@@ -364,7 +364,8 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    '<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less'
+                    '<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
+                    '<%= yeoman.app %>/styles/sb-admin-2.css': '<%= yeoman.app %>/styles/less/sb-admin-2/sb-admin-2.less'
                 }
             },
             production: {
@@ -372,7 +373,8 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less'
+                    '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
+                    '<%= yeoman.dist %>/styles/sb-admin-2.css': '<%= yeoman.app %>/styles/less/sb-admin-2/sb-admin-2.less'
                 }
             }
         },

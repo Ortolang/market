@@ -13,7 +13,9 @@
         "angular-file-upload": "~1.1.x",
         "angular-strap": "~2.1.x",
         "highlight": "8.2",
-        "angular-highlightjs": "~0.3.0"
+        "angular-highlightjs": "~0.3.0",
+        "metisMenu": "~1.1.2",
+        "components-font-awesome": "~4.2.0"
     },
     "devDependencies": {
         "angular-mocks": "~1.2.0",
