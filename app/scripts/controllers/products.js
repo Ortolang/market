@@ -8,14 +8,14 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-  .controller('ProductsCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+  .controller('ProductsCtrl', ['$scope', '$http', '$routeParams', 'Url', function ($scope, $http, $routeParams, Url) {
     console.debug("controller marketCtrl");
 
         $scope.query = "";
 
 		function findAllCarrot(search) {
 
-			var urlService = angular.module('ortolangMarketApp').urlBase + '/rest/objects/semantic';
+			var urlService = Url.urlBase() + '/rest/objects/semantic';
 			console.debug("Search : "+search);
 
 			var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
@@ -27,9 +27,9 @@ angular.module('ortolangMarketApp')
 			.concat(" ?x rdf:type market:Carrot ")
 			.concat(" ; dc:title ?title ")
 			.concat(" ; dcterms:abstract ?abstract ")
-			.concat(" ; otl:use_conditions ?use_conditions ")
-			;
+			.concat(" ; otl:use_conditions ?use_conditions ");
 
+            var query_str_escape;
 			if(search!==undefined) {
 				// TODO escape "'
 				// TODO split by space

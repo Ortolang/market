@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .controller('UploadCtrl', ['$scope', '$routeParams', '$rootScope', 'FileUploader', 'Url',
         function ($scope, $routeParams, $rootScope, FileUploader, Url) {
 
-            var url = Url.urlBase + '/rest/workspaces/' + $routeParams.wsName + '/elements';
+            var url = Url.urlBase() + '/rest/workspaces/' + $routeParams.wsName + '/elements';
 
             var uploader = $scope.uploader = new FileUploader({
                 url: url,

@@ -37,5 +37,3 @@ angular
                 redirectTo: '/'
             });
     });
-
-angular.module('ortolangMarketApp').urlBase = "http://localhost:8080/api";

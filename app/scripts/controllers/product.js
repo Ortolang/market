@@ -8,11 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-  .controller('ProductCtrl', ['$scope', '$http', '$routeParams','$sce', function ($scope, $http, $routeParams, $sce) {
+  .controller('ProductCtrl', ['$scope', '$http', '$routeParams','$sce', 'Url', function ($scope, $http, $routeParams, $sce, Url) {
     console.log("controller productCtrl");
 
         function createURIFromKey(key) {
-			return angular.module('ortolangMarketApp').urlBase+"/rest/objects/"+key;
+			return Url.urlBase()+"/rest/objects/"+key;
 		}
 
 		function getNamespaces() {
@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
 
 		function get(uri) {
 
-			var urlService = angular.module('ortolangMarketApp').urlBase + '/rest/objects/semantic';
+			var urlService = Url.urlBase() + '/rest/objects/semantic';
 
 			var query = "SELECT ?pred ?obj WHERE { <".concat(uri).concat("> ?pred ?obj}");
 			//console.debug("Query : "+query);
