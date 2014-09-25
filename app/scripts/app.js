@@ -25,7 +25,17 @@ angular
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
+            .when('/products', {
+              templateUrl: 'views/products.html',
+              controller: 'ProductsCtrl'
+            })
+            .when('/products/:productId', {
+              templateUrl: 'views/product.html',
+              controller: 'ProductCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
     });
+
+angular.module('ortolangMarketApp').urlBase = "http://localhost:8080/api";
