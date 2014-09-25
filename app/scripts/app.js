@@ -19,21 +19,54 @@ angular
         'mgcrea.ngStrap.helpers.dimensions',
         'hljs'
     ])
-    .config(function ($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
             .when('/products', {
-              templateUrl: 'views/products.html',
-              controller: 'ProductsCtrl'
+                templateUrl: 'views/products.html',
+                controller: 'ProductsCtrl'
             })
             .when('/products/:productId', {
-              templateUrl: 'views/product.html',
-              controller: 'ProductCtrl'
+                templateUrl: 'views/product.html',
+                controller: 'ProductCtrl'
+            })
+            .when('/logout', {
+                templateUrl: 'views/main.html',
+                controller: 'LogoutCtrl'
+            })
+            .when('/login', {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            })
+            .when('/myspace', {
+                templateUrl: 'views/workspaces.html',
+                controller: 'WorkspacesCtrl'
             })
             .otherwise({
                 redirectTo: '/'
             });
-    });
+    }])
+    .run(['$rootScope', 'AuthService', 'AuthEvents', function ($rootScope, AuthService, AuthEvents) {
+        /**
+         * Check if user is authorized to the current url (mainly workspaces)
+         */
+        $rootScope.$on("$routeChangeSuccess", function (event, current) {
+            //console.log(current);
+            var currentWorkspace = current.params.wsName;
+            if (currentWorkspace) {
+                if (!AuthService.isAuthorized(currentWorkspace)) {
+                    event.preventDefault();
+                    if (AuthService.isAuthenticated()) {
+                        // user is not allowed
+                        $rootScope.$broadcast(AuthEvents.notAuthorized);
+                    } else {
+                        // user is not logged in
+                        $rootScope.$broadcast(AuthEvents.notAuthenticated);
+                    }
+                }
+            }
+        });
+    }]);

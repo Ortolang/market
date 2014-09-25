@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:MainCtrl
+ * @name ortolangMarketApp.controller:WorkspacesctrlCtrl
  * @description
- * # MainCtrl
+ * # WorkspacesctrlCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MainCtrl', function ($scope) {
+      .controller('WorkspacesCtrl', function ($scope) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
