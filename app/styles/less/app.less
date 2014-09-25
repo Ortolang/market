@@ -1,10 +1,12 @@
 // Bootstrap Core variables and mixins
-@import "variables";
 @import "/bower_components/bootstrap/less/variables.less";
 @import "/bower_components/bootstrap/less/mixins.less";
+// Ortolang variables and mixins
+@import "variables";
+@import "mixins";
 
 .product-list-element {
-    border-left: 4px solid @product-unknow;
+    border-left: 4px solid @product-unknown;
 }
 
 .Carotte {
@@ -13,4 +15,40 @@
 
 .product-list-element-tool {
     border-color: @product-tool;
+}
+
+.nv-file-over {
+  background-color: @gray-light;
+}
+
+// ============= //
+// Dropdown Menu //
+// ============= //
+
+.dropdown-menu > li > div {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: @line-height-base;
+  color: @dropdown-link-color;
+  white-space: nowrap;
+  cursor: pointer;
+  .user-select-mixin;
+
+  i.glyphicon {
+    padding-right: @padding-base-horizontal;
+    color: @gray-light;
+  }
+
+  &:hover, &:focus {
+    color: @dropdown-link-hover-color;
+    text-decoration: none;
+    background-color: @dropdown-link-hover-bg;
+  }
+}
+
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
 }

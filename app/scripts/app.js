@@ -19,7 +19,7 @@ angular
         'mgcrea.ngStrap.helpers.dimensions',
         'hljs'
     ])
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
@@ -32,6 +32,9 @@ angular
             .when('/products/:productId', {
                 templateUrl: 'views/product.html',
                 controller: 'ProductCtrl'
+            })
+            .when('/workspaces/:wsName/:rootName/:elementPath*\/browse', {
+                templateUrl: 'views/browser.html'
             })
             .when('/logout', {
                 templateUrl: 'views/main.html',
@@ -48,7 +51,7 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    }])
+    })
     .run(['$rootScope', 'AuthService', 'AuthEvents', function ($rootScope, AuthService, AuthEvents) {
         /**
          * Check if user is authorized to the current url (mainly workspaces)
