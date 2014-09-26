@@ -17,8 +17,31 @@
     border-color: @product-tool;
 }
 
+#page-wrapper {
+  padding: 0;
+}
+
+// ============= //
+//    Upload     //
+// ============= //
+
 .nv-file-over {
-  background-color: @gray-light;
+  background-color: @navbar-default-brand-hover-bg;
+}
+
+#upload-zone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: @navbar-default-bg;
+  display: none;
+  border-top: 1px solid @navbar-default-border;
+
+  &.active {
+    display: block;
+  }
 }
 
 // ============= //
@@ -51,4 +74,22 @@
 .dropdown-wrapper {
   position: relative;
   display: inline-block;
+}
+
+// ============= //
+// Browser Table //
+// ============= //
+
+table.workspace-elements {
+  th {
+    .user-select-mixin;
+    &:hover, &:focus {
+      background-color: @table-bg-accent;
+      cursor: pointer;
+    }
+  }
+  td span.glyphicon{
+    padding-right: @padding-base-horizontal;
+    color: @gray-light;
+  }
 }
