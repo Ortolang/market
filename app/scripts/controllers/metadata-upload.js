@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
                 autoUpload: true,
                 removeAfterUpload: false,
                 headers: {
-                    'Authorization': 'Basic cm9vdDp0YWdhZGE1NA=='
+                    'Authorization': $http.defaults.headers.common.Authorization
                 },
                 routeParams: $routeParams
             });

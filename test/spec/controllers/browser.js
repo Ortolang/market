@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: WorkspaceElementsCtrl', function () {
+describe('Controller: BrowserCtrl', function () {
 
     // load the controller's module
     beforeEach(module('ortolangMarketApp'));

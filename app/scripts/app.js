@@ -22,8 +22,7 @@ angular
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                redirectTo: '/products'
             })
             .when('/products', {
                 templateUrl: 'views/products.html',
@@ -56,7 +55,7 @@ angular
         /**
          * Check if user is authorized to the current url (mainly workspaces)
          */
-        $rootScope.$on("$routeChangeSuccess", function (event, current) {
+        $rootScope.$on('$routeChangeSuccess', function (event, current) {
             //console.log(current);
             var currentWorkspace = current.params.wsName;
             if (currentWorkspace) {

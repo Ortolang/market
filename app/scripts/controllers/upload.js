@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$routeParams', '$rootScope', 'FileUploader', 'Url',
-        function ($scope, $routeParams, $rootScope, FileUploader, Url) {
+    .controller('UploadCtrl', ['$scope', '$routeParams', '$rootScope', '$http', 'FileUploader', 'Url',
+        function ($scope, $routeParams, $rootScope, $http, FileUploader, Url) {
 
             var url = Url.urlBase() + '/rest/workspaces/' + $routeParams.wsName + '/elements';
 
@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
                 autoUpload: false,
                 removeAfterUpload: false,
                 headers: {
-                    'Authorization': 'Basic cm9vdDp0YWdhZGE1NA=='
+                    'Authorization': $http.defaults.headers.common.Authorization
                 },
                 routeParams: $routeParams
             });

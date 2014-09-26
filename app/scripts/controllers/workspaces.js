@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:WorkspacesctrlCtrl
+ * @name ortolangMarketApp.controller:WorkspacesCtrl
  * @description
- * # WorkspacesctrlCtrl
+ * # WorkspacesCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')

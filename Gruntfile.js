@@ -123,6 +123,7 @@ module.exports = function (grunt) {
             all: {
                 src: [
                     'Gruntfile.js',
+                    '<%= yeoman.app %>/scripts/*.js',
                     '<%= yeoman.app %>/scripts/controllers/*.js',
                     '<%= yeoman.app %>/scripts/directives/*.js',
                     '<%= yeoman.app %>/scripts/filters/*.js',
@@ -171,7 +172,10 @@ module.exports = function (grunt) {
         wiredep: {
             app: {
                 src: ['<%= yeoman.app %>/index.html'],
-                ignorePath:  /\.\.\//
+                options: {
+                    exclude: ['bower_components/highlightjs/styles/default.css'],
+                    ignorePath:  /\.\.\//
+                }
             }
         },
 

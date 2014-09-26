@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:WorkspaceElementsCtrl
+ * @name ortolangMarketApp.controller:BrowserCtrl
  * @description
- * # WorkspaceElementsCtrl
+ * # BrowserCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceElementsCtrl', ['$scope', '$http', '$routeParams', '$rootScope', '$filter', 'Url',
-        function ($scope, $http, $routeParams, $rootScope, $filter, Url){
+    .controller('BrowserCtrl', ['$scope', '$http', '$routeParams', '$rootScope', '$filter', 'Url',
+        function ($scope, $http, $routeParams, $rootScope, $filter, Url) {
 
             $scope.urlBase = Url.urlBase();
             $scope.wsName = $routeParams.wsName;
@@ -89,10 +89,6 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            // root
-            $http.defaults.headers.common.Authorization = 'Basic cm9vdDp0YWdhZGE1NA==';
-            // user 1
-//        $http.defaults.headers.common.Authorization = 'Basic dXNlcjE6dGFnYWRh';
             getElementData(false);
 
             $scope.clickChild = function (clickEvent, child) {
@@ -137,7 +133,8 @@ angular.module('ortolangMarketApp')
                 $('#new-collection-modal').modal('show');
             };
 
-            $scope.toggleUploadZone = function () {
+            $scope.toggleUploadZone = function (clickEvent) {
+                $(clickEvent.target).toggleClass('active');
                 $('#upload-zone').toggleClass('active');
             };
 
@@ -181,12 +178,22 @@ angular.module('ortolangMarketApp')
                 e.preventDefault();
             });
 
+            function deselectMetadata(clickEvent) {
+                if ($scope.selectedMetadata) {
+                    if (clickEvent) {
+                        $(clickEvent.target).removeClass('active');
+                    } else {
+                        $('.metadata-' + $scope.selectedMetadata.key).removeClass('active');
+                    }
+                    $scope.selectedMetadata = undefined;
+                    $scope.code = undefined;
+                }
+            }
+
             $scope.loadMetadata = function (clickEvent, metadata) {
                 clickEvent.preventDefault();
                 if ($scope.selectedMetadata === metadata) {
-                    $scope.selectedMetadata = undefined;
-                    $scope.code = undefined;
-                    $(clickEvent.target).removeClass('active');
+                    deselectMetadata(clickEvent);
                     return;
                 }
                 if ($scope.selectedMetadata) {
@@ -199,6 +206,9 @@ angular.module('ortolangMarketApp')
                     $('#metadata-modal').modal('show');
                 });
             };
+
+            // When dismiss metadata modal: deselected selected metadata
+            $('#metadata-modal').on('hide.bs.modal', function () { deselectMetadata(); });
 
             $scope.order = function (predicate, reverse) {
                 if (predicate !== $scope.orderProp) {
