@@ -7,7 +7,7 @@ $(function() {
 //Loads the correct sidebar on window load,
 //collapses the sidebar on window resize.
 // Sets the min-height of #page-wrapper to window size
-angular.element(document).ready((function() {
+$(function() {
     $(window).bind("load resize", function() {
         topOffset = 50;
         width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
@@ -25,4 +25,4 @@ angular.element(document).ready((function() {
             $("#page-wrapper").css("min-height", (height) + "px");
         }
     })
-}));
+});

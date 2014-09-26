@@ -10,8 +10,7 @@ angular.module('ortolangMarketApp')
     .directive('ngRightClick', function ($parse) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs)
-            {
+            link: function (scope, element, attrs) {
                 var fn = $parse(attrs.ngRightClick);
                 element.bind('contextmenu', function (event) {
                     scope.$apply(function () {
@@ -20,5 +19,5 @@ angular.module('ortolangMarketApp')
                     });
                 });
             }
-        }
+        };
     });
