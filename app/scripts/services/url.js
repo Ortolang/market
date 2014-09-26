@@ -10,7 +10,13 @@
 angular.module('ortolangMarketApp')
     .factory('Url', function () {
 
-        var urlBase = 'http://localhost:8080/api';
+        var urlBase;
+        if (window.location.hostname === 'localhost') {
+            // TODO: remove hack for local development
+            urlBase = 'http://localhost:8080/api';
+        } else {
+            urlBase = '/api';
+        }
 
         return {
             urlBase: function () {
