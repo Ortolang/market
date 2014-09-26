@@ -80,20 +80,20 @@ angular.module('ortolangMarketApp')
          * Display broadcast messages in console
          * TODO handle this better
          */
-        $scope.formMessage = "";
+        $scope.formMessage = '';
         /* alert-success, alert-warning, alert-info, alert-danger */
-        $scope.formMessageClass = "alert-info";
+        $scope.formMessageClass = 'alert-info';
 
         $scope.$on('$auth:loginSuccess', function (event, data) {
-            console.log("SUCCESS - LoginController:", event, data);
-            $scope.formMessageClass = "alert-success";
-            $scope.formMessage = "Login success.";
+            console.log('SUCCESS - LoginController:', event, data);
+            $scope.formMessageClass = 'alert-success';
+            $scope.formMessage = 'Login success.';
         });
 
         $scope.$on('$auth:loginFailure', function (event, data) {
-            console.log("FAILURE - LoginController:", event, data);
-            $scope.formMessageClass = "alert-danger";
-            $scope.formMessage = "Username or password incorrect.";
+            console.log('FAILURE - LoginController:', event, data);
+            $scope.formMessageClass = 'alert-danger';
+            $scope.formMessage = 'Username or password incorrect.';
         });
 
 //        $rootScope.$on("status", function(event, message){

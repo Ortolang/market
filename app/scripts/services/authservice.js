@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-      .factory('AuthService', ['$http', 'Session', 'ProfilDAO', 'WorkspacesDAO', '$q', '$filter', function ($http, Session, ProfilDAO, WorkspacesDAO, $q, $filter) {
+      .factory('AuthService', ['$http', 'Session', 'ProfilDAO', 'ConnectedDAO', 'WorkspacesDAO', '$q', '$filter', function ($http, Session, ProfilDAO, ConnectedDAO, WorkspacesDAO, $q, $filter) {
         var authService = {};
         /**
          * Get the user profile from the rest API
@@ -19,15 +19,31 @@ angular.module('ortolangMarketApp')
             //TODO replace this by a token
             var auth = window.btoa(credentials.username + ':' + credentials.password), deferred = $q.defer();
             $http.defaults.headers.common.Authorization = 'Basic ' + auth;
-            ProfilDAO.get({userId: credentials.username},
-                function (profil) {
-//                    console.debug(profil);
-                    var session = Session.create(auth, profil);
-                    deferred.resolve(session);
-                },
+            ConnectedDAO.get().$promise.then(
+                angular.noop,
                 function (error) {
-                    deferred.reject(error);
-                });
+                    /**
+                     * In the event of a 303 response data ="", and status=0. This seems wrong.
+                     * @url https://github.com/angular/angular.js/issues/3336
+                     */
+//                    console.debug(error);
+                    if (error.status === 401) {
+                        deferred.reject(error);
+                    //@todo Temporary hack
+                    } else if (error.status === 0) {
+                        ProfilDAO.get({userId: credentials.username},
+                            function (profil) {
+                                //console.debug(profil);
+                                var session = Session.create(auth, profil);
+                                deferred.resolve(session);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            });
+                    }
+                }
+            );
+
             return deferred.promise;
         };
         /**
