@@ -9,17 +9,13 @@
  */
 angular.module('ortolangMarketApp')
   .controller('ProductCtrl', ['$scope', '$http', '$routeParams','$sce', 'Url', function ($scope, $http, $routeParams, $sce, Url) {
-    console.log("controller productCtrl");
-
-        function createURIFromKey(key) {
-			return Url.urlBase()+"/rest/objects/"+key;
-		}
+    console.log('controller productCtrl');
 
 		function getNamespaces() {
-			return [{prefix:'dc:', namespace:"http://purl.org/dc/elements/1.1/"},
-				{prefix:'dcterms:',namespace:"http://purl.org/dc/terms/"},
-				{prefix:'otl:',namespace:"http://www.ortolang.fr/ontology/"},
-				{prefix:'otl_dif:',namespace:"http://www.ortolang.fr/2014/05/diffusion#"}
+			return [{prefix:'dc:', namespace:'http://purl.org/dc/elements/1.1/'},
+				{prefix:'dcterms:',namespace:'http://purl.org/dc/terms/'},
+				{prefix:'otl:',namespace:'http://www.ortolang.fr/ontology/'},
+				{prefix:'otl_dif:',namespace:'http://www.ortolang.fr/2014/05/diffusion#'}
 			];
 		}
 
@@ -45,28 +41,28 @@ angular.module('ortolangMarketApp')
 			}
 		}
 
-		function get(uri) {
+		function get(key) {
 
 			var urlService = Url.urlBase() + '/rest/objects/semantic';
 
-			var query = "SELECT ?pred ?obj WHERE { <".concat(uri).concat("> ?pred ?obj}");
-			//console.debug("Query : "+query);
+			var query = 'SELECT ?pred ?obj WHERE { ?subj ?pred ?obj ; <http://purl.org/dc/elements/1.1/identifier> "'.concat(key).concat('" }');
+			console.debug('Query : '+query);
 
-			var url = urlService + "?query=" + encodeURIComponent(query);
+			var url = urlService + '?query=' + encodeURIComponent(query);
 
 			$http.get(url).success(function (data) {
 
-				console.debug("data : "+JSON.stringify(data));
+				console.debug('data : '+JSON.stringify(data));
 				$scope.metadatas = [];
 				var bindings = data.results.bindings;
 
-				$scope.metadatas.image = "fa-file-text-o";
+				$scope.metadatas.image = 'fa-file-text-o';
 
-				angular.forEach(data.results.bindings, function (binding) {
+				angular.forEach(bindings, function (binding) {
                     var pred = binding.pred.value;
                     var obj = binding.obj.value;
 
-                    if(pred=="http://purl.org/dc/elements/1.1/description") {
+                    if(pred==='http://purl.org/dc/elements/1.1/description') {
 						// $scope.metadatas.description = $sce.trustAsHtml(obj);
 						pushMetadata('dc:description', $sce.trustAsHtml(obj));
 					} else {
@@ -80,6 +76,5 @@ angular.module('ortolangMarketApp')
 
         var key = $routeParams.productId;
 
-		var uri = createURIFromKey(key);
-		get(uri);
+		get(key);
   }]);

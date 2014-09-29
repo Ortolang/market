@@ -29,19 +29,20 @@ angular.module('ortolangMarketApp')
 			.concat(' . ?x dc:title ?title ')
 			.concat(' ; dcterms:abstract ?abstract ')
 			.concat(' ; otl:use_conditions ?use_conditions ');
-			var query_str_escape;
+			var queryStrEscape;
 			if(search!==undefined) {
 				// TODO escape "'
 				// TODO split by space
-				query_str_escape = search;
+				queryStrEscape = search;
 				query.concat(' ; ?all_pred ?all_value')
-					.concat(' . FILTER regex(?all_value, "').concat(query_str_escape).concat('", "i")');
+					.concat(' . FILTER regex(?all_value, "').concat(queryStrEscape).concat('", "i")');
 			}
 
 			query += '}';
-			// console.log("Query : "+query);
+			
 			var url = urlService + '?query=' + encodeURIComponent(query);
-
+			console.log('Call service at url : '+urlService);
+			console.log('Query : '+query);
 			$http.get(url).success(function (data) {
 
 			// console.debug("data : "+JSON.stringify(data));
@@ -72,9 +73,10 @@ angular.module('ortolangMarketApp')
 
 		}
 
-        $scope.filterProducts = function (query) {
+        $scope.filterProducts = function (filterText) {
             return function (product) {
-                var re = new RegExp(query, 'gi');
+            	console.log("filter product : "+filterText);
+                var re = new RegExp(filterText, 'gi');
                 return product.title.match(re) || product.abstract.match(re) || product.use_conditions.match(re);
             };
         };

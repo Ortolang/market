@@ -6,7 +6,7 @@
             <form role="form" id="search" method="GET">
                 <input type="hidden" name="page" value="portal">
                 <div class="input-group custom-search-form">
-                        <input type="text" ng-model="query" name="query" class="form-control" placeholder="Rechercher une ressource...">
+                        <input type="text" ng-model="filterText" name="filterText" class="form-control" placeholder="Rechercher une ressource...">
                         <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fa fa-search"></i>
@@ -21,7 +21,7 @@
 
         <div class="col-lg-10">
         
-            <div class="media" ng-repeat="product in products | filter:filterProducts(query)">
+            <div class="media" ng-repeat="product in products | filter:filterProducts(filterText)">
               <!-- <span class="pull-left" href="#"> -->
                 <!-- <img class="media-object" src="..." alt="..."> -->
                 <!-- <i class="fa {{product.image}} fa-fw" style="font-size: 80px"></i> -->
