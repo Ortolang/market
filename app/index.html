@@ -68,41 +68,41 @@
         <div class="navbar-default sidebar" role="navigation" ng-if="authenticated">
             <div class="sidebar-nav navbar-collapse" >
                 <ul class="nav" id="menu" side-menu="menus" >
-                    <li>
-                        <div class="panel-default">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-12">
-                                        <img src="images/noavatar.png" alt="{{ currentUser.name }}" class="img-rounded">
-                                    </div>
-                                    <div class="col-lg-6 col-md-12"><br>
-                                        <p class="text-capitalize text-center">{{ currentUser.name }}</p>
-                                        <p class="text-center"><a href="#"><i class="fa fa-gear fa-fw"></i> Editer Profil </a></p>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                        <span class="sr-only">60% Complete (warning)</span>
-                                    </div>
-                                </div>
-                                <p class="text-center">Profil complété à 60%</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="sidebar-search">
-                        <form role="form" id="search" method="GET">
-                            <input type="hidden" name="page" value="portal">
-                            <div class="input-group custom-search-form">
-                                <input type="text" name="query" class="form-control" placeholder="Rechercher...">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="submit">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-									</span>
-                            </div>
-                        </form>
-                    </li>
+                    <!--<li>-->
+                        <!--<div class="panel-default">-->
+                            <!--<div class="panel-body">-->
+                                <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="col-lg-6 col-md-12">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<img src="images/noavatar.png" alt="{{ currentUser.name }}" class="img-rounded">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="col-lg-6 col-md-12"><br>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<p class="text-capitalize text-center">{{ currentUser.name }}</p>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<p class="text-center"><a href="#"><i class="fa fa-gear fa-fw"></i> Editer Profil </a></p>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<br>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="progress">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<span class="sr-only">60% Complete (warning)</span>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<p class="text-center">Profil complété à 60%</p>&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="sidebar-search">-->
+                        <!--<form role="form" id="search" method="GET">-->
+                            <!--<input type="hidden" name="page" value="portal">-->
+                            <!--<div class="input-group custom-search-form">-->
+                                <!--<input type="text" name="query" class="form-control" placeholder="Rechercher...">-->
+									<!--<span class="input-group-btn">-->
+										<!--<button class="btn btn-default" type="submit">-->
+                                            <!--<i class="fa fa-search"></i>-->
+                                        <!--</button>-->
+									<!--</span>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</li>-->
                     <li><a href="#/products"><i class="fa fa-home fa-fw"></i> Portail</a></li>
                     <!-- <li><a href="?page=search"><i class="fa fa-search fa-fw"></i> Rechercher</a></li> -->
                     <li><a href="#/myspace"><i class="fa fa-desktop fa-fw"></i> Mon espace</a></li>
@@ -129,7 +129,7 @@
                         </ul>
                     </li>
                     <!-- <li><a href="#registry" data-toggle="tab"><i class="fa fa-fw"></i> Modération</a></li> -->
-                    <li><a href="#/myspace"><i class="fa fa-star fa-fw"></i> Mes favoris</a></li>
+                    <!--<li><a href="#/myspace"><i class="fa fa-star fa-fw"></i> Mes favoris</a></li>-->
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

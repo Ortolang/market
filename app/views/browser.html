@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <div class="col-md-12" ng-click="checkSelection($event)">
+        <div class="col-md-12 browser-toolbar" ng-click="checkSelection($event)">
             <h4>Browsing '{{wsName}}' workspace elements</h4>
 
             <ol class="breadcrumb" >
@@ -72,20 +72,20 @@
 
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 browser-sidebar">
             <!--Sidebar content-->
 
-            <h4 ng-if="!selectedChild"><span class="{{element.type | elementIconCss}}"></span> {{element.name}}</h4>
-            <h4 ng-if="selectedChild"><span class="{{selectedChild.type | elementIconCss}}"></span> {{selectedChildData.object.name}}</h4>
+            <p ng-if="!selectedChild" class="lead"><span class="{{element.type | elementIconCss}}"></span> {{element.name}}</p>
+            <p ng-if="selectedChild" class="lead"><span class="{{selectedChild.type | elementIconCss}}"></span> {{selectedChildData.object.name}}</p>
 
-            <ul id="sideTabs" class="nav nav-tabs nav-justified" role="tablist">
+            <ul id="browser-side-tabs" class="nav nav-justified" role="tablist">
                 <li class="active"><a href="#information" role="tab" ng-click="toggleTab($event)">Information</a></li>
                 <li><a href="#metadata" role="tab" ng-click="toggleTab($event)">Metadata</a></li>
             </ul>
 
             <div class="tab-content">
                 <div class="tab-pane active" id="information">
-                    <dl ng-if="!selectedChild">
+                    <dl ng-if="!selectedChild" class="dl-horizontal">
                         <dt>Name</dt>
                         <dd>{{element.name}}</dd>
                         <dt>Description</dt>
@@ -98,7 +98,7 @@
                         <dd>{{element.elements.length}} element{{element.elements.length > 1 ? 's' : ''}}</dd>
                     </dl>
 
-                    <dl ng-if="selectedChild">
+                    <dl ng-if="selectedChild" class="dl-horizontal">
                         <dt>Name</dt>
                         <dd>{{selectedChildData.object.name}}</dd>
                         <dt>Description</dt>

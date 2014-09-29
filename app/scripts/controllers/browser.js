@@ -174,7 +174,7 @@ angular.module('ortolangMarketApp')
                 }
             });
 
-            $('#sideTabs').find('a').click(function (e) {
+            $('#browser-side-tabs').find('a').click(function (e) {
                 e.preventDefault();
             });
 

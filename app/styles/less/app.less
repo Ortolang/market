@@ -30,7 +30,7 @@
 }
 
 #upload-zone {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -77,8 +77,62 @@
 }
 
 // ============= //
-// Browser Table //
+//    Browser    //
 // ============= //
+
+.browser-toolbar, .browser-sidebar {
+  background-color: @navbar-default-bg;
+  padding-bottom: @padding-large-vertical;
+}
+
+.browser-toolbar {
+  border-bottom: 1px solid @navbar-default-border;
+}
+
+.browser-sidebar {
+  border-left: 1px solid @navbar-default-border;
+  padding-top: @padding-large-vertical;
+
+  .dl-horizontal {
+    dt {
+      width: @browser-offset-horizontal - 20;
+      font-weight: normal;
+    }
+    dd {
+      margin-left: @browser-offset-horizontal;
+    }
+  }
+
+  p.lead span {
+    padding-right: @padding-base-horizontal;
+  }
+}
+
+#browser-side-tabs {
+
+  margin-top: @navbar-margin-bottom;
+  padding-bottom: @padding-large-vertical;
+  border-top: 1px solid @gray-lighter;
+
+  li {
+    &:hover, &.active:hover {
+      border-top: 3px solid @gray;
+    }
+    &.active {
+      border-top: 3px solid @component-active-bg;
+      a {
+        font-weight: bold;
+      }
+    }
+
+    a {
+      color: @gray-dark;
+      &:hover, &:focus {
+        background-color: inherit;
+      }
+    }
+  }
+}
 
 table.workspace-elements {
   th {
