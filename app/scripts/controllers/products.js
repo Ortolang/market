@@ -8,44 +8,44 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-  .controller('ProductsCtrl', ['$scope', '$http', '$routeParams', 'Url', function ($scope, $http, $routeParams, Url) {
-    console.debug("controller marketCtrl");
+  .controller('ProductsCtrl', ['$scope', '$http', '$routeParams', '$sce', 'Url', function ($scope, $http, $routeParams, $sce, Url) {
+    console.debug('controller marketCtrl');
 
-        $scope.query = "";
+		$scope.query = '';
 
 		function findAllCarrot(search) {
 
 			var urlService = Url.urlBase() + '/rest/objects/semantic';
-			console.debug("Search : "+search);
 
-			var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-			.concat("PREFIX dc: <http://purl.org/dc/elements/1.1/> ")
-			.concat("PREFIX dcterms: <http://purl.org/dc/terms/> ")
-			.concat("PREFIX otl: <http://www.ortolang.fr/ontology/>")
-			.concat("PREFIX market: <http://www.ortolang.fr/2014/09/market#> ")
-			.concat("SELECT ?x ?title ?abstract ?use_conditions WHERE { ")
-			.concat(" ?x rdf:type market:Carrot ")
-			.concat(" ; dc:title ?title ")
-			.concat(" ; dcterms:abstract ?abstract ")
-			.concat(" ; otl:use_conditions ?use_conditions ");
-
-            var query_str_escape;
+			var query = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> '
+			.concat('PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ')
+			.concat('PREFIX dc: <http://purl.org/dc/elements/1.1/> ')
+			.concat('PREFIX dcterms: <http://purl.org/dc/terms/> ')
+			.concat('PREFIX otl: <http://www.ortolang.fr/ontology/>')
+			.concat('PREFIX market: <http://www.ortolang.fr/2014/09/market#> ')
+			.concat('SELECT DISTINCT ?x ?resource_type ?title ?abstract ?use_conditions WHERE { ')
+			.concat(' ?x rdf:type ?resource_type ')
+			.concat(' . ?market_type rdfs:subClassOf market:Product ')
+			.concat(' . ?x dc:title ?title ')
+			.concat(' ; dcterms:abstract ?abstract ')
+			.concat(' ; otl:use_conditions ?use_conditions ');
+			var query_str_escape;
 			if(search!==undefined) {
 				// TODO escape "'
 				// TODO split by space
 				query_str_escape = search;
-				query.concat(" ; ?all_pred ?all_value")
-					.concat(" . FILTER regex(?all_value, \"").concat(query_str_escape).concat("\", 'i')");
+				query.concat(' ; ?all_pred ?all_value')
+					.concat(' . FILTER regex(?all_value, "').concat(query_str_escape).concat('", "i")');
 			}
 
-			query += "}";
-			console.log("Query : "+query);
-			var url = urlService + "?query=" + encodeURIComponent(query);
+			query += '}';
+			// console.log("Query : "+query);
+			var url = urlService + '?query=' + encodeURIComponent(query);
 
 			$http.get(url).success(function (data) {
 
-			console.debug("data : "+JSON.stringify(data));
-			$scope.products = [];
+			// console.debug("data : "+JSON.stringify(data));
+			$scope.products = {};
 			var bindings = data.results.bindings;
 			//TODO si bindings vide alors affichier juste un message d'erreur "L'identifiant $identifiant n'est pas une resource connue dans la plateforme"
 			angular.forEach(data.results.bindings, function (binding) {
@@ -53,11 +53,19 @@ angular.module('ortolangMarketApp')
                 var title = binding.title.value;
                 var abstract = binding.abstract.value;
                 var use_conditions = binding.use_conditions.value;
+                var resource_type = binding.resource_type.value;
 
                 // Extract key
                 var key = uri.split('/').pop();
+                var type = resource_type.split('#').pop().toLowerCase();
 
-				$scope.products.push({key: key, uri: uri, title: title, image: 'src/unknow.jpg', type: 'Carotte', abstract: abstract, use_conditions:use_conditions});
+                if($scope.products[key] === undefined) {
+					$scope.products[key] = {key: key, uri: uri, title: title, type: type, abstract: abstract, abstract_html: $sce.trustAsHtml(abstract), use_conditions:use_conditions};
+				} else {
+					var oldType=$scope.products[key].type;
+                	$scope.products[key].type = [oldType, type];
+                }
+				
             });
 
 		});

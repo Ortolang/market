@@ -1,21 +1,12 @@
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Consultation</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
+    <br/>
     <!-- /.row -->
     <div class="row">
-    	<!-- 
-        <div class="col-lg-2">
-        </div>
-        -->
         <div class="col-lg-10">
             <form role="form" id="search" method="GET">
                 <input type="hidden" name="page" value="portal">
                 <div class="input-group custom-search-form">
-                        <input type="text" ng-model="query" name="query" class="form-control" placeholder="Rechercher...">
+                        <input type="text" ng-model="query" name="query" class="form-control" placeholder="Rechercher une ressource...">
                         <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fa fa-search"></i>
@@ -23,40 +14,33 @@
                         </span>
                 </div>
             </form>
+            <hr/>
         </div>
     </div>
-<br/>
     <div class="row">
-    <!-- 
-        <div class="col-lg-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Affiner</div>
-                
-                <div class="panel-body">
 
-                </div>
-            </div>
-        </div>
-	-->
         <div class="col-lg-10">
         
-            <div class="media product-list-element" ng-repeat="product in products | filter:filterProducts(query) " ng-class="product.type">
-              <span class="pull-left" href="#">
+            <div class="media" ng-repeat="product in products | filter:filterProducts(query)">
+              <!-- <span class="pull-left" href="#"> -->
                 <!-- <img class="media-object" src="..." alt="..."> -->
-                <i class="fa {{product.image}} fa-fw" style="font-size: 80px"></i>
-              </span>
+                <!-- <i class="fa {{product.image}} fa-fw" style="font-size: 80px"></i> -->
+                <!-- <img data-src="{{product.image}}" holder-fix></img> -->
+              <!-- </span> -->
               <div class="media-body">
                 <h4 class="media-heading">{{product.title}} <!-- <i><small>(produit par <a href="#">{{author}}</a>)</small></i> --></h4>
                 <span>{{product.type}}</span>
                 <span>{{product.use_conditions}}</span>
-                <p align="justify">
-                {{product.abstract}}
+                <p align="justify" ng-bind-html="product.abstract_html">
+                
                 </p>
                 <a href="#/products/{{product.key}}">Voir la fiche détaillée</a>
               </div>
+              <hr/>
             </div>
             
         </div>
         
     </div>
+
 
