@@ -75,6 +75,7 @@ angular.module('ortolangMarketApp')
                         $scope.breadcrumbParts = breadcrumbParts;
                         $scope.path = data.path.replace('/', 'head/root/').split('/');
                     }
+                    $(window).trigger('resize');
                 });
             }
 
