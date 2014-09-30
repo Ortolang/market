@@ -21,7 +21,8 @@ angular.module('ortolangMarketApp')
             $http.defaults.headers.common.Authorization = 'Basic ' + auth;
             ConnectedDAO.get().$promise.then(
                 function (user) {
-                    console.debug(user);
+                    var session = Session.create(auth, user);
+                    deferred.resolve(session);
                 },
                 function (error) {
                     /**
