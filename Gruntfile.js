@@ -354,7 +354,8 @@ module.exports = function (grunt) {
                         'bower_components/**/*.js',
                         'bower_components/**/*.css',
                         'bower_components/**/*.map',
-                        'bower_components/components-font-awesome/fonts/*'
+                        'bower_components/components-font-awesome/fonts/*',
+                        '!bower_components/*/{src,src/**,test,test/**}'
                     ],
                     dest: '<%= yeoman.dist %>'
                 }]
