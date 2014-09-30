@@ -320,7 +320,9 @@ module.exports = function (grunt) {
                         '*.html',
                         'views/{,*/}*.html',
                         'images/{,*/}*.{webp}',
-                        'fonts/*'
+                        'fonts/*',
+
+                        'scripts/{,*/}*.js'
                     ]
                 }, {
                     expand: true,
@@ -336,6 +338,11 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'bower_components/components-font-awesome',
                     src: 'fonts/*',
+                    dest: '<%= yeoman.dist %>'
+                }, {
+                    expand: true,
+                    cwd: '.',
+                    src: 'bower_components/**/*',
                     dest: '<%= yeoman.dist %>'
                 }]
             },
@@ -453,17 +460,17 @@ module.exports = function (grunt) {
         'clean:dist',
         'less:production',
         'wiredep',
-        'useminPrepare',
+        // 'useminPrepare',
         'concurrent:dist',
-        'autoprefixer',
-        'concat',
-        'ngAnnotate',
+        // 'autoprefixer',
+        // 'concat',
+        // 'ngAnnotate',
         'copy:dist',
-        'cdnify',
-        'cssmin',
+        // 'cdnify',
+        // 'cssmin',
 //        'uglify',
-        'filerev',
-        'usemin'
+        // 'filerev',
+        // 'usemin'
 //        'htmlmin'
     ]);
 
