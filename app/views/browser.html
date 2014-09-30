@@ -143,7 +143,7 @@
                         <a ng-repeat="metadata in element.metadatas" ng-click="loadMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}" href="#">{{metadata.name}}</a>
                     </div>
                     <div ng-if="selectedChild">
-                        <a ng-repeat="metadata in selectedChildData.object.metadatas" ng-click="loadMetadata($event, metadata)" class="list-group-item">{{metadata.name}}</a>
+                        <a ng-repeat="metadata in selectedChildData.object.metadatas" ng-click="loadMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}">{{metadata.name}}</a>
                     </div>
                 </div>
                 <div ng-include="'views/metadata-upload.html'"></div>
