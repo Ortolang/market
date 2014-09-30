@@ -51,7 +51,7 @@ angular
                 redirectTo: '/'
             });
     })
-    .run(['$rootScope', 'AuthService', 'AuthEvents', function ($rootScope, AuthService, AuthEvents) {
+    .run(['$rootScope', '$location', 'AuthService', 'AuthEvents', function ($rootScope, $location, AuthService, AuthEvents) {
         /**
          * Check if user is authorized to the current url (mainly workspaces)
          */
@@ -69,6 +69,10 @@ angular
                         $rootScope.$broadcast(AuthEvents.notAuthenticated);
                     }
                 }
+            }
+            // Save current url is user is not logged in
+            if (!AuthService.isAuthenticated()) {
+                AuthService.saveAttemptUrl();
             }
         });
     }]);

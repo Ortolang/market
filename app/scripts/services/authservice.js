@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-      .factory('AuthService', ['$http', 'Session', 'ProfilDAO', 'ConnectedDAO', 'WorkspacesDAO', '$q', '$filter', function ($http, Session, ProfilDAO, ConnectedDAO, WorkspacesDAO, $q, $filter) {
+      .factory('AuthService', ['$http', '$location', 'Session', 'ProfilDAO', 'ConnectedDAO', 'WorkspacesDAO', 'param', '$q', '$filter', function ($http, $location, Session, ProfilDAO, ConnectedDAO, WorkspacesDAO, param, $q, $filter) {
         var authService = {};
         /**
          * Get the user profile from the rest API
@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
                      * @url https://github.com/angular/angular.js/issues/3336
                      */
 //                    console.debug(error);
-                    if (error.status === 401) {
+                    if (error.status === 401 || error.status === 500) {
                         deferred.reject(error);
                     //@todo Temporary hack
                     } else if (error.status === 0) {
@@ -82,6 +82,23 @@ angular.module('ortolangMarketApp')
                 }
             );
             return deferred.promise;
+        };
+        /**
+         * Save the current URL if it isn't the login screen
+         */
+        authService.saveAttemptUrl = function () {
+            if ($location.path().toLowerCase() !== '/login') {
+                param.redirectToUrlAfterLogin = $location.path();
+            } else {
+                param.redirectToUrlAfterLogin = '/';
+            }
+            //console.debug(param.redirectToUrlAfterLogin);
+        };
+        /**
+         * Redirect to the saved url
+         */
+        authService.redirectToAttemptedUrl = function () {
+            $location.path(param.redirectToUrlAfterLogin);
         };
         return authService;
     }]);
