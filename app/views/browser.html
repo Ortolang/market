@@ -130,11 +130,8 @@
                     <dd>{{selectedChildData.lastModificationDate | date : 'medium'}}</dd>
                     <dt>Clock</dt>
                     <dd>{{element.clock}}</dd>
-                    <div ng-if="selectedChildData.object.size">
-                        <dt>Size</dt>
-                        <dd>{{selectedChildData.object.size | bytes}}</dd>
-                    </div>
-
+                    <dt ng-if="selectedChildData.object.size">Size</dt>
+                    <dd ng-if="selectedChildData.object.size">{{selectedChildData.object.size | bytes}}</dd>
                 </dl>
             </div>
             <div class="tab-pane" id="metadata">
