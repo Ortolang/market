@@ -14,8 +14,18 @@
 
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProjectModal">Nouveau projet</button>
-
+                            <div class="dropdown-wrapper">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    Créer
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><div data-toggle="modal" data-target="#createWorkspaceModal">Workspace</div></li>
+                                    <li><div data-toggle="modal" data-target="#importWorkspaceModal" >Importer un bagit...</div></li>
+                                </ul>
+                            </div>
+<!--
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createWorkspaceModal">Créer un espace de travail</button>
+-->
                         </div>
                     </div>
 
@@ -38,13 +48,7 @@
                                 </td>
                                 <td>{{wk.type}}</td>
                                 <td>
-                                    <form role="form" id="createProjectsForm" method="POST">
-                                        <input type="hidden" name="action" value="release_project">
-                                        <input type="hidden" name="key" value="{{wk.key}}">
-                                        <input type="hidden" name="name" value="v1.0">
-                                        <input type="hidden" name="url_target" value="index.php?page=myspace">
-                                        <input type="submit" class="btn btn-primary btn-outline btn-sm" value="Publier"/>
-                                    </form>
+                                    <button type="button" class="btn btn-default" ng-click="publishWorkspace(wk)">Publiser</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -52,29 +56,62 @@
                     </div>
 
 
-                    <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="createWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="createWorkspaceModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <!-- Create project -->
-                                <form role="form" id="createProjectForm" method="POST">
+                                <form role="form" id="createWorkspaceForm" method="POST">
 
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="createProjectModalLabel">Nouveau projet</h4>
+                                        <h4 class="modal-title" id="createWorkspaceModalLabel">Créer un espace de travail</h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="name">Nom</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Nom du projet">
+                                            <input type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" placeholder="Nom de l'espace de travail" ng-model="newWorkspaceName">
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Type</label>
-                                            <input type="text" class="form-control" id="type" name="type" placeholder="Type">
+                                            <input type="text" class="form-control" id="new-workspace-type" name="new-workspace-type" placeholder="Type" ng-model="newWorkspaceType">
                                         </div>
-                                        <input type="hidden" name="action" value="create_project">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" id="createProjectButton">Créer</button>
+                                        <button type="submit" class="btn btn-primary" id="createWorkspaceButton" ng-click="createWorkspace()">Créer</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                    </div>
+
+                                </form>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
+                    <div class="modal fade" id="importWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="importWorkspaceModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <!-- Create project -->
+                                <form role="form" id="importWorkspaceForm" method="POST">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="importWorkspaceModalLabel">Importer un espace de travail</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="name">Nom</label>
+                                            <input type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" placeholder="Nom de l'espace de travail" ng-model="newWorkspaceName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Type</label>
+                                            <input type="text" class="form-control" id="new-workspace-type" name="new-workspace-type" placeholder="Type" ng-model="newWorkspaceType">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Fichier</label>
+                                            <input type="file" class="form-control" id="new-workspace-file" name="new-workspace-file" placeholder="Fichier BagIt..." ng-model="newWorkspaceFile">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="importWorkspaceButton" ng-click="importWorkspace()">Importer</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                                     </div>
 

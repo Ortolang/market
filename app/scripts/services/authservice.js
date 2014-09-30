@@ -72,10 +72,9 @@ angular.module('ortolangMarketApp')
             var deferred = $q.defer(), wkList = [];
             //TODO replace userId by token
             $http.defaults.headers.common.Authorization = 'Basic ' + userId;
-            WorkspacesDAO.get(
+            WorkspacesDAO.query(
                 function (wk) {
                     wkList = wk.entries;
-                    //console.debug( wkList);
                     deferred.resolve(wkList);
                 },
                 function (error) {
