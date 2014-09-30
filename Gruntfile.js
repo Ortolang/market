@@ -201,8 +201,7 @@ module.exports = function (grunt) {
                 flow: {
                     html: {
                         steps: {
-//                            js: ['concat', 'uglifyjs'],
-                            js: ['concat'],
+                            js: ['concat', 'uglifyjs'],
                             css: ['cssmin']
                         },
                         post: {}
@@ -320,9 +319,7 @@ module.exports = function (grunt) {
                         '*.html',
                         'views/{,*/}*.html',
                         'images/{,*/}*.{webp}',
-                        'fonts/*',
-
-                        'scripts/{,*/}*.js'
+                        'fonts/*'
                     ]
                 }, {
                     expand: true,
@@ -339,10 +336,26 @@ module.exports = function (grunt) {
                     cwd: 'bower_components/components-font-awesome',
                     src: 'fonts/*',
                     dest: '<%= yeoman.dist %>'
+                }]
+            },
+            devDist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        'scripts/{,*/}*.js'
+                    ]
                 }, {
                     expand: true,
                     cwd: '.',
-                    src: 'bower_components/**/*',
+                    src: [
+                        'bower_components/**/*.js',
+                        'bower_components/**/*.css',
+                        'bower_components/**/*.map',
+                        'bower_components/components-font-awesome/fonts/*'
+                    ],
                     dest: '<%= yeoman.dist %>'
                 }]
             },
@@ -460,18 +473,27 @@ module.exports = function (grunt) {
         'clean:dist',
         'less:production',
         'wiredep',
-        // 'useminPrepare',
+        'useminPrepare',
         'concurrent:dist',
-        // 'autoprefixer',
-        // 'concat',
-        // 'ngAnnotate',
+        'autoprefixer',
+        'concat',
+        'ngAnnotate',
         'copy:dist',
-        // 'cdnify',
-        // 'cssmin',
-//        'uglify',
-        // 'filerev',
-        // 'usemin'
-//        'htmlmin'
+        'cdnify',
+        'cssmin',
+        'uglify',
+        'filerev',
+        'usemin',
+        'htmlmin'
+    ]);
+
+    grunt.registerTask('dev-build', [
+        'clean:dist',
+        'less:production',
+        'wiredep',
+        'concurrent:dist',
+        'copy:dist',
+        'copy:devDist'
     ]);
 
     grunt.registerTask('default', [
