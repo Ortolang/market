@@ -8,13 +8,18 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LoginCtrl', ['$scope', '$rootScope', 'AuthEvents', 'AuthService', '$cookieStore',
-        function ($scope, $rootScope, AuthEvents, AuthService, $cookieStore) {
+    .controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'AuthEvents', 'AuthService', '$cookieStore',
+        function ($scope, $rootScope, $location, AuthEvents, AuthService, $cookieStore) {
             //console.log('LoginCtrl loaded');
             $scope.credentials = {
                 username: '',
                 password: ''
             };
+
+            if (AuthService.isAuthenticated()) {
+                $location.path('/');
+            }
+
             /**
              * Process the login form : call by submit
              * @param credentials
@@ -34,6 +39,8 @@ angular.module('ortolangMarketApp')
                             $cookieStore.put('currentUser', user);
                             $rootScope.$broadcast('$auth:loginSuccess', AuthEvents.loginSuccess);
                             //console.log(user);
+                            // Redirect to previous page
+                            AuthService.redirectToAttemptedUrl();
                         },
                         /**
                          * error
