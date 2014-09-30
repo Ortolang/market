@@ -38,10 +38,12 @@ angular.module('ortolangMarketApp')
                     $scope.contextMenuStyle = {
                         position: 'absolute',
                         display: 'block',
-                        left: clickEvent.pageX + 'px',
-                        // TODO: HACK fix dropdown offset because of navbar
-                        // top: clickEvent.pageY-51+'px'
-                        top: clickEvent.pageY + 'px'
+//                        left: clickEvent.pageX + 'px',
+                        // TODO: HACK fix dropdown offset because of margin-left on page wrapper
+                        left: clickEvent.pageX - 250 + 'px',
+                        // TODO: HACK fix dropdown offset because of navbar (51px) and toolbar (55)
+                        top: clickEvent.pageY - 51 - 55 + 'px'
+//                        top: clickEvent.pageY + 'px'
                     };
                     // If the context menu has already been build no need to do it again
                     if ($scope.isContextMenuActive && sameChild) {
