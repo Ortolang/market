@@ -61,48 +61,76 @@ angular.module('ortolangMarketApp')
                 );
         };
 
-        // Initialize session
-        $scope.currentUser = null;
-        var cookie = CookieFactory.getCookie('currentUser').then(function (value) {
-            if (value !== null && !angular.isUndefined(value)) {
-                $scope.currentUser = Session.load(value);
+        /**
+         * Initialize scope var from the session
+         */
+        $scope.initializeSession = function (user) {
+            if (angular.isDefined(user)) {
+                $scope.currentUser = user;
+                $scope.setAuthenticated(AuthService.isAuthenticated());
+                $scope.loadWorkspaces(user.id);
+            } else {
+                $scope.currentUser = null;
+                CookieFactory.getCookie('currentUser').then(function (value) {
+                    if (value !== null && !angular.isUndefined(value)) {
+                        $scope.currentUser = Session.load(value);
+                    }
+                    //            console.debug(value);
+                    $scope.authenticated = AuthService.isAuthenticated();
+                    //        console.debug('User is Authenticated ?' + $scope.authenticated);
+                    $scope.wkList = [];
+                    if ($scope.authenticated) {
+                        $scope.loadWorkspaces($scope.currentUser.id);
+                    }
+                });
             }
-//            console.debug(value);
-            $scope.authenticated = AuthService.isAuthenticated();
-//        console.debug('User is Authenticated ?' + $scope.authenticated);
-            $scope.wkList = [];
-            if ($scope.authenticated) {
-                $scope.loadWorkspaces($scope.currentUser.id);
-            }
-        });
+        };
 
         /**
-         * Display broadcast messages in console
+         * Initialize the var for flash messages
+         */
+        $scope.initializeFlashMessage = function (formMessage, formMessageClass) {
+            if (!angular.isDefined(formMessage)) {
+                $scope.formMessage = '';
+                /* alert-success, alert-warning, alert-info, alert-danger */
+                $scope.formMessageClass = 'alert-info';
+            } else {
+                $scope.formMessageClass = formMessageClass;
+                $scope.formMessage = formMessage;
+            }
+        };
+
+
+        /**
+         * Display broadcast messages in console and in flash div
          * TODO handle this better
          */
-        $scope.formMessage = '';
-        /* alert-success, alert-warning, alert-info, alert-danger */
-        $scope.formMessageClass = 'alert-info';
-
         $scope.$on('$auth:loginSuccess', function (event, data) {
             console.log('SUCCESS - LoginController:', event, data);
-            $scope.formMessageClass = 'alert-success';
-            $scope.formMessage = 'Login success.';
+            $scope.initializeFlashMessage('Login success.', 'alert-success');
         });
 
         $scope.$on('$auth:loginFailure', function (event, data) {
             console.log('FAILURE - LoginController:', event, data);
-            $scope.formMessageClass = 'alert-danger';
-            $scope.formMessage = 'Username or password incorrect.';
+            $scope.initializeFlashMessage('Username or password incorrect.', 'alert-danger');
         });
 
         $scope.$on('$auth:notAuthenticated', function (event, data) {
             console.log('FAILURE - RouteProvider:', event, data);
-            $scope.formMessageClass = 'alert-danger';
-            $scope.formMessage =  'Please log in first !';
+            $scope.initializeFlashMessage('Please log in first.', 'alert-danger');
+        });
+
+        $scope.$on('$auth:notAuthorized', function (event, data) {
+            console.log('WARNING - RouteProvider:', event, data);
+            $scope.initializeFlashMessage('You are not authorized here.', 'alert-warning');
         });
 
 //        $rootScope.$on("status", function(event, message){
 //            console.log("### STATUS : " + message);
 //        });
+
+        // Initialize session
+        $scope.initializeSession();
+        // Initialize flash messages
+        $scope.initializeFlashMessage();
     }]);

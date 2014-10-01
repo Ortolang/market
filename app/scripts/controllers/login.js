@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
                 remember: false
             };
 
+            $scope.initializeFlashMessage();
             if (AuthService.isAuthenticated()) {
                 $location.path('/');
             }
@@ -34,9 +35,7 @@ angular.module('ortolangMarketApp')
                          */
                         function (user) {
                             //Todo use token
-                            $scope.setCurrentUser(user);
-                            $scope.setAuthenticated(AuthService.isAuthenticated());
-                            $scope.loadWorkspaces(user.id);
+                            $scope.initializeSession(user);
                             if (credentials.remember) {
                                 // arbitrary set to 7 days or 1 day : TODO declare this in a config file
                                 CookieFactory.setCookie('currentUser', user, 7);

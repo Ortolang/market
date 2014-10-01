@@ -92,10 +92,10 @@ angular
                     event.preventDefault();
                     if (AuthService.isAuthenticated()) {
                         // user is not allowed
-                        $rootScope.$broadcast(AuthEvents.notAuthorized);
+                        $rootScope.$broadcast('$auth:notAuthorized', AuthEvents.notAuthorized);
                     } else {
                         // user is not logged in
-                        $rootScope.$broadcast(AuthEvents.notAuthenticated);
+                        $rootScope.$broadcast('$auth:notAuthenticated', AuthEvents.notAuthenticated);
                     }
                 }
             }
