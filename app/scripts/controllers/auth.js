@@ -96,6 +96,12 @@ angular.module('ortolangMarketApp')
             $scope.formMessage = 'Username or password incorrect.';
         });
 
+        $scope.$on('$auth:notAuthenticated', function (event, data) {
+            console.log('FAILURE - RouteProvider:', event, data);
+            $scope.formMessageClass = 'alert-danger';
+            $scope.formMessage =  'Please log in first !';
+        });
+
 //        $rootScope.$on("status", function(event, message){
 //            console.log("### STATUS : " + message);
 //        });

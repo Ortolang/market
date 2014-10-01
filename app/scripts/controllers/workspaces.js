@@ -8,45 +8,44 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-      .controller('WorkspacesCtrl', ['$rootScope', '$scope','$http', 'WorkspacesDAO', 'Process', 'Objects', 'AuthService', 'AuthEvents', function ($rootScope, $scope, $http, WorkspacesDAO, Process, Objects, AuthService, AuthEvents) {
+      .controller('WorkspacesCtrl', ['$rootScope', '$scope', '$http', 'WorkspacesDAO', 'Process', 'Objects', 'AuthService', 'AuthEvents', function ($rootScope, $scope, $http, WorkspacesDAO, Process, Objects, AuthService, AuthEvents) {
 
         $scope.createWorkspace = function () {
             if ($scope.newWorkspaceName !== undefined) {
                 $('#new-workspace-name').parentsUntil('form', '.form-group').removeClass('has-error');
                 //TODO generate a key compatible based on the name
-                var key = $scope.newWorkspaceName;
-                var data = {key:key, name: $scope.newWorkspaceName, type: $scope.newWorkspaceType};
-                WorkspacesDAO.save(data, function() {
+                var key = $scope.newWorkspaceName, data = {key: key, name: $scope.newWorkspaceName, type: $scope.newWorkspaceType};
+                WorkspacesDAO.save(data, function () {
 
                     // Refresh list of workspaces
-                        $scope.authenticated = AuthService.isAuthenticated();
-                        $scope.wkList = [];
-                        if ($scope.authenticated) {
-                            $scope.loadWorkspaces($scope.currentUser.id);
+                    $scope.authenticated = AuthService.isAuthenticated();
+                    $scope.wkList = [];
+                    if ($scope.authenticated) {
+                        $scope.loadWorkspaces($scope.currentUser.id);
 
-                            // Refresh workspace view
-                            //Todo use token
-                            AuthService.getWorkspaces($scope.currentUser.id)
-                                .then(
-                                    function (wks) {
-                                        //$scope.setWkList(wks);
-                                        $scope.wkList = wks;
-                                    },
-                                    function (reason) {
-                                        console.log(reason);
-                                        $rootScope.$broadcast('$auth:loginFailure', AuthEvents.loginFailed + ' - error while loading workspaces');
-                                    }
-                                );
+                        // Refresh workspace view
+                        //Todo use token
+                        AuthService.getWorkspaces($scope.currentUser.id)
+                            .then(
+                                function (wks) {
+                                    //$scope.setWkList(wks);
+                                    $scope.wkList = wks;
+                                },
+                                function (reason) {
+                                    console.log(reason);
+                                    $rootScope.$broadcast('$auth:loginFailure', AuthEvents.loginFailed + ' - error while loading workspaces');
+                                }
+                            );
 
-                        }
+                    }
 
-                        $('#createWorkspaceModal').modal('hide');
-                        $scope.newWorkspaceName = undefined;
-                        $scope.newWorkspaceType = undefined;
+                    $('#createWorkspaceModal').modal('hide');
+                    $scope.newWorkspaceName = undefined;
+                    $scope.newWorkspaceType = undefined;
 
-                    }, function(error) {
-                        // deferred.reject(error);
-                        console.error(error);
+                }, function(error) {
+                    // deferred.reject(error);
+                    console.error(error);
                 });
 
             } else {
@@ -56,24 +55,23 @@ angular.module('ortolangMarketApp')
 
 
         $scope.publishWorkspace = function (wk) {
-            console.debug('publish workspace '+wk.name);
-            console.debug("push head "+wk.head);
+            console.debug('publish workspace ' + wk.name);
+            console.debug('push head ' + wk.head);
 
             // List keys
-            Objects.query({oKey: wk.head}, function(listKeys) {
+            Objects.query({oKey: wk.head}, function (listKeys) {
                 console.debug(listKeys);
 
-                var data = {name: 'Publication process for '+wk.name, type: 'simple-publication'};
-                var params = $.param(data) ;
-                angular.forEach(listKeys.entries, function(entry) {
-                    params += '&keys='+entry;
-                })
+                var data = {name: 'Publication process for ' + wk.name, type: 'simple-publication'}, params = $.param(data);
+                angular.forEach(listKeys.entries, function (entry) {
+                    params += '&keys=' + entry;
+                });
 
                 console.debug(params);
 
-                Process.create(params, function() {
+                Process.create(params, function () {
                     console.debug('Publication process created');
-                }, function(error) {
+                }, function (error) {
                     // deferred.reject(error);
                     console.debug('Publication process failed');
                     console.error(error);

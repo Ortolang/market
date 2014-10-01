@@ -89,14 +89,11 @@ angular.module('ortolangMarketApp')
         };
         /**
          * Save the current URL if it isn't the login screen
+         * @param path
          */
-        authService.saveAttemptUrl = function () {
-            if ($location.path().toLowerCase() !== '/login') {
-                param.redirectToUrlAfterLogin = $location.path();
-            } else {
-                param.redirectToUrlAfterLogin = '/';
-            }
-            //console.debug(param.redirectToUrlAfterLogin);
+        authService.saveAttemptUrl = function (path) {
+            param.redirectToUrlAfterLogin = path;
+            console.debug(param.redirectToUrlAfterLogin);
         };
         /**
          * Redirect to the saved url

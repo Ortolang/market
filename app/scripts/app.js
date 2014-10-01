@@ -32,10 +32,11 @@ angular
                 controller: 'ProductCtrl'
             })
             .when('/workspaces/:wsName/:rootName/:elementPath*\/browse', {
-                templateUrl: 'views/browser.html'
+                templateUrl: 'views/browser.html',
+                requiresAuthentication: true
             })
             .when('/logout', {
-                templateUrl: 'views/main.html',
+                templateUrl: 'views/products.html',
                 controller: 'LogoutCtrl'
             })
             .when('/login', {
@@ -44,18 +45,47 @@ angular
             })
             .when('/myspace', {
                 templateUrl: 'views/workspaces.html',
-                controller: 'WorkspacesCtrl'
+                controller: 'WorkspacesCtrl',
+                requiresAuthentication: true
             })
             .otherwise({
                 redirectTo: '/'
             });
     })
+    .config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.interceptors.push(function ($q, $location) {
+            return {
+                'response': function (response) {
+                    console.log('HTTP Status code ' + response.status + ': ' + response.statusText);
+                    return response;
+                },
+                'responseError': function (rejection) {
+                    if (rejection.status === 401) {
+                        $location.path('/login');
+                    }
+                    console.log('HTTP Status code ' + rejection.status + ': ' + rejection.statusText);
+                    return $q.reject(rejection);
+                }
+            };
+        });
+    }])
     .run(['$rootScope', '$location', 'AuthService', 'AuthEvents', function ($rootScope, $location, AuthService, AuthEvents) {
         /**
          * Check if user is authorized to the current url (mainly workspaces)
          */
         $rootScope.$on('$routeChangeSuccess', function (event, current) {
-            //console.log(current);
+            //console.log(angular.lowercase(current));
+            // Save current url is user is not logged in (except for login screen)
+            if (!AuthService.isAuthenticated() && angular.lowercase(current.originalPath) !== '/login') {
+                AuthService.saveAttemptUrl(current.originalPath);
+
+                // redirect to login form if non authorized user try to access a page with requiresAuthentication=true
+                if (current.requiresAuthentication) {
+                    $rootScope.$broadcast('$auth:notAuthenticated', AuthEvents.notAuthenticated);
+                    $location.path('/login');
+                }
+            }
+            // restrain access to a workspace to authorized users
             var currentWorkspace = current.params.wsName;
             if (currentWorkspace) {
                 if (!AuthService.isAuthorized(currentWorkspace)) {
@@ -68,10 +98,6 @@ angular
                         $rootScope.$broadcast(AuthEvents.notAuthenticated);
                     }
                 }
-            }
-            // Save current url is user is not logged in
-            if (!AuthService.isAuthenticated()) {
-                AuthService.saveAttemptUrl();
             }
         });
     }]);
