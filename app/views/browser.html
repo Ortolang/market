@@ -1,14 +1,6 @@
 <div id="browser-wrapper" ng-controller="BrowserCtrl">
     <div class="row">
         <div id="browser-toolbar" class="col-md-12" ng-click="checkSelection($event)">
-            <!--<h4>Browsing '{{//wsName}}' workspace elements</h4>-->
-
-            <!--<ol class="breadcrumb" >-->
-                <!--<li><a href="#/workspaces/{{wsName}}/head///browse">root</a></li>-->
-                <!--<li ng-repeat="part in breadcrumbParts">-->
-                    <!--<a href="#/workspaces/{{wsName}}/head/{{part}}/browse">{{element.pathParts[$index]}}</a>-->
-                <!--</li>-->
-            <!--</ol>-->
             <div class="row">
                 <div class="browser-breadcrumb btn-toolbar col-md-7" role="toolbar">
                     <a class="btn btn-default" href="#/workspaces/{{wsName}}/head///browse">
@@ -34,11 +26,11 @@
                 <div class="col-md-5">
                     <div class="btn-toolbar text-right" role="toolbar">
                         <div ng-if="!selectedChild">
-                            <a ng-if="element.stream" class="btn  btn-primary" href="{{urlBase}}/rest/workspaces/{{wsName}}/download?path={{element.path}}"><i class="glyphicon glyphicon-download"></i>Download</a>
+                            <a ng-if="element.stream" class="btn btn-default" href="{{urlBase}}/rest/workspaces/{{wsName}}/download?path={{element.path}}"><i class="glyphicon glyphicon-download"></i>Download</a>
                         </div>
                                 <span ng-if="selectedChild">
-                                    <a ng-if="selectedChildData.object.stream" class="btn  btn-primary" href="{{selectedChildData.object.downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
-                                    <button class="btn btn-danger" ng-click="clickDelete()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                                    <a ng-if="selectedChildData.object.stream" class="btn   btn-default" href="{{selectedChildData.object.downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
+                                    <button class="btn btn-default" ng-click="clickDelete()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                                 </span>
 
                         <div class="dropdown-wrapper">
@@ -53,14 +45,14 @@
                         </div>
 
                         <button class="btn btn-default" ng-click="newCollectionModal()"><i class="glyphicon glyphicon-plus"></i>  New collection</button>
-                        <button class="btn btn-default" ng-click="toggleUploadZone($event)"><i class="glyphicon glyphicon-upload"></i>  Upload</button>
+                        <button class="btn btn-default" ng-class="uploadZoneStatus" ng-click="toggleUploadZoneStatus()"><i class="glyphicon glyphicon-upload"></i>  Upload</button>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <div class="table-wrapper col-md-9" ng-click="checkSelection($event)">
+        <div class="table-wrapper col-md-9" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader">
 
             <table ng-if="element.elements" class="table table-hover table-responsive workspace-elements">
                 <thead>
@@ -149,19 +141,7 @@
     </div>
     </div>
 
-    <div class="modal fade" id="metadata-modal" tabindex="-1" role="dialog" aria-labelledby="metadata-modal-label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="metadata-modal-label">{{selectedMetadata.name}}</h4>
-                </div>
-                <div class="modal-body">
-                    <div ng-if="code" hljs source="code"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div ng-include="'views/metadata-modal.html'"></div>
 
     <div class="modal fade" id="new-collection-modal" tabindex="-1" role="dialog" aria-labelledby="new-collection-modal-label" aria-hidden="true">
         <div class="modal-dialog">
@@ -194,5 +174,5 @@
         </div>
     </div>
 
-    <div id="upload-zone" ng-include="'views/upload.html'"></div>
+    <div id="upload-zone" ng-class="uploadZoneStatus" ng-include="'views/upload.html'"></div>
 </div>

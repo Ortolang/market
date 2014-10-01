@@ -136,9 +136,12 @@ angular.module('ortolangMarketApp')
                 $('#new-collection-modal').modal('show');
             };
 
-            $scope.toggleUploadZone = function (clickEvent) {
-                $(clickEvent.target).toggleClass('active');
-                $('#upload-zone').toggleClass('active');
+            $scope.toggleUploadZoneStatus = function () {
+                if ($scope.uploadZoneStatus === 'active') {
+                    $scope.uploadZoneStatus = undefined;
+                } else {
+                    $scope.uploadZoneStatus = 'active';
+                }
             };
 
             $scope.addCollection = function () {
@@ -165,8 +168,12 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $rootScope.$on('completeItemUpload', function () {
+            $rootScope.$on('uploaderCompleteItemUpload', function () {
                 getElementData(true);
+            });
+
+            $rootScope.$on('uploaderAfterAddingAll', function () {
+                $scope.uploadZoneStatus = 'active';
             });
 
             $rootScope.$on('completeMetadataUpload', function () {

@@ -1,4 +1,4 @@
-<div ng-controller="UploadCtrl" class="container-fluid" nv-file-over="" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+<div ng-controller="UploadCtrl" class="container-fluid" nv-file-over="" nv-file-drop="" uploader="uploader">
     <div class="row">
 
         <div class="col-md-3">
@@ -42,9 +42,9 @@
                         <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                     </td>
                     <td nowrap>
-                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                            <span class="glyphicon glyphicon-upload"></span> Upload
-                        </button>
+                        <!--<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">-->
+                            <!--<span class="glyphicon glyphicon-upload"></span> Upload-->
+                        <!--</button>-->
                         <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
                             <span class="glyphicon glyphicon-ban-circle"></span> Cancel
                         </button>
@@ -63,9 +63,9 @@
                         <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }" style="width: 0%;"></div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success btn-sm" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">
-                    <span class="glyphicon glyphicon-upload"></span> Upload all
-                </button>
+                <!--<button type="button" class="btn btn-success btn-sm" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">-->
+                    <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
+                <!--</button>-->
                 <button type="button" class="btn btn-warning btn-sm" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading" disabled="disabled">
                     <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
                 </button>
