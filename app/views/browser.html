@@ -52,7 +52,7 @@
 
         </div>
 
-        <div class="table-wrapper col-md-9" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader">
+        <div class="table-wrapper col-md-9" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
 
             <table ng-if="element.elements" class="table table-hover table-responsive workspace-elements">
                 <thead>
@@ -63,8 +63,8 @@
                 </thead>
                 <tbody>
                 <tr class="element-child" ng-repeat="child in element.elements | filter:filterChildren(query) | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
-                    <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{element.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}}"></span> {{child.name}}</a></td>
-                    <td ng-if="!(child.type === 'collection')"><span class="{{child.type | elementIconCss}}"></span>{{child.name}}</td>
+                    <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{element.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}} type"></span> {{child.name}}</a></td>
+                    <td ng-if="!(child.type === 'collection')"><span class="{{child.type | elementIconCss}} type"></span>{{child.name}}</td>
                     <td>{{child.modification | date : dateFormat}}</td>
                 </tr>
                 </tbody>

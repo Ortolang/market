@@ -1,58 +1,21 @@
-<div ng-controller="MetadataUploadCtrl">
+<div ng-controller="UploadCtrl">
     <div class="row">
 
         <div class="col-md-12">
 
-            <div ng-show="metadataUploader.isHTML5">
-                <div class="well my-drop-zone" nv-file-drop="" nv-file-over="" uploader="metadataUploader">
+            <div ng-show="uploader.isHTML5">
+                <div class="well my-drop-zone" nv-file-drop="" nv-file-over="" uploader="uploader" options="{type: 'metadata'}">
                     Drop metadata files
                 </div>
             </div>
 
-            <div ng-if="!metadataUploader.isHTML5">
+            <div ng-if="!uploader.isHTML5">
                 Multiple
                 <input type="file" nv-file-select="" uploader="metadataUploader" multiple=""><br>
 
                 Single
                 <input type="file" nv-file-select="" uploader="metadataUploader">
             </div>
-        </div>
-
-        <div ng-show="metadataUploader.queue.length" class="{{metadataUploader.isHTML5 ? 'col-md-12' : 'col-md-9'}}" style="margin-bottom: 40px">
-
-            <h4>Upload queue</h4>
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th width="50%">Name</th>
-                    <th ng-show="metadataUploader.isHTML5">Size</th>
-                    <th ng-show="metadataUploader.isHTML5">Progress</th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="item in metadataUploader.queue">
-                    <td><strong>{{ item.file.name }}</strong></td>
-                    <td ng-show="metadataUploader.isHTML5" nowrap>{{ item.file.size | bytes }}</td>
-                    <td ng-show="metadataUploader.isHTML5">
-                        <div class="progress" style="margin-bottom: 0;">
-                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <button type="button" class="btn btn-danger btn-s" ng-click="metadataUploader.clearQueue()" ng-disabled="!metadataUploader.queue.length" disabled="disabled">
-                <span class="glyphicon glyphicon-trash"></span> Remove all
-            </button>
-
         </div>
 
     </div>

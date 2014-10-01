@@ -11,6 +11,15 @@
 angular.module('ortolangMarketApp')
     .filter('elementIconCss', function () {
         return function (input) {
-            return input === 'collection' ? 'glyphicon glyphicon-folder-close' : 'glyphicon glyphicon-file';
+            switch (input) {
+                case 'collection':
+                    return 'glyphicon glyphicon-folder-close';
+                case 'object':
+                    return 'glyphicon glyphicon-file';
+                case 'metadata':
+                    return 'glyphicon glyphicon-list-alt';
+                default:
+                    return 'glyphicon glyphicon-minus';
+            }
         };
     });

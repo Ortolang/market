@@ -137,10 +137,10 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.toggleUploadZoneStatus = function () {
-                if ($scope.uploadZoneStatus === 'active') {
-                    $scope.uploadZoneStatus = undefined;
+                if ($rootScope.uploadZoneStatus === 'active') {
+                    $rootScope.uploadZoneStatus = undefined;
                 } else {
-                    $scope.uploadZoneStatus = 'active';
+                    $rootScope.uploadZoneStatus = 'active';
                 }
             };
 
@@ -173,7 +173,7 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('uploaderAfterAddingAll', function () {
-                $scope.uploadZoneStatus = 'active';
+                $rootScope.uploadZoneStatus = 'active';
             });
 
             $rootScope.$on('completeMetadataUpload', function () {
