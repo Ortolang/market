@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$cookieStore', 'Session', 'AuthService', '$rootScope', 'AuthEvents', function ($scope, $cookieStore, Session, AuthService, $rootScope, AuthEvents) {
-        console.debug("controller AuthCtrl");
+    .controller('AuthCtrl', ['$scope', 'Session', 'AuthService', '$rootScope', 'AuthEvents', 'CookieFactory', function ($scope, Session, AuthService, $rootScope, AuthEvents, CookieFactory) {
+        console.debug('controller AuthCtrl');
         /**
          * Set currentUser
          * @param user
@@ -61,20 +61,20 @@ angular.module('ortolangMarketApp')
                 );
         };
 
-        var cookieUser = $cookieStore.get('currentUser');
-//        console.debug('Cookie content : ' + cookieUser);
-        if (cookieUser !== null && !angular.isUndefined(cookieUser)) {
-            $scope.currentUser = Session.load(cookieUser);
-        } else {
-            $scope.currentUser = null;
-        }
-        $scope.authenticated = AuthService.isAuthenticated();
+        // Initialize session
+        $scope.currentUser = null;
+        CookieFactory.getCookie('currentUser').then(function (value) {
+            if (value !== null && !angular.isUndefined(value)) {
+                $scope.currentUser = Session.load(value);
+            }
+//            console.debug(value);
+            $scope.authenticated = AuthService.isAuthenticated();
 //        console.debug('User is Authenticated ?' + $scope.authenticated);
-        $scope.wkList = [];
-        if ($scope.authenticated) {
-            $scope.loadWorkspaces($scope.currentUser.id);
-        }
-
+            $scope.wkList = [];
+            if ($scope.authenticated) {
+                $scope.loadWorkspaces($scope.currentUser.id);
+            }
+        });
 
         /**
          * Display broadcast messages in console

@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp')
             var auth = window.btoa(credentials.username + ':' + credentials.password), deferred = $q.defer();
             $http.defaults.headers.common.Authorization = 'Basic ' + auth;
             ConnectedDAO.get().$promise.then(
+                // 303 redirect
                 function (user) {
                     var session = Session.create(auth, user);
                     deferred.resolve(session);
@@ -32,11 +33,11 @@ angular.module('ortolangMarketApp')
 //                    console.debug(error);
                     if (error.status === 401 || error.status === 500) {
                         deferred.reject(error);
-                    //@todo Temporary hack
+                    //@todo Temporary hack for localhost
                     } else if (error.status === 0 || error.status === 303) {
                         ProfilDAO.get({userId: credentials.username},
                             function (profil) {
-                                console.debug(profil);
+                                //console.debug(profil);
                                 var session = Session.create(auth, profil);
                                 deferred.resolve(session);
                             },

@@ -11,7 +11,6 @@
 angular
     .module('ortolangMarketApp', [
         'ngAnimate',
-        'ngCookies',
         'ngRoute',
         'ngResource',
         'angularFileUpload',

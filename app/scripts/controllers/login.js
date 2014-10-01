@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'AuthEvents', 'AuthService', '$cookieStore',
-        function ($scope, $rootScope, $location, AuthEvents, AuthService, $cookieStore) {
+    .controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'AuthEvents', 'AuthService', 'CookieFactory',
+        function ($scope, $rootScope, $location, AuthEvents, AuthService, CookieFactory) {
             //console.log('LoginCtrl loaded');
             $scope.credentials = {
                 username: '',
@@ -36,7 +36,7 @@ angular.module('ortolangMarketApp')
                             $scope.setCurrentUser(user);
                             $scope.setAuthenticated(AuthService.isAuthenticated());
                             $scope.loadWorkspaces(user.id);
-                            $cookieStore.put('currentUser', user);
+                            CookieFactory.setCookie('currentUser', user, 1);
                             $rootScope.$broadcast('$auth:loginSuccess', AuthEvents.loginSuccess);
                             //console.log(user);
                             // Redirect to previous page
