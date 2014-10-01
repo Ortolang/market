@@ -32,6 +32,12 @@ angular.module('ortolangMarketApp')
                 return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.element.path + '/' + $scope.selectedChildData.object.name;
             }
 
+            $scope.initBreadcrumbDropdownMenu = function () {
+                $scope.breadcrumbDropdownItems = [];
+                $scope.breadcrumbDropdownItems.push({text: 'New Collection', icon: 'plus', action: 'newCollection'});
+            };
+            $scope.initBreadcrumbDropdownMenu();
+
             $scope.contextMenu = function (clickEvent, sameChild) {
                 // If right click
                 if (clickEvent.button === 2) {
@@ -78,6 +84,7 @@ angular.module('ortolangMarketApp')
                         $scope.breadcrumbParts = breadcrumbParts;
                         $scope.path = data.path.replace('/', 'head/root/').split('/');
                     }
+                    console.log(breadcrumbParts);
                     $(window).trigger('resize');
                 });
             }
@@ -248,5 +255,18 @@ angular.module('ortolangMarketApp')
 
             $rootScope.getSelectedChild = function () {
                 return $scope.selectedChild;
+            };
+
+            $scope.doAction = function (name) {
+                switch (name) {
+                    case 'newCollection':
+                        $scope.newCollectionModal();
+                        break;
+                    case 'delete':
+                        $scope.clickDelete();
+                        break;
+                    default:
+                        break;
+                }
             };
         }]);
