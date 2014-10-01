@@ -218,8 +218,13 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            // When dismiss metadata modal: deselected selected metadata
-            $('#metadata-modal').on('hide.bs.modal', function () { deselectMetadata(); });
+            $scope.onDismissMetadataModal = function () {
+                // When dismiss metadata modal: deselected selected metadata
+                $('#metadata-modal').on('hide.bs.modal', function () {
+                    deselectMetadata();
+                });
+            };
+
 
             $scope.order = function (predicate, reverse) {
                 if (predicate !== $scope.orderProp) {
