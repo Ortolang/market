@@ -1,22 +1,10 @@
 <div ng-controller="UploadCtrl">
     <div class="row">
-
         <div class="col-md-12">
-
-            <div ng-show="uploader.isHTML5">
-                <div class="well my-drop-zone" nv-file-drop="" nv-file-over="" uploader="uploader" options="{type: 'metadata'}">
-                    Drop metadata files
-                </div>
-            </div>
-
-            <div ng-if="!uploader.isHTML5">
-                Multiple
-                <input type="file" nv-file-select="" uploader="metadataUploader" multiple=""><br>
-
-                Single
-                <input type="file" nv-file-select="" uploader="metadataUploader">
-            </div>
+            <input id="metadata-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{type: 'metadata'}">
+            <button onclick="$('#metadata-upload-file-select').click();" class="btn btn-default btn-block" nv-file-drop="" nv-file-over="" uploader="uploader" options="{type: 'metadata'}">
+                Select or drop metadata files
+            </button>
         </div>
-
     </div>
 </div>
