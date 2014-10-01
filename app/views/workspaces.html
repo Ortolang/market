@@ -1,14 +1,8 @@
-
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Mon espace</h1>
-        </div>
-    </div>
-
+    <br/>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Liste de mes projets</div>
+                <div class="panel-heading">Liste de mes espaces de travail</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
 
@@ -16,11 +10,11 @@
                         <div class="panel-body">
                             <div class="dropdown-wrapper">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                    Créer
+                                    Créer  <i class="fa fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><div data-toggle="modal" data-target="#createWorkspaceModal">Workspace</div></li>
-                                    <li><div data-toggle="modal" data-target="#importWorkspaceModal" >Importer un bagit...</div></li>
+                                    <li><div data-toggle="modal" data-target="#createWorkspaceModal">Espace de travail</div></li>
+                                    <li><div data-toggle="modal" data-target="#importWorkspaceModal" >Importer un espace de travail...</div></li>
                                 </ul>
                             </div>
 <!--
@@ -42,13 +36,13 @@
                             <tbody>
                             <tr ng-repeat="wk in wkList">
                                 <td>
-                                    <!--<a href="#/workspaces/{{ wk.key }}/head///browse">-->
+                                    <a href="#/workspaces/{{ wk.key }}/head///browse">
                                         {{wk.name}}
-                                    <!--</a>-->
+                                    </a>
                                 </td>
                                 <td>{{wk.type}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-default" ng-click="publishWorkspace(wk)">Publiser</button>
+                                    <button type="button" class="btn btn-default" ng-click="publishWorkspace(wk)">Publier</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -86,7 +80,7 @@
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
 
-                    <div class="modal fade" id="importWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="importWorkspaceModalLabel" aria-hidden="true">
+                    <div ng-controller="BagUploaderCtrl" class="modal fade" id="importWorkspaceModal" tabindex="-1" role="dialog" aria-labelledby="importWorkspaceModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <!-- Create project -->
@@ -99,19 +93,30 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="name">Nom</label>
-                                            <input type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" placeholder="Nom de l'espace de travail" ng-model="newWorkspaceName">
+                                            <input type="text" class="form-control" id="import-workspace-name" name="import-workspace-name" placeholder="Nom de l'espace de travail" ng-model="importWorkspaceName">
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Type</label>
-                                            <input type="text" class="form-control" id="new-workspace-type" name="new-workspace-type" placeholder="Type" ng-model="newWorkspaceType">
+                                            <input type="text" class="form-control" id="import-workspace-type" name="import-workspace-type" placeholder="Type" ng-model="importWorkspaceType">
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Fichier</label>
-                                            <input type="file" class="form-control" id="new-workspace-file" name="new-workspace-file" placeholder="Fichier BagIt..." ng-model="newWorkspaceFile">
+                                            <!-- <input type="file" class="form-control" id="import-workspace-file" name="import-workspace-file" placeholder="Fichier BagIt..." ng-model="importWorkspaceFile"> -->
+                                            <!-- <input type="file" nv-file-select="" uploader="bagUploader"> -->
+
+                                            <div ng-show="bagUploader.isHTML5">
+                                                <div class="well my-drop-zone" nv-file-drop="" nv-file-over="" uploader="bagUploader">
+                                                    Déposer un fichier BagIt
+                                                </div>
+                                            </div>
+
+                                            <div ng-if="!bagUploader.isHTML5">
+                                                <input type="file" nv-file-select="" uploader="bagUploader">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" id="importWorkspaceButton" ng-click="importWorkspace()">Importer</button>
+                                        <button type="submit" class="btn btn-primary" id="importWorkspaceButton" ng-click="bagUploader.queue[0].upload()">Importer</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                                     </div>
 

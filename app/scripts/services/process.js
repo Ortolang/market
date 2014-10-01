@@ -7,19 +7,13 @@
  * # process
  * Factory in the ortolangMarketApp.
  */
-angular.module('ortolangMarketApp')
-  .factory('Process', ['$resource', 'Url', function ($resource, Url) {
-
-          var factory = {};
-
-          factory.createProcess = function (data) {
-              return $resource(Url.urlBase() + '/rest/processes/', data, {
-                  query: {
-                      method: 'POST'
-                  }
-              });
-            };
-
-            return factory;
+ angular.module('ortolangMarketApp')
+ .factory('Process', ['$resource', 'Url', function ($resource, Url) {
+    return $resource(Url.urlBase() + '/rest/processes/:pcKey', {}, {
+        create : {
+            method : 'POST',
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'}
         }
-  ]);
+    });
+}
+]);

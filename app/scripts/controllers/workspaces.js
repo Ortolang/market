@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-      .controller('WorkspacesCtrl', ['$rootScope', '$scope','$http', 'WorkspacesDAO', 'Process', 'AuthService', 'AuthEvents', function ($rootScope, $scope, $http, WorkspacesDAO, Process, AuthService, AuthEvents) {
+      .controller('WorkspacesCtrl', ['$rootScope', '$scope','$http', 'WorkspacesDAO', 'Process', 'Objects', 'AuthService', 'AuthEvents', function ($rootScope, $scope, $http, WorkspacesDAO, Process, Objects, AuthService, AuthEvents) {
 
         $scope.createWorkspace = function () {
             if ($scope.newWorkspaceName !== undefined) {
@@ -17,12 +17,13 @@ angular.module('ortolangMarketApp')
                 var key = $scope.newWorkspaceName;
                 var data = {key:key, name: $scope.newWorkspaceName, type: $scope.newWorkspaceType};
                 WorkspacesDAO.save(data, function() {
+
                     // Refresh list of workspaces
                         $scope.authenticated = AuthService.isAuthenticated();
                         $scope.wkList = [];
                         if ($scope.authenticated) {
                             $scope.loadWorkspaces($scope.currentUser.id);
-                            
+
                             // Refresh workspace view
                             //Todo use token
                             AuthService.getWorkspaces($scope.currentUser.id)
@@ -56,5 +57,67 @@ angular.module('ortolangMarketApp')
 
         $scope.publishWorkspace = function (wk) {
             console.debug('publish workspace '+wk.name);
+            console.debug("push head "+wk.head);
+
+            // List keys
+            Objects.query({oKey: wk.head}, function(listKeys) {
+                console.debug(listKeys);
+
+                var data = {name: 'Publication process for '+wk.name, type: 'simple-publication'};
+                var params = $.param(data) ;
+                angular.forEach(listKeys.entries, function(entry) {
+                    params += '&keys='+entry;
+                })
+
+                console.debug(params);
+
+                Process.create(params, function() {
+                    console.debug('Publication process created');
+                }, function(error) {
+                    // deferred.reject(error);
+                    console.debug('Publication process failed');
+                    console.error(error);
+                });
+
+            });
+            /*
+            var data = {name: 'Publication process for '+wk.name, type: 'simple-publication'};
+            var params = $.param(data) + '&keys='+wk.head;
+            console.debug(params);
+
+            Process.create(params, function() {
+                console.debug('Publication success');
+            }, function(error) {
+                // deferred.reject(error);
+                console.debug('Publication failed');
+                console.error(error);
+            });
+*/
+        };
+
+        $scope.importWorkspace = function () {
+            console.debug('import workspace ');
+
+            /*
+            if ($scope.importWorkspaceName !== undefined) {
+                $('#import-workspace-name').parentsUntil('form', '.form-group').removeClass('has-error');
+                //TODO generate a key compatible based on the name
+                var key = $scope.importWorkspaceName;
+
+                var data = {name: 'Import BagIt process for '+wk.name, type: 'import-workspace', workspace-key: key, workspace-name: $scope.importWorkspaceName, workspace-type: $scope.importWorkspaceType};
+                var params = $.param(data);
+                console.debug(params);
+
+                Process.create(params, function() {
+                    console.debug('Import success');
+                }, function(error) {
+                    // deferred.reject(error);
+                    console.debug('Import failed');
+                    console.error(error);
+                });
+            } else {
+                $('#import-workspace-name').parentsUntil('form', '.form-group').addClass('has-error');
+            }
+            */
         };
     }]);

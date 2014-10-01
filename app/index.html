@@ -107,10 +107,10 @@
                     <!-- <li><a href="?page=search"><i class="fa fa-search fa-fw"></i> Rechercher</a></li> -->
                     <li><a href="#/myspace"><i class="fa fa-desktop fa-fw"></i> Mon espace</a></li>
                     <li class="active">
-                        <a href="#">
+                        <a href="#/myspace">
                             <span class="sidebar-nav-item-icon fa fa-briefcase fa-fw"></span>
                             <span class="sidebar-nav-item"> Liste de mes projets</span>
-                            <span class="fa arrow"></span>
+                            <!-- <span class="fa arrow"></span> -->
                         </a>
                         <ul class="nav nav-second-level">
                             <li ng-repeat="wk in wkList" >
@@ -120,12 +120,12 @@
                                     <span class="sidebar-nav-item">{{wk.name}}</span>
                                 </a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="#/myspace" class='text-info'>
                                     <span class="sidebar-nav-item-icon fa fa-plus fa-fw"></span>
                                     <span class="sidebar-nav-item">Créer un espace de travail</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <!-- <li><a href="#registry" data-toggle="tab"><i class="fa fa-fw"></i> Modération</a></li> -->
@@ -201,6 +201,8 @@
 <script src="scripts/services/connecteddao.js"></script>
 <script src="scripts/services/process.js"></script>
 <script src="scripts/services/param.js"></script>
+<script src="scripts/controllers/bag-uploader.js"></script>
+<script src="scripts/services/objects.js"></script>
 <!-- endbuild -->
 </body>
 </html>
