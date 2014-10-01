@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
                 uploader = $rootScope.uploader = new FileUploader({
                     url: url,
                     alias: 'stream',
-                    autoUpload: false,
+                    autoUpload: true,
                     removeAfterUpload: false,
                     headers: {
                         'Authorization': $http.defaults.headers.common.Authorization
