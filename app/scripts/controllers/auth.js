@@ -63,7 +63,7 @@ angular.module('ortolangMarketApp')
 
         // Initialize session
         $scope.currentUser = null;
-        CookieFactory.getCookie('currentUser').then(function (value) {
+        var cookie = CookieFactory.getCookie('currentUser').then(function (value) {
             if (value !== null && !angular.isUndefined(value)) {
                 $scope.currentUser = Session.load(value);
             }

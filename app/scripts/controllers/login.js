@@ -13,7 +13,8 @@ angular.module('ortolangMarketApp')
             //console.log('LoginCtrl loaded');
             $scope.credentials = {
                 username: '',
-                password: ''
+                password: '',
+                remember: false
             };
 
             if (AuthService.isAuthenticated()) {
@@ -36,18 +37,24 @@ angular.module('ortolangMarketApp')
                             $scope.setCurrentUser(user);
                             $scope.setAuthenticated(AuthService.isAuthenticated());
                             $scope.loadWorkspaces(user.id);
-                            CookieFactory.setCookie('currentUser', user, 1);
+                            if (credentials.remember) {
+                                // arbitrary set to 7 days or 1 day : TODO declare this in a config file
+                                CookieFactory.setCookie('currentUser', user, 7);
+                            } else {
+                                CookieFactory.setCookie('currentUser', user, 1);
+                            }
                             $rootScope.$broadcast('$auth:loginSuccess', AuthEvents.loginSuccess);
                             //console.log(user);
                             // Redirect to previous page
                             AuthService.redirectToAttemptedUrl();
-                        },
+                        }
+                    )
+                    .catch(
                         /**
                          * error
                          * @param reason
                          */
                         function (reason) {
-                            //console.log(reason);
                             $scope.setAuthenticated(AuthService.isAuthenticated());
                             $rootScope.$broadcast('$auth:loginFailure', AuthEvents.loginFailed + reason.statusText);
                         }

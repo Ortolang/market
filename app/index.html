@@ -43,7 +43,7 @@
         </div> <!-- /.navbar-header -->
 
         <!-- when user is logged -->
-        <ul class="nav navbar-top-links navbar-right" ng-if="authenticated">
+        <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="authenticated" ng-cloak>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-user fa-fw"></i> {{currentUser.name}} <i class="fa fa-caret-down"></i>
@@ -59,13 +59,13 @@
         </ul>
 
         <!-- when user is not logged (guest) -->
-        <ul class="nav navbar-top-links navbar-right" ng-if="!authenticated">
+        <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="!authenticated" ng-cloak>
             <li><a href="#/register"><i class="fa fa-bookmark fa-fw"></i> Register</a></li>
             <li class="divider-vertical"></li>
             <li><a href="#/login"><i class="fa fa-user fa-fw"></i> Login</a></li>
         </ul>
 
-        <div class="navbar-default sidebar" role="navigation" ng-if="authenticated">
+        <div class="navbar-default sidebar ng-cloak" role="navigation" ng-if="authenticated" ng-cloak>
             <div class="sidebar-nav navbar-collapse" >
                 <ul class="nav" id="menu" side-menu="menus" >
                     <!--<li>-->
@@ -140,7 +140,7 @@
 
     <!-- Page Content -->
     <div id="page-wrapper">
-        <div class="container-fluid" ng-view="">
+        <div class="container-fluid ng-cloak" ng-view="" ng-cloak>
         </div>
     </div>
     <!-- /#page-wrapper -->

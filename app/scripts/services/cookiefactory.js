@@ -33,6 +33,8 @@ angular.module('ortolangMarketApp')
              * @returns {undefined|The}
              */
             getAllCookies: function () {
+                // Used to un-stringify value of cookie
+                $.cookie.json = true;
                 return $.cookie();
             },
 
