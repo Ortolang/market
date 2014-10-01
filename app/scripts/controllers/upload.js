@@ -11,16 +11,14 @@ angular.module('ortolangMarketApp')
     .controller('UploadCtrl', ['$scope', '$routeParams', '$rootScope', '$http', 'FileUploader', 'Url',
         function ($scope, $routeParams, $rootScope, $http, FileUploader, Url) {
 
-            var url = Url.urlBase() + '/rest/workspaces/' + $routeParams.wsName + '/elements',
-                uploader;
+            var uploader;
 
             if ($rootScope.uploader) {
                 uploader = $rootScope.uploader;
             } else {
                 uploader = $rootScope.uploader = new FileUploader({
-                    url: url,
                     alias: 'stream',
-                    autoUpload: true,
+                    autoUpload: false,
                     removeAfterUpload: false,
                     headers: {
                         'Authorization': $http.defaults.headers.common.Authorization
@@ -30,6 +28,8 @@ angular.module('ortolangMarketApp')
             }
 
             uploader.onAfterAddingFile = function (fileItem) {
+                fileItem.wsName = $routeParams.wsName;
+                fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wsName + '/elements';
                 fileItem.formData = [{type: fileItem.type}];
                 if (fileItem.type === 'object') {
                     fileItem.file.path = this.routeParams.elementPath;

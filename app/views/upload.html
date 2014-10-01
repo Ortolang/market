@@ -17,11 +17,12 @@
 
             <h4>Upload queue</h4>
 
-            <table class="table">
+            <table class="table table-responsive">
                 <thead>
                 <tr>
-                    <th width="30%">Name</th>
-                    <th width="30%">Path</th>
+                    <th>Name</th>
+                    <th>Workspace</th>
+                    <th>Path</th>
                     <th ng-show="uploader.isHTML5">Size</th>
                     <th ng-show="uploader.isHTML5">Progress</th>
                     <th>Status</th>
@@ -31,6 +32,7 @@
                 <tbody>
                 <tr ng-repeat="item in uploader.queue">
                     <td><span class="{{ item.type | elementIconCss}} type"></span> <strong>{{ item.file.name }}</strong></td>
+                    <td>{{ item.wsName }}</td>
                     <td>{{ item.file.path }}</td>
                     <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size | bytes }}</td>
                     <td ng-show="uploader.isHTML5">
@@ -44,9 +46,9 @@
                         <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                     </td>
                     <td nowrap>
-                        <!--<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">-->
-                            <!--<span class="glyphicon glyphicon-upload"></span> Upload-->
-                        <!--</button>-->
+                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
                         <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
                             <span class="glyphicon glyphicon-ban-circle"></span> Cancel
                         </button>
@@ -65,9 +67,9 @@
                         <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }" style="width: 0%;"></div>
                     </div>
                 </div>
-                <!--<button type="button" class="btn btn-success btn-sm" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">-->
-                    <!--<span class="glyphicon glyphicon-upload"></span> Upload all-->
-                <!--</button>-->
+                <button type="button" class="btn btn-success btn-sm" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
                 <button type="button" class="btn btn-warning btn-sm" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading" disabled="disabled">
                     <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
                 </button>
