@@ -8,7 +8,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <div class="dropdown-wrapper">
+                            <div class="btn-group dropdown-wrapper">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                     Créer  <i class="fa fa-caret-down"></i>
                                 </button>
@@ -92,15 +92,15 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="name">Nom</label>
+                                            <label for="import-workspace-name">Nom</label>
                                             <input type="text" class="form-control" id="import-workspace-name" name="import-workspace-name" placeholder="Nom de l'espace de travail" ng-model="importWorkspaceName">
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Type</label>
+                                            <label for="import-workspace-type">Type</label>
                                             <input type="text" class="form-control" id="import-workspace-type" name="import-workspace-type" placeholder="Type" ng-model="importWorkspaceType">
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Fichier</label>
+                                            <label for="import-workspace-file">Fichier</label>
                                             <!-- <input type="file" class="form-control" id="import-workspace-file" name="import-workspace-file" placeholder="Fichier BagIt..." ng-model="importWorkspaceFile"> -->
                                             <!-- <input type="file" nv-file-select="" uploader="bagUploader"> -->
 
@@ -111,7 +111,7 @@
                                             </div>
 
                                             <div ng-if="!bagUploader.isHTML5">
-                                                <input type="file" nv-file-select="" uploader="bagUploader">
+                                                <input id="import-workspace-file" type="file" nv-file-select="" uploader="bagUploader">
                                             </div>
                                         </div>
                                     </div>
