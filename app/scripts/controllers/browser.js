@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserCtrl', ['$scope', '$http', '$routeParams', '$rootScope', '$filter', 'Url',
-        function ($scope, $http, $routeParams, $rootScope, $filter, Url) {
+    .controller('BrowserCtrl', ['$scope', '$http', '$routeParams', '$rootScope', 'Url',
+        function ($scope, $http, $routeParams, $rootScope, Url) {
 
             $scope.urlBase = Url.urlBase();
             $scope.wsName = $routeParams.wsName;
@@ -254,13 +254,6 @@ angular.module('ortolangMarketApp')
                 }
                 $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
                 $scope.orderProp = predicate;
-            };
-
-            $scope.filterChildren = function (query) {
-                return function (child) {
-                    var re = new RegExp(query, 'gi');
-                    return child.name.match(re) || ($filter('date')(child.modification, $scope.dateFormat)).match(re);
-                };
             };
 
             $scope.toggleTab = function (clickEvent) {

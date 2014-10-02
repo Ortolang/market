@@ -51,8 +51,8 @@
                             <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
                                 <div class="has-feedback">
                                     <label class="control-label sr-only" for="filter-input">Filter</label>
-                                    <input id="filter-input" ng-model="filter" class="form-control" placeholder="Filter" type="text">
-                                    <span ng-show="filter" ng-click="filter = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <input id="filter-input" ng-model="filterQuery" class="form-control" placeholder="Filter" type="text">
+                                    <span ng-show="filterQuery" ng-click="filterQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="element-child" ng-repeat="child in element.elements | filter:filterChildren(filter) | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
+                <tr class="element-child" ng-repeat="child in element.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
                     <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{element.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}} type"></span> {{child.name}}</a></td>
                     <td ng-if="!(child.type === 'collection')"><span class="{{child.type | elementIconCss}} type"></span>{{child.name}}</td>
                     <td>{{child.modification | date : dateFormat}}</td>
