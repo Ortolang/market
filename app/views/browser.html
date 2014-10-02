@@ -2,7 +2,7 @@
     <div class="row">
         <div id="browser-toolbar" class="col-md-12" ng-click="checkSelection($event)">
             <div class="row">
-                <div class="browser-breadcrumb btn-toolbar col-md-7" role="toolbar">
+                <div class="browser-breadcrumb btn-toolbar col-md-6" role="toolbar">
 
                     <a ng-if="breadcrumbParts" class="btn btn-default" href="#/workspaces/{{wsName}}/head///browse">
                         <span class="glyphicon glyphicon-home"></span>{{wsName}}
@@ -30,20 +30,10 @@
                         </ul>
                     </div>
                 </div>
-                <!--<div class="col-md-4">-->
-                    <!--<input ng-model="query" class="form-control" placeholder="Search">-->
-                <!--</div>-->
-                <div class="col-md-5">
-                    <div class="btn-toolbar text-right" role="toolbar">
-                        <div ng-if="!selectedChild">
-                            <a ng-if="element.stream" class="btn btn-default" href="{{urlBase}}/rest/workspaces/{{wsName}}/download?path={{element.path}}"><i class="glyphicon glyphicon-download"></i>Download</a>
-                        </div>
-                                <span ng-if="selectedChild">
-                                    <a ng-if="selectedChildData.object.stream" class="btn   btn-default" href="{{selectedChildData.object.downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
-                                    <button class="btn btn-default" ng-click="clickDelete()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                                </span>
+                <div class="col-md-6">
+                    <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
-                        <div class="dropdown-wrapper">
+                        <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-sort"></span> Sort by
                             </button>
@@ -53,9 +43,39 @@
                                 <li><div ng-click="order('modification', false)">Date</div></li>
                             </ul>
                         </div>
+                        <!--<button class="btn btn-default" ng-click="newCollectionModal()"><i class="glyphicon glyphicon-plus"></i>  New collection</button>-->
+                        <div id="testFilter" class="btn-group">
+                            <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-search"></span> Filter
+                            </button>
+                            <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
+                                <div class="has-feedback">
+                                    <label class="control-label sr-only" for="filter-input">Filter</label>
+                                    <input id="filter-input" ng-model="filter" class="form-control" placeholder="Filter" type="text">
+                                    <span ng-show="filter" ng-click="filter = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
 
-                        <button class="btn btn-default" ng-click="newCollectionModal()"><i class="glyphicon glyphicon-plus"></i>  New collection</button>
-                        <button class="btn btn-default" ng-class="uploadZoneStatus" ng-click="toggleUploadZoneStatus()"><i class="glyphicon glyphicon-upload"></i>  Upload</button>
+                        <div class="btn-group">
+                            <button class="btn btn-default" onclick="$('#object-upload-file-select').click();"><i class="glyphicon glyphicon-upload"></i> Upload</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><div ng-class="uploadZoneStatus" ng-click="toggleUploadZoneStatus()">Show upload queue</div></li>
+                            </ul>
+                        </div>
+
+                        <div ng-if="!selectedChild" class="btn-group">
+                            <a ng-if="element.stream" class="btn btn-default" href="{{urlBase}}/rest/workspaces/{{wsName}}/download?path={{element.path}}"><i class="glyphicon glyphicon-download"></i>Download</a>
+                        </div>
+                        <div ng-if="selectedChild" class="btn-group">
+                            <a ng-if="selectedChildData.object.stream" class="btn   btn-default" href="{{selectedChildData.object.downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
+                            <button class="btn btn-default" ng-click="clickDelete()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -63,7 +83,6 @@
         </div>
 
         <div class="table-wrapper col-md-9" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
-
             <table ng-if="element.elements" class="table table-hover table-responsive workspace-elements">
                 <thead>
                 <tr>
@@ -72,7 +91,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="element-child" ng-repeat="child in element.elements | filter:filterChildren(query) | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
+                <tr class="element-child" ng-repeat="child in element.elements | filter:filterChildren(filter) | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
                     <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{element.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}} type"></span> {{child.name}}</a></td>
                     <td ng-if="!(child.type === 'collection')"><span class="{{child.type | elementIconCss}} type"></span>{{child.name}}</td>
                     <td>{{child.modification | date : dateFormat}}</td>
@@ -87,7 +106,7 @@
                     </li>
                 </ul>
             </div>
-
+            <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{type: 'object'}">
         </div>
 
         <div id="browser-sidebar" class="col-md-3">

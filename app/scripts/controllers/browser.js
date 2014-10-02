@@ -176,6 +176,11 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.clearUploaderQueue = function () {
+                $rootScope.uploader.clearQueue();
+                $rootScope.uploadZoneStatus = undefined;
+            };
+
             $rootScope.$on('uploaderCompleteItemUpload', function () {
                 getElementData(true);
             });
@@ -269,4 +274,14 @@ angular.module('ortolangMarketApp')
                         break;
                 }
             };
+
+            $scope.openFilter = function (event) {
+                event.stopPropagation();
+            };
+
+            $('#testFilter').on('hide.bs.dropdown', function (e) {
+                if ($scope.filter !== undefined && $scope.filter.length !== 0) {
+                    return false;
+                }
+            });
         }]);
