@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.Session
+ * @name ortolangMarketApp.Storage
  * @description
- * # Session
+ * # Storage
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Session', function (CookieFactory) {
+    .factory('Storage', function (CookieFactory) {
 
         return {
             /**

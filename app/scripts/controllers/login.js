@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'AuthEvents', 'AuthService', 'Session',
-        function ($scope, $rootScope, $location, AuthEvents, AuthService, Session) {
+    .controller('LoginCtrl', ['$scope', '$rootScope', '$location', 'AuthEvents', 'AuthService', 'Storage',
+        function ($scope, $rootScope, $location, AuthEvents, AuthService, Storage) {
             //console.log('LoginCtrl loaded');
             $scope.credentials = {
                 username: '',
@@ -38,9 +38,9 @@ angular.module('ortolangMarketApp')
                             $scope.initializeSession(user);
                             if (credentials.remember) {
                                 // arbitrary set to 7 days or 1 day : TODO declare this in a config file
-                                Session.setSession(user, 7);
+                                Storage.setSession(user, 7);
                             } else {
-                                Session.setSession(user, 1);
+                                Storage.setSession(user, 1);
                             }
                             $rootScope.$broadcast('$auth:loginSuccess', AuthEvents.loginSuccess);
                             //console.log(user);

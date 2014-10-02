@@ -8,10 +8,10 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LogoutCtrl', ['$scope', '$location', 'Session', 'AuthService', 'User',
-        function ($scope, $location, Session, AuthService, User) {
+    .controller('LogoutCtrl', ['$scope', '$location', 'Storage', 'AuthService', 'User',
+        function ($scope, $location, Storage, AuthService, User) {
             //TODO stuff before logout like saving work
-            Session.destroySession();
+            Storage.destroySession();
             User.destroy();
             $scope.setCurrentUser(null);
             $scope.setAuthenticated(AuthService.isAuthenticated());
