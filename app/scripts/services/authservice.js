@@ -8,22 +8,22 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-      .factory('AuthService', ['$http', '$location', 'Session', 'ProfilDAO', 'ConnectedDAO', 'WorkspacesDAO', 'param', '$q', '$filter', function ($http, $location, Session, ProfilDAO, ConnectedDAO, WorkspacesDAO, param, $q, $filter) {
+      .factory('AuthService', ['$http', '$location', 'User', 'ProfilDAO', 'ConnectedDAO', 'WorkspacesDAO', 'param', '$q', '$filter', function ($http, $location, User, ProfilDAO, ConnectedDAO, WorkspacesDAO, param, $q, $filter) {
         var authService = {};
         /**
          * Get the user profile from the rest API
          * @param credentials
          * @returns {*}
          */
-        authService.getSession = function (credentials) {
+        authService.getUser = function (credentials) {
             //TODO replace this by a token
             var auth = window.btoa(credentials.username + ':' + credentials.password), deferred = $q.defer();
             $http.defaults.headers.common.Authorization = 'Basic ' + auth;
             ConnectedDAO.get().$promise.then(
                 // 303 redirect
                 function (user) {
-                    var session = Session.create(auth, user);
-                    deferred.resolve(session);
+                    var userSession = User.create(auth, user);
+                    deferred.resolve(userSession);
                 },
                 function (error) {
                     /**
@@ -38,8 +38,8 @@ angular.module('ortolangMarketApp')
                         ProfilDAO.get({userId: credentials.username},
                             function (profil) {
                                 //console.debug(profil);
-                                var session = Session.create(auth, profil);
-                                deferred.resolve(session);
+                                var userSession = User.create(auth, profil);
+                                deferred.resolve(userSession);
                             },
                             function (error) {
                                 deferred.reject(error);
@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
          * @returns {boolean}
          */
         authService.isAuthenticated = function () {
-            return !!Session.userId;
+            return !!User.userId;
         };
         /**
          * Check if user is authorized
@@ -63,7 +63,7 @@ angular.module('ortolangMarketApp')
          * @returns {boolean}
          */
         authService.isAuthorized = function (wsName) {
-            var found = $filter('filter')(Session.userMember, wsName);
+            var found = $filter('filter')(User.userMember, wsName);
             //console.debug(found);
             return (authService.isAuthenticated() &&
                 found.length > 0);

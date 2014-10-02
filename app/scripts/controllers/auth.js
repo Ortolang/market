@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', 'Session', 'AuthService', '$rootScope', 'AuthEvents', 'CookieFactory', function ($scope, Session, AuthService, $rootScope, AuthEvents, CookieFactory) {
-        console.debug('controller AuthCtrl');
+    .controller('AuthCtrl', ['$scope', 'User', 'AuthService', '$rootScope', 'AuthEvents', 'Session', function ($scope, User, AuthService, $rootScope, AuthEvents, Session) {
+        //console.debug('controller AuthCtrl');
         /**
          * Set currentUser
          * @param user
@@ -71,9 +71,9 @@ angular.module('ortolangMarketApp')
                 $scope.loadWorkspaces(user.id);
             } else {
                 $scope.currentUser = null;
-                CookieFactory.getCookie('currentUser').then(function (value) {
+                Session.getSession().then(function (value) {
                     if (value !== null && !angular.isUndefined(value)) {
-                        $scope.currentUser = Session.load(value);
+                        $scope.currentUser = User.load(value);
                     }
                     //            console.debug(value);
                     $scope.authenticated = AuthService.isAuthenticated();
