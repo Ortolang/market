@@ -144,11 +144,21 @@ angular.module('ortolangMarketApp')
                 $('#new-collection-modal').modal('show');
             };
 
-            $scope.toggleUploadZoneStatus = function () {
-                if ($rootScope.uploadZoneStatus === 'active') {
-                    $rootScope.uploadZoneStatus = undefined;
+            $rootScope.activateUploadQueue = function () {
+                $rootScope.uploadQueueStatus = 'active';
+                $rootScope.$emit('uploadQueueStatusChanged');
+            };
+
+            $rootScope.deactivateUploadQueue = function () {
+                $rootScope.uploadQueueStatus = undefined;
+                $rootScope.$emit('uploadQueueStatusChanged');
+            };
+
+            $scope.toggleUploadQueueStatus = function () {
+                if ($rootScope.uploadQueueStatus === 'active') {
+                    $rootScope.deactivateUploadQueue();
                 } else {
-                    $rootScope.uploadZoneStatus = 'active';
+                    $rootScope.activateUploadQueue();
                 }
             };
 
@@ -178,15 +188,15 @@ angular.module('ortolangMarketApp')
 
             $scope.clearUploaderQueue = function () {
                 $rootScope.uploader.clearQueue();
-                $rootScope.uploadZoneStatus = undefined;
+                $rootScope.deactivateUploadQueue();
             };
+
+            $rootScope.$on('uploaderAfterAddingAll', function () {
+                $rootScope.activateUploadQueue();
+            });
 
             $rootScope.$on('uploaderCompleteItemUpload', function () {
                 getElementData(true);
-            });
-
-            $rootScope.$on('uploaderAfterAddingAll', function () {
-                $rootScope.uploadZoneStatus = 'active';
             });
 
             $rootScope.$on('completeMetadataUpload', function () {
@@ -279,9 +289,36 @@ angular.module('ortolangMarketApp')
                 event.stopPropagation();
             };
 
-            $('#testFilter').on('hide.bs.dropdown', function (e) {
+            $('#testFilter').on('hide.bs.dropdown', function () {
                 if ($scope.filter !== undefined && $scope.filter.length !== 0) {
                     return false;
                 }
             });
+
+            $scope.resizeBrowser = function () {
+                var topOffset = $('#main-navbar').innerHeight(),
+                    height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+                    browserToolbarHeight = $('#browser-toolbar').innerHeight();
+
+                height = height - topOffset;
+                if (height < 1) {
+                    height = 1;
+                }
+                if (height > topOffset) {
+                    if ($rootScope.uploadQueueStatus === 'active') {
+                        height -= $('#upload-queue').innerHeight();
+                    }
+                    $('#browser-sidebar').css('min-height', (height - browserToolbarHeight) + 'px');
+                    $('#browser-wrapper').find('.table-wrapper').css('height', (height - browserToolbarHeight) + 'px');
+                }
+            };
+
+            $(window).bind('load resize', function () {
+                $scope.resizeBrowser();
+            });
+
+            $rootScope.$on('uploadQueueStatusChanged', function () {
+                $scope.resizeBrowser();
+            });
+
         }]);

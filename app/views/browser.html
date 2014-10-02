@@ -64,7 +64,7 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li><div ng-class="uploadZoneStatus" ng-click="toggleUploadZoneStatus()">Show upload queue</div></li>
+                                <li><div ng-class="uploadQueueStatus" ng-click="toggleUploadQueueStatus()">Show upload queue</div></li>
                             </ul>
                         </div>
 
@@ -202,5 +202,5 @@
         </div>
     </div>
 
-    <div id="upload-zone" ng-class="uploadZoneStatus" ng-include="'views/upload.html'"></div>
+    <div id="upload-queue" ng-class="uploadQueueStatus" ng-include="'views/upload.html'"></div>
 </div>

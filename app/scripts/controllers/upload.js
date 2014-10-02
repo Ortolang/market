@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
             } else {
                 uploader = $rootScope.uploader = new FileUploader({
                     alias: 'stream',
-                    autoUpload: true,
+                    autoUpload: false,
                     removeAfterUpload: false,
                     headers: {
                         'Authorization': $http.defaults.headers.common.Authorization
@@ -48,7 +48,7 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onAfterAddingAll = function () {
-                $rootScope.$emit('uploaderAfterAddingAll');
+                $rootScope.activateUploadQueue();
             };
 
             uploader.onCompleteItem = function (fileItem, response, status, headers) {

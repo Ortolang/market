@@ -26,9 +26,6 @@ $(function () {
         }
         if (height > topOffset) {
             $('#page-wrapper').css('min-height', height + 'px');
-            var browserToolbarHeight = $('#browser-toolbar').outerHeight();
-            $('#browser-sidebar').css('min-height', (height - browserToolbarHeight) + 'px');
-            $('#browser-wrapper').find('.table-wrapper').css('height', (height - browserToolbarHeight) + 'px');
         }
     });
 });
