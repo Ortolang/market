@@ -12,7 +12,11 @@ angular.module('ortolangMarketApp')
     console.debug('controller marketCtrl');
 
 		$scope.query = '';
-		$scope.names = ['Igor Minar', 'Brad Green', 'Dave Geddes', 'Naomi Black', 'Greg Weber', 'Dean Sofer', 'Wes Alvaro', 'John Scott', 'Daniel Nadasi'];
+
+		var defaultCategoriesLabel = "Catégories"
+		$scope.categoriesLabel = defaultCategoriesLabel;
+		$scope.categories = [];
+		$scope.selectedCategory = undefined;
 
 		function findAllCarrot(search) {
 
@@ -48,7 +52,7 @@ angular.module('ortolangMarketApp')
 
 			// console.debug("data : "+JSON.stringify(data));
 			$scope.products = [];
-			var bindings = data.results.bindings;
+
 			//TODO si bindings vide alors affichier juste un message d'erreur "L'identifiant $identifiant n'est pas une resource connue dans la plateforme"
 			angular.forEach(data.results.bindings, function (binding) {
 				var uri = binding.x.value;
@@ -61,16 +65,19 @@ angular.module('ortolangMarketApp')
                 var key = uri.split('/').pop();
                 var type = resource_type.split('#').pop().toLowerCase();
 
+                $scope.categories.push({id: type, name: type, count: 1});
+
                 // Finds products already added
                 var oldProduct = $filter('filter')($scope.products, {key: key});
 
                 if(oldProduct.length == 0) {
                 	// If new product, then add it
-					$scope.products.push({key: key, uri: uri, title: title, type: type, abstract: abstract, abstract_html: $sce.trustAsHtml(abstract), use_conditions:use_conditions});
+					$scope.products.push({key: key, uri: uri, title: title, type: [type], abstract: abstract, abstract_html: $sce.trustAsHtml(abstract), use_conditions:use_conditions});
 				} else {
 					// Else changed it (it could have many type)
-					var oldType=oldProduct[0].type;
-					oldProduct[0].type = [oldType, type];
+					// var oldType=oldProduct[0].type[0];
+					// oldProduct[0].type = [oldType, type];
+					oldProduct[0].type.push(type);
                 }
 				
             });
@@ -79,13 +86,33 @@ angular.module('ortolangMarketApp')
 
 		}
 
-        findAllCarrot();
-
         $scope.filterProducts = function (filterText) {
             return function (product) {
                 var re = new RegExp(filterText, 'gi');
                 return product.title.match(re) || product.abstract.match(re) || product.use_conditions.match(re);
             };
         };
+
+        $scope.filterProductsByCategory = function(selectedCategory) {
+        	return function (product) {
+        		if(selectedCategory === undefined) {
+        			return true;
+        		}
+        		var found = false;
+                angular.forEach(product.type, function(categoryId) {
+                	if(categoryId == selectedCategory) {
+                		found = true;
+                	}
+                });
+                return found;
+            };
+        }
+
+        $scope.setSelectedCategory = function(category) {
+        	$scope.selectedCategory = category;
+        	$scope.categoriesLabel = category;
+        }
+
+        findAllCarrot();
 
   }]);
