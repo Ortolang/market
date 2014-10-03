@@ -5,13 +5,11 @@
                 <div class="col-md-6">
                     <div class="btn-toolbar" role="toolbar">
 
-                        <div class="btn-group">
-                            <button class="btn btn-default" > {{categoriesLabel}}</button>
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <div id="category-select" class="btn-group">
+                            <button class="btn btn-default dropdown-toggle btn-select-label" data-toggle="dropdown"><div class="select-label"> {{categoriesLabel}}</div><div class="select-caret"><span class="caret"></span></div></button>
+                            
+                            <ul class="dropdown-menu dropdown-menu-right select-menu" role="menu">
+                                <li><div ng-click="resetSelectedCategory()"><strong>Toutes les catégories</strong></div></li>
                                 <li ng-repeat="item in categories"><div ng-click="setSelectedCategory(item.id)">{{item.name}} ({{item.count}})</div></li>
                             </ul>
                         </div>

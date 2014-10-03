@@ -13,8 +13,9 @@ angular.module('ortolangMarketApp')
 
 		$scope.query = '';
 
-		var defaultCategoriesLabel = "Catégories"
-		$scope.categoriesLabel = defaultCategoriesLabel;
+		//TODO constante
+		$scope.defaultCategoriesLabel = "Toutes les catégories";
+		$scope.categoriesLabel = $scope.defaultCategoriesLabel;
 		$scope.categories = [];
 		$scope.selectedCategory = undefined;
 
@@ -111,6 +112,11 @@ angular.module('ortolangMarketApp')
         $scope.setSelectedCategory = function(category) {
         	$scope.selectedCategory = category;
         	$scope.categoriesLabel = category;
+        }
+
+        $scope.resetSelectedCategory = function() {
+        	$scope.selectedCategory = undefined;
+        	$scope.categoriesLabel = $scope.defaultCategoriesLabel;
         }
 
         findAllCarrot();
