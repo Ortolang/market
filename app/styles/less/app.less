@@ -9,6 +9,7 @@
 @import "browser";
 @import "upload";
 @import "products";
+@import "dropdown";
 
 .product-list-element {
   border-left: 4px solid @product-unknown;
@@ -24,34 +25,4 @@
 
 #page-wrapper {
   padding: 0;
-}
-
-// ============= //
-// Dropdown Menu //
-// ============= //
-
-.dropdown-menu {
-  z-index: 1010;
-  > li > div {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: normal;
-    line-height: @line-height-base;
-    color: @dropdown-link-color;
-    white-space: nowrap;
-    cursor: pointer;
-    .user-select-mixin;
-
-    i.glyphicon {
-      padding-right: @padding-base-horizontal;
-      color: @gray-light;
-    }
-
-    &:hover, &:focus {
-      color: @dropdown-link-hover-color;
-      text-decoration: none;
-      background-color: @dropdown-link-hover-bg;
-    }
-  }
 }

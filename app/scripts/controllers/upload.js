@@ -18,14 +18,35 @@ angular.module('ortolangMarketApp')
             } else {
                 uploader = $rootScope.uploader = new FileUploader({
                     alias: 'stream',
-                    autoUpload: false,
+                    autoUpload: true,
                     removeAfterUpload: false,
                     headers: {
                         'Authorization': $http.defaults.headers.common.Authorization
                     },
-                    routeParams: $routeParams
+                    routeParams: $routeParams,
+                    queueLimit: 100,
+                    filters: [{
+                        name: 'noFolder',
+                        fn: function (item) {
+                            return item.type.length !== 0;
+                        }
+                    }]
                 });
             }
+
+            $rootScope.toggleUploadQueueStatus = function () {
+                $rootScope.uploadQueueStatus ? $rootScope.deactivateUploadQueue() : $rootScope.activateUploadQueue();
+            };
+
+            $rootScope.activateUploadQueue = function () {
+                $rootScope.uploadQueueStatus = 'active';
+                var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+                $('#upload-queue').find('.upload-elements-wrapper').css('max-height', height / 3);
+            };
+
+            $rootScope.deactivateUploadQueue = function () {
+                $rootScope.uploadQueueStatus = undefined;
+            };
 
             uploader.onAfterAddingFile = function (fileItem) {
                 fileItem.wsName = $routeParams.wsName;
