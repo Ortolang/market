@@ -16,7 +16,8 @@ angular
         'angularFileUpload',
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.helpers.dimensions',
-        'hljs'
+        'hljs',
+        'cfp.hotkeys'
     ])
     .config(function ($routeProvider) {
         $routeProvider

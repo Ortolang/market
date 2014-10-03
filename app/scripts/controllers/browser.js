@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserCtrl', ['$scope', '$http', '$routeParams', '$rootScope', 'Url',
-        function ($scope, $http, $routeParams, $rootScope, Url) {
+    .controller('BrowserCtrl', ['$scope', '$http', '$routeParams', '$rootScope', 'Url', 'hotkeys',
+        function ($scope, $http, $routeParams, $rootScope, Url, hotkeys) {
 
             $scope.urlBase = Url.urlBase();
             $scope.wsName = $routeParams.wsName;
@@ -19,6 +19,7 @@ angular.module('ortolangMarketApp')
             $scope.reverse = false;
             $scope.newCollectionName = undefined;
             $scope.newCollectionDescription = undefined;
+            $scope.filterQuery = undefined;
 
             var url = Url.urlBase() + '/rest/workspaces/' +
                 $scope.wsName + '/elements?root=' + $scope.rootName + '&path=' + $routeParams.elementPath;
@@ -250,10 +251,21 @@ angular.module('ortolangMarketApp')
             };
 
             $('#filter-query-wrapper').on('hide.bs.dropdown', function () {
-                if ($scope.filter !== undefined && $scope.filter.length !== 0) {
+                if ($scope.filterQuery !== undefined && $scope.filterQuery.length !== 0) {
                     return false;
                 }
             });
+
+            hotkeys.bindTo($scope)
+                .add({
+                    combo: 'ctrl+f',
+                    description: 'Filter',
+                    callback: function () {
+                        var filterWrapper = $('#filter-query-wrapper');
+                        filterWrapper.find('button').dropdown('toggle');
+                        filterWrapper.find('#filter-input').focus();
+                    }
+                });
 
             $scope.resizeBrowser = function () {
                 var topOffset = $('#main-navbar').innerHeight(),
