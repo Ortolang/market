@@ -258,9 +258,10 @@ angular.module('ortolangMarketApp')
 
             hotkeys.bindTo($scope)
                 .add({
-                    combo: 'ctrl+f',
+                    combo: 'mod+f',
                     description: 'Filter',
-                    callback: function () {
+                    callback: function (event) {
+                        event.preventDefault();
                         var filterWrapper = $('#filter-query-wrapper');
                         filterWrapper.find('button').dropdown('toggle');
                         filterWrapper.find('#filter-input').focus();
