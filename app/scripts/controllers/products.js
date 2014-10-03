@@ -8,10 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-  .controller('ProductsCtrl', ['$scope', '$http', '$routeParams', '$sce', 'Url', function ($scope, $http, $routeParams, $sce, Url) {
+  .controller('ProductsCtrl', ['$scope', '$http', '$routeParams', '$sce', '$filter', 'Url', function ($scope, $http, $routeParams, $sce, $filter, Url) {
     console.debug('controller marketCtrl');
 
 		$scope.query = '';
+		$scope.names = ['Igor Minar', 'Brad Green', 'Dave Geddes', 'Naomi Black', 'Greg Weber', 'Dean Sofer', 'Wes Alvaro', 'John Scott', 'Daniel Nadasi'];
 
 		function findAllCarrot(search) {
 
@@ -46,7 +47,7 @@ angular.module('ortolangMarketApp')
 			$http.get(url).success(function (data) {
 
 			// console.debug("data : "+JSON.stringify(data));
-			$scope.products = {};
+			$scope.products = [];
 			var bindings = data.results.bindings;
 			//TODO si bindings vide alors affichier juste un message d'erreur "L'identifiant $identifiant n'est pas une resource connue dans la plateforme"
 			angular.forEach(data.results.bindings, function (binding) {
@@ -60,11 +61,16 @@ angular.module('ortolangMarketApp')
                 var key = uri.split('/').pop();
                 var type = resource_type.split('#').pop().toLowerCase();
 
-                if($scope.products[key] === undefined) {
-					$scope.products[key] = {key: key, uri: uri, title: title, type: type, abstract: abstract, abstract_html: $sce.trustAsHtml(abstract), use_conditions:use_conditions};
+                // Finds products already added
+                var oldProduct = $filter('filter')($scope.products, {key: key});
+
+                if(oldProduct.length == 0) {
+                	// If new product, then add it
+					$scope.products.push({key: key, uri: uri, title: title, type: type, abstract: abstract, abstract_html: $sce.trustAsHtml(abstract), use_conditions:use_conditions});
 				} else {
-					var oldType=$scope.products[key].type;
-                	$scope.products[key].type = [oldType, type];
+					// Else changed it (it could have many type)
+					var oldType=oldProduct[0].type;
+					oldProduct[0].type = [oldType, type];
                 }
 				
             });
@@ -73,13 +79,13 @@ angular.module('ortolangMarketApp')
 
 		}
 
+        findAllCarrot();
+
         $scope.filterProducts = function (filterText) {
             return function (product) {
-            	console.log("filter product : "+filterText);
                 var re = new RegExp(filterText, 'gi');
                 return product.title.match(re) || product.abstract.match(re) || product.use_conditions.match(re);
             };
         };
 
-        findAllCarrot();
   }]);
