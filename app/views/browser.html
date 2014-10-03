@@ -33,26 +33,29 @@
                 <div class="col-md-6">
                     <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-sort"></span> Sort by
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><div ng-click="order('name', false)">Name</div></li>
-                                <li><div ng-click="order(['type','name'], false)">Type</div></li>
-                                <li><div ng-click="order('modification', false)">Date</div></li>
-                            </ul>
-                        </div>
                         <!--<button class="btn btn-default" ng-click="newCollectionModal()"><i class="glyphicon glyphicon-plus"></i>  New collection</button>-->
-                        <div id="testFilter" class="btn-group">
-                            <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-search"></span> Filter
-                            </button>
-                            <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
-                                <div class="has-feedback">
-                                    <label class="control-label sr-only" for="filter-input">Filter</label>
-                                    <input id="filter-input" ng-model="filterQuery" class="form-control" placeholder="Filter" type="text">
-                                    <span ng-show="filterQuery" ng-click="filterQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+
+                        <div class="btn-group">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-sort"></span> Sort by
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><div ng-click="order('name', false)">Name</div></li>
+                                    <li><div ng-click="order(['type','name'], false)">Type</div></li>
+                                    <li><div ng-click="order('modification', false)">Date</div></li>
+                                </ul>
+                            </div>
+                            <div id="filter-query-wrapper" class="btn-group">
+                                <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-search"></span> Filter
+                                </button>
+                                <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
+                                    <div class="has-feedback">
+                                        <label class="control-label sr-only" for="filter-input">Filter</label>
+                                        <input id="filter-input" ng-model="filterQuery" class="form-control" placeholder="Filter" type="text">
+                                        <span ng-show="filterQuery" ng-click="filterQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -110,66 +113,65 @@
         </div>
 
         <div id="browser-sidebar" class="col-md-3">
-        <!--Sidebar content-->
 
-        <p ng-if="!selectedChild" class="lead"><span class="{{element.type | elementIconCss}}"></span> {{element.name}}</p>
-        <p ng-if="selectedChild" class="lead"><span class="{{selectedChild.type | elementIconCss}}"></span> {{selectedChildData.object.name}}</p>
+            <p ng-if="!selectedChild" class="lead"><span class="{{element.type | elementIconCss}}"></span> {{element.name}}</p>
+            <p ng-if="selectedChild" class="lead"><span class="{{selectedChild.type | elementIconCss}}"></span> {{selectedChildData.object.name}}</p>
 
-        <ul id="browser-side-tabs" class="nav nav-justified" role="tablist">
-            <li class="active"><a href="#information" role="tab" ng-click="toggleTab($event)">Information</a></li>
-            <li><a href="#metadata" role="tab" ng-click="toggleTab($event)">Metadata</a></li>
-        </ul>
+            <ul id="browser-side-tabs" class="nav nav-justified" role="tablist">
+                <li class="active"><a href="#information" role="tab" ng-click="toggleTab($event)">Information</a></li>
+                <li><a href="#metadata" role="tab" ng-click="toggleTab($event)">Metadata</a></li>
+            </ul>
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="information">
-                <dl ng-if="!selectedChild" class="dl-horizontal">
-                    <dt>Name</dt>
-                    <dd>{{element.name}}</dd>
-                    <dt>Description</dt>
-                    <dd>{{element.description}}</dd>
-                    <dt>Type</dt>
-                    <dd>{{element.type}}</dd>
-                    <dt>Clock</dt>
-                    <dd>{{element.clock}}</dd>
-                    <dt>Size</dt>
-                    <dd>{{element.elements.length}} element{{element.elements.length > 1 ? 's' : ''}}</dd>
-                </dl>
+            <div class="tab-content">
+                <div class="tab-pane active" id="information">
+                    <dl ng-if="!selectedChild" class="dl-horizontal">
+                        <dt>Name</dt>
+                        <dd>{{element.name}}</dd>
+                        <dt>Description</dt>
+                        <dd>{{element.description}}</dd>
+                        <dt>Type</dt>
+                        <dd>{{element.type}}</dd>
+                        <dt>Clock</dt>
+                        <dd>{{element.clock}}</dd>
+                        <dt>Size</dt>
+                        <dd>{{element.elements.length}} element{{element.elements.length > 1 ? 's' : ''}}</dd>
+                    </dl>
 
-                <dl ng-if="selectedChild" class="dl-horizontal">
-                    <dt>Name</dt>
-                    <dd>{{selectedChildData.object.name}}</dd>
-                    <dt>Description</dt>
-                    <dd>{{selectedChildData.object.description}}</dd>
-                    <dt>Content type</dt>
-                    <dd>{{selectedChildData.object.contentType | contentType}}</dd>
-                    <dt>Author</dt>
-                    <dd>{{selectedChildData.author}}</dd>
-                    <dt>Created</dt>
-                    <dd>{{selectedChildData.creationDate | date : 'medium'}}</dd>
-                    <dt>Modified</dt>
-                    <dd>{{selectedChildData.lastModificationDate | date : 'medium'}}</dd>
-                    <dt>Clock</dt>
-                    <dd>{{element.clock}}</dd>
-                    <dt ng-if="selectedChildData.object.size">Size</dt>
-                    <dd ng-if="selectedChildData.object.size">{{selectedChildData.object.size | bytes}}</dd>
-                </dl>
-            </div>
-            <div class="tab-pane" id="metadata">
-                <div class="list-group">
-                    <div ng-if="!selectedChild">
-                        <a ng-repeat="metadata in element.metadatas" ng-click="loadMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}" href="#">{{metadata.name}}</a>
-                    </div>
-                    <div ng-if="selectedChild">
-                        <a ng-repeat="metadata in selectedChildData.object.metadatas" ng-click="loadMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}">{{metadata.name}}</a>
-                    </div>
+                    <dl ng-if="selectedChild" class="dl-horizontal">
+                        <dt>Name</dt>
+                        <dd>{{selectedChildData.object.name}}</dd>
+                        <dt>Description</dt>
+                        <dd>{{selectedChildData.object.description}}</dd>
+                        <dt>Content type</dt>
+                        <dd>{{selectedChildData.object.contentType | contentType}}</dd>
+                        <dt>Author</dt>
+                        <dd>{{selectedChildData.author}}</dd>
+                        <dt>Created</dt>
+                        <dd>{{selectedChildData.creationDate | date : 'medium'}}</dd>
+                        <dt>Modified</dt>
+                        <dd>{{selectedChildData.lastModificationDate | date : 'medium'}}</dd>
+                        <dt>Clock</dt>
+                        <dd>{{element.clock}}</dd>
+                        <dt ng-if="selectedChildData.object.size">Size</dt>
+                        <dd ng-if="selectedChildData.object.size">{{selectedChildData.object.size | bytes}}</dd>
+                    </dl>
                 </div>
-                <div ng-include="'views/metadata-upload.html'"></div>
+                <div class="tab-pane" id="metadata">
+                    <div class="list-group">
+                        <div ng-if="!selectedChild">
+                            <a ng-repeat="metadata in element.metadatas" ng-click="selectMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}" href="#">{{metadata.name}}</a>
+                        </div>
+                        <div ng-if="selectedChild">
+                            <a ng-repeat="metadata in selectedChildData.object.metadatas" ng-click="selectMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}">{{metadata.name}}</a>
+                        </div>
+                    </div>
+                    <div ng-include="'views/metadata-upload.html'"></div>
+                </div>
             </div>
         </div>
     </div>
-    </div>
 
-    <div ng-include="'views/metadata-modal.html'" onload="onDismissMetadataModal()"></div>
+    <div ng-include="'views/metadata-preview.html'"></div>
 
     <div class="modal fade" id="new-collection-modal" tabindex="-1" role="dialog" aria-labelledby="new-collection-modal-label" aria-hidden="true">
         <div class="modal-dialog">
@@ -196,7 +198,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" ng-click="addCollection()">Add</button>
+                    <button type="button" class="btn btn-primary add-collection" ng-click="addCollection()">Add</button>
                 </div>
             </div>
         </div>

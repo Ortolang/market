@@ -1,0 +1,135 @@
+// ============= //
+//    Browser    //
+// ============= //
+
+#browser-toolbar, #browser-sidebar {
+  background-color: @navbar-default-bg;
+  padding-top: @padding-large-vertical;
+  padding-bottom: @padding-large-vertical;
+}
+
+#browser-toolbar {
+  border-bottom: 1px solid @navbar-default-border;
+  min-height: 55px;
+
+  .btn-toolbar.btn-toolbar-right .btn-group {
+    float: right;
+    > .btn-group {
+      float: left;
+    }
+  }
+
+  .browser-breadcrumb {
+    button, a {
+      background-color: transparent;
+      border-color: transparent;
+      float: left;
+      position: relative;
+
+      span.glyphicon-home {
+        padding-right: @padding-large-horizontal;
+      }
+
+      span.caret {
+        margin-left: @padding-xs-horizontal;
+      }
+
+      &:hover, &:focus {
+        border: 1px solid @btn-default-border;
+      }
+    }
+  }
+
+  .dropdown-menu.filter {
+    padding-left: @padding-xs-horizontal;
+    padding-right: @padding-xs-horizontal;
+  }
+}
+
+#browser-sidebar {
+  border-left: 1px solid @navbar-default-border;
+
+  .dl-horizontal {
+    dt {
+      width: @browser-offset-horizontal - 20;
+      font-weight: normal;
+    }
+    dd {
+      margin-left: @browser-offset-horizontal;
+    }
+  }
+
+  p.lead span {
+    padding-right: @padding-base-horizontal;
+  }
+}
+
+#browser-side-tabs {
+
+  margin-top: @navbar-margin-bottom;
+  padding-bottom: @padding-large-vertical;
+  border-top: 1px solid @gray-lighter;
+
+  li {
+    &:hover, &.active:hover {
+      border-top: 3px solid @gray;
+    }
+    &.active {
+      border-top: 3px solid @component-active-bg;
+      a {
+        font-weight: bold;
+      }
+    }
+
+    a {
+      color: @gray-dark;
+      &:hover, &:focus {
+        background-color: inherit;
+      }
+    }
+  }
+}
+
+.table-wrapper {
+  overflow: auto;
+}
+
+table.workspace-elements {
+  .user-select-mixin;
+  tr.active {
+    td {
+      background-color: @ortolang-blue;
+      color: #FFF;
+      span.glyphicon.type {
+        color: inherit;
+      }
+    }
+    &:hover {
+      td {
+        background-color: @ortolang-blue;
+      }
+    }
+  }
+  th {
+
+    &:hover, &:focus {
+      background-color: @table-bg-accent;
+      cursor: pointer;
+    }
+  }
+  td {
+    cursor: default;
+
+    a {
+      color: inherit;
+    }
+
+  }
+}
+
+table td {
+  span.glyphicon.type {
+    padding-right: @padding-base-horizontal;
+    color: @gray-light;
+  }
+}

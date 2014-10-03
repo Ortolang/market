@@ -19,7 +19,6 @@ angular.module('ortolangMarketApp')
             $scope.reverse = false;
             $scope.newCollectionName = undefined;
             $scope.newCollectionDescription = undefined;
-            $scope.code = undefined;
 
             var url = Url.urlBase() + '/rest/workspaces/' +
                 $scope.wsName + '/elements?root=' + $scope.rootName + '&path=' + $routeParams.elementPath;
@@ -142,6 +141,7 @@ angular.module('ortolangMarketApp')
 
             $scope.newCollectionModal = function () {
                 $('#new-collection-modal').modal('show');
+                $('#new-collection-modal').find('button.add-collection').focus();
             };
 
             $rootScope.activateUploadQueue = function () {
@@ -211,42 +211,9 @@ angular.module('ortolangMarketApp')
                 e.preventDefault();
             });
 
-            function deselectMetadata(clickEvent) {
-                if ($scope.selectedMetadata) {
-                    if (clickEvent) {
-                        $(clickEvent.target).removeClass('active');
-                    } else {
-                        $('.metadata-' + $scope.selectedMetadata.key).removeClass('active');
-                    }
-                    $scope.selectedMetadata = undefined;
-                    $scope.code = undefined;
-                }
-            }
-
-            $scope.loadMetadata = function (clickEvent, metadata) {
-                clickEvent.preventDefault();
-                if ($scope.selectedMetadata === metadata) {
-                    deselectMetadata(clickEvent);
-                    return;
-                }
-                if ($scope.selectedMetadata) {
-                    $('.metadata-' + $scope.selectedMetadata.key).removeClass('active');
-                }
-                $(clickEvent.target).addClass('active');
-                $scope.selectedMetadata = metadata;
-                $http.get(Url.urlBase() + '/rest/objects/' + metadata.key + '/download').success(function (data) {
-                    $scope.code = data;
-                    $('#metadata-modal').modal('show');
-                });
+            $scope.selectMetadata = function (clickEvent, metadata) {
+                $rootScope.$broadcast('metadata-selected', clickEvent, metadata);
             };
-
-            $scope.onDismissMetadataModal = function () {
-                // When dismiss metadata modal: deselected selected metadata
-                $('#metadata-modal').on('hide.bs.modal', function () {
-                    deselectMetadata();
-                });
-            };
-
 
             $scope.order = function (predicate, reverse) {
                 if (predicate !== $scope.orderProp) {
@@ -282,7 +249,7 @@ angular.module('ortolangMarketApp')
                 event.stopPropagation();
             };
 
-            $('#testFilter').on('hide.bs.dropdown', function () {
+            $('#filter-query-wrapper').on('hide.bs.dropdown', function () {
                 if ($scope.filter !== undefined && $scope.filter.length !== 0) {
                     return false;
                 }
