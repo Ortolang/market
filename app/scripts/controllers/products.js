@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
 
 		//TODO constante
 		$scope.defaultCategoriesLabel = "Toutes les catégories";
+
 		$scope.categoriesLabel = $scope.defaultCategoriesLabel;
 		$scope.categories = [];
 		$scope.selectedCategory = undefined;
@@ -66,19 +67,26 @@ angular.module('ortolangMarketApp')
                 var key = uri.split('/').pop();
                 var type = resource_type.split('#').pop().toLowerCase();
 
-                $scope.categories.push({id: type, name: type, count: 1});
+ 				// Finds products already added
+                var oldCategory = $filter('filter')($scope.categories, {id: type});
+
+                if(oldCategory.length == 0) {
+                	$scope.categories.push({id: type, name: getResourceTypeLabel(type), count: 1});
+                } else {
+                	oldProduct[0].count++;
+                }
 
                 // Finds products already added
                 var oldProduct = $filter('filter')($scope.products, {key: key});
 
                 if(oldProduct.length == 0) {
                 	// If new product, then add it
-					$scope.products.push({key: key, uri: uri, title: title, type: [type], abstract: abstract, abstract_html: $sce.trustAsHtml(abstract), use_conditions:use_conditions});
+					$scope.products.push({key: key, uri: uri, title: title, type: [{id: type, name: getResourceTypeLabel(type)}], abstract: abstract, abstract_html: $sce.trustAsHtml(abstract), use_conditions:use_conditions});
 				} else {
 					// Else changed it (it could have many type)
 					// var oldType=oldProduct[0].type[0];
 					// oldProduct[0].type = [oldType, type];
-					oldProduct[0].type.push(type);
+					oldProduct[0].type.push({id: type, name: getResourceTypeLabel(type)});
                 }
 				
             });
@@ -100,8 +108,8 @@ angular.module('ortolangMarketApp')
         			return true;
         		}
         		var found = false;
-                angular.forEach(product.type, function(categoryId) {
-                	if(categoryId == selectedCategory) {
+                angular.forEach(product.type, function(category) {
+                	if(category.id == selectedCategory) {
                 		found = true;
                 	}
                 });
@@ -111,12 +119,30 @@ angular.module('ortolangMarketApp')
 
         $scope.setSelectedCategory = function(category) {
         	$scope.selectedCategory = category;
-        	$scope.categoriesLabel = category;
+        	$scope.categoriesLabel = getResourceTypeLabel(category);
         }
 
         $scope.resetSelectedCategory = function() {
         	$scope.selectedCategory = undefined;
         	$scope.categoriesLabel = $scope.defaultCategoriesLabel;
+        }
+
+        function getResourceTypeLabel(type) {
+        	if(type == 'corpora') {
+        		return "Corpus";
+        	} else if(type == 'fulltextdatabase') {
+        		return "Base de données textuelles";
+        	} else if(type == 'annotation') {
+        		return "Enrichissement";
+        	} else if(type == 'lexicon') {
+        		return "Lexique";
+        	} else if(type == 'tool') {
+        		return "Outil";
+        	} else if(type == 'dictionary') {
+        		return "Dictionnaire";
+        	} else if(type == 'dictionary') {
+        		return "Dictionnaire";
+        	}
         }
 
         findAllCarrot();

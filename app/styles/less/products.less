@@ -8,6 +8,7 @@
 
   .btn-select-label {
     width: @products-select-width;
+    font-weight: bold;
 
     .select-label {
       float: left;
@@ -21,11 +22,11 @@
   }
   
   .select-menu {
-    width: @products-select-width;
+    min-width: @products-select-width;
     > li {
-      width: @products-select-width;
+      min-width: @products-select-width;
       > div {
-        width: @products-select-width;
+        min-width: @products-select-width;
       }
     }
   }

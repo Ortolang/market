@@ -5,14 +5,7 @@
                 <div class="col-md-6">
                     <div class="btn-toolbar" role="toolbar">
 
-                        <div id="category-select" class="btn-group">
-                            <button class="btn btn-default dropdown-toggle btn-select-label" data-toggle="dropdown"><div class="select-label"> {{categoriesLabel}}</div><div class="select-caret"><span class="caret"></span></div></button>
-                            
-                            <ul class="dropdown-menu dropdown-menu-right select-menu" role="menu">
-                                <li><div ng-click="resetSelectedCategory()"><strong>Toutes les catégories</strong></div></li>
-                                <li ng-repeat="item in categories"><div ng-click="setSelectedCategory(item.id)">{{item.name}} ({{item.count}})</div></li>
-                            </ul>
-                        </div>
+                        <category-select></category-select>
 
                     </div>
                 </div>
@@ -28,7 +21,7 @@
             <form role="form" id="search" method="GET">
                 <input type="hidden" name="page" value="portal">
                 <div class="input-group custom-search-form">
-                        <input type="text" ng-model="filterProduct" id="filterProduct" name="filterProduct" class="form-control" placeholder="Rechercher une ressource...">
+                        <input type="text" ng-model="filterProduct" id="filterProduct" name="filterProduct" class="form-control" placeholder="Rechercher par mots clés...">
                         <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fa fa-search"></i>
@@ -52,7 +45,7 @@
               <!-- </span> -->
               <div class="media-body">
                 <h4 class="media-heading">{{product.title}} <!-- <i><small>(produit par <a href="#">{{author}}</a>)</small></i> --></h4>
-                <span>{{product.type}}</span>
+                <div><h4><span ng-repeat="type in product.type" class="label label-primary">{{type.name}}</span></h4></div>
                 <span>{{product.use_conditions}}</span>
                 <p align="justify" ng-bind-html="product.abstract_html">
                 
