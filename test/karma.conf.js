@@ -34,14 +34,20 @@ module.exports = function (config) {
             'bower_components/angular-hotkeys/build/hotkeys.js',
             'app/scripts/**/*.js',
             'test/mock/**/*.js',
-            'test/spec/**/*.js'
+            'test/spec/**/*.js',
+            'app/views/*.html'
         ],
 
         preprocessors: {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            'app/**/*.js': ['coverage']
+            'app/**/*.js': ['coverage'],
+            "app/views/*.html": ["ng-html2js"]
+        },
+        
+        ngHtml2JsPreprocessor: {
+          stripPrefix: 'app/',
         },
 
         // list of files / patterns to exclude
@@ -68,7 +74,8 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-junit-reporter',
             'karma-tapfile-reporter',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-ng-html2js-preprocessor'
         ],
 
         // Continuous Integration mode
