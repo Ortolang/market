@@ -49,6 +49,16 @@ angular
                 controller: 'WorkspacesCtrl',
                 requiresAuthentication: true
             })
+            .when('/plugins', {
+                templateUrl: 'views/plugins.html',
+                controller: 'PluginsCtrl',
+                requiresAuthentication: true
+            })
+            .when('/plugins/:plName', {
+                templateUrl: 'views/plugin.html',
+                controller: 'PluginCtrl',
+                requiresAuthentication: true
+            })
             .otherwise({
                 redirectTo: '/'
             });
