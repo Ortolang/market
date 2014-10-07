@@ -1,0 +1,10 @@
+<div ng-controller="MetadataFormatSelectCtrl" id="metadata-format-select" class="btn-group">
+    <button class="btn btn-default dropdown-toggle btn-select-label" data-toggle="dropdown"><div class="select-label"> Tous les formats</div><div class="select-caret"><span class="caret"></span></div></button>
+    
+    <ul class="dropdown-menu dropdown-menu-right select-menu" role="menu">
+        <li><div ng-click="resetSelectedMetadataFormat()"><strong>Tous les formats</strong></div></li>
+
+        <li ng-repeat="item in metadataFormats" ng-if="metadataFormats.length>0"><div ng-click="setSelectedMetadataFormat(item.id)">{{item.name}}</div></li>
+        <li role="presentation" class="disabled" ng-if="metadataFormats.length===0"><a role="menuitem" href="#"><em>Aucun élément disponible</em></div></li>
+    </ul>
+</div>

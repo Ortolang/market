@@ -1,0 +1,41 @@
+<div ng-controller="MetadataTabCtrl">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-if="!selectedChild" ng-repeat="metadata in metadatas" class="input-group metadata-{{metadata.key}}">
+                <div class="form-control">{{metadata.name}}</div>
+                <div class="input-group-btn">
+                    <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
+                    <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
+                </div>
+            </div>
+            <div ng-if="selectedChild" ng-repeat="metadata in selectedChildData.object.metadatas" class="input-group metadata-{{metadata.key}}">
+                <div class="form-control">{{metadata.name}}</div>
+                <div class="input-group-btn">
+                    <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
+                    <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button ng-click="showMetadataCreator()" class="btn btn-default btn-block">
+                Add a metadata file
+            </button>
+        </div>
+    </div>
+
+    <!-- <div ng-include="views/metadata-creator.html"></div> -->
+
+    <div ng-show="isMetadataCreatorShow()">
+        <div class="row">
+            <div class="col-md-12">
+                <div ng-include="'views/metadata-format-select.html'"></div>
+            </div>
+        </div>
+
+        <div ng-include="'views/metadata-upload.html'"></div>
+    </div>
+</div>
