@@ -2,18 +2,20 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.objects
+ * @name ortolangMarketApp.WorkspaceResource
  * @description
- * # objects
+ * # WorkspaceResource
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-  .factory('Objects', ['$resource', 'Url',function ($resource, Url) {
-   
-            return $resource(Url.urlBase() + '/rest/objects/:oKey/keys', {}, {
+      .factory('WorkspaceResource', ['$resource', 'Url',
+        function ($resource, Url) {
+
+            return $resource(Url.urlBase() + '/rest/workspaces/:wsName', {}, {
                 query: {
                     method: 'GET',
                     isArray: false
                 }
             });
-  }]);
+        }
+    ]);

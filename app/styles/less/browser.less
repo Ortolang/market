@@ -62,6 +62,40 @@
   p.lead span {
     padding-right: @padding-base-horizontal;
   }
+
+  #metadata .input-group {
+    .user-select-mixin();
+    padding-bottom: @padding-large-vertical;
+  }
+
+//  #metadata .input-group:not(:hover) {
+//    .form-control {
+//      border-right: none;
+//    }
+//    .input-group-btn {
+//      > button {
+//        color: transparent;
+//        border-left: none;
+//      }
+//      > button:first-child {
+//        border-right: none;
+//      }
+//    }
+//  }
+
+  .list-group-item {
+    &:hover {
+      button {
+        display: inline-block;
+        float: right;
+      }
+    }
+    button {
+//      display: none;
+      display: inline-block;
+      float: right;
+    }
+  }
 }
 
 #browser-side-tabs {

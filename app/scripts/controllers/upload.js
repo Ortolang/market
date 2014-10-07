@@ -48,15 +48,25 @@ angular.module('ortolangMarketApp')
                 $rootScope.uploadQueueStatus = undefined;
             };
 
+            $scope.clearUploaderQueue = function () {
+                $rootScope.uploader.clearQueue();
+                $rootScope.deactivateUploadQueue();
+            };
+
+            $scope.clearItem = function (item) {
+                item.remove();
+                $scope.resizeBrowser();
+            };
+
             uploader.onAfterAddingFile = function (fileItem) {
                 fileItem.wsName = $routeParams.wsName;
                 fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wsName + '/elements';
                 fileItem.formData = [{type: fileItem.type}];
                 if (fileItem.type === 'object') {
-                    fileItem.file.path = this.routeParams.elementPath;
+                    fileItem.file.path = this.routeParams.path;
                     fileItem.formData.push({path: fileItem.file.path + '/' + fileItem.file.name});
                 } else if (fileItem.type === 'metadata') {
-                    fileItem.file.path = this.routeParams.elementPath + ($rootScope.getSelectedChild() ? '/' + $rootScope.getSelectedChild().name : '');
+                    fileItem.file.path = this.routeParams.path + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
                     fileItem.formData.push({path: fileItem.file.path});
                     fileItem.formData.push({name: fileItem.file.name});
                 } else {

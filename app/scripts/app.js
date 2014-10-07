@@ -32,7 +32,7 @@ angular
                 templateUrl: 'views/product.html',
                 controller: 'ProductCtrl'
             })
-            .when('/workspaces/:wsName/:rootName/:elementPath*\/browse', {
+            .when('/workspaces/:wsName/:root/:path*\/browse', {
                 templateUrl: 'views/browser.html',
                 requiresAuthentication: true
             })

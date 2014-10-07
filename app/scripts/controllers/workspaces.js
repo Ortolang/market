@@ -8,14 +8,14 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-      .controller('WorkspacesCtrl', ['$rootScope', '$scope', '$http', 'WorkspacesDAO', 'Process', 'Objects', 'AuthService', 'AuthEvents', function ($rootScope, $scope, $http, WorkspacesDAO, Process, Objects, AuthService, AuthEvents) {
+      .controller('WorkspacesCtrl', ['$rootScope', '$scope', '$http', 'WorkspaceResource', 'ProcessResource', 'ObjectResource', 'AuthService', 'AuthEvents', function ($rootScope, $scope, $http, WorkspaceResource, ProcessResource, ObjectResource, AuthService, AuthEvents) {
 
         $scope.createWorkspace = function () {
             if ($scope.newWorkspaceName !== undefined) {
                 $('#new-workspace-name').parentsUntil('form', '.form-group').removeClass('has-error');
                 //TODO generate a key compatible based on the name
                 var key = $scope.newWorkspaceName, data = {key: key, name: $scope.newWorkspaceName, type: $scope.newWorkspaceType};
-                WorkspacesDAO.save(data, function () {
+                WorkspaceResource.save(data, function () {
 
                     // Refresh list of workspaces
                     $scope.authenticated = AuthService.isAuthenticated();
@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
             console.debug('push head ' + wk.head);
 
             // List keys
-            Objects.query({oKey: wk.head}, function (listKeys) {
+            ObjectResource.keys({oKey: wk.head}, function (listKeys) {
                 console.debug(listKeys);
 
                 var data = {name: 'Publication process for ' + wk.name, type: 'simple-publication'}, params = $.param(data);
@@ -69,7 +69,7 @@ angular.module('ortolangMarketApp')
 
                 console.debug(params);
 
-                Process.create(params, function () {
+                ProcessResource.create(params, function () {
                     console.debug('Publication process created');
                 }, function (error) {
                     // deferred.reject(error);
@@ -83,7 +83,7 @@ angular.module('ortolangMarketApp')
             var params = $.param(data) + '&keys='+wk.head;
             console.debug(params);
 
-            Process.create(params, function() {
+             ProcessResource.create(params, function() {
                 console.debug('Publication success');
             }, function(error) {
                 // deferred.reject(error);
@@ -106,7 +106,7 @@ angular.module('ortolangMarketApp')
                 var params = $.param(data);
                 console.debug(params);
 
-                Process.create(params, function() {
+                ProcessResource.create(params, function() {
                     console.debug('Import success');
                 }, function(error) {
                     // deferred.reject(error);

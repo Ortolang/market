@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-      .factory('AuthService', ['$http', '$location', 'User', 'ProfilDAO', 'ConnectedDAO', 'WorkspacesDAO', 'param', '$q', '$filter', function ($http, $location, User, ProfilDAO, ConnectedDAO, WorkspacesDAO, param, $q, $filter) {
+      .factory('AuthService', ['$http', '$location', 'User', 'ProfileResource', 'WorkspaceResource', 'param', '$q', '$filter', function ($http, $location, User, ProfileResource, WorkspaceResource, param, $q, $filter) {
         var authService = {};
         /**
          * Get the user profile from the rest API
@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
             //TODO replace this by a token
             var auth = window.btoa(credentials.username + ':' + credentials.password), deferred = $q.defer();
             $http.defaults.headers.common.Authorization = 'Basic ' + auth;
-            ConnectedDAO.get().$promise.then(
+            ProfileResource.connected().$promise.then(
                 // 303 redirect
                 function (user) {
                     var userSession = User.create(auth, user);
@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
                         deferred.reject(error);
                     //@todo Temporary hack for localhost
                     } else if (error.status === 0 || error.status === 303) {
-                        ProfilDAO.get({userId: credentials.username},
+                        ProfileResource.get({userId: credentials.username},
                             function (profil) {
                                 //console.debug(profil);
                                 var userSession = User.create(auth, profil);
@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
             var deferred = $q.defer(), wkList = [];
             //TODO replace userId by token
             $http.defaults.headers.common.Authorization = 'Basic ' + userId;
-            WorkspacesDAO.query(
+            WorkspaceResource.query(
                 function (wk) {
                     wkList = wk.entries;
                     deferred.resolve(wkList);

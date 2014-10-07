@@ -157,14 +157,33 @@
                     </dl>
                 </div>
                 <div class="tab-pane" id="metadata">
-                    <div class="list-group">
-                        <div ng-if="!selectedChild">
-                            <a ng-repeat="metadata in element.metadatas" ng-click="selectMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}" href="#">{{metadata.name}}</a>
-                        </div>
-                        <div ng-if="selectedChild">
-                            <a ng-repeat="metadata in selectedChildData.object.metadatas" ng-click="selectMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}">{{metadata.name}}</a>
+                    <div ng-if="!selectedChild" ng-repeat="metadata in element.metadatas" class="input-group metadata-{{metadata.key}}">
+                        <div class="form-control">{{metadata.name}}</div>
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
+                            <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     </div>
+                    <div ng-if="selectedChild" ng-repeat="metadata in selectedChildData.object.metadatas" class="input-group metadata-{{metadata.key}}">
+                        <div class="form-control">{{metadata.name}}</div>
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
+                            <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    </div>
+                    <!--<ul class="list-group">-->
+                        <!--<li ng-if="!selectedChild" ng-repeat="metadata in element.metadatas" class="list-group-item metadata-{{metadata.key}}">-->
+                            <!--{{metadata.name}}-->
+                            <!--<button class="btn btn-xs" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>-->
+                            <!--<button class="btn btn-xs"><span class="glyphicon glyphicon-trash"></span> Delete</button>-->
+                        <!--</li>-->
+                        <!--<li ng-if="selectedChild" ng-repeat="metadata in selectedChildData.object.metadatas" ng-click="previewMetadata($event, metadata)" class="list-group-item metadata-{{metadata.key}}">-->
+                            <!--{{metadata.name}}-->
+                            <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+                            <!--<span class="glyphicon glyphicon-trash"></span>-->
+                            <!--<span class="test"><span class="glyphicon glyphicon-trash"></span></span>-->
+                        <!--</li>-->
+                    <!--</ul>-->
                     <div ng-include="'views/metadata-upload.html'"></div>
                 </div>
             </div>

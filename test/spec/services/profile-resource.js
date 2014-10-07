@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: ConnectedDAO', function () {
+describe('Service: ProfileResource', function () {
 
 //    // load the service's module
 //    beforeEach(module('ortolangMarketApp'));
@@ -26,9 +26,9 @@ describe('Service: ConnectedDAO', function () {
     });
 
     // instantiate service
-    var ConnectedDAO;
-    beforeEach(inject(function (_ConnectedDAO_) {
-        ConnectedDAO = _ConnectedDAO_;
+    var ProfileResource;
+    beforeEach(inject(function (_ProfileResource_) {
+        ProfileResource = _ProfileResource_;
     }));
 
     afterEach(function () {
@@ -38,9 +38,9 @@ describe('Service: ConnectedDAO', function () {
         });
     });
 
-    describe('Service: ConnectedDAO', function () {
+    describe('Service: ProfileResource', function () {
         it('should exist', function () {
-            expect(!!ConnectedDAO).toBe(true);
+            expect(!!ProfileResource).toBe(true);
         });
 
 //        it('should work',
