@@ -1,4 +1,4 @@
-<div ng-controller="MetadataTabCtrl">
+<div id="metadata-tab" ng-controller="MetadataTabCtrl">
 
     <div class="row">
         <div class="col-md-12">
@@ -21,15 +21,50 @@
 
     <div class="row">
         <div class="col-md-12">
-            <button ng-click="showMetadataCreator()" class="btn btn-default btn-block">
+            <!-- Name -->
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" name="name" class="form-control" ng-model="mdName" required>
+            </div>
+
+            <!-- Format -->
+            <div class="form-group">
+                <label>Format</label>
+                <select name="format" class="form-control">
+                    <option ng-repeat="md in metadataFormats" value="{{md.id}}">{{md.name}}</option>
+                </select>
+            </div>
+
+
+            <!-- Button -->
+            <div class="form-group">
+                <button class="btn btn-primary" data-template="views/aside.tpl.html" data-placement="right" data-animation="am-fade-and-slide-right" bs-aside="aside" data-container="body">Ajouter</button>
+            </div>
+
+            <!--
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <div class="col-sm-10">
+                            <select class="form-control">
+                                <option ng-repeat="md in metadataFormats" value="md.id">{{md.name}}</option>
+                            </select>
+                            <button class="btn btn-primary" type="button" data-template="views/aside.tpl.html" data-placement="right" data-animation="am-fade-and-slide-right" bs-aside="aside" data-container="body">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            -->
+
+            <!-- <button class="btn btn-default btn-block" data-template="views/aside.tpl.html" data-placement="right" data-animation="am-fade-and-slide-right" bs-aside="aside" data-container="body">
                 Add a metadata file
-            </button>
+            </button> -->
         </div>
     </div>
 
     <!-- <div ng-include="views/metadata-creator.html"></div> -->
 
-    <div ng-show="isMetadataCreatorShow()">
+    <div ng-if="isMetadataCreatorShow()">
         <div class="row">
             <div class="col-md-12">
                 <div ng-include="'views/metadata-format-select.html'"></div>

@@ -16,6 +16,7 @@ angular
         'angularFileUpload',
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.helpers.dimensions',
+        'mgcrea.ngStrap.aside',
         'hljs',
         'cfp.hotkeys'
     ])

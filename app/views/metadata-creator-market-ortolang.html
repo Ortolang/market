@@ -1,0 +1,51 @@
+
+<form role="form" ng-controller="MetadataCreatorMarketOrtolangCtrl">
+	
+    <!-- Catégorie -->
+    <div class="form-group">
+        <label>Catégorie de la ressource</label>
+        <select name="category" class="form-control">
+            <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.label}}</option>
+        </select>
+    </div>
+
+	<!-- Title -->
+	<div class="form-group">
+        <label>Titre</label>
+        <input type="text" name="title" class="form-control" required>
+    </div>
+
+	<!-- Description -->
+	<div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" name="description" rows="3" required></textarea>
+    </div>
+
+	<!-- Résumé -->
+	<div class="form-group">
+        <label>Résumé</label>
+        <textarea class="form-control" name="abstract" rows="3" required></textarea>
+    </div>
+
+    <!-- Droit d'utilisation -->
+    <div class="form-group">
+        <label>Droit d'utilisation</label>
+        <select name="use_conditions" class="form-control">
+            <option ng-repeat="uc in use_conditions" value="{{uc.id}}">{{uc.label}}</option>
+        </select>
+    </div>
+
+	<!-- Action -->
+	<div class="form-group">
+        <button class="btn btn-primary" >Valider</button>
+    </div>
+<!-- 
+<div class="row">
+    <div class="col-md-12">
+        <div ng-include="'views/metadata-format-select.html'"></div>
+    </div>
+</div>
+ -->
+
+
+</form>

@@ -1,20 +1,19 @@
 'use strict';
 
-describe('Controller: MetadataTabCtrl', function () {
+describe('Controller: MetadataCreatorCtrl', function () {
 
   // load the controller's module
   beforeEach(module('ortolangMarketApp'));
 
-  var MetadataTabCtrl,
+  var MetadataCreatorCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    MetadataTabCtrl = $controller('MetadataTabCtrl', {
+    MetadataCreatorCtrl = $controller('MetadataCreatorCtrl', {
       $scope: scope
     });
   }));
 
-  
 });
