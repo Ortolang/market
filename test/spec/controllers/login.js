@@ -15,15 +15,15 @@ describe('Controller: LoginCtrl', function () {
         });
     }));
 
-    it('should have a LoginCtrl controller', function () {
-        expect(LoginCtrl).toBeDefined();
-    });
-
-    it('should get username and password', function () {
-        expect(scope.credentials).toBeDefined();
-        expect(scope.credentials.username).toBeDefined();
-        expect(scope.credentials.password).toBeDefined();
-    });
+//    it('should have a LoginCtrl controller', function () {
+//        expect(LoginCtrl).toBeDefined();
+//    });
+//
+//    it('should get username and password', function () {
+//        expect(scope.credentials).toBeDefined();
+//        expect(scope.credentials.username).toBeDefined();
+//        expect(scope.credentials.password).toBeDefined();
+//    });
 
 
 });
