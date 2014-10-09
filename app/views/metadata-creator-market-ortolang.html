@@ -1,5 +1,5 @@
 
-<form role="form" ng-controller="MetadataCreatorMarketOrtolangCtrl">
+<form name="metadataMarketform" novalidate role="form" ng-controller="MetadataCreatorMarketOrtolangCtrl">
 	
     <!-- Catégorie -->
     <div class="form-group">
@@ -10,9 +10,9 @@
     </div>
 
 	<!-- Title -->
-	<div class="form-group">
+	<div class="form-group" ng-class="{ 'has-error': metadataMarketform.title.$invalid }">
         <label>Titre</label>
-        <input type="text" name="title" class="form-control" required>
+        <input type="text" name="title" ng-model="md.title" class="form-control" required>
     </div>
 
 	<!-- Description -->
@@ -37,7 +37,7 @@
 
 	<!-- Action -->
 	<div class="form-group">
-        <button class="btn btn-primary" >Valider</button>
+        <button class="btn btn-primary" ng-click="submit(metadataMarketform)">Valider</button>
     </div>
 <!-- 
 <div class="row">
