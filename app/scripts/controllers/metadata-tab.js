@@ -16,8 +16,9 @@ angular.module('ortolangMarketApp')
       "contentTemplate": "views/metadata-creator-market-ortolang.html",
     };
 
+    console.debug($scope.element);
+
     $scope.metadataFormats = [{id:'rdf-market-ortolang', name:'Présentation'}];
     $scope.mdName = ""; //TODO aller cherhcer le nom de l'element selectionné
-    //$scope.mdFormat = $scope.metadataFormats[0].id;
 
 }]);

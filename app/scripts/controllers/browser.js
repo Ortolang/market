@@ -268,6 +268,20 @@ angular.module('ortolangMarketApp')
             });
 
             // *********************** //
+            //          Metadata         //
+            // *********************** //
+
+            $scope.aside = {
+              "title": "Create metadata",
+              "contentTemplate": "views/metadata-creator-market-ortolang.html",
+            };
+
+            $scope.metadataFormats = [{id:'rdf-market-ortolang', name:'Présentation'}, {id:'oai_dc', name: 'OAI Dublin Core'}];
+            $scope.userMetadataFormat = null;
+            $scope.mdName = ""; //TODO aller cherhcer le nom de l'element selectionné
+
+
+            // *********************** //
             //          Init         //
             // *********************** //
 

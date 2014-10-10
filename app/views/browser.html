@@ -116,13 +116,14 @@
 
             <p ng-if="!selectedChild" class="lead"><span class="{{element.type | elementIconCss}}"></span> {{element.name}}</p>
             <p ng-if="selectedChild" class="lead"><span class="{{selectedChild.type | elementIconCss}}"></span> {{selectedChildData.object.name}}</p>
-
+            <hr/>
+<!-- 
             <ul id="browser-side-tabs" class="nav nav-justified" role="tablist">
                 <li class="active"><a href="#information" role="tab" ng-click="toggleTab($event)">Information</a></li>
                 <li><a href="#metadata" role="tab" ng-click="toggleTab($event)">Metadata</a></li>
             </ul>
 
-            <div class="tab-content">
+            <div class="tab-content"> -->
                 <div class="tab-pane active" id="information">
                     <dl ng-if="!selectedChild" class="dl-horizontal">
                         <dt>Name</dt>
@@ -156,10 +157,58 @@
                         <dd ng-if="selectedChildData.object.size">{{selectedChildData.object.size | bytes}}</dd>
                     </dl>
                 </div>
-                <div class="tab-pane" id="metadata">
-                    <div ng-include="'views/metadata-tab.html'"></div>
+                <!-- <div class="tab-pane" id="metadata">
+                    <div id="metadata-tab"> -->
+
+                        <hr/>
+                        <p class="lead">Métadonnées</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div ng-if="!selectedChild" ng-repeat="metadata in element.metadatas" class="input-group metadata-{{metadata.key}}">
+                                    <div class="form-control">{{metadata.name}}</div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                        <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </div>
+                                </div>
+                                <div ng-if="selectedChild" ng-repeat="metadata in selectedChildData.object.metadatas" class="input-group metadata-{{metadata.key}}">
+                                    <div class="form-control">{{metadata.name}}</div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                        <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Name -->
+                    <!--             <div class="form-group">
+                                    <label>Nom</label>
+                                    <input type="text" name="name" class="form-control" ng-model="mdName" required>
+                                </div> -->
+                                
+                                <!-- Format -->
+                                <div class="form-group">
+                                    <!-- <label>Métadonnées</label> -->
+                                    <select name="format" class="form-control" ng-model="userMetadataFormat" ng-options="md.id as md.name for md in metadataFormats">
+                                        <option value="">-- choose format --</option>
+                                    </select>
+                                </div>
+
+
+                                <!-- Button -->
+                                <div class="form-group">
+                                    <button class="btn btn-primary" data-template="views/aside.tpl.html" data-placement="right" data-animation="am-fade-and-slide-right" bs-aside="aside" data-container="body">Ajouter</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <!-- </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>
