@@ -8,82 +8,118 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-      .controller('PluginCtrl', [ '$scope', '$http', 'PluginsResource', '$routeParams', function ($scope, $http, PluginsResource, $routeParams) {
-        /**
-         * Load chosen plugin
-         */
-        $scope.loadPlugin = function () {
-            $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-            PluginsResource.getPlugin({pKey: $routeParams.plName},
-                function (plugin) {
-                    $scope.plugin = plugin;
-                },
-                function (error) {
-                    console.log(error);
+    .controller('PluginCtrl', [ '$scope', '$http', 'PluginsResource', '$routeParams', 'formlyTemplate', 'AuthService', '$filter', 'WorkspaceElementResource', '$q',
+        function ($scope, $http, PluginsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q) {
+            /**
+             * Load chosen plugin informations
+             */
+            $scope.loadPlugin = function () {
+                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                PluginsResource.getPlugin({pKey: $routeParams.plName},
+                    function (plugin) {
+                        $scope.plugin = plugin;
+                    },
+                    function (error) {
+                        console.log(error);
+                    });
+            };
+
+            /**
+             * Load config JSON form for the plugin
+             * @return {*[]}
+             */
+            $scope.loadConfig = function () {
+                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                PluginsResource.getConfig({pKey: $routeParams.plName},
+                    function (config) {
+                        //console.debug(config);
+                        $scope.initialiseFormConfig(config);
+                        $scope.generateForm(config);
+                    },
+                    function (error) {
+                        console.log(error);
+                    });
+            };
+
+            /**
+             * Push object from workspace in an array
+             * @param workspaces
+             * @param callback
+             */
+            $scope.pushDataObjects = function (workspaces, callback) {
+                var deferred = $q.defer(), promise = [], list = [];
+                workspaces.forEach(function (index) {
+                    promise.push(WorkspaceElementResource.get({wsName: index.key, path: '/', root: 'head'}).$promise
+                        .then(function (element) {
+                            var tmp = $filter('filter')(element.elements, {'type': 'object'});
+                            list = list.concat(tmp);
+                        }));
                 });
-        };
 
-        $scope.plName = $routeParams.plName;
-        $scope.plugin = null;
-        $scope.loadPlugin();
+                $q.all(promise).then(function () {
+                    $scope.listAvailableDataObject = list;
+                    callback();
+                });
+                deferred.resolve();
+            };
 
-        //test dynamic form
+            /**
+             * Initialise the form from the JSON config
+             * @param configJSON
+             */
+            $scope.initialiseFormConfig = function (configJSON) {
+                // parcours du json pour initialiser le formulaire : les éventuels dataobject sont séléctionnés dans le workspace avec un typeahead
+                var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
+                if (objectsFieldList.length > 0) {
+                    $scope.listAvailableDataObject = [];
+                    if ($scope.authenticated) {
+                        AuthService.getWorkspaces($scope.currentUser.id)
+                            .then(function (wks) {
+                                $scope.pushDataObjects(wks, function () {
+                                    angular.forEach(configJSON, function (field, index) {
+                                        if (field.type === 'dataobject') {
+                                            configJSON[index].availableData = $scope.listAvailableDataObject;
+                                        }
+                                    });
+                                });
+                            });
+                    }
+                }
+            };
 
-//
-//        $scope.test = ['bli', 'toto'];
-//        $scope.fields =
-//            [
-//                {
-//                    'type' : 'div',
-//                    'html' : [
-//                        {
-//                            'name': 'input',
-//                            'id': 'txt-input',
-//                            'caption': 'Fichier à annoter',
-//                            'type': 'text',
-//                            'placeholder': 'Nom du fichier à annoter',
-//                            'typehead': {
-//                                'source' : [ 'Apple', 'Android', 'Windows Phone', 'Blackberry' ]
-//                            },
-//                            'validate': {
-//                                'required': true
-//                            }
-//                        },
-//                        {
-//                            'type' : 'p',
-//                            'html' : 'Entrez le nom du fichier texte sur lequel vous souhaitez appliquer Tree Tagger.'
-//                        }
-//                    ]
-//                },
-//                {
-//                    'type' : 'div',
-//                    'html' : [
-//                        {
-//                            'name': 'lg',
-//                            'caption': 'Langue du texte',
-//                            'type': 'select',
-//                            'options': {
-//                                'fr': {
-//                                    'selected': 'selected',
-//                                    'html': 'Français'
-//                                },
-//                                'en': 'Anglais',
-//                                'de': 'Allemand'
-//                            },
-//                            'validate' : {
-//                                'required': true
-//                            }
-//                        },
-//                        {
-//                            'type' : 'p',
-//                            'html' : 'Selectionnez la langue du fichier à annoter.'
-//                        }
-//                    ]
-//                },
-//                {
-//                    'type': 'submit',
-//                    'value': 'Run TreeTagger'
-//                }
-//            ];
+            /**
+             * Generate the form
+             * @param configJSON
+             */
+            $scope.generateForm = function (configJSON) {
+                // ajoute les template ortolang
+                formlyTemplate.setTemplateUrl('select', 'views/ortolang-formly-select.html');
+                formlyTemplate.setTemplateUrl('dataobject', 'views/ortolang-formly-typeahead.html');
 
-    }]);
+                $scope.formData = {};
+                $scope.formFields = configJSON;
+                $scope.formOptions = {
+                    //Set the id of the form
+                    uniqueFormId: 'pluginConfig',
+                    //Hide the submit button that is added automatically
+                    //default: false
+                    hideSubmit: false,
+                    //Set the text on the default submit button
+                    //default: Submit
+                    submitCopy: 'Save and Run'
+                };
+            };
+
+            /**
+             * Action to perform on submit
+             */
+            $scope.onSubmit = function () {
+                console.log('form submitted:', $scope.formData);
+            };
+
+            // INIT :
+            $scope.plName = $routeParams.plName;
+            $scope.plugin = null;
+            $scope.loadPlugin();
+            $scope.loadConfig();
+        }]);

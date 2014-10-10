@@ -18,6 +18,11 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/plugins/:pKey/',
                 method: 'GET',
                 isArray: false
+            },
+            getConfig: {
+                url: Url.urlBase() + '/rest/plugins/:pKey/config',
+                method: 'GET',
+                isArray: true
             }
         });
     }]);

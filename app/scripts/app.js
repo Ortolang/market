@@ -17,8 +17,10 @@ angular
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.helpers.dimensions',
         'mgcrea.ngStrap.aside',
+        'mgcrea.ngStrap.typeahead',
         'hljs',
-        'cfp.hotkeys'
+        'cfp.hotkeys',
+        'formly'
     ])
     .config(function ($routeProvider) {
         $routeProvider

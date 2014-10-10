@@ -48,7 +48,7 @@ angular.module('ortolangMarketApp')
                      */
                     function (wks) {
                         $scope.setWkList(wks);
-                        //console.log(user);
+//                        console.log(wks);
                     },
                     /**
                      * error
