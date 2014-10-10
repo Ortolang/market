@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', 'Url', 'hotkeys', 'WorkspaceElementResource', 'ObjectResource',
-        function ($scope, $routeParams, $rootScope, Url, hotkeys, WorkspaceElementResource, ObjectResource) {
+    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', 'Url', 'hotkeys', 'WorkspaceElementResource', 'ObjectResource', '$aside',
+        function ($scope, $routeParams, $rootScope, Url, hotkeys, WorkspaceElementResource, ObjectResource, $aside) {
 
             $scope.urlBase = Url.urlBase();
             $scope.wsName = $routeParams.wsName;
@@ -271,15 +271,34 @@ angular.module('ortolangMarketApp')
             //          Metadata         //
             // *********************** //
 
+            // DEPRECATED SINCE USE showMetadataCreator
             $scope.aside = {
-              "title": "Create metadata",
-              "contentTemplate": "views/metadata-creator-market-ortolang.html",
+                'title': 'Create metadata',
+                'contentTemplate': 'views/metadata-creator-market-ortolang.html',
             };
 
             $scope.metadataFormats = [{id:'rdf-market-ortolang', name:'Présentation'}, {id:'oai_dc', name: 'OAI Dublin Core'}];
             $scope.userMetadataFormat = null;
-            $scope.mdName = ""; //TODO aller cherhcer le nom de l'element selectionné
 
+            $scope.mdName = ''; //TODO aller cherhcer le nom de l'element selectionné
+
+            $scope.dropdownMetadataFormats = [{
+                'text': 'Présentation',
+                'click': 'showMetadataCreator()'
+            }
+            ];
+
+            $scope.showMetadataCreator = function() {
+                console.debug('show metadata creator');
+
+                $aside({title: 'Create metadata',
+                    contentTemplate: 'views/metadata-creator-market-ortolang.html',
+                    template: 'views/aside.tpl.html',
+                    placement: 'right',
+                    animation: 'am-fade-and-slide-right',
+                    container: 'body'
+                });
+            };
 
             // *********************** //
             //          Init         //

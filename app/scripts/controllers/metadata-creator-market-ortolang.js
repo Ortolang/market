@@ -92,7 +92,7 @@ angular.module('ortolangMarketApp')
 		}
 
 		content += '<dc:description>'+description+'</dc:description>\n';
-		content += '<dc:abstract>'+abstract+'</dc:abstract>\n';
+		content += '<dcterms:abstract>'+abstract+'</dc:abstract>\n';
 		content += '<otl:use_conditions>'+use_conditions+'</otl:use_conditions>\n'
 	
 		return content + footer;

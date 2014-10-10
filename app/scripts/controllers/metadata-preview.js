@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
             if ($scope.selectedChild) {
                 path += '/' + $scope.selectedChild.name;
             }
-            return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/elements?path=' + path + '&metadataname=' + metadata.name;
+            return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/elements?path=' + path + '&metadataname=' + metadata.name + '&root=head';
         }
 
         $scope.deleteMetadata = function (metadata) {
