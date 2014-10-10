@@ -23,6 +23,11 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/plugins/:pKey/config',
                 method: 'GET',
                 isArray: true
+            },
+            invoke: {
+                url: Url.urlBase() + '/rest/plugins/:pKey/invoke',
+                method: 'POST',
+                headers: {enctype: 'multipart/form-data'}
             }
         });
     }]);

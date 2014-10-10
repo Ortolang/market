@@ -115,6 +115,8 @@ angular.module('ortolangMarketApp')
              */
             $scope.onSubmit = function () {
                 console.log('form submitted:', $scope.formData);
+                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                PluginsResource.invoke({pKey: $routeParams.plName}, $scope.formData);
             };
 
             // INIT :
