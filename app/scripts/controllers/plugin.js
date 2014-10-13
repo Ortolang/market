@@ -33,6 +33,8 @@ angular.module('ortolangMarketApp')
                 PluginsResource.getConfig({pKey: $routeParams.plName},
                     function (config) {
                         //console.debug(config);
+                        var configJSON = JSON.parse(config);
+                        console.debug(configJSON);
                         $scope.initialiseFormConfig(config);
                         $scope.generateForm(config);
                     },

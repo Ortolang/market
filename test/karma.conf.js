@@ -32,6 +32,7 @@ module.exports = function (config) {
             'bower_components/angular-highlightjs/angular-highlightjs.js',
             'bower_components/metisMenu/dist/metisMenu.js',
             'bower_components/angular-hotkeys/build/hotkeys.js',
+            'bower_components/angular-formly/dist/formly.bootstrap.js',
             'app/scripts/**/*.js',
             'test/mock/**/*.js',
             'test/spec/**/*.js',
