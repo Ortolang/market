@@ -73,7 +73,7 @@ angular.module('ortolangMarketApp')
                 if(oldCategory.length == 0) {
                 	$scope.categories.push({id: type, name: getResourceTypeLabel(type), count: 1});
                 } else {
-                	oldProduct[0].count++;
+                	oldCategory[0].count++;
                 }
 
                 // Finds products already added
