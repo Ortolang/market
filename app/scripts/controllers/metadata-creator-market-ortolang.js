@@ -16,8 +16,6 @@ angular.module('ortolangMarketApp')
 	$scope.use_conditions = [{id:'free', label:'Libre'}, {id:'free-nc', label:'Libre sans usage commercial'}, {id:'restricted', label:'Négociation nécessaire'}];
 
 	$scope.submit = function(form, md) {
-		console.debug("submit form : ");
-		console.debug(form);
 
 		if (form.$invalid) {
 			console.debug('not ready');
@@ -35,6 +33,7 @@ angular.module('ortolangMarketApp')
 		fd.append('type', 'metadata');
 		
 		var mdName = "unknow";
+        //fd.append('format', 'rdf');
         fd.append('format', $scope.userMetadataFormat);
 
         //TODO use lodash
@@ -58,7 +57,7 @@ angular.module('ortolangMarketApp')
 		});
 
 		var content = createRDF(md.category, md.title, md.description, md.abstract, use_conditionsLabel);
-		var blob = new Blob([content], { type: "text/xml"});
+		var blob = new Blob([content], { type: "application/rdf+xml"});
 
 		fd.append("stream", blob);
 
@@ -68,9 +67,19 @@ angular.module('ortolangMarketApp')
         })
         .success(function(){
         	console.debug("metadata created !");
+
+	    	// console.debug($scope);
+	    	// $aside.$hide();
+	    	$scope.aside.hide();
+	    	// $scope.refreshData(true);
         })
         .error(function(){
         	console.error("creation of metadata failed !");
+
+	    	// console.debug($scope);
+	    	// $aside.$hide();
+	    	$scope.aside.hide();
+	    	// $scope.refreshData(true);
         });
 	};
 
@@ -92,7 +101,7 @@ angular.module('ortolangMarketApp')
 		}
 
 		content += '<dc:description>'+description+'</dc:description>\n';
-		content += '<dcterms:abstract>'+abstract+'</dc:abstract>\n';
+		content += '<dcterms:abstract>'+abstract+'</dcterms:abstract>\n';
 		content += '<otl:use_conditions>'+use_conditions+'</otl:use_conditions>\n'
 	
 		return content + footer;

@@ -277,27 +277,46 @@ angular.module('ortolangMarketApp')
                 'contentTemplate': 'views/metadata-creator-market-ortolang.html',
             };
 
-            $scope.metadataFormats = [{id:'rdf-market-ortolang', name:'Présentation'}, {id:'oai_dc', name: 'OAI Dublin Core'}];
+            $scope.metadataFormats = [
+                {
+                    id:'rdf',
+                    name:'Présentation',
+                    contentTemplate: 'views/metadata-creator-market-ortolang.html'
+                },
+                {
+                    id:'oai_dc',
+                    name: 'OAI Dublin Core',
+                    contentTemplate: 'views/metadata-creator-oai_dc.html'
+                }
+            ];
             $scope.userMetadataFormat = null;
 
             $scope.mdName = ''; //TODO aller cherhcer le nom de l'element selectionné
 
             $scope.dropdownMetadataFormats = [{
                 'text': 'Présentation',
-                'click': 'showMetadataCreator()'
+                'click': 'showMetadataCreator("rdf")'
+            },
+            {
+                'text': 'OAI Dublin Core',
+                'click': 'showMetadataCreator("oai_dc")'
             }
             ];
 
-            $scope.showMetadataCreator = function() {
-                console.debug('show metadata creator');
+            $scope.aside = $aside({scope: $scope,
+                title: 'Create metadata',
+                contentTemplate: 'views/metadata-creator-market-ortolang.html', //TODO set with the selected metadata formats
+                template: 'views/aside.tpl.html',
+                placement: 'right',
+                animation: 'am-fade-and-slide-right',
+                container: 'body',
+                show: false
+            });
 
-                $aside({title: 'Create metadata',
-                    contentTemplate: 'views/metadata-creator-market-ortolang.html',
-                    template: 'views/aside.tpl.html',
-                    placement: 'right',
-                    animation: 'am-fade-and-slide-right',
-                    container: 'body'
-                });
+            $scope.showMetadataCreator = function(format) {
+                // console.debug('show metadata creator');
+                $scope.userMetadataFormat = format;
+                $scope.aside.show();
             };
 
             // *********************** //
