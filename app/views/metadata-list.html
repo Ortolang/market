@@ -1,0 +1,32 @@
+<div class="aside-backdrop am-fade" ng-if="isMetadataListShow()" ng-click="hideMetadataList()"></div>
+<div class="aside right am-fade-and-slide-right metadataList" ng-class="middle"  ng-if="isMetadataListShow()" tabindex="-1" role="dialog">
+  <div class="aside-dialog">
+    <div class="aside-content">
+        <div class="aside-header">
+            <!-- <button type="button" class="close" ng-click="toggleMetadataList()">&times;</button> -->
+            <h4 class="aside-title">List of metadata</h4>
+        </div>
+        <div id="browser-toolbar">
+            <!-- <button type="button" class="close" ng-click="toggleMetadataList()">&times;</button> -->
+            <button type="button" style="float: right; margin-right: 15px" class="btn btn-default" data-animation="am-flip-x" data-placement="bottom-right" bs-dropdown="dropdownMetadataFormats">Nouveau</button>
+        </div>
+        <br/>
+		<div class="aside-body">
+            <div style="width: 350px; height: 100%" class="row">
+                <div class="col-md-12">
+                    <div ng-repeat="metadata in metadatas" class="list-group">
+                    	<li class="list-group-item">
+	                        <p>{{metadata.name}}</p>
+	                        <div class="input-group-btn">
+	                            <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
+	                            <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
+	                        </div>
+	            		</li>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

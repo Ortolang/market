@@ -1,0 +1,20 @@
+<div class="aside-backdrop am-fade metadataEditor-backdrop" ng-if="isEditorShow()" ng-click="hideEditor()"></div>
+<div class="aside right am-fade-and-slide-right metadataEditor" ng-if="isEditorShow()" tabindex="-1" role="dialog">
+  <div class="aside-dialog">
+    <div class="aside-content">
+        <div class="aside-header">
+            <!-- <button type="button" class="close" ng-click="toggleEditor()">&times;</button> -->
+            <h4 class="aside-title">Edit metadata</h4>
+          </div>
+          <div class="aside-body">
+
+            <div style="width: 350px; height: 100%" class="row">
+                <div class="col-md-12">
+                    <div ng-include="metadataForm"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  </div>
+</div>

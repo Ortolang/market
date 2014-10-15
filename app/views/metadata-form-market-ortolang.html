@@ -1,0 +1,34 @@
+<form name="metadataMarketform"  accept-charset="UTF-8" novalidate role="form" ng-controller="MetadataFormMarketOrtolangCtrl">
+                        
+    <div class="form-group">
+        <label>Catégorie de la ressource</label>
+        <select name="category" class="form-control" ng-model="md.category" ng-options="cat.id as cat.label for cat in categories" required>
+            <option value="">Choisir une catégorie</option>
+        </select>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': metadataMarketform.title.$invalid }">
+        <label>Titre</label>
+        <input type="text" name="title" ng-model="md.title" class="form-control" required>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': metadataMarketform.description.$invalid }">
+        <label>Description</label>
+        <textarea class="form-control" name="description" ng-model="md.description" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': metadataMarketform.abstract.$invalid }">
+        <label>Résumé</label>
+        <textarea class="form-control" name="abstract" ng-model="md.abstract" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Droit d'utilisation</label>
+        <select name="use_conditions" class="form-control" ng-model="md.use_conditions" ng-options="uc.id as uc.label for uc in use_conditions" required>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" ng-click="submit(metadataMarketform, md)">Valider</button>
+    </div>
+</form>

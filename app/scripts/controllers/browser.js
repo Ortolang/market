@@ -92,6 +92,14 @@ angular.module('ortolangMarketApp')
                 });
             }
 
+            function getMetadatasOfSelectedElement() {
+                if($scope.selectedChild !== undefined) {
+                    return $scope.selectedChildData.object.metadatas;
+                } else {
+                    return $scope.element.metadatas;
+                }
+            }
+
             $scope.clickChild = function (clickEvent, child) {
                 if ($scope.selectedChild === child) {
                     $scope.contextMenu(clickEvent, true);
@@ -175,12 +183,8 @@ angular.module('ortolangMarketApp')
                 e.preventDefault();
             });
 
-            $scope.previewMetadata = function (clickEvent, metadata) {
-                $rootScope.$broadcast('metadata-preview', clickEvent, metadata);
-            };
-
-            $scope.deleteMetadata = function (metadata) {
-                $rootScope.$broadcast('metadata-delete', metadata);
+            $scope.showMetadata = function () {
+                $rootScope.$broadcast('metadata-list-show', getMetadatasOfSelectedElement());
             };
 
             $scope.order = function (predicate, reverse) {
@@ -266,58 +270,6 @@ angular.module('ortolangMarketApp')
                     $scope.resizeBrowser();
                 }
             });
-
-            // *********************** //
-            //          Metadata         //
-            // *********************** //
-
-            // DEPRECATED SINCE USE showMetadataCreator
-            $scope.aside = {
-                'title': 'Create metadata',
-                'contentTemplate': 'views/metadata-creator-market-ortolang.html',
-            };
-
-            $scope.metadataFormats = [
-                {
-                    id:'rdf',
-                    name:'Présentation',
-                    contentTemplate: 'views/metadata-creator-market-ortolang.html'
-                },
-                {
-                    id:'oai_dc',
-                    name: 'OAI Dublin Core',
-                    contentTemplate: 'views/metadata-creator-oai_dc.html'
-                }
-            ];
-            $scope.userMetadataFormat = null;
-
-            $scope.mdName = ''; //TODO aller cherhcer le nom de l'element selectionné
-
-            $scope.dropdownMetadataFormats = [{
-                'text': 'Présentation',
-                'click': 'showMetadataCreator("rdf")'
-            },
-            {
-                'text': 'OAI Dublin Core',
-                'click': 'showMetadataCreator("oai_dc")'
-            }
-            ];
-
-            $scope.aside = $aside({scope: $scope,
-                title: 'Create metadata',
-                contentTemplate: 'views/metadata-creator-market-ortolang.html', //TODO set with the selected metadata formats
-                template: 'views/aside.tpl.html',
-                placement: 'right',
-                animation: 'am-fade-and-slide-right',
-                container: 'body',
-                show: false
-            });
-
-            $scope.showMetadataCreator = function(format) {
-                // console.debug('show metadata creator');
-                $scope.userMetadataFormat = format;
-                $scope.aside.show();
-            };
 
             // *********************** //
             //          Init         //

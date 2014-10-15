@@ -1,4 +1,5 @@
 <div id="browser-wrapper" ng-controller="BrowserCtrl">
+    
     <div class="row">
         <div id="browser-toolbar" class="col-md-12" ng-click="checkSelection($event)">
             <div class="row">
@@ -71,6 +72,10 @@
                             </ul>
                         </div>
 
+                        <div class="btn-group">
+                            <button class="btn btn-default" ng-click="showMetadata()"> Métadonnées</button>
+                        </div>
+
                         <div ng-if="!selectedChild" class="btn-group">
                             <a ng-if="element.stream" class="btn btn-default" href="{{urlBase}}/rest/workspaces/{{wsName}}/download?path={{element.path}}"><i class="glyphicon glyphicon-download"></i>Download</a>
                         </div>
@@ -116,87 +121,52 @@
 
             <p ng-if="!selectedChild" class="lead"><span class="{{element.type | elementIconCss}}"></span> {{element.name}}</p>
             <p ng-if="selectedChild" class="lead"><span class="{{selectedChild.type | elementIconCss}}"></span> {{selectedChildData.object.name}}</p>
-            <!-- <hr/> -->
+            <hr/>
 
-            <ul id="browser-side-tabs" class="nav nav-justified" role="tablist">
-                <li class="active"><a href="#information" role="tab" ng-click="toggleTab($event)">Information</a></li>
-                <li><a href="#metadata" role="tab" ng-click="toggleTab($event)">Metadata</a></li>
-            </ul>
+            <div class="tab-pane active" id="information">
+                <dl ng-if="!selectedChild" class="dl-horizontal">
+                    <dt>Name</dt>
+                    <dd>{{element.name}}</dd>
+                    <dt>Description</dt>
+                    <dd>{{element.description}}</dd>
+                    <dt>Type</dt>
+                    <dd>{{element.type}}</dd>
+                    <dt>Clock</dt>
+                    <dd>{{element.clock}}</dd>
+                    <dt>Size</dt>
+                    <dd>{{element.elements.length}} element{{element.elements.length > 1 ? 's' : ''}}</dd>
+                </dl>
 
-            <div class="tab-content">
-                <div class="tab-pane active" id="information">
-                    <dl ng-if="!selectedChild" class="dl-horizontal">
-                        <dt>Name</dt>
-                        <dd>{{element.name}}</dd>
-                        <dt>Description</dt>
-                        <dd>{{element.description}}</dd>
-                        <dt>Type</dt>
-                        <dd>{{element.type}}</dd>
-                        <dt>Clock</dt>
-                        <dd>{{element.clock}}</dd>
-                        <dt>Size</dt>
-                        <dd>{{element.elements.length}} element{{element.elements.length > 1 ? 's' : ''}}</dd>
-                    </dl>
-
-                    <dl ng-if="selectedChild" class="dl-horizontal">
-                        <dt>Name</dt>
-                        <dd>{{selectedChildData.object.name}}</dd>
-                        <dt>Description</dt>
-                        <dd>{{selectedChildData.object.description}}</dd>
-                        <dt>Content type</dt>
-                        <dd>{{selectedChildData.object.contentType | contentType}}</dd>
-                        <dt>Author</dt>
-                        <dd>{{selectedChildData.author}}</dd>
-                        <dt>Created</dt>
-                        <dd>{{selectedChildData.creationDate | date : 'medium'}}</dd>
-                        <dt>Modified</dt>
-                        <dd>{{selectedChildData.lastModificationDate | date : 'medium'}}</dd>
-                        <dt>Clock</dt>
-                        <dd>{{element.clock}}</dd>
-                        <dt ng-if="selectedChildData.object.size">Size</dt>
-                        <dd ng-if="selectedChildData.object.size">{{selectedChildData.object.size | bytes}}</dd>
-                    </dl>
-                </div>
-                <div class="tab-pane" id="metadata">
-                    <div id="metadata-tab">
-
-                        <!-- <hr/> -->
-                        <!-- <p class="lead">Métadonnées</p> -->
-
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-primary" data-animation="am-flip-x" bs-dropdown="dropdownMetadataFormats">Nouveau</button>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div ng-if="!selectedChild" ng-repeat="metadata in element.metadatas" class="input-group metadata-{{metadata.key}}">
-                                    <div class="form-control">{{metadata.name}}</div>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
-                                        <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
-                                    </div>
-                                </div>
-                                <div ng-if="selectedChild" ng-repeat="metadata in selectedChildData.object.metadatas" class="input-group metadata-{{metadata.key}}">
-                                    <div class="form-control">{{metadata.name}}</div>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" ng-click="previewMetadata($event, metadata)"><span class="glyphicon glyphicon-eye-open"></span></button>
-                                        <button class="btn btn-default" ng-click="deleteMetadata(metadata)"><span class="glyphicon glyphicon-trash"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <dl ng-if="selectedChild" class="dl-horizontal">
+                    <dt>Name</dt>
+                    <dd>{{selectedChildData.object.name}}</dd>
+                    <dt>Description</dt>
+                    <dd>{{selectedChildData.object.description}}</dd>
+                    <dt>Content type</dt>
+                    <dd>{{selectedChildData.object.contentType | contentType}}</dd>
+                    <dt>Author</dt>
+                    <dd>{{selectedChildData.author}}</dd>
+                    <dt>Created</dt>
+                    <dd>{{selectedChildData.creationDate | date : 'medium'}}</dd>
+                    <dt>Modified</dt>
+                    <dd>{{selectedChildData.lastModificationDate | date : 'medium'}}</dd>
+                    <dt>Clock</dt>
+                    <dd>{{element.clock}}</dd>
+                    <dt ng-if="selectedChildData.object.size">Size</dt>
+                    <dd ng-if="selectedChildData.object.size">{{selectedChildData.object.size | bytes}}</dd>
+                </dl>
             </div>
+                
         </div>
 
     </div>
+    
+        <!-- <div ng-include="'views/metadata-editor.html'" class="am-fade-and-slide-right metadataEditor" ng-if="isEditorShow()"></div> -->
+        <div ng-include="'views/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
+        <!-- end editor -->
+
+        <div ng-include="'views/metadata-list.html'" ng-controller="MetadataListCtrl"></div>
+        
 
     <div ng-include="'views/metadata-preview.html'"></div>
 
