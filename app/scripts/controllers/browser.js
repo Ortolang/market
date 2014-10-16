@@ -39,6 +39,19 @@ angular.module('ortolangMarketApp')
             //       Context Menu      //
             // *********************** //
 
+            function clearContextMenuItems() {
+                $scope.contextMenuItems = [];
+            }
+
+            function activateContextMenu() {
+                $scope.isContextMenuActive = true;
+            }
+
+            function deactivateContextMenu() {
+                $scope.isContextMenuActive = false;
+                clearContextMenuItems();
+            }
+
             $scope.contextMenu = function (clickEvent, sameChild) {
                 // If right click
                 if (clickEvent && clickEvent.button === 2) {
@@ -57,22 +70,22 @@ angular.module('ortolangMarketApp')
                     if ($scope.isContextMenuActive && sameChild) {
                         return;
                     }
-                    $scope.isContextMenuActive = true;
-                    $scope.menuItems = [];
+                    clearContextMenuItems();
                     if ($scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
-                        $scope.menuItems.push({text: 'New Collection', icon: 'plus', action: 'newCollection'});
-                        $scope.menuItems.push({divider: true});
+                        $scope.contextMenuItems.push({text: 'New Collection', icon: 'plus', action: 'newCollection'});
+                        $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.visualizers) {
-                        $scope.menuItems.push({text: 'Preview', icon: 'eye-open', action: 'preview'});
-                        $scope.menuItems.push({divider: true});
+                        $scope.contextMenuItems.push({text: 'Preview', icon: 'eye-open', action: 'preview'});
+                        $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
-                        $scope.menuItems.push({text: 'Download', icon: 'download', href: $scope.selectedElements[0].downloadUrl});
+                        $scope.contextMenuItems.push({text: 'Download', icon: 'download', href: $scope.selectedElements[0].downloadUrl});
                     }
-                    $scope.menuItems.push({text: 'Delete', icon: 'trash', action: 'delete'});
+                    $scope.contextMenuItems.push({text: 'Delete', icon: 'trash', action: 'delete'});
+                    activateContextMenu();
                 } else {
-                    $scope.isContextMenuActive = false;
+                    deactivateContextMenu();
                 }
             };
 
@@ -132,7 +145,6 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-
             // *********************** //
             //        Selection        //
             // *********************** //
@@ -164,7 +176,7 @@ angular.module('ortolangMarketApp')
 
             function deselectChildren() {
                 $scope.selectedElements = [$scope.parent];
-                $scope.isContextMenuActive = false;
+                deactivateContextMenu();
                 clearVisualizers();
             }
 
@@ -210,19 +222,29 @@ angular.module('ortolangMarketApp')
                 return size;
             };
 
+            // *********************** //
+            //         Delete          //
+            // *********************** //
+
+            function deleteElements(toBeDeletedElements) {
+                if (toBeDeletedElements.length !== 0) {
+                    WorkspaceElementResource.delete({wsName: $scope.wsName, path: $scope.parent.path + '/' + toBeDeletedElements.pop().name}, function () {
+                        deleteElements(toBeDeletedElements);
+                    });
+                } else {
+                    getParentData(true);
+                }
+            }
+
             $scope.clickDelete = function () {
                 var toBeDeletedElements = $scope.selectedElements;
+                deleteElements(toBeDeletedElements);
                 deselectChildren();
-                angular.forEach(toBeDeletedElements, function (element) {
-                    WorkspaceElementResource.delete({wsName: $scope.wsName, path: $scope.parent.path + '/' + element.name}, function () {
-                        getParentData(true);
-                    });
-                });
             };
 
-            function getMetadatasOfSelectedElement() {
-                return $scope.selectedElements[0].metadatas;
-            }
+            // *********************** //
+            //     Add Collection      //
+            // *********************** //
 
             $scope.newCollectionModal = function () {
                 // TODO give focus to button
@@ -253,7 +275,7 @@ angular.module('ortolangMarketApp')
                         $('#new-collection-modal').modal('hide');
                         $scope.newCollectionName = undefined;
                         $scope.newCollectionDescription = undefined;
-                        $scope.isContextMenuActive = false;
+                        deactivateContextMenu();
                     });
                 } else {
                     $('#new-collection-name').parentsUntil('form', '.form-group').addClass('has-error');
@@ -263,6 +285,14 @@ angular.module('ortolangMarketApp')
             $rootScope.$on('uploaderCompleteItemUpload', function () {
                 getParentData(true);
             });
+
+            // *********************** //
+            //        Metadata         //
+            // *********************** //
+
+            function getMetadatasOfSelectedElement() {
+                return $scope.selectedElements[0].metadatas;
+            }
 
             $rootScope.$on('completeMetadataUpload', function () {
                 if ($scope.hasOnlyParentSelected()) {
@@ -274,19 +304,6 @@ angular.module('ortolangMarketApp')
 
             $scope.showMetadata = function () {
                 $rootScope.$broadcast('metadata-list-show', getMetadatasOfSelectedElement());
-            };
-
-            $scope.order = function (predicate, reverse) {
-                if (predicate !== $scope.orderProp) {
-                    reverse = false;
-                }
-                $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
-                $scope.orderProp = predicate;
-            };
-
-            $scope.toggleTab = function (clickEvent) {
-                clickEvent.preventDefault();
-                $(clickEvent.target).tab('show');
             };
 
             $scope.doAction = function (name) {
@@ -343,6 +360,14 @@ angular.module('ortolangMarketApp')
             // *********************** //
             //          Filter         //
             // *********************** //
+
+            $scope.order = function (predicate, reverse) {
+                if (predicate !== $scope.orderProp) {
+                    reverse = false;
+                }
+                $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
+                $scope.orderProp = predicate;
+            };
 
             $scope.openFilter = function (event) {
                 event.stopPropagation();
@@ -412,7 +437,7 @@ angular.module('ortolangMarketApp')
                 $scope.breadcrumbDropdownItems = undefined;
                 // Context Menu
                 $scope.isContextMenuActive = false;
-                $scope.menuItems = undefined;
+                $scope.contextMenuItems = undefined;
                 // Filter
                 $scope.orderProp = ['type', 'name'];
                 $scope.dateFormat = 'medium';
