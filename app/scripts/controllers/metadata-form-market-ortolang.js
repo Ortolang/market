@@ -13,6 +13,11 @@ angular.module('ortolangMarketApp')
 	$scope.categories = [{id:'Corpora', label:'Corpus'}, {id:'Lexicon', label:'Lexique'}];
 	$scope.use_conditions = [{id:'free', label:'Libre'}, {id:'free-nc', label:'Libre sans usage commercial'}, {id:'restricted', label:'Négociation nécessaire'}];
 
+	if($scope.selectedMetadataContent != undefined) {
+		var mdFromN3 = fromN3($scope.selectedMetadataContent);
+		$scope.md = angular.copy(mdFromN3);
+	}
+
 	$scope.submit = function(form, md) {
 
 		if (form.$invalid) {
@@ -33,7 +38,20 @@ angular.module('ortolangMarketApp')
 		var contentType = "text/n3";
 
 		$rootScope.$broadcast('metadata-editor-create', content, contentType);
-	}
+	};
+
+
+    // ********* //
+    // Listeners //
+    // ********* //
+
+    // $scope.$on('metadata-form', function (event, metadataContent) {
+    //     var mdFromN3 = fromN3(metadataContent);
+
+    //     $scope.md = angular.copy(mdFromN3);
+    // });
+
+	console.debug('show metadata-form-market-ortolang');
 
 
 	// ********* //
@@ -86,6 +104,19 @@ angular.module('ortolangMarketApp')
 		content += ' otl:use_conditions "'+use_conditions+'" .\n'
 	
 		return content;
+	}
+
+	function fromN3(content) {
+		var mdFromN3 = {};
+
+		//TODO extract from content
+		mdFromN3.category = 'Corpora';
+		mdFromN3.title = 'Exemple title';
+		mdFromN3.description = 'Exemple description';
+		mdFromN3.abstract = 'Exemple abstract';
+		mdFromN3.use_conditions = 'Libre';
+
+		return mdFromN3;
 	}
 
   }]);

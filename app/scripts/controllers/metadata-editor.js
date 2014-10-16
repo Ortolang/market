@@ -19,24 +19,24 @@ angular.module('ortolangMarketApp')
     $scope.showEditor = function() {
         $scope.editorVisibility = true;
         $rootScope.$broadcast('metadata-list-push');
-    }
+    };
 
     $scope.hideEditor = function() {
         $scope.editorVisibility = false;
         $rootScope.$broadcast('metadata-list-unpush');
-    }
+    };
 
     $scope.toggleEditor = function() {
-        if($scope.editorVisibility == true) {
+        if($scope.editorVisibility === true) {
             $scope.hideEditor();
         } else {
             $scope.showEditor();
         }
-    }
+    };
 
     $scope.isEditorShow = function() {
         return $scope.editorVisibility === true;
-    }
+    };
 
     // ******** //
     // Metadata //
@@ -47,16 +47,19 @@ angular.module('ortolangMarketApp')
 
     function loadMetadataContent(metadata) {
         $scope.selectedMetadata = metadata;
+        console.debug('metadata : ');
+        console.debug(metadata);
         //TODO get content from workspace resource
         $http.get(Url.urlBase() + '/rest/objects/' + metadata.key + '/download').success(function (data) {
             $scope.selectedMetadataContent = data;
 
+            // $rootScope.$broadcast('metadata-form', $scope.selectedMetadataContent);
             $scope.showEditor();
         }).error(function () {
-            $scope.selectedMetadataContent = undefined;
+            resetMetadata();
             //TODO send error message
         });
-    };
+    }
 
     function resetMetadata() {
         $scope.selectedMetadata = undefined;
@@ -96,7 +99,7 @@ angular.module('ortolangMarketApp')
 
 		var blob = new Blob([content], { type: contentType});
 
-		fd.append("stream", blob);
+		fd.append('stream', blob);
 
 		console.info('create metadata with param : (path:"'+currentPath+'",format:"'+$scope.userMetadataFormat.id+'",name:"'+$scope.userMetadataFormat.name+'")');
 
@@ -105,19 +108,19 @@ angular.module('ortolangMarketApp')
             headers: {'Content-Type': undefined}
         })
         .success(function(){
-        	console.debug("metadata created !");
+        	console.debug('metadata created !');
 
 	    	$scope.hideEditor();
 	    	//TODO refresh metadata list
 	    	resetMetadataFormat();
         })
         .error(function(){
-        	console.error("creation of metadata failed !");
+        	console.error('creation of metadata failed !');
         	//TODO show a message !!
 	    	$scope.hideEditor();
 	    	resetMetadataFormat();
         });
-	};
+	}
 
     // ********* //
     // Listeners //
@@ -131,6 +134,7 @@ angular.module('ortolangMarketApp')
     });
 
     $scope.$on('metadata-editor-edit', function (event, metadataFormat, metadata) {
+
         $scope.userMetadataFormat = metadataFormat;
         $scope.metadataForm = metadataFormat.view;
 

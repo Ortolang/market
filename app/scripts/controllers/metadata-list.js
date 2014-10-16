@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-  .controller('MetadataListCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+  .controller('MetadataListCtrl', ['$scope', '$rootScope', '$http', 'Url', function ($scope, $rootScope, $http, Url) {
 
     $scope.metadataFormats = [
         {
@@ -48,34 +48,28 @@ angular.module('ortolangMarketApp')
 
     function loadMetadatas(metadatas) {
         $scope.metadatas = metadatas;
-        // TODO see if we need to do something like clear garbage collection for metadatas
-        /*
-        $scope.metadatas = [];
-        angular.forEach(metadatas, function() {
-            $http.get(Url.urlBase() + '/rest/workspaces/' + wsName + '/elements?path=')
-            .success(function (data) {
-                $scope.selectedMetadataContent = data;
-
-                $scope.showEditor();
-            }
-            ).error(function () {
-                $scope.selectedMetadataContent = undefined;
-                //TODO send error message
-            });
-        });
-        */
     }
 
     $scope.editMetadata = function (clickEvent, metadata) {
         console.debug('editMetadata with metadata : ');
         console.debug(metadata);
-        var metadataFormat = undefined;
-        angular.forEach($scope.metadataFormats, function(md) {
-            if(md.id === metadata.format) {
-                metadataFormat = md;
-            }
+        //TODO load metadata from WorkspaceElementResource factory
+        $http.get(Url.urlBase() + '/rest/workspaces/'+$scope.selectedElements[0].workspace+'/elements?path='+$scope.selectedElements[0].path+'&metadata='+metadata.name)
+        .success(function (data) {
+            var metadataFormat = undefined;
+            angular.forEach($scope.metadataFormats, function(md) {
+                if(md.id === data.format) {
+                    metadataFormat = md;
+                }
+            });
+            $rootScope.$broadcast('metadata-editor-edit', metadataFormat, data);
+        })
+        .error(function () {
+            //TODO send error message
+            console.error('get workspace element failed !');
         });
-        $rootScope.$broadcast('metadata-editor-edit', clickEvent, metadataFormat, metadata);
+
+        
     };
 
     $scope.previewMetadata = function (clickEvent, metadata) {
