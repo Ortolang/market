@@ -44,13 +44,14 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         function init() {
-            var regExp;
-            angular.forEach($scope.navElements, function (navElement) {
-                regExp = new RegExp('^' + navElement.path);
+            var regExp, i;
+            for (i = 0; i < $scope.navElements.length; i++) {
+                regExp = new RegExp('^' + $scope.navElements[i].path);
                 if ($route.current.originalPath.match(regExp)) {
-                    navElement.active = 'active';
+                    $scope.navElements[i].active = 'active';
+                    break;
                 }
-            });
+            }
         }
 
         init();

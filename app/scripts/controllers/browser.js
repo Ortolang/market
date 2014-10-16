@@ -8,10 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', 'Url', 'hotkeys', 'WorkspaceElementResource',
-        function ($scope, $routeParams, $rootScope, $compile, $filter, Url, hotkeys, WorkspaceElementResource) {
+    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'Url', 'hotkeys', 'WorkspaceElementResource',
+        function ($scope, $routeParams, $rootScope, $compile, $filter, $window, Url, hotkeys, WorkspaceElementResource) {
 //    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', 'Url', 'hotkeys', 'WorkspaceElementResource', 'VisualizerManager',
 //        function ($scope, $routeParams, $rootScope, $compile, $filter, Url, hotkeys, WorkspaceElementResource, VisualizerManager) {
+
+            var isMacOs;
 
             function buildChildDownloadUrl(data) {
                 return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
@@ -181,8 +183,9 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.selectChild = function (clickEvent, child) {
+                var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
                 if ($scope.isSelected(child)) {
-                    if (clickEvent.metaKey) {
+                    if (modKey) {
                         deselectChild(child);
                         return;
                     }
@@ -190,7 +193,7 @@ angular.module('ortolangMarketApp')
                     return;
                 }
                 // Get detailed info on the selected child
-                if (clickEvent.metaKey && !$scope.hasOnlyParentSelected()) {
+                if (modKey && !$scope.hasOnlyParentSelected()) {
                     getChildData(child, false, clickEvent, true);
                 } else {
                     getChildData(child, false, clickEvent, false);
@@ -427,7 +430,7 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
-            function init() {
+            function initScopeVariables() {
                 $scope.wsName = $routeParams.wsName;
                 $scope.parent = undefined;
                 $scope.children = undefined;
@@ -445,7 +448,11 @@ angular.module('ortolangMarketApp')
                 $scope.filterQuery = undefined;
                 // Visualizers
                 $scope.visualizers = undefined;
+            }
 
+            function init() {
+                initScopeVariables();
+                isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 getParentData(false);
                 initBreadcrumbDropdownMenu();
             }
