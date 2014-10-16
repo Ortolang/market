@@ -135,3 +135,19 @@ angular
  * Ortolang Visualizers Module
  */
 angular.module('ortolangVisualizers', ['ortolangMarketApp']);
+//    .config(function () {
+//        console.debug('CONFIG ortolangVisualizers');
+//    $.getScript('http://localhost:9000/scripts/visualizers/simple-audio-visualizer/simple-audio-visualizer.js', function () {
+//        console.debug('LOADED SCRIPT');
+//    });
+//    var s = document.createElement("script");
+//    s.type = "text/javascript";
+//    s.src = "http://localhost:9000/scripts/visualizers/simple-audio-visualizer/simple-audio-visualizer.js";
+//    // Use any selector
+//    $("head").append(s);
+//}).run(function ($http) {
+//    $http.get('http://localhost:9000/scripts/visualizers/simple-audio-visualizer/simple-audio-visualizer.js').success(function (data) {
+//        console.debug(data);
+//    });
+//    console.debug('RUN ortolangVisualizers');
+//});
