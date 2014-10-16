@@ -103,7 +103,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="child in parent.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse" ng-click="selectChild($event, child)" ng-right-click="selectChild($event, child)" ng-class="{active : isSelected(child)}">
+                <tr ng-repeat="child in parent.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
                     <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{parent.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}} type"></span> {{child.name}}</a></td>
                     <td ng-if="!(child.type === 'collection')"><span class="{{child.type | elementIconCss}} type"></span>{{child.name}}</td>
                     <td>{{child.modification | date : dateFormat}}</td>

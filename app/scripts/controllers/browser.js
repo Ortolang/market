@@ -13,8 +13,6 @@ angular.module('ortolangMarketApp')
 //    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', 'Url', 'hotkeys', 'WorkspaceElementResource', 'VisualizerManager',
 //        function ($scope, $routeParams, $rootScope, $compile, $filter, Url, hotkeys, WorkspaceElementResource, VisualizerManager) {
 
-            var isMacOs;
-
             function buildChildDownloadUrl(data) {
                 return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
             }
@@ -176,18 +174,40 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function deselectOthers(element) {
+                $scope.selectedElements = $filter('filter')($scope.selectedElements, {key: element.key}, true);
+            }
+
             function deselectChildren() {
                 $scope.selectedElements = [$scope.parent];
                 deactivateContextMenu();
                 clearVisualizers();
             }
 
-            $scope.selectChild = function (clickEvent, child) {
+            $scope.clickChild = function (clickEvent, child) {
                 var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
                 if ($scope.isSelected(child)) {
                     if (modKey) {
                         deselectChild(child);
                         return;
+                    }
+                    if (clickEvent.button === 0) {
+                        if (!$scope.hasOnlyOneElementSelected()) {
+                            // Check if the user left-clicked again on the same element
+                            if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
+                                deselectOthers(child);
+                            } else {
+                                // If it's the first time do nothing; if it's the second time deselect the others
+                                if (isClickedOnce) {
+                                    deselectOthers(child);
+                                    isClickedOnce = false;
+                                } else {
+                                    isClickedOnce = true;
+                                }
+                            }
+                        }
+                    } else {
+                        isClickedOnce = false;
                     }
                     $scope.contextMenu(clickEvent, true);
                     return;
@@ -430,6 +450,13 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
+            var isMacOs, isClickedOnce;
+
+            function initLocalVariables() {
+                isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                isClickedOnce = false;
+            }
+
             function initScopeVariables() {
                 $scope.wsName = $routeParams.wsName;
                 $scope.parent = undefined;
@@ -451,8 +478,8 @@ angular.module('ortolangMarketApp')
             }
 
             function init() {
+                initLocalVariables();
                 initScopeVariables();
-                isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 getParentData(false);
                 initBreadcrumbDropdownMenu();
             }
