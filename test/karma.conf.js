@@ -44,11 +44,11 @@ module.exports = function (config) {
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
             'app/**/*.js': ['coverage'],
-            "app/views/*.html": ["ng-html2js"]
+            'app/views/*.html': ['ng-html2js']
         },
-        
+
         ngHtml2JsPreprocessor: {
-          stripPrefix: 'app/',
+            stripPrefix: 'app/'
         },
 
         // list of files / patterns to exclude
@@ -71,6 +71,7 @@ module.exports = function (config) {
 
         // Which plugins to enable
         plugins: [
+            'karma-chrome-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-junit-reporter',

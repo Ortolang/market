@@ -19,11 +19,11 @@
                     </div>
 
                     <a ng-if="!$last" href="#/workspaces/{{wsName}}/head/{{part}}/browse" class="btn btn-default" ng-repeat-start="part in breadcrumbParts">
-                        {{element.pathParts[$index]}}
+                        {{parent.pathParts[$index]}}
                     </a>
                     <div class="btn-group" ng-if="$last" ng-repeat-end>
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            {{element.pathParts[$index]}}
+                            {{parent.pathParts[$index]}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -73,15 +73,16 @@
                         </div>
 
                         <div class="btn-group">
-                            <button class="btn btn-default" ng-click="showMetadata()"> Métadonnées</button>
+                            <button class="btn btn-default" ng-click="showMetadata()"> <span class="glyphicon glyphicon-list"></span> Métadonnées</button>
                         </div>
 
-                        <div ng-if="!selectedChild" class="btn-group">
-                            <a ng-if="element.stream" class="btn btn-default" href="{{urlBase}}/rest/workspaces/{{wsName}}/download?path={{element.path}}"><i class="glyphicon glyphicon-download"></i>Download</a>
-                        </div>
                         <div ng-if="selectedChild" class="btn-group">
-                            <a ng-if="selectedChildData.object.stream" class="btn   btn-default" href="{{selectedChildData.object.downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
+                            <a ng-if="selectedElements[0].stream" class="btn   btn-default" href="{{selectedElements[0].downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
                             <button class="btn btn-default" ng-click="clickDelete()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </div>
+
+                        <div ng-if="visualizers" class="btn-group">
+                            <button class="btn btn-default" ng-click="clickPreview()"><i class="glyphicon glyphicon-eye-open"></i> Preview</button>
                         </div>
 
                     </div>
@@ -89,9 +90,12 @@
             </div>
 
         </div>
+    </div>
+
+    <div class="row">
 
         <div class="table-wrapper col-md-9 workspace-elements-wrapper" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
-            <table ng-if="element.elements" class="table table-hover table-responsive workspace-elements">
+            <table ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
                 <thead>
                 <tr>
                     <th ng-click="order('name', 'toggle')">Name</th>
@@ -99,8 +103,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="element-child" ng-repeat="child in element.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
-                    <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{element.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}} type"></span> {{child.name}}</a></td>
+                <tr ng-repeat="child in parent.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
+                    <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{parent.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}} type"></span> {{child.name}}</a></td>
                     <td ng-if="!(child.type === 'collection')"><span class="{{child.type | elementIconCss}} type"></span>{{child.name}}</td>
                     <td>{{child.modification | date : dateFormat}}</td>
                 </tr>
@@ -109,8 +113,8 @@
             <div ng-show="isContextMenuActive && menuItems" ng-style="contextMenuStyle" id="context-menu" class="dropdown clearfix open">
                 <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="item in menuItems" class="{{item.divider ? 'divider' : ''}}">
-                        <a ng-if="item.href" tabindex="-1" href="{{item.href}}"><i class="{{item.icon | iconFullClass}}"></i> {{item.text}}</a>
-                        <div ng-if="!item.href" ng-click="doAction(item.action)" tabindex="-1"><i class="{{item.icon | iconFullClass}}"></i> {{item.text}}</div>
+                        <a ng-if="item.href" tabindex="-1" href="{{item.href}}"><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</a>
+                        <div ng-if="!item.href" ng-click="doAction(item.action)" tabindex="-1"><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</div>
                     </li>
                 </ul>
             </div>
@@ -119,41 +123,43 @@
 
         <div id="browser-sidebar" class="col-md-3">
 
-            <p ng-if="!selectedChild" class="lead"><span class="{{element.type | elementIconCss}}"></span> {{element.name}}</p>
-            <p ng-if="selectedChild" class="lead"><span class="{{selectedChild.type | elementIconCss}}"></span> {{selectedChildData.object.name}}</p>
+            <p ng-if="hasOnlyOneElementSelected()" class="lead">
+                <span class="{{selectedElements[0].type | elementIconCss}}"></span> {{selectedElements[0].name}}
+            </p>
+            <p ng-if="!hasOnlyOneElementSelected()" class="lead">
+                <span class="{{'multiple' | elementIconCss}}"></span> {{selectedElements.length}} elements
+            </p>
             <hr/>
 
-            <div class="tab-pane active" id="information">
-                <dl ng-if="!selectedChild" class="dl-horizontal">
+            <div id="information">
+                <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
                     <dt>Name</dt>
-                    <dd>{{element.name}}</dd>
+                    <dd>{{selectedElements[0].name}}</dd>
                     <dt>Description</dt>
-                    <dd>{{element.description}}</dd>
+                    <dd>{{selectedElements[0].description}}</dd>
+                    <dt>Author</dt>
+                    <dd>{{selectedElements[0].author}}</dd>
                     <dt>Type</dt>
-                    <dd>{{element.type}}</dd>
+                    <dd>{{selectedElements[0].type}}</dd>
+                    <dt>Content-type</dt>
+                    <dd>{{selectedElements[0].mimetype | contentType}}</dd>
+                    <dt>Created</dt>
+                    <dd>{{selectedElements[0].creation}}</dd>
+                    <!--<dd>{{selectedElements[0].creation | date : 'medium'}}</dd>-->
+                    <dt>Modified</dt>
+                    <dd>{{selectedElements[0].modification}}</dd>
+                    <!--<dd>{{selectedElements[0].modification | date : 'medium'}}</dd>-->
                     <dt>Clock</dt>
-                    <dd>{{element.clock}}</dd>
-                    <dt>Size</dt>
-                    <dd>{{element.elements.length}} element{{element.elements.length > 1 ? 's' : ''}}</dd>
+                    <dd>{{selectedElements[0].clock}}</dd>
+                    <dt ng-if="selectedElements[0].type === 'collection'">Size</dt>
+                    <dd ng-if="selectedElements[0].type === 'collection'">{{selectedElements[0].elements.length}} element{{selectedElements[0].elements.length > 1 ? 's' : ''}}</dd>
+                    <dt ng-if="selectedElements[0].type === 'object'">Size</dt>
+                    <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
                 </dl>
 
-                <dl ng-if="selectedChild" class="dl-horizontal">
-                    <dt>Name</dt>
-                    <dd>{{selectedChildData.object.name}}</dd>
-                    <dt>Description</dt>
-                    <dd>{{selectedChildData.object.description}}</dd>
-                    <dt>Content type</dt>
-                    <dd>{{selectedChildData.object.contentType | contentType}}</dd>
-                    <dt>Author</dt>
-                    <dd>{{selectedChildData.author}}</dd>
-                    <dt>Created</dt>
-                    <dd>{{selectedChildData.creationDate | date : 'medium'}}</dd>
-                    <dt>Modified</dt>
-                    <dd>{{selectedChildData.lastModificationDate | date : 'medium'}}</dd>
-                    <dt>Clock</dt>
-                    <dd>{{element.clock}}</dd>
-                    <dt ng-if="selectedChildData.object.size">Size</dt>
-                    <dd ng-if="selectedChildData.object.size">{{selectedChildData.object.size | bytes}}</dd>
+                <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
+                    <dt>Size</dt>
+                    <dd>{{selectedElementsSize() | bytes}}</dd>
                 </dl>
             </div>
                 
@@ -169,6 +175,8 @@
         
 
     <div ng-include="'views/metadata-preview.html'"></div>
+
+    <div ng-include="'views/visualizer.html'"></div>
 
     <div class="modal fade" id="new-collection-modal" tabindex="-1" role="dialog" aria-labelledby="new-collection-modal-label" aria-hidden="true">
         <div class="modal-dialog">

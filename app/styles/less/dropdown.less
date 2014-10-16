@@ -4,26 +4,27 @@
 
 .dropdown-menu {
   z-index: 1010;
-  > li > div {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: normal;
-    line-height: @line-height-base;
-    color: @dropdown-link-color;
-    white-space: nowrap;
-    cursor: pointer;
-    .user-select-mixin;
+  > li {
+    > div, > a {
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      line-height: @line-height-base;
+      color: @dropdown-link-color;
+      white-space: nowrap;
+      cursor: pointer;
+      .user-select-mixin;
 
-    i.glyphicon {
-      padding-right: @padding-base-horizontal;
-      color: @gray-light;
-    }
+      i.glyphicon, span.glyphicon {
+        padding-right: @padding-base-horizontal;
+      }
 
-    &:hover, &:focus {
-      color: @dropdown-link-hover-color;
-      text-decoration: none;
-      background-color: @dropdown-link-hover-bg;
+      &:hover, &:focus {
+        color: @dropdown-link-hover-color;
+        text-decoration: none;
+        background-color: @dropdown-link-hover-bg;
+      }
     }
   }
 }

@@ -23,6 +23,7 @@ angular
         'hljs',
         'cfp.hotkeys',
         'formly'
+//        'ortolangVisualizers'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -67,6 +68,13 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
+    })
+    .config(function ($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist([
+            // Allow same origin resource loads.
+            'self',
+            'http://localhost:8080/**'
+        ]);
     })
     .config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push(function ($q, $location) {
@@ -117,3 +125,13 @@ angular
             }
         });
     }]);
+
+/**
+ * @ngdoc overview
+ * @name ortolangVisualizers
+ * @description
+ * # ortolangVisualizers
+ *
+ * Ortolang Visualizers Module
+ */
+angular.module('ortolangVisualizers', ['ortolangMarketApp']);

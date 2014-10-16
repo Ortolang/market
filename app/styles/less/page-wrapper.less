@@ -1,0 +1,18 @@
+#wrapper {
+  width: 100%;
+}
+
+#page-wrapper {
+  padding: 0 15px;
+  min-height: 568px;
+  background-color: white;
+}
+
+@media(min-width:768px) {
+  #page-wrapper {
+    position: inherit;
+    margin: 0 0 0 @side-bar-width;
+    padding: 0 30px;
+    border-left: 1px solid darken(@gray-lighter, 6.5%);
+  }
+}

@@ -5,12 +5,18 @@
 @import "variables";
 @import "mixins";
 
+@import "page-wrapper";
+@import "side-nav";
 @import "metadata-preview";
 @import "metadata";
 @import "browser";
 @import "upload";
 @import "products";
 @import "dropdown";
+
+body {
+  background-color: @body-bg;
+}
 
 .product-list-element {
   border-left: 4px solid @product-unknown;
