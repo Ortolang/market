@@ -72,16 +72,16 @@
                             </ul>
                         </div>
 
-                        <div class="btn-group">
+                        <div ng-show="hasOnlyOneElementSelected()" class="btn-group">
                             <button class="btn btn-default" ng-click="showMetadata()"> <span class="glyphicon glyphicon-list"></span> Métadonnées</button>
                         </div>
 
-                        <div ng-if="!hasOnlyParentSelected()" class="btn-group">
-                            <a ng-if="selectedElements[0].stream" class="btn   btn-default" href="{{selectedElements[0].downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
+                        <div ng-show="!hasOnlyParentSelected()" class="btn-group">
+                            <a ng-show="selectedElements[0].stream" class="btn   btn-default" href="{{selectedElements[0].downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
                             <button class="btn btn-default" ng-click="clickDelete()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </div>
 
-                        <div ng-if="visualizers" class="btn-group">
+                        <div ng-show="visualizers" class="btn-group">
                             <button class="btn btn-default" ng-click="clickPreview()"><i class="glyphicon glyphicon-eye-open"></i> Preview</button>
                         </div>
 
