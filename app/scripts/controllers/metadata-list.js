@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
     $scope.metadataFormats = [
         {
-            id:'rdf',
+            id:'market-ortolang-n3',
             name:'Présentation',
             view: 'views/metadata-form-market-ortolang.html'
         },
@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
     $scope.userMetadataFormat = null;
     $scope.dropdownMetadataFormats = [{
         'text': 'Présentation',
-        'click': 'showMetadataEditor("rdf")'
+        'click': 'showMetadataEditor("market-ortolang-n3")'
     },
     {
         'text': 'OAI Dublin Core',
@@ -48,7 +48,35 @@ angular.module('ortolangMarketApp')
 
     function loadMetadatas(metadatas) {
         $scope.metadatas = metadatas;
+        // TODO see if we need to do something like clear garbage collection for metadatas
+        /*
+        $scope.metadatas = [];
+        angular.forEach(metadatas, function() {
+            $http.get(Url.urlBase() + '/rest/workspaces/' + wsName + '/elements?path=')
+            .success(function (data) {
+                $scope.selectedMetadataContent = data;
+
+                $scope.showEditor();
+            }
+            ).error(function () {
+                $scope.selectedMetadataContent = undefined;
+                //TODO send error message
+            });
+        });
+        */
     }
+
+    $scope.editMetadata = function (clickEvent, metadata) {
+        console.debug('editMetadata with metadata : ');
+        console.debug(metadata);
+        var metadataFormat = undefined;
+        angular.forEach($scope.metadataFormats, function(md) {
+            if(md.id === metadata.format) {
+                metadataFormat = md;
+            }
+        });
+        $rootScope.$broadcast('metadata-editor-edit', clickEvent, metadataFormat, metadata);
+    };
 
     $scope.previewMetadata = function (clickEvent, metadata) {
         $rootScope.$broadcast('metadata-preview', clickEvent, metadata);

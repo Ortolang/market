@@ -38,6 +38,31 @@ angular.module('ortolangMarketApp')
         return $scope.editorVisibility === true;
     }
 
+    // ******** //
+    // Metadata //
+    // ******** //
+
+    $scope.selectedMetadata = undefined;
+    $scope.selectedMetadataContent = undefined;
+
+    function loadMetadataContent(metadata) {
+        $scope.selectedMetadata = metadata;
+        //TODO get content from workspace resource
+        $http.get(Url.urlBase() + '/rest/objects/' + metadata.key + '/download').success(function (data) {
+            $scope.selectedMetadataContent = data;
+
+            $scope.showEditor();
+        }).error(function () {
+            $scope.selectedMetadataContent = undefined;
+            //TODO send error message
+        });
+    };
+
+    function resetMetadata() {
+        $scope.selectedMetadata = undefined;
+        $scope.selectedMetadataContent = undefined;
+    }
+
 
 	// **** //
 	// Form //
@@ -53,13 +78,16 @@ angular.module('ortolangMarketApp')
 
 	function sendForm(content, contentType) {
 
-		var uploadUrl = Url.urlBase() + '/rest/workspaces/'+$scope.wsName+'/elements/';
+		var uploadUrl = Url.urlBase() + '/rest/workspaces/'+$scope.selectedElements[0].workspace+'/elements/';
 		var fd = new FormData();
-
+/*
 		var currentPath = $scope.element.path;
 		if($scope.selectedChild) {
 			currentPath += '/' + $scope.selectedChildData.object.name
 		}
+*/
+        var currentPath = $scope.selectedElements[0].path;
+
 		fd.append('path', currentPath);
 		fd.append('type', 'metadata');
 		
@@ -96,9 +124,17 @@ angular.module('ortolangMarketApp')
     // ********* //
 
     $scope.$on('metadata-editor-show', function (event, metadataFormat) {
+        resetMetadata();
         $scope.userMetadataFormat = metadataFormat;
         $scope.metadataForm = metadataFormat.view;
         $scope.showEditor();
+    });
+
+    $scope.$on('metadata-editor-edit', function (event, metadataFormat, metadata) {
+        $scope.userMetadataFormat = metadataFormat;
+        $scope.metadataForm = metadataFormat.view;
+
+        loadMetadataContent(metadata);
     });
 
     $scope.$on('metadata-editor-create', function (event, content, contentType) {

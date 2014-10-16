@@ -27,11 +27,13 @@ angular.module('ortolangMarketApp')
 			}
 		});
 
-		var content = createRDF(md.category, md.title, md.description, md.abstract, use_conditionsLabel);
-		var contentType = "application/rdf+xml";
+		// var content = createRDF(md.category, md.title, md.description, md.abstract, use_conditionsLabel);
+		// var contentType = "application/rdf+xml";
+		var content = toN3(md.category, md.title, md.description, md.abstract, use_conditionsLabel);
+		var contentType = "text/n3";
 
 		$rootScope.$broadcast('metadata-editor-create', content, contentType);
-	};
+	}
 
 
 	// ********* //
@@ -61,4 +63,29 @@ angular.module('ortolangMarketApp')
 	
 		return content + footer;
 	}
+
+	function toN3(category, title, description, abstract, use_conditions) {
+		var content = '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n'
+			+ '@prefix dc: <http://purl.org/dc/elements/1.1/> .\n'
+			+ '@prefix dcterms: <http://purl.org/dc/terms/> .\n'
+			+ '@prefix otl: <http://www.ortolang.fr/ontology/> .\n'
+			+ '@prefix market: <http://www.ortolang.fr/2014/09/market#> .\n';
+
+		content += '<${target}> dc:identifier "${targetKey}"'+' ;\n';
+
+		// Requires
+		if(category !== undefined && category != '') {
+			content += ' rdf:type market:'+category+' ;\n';	
+		}
+		if(title !== undefined && title != '') {
+			content += ' dc:title "'+title+'" ;\n';
+		}
+
+		content += ' dc:description "'+description+'" ;\n';
+		content += ' dcterms:abstract "'+abstract+'" ;\n';
+		content += ' otl:use_conditions "'+use_conditions+'" .\n'
+	
+		return content;
+	}
+
   }]);
