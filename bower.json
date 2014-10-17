@@ -19,7 +19,8 @@
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.5",
     "angular-motion": "~0.3.3",
     "bootstrap-additions": "~0.2.3",
-    "angular-formly": "~0.0.16"
+    "angular-formly": "~0.0.16",
+    "n3js": "~0.2.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
