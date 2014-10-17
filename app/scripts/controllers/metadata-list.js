@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-  .controller('MetadataListCtrl', ['$scope', '$rootScope', '$http', 'Url', function ($scope, $rootScope, $http, Url) {
+  .controller('MetadataListCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'Url', 'WorkspaceElementResource', function ($scope, $rootScope, $http, $routeParams, Url, WorkspaceElementResource) {
 
     $scope.metadataFormats = [
         {
@@ -48,6 +48,13 @@ angular.module('ortolangMarketApp')
 
     function loadMetadatas(metadatas) {
         $scope.metadatas = metadatas;
+    }
+
+    function refreshMetadatas() {
+        WorkspaceElementResource.get({wsName: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, root: $routeParams.root},
+            function (workspaceElement) {
+                loadMetadatas(workspaceElement.metadatas);
+            });
     }
 
     $scope.editMetadata = function (clickEvent, metadata) {
@@ -117,6 +124,8 @@ angular.module('ortolangMarketApp')
 
     $scope.$on('metadata-list-unpush', function (event, metadata) {
         $scope.middle = '';
+        // Refresh list of metadata
+        refreshMetadatas();
     });
 
 
