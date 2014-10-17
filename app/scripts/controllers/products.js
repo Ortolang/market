@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
 		$scope.query = '';
 
 		//TODO constante
-		$scope.defaultCategoriesLabel = "Toutes les catégories";
+		$scope.defaultCategoriesLabel = 'Toutes les catégories';
 
 		$scope.categoriesLabel = $scope.defaultCategoriesLabel;
 		$scope.categories = [];
@@ -115,33 +115,33 @@ angular.module('ortolangMarketApp')
                 });
                 return found;
             };
-        }
+        };
 
         $scope.setSelectedCategory = function(category) {
         	$scope.selectedCategory = category;
         	$scope.categoriesLabel = getResourceTypeLabel(category);
-        }
+        };
 
         $scope.resetSelectedCategory = function() {
         	$scope.selectedCategory = undefined;
         	$scope.categoriesLabel = $scope.defaultCategoriesLabel;
-        }
+        };
 
         function getResourceTypeLabel(type) {
         	if(type == 'corpora') {
-        		return "Corpus";
+        		return 'Corpus';
         	} else if(type == 'fulltextdatabase') {
-        		return "Base de données textuelles";
+        		return 'Base de données textuelles';
         	} else if(type == 'annotation') {
-        		return "Enrichissement";
+        		return 'Enrichissement';
         	} else if(type == 'lexicon') {
-        		return "Lexique";
+        		return 'Lexique';
         	} else if(type == 'tool') {
-        		return "Outil";
+        		return 'Outil';
         	} else if(type == 'dictionary') {
-        		return "Dictionnaire";
+        		return 'Dictionnaire';
         	} else if(type == 'dictionary') {
-        		return "Dictionnaire";
+        		return 'Dictionnaire';
         	}
         }
 

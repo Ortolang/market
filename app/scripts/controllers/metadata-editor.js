@@ -114,8 +114,8 @@ angular.module('ortolangMarketApp')
 	    	//TODO refresh metadata list
 	    	resetMetadataFormat();
         })
-        .error(function(){
-        	console.error('creation of metadata failed !');
+        .error(function(error){
+        	console.error('creation of metadata failed !',error);
         	//TODO show a message !!
 	    	$scope.hideEditor();
 	    	resetMetadataFormat();

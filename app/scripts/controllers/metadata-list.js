@@ -35,14 +35,14 @@ angular.module('ortolangMarketApp')
     ];
 
     $scope.showMetadataEditor = function(format) {
-        var metadataFormat = undefined;
+        var metadataFormat;
         angular.forEach($scope.metadataFormats, function(md) {
             if(md.id === format) {
                 metadataFormat = md;
             }
         });
         $rootScope.$broadcast('metadata-editor-show', metadataFormat);
-    }
+    };
 
     $scope.metadatas = [];
 
@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
         //TODO load metadata from WorkspaceElementResource factory
         $http.get(Url.urlBase() + '/rest/workspaces/'+$scope.selectedElements[0].workspace+'/elements?path='+$scope.selectedElements[0].path+'&metadata='+metadata.name)
         .success(function (data) {
-            var metadataFormat = undefined;
+            var metadataFormat;
             angular.forEach($scope.metadataFormats, function(md) {
                 if(md.id === data.format) {
                     metadataFormat = md;
@@ -87,19 +87,19 @@ angular.module('ortolangMarketApp')
 
     $scope.showMetadataList = function() {
         $scope.metadataListVisibility = true;
-    }
+    };
 
     $scope.hideMetadataList = function() {
         $scope.metadataListVisibility = false;
-    }
+    };
 
     $scope.toggleMetadataList = function() {
         $scope.metadataListVisibility = !$scope.metadataListVisibility;
-    }
+    };
 
     $scope.isMetadataListShow = function() {
         return $scope.metadataListVisibility === true;
-    }
+    };
 
 
     // ********* //
