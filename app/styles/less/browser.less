@@ -4,11 +4,11 @@
 
 #browser-toolbar, #browser-sidebar {
   background-color: @navbar-default-bg;
-  padding-top: @padding-large-vertical;
-  padding-bottom: @padding-large-vertical;
 }
 
 #browser-toolbar {
+  padding-top: @padding-large-vertical;
+  padding-bottom: @padding-large-vertical;
   border-bottom: 1px solid @navbar-default-border;
   min-height: 55px;
 
@@ -47,6 +47,8 @@
 }
 
 #browser-sidebar {
+  padding-top: 2 * @padding-large-vertical;
+  padding-bottom: @padding-large-vertical;
   border-left: 1px solid @navbar-default-border;
 
   .dl-horizontal {
@@ -134,7 +136,7 @@ table.workspace-elements {
     td {
       background-color: @ortolang-blue;
       color: #FFF;
-      span.glyphicon.type {
+      span.glyphicon.type, span.fa.type {
         color: inherit;
       }
     }
@@ -162,7 +164,7 @@ table.workspace-elements {
 }
 
 table td {
-  span.glyphicon.type {
+  span.glyphicon.type, span.fa.type {
     padding-right: @padding-base-horizontal;
     color: @gray-light;
   }

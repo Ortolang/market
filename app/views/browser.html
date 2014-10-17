@@ -43,7 +43,8 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><div ng-click="order('name', false)">Name</div></li>
-                                    <li><div ng-click="order(['type','name'], false)">Type</div></li>
+                                    <li><div ng-click="order(['type','name'], false)">Ortolang Type</div></li>
+                                    <li><div ng-click="order('mimeType', false)">Mime Type</div></li>
                                     <li><div ng-click="order('modification', false)">Date</div></li>
                                 </ul>
                             </div>
@@ -100,13 +101,15 @@
                 <tr>
                     <th ng-click="order('name', 'toggle')">Name</th>
                     <th ng-click="order('modification', 'toggle')">Modification Date</th>
+                    <th ng-click="order('mimeType', 'toggle')">Mime type</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="child in parent.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
-                    <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{parent.path}}/{{child.name}}/browse"><span class="{{child.type | elementIconCss}} type"></span> {{child.name}}</a></td>
-                    <td ng-if="!(child.type === 'collection')"><span class="{{child.type | elementIconCss}} type"></span>{{child.name}}</td>
+                    <td ng-if="child.type === 'collection'"><a href="#/workspaces/{{wsName}}/head/{{parent.path}}/{{child.name}}/browse"><span class="{{child.mimeType | mimeTypeIconCss}} type"></span> {{child.name}}</a></td>
+                    <td ng-if="!(child.type === 'collection')"><span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}</td>
                     <td>{{child.modification | date : dateFormat}}</td>
+                    <td>{{child.mimeType}}</td>
                 </tr>
                 </tbody>
             </table>
