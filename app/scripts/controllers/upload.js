@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$routeParams', '$rootScope', '$http', 'FileUploader', 'Url',
-        function ($scope, $routeParams, $rootScope, $http, FileUploader, Url) {
+    .controller('UploadCtrl', ['$scope', '$routeParams', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url',
+        function ($scope, $routeParams, $rootScope, $http, $timeout, FileUploader, Url) {
 
             var uploader;
 
@@ -74,21 +74,26 @@ angular.module('ortolangMarketApp')
                     uploader.removeFromQueue(fileItem);
                     return;
                 }
-                console.info('onAfterAddingFile', fileItem);
-                console.info('formData', fileItem.formData[0], fileItem.formData[1]);
+                console.info(fileItem.file.name + ' added to the queue', fileItem, fileItem.formData[0], fileItem.formData[1]);
             };
 
             uploader.onAfterAddingAll = function () {
                 $rootScope.activateUploadQueue();
             };
 
-            uploader.onCompleteItem = function (fileItem, response, status, headers) {
-                console.info('onCompleteItem', fileItem, response, status, headers);
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                console.info(fileItem.file.name + ' successfully uploaded', fileItem, response, status, headers);
                 if (fileItem.type === 'object') {
-                    console.debug('Emit: uploaderCompleteItemUpload event');
+                    console.info('Emit: uploaderCompleteItemUpload event');
                     $rootScope.$emit('uploaderCompleteItemUpload');
+                    $timeout(function () {
+                        fileItem.remove();
+                        if (uploader.queue.length === 0) {
+                            $rootScope.deactivateUploadQueue();
+                        }
+                    }, 800);
                 } else if (fileItem.type === 'metadata') {
-                    console.debug('Emit: completeMetadataUpload event');
+                    console.info('Emit: completeMetadataUpload event');
                     $rootScope.$emit('completeMetadataUpload');
                 }
             };

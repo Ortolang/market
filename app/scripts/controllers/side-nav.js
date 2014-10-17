@@ -18,6 +18,7 @@ angular.module('ortolangMarketApp')
             },
             {
                 path: '/myspace',
+                otherPath: '/workspaces',
                 description: 'Mon espace',
                 iconCss: 'fa fa-desktop fa-2x',
                 active: undefined
@@ -44,10 +45,14 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         function init() {
-            var regExp, i;
+            var regExp, regExpBis, i;
             for (i = 0; i < $scope.navElements.length; i++) {
                 regExp = new RegExp('^' + $scope.navElements[i].path);
-                if ($route.current.originalPath.match(regExp)) {
+                if ($scope.navElements[i].otherPath) {
+                    regExpBis = new RegExp('^' + $scope.navElements[i].otherPath);
+                }
+                if ($route.current.originalPath.match(regExp) ||
+                        (regExpBis && $route.current.originalPath.match(regExpBis))) {
                     $scope.navElements[i].active = 'active';
                     break;
                 }

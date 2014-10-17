@@ -154,11 +154,11 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.isOnlySelectedElementParent = function () {
-                return $scope.selectedElements[0] === $scope.parent;
+                return $scope.selectedElements[0].key === $scope.parent.key;
             };
 
             $scope.hasOnlyParentSelected = function () {
-                return $scope.selectedElements.length === 1 && $scope.selectedElements[0] === $scope.parent;
+                return $scope.selectedElements.length === 1 && $scope.selectedElements[0].key === $scope.parent.key;
             };
 
             $scope.hasOnlyOneElementSelected = function () {
