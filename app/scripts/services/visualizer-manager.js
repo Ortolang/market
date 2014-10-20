@@ -34,11 +34,20 @@ angular.module('ortolangVisualizers')
             return compatibleVisualizers;
         };
 
+        this.getAllSupportedMimeTypes = function () {
+            var allSupportedMimeTypes = {};
+            angular.forEach(registry, function (visualizer) {
+                angular.extend(allSupportedMimeTypes, visualizer.compatibleTypes);
+            });
+            return allSupportedMimeTypes;
+        };
+
         this.$get = function () {
             return {
                 getRegistry: this.getRegistry,
                 register: this.register,
-                getCompatibleVisualizers: this.getCompatibleVisualizers
+                getCompatibleVisualizers: this.getCompatibleVisualizers,
+                getAllSupportedMimeTypes: this.getAllSupportedMimeTypes
             };
         };
 
@@ -85,7 +94,7 @@ angular.module('ortolangVisualizers')
             },
 
             isCompatible: function (mimeType) {
-                return this.compatibleTypes.indexOf(mimeType) >= 0;
+                return this.compatibleTypes[mimeType];
             }
         };
 

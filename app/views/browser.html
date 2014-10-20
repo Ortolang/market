@@ -111,9 +111,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="child in parent.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse" ng-click="clickChild($event, child)" ng-right-click="clickChild($event, child)" ng-class="{active : isSelected(child)}">
-                    <td ng-if="child.type === 'collection'"><a ng-href="#/workspaces/{{wsName}}/head/{{parent.path}}/{{child.name}}/browse"><span class="{{child.mimeType | mimeTypeIconCss}} type"></span> {{child.name}}</a></td>
-                    <td ng-if="!(child.type === 'collection')"><span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}</td>
+                <tr ng-repeat="child in parent.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse"
+                    ng-click="clickChild($event, child)"
+                    ng-right-click="clickChild($event, child)"
+                    ng-dblclick="doubleClickChild(child)"
+                    ng-class="{active : isSelected(child)}">
+                    <td ng-if="child.type === 'collection'">
+                        <a ng-href="#/workspaces/{{wsName}}/head/{{parent.path}}/{{child.name}}/browse">
+                            <span class="{{child.mimeType | mimeTypeIconCss}} type"></span> {{child.name}}
+                        </a>
+                    </td>
+                    <td ng-if="!(child.type === 'collection')">
+                        <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>
+                        {{child.name}}
+                    </td>
                     <td>{{child.modification | date : dateFormat}}</td>
                     <td>{{child.mimeType}}</td>
                 </tr>

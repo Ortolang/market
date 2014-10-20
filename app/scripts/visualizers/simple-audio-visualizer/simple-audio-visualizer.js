@@ -13,7 +13,12 @@ angular.module('ortolangVisualizers')
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleAudioVisualizer',
             name: 'Simple Audio Visualizer',
-            compatibleTypes: ['audio/webm', 'audio/ogg', 'audio/vorbis', 'audio/mp3'],
+            compatibleTypes: {
+                'audio/webm': true,
+                'audio/ogg': true,
+                'audio/vorbis': true,
+                'audio/mp3': true
+            },
             element: '<simple-audio-visualizer></simple-audio-visualizer>'
         });
 

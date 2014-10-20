@@ -37,7 +37,12 @@ angular.module('ortolangVisualizers')
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleImageVisualizer',
             name: 'Simple Image Visualizer',
-            compatibleTypes: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
+            compatibleTypes: {
+                'image/jpg': true,
+                'image/jpeg': true,
+                'image/png': true,
+                'image/gif': true
+            },
             element: '<simple-image-visualizer></simple-image-visualizer>',
             needAllChildrenData: true
         });
