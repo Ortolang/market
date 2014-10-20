@@ -9,7 +9,7 @@
  */
 angular.module('ortolangMarketApp')
   .controller('MetadataFormMarketOrtolangCtrl', [ '$scope', '$rootScope', '$q', function ($scope, $rootScope, $q) {
-    
+
 	$scope.categories = [{id:'Corpora', label:'Corpus'}, {id:'Lexicon', label:'Lexique'}];
 	$scope.useConditions = [{id:'free', label:'Libre'}, {id:'free-nc', label:'Libre sans usage commercial'}, {id:'restricted', label:'Négociation nécessaire'}];
 	
@@ -65,26 +65,33 @@ angular.module('ortolangMarketApp')
 	// }
 
 	function toN3(category, title, description, abstract, useConditions) {
-		var content = '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n'+
-			'@prefix dc: <http://purl.org/dc/elements/1.1/> .\n'+
-			'@prefix dcterms: <http://purl.org/dc/terms/> .\n'+
-			'@prefix otl: <http://www.ortolang.fr/ontology/> .\n'+
-			'@prefix market: <http://www.ortolang.fr/2014/09/market#> .\n';
+		var content = '',
+			N3Util = N3.Util,
+			writer = N3.Writer(prefixesRDF);
 
-		content += '<${target}> dc:identifier "${targetKey}" ;\n';
+		writer.addTriple('${target}', N3Util.expandQName('dc:identifier', prefixesRDF), '"${targetKey}"');
 		
-		// Requires
 		if(category !== undefined && category !== '') {
-			content += ' rdf:type market:'+category+' ;\n';
+			writer.addTriple('${target}', N3Util.expandQName('rdf:type', prefixesRDF), N3Util.expandQName('market:'+category, prefixesRDF));
 		}
 		if(title !== undefined && title !== '') {
-			content += ' dc:title "'+title+'" ;\n';
+			writer.addTriple('${target}', N3Util.expandQName('dc:title', prefixesRDF), '"'+title+'"');
 		}
 
-		content += ' dc:description "'+description+'" ;\n';
-		content += ' dcterms:abstract "'+abstract+'" ;\n';
-		content += ' otl:use_conditions "'+useConditions+'" .\n';
-	
+		writer.addTriple('${target}', N3Util.expandQName('dc:description', prefixesRDF), '"'+description+'"');
+		writer.addTriple('${target}', N3Util.expandQName('dcterms:abstract', prefixesRDF), '"'+abstract+'"');
+		writer.addTriple('${target}', N3Util.expandQName('otl:use_conditions', prefixesRDF), '"'+useConditions+'"');
+		
+
+		writer.end(function (error, result) {
+			if(error) {
+				//TODO show error message
+				console.error('Cannot create N3 metadata : ', error);
+			} else {
+				content = angular.copy(result);	
+			}
+		});
+
 		return content;
 	}
 
@@ -101,11 +108,7 @@ angular.module('ortolangMarketApp')
 
 		var N3Util = N3.Util;
 		var parser = N3.Parser();
-		var prefixesNeeded = {'dc': 'http://purl.org/dc/elements/1.1/',
-								 'dcterms': 'http://purl.org/dc/terms/',
-								 'market': 'http://www.ortolang.fr/2014/09/market#',
-								 'otl': 'http://www.ortolang.fr/ontology/',
-								 'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'};
+		
 
 		parser.parse(contentPurify,
              function (error, triple) {
@@ -119,16 +122,16 @@ angular.module('ortolangMarketApp')
 						var catId = triple.object.split('#').pop();
 
 						mdFromN3.category = catId;
-					} else if(triple.predicate === N3Util.expandQName('dc:title', prefixesNeeded)) {
+					} else if(triple.predicate === N3Util.expandQName('dc:title', prefixesRDF)) {
 	                 	// 'http://purl.org/dc/elements/1.1/title'
 	                 	mdFromN3.title = angular.copy(literalValue);
-					} else if(triple.predicate === N3Util.expandQName('dc:description', prefixesNeeded)) {
+					} else if(triple.predicate === N3Util.expandQName('dc:description', prefixesRDF)) {
 	                 	// 'http://purl.org/dc/elements/1.1/title'
 	                 	mdFromN3.description = angular.copy(literalValue);
-					} else if(triple.predicate === N3Util.expandQName('dcterms:abstract', prefixesNeeded)) {
+					} else if(triple.predicate === N3Util.expandQName('dcterms:abstract', prefixesRDF)) {
 	                 	// 'http://purl.org/dc/elements/1.1/title'
 	                 	mdFromN3.abstract = angular.copy(literalValue);
-					} else if(triple.predicate === N3Util.expandQName('otl:use_conditions', prefixesNeeded)) {
+					} else if(triple.predicate === N3Util.expandQName('otl:use_conditions', prefixesRDF)) {
 	                 	// 'http://purl.org/dc/elements/1.1/title'
 	                 	mdFromN3.useConditions = angular.copy(literalValue);
 					}
@@ -139,8 +142,7 @@ angular.module('ortolangMarketApp')
 					deferred.reject();
                }
                else {
-					// console.debug("# That's all, folks!", prefixes);
-					console.debug('Parse success !', mdFromN3);
+					// console.debug('Parse success !', mdFromN3);
 					deferred.resolve(mdFromN3);
                }
              });
@@ -154,5 +156,18 @@ angular.module('ortolangMarketApp')
 			$scope.md = angular.copy(data);
 		});
 	}
+
+	var prefixesRDF;
+
+	function initLocalVariables() {
+		prefixesRDF = {'dc': 'http://purl.org/dc/elements/1.1/',
+								 'dcterms': 'http://purl.org/dc/terms/',
+								 'market': 'http://www.ortolang.fr/2014/09/market#',
+								 'otl': 'http://www.ortolang.fr/ontology/',
+								 'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'};
+	}
+
+	initLocalVariables();
+	
 
   }]);
