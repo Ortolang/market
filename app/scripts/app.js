@@ -22,7 +22,8 @@ angular
         'mgcrea.ngStrap.typeahead',
         'hljs',
         'cfp.hotkeys',
-        'formly'
+        'formly',
+        'ui.bootstrap.showErrors'
 //        'ortolangVisualizers'
     ])
     .config(function ($routeProvider) {

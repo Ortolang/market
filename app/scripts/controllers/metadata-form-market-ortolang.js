@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
 	$scope.useConditions = [{id:'free', label:'Libre'}, {id:'free-nc', label:'Libre sans usage commercial'}, {id:'restricted', label:'Négociation nécessaire'}];
 	
 	$scope.submit = function(form, md) {
+		$scope.$broadcast('show-errors-check-validity');
 
 		if (form.$invalid) {
 			console.debug('not ready');
