@@ -6,7 +6,7 @@
                 <i class="fa fa-puzzle-piece"></i> {{plugin.name}}
                 <div class="pull-right">
                     <div class="btn-group">
-                        <a href="#/plugins" class="btn btn-xs"><i class="fa fa-chevron-left"></i> Retour à la liste de plugins</a>
+                        <a href="#/plugins" class="btn btn-xs"><i class="fa fa-chevron-left"></i> Retour à la liste des outils</a>
                     </div>
                 </div>
             </div>
@@ -48,6 +48,24 @@
                     </formly-form>
                 </div>
                 <!-- /.list-group -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+
+        <div class="panel panel-default" ng-if="preview">
+            <div class="panel-heading">
+                <i class="fa fa-eye"></i> Preview du résultat
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a class="btn btn-xs" ng-href="{{downloadUrl}}">
+                            <i class="fa fa-download"></i> Télécharger le fichier généré</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body" ng-bind-html='preview | breakLineFilter'>
             </div>
             <!-- /.panel-body -->
         </div>

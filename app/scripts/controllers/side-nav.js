@@ -24,6 +24,12 @@ angular.module('ortolangMarketApp')
                 active: undefined
             },
             {
+                href: '#/plugins',
+                description: 'Outils',
+                iconCss: 'fa fa-puzzle-piece fa-2x',
+                active: undefined
+            },
+            {
                 path: '/settings',
                 description: 'Settings',
                 iconCss: 'fa fa-cog fa-2x',

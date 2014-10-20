@@ -10,7 +10,6 @@
            aria-describedby="{{id}}_description"
            ng-required="options.required"
            ng-model="value"
-           bs-typeahead
-           ng-options="object.name as object.name for object in options.availableData ">
+           typeahead="object as object.name for object in options.availableData | filter:$viewValue | limitTo:8">
     <p id="{{id}}_description" class="help-block" ng-if="options.description">{{options.description}}</p>
 </div>
