@@ -2,9 +2,8 @@
     
     <div class="row">
         <div id="browser-toolbar" class="col-md-12" ng-click="checkSelection($event)">
-            <div class="row">
-                <div class="browser-breadcrumb btn-toolbar col-md-6" role="toolbar">
-
+            <div class="btn-toolbar" role="toolbar">
+                <div class="browser-breadcrumb">
                     <a ng-if="breadcrumbParts" class="btn btn-default" href="#/workspaces/{{wsName}}/head///browse">
                         <span class="glyphicon glyphicon-home"></span>{{wsName}}
                     </a>
@@ -31,65 +30,72 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="btn-toolbar btn-toolbar-right" role="toolbar">
+                <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
-                        <!--<button class="btn btn-default" ng-click="newCollectionModal()"><i class="glyphicon glyphicon-plus"></i>  New collection</button>-->
+                    <!--<button class="btn btn-default" ng-click="newCollectionModal()"><i class="glyphicon glyphicon-plus"></i>  New collection</button>-->
 
+                    <div class="btn-group">
                         <div class="btn-group">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-sort"></span> Sort by
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><div ng-click="order('name', false)">Name</div></li>
-                                    <li><div ng-click="order(['type','name'], false)">Ortolang Type</div></li>
-                                    <li><div ng-click="order('mimeType', false)">Mime Type</div></li>
-                                    <li><div ng-click="order('modification', false)">Date</div></li>
-                                </ul>
-                            </div>
-                            <div id="filter-query-wrapper" class="btn-group">
-                                <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-search"></span> Filter
-                                </button>
-                                <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
-                                    <div class="has-feedback">
-                                        <label class="control-label sr-only" for="filter-input">Filter</label>
-                                        <input id="filter-input" ng-model="filterQuery" class="form-control" placeholder="Filter" type="text">
-                                        <span ng-show="filterQuery" ng-click="filterQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
-                                    </div>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Sort&nbsp;by" bs-tooltip>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><div ng-click="order('name', false)">Name</div></li>
+                                <li><div ng-click="order(['type','name'], false)">Ortolang Type</div></li>
+                                <li><div ng-click="order('mimeType', false)">Mime Type</div></li>
+                                <li><div ng-click="order('modification', false)">Date</div></li>
+                            </ul>
+                        </div>
+                        <div id="filter-query-wrapper" class="btn-group">
+                            <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Filter" bs-tooltip>
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
+                                <div class="has-feedback">
+                                    <label class="control-label sr-only" for="filter-input">Filter</label>
+                                    <input id="filter-input" ng-model="filterQuery" class="form-control" placeholder="Filter" type="text">
+                                    <span ng-show="filterQuery" ng-click="filterQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="btn-group">
-                            <button class="btn btn-default" onclick="$('#object-upload-file-select').click();"><i class="glyphicon glyphicon-upload"></i> Upload</button>
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li><div ng-class="uploadQueueStatus" ng-click="toggleUploadQueueStatus()">Show upload queue</div></li>
-                            </ul>
-                        </div>
-
-                        <div ng-show="hasOnlyOneElementSelected()" class="btn-group">
-                            <button class="btn btn-default" ng-click="showMetadata()"> <span class="glyphicon glyphicon-list"></span> Métadonnées</button>
-                        </div>
-
-                        <div ng-show="!hasOnlyParentSelected()" class="btn-group">
-                            <a ng-show="selectedElements[0].stream" class="btn   btn-default" href="{{selectedElements[0].downloadUrl}}"><i class="glyphicon glyphicon-download"></i> Download</a>
-                            <button class="btn btn-default" ng-click="clickDelete()"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                        </div>
-
-                        <div ng-show="visualizers" class="btn-group">
-                            <button class="btn btn-default" ng-click="clickPreview()"><i class="glyphicon glyphicon-eye-open"></i> Preview</button>
-                        </div>
-
                     </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-default" onclick="$('#object-upload-file-select').click();" data-title="Upload" bs-tooltip>
+                            <span class="glyphicon glyphicon-upload"></span>
+                        </button>
+                        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
+                            <!--<span class="caret"></span>-->
+                            <!--<span class="sr-only">Toggle Dropdown</span>-->
+                        <!--</button>-->
+                        <!--<ul class="dropdown-menu dropdown-menu-right" role="menu">-->
+                            <!--<li><div ng-class="uploadQueueStatus" ng-click="toggleUploadQueueStatus()">Show upload queue</div></li>-->
+                        <!--</ul>-->
+                    </div>
+
+                    <div ng-show="hasOnlyOneElementSelected()" class="btn-group">
+                        <button class="btn btn-default" ng-click="showMetadata()" data-title="Métadonnées" bs-tooltip>
+                            <span class="glyphicon glyphicon-list"></span>
+                        </button>
+                    </div>
+
+                    <div ng-show="!hasOnlyParentSelected()" class="btn-group">
+                        <a ng-show="selectedElements[0].stream" class="btn btn-default" href="{{selectedElements[0].downloadUrl}}" data-title="Download" bs-tooltip>
+                            <span class="glyphicon glyphicon-download"></span>
+                        </a>
+                        <button class="btn btn-default" ng-click="clickDelete()" data-title="Delete" bs-tooltip>
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+
+                    <div ng-show="visualizers" class="btn-group">
+                        <button class="btn btn-default" ng-click="clickPreview()" data-title="Preview" bs-tooltip>
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                    </div>
+
                 </div>
             </div>
-
         </div>
     </div>
 

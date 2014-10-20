@@ -8,10 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'Url', 'hotkeys', 'WorkspaceElementResource',
-        function ($scope, $routeParams, $rootScope, $compile, $filter, $window, Url, hotkeys, WorkspaceElementResource) {
-//    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', 'Url', 'hotkeys', 'WorkspaceElementResource', 'VisualizerManager',
-//        function ($scope, $routeParams, $rootScope, $compile, $filter, Url, hotkeys, WorkspaceElementResource, VisualizerManager) {
+    .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'Url', 'hotkeys', 'WorkspaceElementResource', 'VisualizerManager',
+        function ($scope, $routeParams, $rootScope, $compile, $filter, $window, Url, hotkeys, WorkspaceElementResource, VisualizerManager) {
 
             function buildChildDownloadUrl(data) {
                 return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
@@ -127,22 +125,37 @@ angular.module('ortolangMarketApp')
                     });
             }
 
-            function getChildrenData(isPreview) {
+            function getChildrenDataOfTypes(mimeTypes, isPreview) {
+                console.info('Starting to get children data of types', mimeTypes);
                 $scope.children = [];
-                var completedElements = 0;
-                angular.forEach($scope.parent.elements, function (child) {
+                var completedElements = 0,
+                    filteredElements;
+                if (mimeTypes) {
+                    filteredElements = [];
+                    angular.forEach(mimeTypes, function (mimeType) {
+                        filteredElements = filteredElements.concat($filter('filter')($scope.parent.elements, {mimeType: mimeType}, true));
+                    });
+                } else {
+                    filteredElements = $scope.parent.elements;
+                }
+                angular.forEach(filteredElements, function (child) {
+                    console.info('Requesting data of ' + child.name);
                     WorkspaceElementResource.get({wsName: $routeParams.wsName, path: $routeParams.path + child.name, root: $routeParams.root},
                         function (data) {
                             data.downloadUrl = Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
                             data.selected = $scope.isSelected(data);
                             $scope.children.push(data);
-                            console.log(data);
+                            console.info('Successfully retrieved data of ' + child.name, data);
                             completedElements += 1;
-                            if (isPreview && completedElements === $scope.parent.elements.length) {
+                            if (isPreview && completedElements === filteredElements.length) {
                                 finishPreview();
                             }
                         });
                 });
+            }
+
+            function getAllChildrenData(isPreview) {
+                getChildrenDataOfTypes(undefined, isPreview);
             }
 
             // *********************** //
@@ -355,10 +368,10 @@ angular.module('ortolangMarketApp')
             }
 
             function checkVisualizer(element) {
-//                $scope.visualizers = VisualizerManager.getCompatibleVisualizers(element.mimetype);
-//                if ($scope.visualizers.length === 0) {
+                $scope.visualizers = VisualizerManager.getCompatibleVisualizers(element.mimetype);
+                if ($scope.visualizers.length === 0) {
                     clearVisualizers();
-//                }
+                }
             }
 
             function finishPreview() {
@@ -374,7 +387,7 @@ angular.module('ortolangMarketApp')
             $scope.clickPreview = function () {
                 var firstVisualizer = $scope.visualizers[0];
                 if (firstVisualizer.needAllChildrenData) {
-                    getChildrenData(true);
+                    getChildrenDataOfTypes(firstVisualizer.compatibleTypes, true);
                 } else {
                     finishPreview();
                 }

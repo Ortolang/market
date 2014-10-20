@@ -13,6 +13,7 @@ angular
         'ngAnimate',
         'ngRoute',
         'ngResource',
+        'ortolangVisualizers',
         'angularFileUpload',
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.aside',
@@ -24,7 +25,6 @@ angular
         'cfp.hotkeys',
         'formly',
         'ui.bootstrap.showErrors'
-//        'ortolangVisualizers'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -135,20 +135,21 @@ angular
  *
  * Ortolang Visualizers Module
  */
-angular.module('ortolangVisualizers', ['ortolangMarketApp']);
-//    .config(function () {
+angular.module('ortolangVisualizers', [])
+    .config(function () {
 //        console.debug('CONFIG ortolangVisualizers');
-//    $.getScript('http://localhost:9000/scripts/visualizers/simple-audio-visualizer/simple-audio-visualizer.js', function () {
-//        console.debug('LOADED SCRIPT');
-//    });
-//    var s = document.createElement("script");
-//    s.type = "text/javascript";
-//    s.src = "http://localhost:9000/scripts/visualizers/simple-audio-visualizer/simple-audio-visualizer.js";
-//    // Use any selector
-//    $("head").append(s);
-//}).run(function ($http) {
+//        $.getScript('http://localhost:9000/scripts/visualizers/simple-image-visualizer/simple-image-visualizer.js', function () {
+//            console.debug('LOADED SCRIPT');
+//        });
+//        var s = document.createElement('script');
+//        s.type = 'text/javascript';
+//        s.src = 'http://localhost:9000/scripts/visualizers/simple-image-visualizer/simple-image-visualizer.js';
+        // Use any selector
+//        $('head').append(s);
+//})
+// .run(function ($http) {
 //    $http.get('http://localhost:9000/scripts/visualizers/simple-audio-visualizer/simple-audio-visualizer.js').success(function (data) {
 //        console.debug(data);
 //    });
 //    console.debug('RUN ortolangVisualizers');
-//});
+    });

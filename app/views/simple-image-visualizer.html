@@ -1,0 +1,30 @@
+<div id="simple-image-visualizer-carousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li ng-repeat="image in imageElements"
+            ng-class="{active: image.selected}"
+            data-target="#simple-image-visualizer-carousel"
+            data-slide-to="{{$index}}"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div ng-repeat="image in imageElements" ng-class="{active: image.selected}" class="item">
+            <!--<p style="text-align: center">-->
+                <img src="{{image.downloadUrl}}" alt="{{image.description}}">
+            <!--</p>-->
+            <div class="carousel-caption">
+                <h4>{{image.name}}</h4>
+                <p>{{image.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div style="cursor: pointer" ng-if="imageElements.length > 1" onclick="angular.element('#simple-image-visualizer-carousel').carousel('prev')" class="left carousel-control" role="button">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </div>
+    <a style="cursor: pointer" ng-if="imageElements.length > 1" onclick="angular.element('#simple-image-visualizer-carousel').carousel('next')" class="right carousel-control" role="button">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>
