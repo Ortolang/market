@@ -47,8 +47,6 @@ angular.module('ortolangMarketApp')
 
     function loadMetadataContent(metadata) {
         $scope.selectedMetadata = metadata;
-        console.debug('metadata : ');
-        console.debug(metadata);
         //TODO get content from workspace resource
         $http.get(Url.urlBase() + '/rest/objects/' + metadata.key + '/download').success(function (data) {
             $scope.selectedMetadataContent = data;
@@ -101,14 +99,11 @@ angular.module('ortolangMarketApp')
 
 		fd.append('stream', blob);
 
-		console.info('create metadata with param : (path:"'+currentPath+'",format:"'+$scope.userMetadataFormat.id+'",name:"'+$scope.userMetadataFormat.name+'")');
-
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
         .success(function(){
-        	console.debug('metadata created !');
 
 	    	$scope.hideEditor();
 	    	//TODO refresh metadata list

@@ -58,8 +58,7 @@ angular.module('ortolangMarketApp')
     }
 
     $scope.editMetadata = function (clickEvent, metadata) {
-        console.debug('editMetadata with metadata : ');
-        console.debug(metadata);
+        // Get metadata content
         //TODO load metadata from WorkspaceElementResource factory
         $http.get(Url.urlBase() + '/rest/workspaces/'+$scope.selectedElements[0].workspace+'/elements?path='+$scope.selectedElements[0].path+'&metadata='+metadata.name)
         .success(function (data) {
@@ -73,7 +72,7 @@ angular.module('ortolangMarketApp')
         })
         .error(function () {
             //TODO send error message
-            console.error('get workspace element failed !');
+            console.error('Get metadata content of '+metadata.name+' failed !');
         });
 
         
