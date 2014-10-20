@@ -11,7 +11,7 @@
     <div class="carousel-inner">
         <div ng-repeat="image in imageElements" ng-class="{active: image.selected}" class="item">
             <!--<p style="text-align: center">-->
-                <img src="{{image.downloadUrl}}" alt="{{image.description}}">
+                <img ng-src="{{image.downloadUrl}}" alt="{{image.description}}">
             <!--</p>-->
             <div class="carousel-caption">
                 <h4>{{image.name}}</h4>

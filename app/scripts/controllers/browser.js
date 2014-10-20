@@ -11,10 +11,6 @@ angular.module('ortolangMarketApp')
     .controller('BrowserCtrl', ['$scope', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'Url', 'hotkeys', 'WorkspaceElementResource', 'VisualizerManager',
         function ($scope, $routeParams, $rootScope, $compile, $filter, $window, Url, hotkeys, WorkspaceElementResource, VisualizerManager) {
 
-            function buildChildDownloadUrl(data) {
-                return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
-            }
-
             // *********************** //
             //        Breadcrumb       //
             // *********************** //
@@ -102,6 +98,10 @@ angular.module('ortolangMarketApp')
                         }
                         $scope.resizeBrowser();
                     });
+            }
+
+            function buildChildDownloadUrl(data) {
+                return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
             }
 
             function getChildData(child, refresh, clickEvent, isPush) {
