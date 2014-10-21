@@ -41,7 +41,15 @@ angular.module('ortolangVisualizers')
         return {
             templateUrl: '../../../views/simple-video-visualizer.html',
             restrict: 'E',
-            scope: true
+            scope: true,
+            link: function postLink(scope, element, attrs) {
+                angular.element('#visualizer-modal').on('hide.bs.modal', function () {
+                    var simpleHtml5Video = angular.element('#simple-html5-video');
+                    if (simpleHtml5Video.length === 1) {
+                        simpleHtml5Video[0].pause();
+                    }
+                });
+            }
         };
     }]);
 

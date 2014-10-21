@@ -6,12 +6,3 @@
         <source ng-switch-when="application/octet-stream" src="{{selectedElements[0].downloadUrl}}" type="video/webm">
     </video>
 </div>
-
-<script type="text/javascript">
-    angular.element('#visualizer-modal').on('hide.bs.modal', function () {
-        var simpleHtml5Video = angular.element('#simple-html5-video');
-        if (simpleHtml5Video.length === 1) {
-            simpleHtml5Video[0].pause();
-        }
-    });
-</script>

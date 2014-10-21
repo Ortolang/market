@@ -41,7 +41,15 @@ angular.module('ortolangVisualizers')
         return {
             templateUrl: '../../../views/simple-audio-visualizer.html',
             restrict: 'E',
-            scope: true
+            scope: true,
+            link: function postLink(scope, element, attrs) {
+                angular.element('#visualizer-modal').on('hide.bs.modal', function () {
+                    var simpleHtml5VAudio = angular.element('#simple-html5-audio');
+                    if (simpleHtml5VAudio.length === 1) {
+                        simpleHtml5VAudio[0].pause();
+                    }
+                });
+            }
         };
     }]);
 

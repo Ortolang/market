@@ -8,12 +8,3 @@
         <source ng-switch-when="audio/webm" src="{{selectedElements[0].downloadUrl}}" type="audio/webm">
     </audio>
 </div>
-
-<script type="text/javascript">
-    angular.element('#visualizer-modal').on('hide.bs.modal', function () {
-        var simpleHtml5VAudio = angular.element('#simple-html5-audio');
-        if (simpleHtml5VAudio.length === 1) {
-            simpleHtml5VAudio[0].pause();
-        }
-    });
-</script>
