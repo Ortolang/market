@@ -17,17 +17,19 @@
                         </ul>
                     </div>
 
-                    <a ng-if="!$last" ng-href="#/workspaces/{{wsName}}/head/{{part}}/browse" class="btn btn-default" ng-repeat-start="part in breadcrumbParts">
-                        {{parent.pathParts[$index]}}
-                    </a>
-                    <div class="btn-group" ng-if="$last" ng-repeat-end>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <div ng-repeat="part in breadcrumbParts" class="breadcrumb-part">
+                        <a ng-if="!$last" ng-href="#/workspaces/{{wsName}}/head/{{part}}/browse" class="btn btn-default">
                             {{parent.pathParts[$index]}}
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</div></li>
-                        </ul>
+                        </a>
+                        <div class="btn-group" ng-if="$last">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                {{parent.pathParts[$index]}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</div></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" role="toolbar">

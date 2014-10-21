@@ -20,6 +20,19 @@
   }
 
   .browser-breadcrumb {
+    .btn.btn-default {
+      padding: @padding-base-vertical (@padding-small-horizontal - 2);
+    }
+    .breadcrumb-part {
+      display: inline;
+      &::before {
+        content: '\f054';
+        font-family: "fontawesome";
+        float: left;
+        color: @btn-default-border;
+        padding: (@padding-base-vertical + 2) 3px (@padding-base-vertical - 2) 3px;
+      }
+    }
     button, a {
       background-color: transparent;
       border-color: transparent;
