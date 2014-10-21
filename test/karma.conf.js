@@ -34,6 +34,7 @@ module.exports = function (config) {
             'bower_components/angular-hotkeys/build/hotkeys.js',
             'bower_components/angular-formly/dist/formly.bootstrap.js',
             'bower_components/angular-bootstrap-show-errors/src/showErrors.js',
+            'bower_components/angular-sanitize/angular-sanitize.js',
             'app/scripts/**/*.js',
             'test/mock/**/*.js',
             'test/spec/**/*.js',
