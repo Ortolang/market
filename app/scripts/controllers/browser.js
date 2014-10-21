@@ -125,7 +125,7 @@ angular.module('ortolangMarketApp')
                     });
             }
 
-            function getChildrenDataOfTypes(mimeTypes, isPreview) {
+            function getChildrenDataOfTypes(mimeTypes, isPreview, visualizer) {
                 console.info('Starting to get children data of types', Object.keys(mimeTypes));
                 $scope.children = [];
                 var completedElements = 0,
@@ -148,14 +148,14 @@ angular.module('ortolangMarketApp')
                             console.info('Successfully retrieved data of ' + child.name, data);
                             completedElements += 1;
                             if (isPreview && completedElements === filteredElements.length) {
-                                finishPreview();
+                                finishPreview(visualizer);
                             }
                         });
                 });
             }
 
-            function getAllChildrenData(isPreview) {
-                getChildrenDataOfTypes(undefined, isPreview);
+            function getAllChildrenData(isPreview, visualizer) {
+                getChildrenDataOfTypes(undefined, isPreview, visualizer);
             }
 
             // *********************** //
@@ -374,22 +374,21 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function finishPreview() {
-                var firstVisualizer = $scope.visualizers[0],
-                    element = $compile(firstVisualizer.element)($scope),
+            function finishPreview(visualizer) {
+                var element = $compile(visualizer.element)($scope),
                     visualizerModal = $('#visualizer-modal');
-                visualizerModal.find('.modal-header strong').text(firstVisualizer.name);
+                visualizerModal.find('.modal-header strong').text(visualizer.name);
                 visualizerModal.find('.modal-body').empty().append(element);
                 visualizerModal.modal('show');
                 $scope.contextMenu();
             }
 
-            $scope.clickPreview = function () {
-                var firstVisualizer = $scope.visualizers[0];
-                if (firstVisualizer.needAllChildrenData) {
-                    getChildrenDataOfTypes(firstVisualizer.compatibleTypes, true);
+            $scope.clickPreview = function (_visualizer_) {
+                var visualizer = _visualizer_ || $scope.visualizers[0];
+                if (visualizer.needAllChildrenData) {
+                    getChildrenDataOfTypes(visualizer.compatibleTypes, true, visualizer);
                 } else {
-                    finishPreview();
+                    finishPreview(visualizer);
                 }
             };
 

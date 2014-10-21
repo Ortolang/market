@@ -92,6 +92,14 @@
                         <button class="btn btn-default" ng-click="clickPreview()" data-title="Preview" bs-tooltip>
                             <span class="glyphicon glyphicon-eye-open"></span>
                         </button>
+                        <button ng-if="visualizers.length > 1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul ng-if="visualizers.length > 1" class="dropdown-menu" role="menu">
+                            <li ng-repeat-start="visualizer in visualizers"><div ng-click="clickPreview(visualizer)">{{visualizer.getName()}}</div></li>
+                            <li ng-repeat-end ng-if="$first" class="divider"></li>
+                        </ul>
                     </div>
 
                 </div>
