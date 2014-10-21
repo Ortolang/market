@@ -1,6 +1,6 @@
 <div>
     <p>{{selectedElements[0].name}}</p>
-    <audio controls ng-switch="selectedElements[0].mimetype">
+    <audio id="simple-html5-audio" controls ng-switch="selectedElements[0].mimetype">
         <source ng-switch-when="audio/vorbis" src="{{selectedElements[0].downloadUrl}}" type="audio/ogg">
         <source ng-switch-when="audio/ogg" src="{{selectedElements[0].downloadUrl}}" type="audio/ogg">
         <source ng-switch-when="audio/mp3" src="{{selectedElements[0].downloadUrl}}" type="audio/mpeg">
@@ -8,3 +8,12 @@
         <source ng-switch-when="audio/webm" src="{{selectedElements[0].downloadUrl}}" type="audio/webm">
     </audio>
 </div>
+
+<script type="text/javascript">
+    angular.element('#visualizer-modal').on('hide.bs.modal', function () {
+        var simpleHtml5VAudio = angular.element('#simple-html5-audio');
+        if (simpleHtml5VAudio.length === 1) {
+            simpleHtml5VAudio[0].pause();
+        }
+    });
+</script>

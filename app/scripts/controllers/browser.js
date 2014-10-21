@@ -368,7 +368,7 @@ angular.module('ortolangMarketApp')
             }
 
             function checkCompatibleVisualizers(element) {
-                $scope.visualizers = VisualizerManager.getCompatibleVisualizers(element.mimetype);
+                $scope.visualizers = VisualizerManager.getCompatibleVisualizers(element.mimetype, element.name);
                 if ($scope.visualizers.length === 0) {
                     clearVisualizers();
                 }
@@ -378,7 +378,7 @@ angular.module('ortolangMarketApp')
                 var firstVisualizer = $scope.visualizers[0],
                     element = $compile(firstVisualizer.element)($scope),
                     visualizerModal = $('#visualizer-modal');
-                visualizerModal.find('.modal-header h4').text(firstVisualizer.name);
+                visualizerModal.find('.modal-header strong').text(firstVisualizer.name);
                 visualizerModal.find('.modal-body').empty().append(element);
                 visualizerModal.modal('show');
                 $scope.contextMenu();
@@ -393,7 +393,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.doubleClickChild = function (child) {
+            $scope.doubleClickChild = function ($event, child) {
                 if (child.type === 'collection') {
                     $location.path('/workspaces/' + $routeParams.wsName + '/' + $routeParams.root +
                         '/' + $routeParams.path + '/' + child.name + '/browse');

@@ -36,7 +36,7 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('simpleAudioVisualizer', [ 'SimpleAudioVisualizer', function (SimpleAudioVisualizer) {
+    .directive('simpleAudioVisualizer', [function () {
 
         return {
             templateUrl: '../../../views/simple-audio-visualizer.html',

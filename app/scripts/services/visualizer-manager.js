@@ -24,10 +24,10 @@ angular.module('ortolangVisualizers')
             return registry.push(visualizer);
         };
 
-        this.getCompatibleVisualizers = function (mimeType) {
+        this.getCompatibleVisualizers = function (mimeType, name) {
             var compatibleVisualizers = [];
             angular.forEach(registry, function (visualizer) {
-                if (visualizer.isCompatible(mimeType)) {
+                if (visualizer.isCompatible(mimeType, name)) {
                     this.push(visualizer);
                 }
             }, compatibleVisualizers);
@@ -93,7 +93,13 @@ angular.module('ortolangVisualizers')
                 return this.element;
             },
 
-            isCompatible: function (mimeType) {
+            isCompatible: function (mimeType, name) {
+                // If mimetype is given with an array of compatible file extensions
+                if (angular.isArray(this.compatibleTypes[mimeType])) {
+                    // check if the file extension is compatible
+                    return this.compatibleTypes[mimeType]
+                        .indexOf(name.substr((~-name.lastIndexOf('.') >>> 0) + 2)) !== -1;
+                }
                 return this.compatibleTypes[mimeType];
             }
         };
