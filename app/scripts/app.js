@@ -94,6 +94,11 @@ angular
             };
         });
     }])
+    .config(function ($tooltipProvider) {
+        angular.extend($tooltipProvider.defaults, {
+            container: 'body'
+        });
+    })
     .run(['$rootScope', '$location', 'AuthService', 'AuthEvents', function ($rootScope, $location, AuthService, AuthEvents) {
         /**
          * Check if user is authorized to the current url (mainly workspaces)
