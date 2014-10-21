@@ -44,6 +44,12 @@
     padding-left: @padding-xs-horizontal;
     padding-right: @padding-xs-horizontal;
   }
+  // Fix border-radius issue due to angular-strap tooltips elements
+  .btn-group > .btn:first-child {
+    &:last-of-type:not(.dropdown-toggle) {
+      .border-right-radius(@border-radius-base);
+    }
+  }
 }
 
 #browser-sidebar {

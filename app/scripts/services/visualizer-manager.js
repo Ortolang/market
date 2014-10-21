@@ -117,5 +117,4 @@ angular.module('ortolangVisualizers')
     .run(function (VisualizerFactory) {
         // force VisualizerFactory to run by injecting it. Without this, VisualizerFactory only runs
         // when a controller or something else asks for it via DI.
-        console.debug('RUN VisualizerFactory', VisualizerFactory);
     });
