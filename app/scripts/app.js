@@ -21,7 +21,6 @@ angular
         'mgcrea.ngStrap.helpers.dimensions',
         'mgcrea.ngStrap.tooltip',
         'mgcrea.ngStrap.dropdown',
-        'ui.bootstrap',
         'hljs',
         'cfp.hotkeys',
         'formly',
