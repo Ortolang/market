@@ -76,8 +76,8 @@ angular.module('ortolangMarketApp')
 
         };
 
-        $scope.previewMetadata = function (clickEvent, metadata) {
-            $rootScope.$broadcast('metadata-preview', clickEvent, metadata);
+        $scope.previewMetadata = function (metadata) {
+            $rootScope.$broadcast('metadata-preview', metadata);
         };
 
         $scope.deleteMetadata = function (metadata) {

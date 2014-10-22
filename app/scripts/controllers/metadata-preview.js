@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('MetadataPreviewCtrl', ['$scope', 'DownloadResource', function ($scope, DownloadResource) {
 
-        $scope.loadMetadata = function (clickEvent, metadata) {
+        function previewMetadata(metadata) {
             $scope.selectedMetadata = metadata;
             DownloadResource.download({oKey: metadata.key}).success(function (data) {
                 $scope.code = data;
@@ -18,9 +18,9 @@ angular.module('ortolangMarketApp')
             }).error(function () {
                 $scope.code = undefined;
             });
-        };
+        }
 
-        $scope.$on('metadata-preview', function (event, clickEvent, metadata) {
-            $scope.loadMetadata(clickEvent, metadata);
+        $scope.$on('metadata-preview', function (event, metadata) {
+            previewMetadata(metadata);
         });
     }]);
