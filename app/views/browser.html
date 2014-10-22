@@ -121,7 +121,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="child in parent.elements | filter:{name: filterQuery} | orderBy:orderProp:orderReverse"
+                <tr ng-repeat="child in parent.elements | filter: filterChildren(filterQuery) | orderBy:orderProp:orderReverse"
                     ng-click="clickChild($event, child)"
                     ng-right-click="clickChild($event, child)"
                     ng-dblclick="doubleClickChild($event, child)"

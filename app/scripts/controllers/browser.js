@@ -425,6 +425,13 @@ angular.module('ortolangMarketApp')
                 }
             });
 
+            $scope.filterChildren = function (query) {
+                return function (child) {
+                    var re = new RegExp(query, 'gi');
+                    return child.name.match(re) || child.mimeType.match(re);
+                };
+            };
+
             hotkeys.bindTo($scope)
                 .add({
                     combo: 'mod+f',
