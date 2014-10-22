@@ -79,6 +79,7 @@ angular.module('ortolangMarketApp')
             WorkspaceResource.query(
                 function (wk) {
                     wkList = wk.entries;
+                    console.debug(wk);
                     deferred.resolve(wkList);
                 },
                 function (error) {

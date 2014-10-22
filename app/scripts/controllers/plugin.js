@@ -32,8 +32,8 @@ angular.module('ortolangMarketApp')
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
                 PluginsResource.getConfig({pKey: $routeParams.plName},
                     function (config) {
-                        console.debug(config);
                         $scope.initialiseFormConfig(config);
+                        console.debug(config);
                         $scope.generateForm(config);
                     },
                     function (error) {
@@ -78,7 +78,26 @@ angular.module('ortolangMarketApp')
                                 $scope.pushDataObjects(wks, function () {
                                     angular.forEach(configJSON, function (field, index) {
                                         if (field.type === 'dataobject') {
-                                            configJSON[index].availableData = $scope.listAvailableDataObject;
+//                                            configJSON[index].availableData = $scope.listAvailableDataObject;
+//                                            console.debug(JSON.stringify(configJSON[index].availableData));
+                                            configJSON[index].availableData = [
+                                                {
+                                                    'type': 'object',
+                                                    'name': 'test.txt',
+                                                    'label': 'test.txt',
+                                                    'modification': 1413878591735,
+                                                    'mimeType': 'text/plain',
+                                                    'key': 'd3c8bfb2-f495-476d-abc0-099642f079f8'
+                                                },
+                                                {
+                                                    'type': 'object',
+                                                    'name': 'bootstrap.txt',
+                                                    'label': 'bootstrap.txt',
+                                                    'modification': 1413878556410,
+                                                    'mimeType': 'text/plain',
+                                                    'key': '541f61b1-958b-45ac-ad58-0ca50bca7f33'
+                                                }
+                                            ];
                                         }
                                     });
                                 });
@@ -89,6 +108,7 @@ angular.module('ortolangMarketApp')
 //                    $scope.formFields.concat('{key: \'hidden_' + field.key + '\', type: \'hidden\' }');
 //                });
             };
+
 
             /**
              * Generate the form

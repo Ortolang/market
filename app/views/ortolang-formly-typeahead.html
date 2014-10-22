@@ -5,11 +5,13 @@
     </label>
     <input type="text"
            class="form-control"
+           data-animation="am-flip-x"
            id="{{id}}"
            placeholder="{{options.placeholder}}"
            aria-describedby="{{id}}_description"
            ng-required="options.required"
            ng-model="value"
-           typeahead="object as object.name for object in options.availableData | filter:$viewValue | limitTo:8">
+           bs-typeahead="typeahead"
+           ng-options="object as object.name for object in options.availableData | filter:$viewValue | limitTo:8">
     <p id="{{id}}_description" class="help-block" ng-if="options.description">{{options.description}}</p>
 </div>
