@@ -97,6 +97,11 @@ angular.module('ortolangMarketApp')
                             newSelectedElement($scope.parent);
                         }
                         $scope.resizeBrowser();
+                        angular.forEach($scope.parent.elements, function (value) {
+                            if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
+                                $scope.allChildrenMimeTypes.push(value.mimeType);
+                            }
+                        });
                     });
             }
 
@@ -157,6 +162,14 @@ angular.module('ortolangMarketApp')
             function getAllChildrenData(isPreview, visualizer) {
                 getChildrenDataOfTypes(undefined, isPreview, visualizer);
             }
+
+            $scope.refreshSelectedElements = function () {
+                if ($scope.hasOnlyParentSelected()) {
+                    getParentData(true);
+                } else if ($scope.hasOnlyOneElementSelected()) {
+                    getChildData($scope.selectedElements[0], true, undefined, false);
+                }
+            };
 
             // *********************** //
             //        Selection        //
@@ -420,17 +433,11 @@ angular.module('ortolangMarketApp')
             };
 
             angular.element('#filter-query-wrapper').on('hide.bs.dropdown', function () {
-                if ($scope.filterQuery !== undefined && $scope.filterQuery.length !== 0) {
+                if (($scope.filterNameQuery !== undefined && $scope.filterNameQuery.length !== 0) ||
+                        ($scope.filterMimeTypeQuery !== undefined && $scope.filterMimeTypeQuery.length !== 0)) {
                     return false;
                 }
             });
-
-            $scope.filterChildren = function (query) {
-                return function (child) {
-                    var re = new RegExp(query, 'gi');
-                    return child.name.match(re) || child.mimeType.match(re);
-                };
-            };
 
             hotkeys.bindTo($scope)
                 .add({
@@ -491,6 +498,7 @@ angular.module('ortolangMarketApp')
                 $scope.wsName = $routeParams.wsName;
                 $scope.parent = undefined;
                 $scope.children = undefined;
+                $scope.allChildrenMimeTypes = [];
                 $scope.selectedElements = [];
                 // Breadcrumb
                 $scope.breadcrumbParts = undefined;
@@ -502,7 +510,8 @@ angular.module('ortolangMarketApp')
                 $scope.orderProp = ['type', 'name'];
                 $scope.dateFormat = 'medium';
                 $scope.reverse = false;
-                $scope.filterQuery = undefined;
+                $scope.filterNameQuery = undefined;
+                $scope.filterMimeTypeQuery = undefined;
                 // Visualizers
                 $scope.visualizers = undefined;
                 $scope.allSuportedMimeTypes = VisualizerManager.getAllSupportedMimeTypes();

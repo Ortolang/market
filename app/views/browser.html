@@ -34,8 +34,6 @@
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
-                    <!--<button class="btn btn-default" ng-click="newCollectionModal()"><i class="glyphicon glyphicon-plus"></i>  New collection</button>-->
-
                     <div class="btn-group">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Sort&nbsp;by" bs-tooltip>
@@ -53,10 +51,15 @@
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                             <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
+                                <div class="form-group has-feedback">
+                                    <label class="control-label" for="filter-input">Name</label>
+                                    <input id="filter-input" ng-model="filterNameQuery" class="form-control" placeholder="Name" type="text">
+                                    <span ng-show="filterNameQuery" ng-click="filterNameQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                </div>
                                 <div class="has-feedback">
-                                    <label class="control-label sr-only" for="filter-input">Filter</label>
-                                    <input id="filter-input" ng-model="filterQuery" class="form-control" placeholder="Filter" type="text">
-                                    <span ng-show="filterQuery" ng-click="filterQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <label class="control-label" for="filter-mime-type-input">Mime Type</label>
+                                    <input id="filter-mime-type-input" ng-model="filterMimeTypeQuery" class="form-control" placeholder="Mime Type" type="text" ng-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
+                                    <span ng-show="filterMimeTypeQuery" ng-click="filterMimeTypeQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +124,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="child in parent.elements | filter: filterChildren(filterQuery) | orderBy:orderProp:orderReverse"
+                <tr ng-repeat="child in parent.elements | filter: {name: filterNameQuery, mimeType: filterMimeTypeQuery} | orderBy:orderProp:orderReverse"
                     ng-click="clickChild($event, child)"
                     ng-right-click="clickChild($event, child)"
                     ng-dblclick="doubleClickChild($event, child)"

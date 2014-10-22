@@ -141,7 +141,10 @@ angular
  *
  * Ortolang Visualizers Module
  */
-angular.module('ortolangVisualizers', ['ortolangMarketApp']);
+angular.module('ortolangVisualizers', [
+    'ortolangMarketApp'
+//    'pdf'
+]);
 //    .config(function () {
 //        console.debug('CONFIG ortolangVisualizers');
 //    $.getScript('http://localhost:9000/scripts/visualizers/simple-audio-visualizer/simple-audio-visualizer.js', function () {
