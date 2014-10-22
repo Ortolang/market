@@ -14,11 +14,6 @@ angular.module('ortolangMarketApp')
             query: {
                 method: 'GET',
                 isArray: false
-            },
-            download: {
-                url: Url.urlBase() + '/rest/workspaces/:wsName/download',
-                method: 'GET',
-                isArray: false
             }
         });
     }]);

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'Url', 'hotkeys', 'WorkspaceElementResource', 'VisualizerManager',
-        function ($scope, $location, $routeParams, $rootScope, $compile, $filter, $window, Url, hotkeys, WorkspaceElementResource, VisualizerManager) {
+    .controller('BrowserCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'hotkeys', 'DownloadResource', 'WorkspaceElementResource', 'VisualizerManager',
+        function ($scope, $location, $routeParams, $rootScope, $compile, $filter, $window, hotkeys, DownloadResource, WorkspaceElementResource, VisualizerManager) {
 
             // *********************** //
             //        Breadcrumb       //
@@ -101,7 +101,7 @@ angular.module('ortolangMarketApp')
             }
 
             function buildChildDownloadUrl(data) {
-                return Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
+                return DownloadResource.getDownloadUrl({wsName: $scope.wsName, path: $scope.parent.path + '/' + data.name});
             }
 
             function getChildData(child, refresh, clickEvent, isPush) {
@@ -142,7 +142,7 @@ angular.module('ortolangMarketApp')
                     console.info('Requesting data of ' + child.name);
                     WorkspaceElementResource.get({wsName: $routeParams.wsName, path: $routeParams.path + child.name, root: $routeParams.root},
                         function (data) {
-                            data.downloadUrl = Url.urlBase() + '/rest/workspaces/' + $scope.wsName + '/download?path=' + $scope.parent.path + '/' + data.name;
+                            data.downloadUrl = DownloadResource.getDownloadUrl({wsName: $scope.wsName, path: $scope.parent.path + '/' + data.name});
                             data.selected = $scope.isSelected(data);
                             $scope.children.push(data);
                             console.info('Successfully retrieved data of ' + child.name, data);
