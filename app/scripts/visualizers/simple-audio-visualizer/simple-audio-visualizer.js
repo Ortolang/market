@@ -17,7 +17,8 @@ angular.module('ortolangVisualizers')
                 'audio/webm': true,
                 'audio/ogg': true,
                 'audio/vorbis': true,
-                'audio/mp3': true
+                'audio/mp3': true,
+                'audio/mpeg': true
             },
             element: '<simple-audio-visualizer></simple-audio-visualizer>'
         });
