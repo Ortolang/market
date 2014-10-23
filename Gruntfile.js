@@ -438,7 +438,7 @@ module.exports = function (grunt) {
                         projectKey: 'ortolang:market:0.2.0',
                         projectName: 'Ortolang Market',
                         projectVersion: '0.2.0-SNAPSHOT',
-                        sources: ['app/scripts', 'test'].join(','),
+                        sources: ['app/scripts', 'test/spec'].join(','),
                         language: 'js',
                         sourceEncoding: 'UTF-8'
                     }
