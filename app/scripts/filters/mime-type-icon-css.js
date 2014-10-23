@@ -9,55 +9,62 @@
  * Filter in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .filter('mimeTypeIconCss', function () {
+    .filter('mimeTypeIconCss', ['icons', function (icons) {
 
         var xmlRegExp = new RegExp('^(?!image/)[a-zA-Z0-9\/+]*xml$');
 
         return function (input) {
+            if (!input) {
+                return undefined;
+            }
             if (input === 'ortolang/collection') {
-                return 'fa fa-folder-o';
+                return icons.folder;
+            }
+            if (xmlRegExp.test(input) || input === 'text/html') {
+                return icons.codeFile;
             }
             if (/^text/.test(input)) {
-                return 'fa fa-file-text-o';
-            }
-            if (xmlRegExp.test(input)) {
-                return 'fa fa-file-code-o';
+                return icons.textFile;
             }
             if (/^image/.test(input)) {
-                return 'fa fa-file-image-o';
+                return icons.imageFile;
             }
             if (/^audio/.test(input)) {
-                return 'fa fa-file-audio-o';
+                return icons.audioFile;
             }
             if (/^video/.test(input)) {
-                return 'fa fa-file-video-o';
+                return icons.videoFile;
             }
             if (input === 'application/pdf') {
-                return 'fa fa-file-pdf-o';
+                return icons.pdfFile;
             }
-            if (input === 'application/zip') {
-                return 'fa fa-file-archive-o';
+            if (input === 'application/zip' ||
+                    input === 'application/x-rar-compressed' ||
+                    input === 'application/x-tar' ||
+                    input === 'application/x-apple-diskimage' ||
+                    input === 'application/x-7z-compressed') {
+                return icons.archiveFile;
             }
             if (input === 'application/msword') {
-                return 'fa fa-file-word-o';
+                return icons.officeWordFile;
             }
             if (input === 'application/vnd.ms-excel') {
-                return 'fa fa-file-excel-o';
+                return icons.officeExcelFile;
             }
             if (input === 'application/vnd.ms-powerpoint') {
-                return 'fa fa-file-powerpoint-o';
+                return icons.officePowerpointFile;
             }
             if (/officedocument/.test(input)) {
                 if (/wordprocessingml/.test(input)) {
-                    return 'fa fa-file-word-o';
+                    return icons.officeWordFile;
                 }
                 if (/spreadsheetml/.test(input)) {
-                    return 'fa fa-file-excel-o';
+                    return icons.officeExcelFile;
                 }
                 if (/presentationml/.test(input)) {
-                    return 'fa fa-file-powerpoint-o';
+                    return icons.officePowerpointFile;
                 }
             }
-            return 'fa fa-file-o';
+            return icons.file;
         };
-    });
+    }]);
