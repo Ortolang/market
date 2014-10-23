@@ -119,8 +119,8 @@
                 <thead>
                 <tr>
                     <th ng-click="order('name', 'toggle')">Name</th>
-                    <th ng-click="order('modification', 'toggle')">Modification Date</th>
-                    <th ng-click="order('mimeType', 'toggle')">Mime type</th>
+                    <th ng-click="order('mimeType', 'toggle')">Type</th>
+                    <th ng-click="order('modification', 'toggle')">Last Modification</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -137,8 +137,8 @@
                     <td ng-if="!(child.type === 'collection')">
                         <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}
                     </td>
+                    <td>{{child.mimeType | contentType}}</td>
                     <td>{{child.modification | date : dateFormat}}</td>
-                    <td>{{child.mimeType}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -172,15 +172,11 @@
                     <dt>Author</dt>
                     <dd>{{selectedElements[0].author}}</dd>
                     <dt>Type</dt>
-                    <dd>{{selectedElements[0].type}}</dd>
-                    <dt>Content-type</dt>
                     <dd>{{selectedElements[0].mimetype | contentType}}</dd>
                     <dt>Created</dt>
-                    <dd>{{selectedElements[0].creation}}</dd>
-                    <!--<dd>{{selectedElements[0].creation | date : 'medium'}}</dd>-->
+                    <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
                     <dt>Modified</dt>
-                    <dd>{{selectedElements[0].modification}}</dd>
-                    <!--<dd>{{selectedElements[0].modification | date : 'medium'}}</dd>-->
+                    <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
                     <dt>Clock</dt>
                     <dd>{{selectedElements[0].clock}}</dd>
                     <dt ng-if="selectedElements[0].type === 'collection'">Size</dt>

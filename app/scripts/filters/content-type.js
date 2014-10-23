@@ -11,6 +11,6 @@
 angular.module('ortolangMarketApp')
     .filter('contentType', function () {
         return function (input) {
-            return input || 'collection';
+            return input === 'ortolang/collection' ? 'collection' : input;
         };
     });
