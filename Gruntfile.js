@@ -435,9 +435,9 @@ module.exports = function (grunt) {
                             password: 'sonar'
                         },
 
-                        projectKey: 'sonar:grunt-sonar-runner:0.1.0',
-                        projectName: 'Grunt Sonar Runner',
-                        projectVersion: '0.10',
+                        projectKey: 'ortolang:market:0.2.0',
+                        projectName: 'Ortolang Market',
+                        projectVersion: '0.2.0-SNAPSHOT',
                         sources: ['test'].join(','),
                         language: 'js',
                         sourceEncoding: 'UTF-8'
