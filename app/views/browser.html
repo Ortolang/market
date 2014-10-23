@@ -5,15 +5,15 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="browser-breadcrumb">
                     <a ng-if="breadcrumbParts" class="btn btn-default" ng-href="#/workspaces/{{wsName}}/head///browse">
-                        <span class="glyphicon glyphicon-home"></span>{{wsName}}
+                        <span ng-class="icons.browser.home"></span>{{wsName}}
                     </a>
                     <div ng-if="breadcrumbParts.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-home"></span>{{wsName}}
+                            <span ng-class="icons.browser.home"></span>{{wsName}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</div></li>
+                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
                         </ul>
                     </div>
 
@@ -27,7 +27,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</div></li>
+                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
                             </ul>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                     <div class="btn-group">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Sort&nbsp;by" bs-tooltip>
-                                <span class="glyphicon glyphicon-sort"></span>
+                                <span ng-class="icons.browser.sort"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li><div ng-click="order('name', false)">Name</div></li>
@@ -48,18 +48,18 @@
                         </div>
                         <div id="filter-query-wrapper" class="btn-group">
                             <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Filter" bs-tooltip>
-                                <span class="glyphicon glyphicon-search"></span>
+                                <span ng-class="icons.browser.search"></span>
                             </button>
                             <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
                                 <div class="form-group has-feedback">
                                     <label class="control-label" for="filter-input">Name</label>
                                     <input id="filter-input" ng-model="filterNameQuery" class="form-control" placeholder="Name" type="text">
-                                    <span ng-show="filterNameQuery" ng-click="filterNameQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <span ng-show="filterNameQuery" ng-click="filterNameQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                                 </div>
                                 <div class="has-feedback">
                                     <label class="control-label" for="filter-mime-type-input">Mime Type</label>
                                     <input id="filter-mime-type-input" ng-model="filterMimeTypeQuery" class="form-control" placeholder="Mime Type" type="text" ng-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
-                                    <span ng-show="filterMimeTypeQuery" ng-click="filterMimeTypeQuery = ''" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                    <span ng-show="filterMimeTypeQuery" ng-click="filterMimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
 
                     <div class="btn-group">
                         <button class="btn btn-default" onclick="$('#object-upload-file-select').click();" data-title="Upload" bs-tooltip>
-                            <span class="glyphicon glyphicon-upload"></span>
+                            <span ng-class="icons.browser.upload"></span>
                         </button>
                         <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
                             <!--<span class="caret"></span>-->
@@ -80,22 +80,22 @@
 
                     <div ng-show="hasOnlyOneElementSelected()" class="btn-group">
                         <button class="btn btn-default" ng-click="showMetadata()" data-title="Métadonnées" bs-tooltip>
-                            <span class="glyphicon glyphicon-list"></span>
+                            <span ng-class="icons.browser.metadata"></span>
                         </button>
                     </div>
 
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
                         <a ng-show="selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="Download" bs-tooltip>
-                            <span class="glyphicon glyphicon-download"></span>
+                            <span ng-class="icons.browser.download"></span>
                         </a>
                         <button class="btn btn-default" ng-click="clickDelete()" data-title="Delete" bs-tooltip>
-                            <span class="glyphicon glyphicon-trash"></span>
+                            <span ng-class="icons.browser.delete"></span>
                         </button>
                     </div>
 
                     <div ng-show="visualizers" class="btn-group">
                         <button class="btn btn-default" ng-click="clickPreview()" data-title="Preview" bs-tooltip>
-                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span ng-class="icons.browser.preview"></span>
                         </button>
                         <button ng-if="visualizers.length > 1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
@@ -145,8 +145,8 @@
             <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" id="context-menu" class="dropdown clearfix open">
                 <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="item in contextMenuItems" class="{{item.divider ? 'divider' : ''}}">
-                        <a ng-if="item.href" tabindex="-1" ng-href="{{item.href}}"><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</a>
-                        <div ng-if="!item.href" ng-click="doAction(item.action)" tabindex="-1"><span class="{{item.icon | iconFullClass}}"></span> {{item.text}}</div>
+                        <a ng-if="item.href" tabindex="-1" ng-href="{{item.href}}"><span ng-class="item.icon"></span> {{item.text}}</a>
+                        <div ng-if="!item.href" ng-click="doAction(item.action)" tabindex="-1"><span ng-class="item.icon"></span> {{item.text}}</div>
                     </li>
                 </ul>
             </div>
@@ -156,10 +156,10 @@
         <div id="browser-sidebar" class="col-md-3">
 
             <p ng-if="hasOnlyOneElementSelected()" class="lead">
-                <span class="{{selectedElements[0].type | elementIconCss}}"></span> {{selectedElements[0].name}}
+                <span ng-class="selectedElements[0].mimetype | mimeTypeIconCss"></span> {{selectedElements[0].name}}
             </p>
             <p ng-if="!hasOnlyOneElementSelected()" class="lead">
-                <span class="{{'multiple' | elementIconCss}}"></span> {{selectedElements.length}} elements
+                <span ng-class="icons.files"></span> {{selectedElements.length}} elements
             </p>
             <hr/>
 

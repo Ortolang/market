@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'hotkeys', 'DownloadResource', 'WorkspaceElementResource', 'VisualizerManager',
-        function ($scope, $location, $routeParams, $rootScope, $compile, $filter, $window, hotkeys, DownloadResource, WorkspaceElementResource, VisualizerManager) {
+    .controller('BrowserCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$compile', '$filter', '$window', 'hotkeys', 'DownloadResource', 'WorkspaceElementResource', 'VisualizerManager', 'icons',
+        function ($scope, $location, $routeParams, $rootScope, $compile, $filter, $window, hotkeys, DownloadResource, WorkspaceElementResource, VisualizerManager, icons) {
 
             // *********************** //
             //        Breadcrumb       //
@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
 
             function initBreadcrumbDropdownMenu() {
                 $scope.breadcrumbDropdownItems = [];
-                $scope.breadcrumbDropdownItems.push({text: 'New Collection', icon: 'plus', action: 'newCollection'});
+                $scope.breadcrumbDropdownItems.push({text: 'New Collection', icon: icons.browser.plus, action: 'newCollection'});
             }
 
             function buildBreadcrumb() {
@@ -66,17 +66,17 @@ angular.module('ortolangMarketApp')
                     }
                     clearContextMenuItems();
                     if ($scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
-                        $scope.contextMenuItems.push({text: 'New Collection', icon: 'plus', action: 'newCollection'});
+                        $scope.contextMenuItems.push({text: 'New Collection', icon: icons.browser.plus, action: 'newCollection'});
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.visualizers) {
-                        $scope.contextMenuItems.push({text: 'Preview', icon: 'eye-open', action: 'preview'});
+                        $scope.contextMenuItems.push({text: 'Preview', icon: icons.browser.preview, action: 'preview'});
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
-                        $scope.contextMenuItems.push({text: 'Download', icon: 'download', href: $scope.selectedElements[0].downloadUrl});
+                        $scope.contextMenuItems.push({text: 'Download', icon: icons.browser.download, href: $scope.selectedElements[0].downloadUrl});
                     }
-                    $scope.contextMenuItems.push({text: 'Delete', icon: 'trash', action: 'delete'});
+                    $scope.contextMenuItems.push({text: 'Delete', icon: icons.browser.delete, action: 'delete'});
                     activateContextMenu();
                 } else {
                     deactivateContextMenu();
@@ -496,6 +496,7 @@ angular.module('ortolangMarketApp')
                 $scope.children = undefined;
                 $scope.allChildrenMimeTypes = [];
                 $scope.selectedElements = [];
+                $scope.icons = icons;
                 // Breadcrumb
                 $scope.breadcrumbParts = undefined;
                 $scope.breadcrumbDropdownItems = undefined;
