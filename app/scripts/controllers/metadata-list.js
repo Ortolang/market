@@ -34,28 +34,15 @@ angular.module('ortolangMarketApp')
             }
         ];
 
-        $scope.showMetadataEditor = function(format) {
+        $scope.showMetadataEditor = function (format) {
             var metadataFormat;
-            angular.forEach($scope.metadataFormats, function(md) {
+            angular.forEach($scope.metadataFormats, function (md) {
                 if (md.id === format) {
                     metadataFormat = md;
                 }
             });
             $rootScope.$broadcast('metadata-editor-show', metadataFormat);
         };
-
-        $scope.metadatas = [];
-
-        function loadMetadatas(metadatas) {
-            $scope.metadatas = metadatas;
-        }
-
-        function refreshMetadatas() {
-            WorkspaceElementResource.get({wsName: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, root: $routeParams.root},
-                function (workspaceElement) {
-                    loadMetadatas(workspaceElement.metadatas);
-                });
-        }
 
         $scope.editMetadata = function (clickEvent, metadata) {
             // Get metadata content
@@ -81,10 +68,9 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.deleteMetadata = function (metadata) {
-            // TODO fix issue when deleting metadata on root collection
             WorkspaceElementResource.delete({wsName: $scope.wsName, path: $scope.selectedElements[0].path, metadataname: metadata.name}, function () {
                 $scope.selectedMetadata = undefined;
-                $scope.refreshSelectedElements();
+                $scope.refreshSelectedElement();
             });
         };
 
@@ -113,8 +99,7 @@ angular.module('ortolangMarketApp')
         // Listeners //
         // ********* //
 
-        $scope.$on('metadata-list-show', function (event, metadata) {
-            loadMetadatas(metadata);
+        $scope.$on('metadata-list-show', function (event) {
             $scope.toggleMetadataList();
         });
 
@@ -125,7 +110,7 @@ angular.module('ortolangMarketApp')
         $scope.$on('metadata-list-unpush', function (event, metadata) {
             $scope.middle = '';
             // Refresh list of metadata
-            refreshMetadatas();
+            $scope.refreshSelectedElement();
         });
 
     }]);

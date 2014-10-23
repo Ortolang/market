@@ -163,7 +163,7 @@ angular.module('ortolangMarketApp')
                 getChildrenDataOfTypes(undefined, isPreview, visualizer);
             }
 
-            $scope.refreshSelectedElements = function () {
+            $scope.refreshSelectedElement = function () {
                 if ($scope.hasOnlyParentSelected()) {
                     getParentData(true);
                 } else if ($scope.hasOnlyOneElementSelected()) {
@@ -339,10 +339,6 @@ angular.module('ortolangMarketApp')
             //        Metadata         //
             // *********************** //
 
-            function getMetadatasOfSelectedElement() {
-                return $scope.selectedElements[0].metadatas;
-            }
-
             $rootScope.$on('completeMetadataUpload', function () {
                 if ($scope.hasOnlyParentSelected()) {
                     getParentData(true);
@@ -352,7 +348,7 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.showMetadata = function () {
-                $rootScope.$broadcast('metadata-list-show', getMetadatasOfSelectedElement());
+                $rootScope.$broadcast('metadata-list-show');
             };
 
             $scope.doAction = function (name) {
