@@ -1,29 +1,5 @@
 'use strict';
 
-///**
-//* @ngdoc service
-//* @name ortolangVisualizers.simpleImageVisualizer
-//* @description
-//* # simpleImageVisualizer
-//* Provider in the ortolangVisualizers.
-//*/
-//angular.module('ortolangVisualizers')
-//    .factory('SimpleImageVisualizer', ['VisualizerFactory', function (VisualizerFactory) {
-//
-//        var visualizer = VisualizerFactory.make({
-//            id: 'SimpleImageVisualizer',
-//            name: 'Simple Image Visualizer',
-//            compatibleTypes: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
-//            element: '<simple-image-visualizer></simple-image-visualizer>',
-//            needAllChildrenData: true
-//        });
-//
-//        return visualizer;
-//
-//    }]).run(function (SimpleImageVisualizer) {
-//        console.debug('RUN SimpleImageVisualizer', SimpleImageVisualizer);
-//    });
-
 /**
 * @ngdoc service
 * @name ortolangVisualizers.simpleImageVisualizer
