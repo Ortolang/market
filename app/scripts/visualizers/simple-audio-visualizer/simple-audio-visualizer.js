@@ -44,7 +44,7 @@ angular.module('ortolangVisualizers')
             templateUrl: '../../../views/simple-audio-visualizer.html',
             restrict: 'E',
             scope: true,
-            link: function postLink(scope, element, attrs) {
+            link: function (scope, element, attrs) {
                 angular.element('#visualizer-modal').on('hide.bs.modal', function () {
                     var simpleHtml5VAudio = angular.element('#simple-html5-audio');
                     if (simpleHtml5VAudio.length === 1) {

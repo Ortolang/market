@@ -45,7 +45,7 @@ angular.module('ortolangVisualizers')
             templateUrl: '../../../views/simple-text-visualizer.html',
             restrict: 'E',
             scope: true,
-            link: function postLink(scope, element, attrs) {
+            link: function (scope, element, attrs) {
                 DownloadResource.download(
                     {
                         wsName: scope.wsName,

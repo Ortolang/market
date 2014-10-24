@@ -44,7 +44,7 @@ angular.module('ortolangVisualizers')
             templateUrl: '../../../views/simple-image-visualizer.html',
             restrict: 'E',
             scope: true,
-            link: function postLink(scope, element, attrs) {
+            link: function (scope, element, attrs) {
                 scope.imageElements = [];
                 angular.forEach(scope.children, function (child) {
                     if (SimpleImageVisualizer.isCompatible(child.mimetype)) {
