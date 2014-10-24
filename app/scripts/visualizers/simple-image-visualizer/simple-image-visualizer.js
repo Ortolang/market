@@ -32,7 +32,7 @@
 * Provider in the ortolangVisualizers.
 */
 angular.module('ortolangVisualizers')
-    .provider('SimpleImageVisualizer', ['VisualizerFactoryProvider', function (VisualizerFactoryProvider) {
+    .provider('SimpleImageVisualizer', ['VisualizerFactoryProvider', 'VisualizerManagerProvider', function (VisualizerFactoryProvider, VisualizerManagerProvider) {
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleImageVisualizer',
@@ -43,9 +43,10 @@ angular.module('ortolangVisualizers')
                 'image/png': true,
                 'image/gif': true
             },
-            element: '<simple-image-visualizer></simple-image-visualizer>',
             needAllChildrenData: true
         });
+
+        VisualizerManagerProvider.$get().register(visualizer);
 
         visualizer.$get = function () {
             return visualizer;

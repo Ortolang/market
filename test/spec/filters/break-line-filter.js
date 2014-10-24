@@ -11,4 +11,8 @@ describe('Filter: breakLineFilter', function () {
         breakLineFilter = $filter('breakLineFilter');
     }));
 
+    it('should do something', function () {
+        expect(!!breakLineFilter).toBe(true);
+    });
+
 });

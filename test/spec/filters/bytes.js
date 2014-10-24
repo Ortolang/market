@@ -26,7 +26,7 @@ describe('Filter: bytes', function () {
     });
 
     it('should recognize bytes', function () {
-        expect(bytes(1, 0)).toBe('1 bytes');
+        expect(bytes(1.000, 0)).toBe('1 bytes');
     });
 
     it('should recognize KiloBytes', function () {

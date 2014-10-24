@@ -8,7 +8,7 @@
  * Provider in the ortolangVisualizers.
  */
 angular.module('ortolangVisualizers')
-    .provider('SimpleVideoVisualizer', ['VisualizerFactoryProvider', function (VisualizerFactoryProvider) {
+    .provider('SimpleVideoVisualizer', ['VisualizerFactoryProvider', 'VisualizerManagerProvider', function (VisualizerFactoryProvider, VisualizerManagerProvider) {
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleVideoVisualizer',
@@ -17,10 +17,11 @@ angular.module('ortolangVisualizers')
                 'video/mp4': true,
                 'video/ogg': true,
                 'video/webm': true,
-                'application/octet-stream': ['webm']
-            },
-            element: '<simple-video-visualizer></simple-video-visualizer>'
+                'application/octet-stream': {webm: true}
+            }
         });
+
+        VisualizerManagerProvider.$get().register(visualizer);
 
         visualizer.$get = function () {
             return visualizer;

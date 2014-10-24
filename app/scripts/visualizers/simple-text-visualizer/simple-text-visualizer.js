@@ -8,7 +8,7 @@
  * Provider in the ortolangVisualizers.
  */
 angular.module('ortolangVisualizers')
-    .provider('SimpleTextVisualizer', ['VisualizerFactoryProvider', function (VisualizerFactoryProvider) {
+    .provider('SimpleTextVisualizer', ['VisualizerFactoryProvider', 'VisualizerManagerProvider', function (VisualizerFactoryProvider, VisualizerManagerProvider) {
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleTextVisualizer',
@@ -22,15 +22,14 @@ angular.module('ortolangVisualizers')
                 'application/rdf+xml': true,
                 'text/javascript': true,
                 'application/javascript': true
-            },
-            element: '<simple-text-visualizer></simple-text-visualizer>'
+            }
         });
 
-        visualizer.$get = function () {
+        VisualizerManagerProvider.$get().register(visualizer);
+
+        this.$get = function () {
             return visualizer;
         };
-
-        return visualizer;
     }]);
 
 /**

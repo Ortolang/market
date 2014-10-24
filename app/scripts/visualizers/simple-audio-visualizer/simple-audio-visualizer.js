@@ -8,7 +8,7 @@
 * Provider in the ortolangVisualizers.
 */
 angular.module('ortolangVisualizers')
-    .provider('SimpleAudioVisualizer', ['VisualizerFactoryProvider', function (VisualizerFactoryProvider) {
+    .provider('SimpleAudioVisualizer', ['VisualizerFactoryProvider', 'VisualizerManagerProvider', function (VisualizerFactoryProvider, VisualizerManagerProvider) {
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleAudioVisualizer',
@@ -19,9 +19,10 @@ angular.module('ortolangVisualizers')
                 'audio/vorbis': true,
                 'audio/mp3': true,
                 'audio/mpeg': true
-            },
-            element: '<simple-audio-visualizer></simple-audio-visualizer>'
+            }
         });
+
+        VisualizerManagerProvider.$get().register(visualizer);
 
         visualizer.$get = function () {
             return visualizer;
