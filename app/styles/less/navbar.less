@@ -1,0 +1,30 @@
+.navbar.navbar-default {
+    background-color: @ortolang-blue;
+    border: none;
+
+    a.dropdown-toggle, .navbar-brand {
+        color: @gray-lightest;
+    }
+
+    .navbar-brand {
+        padding: 0 0 0 @padding-base-horizontal;
+        line-height: @navbar-height;
+    }
+
+    a.dropdown-toggle:hover {
+        background-color: inherit;
+    }
+
+    ul.navbar-top-links > li {
+        &.open > a {
+            background-color: inherit;
+        }
+        cursor: pointer;
+        > a {
+            color: @gray-lightest;
+            &:hover {
+                background-color: inherit;
+            }
+        }
+    }
+}

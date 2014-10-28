@@ -32,6 +32,9 @@ angular
             .when('/', {
                 redirectTo: '/products'
             })
+            .when('/market', {
+                templateUrl: 'views/market-item.html'
+            })
             .when('/products', {
                 templateUrl: 'views/products.html',
                 controller: 'ProductsCtrl'

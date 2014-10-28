@@ -3,6 +3,14 @@
 // --------------------------------------------------
 @import "/bower_components/bootstrap/less/variables.less";
 
+
+//== Colors test
+@blue-dark: #005883;
+@blue-lighter: #19B3FF;
+@orange-dark: #834900;
+@orange-lighter: #EB8200;
+@gray-lightest: lighten(#000, 97.25%);
+
 //== Colors
 @ortolang-blue: #008bd0;
 @product-unknown: #ddd;
@@ -13,7 +21,6 @@
 
 // Bootstrap override
 @brand-primary: @ortolang-blue;
-@link-color: @ortolang-blue;
 
 //== Type
 //
@@ -32,5 +39,5 @@
 @side-bar-width: 80px;
 @side-bar-item-height: 50px;
 @side-bar-item-color: @gray;
-@side-bar-item-active-color: @gray-lighter;
-@side-bar-item-bg: @ortolang-blue;
+@side-bar-item-active-color: @gray-lightest;
+@side-bar-item-bg: @orange-lighter;

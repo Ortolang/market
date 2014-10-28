@@ -1,8 +1,8 @@
 #side-nav {
-  ul {
+    > ul {
     margin: 0;
     padding: @padding-large-vertical 0;
-    li {
+    > li {
       list-style: none;
       text-align: center;
       vertical-align: baseline;
@@ -11,7 +11,7 @@
 
       &.active:not(:hover) {
 
-        a {
+        > a, > div {
           i {
             background-color: lighten(#000, 85%);
             border-radius: 50%;
@@ -21,7 +21,7 @@
 
       }
 
-      a {
+      > a, > div {
         display: block;
         position: relative;
         text-decoration: none;
@@ -31,7 +31,7 @@
         transition: 0s;
 
         &:hover {
-          background-color: @ortolang-blue;
+          background-color: @side-bar-item-bg;
           color: @side-bar-item-active-color;
           .nav-description {
             width: 200px;
@@ -74,6 +74,17 @@
           white-space: nowrap;
           transition: all 0 ease 0;
         }
+
+          .sub-elements {
+              position: relative;
+              > li {
+                  list-style: none;
+                  &:hover {
+                      color: @side-bar-item-active-color;
+                  }
+              }
+//              padding-left: @side-bar-width - @padding-small-horizontal;
+          }
       }
     }
   }
