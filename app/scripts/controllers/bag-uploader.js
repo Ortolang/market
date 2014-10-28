@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
   .controller('BagUploaderCtrl',['$scope', '$routeParams', '$rootScope', '$http', 'FileUploader', 'Url', 
   	function ($scope, $routeParams, $rootScope, $http, FileUploader, Url) {
 
-    var url = Url.urlBase() + '/rest/processes/';
+    var url = Url.urlBase() + '/rest/runtime/instances';
 
     var bagUploader = $scope.bagUploader = new FileUploader({
         url: url,
@@ -27,8 +27,7 @@ angular.module('ortolangMarketApp')
     bagUploader.onAfterAddingFile = function (fileItem) {
     	var key = $scope.importWorkspaceName;
         fileItem.formData = [
-        		 {type: 'import-workspace'},
-        		 {name: 'Workspace import for bag '+$scope.importWorkspaceName},
+        		 {definition: 'import-bag'},
         		 {'workspace-key': key},
         		 {'workspace-name': $scope.importWorkspaceName},
         		 {'workspace-type': $scope.importWorkspaceType}
@@ -38,7 +37,7 @@ angular.module('ortolangMarketApp')
     };
 
     bagUploader.onCompleteItem = function (fileItem, response, status, headers) {
-        console.info('onCompleteItem', fileItem, response, status, headers);
-        $rootScope.$emit('completeItemUpload');
+        console.info('onCompleteBag', fileItem, response, status, headers);
+        $rootScope.$emit('completeBagUpload');
     };
   }]);
