@@ -8,60 +8,64 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-  .controller('MarketItemCtrl', ['$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'N3Serializer', function ($scope, $routeParams, $http, Url, ObjectResource, N3Serializer) {
-    
-  	function loadItem(key) {
-  		ObjectResource.get({oKey: key}, function(oobject) {
-  			$scope.oobject = oobject;
+    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'N3Serializer', function ($scope, $routeParams, $http, Url, ObjectResource, N3Serializer) {
 
-  			if(oobject.type === 'collection') {
-  				if(oobject.object.root === true) {
-  					console.debug('load root collection view');
+        function loadItem(key) {
+            ObjectResource.get({oKey: key}, function (oobject) {
+                $scope.oobject = oobject;
 
-  					if(oobject.object.metadatas.length>0) {
-  						//TODO find metadata in Resource name or rdf format ??
-  						var metaKey = oobject.object.metadatas[0].key;
+                if (oobject.type === 'collection') {
+                    if (oobject.object.root === true) {
+                        console.debug('load root collection view');
 
-  						$http.get(Url.urlBase() + '/rest/objects/' + metaKey + '/download').success(function (metaContent) {
-				            N3Serializer.fromN3(metaContent).then(function(data) {
-  								$scope.item = angular.copy(data);
-  							});
-				        }).error(function () {
-				            // resetMetadata();
-				            //TODO send error message
-				        });
+                        if (oobject.object.metadatas.length > 0) {
+                            //TODO find metadata in Resource name or rdf format ??
+                            var metaKey = oobject.object.metadatas[0].key;
 
-						// ObjectResource.download({oKey: metaKey}, function(metaContent) {
-						// 	console.debug(metaContent);
-  				// 			N3Serializer.fromN3(metaContent).then(function(data) {
-  				// 				$scope.item = angular.copy(data);
-  				// 			});
-  							
-  				// 		});
-  					}
-  				} else {
-  					console.debug('load collection view');	
-  				}
-  			} else if(oobject.type === 'object') {
-  				console.debug('load data object view');
-  			} else if(oobject.type === 'link') {
-  				console.debug('follow link');
-  			} else {
-  				console.debug('load item key not found view');
-  			}
-  		});
-  	}
+                            $http.get(Url.urlBase() + '/rest/objects/' + metaKey + '/download').success(function (metaContent) {
+                                N3Serializer.fromN3(metaContent).then(function (data) {
+                                    $scope.item = angular.copy(data);
+                                    $scope.marketItemTemplate = 'views/market-item-root-collection.html';
+                                });
+                            }).error(function () {
+                                // resetMetadata();
+                                //TODO send error message
+                            });
 
-    // Scope variables
-    function initScopeVariables() {
-    	$scope.oobject = undefined;
-    	$scope.item = undefined;
-    }
+                            // ObjectResource.download({oKey: metaKey}, function(metaContent) {
+                            // console.debug(metaContent);
+                            // N3Serializer.fromN3(metaContent).then(function(data) {
+                            // $scope.item = angular.copy(data);
+                            // });
 
-    function init() {
-        initScopeVariables();
-        loadItem($routeParams.itemKey);
-    }
-    init();
+                            // });
+                        }
+                    } else {
+                        console.debug('load collection view');
+                        $scope.marketItemTemplate = 'views/market-item-collection.html';
+                    }
+                } else if (oobject.type === 'object') {
+                    console.debug('load data object view');
+                    $scope.marketItemTemplate = 'views/market-item-data-object.html';
+                } else if (oobject.type === 'link') {
+                    console.debug('follow link');
+                } else {
+                    console.debug('load item key not found view');
+                }
+            });
+        }
 
-  }]);
+        // Scope variables
+        function initScopeVariables() {
+            $scope.oobject = undefined;
+            $scope.item = undefined;
+            $scope.marketItemTemplate = undefined;
+        }
+
+        function init() {
+            initScopeVariables();
+            loadItem($routeParams.itemKey);
+        }
+        init();
+
+    }]);

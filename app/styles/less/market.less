@@ -2,6 +2,60 @@
     background-color: lighten(#000, 97.25%);
 }
 
+#market-home {
+
+    #search-market {
+        padding-top: 4*@padding-large-vertical;
+        padding-bottom: 5*@padding-large-vertical;
+        background-color: @gray-lighter;
+    }
+
+    #redactor-choices {
+
+    }
+
+    h3 {
+        color: @orange-lighter;
+        display: inline-block;
+    }
+    .market-item {
+        background-color: #FFFFFF;
+        padding-top: @padding-large-vertical;
+//        &:hover {
+//            .title {
+//                color: @orange-lighter;
+//            }
+//        }
+        .title {
+            overflow: hidden;
+            max-height: 24px;
+            position: relative;
+            color: inherit;
+        }
+        .paragraph-end {
+//            background-image: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(@navbar-default-bg,0)),color-stop(100%,rgba(@navbar-default-bg,1)));
+//            background-image: -webkit-linear-gradient(left,rgba(@navbar-default-bg,0),rgba(@navbar-default-bg,1));
+//            background-image: -moz-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));
+//            background-image: -ms-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));
+//            background-image: -o-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));
+//            background: linear-gradient(to right,fade(@navbar-default-bg,0%),fade(@navbar-default-bg,100%));
+////            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#00ffffff',EndColorStr='#ffffff');
+//            bottom: 0;
+//            height: 25px;
+//            max-height: 100%;
+//            position: absolute;
+//            right: 0;
+//            width: 60px;
+        }
+//        cursor: pointer;
+        .producers {
+            a {
+                display: block;
+            }
+        }
+    }
+}
+
 #market-item {
     > header {
         margin-bottom: 3*@padding-large-vertical;
