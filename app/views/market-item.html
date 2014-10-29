@@ -1,7 +1,7 @@
 <section id="market-item">
     <header>
-        <h1>Corpus Frantext</h1>
-        <span class="author">Stéphane Rauzy, CNRS - LPL</span>
+        <h1>{{item.title}}</h1>
+        <span class="author">{{oobject.author}}, CNRS - LPL</span>
         <span class="lab">Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR)</span>
         <p class="actions">
             <button class="btn btn-primary">Aperçu</button>
@@ -14,7 +14,7 @@
         <div class="col-md-8">
             <section id="description">
                 <header>Description</header>
-                <p>Issu de la base Frantext, le corpus Frantext « textes libres de droits » offre à la communauté scientifique, un large champ d’investigation où sont réunies 500 œuvres de la littérature française couvrant la période du 18e au 20e siècle. Le traitement informatique des données textuelles en format TEI XML a été réalisé par le laboratoire ATILF. L'interface de recherche permet d'effectuer des sélections au sein du corpus par genre de texte, auteur, période…</p>
+                <p>{{item.description}}</p>
             </section>
             <!--<p><strong>Mots-clefs</strong></p>-->
             <!--<ul class="list-inline">-->
@@ -38,7 +38,7 @@
         <aside class="col-md-4">
             <div class="panel panel-default license-panel">
                 <div class="panel-body">
-                    <p><strong>Libre sans usage commercial</strong></p>
+                    <p><strong>{{item.useConditions}}</strong></p>
                     <p>Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Aenean ut eros et nisl sagittis vestibulum.</p>
                     <p><a href="#">Plus de détails</a></p>
                     <p><button class="btn btn-block btn-success">Télécharger</button></p>

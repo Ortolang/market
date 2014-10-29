@@ -30,7 +30,7 @@ angular.module('ortolangMarketApp')
 
 		// var content = createRDF(md.category, md.title, md.description, md.abstract, use_conditionsLabel);
 		// var contentType = "application/rdf+xml";
-		var content = toN3(md.category, md.title, md.description, md.abstract, md.useConditions);
+		var content = toN3(md);
 		var contentType = 'text/n3';
 
 		$rootScope.$broadcast('metadata-editor-create', content, contentType);
@@ -65,23 +65,18 @@ angular.module('ortolangMarketApp')
 	// 	return content + footer;
 	// }
 
-	function toN3(category, title, description, abstract, useConditions) {
+	function toN3(md) {
 		var content = '',
 			N3Util = N3.Util,
 			writer = N3.Writer(prefixesRDF);
 
 		writer.addTriple('${target}', N3Util.expandQName('dc:identifier', prefixesRDF), '"${targetKey}"');
 		
-		if(category !== undefined && category !== '') {
-			writer.addTriple('${target}', N3Util.expandQName('rdf:type', prefixesRDF), N3Util.expandQName('market:'+category, prefixesRDF));
-		}
-		if(title !== undefined && title !== '') {
-			writer.addTriple('${target}', N3Util.expandQName('dc:title', prefixesRDF), '"'+title+'"');
-		}
-
-		writer.addTriple('${target}', N3Util.expandQName('dc:description', prefixesRDF), '"'+description+'"');
-		writer.addTriple('${target}', N3Util.expandQName('dcterms:abstract', prefixesRDF), '"'+abstract+'"');
-		writer.addTriple('${target}', N3Util.expandQName('otl:use_conditions', prefixesRDF), '"'+useConditions+'"');
+		writer.addTriple('${target}', N3Util.expandQName('rdf:type', prefixesRDF), N3Util.expandQName('market:'+md.category, prefixesRDF));
+		writer.addTriple('${target}', N3Util.expandQName('dc:title', prefixesRDF), '"'+md.title+'"');
+		writer.addTriple('${target}', N3Util.expandQName('dc:description', prefixesRDF), '"'+md.description+'"');
+		writer.addTriple('${target}', N3Util.expandQName('dcterms:abstract', prefixesRDF), '"'+md.abstract+'"');
+		writer.addTriple('${target}', N3Util.expandQName('otl:use_conditions', prefixesRDF), '"'+md.useConditions+'"');
 		
 
 		writer.end(function (error, result) {

@@ -15,6 +15,11 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/objects/:oKey/keys',
                 method: 'GET',
                 isArray: false
+            },
+            download: {
+                url: Url.urlBase() + '/rest/objects/:oKey/download',
+                method: 'GET',
+                isArray: false
             }
         });
     }]);
