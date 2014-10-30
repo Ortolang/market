@@ -19,14 +19,8 @@
                         <dd>{{plugin.name}}</dd>
                         <dt>Description</dt>
                         <dd>{{plugin.description}}</dd>
-                        <dt>Detail</dt>
-                        <dd>{{plugin.detail}}</dd>
-                        <dt>URL</dt>
-                        <dd><a href="{{plugin.url}}">{{plugin.url}}</a></dd>
-                        <dt>Available for :</dt>
-                        <dd ng-repeat="format in plugin.formats">
-                            {{format}}
-                        </dd>
+                        <dt>Documentation</dt>
+                        <dd>{{plugin.documentation}}</dd>
                     </dl>
                 </div>
                 <!-- /.list-group -->
@@ -55,7 +49,7 @@
 
         <div class="panel panel-default" ng-if="preview">
             <div class="panel-heading">
-                <i class="fa fa-eye"></i> Preview du résultat
+                <i class="fa fa-eye"></i> Preview du résultat : {{resultStatus}}
                 <div class="pull-right">
                     <div class="btn-group">
                         <a class="btn btn-xs" ng-href="{{downloadUrl}}">

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PluginCtrl', [ '$scope', '$http', 'PluginsResource', '$routeParams', 'formlyTemplate', 'AuthService', '$filter', 'WorkspaceElementResource', '$q', 'Url',
-        function ($scope, $http, PluginsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url) {
+    .controller('PluginCtrl', [ '$scope', '$http', 'PluginsResource', '$routeParams', 'formlyTemplate', 'AuthService', '$filter', 'WorkspaceElementResource', '$q',
+        function ($scope, $http, PluginsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q) {
             /**
              * Load chosen plugin informations
              */
@@ -78,35 +78,13 @@ angular.module('ortolangMarketApp')
                                 $scope.pushDataObjects(wks, function () {
                                     angular.forEach(configJSON, function (field, index) {
                                         if (field.type === 'dataobject') {
-//                                            configJSON[index].availableData = $scope.listAvailableDataObject;
-//                                            console.debug(JSON.stringify(configJSON[index].availableData));
-                                            configJSON[index].availableData = [
-                                                {
-                                                    'type': 'object',
-                                                    'name': 'test.txt',
-                                                    'label': 'test.txt',
-                                                    'modification': 1413878591735,
-                                                    'mimeType': 'text/plain',
-                                                    'key': 'd3c8bfb2-f495-476d-abc0-099642f079f8'
-                                                },
-                                                {
-                                                    'type': 'object',
-                                                    'name': 'bootstrap.txt',
-                                                    'label': 'bootstrap.txt',
-                                                    'modification': 1413878556410,
-                                                    'mimeType': 'text/plain',
-                                                    'key': '541f61b1-958b-45ac-ad58-0ca50bca7f33'
-                                                }
-                                            ];
+                                            configJSON[index].availableData = $scope.listAvailableDataObject;
                                         }
                                     });
                                 });
                             });
                     }
                 }
-//                angular.forEach(objectsFieldList, function (field) {
-//                    $scope.formFields.concat('{key: \'hidden_' + field.key + '\', type: \'hidden\' }');
-//                });
             };
 
 
@@ -118,7 +96,6 @@ angular.module('ortolangMarketApp')
                 // ajoute les template ortolang
                 formlyTemplate.setTemplateUrl('select', 'views/ortolang-formly-select.html');
                 formlyTemplate.setTemplateUrl('dataobject', 'views/ortolang-formly-typeahead.html');
-
                 $scope.formData = {};
                 $scope.formFields = configJSON;
                 $scope.formOptions = {
@@ -131,6 +108,7 @@ angular.module('ortolangMarketApp')
                     //default: Submit
                     submitCopy: 'Save and Run'
                 };
+                console.log('$$childHead', $scope.$$childHead);
             };
 
 
@@ -139,25 +117,20 @@ angular.module('ortolangMarketApp')
              */
             $scope.onSubmit = function () {
                 console.log('form submitted:', $scope.formData);
-
-                var deferred = $q.defer(), promise;
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                promise = PluginsResource.postConfig({pKey: $routeParams.plName}, $scope.formData);
-
-                $q.all(promise).then(function (data) {
-                    console.log('data:', data);
-                    PluginsResource.invoke({pKey: $routeParams.plName},
-                        function (response) {
-                            console.log('reponse invoke:', response);
+                PluginsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
+                    function (response) {
+                        console.log('reponse invoke:', response);
+                        if (response.status === 'SUCCESS') {
+                            $scope.resultStatus = response.status;
                             $scope.preview = response.output;
-                            $scope.downloadUrl = Url.urlBase() + '/rest/plugins/' + $routeParams.plName + '/download?path=' + response.urlResult;
-                        },
-                        function (error) {
-                            console.log(error);
-                        });
-                });
-                deferred.resolve();
+                        } else {
+                            $scope.resultStatus = response.status;
+                            $scope.preview = response.log;
+                        }
+                    });
             };
+
 
             // INIT :
             $scope.plName = $routeParams.plName;

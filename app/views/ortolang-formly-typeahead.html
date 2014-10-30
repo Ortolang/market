@@ -3,15 +3,30 @@
         {{options.label || 'Text'}}
         {{options.required ? '*' : ''}}
     </label>
-    <input type="text"
-           class="form-control"
-           data-animation="am-flip-x"
-           id="{{id}}"
-           placeholder="{{options.placeholder}}"
-           aria-describedby="{{id}}_description"
-           ng-required="options.required"
-           ng-model="value"
-           bs-typeahead="typeahead"
-           ng-options="object as object.name for object in options.availableData | filter:$viewValue | limitTo:8">
+    <!--<input type="text"-->
+           <!--class="form-control"-->
+           <!--data-animation="am-flip-x"-->
+           <!--id="{{id}}"-->
+           <!--placeholder="{{options.placeholder}}"-->
+           <!--aria-describedby="{{id}}_description"-->
+           <!--ng-required="options.required"-->
+           <!--list="_objects_{{id}}"-->
+           <!--ng-model="result[options.key || index]"-->
+           <!--autocomplete="off">-->
+    <!--<datalist id="_objects_{{id}}">-->
+            <!--<option ng-repeat="object in options.availableData"-->
+                    <!--value="{{object.key}}"-->
+                    <!--label="{{object.name}}">-->
+            <!--</option>-->
+    <!--</datalist>-->
+    <select class="form-control"
+            id="{{id}}"
+            aria-describedby="{{id}}_description"
+            ng-required="options.required"
+            data-ng-model="value"
+            data-ng-disabled="options.disabled"
+            ng-init="value = options.default.key"
+            ng-options="option.key as option.name group by option.group for option in options.availableData | filter:$viewValue">
+    </select>
     <p id="{{id}}_description" class="help-block" ng-if="options.description">{{options.description}}</p>
 </div>

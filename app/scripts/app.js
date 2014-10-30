@@ -66,12 +66,12 @@ angular
                 requiresAuthentication: true
             })
             .when('/plugins', {
-                templateUrl: 'views/plugins.html',
+                templateUrl: '../views/tools.html',
                 controller: 'PluginsCtrl',
                 requiresAuthentication: true
             })
             .when('/plugins/:plName', {
-                templateUrl: 'views/plugin.html',
+                templateUrl: '../views/tool.html',
                 controller: 'PluginCtrl',
                 requiresAuthentication: true
             })

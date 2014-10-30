@@ -9,8 +9,8 @@
             ng-required="options.required"
             data-ng-model="value"
             data-ng-disabled="options.disabled"
-            ng-init="value = options.default"
-            ng-options="option as option.name group by option.group for option in options.options track by option.id">
+            ng-init="value = options.default.id"
+            ng-options="option.id as option.name group by option.group for option in options.options | filter:$viewValue">
     </select>
     <p class="help-block" id="{{id}}_description" ng-if="options.description">{{options.description}}</p>
 </div>
