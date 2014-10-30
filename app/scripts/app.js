@@ -33,7 +33,8 @@ angular
                 redirectTo: '/products'
             })
             .when('/market', {
-                templateUrl: 'views/market-home.html'
+                templateUrl: 'views/market-home.html',
+                controller: 'MarketHomeCtrl'
             })
             .when('/market/:itemKey', {
                 templateUrl: 'views/market-item.html',

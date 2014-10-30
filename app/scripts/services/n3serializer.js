@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
         fromN3: function (content) {
         
             var deferred = $q.defer();
-            var mdFromN3 = {};
+            var mdFromN3 = {producer:[]};
             // ${target} : 
             // ${targetKey}
             var find = '\\$\\{target\\}';
@@ -59,6 +59,8 @@ angular.module('ortolangMarketApp')
                             mdFromN3.abstract = angular.copy(literalValue);
                         } else if(triple.predicate === N3Util.expandQName('otl:use_conditions', prefixesRDF)) {
                             mdFromN3.useConditions = angular.copy(literalValue);
+                        } else if(triple.predicate === N3Util.expandQName('otl:producer', prefixesRDF)) {
+                            mdFromN3.producer.push(angular.copy(literalValue));
                         }
                    }
                    else if(error) {
@@ -92,6 +94,8 @@ angular.module('ortolangMarketApp')
             writer.addTriple('${target}', N3Util.expandQName('dc:description', prefixesRDF), '"'+md.description+'"');
             writer.addTriple('${target}', N3Util.expandQName('dcterms:abstract', prefixesRDF), '"'+md.abstract+'"');
             writer.addTriple('${target}', N3Util.expandQName('otl:use_conditions', prefixesRDF), '"'+md.useConditions+'"');
+
+            writer.addTriple('${target}', N3Util.expandQName('otl:producer', prefixesRDF), '"'+md.producer+'"');
             
 
             writer.end(function (error, result) {
