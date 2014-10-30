@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
                 //subElements: workspaceSubElements()
             },
             {
-                path: '/plugins',
+                path: '/tools',
                 description: 'Outils',
                 iconCss: 'fa fa-puzzle-piece fa-2x',
                 active: undefined

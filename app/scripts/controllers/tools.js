@@ -8,15 +8,15 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PluginsCtrl', ['$scope', '$http', 'PluginsResource', function ($scope, $http, PluginsResource) {
+    .controller('ToolsCtrl', ['$scope', '$http', 'ToolsResource', function ($scope, $http, ToolsResource) {
         /**
          * Load List of available plugins
          */
-        $scope.loadPlugins = function () {
+        $scope.loadTools = function () {
             $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-            PluginsResource.getPluginsList(
-                function (plugins) {
-                    $scope.plgList = plugins.entries;
+            ToolsResource.getToolsList(
+                function (tools) {
+                    $scope.toolList = tools.entries;
                 },
                 function (error) {
                     console.log(error);
@@ -24,6 +24,6 @@ angular.module('ortolangMarketApp')
             );
         };
 
-        $scope.plgList = [];
-        $scope.loadPlugins();
+        $scope.toolList = [];
+        $scope.loadTools();
     }]);

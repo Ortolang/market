@@ -16,11 +16,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="plg in plgList">
-                            <td>{{plg.name}}</td>
-                            <td>{{plg.description}}</td>
+                        <tr ng-repeat="tool in toolList">
+                            <td>{{tool.name}}</td>
+                            <td>{{tool.description}}</td>
                             <td>
-                                <a type="button" class="btn btn-default" href="#/plugins/{{ plg.key }}">Choose</a>
+                                <a type="button" class="btn btn-default" href="#/tools/{{ tool.key }}">Choose</a>
                             </td>
                         </tr>
                         </tbody>

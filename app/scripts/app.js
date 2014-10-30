@@ -65,14 +65,14 @@ angular
                 controller: 'WorkspacesCtrl',
                 requiresAuthentication: true
             })
-            .when('/plugins', {
+            .when('/tools', {
                 templateUrl: '../views/tools.html',
-                controller: 'PluginsCtrl',
+                controller: 'ToolsCtrl',
                 requiresAuthentication: true
             })
-            .when('/plugins/:plName', {
+            .when('/tools/:plName', {
                 templateUrl: '../views/tool.html',
-                controller: 'PluginCtrl',
+                controller: 'ToolCtrl',
                 requiresAuthentication: true
             })
             .otherwise({

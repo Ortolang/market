@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-puzzle-piece"></i> {{plugin.name}}
+                <i class="fa fa-puzzle-piece"></i> {{tool.name}}
                 <div class="pull-right">
                     <div class="btn-group">
                         <a href="#/plugins" class="btn btn-xs"><i class="fa fa-chevron-left"></i> Retour à la liste des outils</a>
@@ -16,11 +16,11 @@
                 <div class="list-group" >
                     <dl class="dl-vertical">
                         <dt>Name</dt>
-                        <dd>{{plugin.name}}</dd>
+                        <dd>{{tool.name}}</dd>
                         <dt>Description</dt>
-                        <dd>{{plugin.description}}</dd>
+                        <dd>{{tool.description}}</dd>
                         <dt>Documentation</dt>
-                        <dd>{{plugin.documentation}}</dd>
+                        <dd ng-bind-html='tool.documentation'></dd>
                     </dl>
                 </div>
                 <!-- /.list-group -->
@@ -31,7 +31,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-gears"></i> Configuration de {{plugin.name}}
+                <i class="fa fa-gears"></i> Configuration de {{tool.name}}
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">

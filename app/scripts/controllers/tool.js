@@ -8,16 +8,16 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PluginCtrl', [ '$scope', '$http', 'PluginsResource', '$routeParams', 'formlyTemplate', 'AuthService', '$filter', 'WorkspaceElementResource', '$q',
-        function ($scope, $http, PluginsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q) {
+    .controller('ToolCtrl', [ '$scope', '$http', 'ToolsResource', '$routeParams', 'formlyTemplate', 'AuthService', '$filter', 'WorkspaceElementResource', '$q',
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q) {
             /**
              * Load chosen plugin informations
              */
-            $scope.loadPlugin = function () {
+            $scope.loadTool = function () {
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                PluginsResource.getPlugin({pKey: $routeParams.plName},
-                    function (plugin) {
-                        $scope.plugin = plugin;
+                ToolsResource.getTool({pKey: $routeParams.plName},
+                    function (tool) {
+                        $scope.tool = tool;
                     },
                     function (error) {
                         console.log(error);
@@ -25,12 +25,12 @@ angular.module('ortolangMarketApp')
             };
 
             /**
-             * Load config JSON form for the plugin
+             * Load config JSON form for the tool
              * @return {*[]}
              */
             $scope.loadConfig = function () {
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                PluginsResource.getConfig({pKey: $routeParams.plName},
+                ToolsResource.getConfig({pKey: $routeParams.plName},
                     function (config) {
                         $scope.initialiseFormConfig(config);
                         console.debug(config);
@@ -100,7 +100,7 @@ angular.module('ortolangMarketApp')
                 $scope.formFields = configJSON;
                 $scope.formOptions = {
                     //Set the id of the form
-                    uniqueFormId: 'pluginConfig',
+                    uniqueFormId: 'toolConfig',
                     //Hide the submit button that is added automatically
                     //default: false
                     hideSubmit: false,
@@ -118,7 +118,7 @@ angular.module('ortolangMarketApp')
             $scope.onSubmit = function () {
                 console.log('form submitted:', $scope.formData);
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                PluginsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
+                ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
                     function (response) {
                         console.log('reponse invoke:', response);
                         if (response.status === 'SUCCESS') {
@@ -134,9 +134,9 @@ angular.module('ortolangMarketApp')
 
             // INIT :
             $scope.plName = $routeParams.plName;
-            $scope.plugin = null;
+            $scope.tool = null;
             $scope.preview = null;
             $scope.downloadUrl = null;
-            $scope.loadPlugin();
+            $scope.loadTool();
             $scope.loadConfig();
         }]);
