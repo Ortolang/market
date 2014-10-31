@@ -145,6 +145,7 @@
 
 .browsed-element-children-wrapper {
   overflow: auto;
+  padding-top: @grid-gutter-width / 2;
   .browsed-element-children {
     .browsed-element-child-wrapper {
       .user-select-mixin;
@@ -160,10 +161,21 @@
             background-color: @ortolang-blue;
             color: @gray-lightest;
           }
+          .preview span {
+            color: darken(@gray-lighter, 50%);
+          }
         }
         .preview {
-          height: 175px;
+          height: 130px;
+          width: 100%;
+          display: table;
           background-color: @gray-lighter;
+          text-align: center;
+          span {
+            color: darken(@gray-lighter, 15%);
+            display: table-cell;
+            vertical-align: middle;
+          }
         }
         .name-wrapper {
           position: relative;
@@ -181,7 +193,7 @@
             word-break: break-all;
           }
         }
-        margin-top: @grid-gutter-width / 2;
+        margin-bottom: @grid-gutter-width / 2;
       }
     }
   }

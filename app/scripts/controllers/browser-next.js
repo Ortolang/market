@@ -264,7 +264,9 @@ angular.module('ortolangMarketApp')
 
             $scope.checkSelection = function (clickEvent) {
                 if (!($(clickEvent.target).parent('tr').length || $(clickEvent.target).parent('td').length ||
-                        $(clickEvent.target).parent('.browsed-element-child').length || $(clickEvent.target).parents('#context-menu').length ||
+                        $(clickEvent.target).parent('.browsed-element-child').length ||
+                        $(clickEvent.target).parent().parent('.browsed-element-child').length ||
+                        $(clickEvent.target).parents('#context-menu').length ||
                         $(clickEvent.target).parents('.btn-toolbar').length)) {
                     deselectChildren();
                 }
