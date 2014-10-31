@@ -83,20 +83,20 @@
     padding-bottom: @padding-large-vertical;
   }
 
-//  #metadata .input-group:not(:hover) {
-//    .form-control {
-//      border-right: none;
-//    }
-//    .input-group-btn {
-//      > button {
-//        color: transparent;
-//        border-left: none;
-//      }
-//      > button:first-child {
-//        border-right: none;
-//      }
-//    }
-//  }
+  //  #metadata .input-group:not(:hover) {
+  //    .form-control {
+  //      border-right: none;
+  //    }
+  //    .input-group-btn {
+  //      > button {
+  //        color: transparent;
+  //        border-left: none;
+  //      }
+  //      > button:first-child {
+  //        border-right: none;
+  //      }
+  //    }
+  //  }
 
   .list-group-item {
     &:hover {
@@ -106,7 +106,7 @@
       }
     }
     button {
-//      display: none;
+      //      display: none;
       display: inline-block;
       float: right;
     }
@@ -141,6 +141,50 @@
 
 .table-wrapper {
   overflow: auto;
+}
+
+.browsed-element-children-wrapper {
+  overflow: auto;
+  .browsed-element-children {
+    .browsed-element-child-wrapper {
+      .user-select-mixin;
+      .browsed-element-child {
+        &.collection {
+          .name-wrapper {
+            padding: 2*@padding-large-vertical @padding-large-horizontal;
+            background-color: @gray-lighter;
+          }
+        }
+        &.active {
+          .name-wrapper {
+            background-color: @ortolang-blue;
+            color: @gray-lightest;
+          }
+        }
+        .preview {
+          height: 175px;
+          background-color: @gray-lighter;
+        }
+        .name-wrapper {
+          position: relative;
+          display: block;
+          font-size: @font-size-base - 1px;
+          padding: @padding-large-vertical @padding-base-horizontal;
+          overflow: hidden;
+          margin: 0;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          .type {
+            padding-right: @padding-small-horizontal;
+          }
+          .name {
+            word-break: break-all;
+          }
+        }
+        margin-top: @grid-gutter-width / 2;
+      }
+    }
+  }
 }
 
 table.workspace-elements {

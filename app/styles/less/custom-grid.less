@@ -1,0 +1,62 @@
+@screen-xlg-min: 1400px;
+@screen-xxlg-min: 1550px;
+
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15,
+.col-xlg-15,
+.col-xlg-14,
+.col-xxlg-15,
+.col-xxlg-16 {
+  position: relative;
+  min-height: 1px;
+  padding-right: (@grid-gutter-width / 2);
+  padding-left: (@grid-gutter-width / 2);
+}
+.col-xs-15 {
+  width: 20%;
+  float: left;
+}
+@media (min-width: @screen-sm-min) {
+  .col-sm-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: @screen-md-min) {
+  .col-md-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: @screen-lg-min) {
+  .col-lg-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: @screen-xlg-min) {
+  .col-xlg-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: @screen-xlg-min) {
+  .col-xlg-14 {
+    width: 25%;
+    float: left;
+  }
+}
+@media (min-width: @screen-xxlg-min) {
+  .col-xxlg-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: @screen-xxlg-min) {
+  .col-xxlg-16 {
+    width: percentage((2 / @grid-columns));
+    float: left;
+  }
+}

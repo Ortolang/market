@@ -1,6 +1,6 @@
 <div>
     <p>{{selectedElements[0].name}}</p>
-    <video id="simple-html5-video" controls ng-switch="selectedElements[0].mimetype">
+    <video id="simple-html5-video" controls ng-switch="selectedElements[0].mimeType">
         <source ng-switch-when="video/ogg" src="{{selectedElements[0].downloadUrl}}" type="video/ogg">
         <source ng-switch-when="video/mp4" src="{{selectedElements[0].downloadUrl}}" type="video/mp4">
         <source ng-switch-when="application/octet-stream" src="{{selectedElements[0].downloadUrl}}" type="video/webm">

@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         {
             // Files & folder
             folder: 'fa fa-folder-o',
+            folderPlain: 'fa fa-folder',
             file: 'fa fa-file-o',
             files: 'fa fa-files-o',
             textFile: 'fa fa-file-text-o',
@@ -34,6 +35,8 @@ angular.module('ortolangMarketApp')
             // Browser
             browser: {
                 home: 'glyphicon glyphicon-home',
+                viewModeTile: 'glyphicon glyphicon-th-large',
+                viewModeLine: 'glyphicon glyphicon-align-justify',
                 download: 'glyphicon glyphicon-download',
                 upload: 'glyphicon glyphicon-upload',
                 delete: 'glyphicon glyphicon-trash',

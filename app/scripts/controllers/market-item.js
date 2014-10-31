@@ -16,6 +16,12 @@ angular.module('ortolangMarketApp')
 
                 if (oobject.type === 'collection') {
                     if (oobject.object.root === true) {
+                        console.debug('routeParams', $routeParams.view);
+                        if ($routeParams.view === 'browse') {
+                            console.debug('load collection view');
+                            $scope.marketItemTemplate = 'views/browser.html';
+                            return;
+                        }
                         console.debug('load root collection view');
 
                         if (oobject.object.metadatas.length > 0) {
@@ -42,7 +48,7 @@ angular.module('ortolangMarketApp')
                         }
                     } else {
                         console.debug('load collection view');
-                        $scope.marketItemTemplate = 'views/market-item-collection.html';
+                        $scope.marketItemTemplate = 'views/browser.html';
                     }
                 } else if (oobject.type === 'object') {
                     console.debug('load data object view');
@@ -57,6 +63,7 @@ angular.module('ortolangMarketApp')
 
         // Scope variables
         function initScopeVariables() {
+            $scope.itemKey = $routeParams.itemKey;
             $scope.oobject = undefined;
             $scope.item = undefined;
             $scope.marketItemTemplate = undefined;

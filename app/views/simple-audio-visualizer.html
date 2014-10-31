@@ -1,6 +1,6 @@
 <div>
     <p>{{selectedElements[0].name}}</p>
-    <audio id="simple-html5-audio" controls ng-switch="selectedElements[0].mimetype">
+    <audio id="simple-html5-audio" controls ng-switch="selectedElements[0].mimeType">
         <source ng-switch-when="audio/vorbis" src="{{selectedElements[0].downloadUrl}}" type="audio/ogg">
         <source ng-switch-when="audio/ogg" src="{{selectedElements[0].downloadUrl}}" type="audio/ogg">
         <source ng-switch-when="audio/mpeg" src="{{selectedElements[0].downloadUrl}}" type="audio/mpeg">

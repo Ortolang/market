@@ -21,14 +21,15 @@ angular.module('ortolangVisualizers')
         };
 
         this.register = function (visualizer) {
-            console.info('Start registering visualizer \'' + visualizer.getName() + '\'');
+//            console.info('Start registering visualizer \'' + visualizer.getName() + '\'');
             var i = 0;
             for (i; i < registry.length; i++) {
                 if (registry[i].id === visualizer.id) {
+                    console.error('A visualizer with the id "' + visualizer.id + '" has already been registered');
                     return;
                 }
             }
-            console.info('Visualizer \'' + visualizer.getName() + '\' registered');
+            //console.info('Visualizer \'' + visualizer.getName() + '\' registered');
             return registry.push(visualizer);
         };
 
@@ -132,13 +133,13 @@ angular.module('ortolangVisualizers')
         };
 
         this.make = function (config) {
-            console.info('Start making visualizer \'' + config.name + '\'');
+//            console.info('Start making visualizer \'' + config.name + '\'');
             if (!config.id || !config.compatibleTypes) {
                 console.error('id and compatiblesTypes are mandatory', config);
                 return undefined;
             }
             if (!config.id.match(/^[A-Z]/)) {
-                console.error('id must start with an upper-case letter');
+                console.error('id must start with an upper-case letter', config.id);
                 return undefined;
             }
             return new OrtolangVisualizer(config);

@@ -47,7 +47,7 @@ angular.module('ortolangVisualizers')
             link: function (scope, element, attrs) {
                 scope.imageElements = [];
                 angular.forEach(scope.children, function (child) {
-                    if (SimpleImageVisualizer.isCompatible(child.mimetype)) {
+                    if (SimpleImageVisualizer.isCompatible(child.mimeType)) {
                         scope.imageElements.push(child);
                     }
                 });
