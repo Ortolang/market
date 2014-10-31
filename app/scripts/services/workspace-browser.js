@@ -27,6 +27,7 @@ angular.module('ortolangMarketApp')
         }
 
         return {
+            getId: function () { return 'WorkspaceBrowserService'; },
             getData: getData,
             buildChildDownloadUrl: buildChildDownloadUrl,
             buildChildBrowseUrl: buildChildBrowseUrl,

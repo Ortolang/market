@@ -495,20 +495,39 @@ angular.module('ortolangMarketApp')
             //        View mode        //
             // *********************** //
 
-            function initViewMode() {
-                if ($scope.browserService.defaultViewMode === 'tile') {
-                    $scope.viewMode = viewModeLine;
+            function storeViewMode() {
+                if (localStorage !== undefined) {
+                    localStorage.setItem($scope.browserService.getId(), $scope.viewMode.id);
                 }
-                $scope.switchViewMode();
+            }
+
+            function setViewMode(viewMode) {
+                if (viewMode === viewModeLine.id) {
+                    $scope.viewMode = viewModeLine;
+                    $scope.otherViewMode = viewModeTile;
+                } else {
+                    $scope.viewMode = viewModeTile;
+                    $scope.otherViewMode = viewModeLine;
+                }
+                storeViewMode();
+            }
+
+            function initViewMode() {
+                var initialViewMode = $scope.browserService.defaultViewMode;
+                if (localStorage !== undefined) {
+                    var storedViewMode = localStorage.getItem($scope.browserService.getId());
+                    if (storedViewMode) {
+                        initialViewMode = storedViewMode;
+                    }
+                }
+                setViewMode(initialViewMode);
             }
 
             $scope.switchViewMode = function () {
                 if ($scope.viewMode === viewModeLine) {
-                    $scope.viewMode = viewModeTile;
-                    $scope.otherViewMode = viewModeLine;
+                    setViewMode(viewModeTile.id);
                 } else {
-                    $scope.viewMode = viewModeLine;
-                    $scope.otherViewMode = viewModeTile;
+                    setViewMode(viewModeLine.id);
                 }
             };
 
@@ -530,8 +549,8 @@ angular.module('ortolangMarketApp')
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile;
 
             function initLocalVariables() {
-                viewModeLine = {name: 'Mode line', icon: icons.browser.viewModeLine};
-                viewModeTile = {name: 'Mode tile', icon: icons.browser.viewModeTile};
+                viewModeLine = {id: 'line', name: 'Mode line', icon: icons.browser.viewModeLine};
+                viewModeTile = {id: 'tile', name: 'Mode tile', icon: icons.browser.viewModeTile};
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
             }
