@@ -347,10 +347,6 @@ angular.module('ortolangMarketApp')
                 }
             });
 
-            $scope.showMetadata = function () {
-                $rootScope.$broadcast('metadata-list-show');
-            };
-
             $scope.doAction = function (name) {
                 switch (name) {
                 case 'newCollection':

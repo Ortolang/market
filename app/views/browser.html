@@ -70,12 +70,6 @@
                         </div>
                     </div>
 
-                    <div ng-show="hasOnlyOneElementSelected()" class="btn-group">
-                        <button class="btn btn-default" ng-click="showMetadata()" data-title="Métadonnées" bs-tooltip>
-                            <span ng-class="icons.browser.metadata"></span>
-                        </button>
-                    </div>
-
                     <div ng-if="browserService.canAdd" class="btn-group">
                         <button class="btn btn-default" onclick="$('#object-upload-file-select').click();" data-title="Upload" bs-tooltip>
                             <span ng-class="icons.browser.upload"></span>
@@ -186,45 +180,54 @@
             <p ng-if="!hasOnlyOneElementSelected()" class="lead">
                 <span ng-class="icons.files"></span> {{selectedElements.length}} elements
             </p>
-            <hr/>
 
-            <div id="information">
-                <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
-                    <dt>Name</dt>
-                    <dd>{{selectedElements[0].name}}</dd>
-                    <dt>Description</dt>
-                    <dd>{{selectedElements[0].description}}</dd>
-                    <dt>Author</dt>
-                    <dd>{{selectedElements[0].author}}</dd>
-                    <dt>Type</dt>
-                    <dd>{{selectedElements[0].mimeType | contentType}}</dd>
-                    <dt>Created</dt>
-                    <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
-                    <dt>Modified</dt>
-                    <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
-                    <dt>Clock</dt>
-                    <dd>{{selectedElements[0].clock}}</dd>
-                    <dt ng-if="selectedElements[0].type === 'collection'">Size</dt>
-                    <dd ng-if="selectedElements[0].type === 'collection'">{{selectedElements[0].elements.length}} element{{selectedElements[0].elements.length > 1 ? 's' : ''}}</dd>
-                    <dt ng-if="selectedElements[0].type === 'object'">Size</dt>
-                    <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
-                </dl>
 
-                <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
-                    <dt>Size</dt>
-                    <dd>{{selectedElementsSize() | bytes}}</dd>
-                </dl>
+            <div id="browser-side-tabs" bs-tabs>
+                <div title="Informations" bs-pane>
+                    <div id="information">
+                        <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
+                            <dt>Name</dt>
+                            <dd>{{selectedElements[0].name}}</dd>
+                            <dt>Description</dt>
+                            <dd>{{selectedElements[0].description}}</dd>
+                            <dt>Author</dt>
+                            <dd>{{selectedElements[0].author}}</dd>
+                            <dt>Type</dt>
+                            <dd>{{selectedElements[0].mimeType | contentType}}</dd>
+                            <dt>Created</dt>
+                            <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
+                            <dt>Modified</dt>
+                            <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
+                            <dt>Clock</dt>
+                            <dd>{{selectedElements[0].clock}}</dd>
+                            <dt ng-if="selectedElements[0].type === 'collection'">Size</dt>
+                            <dd ng-if="selectedElements[0].type === 'collection'">{{selectedElements[0].elements.length}} element{{selectedElements[0].elements.length > 1 ? 's' : ''}}</dd>
+                            <dt ng-if="selectedElements[0].type === 'object'">Size</dt>
+                            <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
+                        </dl>
+
+                        <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
+                            <dt>Size</dt>
+                            <dd>{{selectedElementsSize() | bytes}}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div title="Métadonnées" bs-pane>
+                    <div ng-include="'views/browser-sidebar-metadata.html'" ng-controller="BrowserSidebarMetadataCtrl"></div>
+                </div>
             </div>
-
         </div>
 
     </div>
 
+    <div ng-include="'views/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
+
         <!-- <div ng-include="'views/metadata-editor.html'" class="am-fade-and-slide-right metadataEditor" ng-if="isEditorShow()"></div> -->
-        <div ng-include="'views/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
+        
         <!-- end editor -->
 
-        <div ng-include="'views/metadata-list.html'" ng-controller="MetadataListCtrl"></div>
+        <!-- <div ng-include="'views/metadata-list.html'" ng-controller="MetadataListCtrl"></div> -->
 
 
     <div ng-include="'views/metadata-preview.html'"></div>

@@ -16,6 +16,7 @@ angular
         'ngSanitize',
         'ortolangVisualizers',
         'angularFileUpload',
+        'mgcrea.ngStrap.tab',
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.aside',
         'mgcrea.ngStrap.helpers.dimensions',

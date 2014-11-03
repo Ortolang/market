@@ -83,20 +83,22 @@
     padding-bottom: @padding-large-vertical;
   }
 
-  //  #metadata .input-group:not(:hover) {
-  //    .form-control {
-  //      border-right: none;
-  //    }
-  //    .input-group-btn {
-  //      > button {
-  //        color: transparent;
-  //        border-left: none;
-  //      }
-  //      > button:first-child {
-  //        border-right: none;
-  //      }
-  //    }
-  //  }
+  .tab-pane {
+    padding-top: 2*@padding-large-vertical;
+    padding-left: @padding-base-horizontal;
+  }
+
+  #add-metadata {
+    #add-metadata-title {
+      background-color: @side-bar-item-bg;
+      color: white;
+    }
+
+    a > span.glyphicon {
+      margin-right: @padding-base-horizontal;
+    }
+
+  }
 
   .list-group-item {
     &:hover {
@@ -106,7 +108,6 @@
       }
     }
     button {
-      //      display: none;
       display: inline-block;
       float: right;
     }
@@ -119,7 +120,9 @@
   padding-bottom: @padding-large-vertical;
   border-top: 1px solid @gray-lighter;
 
-  li {
+  ul.nav-tabs > li {
+    cursor: pointer;
+
     &:hover, &.active:hover {
       border-top: 3px solid @gray;
     }

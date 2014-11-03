@@ -1,14 +1,17 @@
-<div class="aside-backdrop am-fade metadataEditor-backdrop" ng-if="isEditorShow()" ng-click="hideEditor()"></div>
-<div class="aside right am-fade-and-slide-right metadataEditor" ng-if="isEditorShow()" tabindex="-1" role="dialog">
+<div class="aside-backdrop am-fade metadataEditor-backdrop" ng-show="isEditorShow()" ng-click="hideEditor()"></div>
+<div class="aside right am-fade-and-slide-right metadataEditor" ng-show="isEditorShow()" tabindex="-1" role="dialog">
   <div class="aside-dialog">
     <div class="aside-content">
-        <div class="aside-header">
-            <!-- <button type="button" class="close" ng-click="toggleEditor()">&times;</button> -->
-            <h4 class="aside-title">Edit metadata</h4>
+        <div class="metadataEditorHeader">
+            <button type="button" class="close" ng-click="hideEditor()">&times;</button>
+            <h4 class="aside-title">{{userMetadataFormat.name}} de <em>{{selectedElements[0].name}}</em></h4>
           </div>
-          <div class="aside-body">
-
-            <div style="width: 350px; height: 100%" class="row">
+          <div id="metadataEditorBody" class="aside-body">
+            <blockquote>
+              <p>{{userMetadataFormat.description}}</p>
+            </blockquote>
+            <Hr/>
+            <div style="width: 700px; height: 100%" class="row">
                 <div class="col-md-12">
                     <div ng-include="metadataForm"></div>
                 </div>

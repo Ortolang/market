@@ -3,6 +3,22 @@
 	-webkit-transition:all ease-in-out 0.25s;
 	transition:all ease-in-out 0.25s;
 	z-index: 2000;
+	//top: 50px;
+	position: absolute;
+
+	.aside-body {
+		overflow: auto;
+	}
+
+}
+
+.metadataEditorHeader {
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+	min-height: 16.43px;
+	padding: 6px 15px;
+	background: @side-bar-item-bg;
+	color: #000;
 }
 
 .metadataList {
@@ -11,11 +27,22 @@
 }
 
 .metadataEditor-backdrop {
-	z-index: 1800;	
+	z-index: 400;
+	//top: 50px;
+	position: absolute;
 }
 
 .metadataList.middle {
 	right: 35rem;
+}
+
+#add-metadata {
+
+	.collapse-box {
+		-webkit-transition:all linear 0.2s;
+  		transition:all linear 0.2s;
+	}
+	
 }
 
 

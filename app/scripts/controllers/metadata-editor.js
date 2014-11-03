@@ -18,12 +18,14 @@ angular.module('ortolangMarketApp')
 
     $scope.showEditor = function() {
         $scope.editorVisibility = true;
-        $rootScope.$broadcast('metadata-list-push');
+        // $rootScope.$broadcast('metadata-list-push');
+        $scope.resizeAsideBody();
     };
 
     $scope.hideEditor = function() {
         $scope.editorVisibility = false;
-        $rootScope.$broadcast('metadata-list-unpush');
+        // $rootScope.$broadcast('metadata-list-unpush');
+        resetMetadataFormat();
     };
 
     $scope.toggleEditor = function() {
@@ -45,11 +47,13 @@ angular.module('ortolangMarketApp')
     $scope.selectedMetadata = undefined;
     $scope.selectedMetadataContent = undefined;
 
-    function loadMetadataContent(metadata) {
+    function loadMetadataContent(view, metadata) {
         $scope.selectedMetadata = metadata;
         //TODO get content from workspace resource
         $http.get(Url.urlBase() + '/rest/objects/' + metadata.key + '/download').success(function (data) {
             $scope.selectedMetadataContent = data;
+
+            $scope.metadataForm = view;
 
             // $rootScope.$broadcast('metadata-form', $scope.selectedMetadataContent);
             $scope.showEditor();
@@ -81,12 +85,7 @@ angular.module('ortolangMarketApp')
 
 		var uploadUrl = Url.urlBase() + '/rest/workspaces/'+$scope.selectedElements[0].workspace+'/elements/';
 		var fd = new FormData();
-/*
-		var currentPath = $scope.element.path;
-		if($scope.selectedChild) {
-			currentPath += '/' + $scope.selectedChildData.object.name
-		}
-*/
+
         var currentPath = $scope.selectedElements[0].path;
 
 		fd.append('path', currentPath);
@@ -106,8 +105,8 @@ angular.module('ortolangMarketApp')
         .success(function(){
 
 	    	$scope.hideEditor();
-	    	//TODO refresh metadata list
 	    	resetMetadataFormat();
+            $scope.refreshSelectedElement();
         })
         .error(function(error){
         	console.error('creation of metadata failed !',error);
@@ -131,9 +130,8 @@ angular.module('ortolangMarketApp')
     $scope.$on('metadata-editor-edit', function (event, metadataFormat, metadata) {
 
         $scope.userMetadataFormat = metadataFormat;
-        $scope.metadataForm = metadataFormat.view;
 
-        loadMetadataContent(metadata);
+        loadMetadataContent(metadataFormat.view, metadata);
     });
 
     $scope.$on('metadata-editor-create', function (event, content, contentType) {
@@ -141,5 +139,28 @@ angular.module('ortolangMarketApp')
     });
 
 
+        // *********************** //
+        //          Resize         //
+        // *********************** //
+
+        $scope.resizeAsideBody = function() {
+            var topOffset = $('#main-navbar').innerHeight(),
+                height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+                // browserToolbarHeight = $('#browser-toolbar').innerHeight();
+
+            height = height - topOffset;
+            if (height < 1) {
+                height = 1;
+            }
+            if (height > topOffset) {
+                if ($rootScope.uploadQueueStatus === 'active') {
+                    height -= $('#upload-queue').innerHeight();
+                }
+                // $('#browser-sidebar').css('min-height', (height - browserToolbarHeight) + 'px');
+                // $('#browser-wrapper').find('.table-wrapper.workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
+                //$('#browser-sidebar').css('min-height', height + 'px');
+                $('#metadataEditorBody').css('height', height + 'px');
+            }
+        };
 
   }]);
