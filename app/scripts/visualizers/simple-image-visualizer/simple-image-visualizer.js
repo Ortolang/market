@@ -45,12 +45,7 @@ angular.module('ortolangVisualizers')
             restrict: 'E',
             scope: true,
             link: function (scope, element, attrs) {
-                scope.imageElements = [];
-                angular.forEach(scope.children, function (child) {
-                    if (SimpleImageVisualizer.isCompatible(child.mimeType)) {
-                        scope.imageElements.push(child);
-                    }
-                });
+                scope.imageElements = scope.children;
             }
         };
     }]);
