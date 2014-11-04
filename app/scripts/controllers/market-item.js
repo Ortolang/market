@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'N3Serializer', function ($scope, $routeParams, $http, Url, ObjectResource, N3Serializer) {
+    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($scope, $routeParams, $http, Url, ObjectResource, N3Serializer, VisualizerManager, $compile) {
 
         function loadItem(key) {
             ObjectResource.get({oKey: key}, function (oobject) {
@@ -37,14 +37,6 @@ angular.module('ortolangMarketApp')
                                 // resetMetadata();
                                 //TODO send error message
                             });
-
-                            // ObjectResource.download({oKey: metaKey}, function(metaContent) {
-                            // console.debug(metaContent);
-                            // N3Serializer.fromN3(metaContent).then(function(data) {
-                            // $scope.item = angular.copy(data);
-                            // });
-
-                            // });
                         }
                     } else {
                         console.debug('load collection view');
@@ -59,6 +51,30 @@ angular.module('ortolangMarketApp')
                     console.debug('load item key not found view');
                 }
             });
+        }
+
+        $scope.showPreview = function (preview) {
+
+            if(preview !== undefined && preview !== '') {
+                //TODO Get preview file or collection
+                ObjectResource.get({oKey: preview}, function (oobject) {
+                    console.info(oobject);
+                    // var visualizers = VisualizerManager.getCompatibleVisualizers(element.mimetype, element.name);
+
+                    // if(visualizers.length > 0) {
+                    //     finishPreview(visualizers[0]);
+                    // }
+                });
+                //TODO si la cle n'existe pas afficher quelque chose !!
+            }
+        };
+
+        function finishPreview(visualizer) {
+            var element = $compile(visualizer.element)($scope),
+                visualizerModal = $('#visualizer-modal');
+            visualizerModal.find('.modal-header strong').text(visualizer.name);
+            visualizerModal.find('.modal-body').empty().append(element);
+            visualizerModal.modal('show');
         }
 
         // Scope variables

@@ -1,10 +1,10 @@
 <section id="market-item">
     <header>
         <h1>{{item.title}}</h1>
-        <span class="author">{{oobject.author}}, CNRS - LPL</span>
-        <span class="lab">Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR)</span>
+        <span class="author">{{oobject.author}}</span>
+        <span ng-repeat="prod in item.producer" class="lab">{{prod}}</span>
         <p class="actions">
-            <button class="btn btn-primary">Aperçu</button>
+            <button class="btn btn-primary" ng-click="showPreview(item.preview)">Aperçu</button>
             <a ng-href="#/market/{{itemKey}}?view=browse" class="btn btn-default">Afficher le contenu</a>
         </p>
     </header>
@@ -35,6 +35,8 @@
             </section>
         </div>
 
+        <div ng-include="'views/visualizer.html'"></div>
+
         <aside class="col-md-4">
             <div class="panel panel-default license-panel">
                 <div class="panel-body">
@@ -62,16 +64,8 @@
             <div class="panel panel-default metadata-panel">
                 <div class="panel-body">
                     <dl class="dl-horizontal">
-                        <dt>Version</dt>
-                        <dd>1.0</dd>
-                        <dt>Responsable informatique</dt>
-                        <dd>Etienne Petitjean</dd>
                         <dt>Contenu</dt>
-                        <dd>500 textes</dd>
-                        <dt>Format</dt>
-                        <dd>XML - TEI P5</dd>
-                        <dt>Taille</dt>
-                        <dd>120 Mo</dd>
+                        <dd>{{item.extent}}</dd>
                         <dt>Tags</dt>
                         <dd>tokenizer, étiquetage morphosyntaxique, POS tagger</dd>
                     </dl>

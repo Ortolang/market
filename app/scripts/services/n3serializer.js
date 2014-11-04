@@ -57,10 +57,12 @@ angular.module('ortolangMarketApp')
                             mdFromN3.description = angular.copy(literalValue);
                         } else if(triple.predicate === N3Util.expandQName('dcterms:abstract', prefixesRDF)) {
                             mdFromN3.abstract = angular.copy(literalValue);
-                        } else if(triple.predicate === N3Util.expandQName('otl:use_conditions', prefixesRDF)) {
+                        } else if(triple.predicate === N3Util.expandQName('otl:useConditions', prefixesRDF)) {
                             mdFromN3.useConditions = angular.copy(literalValue);
                         } else if(triple.predicate === N3Util.expandQName('otl:producer', prefixesRDF)) {
                             mdFromN3.producer.push(angular.copy(literalValue));
+                        } else if(triple.predicate === N3Util.expandQName('otl:preview', prefixesRDF)) {
+                            mdFromN3.preview = angular.copy(literalValue);
                         }
                    }
                    else if(error) {
@@ -93,9 +95,9 @@ angular.module('ortolangMarketApp')
             writer.addTriple('${target}', N3Util.expandQName('dc:title', prefixesRDF), '"'+md.title+'"');
             writer.addTriple('${target}', N3Util.expandQName('dc:description', prefixesRDF), '"'+md.description+'"');
             writer.addTriple('${target}', N3Util.expandQName('dcterms:abstract', prefixesRDF), '"'+md.abstract+'"');
-            writer.addTriple('${target}', N3Util.expandQName('otl:use_conditions', prefixesRDF), '"'+md.useConditions+'"');
-
+            writer.addTriple('${target}', N3Util.expandQName('otl:useConditions', prefixesRDF), '"'+md.useConditions+'"');
             writer.addTriple('${target}', N3Util.expandQName('otl:producer', prefixesRDF), '"'+md.producer+'"');
+            writer.addTriple('${target}', N3Util.expandQName('otl:preview', prefixesRDF), '"'+md.preview+'"');
             
 
             writer.end(function (error, result) {
