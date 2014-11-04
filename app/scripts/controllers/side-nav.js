@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
                 active: undefined
             },
             {
-                path: '/test/system/head///select',
+                path: '/test',
                 description: 'Test',
                 iconCss: 'fa fa-cubes fa-2x',
                 active: undefined
