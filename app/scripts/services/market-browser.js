@@ -29,14 +29,17 @@ angular.module('ortolangMarketApp')
         return {
             getId: function () { return 'MarketBrowserService'; },
             getData: getData,
+            getDataResource: 'object',
             buildChildDownloadUrl: buildChildDownloadUrl,
             buildChildBrowseUrl: buildChildBrowseUrl,
             canDelete: false,
             canAdd: false,
+            canDownload: true,
             canPreview: true,
             hasBreadcrumb: false,
             defaultViewMode: 'tile',
             canSwitchViewMode: true,
-            displayAsideInfo: false
+            displayAsideInfo: false,
+            isFileSelect: false
         };
     }]);

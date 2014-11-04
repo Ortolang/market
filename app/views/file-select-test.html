@@ -1,0 +1,24 @@
+<section class="row" ng-controller="TestCtrl">
+    <div class="col-md-12">
+
+        <h3>File Select Test</h3>
+        <p>
+            <button class="btn btn-default" ng-click="fileSelectModal.show()">Select workspace element</button>
+        </p>
+        <p>Workspaces list  : </p>
+        <ul>
+           <li ng-repeat="ws in wsList.entries">{{ws.name}}</li>
+        </ul>
+        <p>Selected element : </p>
+        <ul>
+            <li ng-repeat="element in elements">
+                <ul>
+                    <li>Name : {{element.name}}</li>
+                    <li>Key : {{element.key}}</li>
+                    <li>Path : {{element.path}}</li>
+                    <li>Workspace : {{element.workspace}}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</section>

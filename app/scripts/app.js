@@ -61,9 +61,8 @@ angular
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
             })
-            .when('/myspace', {
-                templateUrl: 'views/workspaces.html',
-                controller: 'WorkspacesCtrl',
+            .when('/workspaces', {
+                templateUrl: 'views/browser.html',
                 requiresAuthentication: true
             })
             .when('/tools', {
@@ -75,6 +74,9 @@ angular
                 templateUrl: '../views/tool.html',
                 controller: 'ToolCtrl',
                 requiresAuthentication: true
+            })
+            .when('/test', {
+                templateUrl: 'views/file-select-test.html'
             })
             .otherwise({
                 redirectTo: '/'

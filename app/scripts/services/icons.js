@@ -46,6 +46,7 @@ angular.module('ortolangMarketApp')
                 search: 'glyphicon glyphicon-search',
                 sort: 'glyphicon glyphicon-sort',
                 metadata: 'glyphicon glyphicon-list',
-                info: 'glyphicon glyphicon-info-sign'
+                info: 'glyphicon glyphicon-info-sign',
+                publish: 'glyphicon glyphicon-ok'
             }
         });

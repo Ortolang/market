@@ -39,7 +39,7 @@
 
                 <div ng-repeat="item in items" class="col-sm-6 col-md-3">
                     <div class="thumbnail market-item">
-                    	<a href="#/market/{{item.oobject.key}}">
+                    	<a ng-href="#/market/{{item.oobject.key}}">
                         	<img src="images/holder.png" alt="{{item.meta.title}}">
                         </a>
                         <div class="caption">

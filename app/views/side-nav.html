@@ -5,17 +5,6 @@
                 <i ng-class="element.iconCss"></i>
                 <span class="nav-description">{{element.description}}</span>
             </a>
-            <div ng-if="element.subElements">
-                <a ng-href="#{{element.path}}" ng-click="select($event, element)">
-                    <i ng-class="element.iconCss"></i>
-                    <span class="nav-description">{{element.description}}</span>
-                </a>
-                <ul ng-if="element.subElements" class="sub-elements nav-description">
-                    <li ng-repeat="subElement in element.subElements">
-                        <a ng-href="#{{subElement.path}}" ng-click="select($event, subElement)">{{subElement.description}}</a>
-                    </li>
-                </ul>
-            </div>
         </li>
     </ul>
 </nav>

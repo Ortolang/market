@@ -10,13 +10,6 @@
 angular.module('ortolangMarketApp')
     .controller('SideNavCtrl', [ '$scope', '$route', function ($scope, $route) {
 
-        function workspaceSubElements() {
-            return [
-                { description: 'System', path: '/workspaces/system/head///browse'},
-                { description: 'System', path: '/workspaces/system/head///browse'}
-            ];
-        }
-
         $scope.navElements = [
             {
                 path: '/products',
@@ -31,17 +24,22 @@ angular.module('ortolangMarketApp')
                 active: undefined
             },
             {
-                path: '/myspace',
+                path: '/workspaces',
                 otherPath: '/workspaces',
                 description: 'Mes espaces',
                 iconCss: 'fa fa-cloud fa-2x',
                 active: undefined
-                //subElements: workspaceSubElements()
             },
             {
                 path: '/tools',
                 description: 'Outils',
                 iconCss: 'fa fa-puzzle-piece fa-2x',
+                active: undefined
+            },
+            {
+                path: '/test/system/head///select',
+                description: 'Test',
+                iconCss: 'fa fa-cubes fa-2x',
                 active: undefined
             },
             {

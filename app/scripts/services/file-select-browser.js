@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.WorkspaceBrowserService
+ * @name ortolangMarketApp.FileSelectBrowserService
  * @description
- * # WorkspaceBrowserService
+ * # FileSelectBrowserService
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('WorkspaceBrowserService', ['WorkspaceElementResource', 'DownloadResource', function (WorkspaceElementResource, DownloadResource) {
+    .factory('FileSelectBrowserService', ['WorkspaceElementResource', 'DownloadResource', function (WorkspaceElementResource, DownloadResource) {
 
         function getData(config) {
             if (config.path) {
@@ -26,25 +26,20 @@ angular.module('ortolangMarketApp')
             return '/workspaces/' + parent.workspace + '/' + root + '/' +  parent.path + '/' + child.name + '/browse';
         }
 
-        function buildBrowseUrlFromPath(wsName, path, root) {
-            return '/workspaces/' + wsName + '/' + root + '/' + path + '/browse';
-        }
-
         return {
-            getId: function () { return 'WorkspaceBrowserService'; },
+            getId: function () { return 'FileSelectBrowserService'; },
             getData: getData,
             getDataResource: 'workspace',
             buildChildDownloadUrl: buildChildDownloadUrl,
             buildChildBrowseUrl: buildChildBrowseUrl,
-            buildBrowseUrlFromPath: buildBrowseUrlFromPath,
-            canDelete: true,
-            canAdd: true,
-            canDownload: true,
-            canPreview: true,
+            canDelete: false,
+            canAdd: false,
+            canDownload: false,
+            canPreview: false,
             hasBreadcrumb: true,
             defaultViewMode: 'line',
-            canSwitchViewMode: true,
-            displayAsideInfo: true,
-            isFileSelect: false
+            canSwitchViewMode: false,
+            displayAsideInfo: false,
+            isFileSelect: true
         };
     }]);

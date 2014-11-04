@@ -1,13 +1,22 @@
 <div id="browser-wrapper" ng-controller="BrowserNextCtrl">
 
     <div class="row">
-        <div id="browser-toolbar" class="col-md-12" ng-click="checkSelection($event)">
-            <div class="btn-toolbar" role="toolbar">
+        <div id="browser-toolbar" ng-click="checkSelection($event)">
+            <div class="col-md-2 toolbar-aside">
+                <div class="btn title">Browser</div>
+            </div>
+
+            <div class="btn-toolbar col-md-10" role="toolbar">
                 <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
-                    <a ng-if="breadcrumbParts" class="btn btn-default" ng-href="#/workspaces/{{wsName}}/head///browse">
+                    <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseTo('/')">
                         <span ng-class="icons.browser.home"></span>{{wsName}}
-                    </a>
-                    <div ng-if="breadcrumbParts.length === 0" class="btn-group">
+                    </button>
+                    <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
+                        <button type="button" class="btn btn-default">
+                            <span ng-class="icons.browser.home"></span>{{wsName}}
+                        </button>
+                    </div>
+                    <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span ng-class="icons.browser.home"></span>{{wsName}}
                             <span class="caret"></span>
@@ -18,10 +27,15 @@
                     </div>
 
                     <div ng-repeat="part in breadcrumbParts" class="breadcrumb-part">
-                        <a ng-if="!$last" ng-href="#/workspaces/{{wsName}}/head/{{part}}/browse" class="btn btn-default">
+                        <a ng-if="!$last" ng-click="browseTo(part)" class="btn btn-default">
                             {{parent.pathParts[$index]}}
                         </a>
-                        <div class="btn-group" ng-if="$last">
+                        <div class="btn-group" ng-if="$last && breadcrumbDropdownItems.length === 0">
+                            <button type="button" class="btn btn-default">
+                                {{parent.pathParts[$index]}}
+                            </button>
+                        </div>
+                        <div class="btn-group" ng-if="$last && breadcrumbDropdownItems.length !== 0">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 {{parent.pathParts[$index]}}
                                 <span class="caret"></span>
@@ -82,8 +96,14 @@
                         </button>
                     </div>
 
+                    <div ng-if="browserService.canAdd" class="btn-group">
+                        <button class="btn btn-default" ng-click="publishWorkspace()" data-title="Publish" bs-tooltip>
+                            <span ng-class="icons.browser.publish"></span>
+                        </button>
+                    </div>
+
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
-                        <a ng-if="selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="Download" bs-tooltip>
+                        <a ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="Download" bs-tooltip>
                             <span ng-class="icons.browser.download"></span>
                         </a>
                         <button ng-if="browserService.canDelete" class="btn btn-default" ng-click="clickDelete()" data-title="Delete" bs-tooltip>
@@ -111,7 +131,26 @@
     </div>
 
     <div class="row">
-        <div ng-hide="isViewModeLine()" class="browsed-element-children-wrapper" ng-class="browserService.displayAsideInfo ? 'col-md-9' : 'col-md-12'" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
+        <div class="col-md-2 browser-aside browser-aside-left">
+            <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                    New
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><div data-toggle="modal" data-target="#new-collection-modal">Collection</div></li>
+                    <li class="divider"></li>
+                    <li><div data-toggle="modal" data-target="#create-workspace-modal">Workspace</div></li>
+                </ul>
+            </div>
+            <section id="my-workspaces">
+                <h5>My workspaces</h5>
+                <ul class="list-unstyled">
+                    <li ng-repeat="ws in wsList.entries" ng-click="changeWorkspace(ws)" ng-class="isActiveWorkspace(ws)"><span></span>{{ws.name}}</li>
+                </ul>
+            </section>
+        </div>
+
+        <div ng-hide="isViewModeLine()" class="browsed-element-children-wrapper" ng-class="browserService.displayAsideInfo ? 'col-md-7' : 'col-md-10'" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
             <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
                 <div ng-repeat="child in parent.elements | filter: {name: filterNameQuery, mimeType: filterMimeTypeQuery, type: type} | orderBy:orderProp:orderReverse"
                      ng-class="tileCssClasses()" class="browsed-element-child-wrapper">
@@ -133,7 +172,7 @@
             </div>
         </div>
 
-        <div ng-show="isViewModeLine()" class="table-wrapper workspace-elements-wrapper" ng-class="browserService.displayAsideInfo ? 'col-md-9' : 'col-md-12'" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
+        <div ng-show="isViewModeLine()" class="table-wrapper workspace-elements-wrapper" ng-class="browserService.displayAsideInfo ? 'col-md-7' : 'col-md-10'" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
             <table ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
                 <thead>
                 <tr>
@@ -149,9 +188,9 @@
                     ng-dblclick="doubleClickChild($event, child)"
                     ng-class="{active : isSelected(child)}">
                     <td ng-if="child.type === 'collection'">
-                        <a ng-href="#{{getChildBrowseUrl(child)}}">
+                        <span ng-click="browseToChild(child)" class="collection">
                             <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}
-                        </a>
+                        </span>
                     </td>
                     <td ng-if="!(child.type === 'collection')">
                         <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}
@@ -172,7 +211,7 @@
             </ul>
         </div>
 
-        <div ng-if="browserService.displayAsideInfo" id="browser-sidebar" class="col-md-3">
+        <div ng-if="browserService.displayAsideInfo" id="browser-sidebar" class="col-md-3 browser-aside browser-aside-right">
 
             <p ng-if="hasOnlyOneElementSelected()" class="lead">
                 <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span> {{selectedElements[0].name}}
@@ -182,7 +221,7 @@
             </p>
 
 
-            <div id="browser-side-tabs" bs-tabs>
+            <div id="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
                 <div title="Informations" bs-pane>
                     <div id="information">
                         <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
@@ -224,7 +263,7 @@
     <div ng-include="'views/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
 
         <!-- <div ng-include="'views/metadata-editor.html'" class="am-fade-and-slide-right metadataEditor" ng-if="isEditorShow()"></div> -->
-        
+
         <!-- end editor -->
 
         <!-- <div ng-include="'views/metadata-list.html'" ng-controller="MetadataListCtrl"></div> -->
@@ -264,6 +303,38 @@
             </div>
         </div>
     </div>
+
+    <div ng-if="browserService.canAdd" class="modal fade" id="create-workspace-modal" tabindex="-1" role="dialog" aria-labelledby="create-workspace-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="create-workspace-modal-label">Créer un espace de travail</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id="create-workspace-form" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="new-workspace-name" class="col-sm-2 control-label">Nom</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" placeholder="Nom de l'espace de travail" ng-model="$parent.newWorkspaceName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-workspace-type" class="col-sm-2 control-label">Type</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="new-workspace-type" name="new-workspace-type" placeholder="Type" ng-model="$parent.newWorkspaceType">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="createWorkspace()">Créer</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <div ng-if="browserService.canAdd" id="upload-queue" ng-class="uploadQueueStatus" ng-include="'views/upload.html'"></div>
 </div>
