@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
             restrict: 'A',
             templateUrl: '/views/browser.html',
             link: function (scope, element, attrs) {
-                scope.fileSelectWorkspace = attrs.wsName;
+                scope.filterMimeTypeQuery = attrs.filterNameQuery;
             }
         };
     });

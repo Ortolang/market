@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$routeParams', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url',
-        function ($scope, $routeParams, $rootScope, $http, $timeout, FileUploader, Url) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url',
+        function ($scope, $rootScope, $http, $timeout, FileUploader, Url) {
 
             var uploader;
 
@@ -23,7 +23,6 @@ angular.module('ortolangMarketApp')
                     headers: {
                         'Authorization': $http.defaults.headers.common.Authorization
                     },
-                    routeParams: $routeParams,
                     queueLimit: 100,
                     filters: [{
                         name: 'noFolder',
@@ -59,14 +58,14 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onAfterAddingFile = function (fileItem) {
-                fileItem.wsName = $routeParams.wsName;
+                fileItem.wsName = angular.copy($scope.wsName);
                 fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wsName + '/elements';
                 fileItem.formData = [{type: fileItem.type}];
                 if (fileItem.type === 'object') {
-                    fileItem.file.path = this.routeParams.path;
+                    fileItem.file.path = angular.copy($scope.parent.path);
                     fileItem.formData.push({path: fileItem.file.path + '/' + fileItem.file.name});
                 } else if (fileItem.type === 'metadata') {
-                    fileItem.file.path = this.routeParams.path + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
+                    fileItem.file.path = angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
                     fileItem.formData.push({path: fileItem.file.path});
                     fileItem.formData.push({name: fileItem.file.name});
                 } else {

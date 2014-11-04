@@ -681,8 +681,8 @@ angular.module('ortolangMarketApp')
                 $scope.orderProp = ['type', 'name'];
                 $scope.dateFormat = 'medium';
                 $scope.reverse = false;
-                $scope.filterNameQuery = undefined;
-                $scope.filterMimeTypeQuery = undefined;
+                //$scope.filterNameQuery = undefined;
+                //$scope.filterMimeTypeQuery = undefined;
                 // Visualizers
                 $scope.visualizers = undefined;
                 $scope.allSuportedMimeTypes = VisualizerManager.getAllSupportedMimeTypes();
