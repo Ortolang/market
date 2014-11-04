@@ -88,11 +88,11 @@ angular.module('ortolangMarketApp')
 
         var currentPath = $scope.selectedElements[0].path;
 
-		fd.append('path', currentPath);
+		fd.append('path', encodeURIComponent(currentPath));
 		fd.append('type', 'metadata');
 		
         fd.append('format', $scope.userMetadataFormat.id);
-        fd.append('name', $scope.userMetadataFormat.name);
+        fd.append('name', encodeURIComponent($scope.userMetadataFormat.name));
 
 		var blob = new Blob([content], { type: contentType});
 
