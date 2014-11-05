@@ -38,17 +38,17 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('simpleImageVisualizer', [ '$filter', function ($filter) {
+    .directive('simpleImageVisualizer', ['$filter', function ($filter) {
 
         return {
             templateUrl: '../../../views/simple-image-visualizer.html',
             restrict: 'E',
             scope: true,
             link: function (scope, element, attrs) {
-                if ($filter('filter')(scope.children, {selected: true}, true).length === 0) {
-                    scope.children[0].selected = true;
+                if ($filter('filter')(scope.elements, {selected: true}, true).length === 0) {
+                    scope.elements[0].selected = true;
                 }
-                scope.imageElements = scope.children;
+                scope.imageElements = scope.elements;
             }
         };
     }]);

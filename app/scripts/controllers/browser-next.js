@@ -18,7 +18,6 @@ angular.module('ortolangMarketApp')
         '$filter',
         '$window',
         'hotkeys',
-        'DownloadResource',
         'WorkspaceResource',
         'WorkspaceElementResource',
         'VisualizerManager',
@@ -26,7 +25,7 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, hotkeys, DownloadResource, WorkspaceResource, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, hotkeys, WorkspaceResource, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             // *********************** //
             //        Breadcrumb       //
@@ -107,26 +106,26 @@ angular.module('ortolangMarketApp')
 
             function getParentData(refresh) {
                 console.log('getParentData / refresh :', refresh);
-                var resource = $scope.browserService.getData({oKey: $scope.itemKey, wsName: $scope.wsName, path: $scope.path, root: $scope.root});
-                resource.$promise.then(function (element) {
-                    console.log('getParentData success', element);
-                    $scope.parent = $scope.browserService.getDataResource === 'object' ? element.object : element;
-                    // If we just refreshed the data no need to build the breadcrumb again
-                    if (!refresh) {
-                        buildBreadcrumb();
-                        newSelectedElement($scope.parent);
-                    }
-                    $scope.resizeBrowser();
-                    angular.forEach($scope.parent.elements, function (value) {
-                        if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
-                            $scope.allChildrenMimeTypes.push(value.mimeType);
+                $scope.browserService.getData({oKey: $scope.itemKey, wsName: $scope.wsName, path: $scope.path, root: $scope.root})
+                    .$promise.then(function (element) {
+                        console.log('getParentData success', element);
+                        $scope.parent = $scope.browserService.getDataResource === 'object' ? element.object : element;
+                        // If we just refreshed the data no need to build the breadcrumb again
+                        if (!refresh) {
+                            buildBreadcrumb();
+                            newSelectedElement($scope.parent);
                         }
+                        $scope.resizeBrowser();
+                        angular.forEach($scope.parent.elements, function (value) {
+                            if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
+                                $scope.allChildrenMimeTypes.push(value.mimeType);
+                            }
+                        });
                     });
-                });
             }
 
             function buildChildDownloadUrl(data) {
-                return $scope.browserService.buildChildBrowseUrl(data, $scope.parent, $scope.root);
+                return $scope.browserService.buildChildDownloadUrl(data, $scope.parent, $scope.root);
             }
 
             $scope.getChildBrowseUrl = function (child) {
@@ -135,26 +134,26 @@ angular.module('ortolangMarketApp')
 
             function getChildData(child, refresh, clickEvent, isPush) {
                 clickEvent = clickEvent || undefined;
-                var resource = $scope.browserService.getData({oKey: child.key, wsName: $scope.wsName, path: $scope.path + '/' + child.name, root: $scope.root});
-                resource.$promise.then(function (data) {
-                    if ($scope.browserService.getDataResource === 'object') {
-                        data = data.object;
-                    }
-                    if (!refresh) {
-                        data.downloadUrl = buildChildDownloadUrl(data);
-                    }
-                    child.element = data;
-                    if (isPush) {
-                        pushSelectedElement(data);
-                        clearVisualizers();
-                    } else {
-                        newSelectedElement(data);
-                        checkCompatibleVisualizers(data);
-                    }
-                    if (!refresh) {
-                        $scope.contextMenu(clickEvent, false);
-                    }
-                });
+                $scope.browserService.getData({oKey: child.key, wsName: $scope.wsName, path: $scope.path + '/' + child.name, root: $scope.root})
+                    .$promise.then(function (data) {
+                        if ($scope.browserService.getDataResource === 'object') {
+                            data = data.object;
+                        }
+                        if (!refresh) {
+                            data.downloadUrl = buildChildDownloadUrl(data);
+                        }
+                        child.element = data;
+                        if (isPush) {
+                            pushSelectedElement(data);
+                            clearVisualizers();
+                        } else {
+                            newSelectedElement(data);
+                            checkCompatibleVisualizers(data);
+                        }
+                        if (!refresh) {
+                            $scope.contextMenu(clickEvent, false);
+                        }
+                    });
             }
 
             function getChildrenDataOfTypes(mimeTypes, isPreview, visualizer) {
@@ -172,9 +171,12 @@ angular.module('ortolangMarketApp')
                 }
                 angular.forEach(filteredElements, function (child) {
                     console.info('Requesting data of ' + child.name);
-                    WorkspaceElementResource.get({wsName: $scope.wsName, path: $scope.path + child.name, root: $scope.root},
-                        function (data) {
-                            data.downloadUrl = DownloadResource.getDownloadUrl({wsName: $scope.wsName, path: $scope.parent.path + '/' + data.name});
+                    $scope.browserService.getData({oKey: $scope.itemKey, wsName: $scope.wsName, path: $scope.path + child.name, root: $scope.root})
+                        .$promise.then(function (data) {
+                            if ($scope.browserService.getDataResource === 'object') {
+                                data = data.object;
+                            }
+                            data.downloadUrl = buildChildDownloadUrl(data);
                             data.selected = $scope.isSelected(data);
                             $scope.children.push(data);
                             console.info('Successfully retrieved data of ' + child.name, data);
@@ -414,7 +416,13 @@ angular.module('ortolangMarketApp')
             }
 
             function finishPreview(visualizer) {
-                var element = $compile(visualizer.element)($scope),
+                var isolatedScope = $rootScope.$new();
+                if ($scope.children && $scope.children.length !==0) {
+                    isolatedScope.elements = $scope.children;
+                } else {
+                    isolatedScope.elements = $scope.selectedElements;
+                }
+                var element = $compile(visualizer.element)(isolatedScope),
                     visualizerModal = $('#visualizer-modal');
                 visualizerModal.find('.modal-header strong').text(visualizer.name);
                 visualizerModal.find('.modal-body').empty().append(element);
@@ -427,6 +435,7 @@ angular.module('ortolangMarketApp')
                 if (visualizer.needAllChildrenData) {
                     getChildrenDataOfTypes(visualizer.compatibleTypes, true, visualizer);
                 } else {
+                    $scope.children = undefined;
                     finishPreview(visualizer);
                 }
             };
@@ -636,6 +645,17 @@ angular.module('ortolangMarketApp')
                     return 'col-lg-3 col-xlg-14 col-xxlg-15 col-md-4 col-sm-4 col-xs-6';
                 }
                 return 'col-lg-3 col-xlg-15 col-xxlg-16 col-md-4 col-sm-4 col-xs-6';
+            };
+
+            $scope.middleCssClass = function () {
+                var columnNumber = 12;
+                if ($scope.browserService.displayAsideInfo) {
+                    columnNumber -= 3;
+                }
+                if ($scope.browserService.displayAsideWorkspaceList) {
+                    columnNumber -= 2;
+                }
+                return 'col-md-' + columnNumber;
             };
 
             // *********************** //

@@ -40,6 +40,7 @@ angular.module('ortolangMarketApp')
             defaultViewMode: 'line',
             canSwitchViewMode: false,
             displayAsideInfo: false,
+            displayAsideWorkspaceList: true,
             isFileSelect: true
         };
     }]);

@@ -2,11 +2,11 @@
 
     <div class="row">
         <div id="browser-toolbar" ng-click="checkSelection($event)">
-            <div class="col-md-2 toolbar-aside">
+            <div ng-if="browserService.displayAsideWorkspaceList" class="col-md-2 toolbar-aside">
                 <div class="btn title">Browser</div>
             </div>
 
-            <div class="btn-toolbar col-md-10" role="toolbar">
+            <div ng-class="browserService.displayAsideWorkspaceList ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
                 <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
                     <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseTo('/')">
                         <span ng-class="icons.browser.home"></span>{{wsName}}
@@ -97,7 +97,7 @@
                     </div>
 
                     <div ng-if="browserService.canAdd" class="btn-group">
-                        <button class="btn btn-default" ng-click="publishWorkspace()" data-title="Publish" bs-tooltip>
+                        <button class="btn btn-default" ng-click="publishWorkspace()" data-title="Publish workspace" bs-tooltip>
                             <span ng-class="icons.browser.publish"></span>
                         </button>
                     </div>
@@ -131,7 +131,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 browser-aside browser-aside-left">
+        <div ng-if="browserService.displayAsideWorkspaceList" class="col-md-2 browser-aside browser-aside-left">
             <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                     New
@@ -172,7 +172,7 @@
             </div>
         </div>
 
-        <div ng-show="isViewModeLine()" class="table-wrapper workspace-elements-wrapper" ng-class="browserService.displayAsideInfo ? 'col-md-7' : 'col-md-10'" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
+        <div ng-show="isViewModeLine()" ng-class="middleCssClass()" class="table-wrapper workspace-elements-wrapper" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
             <table ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
                 <thead>
                 <tr>

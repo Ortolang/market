@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($scope, $routeParams, $http, Url, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, $http, Url, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
 
         function loadItem(key) {
             ObjectResource.get({oKey: key}, function (oobject) {
@@ -73,10 +73,12 @@ angular.module('ortolangMarketApp')
 
             //var scopePreview = {children: [{downloadUrl: DownloadResource.getDownloadUrl({oKey: oobject.object.key}), description: oobject.object.description, name: oobject.object.name}]};
             // angular.extend($scope, scopePreview);
-            $scope.children = [];
-            $scope.children.push({downloadUrl: DownloadResource.getDownloadUrl({oKey: oobject.object.key}), description: oobject.object.description, name: oobject.object.name});
+            oobject.object.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
+            var isolatedScope = $rootScope.$new();
+            isolatedScope.elements = [];
+            isolatedScope.elements.push(oobject.object);
 
-            var element = $compile(visualizer.element)($scope),
+            var element = $compile(visualizer.element)(isolatedScope),
                 visualizerModal = $('#visualizer-modal');
             visualizerModal.find('.modal-header strong').text(visualizer.name);
             visualizerModal.find('.modal-body').empty().append(element);
