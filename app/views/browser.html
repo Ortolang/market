@@ -150,58 +150,17 @@
             </section>
         </div>
 
-        <div ng-hide="isViewModeLine()" class="browsed-element-children-wrapper" ng-class="browserService.displayAsideInfo ? 'col-md-7' : 'col-md-10'" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
-            <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
-                <div ng-repeat="child in parent.elements | filter: {name: filterNameQuery, mimeType: filterMimeTypeQuery, type: type} | orderBy:orderProp:orderReverse"
-                     ng-class="tileCssClasses()" class="browsed-element-child-wrapper">
-                    <div class="browsed-element-child"
-                         ng-click="clickChild($event, child)"
-                         ng-right-click="clickChild($event, child)"
-                         ng-dblclick="doubleClickChild($event, child)"
-                         ng-class="{active : isSelected(child), collection: type === 'collection'}">
-                        <div ng-if="type === 'object'" class="preview">
-                            <span class="fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
-                        </div>
-                        <p class="name-wrapper">
-                            <span ng-if="type === 'collection'" ng-class="icons.folderPlain" class="type"></span>
-                            <span ng-if="type === 'object'" ng-class="child.mimeType | mimeTypeIconCss" class="type"></span>
-                            <span class="name">{{child.name}}</span>
-                        </p>
-                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div ng-show="isViewModeLine()" ng-class="middleCssClass()" class="table-wrapper workspace-elements-wrapper" ng-controller="UploadCtrl" ng-click="checkSelection($event)" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
-            <table ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
-                <thead>
-                <tr>
-                    <th ng-click="order('name', 'toggle')">Name</th>
-                    <th ng-click="order('mimeType', 'toggle')">Type</th>
-                    <th ng-click="order('modification', 'toggle')">Last Modification</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="child in parent.elements | filter: {name: filterNameQuery, mimeType: filterMimeTypeQuery} | orderBy:orderProp:orderReverse"
-                    ng-click="clickChild($event, child)"
-                    ng-right-click="clickChild($event, child)"
-                    ng-dblclick="doubleClickChild($event, child)"
-                    ng-class="{active : isSelected(child)}">
-                    <td ng-if="child.type === 'collection'">
-                        <span ng-click="browseToChild(child)" class="collection">
-                            <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}
-                        </span>
-                    </td>
-                    <td ng-if="!(child.type === 'collection')">
-                        <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}
-                    </td>
-                    <td>{{child.mimeType | contentType}}</td>
-                    <td>{{child.modification | date : dateFormat}}</td>
-                </tr>
-                </tbody>
-            </table>
+        <div ng-if="browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
+            <div ng-include="'views/browser-line-template.html'"></div>
+            <div ng-include="'views/browser-tile-template.html'"></div>
             <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{type: 'object'}">
         </div>
+
+        <div ng-if="!browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()">
+            <div ng-include="'views/browser-line-template.html'"></div>
+            <div ng-include="'views/browser-tile-template.html'"></div>
+        </div>
+
         <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" id="context-menu" class="dropdown clearfix open">
             <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="item in contextMenuItems" class="{{item.divider ? 'divider' : ''}}">

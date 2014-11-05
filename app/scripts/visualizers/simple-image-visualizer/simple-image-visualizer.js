@@ -44,11 +44,13 @@ angular.module('ortolangVisualizers')
             templateUrl: '../../../views/simple-image-visualizer.html',
             restrict: 'E',
             scope: true,
-            link: function (scope, element, attrs) {
-                if ($filter('filter')(scope.elements, {selected: true}, true).length === 0) {
-                    scope.elements[0].selected = true;
+            link: {
+                pre: function (scope, element, attrs) {
+                    if ($filter('filter')(scope.elements, {selected: true}, true).length === 0) {
+                        scope.elements[0].selected = true;
+                    }
+                    scope.imageElements = scope.elements;
                 }
-                scope.imageElements = scope.elements;
             }
         };
     }]);

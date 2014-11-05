@@ -44,23 +44,7 @@ angular.module('ortolangVisualizers')
         return {
             templateUrl: '../../../views/simple-text-visualizer.html',
             restrict: 'E',
-            scope: true,
-            link: function (scope, element, attrs) {
-                DownloadResource.download(
-                    {
-                        wsName: scope.wsName,
-                        path: scope.selectedElements[0].path
-                    },
-                    {
-                        transformResponse: function (data, headersGetter) { return data; }
-                    }
-                )
-                    .success(function (data) {
-                        scope.code = data;
-                    }).error(function () {
-                        scope.code = undefined;
-                    });
-            }
+            scope: true
         };
     }]);
 

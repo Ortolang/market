@@ -484,11 +484,13 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             $rootScope.$on('browserAskSelectedElements', function () {
-                var selectedElementsCopy = angular.copy($scope.selectedElements);
-                angular.forEach(selectedElementsCopy, function (element) {
-                    element.path = $scope.parent.path + '/' + element.name;
-                });
-                $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy());
+                if ($scope.browserService.isFileSelect) {
+                    var selectedElementsCopy = angular.copy($scope.selectedElements);
+                    angular.forEach(selectedElementsCopy, function (element) {
+                        element.path = $scope.parent.path + '/' + element.name;
+                    });
+                    $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy());
+                }
             });
 
             $rootScope.$on('browserAskChangeWorkspace', function ($event, workspace) {
@@ -672,10 +674,10 @@ angular.module('ortolangMarketApp')
             }
 
             function initScopeVariables() {
-                if ($route.current.originalPath.match(/\/workspaces/)) {
-                    $scope.browserService = WorkspaceBrowserService;
-                } else if ($route.current.originalPath.match(/\/test/)) {
+                if ($scope.isFileSelect) {
                     $scope.browserService = FileSelectBrowserService;
+                } else if ($route.current.originalPath.match(/\/workspaces/)) {
+                    $scope.browserService = WorkspaceBrowserService;
                 } else {
                     $scope.browserService = MarketBrowserService;
                 }
