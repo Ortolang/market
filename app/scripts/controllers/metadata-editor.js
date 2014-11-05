@@ -88,7 +88,7 @@ angular.module('ortolangMarketApp')
 
         var currentPath = $scope.selectedElements[0].path;
 
-		fd.append('path', encodeURIComponent(currentPath));
+		fd.append('path', currentPath);
 		fd.append('type', 'metadata');
 		
         fd.append('format', $scope.userMetadataFormat.id);
