@@ -29,6 +29,7 @@ angular.module('ortolangMarketApp')
 
         var fileSelectModalScope = $rootScope.$new();
         fileSelectModalScope.acceptMultiple = true;
+        fileSelectModalScope.forceWorkspace = $scope.wsName;
         $scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: 'File select test', template: 'views/file-select-modal-template.html', show: false});
 
         $rootScope.$on('browserSelectedElements', function ($event, elements) {

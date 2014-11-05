@@ -18,6 +18,7 @@ angular.module('ortolangMarketApp')
                     scope.isFileSelect = true;
                     scope.fileSelectAcceptMultiple = attrs.acceptMultiple &&
                         (attrs.acceptMultiple === 'true' || attrs.acceptMultiple === 'multiple');
+                    scope.forceWorkspace = attrs.forceWorkspace;
                     scope.filterMimeTypeQuery = attrs.filterMimeTypeQuery;
                 }
             }

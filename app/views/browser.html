@@ -2,11 +2,11 @@
 
     <div class="row">
         <div id="browser-toolbar" ng-click="checkSelection($event)">
-            <div ng-if="browserService.displayAsideWorkspaceList" class="col-md-2 toolbar-aside">
+            <div ng-if="displayAsideWorkspaceList()" class="col-md-2 toolbar-aside">
                 <div class="btn title">Browser</div>
             </div>
 
-            <div ng-class="browserService.displayAsideWorkspaceList ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
+            <div ng-class="displayAsideWorkspaceList() ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
                 <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
                     <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseTo('/')">
                         <span ng-class="icons.browser.home"></span>{{wsName}}
@@ -131,7 +131,7 @@
     </div>
 
     <div class="row">
-        <div ng-if="browserService.displayAsideWorkspaceList" class="col-md-2 browser-aside browser-aside-left">
+        <div ng-if="displayAsideWorkspaceList()" class="col-md-2 browser-aside browser-aside-left">
             <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                     New

@@ -502,7 +502,7 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.changeWorkspace = function (workspace) {
-                if (workspace.key !== $scope.wsName) {
+                if (!$scope.forceWorkspace && workspace.key !== $scope.wsName) {
                     $scope.wsName = workspace.key;
                     $scope.root = 'head';
                     $scope.browseTo('/');
@@ -655,10 +655,14 @@ angular.module('ortolangMarketApp')
                 if ($scope.browserService.displayAsideInfo) {
                     columnNumber -= 3;
                 }
-                if ($scope.browserService.displayAsideWorkspaceList) {
+                if ($scope.displayAsideWorkspaceList()) {
                     columnNumber -= 2;
                 }
                 return 'col-md-' + columnNumber;
+            };
+
+            $scope.displayAsideWorkspaceList = function () {
+                return !$scope.forceWorkspace && $scope.browserService.displayAsideWorkspaceList;
             };
 
             // *********************** //
@@ -723,7 +727,15 @@ angular.module('ortolangMarketApp')
                     initBreadcrumbDropdownMenu();
                 } else {
                     $scope.wsList.$promise.then(function (data) {
-                        $scope.wsName = data.entries[0].key;
+                        if ($scope.forceWorkspace) {
+                            if ($filter('filter')(data.entries[0], {key: $scope.forceWorkspace}, true).length !== 1) {
+                                console.error('No workspace with key "' + $scope.forceWorkspace + '" available');
+                                return;
+                            }
+                            $scope.wsName = $scope.forceWorkspace;
+                        } else {
+                            $scope.wsName = data.entries[0].key;
+                        }
                         $scope.root = 'head';
                         $scope.path = '/';
                         getParentData(false);

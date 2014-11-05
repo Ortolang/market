@@ -6,7 +6,7 @@
                 <h4 class="modal-title" ng-bind="title"></h4>
             </div>
             <div class="modal-body" style="padding-top: 0">
-                <div file-select-browser data-accept-multiple="{{acceptMultiple}}"></div>
+                <div file-select-browser data-accept-multiple="{{acceptMultiple}}" data-force-workspace="{{forceWorkspace}}"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" ng-click="$emit('browserAskSelectedElements')">Select</button>
