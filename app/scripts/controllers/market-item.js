@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($scope, $routeParams, $http, Url, ObjectResource, N3Serializer, VisualizerManager, $compile) {
+    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($scope, $routeParams, $http, Url, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
 
         function loadItem(key) {
             ObjectResource.get({oKey: key}, function (oobject) {
@@ -59,17 +59,23 @@ angular.module('ortolangMarketApp')
                 //TODO Get preview file or collection
                 ObjectResource.get({oKey: preview}, function (oobject) {
                     console.info(oobject);
-                    // var visualizers = VisualizerManager.getCompatibleVisualizers(element.mimetype, element.name);
+                    var visualizers = VisualizerManager.getCompatibleVisualizers(oobject.object.mimeType, oobject.object.name);
 
-                    // if(visualizers.length > 0) {
-                    //     finishPreview(visualizers[0]);
-                    // }
+                    if(visualizers.length > 0) {
+                        finishPreview(visualizers[0], oobject);
+                    }
                 });
                 //TODO si la cle n'existe pas afficher quelque chose !!
             }
         };
 
-        function finishPreview(visualizer) {
+        function finishPreview(visualizer, oobject) {
+
+            //var scopePreview = {children: [{downloadUrl: DownloadResource.getDownloadUrl({oKey: oobject.object.key}), description: oobject.object.description, name: oobject.object.name}]};
+            // angular.extend($scope, scopePreview);
+            $scope.children = [];
+            $scope.children.push({downloadUrl: DownloadResource.getDownloadUrl({oKey: oobject.object.key}), description: oobject.object.description, name: oobject.object.name});
+
             var element = $compile(visualizer.element)($scope),
                 visualizerModal = $('#visualizer-modal');
             visualizerModal.find('.modal-header strong').text(visualizer.name);

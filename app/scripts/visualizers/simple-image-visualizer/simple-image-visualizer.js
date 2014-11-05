@@ -45,6 +45,7 @@ angular.module('ortolangVisualizers')
             restrict: 'E',
             scope: true,
             link: function (scope, element, attrs) {
+                // image {selected, downloadUrl, description, name}
                 scope.imageElements = scope.children;
             }
         };
