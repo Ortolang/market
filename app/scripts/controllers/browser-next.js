@@ -268,7 +268,8 @@ angular.module('ortolangMarketApp')
                     return;
                 }
                 // Get detailed info on the selected child
-                if (modKey && !$scope.hasOnlyParentSelected()) {
+                if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
+                        modKey && !$scope.hasOnlyParentSelected()) {
                     getChildData(child, false, clickEvent, true);
                 } else {
                     getChildData(child, false, clickEvent, false);

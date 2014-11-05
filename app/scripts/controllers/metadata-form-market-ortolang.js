@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataFormMarketOrtolangCtrl', [ '$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource) {
+    .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource) {
 
         $scope.categories = [{id: 'Corpora', label: 'Corpus'}, {id: 'Lexicon', label: 'Lexique'}];
         $scope.useConditions = [{id: 'free', label: 'Libre'}, {id: 'free-nc', label: 'Libre sans usage commercial'}, {id: 'restricted', label: 'Négociation nécessaire'}];
@@ -27,7 +27,9 @@ angular.module('ortolangMarketApp')
             $rootScope.$broadcast('metadata-editor-create', content, contentType);
         };
 
-        $scope.fileSelectModal = $modal({title: 'File select test', template: 'views/file-select-modal-template.html', show: false});
+        var fileSelectModalScope = $rootScope.$new();
+        fileSelectModalScope.acceptMultiple = true;
+        $scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: 'File select test', template: 'views/file-select-modal-template.html', show: false});
 
         $rootScope.$on('browserSelectedElements', function ($event, elements) {
             console.debug('on browserSelectedElements');
