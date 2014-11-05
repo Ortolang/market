@@ -1,0 +1,9 @@
+<hr>
+<div class="form-group"
+     id="{{id}}"
+     aria-describedby="{{id}}_description"
+     ng-required="options.required"
+     disabled="options.disabled">
+    <label class="control-label">{{options.label}}{{options.required ? '*' : ''}} </label>
+    <p id="{{id}}_description" class="help-block" ng-if="options.description">{{options.description}}</p>
+</div>

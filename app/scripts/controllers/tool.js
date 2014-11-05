@@ -96,6 +96,8 @@ angular.module('ortolangMarketApp')
                 // ajoute les template ortolang
                 formlyTemplate.setTemplateUrl('select', 'views/ortolang-formly-select.html');
                 formlyTemplate.setTemplateUrl('dataobject', 'views/ortolang-formly-typeahead.html');
+                formlyTemplate.setTemplateUrl('label', 'views/ortolang-formly-label.html');
+                formlyTemplate.setTemplateUrl('decimal', 'views/ortolang-formly-decimal.html');
                 $scope.formData = {};
                 $scope.formFields = configJSON;
                 $scope.formOptions = {
