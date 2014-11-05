@@ -38,14 +38,16 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('simpleImageVisualizer', [ 'SimpleImageVisualizer', function (SimpleImageVisualizer) {
+    .directive('simpleImageVisualizer', [ '$filter', function ($filter) {
 
         return {
             templateUrl: '../../../views/simple-image-visualizer.html',
             restrict: 'E',
             scope: true,
             link: function (scope, element, attrs) {
-                // image {selected, downloadUrl, description, name}
+                if ($filter('filter')(scope.children, {selected: true}, true).length === 0) {
+                    scope.children[0].selected = true;
+                }
                 scope.imageElements = scope.children;
             }
         };
