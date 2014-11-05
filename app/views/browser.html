@@ -181,7 +181,7 @@
 
 
             <div id="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
-                <div title="Informations" bs-pane>
+                <div data-title="Informations" bs-pane>
                     <div id="information">
                         <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
                             <dt>Name</dt>
@@ -211,7 +211,7 @@
                     </div>
                 </div>
 
-                <div title="Métadonnées" bs-pane>
+                <div data-title="Métadonnées" bs-pane>
                     <div ng-include="'views/browser-sidebar-metadata.html'" ng-controller="BrowserSidebarMetadataCtrl"></div>
                 </div>
             </div>
