@@ -75,10 +75,10 @@
                                     <input id="filter-input" ng-model="filterNameQuery" class="form-control" placeholder="Name" type="text">
                                     <span ng-show="filterNameQuery" ng-click="filterNameQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                                 </div>
-                                <div class="has-feedback">
+                                <div ng-if="!forceMimeTypes" class="has-feedback">
                                     <label class="control-label" for="filter-mime-type-input">Mime Type</label>
-                                    <input id="filter-mime-type-input" ng-model="filterMimeTypeQuery" class="form-control" placeholder="Mime Type" type="text" ng-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
-                                    <span ng-show="filterMimeTypeQuery" ng-click="filterMimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
+                                    <input id="filter-mime-type-input" ng-model="$parent.filterMimeTypeQuery" class="form-control" placeholder="Mime Type" type="text" ng-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
+                                    <span ng-show="$parent.filterMimeTypeQuery" ng-click="$parent.filterMimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                                 </div>
                             </div>
                         </div>

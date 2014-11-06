@@ -11,15 +11,16 @@ angular.module('ortolangMarketApp')
     .directive('fileSelectBrowser', function () {
         return {
             restrict: 'A',
-            scope: {},
+            scope: {
+                forceMimeTypes: '=',
+                forceWorkspace: '='
+            },
             templateUrl: '/views/browser.html',
             link: {
                 pre : function (scope, element, attrs) {
                     scope.isFileSelect = true;
                     scope.fileSelectAcceptMultiple = attrs.acceptMultiple &&
                         (attrs.acceptMultiple === 'true' || attrs.acceptMultiple === 'multiple');
-                    scope.forceWorkspace = attrs.forceWorkspace;
-                    scope.filterMimeTypeQuery = attrs.filterMimeTypeQuery;
                 }
             }
         };

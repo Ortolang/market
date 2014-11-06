@@ -116,6 +116,7 @@ angular.module('ortolangMarketApp')
                             newSelectedElement($scope.parent);
                         }
                         $scope.resizeBrowser();
+                        clearPreviousFilteringQueries();
                         angular.forEach($scope.parent.elements, function (value) {
                             if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
                                 $scope.allChildrenMimeTypes.push(value.mimeType);
@@ -517,6 +518,79 @@ angular.module('ortolangMarketApp')
             //          Filter         //
             // *********************** //
 
+            function clearPreviousFilteringQueries() {
+                previousFilterNameQuery = undefined;
+                previousFilterMimeTypeQuery = undefined;
+                previousFilterType = undefined;
+                previousFilteredChildren = {};
+            }
+
+            //$scope.filteringTime = 0;
+            $scope.filterChildren = function (filterNameQuery, filterMimeTypeQuery, type) {
+                return function (child) {
+                    //$scope.filteringTime += 1;
+                    //console.log($scope.filteringTime, filterNameQuery, filterMimeTypeQuery, type);
+                    if (type && child.type !== type) {
+                        return false;
+                    }
+                    if (!filterNameQuery && !filterMimeTypeQuery) {
+                        return true;
+                    }
+                    var nameRegExp = new RegExp(filterNameQuery, 'gi'),
+                        mimeTypeRegExp,
+                        matchMimeTypes = false,
+                        matchName = !filterNameQuery || filterNameQuery.length < 2 || child.name.match(nameRegExp);
+                    if (matchName) {
+                        if (child.type === 'collection') {
+                            return true;
+                        }
+                        if (!filterMimeTypeQuery || filterMimeTypeQuery.length < 2) {
+                            matchMimeTypes = true;
+                        } else {
+                            if (angular.isArray(filterMimeTypeQuery)) {
+                                var i;
+                                for (i = 0; i < filterMimeTypeQuery.length; i++) {
+                                    mimeTypeRegExp = new RegExp(filterMimeTypeQuery[i], 'gi');
+                                    if (child.mimeType.match(mimeTypeRegExp)) {
+                                        matchMimeTypes = true;
+                                        break;
+                                    }
+                                }
+                            } else {
+                                mimeTypeRegExp = new RegExp(filterMimeTypeQuery, 'gi');
+                                matchMimeTypes = child.mimeType.match(mimeTypeRegExp);
+                            }
+                        }
+                        return matchMimeTypes;
+                    }
+                    return false;
+                };
+            };
+
+            $scope.filteredChildren = function (type) {
+                if ($scope.parent && $scope.parent.elements) {
+                    if ($scope.filterNameQuery === previousFilterNameQuery &&
+                            $scope.filterMimeTypeQuery === previousFilterMimeTypeQuery &&
+                            type === previousFilterType) {
+                        if (type) {
+                            return previousFilteredChildren[type] || $scope.parent.elements;
+                        }
+                        return previousFilteredChildren.noType || $scope.parent.elements;
+                    }
+                    var filterResult = $filter('filter')($scope.parent.elements, $scope.filterChildren($scope.filterNameQuery, $scope.filterMimeTypeQuery, type), true);
+                    if (type) {
+                        previousFilteredChildren[type] = filterResult;
+                    } else {
+                        previousFilteredChildren.noType = filterResult;
+                    }
+                    previousFilterNameQuery = $scope.filterNameQuery;
+                    previousFilterMimeTypeQuery = $scope.filterMimeTypeQuery;
+                    previousFilterType = type;
+                    return filterResult;
+                }
+                return [];
+            };
+
             $scope.order = function (predicate, reverse) {
                 if (predicate !== $scope.orderProp) {
                     reverse = false;
@@ -531,7 +605,7 @@ angular.module('ortolangMarketApp')
 
             angular.element('#filter-query-wrapper').on('hide.bs.dropdown', function () {
                 if (($scope.filterNameQuery !== undefined && $scope.filterNameQuery.length !== 0) ||
-                    ($scope.filterMimeTypeQuery !== undefined && $scope.filterMimeTypeQuery.length !== 0)) {
+                        ($scope.filterMimeTypeQuery !== undefined && $scope.filterMimeTypeQuery.length !== 0)) {
                     return false;
                 }
             });
@@ -632,6 +706,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.switchViewMode = function () {
+                clearPreviousFilteringQueries();
                 if ($scope.viewMode === viewModeLine) {
                     setViewMode(viewModeTile.id);
                 } else {
@@ -669,18 +744,23 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
-            var isMacOs, isClickedOnce, viewModeLine, viewModeTile;
+            var isMacOs, isClickedOnce, viewModeLine, viewModeTile,
+                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren;
 
             function initLocalVariables() {
                 viewModeLine = {id: 'line', name: 'Mode line', icon: icons.browser.viewModeLine};
                 viewModeTile = {id: 'tile', name: 'Mode tile', icon: icons.browser.viewModeTile};
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
+                clearPreviousFilteringQueries();
             }
 
             function initScopeVariables() {
                 if ($scope.isFileSelect) {
                     $scope.browserService = FileSelectBrowserService;
+                    if ($scope.forceMimeTypes) {
+                        $scope.filterMimeTypeQuery = $scope.forceMimeTypes;
+                    }
                 } else if ($route.current.originalPath.match(/\/workspaces/)) {
                     $scope.browserService = WorkspaceBrowserService;
                 } else {
@@ -708,8 +788,6 @@ angular.module('ortolangMarketApp')
                 $scope.orderProp = ['type', 'name'];
                 $scope.dateFormat = 'medium';
                 $scope.reverse = false;
-                //$scope.filterNameQuery = undefined;
-                //$scope.filterMimeTypeQuery = undefined;
                 // Visualizers
                 $scope.visualizers = undefined;
                 $scope.allSuportedMimeTypes = VisualizerManager.getAllSupportedMimeTypes();
@@ -728,7 +806,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     $scope.wsList.$promise.then(function (data) {
                         if ($scope.forceWorkspace) {
-                            if ($filter('filter')(data.entries[0], {key: $scope.forceWorkspace}, true).length !== 1) {
+                            if ($filter('filter')(data.entries, {key: $scope.forceWorkspace}, true).length !== 1) {
                                 console.error('No workspace with key "' + $scope.forceWorkspace + '" available');
                                 return;
                             }

@@ -1,6 +1,6 @@
-<div ng-hide="isViewModeLine()" class="browsed-element-children-wrapper">
+<div ng-if="!isViewModeLine()" class="browsed-element-children-wrapper">
     <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
-        <div ng-repeat="child in parent.elements | filter: {name: filterNameQuery, mimeType: filterMimeTypeQuery, type: type} | orderBy:orderProp:orderReverse"
+        <div ng-repeat="child in filteredChildren(type) | orderBy:orderProp:orderReverse"
              ng-class="tileCssClasses()" class="browsed-element-child-wrapper">
             <div class="browsed-element-child"
                  ng-click="clickChild($event, child)"

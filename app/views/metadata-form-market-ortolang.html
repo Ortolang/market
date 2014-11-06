@@ -51,7 +51,7 @@
     <div class="form-group" show-errors>
         <label>Aperçu </label>
         <div class="input-group">
-            <span class="form-control" ng-click="fileSelectModal.show()" ng-bind="previewName"></span>
+            <span class="form-control" ng-click="fileSelectModal.show()"><span ng-class="preview.mimeType | mimeTypeIconCss"></span> {{preview.name}}</span>
             <span class="input-group-btn">
             <button class="btn btn-default" ng-click="fileSelectModal.show()" type="button">Select workspace element</button>
             </span>

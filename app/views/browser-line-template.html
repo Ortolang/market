@@ -1,4 +1,4 @@
-<div ng-show="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
+<div ng-if="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
     <table ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
         <thead>
         <tr>
@@ -8,7 +8,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="child in parent.elements | filter: {name: filterNameQuery, mimeType: filterMimeTypeQuery} | orderBy:orderProp:orderReverse"
+        <tr ng-repeat="child in filteredChildren() | orderBy:orderProp:orderReverse"
             ng-click="clickChild($event, child)"
             ng-right-click="clickChild($event, child)"
             ng-dblclick="doubleClickChild($event, child)"
