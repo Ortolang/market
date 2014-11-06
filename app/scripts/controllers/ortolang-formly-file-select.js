@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('browserSelectedElements', function ($event, elements) {
             console.debug('on browserSelectedElements', elements);
-            $scope.value = elements[0].key;
+            $scope.$parent.value = elements[0].key;
             $scope.displayedValue = elements[0];
             $scope.fileSelectModal.hide();
         });
