@@ -28,7 +28,8 @@ angular.module('ortolangMarketApp')
         };
 
         var fileSelectModalScope = $rootScope.$new(true);
-        fileSelectModalScope.acceptMultiple = true;
+        fileSelectModalScope.acceptMultiple = false;
+        fileSelectModalScope.forceMimeTypes = 'ortolang/collection';
         fileSelectModalScope.forceWorkspace = $scope.wsName;
         $scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: 'File select test', template: 'views/file-select-modal-template.html', show: false});
 
@@ -37,11 +38,12 @@ angular.module('ortolangMarketApp')
             angular.forEach(elements, function (element) {
                 console.log(element);
             });
-            //if ($filter('filter')(elements, {mimeType: 'ortolang/collection'}, true).length === 0) {
+            if (!$scope.md) {
+                $scope.md = {};
+            }
             $scope.md.preview = elements[0].key;
             $scope.preview = elements[0];
             $scope.fileSelectModal.hide();
-            //}
         });
 
 
