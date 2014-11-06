@@ -69,22 +69,22 @@ angular.module('ortolangMarketApp')
              */
             $scope.initialiseFormConfig = function (configJSON) {
                 // parcours du json pour initialiser le formulaire : les éventuels dataobject sont séléctionnés dans le workspace avec un typeahead
-                var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
-                if (objectsFieldList.length > 0) {
-                    $scope.listAvailableDataObject = [];
-                    if ($scope.authenticated) {
-                        AuthService.getWorkspaces($scope.currentUser.id)
-                            .then(function (wks) {
-                                $scope.pushDataObjects(wks, function () {
-                                    angular.forEach(configJSON, function (field, index) {
-                                        if (field.type === 'dataobject') {
-                                            configJSON[index].availableData = $scope.listAvailableDataObject;
-                                        }
-                                    });
-                                });
-                            });
-                    }
-                }
+                //var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
+                //if (objectsFieldList.length > 0) {
+                //    $scope.listAvailableDataObject = [];
+                //    if ($scope.authenticated) {
+                //        AuthService.getWorkspaces($scope.currentUser.id)
+                //            .then(function (wks) {
+                //                $scope.pushDataObjects(wks, function () {
+                //                    angular.forEach(configJSON, function (field, index) {
+                //                        if (field.type === 'dataobject') {
+                //                            configJSON[index].availableData = $scope.listAvailableDataObject;
+                //                        }
+                //                    });
+                //                });
+                //            });
+                //    }
+                //}
             };
 
 
@@ -95,7 +95,7 @@ angular.module('ortolangMarketApp')
             $scope.generateForm = function (configJSON) {
                 // ajoute les template ortolang
                 formlyTemplate.setTemplateUrl('select', 'views/ortolang-formly-select.html');
-                formlyTemplate.setTemplateUrl('dataobject', 'views/ortolang-formly-typeahead.html');
+                formlyTemplate.setTemplateUrl('dataobject', 'views/ortolang-formly-file-select.html');
                 formlyTemplate.setTemplateUrl('label', 'views/ortolang-formly-label.html');
                 formlyTemplate.setTemplateUrl('decimal', 'views/ortolang-formly-decimal.html');
                 $scope.formData = {};
