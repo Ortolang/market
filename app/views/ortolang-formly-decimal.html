@@ -12,7 +12,7 @@
 		   ng-disabled="options.disabled"
 		   min="{{options.min}}"
 		   max="{{options.max}}"
-           step="{{options.step ? options.step : 1}}"
+           step="{{options.step!== undefined ? options.step : 1}}"
 		   ng-minlength="{{options.minlength}}"
 		   ng-maxlength="{{options.maxlength}}"
 		   ng-model="value">

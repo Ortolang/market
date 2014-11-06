@@ -97,7 +97,7 @@ angular.module('ortolangMarketApp')
                 formlyTemplate.setTemplateUrl('select', 'views/ortolang-formly-select.html');
                 formlyTemplate.setTemplateUrl('dataobject', 'views/ortolang-formly-file-select.html');
                 formlyTemplate.setTemplateUrl('label', 'views/ortolang-formly-label.html');
-                formlyTemplate.setTemplateUrl('decimal', 'views/ortolang-formly-decimal.html');
+                formlyTemplate.setTemplateUrl('number', 'views/ortolang-formly-decimal.html');
                 $scope.formData = {};
                 $scope.formFields = configJSON;
                 $scope.formOptions = {
