@@ -13,7 +13,8 @@ angular.module('ortolangMarketApp')
         function loadItem(key) {
             ObjectResource.get({oKey: key}, function (oobject) {
                 $scope.oobject = oobject;
-
+                $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
+                
                 if (oobject.type === 'collection') {
                     if (oobject.object.root === true) {
                         console.debug('routeParams', $routeParams.view);
