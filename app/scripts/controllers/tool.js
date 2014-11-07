@@ -8,8 +8,17 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolCtrl', [ '$scope', '$http', 'ToolsResource', '$routeParams', 'formlyTemplate', 'AuthService', '$filter', 'WorkspaceElementResource', '$q',
-        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q) {
+    .controller('ToolCtrl', [ '$scope',
+        '$http',
+        'ToolsResource',
+        '$routeParams',
+        'formlyTemplate',
+        'AuthService',
+        '$filter',
+        'WorkspaceElementResource',
+        '$q',
+        'Url',
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url) {
             /**
              * Load chosen plugin informations
              */
@@ -113,22 +122,36 @@ angular.module('ortolangMarketApp')
                 console.log('$$childHead', $scope.$$childHead);
             };
 
-
             /**
              * Action to perform on submit
              */
             $scope.onSubmit = function () {
+                $scope.viewLoading = true;
                 console.log('form submitted:', $scope.formData);
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
                 ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
                     function (response) {
-                        console.log('reponse invoke:', response);
+                        $scope.viewLoading = false;
+                        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
+                        //console.log('reponse invoke:', response);
                         if (response.status === 'SUCCESS') {
+                            $scope.success = true;
                             $scope.resultStatus = response.status;
                             $scope.preview = response.output;
+                            $scope.listFileResult = [];
+                            angular.forEach(response.outputFilePath, function (fileName) {
+                                $scope.listFileResult.push(
+                                    {
+                                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + fileName,
+                                        resFileName : fileName
+                                    }
+                                );
+                            });
+                            console.debug($scope.listFileResult);
                         } else {
+                            $scope.success = false;
                             $scope.resultStatus = response.status;
-                            $scope.preview = response.log;
+                            $scope.preview = response.status;
                         }
                     });
             };
@@ -139,6 +162,7 @@ angular.module('ortolangMarketApp')
             $scope.tool = null;
             $scope.preview = null;
             $scope.downloadUrl = null;
+            $scope.viewLoading = false;
             $scope.loadTool();
             $scope.loadConfig();
         }]);
