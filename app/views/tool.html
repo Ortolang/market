@@ -1,9 +1,11 @@
 <br/>
 <div class="row" >
-    <div class="col-lg-12">
+    <div class="col-lg-12 panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-puzzle-piece"></i> {{tool.name}}
+                <a class="" aria-expanded="true" data-toggle="collapse" data-parent="#accordion" href="#collapseInfo" target="_blank">
+                    <i class="fa fa-puzzle-piece"></i> {{tool.name}}
+                </a>
                 <div class="pull-right">
                     <div class="btn-group">
                         <a href="#/plugins" class="btn btn-xs"><i class="fa fa-chevron-left"></i> Retour à la liste des outils</a>
@@ -11,7 +13,7 @@
                 </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
+            <div id="collapseInfo" class="panel-body panel-collapse collapse in">
 
                 <div class="list-group" >
                     <dl class="dl-vertical">
@@ -31,10 +33,12 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-gears"></i> Configuration de {{tool.name}}
+                <a class="" aria-expanded="true" data-toggle="collapse" data-parent="#accordion" href="#collapseConfig" target="_blank">
+                    <i class="fa fa-gears"></i> Configuration de {{tool.name}}
+                </a>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
+            <div id="collapseConfig" class="panel-body panel-collapse collapse">
                 <div class="list-group" >
                     <!-- formulaire -->
                     <formly-form result="formData" fields="formFields" options="formOptions" ng-submit="onSubmit()">
@@ -51,12 +55,14 @@
             <br><br>
         </div>
 
-        <div class="panel panel-default" ng-if="resultStatus">
+        <div class="panel panel-default {{success? 'panel-success' : 'panel-danger'}}" ng-if="resultStatus">
             <div class="panel-heading">
-                <i class="fa fa-eye"></i> Result : {{resultStatus}}
+                <a class="" aria-expanded="true" data-toggle="collapse" data-parent="#accordion" href="#collapseRes" target="_blank">
+                    <i class="fa fa-eye"></i> Result : {{resultStatus}}
+                </a>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
+            <div id="collapseRes" class="panel-body panel-collapse collapse" >
                 <!-- Nav tabs -->
                 <ul class="nav nav-pills">
                     <li class="{{success? 'active' : ''}}"><a aria-expanded="false" href="#file-pills" target="_blank" data-toggle="tab">Generated file(s)</a>

@@ -126,6 +126,7 @@ angular.module('ortolangMarketApp')
              * Action to perform on submit
              */
             $scope.onSubmit = function () {
+                $scope.resultStatus = null;
                 $scope.viewLoading = true;
                 console.log('form submitted:', $scope.formData);
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
@@ -139,15 +140,14 @@ angular.module('ortolangMarketApp')
                             $scope.resultStatus = response.status;
                             $scope.preview = response.output;
                             $scope.listFileResult = [];
-                            angular.forEach(response.outputFilePath, function (fileName) {
+                            angular.forEach(response.outputFilePath, function (file, fileName) {
                                 $scope.listFileResult.push(
                                     {
-                                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + fileName,
+                                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
                                         resFileName : fileName
                                     }
                                 );
                             });
-                            console.debug($scope.listFileResult);
                         } else {
                             $scope.success = false;
                             $scope.resultStatus = response.status;
