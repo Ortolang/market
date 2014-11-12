@@ -81,5 +81,32 @@
       margin-bottom: @padding-large-vertical;
     }
   }
+
+    #preview {
+
+      .browsed-element-children-wrapper {
+        overflow: auto;
+        display: inline-block;
+        padding-top: 15px;
+        width: 100%;
+
+        .browsed-element-children {
+          display: inline-block;
+          white-space: nowrap;
+          overflow-x: scroll;
+          overflow-y: hidden;
+
+          .browsed-element-child-wrapper {
+            display: inline-block;
+            width: 150px;
+            margin: 15px;
+
+            .browsed-element-child {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
 }
 

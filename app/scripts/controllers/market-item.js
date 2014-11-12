@@ -33,6 +33,8 @@ angular.module('ortolangMarketApp')
                                 N3Serializer.fromN3(metaContent).then(function (data) {
                                     $scope.item = angular.copy(data);
                                     $scope.marketItemTemplate = 'views/market-item-root-collection.html';
+
+                                    loadPreview($scope.item.preview);
                                 });
                             }).error(function () {
                                 // resetMetadata();
@@ -70,6 +72,18 @@ angular.module('ortolangMarketApp')
             }
         };
 
+        function loadPreview(previewKey) {
+
+            if(previewKey !== undefined && previewKey !== '') {
+                //TODO Get preview collection
+                ObjectResource.get({oKey: previewKey}, function (oobject) {
+                    
+                    $scope.previewCollection = oobject;
+                });
+                //TODO si la cle n'existe pas afficher quelque chose !!
+            }
+        }
+
         function finishPreview(visualizer, oobject) {
 
             //var scopePreview = {children: [{downloadUrl: DownloadResource.getDownloadUrl({oKey: oobject.object.key}), description: oobject.object.description, name: oobject.object.name}]};
@@ -88,15 +102,17 @@ angular.module('ortolangMarketApp')
 
         // Scope variables
         function initScopeVariables() {
-            $scope.itemKey = $routeParams.itemKey;
-            $scope.oobject = undefined;
-            $scope.item = undefined;
-            $scope.marketItemTemplate = undefined;
+            $scope.itemKey = $routeParams.itemKey; // Key of the object
+            $scope.oobject = undefined; // Ortolang representation of the object
+            $scope.item = undefined; // RDF representation of the object
+            $scope.previewCollection = undefined;
+            $scope.marketItemTemplate = undefined; // Show info, browse, ...
         }
 
         function init() {
             initScopeVariables();
             loadItem($routeParams.itemKey);
+
         }
         init();
 

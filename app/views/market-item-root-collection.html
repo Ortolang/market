@@ -24,14 +24,21 @@
             <!--<li><span class="fa fa-tag"></span> transcription de l'oral</li>-->
             <!--<li><span class="fa fa-tag"></span> texte écrit</li>-->
             <!--</ul>-->
-            <section id="bibliographical-references">
-                <header>Référence bibliographique</header>
-                <ul>
-                    <li>FR: MarsaTag (Stéphane Rauzy, CNRS - LPL). Outil. Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR). Création 2013-10-17. Banque de données parole et langage (SLDR/ORTOLANG). Identifiant hdl:11041/sldr000841</li>
-                    <li>EN: MarsaTag (Stéphane Rauzy, CNRS - LPL). Tool. Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR). Created 2013-10-17. Speech and Language Data Repository (SLDR/ORTOLANG). Identifier hdl:11041/sldr000841</li>
-                    <li>ES: MarsaTag (Stéphane Rauzy, CNRS - LPL). Herramienta. Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR). Creación 2013-10-17. Banco de datos de habla y lenguaje (SLDR/ORTOLANG). Identificador hdl:11041/sldr000841</li>
-                    <li>ZH: MarsaTag (Stéphane Rauzy, CNRS - LPL). 工具. Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR). 创建 2013-10-17. Speech and Language Data Repository (SLDR/ORTOLANG). 标识符 hdl:11041/sldr000841</li>
-                </ul>
+            <section id="preview">
+                <header>Aperçu</header>
+                
+                <div class="browsed-element-children-wrapper">
+                    <div class="row browsed-element-children">
+                        <div ng-repeat="element in previewCollection.object.elements"  class="browsed-element-child-wrapper">
+                            <div class="browsed-element-child"
+                                ng-click="showPreview(element.key)">
+                                <div class="preview">
+                                    <span class="fa-4x" ng-class="element.mimeType | mimeTypeIconCss"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
 
