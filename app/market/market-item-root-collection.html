@@ -1,0 +1,83 @@
+<section id="market-item">
+    <header>
+        <h1>{{item.title}}</h1>
+        <span class="author">{{oobject.author}}</span>
+        <span ng-repeat="prod in item.producer" class="lab">{{prod}}</span>
+        <p class="actions">
+            <button class="btn btn-primary" ng-click="showPreview(item.preview)">Aperçu</button>
+            <a ng-href="#/market/{{itemKey}}?view=browse" class="btn btn-default">Afficher le contenu</a>
+        </p>
+    </header>
+
+    <div class="row">
+
+        <div class="col-md-8">
+            <section id="description">
+                <header>Description</header>
+                <p>{{item.description}}</p>
+            </section>
+            <!--<p><strong>Mots-clefs</strong></p>-->
+            <!--<ul class="list-inline">-->
+            <!--<li><span class="fa fa-tag"></span> tokenizer</li>-->
+            <!--<li><span class="fa fa-tag"></span> étiquetage morphosyntaxique</li>-->
+            <!--<li><span class="fa fa-tag"></span> POS tagger</li>-->
+            <!--<li><span class="fa fa-tag"></span> transcription de l'oral</li>-->
+            <!--<li><span class="fa fa-tag"></span> texte écrit</li>-->
+            <!--</ul>-->
+            <section id="preview">
+                <header>Aperçu</header>
+
+                <div class="browsed-element-children-wrapper">
+                    <div class="row browsed-element-children">
+                        <div ng-repeat="element in previewCollection.object.elements"  class="browsed-element-child-wrapper">
+                            <div class="browsed-element-child"
+                                ng-click="showPreview(element.key)">
+                                <div class="preview">
+                                    <span class="fa-4x" ng-class="element.mimeType | mimeTypeIconCss"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div ng-include="'../common/visualizers/visualizer-template.html'"></div>
+
+        <aside class="col-md-4">
+            <div class="panel panel-default license-panel">
+                <div class="panel-body">
+                    <p><strong>{{item.useConditions}}</strong></p>
+                    <p>Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Aenean ut eros et nisl sagittis vestibulum.</p>
+                    <p><a href="#">Plus de détails</a></p>
+                    <p><a ng-href="{{downloadUrl}}" class="btn btn-block btn-success">Télécharger</a></p>
+                </div>
+            </div>
+
+            <div class="btn-group btn-group-justified">
+                <div class="btn-group">
+                    <button class="btn btn-default">
+                        <span class="fa fa-heart"></span> Ajouter à mes favoris
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-default">
+                        <span class="fa fa-folder"></span> Utiliser dans mon projet
+                    </button>
+                </div>
+            </div>
+            <br/>
+
+            <div class="panel panel-default metadata-panel">
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>Contenu</dt>
+                        <dd>{{item.extent}}</dd>
+                        <dt>Tags</dt>
+                        <dd>tokenizer, étiquetage morphosyntaxique, POS tagger</dd>
+                    </dl>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>

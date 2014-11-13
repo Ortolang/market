@@ -14,7 +14,6 @@
     "angular-strap": "~2.1.x",
     "highlight": "8.2",
     "angular-highlightjs": "~0.3.0",
-    "metisMenu": "~1.1.2",
     "components-font-awesome": "~4.2.0",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.5",
     "angular-motion": "~0.3.3",

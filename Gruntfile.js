@@ -34,8 +34,8 @@ module.exports = function (grunt) {
                 tasks: ['wiredep']
             },
             js: {
-                files: ['<%= yeoman.app %>/scripts/**/*.js'],
-                tasks: ['newer:jshint:all'],
+                files: ['<%= yeoman.app %>/**/*.js'],
+                //tasks: ['newer:jshint:all'],
                 options: {
                     livereload: '<%= connect.options.livereload %>'
                 }
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{,*/}*.html',
+                    '<%= yeoman.app %>/**/*.html',
                     '.tmp/styles/{,*/}*.css',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
@@ -123,6 +123,7 @@ module.exports = function (grunt) {
             all: {
                 src: [
                     'Gruntfile.js',
+                    '<%= yeoman.app %>/market/*.js',
                     '<%= yeoman.app %>/scripts/*.js',
                     '<%= yeoman.app %>/scripts/controllers/*.js',
                     '<%= yeoman.app %>/scripts/directives/*.js',
@@ -173,7 +174,10 @@ module.exports = function (grunt) {
             app: {
                 src: ['<%= yeoman.app %>/index.html'],
                 options: {
-                    exclude: ['bower_components/highlightjs/styles/default.css'],
+                    exclude: [
+                        'bower_components/highlightjs/styles/default.css',
+                        'bower_components/bootstrap/dist/css/bootstrap.css'
+                    ],
                     ignorePath:  /\.\.\//
                 }
             }
@@ -186,7 +190,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.dist %>/scripts/{,*/}*.js',
                     '<%= yeoman.dist %>/styles/{,*/}*.css',
                     '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-                    '<%= yeoman.dist %>/styles/fonts/*'
+                    '<%= yeoman.dist %>/assets/fonts/*'
                 ]
             }
         },
@@ -279,7 +283,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.dist %>',
-                    src: ['*.html', 'views/{,*/}*.html'],
+                    src: ['{,*/}*.html', 'views/{,*/}*.html'],
                     dest: '<%= yeoman.dist %>'
                 }]
             }
@@ -308,35 +312,37 @@ module.exports = function (grunt) {
         // Copies remaining files to places other tasks can use
         copy: {
             dist: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>',
-                    dest: '<%= yeoman.dist %>',
-                    src: [
-                        '*.{ico,png,txt}',
-                        '.htaccess',
-                        '*.html',
-                        'views/{,*/}*.html',
-                        'images/{,*/}*.{webp}',
-                        'fonts/*'
-                    ]
-                }, {
-                    expand: true,
-                    cwd: '.tmp/images',
-                    dest: '<%= yeoman.dist %>/images',
-                    src: ['generated/*']
-                }, {
-                    expand: true,
-                    cwd: 'bower_components/bootstrap/dist',
-                    src: 'fonts/*',
-                    dest: '<%= yeoman.dist %>'
-                }, {
-                    expand: true,
-                    cwd: 'bower_components/components-font-awesome',
-                    src: 'fonts/*',
-                    dest: '<%= yeoman.dist %>'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '<%= yeoman.dist %>',
+                        src: [
+                            '*.{ico,png,txt}',
+                            '.htaccess',
+                            //'*.html',
+                            '{,*/}*.html',
+                            'views/{,*/}*.html',
+                            'images/{,*/}*.{webp}',
+                            'assets/*'
+                        ]
+                    }, {
+                        expand: true,
+                        cwd: '.tmp/images',
+                        dest: '<%= yeoman.dist %>/images',
+                        src: ['generated/*']
+                    }, {
+                        expand: true,
+                        cwd: 'bower_components/bootstrap/dist',
+                        src: 'fonts/*',
+                        dest: '<%= yeoman.dist %>/assets'
+                    }, {
+                        expand: true,
+                        cwd: 'bower_components/components-font-awesome',
+                        src: 'fonts/*',
+                        dest: '<%= yeoman.dist %>/assets'
+                    }]
             },
             devDist: {
                 files: [{
@@ -354,6 +360,7 @@ module.exports = function (grunt) {
                         'bower_components/**/*.js',
                         'bower_components/**/*.css',
                         'bower_components/**/*.map',
+                        'bower_components/bootstrap/dist/fonts/*',
                         'bower_components/components-font-awesome/fonts/*',
                         '!bower_components/*/{src,src/**,test,test/**}'
                     ],
@@ -371,7 +378,10 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
-                src: '{,*/}*.css'
+                src: [
+                    '{,*/}*.css',
+                    '{,*/}*.less'
+                ]
             }
         },
 
@@ -401,7 +411,8 @@ module.exports = function (grunt) {
         less: {
             development: {
                 options: {
-                    compress: false
+                    compress: false,
+                    sourceMap: true
                 },
                 files: {
                     '<%= yeoman.app %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
@@ -411,7 +422,8 @@ module.exports = function (grunt) {
             },
             production: {
                 options: {
-                    compress: false
+                    compress: false,
+                    sourceMap: true
                 },
                 files: {
                     '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',

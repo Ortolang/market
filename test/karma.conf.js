@@ -30,15 +30,14 @@ module.exports = function (config) {
             'bower_components/angular-strap/dist/angular-strap.js',
             'bower_components/highlightjs/highlight.pack.js',
             'bower_components/angular-highlightjs/angular-highlightjs.js',
-            'bower_components/metisMenu/dist/metisMenu.js',
             'bower_components/angular-hotkeys/build/hotkeys.js',
             'bower_components/angular-formly/dist/formly.bootstrap.js',
             'bower_components/angular-bootstrap-show-errors/src/showErrors.js',
             'bower_components/angular-sanitize/angular-sanitize.js',
-            'app/scripts/**/*.js',
+            'app/**/*.js',
             'test/mock/**/*.js',
             'test/spec/**/*.js',
-            'app/views/*.html'
+            'app/**/*.html'
         ],
 
         preprocessors: {
@@ -46,7 +45,7 @@ module.exports = function (config) {
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
             'app/**/*.js': ['coverage'],
-            'app/views/*.html': ['ng-html2js']
+            'app/**/*.html': ['ng-html2js']
         },
 
         ngHtml2JsPreprocessor: {
@@ -99,7 +98,7 @@ module.exports = function (config) {
         // URL root prevent conflicts with the site root
 //        urlRoot: '/_karma_/',
 
-        reporters: ['dots', 'junit', 'tapFile', 'coverage'],
+        reporters: ['dots', 'junit', 'coverage'],
         junitReporter: {
             outputFile: 'test/reports/test-results.xml'
         },
