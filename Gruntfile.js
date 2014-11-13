@@ -322,12 +322,12 @@ module.exports = function (grunt) {
                             '*.{ico,png,txt}',
                             '.htaccess',
                             '**/*.html',
-                            'assets/*'
+                            'assets/**/*'
                         ]
                     }, {
                         expand: true,
                         cwd: '.tmp/images',
-                        dest: '<%= yeoman.dist %>/images',
+                        dest: '<%= yeoman.dist %>/assets/images',
                         src: ['generated/*']
                     }, {
                         expand: true,

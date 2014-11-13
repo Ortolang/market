@@ -31,7 +31,7 @@ angular
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                redirectTo: '/workspaces'
+                redirectTo: '/market'
             })
             .when('/market', {
                 templateUrl: 'market/market-home.html',
