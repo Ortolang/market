@@ -13,7 +13,8 @@ angular.module('ortolangMarketApp')
             restrict: 'A',
             scope: {
                 forceMimeTypes: '=',
-                forceWorkspace: '='
+                forceWorkspace: '=',
+                fileSelectId: '='
             },
             templateUrl: '/views/browser.html',
             link: {
