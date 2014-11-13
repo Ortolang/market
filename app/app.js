@@ -42,11 +42,11 @@ angular
                 controller: 'MarketItemCtrl'
             })
             .when('/workspaces', {
-                templateUrl: 'workspace/browser.html',
+                templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
             .when('/workspaces/:wsName/:root/:path*\/browse', {
-                templateUrl: 'workspace/browser.html',
+                templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
             .when('/login', {

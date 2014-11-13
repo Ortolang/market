@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
                 forceWorkspace: '=',
                 fileSelectId: '='
             },
-            templateUrl: 'workspace/browser.html',
+            templateUrl: 'common/directives/browser.html',
             link: {
                 pre : function (scope, element, attrs) {
                     scope.isFileSelect = true;

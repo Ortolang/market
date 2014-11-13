@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
                         console.debug('routeParams', $routeParams.view);
                         if ($routeParams.view === 'browse') {
                             console.debug('load collection view');
-                            $scope.marketItemTemplate = 'market/browser.html';
+                            $scope.marketItemTemplate = 'market/market-item-collection.html';
                             return;
                         }
                         console.debug('load root collection view');
@@ -43,7 +43,7 @@ angular.module('ortolangMarketApp')
                         }
                     } else {
                         console.debug('load collection view');
-                        $scope.marketItemTemplate = 'workspace/browser.html';
+                        $scope.marketItemTemplate = 'market/market-item-collection.html';
                     }
                 } else if (oobject.type === 'object') {
                     console.debug('load data object view');

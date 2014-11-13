@@ -151,14 +151,14 @@
         </div>
 
         <div ng-if="browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
-            <div ng-include="'workspace/browser-line-template.html'"></div>
-            <div ng-include="'workspace/browser-tile-template.html'"></div>
+            <div ng-include="'common/directives/browser-line-template.html'"></div>
+            <div ng-include="'common/directives/browser-tile-template.html'"></div>
             <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{type: 'object'}">
         </div>
 
         <div ng-if="!browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()">
-            <div ng-include="'workspace/browser-line-template.html'"></div>
-            <div ng-include="'workspace/browser-tile-template.html'"></div>
+            <div ng-include="'common/directives/browser-line-template.html'"></div>
+            <div ng-include="'common/directives/browser-tile-template.html'"></div>
         </div>
 
         <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" id="context-menu" class="dropdown clearfix open">
@@ -230,7 +230,7 @@
 
     <div ng-include="'workspace/metadata-preview.html'"></div>
 
-    <div ng-include="'../common/visualizers/visualizer-template.html'"></div>
+    <div ng-include="'common/visualizers/visualizer-template.html'"></div>
 
     <div ng-if="browserService.canAdd" class="modal fade" id="new-collection-modal" tabindex="-1" role="dialog" aria-labelledby="new-collection-modal-label" aria-hidden="true">
         <div class="modal-dialog">
