@@ -16,6 +16,9 @@ angular.module('ortolangMarketApp')
              'otl': 'http://www.ortolang.fr/ontology/',
              'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'};
     
+    function isURL (entity) {
+      return entity && entity.substr(0, 7) === 'http://';
+    }
 
     // Public API here
     return {
@@ -27,7 +30,7 @@ angular.module('ortolangMarketApp')
         fromN3: function (content) {
         
             var deferred = $q.defer();
-            var mdFromN3 = {producer:[]};
+            var mdFromN3 = {};
             // ${target} : 
             // ${targetKey}
             var find = '\\$\\{target\\}';
@@ -42,27 +45,10 @@ angular.module('ortolangMarketApp')
             parser.parse(contentPurify,
                 function (error, triple) {
                     if (triple) {
-                        var literalValue;
-                        if(N3Util.isLiteral(triple.object)) {
-                            literalValue = N3Util.getLiteralValue(triple.object);
-                        }
-                      
-                        if(triple.predicate === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
-                            var catId = triple.object.split('#').pop();
-
-                            mdFromN3.category = catId;
-                        } else if(triple.predicate === N3Util.expandQName('dc:title', prefixesRDF)) {
-                            mdFromN3.title = angular.copy(literalValue);
-                        } else if(triple.predicate === N3Util.expandQName('dc:description', prefixesRDF)) {
-                            mdFromN3.description = angular.copy(literalValue);
-                        } else if(triple.predicate === N3Util.expandQName('dcterms:abstract', prefixesRDF)) {
-                            mdFromN3.abstract = angular.copy(literalValue);
-                        } else if(triple.predicate === N3Util.expandQName('otl:useConditions', prefixesRDF)) {
-                            mdFromN3.useConditions = angular.copy(literalValue);
-                        } else if(triple.predicate === N3Util.expandQName('otl:producer', prefixesRDF)) {
-                            mdFromN3.producer.push(angular.copy(literalValue));
-                        } else if(triple.predicate === N3Util.expandQName('otl:preview', prefixesRDF)) {
-                            mdFromN3.preview = angular.copy(literalValue);
+                        if (N3Util.isLiteral(triple.object)) {
+                          mdFromN3[triple.predicate] = angular.copy(N3Util.getLiteralValue(triple.object));
+                        } else {
+                          mdFromN3[triple.predicate] = triple.object;
                         }
                    }
                    else if(error) {
@@ -91,14 +77,14 @@ angular.module('ortolangMarketApp')
 
             writer.addTriple('${target}', N3Util.expandQName('dc:identifier', prefixesRDF), '"${targetKey}"');
             
-            writer.addTriple('${target}', N3Util.expandQName('rdf:type', prefixesRDF), N3Util.expandQName('market:'+md.category, prefixesRDF));
-            writer.addTriple('${target}', N3Util.expandQName('dc:title', prefixesRDF), '"'+md.title+'"');
-            writer.addTriple('${target}', N3Util.expandQName('dc:description', prefixesRDF), '"'+md.description+'"');
-            writer.addTriple('${target}', N3Util.expandQName('dcterms:abstract', prefixesRDF), '"'+md.abstract+'"');
-            writer.addTriple('${target}', N3Util.expandQName('otl:useConditions', prefixesRDF), '"'+md.useConditions+'"');
-            writer.addTriple('${target}', N3Util.expandQName('otl:producer', prefixesRDF), '"'+md.producer+'"');
-            writer.addTriple('${target}', N3Util.expandQName('otl:preview', prefixesRDF), '"'+md.preview+'"');
-            
+            angular.forEach(md, function(valueElement, keyElement) {
+
+              if (isURL(valueElement)) {
+                writer.addTriple('${target}', keyElement, valueElement);
+              } else {
+                writer.addTriple('${target}', keyElement, '"'+valueElement+'"');
+              }
+            });
 
             writer.end(function (error, result) {
                 if(error) {

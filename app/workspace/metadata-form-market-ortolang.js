@@ -10,10 +10,10 @@
 angular.module('ortolangMarketApp')
     .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource) {
 
-        $scope.categories = [{id: 'Corpora', label: 'Corpus'}, {id: 'Lexicon', label: 'Lexique'}];
+        $scope.categories = [{id: 'http://www.ortolang.fr/2014/09/market#Corpora', label: 'Corpus'}, {id: 'http://www.ortolang.fr/2014/09/market#Lexicon', label: 'Lexique'}];
         $scope.useConditions = [{id: 'free', label: 'Libre'}, {id: 'free-nc', label: 'Libre sans usage commercial'}, {id: 'restricted', label: 'Négociation nécessaire'}];
 
-        $scope.submit = function (form, md) {
+        $scope.submitMetadata = function (form, md) {
             $scope.$broadcast('show-errors-check-validity');
 
             if (form.$invalid) {
@@ -34,14 +34,10 @@ angular.module('ortolangMarketApp')
         $scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: 'File select test', template: 'common/directives/file-select-modal-template.html', show: false});
 
         $rootScope.$on('browserSelectedElements', function ($event, elements) {
-            console.debug('on browserSelectedElements');
-            angular.forEach(elements, function (element) {
-                console.log(element);
-            });
             if (!$scope.md) {
                 $scope.md = {};
             }
-            $scope.md.preview = elements[0].key;
+            $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].key;
             $scope.preview = elements[0];
             $scope.fileSelectModal.hide();
         });
