@@ -21,14 +21,14 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.toggleMetadataEditorList = function () {
-            if($scope.metadataEditorListVisibility === true) {
+            if ($scope.metadataEditorListVisibility === true) {
                 $scope.hideMetadataEditorList();
             } else {
                 $scope.showMetadataEditorList();
             }
         };
 
-        $scope.isMetadataEditorListShow = function() {
+        $scope.isMetadataEditorListShow = function () {
             return $scope.metadataEditorListVisibility === true;
         };
 
@@ -48,10 +48,11 @@ angular.module('ortolangMarketApp')
         ];
 
         $scope.userMetadataFormat = null;
-        $scope.dropdownMetadataFormats = [{
-            'text': 'Présentation',
-            'click': 'showMetadataEditor("market-ortolang-n3")'
-        },
+        $scope.dropdownMetadataFormats = [
+            {
+                'text': 'Présentation',
+                'click': 'showMetadataEditor("market-ortolang-n3")'
+            },
             {
                 'text': 'OAI Dublin Core',
                 'click': 'showMetadataEditor("oai_dc")'
@@ -68,7 +69,7 @@ angular.module('ortolangMarketApp')
             $rootScope.$broadcast('metadata-editor-show', metadataFormat);
         };
 
-        $scope.editMetadata = function (clickEvent, metadata) {
+        $scope.editMetadata = function (metadata) {
             // Get metadata content
             WorkspaceElementResource.get({wsName: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, metadata: metadata.name},
                 function (data) {

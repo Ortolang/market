@@ -104,7 +104,7 @@ angular.module('ortolangMarketApp')
             //         Get Data        //
             // *********************** //
 
-            function getParentData(refresh) {
+            function getParentData(refresh, forceNewSelection) {
                 console.log('getParentData / refresh :', refresh);
                 $scope.browserService.getData({oKey: $scope.itemKey, wsName: $scope.wsName, path: $scope.path, root: $scope.root})
                     .$promise.then(function (element) {
@@ -114,7 +114,9 @@ angular.module('ortolangMarketApp')
                         if (!refresh) {
                             buildBreadcrumb();
                         }
-                        newSelectedElement($scope.parent);
+                        if (!refresh || forceNewSelection) {
+                            newSelectedElement($scope.parent);
+                        }
                         $scope.resizeBrowser();
                         clearPreviousFilteringQueries();
                         angular.forEach($scope.parent.elements, function (value) {
@@ -195,7 +197,7 @@ angular.module('ortolangMarketApp')
 
             $scope.refreshSelectedElement = function () {
                 if ($scope.hasOnlyParentSelected()) {
-                    getParentData(true);
+                    getParentData(true, true);
                 } else if ($scope.hasOnlyOneElementSelected()) {
                     getChildData($scope.selectedElements[0], true, undefined, false);
                 }
