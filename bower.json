@@ -27,6 +27,19 @@
     "angular-mocks": "~1.2.0",
     "angular-scenario": "~1.2.0"
   },
+  "overrides": {
+    "angular-strap": {
+      "main": [
+        "dist/angular-strap.js",
+        "dist/angular-strap.tpl.js"
+        ]
+    },
+    "angular-motion": {
+      "main": [
+        "dist/angular-motion.css"
+        ]
+    }
+  },
   "appPath": "app",
   "resolutions": {
     "angular": "1.2.26"
