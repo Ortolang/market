@@ -113,8 +113,8 @@ angular.module('ortolangMarketApp')
                         // If we just refreshed the data no need to build the breadcrumb again
                         if (!refresh) {
                             buildBreadcrumb();
-                            newSelectedElement($scope.parent);
                         }
+                        newSelectedElement($scope.parent);
                         $scope.resizeBrowser();
                         clearPreviousFilteringQueries();
                         angular.forEach($scope.parent.elements, function (value) {

@@ -219,14 +219,7 @@
 
     </div>
 
-    <div ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
-
-        <!-- <div ng-include="'views/metadata-editor.html'" class="am-fade-and-slide-right metadataEditor" ng-if="isEditorShow()"></div> -->
-
-        <!-- end editor -->
-
-        <!-- <div ng-include="'views/metadata-list.html'" ng-controller="MetadataListCtrl"></div> -->
-
+    <div ng-if="!browserService.isFileSelect" ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
 
     <div ng-include="'workspace/metadata-preview.html'"></div>
 
