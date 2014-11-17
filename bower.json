@@ -32,12 +32,12 @@
       "main": [
         "dist/angular-strap.js",
         "dist/angular-strap.tpl.js"
-        ]
+      ]
     },
     "angular-motion": {
       "main": [
         "dist/angular-motion.css"
-        ]
+      ]
     }
   },
   "appPath": "app",
