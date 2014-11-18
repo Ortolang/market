@@ -11,7 +11,8 @@ angular.module('ortolangMarketApp')
     .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
 
         function loadItem(key) {
-            ObjectResource.get({oKey: key}, function (oobject) {
+            $scope.itemKey = key;
+            ObjectResource.get({oKey: key}).$promise.then(function (oobject) {
                 $scope.oobject = oobject;
                 $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
 
@@ -34,9 +35,8 @@ angular.module('ortolangMarketApp')
 
                                     loadPreview($scope.item['http://www.ortolang.fr/ontology/preview']);
                                 });
-                            }).error(function () {
-                                // resetMetadata();
-                                //TODO send error message
+                            }).error(function (reason) {
+                                console.error(reason);
                             });
                         }
                     } else {
@@ -49,6 +49,8 @@ angular.module('ortolangMarketApp')
                 } else {
                     console.debug('load item key not found view');
                 }
+            }, function (reason) {
+                console.error(reason);
             });
         }
 
@@ -56,7 +58,7 @@ angular.module('ortolangMarketApp')
 
             if(preview !== undefined && preview !== '') {
                 //TODO Get preview file or collection
-                ObjectResource.get({oKey: preview}, function (oobject) {
+                ObjectResource.get({oKey: preview}).$promise.then(function (oobject) {
                     console.info(oobject);
                     var visualizers = VisualizerManager.getCompatibleVisualizers(oobject.object.mimeType, oobject.object.name);
 
@@ -71,12 +73,11 @@ angular.module('ortolangMarketApp')
         function loadPreview(previewKey) {
 
             if(previewKey !== undefined && previewKey !== '') {
-                //TODO Get preview collection
-                ObjectResource.get({oKey: previewKey}, function (oobject) {
-
+                ObjectResource.get({oKey: previewKey}).$promise.then(function (oobject) {
                     $scope.previewCollection = oobject;
+                }, function (reason) {
+                    console.error(reason);
                 });
-                //TODO si la cle n'existe pas afficher quelque chose !!
             }
         }
 
@@ -98,7 +99,7 @@ angular.module('ortolangMarketApp')
 
         // Scope variables
         function initScopeVariables() {
-            $scope.itemKey = $routeParams.itemKey; // Key of the object
+            $scope.itemKey = undefined; // Key of the object
             $scope.oobject = undefined; // Ortolang representation of the object
             $scope.item = undefined; // RDF representation of the object
             $scope.previewCollection = undefined;
