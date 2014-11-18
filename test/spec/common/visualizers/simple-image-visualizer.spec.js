@@ -34,8 +34,7 @@ describe('Visualizer: SimpleImageVisualizer', function () {
         element = angular.element('<simple-image-visualizer></simple-image-visualizer>');
         element = $compile(element)(scope);
         scope.$digest();
-        expect(scope.elements[0].selected).toBe(true);
-        expect(scope.elements[1].selected).not.toBe(true);
+        expect(element.scope().imageElements).toEqualData([{selected: true}, {}]);
     }));
 
     it('should do nothing if one element is already selected', inject(function ($compile) {
@@ -43,7 +42,6 @@ describe('Visualizer: SimpleImageVisualizer', function () {
         element = angular.element('<simple-image-visualizer></simple-image-visualizer>');
         element = $compile(element)(scope);
         scope.$digest();
-        expect(scope.elements[0].selected).not.toBe(true);
-        expect(scope.elements[1].selected).toBe(true);
+        expect(element.scope().imageElements).toEqual(scope.elements);
     }));
 });

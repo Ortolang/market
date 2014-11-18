@@ -2,28 +2,8 @@
 
 describe('Service: ProfileResource', function () {
 
-//    // load the service's module
-//    beforeEach(module('ortolangMarketApp'));
-//
-//    // instantiate service
-//    var ConnectedDAO;
-//    beforeEach(inject(function (_ConnectedDAO_) {
-//        ConnectedDAO = _ConnectedDAO_;
-//    }));
-//
-//    it('should exist', function () {
-//        expect(!!ConnectedDAO).toBe(true);
-//    });
-//
-//});
-    beforeEach(function () {
-        module('ortolangMarketApp');
-        this.addMatchers({
-            toEqualData: function (expected) {
-                return angular.equals(this.actual, expected);
-            }
-        });
-    });
+    // load the service's module
+    beforeEach(module('ortolangMarketApp'));
 
     // instantiate service
     var ProfileResource;
@@ -38,10 +18,9 @@ describe('Service: ProfileResource', function () {
         });
     });
 
-    describe('Service: ProfileResource', function () {
-        it('should exist', function () {
-            expect(!!ProfileResource).toBe(true);
-        });
+    it('should exist', function () {
+        expect(!!ProfileResource).toBe(true);
+    });
 
 //        it('should work',
 //            inject(['$httpBackend',
@@ -54,5 +33,4 @@ describe('Service: ProfileResource', function () {
 //                    //expect(result.Response).toEqualData(user);
 //                }])
 //            );
-    });
 });
