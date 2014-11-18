@@ -19,7 +19,7 @@ describe('Service: DownloadResource', function () {
 
     it('should return the correct url', function () {
         expect(!!DownloadResource).toBe(true);
-        console.debug('DownlaodResource');
+        
         var params = {oKey: 'k1'};
         expect(DownloadResource.getDownloadUrl(params)).toBe('http://localhost:8080/api/rest/objects/k1/download');
 

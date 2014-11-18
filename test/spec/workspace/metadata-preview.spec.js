@@ -19,7 +19,7 @@ describe('Controller: MetadataPreviewCtrl', function () {
             mockDownloadResource.data = 'sample code';
 
             mockDownloadResource.download = function(params) {
-              var defer = $q.defer(), data = this.data, successMethod = params.oKey == 'k1';
+              var defer = $q.defer(), data = this.data, successMethod = params.oKey === 'k1';
               defer.resolve(data);
 
 

@@ -12,28 +12,33 @@ angular.module('ortolangMarketApp')
 
         function loadObjects() {
             // Loads all objects
-            ObjectResource.get({}, function (oobjects) {
+            ObjectResource.get({}).$promise.then(function (oobjects) {
+
                 angular.forEach(oobjects.entries, function (entry) {
 
                     // Loads properties of each object
-                    ObjectResource.get({oKey: entry}, function (oobject) {
-                        if (oobject.object.root === true) {
-                            if (oobject.object.metadatas.length > 0) {
-                                //TODO find metadata in Resource name or rdf format ??
-                                var metaKey = oobject.object.metadatas[0].key;
+                    ObjectResource.get({oKey: entry}).$promise
+                        .then(function (oobject) {
+                            if (oobject.object.root === true) {
+                                if (oobject.object.metadatas.length > 0) {
+                                    //TODO find metadata in Resource name or rdf format ??
+                                    var metaKey = oobject.object.metadatas[0].key;
 
-                                DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                    N3Serializer.fromN3(metaContent).then(function (data) {
+                                    DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
+                                        N3Serializer.fromN3(metaContent).then(function (data) {
 
-                                        $scope.items.push({oobject: oobject, meta: data});
+                                            $scope.items.push({oobject: oobject, meta: data});
+                                        });
+                                    }).error(function (error) {
+                                        //TODO a tester
+                                        console.error('error during process : ' + error);
                                     });
-                                }).error(function (error) {
-                                    //TODO a tester
-                                    console.error('error during process : ' + error);
-                                });
+                                }
                             }
-                        }
-                    });
+                        },
+                        function(reason) {
+                            console.error(reason);
+                        });
                 });
             });
         }
