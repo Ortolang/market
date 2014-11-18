@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: DownlaodResource', function () {
+describe('Service: DownloadResource', function () {
 
     // load the service's module
     beforeEach(module('ortolangMarketApp'));
@@ -12,7 +12,7 @@ describe('Service: DownlaodResource', function () {
         httpBackend = _$httpBackend_;
     }));
 
-    afterEach(function() {
+    afterEach(function () {
         httpBackend.verifyNoOutstandingExpectation();
         httpBackend.verifyNoOutstandingRequest();
     });
@@ -23,13 +23,13 @@ describe('Service: DownlaodResource', function () {
         var params = {oKey: 'k1'};
         expect(DownloadResource.getDownloadUrl(params)).toBe('http://localhost:8080/api/rest/objects/k1/download');
 
-        params = {wsName: '<wsname>', path: '<path>', root:'<root>', metadata: '<metadata>'};
+        params = {wsName: '<wsname>', path: '<path>', root: '<root>', metadata: '<metadata>'};
         expect(DownloadResource.getDownloadUrl(params)).toBe('http://localhost:8080/api/rest/workspaces/<wsname>/download?path=<path>&root=<root>&metadata=<metadata>');
         params = {wsName: '<wsname>'};
         expect(DownloadResource.getDownloadUrl(params)).toBe('http://localhost:8080/api/rest/workspaces/<wsname>/download?');
 
         params = {};
-        expect(DownloadResource.getDownloadUrl(params)).toBe(undefined);        
+        expect(DownloadResource.getDownloadUrl(params)).toBe(undefined);
     });
 
 
@@ -41,7 +41,7 @@ describe('Service: DownlaodResource', function () {
         var promise = DownloadResource.download(params, {}), theData;
         promise.then(function (data) {
             theData = data;
-          });
+        });
         httpBackend.flush();
         expect(theData.data).toBe('sample code');
     });

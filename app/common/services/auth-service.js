@@ -83,13 +83,13 @@ angular.module('ortolangMarketApp')
          */
         authService.saveAttemptUrl = function (path) {
             param.redirectToUrlAfterLogin = path;
-            console.debug(param.redirectToUrlAfterLogin);
+            console.debug('saveAttemptUrl', param.redirectToUrlAfterLogin);
         };
         /**
          * Redirect to the saved url
          */
         authService.redirectToAttemptedUrl = function () {
-            $location.path(param.redirectToUrlAfterLogin);
+            $location.path('redirectToAttemptedUrl', param.redirectToUrlAfterLogin);
         };
         return authService;
     }]);

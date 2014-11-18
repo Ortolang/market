@@ -39,7 +39,7 @@ angular.module('ortolangVisualizers')
  * # ortolangVisualizers
  */
 angular.module('ortolangVisualizers')
-    .directive('simpleTextVisualizer', ['DownloadResource', function (DownloadResource) {
+    .directive('simpleTextVisualizer', [function () {
 
         return {
             templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
