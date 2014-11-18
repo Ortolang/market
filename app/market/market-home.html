@@ -40,14 +40,14 @@
                 <div ng-repeat="item in items" class="col-sm-6 col-md-3">
                     <div class="thumbnail market-item">
                     	<a ng-href="#/market/{{item.oobject.key}}">
-                        	<img src="../assets/images/holder.png" alt="{{item.meta.title}}">
+                        	<img src="../assets/images/holder.png" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}">
                         </a>
                         <div class="caption">
-                            <h3 class="title">{{item.meta.title}}<span class="paragraph-end"></span></h3>
-                            <p>{{item.meta.abstract}}</p>
+                            <h3 class="title">{{item.meta['http://purl.org/dc/elements/1.1/title']}}<span class="paragraph-end"></span></h3>
+                            <p>{{item.meta['http://purl.org/dc/terms/abstract']}}</p>
                             <p class="producers">
                                 <a href="#" class="author">{{item.oobject.author}}</a>
-                                <a ng-repeat="producer in item.meta.producer" href="#" class="lab">{{producer}}</a>
+                                <a href="#" class="lab">{{item.meta['http://www.ortolang.fr/ontology/producer']}}</a>
                             </p>
                         </div>
                     </div>

@@ -8,12 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$http', 'Url', 'ObjectResource', 'N3Serializer', function ($scope, $http, Url, ObjectResource, N3Serializer) {
+    .controller('MarketHomeCtrl', ['$scope', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, ObjectResource, DownloadResource, N3Serializer) {
 
         function loadObjects() {
             // Loads all objects
             ObjectResource.get({}, function (oobjects) {
-
                 angular.forEach(oobjects.entries, function (entry) {
 
                     // Loads properties of each object
@@ -23,7 +22,7 @@ angular.module('ortolangMarketApp')
                                 //TODO find metadata in Resource name or rdf format ??
                                 var metaKey = oobject.object.metadatas[0].key;
 
-                                $http.get(Url.urlBase() + '/rest/objects/' + metaKey + '/download').success(function (metaContent) {
+                                DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                     N3Serializer.fromN3(metaContent).then(function (data) {
 
                                         $scope.items.push({oobject: oobject, meta: data});

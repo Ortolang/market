@@ -9,13 +9,15 @@
  */
 angular.module('ortolangMarketApp')
     .controller('MetadataPreviewCtrl', ['$scope', 'DownloadResource', function ($scope, DownloadResource) {
-
-        function previewMetadata(metadata) {
+        
+        function previewMetadata (metadata) {
             $scope.selectedMetadata = metadata;
-            DownloadResource.download({oKey: metadata.key}).success(function (data) {
+            
+            return DownloadResource.download({oKey: metadata.key}).success(function (data) {
+                
                 $scope.code = data;
                 $('#metadata-modal').modal('show');
-            }).error(function () {
+            }).error( function () {
                 $scope.code = undefined;
             });
         }

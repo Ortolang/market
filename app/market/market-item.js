@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$http', 'Url', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, $http, Url, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
 
         function loadItem(key) {
             ObjectResource.get({oKey: key}, function (oobject) {
@@ -17,24 +17,22 @@ angular.module('ortolangMarketApp')
 
                 if (oobject.type === 'collection') {
                     if (oobject.object.root === true) {
-                        console.debug('routeParams', $routeParams.view);
+                        
                         if ($routeParams.view === 'browse') {
-                            console.debug('load collection view');
                             $scope.marketItemTemplate = 'market/market-item-collection.html';
                             return;
                         }
-                        console.debug('load root collection view');
 
                         if (oobject.object.metadatas.length > 0) {
                             //TODO find metadata in Resource name or rdf format ??
                             var metaKey = oobject.object.metadatas[0].key;
 
-                            $http.get(Url.urlBase() + '/rest/objects/' + metaKey + '/download').success(function (metaContent) {
+                            DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                 N3Serializer.fromN3(metaContent).then(function (data) {
                                     $scope.item = angular.copy(data);
                                     $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
-                                    loadPreview($scope.item.preview);
+                                    loadPreview($scope.item['http://www.ortolang.fr/ontology/preview']);
                                 });
                             }).error(function () {
                                 // resetMetadata();
@@ -42,11 +40,9 @@ angular.module('ortolangMarketApp')
                             });
                         }
                     } else {
-                        console.debug('load collection view');
                         $scope.marketItemTemplate = 'market/market-item-collection.html';
                     }
                 } else if (oobject.type === 'object') {
-                    console.debug('load data object view');
                     $scope.marketItemTemplate = 'market/market-item-data-object.html';
                 } else if (oobject.type === 'link') {
                     console.debug('follow link');

@@ -11,5 +11,12 @@ describe('Service: N3Serializer', function () {
     N3Serializer = _N3Serializer_;
   }));
 
+  it('should have controller marketHomeCtrl be defined', function() {
+        var content = '';
+        // expect($location.path()).toBe('/about');
+        // expect(scope.isActive('/about')).toBe(true);
+        // expect(scope.isActive('/contact')).toBe(false);
 
+        // expect(marketHomeCtrl.initScopeVariables()).toBeDefined();
+    });
 });

@@ -16,4 +16,8 @@ describe('Controller: MetadataEditorCtrl', function () {
     });
   }));
 
+  it('should have setted editorVisibility to true when show editor panel', function() {
+        scope.showEditor();
+        expect(scope.editorVisibility).toBe(true);
+  });
 });
