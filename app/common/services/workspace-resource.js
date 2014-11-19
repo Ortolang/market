@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('WorkspaceResource', ['$resource', 'Url', function ($resource, Url) {
 
-        return $resource(Url.urlBase() + '/rest/workspaces/:wsName', {}, {
+        return $resource(Url.urlBase() + '/rest/workspaces/:wskey', {}, {
             query: {
                 method: 'GET',
                 isArray: false

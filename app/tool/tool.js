@@ -58,7 +58,7 @@ angular.module('ortolangMarketApp')
             $scope.pushDataObjects = function (workspaces, callback) {
                 var deferred = $q.defer(), promise = [], list = [];
                 workspaces.forEach(function (index) {
-                    promise.push(WorkspaceElementResource.get({wsName: index.key, path: '/', root: 'head'}).$promise
+                    promise.push(WorkspaceElementResource.get({wskey: index.key, path: '/', root: 'head'}).$promise
                         .then(function (element) {
                             var tmp = $filter('filter')(element.elements, {'type': 'object'});
                             list = list.concat(tmp);

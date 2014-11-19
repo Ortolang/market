@@ -12,8 +12,8 @@ angular.module('ortolangMarketApp')
 
         function buildDownloadUrl(params) {
             var url;
-            if (params.wsName) {
-                url = Url.urlBase() + '/rest/workspaces/' + params.wsName + '/download?';
+            if (params.wskey) {
+                url = Url.urlBase() + '/rest/workspaces/' + params.wskey + '/download?';
                 if (params.path) {
                     url += 'path=' + params.path + '&';
                 }

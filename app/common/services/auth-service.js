@@ -59,11 +59,11 @@ angular.module('ortolangMarketApp')
         };
         /**
          * Check if user is authorized
-         * @param wsName
+         * @param wskey
          * @returns {boolean}
          */
-        authService.isAuthorized = function (wsName) {
-            var found = $filter('filter')(User.userMember, wsName);
+        authService.isAuthorized = function (wskey) {
+            var found = $filter('filter')(User.userMember, wskey);
             //console.debug(found);
             return (authService.isAuthenticated() &&
                 found.length > 0);

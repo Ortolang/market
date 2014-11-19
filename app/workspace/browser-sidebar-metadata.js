@@ -71,7 +71,7 @@ angular.module('ortolangMarketApp')
 
         $scope.editMetadata = function (metadata) {
             // Get metadata content
-            WorkspaceElementResource.get({wsName: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, metadata: metadata.name},
+            WorkspaceElementResource.get({wskey: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, metadata: metadata.name},
                 function (data) {
                     var metadataFormat;
                     angular.forEach($scope.metadataFormats, function (md) {
@@ -93,7 +93,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.deleteMetadata = function (metadata) {
-            WorkspaceElementResource.delete({wsName: $scope.wsName, path: $scope.selectedElements[0].path, metadataname: metadata.name}, function () {
+            WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.selectedElements[0].path, metadataname: metadata.name}, function () {
                 $scope.selectedMetadata = undefined;
                 $scope.refreshSelectedElement();
             });

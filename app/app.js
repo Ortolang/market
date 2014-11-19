@@ -45,7 +45,7 @@ angular
                 templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
-            .when('/workspaces/:wsName/:root/:path*\/browse', {
+            .when('/workspaces/:wskey/:root/:path*\/browse', {
                 templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
@@ -116,7 +116,7 @@ angular
                 }
             }
             // restrain access to a workspace to authorized users
-            var currentWorkspace = current.params.wsName;
+            var currentWorkspace = current.params.wskey;
             if (currentWorkspace) {
                 if (!AuthService.isAuthorized(currentWorkspace)) {
                     event.preventDefault();

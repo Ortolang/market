@@ -59,7 +59,8 @@ angular.module('ortolangMarketApp')
 
             uploader.onAfterAddingFile = function (fileItem) {
                 fileItem.wsName = angular.copy($scope.wsName);
-                fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wsName + '/elements';
+                fileItem.wskey = angular.copy($scope.wskey);
+                fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 if (fileItem.ortolangType === 'object') {
                     fileItem.file.path = angular.copy($scope.parent.path);

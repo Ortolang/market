@@ -19,15 +19,15 @@ angular.module('ortolangMarketApp')
         }
 
         function buildChildDownloadUrl(data, parent, root) {
-            return DownloadResource.getDownloadUrl({wsName: parent.workspace, path: parent.path + '/' + data.name, root: root});
+            return DownloadResource.getDownloadUrl({wskey: parent.workspace, path: parent.path + '/' + data.name, root: root});
         }
 
         function buildChildBrowseUrl(child, parent, root) {
             return '/workspaces/' + parent.workspace + '/' + root + '/' +  parent.path + '/' + child.name + '/browse';
         }
 
-        function buildBrowseUrlFromPath(wsName, path, root) {
-            return '/workspaces/' + wsName + '/' + root + '/' + path + '/browse';
+        function buildBrowseUrlFromPath(wskey, path, root) {
+            return '/workspaces/' + wskey + '/' + root + '/' + path + '/browse';
         }
 
         return {
