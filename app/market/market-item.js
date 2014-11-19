@@ -12,7 +12,10 @@ angular.module('ortolangMarketApp')
 
         function loadItem(key) {
             $scope.itemKey = key;
-            ObjectResource.get({oKey: key}).$promise.then(function (oobject) {
+            var resource = ObjectResource.get({oKey: key});
+            console.debug(resource);
+            resource.$promise.then(function (oobject) {
+                console.debug('michel');
                 $scope.oobject = oobject;
                 $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
 

@@ -19,6 +19,7 @@ angular.module('ortolangMarketApp')
                     // Loads properties of each object
                     ObjectResource.get({oKey: entry}).$promise
                         .then(function (oobject) {
+                            console.debug(oobject);
                             if (oobject.object.root === true) {
                                 if (oobject.object.metadatas.length > 0) {
                                     //TODO find metadata in Resource name or rdf format ??
