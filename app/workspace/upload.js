@@ -60,20 +60,18 @@ angular.module('ortolangMarketApp')
             uploader.onAfterAddingFile = function (fileItem) {
                 fileItem.wsName = angular.copy($scope.wsName);
                 fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wsName + '/elements';
-                fileItem.formData = [{type: fileItem.type}];
-                if (fileItem.type === 'object') {
+                fileItem.formData = [{type: fileItem.ortolangType}];
+                if (fileItem.ortolangType === 'object') {
                     fileItem.file.path = angular.copy($scope.parent.path);
                     fileItem.formData.push({path: fileItem.file.path + '/' + fileItem.file.name});
-                } else if (fileItem.type === 'metadata') {
+                } else if (fileItem.ortolangType === 'metadata') {
                     fileItem.file.path = angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
                     fileItem.formData.push({path: fileItem.file.path});
                     fileItem.formData.push({name: fileItem.file.name});
                 } else {
-                    console.error('No file type provided');
+                    console.error('No ortolang type provided');
                     uploader.removeFromQueue(fileItem);
-                    return;
                 }
-                console.info(fileItem.file.name + ' added to the queue', fileItem, fileItem.formData[0], fileItem.formData[1]);
             };
 
             uploader.onAfterAddingAll = function () {
@@ -82,8 +80,7 @@ angular.module('ortolangMarketApp')
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
                 console.info(fileItem.file.name + ' successfully uploaded', fileItem, response, status, headers);
-                if (fileItem.type === 'object') {
-                    console.info('Emit: uploaderCompleteItemUpload event');
+                if (fileItem.ortolangType === 'object') {
                     $rootScope.$emit('uploaderCompleteItemUpload');
                     $timeout(function () {
                         fileItem.remove();
@@ -91,8 +88,7 @@ angular.module('ortolangMarketApp')
                             $rootScope.deactivateUploadQueue();
                         }
                     }, 800);
-                } else if (fileItem.type === 'metadata') {
-                    console.info('Emit: completeMetadataUpload event');
+                } else if (fileItem.ortolangType === 'metadata') {
                     $rootScope.$emit('completeMetadataUpload');
                 }
             };

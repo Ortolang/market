@@ -22,7 +22,7 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
+                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)" class="{{item.divider ? 'divider' : ''}}"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
                         </ul>
                     </div>
 
@@ -84,12 +84,6 @@
                         </div>
                     </div>
 
-                    <div ng-if="browserService.canAdd" class="btn-group">
-                        <button class="btn btn-default" onclick="$('#object-upload-file-select').click();" data-title="Upload" bs-tooltip>
-                            <span ng-class="icons.browser.upload"></span>
-                        </button>
-                    </div>
-
                     <div ng-if="browserService.canSwitchViewMode" class="btn-group">
                         <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{otherViewMode.name}}" bs-tooltip>
                             <span ng-class="otherViewMode.icon"></span>
@@ -139,6 +133,8 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><div data-toggle="modal" data-target="#new-collection-modal">Collection</div></li>
                     <li class="divider"></li>
+                    <li><div ng-click="doAction('uploadFiles')">Import Files</div></li>
+                    <li class="divider"></li>
                     <li><div data-toggle="modal" data-target="#create-workspace-modal">Workspace</div></li>
                 </ul>
             </div>
@@ -150,10 +146,10 @@
             </section>
         </div>
 
-        <div ng-if="browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{type: 'object'}">
+        <div ng-if="browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
             <div ng-include="'common/directives/browser-line-template.html'"></div>
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
-            <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{type: 'object'}">
+            <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{ortolangType: 'object'}">
         </div>
 
         <div ng-if="!browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()">
