@@ -83,7 +83,7 @@ module.exports = function (config) {
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: false,
+        singleRun: true,
 
         colors: true,
 
@@ -98,7 +98,7 @@ module.exports = function (config) {
         // URL root prevent conflicts with the site root
 //        urlRoot: '/_karma_/',
 
-        reporters: ['dots', 'junit', 'coverage'],
+        reporters: ['dots', 'junit', 'tapFile', 'coverage'],
         junitReporter: {
             outputFile: 'test/reports/test-results.xml'
         },
