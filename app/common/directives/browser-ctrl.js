@@ -414,7 +414,7 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             $scope.publishWorkspace = function () {
-                RuntimeResource.create({}, $.param({'process-type': 'publish-workspace', 'process-name': 'Publication of workspace: ' + $scope.wsName, 'workspace-key': $scope.wskey }));
+                RuntimeResource.create({}, {'process-type': 'publish-workspace', 'process-name': 'Publication of workspace: ' + $scope.wsName, 'workspace-key': $scope.wskey });
             };
 
 

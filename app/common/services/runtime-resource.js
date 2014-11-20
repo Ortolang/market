@@ -12,9 +12,8 @@ angular.module('ortolangMarketApp')
         return $resource(Url.urlBase() + '/rest/runtime/processes/:pcKey', {}, {
             create : {
                 method : 'POST',
-//                transformRequest: function (data) { data = $.param(data) },
+                transformRequest: function (data) { return $.param(data); },
                 headers : {'Content-Type': 'application/x-www-form-urlencoded'}
             }
         });
-    }
-    ]);
+    }]);
