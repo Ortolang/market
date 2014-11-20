@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
         if (window.location.hostname === 'localhost') {
             // TODO: remove hack for local development
             urlBase = 'http://localhost:8080/api';
+            //urlBase = 'https://localhost:8443/api';
         } else {
             urlBase = '/api';
         }
