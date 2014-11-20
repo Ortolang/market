@@ -12,10 +12,8 @@ angular.module('ortolangMarketApp')
 
         function loadItem(key) {
             $scope.itemKey = key;
-            var resource = ObjectResource.get({oKey: key});
-            console.debug(resource);
-            resource.$promise.then(function (oobject) {
-                console.debug('michel');
+
+            ObjectResource.get({oKey: key}).$promise.then(function (oobject) {
                 $scope.oobject = oobject;
                 $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
 
@@ -30,7 +28,7 @@ angular.module('ortolangMarketApp')
                         if (oobject.object.metadatas.length > 0) {
                             //TODO find metadata in Resource name or rdf format ??
                             var metaKey = oobject.object.metadatas[0].key;
-
+                            
                             DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                 N3Serializer.fromN3(metaContent).then(function (data) {
                                     $scope.item = angular.copy(data);

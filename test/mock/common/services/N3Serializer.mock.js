@@ -22,6 +22,6 @@ angular.module('ortolangMarketAppMock')
 
     return {
     	fromN3: fromN3
-    }
+    };
 
 }]);

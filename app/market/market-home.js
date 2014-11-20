@@ -13,13 +13,13 @@ angular.module('ortolangMarketApp')
         function loadObjects() {
             // Loads all objects
             ObjectResource.get({}).$promise.then(function (oobjects) {
-
+                
                 angular.forEach(oobjects.entries, function (entry) {
-
+                    
                     // Loads properties of each object
                     ObjectResource.get({oKey: entry}).$promise
                         .then(function (oobject) {
-                            console.debug(oobject);
+                            
                             if (oobject.object.root === true) {
                                 if (oobject.object.metadatas.length > 0) {
                                     //TODO find metadata in Resource name or rdf format ??
@@ -31,7 +31,6 @@ angular.module('ortolangMarketApp')
                                             $scope.items.push({oobject: oobject, meta: data});
                                         });
                                     }).error(function (error) {
-                                        //TODO a tester
                                         console.error('error during process : ' + error);
                                     });
                                 }

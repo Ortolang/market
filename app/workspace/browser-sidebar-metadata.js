@@ -71,7 +71,7 @@ angular.module('ortolangMarketApp')
 
         $scope.editMetadata = function (metadata) {
             // Get metadata content
-            WorkspaceElementResource.get({wskey: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, metadata: metadata.name},
+            WorkspaceElementResource.get({wskey: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, metadata: metadata.name}).$promise.then(
                 function (data) {
                     var metadataFormat;
                     angular.forEach($scope.metadataFormats, function (md) {
@@ -81,9 +81,8 @@ angular.module('ortolangMarketApp')
                     });
                     $rootScope.$broadcast('metadata-editor-edit', metadataFormat, data);
                 },
-                function () {
-                    //TODO send error message
-                    console.error('Get metadata content of ' + metadata.name + ' failed !');
+                function (reason) {
+                    console.error('Get metadata content of ' + metadata.name + ' failed cause '+reason+' !');
                 });
 
         };
@@ -93,9 +92,12 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.deleteMetadata = function (metadata) {
-            WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.selectedElements[0].path, metadataname: metadata.name}, function () {
+            WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.selectedElements[0].path, metadataname: metadata.name}).$promise.then(function () {
                 $scope.selectedMetadata = undefined;
                 $scope.refreshSelectedElement();
+            },
+            function(reason) {
+                console.error('Cant delete metadata with name ' + metadata.name + ' failed cause '+reason+' !');
             });
         };
 

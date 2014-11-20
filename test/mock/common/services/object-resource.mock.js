@@ -2,37 +2,47 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.ObjectResource
+ * @name ortolangMarketAppMock.ObjectResource
  * @description
  * # ObjectResource
- * Factory in the ortolangMarketApp.
+ * Factory in the ortolangMarketAppMock.
  */
 angular.module('ortolangMarketAppMock')
     .factory('ObjectResource', [ '$q', 'sample', function ($q, sample) {
 
-        var get = function(params) {
-            var defer = $q.defer();
+        var conditions = [];
 
-            if(params.oKey) {
-                if(params.oKey === sample().rootCollectionKey) {
-                    defer.resolve(sample().oobjectSample);
-                } else if(params.oKey === sample().collectionKey) {
-                    defer.resolve(sample().oobjectNotRootSample);
-                } else if(params.oKey === sample().rootCollectionWithoutMetaKey) {
-                    defer.resolve(sample().oobjectWithoutMetaSample);
-                } else if(params.oKey === sample().rootCollectionWithOtherMetaKey) {
-                    defer.resolve(sample().oobjectWithOtherMetaSample);
-                } else {
-                    defer.reject('unknow object key');
+        function get(params) {
+            var defer = $q.defer(), data;
+            
+            angular.forEach(conditions, function(condition) {
+
+                if(angular.equals(params, condition.condition)) {
+                    data = condition.responseValue;
+                    return;
                 }
+            });
+
+            if(data) {
+                defer.resolve(data);
             } else {
-                defer.resolve(sample().list);
+                defer.reject('unknow object key');
             }
 
             return {$promise: defer.promise};
-        };
+        }
+
+        function when(_condition_, _responseValue_) {
+            conditions.push({condition: _condition_, responseValue: _responseValue_});
+        }
+
+        function clear() {
+            conditions = [];
+        }
 
         return {
-            get: get
+            get: get,
+            when: when,
+            clear: clear
         };
     }]);
