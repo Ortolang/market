@@ -32,6 +32,10 @@
         &:hover {
           background-color: @side-bar-item-bg;
           color: @side-bar-item-active-color;
+          .badge {
+            color: @orange-lighter;
+            background-color: #FFFFFF;
+          }
           .nav-description {
             width: 200px;
             display: block;
@@ -55,6 +59,14 @@
           height: @side-bar-item-height;
           width: @side-bar-item-height;
           line-height: @side-bar-item-height;
+        }
+
+        .badge {
+          position: absolute;
+          top: -1px;
+          right: 5px;
+          z-index: 1000;
+          background-color: @btn-danger-bg;
         }
 
         .nav-description {

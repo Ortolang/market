@@ -3,7 +3,7 @@
     <div class="row">
         <div id="browser-toolbar" ng-click="checkSelection($event)">
             <div ng-if="displayAsideWorkspaceList()" class="col-md-2 toolbar-aside">
-                <div class="btn title">Browser</div>
+                <div class="btn title">My workspaces</div>
             </div>
 
             <div ng-class="displayAsideWorkspaceList() ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
@@ -13,12 +13,12 @@
                     </button>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default">
-                            <span ng-class="icons.browser.home"></span>{{wsName}}
+                            <span ng-class="icons.browser.home"></span>{{wsName}}{{root !== 'head' ? ' (' + root + ')' : ''}}
                         </button>
                     </div>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span ng-class="icons.browser.home"></span>{{wsName}}
+                            <span ng-class="icons.browser.home"></span>{{wsName}}{{root !== 'head' ? ' (' + root + ')' : ''}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -131,15 +131,15 @@
                     New
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><div data-toggle="modal" data-target="#new-collection-modal">Collection</div></li>
-                    <li class="divider"></li>
-                    <li><div ng-click="doAction('uploadFiles')">Import Files</div></li>
-                    <li class="divider"></li>
+                    <!--<li><div data-toggle="modal" data-target="#new-collection-modal">Collection</div></li>-->
+                    <!--<li class="divider"></li>-->
+                    <!--<li><div ng-click="doAction('uploadFiles')">Import Files</div></li>-->
+                    <!--<li class="divider"></li>-->
                     <li><div data-toggle="modal" data-target="#create-workspace-modal">Workspace</div></li>
                 </ul>
             </div>
             <section id="my-workspaces">
-                <h5>My workspaces</h5>
+                <!--<h5>My workspaces</h5>-->
                 <ul class="list-unstyled">
                     <li ng-repeat="ws in wsList.entries" ng-click="changeWorkspace(ws)" ng-class="isActiveWorkspace(ws)"><span></span>{{ws.name}}</li>
                 </ul>

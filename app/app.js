@@ -63,6 +63,11 @@ angular
                 controller: 'ToolCtrl',
                 requiresAuthentication: true
             })
+            .when('/processes/', {
+                templateUrl: 'processes/processes.html',
+                controller: 'ProcessesCtrl',
+                requiresAuthentication: true
+            })
             .when('/404', {
                 templateUrl: '404.html'
             })

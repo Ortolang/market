@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$scope', '$route', function ($scope, $route) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', function ($rootScope, $scope, $route) {
 
         $scope.navElements = [
             {
@@ -28,6 +28,13 @@ angular.module('ortolangMarketApp')
                 path: '/tools',
                 description: 'Outils',
                 iconCss: 'fa fa-puzzle-piece fa-2x',
+                active: undefined
+            },
+            {
+                path: '/processes',
+                description: 'Processes',
+                iconCss: 'fa fa-tasks fa-2x',
+                badge: function () {return $rootScope.activeProcessesNbr; },
                 active: undefined
             },
             {

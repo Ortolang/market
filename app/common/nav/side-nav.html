@@ -1,8 +1,9 @@
 <nav ng-controller="SideNavCtrl" id="side-nav" class="ng-cloak" role="navigation" ng-if="authenticated" ng-cloak>
     <ul>
         <li ng-repeat="element in navElements" ng-class="element.active">
-            <a ng-if="!element.subElements" ng-href="#{{element.path}}" ng-click="select($event, element)">
+            <a ng-href="#{{element.path}}" ng-click="select($event, element)">
                 <i ng-class="element.iconCss"></i>
+                <span ng-if="element.badge" class="badge">{{element.badge()}}</span>
                 <span class="nav-description">{{element.description}}</span>
             </a>
         </li>
