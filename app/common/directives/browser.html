@@ -10,18 +10,18 @@
                 <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
                     <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseTo('/')">
                         <span ng-class="icons.browser.home"></span>{{wsName}}
-                        <span class="root">{{root !== 'head' ? ' - ' + root : ''}}</span>
+                        <span ng-show="root !== 'head'" class="root">{{root}}</span>
                     </button>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default">
                             <span ng-class="icons.browser.home"></span>{{wsName}}
-                            <span class="root">{{root !== 'head' ? ' - ' + root : ''}}</span>
+                            <span ng-show="root !== 'head'" class="root">{{root}}</span>
                         </button>
                     </div>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span ng-class="icons.browser.home"></span>{{wsName}}
-                            <span class="root">{{root !== 'head' ? ' - ' + root : ''}}</span>
+                            <span ng-show="root !== 'head'" class="root">{{root}}</span>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
