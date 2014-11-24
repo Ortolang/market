@@ -33,7 +33,8 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function populateBreadcrumbDropdownMenu() {
-                if ($scope.browserService.canAdd) {
+                $scope.breadcrumbDropdownItems = [];
+                if ($scope.browserService.canAdd && $scope.isHead) {
                     $scope.breadcrumbDropdownItems.push({text: 'New Collection', icon: icons.browser.plus, action: 'newCollection'});
                     $scope.breadcrumbDropdownItems.push({divider: true});
                     $scope.breadcrumbDropdownItems.push({text: 'Import files', icon: icons.browser.upload, action: 'uploadFiles'});
@@ -83,7 +84,7 @@ angular.module('ortolangMarketApp')
                         return;
                     }
                     clearContextMenuItems();
-                    if ($scope.browserService.canAdd && $scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
+                    if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
                         $scope.contextMenuItems.push({text: 'New Collection', icon: icons.browser.plus, action: 'newCollection'});
                         $scope.contextMenuItems.push({divider: true});
                     }
@@ -94,7 +95,7 @@ angular.module('ortolangMarketApp')
                     if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
                         $scope.contextMenuItems.push({text: 'Download', icon: icons.browser.download, href: $scope.selectedElements[0].downloadUrl});
                     }
-                    if ($scope.browserService.canDelete) {
+                    if ($scope.browserService.canDelete && $scope.isHead) {
                         $scope.contextMenuItems.push({text: 'Delete', icon: icons.browser.delete, action: 'delete'});
                     }
                     activateContextMenu();
@@ -107,6 +108,12 @@ angular.module('ortolangMarketApp')
             //         Get Data        //
             // *********************** //
 
+            function getWorkspaceData() {
+                WorkspaceResource.get({wskey: $scope.workspace.key}).$promise.then(function (data) {
+                    $scope.workspace = data;
+                });
+            }
+
             function getParentData(refresh, forceNewSelection) {
                 console.log('getParentData / refresh :', refresh);
                 $scope.browserService.getData({oKey: $scope.itemKey, wskey: $scope.wskey, path: $scope.path, root: $scope.root})
@@ -116,6 +123,7 @@ angular.module('ortolangMarketApp')
                         // If we just refreshed the data no need to build the breadcrumb again
                         if (!refresh) {
                             buildBreadcrumb();
+                            populateBreadcrumbDropdownMenu();
                         }
                         if (!refresh || forceNewSelection) {
                             newSelectedElement($scope.parent);
@@ -512,24 +520,24 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('browserAskChangeWorkspace', function ($event, workspace) {
-                $scope.wskey = workspace.key;
-                $scope.wsName = workspace.name;
-                $scope.root = 'head';
-                $scope.path = '/';
+                initWorkspaceVariables(workspace);
                 getParentData(false);
             });
 
             $scope.changeWorkspace = function (workspace) {
                 if (!$scope.forceWorkspace && workspace.key !== $scope.wskey) {
-                    $scope.wskey = workspace.key;
-                    $scope.wsName = workspace.name;
-                    $scope.root = 'head';
-                    $scope.browseTo('/');
+                    initWorkspaceVariables(workspace);
+                    getParentData(false);
                 }
             };
 
             $scope.isActiveWorkspace = function (workspace) {
                 return $scope.wskey === workspace.key ? 'active' : '';
+            };
+
+            $scope.changeRoot = function (snapshot) {
+                initWorkspaceVariables(undefined, snapshot.name);
+                getParentData(false);
             };
 
             // *********************** //
@@ -816,29 +824,37 @@ angular.module('ortolangMarketApp')
                 $scope.newCollectionDescription = undefined;
             }
 
+            function initWorkspaceVariables(workspace, root) {
+                if (workspace) {
+                    $scope.workspace = workspace;
+                }
+                $scope.wskey = $scope.workspace.key;
+                $scope.wsName = $scope.workspace.name;
+                $scope.root = root ? root : 'head';
+                $scope.isHead = $scope.root === 'head';
+                $scope.path = '/';
+                console.debug($scope.workspace);
+            }
+
             function init() {
                 console.debug('init browser');
                 initLocalVariables();
                 initScopeVariables();
                 if ($scope.wskey) {
                     getParentData(false);
-                    populateBreadcrumbDropdownMenu();
                 } else {
                     $scope.wsList.$promise.then(function (data) {
                         if ($scope.forceWorkspace) {
-                            if ($filter('filter')(data.entries, {key: $scope.forceWorkspace}, true).length !== 1) {
+                            $scope.workspace = $filter('filter')(data.entries, {key: $scope.forceWorkspace}, true);
+                            if ($scope.workspace.length !== 1) {
                                 console.error('No workspace with key "' + $scope.forceWorkspace + '" available');
                                 return;
                             }
-                            $scope.wskey = $scope.forceWorkspace;
                         } else {
-                            $scope.wskey = data.entries[0].key;
-                            $scope.wsName = data.entries[0].name;
+                            $scope.workspace = data.entries[0];
                         }
-                        $scope.root = 'head';
-                        $scope.path = '/';
+                        initWorkspaceVariables();
                         getParentData(false);
-                        populateBreadcrumbDropdownMenu();
                     });
                 }
             }

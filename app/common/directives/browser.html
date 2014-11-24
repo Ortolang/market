@@ -9,7 +9,7 @@
             <div ng-class="displayAsideWorkspaceList() ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
                 <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
                     <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseTo('/')">
-                        <span ng-class="icons.browser.home"></span>{{wsName}}
+                        <span ng-class="icons.browser.home"></span>{{wsName}} {{root !== 'head' ? ' (' + root + ')' : ''}}
                     </button>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default">
@@ -66,7 +66,7 @@
                             </ul>
                         </div>
                         <div id="filter-query-wrapper" class="btn-group">
-                            <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Filter" bs-tooltip>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Filter" bs-tooltip>
                                 <span ng-class="icons.browser.search"></span>
                             </button>
                             <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
@@ -90,17 +90,31 @@
                         </button>
                     </div>
 
-                    <div ng-if="browserService.canAdd" class="btn-group">
-                        <button class="btn btn-default" ng-click="publishWorkspace()" data-title="Publish workspace" bs-tooltip>
+                    <div class="btn-group">
+                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="publishWorkspace()" data-title="Publish workspace" bs-tooltip>
                             <span ng-class="icons.browser.publish"></span>
                         </button>
+                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Versions" bs-tooltip>
+                            <span ng-class="icons.browser.history"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right snapshots" role="menu">
+                            <li ng-click="changeRoot('head')" ng-class="{active: root === 'head'}">
+                                <div>Head</div>
+                            </li>
+                            <li ng-if="workspace.snapshots.length !== 0" class="divider"></li>
+                            <li ng-repeat="snapshot in workspace.snapshots"
+                                ng-class="{active: root === snapshot.name}"
+                                ng-click="changeRoot(snapshot)">
+                                <div>{{snapshot.name}}</div>
+                            </li>
+                        </ul>
                     </div>
 
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
                         <a ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="Download" bs-tooltip>
                             <span ng-class="icons.browser.download"></span>
                         </a>
-                        <button ng-if="browserService.canDelete" class="btn btn-default" ng-click="clickDelete()" data-title="Delete" bs-tooltip>
+                        <button ng-if="browserService.canDelete && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="Delete" bs-tooltip>
                             <span ng-class="icons.browser.delete"></span>
                         </button>
                     </div>
@@ -126,7 +140,7 @@
 
     <div class="row">
         <div ng-if="displayAsideWorkspaceList()" class="col-md-2 browser-aside browser-aside-left">
-            <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
+            <div ng-if="browserService.canAdd && isHead" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                     New
                 </button>
@@ -146,13 +160,13 @@
             </section>
         </div>
 
-        <div ng-if="browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
+        <div ng-if="browserService.canAdd && isHead" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
             <div ng-include="'common/directives/browser-line-template.html'"></div>
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
             <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{ortolangType: 'object'}">
         </div>
 
-        <div ng-if="!browserService.canAdd" ng-click="checkSelection($event)" ng-class="middleCssClass()">
+        <div ng-if="!browserService.canAdd || !isHead" ng-click="checkSelection($event)" ng-class="middleCssClass()">
             <div ng-include="'common/directives/browser-line-template.html'"></div>
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
         </div>
@@ -194,6 +208,8 @@
                             <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
                             <dt>Clock</dt>
                             <dd>{{selectedElements[0].clock}}</dd>
+                            <dt>Key</dt>
+                            <dd>{{selectedElements[0].key}}</dd>
                             <dt ng-if="selectedElements[0].type === 'collection'">Size</dt>
                             <dd ng-if="selectedElements[0].type === 'collection'">{{selectedElements[0].elements.length}} element{{selectedElements[0].elements.length > 1 ? 's' : ''}}</dd>
                             <dt ng-if="selectedElements[0].type === 'object'">Size</dt>
@@ -221,7 +237,7 @@
 
     <div ng-include="'common/visualizers/visualizer-template.html'"></div>
 
-    <div ng-if="browserService.canAdd" class="modal fade" id="new-collection-modal" tabindex="-1" role="dialog" aria-labelledby="new-collection-modal-label" aria-hidden="true">
+    <div ng-if="browserService.canAdd && isHead" class="modal fade" id="new-collection-modal" tabindex="-1" role="dialog" aria-labelledby="new-collection-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -252,7 +268,7 @@
         </div>
     </div>
 
-    <div ng-if="browserService.canAdd" class="modal fade" id="create-workspace-modal" tabindex="-1" role="dialog" aria-labelledby="create-workspace-modal-label" aria-hidden="true">
+    <div ng-if="browserService.canAdd && isHead" class="modal fade" id="create-workspace-modal" tabindex="-1" role="dialog" aria-labelledby="create-workspace-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -284,5 +300,5 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <div ng-if="browserService.canAdd" id="upload-queue" ng-class="uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
+    <div ng-if="browserService.canAdd && isHead" id="upload-queue" ng-class="uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
 </div>
