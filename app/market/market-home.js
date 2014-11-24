@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
         function loadObjects() {
             // Loads all objects
-            ObjectResource.get({}).$promise.then(function (oobjects) {
+            ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(function (oobjects) {
                 
                 angular.forEach(oobjects.entries, function (entry) {
                     
