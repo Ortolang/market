@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
             canAdd: false,
             canDownload: false,
             canPreview: false,
+            canChangeRoot: true,
             hasBreadcrumb: true,
             defaultViewMode: 'line',
             canSwitchViewMode: false,

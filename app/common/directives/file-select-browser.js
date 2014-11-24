@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             scope: {
                 forceMimeTypes: '=',
                 forceWorkspace: '=',
+                forceHead: '=',
                 fileSelectId: '='
             },
             templateUrl: 'common/directives/browser.html',

@@ -114,27 +114,30 @@ angular.module('ortolangMarketApp')
                 });
             }
 
+            function finishGetParentData(element, refresh, forceNewSelection) {
+                $scope.parent = $scope.browserService.getDataResource === 'object' ? element.object : element;
+                // If we just refreshed the data no need to build the breadcrumb again
+                if (!refresh) {
+                    buildBreadcrumb();
+                    populateBreadcrumbDropdownMenu();
+                }
+                if (!refresh || forceNewSelection) {
+                    newSelectedElement($scope.parent);
+                }
+                $scope.resizeBrowser();
+                clearPreviousFilteringQueries();
+                angular.forEach($scope.parent.elements, function (value) {
+                    if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
+                        $scope.allChildrenMimeTypes.push(value.mimeType);
+                    }
+                });
+            }
+
             function getParentData(refresh, forceNewSelection) {
                 console.log('getParentData / refresh :', refresh);
                 $scope.browserService.getData({oKey: $scope.itemKey, wskey: $scope.wskey, path: $scope.path, root: $scope.root})
                     .$promise.then(function (element) {
-                        console.log('getParentData success', element);
-                        $scope.parent = $scope.browserService.getDataResource === 'object' ? element.object : element;
-                        // If we just refreshed the data no need to build the breadcrumb again
-                        if (!refresh) {
-                            buildBreadcrumb();
-                            populateBreadcrumbDropdownMenu();
-                        }
-                        if (!refresh || forceNewSelection) {
-                            newSelectedElement($scope.parent);
-                        }
-                        $scope.resizeBrowser();
-                        clearPreviousFilteringQueries();
-                        angular.forEach($scope.parent.elements, function (value) {
-                            if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
-                                $scope.allChildrenMimeTypes.push(value.mimeType);
-                            }
-                        });
+                        finishGetParentData(element, refresh, forceNewSelection);
                     });
             }
 
@@ -466,7 +469,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.browseTo = function (path) {
+            $scope.browseToPath = function (path) {
                 if (!browseUsingLocation || $scope.browserService.isFileSelect) {
                     $scope.path = path;
                     getParentData(false);
@@ -476,8 +479,8 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.browseToChild = function (child) {
-                if (!browseUsingLocation || $scope.browserService.isFileSelect) {
-                    $scope.browseTo($scope.parent.path + '/' + child.name);
+                if ($scope.browserService.getDataResource !== 'object' && (!browseUsingLocation || $scope.browserService.isFileSelect)) {
+                    $scope.browseToPath($scope.parent.path + '/' + child.name);
                 } else {
                     $location.path($scope.browserService.buildChildBrowseUrl(child, $scope.parent, $scope.root));
                 }
@@ -536,8 +539,19 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.changeRoot = function (snapshot) {
-                initWorkspaceVariables(undefined, snapshot.name);
-                getParentData(false);
+                if ($scope.path === '/') {
+                    initWorkspaceVariables(undefined, snapshot.name);
+                    getParentData(false);
+                } else {
+                    $scope.browserService.getData({wskey: $scope.wskey, root: snapshot.name, path: $scope.path})
+                        .$promise.then(function (element) {
+                            initWorkspaceVariables(undefined, snapshot.name, $scope.path);
+                            finishGetParentData(element);
+                        }, function () {
+                            initWorkspaceVariables(undefined, snapshot.name);
+                            getParentData(false);
+                        });
+                }
             };
 
             // *********************** //
@@ -824,15 +838,15 @@ angular.module('ortolangMarketApp')
                 $scope.newCollectionDescription = undefined;
             }
 
-            function initWorkspaceVariables(workspace, root) {
+            function initWorkspaceVariables(workspace, root, path) {
                 if (workspace) {
                     $scope.workspace = workspace;
                 }
                 $scope.wskey = $scope.workspace.key;
                 $scope.wsName = $scope.workspace.name;
-                $scope.root = root ? root : 'head';
+                $scope.root = root || 'head';
                 $scope.isHead = $scope.root === 'head';
-                $scope.path = '/';
+                $scope.path = path || '/';
                 console.debug($scope.workspace);
             }
 
@@ -840,7 +854,7 @@ angular.module('ortolangMarketApp')
                 console.debug('init browser');
                 initLocalVariables();
                 initScopeVariables();
-                if ($scope.wskey) {
+                if ($scope.wskey || $scope.itemKey) {
                     getParentData(false);
                 } else {
                     $scope.wsList.$promise.then(function (data) {

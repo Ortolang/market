@@ -8,7 +8,7 @@
 
             <div ng-class="displayAsideWorkspaceList() ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
                 <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
-                    <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseTo('/')">
+                    <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseToPath('/')">
                         <span ng-class="icons.browser.home"></span>{{wsName}}
                         <span ng-show="root !== 'head'" class="root">{{root}}</span>
                     </button>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div ng-repeat="part in breadcrumbParts" class="breadcrumb-part">
-                        <a ng-if="!$last" ng-click="browseTo(part)" class="btn btn-default">
+                        <a ng-if="!$last" ng-click="browseToPath(part)" class="btn btn-default">
                             {{parent.pathParts[$index]}}
                         </a>
                         <div class="btn-group" ng-if="$last && breadcrumbDropdownItems.length === 0">
@@ -97,10 +97,10 @@
                         <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="publishWorkspace()" data-title="Publish workspace" bs-tooltip>
                             <span ng-class="icons.browser.publish"></span>
                         </button>
-                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Versions" bs-tooltip>
+                        <button ng-if="browserService.canChangeRoot && !forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Versions" bs-tooltip>
                             <span ng-class="icons.browser.history"></span>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-right snapshots" role="menu">
+                        <ul ng-if="browserService.canChangeRoot && !forceHead" class="dropdown-menu dropdown-menu-right snapshots" role="menu">
                             <li ng-click="changeRoot('head')" ng-class="{active: root === 'head'}">
                                 <div>Head</div>
                             </li>
