@@ -39,7 +39,7 @@ describe('Controller: MarketHomeCtrl', function () {
 
     it('should load objects', function() {
 
-      ObjectResource.when({}, {entries: [sample().rootCollectionKey]});
+      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().rootCollectionKey]});
       ObjectResource.when({oKey: sample().rootCollectionKey}, sample().oobjectSample);
 
       controllerCreator();
@@ -54,7 +54,7 @@ describe('Controller: MarketHomeCtrl', function () {
 
     it('should load object not root', function() {
 
-      ObjectResource.when({}, {entries: [sample().collectionKey]});
+      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().collectionKey]});
       ObjectResource.when({oKey: sample().collectionKey}, sample().oobjectNotRootSample);
 
       controllerCreator();
@@ -67,7 +67,7 @@ describe('Controller: MarketHomeCtrl', function () {
 
     it('should load object without metadata', function() {
 
-      ObjectResource.when({}, {entries: [sample().rootCollectionWithoutMetaKey]});
+      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().rootCollectionWithoutMetaKey]});
       ObjectResource.when({oKey: sample().rootCollectionWithoutMetaKey}, sample().oobjectWithoutMetaSample);
 
       controllerCreator();
@@ -82,7 +82,7 @@ describe('Controller: MarketHomeCtrl', function () {
 
       spyOn(console, 'error');
 
-      ObjectResource.when({}, {entries: [sample().rootCollectionWithOtherMetaKey]});
+      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().rootCollectionWithOtherMetaKey]});
       ObjectResource.when({oKey: sample().rootCollectionWithOtherMetaKey}, sample().oobjectWithOtherMetaSample);
 
       controllerCreator();
@@ -98,7 +98,7 @@ describe('Controller: MarketHomeCtrl', function () {
 
       spyOn(console, 'error');
 
-      ObjectResource.when({}, {entries: [sample().unknowObjectKey]});
+      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().unknowObjectKey]});
 
       controllerCreator();
 
