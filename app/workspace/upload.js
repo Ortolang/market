@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
                     filters: [{
                         name: 'noFolder',
                         fn: function (item) {
-                            return item.type.length !== 0;
+                            return item.type.length !== 0 || item.name.indexOf('.') !== -1;
                         }
                     }]
                 });
@@ -63,8 +63,13 @@ angular.module('ortolangMarketApp')
                 fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 if (fileItem.ortolangType === 'object') {
-                    fileItem.file.path = angular.copy($scope.parent.path);
-                    fileItem.formData.push({path: fileItem.file.path + '/' + fileItem.file.name});
+                    fileItem.file.path = angular.copy($scope.parent.path) + '/';
+                    if (fileItem._file.webkitRelativePath) {
+                        fileItem.formData.push({path: fileItem.file.path + fileItem._file.webkitRelativePath});
+                        fileItem.file.path += fileItem._file.webkitRelativePath.replace(fileItem.file.name, '');
+                    } else {
+                        fileItem.formData.push({path: fileItem.file.path + fileItem.file.name});
+                    }
                 } else if (fileItem.ortolangType === 'metadata') {
                     fileItem.file.path = angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
                     fileItem.formData.push({path: fileItem.file.path});
