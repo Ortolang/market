@@ -379,7 +379,7 @@ angular.module('ortolangMarketApp')
             };
 
             $rootScope.$on('uploaderCompleteItemUpload', function () {
-                getParentData(true);
+                getParentData(true, $scope.isOnlySelectedElementParent());
             });
 
             // *********************** //
@@ -845,11 +845,12 @@ angular.module('ortolangMarketApp')
                 } else {
                     $scope.wsList.$promise.then(function (data) {
                         if ($scope.forceWorkspace) {
-                            $scope.workspace = $filter('filter')(data.entries, {key: $scope.forceWorkspace}, true);
-                            if ($scope.workspace.length !== 1) {
+                             var filteredWorkspace = $filter('filter')(data.entries, {key: $scope.forceWorkspace}, true);
+                            if (filteredWorkspace.length !== 1) {
                                 console.error('No workspace with key "' + $scope.forceWorkspace + '" available');
                                 return;
                             }
+                            $scope.workspace = filteredWorkspace[0];
                         } else {
                             $scope.workspace = data.entries[0];
                         }
