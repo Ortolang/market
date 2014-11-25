@@ -26,7 +26,8 @@ angular
         'hljs',
         'cfp.hotkeys',
         'formly',
-        'ui.bootstrap.showErrors'
+        'ui.bootstrap.showErrors',
+        'pascalprecht.translate'
     ])
     .config(function ($routeProvider) {
         $routeProvider

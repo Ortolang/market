@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
         '$compile',
         '$filter',
         '$window',
+        '$translate',
         'hotkeys',
         'WorkspaceResource',
         'RuntimeResource',
@@ -26,7 +27,7 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, hotkeys, WorkspaceResource, RuntimeResource, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, $translate, hotkeys, WorkspaceResource, RuntimeResource, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             // *********************** //
             //        Breadcrumb       //
@@ -35,9 +36,10 @@ angular.module('ortolangMarketApp')
             function populateBreadcrumbDropdownMenu() {
                 $scope.breadcrumbDropdownItems = [];
                 if ($scope.browserService.canAdd && $scope.isHead) {
-                    $scope.breadcrumbDropdownItems.push({text: 'New Collection', icon: icons.browser.plus, action: 'newCollection'});
+                    $scope.breadcrumbDropdownItems.push({text: $scope.translationsNewCollection, icon: icons.browser.plus, action: 'newCollection'});
                     $scope.breadcrumbDropdownItems.push({divider: true});
-                    $scope.breadcrumbDropdownItems.push({text: 'Import files', icon: icons.browser.upload, action: 'uploadFiles'});
+                    $scope.breadcrumbDropdownItems.push({text: $scope.translationsUploadFiles, icon: icons.browser.upload, action: 'uploadFiles'});
+                    $scope.breadcrumbDropdownItems.push({text: $scope.translationsUploadFolder, icon: icons.browser.upload, action: 'uploadFolder'});
                 }
             }
 
@@ -85,18 +87,18 @@ angular.module('ortolangMarketApp')
                     }
                     clearContextMenuItems();
                     if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
-                        $scope.contextMenuItems.push({text: 'New Collection', icon: icons.browser.plus, action: 'newCollection'});
+                        $scope.contextMenuItems.push({text: $scope.translationsNewCollection, icon: icons.browser.plus, action: 'newCollection'});
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.browserService.canPreview && $scope.visualizers) {
-                        $scope.contextMenuItems.push({text: 'Preview', icon: icons.browser.preview, action: 'preview'});
+                        $scope.contextMenuItems.push({text: $scope.translationsPreview, icon: icons.browser.preview, action: 'preview'});
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
-                        $scope.contextMenuItems.push({text: 'Download', icon: icons.browser.download, href: $scope.selectedElements[0].downloadUrl});
+                        $scope.contextMenuItems.push({text: $scope.translationsDownload, icon: icons.browser.download, href: $scope.selectedElements[0].downloadUrl});
                     }
                     if ($scope.browserService.canDelete && $scope.isHead) {
-                        $scope.contextMenuItems.push({text: 'Delete', icon: icons.browser.delete, action: 'delete'});
+                        $scope.contextMenuItems.push({text: $scope.translationsDelete, icon: icons.browser.delete, action: 'delete'});
                     }
                     activateContextMenu();
                 } else {
@@ -415,6 +417,9 @@ angular.module('ortolangMarketApp')
                 case 'uploadFiles':
                     angular.element('#object-upload-file-select').click();
                     break;
+                case 'uploadFolder':
+                    angular.element('#object-upload-folder-select').click();
+                    break;
                 default:
                     break;
                 }
@@ -446,7 +451,7 @@ angular.module('ortolangMarketApp')
 
             function finishPreview(visualizer) {
                 var isolatedScope = $rootScope.$new();
-                if ($scope.children && $scope.children.length !==0) {
+                if ($scope.children && $scope.children.length !== 0) {
                     isolatedScope.elements = $scope.children;
                 } else {
                     isolatedScope.elements = $scope.selectedElements;
@@ -520,6 +525,10 @@ angular.module('ortolangMarketApp')
                     });
                     $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy(), $scope.fileSelectId);
                 }
+            });
+
+            $rootScope.$on('$translateChangeSuccess', function () {
+                initTranslations();
             });
 
             $rootScope.$on('browserAskChangeWorkspace', function ($event, workspace) {
@@ -789,8 +798,8 @@ angular.module('ortolangMarketApp')
                 previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren;
 
             function initLocalVariables() {
-                viewModeLine = {id: 'line', name: 'Mode line', icon: icons.browser.viewModeLine};
-                viewModeTile = {id: 'tile', name: 'Mode tile', icon: icons.browser.viewModeTile};
+                viewModeLine = {id: 'line', icon: icons.browser.viewModeLine};
+                viewModeTile = {id: 'tile', icon: icons.browser.viewModeTile};
                 browseUsingLocation = false;
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
@@ -838,6 +847,28 @@ angular.module('ortolangMarketApp')
                 $scope.newCollectionDescription = undefined;
             }
 
+            function initTranslations() {
+                return $translate([
+                    'BROWSER.VIEW_MODE_LINE',
+                    'BROWSER.VIEW_MODE_TILE',
+                    'BROWSER.NEW_COLLECTION',
+                    'BROWSER.PREVIEW',
+                    'BROWSER.DELETE',
+                    'BROWSER.DOWNLOAD',
+                    'BROWSER.UPLOAD_FILES',
+                    'BROWSER.UPLOAD_FOLDER'
+                ]).then(function (translations) {
+                    $scope.translationsNewCollection = translations['BROWSER.NEW_COLLECTION'];
+                    $scope.translationsPreview = translations['BROWSER.PREVIEW'];
+                    $scope.translationsDelete = translations['BROWSER.DELETE'];
+                    $scope.translationsDownload = translations['BROWSER.DOWNLOAD'];
+                    $scope.translationsUploadFiles = translations['BROWSER.UPLOAD_FILES'];
+                    $scope.translationsUploadFolder = translations['BROWSER.UPLOAD_FOLDER'];
+                    viewModeLine.name = translations['BROWSER.VIEW_MODE_LINE'];
+                    viewModeTile.name = translations['BROWSER.VIEW_MODE_TILE'];
+                });
+            }
+
             function initWorkspaceVariables(workspace, root, path) {
                 if (workspace) {
                     $scope.workspace = workspace;
@@ -852,6 +883,7 @@ angular.module('ortolangMarketApp')
 
             function init() {
                 console.debug('init browser');
+                initTranslations();
                 initLocalVariables();
                 initScopeVariables();
                 if ($scope.wskey || $scope.itemKey) {

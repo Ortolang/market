@@ -3,7 +3,7 @@
     <div class="row">
         <div id="browser-toolbar" ng-click="checkSelection($event)">
             <div ng-if="displayAsideWorkspaceList()" class="col-md-2 toolbar-aside">
-                <div class="btn title">My workspaces</div>
+                <div class="btn title" translate="BROWSER.MY_WORKSPACES"></div>
             </div>
 
             <div ng-class="displayAsideWorkspaceList() ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
@@ -50,37 +50,37 @@
                     </div>
                 </div>
                 <div ng-if="!browserService.hasBreadcrumb" class="browser-breadcrumb">
-                    <button class="btn btn-default" onclick="window.history.back()" data-title="Back" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
-                    <button class="btn btn-default" onclick="window.history.forward()" data-title="Forward" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
+                    <button class="btn btn-default" onclick="window.history.back()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
+                    <button class="btn btn-default" onclick="window.history.forward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
                     <button class="btn btn-default" disabled>{{parent.name}}</button>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
                     <div class="btn-group">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Sort&nbsp;by" bs-tooltip>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" bs-tooltip>
                                 <span ng-class="icons.browser.sort"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li><div ng-click="order('name', false)">Name</div></li>
-                                <li><div ng-click="order(['type','name'], false)">Ortolang Type</div></li>
-                                <li><div ng-click="order('mimeType', false)">Mime Type</div></li>
-                                <li><div ng-click="order('modification', false)">Date</div></li>
+                                <li><div ng-click="order('name', false)" translate="NAME"></div></li>
+                                <li><div ng-click="order(['type','name'], false)" translate="BROWSER.SORT.TYPE_NAME"></div></li>
+                                <li><div ng-click="order('mimeType', false)" translate="BROWSER.SORT.MIME_TYPE"></div></li>
+                                <li><div ng-click="order('modification', false)" translate="BROWSER.SORT.DATE"></div></li>
                             </ul>
                         </div>
                         <div id="filter-query-wrapper" class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Filter" bs-tooltip>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.FILTER' | translate}}" bs-tooltip>
                                 <span ng-class="icons.browser.search"></span>
                             </button>
                             <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
                                 <div class="form-group has-feedback">
-                                    <label class="control-label" for="filter-input">Name</label>
-                                    <input id="filter-input" ng-model="filterNameQuery" class="form-control" placeholder="Name" type="text">
+                                    <label class="control-label" for="filter-input" translate="NAME"></label>
+                                    <input id="filter-input" ng-model="filterNameQuery" class="form-control" placeholder="{{'NAME' | translate}}" type="text">
                                     <span ng-show="filterNameQuery" ng-click="filterNameQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                                 </div>
                                 <div ng-if="!forceMimeTypes" class="has-feedback">
-                                    <label class="control-label" for="filter-mime-type-input">Mime Type</label>
-                                    <input id="filter-mime-type-input" ng-model="$parent.filterMimeTypeQuery" class="form-control" placeholder="Mime Type" type="text" ng-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
+                                    <label class="control-label" for="filter-mime-type-input" translate="BROWSER.FILTER.MIME_TYPE"></label>
+                                    <input id="filter-mime-type-input" ng-model="$parent.filterMimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" ng-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
                                     <span ng-show="$parent.filterMimeTypeQuery" ng-click="$parent.filterMimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                                 </div>
                             </div>
@@ -94,10 +94,10 @@
                     </div>
 
                     <div class="btn-group">
-                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="publishWorkspace()" data-title="Publish workspace" bs-tooltip>
+                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="publishWorkspace()" data-title="{{'BROWSER.PUBLISH' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.publish"></span>
                         </button>
-                        <button ng-if="browserService.canChangeRoot && !forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="Versions" bs-tooltip>
+                        <button ng-if="browserService.canChangeRoot && !forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSION' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.history"></span>
                         </button>
                         <ul ng-if="browserService.canChangeRoot && !forceHead" class="dropdown-menu dropdown-menu-right snapshots" role="menu">
@@ -114,21 +114,21 @@
                     </div>
 
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
-                        <a ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="Download" bs-tooltip>
+                        <a ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="{{'BROWSER.DOWNLOAD' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.download"></span>
                         </a>
-                        <button ng-if="browserService.canDelete && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="Delete" bs-tooltip>
+                        <button ng-if="browserService.canDelete && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="{{'BROWSER.DELETE' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.delete"></span>
                         </button>
                     </div>
 
                     <div ng-if="browserService.canPreview" ng-show="visualizers" class="btn-group">
-                        <button class="btn btn-default" ng-click="clickPreview()" data-title="Preview" bs-tooltip>
+                        <button class="btn btn-default" ng-click="clickPreview()" data-title="{{'BROWSER.PREVIEW' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.preview"></span>
                         </button>
                         <button ng-if="visualizers.length > 1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
+                            <span class="sr-only" translate="BROWSER.TOGGLE_DROPDOWN"></span>
                         </button>
                         <ul ng-if="visualizers.length > 1" class="dropdown-menu" role="menu">
                             <li ng-repeat-start="visualizer in visualizers"><div ng-click="clickPreview(visualizer)">{{visualizer.getName()}}</div></li>
@@ -144,19 +144,16 @@
     <div class="row">
         <div ng-if="displayAsideWorkspaceList()" class="col-md-2 browser-aside browser-aside-left">
             <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-                    New
-                </button>
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
                 <ul class="dropdown-menu" role="menu">
-                    <!--<li><div data-toggle="modal" data-target="#new-collection-modal">Collection</div></li>-->
+                    <!--<li><div data-toggle="modal" data-target="#new-collection-modal" translate="BROWSER.COLLECTION"></div></li>-->
                     <!--<li class="divider"></li>-->
                     <!--<li><div ng-click="doAction('uploadFiles')">Import Files</div></li>-->
                     <!--<li class="divider"></li>-->
-                    <li><div data-toggle="modal" data-target="#create-workspace-modal">Workspace</div></li>
+                    <li><div data-toggle="modal" data-target="#create-workspace-modal" translate="BROWSER.WORKSPACE"></div></li>
                 </ul>
             </div>
             <section id="my-workspaces">
-                <!--<h5>My workspaces</h5>-->
                 <ul class="list-unstyled">
                     <li ng-repeat="ws in wsList.entries" ng-click="changeWorkspace(ws)" ng-class="isActiveWorkspace(ws)"><span></span>{{ws.name}}</li>
                 </ul>
@@ -166,7 +163,8 @@
         <div ng-if="browserService.canAdd && isHead" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
             <div ng-include="'common/directives/browser-line-template.html'"></div>
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
-            <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" webkitdirectory ng-hide="true" options="{ortolangType: 'object'}">
+            <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{ortolangType: 'object'}">
+            <input id="object-upload-folder-select" type="file" nv-file-select="" uploader="uploader" multiple="" webkitdirectory ng-hide="true" options="{ortolangType: 'object'}">
         </div>
 
         <div ng-if="!browserService.canAdd || !isHead" ng-click="checkSelection($event)" ng-class="middleCssClass()">
@@ -189,44 +187,44 @@
                 <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span> {{selectedElements[0].name}}
             </p>
             <p ng-if="!hasOnlyOneElementSelected()" class="lead">
-                <span ng-class="icons.files"></span> {{selectedElements.length}} elements
+                <span ng-class="icons.files"></span> {{'BROWSER.ELEMENT' | translate:'{value: selectedElements.length}'}}
             </p>
 
 
             <div id="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
-                <div data-title="Informations" bs-pane>
+                <div data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
                     <div id="information">
                         <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
-                            <dt>Name</dt>
+                            <dt translate="NAME"></dt>
                             <dd>{{selectedElements[0].name}}</dd>
-                            <dt>Description</dt>
+                            <dt translate="BROWSER.DESCRIPTION"></dt>
                             <dd>{{selectedElements[0].description}}</dd>
-                            <dt>Author</dt>
+                            <dt translate="BROWSER.AUTHOR"></dt>
                             <dd>{{selectedElements[0].author}}</dd>
-                            <dt>Type</dt>
+                            <dt translate="TYPE"></dt>
                             <dd>{{selectedElements[0].mimeType | contentType}}</dd>
-                            <dt>Created</dt>
+                            <dt translate="BROWSER.CREATION"></dt>
                             <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
-                            <dt>Modified</dt>
+                            <dt translate="BROWSER.MODIFICATION"></dt>
                             <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
-                            <dt>Clock</dt>
+                            <dt translate="BROWSER.CLOCK"></dt>
                             <dd>{{selectedElements[0].clock}}</dd>
-                            <dt>Key</dt>
+                            <dt translate="BROWSER.KEY"></dt>
                             <dd>{{selectedElements[0].key}}</dd>
-                            <dt ng-if="selectedElements[0].type === 'collection'">Size</dt>
-                            <dd ng-if="selectedElements[0].type === 'collection'">{{selectedElements[0].elements.length}} element{{selectedElements[0].elements.length > 1 ? 's' : ''}}</dd>
-                            <dt ng-if="selectedElements[0].type === 'object'">Size</dt>
+                            <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
+                            <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></dd>
+                            <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>
                             <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
                         </dl>
 
                         <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
-                            <dt>Size</dt>
+                            <dt translate="SIZE"></dt>
                             <dd>{{selectedElementsSize() | bytes}}</dd>
                         </dl>
                     </div>
                 </div>
 
-                <div data-title="Métadonnées" bs-pane>
+                <div data-title="{{'BROWSER.METADATA' | translate}}" bs-pane>
                     <div ng-include="'workspace/browser-sidebar-metadata.html'" ng-controller="BrowserSidebarMetadataCtrl"></div>
                 </div>
             </div>
@@ -244,28 +242,28 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="new-collection-modal-label">New collection</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only" translate="CLOSE"></span></button>
+                    <h4 class="modal-title" id="new-collection-modal-label" translate="BROWSER.NEW_COLLECTION"></h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label for="new-collection-name" class="col-sm-2 control-label">Name</label>
+                            <label for="new-collection-name" class="col-sm-2 control-label" translate="NAME"></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="new-collection-name" placeholder="Name" ng-model="$parent.newCollectionName">
+                                <input type="text" class="form-control" id="new-collection-name" placeholder="{{'NAME' | translate}}" ng-model="$parent.newCollectionName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="new-collection-description" class="col-sm-2 control-label">Description</label>
+                            <label for="new-collection-description" class="col-sm-2 control-label" translate="DESCRIPTION"></label>
                             <div class="col-sm-10">
-                                <textarea id="new-collection-description" class="form-control" rows="3" placeholder="Description (optional)" ng-model="$parent.newCollectionDescription"></textarea>
+                                <textarea id="new-collection-description" class="form-control" rows="3" placeholder="{{'DESCRIPTION' | translate}}" ng-model="$parent.newCollectionDescription"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary add-collection" ng-click="addCollection()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
+                    <button type="button" class="btn btn-primary add-collection" ng-click="addCollection()" translate="ADD"></button>
                 </div>
             </div>
         </div>
@@ -276,27 +274,27 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="create-workspace-modal-label">Créer un espace de travail</h4>
+                    <h4 class="modal-title" id="create-workspace-modal-label" translate="BROWSER.CREATE_WORKSPACE"></h4>
                 </div>
                 <div class="modal-body">
                     <form role="form" id="create-workspace-form" class="form-horizontal">
                         <div class="form-group">
-                            <label for="new-workspace-name" class="col-sm-2 control-label">Nom</label>
+                            <label for="new-workspace-name" class="col-sm-2 control-label" translate="NAME"></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" placeholder="Nom de l'espace de travail" ng-model="$parent.newWorkspaceName">
+                                <input type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" placeholder="{{'NAME' | translate}}" ng-model="$parent.newWorkspaceName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="new-workspace-type" class="col-sm-2 control-label">Type</label>
+                            <label for="new-workspace-type" class="col-sm-2 control-label" translate="TYPE"></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="new-workspace-type" name="new-workspace-type" placeholder="Type" ng-model="$parent.newWorkspaceType">
+                                <input type="text" class="form-control" id="new-workspace-type" name="new-workspace-type" placeholder="{{'TYPE' | translate}}" ng-model="$parent.newWorkspaceType">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="createWorkspace()">Créer</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" ng-click="createWorkspace()" translate="CREATE"></button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
                 </div>
 
             </div><!-- /.modal-content -->

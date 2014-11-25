@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
 
         $scope.hasProcessesOfType = function (type) {
             if ($scope.processes && $scope.states[type]) {
-                return ($filter('filter')($scope.processes.entries, $scope.states[type])).length > 0;
+                return ($filter('filter')($scope.processes.entries, {state: $scope.states[type]})).length > 0;
             }
             return false;
         };

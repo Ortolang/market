@@ -1,21 +1,21 @@
 <div ng-controller="UploadCtrl" class="container-fluid" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
 
     <div class="modal-header">
-        <button type="button" class="close" ng-click="toggleUploadQueueStatus()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4>Upload queue</h4>
+        <button type="button" class="close" ng-click="toggleUploadQueueStatus()"><span aria-hidden="true">&times;</span><span class="sr-only" translate="CLOSE"></span></button>
+        <h4 translate="WORKSPACE.UPLOAD_QUEUE"></h4>
     </div>
 
     <div class="table-wrapper upload-elements-wrapper">
         <table class="table table-responsive table-condensed">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Workspace</th>
-                <th>Path</th>
-                <th ng-show="uploader.isHTML5">Size</th>
-                <th ng-show="uploader.isHTML5">Progress</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th translate="NAME"></th>
+                <th translate="WORKSPACE"></th>
+                <th translate="WORKSPACE.PATH">Path</th>
+                <th ng-show="uploader.isHTML5" translate="SIZE"></th>
+                <th ng-show="uploader.isHTML5" translate="WORKSPACE.PROGRESS"></th>
+                <th translate="WORKSPACE.STATUS"></th>
+                <th translate="ACTIONS"></th>
             </tr>
             </thead>
             <tbody>
@@ -37,13 +37,13 @@
                 </td>
                 <td nowrap>
                     <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                        <span class="glyphicon glyphicon-upload"></span> Upload
+                        <span class="glyphicon glyphicon-upload"></span> {{'WORKSPACE.UPLOAD' | translate}}
                     </button>
                     <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                        <span class="glyphicon glyphicon-ban-circle"></span> {{'CANCEL' | translate}}
                     </button>
                     <button type="button" class="btn btn-danger btn-xs" ng-click="clearItem(item)">
-                        <span class="glyphicon glyphicon-trash"></span> Clear
+                        <span class="glyphicon glyphicon-trash"></span> {{'WORKSPACE.CLEAR' | translate}}
                     </button>
                 </td>
             </tr>
@@ -52,20 +52,14 @@
     </div>
 
     <div class="modal-footer">
-        <!--<div>-->
-        <!--Queue progress:-->
-        <!--<div class="progress" style="">-->
-        <!--<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }" style="width: 0%;"></div>-->
-        <!--</div>-->
-        <!--</div>-->
         <button type="button" class="btn btn-success btn-sm" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">
-            <span class="glyphicon glyphicon-upload"></span> Upload all
+            <span class="glyphicon glyphicon-upload"></span> {{'WORKSPACE.UPLOAD_ALL' | translate}}
         </button>
         <button type="button" class="btn btn-warning btn-sm" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading" disabled="disabled">
-            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+            <span class="glyphicon glyphicon-ban-circle"></span> {{'WORKSPACE.CANCEL_ALL' | translate}}
         </button>
         <button type="button" class="btn btn-danger btn-sm" ng-click="clearUploaderQueue()" ng-disabled="!uploader.queue.length" disabled="disabled">
-            <span class="glyphicon glyphicon-trash"></span> Clear all
+            <span class="glyphicon glyphicon-trash"></span> {{'WORKSPACE.CLEAR_ALL' | translate}}
         </button>
     </div>
 

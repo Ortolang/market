@@ -14,15 +14,17 @@
 
     <!-- when user is logged -->
     <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="authenticated" ng-cloak>
+        <li ng-click="changeLanguage('fr')" ng-if="currentLanguage !== 'fr'" class="language">FR</li>
+        <li ng-click="changeLanguage('en')" ng-if="currentLanguage !== 'en'" class="language">EN</li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user fa-fw"></i> {{currentUser.name}} <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> Profil </a></li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+                <li><a href="#"><i class="fa fa-user fa-fw"></i> {{'NAV.PROFILE' | translate}}</a></li>
+                <li><a href="#"><i class="fa fa-gear fa-fw"></i> {{'NAV.SETTINGS' | translate}}</a></li>
                 <li class="divider"></li>
-                <li ng-click="logout()"><div><i class="fa fa-sign-out fa-fw"></i> Logout</div></li>
+                <li ng-click="logout()"><div><i class="fa fa-sign-out fa-fw"></i> {{'NAV.LOG_OUT' | translate}}</div></li>
             </ul>
             <!-- /.dropdown-user -->
         </li>
@@ -30,8 +32,8 @@
 
     <!-- when user is not logged (guest) -->
     <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="!authenticated" ng-cloak>
-        <li><a href="#/register"><i class="fa fa-bookmark fa-fw"></i> Register</a></li>
+        <li><a href="#/register"><i class="fa fa-bookmark fa-fw"></i> {{'NAV.REGISTER' | translate}}</a></li>
         <li class="divider-vertical"></li>
-        <li><a href="#/login"><i class="fa fa-user fa-fw"></i> Login</a></li>
+        <li><a href="#/login"><i class="fa fa-user fa-fw"></i> {{'NAV.LOG_IN' | translate}}</a></li>
     </ul>
 </nav>
