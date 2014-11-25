@@ -27,7 +27,8 @@ angular.module('ortolangMarketApp')
                     filters: [{
                         name: 'noFolder',
                         fn: function (item) {
-                            return item.type.length !== 0 || item.name.indexOf('.') !== -1;
+                            return item.type.length !== 0 ||
+                                (item.name.indexOf('.') !== -1 && item.name.lastIndexOf('.') + 5 >= item.name.length - 1);
                         }
                     }]
                 });

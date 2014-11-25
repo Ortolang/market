@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
         var xmlRegExp = new RegExp('^(?!image/)[a-zA-Z0-9\/+]*xml$');
 
         return function (input) {
-            if (!input) {
+            if (input === undefined) {
                 return undefined;
             }
             if (input === 'ortolang/collection') {
