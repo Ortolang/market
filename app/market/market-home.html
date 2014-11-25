@@ -4,16 +4,16 @@
         <div class="col-md-offset-3 col-md-6">
             <p class="lead text-center">Cherchez dans Ortolang</p>
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Rechercher">
+                <input ng-model="content" class="form-control" type="text" placeholder="Rechercher">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
             </div>
         </div>
     </section>
 
     <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+        <!-- <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
             Catégories
             <span class="caret"></span>
         </button>
@@ -21,14 +21,13 @@
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Corpus</a></li>
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Outils</a></li>
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lexique</a></li>
-        </ul>
+        </ul> -->
     </div>
 
     <section id="redactor-choices" class="row">
         <div class="col-md-10">
             <header>
                 <h3>Choix de l'équipe</h3>
-                <button class="btn btn-default pull-right">Test</button>
             </header>
             <div class="row">
 
@@ -114,8 +113,4 @@
         </div>
     </section>
 
-    <section id="free-items" class="col-md-12">
-        <h3>Libres</h3>
-
-    </section>
 </div>

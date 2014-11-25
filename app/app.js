@@ -41,6 +41,10 @@ angular
                 templateUrl: 'market/market-item.html',
                 controller: 'MarketItemCtrl'
             })
+            .when('/search', {
+                templateUrl: 'market/market-search.html',
+                controller: 'MarketSearchCtrl'
+            })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true

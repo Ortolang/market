@@ -1,7 +1,7 @@
 <section id="market-item">
     <header>
         <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
-        <a href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a>
+        <a ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a>
         <span class="lab">{{item['http://www.ortolang.fr/ontology/producer']}}</span>
         <p class="actions">
             <a ng-href="{{downloadUrl}}" class="btn btn-primary">Télécharger</a>
@@ -24,7 +24,7 @@
             <!--<li><span class="fa fa-tag"></span> transcription de l'oral</li>-->
             <!--<li><span class="fa fa-tag"></span> texte écrit</li>-->
             <!--</ul>-->
-            <section id="preview">
+            <section id="preview" ng-if="previewCollection">
                 <header>Aperçu</header>
 
                 <div class="browsed-element-children-wrapper">

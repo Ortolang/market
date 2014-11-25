@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:MarketHomeCtrl
+ * @name MarketSearchCtrl.controller:MarketSearchCtrl
  * @description
- * # MarketHomeCtrl
+ * # MarketSearchCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $location, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'IndexResultResource', function ($scope, $location, $routeParams, ObjectResource, DownloadResource, N3Serializer, IndexResultResource) {
 
         $scope.search = function() {
             if($scope.content !== '') {
@@ -17,14 +17,24 @@ angular.module('ortolangMarketApp')
             }
         }
 
-        function loadObjects() {
+
+        function loadObjects(content) {
+
+        	var query = ' STATUS:PUBLISHED', contentSplit = content.split(' ');
+
+        	if (contentSplit.length > 0) {
+        		angular.forEach(contentSplit, function(contentPart) {
+        			query += ' AND CONTENT:' + encodeURIComponent(contentPart) + '~';
+        		});
+        	}
+
             // Loads all objects
-            ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(function (oobjects) {
+            IndexResultResource.get({query: query}).$promise.then(function (results) {
                 
-                angular.forEach(oobjects.entries, function (entry) {
+                angular.forEach(results, function (entry) {
                     
                     // Loads properties of each object
-                    ObjectResource.get({oKey: entry}).$promise
+                    ObjectResource.get({oKey: entry.key}).$promise
                         .then(function (oobject) {
                             
                             if (oobject.object.root === true) {
@@ -50,6 +60,7 @@ angular.module('ortolangMarketApp')
             });
         }
 
+
         // Scope variables
         function initScopeVariables() {
             $scope.items = [];
@@ -58,7 +69,9 @@ angular.module('ortolangMarketApp')
 
         function init() {
             initScopeVariables();
-            loadObjects();
+
+            $scope.content = $routeParams.content;
+            loadObjects($routeParams.content);
         }
         init();
 
