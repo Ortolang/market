@@ -32,10 +32,8 @@
             <div class="row">
 
                 <div ng-repeat="item in items" class="col-sm-6 col-md-3">
-                    <div class="thumbnail market-item">
-                    	<a ng-href="#/market/{{item.oobject.key}}">
-                        	<img src="../assets/images/holder.png" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}">
-                        </a>
+                    <div class="thumbnail market-item" ng-click="clickItem(item)">
+                        <img src="../assets/images/holder.png" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}">
                         <div class="caption">
                             <h3 class="title">{{item.meta['http://purl.org/dc/elements/1.1/title']}}<span class="paragraph-end"></span></h3>
                             <p>{{item.meta['http://purl.org/dc/terms/abstract']}}</p>

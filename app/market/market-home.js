@@ -10,23 +10,27 @@
 angular.module('ortolangMarketApp')
     .controller('MarketHomeCtrl', ['$scope', '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $location, ObjectResource, DownloadResource, N3Serializer) {
 
-        $scope.search = function() {
-            if($scope.content !== '') {
+        $scope.search = function () {
+            if ($scope.content !== '') {
                 $location.search('content', $scope.content).path('/search');
                 // $location.url('/search?content='+encodeURIComponent($scope.content));
             }
-        }
+        };
+
+        $scope.clickItem = function (item) {
+            $location.path('/market/' + item.oobject.key);
+        };
 
         function loadObjects() {
             // Loads all objects
             ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(function (oobjects) {
-                
+
                 angular.forEach(oobjects.entries, function (entry) {
-                    
+
                     // Loads properties of each object
                     ObjectResource.get({oKey: entry}).$promise
                         .then(function (oobject) {
-                            
+
                             if (oobject.object.root === true) {
                                 if (oobject.object.metadatas.length > 0) {
                                     //TODO find metadata in Resource name or rdf format ??
@@ -42,8 +46,7 @@ angular.module('ortolangMarketApp')
                                     });
                                 }
                             }
-                        },
-                        function(reason) {
+                        }, function (reason) {
                             console.error(reason);
                         });
                 });
