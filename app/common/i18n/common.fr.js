@@ -19,5 +19,6 @@ angular.module('ortolangMarketApp')
         TYPE: 'Type',
         ACTIONS: 'Actions',
         SIZE: 'Taille',
-        SEARCH: 'Rechercher'
+        SEARCH: 'Rechercher',
+        LOG_IN: 'Connexion'
     });

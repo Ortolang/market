@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
             TOOLS: 'Outils',
             PROCESSES: 'Processus',
             SETTINGS: 'Paramètres',
-            LOG_IN: 'Connexion',
             LOG_OUT: 'Déconnexion',
             PROFILE: 'Profil',
             REGISTER: 'S\'enregistrer'

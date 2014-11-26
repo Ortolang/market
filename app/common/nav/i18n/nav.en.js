@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
             TOOLS: 'Tools',
             PROCESSES: 'Processes',
             SETTINGS: 'Settings',
-            LOG_IN: 'Login',
             LOG_OUT: 'Logout',
             PROFILE: 'Profile',
             REGISTER: 'Register'
