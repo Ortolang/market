@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
                 $location.search('content', $scope.content).path('/search');
                 // $location.url('/search?content='+encodeURIComponent($scope.content));
             }
-        }
+        };
 
 
         function loadObjects(content) {
@@ -33,8 +33,10 @@ angular.module('ortolangMarketApp')
                 
                 angular.forEach(results, function (entry) {
                     
+
+
                     // Loads properties of each object
-                    ObjectResource.get({oKey: entry.key}).$promise
+                    ObjectResource.get({oKey: entry.root}).$promise
                         .then(function (oobject) {
                             
                             if (oobject.object.root === true) {
@@ -45,7 +47,7 @@ angular.module('ortolangMarketApp')
                                     DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                         N3Serializer.fromN3(metaContent).then(function (data) {
 
-                                            $scope.items.push({oobject: oobject, meta: data});
+                                            $scope.items.push({oobject: oobject, meta: data, result: entry});
                                         });
                                     }).error(function (error) {
                                         console.error('error during process : ' + error);
