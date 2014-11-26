@@ -2,9 +2,9 @@
 
     <section class="row" id="search-market">
         <div class="col-md-offset-3 col-md-6">
-            <p class="lead text-center">Cherchez dans Ortolang</p>
+            <p class="lead text-center" translate="MARKET.PUNCH_LINE"></p>
             <div class="input-group">
-                <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="Rechercher">
+                <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
                 <span class="input-group-btn">
                     <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
@@ -27,7 +27,7 @@
     <section id="redactor-choices" class="row">
         <div class="col-md-10">
             <header>
-                <h3>Choix de l'équipe</h3>
+                <h3 translate="MARKET.REDACTOR_CHOICES"></h3>
             </header>
             <div class="row">
 
