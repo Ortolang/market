@@ -20,25 +20,20 @@
             </header>
             <!-- <div class="row"> -->
 
-                <div ng-repeat="item in items" class="row market-item">
-                    <a ng-href="#/market/{{item.oobject.key}}" class="col-md-2">
-                        <img src="../assets/images/holder.png" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}">
-                    </a>
-                    <div class="col-md-10">
+                <div ng-repeat="item in items" class="row market-item" ng-click="clickItem(item)">
+                    <img src="../assets/images/holder.png" class="col-md-3">
+                    <div class="col-md-9">
                         <h3 class="title">{{item.meta['http://purl.org/dc/elements/1.1/title']}}<span class="paragraph-end"></span></h3>
-                        <p>{{item.meta['http://purl.org/dc/terms/abstract']}}</p>
+                        <p>{{item.meta['http://purl.org/dc/elements/1.1/description']}}</p>
                         <p class="producers">
-                            <a href="#" class="author">{{item.meta['http://www.ortolang.fr/ontology/researcher']}}</a>
-                            <a href="#" class="lab">{{item.meta['http://www.ortolang.fr/ontology/producer']}}</a>
+                            <span class="author">{{item.meta['http://www.ortolang.fr/ontology/researcher']}}</span>
+                            <span class="lab">{{item.meta['http://www.ortolang.fr/ontology/producer']}}</span>
                         </p>
-                        <blockquote>
+                        <div ng-if="item.result.key != item.result.root" class="item-element">
                             <p>
                             {{item.result.name}}
                             </p>
-                            <p>
-                            {{item.result.explain}}
-                            </p>
-                        </blockquote>
+                        </div>
                     </div>
                     <!-- <div class="thumbnail market-item">
                     	<a ng-href="#/market/{{item.oobject.key}}">

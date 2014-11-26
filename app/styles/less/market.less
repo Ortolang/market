@@ -22,6 +22,8 @@
   .market-item {
     background-color: #FFFFFF;
     padding-top: @padding-large-vertical;
+    margin-left: @padding-large-vertical;
+
     cursor: pointer;
     &:hover {
         .title {
@@ -54,6 +56,11 @@
       a {
         display: block;
       }
+    }
+
+    .item-element {
+      border-left: 4px solid @orange-lighter;
+      padding : @padding-large-vertical;
     }
   }
 }

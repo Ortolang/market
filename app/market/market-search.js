@@ -17,10 +17,18 @@ angular.module('ortolangMarketApp')
             }
         };
 
+        $scope.clickItem = function (item) {
+            $location.path('/market/' + item.oobject.key);
+        };
+
 
         function loadObjects(content) {
 
-        	var query = ' STATUS:PUBLISHED', contentSplit = content.split(' ');
+        	var query = ' STATUS:PUBLISHED', contentSplit = [];
+
+            if (content && content !== '') {
+                contentSplit = content.split(' ');
+            }
 
         	if (contentSplit.length > 0) {
         		angular.forEach(contentSplit, function(contentPart) {
@@ -33,7 +41,7 @@ angular.module('ortolangMarketApp')
                 
                 angular.forEach(results, function (entry) {
                     
-
+                    entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
 
                     // Loads properties of each object
                     ObjectResource.get({oKey: entry.root}).$promise
