@@ -19,6 +19,7 @@ angular.module('ortolangMarketApp')
             CLEAR: 'Supprimer',
             UPLOAD_ALL: 'Tout importer',
             CLEAR_ALL: 'Tout supprimer',
-            CANCEL_ALL: 'Tout annuler'
+            CANCEL_ALL: 'Tout annuler',
+            ADD_METADATA: 'Ajouter une métadonnée'
         }
     });
