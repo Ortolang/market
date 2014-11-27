@@ -717,6 +717,7 @@ angular.module('ortolangMarketApp')
                         height = 1;
                     }
                     if (height > topOffset) {
+                        height -= 1;
                         if ($rootScope.uploadQueueStatus === 'active') {
                             height -= $('#upload-queue').innerHeight();
                         }
