@@ -1,4 +1,4 @@
-<div ng-if="!isViewModeLine()" class="row browsed-element-children-wrapper">
+<div ng-show="!isViewModeLine()" class="row browsed-element-children-wrapper">
     <div class="col-md-12">
         <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
             <div ng-repeat="child in filteredChildren(type) | orderBy:orderProp:orderReverse"
