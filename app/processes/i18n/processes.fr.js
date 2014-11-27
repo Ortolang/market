@@ -20,6 +20,9 @@ angular.module('ortolangMarketApp')
             ACTIVITY: 'Activité',
             VIEW_LOG: 'Voir le log',
             ASSIGNEE: 'Assignée à',
-            CLAIM: 'Se l\'assigner'
+            CLAIM: 'Se l\'assigner',
+            START_PROCESS: 'Démarrer le processus',
+            COMPLETE_TASK: 'Compléter la tâche',
+            SHOW_ALL: 'Tout afficher'
         }
     });

@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
         SELECT: 'Selectionner',
         CANCEL: 'Annuler',
         CREATE: 'Créer',
+        SUBMIT: 'Valider',
         ADD: 'Ajouter',
         NAME: 'Nom',
         DESCRIPTION: 'Description',

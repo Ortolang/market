@@ -45,6 +45,11 @@ angular.module('ortolangMarketApp')
             NEW_COLLECTION: 'New Folder',
             CREATE_WORKSPACE: 'Create Workspace',
             PUBLISH: 'Publish workspace',
+            PUBLISH_MODAL: {
+                TITLE: 'Workspace Publication',
+                BODY: 'Are you sure you want to publish "{{wsName}}" ?',
+                SUBMIT: 'Publish'
+            },
             VERSION: 'Versions',
             BACK: 'Back',
             FORWARD: 'Forward',

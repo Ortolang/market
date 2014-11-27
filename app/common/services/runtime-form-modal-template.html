@@ -6,7 +6,8 @@
                 <h4 class="modal-title" ng-bind="title"></h4>
             </div>
             <div class="modal-body process-log">
-                <pre>{{selectedProcess.log}}</pre>
+                <formly-form result="formData" fields="formFields" options="formOptions" ng-submit="onSubmit()">
+                </formly-form>
             </div>
         </div>
     </div>

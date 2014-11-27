@@ -83,7 +83,6 @@ angular.module('ortolangMarketApp')
          */
         authService.saveAttemptUrl = function (path) {
             param.redirectToUrlAfterLogin = path;
-            console.debug('saveAttemptUrl', param.redirectToUrlAfterLogin);
         };
         /**
          * Redirect to the saved url

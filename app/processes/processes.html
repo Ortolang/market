@@ -1,67 +1,69 @@
-<div class="row">
-    <section id="processes" class="col-md-12">
-        <br/>
-        <button class="btn btn-success" ng-click="test()">Start test process</button>
-        <br/>
-        <br/>
-        <div class="panel panel-default">
-            <div class="panel-heading" translate="PROCESSES"></div>
-            <div ng-if="!hasActiveProcesses()" class="panel-body">
-                <p translate="PROCESSES.NO_ACTIVE_PROCCESS"></p>
+<div class="row" bs-active-pane="activeTab" data-nav-class="nav-pills" data-template="/processes/processes-tabs-template.html" bs-tabs>
+    <div data-title="{{'PROCESSES' | translate}} <span class='badge'>{{Runtime.activeProcessesNumber()}}</span>" bs-pane>
+        <section id="processes" class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="PROCESSES"></div>
+                <div ng-if="!Runtime.hasActiveProcesses()" class="panel-body">
+                    <p translate="PROCESSES.NO_ACTIVE_PROCCESS"></p>
+                </div>
+                <table ng-if="Runtime.hasActiveProcesses()" class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th translate="NAME"></th>
+                        <th translate="TYPE"></th>
+                        <th translate="PROCESSES.STATE"></th>
+                        <th translate="PROCESSES.ACTIVITY"></th>
+                        <th translate="ACTIONS"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="process in processes | filter:{state: '!'+Runtime.getStates().completed}">
+                        <td>{{process.name}}</td>
+                        <td>{{process.type}}</td>
+                        <td>{{process.state}}</td>
+                        <td>{{process.activity}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <table ng-if="hasActiveProcesses()" class="table table-responsive">
-                <thead>
-                <tr>
-                    <th translate="NAME"></th>
-                    <th translate="TYPE"></th>
-                    <th translate="PROCESSES.STATE"></th>
-                    <th translate="PROCESSES.ACTIVITY"></th>
-                    <th translate="ACTIONS"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="process in processes.entries | filter:{state: '!'+states.completed}">
-                    <td>{{process.name}}</td>
-                    <td>{{process.type}}</td>
-                    <td>{{process.state}}</td>
-                    <td>{{process.activity}}</td>
-                    <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-    <section id="completed-processes" class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading" translate="PROCESSES.COMPLETED_PROCESSES"></div>
-            <div ng-if="!hasProcessesOfType('completed')" class="panel-body">
-                <p translate="PROCESSES.NO_COMPLETED_PROCESS"></p>
+        </section>
+        <section id="completed-processes" class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="PROCESSES.COMPLETED_PROCESSES"></div>
+                <div ng-if="!Runtime.hasProcessesOfType('completed')" class="panel-body">
+                    <p translate="PROCESSES.NO_COMPLETED_PROCESS"></p>
+                </div>
+                <table ng-if="Runtime.hasProcessesOfType('completed')" class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th translate="NAME"></th>
+                        <th translate="TYPE"></th>
+                        <th translate="ACTIONS"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().completed}" ng-class="{hidden: $index >= 3}">
+                        <td>{{process.name}}</td>
+                        <td>{{process.type}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="panel-footer toggle-show-all" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
             </div>
-            <table ng-if="hasProcessesOfType('completed')" class="table table-responsive">
-                <thead>
-                <tr>
-                    <th translate="NAME"></th>
-                    <th translate="TYPE"></th>
-                    <th translate="ACTIONS"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="process in processes.entries | filter:{state: states.completed}">
-                    <td>{{process.name}}</td>
-                    <td>{{process.type}}</td>
-                    <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-    <section id="tasks" class="col-md-12">
+            <button class="btn btn-success" ng-click="Runtime.createProcessFromForm('test-process-start-form')">Start test process</button>
+            <br/>
+            <br/>
+        </section>
+    </div>
+    <section data-title="{{'PROCESSES.TASKS' | translate}} <span class='badge'>{{tasks.length}}</span>" id="tasks" class="col-md-12" bs-pane>
         <div class="panel panel-default">
             <div class="panel-heading" translate="PROCESSES.TASKS"></div>
-            <div ng-if="!tasks.entries" class="panel-body">
+            <div ng-if="!tasks || tasks.length == 0" class="panel-body">
                 <p translate="PROCESSES.NO_TASK"></p>
             </div>
-            <table ng-if="tasks.entries" class="table table-responsive">
+            <table ng-if="tasks.entries && tasks.length !== 0" class="table table-responsive">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -72,15 +74,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="task in tasks.entries">
+                <tr ng-repeat="task in tasks">
                     <td>{{task.id}}</td>
                     <td>{{task.name}}</td>
                     <td>{{task.description}}</td>
                     <td>{{task.assignee}}</td>
                     <td>
-                        <button class="btn btn-sm btn-default" ng-click="claim(task)" translate="PROCESSES.CL"></button>
-                        <button class="btn btn-sm btn-success" ng-click="complete(task, true)">Complete (true)</button>
-                        <button class="btn btn-sm btn-danger" ng-click="complete(task, false)">Complete (false)</button>
+                        <button class="btn btn-sm btn-default" ng-click="Runtime.claimTask(task)" translate="PROCESSES.CLAIM"></button>
+                        <button class="btn btn-sm btn-success" ng-click="Runtime.completeTask(task)" translate="PROCESSES.COMPLETE_TASK"></button>
                     </td>
                 </tr>
                 </tbody>

@@ -18,16 +18,17 @@ angular.module('ortolangMarketApp')
         '$filter',
         '$window',
         '$translate',
+        '$modal',
         'hotkeys',
         'WorkspaceResource',
-        'RuntimeResource',
+        'Runtime',
         'WorkspaceElementResource',
         'VisualizerManager',
         'icons',
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, $translate, hotkeys, WorkspaceResource, RuntimeResource, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, $translate, $modal, hotkeys, WorkspaceResource, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             // *********************** //
             //        Breadcrumb       //
@@ -349,7 +350,7 @@ angular.module('ortolangMarketApp')
 
             $scope.newCollectionModal = function () {
                 // TODO give focus to button
-                $('#new-collection-modal').modal('show').find('button.add-collection').focus();
+                $('#new-collection-modal').modal('show');
             };
 
             $scope.addCollection = function () {
@@ -430,7 +431,21 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             $scope.publishWorkspace = function () {
-                RuntimeResource.createProcess({}, {'process-type': 'publish-workspace', 'process-name': 'Publication of workspace: ' + $scope.wsName, 'workspace-key': $scope.wskey });
+                var publishModalScope = $rootScope.$new();
+                publishModalScope.wsName = $scope.wsName;
+                publishModalScope.publish = function () {
+                    Runtime.createProcess({
+                        'process-type': 'publish-workspace',
+                        'process-name': 'Publication of workspace: ' + $scope.wsName + ' (version ' + ($scope.workspace.snapshots.length + 1) + ')',
+                        'workspace-key': $scope.wskey
+                    });
+                    publishModal.hide();
+                };
+                var publishModal = $modal({
+                    scope: publishModalScope,
+                    template: '/common/directives/browser-publish-modal-template.html',
+                    show: true
+                });
             };
 
 

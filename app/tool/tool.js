@@ -102,11 +102,6 @@ angular.module('ortolangMarketApp')
              * @param configJSON
              */
             $scope.generateForm = function (configJSON) {
-                // ajoute les template ortolang
-                formlyTemplate.setTemplateUrl('select', 'common/formly/ortolang-formly-select.html');
-                formlyTemplate.setTemplateUrl('dataobject', 'common/formly/ortolang-formly-file-select.html');
-                formlyTemplate.setTemplateUrl('label', 'common/formly/ortolang-formly-label.html');
-                formlyTemplate.setTemplateUrl('number', 'common/formly/ortolang-formly-decimal.html');
                 $scope.formData = {};
                 $scope.formFields = configJSON;
                 $scope.formOptions = {

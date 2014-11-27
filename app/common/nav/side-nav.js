@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', function ($rootScope, $scope, $route, $translate) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', 'Runtime', function ($rootScope, $scope, $route, $translate, Runtime) {
 
         $scope.select = function ($event, element) {
             angular.element($event.target).parent().addClass('activated').on('mouseleave', function () {

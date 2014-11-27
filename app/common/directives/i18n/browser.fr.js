@@ -45,6 +45,11 @@ angular.module('ortolangMarketApp')
             NEW_COLLECTION: 'Nouveau dossier',
             CREATE_WORKSPACE: 'Créer un espace de travail',
             PUBLISH: 'Publier l\'espace de travail',
+            PUBLISH_MODAL: {
+                TITLE: 'Publication d\'un espace de travail',
+                BODY: 'Êtes-vous sûr de vouloir publier l\'espace de travail "{{wsName}}" ?',
+                SUBMIT: 'Publier'
+            },
             VERSION: 'Versions',
             BACK: 'Revenir',
             FORWARD: 'Avancer',
