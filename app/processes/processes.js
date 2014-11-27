@@ -12,6 +12,8 @@ angular.module('ortolangMarketApp')
 
         $scope.Runtime = Runtime;
 
+        $scope.completedProcessessDisplayed = 3;
+
         $scope.showLog = function (process) {
             Runtime.selectProcess(process);
             $modal({

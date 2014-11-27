@@ -74,9 +74,16 @@ angular.module('ortolangMarketApp')
             return false;
         }
 
+        function getProcessesOfType(type) {
+            if ($rootScope.processes && states[type]) {
+                return $filter('filter')($rootScope.processes, {state: states[type]});
+            }
+            return [];
+        }
+
         function hasProcessesOfType(type) {
             if ($rootScope.processes && states[type]) {
-                return ($filter('filter')($rootScope.processes, {state: states[type]})).length > 0;
+                return getProcessesOfType.length > 0;
             }
             return false;
         }
@@ -215,6 +222,7 @@ angular.module('ortolangMarketApp')
             activeProcessesNumber: activeProcessesNumber,
             hasActiveProcesses: hasActiveProcesses,
             hasProcessesOfType: hasProcessesOfType,
+            getProcessesOfType: getProcessesOfType,
             getStates: getStates,
             // Tasks
             claimTask: claimTask,

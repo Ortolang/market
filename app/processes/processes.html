@@ -43,14 +43,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().completed}" ng-class="{hidden: $index >= 3}">
+                    <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().completed}" ng-class="{hidden: $index >= completedProcessessDisplayed}">
                         <td>{{process.name}}</td>
                         <td>{{process.type}}</td>
                         <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>
                     </tbody>
                 </table>
-                <div class="panel-footer toggle-show-all" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
+                <div class="panel-footer toggle-show-all" ng-if="Runtime.getProcessesOfType(Runtime.getStates().completed).length > completedProcessessDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
             </div>
             <button class="btn btn-success" ng-click="Runtime.createProcessFromForm('test-process-start-form')">Start test process</button>
             <br/>
@@ -63,7 +63,7 @@
             <div ng-if="!tasks || tasks.length == 0" class="panel-body">
                 <p translate="PROCESSES.NO_TASK"></p>
             </div>
-            <table ng-if="tasks.entries && tasks.length !== 0" class="table table-responsive">
+            <table ng-if="tasks && tasks.length !== 0" class="table table-responsive">
                 <thead>
                 <tr>
                     <th>#</th>
