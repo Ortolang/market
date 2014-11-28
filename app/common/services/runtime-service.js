@@ -83,7 +83,7 @@ angular.module('ortolangMarketApp')
 
         function hasProcessesOfType(type) {
             if ($rootScope.processes && states[type]) {
-                return getProcessesOfType.length > 0;
+                return getProcessesOfType(type).length > 0;
             }
             return false;
         }
