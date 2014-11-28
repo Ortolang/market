@@ -11,6 +11,7 @@
   padding-bottom: @padding-large-vertical;
   border-bottom: 1px solid @navbar-default-border;
   min-height: 55px;
+  overflow: auto;
 
   .btn-toolbar.btn-toolbar-right .btn-group {
     float: right;
@@ -67,6 +68,15 @@
     }
   }
 
+  span.divider {
+    border-left: 1px solid @navbar-default-border;
+    float: right;
+    position: relative;
+    margin: -@padding-large-vertical (@padding-large-horizontal - @padding-xs-horizontal) -@padding-large-vertical @padding-large-horizontal;
+    display: inline-block;
+    min-height: 54px;
+  }
+
   .dropdown-menu.filter {
     padding-left: @padding-xs-horizontal;
     padding-right: @padding-xs-horizontal;
@@ -112,6 +122,9 @@
     dt {
       width: @browser-offset-horizontal - 20;
       font-weight: normal;
+      &.key {
+        padding-top: @padding-small-vertical - 1;
+      }
     }
     dd {
       margin-left: @browser-offset-horizontal;

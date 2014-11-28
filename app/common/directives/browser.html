@@ -113,6 +113,8 @@
                         </ul>
                     </div>
 
+                    <span ng-show="!hasOnlyParentSelected()" class="divider"></span>
+
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
                         <a ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="{{'BROWSER.DOWNLOAD' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.download"></span>
@@ -209,8 +211,8 @@
                             <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
                             <dt translate="BROWSER.CLOCK"></dt>
                             <dd>{{selectedElements[0].clock}}</dd>
-                            <dt translate="BROWSER.KEY"></dt>
-                            <dd>{{selectedElements[0].key}}</dd>
+                            <dt translate="BROWSER.KEY" class="key"></dt>
+                            <dd>{{selectedElements[0].key.substring(0,12)}}... <button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"  data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><span class="fa fa-copy"></span></button></dd>
                             <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
                             <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></dd>
                             <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>

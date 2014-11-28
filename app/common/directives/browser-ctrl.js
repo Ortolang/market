@@ -233,11 +233,11 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.hasOnlyParentSelected = function () {
-                return $scope.selectedElements.length === 1 && $scope.selectedElements[0].key === $scope.parent.key;
+                return !$scope.selectedElements || ($scope.selectedElements.length === 1 && $scope.selectedElements[0].key === $scope.parent.key);
             };
 
             $scope.hasOnlyOneElementSelected = function () {
-                return $scope.selectedElements.length === 1;
+                return $scope.selectedElements && $scope.selectedElements.length === 1;
             };
 
             function deselectChild(child) {
@@ -843,7 +843,7 @@ angular.module('ortolangMarketApp')
                 $scope.parent = undefined;
                 $scope.children = undefined;
                 $scope.allChildrenMimeTypes = [];
-                $scope.selectedElements = [];
+                $scope.selectedElements = undefined;
                 $scope.icons = icons;
                 // Breadcrumb
                 $scope.breadcrumbParts = undefined;

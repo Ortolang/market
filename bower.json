@@ -1,56 +1,58 @@
 {
-    "name": "ortolang-market",
-    "version": "0.0.0",
-    "dependencies": {
-        "angular": "~1.2.0",
-        "json3": "~3.3.1",
-        "es5-shim": ">=3.4.0",
-        "bootstrap": "~3.2.0",
-        "jquery.cookie": "~1.4.1",
-        "angular-animate": "~1.2.0",
-        "angular-route": "~1.2.0",
-        "angular-resource": "~1.2.0",
-        "angular-file-upload": "~1.1.x",
-        "angular-strap": "~2.1.x",
-        "highlight": "8.2",
-        "angular-highlightjs": "~0.3.0",
-        "components-font-awesome": "~4.2.0",
-        "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.5",
-        "angular-motion": "~0.3.3",
-        "bootstrap-additions": "~0.2.3",
-        "angular-formly": "~0.0.16",
-        "n3js": "~0.2.7",
-        "angular-bootstrap-show-errors": "~2.0.0",
-        "angular-sanitize": "~1.2.x",
-        "angular-translate": "~2.4.2"
+  "name": "ortolang-market",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "~1.2.0",
+    "json3": "~3.3.1",
+    "es5-shim": ">=3.4.0",
+    "bootstrap": "~3.2.0",
+    "jquery.cookie": "~1.4.1",
+    "angular-animate": "~1.2.0",
+    "angular-route": "~1.2.0",
+    "angular-resource": "~1.2.0",
+    "angular-file-upload": "~1.1.x",
+    "angular-strap": "~2.1.x",
+    "highlight": "8.2",
+    "angular-highlightjs": "~0.3.0",
+    "components-font-awesome": "~4.2.0",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.5",
+    "angular-motion": "~0.3.3",
+    "bootstrap-additions": "~0.2.3",
+    "angular-formly": "~0.0.16",
+    "n3js": "~0.2.7",
+    "angular-bootstrap-show-errors": "~2.0.0",
+    "angular-sanitize": "~1.2.x",
+    "angular-translate": "~2.4.2",
+    "angular-zeroclipboard": "~0.3.2",
+    "zeroclipboard": "~2.1.6"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.0",
+    "angular-scenario": "~1.2.0"
+  },
+  "overrides": {
+    "angular-strap": {
+      "main": [
+        "dist/angular-strap.js",
+        "dist/angular-strap.tpl.js"
+      ]
     },
-    "devDependencies": {
-        "angular-mocks": "~1.2.0",
-        "angular-scenario": "~1.2.0"
+    "angular-motion": {
+      "main": [
+        "dist/angular-motion.css"
+      ]
     },
-    "overrides": {
-        "angular-strap": {
-            "main": [
-                "dist/angular-strap.js",
-                "dist/angular-strap.tpl.js"
-            ]
-        },
-        "angular-motion": {
-            "main": [
-                "dist/angular-motion.css"
-            ]
-        },
-        "angular-formly": {
-            "main": [
-                "dist/formly.min.js",
-                "dist/formly.min.map",
-                "dist/formly.bootstrap.min.js",
-                "dist/formly.bootstrap.min.map"
-            ]
-        }
-    },
-    "appPath": "app",
-    "resolutions": {
-        "angular": "1.2.26"
+    "angular-formly": {
+      "main": [
+        "dist/formly.min.js",
+        "dist/formly.min.map",
+        "dist/formly.bootstrap.min.js",
+        "dist/formly.bootstrap.min.map"
+      ]
     }
+  },
+  "appPath": "app",
+  "resolutions": {
+    "angular": "1.2.26"
+  }
 }

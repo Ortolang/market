@@ -27,7 +27,8 @@ angular
         'cfp.hotkeys',
         'formly',
         'ui.bootstrap.showErrors',
-        'pascalprecht.translate'
+        'pascalprecht.translate',
+        'zeroclipboard'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -109,6 +110,11 @@ angular
             container: 'body'
         });
     })
+    .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
+        uiZeroclipConfigProvider.setZcConf({
+            swfPath: '../bower_components/zeroclipboard/dist/ZeroClipboard.swf'
+        });
+    }])
     .run(['$rootScope', '$location', 'AuthService', 'AuthEvents', function ($rootScope, $location, AuthService, AuthEvents) {
         /**
          * Check if user is authorized to the current url (mainly workspaces)

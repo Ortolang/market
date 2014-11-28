@@ -50,9 +50,10 @@ angular.module('ortolangMarketApp')
                 BODY: 'Are you sure you want to publish "{{wsName}}" ?',
                 SUBMIT: 'Publish'
             },
-            VERSION: 'Versions',
+            VERSION: 'Workspace versions',
             BACK: 'Back',
             FORWARD: 'Forward',
-            TOGGLE_DROPDOWN: 'Toggle dropdown'
+            TOGGLE_DROPDOWN: 'Toggle dropdown',
+            COPY_TO_CLIPBOARD: 'Copy to clipboard'
         }
     });

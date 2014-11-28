@@ -50,9 +50,10 @@ angular.module('ortolangMarketApp')
                 BODY: 'Êtes-vous sûr de vouloir publier l\'espace de travail "{{wsName}}" ?',
                 SUBMIT: 'Publier'
             },
-            VERSION: 'Versions',
+            VERSION: 'Versions de l\'espace de travail',
             BACK: 'Revenir',
             FORWARD: 'Avancer',
-            TOGGLE_DROPDOWN: 'Menu déroulant'
+            TOGGLE_DROPDOWN: 'Menu déroulant',
+            COPY_TO_CLIPBOARD: 'Copier'
         }
     });
