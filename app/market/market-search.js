@@ -32,7 +32,8 @@ angular.module('ortolangMarketApp')
 
         	if (contentSplit.length > 0) {
         		angular.forEach(contentSplit, function(contentPart) {
-        			query += ' AND CONTENT:' + encodeURIComponent(contentPart) + '~';
+        			// query += ' AND CONTENT:' + encodeURIComponent(contentPart) + '~';
+                    query += ' AND (CONTENT:' + contentPart + '~ OR CONTENT:' + contentPart + '*)';
         		});
         	}
 

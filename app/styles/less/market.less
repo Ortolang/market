@@ -1,5 +1,9 @@
 .license-panel, .metadata-panel {
   background-color: lighten(#000, 97.25%);
+  .panel-heading {
+    font-size: @font-size-h4;
+    font-weight: 200;
+  }
 }
 
 #market-home {
@@ -36,6 +40,10 @@
       position: relative;
       color: inherit;
     }
+    .description {    
+      overflow: hidden;
+      max-height: 100px;
+    }
     .paragraph-end {
       //            background-image: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(@navbar-default-bg,0)),color-stop(100%,rgba(@navbar-default-bg,1)));
       //            background-image: -webkit-linear-gradient(left,rgba(@navbar-default-bg,0),rgba(@navbar-default-bg,1));
@@ -55,6 +63,7 @@
     .producers {
       a {
         display: block;
+        font-weight: 200;
       }
     }
 
@@ -81,12 +90,12 @@
     }
   }
   section {
-    padding-bottom: 1*@padding-large-vertical;
+    padding-bottom: 3*@padding-large-vertical;
     margin-bottom: 2*@padding-large-vertical;
     border-bottom: 1px solid @gray-lighter;
     header {
-      font-size: @font-size-h4;
-      font-weight: normal;
+      font-size: @font-size-h3;
+      font-weight: 200;
       margin-bottom: @padding-large-vertical;
     }
   }

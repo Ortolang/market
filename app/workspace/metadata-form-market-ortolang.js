@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource) {
 
-        $scope.categories = [{id: 'http://www.ortolang.fr/2014/09/market#Corpora', label: 'Corpus'}, {id: 'http://www.ortolang.fr/2014/09/market#Lexicon', label: 'Lexique'}];
+        $scope.categories = [{id: 'http://www.ortolang.fr/2014/09/market#Corpora', label: 'Corpus'}, {id: 'http://www.ortolang.fr/2014/09/market#Lexicon', label: 'Lexique'}, {id: 'http://www.ortolang.fr/2014/09/market#Tool', label: 'Outil'}];
         $scope.useConditions = [{id: 'free', label: 'Libre'}, {id: 'free-nc', label: 'Libre sans usage commercial'}, {id: 'restricted', label: 'Négociation nécessaire'}];
 
         $scope.submitMetadata = function (form, md) {

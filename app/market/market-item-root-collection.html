@@ -1,8 +1,8 @@
 <section id="market-item">
     <header>
         <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
-        <a ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a>
-        <span class="lab">{{item['http://www.ortolang.fr/ontology/producer']}}</span>
+        Par : <a ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a>
+        <span>Production de <a href="#" class="lab">{{item['http://www.ortolang.fr/ontology/producer']}}</a></span>
         <p class="actions">
             <a ng-href="{{downloadUrl}}" class="btn btn-primary">Télécharger</a>
             <a ng-href="#/market/{{itemKey}}?view=browse" class="btn btn-default">Afficher le contenu</a>
@@ -46,15 +46,17 @@
 
         <aside class="col-md-4">
             <div class="panel panel-default license-panel">
+                <div class="panel-heading">Condition d'utilisation</div>
                 <div class="panel-body">
                     <p><strong>{{item['http://www.ortolang.fr/ontology/useConditions']}}</strong></p>
-                    <p>Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Aenean ut eros et nisl sagittis vestibulum.</p>
+                    <p ng-if="item['http://purl.org/dc/terms/licence']">{{item['http://purl.org/dc/terms/licence']}}</p>
+                    <!-- <p>Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Aenean ut eros et nisl sagittis vestibulum.</p> -->
                     <!-- <p><a href="#">Plus de détails</a></p> -->
-                    <p><a ng-href="{{downloadUrl}}" class="btn btn-block btn-success">Afficher la license</a></p>
+                    <!-- <p><a ng-href="{{downloadUrl}}" class="btn btn-block btn-success">Afficher la license</a></p> -->
                 </div>
             </div>
 
-            <div class="btn-group btn-group-justified">
+            <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">
                         <span class="fa fa-heart"></span> Ajouter à mes favoris
@@ -66,15 +68,16 @@
                     </button>
                 </div>
             </div>
-            <br/>
+            <br/> -->
 
             <div class="panel panel-default metadata-panel">
+                <div class="panel-heading">Informations complémentaires</div>
                 <div class="panel-body">
                     <dl class="dl-horizontal">
                         <dt ng-if="item['http://purl.org/dc/terms/extent']">Contenu</dt>
                         <dd ng-if="item['http://purl.org/dc/terms/extent']">{{item['http://purl.org/dc/terms/extent']}}</dd>
-                        <dt>Tags</dt>
-                        <dd>tokenizer, étiquetage morphosyntaxique, POS tagger</dd>
+                        <dt ng-if="item['http://www.ortolang.fr/ontology/keywords']">Mots clés</dt>
+                        <dd ng-if="item['http://www.ortolang.fr/ontology/keywords']">{{item['http://www.ortolang.fr/ontology/keywords']}}</dd>
                     </dl>
                 </div>
             </div>
