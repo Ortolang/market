@@ -437,11 +437,11 @@ angular.module('ortolangMarketApp')
                     Runtime.createProcess({
                         'process-type': 'publish-workspace',
                         'process-name': 'Publication of workspace: ' + $scope.wsName + ' (version ' + ($scope.workspace.snapshots.length + 1) + ')',
-                        'workspace-key': $scope.wskey
+                        'wskey': $scope.wskey
                     });
                     publishModal.hide();
                 };
-                var publishModal = $modal({
+                var publishModal = $modalpace({
                     scope: publishModalScope,
                     template: '/common/directives/browser-publish-modal-template.html',
                     show: true

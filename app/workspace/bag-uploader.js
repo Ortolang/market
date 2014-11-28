@@ -28,9 +28,9 @@ angular.module('ortolangMarketApp')
     	var key = $scope.importWorkspaceName;
         fileItem.formData = [
         		 {definition: 'import-bag'},
-        		 {'workspace-key': key},
-        		 {'workspace-name': $scope.importWorkspaceName},
-        		 {'workspace-type': $scope.importWorkspaceType}
+        		 {'wskey': key},
+        		 {'wsname': $scope.importWorkspaceName},
+        		 {'wstype': $scope.importWorkspaceType}
         		 ];
         console.info('onAfterAddingFile', fileItem);
         // console.info('formData', fileItem.formData[0], fileItem.formData[1]);
