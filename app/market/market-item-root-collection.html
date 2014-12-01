@@ -6,8 +6,8 @@
             </a>
             <div class="media-body">
                 <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
-                Par : <a ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a>
-                <span>Production de <a href="#" class="lab">{{item['http://www.ortolang.fr/ontology/producer']}}</a></span>
+                Par : <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a>
+                <span>Production de <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/producer']}}" class="lab">{{item['http://www.ortolang.fr/ontology/producer']}}</a></span>
                 <!-- <p class="actions">
                     <a ng-href="{{downloadUrl}}" class="btn btn-primary">Télécharger</a>
                     <a ng-href="#/market/{{itemKey}}?view=browse" class="btn btn-default">Afficher le contenu</a>
