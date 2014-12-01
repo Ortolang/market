@@ -441,7 +441,7 @@ angular.module('ortolangMarketApp')
                     });
                     publishModal.hide();
                 };
-                var publishModal = $modalpace({
+                var publishModal = $modal({
                     scope: publishModalScope,
                     template: '/common/directives/browser-publish-modal-template.html',
                     show: true
