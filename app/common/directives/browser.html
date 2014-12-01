@@ -212,7 +212,7 @@
                             <dt translate="BROWSER.CLOCK"></dt>
                             <dd>{{selectedElements[0].clock}}</dd>
                             <dt translate="BROWSER.KEY" class="key"></dt>
-                            <dd>{{selectedElements[0].key.substring(0,12)}}... <button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"  data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><span class="fa fa-copy"></span></button></dd>
+                            <dd>{{selectedElements[0].key.substring(0,12)}}... <button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"  data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><span class="octicon octicon-clippy"></span></button></dd>
                             <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
                             <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></dd>
                             <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>

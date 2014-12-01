@@ -21,5 +21,6 @@ angular.module('ortolangMarketApp')
         ACTIONS: 'Actions',
         SIZE: 'Taille',
         SEARCH: 'Rechercher',
-        LOG_IN: 'Connexion'
+        LOG_IN: 'Connexion',
+        NO_IMAGE_PROVIDED: 'Pas d\'image disponible'
     });

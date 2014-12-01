@@ -14,12 +14,13 @@
                 </p> -->
             </div>
         </div>
+        <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">Retourner à la fiche</button>
     </header>
 
     <div class="row">
 
-        <div class="col-md-9">
-            <section id="description">
+        <div ng-show="!browse" class="col-md-8">
+            <section ng-show="!browse" id="description">
                 <header>Description</header>
                 <p>{{item['http://purl.org/dc/elements/1.1/description']}}</p>
             </section>
@@ -31,7 +32,7 @@
             <!--<li><span class="fa fa-tag"></span> transcription de l'oral</li>-->
             <!--<li><span class="fa fa-tag"></span> texte écrit</li>-->
             <!--</ul>-->
-            <section id="preview" ng-if="previewCollection">
+            <section ng-show="!browse" id="preview" ng-if="previewCollection">
                 <header>Aperçu</header>
 
                 <div class="browsed-element-children-wrapper">
@@ -49,21 +50,30 @@
             </section>
         </div>
 
+        <div ng-show="browse" class="col-md-12">
+            <div browser></div>
+        </div>
+
         <div ng-include="'../common/visualizers/visualizer-template.html'"></div>
 
-        <aside class="col-md-3">
+        <aside ng-show="!browse" class="col-md-4">
             <div class="panel panel-default license-panel">
                 <div class="panel-heading">Condition d'utilisation</div>
                 <div class="panel-body">
                     <p><strong>{{item['http://www.ortolang.fr/ontology/useConditions']}}</strong></p>
                     <p ng-if="item['http://purl.org/dc/terms/licence']">{{item['http://purl.org/dc/terms/licence']}}</p>
-                    <!-- <p>Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Aenean ut eros et nisl sagittis vestibulum.</p> -->
-                    <!-- <p><a href="#">Plus de détails</a></p> -->
-                    <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success">Télécharger</a>
+                     <p>Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Aenean ut eros et nisl sagittis vestibulum.</p>
+                     <p><a href="#">Plus de détails</a></p>
+                     <div class="btn-group btn-group-justified">
+                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success">Télécharger</a>
+                         <div class="btn-group">
+                             <button class="btn btn-default btn-block" ng-click="browse = !browse">Voir contenu</button>
+                         </div>
+                     </div>
                 </div>
             </div>
 
-            <!-- <div class="btn-group btn-group-justified">
+            <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">
                         <span class="fa fa-heart"></span> Ajouter à mes favoris
@@ -75,7 +85,7 @@
                     </button>
                 </div>
             </div>
-            <br/> -->
+            <br/>
 
             <div class="panel panel-default metadata-panel">
                 <div class="panel-heading">Informations complémentaires</div>

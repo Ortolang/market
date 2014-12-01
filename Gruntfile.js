@@ -339,7 +339,13 @@ module.exports = function (grunt) {
                         cwd: 'bower_components/components-font-awesome',
                         src: 'fonts/*',
                         dest: '<%= yeoman.dist %>/assets'
-                    }]
+                    }, {
+                        expand: true,
+                        cwd: 'bower_components/octicons',
+                        src: 'octicons/*',
+                        dest: '<%= yeoman.dist %>/assets'
+                    }
+                ]
             },
             devDist: {
                 files: [{
@@ -359,6 +365,7 @@ module.exports = function (grunt) {
                         'bower_components/**/*.map',
                         'bower_components/bootstrap/dist/fonts/*',
                         'bower_components/components-font-awesome/fonts/*',
+                        'bower_components/octicons/octicons/*',
                         '!bower_components/*/{src,src/**,test,test/**}'
                     ],
                     dest: '<%= yeoman.dist %>'
@@ -367,6 +374,13 @@ module.exports = function (grunt) {
                     cwd: '.',
                     src: [
                         'bower_components/angular-bootstrap-show-errors/**/*.js'
+                    ],
+                    dest: '<%= yeoman.dist %>'
+                }, {
+                    expand: true,
+                    cwd: '.',
+                    src: [
+                        'bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js'
                     ],
                     dest: '<%= yeoman.dist %>'
                 }]

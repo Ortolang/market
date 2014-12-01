@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
 
                 if (oobject.type === 'collection') {
                     if (oobject.object.root === true) {
-                        
+
                         if ($routeParams.view === 'browse') {
                             $scope.marketItemTemplate = 'market/market-item-collection.html';
                             return;
@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
                         if (oobject.object.metadatas.length > 0) {
                             //TODO find metadata in Resource name or rdf format ??
                             var metaKey = oobject.object.metadatas[0].key;
-                            
+
                             DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                 N3Serializer.fromN3(metaContent).then(function (data) {
                                     $scope.item = angular.copy(data);
@@ -54,6 +54,8 @@ angular.module('ortolangMarketApp')
                 console.error(reason);
             });
         }
+
+        $scope.browse = false;
 
         $scope.showPreview = function (preview) {
 
