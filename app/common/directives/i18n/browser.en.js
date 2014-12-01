@@ -38,7 +38,6 @@ angular.module('ortolangMarketApp')
             },
             PREVIEW: 'Preview',
             DELETE: 'Delete',
-            DOWNLOAD: 'Download',
             UPLOAD: 'Upload',
             UPLOAD_FILES: 'Import files',
             UPLOAD_FOLDER: 'Import folder',

@@ -870,14 +870,14 @@ angular.module('ortolangMarketApp')
                     'BROWSER.NEW_COLLECTION',
                     'BROWSER.PREVIEW',
                     'BROWSER.DELETE',
-                    'BROWSER.DOWNLOAD',
+                    'DOWNLOAD',
                     'BROWSER.UPLOAD_FILES',
                     'BROWSER.UPLOAD_FOLDER'
                 ]).then(function (translations) {
                     $scope.translationsNewCollection = translations['BROWSER.NEW_COLLECTION'];
                     $scope.translationsPreview = translations['BROWSER.PREVIEW'];
                     $scope.translationsDelete = translations['BROWSER.DELETE'];
-                    $scope.translationsDownload = translations['BROWSER.DOWNLOAD'];
+                    $scope.translationsDownload = translations['DOWNLOAD'];
                     $scope.translationsUploadFiles = translations['BROWSER.UPLOAD_FILES'];
                     $scope.translationsUploadFolder = translations['BROWSER.UPLOAD_FOLDER'];
                     viewModeLine.name = translations['BROWSER.VIEW_MODE_LINE'];

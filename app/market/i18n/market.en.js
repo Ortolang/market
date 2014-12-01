@@ -11,6 +11,11 @@ angular.module('ortolangMarketApp')
     .constant('MARKET_EN', {
         MARKET: {
             PUNCH_LINE: 'Search Ortolang',
-            REDACTOR_CHOICES: 'Redactor choices'
+            REDACTOR_CHOICES: 'Redactor choices',
+            CONDITIONS_OF_USE: 'Conditions of use',
+            BROWSE: 'Browse',
+            ADD_TO_FAVOURITES: 'Add to my favourites',
+            USE_IN_MY_PROJECT: 'Use in my project',
+            ADDITIONAL_INFORMATION: 'Additional information'
         }
     });

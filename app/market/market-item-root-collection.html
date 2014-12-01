@@ -2,16 +2,12 @@
     <header>
         <div class="media">
             <a class="pull-left">
-                <img src="../assets/images/no-image.png" class="thumbnail image"></img>
+                <img src="../assets/images/no-image.png" class="thumbnail image"/>
             </a>
             <div class="media-body">
                 <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
                 Par : <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a>
                 <span>Production de <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/producer']}}" class="lab">{{item['http://www.ortolang.fr/ontology/producer']}}</a></span>
-                <!-- <p class="actions">
-                    <a ng-href="{{downloadUrl}}" class="btn btn-primary">Télécharger</a>
-                    <a ng-href="#/market/{{itemKey}}?view=browse" class="btn btn-default">Afficher le contenu</a>
-                </p> -->
             </div>
         </div>
         <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">Retourner à la fiche</button>
@@ -21,7 +17,7 @@
 
         <div ng-show="!browse" class="col-md-8">
             <section ng-show="!browse" id="description">
-                <header>Description</header>
+                <header translate="DESCRIPTION"></header>
                 <p>{{item['http://purl.org/dc/elements/1.1/description']}}</p>
             </section>
             <!--<p><strong>Mots-clefs</strong></p>-->
@@ -58,16 +54,16 @@
 
         <aside ng-show="!browse" class="col-md-4">
             <div class="panel panel-default license-panel">
-                <div class="panel-heading">Condition d'utilisation</div>
+                <div class="panel-heading" translate="MARKET.CONDITIONS_OF_USE"></div>
                 <div class="panel-body">
                     <p><strong>{{item['http://www.ortolang.fr/ontology/useConditions']}}</strong></p>
                     <p ng-if="item['http://purl.org/dc/terms/licence']">{{item['http://purl.org/dc/terms/licence']}}</p>
                      <p>Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Aenean ut eros et nisl sagittis vestibulum.</p>
                      <p><a href="#">Plus de détails</a></p>
                      <div class="btn-group btn-group-justified">
-                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success">Télécharger</a>
+                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD"></a>
                          <div class="btn-group">
-                             <button class="btn btn-default btn-block" ng-click="browse = !browse">Voir contenu</button>
+                             <button class="btn btn-default btn-block" ng-click="browse = !browse" translate="MARKET.BROWSE"></button>
                          </div>
                      </div>
                 </div>
@@ -76,19 +72,19 @@
             <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">
-                        <span class="fa fa-heart"></span> Ajouter à mes favoris
+                        <span class="fa fa-heart"></span> {{'MARKET.ADD_TO_FAVOURITES' | translate}}
                     </button>
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-default">
-                        <span class="fa fa-folder"></span> Utiliser dans mon projet
+                        <span class="octicon octicon-repo-push"></span> {{'MARKET.USE_IN_MY_PROJECT' | translate}}
                     </button>
                 </div>
             </div>
             <br/>
 
             <div class="panel panel-default metadata-panel">
-                <div class="panel-heading">Informations complémentaires</div>
+                <div class="panel-heading" translate="MARKET.ADDITIONAL_INFORMATION"></div>
                 <div class="panel-body">
                     <dl class="dl-horizontal">
                         <dt ng-if="item['http://purl.org/dc/terms/extent']">Contenu</dt>

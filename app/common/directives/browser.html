@@ -116,7 +116,7 @@
                     <span ng-show="!hasOnlyParentSelected()" class="divider"></span>
 
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
-                        <a ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="{{'BROWSER.DOWNLOAD' | translate}}" bs-tooltip>
+                        <a ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-href="{{selectedElements[0].downloadUrl}}" data-title="{{'DOWNLOAD' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.download"></span>
                         </a>
                         <button ng-if="browserService.canDelete && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="{{'BROWSER.DELETE' | translate}}" bs-tooltip>
