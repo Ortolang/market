@@ -75,7 +75,9 @@ angular.module('ortolangMarketApp')
             N3Util = N3.Util,
             writer = N3.Writer(prefixesRDF);
 
-            writer.addTriple('${target}', N3Util.expandQName('dc:identifier', prefixesRDF), '"${targetKey}"');
+            if(!md[N3Util.expandQName('dc:identifier', prefixesRDF)]) {
+                writer.addTriple('${target}', N3Util.expandQName('dc:identifier', prefixesRDF), '"${targetKey}"');
+            }
             
             angular.forEach(md, function(valueElement, keyElement) {
 
