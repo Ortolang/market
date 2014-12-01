@@ -5,7 +5,7 @@
         <!-- <select name="type" class="form-control" ng-model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" ng-options="cat.id as cat.label for cat in categories" required>
             <option value="">Choisir une catégorie</option>
         </select> -->
-        <sparql-select label="'Catégorie de la ressource'" sparql="sparqlCategories" model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" required="'required'"></sparql-select>
+        <sparql-select label="'Catégorie de la ressource'" default-value="'Choisir une catégorie'" sparql="sparqlCategories" model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" required="'required'"></sparql-select>
     <!-- </div> -->
 
     <div class="form-group" show-errors>
@@ -33,11 +33,12 @@
         <input type="text" name="provenance" ng-model="md['http://www.ortolang.fr/ontology/provenance']" class="form-control">
     </div>
 
-    <div class="form-group" show-errors>
+    <!-- <div class="form-group" show-errors>
         <label>Droit d'utilisation *</label>
         <select name="useConditions" class="form-control" ng-model="md['http://www.ortolang.fr/ontology/useConditions']" ng-options="uc.id as uc.label for uc in useConditions" required>
         </select>
-    </div>
+    </div> -->
+    <sparql-select label="'Droit d\'utilisation'" default-value="'Choisir les conditions d\'utilisation'" sparql="sparqlConditionsOfUse" model="md['http://www.ortolang.fr/ontology/useConditions']" required="'required'"></sparql-select>
 
     <div class="form-group" show-errors>
         <label>Licence </label>
