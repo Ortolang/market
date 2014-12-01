@@ -1,11 +1,12 @@
 <form name="metadataMarketform" novalidate role="form" ng-controller="MetadataFormMarketOrtolangCtrl">
 
-    <div class="form-group" show-errors>
-        <label>Catégorie de la ressource *</label>
-        <select name="type" class="form-control" ng-model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" ng-options="cat.id as cat.label for cat in categories" required>
+    <!-- <div class="form-group" show-errors>
+        <label>Catégorie de la ressource *</label> -->
+        <!-- <select name="type" class="form-control" ng-model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" ng-options="cat.id as cat.label for cat in categories" required>
             <option value="">Choisir une catégorie</option>
-        </select>
-    </div>
+        </select> -->
+        <sparql-select label="'Catégorie de la ressource'" sparql="sparqlCategories" model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" required="'required'"></sparql-select>
+    <!-- </div> -->
 
     <div class="form-group" show-errors>
         <label>Titre *</label>

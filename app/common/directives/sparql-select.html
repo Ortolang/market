@@ -1,0 +1,7 @@
+
+<div class="form-group" show-errors>
+    <label>{{label}} {{requiredLabel}}</label>
+	<select name="type" class="form-control" ng-model="model" ng-options="cat.id as cat.label for cat in categories">
+	    <option value="">Choisir une catégorie</option>
+	</select>
+</div>
