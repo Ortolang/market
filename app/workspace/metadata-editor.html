@@ -4,7 +4,7 @@
     <div class="aside-content">
         <div class="metadataEditorHeader">
             <button type="button" class="close" ng-click="hideEditor()">&times;</button>
-            <h4 class="aside-title">{{userMetadataFormat.name}} de <em>{{selectedElements[0].name}}</em></h4>
+            <h4 class="aside-title">{{userMetadataFormat.name}} de <em>{{hasOnlyRootCollectionSelected() ? workspace.name : selectedElements[0].name}}</em></h4>
           </div>
           <div id="metadataEditorBody" class="aside-body">
             <blockquote>

@@ -1,0 +1,25 @@
+<div class="modal" id="create-workspace-modal" tabindex="-1" role="dialog" aria-labelledby="create-workspace-modal-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" id="create-workspace-modal-label" translate="WORKSPACE.CREATE_WORKSPACE_MODAL.TITLE"></h4>
+            </div>
+            <form role="form" id="create-workspace-form" class="form-horizontal" ng-submit="createWorkspace()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="new-workspace-name" class="col-sm-2 control-label" translate="NAME"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="$parent.newWorkspaceName" type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" required autofocus placeholder="{{'NAME' | translate}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" translate="WORKSPACE.CREATE_WORKSPACE_MODAL.SUBMIT"></button>
+                    <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

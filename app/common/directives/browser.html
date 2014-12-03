@@ -50,8 +50,8 @@
                     </div>
                 </div>
                 <div ng-if="!browserService.hasBreadcrumb" class="browser-breadcrumb">
-                    <button class="btn btn-default" onclick="window.history.back()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
-                    <button class="btn btn-default" onclick="window.history.forward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
+                    <!--<button class="btn btn-default" onclick="window.history.back()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>-->
+                    <!--<button class="btn btn-default" onclick="window.history.forward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>-->
                     <button class="btn btn-default" disabled>{{parent.name}}</button>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" role="toolbar">
@@ -94,9 +94,6 @@
                     </div>
 
                     <div class="btn-group">
-                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="publishWorkspace()" data-title="{{'BROWSER.PUBLISH' | translate}}" bs-tooltip>
-                            <span ng-class="icons.browser.publish"></span>
-                        </button>
                         <button ng-if="browserService.canChangeRoot && !forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSION' | translate}}" bs-tooltip>
                             <span ng-class="icons.browser.history"></span>
                         </button>
@@ -148,11 +145,11 @@
             <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
                 <ul class="dropdown-menu" role="menu">
-                    <!--<li><div data-toggle="modal" data-target="#new-collection-modal" translate="BROWSER.COLLECTION"></div></li>-->
+                    <!--<li><div ng-click="addCollection()" translate="BROWSER.COLLECTION"></div></li>-->
                     <!--<li class="divider"></li>-->
                     <!--<li><div ng-click="doAction('uploadFiles')">Import Files</div></li>-->
                     <!--<li class="divider"></li>-->
-                    <li><div data-toggle="modal" data-target="#create-workspace-modal" translate="BROWSER.WORKSPACE"></div></li>
+                    <li><div ng-click="createWorkspace()" translate="BROWSER.WORKSPACE"></div></li>
                 </ul>
             </div>
             <section id="my-workspaces">
@@ -185,51 +182,126 @@
 
         <div ng-if="browserService.displayAsideInfo" id="browser-sidebar" class="col-md-3 browser-aside browser-aside-right">
 
-            <p ng-if="hasOnlyOneElementSelected()" class="lead">
-                <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span> {{selectedElements[0].name}}
-            </p>
-            <p ng-if="!hasOnlyOneElementSelected()" class="lead">
-                <span ng-class="icons.files"></span> {{'BROWSER.ELEMENT' | translate:'{value: selectedElements.length}'}}
-            </p>
+            <div ng-show="!hasOnlyRootCollectionSelected()">
+                <p ng-if="hasOnlyOneElementSelected()" class="lead">
+                    <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span> {{selectedElements[0].name}}
+                </p>
+                <p ng-if="!hasOnlyOneElementSelected()" class="lead">
+                    <span ng-class="icons.files"></span> {{'BROWSER.ELEMENT' | translate:'{value: selectedElements.length}'}}
+                </p>
 
 
-            <div id="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
-                <div data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
-                    <div id="information">
-                        <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
-                            <dt translate="NAME"></dt>
-                            <dd>{{selectedElements[0].name}}</dd>
-                            <dt translate="BROWSER.DESCRIPTION"></dt>
-                            <dd>{{selectedElements[0].description}}</dd>
-                            <dt translate="BROWSER.AUTHOR"></dt>
-                            <dd>{{selectedElements[0].author}}</dd>
-                            <dt translate="TYPE"></dt>
-                            <dd>{{selectedElements[0].mimeType | contentType}}</dd>
-                            <dt translate="BROWSER.CREATION"></dt>
-                            <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
-                            <dt translate="BROWSER.MODIFICATION"></dt>
-                            <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
-                            <dt translate="BROWSER.CLOCK"></dt>
-                            <dd>{{selectedElements[0].clock}}</dd>
-                            <dt translate="BROWSER.KEY" class="key"></dt>
-                            <dd>{{selectedElements[0].key.substring(0,12)}}... <button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"  data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><span class="octicon octicon-clippy"></span></button></dd>
-                            <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
-                            <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></dd>
-                            <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>
-                            <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
-                        </dl>
+                <div class="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
+                    <div data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
+                        <div class="information">
+                            <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
+                                <dt translate="NAME"></dt>
+                                <dd>{{selectedElements[0].name}}</dd>
+                                <dt translate="BROWSER.DESCRIPTION"></dt>
+                                <dd>{{selectedElements[0].description}}</dd>
+                                <dt translate="BROWSER.AUTHOR"></dt>
+                                <dd>{{selectedElements[0].author}}</dd>
+                                <dt translate="TYPE"></dt>
+                                <dd>{{selectedElements[0].mimeType | contentType}}</dd>
+                                <dt translate="BROWSER.CREATION"></dt>
+                                <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
+                                <dt translate="BROWSER.MODIFICATION"></dt>
+                                <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
+                                <dt translate="BROWSER.CLOCK"></dt>
+                                <dd>{{selectedElements[0].clock}}</dd>
+                                <dt translate="BROWSER.KEY" class="key"></dt>
+                                <dd>{{selectedElements[0].key.substring(0,12)}}... <button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"  data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><span class="octicon octicon-clippy"></span></button></dd>
+                                <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
+                                <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></dd>
+                                <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>
+                                <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
+                            </dl>
 
-                        <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
-                            <dt translate="SIZE"></dt>
-                            <dd>{{selectedElementsSize() | bytes}}</dd>
-                        </dl>
+                            <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
+                                <dt translate="SIZE"></dt>
+                                <dd>{{selectedElementsSize() | bytes}}</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div data-title="{{'BROWSER.METADATA' | translate}}" bs-pane>
+                        <div ng-include="'workspace/browser-sidebar-metadata.html'" ng-controller="BrowserSidebarMetadataCtrl"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="hasOnlyRootCollectionSelected()">
+                <p class="lead workspace-name">{{wsName}}</p>
+                <div class="btn-toolbar workspace-toolbar" role="toolbar" ng-controller="BrowserSidebarMetadataCtrl">
+                    <div class="btn-group" role="group">
+                        <button ng-if="!hasPresentationMetadata()" class="btn btn-default" ng-click="showMetadataEditor('market-ortolang-n3')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA' | translate}}" bs-tooltip>
+                            <span class="octicon octicon-book"></span>
+                        </button>
+
+                        <div ng-if="hasPresentationMetadata()" id="list-metadata">
+                            <div ng-repeat="metadata in selectedElements[0].metadatas">
+                                <button type="button" class="btn btn-default" ng-click="editMetadata(metadata)"  data-title="{{'BROWSER.EDIT_PRESENTATION_METADATA' | translate}}" bs-tooltip>
+                                    <span class="octicon octicon-book"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button ng-if="browserService.canAdd && isHead" data-ng-disabled="!workspace.changed" ng-click="snapshotWorkspace()" class="btn btn-default" data-title="{{'BROWSER.SNAPSHOT' | translate}}" bs-tooltip>
+                            <span ng-class="icons.browser.snapshot"></span>
+                        </button>
+                    </div>
+                    <div ng-if="hasPresentationMetadata()" class="btn-group" role="group">
+                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" data-title="{{'BROWSER.PREVIEW_WORKSPACE' | translate}}" bs-tooltip data-ng-disabled="!hasPresentationMetadata()">
+                            <span ng-class="icons.browser.preview"></span>
+                        </button>
+                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="publishWorkspace()" data-title="{{'BROWSER.PUBLISH' | translate}}" bs-tooltip data-ng-disabled="!hasPresentationMetadata()">
+                            <span ng-class="icons.browser.publish"></span>
+                        </button>
+                    </div>
+                    <div ng-if="!hasPresentationMetadata()" class="btn-group" role="group">
+                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('market-ortolang-n3')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
+                            <span ng-class="icons.browser.preview"></span>
+                        </button>
+                        <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('market-ortolang-n3')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
+                            <span ng-class="icons.browser.publish"></span>
+                        </button>
                     </div>
                 </div>
 
-                <div data-title="{{'BROWSER.METADATA' | translate}}" bs-pane>
-                    <div ng-include="'workspace/browser-sidebar-metadata.html'" ng-controller="BrowserSidebarMetadataCtrl"></div>
+                <div class="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
+                    <div data-title="{{'BROWSER.HISTORY' | translate}}" bs-pane>
+                        <ul class="list-unstyled">
+                            <li ng-repeat="snapshotHistory in snapshotsHistory | orderBy:'date':true" class="panel panel-default" ng-if="getSnapshotNameFromHistory(snapshotHistory)">
+                                <div class="panel-body workspace-snapshot">
+                                    <div class="media">
+                                        <div class="pull-left">
+                                            <span class="fa fa-user fa-2x"></span>
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="creation">
+                                                {{'BROWSER.CREATED' | translate:'{author: snapshotHistory.author}'}}
+                                                <strong ng-click="changeRoot(getSnapshotFromHistory(snapshotHistory))">{{getSnapshotNameFromHistory(snapshotHistory)}}</strong>
+                                                <span class="small publication-status" ng-class="snapshotHistory.publicationStatus === 'draft' ? icons.browser.draft : icons.browser.publish" data-title="{{snapshotHistory.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="left" bs-tooltip></span>
+                                            </p>
+                                            <span class="date small">{{snapshotHistory.date | date:'medium'}}</span>
+                                            <!--<br/><span class="small">{{snapshotHistory.key}}</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div data-title="{{'BROWSER.MEMBERS' | translate}}" bs-pane>
+                        <ul class="list-group">
+                            <li ng-repeat="member in workspaceMembers.members" class="list-group-item">{{member}}</li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
+
         </div>
 
     </div>
@@ -239,69 +311,6 @@
     <div ng-include="'workspace/metadata-preview.html'"></div>
 
     <div ng-include="'common/visualizers/visualizer-template.html'"></div>
-
-    <div ng-if="browserService.canAdd && isHead" class="modal fade" id="new-collection-modal" tabindex="-1" role="dialog" aria-labelledby="new-collection-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only" translate="CLOSE"></span></button>
-                    <h4 class="modal-title" id="new-collection-modal-label" translate="BROWSER.NEW_COLLECTION"></h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="new-collection-name" class="col-sm-2 control-label" translate="NAME"></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="new-collection-name" placeholder="{{'NAME' | translate}}" ng-model="$parent.newCollectionName">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="new-collection-description" class="col-sm-2 control-label" translate="DESCRIPTION"></label>
-                            <div class="col-sm-10">
-                                <textarea id="new-collection-description" class="form-control" rows="3" placeholder="{{'DESCRIPTION' | translate}}" ng-model="$parent.newCollectionDescription"></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
-                    <button type="button" class="btn btn-primary add-collection" ng-click="addCollection()" translate="ADD"></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div ng-if="browserService.canAdd && isHead" class="modal fade" id="create-workspace-modal" tabindex="-1" role="dialog" aria-labelledby="create-workspace-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="create-workspace-modal-label" translate="BROWSER.CREATE_WORKSPACE"></h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form" id="create-workspace-form" class="form-horizontal">
-                        <div class="form-group">
-                            <label for="new-workspace-name" class="col-sm-2 control-label" translate="NAME"></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="new-workspace-name" name="new-workspace-name" autofocus placeholder="{{'NAME' | translate}}" ng-model="$parent.newWorkspaceName">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="new-workspace-type" class="col-sm-2 control-label" translate="TYPE"></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="new-workspace-type" name="new-workspace-type" placeholder="{{'TYPE' | translate}}" ng-model="$parent.newWorkspaceType">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="createWorkspace()" translate="CREATE"></button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" translate="CANCEL"></button>
-                </div>
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
     <div ng-if="browserService.canAdd && isHead" id="upload-queue" ng-class="uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
 </div>

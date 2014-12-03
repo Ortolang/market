@@ -168,9 +168,32 @@
       float: right;
     }
   }
+
+  .lead.workspace-name {
+    margin-bottom: @padding-large-vertical;
+  }
+  .workspace-toolbar {
+    margin-bottom: 2*@padding-large-vertical;
+  }
+
+  .workspace-snapshot {
+    .creation {
+      margin-bottom: @padding-xs-vertical;
+      position: relative;
+      padding-right: @padding-large-horizontal;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: break-all;
+      overflow: hidden;
+      span.publication-status {
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
 }
 
-#browser-side-tabs {
+.browser-side-tabs {
 
   ul.nav > li {
     margin-top: @navbar-margin-bottom;

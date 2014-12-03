@@ -42,17 +42,21 @@ angular.module('ortolangMarketApp')
             UPLOAD_FILES: 'Importer des fichiers',
             UPLOAD_FOLDER: 'Importer un dossier',
             NEW_COLLECTION: 'Nouveau dossier',
-            CREATE_WORKSPACE: 'Créer un espace de travail',
             PUBLISH: 'Publier l\'espace de travail',
-            PUBLISH_MODAL: {
-                TITLE: 'Publication d\'un espace de travail',
-                BODY: 'Êtes-vous sûr de vouloir publier l\'espace de travail "{{wsName}}" ?',
-                SUBMIT: 'Publier'
-            },
+            PREVIEW_WORKSPACE: 'Aperçu avant publication',
             VERSION: 'Versions de l\'espace de travail',
             BACK: 'Revenir',
             FORWARD: 'Avancer',
             TOGGLE_DROPDOWN: 'Menu déroulant',
-            COPY_TO_CLIPBOARD: 'Copier'
+            COPY_TO_CLIPBOARD: 'Copier',
+            MEMBERS: 'Membres',
+            HISTORY: 'Historique',
+            SNAPSHOT: 'Sauvegarder l\'état de l\'espace',
+            CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
+            CREATE_PRESENTATION_METADATA: 'Créer les métadonées de présentation',
+            EDIT_PRESENTATION_METADATA: 'Éditer les métadonées de présentation',
+            DRAFT: 'Brouillon',
+            PUBLISHED: 'Publié',
+            CREATED: '{{author}} a créé'
         }
     });

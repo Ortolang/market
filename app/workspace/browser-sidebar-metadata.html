@@ -2,7 +2,7 @@
 <div id="add-metadata">
     <a href="" id="add-metadata-title" class="list-group-item" ng-click="toggleMetadataEditorList()"><span ng-class="icons.browser.metadata"></span> {{'WORKSPACE.ADD_METADATA' | translate}}</a>
     <div class="list-group am-collapse collapse-box" ng-show="metadataEditorListVisibility">
-        <a ng-repeat="metadataFormat in metadataFormats" ng-click="showMetadataEditor(metadataFormat.id)" href="" class="list-group-item clickable">{{metadataFormat.name}}</a>
+        <a ng-repeat="metadataFormat in metadataFormats" ng-if="metadataFormat.displayed" ng-click="showMetadataEditor(metadataFormat.id)" href="" class="list-group-item clickable">{{metadataFormat.name}}</a>
     </div>
 </div>
 <br/>

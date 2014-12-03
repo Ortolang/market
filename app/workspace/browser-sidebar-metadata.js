@@ -37,27 +37,19 @@ angular.module('ortolangMarketApp')
                 id: 'market-ortolang-n3',
                 name: 'Présentation',
                 description: 'Les métadonnées de présentation permettent de paramétrer l\'affichage de la ressource dans la partie consultation du site.',
-                view: 'workspace/metadata-form-market-ortolang.html'
+                view: 'workspace/metadata-form-market-ortolang.html',
+                displayed: false
             },
             {
                 id: 'oai_dc',
                 name: 'OAI Dublin Core',
                 description: 'Les métadonnées OAI Dublin core permettent d\'être accessible via la protocole OAI-PMH.',
-                view: 'workspace/metadata-form-oai_dc.html'
+                view: 'workspace/metadata-form-oai_dc.html',
+                displayed: true
             }
         ];
 
         $scope.userMetadataFormat = null;
-        $scope.dropdownMetadataFormats = [
-            {
-                'text': 'Présentation',
-                'click': 'showMetadataEditor("market-ortolang-n3")'
-            },
-            {
-                'text': 'OAI Dublin Core',
-                'click': 'showMetadataEditor("oai_dc")'
-            }
-        ];
 
         $scope.showMetadataEditor = function (format) {
             var metadataFormat;
@@ -82,9 +74,9 @@ angular.module('ortolangMarketApp')
                     $rootScope.$broadcast('metadata-editor-edit', metadataFormat, data);
                 },
                 function (reason) {
-                    console.error('Get metadata content of ' + metadata.name + ' failed cause '+reason+' !');
-                });
-
+                    console.error('Get metadata content of ' + metadata.name + ' failed cause ' + reason + '!');
+                }
+            );
         };
 
         $scope.previewMetadata = function (metadata) {
@@ -92,13 +84,15 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.deleteMetadata = function (metadata) {
-            WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.selectedElements[0].path, metadataname: metadata.name}).$promise.then(function () {
-                $scope.selectedMetadata = undefined;
-                $scope.refreshSelectedElement();
-            },
-            function(reason) {
-                console.error('Cant delete metadata with name ' + metadata.name + ' failed cause '+reason+' !');
-            });
+            WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.selectedElements[0].path, metadataname: metadata.name}).$promise.then(
+                function () {
+                    $scope.selectedMetadata = undefined;
+                    $scope.refreshSelectedElement();
+                },
+                function (reason) {
+                    console.error('Cant delete metadata with name ' + metadata.name + ' failed cause '+reason+' !');
+                }
+            );
         };
 
 
