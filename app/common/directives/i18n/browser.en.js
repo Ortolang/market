@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
             CREATE_PRESENTATION_METADATA_FIRST: 'You must create presentation metadata first',
             CREATE_PRESENTATION_METADATA: 'Create presentation metadata',
             EDIT_PRESENTATION_METADATA: 'Edit presentation metadata',
-            DRAFT: 'Draft',
+            DRAFT: 'Not published',
             PUBLISHED: 'Published',
             CREATED: '{{author}} created'
         }

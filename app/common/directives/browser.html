@@ -272,7 +272,7 @@
                 <div class="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
                     <div data-title="{{'BROWSER.HISTORY' | translate}}" bs-pane>
                         <ul class="list-unstyled">
-                            <li ng-repeat="snapshotHistory in snapshotsHistory | orderBy:'date':true" class="panel panel-default" ng-if="getSnapshotNameFromHistory(snapshotHistory)">
+                            <li ng-repeat="snapshotHistory in snapshotsHistory | orderBy:'date':true" class="panel panel-default" ng-if="getSnapshotNameFromHistory(snapshotHistory)" ng-click="changeRoot(getSnapshotFromHistory(snapshotHistory))">
                                 <div class="panel-body workspace-snapshot">
                                     <div class="media">
                                         <div class="pull-left">
@@ -281,8 +281,8 @@
                                         <div class="media-body">
                                             <p class="creation">
                                                 {{'BROWSER.CREATED' | translate:'{author: snapshotHistory.author}'}}
-                                                <strong ng-click="changeRoot(getSnapshotFromHistory(snapshotHistory))">{{getSnapshotNameFromHistory(snapshotHistory)}}</strong>
-                                                <span class="small publication-status" ng-class="snapshotHistory.publicationStatus === 'draft' ? icons.browser.draft : icons.browser.publish" data-title="{{snapshotHistory.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="left" bs-tooltip></span>
+                                                <strong class="snapshot-name">{{getSnapshotNameFromHistory(snapshotHistory)}}</strong>
+                                                <span class="small publication-status" ng-class="[snapshotHistory.publicationStatus, icons.browser.published]" data-title="{{snapshotHistory.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="left" bs-tooltip></span>
                                             </p>
                                             <span class="date small">{{snapshotHistory.date | date:'medium'}}</span>
                                             <!--<br/><span class="small">{{snapshotHistory.key}}</span>-->

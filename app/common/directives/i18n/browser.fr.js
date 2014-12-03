@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
             CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
             CREATE_PRESENTATION_METADATA: 'Créer les métadonées de présentation',
             EDIT_PRESENTATION_METADATA: 'Éditer les métadonées de présentation',
-            DRAFT: 'Brouillon',
+            DRAFT: 'Non publié',
             PUBLISHED: 'Publié',
             CREATED: '{{author}} a créé'
         }

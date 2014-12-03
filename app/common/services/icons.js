@@ -50,6 +50,7 @@ angular.module('ortolangMarketApp')
                 publish: 'glyphicon glyphicon-ok',
                 snapshot: 'glyphicon glyphicon-floppy-disk',
                 history: 'glyphicon glyphicon-time',
-                draft: 'glyphicon glyphicon-pencil'
+                draft: 'octicon octicon-beer',
+                published: 'glyphicon glyphicon-globe'
             }
         });

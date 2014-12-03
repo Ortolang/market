@@ -15,7 +15,8 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
             id: 'market-ortolang-n3',
             name: 'Présentation',
             description: 'Les métadonnées de présentation permettent de paramétrer l\'affichage de la ressource dans la partie consultation du site.',
-            view: 'workspace/metadata-form-market-ortolang.html'
+            view: 'workspace/metadata-form-market-ortolang.html',
+            displayed: false
         };
 
     // Initialize the controller and a mock scope
@@ -24,7 +25,7 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         rootScope = $rootScope;
         sample = _sample_;
         WorkspaceElementResource = _WorkspaceElementResource_;
-        
+
         scope.refreshSelectedElement = function() {
             return 'michel';
         };
@@ -70,7 +71,7 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
 
     it('should send metadata-editor-show event with correct metadata format', function() {
         scope.showMetadataEditor('market-ortolang-n3');
-        
+
         expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-editor-show', md);
 
     });
@@ -94,7 +95,7 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
 
     it('should send metadata-preview event with correct metadata', function() {
         scope.previewMetadata('market-ortolang-n3');
-        
+
         expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-preview', 'market-ortolang-n3');
     });
 

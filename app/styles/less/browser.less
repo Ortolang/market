@@ -177,6 +177,7 @@
   }
 
   .workspace-snapshot {
+    cursor: pointer;
     .creation {
       margin-bottom: @padding-xs-vertical;
       position: relative;
@@ -188,6 +189,9 @@
       span.publication-status {
         position: absolute;
         right: 0;
+        &.draft {
+          opacity: 0.3;
+        }
       }
     }
   }
