@@ -55,6 +55,6 @@
   },
   "appPath": "app",
   "resolutions": {
-    "angular": "1.2.24"
+    "angular": "1.2.27"
   }
 }

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Ortolang Market AngularJS App",
   "repository": {
-    "type": "svn",
+    "type": "git",
     "url": ""
   },
   "private": true,
