@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
                     var queryStr = scope.sparql;
                     SemanticResultResource.get({query: queryStr}).$promise.then(function(sparqlResults) {
                         sparqlResults.results.bindings.forEach(function(result) {
-                            scope.categories.push({id: result.class.value, label: result.label.value});
+                            scope.categories.push(result.label.value);
                         });
                     });
                 }

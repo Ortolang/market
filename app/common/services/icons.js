@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
             officeWordFile: 'fa fa-file-word-o',
             officeExcelFile: 'fa fa-file-excel-o',
             officePowerpointFile: 'fa fa-file-powerpoint-o',
+            trash: 'glyphicon glyphicon-trash',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

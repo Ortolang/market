@@ -82,17 +82,30 @@
   }
   section {
     padding-top: 3*@padding-large-vertical;
-    margin-bottom: 2*@padding-large-vertical;
-    border-bottom: 1px solid @gray-lighter;
+    padding-bottom: 3*@padding-large-vertical;
+
     header {
       font-size: @font-size-h3;
       font-weight: 200;
       margin-bottom: @padding-large-vertical;
     }
+    article {
+     margin-left: @padding-large-horizontal; 
+
+     .pictureContributor {
+      font-size: 130px;
+      color: @thumbnail-border;
+     }
+    }
     p {
       text-align: justify;
     }
   }
+
+  section:not(:first-child) {
+      border-top: 1px solid @gray-lighter;
+    
+    }
 
     #preview {
 

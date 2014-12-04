@@ -14,7 +14,8 @@ angular.module('ortolangMarketApp')
              'dcterms': 'http://purl.org/dc/terms/',
              'market': 'http://www.ortolang.fr/2014/09/market#',
              'otl': 'http://www.ortolang.fr/ontology/',
-             'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'};
+             'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+             'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'};
     
     function isURL (entity) {
       return entity && entity.substr(0, 7) === 'http://';
@@ -40,15 +41,49 @@ angular.module('ortolangMarketApp')
 
             var N3Util = N3.Util;
             var parser = N3.Parser();
-            
+
+            var blankNodes = [];
 
             parser.parse(contentPurify,
                 function (error, triple) {
                     if (triple) {
-                        if (N3Util.isLiteral(triple.object)) {
-                          mdFromN3[triple.predicate] = angular.copy(N3Util.getLiteralValue(triple.object));
+
+                        if(triple.subject==='info:otl/target') {
+
+                            if (N3Util.isLiteral(triple.object)) {
+                              mdFromN3[triple.predicate] = angular.copy(N3Util.getLiteralValue(triple.object));
+                            } else {
+                                if(N3Util.isBlank(triple.object)) {
+                                    // mdFromN3[triple.predicate] = blankNode;
+                                    blankNodes[triple.object] = [];
+                                    mdFromN3[triple.predicate] = blankNodes[triple.object];
+                                } else {
+                                    mdFromN3[triple.predicate] = triple.object;
+                                    
+                                }
+                            }
                         } else {
-                          mdFromN3[triple.predicate] = triple.object;
+                            if(blankNodes[triple.subject]) {
+
+                                if (triple.predicate===N3Util.expandQName('rdfs:member', prefixesRDF)) {
+
+                                    // if(!angular.isArray(blankNodes[triple.subject])) {
+                                    //     blankNodes[triple.subject] = [];
+                                    // }
+
+                                    if (N3Util.isLiteral(triple.object)) {
+                                      blankNodes[triple.subject].push(angular.copy(N3Util.getLiteralValue(triple.object)));
+                                    } else {
+                                        // if(N3Util.isBlank(triple.object)) {
+                                            // mdFromN3[triple.predicate] = blankNode;
+                                            // blankNodeName = triple.object;
+                                        // } else {
+                                            blankNodes[triple.subject].push(triple.object);
+                                            
+                                        // }
+                                    }
+                                }
+                            }
                         }
                    }
                    else if(error) {
@@ -81,11 +116,24 @@ angular.module('ortolangMarketApp')
             
             angular.forEach(md, function(valueElement, keyElement) {
 
-              if (isURL(valueElement)) {
-                writer.addTriple('${target}', keyElement, valueElement);
-              } else {
-                writer.addTriple('${target}', keyElement, '"'+valueElement+'"');
-              }
+                if(angular.isArray(valueElement)) {
+                    var bag = '_:1';
+                    writer.addTriple('${target}', keyElement, bag);
+                    angular.forEach(valueElement, function(value) {
+                        // Needs value to be object {id:..., name:...}
+                        if (isURL(value)) {
+                            writer.addTriple(bag, N3Util.expandQName('rdfs:member', prefixesRDF), value);
+                        } else {
+                            writer.addTriple(bag, N3Util.expandQName('rdfs:member', prefixesRDF), '"'+value+'"');
+                        }
+                    });
+                } else {
+                    if (isURL(valueElement)) {
+                        writer.addTriple('${target}', keyElement, valueElement);
+                    } else {
+                        writer.addTriple('${target}', keyElement, '"'+valueElement+'"');
+                    }
+                }
             });
 
             writer.end(function (error, result) {

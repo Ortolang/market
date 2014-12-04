@@ -63,6 +63,11 @@ angular.module('ortolangMarketApp')
             });
         }
 
+        $scope.submitMetadataForm = function() {
+            // console.debug($scope.metadataMarketform);
+            $rootScope.$broadcast('metadata-form-submit');
+        };
+
         function resetMetadata() {
             $scope.selectedMetadata = undefined;
             $scope.selectedMetadataContent = undefined;

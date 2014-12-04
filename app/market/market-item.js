@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$sce', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $sce, $routeParams, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -107,6 +107,7 @@ angular.module('ortolangMarketApp')
             $scope.item = undefined; // RDF representation of the object
             $scope.previewCollection = undefined;
             $scope.marketItemTemplate = undefined; // Show info, browse, ...
+            $scope.description = $sce.trustAsHtml('The layout&lt;br/&gt; inside.');
         }
 
         function init() {
