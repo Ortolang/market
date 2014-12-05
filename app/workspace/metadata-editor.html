@@ -12,13 +12,13 @@
                         <buton class="btn btn-success" ng-click="submitMetadataForm()">
                             <span ng-class="icons.browser.publish"></span> Valider
                         </buton>
-                        <buton class="btn btn-default">
-                            <span ng-class="icons.browser.remove" ng-click="cancelMetadataForm()"></span> Annuler
+                        <buton class="btn btn-default" ng-click="hideEditor()">
+                            <span ng-class="icons.browser.remove"></span> Annuler
                         </buton>
                     </div>
                     <div class="btn-group ">
-                        <buton class="btn btn-default">
-                            <span ng-class="icons.trash" ng-click="removeMetadata()"></span> Supprimer
+                        <buton class="btn btn-default" ng-click="deleteMetadata()">
+                            <span ng-class="icons.browser.delete"></span> Supprimer
                         </buton>
                     </div>
                 </div>

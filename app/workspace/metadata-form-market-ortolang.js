@@ -31,13 +31,21 @@ angular.module('ortolangMarketApp')
         /*************
          * Listeners
          *************/
-        $rootScope.$on('browserSelectedElements', function ($event, elements) {
+        $rootScope.$on('browserSelectedElements', function ($event, elements, fileSelectId) {
             if (!$scope.md) {
                 $scope.md = {};
             }
-            $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].key;
-            $scope.preview = elements[0];
-            $scope.fileSelectModal.hide();
+            if (fileSelectId==='folderSelectModal') {
+                
+                $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].key;
+                $scope.preview = elements[0];
+                $scope.folderSelectModal.hide();
+            } else if (fileSelectId==='fileImageSelectModal') {
+
+                $scope.md['http://www.ortolang.fr/ontology/image'] = elements[0].key;
+                $scope.image = elements[0];
+                $scope.fileImageSelectModal.hide();
+            }
         });
 
         $rootScope.$on('metadata-form-submit', function ($event) {
@@ -59,22 +67,33 @@ angular.module('ortolangMarketApp')
             $scope.sparqlConditionsOfUse = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX otl: <http://www.ortolang.fr/2014/09/market#> SELECT DISTINCT ?label WHERE { ?class rdf:type rdfs:Class ; rdfs:subClassOf <http://www.ortolang.fr/2014/09/market#ConditionsOfUse> ; rdfs:label ?label . FILTER langMatches( lang(?label), "fr" ) }';
             // $scope.useConditions = [{id: 'free', label: 'Libre'}, {id: 'free-nc', label: 'Libre sans usage commercial'}, {id: 'restricted', label: 'Négociation nécessaire'}];
 
-            $scope.keywordsSuggestion = ['Sociologie', 'Linguistique'];
-            // $scope.keyword = ['Linguistique'];
+            $scope.sparqlSpartial = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?geographicRegion ?label ?p ?o WHERE { ?geographicRegion rdf:type <lvont:GeographicRegion> ; rdfs:label ?label .FILTER (langMatches( lang(?label), "fr") && regex(?label, "^$searchText", "i")) }';
 
-            var fileSelectModalScope = $rootScope.$new(true);
-            fileSelectModalScope.acceptMultiple = false;
-            fileSelectModalScope.forceMimeTypes = 'ortolang/collection';
-            fileSelectModalScope.forceWorkspace = $scope.wskey;
-            fileSelectModalScope.forceHead = true;
-            $scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: 'File select test', template: 'common/directives/file-select-modal-template.html', show: false});
+            var folderSelectModalScope = $rootScope.$new(true);
+            folderSelectModalScope.acceptMultiple = false;
+            folderSelectModalScope.forceMimeTypes = 'ortolang/collection';
+            folderSelectModalScope.forceWorkspace = $scope.wskey;
+            folderSelectModalScope.forceHead = true;
+            folderSelectModalScope.fileSelectId = 'folderSelectModal';
+            $scope.folderSelectModal = $modal({scope: folderSelectModalScope, title: 'Folder select', template: 'common/directives/file-select-modal-template.html', show: false});
+
+            var fileImageSelectModalScope = $rootScope.$new(true);
+            fileImageSelectModalScope.acceptMultiple = false;
+            fileImageSelectModalScope.forceMimeTypes = 'image';
+            fileImageSelectModalScope.forceWorkspace = $scope.wskey;
+            fileImageSelectModalScope.forceHead = true;
+            fileImageSelectModalScope.fileSelectId = 'fileImageSelectModal';
+            $scope.fileImageSelectModal = $modal({scope: fileImageSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
 
             if ($scope.selectedMetadataContent !== undefined) {
                 var mdFromN3 = N3Serializer.fromN3($scope.selectedMetadataContent);
                 mdFromN3.then(function (data) {
                     $scope.md = angular.copy(data);
-                    ObjectResource.get({oKey: $scope.md.preview}).$promise.then(function (data) {
+                    ObjectResource.get({oKey: $scope.md['http://www.ortolang.fr/ontology/preview']}).$promise.then(function (data) {
                         $scope.preview = data.object;
+                    });
+                    ObjectResource.get({oKey: $scope.md['http://www.ortolang.fr/ontology/image']}).$promise.then(function (data) {
+                        $scope.image = data.object;
                     });
                 });
             }

@@ -45,7 +45,8 @@
 
         <div class="form-group">
             <label>Origine spaciale des données </label>
-            <input type="text" name="spacial" ng-model="md['http://purl.org/dc/terms/spacial']" class="form-control">
+            <!-- <input type="text" name="spacial" ng-model="md['http://purl.org/dc/terms/spacial']" class="form-control"> -->
+            <div auto-complete sparql="sparqlSpartial" model="md['http://purl.org/dc/terms/spacial']" placeholder="'Code ISOXXX'"></div>
         </div>
 
         <div class="form-group">
@@ -54,15 +55,28 @@
         </div>
 
         <div class="form-group" show-errors>
+            <label>Illustration </label>
+            <div class="input-group">
+                <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="icons.imageFile"></span> {{image.name}}</span>
+                <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="fileImageSelectModal.show()" type="button">Selectionner</button>
+                </span>
+            </div>
+            <input type="hidden" name="image" ng-model="md['http://www.ortolang.fr/ontology/image']" class="form-control">
+        </div>
+
+        <div class="form-group" show-errors>
             <label>Aperçu </label>
             <div class="input-group">
-                <span class="form-control" ng-click="fileSelectModal.show()"><span ng-class="preview.mimeType | mimeTypeIconCss"></span> {{preview.name}}</span>
+                <span class="form-control" ng-click="folderSelectModal.show()"><span ng-class="icons.folder"></span> {{preview.name}}</span>
                 <span class="input-group-btn">
-                <button class="btn btn-default" ng-click="fileSelectModal.show()" type="button">Select workspace element</button>
+                <button class="btn btn-default" ng-click="folderSelectModal.show()" type="button">Selectionner</button>
                 </span>
             </div>
             <input type="hidden" name="preview" ng-model="md['http://www.ortolang.fr/ontology/preview']" class="form-control">
         </div>
+
+
     </div>
     <div class="col-md-9" ng-show="selectedTab=='rights'">
 

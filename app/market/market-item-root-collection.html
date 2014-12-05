@@ -2,7 +2,8 @@
     <header>
         <div class="media">
             <a class="pull-left">
-                <img src="../assets/images/no-image.png" class="thumbnail image"/>
+                <img ng-if="item.image == undefined" src="../assets/images/no-image.png" class="thumbnail image"/>
+                <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image"/>
             </a>
             <div class="media-body">
                 <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
@@ -167,7 +168,7 @@
                 <div class="panel-body">
                     <!-- <p ng-bind="item['http://www.ortolang.fr/ontology/statusOfUse']"></p> -->
                     <p ng-bind="item['http://www.ortolang.fr/ontology/conditionsOfUse']"></p>
-                    <a ng-if="item['http://purl.org/dc/terms/licence']" ng-href="item['http://purl.org/dc/terms/licence']" translate="MARKET.LICENCE_DETAIL" target="_BLANK"></a>
+                    <p><a ng-if="item['http://purl.org/dc/terms/licence']" ng-href="{{item['http://purl.org/dc/terms/licence']}}" translate="MARKET.LICENCE_DETAIL" target="_BLANK"></a></p>
                     <div class="btn-group btn-group-justified">
                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD"></a>
                         <div class="btn-group">
