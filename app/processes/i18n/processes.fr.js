@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             PROCESSES: 'Processus',
             NO_ACTIVE_PROCCESS: 'Pas de processus actifs',
             COMPLETED_PROCESSES: 'Processus complétés',
+            ABORTED_PROCESSES: 'Processus avortés',
             NO_COMPLETED_PROCESS: 'Pas de processus complétés',
             TASKS: 'Tâches',
             NO_TASK: 'Pas de tâches',

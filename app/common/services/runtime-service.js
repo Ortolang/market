@@ -63,7 +63,9 @@ angular.module('ortolangMarketApp')
         }
 
         function getActiveProcesses() {
-            return getProcessesOfType(states.completed, true);
+            return $filter('filter')($rootScope.processes, function (value) {
+                return !(value.state === states.completed || value.state === states.aborted);
+            });
         }
 
         function activeProcessesNumber() {
@@ -77,16 +79,20 @@ angular.module('ortolangMarketApp')
             return activeProcessesNumber() > 0;
         }
 
-        function getProcessesOfType(type, not) {
+        function getProcessesWithState(state, not) {
             if ($rootScope.processes) {
-                return $filter('filter')($rootScope.processes, {state: (not ? '!' : '') + type});
+                return $filter('filter')($rootScope.processes, {state: (not ? '!' : '') + state});
             }
             return [];
         }
 
-        function hasProcessesOfType(type) {
+        function hasProcessesWithState(state) {
             if ($rootScope.processes) {
-                return getProcessesOfType(type).length > 0;
+                for (var i = 0; i < $rootScope.processes.length; i++) {
+                    if ($rootScope.processes[i].state === state) {
+                        return true;
+                    }
+                }
             }
             return false;
         }
@@ -94,7 +100,7 @@ angular.module('ortolangMarketApp')
         function refreshProcesses() {
             RuntimeResource.processes().$promise.then(function (data) {
                 $rootScope.processes = data.entries;
-                completedProcesses = getProcessesOfType(states.completed);
+                completedProcesses = getProcessesWithState(states.completed);
                 var justCompletedProcesses = $filter('filter')(activeProcesses, function (activeProcess) {
                     return $filter('filter')(completedProcesses, {key: activeProcess.key}).length > 0;
                 });
@@ -238,9 +244,10 @@ angular.module('ortolangMarketApp')
             createProcess: createProcess,
             selectProcess: selectProcess,
             activeProcessesNumber: activeProcessesNumber,
+            getActiveProcesses: getActiveProcesses,
             hasActiveProcesses: hasActiveProcesses,
-            hasProcessesOfType: hasProcessesOfType,
-            getProcessesOfType: getProcessesOfType,
+            hasProcessesWithState: hasProcessesWithState,
+            getProcessesWithState: getProcessesWithState,
             getStates: getStates,
             // Tasks
             claimTask: claimTask,
