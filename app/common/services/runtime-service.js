@@ -8,9 +8,9 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Runtime', ['$rootScope', '$filter', '$timeout', '$modal', '$translate', 'FormResource', 'RuntimeResource', function ($rootScope, $filter, $timeout, $modal, $translate, FormResource, RuntimeResource) {
+    .factory('Runtime', ['$rootScope', '$filter', '$timeout', '$modal', '$alert', '$translate', 'FormResource', 'RuntimeResource', function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource) {
 
-        var translationsStartProcess, translationsCompleteTask, processModal, completeTaskModal, processesTimeout, tasksTimeout,
+        var translationsStartProcess, translationsCompleteTask, translationsProcess, translationsJustCompleted, processModal, completeTaskModal, processesTimeout, tasksTimeout,
             states = {
                 pending: 'PENDING',
                 submitted: 'SUBMITTED',
@@ -19,7 +19,9 @@ angular.module('ortolangMarketApp')
                 aborted: 'ABORTED',
                 completed: 'COMPLETED'
             },
-            timeout = 5000;
+            timeout = 5000,
+            activeProcesses = [],
+            completedProcesses;
 
         function createProcessFromForm(formKey, template) {
             FormResource.get({formKey: formKey}, {}, function (form) {
@@ -60,29 +62,30 @@ angular.module('ortolangMarketApp')
             $rootScope.selectedProcess = process;
         }
 
+        function getActiveProcesses() {
+            return getProcessesOfType(states.completed, true);
+        }
+
         function activeProcessesNumber() {
             if ($rootScope.processes) {
-                return ($filter('filter')($rootScope.processes, {state : '!' + states.completed})).length;
+                return getActiveProcesses().length;
             }
             return 0;
         }
 
         function hasActiveProcesses() {
-            if ($rootScope.processes) {
-                return activeProcessesNumber() > 0;
-            }
-            return false;
+            return activeProcessesNumber() > 0;
         }
 
-        function getProcessesOfType(type) {
-            if ($rootScope.processes && states[type]) {
-                return $filter('filter')($rootScope.processes, {state: states[type]});
+        function getProcessesOfType(type, not) {
+            if ($rootScope.processes) {
+                return $filter('filter')($rootScope.processes, {state: (not ? '!' : '') + type});
             }
             return [];
         }
 
         function hasProcessesOfType(type) {
-            if ($rootScope.processes && states[type]) {
+            if ($rootScope.processes) {
                 return getProcessesOfType(type).length > 0;
             }
             return false;
@@ -91,7 +94,18 @@ angular.module('ortolangMarketApp')
         function refreshProcesses() {
             RuntimeResource.processes().$promise.then(function (data) {
                 $rootScope.processes = data.entries;
-                $rootScope.activeProcessesNbr = activeProcessesNumber();
+                completedProcesses = getProcessesOfType(states.completed);
+                var justCompletedProcesses = $filter('filter')(activeProcesses, function (activeProcess) {
+                    return $filter('filter')(completedProcesses, {key: activeProcess.key}).length > 0;
+                });
+                angular.forEach(justCompletedProcesses, function (justCompletedProcess) {
+                    $alert({title: translationsProcess, content: justCompletedProcess.name + translationsJustCompleted, placement: 'top-right', type: 'success', show: true});
+                    if (justCompletedProcess.type === 'publish-workspace') {
+                        $rootScope.$broadcast('publishWorkspaceCompleted');
+                    }
+                });
+                activeProcesses = getActiveProcesses();
+                $rootScope.activeProcessesNbr = activeProcesses.length;
                 if ($rootScope.activeProcessesNbr === 0) {
                     $timeout.cancel(processesTimeout);
                     $timeout.cancel(tasksTimeout);
@@ -200,10 +214,14 @@ angular.module('ortolangMarketApp')
         function initTranslations() {
             $translate([
                 'PROCESSES.START_PROCESS',
-                'PROCESSES.COMPLETE_TASK'
+                'PROCESSES.COMPLETE_TASK',
+                'PROCESSES.PROCESS',
+                'PROCESSES.JUST_COMPLETED'
             ]).then(function (translations) {
                 translationsStartProcess = translations['PROCESSES.START_PROCESS'];
                 translationsCompleteTask = translations['PROCESSES.COMPLETE_TASK'];
+                translationsProcess = translations['PROCESSES.PROCESS'];
+                translationsJustCompleted = translations['PROCESSES.JUST_COMPLETED'];
             });
         }
 

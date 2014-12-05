@@ -23,6 +23,7 @@ angular
         'mgcrea.ngStrap.tooltip',
         'mgcrea.ngStrap.dropdown',
         'mgcrea.ngStrap.typeahead',
+        'mgcrea.ngStrap.alert',
         'hljs',
         'cfp.hotkeys',
         'formly',

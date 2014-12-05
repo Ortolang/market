@@ -605,6 +605,11 @@ angular.module('ortolangMarketApp')
                 getParentData(false);
             });
 
+            $rootScope.$on('publishWorkspaceCompleted', function () {
+                getParentData(true);
+                getSnapshotsHistory();
+            });
+
             $scope.changeWorkspace = function (workspace) {
                 if (!$scope.forceWorkspace && workspace.key !== $scope.wskey) {
                     initWorkspaceVariables(workspace);

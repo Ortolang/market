@@ -31,10 +31,10 @@
         <section id="completed-processes" class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading" translate="PROCESSES.COMPLETED_PROCESSES"></div>
-                <div ng-if="!Runtime.hasProcessesOfType('completed')" class="panel-body">
+                <div ng-if="!Runtime.hasProcessesOfType(Runtime.getStates().completed)" class="panel-body">
                     <p translate="PROCESSES.NO_COMPLETED_PROCESS"></p>
                 </div>
-                <table ng-if="Runtime.hasProcessesOfType('completed')" class="table table-responsive">
+                <table ng-if="Runtime.hasProcessesOfType(Runtime.getStates().completed)" class="table table-responsive">
                     <thead>
                     <tr>
                         <th translate="NAME"></th>
