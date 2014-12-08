@@ -88,7 +88,11 @@ angular.module('ortolangMarketApp')
 
         function hasProcessesWithState(state) {
             if ($rootScope.processes) {
-                for (var i = 0; i < $rootScope.processes.length; i++) {
+                console.debug('$rootScope.processes', $rootScope.processes);
+                console.debug('state', state);
+                var i;
+                for (i = 0; i < $rootScope.processes.length; i++) {
+                    console.debug('i', i, '$rootScope.processes[i].state', $rootScope.processes[i].state);
                     if ($rootScope.processes[i].state === state) {
                         return true;
                     }
