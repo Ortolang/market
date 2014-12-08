@@ -36,9 +36,10 @@ describe('Factory: Runtime', function () {
         var states = Runtime.getStates();
         expect(Runtime.hasProcessesWithState).toBeDefined();
         //$rootScope.processes = [sample().completedProcess, sample().pendingProcess];
+        $rootScope.processes = [sample().pendingProcess];
         //expect(Runtime.hasProcessesWithState(states.completed)).toBe(true);
-        //expect(Runtime.hasProcessesWithState(states.pending)).toBe(true);
-        //expect(Runtime.hasProcessesWithState(states.aborted)).toBe(false);
+        expect(Runtime.hasProcessesWithState(states.pending)).toBe(true);
+        expect(Runtime.hasProcessesWithState(states.aborted)).toBe(false);
         //expect(Runtime.hasProcessesWithState('TOTO')).toBe(false);
     });
 
