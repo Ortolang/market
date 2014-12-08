@@ -33,10 +33,10 @@ angular.module('ortolangVisualizers')
             return registry.push(visualizer);
         };
 
-        this.getCompatibleVisualizers = function (mimeType, name) {
+        this.getCompatibleVisualizers = function (elements) {
             var compatibleVisualizers = [];
             angular.forEach(registry, function (visualizer) {
-                if (visualizer.isCompatible(mimeType, name)) {
+                if (visualizer.isCompatible(elements)) {
                     this.push(visualizer);
                 }
             }, compatibleVisualizers);
@@ -88,6 +88,7 @@ angular.module('ortolangVisualizers')
             this.description = undefined;
             this.compatibleTypes = undefined;
             this.needAllChildrenData = false;
+            this.acceptMultiple = false;
 
             angular.forEach(config, function (value, key) {
                 if (this.hasOwnProperty(key)) {
@@ -122,13 +123,50 @@ angular.module('ortolangVisualizers')
                 return this.element;
             },
 
-            isCompatible: function (mimeType, name) {
+            isAcceptingSingle: function () {
+                return !this.acceptMultiple;
+            },
+
+            isAcceptingMultiple: function () {
+                return this.acceptMultiple;
+            },
+
+            isCompatibleHelper: function (element, _compatibleTypes_) {
+                var compatibleTypes = _compatibleTypes_ || this.compatibleTypes;
                 // If mimetype is given with an array of compatible file extensions
-                if (angular.isObject(this.compatibleTypes[mimeType])) {
+                if (angular.isObject(compatibleTypes[element.mimeType])) {
                     // check if the file extension is compatible
-                    return this.compatibleTypes[mimeType][name.substr((~-name.lastIndexOf('.') >>> 0) + 2)] || false;
+                    return compatibleTypes[element.mimeType][element.name.substr((~-name.lastIndexOf('.') >>> 0) + 2)] || false;
                 }
-                return this.compatibleTypes[mimeType] || false;
+                return compatibleTypes[element.mimeType] || false;
+            },
+
+            isCompatible: function (elements) {
+                console.debug('Checking if ' + this.name + ' is compatible with ', elements);
+                if (elements.length === 1) {
+                    console.debug('One element selected');
+                    return this.isAcceptingSingle() && this.isCompatibleHelper(elements[0]);
+                } else {
+                    console.debug('Multiple element selected');
+                    if (this.isAcceptingMultiple()) {
+                        var compatibleTypesArray = angular.copy(this.compatibleTypes),
+                            matchingCompatibleTypesArray = [];
+
+                        angular.forEach(elements, function (element) {
+                            console.debug('visualizer.isCompatible(element.mimeType, element.name)', element.mimeType, element.name);
+                            var j;
+                            for (j = 0; j < compatibleTypesArray.length; j++) {
+                                if (this.isCompatibleHelper(element, compatibleTypesArray[j])) {
+                                    matchingCompatibleTypesArray.push(compatibleTypesArray.splice(j, 1)[0]);
+                                    break;
+                                }
+                            }
+                            console.debug(compatibleTypesArray, matchingCompatibleTypesArray);
+                        }, this);
+                        return compatibleTypesArray.length === 0;
+                    }
+                }
+
             }
         };
 

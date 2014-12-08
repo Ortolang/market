@@ -172,14 +172,13 @@ angular.module('ortolangMarketApp')
                         child.element = data;
                         if (isPush) {
                             pushSelectedElement(data);
-                            clearVisualizers();
                         } else {
                             newSelectedElement(data);
-                            checkCompatibleVisualizers(data);
                         }
                         if (!refresh) {
                             $scope.contextMenu(clickEvent, false);
                         }
+                        checkCompatibleVisualizers();
                     });
             }
 
@@ -279,11 +278,10 @@ angular.module('ortolangMarketApp')
 
             function deselectChild(child) {
                 $scope.selectedElements = $filter('filter')($scope.selectedElements, {key: '!' + child.key}, true);
-                if ($scope.hasOnlyOneElementSelected()) {
-                    checkCompatibleVisualizers($scope.selectedElements[0]);
-                } else if ($scope.selectedElements.length === 0) {
+                if ($scope.selectedElements.length === 0) {
                     newSelectedElement($scope.parent);
                 }
+                checkCompatibleVisualizers();
             }
 
             function deselectOthers(element) {
@@ -516,8 +514,8 @@ angular.module('ortolangMarketApp')
                 $scope.visualizers = undefined;
             }
 
-            function checkCompatibleVisualizers(element) {
-                $scope.visualizers = VisualizerManager.getCompatibleVisualizers(element.mimeType, element.name);
+            function checkCompatibleVisualizers() {
+                $scope.visualizers = VisualizerManager.getCompatibleVisualizers($scope.selectedElements);
                 if ($scope.visualizers.length === 0) {
                     clearVisualizers();
                 }
