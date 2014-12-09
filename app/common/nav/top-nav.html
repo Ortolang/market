@@ -36,6 +36,6 @@
         <li ng-click="changeLanguage('en')" ng-if="currentLanguage !== 'en'" class="language">EN</li>
         <li><a href="#/register"><i class="fa fa-bookmark fa-fw"></i> {{'NAV.REGISTER' | translate}}</a></li>
         <li class="divider-vertical"></li>
-        <li><a href="#/login"><i class="fa fa-user fa-fw"></i> {{'LOG_IN' | translate}}</a></li>
+        <li><a ng-click="login()"><i class="fa fa-user fa-fw"></i> {{'LOG_IN' | translate}}</a></li>
     </ul>
 </nav>

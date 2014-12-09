@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
         authService.getUser = function (credentials) {
             //TODO replace this by a token
             var auth = window.btoa(credentials.username + ':' + credentials.password), deferred = $q.defer();
-            $http.defaults.headers.common.Authorization = 'Basic ' + auth;
+//            $http.defaults.headers.common.Authorization = 'Basic ' + auth;
             ProfileResource.connected().$promise.then(
                 // 303 redirect
                 function (user) {
