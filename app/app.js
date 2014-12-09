@@ -29,7 +29,8 @@ angular
         'formly',
         'ui.bootstrap.showErrors',
         'pascalprecht.translate',
-        'zeroclipboard'
+        'zeroclipboard',
+        'diff-match-patch'
     ])
     .config(function ($routeProvider) {
         $routeProvider

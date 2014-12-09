@@ -25,7 +25,7 @@ angular.module('ortolangVisualizers')
             var i = 0;
             for (i; i < registry.length; i++) {
                 if (registry[i].id === visualizer.id) {
-                    console.error('A visualizer with the id "' + visualizer.id + '" has already been registered');
+                    console.error('A visualizer with the id "' + visualizer.getId() + '" has already been registered');
                     return;
                 }
             }
@@ -46,24 +46,32 @@ angular.module('ortolangVisualizers')
         this.getAllSupportedMimeTypes = function () {
             var allSupportedMimeTypes = {};
             angular.forEach(registry, function (visualizer) {
-                angular.forEach(visualizer.compatibleTypes, function (value, key) {
-                    // if already supported by previous visualizers
-                    if (allSupportedMimeTypes[key]) {
-                        // if mime type compatibility restricted to given file extensions
-                        if (angular.isObject(allSupportedMimeTypes[key])) {
-                            // if value is an object we extend the list of compatible file extensions
-                            if (angular.isObject(value)) {
-                                angular.extend(allSupportedMimeTypes[key], value);
-                            } else if (value) {
-                                // else means that visualizer is compatible with any file extensions
+                var compatibleTypesArray;
+                if (visualizer.isAcceptingSingle()) {
+                    compatibleTypesArray = [angular.copy(visualizer.getCompatibleTypes())];
+                } else {
+                    compatibleTypesArray = angular.copy(visualizer.getCompatibleTypes());
+                }
+                angular.forEach(compatibleTypesArray, function (compatibleTypes) {
+                    angular.forEach(compatibleTypes, function (value, key) {
+                        // if already supported by previous visualizers
+                        if (allSupportedMimeTypes[key]) {
+                            // if mime type compatibility restricted to given file extensions
+                            if (angular.isObject(allSupportedMimeTypes[key])) {
+                                // if value is an object we extend the list of compatible file extensions
+                                if (angular.isObject(value)) {
+                                    angular.extend(allSupportedMimeTypes[key], value);
+                                } else if (value) {
+                                    // else means that visualizer is compatible with any file extensions
+                                    allSupportedMimeTypes[key] = value;
+                                }
+                            }
+                        } else {
+                            if (value) {
                                 allSupportedMimeTypes[key] = value;
                             }
                         }
-                    } else {
-                        if (value) {
-                            allSupportedMimeTypes[key] = value;
-                        }
-                    }
+                    });
                 });
             });
             return allSupportedMimeTypes;
@@ -142,26 +150,19 @@ angular.module('ortolangVisualizers')
             },
 
             isCompatible: function (elements) {
-                console.debug('Checking if ' + this.name + ' is compatible with ', elements);
                 if (elements.length === 1) {
-                    console.debug('One element selected');
                     return this.isAcceptingSingle() && this.isCompatibleHelper(elements[0]);
                 } else {
-                    console.debug('Multiple element selected');
                     if (this.isAcceptingMultiple()) {
-                        var compatibleTypesArray = angular.copy(this.compatibleTypes),
-                            matchingCompatibleTypesArray = [];
-
+                        var compatibleTypesArray = angular.copy(this.compatibleTypes);
                         angular.forEach(elements, function (element) {
-                            console.debug('visualizer.isCompatible(element.mimeType, element.name)', element.mimeType, element.name);
                             var j;
                             for (j = 0; j < compatibleTypesArray.length; j++) {
                                 if (this.isCompatibleHelper(element, compatibleTypesArray[j])) {
-                                    matchingCompatibleTypesArray.push(compatibleTypesArray.splice(j, 1)[0]);
+                                    compatibleTypesArray.splice(j, 1);
                                     break;
                                 }
                             }
-                            console.debug(compatibleTypesArray, matchingCompatibleTypesArray);
                         }, this);
                         return compatibleTypesArray.length === 0;
                     }

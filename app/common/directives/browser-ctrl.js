@@ -528,22 +528,27 @@ angular.module('ortolangMarketApp')
                 } else {
                     isolatedScope.elements = $scope.selectedElements;
                 }
-                var element = $compile(visualizer.element)(isolatedScope),
+                var element = $compile(visualizer.getElement())(isolatedScope),
                     visualizerModal = $('#visualizer-modal');
-                visualizerModal.find('.modal-header strong').text(visualizer.name);
+                visualizerModal.find('.modal-header strong').text(visualizer.getName());
                 visualizerModal.find('.modal-body').empty().append(element);
                 visualizerModal.modal('show');
                 $scope.contextMenu();
             }
 
             $scope.clickPreview = function (_visualizer_) {
-                var visualizer = _visualizer_ || $scope.visualizers[0];
-                if (visualizer.needAllChildrenData) {
-                    getChildrenDataOfTypes(visualizer.compatibleTypes, true, visualizer);
-                } else {
-                    $scope.children = undefined;
-                    finishPreview(visualizer);
-                }
+                //if (_visualizer_ || $scope.visualizers) {
+                    var visualizer = _visualizer_ || $scope.visualizers[0];
+                    if (visualizer.needAllChildrenData) {
+                        // TODO Won't work for visualizers accepting multiple
+                        if (visualizer.isAcceptingSingle()) {
+                            getChildrenDataOfTypes(visualizer.getCompatibleTypes(), true, visualizer);
+                        }
+                    } else {
+                        $scope.children = undefined;
+                        finishPreview(visualizer);
+                    }
+                //}
             };
 
             $scope.browseToPath = function (path) {
@@ -599,7 +604,7 @@ angular.module('ortolangMarketApp')
                     if ($scope.browserService.isFileSelect) {
                         $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy(), $scope.fileSelectId);
                     } else {
-                        if ($scope.allSuportedMimeTypes[child.mimeType]) {
+                        if ($scope.visualizers) {
                             $scope.clickPreview();
                         }
                     }
@@ -953,7 +958,6 @@ angular.module('ortolangMarketApp')
                 $scope.reverse = false;
                 // Visualizers
                 $scope.visualizers = undefined;
-                $scope.allSuportedMimeTypes = VisualizerManager.getAllSupportedMimeTypes();
                 // Workspace
                 $scope.snapshotsHistory = undefined;
                 $scope.workspaceMembers = undefined;
