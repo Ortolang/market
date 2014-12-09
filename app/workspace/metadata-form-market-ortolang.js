@@ -9,7 +9,6 @@
  */
 angular.module('ortolangMarketApp')
     .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', 'SemanticResultResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource, SemanticResultResource) {
-
         $scope.selectTab = function(tabName) {
             $scope.selectedTab = tabName;
         }
@@ -48,8 +47,13 @@ angular.module('ortolangMarketApp')
             }
         });
 
-        $rootScope.$on('metadata-form-submit', function ($event) {
+
+        var deregistration = $rootScope.$on('metadata-form-submit', function ($event) {
            $scope.submitMetadata($scope.metadataMarketform, $scope.md);
+        });
+
+        $scope.$on('$destroy', function () {
+            deregistration();
         });
 
         function init() {
