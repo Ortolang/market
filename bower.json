@@ -27,7 +27,6 @@
     "zeroclipboard": "~2.1.6",
     "holderjs": "~2.4.1",
     "octicons": "~2.1.2",
-    "popcorn-js": "~1.5.10",
     "angular-diff-match-patch": "~0.1.5"
   },
   "devDependencies": {
