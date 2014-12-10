@@ -44,7 +44,7 @@ angular.module('ortolangMarketApp')
                     $scope.authenticated = AuthService.isAuthenticated();
                     // console.debug('User is Authenticated ?' + $scope.authenticated);
                     if ($scope.authenticated) {
-                        AuthService.setUserId($scope.currentUser.id);
+                        //AuthService.setUserId($scope.currentUser.id);
                     }
                 });
             }

@@ -88,23 +88,23 @@ angular
             'http://localhost:8080/**'
         ]);
     })
-    .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(function ($q, $location) {
-            return {
-                'response': function (response) {
-                    console.log('HTTP Status code ' + response.status + ': ' + response.statusText);
-                    return response;
-                },
-                'responseError': function (rejection) {
-                    if (rejection.status === 401) {
-                        $location.path('/login');
-                    }
-                    console.log('HTTP Status code ' + rejection.status + ': ' + rejection.statusText);
-                    return $q.reject(rejection);
-                }
-            };
-        });
-    }])
+    //.config(['$httpProvider', function ($httpProvider) {
+    //    $httpProvider.interceptors.push(function ($q, $location) {
+    //        return {
+    //            'response': function (response) {
+    //                console.log('HTTP Status code ' + response.status + ': ' + response.statusText);
+    //                return response;
+    //            },
+    //            'responseError': function (rejection) {
+    //                if (rejection.status === 401) {
+    //                    $location.path('/login');
+    //                }
+    //                console.log('HTTP Status code ' + rejection.status + ': ' + rejection.statusText);
+    //                return $q.reject(rejection);
+    //            }
+    //        };
+    //    });
+    //}])
     .config(function ($tooltipProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body'

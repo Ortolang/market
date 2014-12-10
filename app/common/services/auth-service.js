@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-      .factory('AuthService', ['$http', '$location', 'User', 'ProfileResource', 'WorkspaceResource', 'param', '$q', '$filter', function ($http, $location, User, ProfileResource, WorkspaceResource, param, $q, $filter) {
+      .factory('AuthService', ['$http', '$location', 'User', 'ProfileResource', 'WorkspaceResource', 'param', '$q', '$filter', 'Auth', function ($http, $location, User, ProfileResource, WorkspaceResource, param, $q, $filter, Auth) {
         var authService = {};
         /**
          * Get the user profile from the rest API
@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
          * @returns {boolean}
          */
         authService.isAuthenticated = function () {
-            return !!User.userId;
+            return Auth.isAuthenticated();
         };
         /**
          * Check if user is authorized

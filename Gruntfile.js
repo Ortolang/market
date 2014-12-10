@@ -71,12 +71,18 @@ module.exports = function (grunt) {
         connect: {
             options: {
                 port: 9000,
+                protocol: 'https',
+                key: grunt.file.read('server.key').toString(),
+                cert: grunt.file.read('server.crt').toString(),
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost',
                 livereload: 35729
             },
             livereload: {
                 options: {
+                    protocol: 'https',
+                    key: grunt.file.read('server.key').toString(),
+                    cert: grunt.file.read('server.crt').toString(),
                     open: true,
                     middleware: function (connect) {
                         return [

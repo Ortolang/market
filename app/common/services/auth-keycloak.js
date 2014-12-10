@@ -1,85 +1,58 @@
 var module = angular.module('ortolangMarketApp');
 
-//var auth = {};
-//var logout = function(){
-//    console.log('*** LOGOUT');
-//    auth.loggedIn = false;
-//    auth.authz = null;
-//    window.location = auth.logoutUrl;
-//};
-
-module.factory('Auth', function() {
-    var auth;
-
-    return {
-        setAuth: function (_auth_) {
-            auth = _auth_;
-        },
-        getAuth: function () { return auth; }
-    };
-});
-
-
 module.factory('authInterceptor', function($q, Auth) {
     return {
         request: function (config) {
             var deferred = $q.defer();
-            if (Auth.getAuth()) {
-                Auth.getAuth().promise.success(function () {
-                    if (Auth.authz.token) {
-                        Auth.authz.updateToken(5).success(function() {
-                            config.headers = config.headers || {};
-                            config.headers.Authorization = 'Bearer ' + Auth.getAuth().authz.token;
+            if (Auth.isAuthenticated()) {
+                if (Auth.getKeycloak().token) {
+                    Auth.getKeycloak().updateToken(5).success(function() {
+                        config.headers = config.headers || {};
+                        config.headers.Authorization = 'Bearer ' + Auth.getKeycloak().token;
 
-                            deferred.resolve(config);
-                        }).error(function() {
-                                deferred.reject('Failed to refresh token');
-                            });
-                    }
-                    return deferred.promise;
-                });
+                        deferred.resolve(config);
+                    }).error(function() {
+                        deferred.reject('Failed to refresh token');
+                    });
+                }
+                return deferred.promise;
+            } else {
+                return config;
             }
-            return config;
         }
     };
 });
 
-
-
-//angular.element(document).ready(function ($http) {
-//    var keycloakAuth = new Keycloak('../../keycloak.json');
-//    auth.loggedIn = false;
-//
-//    auth.promise = keycloakAuth.init();
-//    auth.promise.success(function () {
-//        auth.loggedIn = true;
-//        auth.authz = keycloakAuth;
-//        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/ortolang/tokens/logout?redirect_uri=/market";
-//        module.factory('Auth', function() {
-//            return auth;
-//        });
-//        angular.bootstrap(document, ["ortolangMarketApp"]);
-//    }).error(function () {
-//            window.location.reload();
-//        });
-
-//});
-
-
-
-module.config(function($httpProvider) {
-    $httpProvider.responseInterceptors.push('errorInterceptor');
-    $httpProvider.interceptors.push('authInterceptor');
+angular.element(document).ready(function () {
+    var keycloakAuth = new Keycloak('../../keycloak.json');
+    keycloakAuth.init({ onLoad: 'check-sso' }).success(function () {
+        module.factory('Auth', function() {
+            var logoutUrl = keycloakAuth.authServerUrl + "/realms/ortolang/tokens/logout?redirect_uri=https://localhost:9000/";
+            function isAuthenticated() {
+                return keycloakAuth.authenticated;
+            }
+            return {
+                getKeycloak: function () { return keycloakAuth; },
+                isAuthenticated: isAuthenticated,
+                getLogoutUrl: function () { return logoutUrl; }
+            };
+        });
+        angular.bootstrap(document, ["ortolangMarketApp"]);
+    }).error(function () {
+        window.location.reload();
+    });
 });
 
-module.factory('errorInterceptor', function($q) {
+module.factory('errorInterceptor', function($q, $window, Auth) {
     return function(promise) {
         return promise.then(function(response) {
             return response;
         }, function(response) {
             if (response.status == 401) {
                 console.log('session timeout?');
-                logout();
+                if (!Auth.isAuthenticated()) {
+                    $window.location = Auth.getKeycloak().createLoginUrl();
+                }
             } else if (response.status == 403) {
                 alert("Forbidden");
             } else if (response.status == 404) {
@@ -94,4 +67,9 @@ module.factory('errorInterceptor', function($q) {
             return $q.reject(response);
         });
     };
+});
+
+module.config(function($httpProvider) {
+    $httpProvider.responseInterceptors.push('errorInterceptor');
+    $httpProvider.interceptors.push('authInterceptor');
 });
