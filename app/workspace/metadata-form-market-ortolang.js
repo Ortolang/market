@@ -9,14 +9,13 @@
  */
 angular.module('ortolangMarketApp')
     .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', 'SemanticResultResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource, SemanticResultResource) {
-
         $scope.selectTab = function(tabName) {
             $scope.selectedTab = tabName;
-        }
+        };
 
         $scope.submitMetadata = function (form, md) {
             $scope.$broadcast('show-errors-check-validity');
-            
+
             if (form.$invalid) {
                 console.debug('not ready');
                 return;
@@ -36,7 +35,6 @@ angular.module('ortolangMarketApp')
                 $scope.md = {};
             }
             if (fileSelectId==='folderSelectModal') {
-                
                 $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].key;
                 $scope.preview = elements[0];
                 $scope.folderSelectModal.hide();
@@ -48,17 +46,22 @@ angular.module('ortolangMarketApp')
             }
         });
 
-        $rootScope.$on('metadata-form-submit', function ($event) {
+
+        var deregistration = $rootScope.$on('metadata-form-submit', function ($event) {
            $scope.submitMetadata($scope.metadataMarketform, $scope.md);
+        });
+
+        $scope.$on('$destroy', function () {
+            deregistration();
         });
 
         function init() {
             $scope.tabs = [
-                {id:'info', label:'Renseignements'}, 
-                {id: 'rights', label: 'Droits'}, 
-                {id:'contributor', label: 'Contribution'}, 
-                {id:'corpora', label: 'Corpus'}, 
-                {id:'annotation', label: 'Enrichissement'}, 
+                {id:'info', label:'Renseignements'},
+                {id: 'rights', label: 'Droits'},
+                {id:'contributor', label: 'Contribution'},
+                {id:'corpora', label: 'Corpus'},
+                {id:'annotation', label: 'Enrichissement'},
                 {id:'tool', label: 'Outil'}
             ];
             $scope.selectedTab = 'info';
