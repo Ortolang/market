@@ -587,11 +587,29 @@ angular.module('ortolangMarketApp')
             };
 
             function getSelectedElementsCopy() {
-                var selectedElementsCopy = angular.copy($scope.selectedElements);
+                var selectedElementsCopy = angular.copy($scope.selectedElements),
+                    matchingSelectedElements,
+                    isForceMimeTypesArray = $scope.forceMimeTypes ? angular.isArray($scope.forceMimeTypes) : undefined;
+                if (isForceMimeTypesArray) {
+                    matchingSelectedElements = [];
+                }
                 angular.forEach(selectedElementsCopy, function (element) {
                     element.path = $scope.parent.path + '/' + element.name;
+                    if (isForceMimeTypesArray) {
+                        var i, mimeTypeRegExp;
+                        for (i = 0; i < $scope.forceMimeTypes.length; i++) {
+                            mimeTypeRegExp = new RegExp($scope.forceMimeTypes[i], 'gi');
+                            if (element.mimeType.match(mimeTypeRegExp)) {
+                                matchingSelectedElements.push(element);
+                                break;
+                            }
+                        }
+                    }
                 });
-                return selectedElementsCopy;
+                if ($scope.forceMimeTypes && !isForceMimeTypesArray) {
+                    matchingSelectedElements = $filter('filter')(selectedElementsCopy, {mimeType: $scope.forceMimeTypes}, false)
+                }
+                return $scope.forceMimeTypes ? matchingSelectedElements : selectedElementsCopy;
             }
 
             $scope.doubleClickChild = function ($event, child) {
@@ -599,7 +617,10 @@ angular.module('ortolangMarketApp')
                     $scope.browseToChild(child);
                 } else {
                     if ($scope.browserService.isFileSelect) {
-                        $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy(), $scope.fileSelectId);
+                        var elements = getSelectedElementsCopy();
+                        if (elements && elements.length > 0) {
+                            $rootScope.$broadcast('browserSelectedElements', elements, $scope.fileSelectId);
+                        }
                     } else {
                         if ($scope.allSuportedMimeTypes[child.mimeType]) {
                             $scope.clickPreview();
@@ -614,11 +635,10 @@ angular.module('ortolangMarketApp')
 
             $rootScope.$on('browserAskSelectedElements', function () {
                 if ($scope.browserService.isFileSelect) {
-                    var selectedElementsCopy = angular.copy($scope.selectedElements);
-                    angular.forEach(selectedElementsCopy, function (element) {
-                        element.path = $scope.parent.path + '/' + element.name;
-                    });
-                    $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy(), $scope.fileSelectId);
+                    var elements = getSelectedElementsCopy();
+                    if (elements && elements.length > 0) {
+                        $rootScope.$broadcast('browserSelectedElements', elements, $scope.fileSelectId);
+                    }
                 }
             });
 
