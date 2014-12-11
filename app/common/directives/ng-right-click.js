@@ -7,7 +7,7 @@
  * # The ngRightClick directive allows you to specify custom behavior when an element is right clicked.
  */
 angular.module('ortolangMarketApp')
-    .directive('ngRightClick', function ($parse) {
+    .directive('ngRightClick', ['$parse', function ($parse) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -20,4 +20,4 @@ angular.module('ortolangMarketApp')
                 });
             }
         };
-    });
+    }]);

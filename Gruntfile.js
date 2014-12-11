@@ -366,6 +366,7 @@ module.exports = function (grunt) {
                         'bower_components/bootstrap/dist/fonts/*',
                         'bower_components/components-font-awesome/fonts/*',
                         'bower_components/octicons/octicons/*',
+                        'bower_components/zeroclipboard/dist/*.swf',
                         '!bower_components/*/{src,src/**,test,test/**}'
                     ],
                     dest: '<%= yeoman.dist %>'
