@@ -9,18 +9,18 @@
                 <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
 
                 <!-- Par : <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a> -->
-                <span>Production de <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/producer']}}" class="lab">{{item['http://www.ortolang.fr/ontology/producer']}}</a></span>
+                <p>Production de <span ng-repeat="producer in item['http://www.ortolang.fr/ontology/producer']"><a ng-href="#/search?content={{producer}}" ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
                 <!-- Category : Corpora -->
-                <span ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']" class="lang">Langue principale du corpus : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/primaryLanguage']}}" ng-bind="item['http://www.ortolang.fr/ontology/primaryLanguage']"></a></span>
-                <span ng-if="item['http://www.ortolang.fr/ontology/discourseType']" class="lang">Type discursif : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/discourseType']}}" ng-bind="item['http://www.ortolang.fr/ontology/discourseType']"></a></span>
-                <span ng-if="item['http://www.ortolang.fr/ontology/linguisticField']" class="lang">Domaines linguistiques : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/linguisticField']}}" ng-bind="item['http://www.ortolang.fr/ontology/linguisticField']"></a></span>
+                <p ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']">Langue principale du corpus : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/primaryLanguage']}}" ng-bind="item['http://www.ortolang.fr/ontology/primaryLanguage']"></a></p>
+                <p ng-if="item['http://www.ortolang.fr/ontology/discourseType']">Type discursif : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/discourseType']}}" ng-bind="item['http://www.ortolang.fr/ontology/discourseType']"></a></p>
+                <p ng-if="item['http://www.ortolang.fr/ontology/linguisticField']">Domaines linguistiques : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/linguisticField']}}" ng-bind="item['http://www.ortolang.fr/ontology/linguisticField']"></a></p>
                 <!-- Category : Tool -->
-                <span ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']" class="lang">Languages de programmation : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/programmingLanguage']}}" ng-bind="item['http://www.ortolang.fr/ontology/programmingLanguage']"></a></span>
-                <span ng-if="item['http://www.ortolang.fr/ontology/opearatingSystem']" class="lang">Systèmes d'exploitation supportés : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/opearatingSystem']}}" ng-bind="item['http://www.ortolang.fr/ontology/opearatingSystem']"></a></span>
-                <span ng-if="item['http://www.ortolang.fr/ontology/toolType']" class="lang">Catégorie d'outil : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/toolType']}}" ng-bind="item['http://www.ortolang.fr/ontology/toolType']"></a></span>
+                <p>Languages de programmation : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/programmingLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
+                <p>Systèmes d'exploitation supportés : <span ng-repeat="os in item['http://www.ortolang.fr/ontology/opearatingSystem']"><a href="#/search?content={{os}}" ng-bind="os"></a><span ng-if="!$last">, </span></span></p>
+                <p ng-if="item['http://www.ortolang.fr/ontology/toolType']">Catégorie d'outil : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/toolType']}}" ng-bind="item['http://www.ortolang.fr/ontology/toolType']"></a></p>
                 <!-- Category : Annotation -->
-                <span ng-if="item['http://www.ortolang.fr/ontology/language']" class="lang">Langues concernés par cet objet : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/language']}}" ng-bind="item['http://www.ortolang.fr/ontology/language']"></a></span>
-
+                <p>Langues concernés par cet objet : <span ng-repeat="language in item['http://www.ortolang.fr/ontology/language']"><a href="#/search?content={{language}}" ng-bind="language"></a><span ng-if="!$last">, </span></span></p>
+                
             </div>
         </div>
         <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">Retourner à la fiche</button>
@@ -68,7 +68,7 @@
                         <div ng-if="item['http://purl.org/dc/terms/extent']" class="col-md-3">
                             <dl>
                                 <dt>Contenu</dt>
-                                <dd ng-bind="item['http://purl.org/dc/terms/extent']"></dd>
+                                <dd ng-bind-html="item['http://purl.org/dc/terms/extent']"></dd>
                             </dl>
                         </div>
 
@@ -129,24 +129,24 @@
                 <header translate="MARKET.CONTRIBUTOR"></header>
                 <article>
                     <div class="row">
-                        <div ng-if="item['http://www.ortolang.fr/ontology/researcher']" class="col-md-3">
+                        <div ng-repeat="researcher in item['http://www.ortolang.fr/ontology/researcher']" class="col-md-3">
                             <dl>
                                 <dt><i class="fa fa-user fa-fw pictureContributor thumbnail"></i></dt>
-                                <dd><a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-bind="item['http://www.ortolang.fr/ontology/researcher']"></a></dd>
+                                <dd><a ng-href="#/search?content={{researcher}}" ng-bind="researcher"></a></dd>
                                 <dd><i>Responsable scientifique</i></dd>
                             </dl>
                         </div>
-                        <div ng-if="item['http://www.ortolang.fr/ontology/manager']" class="col-md-3">
+                        <div ng-repeat="manager in item['http://www.ortolang.fr/ontology/manager']" class="col-md-3">
                             <dl>
                                 <dt><i class="fa fa-user fa-fw pictureContributor thumbnail"></i></dt>
-                                <dd><a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/manager']}}" ng-bind="item['http://www.ortolang.fr/ontology/manager']"></a></dd>
+                                <dd><a ng-href="#/search?content={{manager}}" ng-bind="manager"></a></dd>
                                 <dd><i>Responsable informatique</i></dd>
                             </dl>
                         </div>
-                        <div ng-if="item['http://www.ortolang.fr/ontology/developper']" class="col-md-3">
+                        <div ng-repeat="developper in item['http://www.ortolang.fr/ontology/developper']" class="col-md-3">
                             <dl>
                                 <dt><i class="fa fa-user fa-fw pictureContributor thumbnail"></i></dt>
-                                <dd><a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/developper']}}" ng-bind="item['http://www.ortolang.fr/ontology/developper']"></a></dd>
+                                <dd><a ng-href="#/search?content={{developper}}" ng-bind="developper"></a></dd>
                                 <dd><i>Responsable technique</i></dd>
                             </dl>
                         </div>
@@ -156,11 +156,11 @@
 
         </div>
 
-        <div ng-if="browse" class="col-md-12">
+        <div ng-show="browse" class="col-md-12">
             <div browser></div>
         </div>
 
-        <div ng-if="!browse" ng-include="'../common/visualizers/visualizer-template.html'"></div>
+        <div ng-include="'../common/visualizers/visualizer-template.html'"></div>
 
         <aside ng-show="!browse" class="col-md-4">
             <div class="panel panel-default license-panel">
@@ -211,7 +211,7 @@
                 <div class="panel-body">
                     <dl class="dl-horizontal">
                         <dt ng-if="item['http://purl.org/dc/terms/spacial']">Position géographique</dt>
-                        <dd ng-if="item['http://purl.org/dc/terms/spacial']">{{item['http://purl.org/dc/terms/spacial']}}</dd>
+                        <dd ng-repeat="spacial in item['http://purl.org/dc/terms/spacial']">{{spacial}}<span ng-if="!$last">, </span></dd>
                         <dt ng-if="item['http://purl.org/dc/terms/temporal']">Localisation temporelle</dt>
                         <dd ng-if="item['http://purl.org/dc/terms/temporal']">{{item['http://purl.org/dc/terms/temporal']}}</dd>
                     </dl>
