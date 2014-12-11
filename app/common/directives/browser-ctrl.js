@@ -295,39 +295,43 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.clickChild = function (clickEvent, child) {
-                var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
-                if ($scope.isSelected(child)) {
-                    if (modKey) {
-                        deselectChild(child);
-                        return;
-                    }
-                    if (clickEvent.button === 0) {
-                        if (!$scope.hasOnlyOneElementSelected()) {
-                            // Check if the user left-clicked again on the same element
-                            if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
-                                deselectOthers(child);
-                            } else {
-                                // If it's the first time do nothing; if it's the second time deselect the others
-                                if (isClickedOnce) {
+                // Target with attribute ng-click equalling browseToChild means that we don't need
+                // to select the child since a browseToChild is about to occur
+                if (angular.element(clickEvent.target).attr('ng-click') !== 'browseToChild(child)') {
+                    var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
+                    if ($scope.isSelected(child)) {
+                        if (modKey) {
+                            deselectChild(child);
+                            return;
+                        }
+                        if (clickEvent.button === 0) {
+                            if (!$scope.hasOnlyOneElementSelected()) {
+                                // Check if the user left-clicked again on the same element
+                                if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
                                     deselectOthers(child);
-                                    isClickedOnce = false;
                                 } else {
-                                    isClickedOnce = true;
+                                    // If it's the first time do nothing; if it's the second time deselect the others
+                                    if (isClickedOnce) {
+                                        deselectOthers(child);
+                                        isClickedOnce = false;
+                                    } else {
+                                        isClickedOnce = true;
+                                    }
                                 }
                             }
+                        } else {
+                            isClickedOnce = false;
                         }
-                    } else {
-                        isClickedOnce = false;
+                        $scope.contextMenu(clickEvent, true);
+                        return;
                     }
-                    $scope.contextMenu(clickEvent, true);
-                    return;
-                }
-                // Get detailed info on the selected child
-                if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
-                        modKey && !$scope.hasOnlyParentSelected()) {
-                    getChildData(child, false, clickEvent, true);
-                } else {
-                    getChildData(child, false, clickEvent, false);
+                    // Get detailed info on the selected child
+                    if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
+                            modKey && !$scope.hasOnlyParentSelected()) {
+                        getChildData(child, false, clickEvent, true);
+                    } else {
+                        getChildData(child, false, clickEvent, false);
+                    }
                 }
             };
 
