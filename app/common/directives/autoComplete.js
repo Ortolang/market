@@ -14,23 +14,31 @@ angular.module('ortolangMarketApp')
             scope: {
                 sparql:'=',
                 selectedTags:'=model',
-                placeholder:'='
+                placeholder:'=',
+                required: '=',
+                name:'='
             },
             templateUrl: 'common/directives/autocomplete-template.html',
             link:function(scope,elem,attrs){
 
             scope.suggestions=[];
 
-            scope.selectedTags=[];
-
+            if(scope.selectedTags===undefined) {
+                scope.selectedTags=[];    
+            }
+            
             scope.selectedIndex=-1;
+
+            scope.hasTag=function() {
+                return scope.selectedTags.length>0;
+            }
 
             scope.removeTag=function(index){
                 scope.selectedTags.splice(index,1);
             }
 
             scope.search=function(){
-                if(scope.searchText !== '') {
+                if(scope.searchText !== '' && scope.sparql!==undefined) {
                     
                     var queryStr = scope.sparql.replace('$searchText',scope.searchText);
                     SemanticResultResource.get({query: queryStr}).$promise.then(function(sparqlResults) {
