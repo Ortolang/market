@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('CookieFactory', function ($q, $timeout) {
+    .factory('CookieFactory', ['$q', '$timeout', function ($q, $timeout) {
         return {
             /**
              * Get a cookie by its name
@@ -60,4 +60,4 @@ angular.module('ortolangMarketApp')
                 return $.removeCookie(name);
             }
         };
-    });
+    }]);
