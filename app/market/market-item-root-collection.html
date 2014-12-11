@@ -20,7 +20,7 @@
                 <span ng-if="item['http://www.ortolang.fr/ontology/toolType']" class="lang">Catégorie d'outil : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/toolType']}}" ng-bind="item['http://www.ortolang.fr/ontology/toolType']"></a></span>
                 <!-- Category : Annotation -->
                 <span ng-if="item['http://www.ortolang.fr/ontology/language']" class="lang">Langues concernés par cet objet : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/language']}}" ng-bind="item['http://www.ortolang.fr/ontology/language']"></a></span>
-                
+
             </div>
         </div>
         <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">Retourner à la fiche</button>
@@ -156,11 +156,11 @@
 
         </div>
 
-        <div ng-show="browse" class="col-md-12">
+        <div ng-if="browse" class="col-md-12">
             <div browser></div>
         </div>
 
-        <div ng-include="'../common/visualizers/visualizer-template.html'"></div>
+        <div ng-if="!browse" ng-include="'../common/visualizers/visualizer-template.html'"></div>
 
         <aside ng-show="!browse" class="col-md-4">
             <div class="panel panel-default license-panel">

@@ -558,6 +558,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     $location.path($scope.browserService.buildBrowseUrlFromPath($scope.wskey, path, $scope.root));
                 }
+                clearVisualizers();
             };
 
             function browseToKey(key, usingHistory) {
@@ -565,6 +566,7 @@ angular.module('ortolangMarketApp')
                     $scope.keyHistory.back.push($scope.itemKey);
                     $scope.keyHistory.forward = [];
                 }
+                clearVisualizers();
                 $scope.itemKey = key;
                 getParentData();
             }
