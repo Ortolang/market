@@ -39,6 +39,7 @@ describe('Controller: MarketItemCtrl', function () {
 
   it('should load an object', function() {
     ObjectResource.when({oKey: sample().rootCollectionKey}, sample().oobjectSample);
+    ObjectResource.when({oKey: sample().rootCollectionKey, path: sample().rootCollectionKey}, sample().oobjectSample);
 
     var MarketItemCtrl = controllerCreator({itemKey: sample().rootCollectionKey});
     scope.$digest();

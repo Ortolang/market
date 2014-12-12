@@ -43,7 +43,7 @@ angular.module('ortolangMarketApp')
 
                                             // loadPreview(previewKeyCollection);
                                         // });
-                                        loadPreview(oobject.object.key, $scope.item['http://www.ortolang.fr/ontology/preview']);
+                                        loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
                                     }
                                 });
                             }).error(function (reason) {
@@ -68,11 +68,9 @@ angular.module('ortolangMarketApp')
         $scope.browse = false;
 
         $scope.showPreview = function (preview) {
-
             if(preview !== undefined && preview !== '') {
                 //TODO Get preview file or collection
                 ObjectResource.get({oKey: preview}).$promise.then(function (oobject) {
-                    console.info(oobject);
                     var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
 
                     if(visualizers.length > 0) {
@@ -84,7 +82,6 @@ angular.module('ortolangMarketApp')
         };
 
         function loadPreview(collection, previewPath) {
-
                 // ObjectResource.get({oKey: previewKey}).$promise.then(function (oobject) {
             ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function(oobject) {
                 $scope.previewCollection = oobject;
