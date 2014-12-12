@@ -29,9 +29,10 @@ angular
         'formly',
         'ui.bootstrap.showErrors',
         'pascalprecht.translate',
-        'zeroclipboard'
+        'zeroclipboard',
+        'diff-match-patch'
     ])
-    .config(function ($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
                 redirectTo: '/market'
@@ -81,16 +82,16 @@ angular
             .otherwise({
                 redirectTo: '/404'
             });
-    })
-    .config(function ($sceDelegateProvider) {
+    }])
+    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
             'self',
             'http://localhost:8080/**'
         ]);
-    })
+    }])
     .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(function ($q, $location) {
+        $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
             return {
                 'response': function (response) {
                     console.log('HTTP Status code ' + response.status + ': ' + response.statusText);
@@ -104,13 +105,13 @@ angular
                     return $q.reject(rejection);
                 }
             };
-        });
+        }]);
     }])
-    .config(function ($tooltipProvider) {
+    .config(['$tooltipProvider', function ($tooltipProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body'
         });
-    })
+    }])
     .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
         uiZeroclipConfigProvider.setZcConf({
             swfPath: '../bower_components/zeroclipboard/dist/ZeroClipboard.swf'

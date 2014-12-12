@@ -8,14 +8,14 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', 'SemanticResultResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource, SemanticResultResource) {
+    .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource) {
         $scope.selectTab = function(tabName) {
             $scope.selectedTab = tabName;
-        }
+        };
 
         $scope.submitMetadata = function (form, md) {
             $scope.$broadcast('show-errors-check-validity');
-            
+
             if (form.$invalid) {
                 console.debug('not ready');
                 return;
@@ -35,7 +35,6 @@ angular.module('ortolangMarketApp')
                 $scope.md = {};
             }
             if (fileSelectId==='folderSelectModal') {
-                
                 $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].key;
                 $scope.preview = elements[0];
                 $scope.folderSelectModal.hide();
@@ -58,11 +57,11 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.tabs = [
-                {id:'info', label:'Renseignements'}, 
-                {id: 'rights', label: 'Droits'}, 
-                {id:'contributor', label: 'Contribution'}, 
-                {id:'corpora', label: 'Corpus'}, 
-                {id:'annotation', label: 'Enrichissement'}, 
+                {id:'info', label:'Renseignements'},
+                {id: 'rights', label: 'Droits'},
+                {id:'contributor', label: 'Contribution'},
+                {id:'corpora', label: 'Corpus'},
+                {id:'annotation', label: 'Enrichissement'},
                 {id:'tool', label: 'Outil'}
             ];
             $scope.selectedTab = 'info';
@@ -71,7 +70,8 @@ angular.module('ortolangMarketApp')
             $scope.sparqlConditionsOfUse = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX otl: <http://www.ortolang.fr/2014/09/market#> SELECT DISTINCT ?label WHERE { ?class rdf:type rdfs:Class ; rdfs:subClassOf <http://www.ortolang.fr/2014/09/market#ConditionsOfUse> ; rdfs:label ?label . FILTER langMatches( lang(?label), "fr" ) }';
             // $scope.useConditions = [{id: 'free', label: 'Libre'}, {id: 'free-nc', label: 'Libre sans usage commercial'}, {id: 'restricted', label: 'Négociation nécessaire'}];
 
-            $scope.sparqlSpartial = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?geographicRegion ?label ?p ?o WHERE { ?geographicRegion rdf:type <lvont:GeographicRegion> ; rdfs:label ?label .FILTER (langMatches( lang(?label), "fr") && regex(?label, "^$searchText", "i")) }';
+            $scope.sparqlSpartial = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?geographicRegion ?label WHERE { ?geographicRegion rdf:type <lvont:GeographicRegion> ; rdfs:label ?label .FILTER (langMatches( lang(?label), "fr") && regex(?label, "^$searchText", "i")) }';
+            $scope.sparqlLanguage = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?label WHERE { ?lang rdf:type <lvont:Language> ; rdfs:label ?label .FILTER (langMatches( lang(?label), "fr") && regex(?label, "^$searchText", "i")) }';
 
             var folderSelectModalScope = $rootScope.$new(true);
             folderSelectModalScope.acceptMultiple = false;

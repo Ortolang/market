@@ -172,14 +172,13 @@ angular.module('ortolangMarketApp')
                         child.element = data;
                         if (isPush) {
                             pushSelectedElement(data);
-                            clearVisualizers();
                         } else {
                             newSelectedElement(data);
-                            checkCompatibleVisualizers(data);
                         }
                         if (!refresh) {
                             $scope.contextMenu(clickEvent, false);
                         }
+                        checkCompatibleVisualizers();
                     });
             }
 
@@ -279,11 +278,10 @@ angular.module('ortolangMarketApp')
 
             function deselectChild(child) {
                 $scope.selectedElements = $filter('filter')($scope.selectedElements, {key: '!' + child.key}, true);
-                if ($scope.hasOnlyOneElementSelected()) {
-                    checkCompatibleVisualizers($scope.selectedElements[0]);
-                } else if ($scope.selectedElements.length === 0) {
+                if ($scope.selectedElements.length === 0) {
                     newSelectedElement($scope.parent);
                 }
+                checkCompatibleVisualizers();
             }
 
             function deselectOthers(element) {
@@ -297,39 +295,43 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.clickChild = function (clickEvent, child) {
-                var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
-                if ($scope.isSelected(child)) {
-                    if (modKey) {
-                        deselectChild(child);
-                        return;
-                    }
-                    if (clickEvent.button === 0) {
-                        if (!$scope.hasOnlyOneElementSelected()) {
-                            // Check if the user left-clicked again on the same element
-                            if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
-                                deselectOthers(child);
-                            } else {
-                                // If it's the first time do nothing; if it's the second time deselect the others
-                                if (isClickedOnce) {
+                // Target with attribute ng-click equalling browseToChild means that we don't need
+                // to select the child since a browseToChild is about to occur
+                if (angular.element(clickEvent.target).attr('ng-click') !== 'browseToChild(child)') {
+                    var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
+                    if ($scope.isSelected(child)) {
+                        if (modKey) {
+                            deselectChild(child);
+                            return;
+                        }
+                        if (clickEvent.button === 0) {
+                            if (!$scope.hasOnlyOneElementSelected()) {
+                                // Check if the user left-clicked again on the same element
+                                if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
                                     deselectOthers(child);
-                                    isClickedOnce = false;
                                 } else {
-                                    isClickedOnce = true;
+                                    // If it's the first time do nothing; if it's the second time deselect the others
+                                    if (isClickedOnce) {
+                                        deselectOthers(child);
+                                        isClickedOnce = false;
+                                    } else {
+                                        isClickedOnce = true;
+                                    }
                                 }
                             }
+                        } else {
+                            isClickedOnce = false;
                         }
-                    } else {
-                        isClickedOnce = false;
+                        $scope.contextMenu(clickEvent, true);
+                        return;
                     }
-                    $scope.contextMenu(clickEvent, true);
-                    return;
-                }
-                // Get detailed info on the selected child
-                if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
-                        modKey && !$scope.hasOnlyParentSelected()) {
-                    getChildData(child, false, clickEvent, true);
-                } else {
-                    getChildData(child, false, clickEvent, false);
+                    // Get detailed info on the selected child
+                    if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
+                            modKey && !$scope.hasOnlyParentSelected()) {
+                        getChildData(child, false, clickEvent, true);
+                    } else {
+                        getChildData(child, false, clickEvent, false);
+                    }
                 }
             };
 
@@ -516,8 +518,8 @@ angular.module('ortolangMarketApp')
                 $scope.visualizers = undefined;
             }
 
-            function checkCompatibleVisualizers(element) {
-                $scope.visualizers = VisualizerManager.getCompatibleVisualizers(element.mimeType, element.name);
+            function checkCompatibleVisualizers() {
+                $scope.visualizers = VisualizerManager.getCompatibleVisualizers($scope.selectedElements);
                 if ($scope.visualizers.length === 0) {
                     clearVisualizers();
                 }
@@ -530,22 +532,27 @@ angular.module('ortolangMarketApp')
                 } else {
                     isolatedScope.elements = $scope.selectedElements;
                 }
-                var element = $compile(visualizer.element)(isolatedScope),
+                var element = $compile(visualizer.getElement())(isolatedScope),
                     visualizerModal = $('#visualizer-modal');
-                visualizerModal.find('.modal-header strong').text(visualizer.name);
+                visualizerModal.find('.modal-header strong').text(visualizer.getName());
                 visualizerModal.find('.modal-body').empty().append(element);
                 visualizerModal.modal('show');
                 $scope.contextMenu();
             }
 
             $scope.clickPreview = function (_visualizer_) {
-                var visualizer = _visualizer_ || $scope.visualizers[0];
-                if (visualizer.needAllChildrenData) {
-                    getChildrenDataOfTypes(visualizer.compatibleTypes, true, visualizer);
-                } else {
-                    $scope.children = undefined;
-                    finishPreview(visualizer);
-                }
+                //if (_visualizer_ || $scope.visualizers) {
+                    var visualizer = _visualizer_ || $scope.visualizers[0];
+                    if (visualizer.needAllChildrenData) {
+                        // TODO Won't work for visualizers accepting multiple
+                        if (visualizer.isAcceptingSingle()) {
+                            getChildrenDataOfTypes(visualizer.getCompatibleTypes(), true, visualizer);
+                        }
+                    } else {
+                        $scope.children = undefined;
+                        finishPreview(visualizer);
+                    }
+                //}
             };
 
             $scope.browseToPath = function (path) {
@@ -555,6 +562,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     $location.path($scope.browserService.buildBrowseUrlFromPath($scope.wskey, path, $scope.root));
                 }
+                clearVisualizers();
             };
 
             function browseToKey(key, usingHistory) {
@@ -562,6 +570,7 @@ angular.module('ortolangMarketApp')
                     $scope.keyHistory.back.push($scope.itemKey);
                     $scope.keyHistory.forward = [];
                 }
+                clearVisualizers();
                 $scope.itemKey = key;
                 getParentData();
             }
@@ -587,11 +596,29 @@ angular.module('ortolangMarketApp')
             };
 
             function getSelectedElementsCopy() {
-                var selectedElementsCopy = angular.copy($scope.selectedElements);
+                var selectedElementsCopy = angular.copy($scope.selectedElements),
+                    matchingSelectedElements,
+                    isForceMimeTypesArray = $scope.forceMimeTypes ? angular.isArray($scope.forceMimeTypes) : undefined;
+                if (isForceMimeTypesArray) {
+                    matchingSelectedElements = [];
+                }
                 angular.forEach(selectedElementsCopy, function (element) {
                     element.path = $scope.parent.path + '/' + element.name;
+                    if (isForceMimeTypesArray) {
+                        var i, mimeTypeRegExp;
+                        for (i = 0; i < $scope.forceMimeTypes.length; i++) {
+                            mimeTypeRegExp = new RegExp($scope.forceMimeTypes[i], 'gi');
+                            if (element.mimeType.match(mimeTypeRegExp)) {
+                                matchingSelectedElements.push(element);
+                                break;
+                            }
+                        }
+                    }
                 });
-                return selectedElementsCopy;
+                if ($scope.forceMimeTypes && !isForceMimeTypesArray) {
+                    matchingSelectedElements = $filter('filter')(selectedElementsCopy, {mimeType: $scope.forceMimeTypes}, false)
+                }
+                return $scope.forceMimeTypes ? matchingSelectedElements : selectedElementsCopy;
             }
 
             $scope.doubleClickChild = function ($event, child) {
@@ -599,9 +626,12 @@ angular.module('ortolangMarketApp')
                     $scope.browseToChild(child);
                 } else {
                     if ($scope.browserService.isFileSelect) {
-                        $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy(), $scope.fileSelectId);
+                        var elements = getSelectedElementsCopy();
+                        if (elements && elements.length > 0) {
+                            $rootScope.$broadcast('browserSelectedElements', elements, $scope.fileSelectId);
+                        }
                     } else {
-                        if ($scope.allSuportedMimeTypes[child.mimeType]) {
+                        if ($scope.visualizers) {
                             $scope.clickPreview();
                         }
                     }
@@ -614,11 +644,10 @@ angular.module('ortolangMarketApp')
 
             $rootScope.$on('browserAskSelectedElements', function () {
                 if ($scope.browserService.isFileSelect) {
-                    var selectedElementsCopy = angular.copy($scope.selectedElements);
-                    angular.forEach(selectedElementsCopy, function (element) {
-                        element.path = $scope.parent.path + '/' + element.name;
-                    });
-                    $rootScope.$broadcast('browserSelectedElements', getSelectedElementsCopy(), $scope.fileSelectId);
+                    var elements = getSelectedElementsCopy();
+                    if (elements && elements.length > 0) {
+                        $rootScope.$broadcast('browserSelectedElements', elements, $scope.fileSelectId);
+                    }
                 }
             });
 
@@ -955,7 +984,6 @@ angular.module('ortolangMarketApp')
                 $scope.reverse = false;
                 // Visualizers
                 $scope.visualizers = undefined;
-                $scope.allSuportedMimeTypes = VisualizerManager.getAllSupportedMimeTypes();
                 // Workspace
                 $scope.snapshotsHistory = undefined;
                 $scope.workspaceMembers = undefined;

@@ -14,23 +14,39 @@ angular.module('ortolangMarketApp')
             scope: {
                 sparql:'=',
                 selectedTags:'=model',
-                placeholder:'='
+                placeholder:'=',
+                required: '=',
+                name:'='
             },
             templateUrl: 'common/directives/autocomplete-template.html',
             link:function(scope,elem,attrs){
 
             scope.suggestions=[];
 
-            scope.selectedTags=[];
-
+            if(scope.selectedTags===undefined) {
+                scope.selectedTags=[];    
+            }
+            
             scope.selectedIndex=-1;
+
+            scope.hasTag=function() {
+                return scope.selectedTags.length>0;
+            }
+
+            scope.isValid = function() {
+                if(scope.required) {
+                    return scope.hasTag();
+                } else {
+                    return true;
+                }
+            }
 
             scope.removeTag=function(index){
                 scope.selectedTags.splice(index,1);
             }
 
             scope.search=function(){
-                if(scope.searchText !== '') {
+                if(scope.searchText !== '' && scope.sparql!==undefined) {
                     
                     var queryStr = scope.sparql.replace('$searchText',scope.searchText);
                     SemanticResultResource.get({query: queryStr}).$promise.then(function(sparqlResults) {
@@ -39,14 +55,11 @@ angular.module('ortolangMarketApp')
                             
                             sparqlResults.results.bindings.forEach(function(result) {
 
-                                if(scope.searchText !== result.label.value) {
-                                    labels.push(result.label.value);    
+                                if(scope.searchText !== result.label.value && labels.indexOf(result.label.value)===-1) {
+                                    labels.push(result.label.value);   
                                 }
                             });
 
-                            // if(data.indexOf(scope.searchText)===-1){
-                            //     data.unshift(scope.searchText);
-                            // }
                             scope.suggestions=labels;
                             scope.selectedIndex=-1;
                         }

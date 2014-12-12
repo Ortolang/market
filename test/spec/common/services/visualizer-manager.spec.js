@@ -7,14 +7,15 @@ describe('Service: VisualizerManager', function () {
 
     // instantiate service
     var VisualizerManager, VisualizerFactory,
-        fakeVisualizerConfig, fakeVisualizerBisConfig, fakeVisualizerTerConfig,
-        fakeVisualizer, fakeVisualizerBis, fakeVisualizerTer;
+        fakeVisualizerConfig, fakeVisualizerBisConfig, fakeVisualizerTerConfig, fakeVisualizerQuaterConfig,
+        fakeVisualizer, fakeVisualizerBis, fakeVisualizerTer, fakeVisualizerQuater;
     beforeEach(inject(function (_VisualizerManager_, _VisualizerFactory_) {
         VisualizerManager = _VisualizerManager_;
         VisualizerFactory = _VisualizerFactory_;
         fakeVisualizer = VisualizerFactory.make(fakeVisualizerConfig);
         fakeVisualizerBis = VisualizerFactory.make(fakeVisualizerBisConfig);
         fakeVisualizerTer = VisualizerFactory.make(fakeVisualizerTerConfig);
+        fakeVisualizerQuater = VisualizerFactory.make(fakeVisualizerQuaterConfig);
     }));
 
     fakeVisualizerConfig = {
@@ -42,6 +43,20 @@ describe('Service: VisualizerManager', function () {
             'toto/toto': true,
             'application/fake-stream': true
         }
+    };
+
+    fakeVisualizerQuaterConfig = {
+        id: 'FakeVisualizerQuater',
+        acceptMultiple: true,
+        compatibleTypes: [
+            {
+                'toto/toto': true,
+                'application/fake-stream': {toto: true}
+            },
+            {
+                'foo/bar': true
+            }
+        ]
     };
 
     it('should do something', function () {
@@ -78,11 +93,11 @@ describe('Service: VisualizerManager', function () {
     });
 
     it('should be possible to know if a visualizer is compatible with a mime type', function () {
-        expect(fakeVisualizer.isCompatible('foo/fake')).toBe(true);
-        expect(fakeVisualizer.isCompatible('foo/bar')).toBe(false);
-        expect(fakeVisualizer.isCompatible('application/fake-stream', 'fake.foo')).toBe(true);
-        expect(fakeVisualizer.isCompatible('application/fake-stream', 'fake.bar')).toBe(true);
-        expect(fakeVisualizer.isCompatible('application/fake-stream', 'foobar.fake')).toBe(false);
+        expect(fakeVisualizer.isCompatible([{mimeType: 'foo/fake'}])).toBe(true);
+        expect(fakeVisualizer.isCompatible([{mimeType: 'foo/bar'}])).toBe(false);
+        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'fake.foo'}])).toBe(true);
+        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'fake.bar'}])).toBe(true);
+        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'foobar.fake'}])).toBe(false);
     });
 
     it('should be possible to register a new visualizer', function () {
@@ -97,9 +112,9 @@ describe('Service: VisualizerManager', function () {
 
     it('should return a list of compatibles visualizer for a given mime type', function () {
         VisualizerManager.register(fakeVisualizer);
-        expect(VisualizerManager.getCompatibleVisualizers('foo/fake').length).toEqual(1);
-        expect(VisualizerManager.getCompatibleVisualizers('foo/fake')[0]).toEqual(fakeVisualizer);
-        expect(VisualizerManager.getCompatibleVisualizers('foo/bar').length).toEqual(0);
+        expect(VisualizerManager.getCompatibleVisualizers([{mimeType: 'foo/fake'}]).length).toEqual(1);
+        expect(VisualizerManager.getCompatibleVisualizers([{mimeType: 'foo/fake'}])[0]).toEqual(fakeVisualizer);
+        expect(VisualizerManager.getCompatibleVisualizers([{mimeType: 'foo/bar'}]).length).toEqual(0);
     });
 
     it('should return a list of all supported mime types', function () {
@@ -112,6 +127,20 @@ describe('Service: VisualizerManager', function () {
         expect(VisualizerManager.getAllSupportedMimeTypes()['application/fake-stream']).toEqual({foo: true, bar: true, hello: true, world: true});
         VisualizerManager.register(fakeVisualizerTer);
         expect(VisualizerManager.getAllSupportedMimeTypes()['application/fake-stream']).toEqual(true);
+    });
+
+    it('should accept single element by default', function () {
+        expect(fakeVisualizer.isAcceptingSingle()).toBe(true);
+        expect(fakeVisualizer.isAcceptingMultiple()).toBe(false);
+    });
+
+    it ('should be possible to register a visualizer accepting multiple elements', function () {
+        expect(fakeVisualizerQuater.isAcceptingMultiple()).toBe(true);
+        expect(fakeVisualizerQuater.isCompatible([{mimeType: 'foo/bar'}])).toBe(false);
+        expect(fakeVisualizerQuater.isCompatible([{mimeType: 'foo/bar'}, {mimeType: 'toto/toto'}])).toBe(true);
+        expect(fakeVisualizerQuater.isCompatible([{mimeType: 'foo/bar'}, {mimeType: 'application/fake-stream', name: 'test.toto'}])).toBe(true);
+        expect(fakeVisualizerQuater.isCompatible([{mimeType: 'foo/bar'}, {mimeType: 'application/fake-stream', name: 'foo.bar'}])).toBe(false);
+        expect(fakeVisualizerQuater.isCompatible([{mimeType: 'foo/bar'}, {mimeType: 'foo/bar'}])).toBe(false);
     });
 
 });

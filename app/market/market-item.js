@@ -67,7 +67,7 @@ angular.module('ortolangMarketApp')
                 //TODO Get preview file or collection
                 ObjectResource.get({oKey: preview}).$promise.then(function (oobject) {
                     console.info(oobject);
-                    var visualizers = VisualizerManager.getCompatibleVisualizers(oobject.object.mimeType, oobject.object.name);
+                    var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
 
                     if(visualizers.length > 0) {
                         finishPreview(visualizers[0], oobject);
@@ -97,9 +97,9 @@ angular.module('ortolangMarketApp')
             isolatedScope.elements = [];
             isolatedScope.elements.push(oobject.object);
 
-            var element = $compile(visualizer.element)(isolatedScope),
+            var element = $compile(visualizer.getElement())(isolatedScope),
                 visualizerModal = $('#visualizer-modal');
-            visualizerModal.find('.modal-header strong').text(visualizer.name);
+            visualizerModal.find('.modal-header strong').text(visualizer.getName());
             visualizerModal.find('.modal-body').empty().append(element);
             visualizerModal.modal('show');
         }
