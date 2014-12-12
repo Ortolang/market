@@ -117,6 +117,8 @@ angular.module('ortolangMarketApp')
             angular.forEach(md, function(valueElement, keyElement) {
 
                 if(angular.isArray(valueElement)) {
+                  if(valueElement.length>0) {
+                    
                     var bag = '_:1';
                     writer.addTriple('${target}', keyElement, bag);
                     angular.forEach(valueElement, function(value) {
@@ -127,6 +129,7 @@ angular.module('ortolangMarketApp')
                             writer.addTriple(bag, N3Util.expandQName('rdfs:member', prefixesRDF), '"'+value+'"');
                         }
                     });
+                  }
                 } else {
                     if (isURL(valueElement)) {
                         writer.addTriple('${target}', keyElement, valueElement);
