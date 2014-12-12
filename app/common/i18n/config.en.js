@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .provider('i18n.en', ['COMMON_EN', 'NAV_EN', 'BROWSER_EN', 'WORKSPACE_EN', 'MARKET_EN', 'PROCESSES_EN', 'TOOLS_EN', 'LOGIN_EN',
-        function (COMMON_EN, NAV_EN, BROWSER_EN, WORKSPACE_EN, MARKET_EN, PROCESSES_EN, TOOLS_EN, LOGIN_EN) {
+    .provider('i18n.en', ['COMMON_EN', 'NAV_EN', 'BROWSER_EN', 'WORKSPACE_EN', 'MARKET_EN', 'PROCESSES_EN', 'TOOLS_EN',
+        function (COMMON_EN, NAV_EN, BROWSER_EN, WORKSPACE_EN, MARKET_EN, PROCESSES_EN, TOOLS_EN) {
 
             var translations;
 
@@ -22,7 +22,6 @@ angular.module('ortolangMarketApp')
                 angular.extend(translations, MARKET_EN);
                 angular.extend(translations, PROCESSES_EN);
                 angular.extend(translations, TOOLS_EN);
-                angular.extend(translations, LOGIN_EN);
             }
 
             init();

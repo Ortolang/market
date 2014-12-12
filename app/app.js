@@ -55,10 +55,6 @@ angular
                 templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
-            .when('/login', {
-                templateUrl: '/login/login.html',
-                controller: 'LoginCtrl'
-            })
             .when('/tools', {
                 templateUrl: 'tool/tools.html',
                 controller: 'ToolsCtrl',

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url',
-        function ($scope, $rootScope, $http, $timeout, FileUploader, Url) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url', 'Auth',
+        function ($scope, $rootScope, $http, $timeout, FileUploader, Url, Auth) {
 
             var uploader;
 
@@ -20,9 +20,6 @@ angular.module('ortolangMarketApp')
                     alias: 'stream',
                     autoUpload: true,
                     removeAfterUpload: false,
-                    headers: {
-                        'Authorization': $http.defaults.headers.common.Authorization
-                    },
                     queueLimit: 100,
                     filters: [{
                         name: 'noFolder',
@@ -60,6 +57,9 @@ angular.module('ortolangMarketApp')
 
             uploader.onAfterAddingFile = function (fileItem) {
                 fileItem.wsName = angular.copy($scope.wsName);
+                fileItem.headers = {
+                    'Authorization': 'Bearer ' + Auth.getToken()
+                };
                 fileItem.wskey = angular.copy($scope.wskey);
                 fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];

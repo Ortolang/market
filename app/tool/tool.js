@@ -23,7 +23,6 @@ angular.module('ortolangMarketApp')
              * Load chosen plugin informations
              */
             $scope.loadTool = function () {
-                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
                 ToolsResource.getTool({pKey: $routeParams.plName},
                     function (tool) {
                         $scope.tool = tool;
@@ -38,7 +37,6 @@ angular.module('ortolangMarketApp')
              * @return {*[]}
              */
             $scope.loadConfig = function () {
-                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
                 ToolsResource.getConfig({pKey: $routeParams.plName},
                     function (config) {
                         $scope.initialiseFormConfig(config);
@@ -124,7 +122,6 @@ angular.module('ortolangMarketApp')
                 $scope.resultStatus = null;
                 $scope.viewLoading = true;
                 console.log('form submitted:', $scope.formData);
-                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
                 ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
                     function (response) {
                         $scope.viewLoading = false;
