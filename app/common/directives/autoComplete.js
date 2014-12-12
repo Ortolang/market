@@ -33,6 +33,14 @@ angular.module('ortolangMarketApp')
                 return scope.selectedTags.length>0;
             }
 
+            scope.isValid = function() {
+                if(scope.required) {
+                    return scope.hasTag();
+                } else {
+                    return true;
+                }
+            }
+
             scope.removeTag=function(index){
                 scope.selectedTags.splice(index,1);
             }
@@ -47,14 +55,11 @@ angular.module('ortolangMarketApp')
                             
                             sparqlResults.results.bindings.forEach(function(result) {
 
-                                if(scope.searchText !== result.label.value) {
-                                    labels.push(result.label.value);    
+                                if(scope.searchText !== result.label.value && labels.indexOf(result.label.value)===-1) {
+                                    labels.push(result.label.value);   
                                 }
                             });
 
-                            // if(data.indexOf(scope.searchText)===-1){
-                            //     data.unshift(scope.searchText);
-                            // }
                             scope.suggestions=labels;
                             scope.selectedIndex=-1;
                         }
