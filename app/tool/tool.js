@@ -149,6 +149,7 @@ angular.module('ortolangMarketApp')
                             $scope.preview = response.status;
                         }
                     });
+
             };
 
 
@@ -160,4 +161,30 @@ angular.module('ortolangMarketApp')
             $scope.viewLoading = false;
             $scope.loadTool();
             $scope.loadConfig();
+
+            //TEST
+            $scope.tabs = { success: 'true',
+                results : [
+                { type: 'text-preview', key:'log', title:'execution log', content:'Dynamic content 1', icon:'fa-file-text-o', active:true },
+                { type: 'text-preview', key:'preview', title:'Preview', content:'Dynamic content 2', icon:'fa-eye', active:false  },
+                {
+                    type: 'link-list',
+                    key:'files',
+                    title:'Generated file(s)',
+                    options: [
+                        {
+                            "name": "metadata.txt",
+                            "url": "/tmp/tika/1/res.txt"
+                        },
+                        {
+                            "name": "log.txt",
+                            "url": "/tmp/tika/1/log.txt"
+                        }
+                    ],
+                    icon:'fa-download',
+                    active:false
+                }
+            ]};
+
+
         }]);
