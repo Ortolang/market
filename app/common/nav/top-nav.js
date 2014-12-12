@@ -8,15 +8,14 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$location', '$window', '$translate', 'AuthService', 'Storage', 'User', 'Auth', function ($scope, $location, $window, $translate, AuthService, Storage, User, Auth) {
+    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', function ($scope, $translate, AuthService) {
+
+        $scope.login = function () {
+            AuthService.login();
+        };
 
         $scope.logout = function () {
-            $window.location = Auth.getLogoutUrl();
-            //Storage.destroySession();
-            //User.destroy();
-            //$scope.setCurrentUser(null);
-            //$scope.setAuthenticated(AuthService.isAuthenticated());
-            //$location.path('/');
+            AuthService.logout();
         };
 
         $scope.currentLanguage = $translate.preferredLanguage();
@@ -27,7 +26,4 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        $scope.login = function () {
-            $window.location = Auth.getKeycloak().createLoginUrl();
-        };
     }]);

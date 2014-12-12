@@ -11,17 +11,15 @@ angular.module('ortolangMarketApp')
     .service('User', function User() {
         /**
          * Create a new user
-         * @param userId
-         * @param profil
+         * @param profile
          */
-        this.create = function (userId, profil) {
-            this.id = userId;
-            this.userId = profil.key;
-            this.name = profil.fullname;
-            this.email = profil.email;
-            this.status = profil.status;
-            this.userMember = profil.groups;
-            //console.log(this);
+        this.create = function (profile) {
+            this.id = profile.key;
+            this.userId = profile.key;
+            this.name = profile.fullname;
+            this.email = profile.email;
+            this.status = profile.status;
+            this.userMember = profile.groups;
             return this;
         };
         /**

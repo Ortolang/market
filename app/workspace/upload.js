@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url', 'Auth',
-        function ($scope, $rootScope, $http, $timeout, FileUploader, Url, Auth) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url', 'AuthService',
+        function ($scope, $rootScope, $http, $timeout, FileUploader, Url, AuthService) {
 
             var uploader;
 
@@ -58,7 +58,7 @@ angular.module('ortolangMarketApp')
             uploader.onAfterAddingFile = function (fileItem) {
                 fileItem.wsName = angular.copy($scope.wsName);
                 fileItem.headers = {
-                    'Authorization': 'Bearer ' + Auth.getToken()
+                    'Authorization': 'Bearer ' + AuthService.getToken()
                 };
                 fileItem.wskey = angular.copy($scope.wskey);
                 fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wskey + '/elements';

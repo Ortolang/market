@@ -13,12 +13,11 @@ angular.module('ortolangMarketApp')
         'ToolsResource',
         '$routeParams',
         'formlyTemplate',
-        'AuthService',
         '$filter',
         'WorkspaceElementResource',
         '$q',
         'Url',
-        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url) {
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, $filter, WorkspaceElementResource, $q, Url) {
             /**
              * Load chosen plugin informations
              */
@@ -39,7 +38,6 @@ angular.module('ortolangMarketApp')
             $scope.loadConfig = function () {
                 ToolsResource.getConfig({pKey: $routeParams.plName},
                     function (config) {
-                        $scope.initialiseFormConfig(config);
                         console.debug(config);
                         $scope.generateForm(config);
                     },
@@ -69,31 +67,6 @@ angular.module('ortolangMarketApp')
                 });
                 deferred.resolve();
             };
-
-            /**
-             * Initialise the form from the JSON config
-             * @param configJSON
-             */
-            $scope.initialiseFormConfig = function (configJSON) {
-                // parcours du json pour initialiser le formulaire : les éventuels dataobject sont séléctionnés dans le workspace avec un typeahead
-                //var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
-                //if (objectsFieldList.length > 0) {
-                //    $scope.listAvailableDataObject = [];
-                //    if ($scope.authenticated) {
-                //        AuthService.getWorkspaces($scope.currentUser.id)
-                //            .then(function (wks) {
-                //                $scope.pushDataObjects(wks, function () {
-                //                    angular.forEach(configJSON, function (field, index) {
-                //                        if (field.type === 'dataobject') {
-                //                            configJSON[index].availableData = $scope.listAvailableDataObject;
-                //                        }
-                //                    });
-                //                });
-                //            });
-                //    }
-                //}
-            };
-
 
             /**
              * Generate the form

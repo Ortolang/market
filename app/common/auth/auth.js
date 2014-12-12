@@ -1,30 +1,49 @@
 'use strict';
 
-angular.element(document).ready(function () {
-    var keycloakAuth = new Keycloak('../../keycloak.json');
-    keycloakAuth.init({ onLoad: 'check-sso' }).success(function () {
-        /**
-         * @ngdoc service
-         * @name ortolangMarketApp.Auth
-         * @description
-         * # Auth
-         * Factory in the ortolangMarketApp.
-         */
-        angular.module('ortolangMarketApp')
-            .factory('Auth', function() {
-                var logoutUrl = keycloakAuth.authServerUrl + "/realms/ortolang/tokens/logout?redirect_uri=https://localhost:9000/";
-                function isAuthenticated() {
-                    return keycloakAuth.authenticated;
-                }
-                return {
-                    getToken: function () { return keycloakAuth.token; },
-                    getKeycloak: function () { return keycloakAuth; },
-                    isAuthenticated: isAuthenticated,
-                    getLogoutUrl: function () { return logoutUrl; }
-                };
+/**
+ * @ngdoc function
+ * @name ortolangMarketApp.controller:AuthCtrl
+ * @description
+ * # AuthCtrl
+ * Controller of the ortolangMarketApp
+ */
+angular.module('ortolangMarketApp')
+    .controller('AuthCtrl', ['$scope', '$q', 'User', '$rootScope', 'AuthService', 'ProfileResource', 'Storage', function ($scope, $q, User, $rootScope, AuthService, ProfileResource, Storage) {
+
+        function getUser() {
+            ProfileResource.connected().$promise.then(function (profile) {
+                $scope.currentUser = User.create(profile);
             });
-        angular.bootstrap(document, ["ortolangMarketApp"]);
-    }).error(function () {
-        window.location.reload();
-    });
-});
+        }
+
+        /**
+         * Initialize scope var from the session
+         */
+        $scope.initializeSession = function (user) {
+            $scope.authenticated = AuthService.isAuthenticated();
+            if (AuthService.isAuthenticated()) {
+                getUser();
+            }
+            //if (angular.isDefined(user)) {
+            //    $scope.currentUser = user;
+            //    $scope.authenticated = AuthService.isAuthenticated();
+            //    //AuthService.setUserId(user.id);
+            //} else {
+            //    $scope.currentUser = null;
+            //    Storage.getSession().then(function (value) {
+            //        if (value !== null && !angular.isUndefined(value)) {
+            //            $scope.currentUser = User.load(value);
+            //        }
+            //        //            console.debug(value);
+            //        $scope.authenticated = AuthService.isAuthenticated();
+            //        // console.debug('User is Authenticated ?' + $scope.authenticated);
+            //        if ($scope.authenticated) {
+            //            //AuthService.setUserId($scope.currentUser.id);
+            //        }
+            //    });
+            //}
+        };
+
+        // Initialize session
+        $scope.initializeSession();
+    }]);
