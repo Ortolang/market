@@ -38,7 +38,13 @@ angular.module('ortolangMarketApp')
                                         $scope.item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
                                     }
 
-                                    loadPreview($scope.item['http://www.ortolang.fr/ontology/preview']);
+                                    if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
+                                        // ObjectResource.element({oKey: oobject.object.key, path: $scope.item['http://www.ortolang.fr/ontology/preview']}).$promise.then(function(previewKeyCollection) {
+
+                                            // loadPreview(previewKeyCollection);
+                                        // });
+                                        loadPreview(oobject.object.key, $scope.item['http://www.ortolang.fr/ontology/preview']);
+                                    }
                                 });
                             }).error(function (reason) {
                                 console.error(reason);
@@ -77,15 +83,14 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        function loadPreview(previewKey) {
+        function loadPreview(collection, previewPath) {
 
-            if(previewKey !== undefined && previewKey !== '') {
-                ObjectResource.get({oKey: previewKey}).$promise.then(function (oobject) {
-                    $scope.previewCollection = oobject;
-                }, function (reason) {
-                    console.error(reason);
-                });
-            }
+                // ObjectResource.get({oKey: previewKey}).$promise.then(function (oobject) {
+            ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function(oobject) {
+                $scope.previewCollection = oobject;
+            }, function (reason) {
+                console.error(reason);
+            });
         }
 
         function finishPreview(visualizer, oobject) {

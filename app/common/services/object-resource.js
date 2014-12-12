@@ -25,6 +25,12 @@ angular.module('ortolangMarketApp')
             history: {
                 url: Url.urlBase() + '/rest/objects/:oKey/history',
                 method: 'GET'
-            }
+            },
+            element: {
+                url: Url.urlBase() + '/rest/objects/:oKey/element',
+                method: 'GET',
+                isArray: false,
+                responseType: ''
+            },
         });
     }]);
