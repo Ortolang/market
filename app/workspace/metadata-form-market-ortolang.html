@@ -125,7 +125,9 @@
 
         <div class="form-group">
             <label>Langue principale du corpus </label>
-            <input type="text" name="primaryLanguage" ng-model="md['http://www.ortolang.fr/ontology/primaryLanguage']" class="form-control">
+            <!-- <input type="text" name="primaryLanguage" ng-model="md['http://www.ortolang.fr/ontology/primaryLanguage']" class="form-control"> -->
+            <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/primaryLanguage']" name="'primaryLanguage'" placeholder="'Langue'"></div>
+
         </div>
 
         <div class="form-group">
@@ -150,7 +152,7 @@
         <div class="form-group">
             <label>Langues concernés par cet objet </label>
             <!-- <input type="text" name="language" ng-model="md['http://www.ortolang.fr/ontology/language']" class="form-control"> -->
-            <div auto-complete model="md['http://www.ortolang.fr/ontology/language']" name="'language'" placeholder="'Langue'"></div>
+            <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/language']" name="'language'" placeholder="'Langue'"></div>
         </div>
 
     </div>
