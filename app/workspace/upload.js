@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
             $rootScope.activateUploadQueue = function () {
                 $rootScope.uploadQueueStatus = 'active';
                 var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-                $('#upload-queue').find('.upload-elements-wrapper').css('max-height', height / 3);
+                $('.upload-queue').find('.upload-elements-wrapper').css('max-height', height / 3);
             };
 
             $rootScope.deactivateUploadQueue = function () {

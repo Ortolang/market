@@ -840,7 +840,7 @@ angular.module('ortolangMarketApp')
                     if (height > topOffset) {
                         height -= 1;
                         if ($rootScope.uploadQueueStatus === 'active') {
-                            height -= $('#upload-queue').innerHeight();
+                            height -= angular.element('.upload-queue').innerHeight();
                         }
                         $('.browser-aside').css('min-height', (height - browserToolbarHeight) + 'px');
                         var browserWrapper = $('#browser-wrapper');

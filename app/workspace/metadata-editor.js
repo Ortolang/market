@@ -49,7 +49,7 @@ angular.module('ortolangMarketApp')
 
         function loadMetadataContent(view, metadata) {
             $scope.selectedMetadata = metadata;
-            
+
             DownloadResource.download({oKey: metadata.key}).success(function (data) {
                 $scope.selectedMetadataContent = data;
 
@@ -170,7 +170,7 @@ angular.module('ortolangMarketApp')
             }
             if (height > topOffset) {
                 if ($rootScope.uploadQueueStatus === 'active') {
-                    height -= $('#upload-queue').innerHeight();
+                    height -= angular.element('.upload-queue').innerHeight();
                 }
                 // $('#browser-sidebar').css('min-height', (height - browserToolbarHeight) + 'px');
                 // $('#browser-wrapper').find('.table-wrapper.workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
