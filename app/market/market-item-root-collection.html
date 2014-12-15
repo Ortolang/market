@@ -11,7 +11,7 @@
                 <!-- Par : <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a> -->
                 <p>Production de <span ng-repeat="producer in item['http://www.ortolang.fr/ontology/producer']"><a ng-href="#/search?content={{producer}}" ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
                 <!-- Category : Corpora -->
-                <p ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']">Langue principale du corpus : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/primaryLanguage']}}" ng-bind="item['http://www.ortolang.fr/ontology/primaryLanguage']"></a></p>
+                <p ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']">Langue principale du corpus : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/primaryLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a></span></p>
                 <p ng-if="item['http://www.ortolang.fr/ontology/discourseType']">Type discursif : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/discourseType']}}" ng-bind="item['http://www.ortolang.fr/ontology/discourseType']"></a></p>
                 <p ng-if="item['http://www.ortolang.fr/ontology/linguisticField']">Domaines linguistiques : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/linguisticField']}}" ng-bind="item['http://www.ortolang.fr/ontology/linguisticField']"></a></p>
                 <!-- Category : Tool -->
@@ -156,11 +156,11 @@
 
         </div>
 
-        <div ng-show="browse" class="col-md-12">
+        <div ng-if="browse" class="col-md-12">
             <div browser></div>
         </div>
 
-        <div ng-include="'../common/visualizers/visualizer-template.html'"></div>
+        <div ng-if="!browse" ng-include="'../common/visualizers/visualizer-template.html'"></div>
 
         <aside ng-show="!browse" class="col-md-4">
             <div class="panel panel-default license-panel">
