@@ -100,7 +100,7 @@ angular.module('ortolangMarketApp')
             isolatedScope.elements.push(oobject.object);
 
             var element = $compile(visualizer.getElement())(isolatedScope),
-                visualizerModal = $('#visualizer-modal');
+                visualizerModal = $('.visualizer-modal');
             visualizerModal.find('.modal-header strong').text(visualizer.getName());
             visualizerModal.find('.modal-body').empty().append(element);
             visualizerModal.modal('show');

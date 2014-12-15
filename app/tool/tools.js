@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:PluginsctrlCtrl
+ * @name ortolangMarketApp.controller:ToolsCtrl
  * @description
- * # PluginsctrlCtrl
+ * # ToolsCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
         /**
          * Load List of available plugins
          */
-        $scope.loadTools = function () {
+        function init() {
             $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
             ToolsResource.getToolsList(
                 function (tools) {
@@ -22,8 +22,7 @@ angular.module('ortolangMarketApp')
                     console.log(error);
                 }
             );
-        };
+        }
 
-        $scope.toolList = [];
-        $scope.loadTools();
+        init();
     }]);
