@@ -1,5 +1,5 @@
-<div ng-show="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
-    <table ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
+<div ng-if="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
+    <table ng-init="resizeBrowser()" ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
         <thead>
         <tr>
             <th ng-click="order('name', 'toggle')" translate="NAME"></th>

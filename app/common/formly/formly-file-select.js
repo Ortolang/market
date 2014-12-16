@@ -22,20 +22,24 @@ angular.module('ortolangMarketApp')
                     var fileSelectModalScope = $rootScope.$new(true);
                     fileSelectModalScope.acceptMultiple = false;
                     fileSelectModalScope.fileSelectId = scope.id;
-                    //fileSelectModalScope.forceMimeTypes = 'ortolang/collection';
                     scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: scope.options.label || 'Select workspace element', template: 'common/directives/file-select-modal-template.html', show: false});
 
                     scope.showModal = function () {
                         scope.fileSelectModal.show();
                     };
 
-                    fileSelectModalScope.$on('browserSelectedElements', function ($event, elements, fileSelectId) {
+                    var unbindListener = scope.$on('browserSelectedElements', function ($event, elements, fileSelectId) {
+                        console.debug('formlyFileSelect with id "%s" caught event "browserSelectedElements" intended for id "%s"', scope.id, fileSelectId);
                         if (fileSelectId === scope.id) {
-                            console.debug('on browserSelectedElements', elements);
+                            console.debug('Selected elements: %o)', elements);
                             scope.value = elements[0].key;
                             scope.displayedValue = elements[0];
                             scope.fileSelectModal.hide();
                         }
+                    });
+
+                    scope.$on('$destroy', function () {
+                        unbindListener();
                     });
                 }
             }
