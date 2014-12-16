@@ -629,7 +629,7 @@ angular.module('ortolangMarketApp')
                     if ($scope.browserService.isFileSelect) {
                         var elements = getSelectedElementsCopy();
                         if (elements && elements.length > 0) {
-                            $rootScope.$broadcast('browserSelectedElements', elements, $scope.fileSelectId);
+                            $rootScope.$emit('browserSelectedElements-' + $scope.fileSelectId, elements);
                         }
                     } else {
                         if ($scope.visualizers) {
@@ -648,7 +648,8 @@ angular.module('ortolangMarketApp')
                 if ($scope.browserService.isFileSelect) {
                     var elements = getSelectedElementsCopy();
                     if (elements && elements.length > 0) {
-                        $rootScope.$broadcast('browserSelectedElements', elements, $scope.fileSelectId);
+                        console.debug('%s emit "browserSelectedElements-%s" event', $scope.browserService.getId(), $scope.fileSelectId);
+                        $scope.$emit('browserSelectedElements-' + $scope.fileSelectId, elements);
                     }
                 }
             });

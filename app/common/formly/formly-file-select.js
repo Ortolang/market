@@ -28,14 +28,12 @@ angular.module('ortolangMarketApp')
                         scope.fileSelectModal.show();
                     };
 
-                    var unbindListener = scope.$on('browserSelectedElements', function ($event, elements, fileSelectId) {
-                        console.debug('formlyFileSelect with id "%s" caught event "browserSelectedElements" intended for id "%s"', scope.id, fileSelectId);
-                        if (fileSelectId === scope.id) {
-                            console.debug('Selected elements: %o)', elements);
-                            scope.value = elements[0].key;
-                            scope.displayedValue = elements[0];
-                            scope.fileSelectModal.hide();
-                        }
+                    var unbindListener = $rootScope.$on('browserSelectedElements-' + scope.id, function ($event, elements) {
+                        console.debug('formlyFileSelect with id "%s" caught event "browserSelectedElements-%s" (selected elements: %o)', scope.id, scope.id, elements);
+                        scope.value = elements[0].key;
+                        scope.displayedValue = elements[0];
+                        scope.fileSelectModal.hide();
+                        $event.stopPropagation();
                     });
 
                     scope.$on('$destroy', function () {
