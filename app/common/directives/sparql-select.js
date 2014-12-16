@@ -16,7 +16,8 @@ angular.module('ortolangMarketApp')
                 model: '=',
                 label: '=',
                 required: '=',
-                defaultValue: '='
+                defaultValue: '=',
+                name:'='
             },
             templateUrl: 'common/directives/sparql-select.html',
             link: {

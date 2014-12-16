@@ -25,8 +25,9 @@
                     <h3 class="title">{{item.meta['http://purl.org/dc/elements/1.1/title']}}<span class="paragraph-end"></span></h3>
                     <p class="description">{{item.meta['http://purl.org/dc/elements/1.1/description']}}</p>
                     <p class="producers">
-                        <a ng-href="#/search?content={{item.meta['http://www.ortolang.fr/ontology/researcher']}}" class="author">{{item.meta['http://www.ortolang.fr/ontology/researcher']}}</a>
-                        <a ng-href="#/search?content={{item.meta['http://www.ortolang.fr/ontology/producer']}}" class="lab">{{item.meta['http://www.ortolang.fr/ontology/producer']}}</a>
+                        <span ng-repeat="producer in item.meta['http://www.ortolang.fr/ontology/producer']">
+                            <a ng-href="#/search?content={{producer}}" ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
+                        </span>
                     </p>
                     <div ng-if="item.result.key != item.result.root" class="item-element">
                         <p>

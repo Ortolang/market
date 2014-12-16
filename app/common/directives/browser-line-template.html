@@ -1,5 +1,5 @@
-<div ng-show="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
-    <table ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
+<div ng-if="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
+    <table ng-init="resizeBrowser()" ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
         <thead>
         <tr>
             <th ng-click="order('name', 'toggle')" translate="NAME"></th>
@@ -15,14 +15,14 @@
             ng-class="{active : isSelected(child)}">
             <td ng-if="child.type === 'collection'">
                         <span ng-click="browseToChild(child)" class="collection">
-                            <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}
+                            <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
                         </span>
             </td>
             <td ng-if="!(child.type === 'collection')">
-                <span class="{{child.mimeType | mimeTypeIconCss}} type"></span>{{child.name}}
+                <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
             </td>
-            <td>{{child.mimeType | contentType}}</td>
-            <td>{{child.modification | date : dateFormat}}</td>
+            <td>{{::child.mimeType | contentType}}</td>
+            <td>{{::child.modification | date : dateFormat}}</td>
         </tr>
         </tbody>
     </table>

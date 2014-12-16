@@ -38,8 +38,14 @@ angular.module('ortolangMarketApp')
 
                                     DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                         N3Serializer.fromN3(metaContent).then(function (data) {
+                                            var item = {};
+                                            item.oobject = oobject;
+                                            item.meta = data;
+                                            if(data['http://www.ortolang.fr/ontology/image']) {
+                                                item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                            }
+                                            $scope.items.push(item);
 
-                                            $scope.items.push({oobject: oobject, meta: data});
                                         });
                                     }).error(function (error) {
                                         console.error('error during process : ' + error);

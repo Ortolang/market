@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Storage', function (CookieFactory) {
+    .factory('Storage', ['CookieFactory', function (CookieFactory) {
 
         return {
             /**
@@ -35,4 +35,4 @@ angular.module('ortolangMarketApp')
                 return CookieFactory.deleteCookie('currentUser');
             }
         };
-    });
+    }]);

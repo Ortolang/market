@@ -37,6 +37,8 @@ module.exports = function (config) {
             'bower_components/angular-translate/angular-translate.js',
             'bower_components/zeroclipboard/dist/ZeroClipboard.js',
             'bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js',
+            'bower_components/angular-diff-match-patch/angular-diff-match-patch.js',
+            'bower_components/google-diff-match-patch/javascript/diff_match_patch_uncompressed.js',
             'app/**/*.js',
             'test/mock/**/*.js',
             'test/spec/**/*.js',

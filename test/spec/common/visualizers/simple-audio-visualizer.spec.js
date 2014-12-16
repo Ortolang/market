@@ -4,12 +4,14 @@ describe('Visualizer: SimpleAudioVisualizer', function () {
 
     // load the service's module
     beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
     beforeEach(module('common/visualizers/simple-audio-visualizer/simple-audio-visualizer.html'));
 
     // instantiate service
-    var SimpleAudioVisualizer, element, scope;
-    beforeEach(inject(function ($rootScope, $compile, _SimpleAudioVisualizer_) {
+    var SimpleAudioVisualizer, element, scope, AuthService;
+    beforeEach(inject(function ($rootScope, $compile, _SimpleAudioVisualizer_, _AuthService_) {
         SimpleAudioVisualizer = _SimpleAudioVisualizer_;
+        AuthService = _AuthService_;
         scope = $rootScope.$new();
         element = angular.element('<simple-audio-visualizer></simple-audio-visualizer>');
         element = $compile(element)(scope);

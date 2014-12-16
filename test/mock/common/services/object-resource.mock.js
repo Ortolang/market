@@ -42,6 +42,7 @@ angular.module('ortolangMarketAppMock')
 
         return {
             get: get,
+            element: get,
             when: when,
             clear: clear
         };

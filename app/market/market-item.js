@@ -34,7 +34,17 @@ angular.module('ortolangMarketApp')
                                     $scope.item = angular.copy(data);
                                     $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
-                                    loadPreview($scope.item['http://www.ortolang.fr/ontology/preview']);
+                                    if(data['http://www.ortolang.fr/ontology/image']) {
+                                        $scope.item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                    }
+
+                                    if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
+                                        // ObjectResource.element({oKey: oobject.object.key, path: $scope.item['http://www.ortolang.fr/ontology/preview']}).$promise.then(function(previewKeyCollection) {
+
+                                            // loadPreview(previewKeyCollection);
+                                        // });
+                                        loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
+                                    }
                                 });
                             }).error(function (reason) {
                                 console.error(reason);
@@ -58,12 +68,10 @@ angular.module('ortolangMarketApp')
         $scope.browse = false;
 
         $scope.showPreview = function (preview) {
-
             if(preview !== undefined && preview !== '') {
                 //TODO Get preview file or collection
                 ObjectResource.get({oKey: preview}).$promise.then(function (oobject) {
-                    console.info(oobject);
-                    var visualizers = VisualizerManager.getCompatibleVisualizers(oobject.object.mimeType, oobject.object.name);
+                    var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
 
                     if(visualizers.length > 0) {
                         finishPreview(visualizers[0], oobject);
@@ -73,15 +81,13 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        function loadPreview(previewKey) {
-
-            if(previewKey !== undefined && previewKey !== '') {
-                ObjectResource.get({oKey: previewKey}).$promise.then(function (oobject) {
-                    $scope.previewCollection = oobject;
-                }, function (reason) {
-                    console.error(reason);
-                });
-            }
+        function loadPreview(collection, previewPath) {
+                // ObjectResource.get({oKey: previewKey}).$promise.then(function (oobject) {
+            ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function(oobject) {
+                $scope.previewCollection = oobject;
+            }, function (reason) {
+                console.error(reason);
+            });
         }
 
         function finishPreview(visualizer, oobject) {
@@ -93,9 +99,9 @@ angular.module('ortolangMarketApp')
             isolatedScope.elements = [];
             isolatedScope.elements.push(oobject.object);
 
-            var element = $compile(visualizer.element)(isolatedScope),
-                visualizerModal = $('#visualizer-modal');
-            visualizerModal.find('.modal-header strong').text(visualizer.name);
+            var element = $compile(visualizer.getElement())(isolatedScope),
+                visualizerModal = $('.visualizer-modal');
+            visualizerModal.find('.modal-header strong').text(visualizer.getName());
             visualizerModal.find('.modal-body').empty().append(element);
             visualizerModal.modal('show');
         }

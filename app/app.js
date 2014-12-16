@@ -23,14 +23,16 @@ angular
         'mgcrea.ngStrap.tooltip',
         'mgcrea.ngStrap.dropdown',
         'mgcrea.ngStrap.typeahead',
+        'mgcrea.ngStrap.alert',
         'hljs',
         'cfp.hotkeys',
         'formly',
         'ui.bootstrap.showErrors',
         'pascalprecht.translate',
-        'zeroclipboard'
+        'zeroclipboard',
+        'diff-match-patch'
     ])
-    .config(function ($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
                 redirectTo: '/market'
@@ -76,20 +78,20 @@ angular
             .otherwise({
                 redirectTo: '/404'
             });
-    })
-    .config(function ($sceDelegateProvider) {
+    }])
+    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
             'self',
             'http://localhost:8080/**',
             'https://localhost:8443/**'
         ]);
-    })
-    .config(function ($tooltipProvider) {
+    }])
+    .config(['$tooltipProvider', function ($tooltipProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body'
         });
-    })
+    }])
     .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
         uiZeroclipConfigProvider.setZcConf({
             swfPath: '../bower_components/zeroclipboard/dist/ZeroClipboard.swf'

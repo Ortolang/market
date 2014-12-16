@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
         /**
          * Load List of available plugins
          */
-        $scope.loadTools = function () {
+        function init() {
             ToolsResource.getToolsList(
                 function (tools) {
                     $scope.toolList = tools.entries;
@@ -21,8 +21,7 @@ angular.module('ortolangMarketApp')
                     console.log(error);
                 }
             );
-        };
+        }
 
-        $scope.toolList = [];
-        $scope.loadTools();
+        init();
     }]);

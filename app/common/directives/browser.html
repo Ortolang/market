@@ -8,7 +8,7 @@
 
             <div ng-class="displayAsideWorkspaceList() ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
                 <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
-                    <button ng-if="breadcrumbParts" class="btn btn-default" ng-click="browseToPath('/')">
+                    <button ng-if="breadcrumbParts.length > 0" class="btn btn-default" ng-click="browseToPath('/')">
                         <span ng-class="icons.browser.home"></span>{{wsName}}
                         <span ng-show="root !== 'head'" class="root">{{root}}</span>
                     </button>
@@ -50,8 +50,8 @@
                     </div>
                 </div>
                 <div ng-if="!browserService.hasBreadcrumb" class="browser-breadcrumb">
-                    <!--<button class="btn btn-default" onclick="window.history.back()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>-->
-                    <!--<button class="btn btn-default" onclick="window.history.forward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>-->
+                    <button data-ng-disabled="keyHistory && keyHistory.back.length === 0" class="btn btn-default" ng-click="goBack()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
+                    <button data-ng-disabled="keyHistory && keyHistory.forward.length === 0" class="btn btn-default" ng-click="goForward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
                     <button class="btn btn-default" disabled>{{parent.name}}</button>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" role="toolbar">
@@ -187,7 +187,7 @@
                     <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span> {{selectedElements[0].name}}
                 </p>
                 <p ng-if="!hasOnlyOneElementSelected()" class="lead">
-                    <span ng-class="icons.files"></span> {{'BROWSER.ELEMENT' | translate:'{value: selectedElements.length}'}}
+                    <span ng-class="icons.files"></span> <span translate="BROWSER.ELEMENT" data-translate-values="{value: selectedElements.length}"></span>
                 </p>
 
 
@@ -210,7 +210,7 @@
                                 <dt translate="BROWSER.CLOCK"></dt>
                                 <dd>{{selectedElements[0].clock}}</dd>
                                 <dt translate="BROWSER.KEY" class="key"></dt>
-                                <dd>{{selectedElements[0].key.substring(0,12)}}... <button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"  data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><span class="octicon octicon-clippy"></span></button></dd>
+                                <dd>{{selectedElements[0].key.substring(0,12)}}... <span data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"><span class="octicon octicon-clippy"></span></button></span></dd>
                                 <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
                                 <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></dd>
                                 <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>
@@ -280,7 +280,7 @@
                                         </div>
                                         <div class="media-body">
                                             <p class="creation">
-                                                {{'BROWSER.CREATED' | translate:'{author: snapshotHistory.author}'}}
+                                                <span translate="BROWSER.CREATED" data-translate-values="{author: snapshotHistory.author}"></span>
                                                 <strong class="snapshot-name">{{getSnapshotNameFromHistory(snapshotHistory)}}</strong>
                                                 <span class="small publication-status" ng-class="[snapshotHistory.publicationStatus, icons.browser.published]" data-title="{{snapshotHistory.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="left" bs-tooltip></span>
                                             </p>
@@ -306,11 +306,11 @@
 
     </div>
 
-    <div ng-if="!browserService.isFileSelect" ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
+    <div ng-show="!browserService.isFileSelect" ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
 
     <div ng-include="'workspace/metadata-preview.html'"></div>
 
     <div ng-include="'common/visualizers/visualizer-template.html'"></div>
 
-    <div ng-if="browserService.canAdd && isHead" id="upload-queue" ng-class="uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
+    <div ng-if="browserService.canAdd && isHead" class="upload-queue" ng-class="uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
 </div>

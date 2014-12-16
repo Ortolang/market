@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', function ($scope, $rootScope, $http, Url, DownloadResource) {
+    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource) {
 
         // ***************** //
         // Editor visibility //
@@ -49,7 +49,7 @@ angular.module('ortolangMarketApp')
 
         function loadMetadataContent(view, metadata) {
             $scope.selectedMetadata = metadata;
-            
+
             DownloadResource.download({oKey: metadata.key}).success(function (data) {
                 $scope.selectedMetadataContent = data;
 
@@ -62,6 +62,18 @@ angular.module('ortolangMarketApp')
                 //TODO send error message
             });
         }
+
+        $scope.deleteMetadata = function () {
+            WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.selectedElements[0].path, metadataname: $scope.selectedMetadata.name}).$promise.then(
+                function () {
+                    $scope.selectedMetadata = undefined;
+                    $scope.refreshSelectedElement();
+                },
+                function (reason) {
+                    console.error('Cant delete metadata with name ' + $scope.selectedMetadata.name + ' failed cause '+reason+' !');
+                }
+            );
+        };
 
         $scope.submitMetadataForm = function() {
             // console.debug($scope.metadataMarketform);
@@ -158,7 +170,7 @@ angular.module('ortolangMarketApp')
             }
             if (height > topOffset) {
                 if ($rootScope.uploadQueueStatus === 'active') {
-                    height -= $('#upload-queue').innerHeight();
+                    height -= angular.element('.upload-queue').innerHeight();
                 }
                 // $('#browser-sidebar').css('min-height', (height - browserToolbarHeight) + 'px');
                 // $('#browser-wrapper').find('.table-wrapper.workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
