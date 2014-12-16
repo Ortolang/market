@@ -1,7 +1,7 @@
 'use strict';
 
 angular.element(document).ready(function () {
-    var keycloakAuth = new Keycloak('../../keycloak.json');
+    var keycloakAuth = new Keycloak('keycloak.json');
     keycloakAuth.init({ onLoad: 'check-sso' }).success(function () {
         /**
          * @ngdoc service
@@ -36,7 +36,7 @@ angular.element(document).ready(function () {
                 };
         }]);
 
-        angular.bootstrap(document, ["ortolangMarketApp"]);
+        angular.bootstrap(document, ["ortolangMarketApp"], { strictDi: true });
     }).error(function () {
         window.location.reload();
     });

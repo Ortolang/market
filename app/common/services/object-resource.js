@@ -30,6 +30,6 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/objects/:oKey/element',
                 method: 'GET',
                 isArray: false
-            },
+            }
         });
     }]);

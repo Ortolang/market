@@ -14,12 +14,10 @@ angular.module('ortolangMarketAppMock')
 
         function get(params) {
             var defer = $q.defer(), data;
-            
-            angular.forEach(conditions, function(condition) {
 
+            angular.forEach(conditions, function(condition) {
                 if(angular.equals(params, condition.condition)) {
                     data = condition.responseValue;
-                    return;
                 }
             });
 

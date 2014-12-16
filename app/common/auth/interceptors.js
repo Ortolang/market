@@ -26,23 +26,8 @@ angular.module('ortolangMarketApp')
                 } else {
                     return config;
                 }
-            }
-        };
-}]);
-
-/**
- * @ngdoc service
- * @name ortolangMarketApp.ErrorInterceptor
- * @description
- * # ErrorInterceptor
- * Factory in the ortolangMarketApp.
- */
-angular.module('ortolangMarketApp')
-    .factory('ErrorInterceptor', ['$q', 'AuthService', function($q, AuthService) {
-        return function(promise) {
-            return promise.then(function(response) {
-                return response;
-            }, function(response) {
+            },
+            responseError: function(response) {
                 if (response.status == 401) {
                     console.log('session timeout?');
                     if (!AuthService.isAuthenticated()) {
@@ -60,15 +45,14 @@ angular.module('ortolangMarketApp')
                     }
                 }
                 return $q.reject(response);
-            });
+            }
         };
-    }]);
+}]);
 
 angular.module('ortolangMarketApp')
-    .config(function($httpProvider) {
-        $httpProvider.responseInterceptors.push('ErrorInterceptor');
+    .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push('AuthInterceptor');
-    })
+    }])
     .run(['$rootScope', 'AuthService', function ($rootScope, AuthService) {
         $rootScope.$on('$routeChangeStart', function (event, current) {
             if (current.requiresAuthentication && !AuthService.isAuthenticated()) {

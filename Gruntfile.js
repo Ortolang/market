@@ -350,6 +350,14 @@ module.exports = function (grunt) {
                         cwd: 'bower_components/octicons',
                         src: 'octicons/*',
                         dest: '<%= yeoman.dist %>/assets'
+                    }, {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '<%= yeoman.dist %>',
+                        src: [
+                            'vendor/keycloak.js',
+                            'keycloak.json'
+                        ]
                     }
                 ]
             },
