@@ -10,6 +10,7 @@ angular.module('ortolangMarketAppMock')
 
         var keycloakAuth = {
             authServerUrl: 'authServerUrl',
+            createLoginUrl: 'createLoginUrl',
             createAccountUrl: 'createAccountUrl',
             token: 'token',
             authenticated: true
@@ -22,7 +23,11 @@ angular.module('ortolangMarketAppMock')
         }
 
         function login() {
-            $window.location = keycloakAuth.createAccountUrl()
+            $window.location = keycloakAuth.createLoginUrl;
+        }
+
+        function register() {
+            $window.location = keycloakAuth.createAccountUrl;
         }
 
         function logout() {
@@ -32,6 +37,7 @@ angular.module('ortolangMarketAppMock')
         return {
             login: login,
             logout: logout,
+            register: register,
             getToken: function () { return keycloakAuth.token; },
             getKeycloak: function () { return keycloakAuth; },
             isAuthenticated: isAuthenticated

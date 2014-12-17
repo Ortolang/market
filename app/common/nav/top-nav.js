@@ -14,6 +14,10 @@ angular.module('ortolangMarketApp')
             AuthService.login();
         };
 
+        $scope.register = function () {
+            AuthService.register();
+        };
+
         $scope.logout = function () {
             AuthService.logout();
         };

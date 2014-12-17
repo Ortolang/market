@@ -20,7 +20,11 @@ angular.element(document).ready(function () {
                 }
 
                 function login() {
-                    $window.location = keycloakAuth.createAccountUrl()
+                    $window.location = keycloakAuth.createLoginUrl();
+                }
+
+                function register() {
+                    $window.location = keycloakAuth.createLoginUrl();
                 }
 
                 function logout() {
@@ -29,6 +33,7 @@ angular.element(document).ready(function () {
 
                 return {
                     login: login,
+                    register: register,
                     logout: logout,
                     getToken: function () { return keycloakAuth.token; },
                     getKeycloak: function () { return keycloakAuth; },
@@ -37,7 +42,7 @@ angular.element(document).ready(function () {
         }]);
 
         angular.bootstrap(document, ["ortolangMarketApp"], { strictDi: true });
-    }).error(function () {
-        window.location.reload();
+    }).error(function (error) {
+        console.error(error);
     });
 });

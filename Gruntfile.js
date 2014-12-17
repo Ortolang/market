@@ -339,25 +339,35 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/bootstrap/dist',
                         src: 'fonts/*',
-                        dest: '<%= yeoman.dist %>/assets'
+                        dest: '<%= yeoman.dist %>'
                     }, {
                         expand: true,
                         cwd: 'bower_components/components-font-awesome',
                         src: 'fonts/*',
-                        dest: '<%= yeoman.dist %>/assets'
+                        dest: '<%= yeoman.dist %>'
                     }, {
                         expand: true,
-                        cwd: 'bower_components/octicons',
-                        src: 'octicons/*',
-                        dest: '<%= yeoman.dist %>/assets'
+                        cwd: 'bower_components/octicons/octicons',
+                        src: [
+                            '*',
+                            '!*.{css,scss,md}'
+                        ],
+                        dest: '<%= yeoman.dist %>/fonts'
                     }, {
                         expand: true,
                         cwd: '<%= yeoman.app %>',
                         dest: '<%= yeoman.dist %>',
                         src: [
-                            'vendor/keycloak.js',
+                            'scripts/keycloak.js',
                             'keycloak.json'
                         ]
+                    }, {
+                        expand: true,
+                        cwd: 'bower_components/zeroclipboard/dist',
+                        src: [
+                            '*.swf'
+                        ],
+                        dest: '<%= yeoman.dist %>/vendor'
                     }
                 ]
             },
@@ -408,16 +418,24 @@ module.exports = function (grunt) {
                     '{,*/}*.css',
                     '{,*/}*.less'
                 ]
+            },
+            swf: {
+                expand: true,
+                cwd: 'bower_components/zeroclipboard/dist',
+                src: 'ZeroClipboard.swf',
+                dest: '<%= yeoman.app %>/vendor/'
             }
         },
 
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             server: [
-                'copy:styles'
+                'copy:styles',
+                'copy:swf'
             ],
             test: [
-                'copy:styles'
+                'copy:styles',
+                'copy:swf'
             ],
             dist: [
                 'copy:styles',
@@ -438,23 +456,46 @@ module.exports = function (grunt) {
             development: {
                 options: {
                     compress: false,
-                    sourceMap: true
+                    sourceMap: true,
+                    outputSourceFiles: true,
+                    modifyVars: {
+                        'octicons-font-path': '"/bower_components/octicons/octicons"'
+                    }
                 },
                 files: {
                     '<%= yeoman.app %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
-                    '<%= yeoman.app %>/styles/sb-admin-2.css': '<%= yeoman.app %>/styles/less/sb-admin-2/sb-admin-2.less'
+                    'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
                 }
             },
             production: {
                 options: {
                     compress: false,
-                    sourceMap: true
+                    sourceMap: false,
+                    modifyVars: {
+                        'icon-font-path': '"../fonts/"',
+                        'octicons-font-path': '"../fonts"'
+                    }
                 },
                 files: {
                     '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
-                    '<%= yeoman.dist %>/styles/sb-admin-2.css': '<%= yeoman.app %>/styles/less/sb-admin-2/sb-admin-2.less'
+                    'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
+                }
+            }
+            ,
+            'dev-production': {
+                options: {
+                    compress: false,
+                    sourceMap: false,
+                    modifyVars: {
+                        'icon-font-path': '"../fonts/"'
+                    }
+                },
+                files: {
+                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
+                    'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
                 }
             }
         },
@@ -536,7 +577,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev-build', [
         'clean:dist',
-        'less:production',
+        'less:dev-production',
         'wiredep',
         'concurrent:dist',
         'copy:dist',
