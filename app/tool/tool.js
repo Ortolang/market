@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
              * Initialise the form from the JSON config
              * @param configJSON
              */
-            $scope.initialiseFormConfig = function (configJSON) {
+            $scope.initialiseFormConfig = function () {
                 // parcours du json pour initialiser le formulaire : les éventuels dataobject sont séléctionnés dans le workspace avec un typeahead
                 //var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
                 //if (objectsFieldList.length > 0) {
