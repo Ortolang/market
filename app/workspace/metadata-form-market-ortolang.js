@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
         });
 
 
-        var deregistration = $rootScope.$on('metadata-form-submit', function ($event) {
+        var deregistration = $rootScope.$on('metadata-form-submit', function () {
            $scope.submitMetadata($scope.metadataMarketform, $scope.md);
         });
 

@@ -129,12 +129,10 @@ module.exports = function (grunt) {
             all: {
                 src: [
                     'Gruntfile.js',
-                    '<%= yeoman.app %>/market/*.js',
-                    '<%= yeoman.app %>/scripts/*.js',
-                    '<%= yeoman.app %>/scripts/controllers/*.js',
-                    '<%= yeoman.app %>/scripts/directives/*.js',
-                    '<%= yeoman.app %>/scripts/filters/*.js',
-                    '<%= yeoman.app %>/scripts/services/*.js'
+                    '<%= yeoman.app %>/{,*/}*.js',
+                    '!<%= yeoman.app %>/scripts/sb-admin-2.js',
+                    '!<%= yeoman.app %>/scripts/keycloak.js',
+                    '!<%= yeoman.app %>/scripts/keycloak.min.js'
                 ]
             },
             test: {
