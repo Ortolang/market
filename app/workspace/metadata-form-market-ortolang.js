@@ -30,20 +30,24 @@ angular.module('ortolangMarketApp')
         /*************
          * Listeners
          *************/
-        $rootScope.$on('browserSelectedElements', function ($event, elements, fileSelectId) {
+        var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
+            console.debug('metadata-form-market-ortolang caught event "browserSelectedElements-folderSelectModal" (selected elements: %o)', elements);
             if (!$scope.md) {
                 $scope.md = {};
             }
-            if (fileSelectId==='folderSelectModal') {
-                $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].key;
-                $scope.preview = elements[0];
-                $scope.folderSelectModal.hide();
-            } else if (fileSelectId==='fileImageSelectModal') {
+            $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].key;
+            $scope.preview = elements[0];
+            $scope.folderSelectModal.hide();
+        });
 
-                $scope.md['http://www.ortolang.fr/ontology/image'] = elements[0].key;
-                $scope.image = elements[0];
-                $scope.fileImageSelectModal.hide();
+        var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
+            console.debug('metadata-form-market-ortolang caught event "browserSelectedElements-fileImageSelectModal" (selected elements: %o)', elements);
+            if (!$scope.md) {
+                $scope.md = {};
             }
+            $scope.md['http://www.ortolang.fr/ontology/image'] = elements[0].key;
+            $scope.image = elements[0];
+            $scope.fileImageSelectModal.hide();
         });
 
 
@@ -53,6 +57,8 @@ angular.module('ortolangMarketApp')
 
         $scope.$on('$destroy', function () {
             deregistration();
+            deregisterFolderSelectModal();
+            deregisterFileImageSelectModal();
         });
 
         function init() {
