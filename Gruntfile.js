@@ -482,8 +482,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
                 }
-            }
-            ,
+            },
             'dev-production': {
                 options: {
                     compress: false,

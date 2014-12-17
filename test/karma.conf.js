@@ -58,7 +58,9 @@ module.exports = function (config) {
         },
 
         // list of files / patterns to exclude
-        exclude: [],
+        exclude: [
+            'app/common/auth/interceptors.js'
+        ],
 
         // web server port
         port: 9876,
