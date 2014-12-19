@@ -11,11 +11,19 @@ angular.module('ortolangMarketApp')
     .factory('ToolsResource', ['$resource', 'Url', function ($resource, Url) {
         return $resource(Url.urlBase() + '/rest/tools', {}, {
             getToolsList: {
+                url: Url.urlBase() + '/rest/tools',
                 method: 'GET',
                 isArray: false
             },
             getTool: {
                 url: Url.urlBaseTool() + ':pKey/:pKey/description',
+                //url: ':base/description',
+                method: 'GET',
+                isArray: false
+            },
+            getToolDiffusion: {
+                url: Url.urlBase() + '/rest/tools/:pKey',
+                //url: ':base/description',
                 method: 'GET',
                 isArray: false
             },
@@ -24,11 +32,21 @@ angular.module('ortolangMarketApp')
                 method: 'GET',
                 isArray: true
             },
+            getConfigDiffusion: {
+                url: Url.urlBase() + '/rest/tools/:pKey/config',
+                method: 'GET',
+                isArray: true
+            },
             postConfig: {
                 //url: Url.urlBase() + '/rest/tools/:pKey/config-new',
                 url: Url.urlBaseTool() + ':pKey/:pKey/jobs',
                 method: 'POST',
                 headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+            },
+            postConfigDiffusion: {
+                url: Url.urlBase() + '/rest/tools/:pKey/config-new',
+                method: 'POST'
+                //headers : {'Content-Type': 'application/x-www-form-urlencoded'}
             },
             createToolJob: {
                 method: 'POST',

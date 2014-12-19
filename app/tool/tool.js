@@ -25,13 +25,24 @@ angular.module('ortolangMarketApp')
              */
             $scope.loadTool = function () {
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                ToolsResource.getTool({pKey: $routeParams.plName},
-                    function (tool) {
-                        $scope.tool = tool;
-                    },
-                    function (error) {
-                        console.log(error);
-                    });
+                // temporary hack
+                if($routeParams.plName === 'tika'){
+                    ToolsResource.getTool({pKey: $routeParams.plName},
+                        function (tool) {
+                            $scope.tool = tool;
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                } else {
+                    ToolsResource.getToolDiffusion({pKey: $routeParams.plName},
+                        function (tool) {
+                            $scope.tool = tool;
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                }
             };
 
             /**
@@ -40,15 +51,28 @@ angular.module('ortolangMarketApp')
              */
             $scope.loadConfig = function () {
                 $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                ToolsResource.getConfig({pKey: $routeParams.plName},
-                    function (config) {
-                        $scope.initialiseFormConfig(config);
-                        console.debug(config);
-                        $scope.generateForm(config);
-                    },
-                    function (error) {
-                        console.log(error);
-                    });
+                // temporary hack
+                if($routeParams.plName === 'tika') {
+                    ToolsResource.getConfig({pKey: $routeParams.plName},
+                        function (config) {
+                            $scope.initialiseFormConfig(config);
+                            console.debug(config);
+                            $scope.generateForm(config);
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                } else {
+                    ToolsResource.getConfigDiffusion({pKey: $routeParams.plName},
+                        function (config) {
+                            $scope.initialiseFormConfig(config);
+                            console.debug(config);
+                            $scope.generateForm(config);
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                }
             };
 
             /**
@@ -122,37 +146,40 @@ angular.module('ortolangMarketApp')
              * Action to perform on submit
              */
             $scope.onSubmit = function () {
-                $scope.resultStatus = null;
-                $scope.viewLoading = true;
                 console.log('form submitted:', $scope.formData);
 
-                Runtime.createToolJob($routeParams.plName, $scope.formData);
-
-                //$http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                //ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
-                //    function (response) {
-                //        $scope.viewLoading = false;
-                //        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
-                //        //console.log('reponse invoke:', response);
-                //        if (response.status === 'SUCCESS') {
-                //            $scope.success = true;
-                //            $scope.resultStatus = response.status;
-                //            $scope.preview = response.output;
-                //            $scope.listFileResult = [];
-                //            angular.forEach(response.outputFilePath, function (file, fileName) {
-                //                $scope.listFileResult.push(
-                //                    {
-                //                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
-                //                        resFileName : fileName
-                //                    }
-                //                );
-                //            });
-                //        } else {
-                //            $scope.success = false;
-                //            $scope.resultStatus = response.status;
-                //            $scope.preview = response.status;
-                //        }
-                //    });
+                // temporary hack
+                if($routeParams.plName === 'tika') {
+                    Runtime.createToolJob($routeParams.plName, $scope.formData);
+                } else {
+                    $scope.resultStatus = null;
+                    $scope.viewLoading = true;
+                    $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                    ToolsResource.postConfigDiffusion({pKey: $routeParams.plName}, $scope.formData,
+                        function (response) {
+                            $scope.viewLoading = false;
+                            $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
+                            //console.log('reponse invoke:', response);
+                            if (response.status === 'SUCCESS') {
+                                $scope.success = true;
+                                $scope.resultStatus = response.status;
+                                $scope.preview = response.output;
+                                $scope.listFileResult = [];
+                                angular.forEach(response.outputFilePath, function (file, fileName) {
+                                    $scope.listFileResult.push(
+                                        {
+                                            downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
+                                            resFileName : fileName
+                                        }
+                                    );
+                                });
+                            } else {
+                                $scope.success = false;
+                                $scope.resultStatus = response.status;
+                                $scope.preview = response.status;
+                            }
+                        });
+                }
 
             };
 
