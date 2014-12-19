@@ -15,7 +15,7 @@
                 <p ng-if="item['http://www.ortolang.fr/ontology/discourseType']">Type discursif : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/discourseType']}}" ng-bind="item['http://www.ortolang.fr/ontology/discourseType']"></a></p>
                 <p ng-if="item['http://www.ortolang.fr/ontology/linguisticField']">Domaines linguistiques : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/linguisticField']}}" ng-bind="item['http://www.ortolang.fr/ontology/linguisticField']"></a></p>
                 <!-- Category : Tool -->
-                <p ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']">Languages de programmation : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/programmingLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
+                <p ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']">Langages de programmation : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/programmingLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
                 <p ng-if="item['http://www.ortolang.fr/ontology/opearatingSystem']">Systèmes d'exploitation supportés : <span ng-repeat="os in item['http://www.ortolang.fr/ontology/opearatingSystem']"><a href="#/search?content={{os}}" ng-bind="os"></a><span ng-if="!$last">, </span></span></p>
                 <p ng-if="item['http://www.ortolang.fr/ontology/toolType']">Catégorie d'outil : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/toolType']}}" ng-bind="item['http://www.ortolang.fr/ontology/toolType']"></a></p>
                 <!-- Category : Annotation -->
