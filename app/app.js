@@ -58,7 +58,7 @@ angular
                 requiresAuthentication: true
             })
             .when('/login', {
-                templateUrl: '/login/login.html',
+                templateUrl: 'login/login.html',
                 controller: 'LoginCtrl'
             })
             .when('/tools', {
@@ -114,7 +114,7 @@ angular
     }])
     .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
         uiZeroclipConfigProvider.setZcConf({
-            swfPath: '../bower_components/zeroclipboard/dist/ZeroClipboard.swf'
+            swfPath: 'vendor/ZeroClipboard.swf'
         });
     }])
     .run(['$rootScope', '$location', 'AuthService', 'AuthEvents', function ($rootScope, $location, AuthService, AuthEvents) {

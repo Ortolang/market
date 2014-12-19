@@ -35,7 +35,11 @@ angular.module('ortolangMarketApp')
             }
 
             $rootScope.toggleUploadQueueStatus = function () {
-                $rootScope.uploadQueueStatus ? $rootScope.deactivateUploadQueue() : $rootScope.activateUploadQueue();
+                if ($rootScope.uploadQueueStatus) {
+                    $rootScope.deactivateUploadQueue();
+                } else {
+                    $rootScope.activateUploadQueue();
+                }
             };
 
             $rootScope.activateUploadQueue = function () {

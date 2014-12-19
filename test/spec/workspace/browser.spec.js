@@ -6,34 +6,34 @@ describe('Controller: BrowserCtrl', function () {
     beforeEach(module('ortolangMarketApp'));
 
     var BrowserCtrl,
-        mockWorkspaceElementResource,
+        //mockWorkspaceElementResource,
         $scope,
         $rootScope,
         $q,
         $httpBackend,
         Url,
-        $routeParams,
+        $routeParams;
 
-        mockParentData = {
-            'pathParts': [],
-            'key': '986a419a-beff-4a3a-b82f-e3d258ff2754',
-            'workspace': 'system',
-            'name': 'root',
-            'clock': 1,
-            'size': 19,
-            'description': 'Root collection of workspace "System Workspace"',
-            'preview': null,
-            'stream': null,
-            'type': 'collection',
-            'mimetype': 'text/directory',
-            'format': null,
-            'target': null,
-            'modification': 1414142656719,
-            'creation': 1414137707733,
-            'elements': [{'type': 'object', 'name': 'ORTOLANG_ATILF_Pre_sentation_20140924.pdf', 'modification': 1414142655254, 'mimeType': 'application/pdf', 'key': 'c5ab65ff-0f16-4828-8630-e579d4afeab6'}],
-            'metadatas': [],
-            'path': '/'
-        };
+        //mockParentData = {
+        //    'pathParts': [],
+        //    'key': '986a419a-beff-4a3a-b82f-e3d258ff2754',
+        //    'workspace': 'system',
+        //    'name': 'root',
+        //    'clock': 1,
+        //    'size': 19,
+        //    'description': 'Root collection of workspace "System Workspace"',
+        //    'preview': null,
+        //    'stream': null,
+        //    'type': 'collection',
+        //    'mimetype': 'text/directory',
+        //    'format': null,
+        //    'target': null,
+        //    'modification': 1414142656719,
+        //    'creation': 1414137707733,
+        //    'elements': [{'type': 'object', 'name': 'ORTOLANG_ATILF_Pre_sentation_20140924.pdf', 'modification': 1414142655254, 'mimeType': 'application/pdf', 'key': 'c5ab65ff-0f16-4828-8630-e579d4afeab6'}],
+        //    'metadatas': [],
+        //    'path': '/'
+        //};
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function ($controller, _$rootScope_, _$q_, _$httpBackend_, _Url_) {
@@ -44,7 +44,7 @@ describe('Controller: BrowserCtrl', function () {
         $routeParams =  {wsName: 'system', root: 'head', path: '/'};
         $httpBackend = _$httpBackend_;
 
-        var queryPromise = $q.defer();
+        //var queryPromise = $q.defer();
 
         //var url = Url.urlBase() + '/rest/workspaces/' + $routeParams.wsName + '/elements';
         //url += '?path=%2F&root=head';
