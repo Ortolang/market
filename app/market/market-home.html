@@ -29,10 +29,10 @@
             <header>
                 <h3 translate="MARKET.REDACTOR_CHOICES"></h3>
             </header>
-            <div class="row">
+            <div class="flex-container">
 
-                <div ng-repeat="item in items" class="col-sm-6 col-md-3">
-                    <div class="thumbnail market-item" ng-click="clickItem(item)">
+                <div ng-repeat="item in items" class="col-sm-6 col-md-3 flex-container">
+                    <div class="thumbnail market-item flex-container" ng-click="clickItem(item)">
                         <img ng-if="item.image == undefined" holder-js="holder.js/242x200/custom/text:{{'NO_IMAGE_PROVIDED' | translate}}" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}"/>
                         <img ng-if="item.image" ng-src="{{item.image}}" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}"/>
                         <div class="caption">
