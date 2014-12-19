@@ -42,7 +42,12 @@ angular.module('ortolangMarketApp')
                                             item.oobject = oobject;
                                             item.meta = data;
                                             if(data['http://www.ortolang.fr/ontology/image']) {
-                                                item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                                // item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                                ObjectResource.element({oKey: entry, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
+                                                    item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+                                                }, function (reason) {
+                                                    console.error(reason);
+                                                });
                                             }
                                             $scope.items.push(item);
 
