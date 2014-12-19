@@ -29,6 +29,7 @@ angular.module('ortolangMarketApp')
             Runtime.selectProcess(toolJob);
             ToolsResource.getToolResult({pKey: toolJob.name.toLowerCase(), jId: toolJob.id}).$promise.then(function (data) {
                 $scope.results = data;
+                $scope.jname = toolJob.name;
                 console.debug(data);
                 $modal({
                     title: toolJob.name,

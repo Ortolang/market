@@ -249,8 +249,9 @@ angular.module('ortolangMarketApp')
             }
         }
 
-        function getToolDownloadUrl(tool, id, path) {
-            return Url.urlBase() + '/rest/tool-' + tool.toLowerCase() + '/jobs/' + id + '/download?path=' + path;
+        function getToolDownloadUrl(tool, path) {
+            var name = tool.toLowerCase();
+            return Url.urlBaseTool() + name + '/' + name + '/jobs/download?path=' + path;
         }
 
         function getToolStates() {
