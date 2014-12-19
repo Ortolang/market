@@ -18,7 +18,8 @@ angular.module('ortolangMarketApp')
         'WorkspaceElementResource',
         '$q',
         'Url',
-        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url) {
+        'Runtime',
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url, Runtime) {
             /**
              * Load chosen plugin informations
              */
@@ -124,31 +125,34 @@ angular.module('ortolangMarketApp')
                 $scope.resultStatus = null;
                 $scope.viewLoading = true;
                 console.log('form submitted:', $scope.formData);
-                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
-                ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
-                    function (response) {
-                        $scope.viewLoading = false;
-                        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
-                        //console.log('reponse invoke:', response);
-                        if (response.status === 'SUCCESS') {
-                            $scope.success = true;
-                            $scope.resultStatus = response.status;
-                            $scope.preview = response.output;
-                            $scope.listFileResult = [];
-                            angular.forEach(response.outputFilePath, function (file, fileName) {
-                                $scope.listFileResult.push(
-                                    {
-                                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
-                                        resFileName : fileName
-                                    }
-                                );
-                            });
-                        } else {
-                            $scope.success = false;
-                            $scope.resultStatus = response.status;
-                            $scope.preview = response.status;
-                        }
-                    });
+
+                Runtime.createToolJob($routeParams.plName, $scope.formData);
+
+                //$http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                //ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
+                //    function (response) {
+                //        $scope.viewLoading = false;
+                //        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
+                //        //console.log('reponse invoke:', response);
+                //        if (response.status === 'SUCCESS') {
+                //            $scope.success = true;
+                //            $scope.resultStatus = response.status;
+                //            $scope.preview = response.output;
+                //            $scope.listFileResult = [];
+                //            angular.forEach(response.outputFilePath, function (file, fileName) {
+                //                $scope.listFileResult.push(
+                //                    {
+                //                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
+                //                        resFileName : fileName
+                //                    }
+                //                );
+                //            });
+                //        } else {
+                //            $scope.success = false;
+                //            $scope.resultStatus = response.status;
+                //            $scope.preview = response.status;
+                //        }
+                //    });
 
             };
 
@@ -161,30 +165,5 @@ angular.module('ortolangMarketApp')
             $scope.viewLoading = false;
             $scope.loadTool();
             $scope.loadConfig();
-
-            //TEST
-            $scope.tabs = { success: 'true',
-                results : [
-                { type: 'text-preview', key:'log', title:'execution log', content:'Dynamic content 1', icon:'fa-file-text-o', active:true },
-                { type: 'text-preview', key:'preview', title:'Preview', content:'Dynamic content 2', icon:'fa-eye', active:false  },
-                {
-                    type: 'link-list',
-                    key:'files',
-                    title:'Generated file(s)',
-                    options: [
-                        {
-                            "name": "metadata.txt",
-                            "url": "/tmp/tika/1/res.txt"
-                        },
-                        {
-                            "name": "log.txt",
-                            "url": "/tmp/tika/1/log.txt"
-                        }
-                    ],
-                    icon:'fa-download',
-                    active:false
-                }
-            ]};
-
 
         }]);

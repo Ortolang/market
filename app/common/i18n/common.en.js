@@ -19,6 +19,7 @@ angular.module('ortolangMarketApp')
         DESCRIPTION: 'Description',
         TYPE: 'Type',
         ACTIONS: 'Actions',
+        RESULT: 'Result',
         SIZE: 'Size',
         SEARCH: 'Search',
         LOG_IN: 'Login',

@@ -98,30 +98,5 @@
             <!-- /.panel-body -->
         </div>
 
-        <div class="panel panel-default {{tabs.success? 'panel-success' : 'panel-danger'}}">
-            <div class="panel-heading">
-                <a class="" aria-expanded="true" data-toggle="collapse" data-parent="#accordion" href="#collapseRes" target="_blank">
-                    <i class="fa fa-eye"></i> Result : {{tabs.success? 'SUCCESS' : 'ERROR'}}
-                </a>
-            </div>
-            <!-- /.panel-heading -->
-            <div id="collapseRes" class="panel-body panel-collapse collapse" >
-                <!-- Nav tabs -->
-                <ul class="nav nav-pills">
-                    <li ng-repeat="tab in tabs.results">
-                        <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab"><i class="fa {{tab.icon}}"></i> {{tab.title}}</a>
-                    </li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div ng-repeat="tab in tabs.results" class="tab-pane fade {{tab.active? 'active in' : ''}}" id="{{tab.key}}">
-                        <div onload="result = tab" ng-include="'tool/tool-tpl-'+ tab.type +'.html'"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-
     </div>
 </div> <!-- ./div row -->
