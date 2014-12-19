@@ -22,6 +22,7 @@ angular.module('ortolangMarketApp')
         'hotkeys',
         'WorkspaceResource',
         'ObjectResource',
+        'Download',
         'Runtime',
         'WorkspaceElementResource',
         'VisualizerManager',
@@ -29,7 +30,7 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             // *********************** //
             //        Breadcrumb       //
@@ -97,7 +98,7 @@ angular.module('ortolangMarketApp')
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
-                        $scope.contextMenuItems.push({text: $scope.translationsDownload, icon: icons.browser.download, href: $scope.selectedElements[0].downloadUrl});
+                        $scope.contextMenuItems.push({text: $scope.translationsDownload, icon: icons.browser.download, action: 'download'});
                     }
                     if ($scope.browserService.canDelete && $scope.isHead) {
                         $scope.contextMenuItems.push({text: $scope.translationsDelete, icon: icons.browser.delete, action: 'delete'});
@@ -249,6 +250,10 @@ angular.module('ortolangMarketApp')
                     return snapshot.name;
                 }
                 return undefined;
+            };
+
+            $scope.download = function (element) {
+                Download.downloadInNewWindow(element);
             };
 
             // *********************** //
@@ -449,6 +454,10 @@ angular.module('ortolangMarketApp')
 
             $scope.doAction = function (name) {
                 switch (name) {
+                case 'download':
+                    $scope.download($scope.selectedElements[0]);
+                    deactivateContextMenu();
+                    break;
                 case 'addCollection':
                     $scope.addCollection();
                     break;

@@ -38,7 +38,7 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('simpleImageVisualizer', ['$filter', function ($filter) {
+    .directive('simpleImageVisualizer', ['$filter', 'Download', function ($filter, Download) {
 
         return {
             templateUrl: 'common/visualizers/simple-image-visualizer/simple-image-visualizer.html',
@@ -49,7 +49,13 @@ angular.module('ortolangVisualizers')
                     if ($filter('filter')(scope.elements, {selected: true}, true).length === 0) {
                         scope.elements[0].selected = true;
                     }
-                    scope.imageElements = scope.elements;
+                    scope.imageElements = [];
+                    angular.forEach(scope.elements, function (element) {
+                        Download.getDownloadUrl(element).then(function (url) {
+                            element.downloadUrl = url;
+                            scope.imageElements.push(element);
+                        });
+                    });
                 }
             }
         };
