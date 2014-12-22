@@ -57,13 +57,10 @@ angular
                 templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
-<<<<<<< HEAD:src/main/webapp/static/app/app.js
-=======
             .when('/login', {
                 templateUrl: 'login/login.html',
                 controller: 'LoginCtrl'
             })
->>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:app/app.js
             .when('/tools', {
                 templateUrl: 'tool/tools.html',
                 controller: 'ToolsCtrl',
@@ -101,9 +98,6 @@ angular
     }])
     .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
         uiZeroclipConfigProvider.setZcConf({
-<<<<<<< HEAD:src/main/webapp/static/app/app.js
-            swfPath: '/vendor/ZeroClipboard.swf'
-=======
             swfPath: 'vendor/ZeroClipboard.swf'
         });
     }])
@@ -137,7 +131,6 @@ angular
                     }
                 }
             }
->>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:app/app.js
         });
     }]);
 

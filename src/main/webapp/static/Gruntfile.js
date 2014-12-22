@@ -353,7 +353,6 @@ module.exports = function (grunt) {
                         dest: '<%= yeoman.dist %>/fonts'
                     }, {
                         expand: true,
-<<<<<<< HEAD:src/main/webapp/static/Gruntfile.js
                         cwd: '<%= yeoman.app %>',
                         dest: '<%= yeoman.dist %>',
                         src: [
@@ -362,8 +361,6 @@ module.exports = function (grunt) {
                         ]
                     }, {
                         expand: true,
-=======
->>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:Gruntfile.js
                         cwd: 'bower_components/zeroclipboard/dist',
                         src: [
                             '*.swf'
@@ -477,8 +474,6 @@ module.exports = function (grunt) {
                         'icon-font-path': '"../fonts/"',
                         'octicons-font-path': '"../fonts"'
                     }
-<<<<<<< HEAD:src/main/webapp/static/Gruntfile.js
-=======
                 },
                 files: {
                     '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
@@ -493,29 +488,11 @@ module.exports = function (grunt) {
                     modifyVars: {
                         'icon-font-path': '"../fonts/"'
                     }
->>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:Gruntfile.js
                 },
                 files: {
                     '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
-<<<<<<< HEAD:src/main/webapp/static/Gruntfile.js
-                }
-            },
-            'dev-production': {
-                options: {
-                    compress: false,
-                    sourceMap: false,
-                    modifyVars: {
-                        'icon-font-path': '"../fonts/"'
-                    }
-                },
-                files: {
-                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
-                    '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
-                    'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
-=======
->>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:Gruntfile.js
                 }
             }
         },

@@ -54,6 +54,7 @@
 
 				<!-- example options usage to get verbose output in logs -->
 				<gruntOptions>
+				    <target>build</target>
 				    <gruntOption>--verbose</gruntOption>
 				</gruntOptions>
 
