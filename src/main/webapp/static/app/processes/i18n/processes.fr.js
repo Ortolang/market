@@ -21,6 +21,7 @@ angular.module('ortolangMarketApp')
             STATE: 'État',
             ACTIVITY: 'Activité',
             VIEW_LOG: 'Voir le log',
+            VIEW_RESULT: 'Voir le résultat',
             ASSIGNEE: 'Assignée à',
             CLAIM: 'Se l\'assigner',
             START_PROCESS: 'Démarrer le processus',

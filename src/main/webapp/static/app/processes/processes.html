@@ -111,4 +111,79 @@
             </table>
         </div>
     </section>
+    <div data-title="{{'TOOLS.TOOLS' | translate}} <span class='badge'>{{Runtime.activeToolJobsNumber()}}</span>" bs-pane>
+        <section id="tool-jobs" class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="TOOLS.TOOLS"></div>
+                <div ng-if="!Runtime.hasActiveToolJobs()" class="panel-body">
+                    <p translate="TOOLS.NO_ACTIVE_TOOL_PROCCESS"></p>
+                </div>
+                <table ng-if="Runtime.hasActiveToolJobs()" class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th translate="NAME"></th>
+                        <th translate="PROCESSES.STATE"></th>
+                        <th translate="ACTIONS"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="job in Runtime.getActiveToolJobs()">
+                        <td>{{::job.name}}</td>
+                        <td>{{job.status}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().error)" id="aborted-tool-jobs" class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="TOOLS.ABORTED_PROCESSES"></div>
+                <table class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th translate="NAME"></th>
+                        <th translate="PROCESSES.STATE"></th>
+                        <th translate="ACTIONS"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().error}">
+                        <td>{{::job.name}}</td>
+                        <td>{{::job.status}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section id="completed-tool_jobs" class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" translate="TOOLS.COMPLETED_TOOL_PROCESSES"></div>
+                <div ng-if="!Runtime.hasToolJobsResultValid()" class="panel-body">
+                    <p translate="TOOLS.NO_COMPLETED_TOOL_PROCESS"></p>
+                </div>
+                <table ng-if="Runtime.hasToolJobsResultValid()" class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th translate="NAME"></th>
+                        <th translate="RESULT"></th>
+                        <th translate="TOOLS.DELAY"></th>
+                        <th translate="ACTIONS"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().completed} | filter : isValidResult(deletedDate)" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
+                        <td>{{::job.name}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showResult(job)" translate="PROCESSES.VIEW_RESULT"></button></td>
+                        <td>{{::job.deleteDate  | date:'medium'}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="panel-footer toggle-show-all" ng-if="Runtime.getToolJobsResultValid.length > completedToolJobsDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
+            </div>
+            <br/>
+        </section>
+    </div>
 </div>

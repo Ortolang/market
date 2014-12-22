@@ -17,11 +17,17 @@ angular.module('ortolangMarketApp')
         'WorkspaceElementResource',
         '$q',
         'Url',
+<<<<<<< HEAD:src/main/webapp/static/app/tool/tool.js
         function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, $filter, WorkspaceElementResource, $q, Url) {
+=======
+        'Runtime',
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url, Runtime) {
+>>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:app/tool/tool.js
             /**
              * Load chosen plugin informations
              */
             $scope.loadTool = function () {
+<<<<<<< HEAD:src/main/webapp/static/app/tool/tool.js
                 ToolsResource.getTool({pKey: $routeParams.plName},
                     function (tool) {
                         $scope.tool = tool;
@@ -29,6 +35,27 @@ angular.module('ortolangMarketApp')
                     function (error) {
                         console.log(error);
                     });
+=======
+                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                // temporary hack
+                if($routeParams.plName === 'tika'){
+                    ToolsResource.getTool({pKey: $routeParams.plName},
+                        function (tool) {
+                            $scope.tool = tool;
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                } else {
+                    ToolsResource.getToolDiffusion({pKey: $routeParams.plName},
+                        function (tool) {
+                            $scope.tool = tool;
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                }
+>>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:app/tool/tool.js
             };
 
             /**
@@ -36,6 +63,7 @@ angular.module('ortolangMarketApp')
              * @return {*[]}
              */
             $scope.loadConfig = function () {
+<<<<<<< HEAD:src/main/webapp/static/app/tool/tool.js
                 ToolsResource.getConfig({pKey: $routeParams.plName},
                     function (config) {
                         console.debug(config);
@@ -44,6 +72,31 @@ angular.module('ortolangMarketApp')
                     function (error) {
                         console.log(error);
                     });
+=======
+                $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                // temporary hack
+                if($routeParams.plName === 'tika') {
+                    ToolsResource.getConfig({pKey: $routeParams.plName},
+                        function (config) {
+                            $scope.initialiseFormConfig(config);
+                            console.debug(config);
+                            $scope.generateForm(config);
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                } else {
+                    ToolsResource.getConfigDiffusion({pKey: $routeParams.plName},
+                        function (config) {
+                            $scope.initialiseFormConfig(config);
+                            console.debug(config);
+                            $scope.generateForm(config);
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                }
+>>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:app/tool/tool.js
             };
 
             /**
@@ -69,6 +122,34 @@ angular.module('ortolangMarketApp')
             };
 
             /**
+<<<<<<< HEAD:src/main/webapp/static/app/tool/tool.js
+=======
+             * Initialise the form from the JSON config
+             * @param configJSON
+             */
+            $scope.initialiseFormConfig = function () {
+                // parcours du json pour initialiser le formulaire : les éventuels dataobject sont séléctionnés dans le workspace avec un typeahead
+                //var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
+                //if (objectsFieldList.length > 0) {
+                //    $scope.listAvailableDataObject = [];
+                //    if ($scope.authenticated) {
+                //        AuthService.getWorkspaces($scope.currentUser.id)
+                //            .then(function (wks) {
+                //                $scope.pushDataObjects(wks, function () {
+                //                    angular.forEach(configJSON, function (field, index) {
+                //                        if (field.type === 'dataobject') {
+                //                            configJSON[index].availableData = $scope.listAvailableDataObject;
+                //                        }
+                //                    });
+                //                });
+                //            });
+                //    }
+                //}
+            };
+
+
+            /**
+>>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:app/tool/tool.js
              * Generate the form
              * @param configJSON
              */
@@ -92,9 +173,8 @@ angular.module('ortolangMarketApp')
              * Action to perform on submit
              */
             $scope.onSubmit = function () {
-                $scope.resultStatus = null;
-                $scope.viewLoading = true;
                 console.log('form submitted:', $scope.formData);
+<<<<<<< HEAD:src/main/webapp/static/app/tool/tool.js
                 ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
                     function (response) {
                         $scope.viewLoading = false;
@@ -119,6 +199,42 @@ angular.module('ortolangMarketApp')
                             $scope.preview = response.status;
                         }
                     });
+=======
+
+                // temporary hack
+                if($routeParams.plName === 'tika') {
+                    Runtime.createToolJob($routeParams.plName, $scope.formData);
+                } else {
+                    $scope.resultStatus = null;
+                    $scope.viewLoading = true;
+                    $http.defaults.headers.common.Authorization = 'Basic ' + $scope.currentUser.id;
+                    ToolsResource.postConfigDiffusion({pKey: $routeParams.plName}, $scope.formData,
+                        function (response) {
+                            $scope.viewLoading = false;
+                            $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
+                            //console.log('reponse invoke:', response);
+                            if (response.status === 'SUCCESS') {
+                                $scope.success = true;
+                                $scope.resultStatus = response.status;
+                                $scope.preview = response.output;
+                                $scope.listFileResult = [];
+                                angular.forEach(response.outputFilePath, function (file, fileName) {
+                                    $scope.listFileResult.push(
+                                        {
+                                            downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
+                                            resFileName : fileName
+                                        }
+                                    );
+                                });
+                            } else {
+                                $scope.success = false;
+                                $scope.resultStatus = response.status;
+                                $scope.preview = response.status;
+                            }
+                        });
+                }
+
+>>>>>>> 22e78b03193b3a8fde7dad6ef577d41e67238aed:app/tool/tool.js
             };
 
 
@@ -130,4 +246,5 @@ angular.module('ortolangMarketApp')
             $scope.viewLoading = false;
             $scope.loadTool();
             $scope.loadConfig();
+
         }]);

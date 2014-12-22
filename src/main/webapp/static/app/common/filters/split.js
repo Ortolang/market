@@ -13,7 +13,6 @@ angular.module('ortolangMarketApp')
         return function (input, splitChar, splitIndex) {
             if (splitIndex < 0) {
                 var index = input.split(splitChar).length + splitIndex;
-                console.debug(index, input.split(splitChar)[index]);
                 return input.split(splitChar)[index];
             }
             return input.split(splitChar)[splitIndex];

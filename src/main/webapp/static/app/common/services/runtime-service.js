@@ -8,9 +8,9 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Runtime', ['$rootScope', '$filter', '$timeout', '$modal', '$alert', '$translate', 'FormResource', 'RuntimeResource', function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource) {
+    .factory('Runtime', ['$rootScope', '$filter', '$timeout', '$modal', '$alert', '$translate', 'FormResource', 'RuntimeResource', 'ToolsResource', 'Url', function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolsResource, Url) {
 
-        var translationsStartProcess, translationsCompleteTask, translationsProcess, translationsJustCompleted, processModal, completeTaskModal, processesTimeout, tasksTimeout,
+        var translationsStartProcess, translationsCompleteTask, translationsProcess, translationsJustCompleted, processModal, completeTaskModal, processesTimeout, tasksTimeout, toolJobsTimeout,
             states = {
                 pending: 'PENDING',
                 submitted: 'SUBMITTED',
@@ -19,9 +19,18 @@ angular.module('ortolangMarketApp')
                 aborted: 'ABORTED',
                 completed: 'COMPLETED'
             },
+            toolJobStatus = {
+                pending: 'PENDING',
+                running: 'RUNNING',
+                completed: 'COMPLETED',
+                error: 'ERROR',
+                canceled: 'CANCELED'
+            },
             timeout = 5000,
             activeProcesses = [],
-            completedProcesses;
+            completedProcesses,
+            activeToolJobs = [],
+            completedToolJobs;
 
         function createProcessFromForm(formKey, template) {
             FormResource.get({formKey: formKey}, {}, function (form) {
@@ -196,6 +205,119 @@ angular.module('ortolangMarketApp')
                 });
             });
         }
+        // *********************** //
+        //          Tools          //
+        // *********************** //
+
+        function createToolJob(tool, data) {
+            ToolsResource.createToolJob({pKey: tool}, data, function () {
+                forceRefresh();
+            });
+        }
+
+        function refreshTools() {
+
+            // TODO function that look diffusion to seek the tool to poll
+            ToolsResource.toolJobs({pKey: 'tika'}).$promise.then(function (data) {
+                console.debug('data:', data);
+                $rootScope.toolJobs = data.entries;
+                completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
+                activeToolJobs = getActiveToolJobs();
+                $rootScope.activeToolJobsNbr = activeToolJobs.length;
+                if ($rootScope.activeToolJobsNbr === 0) {
+                    $timeout.cancel(processesTimeout);
+                    $timeout.cancel(tasksTimeout);
+                    $timeout.cancel(toolJobsTimeout);
+                }
+                if ($rootScope.selectedProcess) {
+                    $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
+                }
+            });
+            toolJobsTimeout = $timeout(refreshTools, timeout);
+
+        }
+
+
+        function forceRefreshToolJobs(delay) {
+            if (toolJobsTimeout) {
+                $timeout.cancel(toolJobsTimeout);
+            }
+            if (delay) {
+                $timeout(refreshTools, delay);
+            } else {
+                refreshTools();
+            }
+        }
+
+        function getToolDownloadUrl(tool, path) {
+            var name = tool.toLowerCase();
+            return Url.urlBaseTool() + name + '/' + name + '/jobs/download?path=' + path;
+        }
+
+        function getToolStates() {
+            return toolJobStatus;
+        }
+
+
+        function selectToolJob(process) {
+            $rootScope.selectedProcess = process;
+        }
+
+        function getActiveToolJobs() {
+            return $filter('filter')($rootScope.toolJobs, function (value) {
+                return !(value.status === toolJobStatus.completed || value.status === toolJobStatus.error);
+            });
+        }
+
+        function activeToolJobNumber() {
+            if ($rootScope.toolJobs) {
+                return getActiveToolJobs().length;
+            }
+            return 0;
+        }
+
+        function hasActiveToolJobs() {
+            return activeToolJobNumber() > 0;
+        }
+
+        function getToolJobsResultValid() {
+            var completedToolJob = getToolJobsWithState(toolJobStatus.completed);
+            if (completedToolJob) {
+                return $filter('isValidResult')(completedToolJob, deleteDate);
+            }
+            return [];
+        }
+
+        function hasToolJobsResultValid() {
+            var completedToolJob = getToolJobsWithState(toolJobStatus.completed), i, now = new Date();
+            if (completedToolJob) {
+                for (i = 0; i < completedToolJob.length; i++) {
+                    if (completedToolJob[i].deleteDate > now) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function getToolJobsWithState(state, not) {
+            if ($rootScope.toolJobs) {
+                return $filter('filter')($rootScope.toolJobs, {status: (not ? '!' : '') + state});
+            }
+            return [];
+        }
+
+        function hasToolJobsWithState(state) {
+            if ($rootScope.toolJobs) {
+                var i;
+                for (i = 0; i < $rootScope.toolJobs.length; i++) {
+                    if ($rootScope.toolJobs[i].status === state) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         // *********************** //
         //          Events         //
@@ -208,6 +330,7 @@ angular.module('ortolangMarketApp')
         function forceRefresh(delay) {
             forceRefreshProcesses(delay);
             forceRefreshTasks(delay);
+            forceRefreshToolJobs(delay);
         }
 
         $rootScope.$on('process-created', function () {
@@ -236,6 +359,7 @@ angular.module('ortolangMarketApp')
             initTranslations();
             refreshProcesses();
             refreshTasks();
+            refreshTools();
         }
         init();
 
@@ -252,6 +376,18 @@ angular.module('ortolangMarketApp')
             getStates: getStates,
             // Tasks
             claimTask: claimTask,
-            completeTask: completeTask
+            completeTask: completeTask,
+            // Tools
+            createToolJob: createToolJob,
+            selectToolJob: selectToolJob,
+            activeToolJobsNumber: activeToolJobNumber,
+            getActiveToolJobs: getActiveToolJobs,
+            hasActiveToolJobs: hasActiveToolJobs,
+            hasToolJobsWithState: hasToolJobsWithState,
+            getToolJobsWithState: getToolJobsWithState,
+            getToolStates: getToolStates,
+            hasToolJobsResultValid: hasToolJobsResultValid,
+            getToolJobsResultValid: getToolJobsResultValid,
+            getToolDownloadUrl: getToolDownloadUrl
         };
     }]);

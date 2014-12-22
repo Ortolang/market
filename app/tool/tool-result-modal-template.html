@@ -1,0 +1,26 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header " ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="title"></h4>
+            </div>
+            <div class="modal-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-pills">
+                    <li ng-repeat="tab in results">
+                        <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab">{{tab.label}}</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div ng-repeat="pane in results" class="tab-pane fade {{pane.active? 'active in' : ''}}" id="{{pane.key}}">
+                        <div onload="result = pane; toolname=jname;" ng-include="'tool/tool-tpl-'+ pane.type +'.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+git pull

@@ -35,7 +35,12 @@ angular.module('ortolangMarketApp')
                                     $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
                                     if(data['http://www.ortolang.fr/ontology/image']) {
-                                        $scope.item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                        // $scope.item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                        ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
+                                            $scope.item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+                                        }, function (reason) {
+                                            console.error(reason);
+                                        });
                                     }
 
                                     if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
