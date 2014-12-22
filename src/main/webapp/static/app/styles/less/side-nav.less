@@ -1,0 +1,99 @@
+.side-nav {
+    > ul {
+    margin: 0;
+    padding: @padding-large-vertical 0;
+    > li {
+      list-style: none;
+      text-align: center;
+      vertical-align: baseline;
+      height: @side-bar-item-height;
+      margin-bottom: @padding-base-vertical;
+
+      &.active:not(:hover) {
+
+        > a, > div {
+          i {
+            background-color: lighten(#000, 85%);
+            border-radius: 50%;
+          }
+
+        }
+
+      }
+
+      > a, > div {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        color: @side-bar-item-color;
+        cursor: pointer;
+        transition: 0s;
+
+        &:hover {
+          background-color: @side-bar-item-bg;
+          color: @side-bar-item-active-color;
+          .badge {
+            color: @orange-lighter;
+            background-color: #FFFFFF;
+          }
+          .nav-description {
+            width: 200px;
+            display: block;
+            background-color: @side-bar-item-bg;
+            color: @side-bar-item-active-color;
+            padding-left: @side-bar-width - @padding-small-horizontal;
+            transition-delay: 0.1s;
+            transition-duration: 0.2s;
+            transition-property: width, color, padding;
+          }
+          transition: 0.1s;
+        }
+
+        &.activated .nav-description {
+          display: none;
+        }
+
+        i {
+          position: relative;
+          z-index: 5;
+          height: @side-bar-item-height;
+          width: @side-bar-item-height;
+          line-height: @side-bar-item-height;
+        }
+
+        .badge {
+          position: absolute;
+          top: -1px;
+          right: 5px;
+          z-index: 1000;
+          background-color: @btn-danger-bg;
+        }
+
+        .nav-description {
+          box-sizing: border-box;
+          color: rgba(0,0,0,0);
+          background-color: rgba(0,0,0,0);
+          text-align: left;
+          width: @side-bar-width;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          position: absolute;
+          top: 0;
+          left: 0;
+          line-height: @side-bar-item-height;
+          height: 100%;
+          white-space: nowrap;
+          transition: all 0 ease 0;
+        }
+      }
+    }
+  }
+}
+
+@media(min-width:768px) {
+  .side-nav {
+    z-index: 10;
+    position: absolute;
+    width: @side-bar-width;
+  }
+}

@@ -1,0 +1,138 @@
+
+.metadataEditor {
+	-webkit-transition:all ease-in-out 0.25s;
+	transition:all ease-in-out 0.25s;
+	z-index: 1000;
+	//top: 50px;
+	position: absolute;
+
+	.aside-body {
+		overflow: auto;
+	}
+
+}
+
+.metadataEditorHeader {
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+	min-height: 16.43px;
+	padding: 6px 15px;
+	background: @side-bar-item-bg;
+	color: #000;
+}
+
+.metadataList {
+	-webkit-transition:all ease-in-out 0.25s;
+  transition:all ease-in-out 0.25s;
+}
+
+.metadataEditor-backdrop {
+	z-index: 1000;
+	//top: 50px;
+	position: absolute;
+}
+
+.metadataList.middle {
+	right: 35rem;
+}
+
+#add-metadata {
+
+	.collapse-box {
+		-webkit-transition:all linear 0.2s;
+  		transition:all linear 0.2s;
+	}
+
+}
+
+
+/***************************
+ * Auto complete directive
+ ***************************/
+
+.tags-wrapper {
+    position: relative;
+
+    .tags-cloud {
+        margin-bottom: 0;
+        
+        .tag {
+            float: left;
+            padding: 4px 6px;
+            font-size: 1em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            background: #f2f2f2;
+            font-weight: 600;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #dddddd;
+        }
+
+        .tag:hover {
+            border: 1px solid #cccccc;
+        }
+
+        .tag:hover .cross {
+            opacity: 1;
+        }
+        .tag .cross {
+            margin-left: 5px;
+            margin-right: 3px;
+            font-size: 1em;
+            color: #20a28e;
+            opacity: .7;
+            cursor: pointer;
+        }
+    } 
+
+    .suggestions-list {
+        position: absolute;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        font-size: 14px;
+        z-index: 200;
+
+        li {
+            color: #333333;
+            font-weight: 600;
+            padding: 4px 25px;
+            font-size: 1em;
+            cursor: pointer;
+            background: #f2f2f2;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        li:hover {
+            background: #dddddd;
+        }
+
+        li.active {
+            color: #20a28e;
+            background: #dddddd;
+        }
+
+        &:focus{
+            outline:none;
+        }
+
+    }
+}
+
+
+
+
+
+

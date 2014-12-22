@@ -1,0 +1,139 @@
+.license-panel, .metadata-panel {
+  background-color: lighten(#000, 97.25%);
+  .panel-heading {
+    font-size: @font-size-h4;
+    font-weight: 200;
+  }
+}
+
+#market-home {
+
+  #search-market {
+    padding-top: 4*@padding-large-vertical;
+    padding-bottom: 5*@padding-large-vertical;
+    background-color: @navbar-default-bg;
+    border-bottom: 1px solid @navbar-default-border;
+  }
+
+  #redactor-choices {
+
+  }
+
+  h3 {
+    color: @orange-lighter;
+    display: inline-block;
+  }
+  .market-item {
+    background-color: #FFFFFF;
+    padding-top: @padding-large-vertical;
+    margin-left: @padding-large-vertical;
+
+    cursor: pointer;
+    &:hover {
+        .title {
+            color: @ortolang-blue;
+        }
+    }
+
+    > img {
+      max-height: 200px;
+    }
+
+    .title {
+      overflow: hidden;
+      // max-height: 24px;
+      position: relative;
+      color: inherit;
+    }
+    .description {
+      overflow: hidden;
+      max-height: 100px;
+    }
+
+    .producers {
+      a {
+        font-weight: 200;
+      }
+    }
+
+    .item-element {
+      border-left: 4px solid @orange-lighter;
+      padding : @padding-large-vertical;
+    }
+  }
+}
+
+#market-item {
+  > header {
+//    margin-bottom: 3*@padding-large-vertical;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 15px @padding-large-vertical;
+    background-color: @navbar-default-bg;
+    border-bottom: 1px solid @navbar-default-border;
+    button, a {
+      margin-top: @padding-large-vertical;
+    }
+    .image {
+      max-width: 200px;
+      max-height: 200px;
+    }
+  }
+  aside {
+    padding-top: 3*@padding-large-vertical;
+  }
+  section {
+    padding-top: 3*@padding-large-vertical;
+    padding-bottom: 3*@padding-large-vertical;
+
+    header {
+      font-size: @font-size-h3;
+      font-weight: 200;
+      margin-bottom: @padding-large-vertical;
+    }
+    article {
+     margin-left: @padding-large-horizontal; 
+
+     .pictureContributor {
+      font-size: 130px;
+      color: @thumbnail-border;
+     }
+    }
+    p {
+      text-align: justify;
+    }
+  }
+
+  section:not(:first-child) {
+      border-top: 1px solid @gray-lighter;
+    
+    }
+
+    #preview {
+
+      .browsed-element-children-wrapper {
+        overflow: auto;
+        display: inline-block;
+        padding-top: 15px;
+        width: 100%;
+
+        .browsed-element-children {
+          display: inline-block;
+          white-space: nowrap;
+          overflow-x: scroll;
+          overflow-y: hidden;
+
+          .browsed-element-child-wrapper {
+            display: inline-block;
+            width: 150px;
+            margin: 15px;
+
+            .browsed-element-child {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+}
+

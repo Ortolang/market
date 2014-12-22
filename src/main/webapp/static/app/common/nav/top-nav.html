@@ -1,0 +1,40 @@
+<nav ng-controller="TopNavCtrl" id="main-navbar" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+            <img src="../../assets/images/logo-ortolang-white.png" style="height:30px; margin-right:10px;">
+            Portail <span class="text-uppercase">Ortolang</span>
+        </a>
+    </div> <!-- /.navbar-header -->
+
+    <!-- when user is logged -->
+    <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="authenticated" ng-cloak>
+        <li ng-click="changeLanguage('fr')" ng-if="currentLanguage !== 'fr'" class="language">FR</li>
+        <li ng-click="changeLanguage('en')" ng-if="currentLanguage !== 'en'" class="language">EN</li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-user fa-fw"></i> {{currentUser.name}} <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li><a href="#"><i class="fa fa-user fa-fw"></i> {{'NAV.PROFILE' | translate}}</a></li>
+                <li><a href="#"><i class="fa fa-gear fa-fw"></i> {{'NAV.SETTINGS' | translate}}</a></li>
+                <li class="divider"></li>
+                <li ng-click="logout()"><div><i class="fa fa-sign-out fa-fw"></i> {{'NAV.LOG_OUT' | translate}}</div></li>
+            </ul>
+            <!-- /.dropdown-user -->
+        </li>
+    </ul>
+
+    <!-- when user is not logged (guest) -->
+    <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="!authenticated" ng-cloak>
+        <li ng-click="changeLanguage('fr')" ng-if="currentLanguage !== 'fr'" class="language">FR</li>
+        <li ng-click="changeLanguage('en')" ng-if="currentLanguage !== 'en'" class="language">EN</li>
+        <li><a ng-click="register()"><i class="fa fa-bookmark fa-fw"></i> {{'NAV.REGISTER' | translate}}</a></li>
+        <li><a ng-click="login()"><i class="fa fa-user fa-fw"></i> {{'LOG_IN' | translate}}</a></li>
+    </ul>
+</nav>

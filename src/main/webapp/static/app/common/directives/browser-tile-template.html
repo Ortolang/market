@@ -1,0 +1,23 @@
+<div ng-if="!isViewModeLine()" class="row browsed-element-children-wrapper">
+    <div ng-init="resizeBrowser()" class="col-md-12">
+        <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
+            <div ng-repeat="child in filteredChildren(type) | orderBy:orderProp:orderReverse"
+                 ng-class="tileCssClasses()" class="browsed-element-child-wrapper">
+                <div class="browsed-element-child"
+                     ng-click="clickChild($event, child)"
+                     ng-right-click="clickChild($event, child)"
+                     ng-dblclick="doubleClickChild($event, child)"
+                     ng-class="{active : isSelected(child), collection: type === 'collection'}">
+                    <div ng-if="type === 'object'" class="preview">
+                        <span class="fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
+                    </div>
+                    <p class="name-wrapper">
+                        <span ng-if="type === 'collection'" ng-class="icons.folderPlain" class="type"></span>
+                        <span ng-if="type === 'object'" ng-class="child.mimeType | mimeTypeIconCss" class="type"></span>
+                        <span class="name">{{child.name}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

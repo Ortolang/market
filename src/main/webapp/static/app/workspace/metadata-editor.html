@@ -1,0 +1,52 @@
+<div class="aside-backdrop am-fade metadataEditor-backdrop" ng-show="isEditorShow()" ng-click="hideEditor()"></div>
+<div class="aside right am-fade-and-slide-right metadataEditor" ng-show="isEditorShow()" tabindex="-1" role="dialog">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="metadataEditorHeader">
+                <button type="button" class="close" ng-click="hideEditor()">&times;</button>
+                <h4 class="aside-title">{{userMetadataFormat.name}} de <em>{{hasOnlyRootCollectionSelected() ? workspace.name : selectedElements[0].name}}</em></h4>
+            </div>
+            <div id="browser-toolbar" role="toolbar">
+                <div class="btn-toolbar" style="margin-left: 10px; float: left;">
+                    <div class="btn-group ">
+                        <buton class="btn btn-success" ng-click="submitMetadataForm()">
+                            <span ng-class="icons.browser.publish"></span> Valider
+                        </buton>
+                        <buton class="btn btn-default" ng-click="hideEditor()">
+                            <span ng-class="icons.browser.remove"></span> Annuler
+                        </buton>
+                    </div>
+                    <div class="btn-group ">
+                        <buton class="btn btn-default" ng-click="deleteMetadata()">
+                            <span ng-class="icons.browser.delete"></span> Supprimer
+                        </buton>
+                    </div>
+                </div>
+                <div class="btn-toolbar btn-toolbar-right" style="margin-right: 10px;">
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Fr
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><div>Fr</div></li>
+                            <li><div>En</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="metadataEditorBody" class="aside-body">
+                <blockquote>
+                    <p>{{userMetadataFormat.description}}</p>
+                </blockquote>
+                <hr/>
+                <div style="width: 700px; height: 100%" class="row">
+                    <div class="col-md-12">
+                        <div ng-include="metadataForm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

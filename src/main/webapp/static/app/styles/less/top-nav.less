@@ -1,0 +1,71 @@
+.navbar.navbar-default {
+  background-color: @ortolang-blue;
+  border: none;
+
+  a.dropdown-toggle, .navbar-brand {
+    color: @gray-lightest;
+  }
+
+  .navbar-brand {
+    padding: 0 0 0 @padding-base-horizontal;
+    line-height: @navbar-height;
+  }
+
+  a.dropdown-toggle {
+    &:hover, &:focus {
+      background-color: inherit;
+    }
+  }
+
+  ul.navbar-top-links > li {
+    &.open > a {
+      background-color: inherit;
+    }
+    cursor: pointer;
+    > a {
+      color: @gray-lightest;
+      &:hover, &:focus {
+        background-color: inherit;
+      }
+    }
+    &.language {
+      color: @gray-lightest;
+    }
+  }
+}
+
+// FROM SB ADMIN 2
+.navbar-top-links li {
+  display: inline-block;
+}
+
+.navbar-top-links li:last-child {
+  margin-right: 15px;
+}
+
+.navbar-top-links li a {
+  padding: 15px;
+  min-height: 50px;
+}
+
+.navbar-top-links .dropdown-menu li {
+  display: block;
+}
+
+.navbar-top-links .dropdown-menu li:last-child {
+  margin-right: 0;
+}
+
+.navbar-top-links .dropdown-menu li a {
+  padding: 3px 20px;
+  min-height: 0;
+}
+
+.navbar-top-links .dropdown-menu li a div {
+  white-space: normal;
+}
+
+.navbar-top-links .dropdown-user {
+  right: 0;
+  left: auto;
+}
