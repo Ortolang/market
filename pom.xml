@@ -7,7 +7,7 @@
 	<artifactId>market</artifactId>
 	<name>Ortolang Diffusion MarketPlace Client</name>
 	<version>0.2-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>war</packaging>
 	<url>http://www.ortolang.fr</url>
 
 	<parent>
@@ -49,46 +49,44 @@
 			    <artifactId>grunt-maven-plugin</artifactId>
 			    <version>1.4.1</version>
 			    <configuration>
-				<!-- relative to src/main/webapp/, default: static -->
-				<jsSourceDirectory>static</jsSourceDirectory>
+                    <!-- relative to src/main/webapp/, default: static -->
+                    <jsSourceDirectory>static</jsSourceDirectory>
 
-				<!-- example options usage to get verbose output in logs -->
-				<gruntOptions>
-				    <target>build</target>
-				    <gruntOption>--verbose</gruntOption>
-				</gruntOptions>
+                    <!-- example options usage to get verbose output in logs -->
+                    <gruntOptions>
+                        <gruntOption>--verbose</gruntOption>
+                    </gruntOptions>
 
-				<!-- example npm install env variable -->
-				<!--
-				<npmEnvironmentVar>
-				    <PHANTOMJS_CDNURL>http://cnpmjs.org/downloads</PHANTOMJS_CDNURL>
-				</npmEnvironmentVar>
-				-->
+                    <!-- example npm install env variable -->
+                    <!--
+                    <npmEnvironmentVar>
+                        <PHANTOMJS_CDNURL>http://cnpmjs.org/downloads</PHANTOMJS_CDNURL>
+                    </npmEnvironmentVar>
+                    -->
 
-				<!-- example options usage to filter variables in given resource -->
-				<!--
-				<filteredResources>
-				    <filteredResource>maven-properties.json</filteredResource>
-				</filteredResources>
-				-->
-
+                    <!-- example options usage to filter variables in given resource -->
+                    <!--
+                    <filteredResources>
+                        <filteredResource>maven-properties.json</filteredResource>
+                    </filteredResources>
+                    -->
 			    </configuration>
 			    <executions>
-				<execution>
-				    <goals>
-					<goal>create-resources</goal>
-					<goal>npm</goal>
-					<goal>bower</goal>
-					<goal>grunt</goal>
-				    </goals>
-				</execution>
+                    <execution>
+                        <goals>
+                            <goal>create-resources</goal>
+                            <goal>npm</goal>
+                            <goal>bower</goal>
+                            <goal>grunt</goal>
+                        </goals>
+                    </execution>
 			    </executions>
 			</plugin>
 			<plugin>
 		        <artifactId>maven-war-plugin</artifactId>
 		        <version>2.3</version>
 		        <configuration>
-		        <warSourceExcludes>static/**</warSourceExcludes>
+		            <warSourceExcludes>static/**</warSourceExcludes>
 		        </configuration>
 		    </plugin>
     	</plugins>
