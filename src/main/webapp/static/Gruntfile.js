@@ -27,24 +27,6 @@ module.exports = function (grunt) {
         // Project settings
         yeoman: appConfig,
 
-        mavenPrepare: {
-            options: {
-                resources: ['**']
-            },
-            prepare: {}
-        },
-
-        mavenDist: {
-            options: {
-                warName: '<%= gruntMavenProperties.warName %>',
-                deliverables: ['**', '!non-deliverable.js'],
-                gruntDistDir: 'dist'
-            },
-            dist: {}
-        },
-
-        gruntMavenProperties: grunt.file.readJSON('grunt-maven.json'),
-
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             bower: {
@@ -83,10 +65,6 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             },
-            maven: {
-                files: ['<%= gruntMavenProperties.filesToWatch %>'],
-                tasks: 'default'
-            }
         },
 
         // The actual grunt server settings
@@ -609,7 +587,4 @@ module.exports = function (grunt) {
         'build'
     ]);
 
-    grunt.loadNpmTasks('grunt-maven');
-
-    grunt.registerTask('default', ['mavenPrepare', 'jshint', 'karma', 'less', 'uglify', 'mavenDist']);
 };
