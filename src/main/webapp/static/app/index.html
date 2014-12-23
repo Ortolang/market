@@ -1,0 +1,170 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ortolang">
+    <title>Ortolang Diffusion</title>
+
+    <!-- Favicon -->
+    <link rel="icon shortcut" href="assets/images/favicon.ico" />
+
+    <link rel="stylesheet" href="styles/custom-bootstrap.css" />
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" />
+    <!-- endbower -->
+    <link rel="stylesheet" href="bower_components/highlightjs/styles/solarized_light.css" />
+    <link rel="stylesheet" href="bower_components/octicons/octicons/octicons.css" />
+    <link rel="stylesheet" href="bower_components/angular-diff-match-patch/demo.css" />
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/app.css -->
+    <link rel="stylesheet" href="styles/app.css">
+    <!-- endbuild -->
+</head>
+<!--<body ng-app="ortolangMarketApp" ng-controller="AuthCtrl">-->
+<body ng-controller="AuthCtrl">
+
+<div id="wrapper" >
+    <!-- Navigation -->
+    <div ng-include="'common/nav/top-nav.html'"></div>
+    <div ng-include="'common/nav/side-nav.html'"></div>
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid ng-cloak" ng-view="" ng-cloak>
+        </div>
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+
+<!-- build:js(.) scripts/oldieshim.js -->
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<![endif]-->
+<!-- endbuild -->
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="bower_components/highlightjs/highlight.pack.js"></script>
+<script src="bower_components/angular-highlightjs/angular-highlightjs.js"></script>
+<script src="bower_components/angular-hotkeys/build/hotkeys.min.js"></script>
+<script src="bower_components/angular-formly/dist/formly.min.js"></script>
+<script src="bower_components/angular-formly/dist/formly.bootstrap.min.js"></script>
+<script src="bower_components/n3js/n3-browser.js"></script>
+<script src="bower_components/angular-bootstrap-show-errors/src/showErrors.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
+<script src="bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js"></script>
+<script src="bower_components/holderjs/holder.js"></script>
+<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="bower_components/google-diff-match-patch/javascript/diff_match_patch_uncompressed.js"></script>
+<script src="bower_components/angular-diff-match-patch/angular-diff-match-patch.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+<script src="scripts/keycloak.js"></script>
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="app.js"></script>
+<script src="scripts/sb-admin-2.js"></script>
+<script src="common/auth/auth-init.js"></script>
+<script src="common/auth/interceptors.js"></script>
+<script src="common/auth/auth.js"></script>
+<script src="common/filters/bytes.js"></script>
+<script src="common/filters/content-type.js"></script>
+<script src="common/filters/ortolang-element-icon-css.js"></script>
+<script src="common/filters/mime-type-icon-css.js"></script>
+<script src="common/filters/break-line-filter.js"></script>
+<script src="common/filters/split.js"></script>
+<script src="common/filters/is-valid-result.js"></script>
+<script src="common/directives/ng-right-click.js"></script>
+<script src="common/directives/browser.js"></script>
+<script src="common/directives/file-select-browser.js"></script>
+<script src="common/directives/holder.js"></script>
+<script src="common/directives/autoComplete.js"></script>
+<script src="common/directives/i18n/browser.fr.js"></script>
+<script src="common/directives/i18n/browser.en.js"></script>
+<script src="common/formly/formly-file-select.js"></script>
+<script src="common/formly/config.js"></script>
+<script src="common/services/url.js"></script>
+<script src="common/services/workspace-resource.js"></script>
+<script src="common/auth/user.js"></script>
+<script src="common/services/profile-resource.js"></script>
+<script src="common/services/runtime-service.js"></script>
+<script src="common/services/runtime-resource.js"></script>
+<script src="common/services/form-resource.js"></script>
+<script src="common/services/param.js"></script>
+<script src="common/services/object-resource.js"></script>
+<script src="common/services/download.js"></script>
+<script src="common/services/storage.js"></script>
+<script src="common/services/cookie-factory.js"></script>
+<script src="common/services/workspace-element-resource.js"></script>
+<script src="common/services/download-resource.js"></script>
+<script src="common/services/tools-resource.js"></script>
+<script src="common/services/tool-service.js"></script>
+<script src="common/services/index-result-resource.js"></script>
+<script src="common/services/semantic-result-resource.js"></script>
+<script src="common/services/icons.js"></script>
+<script src="common/services/market-browser.js"></script>
+<script src="common/services/workspace-browser.js"></script>
+<script src="common/services/metadataformat.js"></script>
+<script src="common/services/metadatamanager.js"></script>
+<script src="common/services/visualizer-manager.js"></script>
+<script src="common/services/n3serializer.js"></script>
+<script src="common/services/file-select-browser.js"></script>
+<script src="common/visualizers/simple-audio-visualizer/simple-audio-visualizer.js"></script>
+<script src="common/visualizers/simple-image-visualizer/simple-image-visualizer.js"></script>
+<script src="common/visualizers/simple-video-visualizer/simple-video-visualizer.js"></script>
+<script src="common/visualizers/simple-text-visualizer/simple-text-visualizer.js"></script>
+<script src="common/visualizers/diff-visualizer/diff-visualizer.js"></script>
+<script src="common/nav/side-nav.js"></script>
+<script src="common/nav/top-nav.js"></script>
+<script src="common/nav/i18n/nav.fr.js"></script>
+<script src="common/nav/i18n/nav.en.js"></script>
+<script src="common/i18n/common.fr.js"></script>
+<script src="common/i18n/common.en.js"></script>
+<script src="common/i18n/config.fr.js"></script>
+<script src="common/i18n/config.en.js"></script>
+<script src="workspace/upload.js"></script>
+<script src="common/directives/browser-ctrl.js"></script>
+<script src="common/directives/sparql-select.js"></script>
+<script src="workspace/i18n/workspace.fr.js"></script>
+<script src="workspace/i18n/workspace.en.js"></script>
+<script src="workspace/browser-sidebar-metadata.js"></script>
+<script src="workspace/bag-uploader.js"></script>
+<script src="workspace/metadata-editor.js"></script>
+<script src="workspace/metadata-form-market-ortolang.js"></script>
+<script src="workspace/metadata-preview.js"></script>
+<script src="workspace/metadata-editor.js"></script>
+<script src="workspace/metadata-form-market-ortolang.js"></script>
+<script src="tool/tools.js"></script>
+<script src="tool/tool.js"></script>
+<script src="tool/i18n/tools.fr.js"></script>
+<script src="tool/i18n/tools.en.js"></script>
+<script src="processes/processes.js"></script>
+<script src="processes/i18n/processes.fr.js"></script>
+<script src="processes/i18n/processes.en.js"></script>
+<script src="market/market-item.js"></script>
+<script src="market/market-home.js"></script>
+<script src="market/market-search.js"></script>
+<script src="market/i18n/market.fr.js"></script>
+<script src="market/i18n/market.en.js"></script>
+<script src="common/directives/dynamic-tabs.js"></script>
+<!-- endbuild -->
+</body>
+</html>
