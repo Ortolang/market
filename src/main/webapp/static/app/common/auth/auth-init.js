@@ -11,7 +11,7 @@ angular.element(document).ready(function () {
          * Factory in the ortolangMarketApp.
          */
         angular.module('ortolangMarketApp')
-            .factory('AuthService', ['$window', function($window) {
+            .factory('AuthService', ['$window', function ($window) {
 
                 var logoutUrl = keycloakAuth.authServerUrl + "/realms/ortolang/tokens/logout?redirect_uri=https://localhost:9000/";
 
@@ -39,9 +39,9 @@ angular.element(document).ready(function () {
                     getKeycloak: function () { return keycloakAuth; },
                     isAuthenticated: isAuthenticated
                 };
-        }]);
+            }]);
 
-        angular.bootstrap(document, ["ortolangMarketApp"], { strictDi: true });
+        angular.bootstrap(document, ['ortolangMarketApp'], { strictDi: true });
     }).error(function (error) {
         console.error('An error occurred while initializing Keycloak', error);
     });

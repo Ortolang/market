@@ -17,8 +17,7 @@ angular.module('ortolangMarketApp')
         'WorkspaceElementResource',
         '$q',
         'Url',
-        'Runtime',
-        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url, Runtime) {
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url) {
             /**
              * Load chosen plugin informations
              */
