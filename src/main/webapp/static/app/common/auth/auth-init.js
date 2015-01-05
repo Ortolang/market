@@ -43,6 +43,6 @@ angular.element(document).ready(function () {
 
         angular.bootstrap(document, ["ortolangMarketApp"], { strictDi: true });
     }).error(function (error) {
-        console.error(error);
+        console.error('An error occurred while initializing Keycloak', error);
     });
 });

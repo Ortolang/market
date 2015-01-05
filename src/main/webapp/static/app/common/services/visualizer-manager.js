@@ -25,7 +25,7 @@ angular.module('ortolangVisualizers')
             var i = 0;
             for (i; i < registry.length; i++) {
                 if (registry[i].id === visualizer.id) {
-                    console.error('A visualizer with the id "' + visualizer.getId() + '" has already been registered');
+                    console.error('A visualizer with the id "%s" has already been registered', visualizer.getId());
                     return;
                 }
             }

@@ -10,7 +10,15 @@
 angular.module('ortolangMarketApp')
     .factory('Runtime', ['$rootScope', '$filter', '$timeout', '$modal', '$alert', '$translate', 'FormResource', 'RuntimeResource', 'ToolsResource', 'Url', function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolsResource, Url) {
 
-        var translationsStartProcess, translationsCompleteTask, translationsProcess, translationsJustCompleted, processModal, completeTaskModal, processesTimeout, tasksTimeout, toolJobsTimeout,
+        var translationsStartProcess,
+            translationsCompleteTask,
+            translationsProcess,
+            translationsJustCompleted,
+            processModal,
+            completeTaskModal,
+            processesTimeout,
+            tasksTimeout,
+            toolJobsTimeout,
             states = {
                 pending: 'PENDING',
                 submitted: 'SUBMITTED',
@@ -129,6 +137,9 @@ angular.module('ortolangMarketApp')
                 if ($rootScope.selectedProcess) {
                     $rootScope.selectedProcess = $filter('filter')($rootScope.processes, {key: $rootScope.selectedProcess.key})[0];
                 }
+            }, function (error) {
+                console.error('An error occurred while trying to refresh the process list', error);
+                $timeout.cancel(processesTimeout);
             });
             processesTimeout = $timeout(refreshProcesses, timeout);
         }
@@ -151,6 +162,9 @@ angular.module('ortolangMarketApp')
         function refreshTasks() {
             RuntimeResource.tasks().$promise.then(function (data) {
                 $rootScope.tasks = data.entries;
+            }, function (error) {
+                console.error('An error occurred while trying to refresh the task list', error);
+                $timeout.cancel(tasksTimeout);
             });
             tasksTimeout = $timeout(refreshTasks, timeout);
         }
@@ -232,6 +246,9 @@ angular.module('ortolangMarketApp')
                 if ($rootScope.selectedProcess) {
                     $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
                 }
+            }, function (error) {
+                console.error('An error occurred while trying to refresh the tool jobs', error);
+                $timeout.cancel(toolJobsTimeout);
             });
             toolJobsTimeout = $timeout(refreshTools, timeout);
 
