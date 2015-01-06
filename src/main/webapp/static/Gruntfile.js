@@ -64,7 +64,7 @@ module.exports = function (grunt) {
                     '.tmp/styles/{,*/}*.css',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
-            },
+            }
         },
 
         // The actual grunt server settings
@@ -497,6 +497,22 @@ module.exports = function (grunt) {
             }
         },
 
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: /\/vendor\/ZeroClipboard\.swf/,
+                            replacement: '../vendor/ZeroClipboard.swf'
+                        }
+                    ]
+                },
+                files: [
+                    {expand: true, flatten: true, src: ['<%= yeoman.dist %>/scripts/scripts.js'], dest: '<%= yeoman.dist %>/scripts/'}
+                ]
+            }
+        },
+
         sonarRunner: {
             analysis: {
                 options: {
@@ -567,6 +583,7 @@ module.exports = function (grunt) {
         'cdnify',
         'cssmin',
         'uglify',
+        'replace:dist',
         'filerev',
         'usemin',
         'htmlmin'
