@@ -1,6 +1,6 @@
 {
     "realm": "ortolang",
-    "realm-public-key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCRmBCDTUMDthejFWpp0ExceHDpVoXI/5WPXq/JLf/D0iY0QWRl1/M/hcBV07VRH8rfJXejisxHyZX/aPx2mYYaRychTz/oEtG3Beio5E7iq/HDz/qoJaQCY1qOU3sNdrykpEY/gVjbFDgDRIOI9shg+J1KRpaVQt5fM5JDTIgNpQIDAQAB",
+    "realm-public-key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC00MwPvKj5Q3k7mbDGizec8haNaqNFnC488h3xYHAkYAUV66sdqxH1VFELhMSHfaqYiVZR2FfWlTNWLobnqqFJ1qxCsg+Tl6DOdg1cFTikgjuT7E9w0SOkTAE7IHpNt4QBcDSPoBENH1RXNgBwEUIr4cFLlBgqVmOlv2AlzvL0zwIDAQAB",
     "auth-server-url": "https://localhost:8443/auth",
     "ssl-required": "external",
     "resource": "market",
