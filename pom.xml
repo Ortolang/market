@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.ortolang.diffusion</groupId>
     <artifactId>market</artifactId>
@@ -14,6 +14,11 @@
         <artifactId>ortolang</artifactId>
         <version>0.2</version>
     </parent>
+
+    <properties>
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <version.grunt.maven.plugin>1.4.1</version.grunt.maven.plugin>
+    </properties>
 
     <repositories>
         <repository>
@@ -46,7 +51,7 @@
             <plugin>
                 <groupId>pl.allegro</groupId>
                 <artifactId>grunt-maven-plugin</artifactId>
-                <version>1.4.1</version>
+                <version>${version.grunt.maven.plugin}</version>
                 <configuration>
                     <!-- relative to src/main/webapp/, default: static -->
                     <jsSourceDirectory>static</jsSourceDirectory>
@@ -88,10 +93,19 @@
                     <warSourceExcludes>static/**</warSourceExcludes>
                     <webResources>
                         <resource>
-                          <!-- this is relative to the pom.xml directory -->
+                            <!-- this is relative to the pom.xml directory -->
                             <directory>target-grunt/dist</directory>
                         </resource>
-                      </webResources>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>
+                <configuration>
+                    <filename>${project.build.finalName}.war</filename>
+                    <skip>false</skip>
                 </configuration>
             </plugin>
         </plugins>
