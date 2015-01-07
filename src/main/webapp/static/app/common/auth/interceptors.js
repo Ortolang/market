@@ -8,50 +8,49 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AuthInterceptor', ['$q', 'AuthService', function($q, AuthService) {
+    .factory('AuthInterceptor', ['$q', 'AuthService', function ($q, AuthService) {
         return {
             request: function (config) {
                 var deferred = $q.defer();
                 if (AuthService.isAuthenticated()) {
                     if (AuthService.getToken()) {
-                        AuthService.getKeycloak().updateToken(5).success(function() {
+                        AuthService.getKeycloak().updateToken(5).success(function () {
                             config.headers = config.headers || {};
                             config.headers.Authorization = 'Bearer ' + AuthService.getToken();
 
                             deferred.resolve(config);
-                        }).error(function() {
+                        }).error(function () {
                             deferred.reject('Failed to refresh token');
                         });
                     }
                     return deferred.promise;
-                } else {
-                    return config;
                 }
+                return config;
             },
-            responseError: function(response) {
-                if (response.status == 401) {
-                    console.log('session timeout?');
+            responseError: function (response) {
+                if (response.status === 401) {
+                    console.error('session timeout?', response);
                     if (!AuthService.isAuthenticated()) {
                         AuthService.login();
                     }
-                } else if (response.status == 403) {
-                    alert("Forbidden");
-                } else if (response.status == 404) {
-                    alert("Not found");
+                } else if (response.status === 403) {
+                    console.error('Forbidden', response);
+                } else if (response.status === 404) {
+                    console.error('Not found', response);
                 } else if (response.status) {
                     if (response.data && response.data.errorMessage) {
-                        alert(response.data.errorMessage);
+                        console.error(response.data.errorMessage);
                     } else {
-                        alert("An unexpected server error has occurred");
+                        console.error('An unexpected server error has occurred', response);
                     }
                 }
                 return $q.reject(response);
             }
         };
-}]);
+    }]);
 
 angular.module('ortolangMarketApp')
-    .config(['$httpProvider', function($httpProvider) {
+    .config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('AuthInterceptor');
     }])
     .run(['$rootScope', 'AuthService', function ($rootScope, AuthService) {
