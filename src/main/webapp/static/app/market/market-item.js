@@ -41,6 +41,8 @@ angular.module('ortolangMarketApp')
                                         }, function (reason) {
                                             console.error(reason);
                                         });
+                                    } else {
+                                        $scope.item.image = 'assets/images/no-image.png';
                                     }
 
                                     if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
