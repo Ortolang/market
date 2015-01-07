@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('ToolsCtrl', ['$scope', '$http', 'ToolsResource', function ($scope, $http, ToolsResource) {
         /**
-         * Load List of url of of available tools
+         * Load List of url of available tools
          */
         function init() {
             ToolsResource.getToolsList(
