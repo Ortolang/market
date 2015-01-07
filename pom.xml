@@ -104,7 +104,7 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>${version.wildfly.maven.plugin}</version>
                 <configuration>
-                    <filename>${project.build.finalName}.war</filename>
+                    <filename>${project.build.finalName}.${project.packaging}</filename>
                     <skip>false</skip>
                 </configuration>
             </plugin>
