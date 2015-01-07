@@ -56,7 +56,19 @@ angular.module('ortolangMarketApp')
                                     DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                         N3Serializer.fromN3(metaContent).then(function (data) {
 
-                                            $scope.items.push({oobject: oobject, meta: data, result: entry});
+                                            var image = 'assets/images/no-image.png';
+                                            if(data['http://www.ortolang.fr/ontology/image']) {
+                                                ObjectResource.element({oKey: oobject.key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobjectImage) {
+                                                    image = DownloadResource.getDownloadUrl({oKey: oobjectImage.key});
+                                                }, function (reason) {
+                                                    console.error(reason);
+                                                    image = 'assets/images/no-image.png';
+                                                });
+                                            } else {
+                                                image = 'assets/images/no-image.png';
+                                            }
+
+                                            $scope.items.push({oobject: oobject, meta: data, result: entry, image: image});
                                         });
                                     }).error(function (error) {
                                         console.error('error during process : ' + error);

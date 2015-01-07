@@ -20,7 +20,7 @@
             </header>
 
             <div ng-repeat="item in items" class="row market-item" ng-click="clickItem(item)">
-                <img src="../assets/images/no-image.png" class="col-md-3 thumbnail image">
+                <img ng-src="{{item.image}}" class="col-md-3 thumbnail image">
                 <div class="col-md-9">
                     <h3 class="title">{{item.meta['http://purl.org/dc/elements/1.1/title']}}<span class="paragraph-end"></span></h3>
                     <p class="description">{{item.meta['http://purl.org/dc/elements/1.1/description']}}</p>
