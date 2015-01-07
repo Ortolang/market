@@ -10,20 +10,23 @@
 angular.module('ortolangMarketApp')
     .factory('ToolsResource', ['$resource', 'Url', function ($resource, Url) {
         return $resource(Url.urlBase() + '/rest/tools', {}, {
-            getToolsList: {
+            getToolPluginsList: {
                 url: Url.urlBase() + '/rest/tools',
                 method: 'GET',
                 isArray: false
             },
-            getTool: {
-                url: Url.urlBaseTool() + ':pKey/:pKey/description',
-                //url: ':base/description',
+            getToolsList: {
+                url: Url.urlBase() + '/rest/tools/list',
                 method: 'GET',
                 isArray: false
             },
+            //getToolDesc: {
+            //    url: Url.urlBaseTool() + ':pKey/:pKey/description',
+            //    method: 'GET',
+            //    isArray: false
+            //},
             getToolDiffusion: {
                 url: Url.urlBase() + '/rest/tools/:pKey',
-                //url: ':base/description',
                 method: 'GET',
                 isArray: false
             },

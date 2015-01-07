@@ -13,26 +13,36 @@ angular.module('ortolangMarketApp')
          * Load List of url of available tools
          */
         function init() {
-            ToolsResource.getToolsList(
+            ToolsResource.getToolPluginsList(
                 function (tools) {
                     $scope.toolList = tools.entries;
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
+            ToolsResource.getToolsList(
+                function (tools) {
+                    $scope.toolServerList = tools.entries;
                     //angular.forEach (tools.entries, function(tool, key) {
-                    //    // hack until all tools are externalize
+                    //    // hack until all tools are externalized
                     //    if ( !angular.isUndefined(tool.url) && tool.url !== null ) {
-                    //        ToolsResource.getToolDesc(
+                    //        var desc = $resource(tool.url + '/description');
+                    //        desc.get(
                     //            function (tool) {
                     //                console.debug(tool);
                     //            },
                     //            function (error) {
                     //                console.log(error);
-                    //            });
+                    //            }
+                    //        );
                     //    }
                     //});
                 },
                 function (error) {
                     console.log(error);
                 }
-            );
+            )
         }
 
         init();
