@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:PluginctrlCtrl
+ * @name ortolangMarketApp.controller:ToolCtrl
  * @description
- * # PluginctrlCtrl
+ * # ToolCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')

@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .constant('TOOLS_EN', {
         TOOLS: {
-            AVAILABLE_TOOLS: 'Available tools',
+            AVAILABLE_TOOLS: 'Available tools - old version',
             AVAILABLE_TOOLS_SERVER: 'Available tool servers',
             CHOOSE: 'Choose',
             DOCUMENTATION: 'Documentation',

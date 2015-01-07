@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:PluginctrlCtrl
+ * @name ortolangMarketApp.controller:ToolPluginCtrl
  * @description
- * # PluginctrlCtrl
+ * # ToolPluginCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolCtrl', [ '$scope',
+    .controller('ToolPluginCtrl', [ '$scope',
         '$http',
         'ToolsResource',
         '$routeParams',
