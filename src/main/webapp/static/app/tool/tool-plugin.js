@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
         'WorkspaceElementResource',
         '$q',
         'Url',
-        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url) {
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, $filter, WorkspaceElementResource, $q, Url, AuthService) {
             /**
              * Load chosen plugin informations
              */
@@ -38,7 +38,6 @@ angular.module('ortolangMarketApp')
             $scope.loadConfig = function () {
                 ToolsResource.getConfigDiffusion({pKey: $routeParams.plName},
                     function (config) {
-                        console.debug(config);
                         $scope.generateForm(config);
                     },
                     function (error) {
@@ -68,30 +67,6 @@ angular.module('ortolangMarketApp')
                 deferred.resolve();
             };
 
-            /**
-             * Initialise the form from the JSON config
-             * @param configJSON
-             */
-            $scope.initialiseFormConfig = function () {
-                // parcours du json pour initialiser le formulaire : les éventuels dataobject sont séléctionnés dans le workspace avec un typeahead
-                //var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
-                //if (objectsFieldList.length > 0) {
-                //    $scope.listAvailableDataObject = [];
-                //    if ($scope.authenticated) {
-                //        AuthService.getWorkspaces($scope.currentUser.id)
-                //            .then(function (wks) {
-                //                $scope.pushDataObjects(wks, function () {
-                //                    angular.forEach(configJSON, function (field, index) {
-                //                        if (field.type === 'dataobject') {
-                //                            configJSON[index].availableData = $scope.listAvailableDataObject;
-                //                        }
-                //                    });
-                //                });
-                //            });
-                //    }
-                //}
-            };
-
 
             /**
              * Generate the form
@@ -110,19 +85,19 @@ angular.module('ortolangMarketApp')
                     //default: Submit
                     submitCopy: 'Save and Run'
                 };
-                console.log('$$childHead', $scope.$$childHead);
             };
 
             /**
              * Action to perform on submit
              */
             $scope.onSubmit = function () {
-                console.log('form submitted:', $scope.formData);
-                ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
+                $scope.viewLoading = true;
+                //console.log('form submitted:', $scope.formData);
+                ToolsResource.postConfigDiffusion({pKey: $routeParams.plName}, $scope.formData,
                     function (response) {
                         $scope.viewLoading = false;
-                        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
                         //console.log('reponse invoke:', response);
+                        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
                         if (response.status === 'SUCCESS') {
                             $scope.success = true;
                             $scope.resultStatus = response.status;
