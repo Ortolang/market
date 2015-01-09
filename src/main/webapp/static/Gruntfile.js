@@ -324,7 +324,6 @@ module.exports = function (grunt) {
                         dest: '<%= yeoman.dist %>',
                         src: [
                             '*.{ico,png,txt}',
-                            '.htaccess',
                             '**/*.html',
                             'assets/**/*'
                         ]
@@ -504,38 +503,16 @@ module.exports = function (grunt) {
                         {
                             match: /\/vendor\/ZeroClipboard\.swf/,
                             replacement: '../vendor/ZeroClipboard.swf'
+                        },
+                        {
+                            match: /keycloak.json/,
+                            replacement: 'keycloak.jsp'
                         }
                     ]
                 },
                 files: [
                     {expand: true, flatten: true, src: ['<%= yeoman.dist %>/scripts/scripts.js'], dest: '<%= yeoman.dist %>/scripts/'}
                 ]
-            }
-        },
-
-        sonarRunner: {
-            analysis: {
-                options: {
-                    debug: true,
-                    separator: '\n',
-                    sonar: {
-                        host: {
-                            url: 'http://localhost:9000'
-                        },
-                        jdbc: {
-                            url: 'jdbc:postgresql://localhost:5432/sonar',
-                            username: 'sonar',
-                            password: 'sonar'
-                        },
-
-                        projectKey: 'ortolang:market:0.2.0',
-                        projectName: 'Ortolang Market',
-                        projectVersion: '0.2.0-SNAPSHOT',
-                        sources: ['app', 'test/spec'].join(','),
-                        language: 'js',
-                        sourceEncoding: 'UTF-8'
-                    }
-                }
             }
         }
     });

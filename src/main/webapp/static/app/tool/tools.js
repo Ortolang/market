@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
                 function (error) {
                     console.log(error);
                 }
-            )
+            );
         }
 
         init();

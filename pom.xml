@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.ortolang.diffusion</groupId>
     <artifactId>market</artifactId>
-    <name>Ortolang Diffusion MarketPlace Client</name>
+    <name>Ortolang Diffusion Marketplace Client</name>
     <version>0.2-SNAPSHOT</version>
     <packaging>war</packaging>
     <url>http://www.ortolang.fr</url>
@@ -18,6 +18,11 @@
     <properties>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
         <version.grunt.maven.plugin>1.4.1</version.grunt.maven.plugin>
+        <version.sonar.maven.plugin>2.4</version.sonar.maven.plugin>
+        <sonar.language>js</sonar.language>
+        <sonar.sources>src/main/webapp/static/app</sonar.sources>
+        <sonar.exclusions>src/main/webapp/static/app/scripts/keycloak*</sonar.exclusions>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
@@ -107,6 +112,11 @@
                     <filename>${project.build.finalName}.${project.packaging}</filename>
                     <skip>false</skip>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${version.sonar.maven.plugin}</version>
             </plugin>
         </plugins>
     </build>

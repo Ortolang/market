@@ -13,7 +13,7 @@ angular.element(document).ready(function () {
         angular.module('ortolangMarketApp')
             .factory('AuthService', ['$window', function ($window) {
 
-                var logoutUrl = keycloakAuth.authServerUrl + "/realms/ortolang/tokens/logout?redirect_uri=https://localhost:9000/";
+                var logoutUrl = keycloakAuth.authServerUrl + "/realms/ortolang/tokens/logout";
 
                 function isAuthenticated() {
                     return keycloakAuth.authenticated;
