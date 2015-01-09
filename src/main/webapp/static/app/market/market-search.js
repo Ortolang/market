@@ -10,8 +10,8 @@
 angular.module('ortolangMarketApp')
     .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'IndexResultResource', function ($scope, $location, $routeParams, ObjectResource, DownloadResource, N3Serializer, IndexResultResource) {
 
-        $scope.search = function() {
-            if($scope.content !== '') {
+        $scope.search = function () {
+            if ($scope.content !== '') {
                 $location.search('content', $scope.content).path('/search');
                 // $location.url('/search?content='+encodeURIComponent($scope.content));
             }
@@ -24,31 +24,31 @@ angular.module('ortolangMarketApp')
 
         function loadObjects(content, producer) {
 
-        	var query = ' STATUS:PUBLISHED', contentSplit = [];
+            var query = ' STATUS:PUBLISHED', contentSplit = [];
 
             if (content && content !== '') {
                 contentSplit = content.split(' ');
             }
 
-        	if (contentSplit.length > 0) {
-        		angular.forEach(contentSplit, function(contentPart) {
-        			// query += ' AND CONTENT:' + encodeURIComponent(contentPart) + '~';
+            if (contentSplit.length > 0) {
+                angular.forEach(contentSplit, function (contentPart) {
+                    // query += ' AND CONTENT:' + encodeURIComponent(contentPart) + '~';
                     var str = contentPart.replace(/\(/g, '\(').replace(/\)/g, '\)');
                     query += ' AND (CONTENT:' + str + '~ OR CONTENT:' + str + '*)';
-        		});
-        	}
-
-            if (producer && producer !== '') {
-                query += ' AND CONTENT:' + producer
+                });
             }
 
-            console.debug('query : '+query);
+            if (producer && producer !== '') {
+                query += ' AND CONTENT:' + producer;
+            }
+
+            console.debug('query : ' + query);
             // Loads all objects
             IndexResultResource.get({query: query}).$promise.then(function (results) {
-                
+
                 angular.forEach(results, function (entry) {
-                    
-                    if(entry.explain) {
+
+                    if (entry.explain) {
 
                         entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
                     }
@@ -56,18 +56,18 @@ angular.module('ortolangMarketApp')
                     // Loads properties of each object
                     ObjectResource.get({oKey: entry.root}).$promise
                         .then(function (oobject) {
-                            
+
                             if (oobject.object.root === true) {
                                 if (oobject.object.metadatas.length > 0) {
-                                    //TODO find metadata in Resource name or rdf format ??
+                                    // TODO find metadata in Resource name or rdf format ??
                                     var metaKey = oobject.object.metadatas[0].key;
 
                                     DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                         N3Serializer.fromN3(metaContent).then(function (data) {
 
                                             var image = 'assets/images/no-image.png';
-                                            if(data['http://www.ortolang.fr/ontology/image']) {
-                                                ObjectResource.element({oKey: oobject.key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobjectImage) {
+                                            if (data['http://www.ortolang.fr/ontology/image']) {
+                                                ObjectResource.element({oKey: oobject.key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function (oobjectImage) {
                                                     image = DownloadResource.getDownloadUrl({oKey: oobjectImage.key});
                                                 }, function (reason) {
                                                     console.error(reason);
@@ -84,8 +84,7 @@ angular.module('ortolangMarketApp')
                                     });
                                 }
                             }
-                        },
-                        function(reason) {
+                        }, function (reason) {
                             console.error(reason);
                         });
                 });
@@ -103,7 +102,7 @@ angular.module('ortolangMarketApp')
             initScopeVariables();
 
             $scope.content = $routeParams.content;
-            var producer = ($routeParams.producer!==undefined && $routeParams.producer!=='')?$routeParams.producer:undefined;
+            var producer = ($routeParams.producer !== undefined && $routeParams.producer !== '') ? $routeParams.producer : undefined;
             console.debug(producer);
             loadObjects($routeParams.content, producer);
         }
