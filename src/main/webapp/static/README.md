@@ -9,11 +9,6 @@ Grunt:
     npm install -g grunt
     npm install -g grunt-cli
 
-Yoeman:
-
-    npm install -g yo
-    npm install -g generator-angular
-
 Get the app node dependencies:
 
     npm install
