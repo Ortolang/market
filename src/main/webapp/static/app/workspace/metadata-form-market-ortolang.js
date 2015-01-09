@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.submitMetadata = function (form, md) {
-            $scope.$broadcast('show-errors-check-validity');
+            // $scope.$broadcast('show-errors-check-validity');
 
             if (form.$invalid) {
                 console.debug('not ready');

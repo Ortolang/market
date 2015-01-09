@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
                     title: form.name,
                     html: true,
                     scope: modalScope,
-                    template: template || '/common/services/runtime-form-modal-template.html',
+                    template: template || 'common/services/runtime-form-modal-template.html',
                     show: true
                 });
             });
@@ -214,11 +214,12 @@ angular.module('ortolangMarketApp')
                     title: form.name,
                     html: true,
                     scope: modalScope,
-                    template: '/common/services/runtime-form-modal-template.html',
+                    template: 'common/services/runtime-form-modal-template.html',
                     show: true
                 });
             });
         }
+
         // *********************** //
         //          Tools          //
         // *********************** //

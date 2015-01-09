@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('TOOLS_FR', {
         TOOLS: {
             AVAILABLE_TOOLS: 'Liste des outils disponibles',
+            AVAILABLE_TOOLS_SERVER: 'Liste des outils externes disponibles',
             CHOOSE: 'Choisir',
             DOCUMENTATION: 'Documentation',
             BACK_TO_TOOL_LIST: 'Retour à la liste des outils',

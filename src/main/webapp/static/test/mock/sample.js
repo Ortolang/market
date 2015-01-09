@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
             publishWorkspaceProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'COMPLETED', type: 'publish-workspace'},
             completedProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'COMPLETED', type: 'publish-workspace'},
             pendingProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'PENDING', type: 'publish-workspace'},
-            sampleN3 = {'http://www.ortolang.fr/ontology/preview':'k1'},
+            sampleN3 = {'http://www.ortolang.fr/ontology/preview':'k1', image : 'assets/images/no-image.png'},
             workspaceElement = {format: 'market-ortolang-n3'};
 
         return {

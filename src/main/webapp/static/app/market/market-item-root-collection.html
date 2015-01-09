@@ -2,7 +2,7 @@
     <header>
         <div class="media">
             <a class="pull-left">
-                <img ng-if="item.image == undefined" src="../assets/images/no-image.png" class="thumbnail image"/>
+                <!-- <img ng-show="item.image == undefined" src="assets/images/no-image.png" class="thumbnail image"/> -->
                 <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image"/>
             </a>
             <div class="media-body">
@@ -160,7 +160,7 @@
             <div browser></div>
         </div>
 
-        <div ng-if="!browse" ng-include="'../common/visualizers/visualizer-template.html'"></div>
+        <div ng-if="!browse" ng-include="'common/visualizers/visualizer-template.html'"></div>
 
         <aside ng-show="!browse" class="col-md-4">
             <div class="panel panel-default license-panel">
