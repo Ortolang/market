@@ -37,10 +37,10 @@
                         <img ng-if="item.image" ng-src="{{item.image}}" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}"/>
                         <div class="caption">
                             <h3 ng-bind="item.meta['http://purl.org/dc/elements/1.1/title']" class="title"></h3>
-                            <p ng-bind="item.meta['http://purl.org/dc/elements/1.1/description']" class="description"></p>
+                            <p ng-bind-html="item.meta['http://purl.org/dc/elements/1.1/description']" class="description"></p>
                             <p class="producers">
                                 <span ng-repeat="producer in item.meta['http://www.ortolang.fr/ontology/producer']">
-                                    <a ng-href="#/search?content={{producer}}" ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
+                                    <a ng-href='#/search?producer="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
                                 </span>
                             </p>
                         </div>

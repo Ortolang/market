@@ -16,6 +16,10 @@ angular.module('ortolangMarketApp')
             BROWSE: 'Browse',
             ADD_TO_FAVOURITES: 'Add to my favourites',
             USE_IN_MY_PROJECT: 'Use in my project',
-            ADDITIONAL_INFORMATION: 'Additional information'
+            ADDITIONAL_INFORMATION: 'Additional information',
+            LOCATION: 'Location',
+            CONTRIBUTOR: 'Contributor',
+            DOWNLOAD: 'Download',
+            LICENCE_DETAIL: 'Licence information'
         }
     });
