@@ -21,7 +21,6 @@ angular.module('ortolangVisualizers')
         };
 
         this.register = function (visualizer) {
-//            console.info('Start registering visualizer \'' + visualizer.getName() + '\'');
             var i = 0;
             for (i; i < registry.length; i++) {
                 if (registry[i].id === visualizer.id) {
@@ -29,7 +28,6 @@ angular.module('ortolangVisualizers')
                     return;
                 }
             }
-            //console.info('Visualizer \'' + visualizer.getName() + '\' registered');
             return registry.push(visualizer);
         };
 
