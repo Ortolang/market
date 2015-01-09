@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
         };
 
 
-        function loadObjects(content) {
+        function loadObjects(content, producer) {
 
         	var query = ' STATUS:PUBLISHED', contentSplit = [];
 
@@ -33,16 +33,25 @@ angular.module('ortolangMarketApp')
         	if (contentSplit.length > 0) {
         		angular.forEach(contentSplit, function(contentPart) {
         			// query += ' AND CONTENT:' + encodeURIComponent(contentPart) + '~';
-                    query += ' AND (CONTENT:' + contentPart + '~ OR CONTENT:' + contentPart + '*)';
+                    var str = contentPart.replace(/\(/g, '\(').replace(/\)/g, '\)');
+                    query += ' AND (CONTENT:' + str + '~ OR CONTENT:' + str + '*)';
         		});
         	}
 
+            if (producer && producer !== '') {
+                query += ' AND CONTENT:' + producer
+            }
+
+            console.debug('query : '+query);
             // Loads all objects
             IndexResultResource.get({query: query}).$promise.then(function (results) {
                 
                 angular.forEach(results, function (entry) {
                     
-                    entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
+                    if(entry.explain) {
+
+                        entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
+                    }
 
                     // Loads properties of each object
                     ObjectResource.get({oKey: entry.root}).$promise
@@ -94,7 +103,9 @@ angular.module('ortolangMarketApp')
             initScopeVariables();
 
             $scope.content = $routeParams.content;
-            loadObjects($routeParams.content);
+            var producer = ($routeParams.producer!==undefined && $routeParams.producer!=='')?$routeParams.producer:undefined;
+            console.debug(producer);
+            loadObjects($routeParams.content, producer);
         }
         init();
 
