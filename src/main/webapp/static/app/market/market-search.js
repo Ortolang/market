@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
 
             if (contentSplit.length > 0) {
                 angular.forEach(contentSplit, function (contentPart) {
-                    var str = contentPart.replace(/\(/g, '\(').replace(/\)/g, '\)');
+                    var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
                     query += ' AND (CONTENT:' + str + '~ OR CONTENT:' + str + '*)';
                 });
             }
@@ -66,16 +66,16 @@ angular.module('ortolangMarketApp')
                                             var image = 'assets/images/no-image.png';
                                             if (data['http://www.ortolang.fr/ontology/image']) {
                                                 ObjectResource.element({oKey: oobject.key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function (oobjectImage) {
-                                                    image = DownloadResource.getDownloadUrl({oKey: oobjectImage.key});
+                                                    $scope.items.push({oobject: oobject, meta: data, result: entry, image: DownloadResource.getDownloadUrl({oKey: oobjectImage.key})});
                                                 }, function (reason) {
                                                     console.error(reason);
-                                                    image = 'assets/images/no-image.png';
+                                                    $scope.items.push({oobject: oobject, meta: data, result: entry, image: image});
                                                 });
                                             } else {
-                                                image = 'assets/images/no-image.png';
+                                                $scope.items.push({oobject: oobject, meta: data, result: entry, image: image});
                                             }
 
-                                            $scope.items.push({oobject: oobject, meta: data, result: entry, image: image});
+                                           
                                         });
                                     }).error(function (error) {
                                         console.error('error during process : ' + error);
