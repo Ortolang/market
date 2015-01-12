@@ -10,19 +10,19 @@
 angular.module('ortolangMarketApp')
     .controller('ToolPluginCtrl', [ '$scope',
         '$http',
-        'ToolsResource',
+        'PluginsResource',
         '$routeParams',
         'formlyTemplate',
         '$filter',
         'WorkspaceElementResource',
         '$q',
         'Url',
-        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, $filter, WorkspaceElementResource, $q, Url, AuthService) {
+        function ($scope, $http, PluginsResource, $routeParams, formlyTemplate, $filter, WorkspaceElementResource, $q, Url) {
             /**
              * Load chosen plugin informations
              */
             $scope.loadTool = function () {
-                ToolsResource.getToolDiffusion({pKey: $routeParams.plName},
+                PluginsResource.getToolDiffusion({pKey: $routeParams.plName},
                     function (tool) {
                         $scope.tool = tool;
                     },
@@ -36,7 +36,7 @@ angular.module('ortolangMarketApp')
              * @return {*[]}
              */
             $scope.loadConfig = function () {
-                ToolsResource.getConfigDiffusion({pKey: $routeParams.plName},
+                PluginsResource.getConfigDiffusion({pKey: $routeParams.plName},
                     function (config) {
                         $scope.generateForm(config);
                     },
@@ -93,7 +93,7 @@ angular.module('ortolangMarketApp')
             $scope.onSubmit = function () {
                 $scope.viewLoading = true;
                 //console.log('form submitted:', $scope.formData);
-                ToolsResource.postConfigDiffusion({pKey: $routeParams.plName}, $scope.formData,
+                PluginsResource.postConfigDiffusion({pKey: $routeParams.plName}, $scope.formData,
                     function (response) {
                         $scope.viewLoading = false;
                         //console.log('reponse invoke:', response);

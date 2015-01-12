@@ -50,53 +50,5 @@
         </div>
         <!-- /.panel -->
 
-        <div style="text-align: center" ng-show="viewLoading">
-            <i class="fa fa-spinner fa-spin"></i> Process running...
-            <br><br>
-        </div>
-
-        <div class="panel panel-default {{success? 'panel-success' : 'panel-danger'}}" ng-if="resultStatus">
-            <div class="panel-heading">
-                <a class="" aria-expanded="true" data-toggle="collapse" data-parent="#accordion" href="#collapseRes" target="_blank">
-                    <i class="fa fa-eye"></i> Result : {{resultStatus}}
-                </a>
-            </div>
-            <!-- /.panel-heading -->
-            <div id="collapseRes" class="panel-body panel-collapse collapse" >
-                <!-- Nav tabs -->
-                <ul class="nav nav-pills">
-                    <li class="{{success? 'active' : ''}}"><a aria-expanded="false" href="#file-pills" target="_blank" data-toggle="tab">Generated file(s)</a>
-                    </li>
-                    <li class=""><a aria-expanded="false" href="#preview-pills" target="_blank" data-toggle="tab">Preview</a>
-                    </li>
-                    <li class="{{success? '' : 'active'}}"><a aria-expanded="false" href="#log-pills" target="_blank" data-toggle="tab">Log</a>
-                    </li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane fade {{success? 'active in' : ''}}" id="file-pills">
-                        <h4><i class="fa fa-download"></i> Generated file(s)</h4>
-                        <ul class="list-unstyled">
-                            <li ng-repeat="FileResult in listFileResult">
-                                <a ng-href="{{FileResult.downloadUrl}}">
-                                    {{FileResult.resFileName | split:'/':-1 }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane fade" id="preview-pills">
-                        <h4><i class="fa fa-eye"></i> Preview</h4>
-                        <p hljs source="preview"></p>
-                    </div>
-                    <div class="tab-pane fade {{success? '' : 'active in'}}" id="log-pills">
-                        <h4><i class="fa fa-file-text-o"></i> Log</h4>
-                        <p ng-bind-html="log | breakLineFilter"></p>
-                    </div>
-                </div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-
     </div>
 </div> <!-- ./div row -->

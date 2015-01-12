@@ -1050,6 +1050,7 @@ angular.module('ortolangMarketApp')
                     getParentData();
                 } else {
                     $scope.wsList.$promise.then(function (data) {
+                        console.log(data);
                         if ($scope.forceWorkspace) {
                              var filteredWorkspace = $filter('filter')(data.entries, {key: $scope.forceWorkspace}, true);
                             if (filteredWorkspace.length !== 1) {
@@ -1060,6 +1061,7 @@ angular.module('ortolangMarketApp')
                         } else {
                             $scope.workspace = data.entries[0];
                         }
+                        console.log($scope.workspace);
                         initWorkspaceVariables();
                         getParentData();
                     });
