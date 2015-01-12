@@ -32,6 +32,9 @@ angular.module('ortolangMarketApp')
         'FileSelectBrowserService',
         function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
+            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation,
+                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren;
+
             // *********************** //
             //        Breadcrumb       //
             // *********************** //
@@ -947,8 +950,7 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
-            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation,
-                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren;
+
 
             function initLocalVariables() {
                 viewModeLine = {id: 'line', icon: icons.browser.viewModeLine};
@@ -1052,7 +1054,7 @@ angular.module('ortolangMarketApp')
                     $scope.wsList.$promise.then(function (data) {
                         console.log(data);
                         if ($scope.forceWorkspace) {
-                             var filteredWorkspace = $filter('filter')(data.entries, {key: $scope.forceWorkspace}, true);
+                            var filteredWorkspace = $filter('filter')(data.entries, {key: $scope.forceWorkspace}, true);
                             if (filteredWorkspace.length !== 1) {
                                 console.error('No workspace with key "%s" available', $scope.forceWorkspace);
                                 return;
