@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp')
             LOCATION: 'Location',
             CONTRIBUTOR: 'Contributor',
             DOWNLOAD: 'Download',
-            LICENCE_DETAIL: 'Licence information'
+            LICENCE_DETAIL: 'Licence information',
+            RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}'
         }
     });
