@@ -44,7 +44,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
+                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)" class="{{item.divider ? 'divider' : ''}}"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
                             </ul>
                         </div>
                     </div>

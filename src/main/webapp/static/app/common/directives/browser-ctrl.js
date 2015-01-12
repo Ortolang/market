@@ -150,7 +150,7 @@ angular.module('ortolangMarketApp')
                 var config = {oKey: $scope.itemKey, wskey: $scope.wskey, path: $scope.path, root: $scope.root};
                 console.debug('Getting parent data (refresh: %s, forceNewSelection: %s, config: %o)', refresh, forceNewSelection, config);
                 $scope.browserService.getData(config).$promise.then(function (element) {
-                        finishGetParentData(element, refresh, forceNewSelection);
+                    finishGetParentData(element, refresh, forceNewSelection);
                 });
             }
 
