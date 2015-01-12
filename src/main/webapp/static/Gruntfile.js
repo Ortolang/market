@@ -130,7 +130,6 @@ module.exports = function (grunt) {
                 src: [
                     'Gruntfile.js',
                     '<%= yeoman.app %>/{,*/}*.js',
-                    '!<%= yeoman.app %>/scripts/sb-admin-2.js',
                     '!<%= yeoman.app %>/scripts/keycloak.js',
                     '!<%= yeoman.app %>/scripts/keycloak.min.js'
                 ]
