@@ -506,11 +506,20 @@ module.exports = function (grunt) {
                         {
                             match: /keycloak\.json/,
                             replacement: 'keycloak.jsp'
+                        },
+                        {
+                            match: /<!--<script src="config\.jsp"><\/script>-->/,
+                            replacement: '<script src="config.jsp"></script>'
                         }
                     ]
                 },
                 files: [
-                    {expand: true, flatten: true, src: ['<%= yeoman.dist %>/scripts/scripts.js'], dest: '<%= yeoman.dist %>/scripts/'}
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.dist %>',
+                        src: ['scripts/scripts.js', 'index.html'],
+                        dest: '<%= yeoman.dist %>/'
+                    }
                 ]
             }
         }

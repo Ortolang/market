@@ -82,12 +82,6 @@ angular.module('ortolangMarketApp')
                         iconCss: 'fa fa-tasks fa-2x',
                         badge: function () {return $rootScope.activeProcessesNbr; },
                         active: undefined
-                    },
-                    {
-                        path: '/settings',
-                        description: $scope.translationsSettings,
-                        iconCss: 'fa fa-cog fa-2x',
-                        active: undefined
                     }
                 ];
                 init();
