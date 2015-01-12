@@ -6,7 +6,6 @@
     <meta name="description" content="Ortolang">
     <title>Ortolang Diffusion</title>
 
-    <!-- Favicon -->
     <link rel="icon shortcut" href="assets/images/favicon.ico" />
 
     <link rel="stylesheet" href="styles/custom-bootstrap.css" />
@@ -25,20 +24,18 @@
     <link rel="stylesheet" href="styles/app.css">
     <!-- endbuild -->
 </head>
-<!--<body ng-app="ortolangMarketApp" ng-controller="AuthCtrl">-->
+
 <body ng-controller="AuthCtrl">
 
 <div id="wrapper" >
-    <!-- Navigation -->
+
     <div ng-include="'common/nav/top-nav.html'"></div>
     <div ng-include="'common/nav/side-nav.html'"></div>
 
-    <!-- Page Content -->
     <div id="page-wrapper">
         <div class="container-fluid ng-cloak" ng-view="" ng-cloak>
         </div>
     </div>
-    <!-- /#page-wrapper -->
 </div>
 
 <!-- build:js(.) scripts/oldieshim.js -->
@@ -77,8 +74,15 @@
 <script src="bower_components/angular-diff-match-patch/angular-diff-match-patch.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
+
 <script src="scripts/keycloak.js"></script>
-<script src="config.jsp"></script>
+
+<!--<script src="config.jsp"></script>-->
+<!-- build:remove -->
+<script type="text/javascript">
+    var logoutRedirectUrl = 'https://localhost:9000';
+</script>
+<!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>

@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
                     $scope.breadcrumbDropdownItems.push({text: $scope.translationsNewCollection, icon: icons.browser.plus, action: 'addCollection'});
                     $scope.breadcrumbDropdownItems.push({divider: true});
                     $scope.breadcrumbDropdownItems.push({text: $scope.translationsUploadFiles, icon: icons.browser.upload, action: 'uploadFiles'});
-                    $scope.breadcrumbDropdownItems.push({text: $scope.translationsUploadFolder, icon: icons.browser.upload, action: 'uploadFolder'});
+                    //$scope.breadcrumbDropdownItems.push({text: $scope.translationsUploadFolder, icon: icons.browser.upload, action: 'uploadFolder'});
                 }
             }
 
