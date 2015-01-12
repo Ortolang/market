@@ -505,7 +505,7 @@ module.exports = function (grunt) {
                             replacement: '../vendor/ZeroClipboard.swf'
                         },
                         {
-                            match: /keycloak.json/,
+                            match: /keycloak\.json/,
                             replacement: 'keycloak.jsp'
                         }
                     ]
