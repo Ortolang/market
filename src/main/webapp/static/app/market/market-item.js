@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
                         }
 
                         if (oobject.object.metadatas.length > 0) {
-                            //TODO find metadata in Resource name or rdf format ??
+
                             var metaKey = oobject.object.metadatas[0].key;
 
                             DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
                                     $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
                                     if(data['http://www.ortolang.fr/ontology/image']) {
-                                        // $scope.item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                        
                                         ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
                                             $scope.item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
                                         }, function (reason) {
@@ -46,10 +46,6 @@ angular.module('ortolangMarketApp')
                                     }
 
                                     if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
-                                        // ObjectResource.element({oKey: oobject.object.key, path: $scope.item['http://www.ortolang.fr/ontology/preview']}).$promise.then(function(previewKeyCollection) {
-
-                                            // loadPreview(previewKeyCollection);
-                                        // });
                                         loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
                                     }
                                 });
@@ -76,7 +72,7 @@ angular.module('ortolangMarketApp')
 
         $scope.showPreview = function (preview) {
             if(preview !== undefined && preview !== '') {
-                //TODO Get preview file or collection
+
                 ObjectResource.get({oKey: preview}).$promise.then(function (oobject) {
                     var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
 
@@ -84,12 +80,10 @@ angular.module('ortolangMarketApp')
                         finishPreview(visualizers[0], oobject);
                     }
                 });
-                //TODO si la cle n'existe pas afficher quelque chose !!
             }
         };
 
         function loadPreview(collection, previewPath) {
-                // ObjectResource.get({oKey: previewKey}).$promise.then(function (oobject) {
             ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function(oobject) {
                 $scope.previewCollection = oobject;
             }, function (reason) {
@@ -99,8 +93,6 @@ angular.module('ortolangMarketApp')
 
         function finishPreview(visualizer, oobject) {
 
-            //var scopePreview = {children: [{downloadUrl: DownloadResource.getDownloadUrl({oKey: oobject.object.key}), description: oobject.object.description, name: oobject.object.name}]};
-            // angular.extend($scope, scopePreview);
             oobject.object.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
             var isolatedScope = $rootScope.$new();
             isolatedScope.elements = [];
