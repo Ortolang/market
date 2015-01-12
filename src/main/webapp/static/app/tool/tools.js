@@ -8,7 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
+<<<<<<< HEAD
     .controller('ToolsCtrl', ['$scope', '$http', 'PluginsResource', function ($scope, $http, PluginsResource) {
+=======
+    .controller('ToolsCtrl', ['$scope', 'ToolsResource', function ($scope, ToolsResource) {
+>>>>>>> b62b9b39e016fd71d1e876d107eab37a68e7c06a
         /**
          * Load List of url of available tools
          */

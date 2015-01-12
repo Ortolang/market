@@ -4,5 +4,6 @@ src/main/webapp/static/.tmp/
 src/main/webapp/static/bower_components
 src/main/webapp/static/dist/
 src/main/webapp/static/test/reports/
+src/main/webapp/static/app/styles/app.css
 target-grunt
 target

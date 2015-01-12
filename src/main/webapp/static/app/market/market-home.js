@@ -13,7 +13,6 @@ angular.module('ortolangMarketApp')
         $scope.search = function () {
             if ($scope.content !== '') {
                 $location.search('content', $scope.content).path('/search');
-                // $location.url('/search?content='+encodeURIComponent($scope.content));
             }
         };
 
@@ -33,7 +32,7 @@ angular.module('ortolangMarketApp')
 
                             if (oobject.object.root === true) {
                                 if (oobject.object.metadatas.length > 0) {
-                                    //TODO find metadata in Resource name or rdf format ??
+                                    
                                     var metaKey = oobject.object.metadatas[0].key;
 
                                     DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
@@ -42,7 +41,7 @@ angular.module('ortolangMarketApp')
                                             item.oobject = oobject;
                                             item.meta = data;
                                             if(data['http://www.ortolang.fr/ontology/image']) {
-                                                // item.image = DownloadResource.getDownloadUrl({oKey: data['http://www.ortolang.fr/ontology/image']});
+                                                
                                                 ObjectResource.element({oKey: entry, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
                                                     item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
                                                 }, function (reason) {

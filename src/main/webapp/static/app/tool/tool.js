@@ -13,14 +13,13 @@ angular.module('ortolangMarketApp')
         'PluginsResource',
         'ToolsResource',
         '$routeParams',
-        'formlyTemplate',
         '$filter',
         'WorkspaceElementResource',
         '$q',
         'Url',
         '$resource',
         function ($scope, $http, PluginsResource, ToolsResource, $routeParams, formlyTemplate, $filter, WorkspaceElementResource, $q, Url, $resource) {
-
+            
             /**
              * Load chosen tool
              */

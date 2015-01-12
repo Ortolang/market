@@ -13,7 +13,6 @@ angular.module('ortolangMarketApp')
         $scope.search = function () {
             if ($scope.content !== '') {
                 $location.search('content', $scope.content).path('/search');
-                // $location.url('/search?content='+encodeURIComponent($scope.content));
             }
         };
 
@@ -32,7 +31,6 @@ angular.module('ortolangMarketApp')
 
             if (contentSplit.length > 0) {
                 angular.forEach(contentSplit, function (contentPart) {
-                    // query += ' AND CONTENT:' + encodeURIComponent(contentPart) + '~';
                     var str = contentPart.replace(/\(/g, '\(').replace(/\)/g, '\)');
                     query += ' AND (CONTENT:' + str + '~ OR CONTENT:' + str + '*)';
                 });
@@ -103,7 +101,6 @@ angular.module('ortolangMarketApp')
 
             $scope.content = $routeParams.content;
             var producer = ($routeParams.producer !== undefined && $routeParams.producer !== '') ? $routeParams.producer : undefined;
-            console.debug(producer);
             loadObjects($routeParams.content, producer);
         }
         init();
