@@ -48,7 +48,7 @@ describe('Controller: MarketHomeCtrl', function () {
 
       expect(scope.items).toBeDefined();
       expect(scope.items.length).toBe(1);
-      expect(scope.items[0]).toEqualData(sample().rootCollectionKey);
+      expect(scope.items[0]).toEqualData({ key : sample().rootCollectionKey });
     });
 
 });
