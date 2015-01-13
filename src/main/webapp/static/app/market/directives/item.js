@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', [ '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer',  function ($location, ObjectResource, DownloadResource, N3Serializer) {
+    .directive('item', [ 'ObjectResource', 'DownloadResource', 'N3Serializer',  function (ObjectResource, DownloadResource, N3Serializer) {
         return {
             restrict: 'EA',
             scope: {
@@ -17,10 +17,6 @@ angular.module('ortolangMarketApp')
             templateUrl: 'market/directives/item.html',
             link: {
                 post : function (scope) {
-
-                    scope.clickItem = function (key) {
-                        $location.path('/market/' + key);
-                    };
 
                     // Loads properties of each object
                     ObjectResource.get({oKey: scope.key}).$promise
