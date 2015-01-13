@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
         '$rootScope',
         '$compile',
         '$filter',
+        '$timeout',
         '$window',
         '$translate',
         '$modal',
@@ -30,7 +31,7 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation,
                 previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren;
@@ -150,7 +151,7 @@ angular.module('ortolangMarketApp')
                 var config = {oKey: $scope.itemKey, wskey: $scope.wskey, path: $scope.path, root: $scope.root};
                 console.debug('Getting parent data (refresh: %s, forceNewSelection: %s, config: %o)', refresh, forceNewSelection, config);
                 $scope.browserService.getData(config).$promise.then(function (element) {
-                        finishGetParentData(element, refresh, forceNewSelection);
+                    finishGetParentData(element, refresh, forceNewSelection);
                 });
             }
 
@@ -471,7 +472,9 @@ angular.module('ortolangMarketApp')
                     $scope.clickPreview();
                     break;
                 case 'uploadFiles':
-                    angular.element('#object-upload-file-select').click();
+                    $timeout(function () {
+                        angular.element('#object-upload-file-select').click();
+                    });
                     break;
                 case 'uploadFolder':
                     angular.element('#object-upload-folder-select').click();

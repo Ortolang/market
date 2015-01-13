@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.clickItem = function (item) {
-            $location.path('/market/' + item.oobject.key);
+            $location.path('/market/' + item.root);
         };
 
 
@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
 
             if (contentSplit.length > 0) {
                 angular.forEach(contentSplit, function (contentPart) {
-                    var str = contentPart.replace(/\(/g, '\(').replace(/\)/g, '\)');
+                    var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
                     query += ' AND (CONTENT:' + str + '~ OR CONTENT:' + str + '*)';
                 });
             }
@@ -47,44 +47,10 @@ angular.module('ortolangMarketApp')
                 angular.forEach(results, function (entry) {
 
                     if (entry.explain) {
-
                         entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
                     }
-
-                    // Loads properties of each object
-                    ObjectResource.get({oKey: entry.root}).$promise
-                        .then(function (oobject) {
-
-                            if (oobject.object.root === true) {
-                                if (oobject.object.metadatas.length > 0) {
-                                    // TODO find metadata in Resource name or rdf format ??
-                                    var metaKey = oobject.object.metadatas[0].key;
-
-                                    DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                        N3Serializer.fromN3(metaContent).then(function (data) {
-
-                                            var image = 'assets/images/no-image.png';
-                                            if (data['http://www.ortolang.fr/ontology/image']) {
-                                                ObjectResource.element({oKey: oobject.key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function (oobjectImage) {
-                                                    image = DownloadResource.getDownloadUrl({oKey: oobjectImage.key});
-                                                }, function (reason) {
-                                                    console.error(reason);
-                                                    image = 'assets/images/no-image.png';
-                                                });
-                                            } else {
-                                                image = 'assets/images/no-image.png';
-                                            }
-
-                                            $scope.items.push({oobject: oobject, meta: data, result: entry, image: image});
-                                        });
-                                    }).error(function (error) {
-                                        console.error('error during process : ' + error);
-                                    });
-                                }
-                            }
-                        }, function (reason) {
-                            console.error(reason);
-                        });
+                    
+                    $scope.items.push(entry);
                 });
             });
         }

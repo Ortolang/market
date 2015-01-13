@@ -18,13 +18,11 @@ angular.module('ortolangMarketApp')
 
         $scope.showEditor = function () {
             $scope.editorVisibility = true;
-            // $rootScope.$broadcast('metadata-list-push');
             $scope.resizeAsideBody();
         };
 
         $scope.hideEditor = function () {
             $scope.editorVisibility = false;
-            // $rootScope.$broadcast('metadata-list-unpush');
             resetMetadataFormat();
         };
 
@@ -55,11 +53,9 @@ angular.module('ortolangMarketApp')
 
                 $scope.metadataForm = view;
 
-                // $rootScope.$broadcast('metadata-form', $scope.selectedMetadataContent);
                 $scope.showEditor();
             }).error(function () {
                 resetMetadata();
-                //TODO send error message
             });
         }
 
@@ -76,7 +72,6 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.submitMetadataForm = function() {
-            // console.debug($scope.metadataMarketform);
             $rootScope.$broadcast('metadata-form-submit');
         };
 
@@ -126,7 +121,6 @@ angular.module('ortolangMarketApp')
                 })
                 .error(function (error) {
                     console.error('creation of metadata failed !', error);
-                    //TODO show a message !!
                     $scope.hideEditor();
                     resetMetadataFormat();
                 });
@@ -162,7 +156,6 @@ angular.module('ortolangMarketApp')
         $scope.resizeAsideBody = function () {
             var topOffset = $('#main-navbar').innerHeight(),
                 height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-            // browserToolbarHeight = $('#browser-toolbar').innerHeight();
 
             height = height - topOffset;
             if (height < 1) {
@@ -172,9 +165,6 @@ angular.module('ortolangMarketApp')
                 if ($rootScope.uploadQueueStatus === 'active') {
                     height -= angular.element('.upload-queue').innerHeight();
                 }
-                // $('#browser-sidebar').css('min-height', (height - browserToolbarHeight) + 'px');
-                // $('#browser-wrapper').find('.table-wrapper.workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
-                //$('#browser-sidebar').css('min-height', height + 'px');
                 $('#metadataEditorBody').css('height', height + 'px');
             }
         };

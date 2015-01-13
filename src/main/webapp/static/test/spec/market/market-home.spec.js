@@ -48,64 +48,7 @@ describe('Controller: MarketHomeCtrl', function () {
 
       expect(scope.items).toBeDefined();
       expect(scope.items.length).toBe(1);
-      expect(scope.items[0].meta).toEqualData(sample().sampleN3);
-      expect(scope.items[0].oobject).toEqualData(sample().oobjectSample); // Why toBe not true ??
+      expect(scope.items[0]).toEqualData({ key : sample().rootCollectionKey });
     });
 
-    it('should load object not root', function() {
-
-      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().collectionKey]});
-      ObjectResource.when({oKey: sample().collectionKey}, sample().oobjectNotRootSample);
-
-      controllerCreator();
-
-      scope.$digest();
-
-      expect(scope.items).toBeDefined();
-      expect(scope.items.length).toBe(0);
-    });
-
-    it('should load object without metadata', function() {
-
-      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().rootCollectionWithoutMetaKey]});
-      ObjectResource.when({oKey: sample().rootCollectionWithoutMetaKey}, sample().oobjectWithoutMetaSample);
-
-      controllerCreator();
-
-      scope.$digest();
-
-      expect(scope.items).toBeDefined();
-      expect(scope.items.length).toBe(0);
-    });
-
-    it('should load object with other meta', function() {
-
-      spyOn(console, 'error');
-
-      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().rootCollectionWithOtherMetaKey]});
-      ObjectResource.when({oKey: sample().rootCollectionWithOtherMetaKey}, sample().oobjectWithOtherMetaSample);
-
-      controllerCreator();
-
-      scope.$digest();
-
-      expect(scope.items).toBeDefined();
-      expect(scope.items.length).toBe(0);
-      expect(console.error).toHaveBeenCalledWith('error during process : Enable to download cause key not found');
-    });
-
-    it('should not load object', function() {
-
-      spyOn(console, 'error');
-
-      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().unknowObjectKey]});
-
-      controllerCreator();
-
-      scope.$digest();
-
-      expect(scope.items).toBeDefined();
-      expect(scope.items.length).toBe(0);
-      expect(console.error).toHaveBeenCalledWith('unknow object key');
-    });
 });

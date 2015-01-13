@@ -1,4 +1,4 @@
-<div id="market-home">
+<div id="market-search">
 
     <section class="row" id="search-market">
         <div class="col-md-offset-3 col-md-6">
@@ -16,25 +16,11 @@
     <section id="results" class="row">
         <div class="col-md-10">
             <header>
-                <h3>Résultats</h3>
+                <h3 translate="MARKET.RESULTS_LABEL" data-translate-values="{value: items.length}"></h3>
             </header>
 
-            <div ng-repeat="item in items" class="row market-item" ng-click="clickItem(item)">
-                <img ng-src="{{item.image}}" class="col-md-3 thumbnail image">
-                <div class="col-md-9">
-                    <h3 class="title">{{item.meta['http://purl.org/dc/elements/1.1/title']}}<span class="paragraph-end"></span></h3>
-                    <p ng-bind-html="item.meta['http://purl.org/dc/elements/1.1/description']" class="description"></p>
-                    <p class="producers">
-                        <span ng-repeat="producer in item.meta['http://www.ortolang.fr/ontology/producer']">
-                            <a ng-href='#/search?producer="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
-                        </span>
-                    </p>
-                    <div ng-if="item.result.key != item.result.root" class="item-element">
-                        <p>
-                        {{item.result.name}}
-                        </p>
-                    </div>
-                </div>
+            <div ng-repeat="item in items">
+                <item data-entry="item" template="market/directives/result.html" class="row market-item" ng-click="clickItem(item)"></item>
             </div>
         </div>
     </section>

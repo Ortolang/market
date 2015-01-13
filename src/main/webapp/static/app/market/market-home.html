@@ -11,102 +11,20 @@
             </div>
         </div>
     </section>
-
-    <div class="dropdown">
-        <!-- <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-            Catégories
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Corpus</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Outils</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lexique</a></li>
-        </ul> -->
-    </div>
-
+    <br/>
     <section id="redactor-choices" class="row">
         <div class="col-md-10">
-            <header>
+            <!-- <header>
                 <h3 translate="MARKET.REDACTOR_CHOICES"></h3>
-            </header>
+            </header> -->
             <div class="flex-container">
 
                 <div ng-repeat="item in items" class="col-sm-6 col-md-3 flex-container">
-                    <div class="thumbnail market-item flex-container" ng-click="clickItem(item)">
-                        <img ng-if="item.image == undefined" holder-js="holder.js/242x200/custom/text:{{'NO_IMAGE_PROVIDED' | translate}}" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}"/>
-                        <img ng-if="item.image" ng-src="{{item.image}}" alt="{{item.meta['http://purl.org/dc/elements/1.1/title']}}"/>
-                        <div class="caption">
-                            <h3 ng-bind="item.meta['http://purl.org/dc/elements/1.1/title']" class="title"></h3>
-                            <p ng-bind-html="item.meta['http://purl.org/dc/elements/1.1/description']" class="description"></p>
-                            <p class="producers">
-                                <span ng-repeat="producer in item.meta['http://www.ortolang.fr/ontology/producer']">
-                                    <a ng-href='#/search?producer="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
+                    <item data-entry="item" template="market/directives/item.html" class="thumbnail market-item flex-container" ng-click="clickItem(item)"></item>
                 </div>
 
             </div>
         </div>
     </section>
-
-    <!-- <section id="new-items" class="row">
-        <div class="col-md-10">
-            <header>
-                <h3>Nouveautés</h3>
-            </header>
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail market-item">
-                        <img src="../assets/images/holder.png" alt="...">
-                        <div class="caption">
-                            <h3 class="title">Donec quam felis ultricies nec<span class="paragraph-end"></span></h3>
-                            <p class="producers">
-                                <a href="#" class="author">Pascal Dufourd, CNRS - LPL</a>
-                                <a href="#" class="lab">Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR)</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail market-item">
-                        <img src="../assets/images/holder.png" alt="...">
-                        <div class="caption">
-                            <h3 class="title">Donec quam felis ultricies nec<span class="paragraph-end"></span></h3>
-                            <p class="producers">
-                                <a href="#" class="author">Pascal Dufourd, CNRS - LPL</a>
-                                <a href="#" class="lab">Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR)</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail market-item">
-                        <img src="../assets/images/holder.png" alt="...">
-                        <div class="caption">
-                            <h3 class="title">Donec quam felis ultricies nec<span class="paragraph-end"></span></h3>
-                            <p class="producers">
-                                <a href="#" class="author">Pascal Dufourd, CNRS - LPL</a>
-                                <a href="#" class="lab">Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR)</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail market-item">
-                        <img src="../assets/images/holder.png" alt="...">
-                        <div class="caption">
-                            <h3 class="title">Donec quam felis ultricies nec<span class="paragraph-end"></span></h3>
-                            <p class="producers">
-                                <a href="#" class="author">Pascal Dufourd, CNRS - LPL</a>
-                                <a href="#" class="lab">Laboratoire parole et langage - UMR 7309 (LPL, Aix-en-Provence FR)</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
 </div>

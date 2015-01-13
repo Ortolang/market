@@ -44,7 +44,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
+                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)" class="{{item.divider ? 'divider' : ''}}"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
                             </ul>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
             <div ng-include="'common/directives/browser-line-template.html'"></div>
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
             <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{ortolangType: 'object'}">
-            <input id="object-upload-folder-select" type="file" nv-file-select="" uploader="uploader" multiple="" webkitdirectory ng-hide="true" options="{ortolangType: 'object'}">
+            <!--<input id="object-upload-folder-select" type="file" nv-file-select="" uploader="uploader" multiple="" webkitdirectory ng-hide="true" options="{ortolangType: 'object'}">-->
         </div>
 
         <div ng-if="!browserService.canAdd || !isHead" ng-click="checkSelection($event)" ng-class="middleCssClass()">
