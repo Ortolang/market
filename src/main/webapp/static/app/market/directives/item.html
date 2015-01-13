@@ -1,0 +1,13 @@
+<div class="thumbnail market-item flex-container" ng-click="clickItem(key)">
+    <img ng-if="image == undefined" holder-js="holder.js/242x200/custom/text:{{'NO_IMAGE_PROVIDED' | translate}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
+    <img ng-if="image" ng-src="{{image}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
+    <div class="caption">
+        <h3 ng-bind="meta['http://purl.org/dc/elements/1.1/title']" class="title"></h3>
+        <p ng-bind-html="meta['http://purl.org/dc/elements/1.1/description']" class="description"></p>
+        <p class="producers">
+            <span ng-repeat="producer in meta['http://www.ortolang.fr/ontology/producer']">
+                <a ng-href='#/search?producer="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
+            </span>
+        </p>
+    </div>
+</div>
