@@ -12,14 +12,17 @@ angular.module('ortolangMarketApp')
         return {
             restrict: 'EA',
             scope: {
-                key: '='
+                entry: '='
             },
-            templateUrl: 'market/directives/item.html',
+            templateUrl: function (element, attr) {
+                  return attr.template;
+            },
             link: {
                 post : function (scope) {
+                    var key = (scope.entry.root!==undefined)?scope.entry.root:scope.entry.key;
 
                     // Loads properties of each object
-                    ObjectResource.get({oKey: scope.key}).$promise
+                    ObjectResource.get({oKey: key}).$promise
                         .then(function (oobject) {
 
                             if (oobject.object.root === true) {
@@ -33,7 +36,7 @@ angular.module('ortolangMarketApp')
                                             scope.meta = data;
                                             if(data['http://www.ortolang.fr/ontology/image']) {
                                                 
-                                                ObjectResource.element({oKey: scope.key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
+                                                ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
                                                     scope.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
                                                 }, function (reason) {
                                                     console.error(reason);

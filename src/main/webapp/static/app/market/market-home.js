@@ -16,8 +16,8 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        $scope.clickItem = function (key) {
-            $location.path('/market/' + key);
+        $scope.clickItem = function (entry) {
+            $location.path('/market/' + entry.key);
         };
 
         function loadObjects() {
@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
             ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(function (oobjects) {
 
                 angular.forEach(oobjects.entries, function (entry) {
-                    $scope.items.push(entry);
+                    $scope.items.push({key: entry});
                 });
             });
         }
