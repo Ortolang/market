@@ -32,7 +32,7 @@
         &:hover {
           background-color: @side-bar-item-bg;
           color: @side-bar-item-active-color;
-          .badge {
+          .badge.tasks, .badge.processes {
             color: @orange-lighter;
             background-color: #FFFFFF;
           }
@@ -66,7 +66,12 @@
           top: -1px;
           right: 5px;
           z-index: 1000;
-          background-color: @btn-danger-bg;
+          &.processes {
+            background-color: @btn-danger-bg;
+          }
+          &.tasks {
+            background-color: @btn-success-bg;
+          }
         }
 
         .nav-description {

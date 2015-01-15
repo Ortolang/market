@@ -3,7 +3,7 @@
         <li ng-repeat="element in navElements" ng-class="element.active">
             <a ng-href="#{{element.path}}" ng-click="select($event, element)">
                 <i ng-class="element.iconCss"></i>
-                <span ng-if="element.badge" class="badge">{{element.badge() > 0 ? element.badge() : ''}}</span>
+                <span ng-if="element.badge" class="badge" ng-class="element.badge().class">{{element.badge().value > 0 ? element.badge().value : ''}}</span>
                 <span class="nav-description">{{element.description}}</span>
             </a>
         </li>

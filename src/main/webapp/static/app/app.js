@@ -77,6 +77,11 @@ angular
                 controller: 'ProcessesCtrl',
                 requiresAuthentication: true
             })
+            .when('/tasks/', {
+                templateUrl: 'tasks/tasks.html',
+                controller: 'TasksCtrl',
+                requiresAuthentication: true
+            })
             .when('/404', {
                 templateUrl: '404.html'
             })

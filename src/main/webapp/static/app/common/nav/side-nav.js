@@ -48,12 +48,14 @@ angular.module('ortolangMarketApp')
                 'NAV.MY_WORKSPACES',
                 'NAV.TOOLS',
                 'NAV.PROCESSES',
+                'NAV.TASKS',
                 'NAV.SETTINGS'
             ]).then(function (translations) {
                 $scope.translationsMarket = translations['NAV.MARKET'];
                 $scope.translationsMyWorkspaces = translations['NAV.MY_WORKSPACES'];
                 $scope.translationsTools = translations['NAV.TOOLS'];
                 $scope.translationsProcesses = translations['NAV.PROCESSES'];
+                $scope.translationsTasks = translations['NAV.TASKS'];
                 $scope.translationsSettings = translations['NAV.SETTINGS'];
 
                 $scope.navElements = [
@@ -80,7 +82,24 @@ angular.module('ortolangMarketApp')
                         path: '/processes',
                         description: $scope.translationsProcesses,
                         iconCss: 'fa fa-tasks fa-2x',
-                        badge: function () {return $rootScope.activeProcessesNbr; },
+                        badge: function () {
+                            return {
+                                value: $rootScope.activeProcessesNbr,
+                                class: 'processes'
+                            };
+                        },
+                        active: undefined
+                    },
+                    {
+                        path: '/tasks',
+                        description: $scope.translationsTasks,
+                        iconCss: 'fa fa-bell fa-2x',
+                        badge: function () {
+                            return {
+                                value: $rootScope.tasks ? $rootScope.tasks.length : 0,
+                                class: 'tasks'
+                            };
+                        },
                         active: undefined
                     }
                 ];

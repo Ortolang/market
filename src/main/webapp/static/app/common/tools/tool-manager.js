@@ -94,7 +94,4 @@ angular.module('ortolangMarketApp')
         return {
             getRegistry: getRegistry
         };
-    }]).run(['ToolManager', function (ToolManager) {
-        // force ToolManager to run by injecting it. Without this, ToolManager only runs
-        // when a controller or something else asks for it via DI.
     }]);

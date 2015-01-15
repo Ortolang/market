@@ -80,37 +80,6 @@
             <br/>
         </section>
     </div>
-    <section data-title="{{'PROCESSES.TASKS' | translate}} <span class='badge'>{{tasks.length}}</span>" id="tasks" class="col-md-12" bs-pane>
-        <div class="panel panel-default">
-            <div class="panel-heading" translate="PROCESSES.TASKS"></div>
-            <div ng-if="!tasks || tasks.length == 0" class="panel-body">
-                <p translate="PROCESSES.NO_TASK"></p>
-            </div>
-            <table ng-if="tasks && tasks.length !== 0" class="table table-responsive">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th translate="NAME"></th>
-                    <th translate="DESCRIPTION"></th>
-                    <th translate="PROCESSES.ASSIGNEE"></th>
-                    <th translate="ACTIONS"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="task in tasks">
-                    <td>{{::task.id}}</td>
-                    <td>{{::task.name}}</td>
-                    <td>{{::task.description}}</td>
-                    <td>{{task.assignee}}</td>
-                    <td>
-                        <button class="btn btn-sm btn-default" ng-click="Runtime.claimTask(task)" translate="PROCESSES.CLAIM"></button>
-                        <button class="btn btn-sm btn-success" ng-click="Runtime.completeTask(task)" translate="PROCESSES.COMPLETE_TASK"></button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
     <div data-title="{{'TOOLS.TOOLS' | translate}} <span class='badge'>{{Runtime.activeToolJobsNumber()}}</span>" bs-pane>
         <section id="tool-jobs" class="col-md-12">
             <div class="panel panel-default">
