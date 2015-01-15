@@ -472,6 +472,7 @@ angular.module('ortolangMarketApp')
                     $scope.clickPreview();
                     break;
                 case 'uploadFiles':
+                    // Using $timeout to prevent '$apply already in progress' error
                     $timeout(function () {
                         angular.element('#object-upload-file-select').click();
                     });

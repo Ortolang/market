@@ -8,7 +8,10 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolsCtrl', ['$scope', 'ToolsResource', function ($scope, ToolsResource) {
+    .controller('ToolsCtrl', ['$scope', 'ToolsResource', 'ToolManager', function ($scope, ToolsResource, ToolManager) {
+
+        $scope.toolServerList = ToolManager.getRegistry();
+
         /**
          * Load List of url of available tools
          */
@@ -16,28 +19,6 @@ angular.module('ortolangMarketApp')
             ToolsResource.getToolPluginsList(
                 function (tools) {
                     $scope.toolList = tools.entries;
-                },
-                function (error) {
-                    console.log(error);
-                }
-            );
-            ToolsResource.getToolsList(
-                function (tools) {
-                    $scope.toolServerList = tools.entries;
-                    //angular.forEach (tools.entries, function(tool, key) {
-                    //    // hack until all tools are externalized
-                    //    if ( !angular.isUndefined(tool.url) && tool.url !== null ) {
-                    //        var desc = $resource(tool.url + '/description');
-                    //        desc.get(
-                    //            function (tool) {
-                    //                console.debug(tool);
-                    //            },
-                    //            function (error) {
-                    //                console.log(error);
-                    //            }
-                    //        );
-                    //    }
-                    //});
                 },
                 function (error) {
                     console.log(error);
