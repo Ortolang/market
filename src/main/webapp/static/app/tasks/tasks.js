@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TasksCtrl', ['$rootScope', '$scope', '$modal', '$filter', '$timeout', '$translate', 'Runtime', 'ToolsResource', function ($rootScope, $scope, $modal, $filter, $timeout, $translate, Runtime, ToolsResource) {
+    .controller('TasksCtrl', ['$scope', 'Runtime', function ($scope, Runtime) {
 
         $scope.Runtime = Runtime;
 
