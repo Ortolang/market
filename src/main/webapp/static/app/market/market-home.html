@@ -13,14 +13,70 @@
     </section>
     <br/>
     <section id="redactor-choices" class="row">
-        <div class="col-md-10">
-            <!-- <header>
-                <h3 translate="MARKET.REDACTOR_CHOICES"></h3>
-            </header> -->
-            <div class="flex-container">
+        <div class="col-md-12">
+            <header>
+                <h3>Nouveautés</h3>
+            </header>
+            <div class="row flex-container">
 
-                <div ng-repeat="item in items" class="col-sm-6 col-md-3 flex-container">
-                    <item data-entry="item" template="market/directives/item.html" class="thumbnail market-item flex-container" ng-click="clickItem(item)"></item>
+                <div ng-repeat="item in items" class="col-sm-12 col-md-3 flex-container">
+                    <item data-entry="item" data-template="market/directives/item.html" class="flex-container" ng-click="clickItem(item)"></item>
+                </div>
+
+            </div>
+        </div>
+    </section>
+     <section id="corpus-section" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3>Corpus</h3>
+            </header>
+            <div class="row flex-container">
+
+                <div ng-repeat="item in corpus | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
+                    <item data-entry="item" data-template="market/directives/item.html" data-category="'Corpus'" class="flex-container" ng-click="clickItem(item)"></item>
+                </div>
+
+            </div>
+        </div>
+    </section>
+     <section id="corpus-section" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3>Outils</h3>
+            </header>
+            <div class="row flex-container">
+
+                <div ng-repeat="item in outils | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
+                    <item data-entry="item" data-template="market/directives/item.html" data-category="'Outil'" class="flex-container" ng-click="clickItem(item)"></item>
+                </div>
+
+            </div>
+        </div>
+    </section>
+     <section id="corpus-section" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3>Lexiques</h3>
+            </header>
+            <div class="row flex-container">
+
+                <div ng-repeat="item in lexiques | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
+                    <item data-entry="item" data-template="market/directives/item.html" data-category="'Lexique'" class="flex-container" ng-click="clickItem(item)"></item>
+                </div>
+
+            </div>
+        </div>
+    </section>
+     <section id="corpus-section" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3>Ressources Libres</h3>
+            </header>
+            <div class="row flex-container">
+
+                <div ng-repeat="item in free | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
+                    <item data-entry="item" data-template="market/directives/item.html" data-status="'Libre'" class="flex-container" ng-click="clickItem(item)"></item>
                 </div>
 
             </div>
