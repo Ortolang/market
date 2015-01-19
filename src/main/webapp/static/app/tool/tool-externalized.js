@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
             /**
              * Load chosen plugin informations
              */
-            $scope.loadTool = function () {
+            $scope.loadToolDefinition = function () {
                 ToolsResource.getToolDiffusion({pKey: $routeParams.plName},
                     function (tool) {
                         $scope.tool = tool;
@@ -151,7 +151,7 @@ angular.module('ortolangMarketApp')
             $scope.preview = null;
             $scope.downloadUrl = null;
             $scope.viewLoading = false;
-            $scope.loadTool();
+            $scope.loadToolDefinition();
             $scope.loadConfig();
 
         }]);

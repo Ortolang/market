@@ -97,7 +97,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="job in Runtime.getActiveToolJobs()">
-                        <td>{{::job.name}}</td>
+                        <td>{{::job.toolName}}</td>
                         <td>{{job.status}}</td>
                         <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>
@@ -118,7 +118,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().error}">
-                        <td>{{::job.name}}</td>
+                        <td>{{::job.toolName}}</td>
                         <td>{{::job.status}}</td>
                         <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>

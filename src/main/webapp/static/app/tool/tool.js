@@ -8,41 +8,33 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolCtrl', [ '$scope',
-        '$http',
-        'ToolsResource',
+    .controller('ToolCtrl', [
+        '$scope',
         '$routeParams',
         '$filter',
         'WorkspaceElementResource',
+        'ToolManager',
         '$q',
-        'Url',
-        function ($scope, $http, ToolsResource, $routeParams, $filter, WorkspaceElementResource, $q, Url) {
+        function ($scope, $routeParams, $filter, WorkspaceElementResource, ToolManager, $q) {
+
+            var toolKey = $routeParams.toolKey;
+
             /**
-             * Load chosen plugin informations
+             * Load tool definition
              */
-            $scope.loadTool = function () {
-                ToolsResource.getToolDiffusion({pKey: $routeParams.plName},
-                    function (tool) {
-                        $scope.tool = tool;
-                    },
-                    function (error) {
-                        console.log(error);
-                    });
+            $scope.loadToolDefinition = function () {
+                ToolManager.getTool(toolKey).getDefinition().$promise.then(function (data) {
+                    $scope.tool = data;
+                });
             };
 
             /**
              * Load config JSON form for the tool
-             * @return {*[]}
              */
             $scope.loadConfig = function () {
-                ToolsResource.getConfigDiffusion({pKey: $routeParams.plName},
-                    function (config) {
-                        console.debug(config);
-                        $scope.generateForm(config);
-                    },
-                    function (error) {
-                        console.log(error);
-                    });
+                ToolManager.getTool(toolKey).getExecutionForm().$promise.then(function (config) {
+                    $scope.generateForm(config);
+                });
             };
 
             /**
@@ -91,41 +83,42 @@ angular.module('ortolangMarketApp')
              * Action to perform on submit
              */
             $scope.onSubmit = function () {
-                console.log('form submitted:', $scope.formData);
-                ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
-                    function (response) {
-                        $scope.viewLoading = false;
-                        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
-                        //console.log('reponse invoke:', response);
-                        if (response.status === 'SUCCESS') {
-                            $scope.success = true;
-                            $scope.resultStatus = response.status;
-                            $scope.preview = response.output;
-                            $scope.listFileResult = [];
-                            angular.forEach(response.outputFilePath, function (file, fileName) {
-                                $scope.listFileResult.push(
-                                    {
-                                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
-                                        resFileName : fileName
-                                    }
-                                );
-                            });
-                        } else {
-                            $scope.success = false;
-                            $scope.resultStatus = response.status;
-                            $scope.preview = response.status;
-                        }
-                    });
+                ToolManager.getTool(toolKey).createJob($scope.formData).$promise.then(function (response) {
+                    console.log(response);
+                });
+                //console.log('form submitted:', $scope.formData);
+                //ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
+                //    function (response) {
+                //        $scope.viewLoading = false;
+                //        $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
+                //        //console.log('reponse invoke:', response);
+                //        if (response.status === 'SUCCESS') {
+                //            $scope.success = true;
+                //            $scope.resultStatus = response.status;
+                //            $scope.preview = response.output;
+                //            $scope.listFileResult = [];
+                //            angular.forEach(response.outputFilePath, function (file, fileName) {
+                //                $scope.listFileResult.push(
+                //                    {
+                //                        downloadUrl : Url.urlBase() + '/rest/tools/' + $routeParams.plName + '/download?path=' + file + '&name=' + fileName,
+                //                        resFileName : fileName
+                //                    }
+                //                );
+                //            });
+                //        } else {
+                //            $scope.success = false;
+                //            $scope.resultStatus = response.status;
+                //            $scope.preview = response.status;
+                //        }
+                //    });
             };
 
-
             // INIT :
-            $scope.plName = $routeParams.plName;
-            $scope.tool = null;
-            $scope.preview = null;
+            $scope.tool = undefined;
+            $scope.preview = undefined;
             $scope.downloadUrl = null;
             $scope.viewLoading = false;
-            $scope.loadTool();
+            $scope.loadToolDefinition();
             $scope.loadConfig();
 
         }]);

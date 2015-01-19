@@ -8,9 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['ToolsResource', function (ToolsResource) {
-
-        var registry = [];
+    .factory('ToolManager', ['$resource', '$q', 'ToolsResource', function ($resource, $q, ToolsResource) {
 
         // ---
         // ORTOLANG TOOL DEFINITION
@@ -29,6 +27,34 @@ angular.module('ortolangMarketApp')
                     this[key] = value;
                 }
             }, this);
+
+            this.resource = $resource(this.url, {}, {
+                getDefinition: {
+                    url: this.url + '/definition',
+                    method: 'GET'
+                },
+                getExecutionForm: {
+                    url: this.url + '/execution-form',
+                    method: 'GET',
+                    isArray: true
+                },
+                getJobs: {
+                    url: this.url + '/jobs',
+                    method: 'GET'
+                },
+                createJob: {
+                    url: this.url + '/jobs',
+                    method: 'POST',
+                    transformRequest: function (data) {
+                        return $.param(data);
+                    },
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                },
+                hasToken: {
+                    url: this.url + '/token',
+                    method: 'GET'
+                }
+            });
         }
 
         // Methods
@@ -36,6 +62,10 @@ angular.module('ortolangMarketApp')
 
             getId: function () {
                 return this.id;
+            },
+
+            getKey: function () {
+                return this.key;
             },
 
             getName: function () {
@@ -48,6 +78,39 @@ angular.module('ortolangMarketApp')
 
             getUrl: function () {
                 return this.url;
+            },
+
+            getResource: function () {
+                return this.resource;
+            },
+
+            getDefinition: function () {
+                return this.resource.getDefinition();
+            },
+
+            getExecutionForm: function () {
+                return this.resource.getExecutionForm();
+            },
+
+            getJobs: function () {
+                return this.resource.getJobs();
+            },
+
+            createJob: function (formData) {
+                return this.resource.createJob({}, formData);
+            },
+
+            hasToken: function () {
+                var deferred = $q.defer();
+                this.resource.hasToken().$promise.then(function (url) {
+                    if (url) {
+                        console.log(url);
+                        deferred.resolve(url);
+                    } else {
+                        deferred.resolve(true);
+                    }
+                });
+                return deferred.promise;
             }
         };
 
@@ -55,43 +118,46 @@ angular.module('ortolangMarketApp')
         // MANAGER.
         // ---
 
+        var registry = {};
+
         function getRegistry() {
             return registry;
         }
 
         function register(tool) {
-            var i = 0;
-            for (i; i < registry.length; i++) {
-                if (registry[i].id === tool.getId()) {
-                    console.error('A tool with the id "%s" has already been registered', tool.getId());
-                    return;
-                }
+            if (registry[tool.getKey()]) {
+                console.error('A tool with the id "%s" has already been registered', tool.getKey());
+                return;
             }
-            return registry.push(tool);
+            console.log(tool);
+            registry[tool.getKey()] = tool;
         }
 
-        function getToolList() {
+        function populateToolList() {
             ToolsResource.getToolsList(
                 function (tools) {
                     angular.forEach(tools.entries, function (tool) {
-                        console.log(new OrtolangTool(tool));
                         register(new OrtolangTool(tool));
                     });
-                    console.log(registry);
                 },
                 function (error) {
-                    console.error('An issue occured when trying to get the tool list: %o', error);
+                    console.error('An issue occurred when trying to get the tool list: %o', error);
                 }
             );
         }
 
+        function getTool(toolKey) {
+            return registry[toolKey];
+        }
+
         function init() {
-            getToolList();
+            populateToolList();
         }
 
         init();
 
         return {
-            getRegistry: getRegistry
+            getRegistry: getRegistry,
+            getTool: getTool
         };
     }]);
