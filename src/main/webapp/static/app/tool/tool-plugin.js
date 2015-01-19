@@ -2,27 +2,27 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:ToolPluginCtrl
+ * @name ortolangMarketApp.controller:PluginctrlCtrl
  * @description
- * # ToolPluginCtrl
+ * # PluginctrlCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolPluginCtrl', [ '$scope',
+    .controller('ToolCtrl', [ '$scope',
         '$http',
-        'PluginsResource',
+        'ToolsResource',
         '$routeParams',
         'formlyTemplate',
         '$filter',
         'WorkspaceElementResource',
         '$q',
         'Url',
-        function ($scope, $http, PluginsResource, $routeParams, formlyTemplate, $filter, WorkspaceElementResource, $q, Url) {
+        function ($scope, $http, ToolsResource, $routeParams, formlyTemplate, AuthService, $filter, WorkspaceElementResource, $q, Url) {
             /**
              * Load chosen plugin informations
              */
-            $scope.loadTool = function () {
-                PluginsResource.getToolDiffusion({pKey: $routeParams.plName},
+            $scope.loadToolDefinition = function () {
+                ToolsResource.getToolDiffusion({pKey: $routeParams.plName},
                     function (tool) {
                         $scope.tool = tool;
                     },
@@ -36,8 +36,9 @@ angular.module('ortolangMarketApp')
              * @return {*[]}
              */
             $scope.loadConfig = function () {
-                PluginsResource.getConfigDiffusion({pKey: $routeParams.plName},
+                ToolsResource.getConfigDiffusion({pKey: $routeParams.plName},
                     function (config) {
+                        console.debug(config);
                         $scope.generateForm(config);
                     },
                     function (error) {
@@ -67,6 +68,30 @@ angular.module('ortolangMarketApp')
                 deferred.resolve();
             };
 
+            /**
+             * Initialise the form from the JSON config
+             * @param configJSON
+             */
+            $scope.initialiseFormConfig = function () {
+                // parcours du json pour initialiser le formulaire : les éventuels dataobject sont séléctionnés dans le workspace avec un typeahead
+                //var objectsFieldList = $filter('filter')(configJSON, {'type': 'dataobject'});
+                //if (objectsFieldList.length > 0) {
+                //    $scope.listAvailableDataObject = [];
+                //    if ($scope.authenticated) {
+                //        AuthService.getWorkspaces($scope.currentUser.id)
+                //            .then(function (wks) {
+                //                $scope.pushDataObjects(wks, function () {
+                //                    angular.forEach(configJSON, function (field, index) {
+                //                        if (field.type === 'dataobject') {
+                //                            configJSON[index].availableData = $scope.listAvailableDataObject;
+                //                        }
+                //                    });
+                //                });
+                //            });
+                //    }
+                //}
+            };
+
 
             /**
              * Generate the form
@@ -85,19 +110,19 @@ angular.module('ortolangMarketApp')
                     //default: Submit
                     submitCopy: 'Save and Run'
                 };
+                console.log('$$childHead', $scope.$$childHead);
             };
 
             /**
              * Action to perform on submit
              */
             $scope.onSubmit = function () {
-                $scope.viewLoading = true;
-                //console.log('form submitted:', $scope.formData);
-                PluginsResource.postConfigDiffusion({pKey: $routeParams.plName}, $scope.formData,
+                console.log('form submitted:', $scope.formData);
+                ToolsResource.postConfig({pKey: $routeParams.plName}, $scope.formData,
                     function (response) {
                         $scope.viewLoading = false;
-                        //console.log('reponse invoke:', response);
                         $scope.log = '##' + $filter('date')(response.start, 'mediumTime') + '<br>' + response.log + '<br>##' + $filter('date')(response.stop, 'mediumTime');
+                        //console.log('reponse invoke:', response);
                         if (response.status === 'SUCCESS') {
                             $scope.success = true;
                             $scope.resultStatus = response.status;
@@ -126,7 +151,7 @@ angular.module('ortolangMarketApp')
             $scope.preview = null;
             $scope.downloadUrl = null;
             $scope.viewLoading = false;
-            $scope.loadTool();
+            $scope.loadToolDefinition();
             $scope.loadConfig();
 
         }]);

@@ -62,12 +62,7 @@ angular
                 controller: 'ToolsCtrl',
                 requiresAuthentication: true
             })
-            .when('/tools/plugin/:plName', {
-                templateUrl: 'tool/tool-plugin.html',
-                controller: 'ToolPluginCtrl',
-                requiresAuthentication: true
-            })
-            .when('/tools/:plName', {
+            .when('/tools/:toolKey', {
                 templateUrl: 'tool/tool.html',
                 controller: 'ToolCtrl',
                 requiresAuthentication: true

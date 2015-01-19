@@ -6,25 +6,25 @@
         </a>
     </div>
 
-    <!-- when user is logged -->
-    <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="authenticated" ng-cloak>
-        <li ng-click="changeLanguage('fr')" ng-if="currentLanguage !== 'fr'" class="language">FR</li>
-        <li ng-click="changeLanguage('en')" ng-if="currentLanguage !== 'en'" class="language">EN</li>
+    <ul class="nav navbar-top-links navbar-right ng-cloak" ng-cloak>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user fa-fw"></i> {{currentUser.name}} <i class="fa fa-caret-down"></i>
+                <span class="fa fa-globe"></span> {{'NAV.LANGUAGE' | translate}} <span class="fa fa-caret-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li ng-click="logout()"><div><i class="fa fa-sign-out fa-fw"></i> {{'NAV.LOG_OUT' | translate}}</div></li>
+                <li ng-click="changeLanguage('en')" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                <li ng-click="changeLanguage('fr')" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
             </ul>
         </li>
-    </ul>
-
-    <!-- when user is not logged (guest) -->
-    <ul class="nav navbar-top-links navbar-right ng-cloak" ng-if="!authenticated" ng-cloak>
-        <li ng-click="changeLanguage('fr')" ng-if="currentLanguage !== 'fr'" class="language">FR</li>
-        <li ng-click="changeLanguage('en')" ng-if="currentLanguage !== 'en'" class="language">EN</li>
-        <li><a ng-click="register()"><i class="fa fa-bookmark fa-fw"></i> {{'NAV.REGISTER' | translate}}</a></li>
-        <li><a ng-click="login()"><i class="fa fa-user fa-fw"></i> {{'LOG_IN' | translate}}</a></li>
+        <li class="dropdown" ng-if="authenticated">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <span class="fa fa-user fa-fw"></span> {{currentUser.name}} <span class="fa fa-caret-down"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
+            </ul>
+        </li>
+        <li ng-if="!authenticated"><a ng-click="register()"><span class="fa fa-bookmark fa-fw"></span> {{'NAV.REGISTER' | translate}}</a></li>
+        <li ng-if="!authenticated"><a ng-click="login()"><span class="fa fa-user fa-fw"></span> {{'LOG_IN' | translate}}</a></li>
     </ul>
 </nav>

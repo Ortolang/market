@@ -18,6 +18,11 @@ angular.module('ortolangMarketApp')
             SETTINGS: 'Paramètres',
             LOG_OUT: 'Déconnexion',
             PROFILE: 'Profil',
-            REGISTER: 'S\'enregistrer'
+            REGISTER: 'S\'enregistrer',
+            LANGUAGE: {
+                LANGUAGE: 'Langue',
+                FRENCH: 'Français',
+                ENGLISH: 'Anglais'
+            }
         }
     });

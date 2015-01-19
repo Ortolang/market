@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Runtime', ['$rootScope', '$filter', '$timeout', '$modal', '$alert', '$translate', 'FormResource', 'RuntimeResource', 'ToolsResource', 'Url', function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolsResource, Url) {
+    .factory('Runtime', ['$rootScope', '$filter', '$timeout', '$modal', '$alert', '$translate', 'FormResource', 'RuntimeResource', 'ToolManager', 'Url', function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolManager, Url) {
 
         var translationsStartProcess,
             translationsCompleteTask,
@@ -224,35 +224,41 @@ angular.module('ortolangMarketApp')
         //          Tools          //
         // *********************** //
 
-        function createToolJob(tool, data) {
-            ToolsResource.createToolJob({pKey: tool}, data, function () {
-                forceRefresh();
-            });
-        }
-
         function refreshTools() {
-
-            // TODO function that look diffusion to seek the tool to poll
-            ToolsResource.toolJobs({pKey: 'tika'}).$promise.then(function (data) {
-                console.debug('data:', data);
-                $rootScope.toolJobs = data.entries;
-                completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
-                activeToolJobs = getActiveToolJobs();
-                $rootScope.activeToolJobsNbr = activeToolJobs.length;
-                if ($rootScope.activeToolJobsNbr === 0) {
-                    $timeout.cancel(processesTimeout);
-                    $timeout.cancel(tasksTimeout);
-                    $timeout.cancel(toolJobsTimeout);
-                }
-                if ($rootScope.selectedProcess) {
-                    $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
-                }
-            }, function (error) {
-                console.error('An error occurred while trying to refresh the tool jobs', error);
-                $timeout.cancel(toolJobsTimeout);
+            $rootScope.toolJobs = [];
+            angular.forEach(ToolManager.getRegistry(), function (tool) {
+                ToolManager.getTool(tool.getKey()).getJobs().$promise.then(function (data) {
+                    angular.forEach(data.entries, function (job) {
+                        job.toolName = tool.getName();
+                    });
+                    $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
+                });
             });
-            toolJobsTimeout = $timeout(refreshTools, timeout);
+            activeToolJobs = getActiveToolJobs();
+            $rootScope.activeToolJobsNbr = activeToolJobs.length;
+            //if ($rootScope.activeToolJobsNbr === 0) {
+            //    $timeout.cancel(toolJobsTimeout);
+            //}
 
+            //ToolsResource.toolJobs({pKey: 'tika'}).$promise.then(function (data) {
+            //    console.debug('data:', data);
+            //    $rootScope.toolJobs = data.entries;
+            //    completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
+            //    activeToolJobs = getActiveToolJobs();
+            //    $rootScope.activeToolJobsNbr = activeToolJobs.length;
+            //    if ($rootScope.activeToolJobsNbr === 0) {
+            //        $timeout.cancel(processesTimeout);
+            //        $timeout.cancel(tasksTimeout);
+            //        $timeout.cancel(toolJobsTimeout);
+            //    }
+            //    if ($rootScope.selectedProcess) {
+            //        $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
+            //    }
+            //}, function (error) {
+            //    console.error('An error occurred while trying to refresh the tool jobs', error);
+            //    $timeout.cancel(toolJobsTimeout);
+            //});
+            toolJobsTimeout = $timeout(refreshTools, timeout);
         }
 
 
@@ -396,7 +402,6 @@ angular.module('ortolangMarketApp')
             claimTask: claimTask,
             completeTask: completeTask,
             // Tools
-            createToolJob: createToolJob,
             selectToolJob: selectToolJob,
             activeToolJobsNumber: activeToolJobNumber,
             getActiveToolJobs: getActiveToolJobs,
