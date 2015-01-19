@@ -89,7 +89,7 @@ angular.module('ortolangMarketApp')
             },
 
             getExecutionForm: function () {
-                return this.resource.getExecutionForm();
+                return this.resource.getExecutionForm({language:$translate.use()});
             },
 
             getJobs: function () {

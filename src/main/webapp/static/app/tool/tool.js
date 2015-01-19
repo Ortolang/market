@@ -15,7 +15,8 @@ angular.module('ortolangMarketApp')
         'WorkspaceElementResource',
         'ToolManager',
         '$rootScope',
-        function ($scope, $routeParams, $filter, WorkspaceElementResource, ToolManager, $rootScope) {
+        '$translate',
+        function ($scope, $routeParams, $filter, WorkspaceElementResource, ToolManager, $rootScope, $translate) {
 
             var toolKey = $routeParams.toolKey;
 
@@ -47,9 +48,8 @@ angular.module('ortolangMarketApp')
                 $scope.formOptions = {
                     uniqueFormId: 'toolConfig',
                     hideSubmit: false,
-                    submitCopy: 'Save and Run'
+                    submitCopy: $scope.saveBt
                 };
-                console.log('$$childHead', $scope.$$childHead);
             };
 
 
@@ -75,6 +75,11 @@ angular.module('ortolangMarketApp')
             // INIT :
 
             $scope.init = function(){
+                $translate([
+                    'TOOLS.RUN_TOOL'
+                ]).then(function (translations) {
+                    $scope.saveBt = translations['TOOLS.RUN_TOOL'];
+                });
                 $scope.tool = undefined;
                 $scope.preview = undefined;
                 $scope.downloadUrl = null;

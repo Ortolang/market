@@ -24,6 +24,7 @@ angular.module('ortolangMarketApp')
             ABORTED_TOOL_PROCESSES: 'Interrupted tool processes with errors',
             NO_COMPLETED_TOOL_PROCESS: 'No completed tool process',
             PREVIEW_TITLE: 'Preview of the result',
-            LINK_LIST_TITLE: 'Generated file(s)'
+            LINK_LIST_TITLE: 'Generated file(s)',
+            RUN_TOOL: 'Save and Run'
         }
     });
