@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', 'ToolsResource', function ($resource, $q, ToolsResource) {
+    .factory('ToolManager', ['$resource', '$q', 'ToolsResource', '$translate', function ($resource, $q, ToolsResource, $translate) {
 
         // ---
         // ORTOLANG TOOL DEFINITION
@@ -85,7 +85,7 @@ angular.module('ortolangMarketApp')
             },
 
             getDefinition: function () {
-                return this.resource.getDefinition();
+                return this.resource.getDefinition({language:$translate.use()});
             },
 
             getExecutionForm: function () {
@@ -149,6 +149,11 @@ angular.module('ortolangMarketApp')
         function getTool(toolKey) {
             return registry[toolKey];
         }
+
+
+        // *********************** //
+        //           Init          //
+        // *********************** //
 
         function init() {
             populateToolList();
