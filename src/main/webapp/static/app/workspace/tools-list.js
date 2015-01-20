@@ -40,8 +40,16 @@ angular.module('ortolangMarketApp')
 
         // Tools list //
 
-        $scope.selectTool = function(toolName) {
-            $scope.selectedTool = toolName;
+        $scope.selectTool = function(tool) {
+            $scope.selectedTool = tool;
+        };
+
+        $scope.resetSelectedTool = function() {
+            $scope.selectedTool = undefined;
+        };
+
+        $scope.hasToolSelected = function() {
+            return $scope.selectedTool !== undefined;
         };
 
 
@@ -63,10 +71,10 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.tools = [
-                {id:'tika', label:'Tika'},
-                {id: 'sample-tool', label: 'Sample tool'}
+                {id: 'tika', name: 'Tika', description: 'Detects and extracts metadata and text content.'},
+                {id: 'sample-tool', name: 'Sample tool', description: 'Dumb tool for demonstration purpose.'}
             ];
-            $scope.selectedTool = 'tika';
+            $scope.selectedTool = undefined;
 
         }
 

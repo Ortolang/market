@@ -117,37 +117,6 @@
                         </button>
                     </div>
 
-                    <div class="btn-group">
-                        <button ng-if="browserService.canExecuteTool" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.TOOLS' | translate}}" bs-tooltip>
-                            <span ng-class="icons.browser.tools"></span>
-                        </button>
-                        <ul ng-if="browserService.canExecuteTool" class="dropdown-menu dropdown-menu-right dropdown-menu-tool" role="menu">
-                            <li ng-click="showToolsList()">
-                                <div class="media">
-                                  <!-- <a class="pull-left">
-                                    <img class="media-object" alt="...">
-                                  </a> -->
-                                  <div class="media-body">
-                                    <h4 class="media-heading">Tika</h4>
-                                    Detects and extracts metadata and text content.
-                                  </div>
-                                </div>
-                            </li>
-                            <li ng-click="showToolsList()">
-                                <div class="media">
-                                  <!-- <a class="pull-left">
-                                    <img alt="...">
-                                  </a> -->
-                                  <div class="media-body">
-                                    <h4 class="media-heading">Sample tool</h4>
-                                    Dumb tool for demonstration purpose.
-                                  </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-
                     <span ng-show="!hasOnlyParentSelected()" class="divider"></span>
 
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
