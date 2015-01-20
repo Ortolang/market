@@ -12,30 +12,31 @@
         </div>
     </section>
     <br/>
+
     <section id="redactor-choices" class="row">
         <div class="col-md-12">
             <header>
                 <h3>Nouveautés</h3>
             </header>
-            <div class="row flex-container">
+            <div class="flex-row">
 
-                <div ng-repeat="item in items" class="col-sm-12 col-md-3 flex-container">
-                    <item data-entry="item" data-template="market/directives/item.html" class="flex-container" ng-click="clickItem(item)"></item>
-                </div>
+                    <item class="flex-column contour market-item" ng-repeat="item in items" data-entry="item" data-template="market/directives/item.html" ng-click="clickItem(item)"></item>
+                
 
             </div>
         </div>
     </section>
+
+    
      <section id="corpus-section" class="row">
         <div class="col-md-12">
             <header>
                 <h3>Corpus</h3>
             </header>
-            <div class="row flex-container">
+            <div class="flex-row">
 
-                <div ng-repeat="item in corpus | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
-                    <item data-entry="item" data-template="market/directives/item.html" data-category="'Corpus'" class="flex-container" ng-click="clickItem(item)"></item>
-                </div>
+                    <item class="flex-column contour market-item" ng-repeat="item in corpus | orderBy:'rang':false" data-entry="item" data-template="market/directives/item.html" data-category="'Corpus'" ng-click="clickItem(item)"></item>
+                
 
             </div>
         </div>
@@ -45,12 +46,10 @@
             <header>
                 <h3>Outils</h3>
             </header>
-            <div class="row flex-container">
+            <div class="flex-row">
 
-                <div ng-repeat="item in outils | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
-                    <item data-entry="item" data-template="market/directives/item.html" data-category="'Outil'" class="flex-container" ng-click="clickItem(item)"></item>
-                </div>
-
+                    <item class="flex-column contour market-item" ng-repeat="item in outils | orderBy:'rang':false" data-entry="item" data-template="market/directives/item.html" data-category="'Outil'" ng-click="clickItem(item)"></item>
+                
             </div>
         </div>
     </section>
@@ -59,12 +58,10 @@
             <header>
                 <h3>Lexiques</h3>
             </header>
-            <div class="row flex-container">
+            <div class="flex-row">
 
-                <div ng-repeat="item in lexiques | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
-                    <item data-entry="item" data-template="market/directives/item.html" data-category="'Lexique'" class="flex-container" ng-click="clickItem(item)"></item>
-                </div>
-
+                    <item class="flex-column contour market-item" ng-repeat="item in lexiques | orderBy:'rang':false" data-entry="item" data-template="market/directives/item.html" data-category="'Lexique'" ng-click="clickItem(item)"></item>
+               
             </div>
         </div>
     </section>
@@ -73,12 +70,8 @@
             <header>
                 <h3>Ressources Libres</h3>
             </header>
-            <div class="row flex-container">
-
-                <div ng-repeat="item in free | orderBy:'rang':false" class="col-sm-6 col-md-3 flex-container">
-                    <item data-entry="item" data-template="market/directives/item.html" data-status="'Libre'" class="flex-container" ng-click="clickItem(item)"></item>
-                </div>
-
+            <div class="flex-row">
+                <item class="flex-column contour market-item" ng-repeat="item in free | orderBy:'rang':false"data-entry="item" data-template="market/directives/item.html" data-status="'Libre'" ng-click="clickItem(item)"></item>
             </div>
         </div>
     </section>
