@@ -92,6 +92,7 @@
                     <tr>
                         <th translate="NAME"></th>
                         <th translate="PROCESSES.STATE"></th>
+                        <th translate="START"></th>
                         <th translate="ACTIONS"></th>
                     </tr>
                     </thead>
@@ -99,6 +100,7 @@
                     <tr ng-repeat="job in Runtime.getActiveToolJobs()">
                         <td>{{::job.toolName}}</td>
                         <td>{{job.status}}</td>
+                        <td>{{job.start | date:'medium'}}</td>
                         <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>
                     </tbody>

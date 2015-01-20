@@ -53,6 +53,10 @@ angular.module('ortolangMarketApp')
                 hasToken: {
                     url: this.url + '/token',
                     method: 'GET'
+                },
+                getLog: {
+                    url: this.url + '/jobs/:jobId/log',
+                    method: 'GET'
                 }
             });
         }
@@ -111,6 +115,10 @@ angular.module('ortolangMarketApp')
                     }
                 });
                 return deferred.promise;
+            },
+
+            getLog: function (jobId) {
+                return this.resource.getLog({jobId:jobId});
             }
         };
 

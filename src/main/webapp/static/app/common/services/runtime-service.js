@@ -30,9 +30,9 @@ angular.module('ortolangMarketApp')
             toolJobStatus = {
                 pending: 'PENDING',
                 running: 'RUNNING',
-                completed: 'COMPLETED',
+                completed: 'SUCCESS',
                 error: 'ERROR',
-                canceled: 'CANCELED'
+                canceled: 'ABORTED'
             },
             timeout = 5000,
             activeProcesses = [],
@@ -235,7 +235,9 @@ angular.module('ortolangMarketApp')
                 });
             });
             activeToolJobs = getActiveToolJobs();
+            completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
             $rootScope.activeToolJobsNbr = activeToolJobs.length;
+
             //if ($rootScope.activeToolJobsNbr === 0) {
             //    $timeout.cancel(toolJobsTimeout);
             //}
