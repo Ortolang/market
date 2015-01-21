@@ -151,7 +151,6 @@
 
         <div class="form-group">
             <label>Langues concernés par cet objet </label>
-            <!-- <input type="text" name="language" ng-model="md['http://www.ortolang.fr/ontology/language']" class="form-control"> -->
             <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/language']" name="'language'" placeholder="'Langue'"></div>
         </div>
 
@@ -161,20 +160,45 @@
 
         <div class="form-group">
             <label>Languages de programmation </label>
-            <!-- <input type="text" name="programmingLanguage" ng-model="md['http://www.ortolang.fr/ontology/programmingLanguage']" class="form-control"> -->
             <div auto-complete model="md['http://www.ortolang.fr/ontology/programmingLanguage']" name="'programmingLanguage'" placeholder="'Language de programmation'"></div>
         </div>
 
         <div class="form-group">
             <label>Systèmes d'exploitation compatibles </label>
-            <!-- <input type="text" name="opearatingSystem" ng-model="md['http://www.ortolang.fr/ontology/opearatingSystem']" class="form-control"> -->
             <div auto-complete model="md['http://www.ortolang.fr/ontology/opearatingSystem']" name="'opearatingSystem'" placeholder="'Système d\'exploitation'"></div>
         </div>
 
         <div class="form-group">
-            <label>Catégorie d'outil </label>
-            <input type="text" name="toolType" ng-model="md['http://www.ortolang.fr/ontology/toolType']" class="form-control">
+            <label>Type de support </label>
+            <select name="toolSupport" ng-model="md['http://www.ortolang.fr/ontology/toolSupport']" class="form-control">
+                <option value=""></option>
+                <option value="Software">Software</option>
+                <option value="Hardware">Hardware</option>
+            </select>
         </div>
+
+        <div class="form-group">
+            <label>Langues traitées par l'outil </label>
+            <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/toolLanguage']" name="'toolLanguage'" placeholder="'Langue'"></div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Aide </label>
+            <textarea name="toolHelp" ng-model="md['http://www.ortolang.fr/ontology/toolHelp']" class="form-control"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Identifiant de l'outil en ligne </label>
+            <input type="text" name="toolId" ng-model="md['http://www.ortolang.fr/ontology/toolId']" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Adresse de l'outil en ligne </label>
+            <input type="text" name="toolUrl" ng-model="md['http://www.ortolang.fr/ontology/toolUrl']" class="form-control">
+        </div>
+
+
     </div>
 </div>
 

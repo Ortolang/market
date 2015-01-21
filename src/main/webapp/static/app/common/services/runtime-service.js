@@ -370,12 +370,12 @@ angular.module('ortolangMarketApp')
         function initTranslations() {
             $translate([
                 'PROCESSES.START_PROCESS',
-                'PROCESSES.COMPLETE_TASK',
+                'TASKS.COMPLETE_TASK',
                 'PROCESSES.PROCESS',
                 'PROCESSES.JUST_COMPLETED'
             ]).then(function (translations) {
                 translationsStartProcess = translations['PROCESSES.START_PROCESS'];
-                translationsCompleteTask = translations['PROCESSES.COMPLETE_TASK'];
+                translationsCompleteTask = translations['TASKS.COMPLETE_TASK'];
                 translationsProcess = translations['PROCESSES.PROCESS'];
                 translationsJustCompleted = translations['PROCESSES.JUST_COMPLETED'];
             });

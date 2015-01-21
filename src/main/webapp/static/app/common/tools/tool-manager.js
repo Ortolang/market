@@ -150,7 +150,6 @@ angular.module('ortolangMarketApp')
                 console.error('A tool with the id "%s" has already been registered', tool.getKey());
                 return;
             }
-            console.log(tool);
             registry[tool.getKey()] = tool;
         }
 

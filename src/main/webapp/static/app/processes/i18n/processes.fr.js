@@ -16,16 +16,11 @@ angular.module('ortolangMarketApp')
             COMPLETED_PROCESSES: 'Processus complétés',
             ABORTED_PROCESSES: 'Processus avortés',
             NO_COMPLETED_PROCESS: 'Pas de processus complétés',
-            TASKS: 'Tâches',
-            NO_TASK: 'Pas de tâches',
             STATE: 'État',
             ACTIVITY: 'Activité',
             VIEW_LOG: 'Voir le log',
             VIEW_RESULT: 'Voir le résultat',
-            ASSIGNEE: 'Assignée à',
-            CLAIM: 'Se l\'assigner',
             START_PROCESS: 'Démarrer le processus',
-            COMPLETE_TASK: 'Compléter la tâche',
             SHOW_ALL: 'Tout afficher',
             JUST_COMPLETED: '{{name}} vient de se terminer'
         }

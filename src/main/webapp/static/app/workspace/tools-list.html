@@ -48,7 +48,7 @@
                                         <dt translate="DESCRIPTION"></dt>
                                         <dd>{{selectedTool.description}}</dd>
                                         <dt translate="TOOLS.DOCUMENTATION"></dt>
-                                        <dd ng-bind-html='selectedTool.documentation'></dd>
+                                        <dd ng-bind-html="selectedTool.meta['http://www.ortolang.fr/ontology/toolHelp']"></dd>
                                     </dl>
                                 </div>
                             <!-- </div> -->
