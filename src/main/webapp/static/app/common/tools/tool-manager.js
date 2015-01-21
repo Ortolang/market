@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                     method: 'GET'
                 },
                 getAuthStatus: {
-                    url: this.url + '/client/auth',
+                    url: this.url + '/client/grant',
                     method: 'GET'
                 },
                 getLog: {
