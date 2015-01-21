@@ -1,0 +1,37 @@
+<div class="aside-backdrop am-fade toolsList-backdrop" ng-show="isShow()" ng-click="hide()"></div>
+<div class="aside right am-fade-and-slide-right toolsList" ng-show="isShow()" tabindex="-1" role="dialog">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="toolsListHeader">
+                <button type="button" class="close" ng-click="hide()">&times;</button>
+                <h4 class="aside-title">Liste des outils</h4>
+            </div>
+            <div id="browser-toolbar" role="toolbar">
+                <div class="btn-toolbar" style="margin-left: 10px; float: left;">
+                    <div class="btn-group ">
+                        <buton class="btn btn-success" ng-click="submitMetadataForm()">
+                            <span ng-class="icons.browser.publish"></span> Executer
+                        </buton>
+                    </div>
+                </div>
+            </div>
+            <div id="toolsListBody" class="aside-body">
+                <div style="width: 700px; height: 100%" class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3" style="border-right: 1px solid #eee;">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li ng-repeat="tool in tools" ng-class="{active : selectedTool==tool.id}">
+                                        <a href="" ng-click="selectTool(tool.id)" ng-bind="tool.label"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-9" ng-show="selectedTool=='tika'">
+                                <div ng-include="'tool/tool.html'"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
