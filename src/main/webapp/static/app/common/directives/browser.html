@@ -110,6 +110,13 @@
                         </ul>
                     </div>
 
+
+                    <div ng-if="browserService.canExecuteTool" class="btn-group">
+                        <button class="btn btn-default" ng-click="showToolsList()" data-title="{{'BROWSER.TOOLS' | translate}}" bs-tooltip>
+                            <span ng-class="icons.browser.tools"></span>
+                        </button>
+                    </div>
+
                     <span ng-show="!hasOnlyParentSelected()" class="divider"></span>
 
                     <div ng-show="!hasOnlyParentSelected()" class="btn-group">
@@ -303,6 +310,8 @@
     </div>
 
     <div ng-show="!browserService.isFileSelect" ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
+
+    <div ng-show="browserService.canExecuteTool" ng-include="'workspace/tools-list.html'" ng-controller="ToolsListCtrl"></div>
 
     <div ng-include="'workspace/metadata-preview.html'"></div>
 

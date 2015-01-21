@@ -51,6 +51,7 @@ angular.module('ortolangMarketApp')
             COPY_TO_CLIPBOARD: 'Copier',
             MEMBERS: 'Membres',
             HISTORY: 'Historique',
+            TOOLS: 'Outils',
             SNAPSHOT: 'Sauvegarder l\'état de l\'espace',
             CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
             CREATE_PRESENTATION_METADATA: 'Créer les métadonées de présentation',

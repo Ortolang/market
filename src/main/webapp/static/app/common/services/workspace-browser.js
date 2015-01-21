@@ -45,6 +45,7 @@ angular.module('ortolangMarketApp')
             hasBreadcrumb: true,
             defaultViewMode: 'line',
             canSwitchViewMode: true,
+            canExecuteTool: true,
             displayAsideInfo: true,
             displayAsideWorkspaceList: true,
             isFileSelect: false

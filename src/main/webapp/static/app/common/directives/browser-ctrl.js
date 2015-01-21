@@ -485,6 +485,16 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+
+            // ***************** //
+            //       Tools       //
+            // ***************** //
+
+            $scope.showToolsList = function () {
+                $rootScope.$broadcast('tools-list-show');
+            };
+
+
             // *********************** //
             //       Publication       //
             // *********************** //

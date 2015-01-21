@@ -1,5 +1,4 @@
-
-    <img ng-if="image == undefined" holder-js="holder.js/242x200/custom/text:{{'NO_IMAGE_PROVIDED' | translate}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}" class="thumbnail"/>
+<img ng-if="image == undefined" holder-js="holder.js/242x200/custom/text:{{'NO_IMAGE_PROVIDED' | translate}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}" class="thumbnail"/>
     <img ng-if="image" ng-src="{{image}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
     <div class="caption">
         <h4 ng-bind="meta['http://purl.org/dc/elements/1.1/title']" class="title"></h4>

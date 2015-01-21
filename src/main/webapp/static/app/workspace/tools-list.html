@@ -1,0 +1,60 @@
+<div class="aside-backdrop am-fade toolsList-backdrop" ng-show="isShow()" ng-click="hide()"></div>
+<div class="aside right am-fade-and-slide-right toolsList" ng-show="isShow()" tabindex="-1" role="dialog">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="toolsListHeader">
+                <button type="button" class="close" ng-click="hide()">&times;</button>
+                <h4 class="aside-title">Liste des outils</h4>
+            </div>
+            <div id="browser-toolbar" role="toolbar">
+                <div class="btn-toolbar" style="margin-left: 10px; float: left;">
+                    
+                    <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
+                        <a ng-click="resetSelectedTool()" class="btn"><i class="fa fa-chevron-left"></i> {{'TOOLS.BACK_TO_TOOL_LIST' | translate}}</a>
+                    </div>
+                </div>
+                <div class="btn-toolbar btn-toolbar-right" style="margin-right: 10px;">
+                    
+                    <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
+                        <buton class="btn btn-primary" ng-click="submitMetadataForm()">
+                            <span ng-class="icons.browser.publish"></span> Executer
+                        </buton>
+                    </div>
+                </div>
+            </div>
+            <div id="toolsListBody" class="aside-body" style="width: 700px; height: 100%">
+                <div class="row" style="width: 1400px">
+                        <div style="width: 700px" class="am-fade-and-slide-left col-md-6" ng-show="!hasToolSelected()">
+                            <!-- <div class="col-md-12"> -->
+
+                                <div ng-repeat="tool in tools" class="media tool-item" ng-click="selectTool(tool)">
+                                  <a class="pull-left">
+                                    <span ng-class="icons.browser.tools" class="fa-4x"/>
+                                  </a>
+                                  <div class="media-body">
+                                    <h4 class="media-heading" ng-bind="tool.name"></h4>
+                                    <p ng-bind="tool.description"></p>
+                                  </div>
+                                </div>
+
+                            <!-- </div> -->
+                        </div>
+                        <div style="width: 700px" class="am-fade-and-slide-right col-md-6" ng-show="hasToolSelected()">
+                            <!-- <div class="col-md-12"> -->
+                                <div class="list-group" >
+                                    <dl class="dl-vertical">
+                                        <dt translate="NAME"></dt>
+                                        <dd>{{selectedTool.name}}</dd>
+                                        <dt translate="DESCRIPTION"></dt>
+                                        <dd>{{selectedTool.description}}</dd>
+                                        <dt translate="TOOLS.DOCUMENTATION"></dt>
+                                        <dd ng-bind-html='selectedTool.documentation'></dd>
+                                    </dl>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+</div>
