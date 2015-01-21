@@ -55,8 +55,8 @@ angular.module('ortolangMarketApp')
                     url: this.url + '/jobs/:jobId/abort',
                     method: 'GET'
                 },
-                hasToken: {
-                    url: this.url + '/token',
+                getAuthStatus: {
+                    url: this.url + '/client/auth',
                     method: 'GET'
                 },
                 getLog: {
@@ -131,9 +131,9 @@ angular.module('ortolangMarketApp')
                 return this.resource.abort({jobId:jobId});
             },
 
-            hasToken: function () {
+            getAuthStatus: function () {
                 var deferred = $q.defer();
-                this.resource.hasToken().$promise.then(function (url) {
+                this.resource.getAuthStatus().$promise.then(function (url) {
                     if (url) {
                         console.log(url);
                         deferred.resolve(url);
@@ -253,9 +253,9 @@ angular.module('ortolangMarketApp')
             if (registry[toolKey]) {
                 registry[toolKey].active = false;
                 console.log('The tool "%s" has been desactivated', toolKey);
-                return;
+            } else {
+                console.error('There is no tool with the id "%s" in registry', toolKey);
             }
-            console.error('There is no tool with the id "%s" in registry', toolKey);
         }
 
 
