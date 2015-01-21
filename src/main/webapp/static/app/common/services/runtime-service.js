@@ -236,9 +236,9 @@ angular.module('ortolangMarketApp')
             });
             activeToolJobs = getActiveToolJobs();
             $rootScope.activeToolJobsNbr = activeToolJobs.length;
-            //if ($rootScope.activeToolJobsNbr === 0) {
-            //    $timeout.cancel(toolJobsTimeout);
-            //}
+            if ($rootScope.activeToolJobsNbr === 0) {
+                $timeout.cancel(toolJobsTimeout);
+            }
 
             //ToolsResource.toolJobs({pKey: 'tika'}).$promise.then(function (data) {
             //    console.debug('data:', data);
@@ -368,12 +368,12 @@ angular.module('ortolangMarketApp')
         function initTranslations() {
             $translate([
                 'PROCESSES.START_PROCESS',
-                'PROCESSES.COMPLETE_TASK',
+                'TASKS.COMPLETE_TASK',
                 'PROCESSES.PROCESS',
                 'PROCESSES.JUST_COMPLETED'
             ]).then(function (translations) {
                 translationsStartProcess = translations['PROCESSES.START_PROCESS'];
-                translationsCompleteTask = translations['PROCESSES.COMPLETE_TASK'];
+                translationsCompleteTask = translations['TASKS.COMPLETE_TASK'];
                 translationsProcess = translations['PROCESSES.PROCESS'];
                 translationsJustCompleted = translations['PROCESSES.JUST_COMPLETED'];
             });

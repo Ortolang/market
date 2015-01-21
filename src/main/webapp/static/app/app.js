@@ -87,9 +87,7 @@ angular
     .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
-            'self',
-            'http://localhost:8080/**',
-            'https://localhost:8443/**'
+            'self'
         ]);
     }])
     .config(['$tooltipProvider', function ($tooltipProvider) {
