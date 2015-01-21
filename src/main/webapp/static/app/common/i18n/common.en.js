@@ -25,5 +25,6 @@ angular.module('ortolangMarketApp')
         LOG_IN: 'Login',
         NO_IMAGE_PROVIDED: 'No image provided',
         DOWNLOAD: 'Download',
-        START: 'Start'
+        START: 'Start',
+        STOP: 'Stop'
     });

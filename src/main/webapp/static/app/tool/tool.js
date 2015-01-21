@@ -61,6 +61,7 @@ angular.module('ortolangMarketApp')
             $scope.onSubmit = function () {
                 ToolManager.getTool(toolKey).createJob($scope.formData).$promise.then(function (response) {
                     console.log(response);
+                    $rootScope.$broadcast('tool-job-created')
                 });
             };
 

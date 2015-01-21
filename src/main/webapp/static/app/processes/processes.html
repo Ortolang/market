@@ -92,16 +92,14 @@
                     <tr>
                         <th translate="NAME"></th>
                         <th translate="PROCESSES.STATE"></th>
-                        <th translate="START"></th>
                         <th translate="ACTIONS"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="job in Runtime.getActiveToolJobs()">
-                        <td>{{::job.toolName}}</td>
+                        <td>{{::job.name}}</td>
                         <td>{{job.status}}</td>
-                        <td>{{job.start | date:'medium'}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -120,9 +118,9 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().error}">
-                        <td>{{::job.toolName}}</td>
+                        <td>{{::job.name}}</td>
                         <td>{{::job.status}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -131,24 +129,26 @@
         <section id="completed-tool_jobs" class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading" translate="TOOLS.COMPLETED_TOOL_PROCESSES"></div>
-                <div ng-if="!Runtime.hasToolJobsResultValid()" class="panel-body">
+                <div ng-if="!Runtime.hasToolJobsWithState(Runtime.getToolStates().completed)" class="panel-body">
                     <p translate="TOOLS.NO_COMPLETED_TOOL_PROCESS"></p>
                 </div>
-                <table ng-if="Runtime.hasToolJobsResultValid()" class="table table-responsive">
+                <table ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().completed)" class="table table-responsive">
                     <thead>
                     <tr>
                         <th translate="NAME"></th>
                         <th translate="RESULT"></th>
-                        <th translate="TOOLS.DELAY"></th>
+                        <th translate="START"></th>
+                        <th translate="STOP"></th>
                         <th translate="ACTIONS"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().completed} | filter : isValidResult(deletedDate)" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
+                    <tr ng-repeat="job in Runtime.getToolJobsWithState(Runtime.getToolStates().completed)" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
                         <td>{{::job.name}}</td>
                         <td><button class="btn btn-sm btn-default" ng-click="showResult(job)" translate="PROCESSES.VIEW_RESULT"></button></td>
-                        <td>{{::job.deleteDate  | date:'medium'}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        <td>{{job.start | date:'medium'}}</td>
+                        <td>{{job.stop | date:'medium'}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>
                     </tbody>
                 </table>

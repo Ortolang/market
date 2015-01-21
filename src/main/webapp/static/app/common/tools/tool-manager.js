@@ -57,6 +57,11 @@ angular.module('ortolangMarketApp')
                 getLog: {
                     url: this.url + '/jobs/:jobId/log',
                     method: 'GET'
+                },
+                getResult: {
+                    url: this.url + '/jobs/:jobId/result',
+                    method: 'GET',
+                    isArray: true
                 }
             });
         }
@@ -119,6 +124,14 @@ angular.module('ortolangMarketApp')
 
             getLog: function (jobId) {
                 return this.resource.getLog({jobId:jobId});
+            },
+
+            getResult: function (jobId) {
+                return this.resource.getResult({jobId:jobId});
+            },
+
+            getDownloadUrl: function (jobId, path) {
+                return this.url + '/jobs/' + jobId + '/download?path=' + path;
             }
         };
 
@@ -158,6 +171,14 @@ angular.module('ortolangMarketApp')
             return registry[toolKey];
         }
 
+        function removeTool(toolKey) {
+            if (registry[toolKey]) {
+                delete registry[toolKey];
+                console.log('The tool "%s" has been removed from registry', toolKey);
+            }
+            console.error('There is no tool with the id "%s" in registry', toolKey);
+        }
+
 
         // *********************** //
         //           Init          //
@@ -171,6 +192,7 @@ angular.module('ortolangMarketApp')
 
         return {
             getRegistry: getRegistry,
-            getTool: getTool
+            getTool: getTool,
+            removeTool: removeTool
         };
     }]);

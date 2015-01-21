@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProcessesCtrl', ['$rootScope', '$scope', '$modal', '$filter', '$timeout', '$translate', 'Runtime', 'ToolsResource', function ($rootScope, $scope, $modal, $filter, $timeout, $translate, Runtime, ToolsResource) {
+    .controller('ProcessesCtrl', ['$rootScope', '$scope', '$modal', '$filter', '$timeout', '$translate', 'Runtime', 'ToolManager', function ($rootScope, $scope, $modal, $filter, $timeout, $translate, Runtime, ToolManager) {
 
         $scope.Runtime = Runtime;
 
@@ -25,11 +25,24 @@ angular.module('ortolangMarketApp')
             });
         };
 
+        $scope.showToolLog = function (toolJob) {
+            Runtime.selectToolJob(toolJob);
+            $modal({
+                title: toolJob.name,
+                html: true,
+                scope: $scope,
+                template: 'processes/process-log-modal-template.html',
+                show: true
+            });
+        };
+
         $scope.showResult = function (toolJob) {
             Runtime.selectProcess(toolJob);
-            ToolsResource.getToolResult({pKey: toolJob.name.toLowerCase(), jId: toolJob.id}).$promise.then(function (data) {
+            console.debug(toolJob);
+            ToolManager.getTool(toolJob.key).getResult(toolJob.id).$promise.then(function (data) {
                 $scope.results = data;
                 $scope.jname = toolJob.name;
+                $scope.job = toolJob;
                 console.debug(data);
                 $modal({
                     title: toolJob.name,
