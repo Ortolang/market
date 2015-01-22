@@ -16,6 +16,12 @@ angular.module('ortolangMarketApp')
         $scope.submitMetadata = function (form, md) {
             // $scope.$broadcast('show-errors-check-validity');
 
+            if($scope.onlineTool===false) {
+                delete md['http://www.ortolang.fr/ontology/toolHelp'];
+                delete md['http://www.ortolang.fr/ontology/toolId'];
+                delete md['http://www.ortolang.fr/ontology/toolUrl'];
+            }
+
             if (form.$invalid) {
                 console.debug('not ready');
                 return;
