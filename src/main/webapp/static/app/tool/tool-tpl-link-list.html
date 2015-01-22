@@ -1,0 +1,10 @@
+<div>
+    <h4><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</h4>
+    <ul class="list-unstyled">
+        <li ng-repeat="file in result.options">
+            <a ng-href="{{Runtime.getToolDownloadUrl(toolJob.key, toolJob.id, file.url)}}">
+                {{file.name | split:'/':-1 }}
+            </a>
+        </li>
+    </ul>
+</div>
