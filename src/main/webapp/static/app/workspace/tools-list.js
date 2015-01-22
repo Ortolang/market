@@ -64,8 +64,8 @@ angular.module('ortolangMarketApp')
                 function success (config) {
                     $scope.generateForm(config);
                 },
-                function error (error) {
-                    console.error('The tool server for "%s" is not responding.', $scope.selectedTool.getName(), error);
+                function error (msg) {
+                    console.error('The tool server for "%s" is not responding.', $scope.selectedTool.getName(), msg);
                     $scope.formData = undefined;
                 }
             );
@@ -122,8 +122,8 @@ angular.module('ortolangMarketApp')
                     $scope.hide();
                     $alert({title: $scope.selectedTool.getName(), content: successJob, placement: 'top-right', type: 'success', show: true});
                 },
-                function error(error) {
-                    console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), error);
+                function error(msg) {
+                    console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);
                     $scope.showError();
                 }
             );
