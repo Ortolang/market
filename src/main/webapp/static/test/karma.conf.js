@@ -33,6 +33,7 @@ module.exports = function (config) {
             'bower_components/angular-hotkeys/build/hotkeys.js',
             'bower_components/angular-formly/dist/formly.bootstrap.js',
             'bower_components/angular-bootstrap-show-errors/src/showErrors.js',
+            'bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js',
             'bower_components/angular-sanitize/angular-sanitize.js',
             'bower_components/angular-translate/angular-translate.js',
             'bower_components/zeroclipboard/dist/ZeroClipboard.js',
