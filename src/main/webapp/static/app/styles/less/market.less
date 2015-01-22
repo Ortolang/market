@@ -54,7 +54,7 @@
     -ms-flex-item-align: auto;
     align-self: auto;
 
-    width: 252px;
+    // width: 252px;
 }
 
 /*
@@ -84,18 +84,59 @@
         display: inline-block;
     }
 
-    .contour {
+    .medium-item {
+        margin: 5px;
+        border: 1px solid #dddddd;
+        line-height: 1.42857143;
+        background-color: #FFFFFF;
+        -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
+        box-shadow: 0 0 5px rgba(0,0,0,0.10);
+        width: 162px;
+
+        cursor: pointer;
+        &:hover {
+            .title {
+                color: @ortolang-blue;
+            }
+        }
+
+        >img {
+          height: 160px;
+          width: 160px;
+        }
+
+        .title {
+            overflow: hidden;
+            position: relative;
+            color: inherit;
+            height: 22px;
+            font-size: 18px;
+            font-weight: 200;
+            margin-left: 5px;
+        }
+        .description {
+          overflow: hidden;
+          max-height: 100px;
+          /*width: 225px;*/
+          text-align: justify;
+        }
+
+        .producers {
+            a {
+                font-weight: 200;
+            }
+        }
+    }
+
+    .market-item {
         padding: 4px;
         margin: 5px;
         border: 1px solid #dddddd;
         line-height: 1.42857143;
         background-color: #FFFFFF;
-    }
-
-    .market-item {
-        background-color: #FFFFFF;
-        /*padding-top: @padding-large-vertical;*/
-        /*margin-left: @padding-large-vertical;*/
+        -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
+        box-shadow: 0 0 5px rgba(0,0,0,0.10);
+        width: 258px;
 
         cursor: pointer;
         &:hover {
