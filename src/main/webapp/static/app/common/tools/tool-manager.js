@@ -55,6 +55,10 @@ angular.module('ortolangMarketApp')
                     },
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 },
+                abort: {
+                    url: this.url + '/jobs/:jobId/abort',
+                    method: 'GET'
+                },
                 hasToken: {
                     url: this.url + '/token',
                     method: 'GET'
@@ -111,15 +115,12 @@ angular.module('ortolangMarketApp')
             },
 
             getExecutionForm: function () {
-                if(this.getActive()) {
-                    if (this.config) {
-                        return this.config;
-                    } else {
-                        return this.resource.getExecutionForm({language: $translate.use()});
-                    }
-                } else {
-                    throw ('The tool "%s" is not active', toolKey);
+                if (!this.getActive()) {
+                    throw ('The tool "%s" is not active', this.getKey());
+                } else if (this.config) {
+                    return this.config;
                 }
+                return this.resource.getExecutionForm({language: $translate.use()});
             },
 
             getActive: function () {
@@ -132,6 +133,10 @@ angular.module('ortolangMarketApp')
 
             createJob: function (formData) {
                 return this.resource.createJob({}, formData);
+            },
+
+            abortJob: function (jobId) {
+                return this.resource.abort({jobId:jobId});
             },
 
             hasToken: function () {

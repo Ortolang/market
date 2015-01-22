@@ -120,7 +120,6 @@ angular.module('ortolangMarketApp')
                     console.log(response);
                     $rootScope.$broadcast('tool-job-created');
                     $scope.hide();
-                    $alert({title: $scope.selectedTool.getName(), content: successJob, placement: 'top-right', type: 'success', show: true});
                 },
                 function error(msg) {
                     console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);

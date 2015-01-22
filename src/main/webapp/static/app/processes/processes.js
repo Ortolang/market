@@ -8,7 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProcessesCtrl', ['$rootScope', '$scope', '$modal', '$filter', '$timeout', '$translate', 'Runtime', 'ToolManager', function ($rootScope, $scope, $modal, $filter, $timeout, $translate, Runtime, ToolManager) {
+    .controller('ProcessesCtrl', ['$rootScope', '$scope', '$modal', '$filter', '$timeout', '$translate', 'Runtime', 'ToolManager', '$alert',
+        function ($rootScope, $scope, $modal, $filter, $timeout, $translate, Runtime, ToolManager, $alert) {
 
         $scope.Runtime = Runtime;
 
@@ -33,6 +34,29 @@ angular.module('ortolangMarketApp')
                 html: true,
                 scope: $scope,
                 template: 'processes/process-log-modal-template.html',
+                show: true
+            });
+        };
+
+        $scope.abortToolJob = function (toolJob) {
+            Runtime.selectProcess(toolJob);
+            ToolManager.getTool(toolJob.key).abortJob(toolJob.id).$promise.then(
+                function success() {
+                    $alert({title: toolJob.name, content: "annulé", placement: 'top-right', type: 'success', show: true});
+                },
+                function error(reason) {
+                    $alert({title: toolJob.name, content: "pas annulé", placement: 'top-right', type: 'danger', show: true});
+                }
+            );
+        };
+
+        $scope.showToolParam = function (toolJob) {
+            Runtime.selectToolJob(toolJob);
+            $modal({
+                title: toolJob.name,
+                html: true,
+                scope: $scope,
+                template: 'tool/tool-tpl-parameters.html',
                 show: true
             });
         };

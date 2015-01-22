@@ -28,6 +28,10 @@ angular.module('ortolangMarketApp')
             LINK_LIST_TITLE: 'Fichier(s) généré(s)',
             RUN_TOOL: 'Executer',
             FAIL: 'a échoué',
-            WAS_SUCCESS: 'est en cours d\'execution'
+            WAS_SUCCESS: 'est en cours d\'execution',
+            VIEW_PARAM: 'Voir les paramètres',
+            PARAMETERS: 'Paramètres',
+            ABORT: 'Annuler',
+            ABORTED: 'est annulé'
         }
     });

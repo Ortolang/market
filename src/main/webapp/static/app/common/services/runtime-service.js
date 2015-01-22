@@ -305,8 +305,7 @@ angular.module('ortolangMarketApp')
 
         function selectToolJob(toolJob) {
             ToolManager.getTool(toolJob.key).getLog(toolJob.id).$promise.then(function (data) {
-                $rootScope.selectedProcess.log = data;
-                console.debug(data);
+                $rootScope.selectedProcess.log = data.log;
             });
             $rootScope.selectedProcess = toolJob;
         }

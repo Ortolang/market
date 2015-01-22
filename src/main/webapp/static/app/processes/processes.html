@@ -92,14 +92,16 @@
                     <tr>
                         <th translate="NAME"></th>
                         <th translate="PROCESSES.STATE"></th>
-                        <th translate="ACTIONS"></th>
+                        <th translate="TOOLS.PARAMETERS"></th>
+                        <th translate="ACTIONS" ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().pending)" ></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="job in Runtime.getActiveToolJobs()">
                         <td>{{::job.name}}</td>
                         <td>{{job.status}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
+                        <td ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().pending)" ><button class="btn btn-sm btn-default" ng-click="abortToolJob(job)" translate="TOOLS.ABORT"></button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -113,6 +115,7 @@
                     <tr>
                         <th translate="NAME"></th>
                         <th translate="PROCESSES.STATE"></th>
+                        <th translate="TOOLS.PARAMETERS"></th>
                         <th translate="ACTIONS"></th>
                     </tr>
                     </thead>
@@ -120,6 +123,7 @@
                     <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().error}">
                         <td>{{::job.name}}</td>
                         <td>{{::job.status}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
                         <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                     </tr>
                     </tbody>
@@ -137,6 +141,7 @@
                     <tr>
                         <th translate="NAME"></th>
                         <th translate="RESULT"></th>
+                        <th translate="TOOLS.PARAMETERS"></th>
                         <th translate="START"></th>
                         <th translate="STOP"></th>
                         <th translate="ACTIONS"></th>
@@ -146,6 +151,7 @@
                     <tr ng-repeat="job in Runtime.getToolJobsWithState(Runtime.getToolStates().completed)" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
                         <td>{{::job.name}}</td>
                         <td><button class="btn btn-sm btn-default" ng-click="showResult(job)" translate="PROCESSES.VIEW_RESULT"></button></td>
+                        <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
                         <td>{{job.start | date:'medium'}}</td>
                         <td>{{job.stop | date:'medium'}}</td>
                         <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
