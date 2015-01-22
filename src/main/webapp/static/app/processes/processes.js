@@ -27,6 +27,7 @@ angular.module('ortolangMarketApp')
 
         $scope.showToolLog = function (toolJob) {
             Runtime.selectToolJob(toolJob);
+            console.debug(toolJob.log);
             $modal({
                 title: toolJob.name,
                 html: true,
@@ -38,12 +39,10 @@ angular.module('ortolangMarketApp')
 
         $scope.showResult = function (toolJob) {
             Runtime.selectProcess(toolJob);
-            console.debug(toolJob);
             ToolManager.getTool(toolJob.key).getResult(toolJob.id).$promise.then(function (data) {
                 $scope.results = data;
                 $scope.jname = toolJob.name;
                 $scope.job = toolJob;
-                console.debug(data);
                 $modal({
                     title: toolJob.name,
                     html: true,

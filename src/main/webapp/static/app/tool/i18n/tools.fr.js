@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
             CHOOSE: 'Choisir',
             DOCUMENTATION: 'Documentation',
             BACK_TO_TOOL_LIST: 'Retour à la liste des outils',
-            CONFIGURATION_OF: 'Configuration de {{name}}',
+            CONFIGURATION: 'Configuration',
             DELAY: 'Date de suppression',
             TOOL: 'Outil',
             TOOLS: 'Outils',
@@ -24,7 +24,10 @@ angular.module('ortolangMarketApp')
             ABORTED_TOOL_PROCESSES: 'Outils interrompus par des erreurs',
             NO_COMPLETED_TOOL_PROCESS: 'Pas d\'outil complété',
             PREVIEW_TITLE: 'Affichage du résultat',
+            LOG_TITLE: 'Affichage des log d\'execution',
             LINK_LIST_TITLE: 'Fichier(s) généré(s)',
-            RUN_TOOL: 'Sauver et Lancer'
+            RUN_TOOL: 'Executer',
+            FAIL: 'a échoué',
+            WAS_SUCCESS: 'est en cours d\'execution'
         }
     });

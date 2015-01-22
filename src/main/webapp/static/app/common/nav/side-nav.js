@@ -73,12 +73,6 @@ angular.module('ortolangMarketApp')
                         active: undefined
                     },
                     {
-                        path: '/tools',
-                        description: $scope.translationsTools,
-                        iconCss: 'fa fa-puzzle-piece fa-2x',
-                        active: undefined
-                    },
-                    {
                         path: '/processes',
                         description: $scope.translationsProcesses,
                         iconCss: 'fa fa-tasks fa-2x',

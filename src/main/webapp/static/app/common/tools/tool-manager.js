@@ -8,7 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', 'ToolsResource', '$translate', function ($resource, $q, ToolsResource, $translate) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', 'ObjectResource', 'DownloadResource', 'N3Serializer', '$filter',
+        function ($resource, $q, $translate, $rootScope, ObjectResource, DownloadResource, N3Serializer, $filter) {
 
         // ---
         // ORTOLANG TOOL DEFINITION
@@ -20,7 +21,11 @@ angular.module('ortolangMarketApp')
             this.key = undefined;
             this.name = undefined;
             this.description = undefined;
+            this.documentation = undefined;
+            this.meta = undefined;
             this.url = undefined;
+            this.config = undefined;
+            this.active = undefined;
 
             angular.forEach(config, function (value, key) {
                 if (this.hasOwnProperty(key)) {
@@ -85,6 +90,14 @@ angular.module('ortolangMarketApp')
                 return this.description;
             },
 
+            getDocumentation: function () {
+                return this.documentation;
+            },
+
+            getMeta: function () {
+                return this.meta;
+            },
+
             getUrl: function () {
                 return this.url;
             },
@@ -98,7 +111,19 @@ angular.module('ortolangMarketApp')
             },
 
             getExecutionForm: function () {
-                return this.resource.getExecutionForm({language:$translate.use()});
+                if(this.getActive()) {
+                    if (this.config) {
+                        return this.config;
+                    } else {
+                        return this.resource.getExecutionForm({language: $translate.use()});
+                    }
+                } else {
+                    throw ('The tool "%s" is not active', toolKey);
+                }
+            },
+
+            getActive: function () {
+                return this.active;
             },
 
             getJobs: function () {
@@ -145,35 +170,92 @@ angular.module('ortolangMarketApp')
             return registry;
         }
 
+        function getActiveRegistry() {
+            var activeRegistry = [];
+            angular.forEach(registry, function (tool) {
+                if(tool.active) {
+                    activeRegistry.push(tool);
+                }
+            });
+            return activeRegistry;
+        }
+
         function register(tool) {
             if (registry[tool.getKey()]) {
                 console.error('A tool with the id "%s" has already been registered', tool.getKey());
                 return;
             }
             registry[tool.getKey()] = tool;
+            console.debug('register tool : ', (registry[tool.getKey()]));
+            $rootScope.$broadcast('tool-list-registered');
         }
 
         function populateToolList() {
-            ToolsResource.getToolsList(
-                function (tools) {
-                    angular.forEach(tools.entries, function (tool) {
-                        register(new OrtolangTool(tool));
+            var deferred = $q.defer();
+            ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(
+                function (oobjects) {
+                    var index = 0;
+                    var items = [];
+                    angular.forEach(oobjects.entries, function (entry) {
+                        items.push({key: entry, rang: index});
+                        index++;
                     });
+
+                    loadMetadata(items);
                 },
                 function (error) {
                     console.error('An issue occurred when trying to get the tool list: %o', error);
+                    deferred.reject();
                 }
             );
+            return deferred.promise;
+        }
+
+        function loadMetadata(items) {
+            angular.forEach(items, function (item) {
+                // Loads properties of each object
+                ObjectResource.get({oKey: item.key}).$promise
+                        .then(function (oobject) {
+                            if (oobject.object.root === true) {
+                                if (oobject.object.metadatas.length > 0) {
+
+                                    var metaKey = oobject.object.metadatas[0].key;
+
+                                    DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
+                                        N3Serializer.fromN3(metaContent).then(function (data) {
+
+                                            if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Outil') {
+                                                item.id = data['http://www.ortolang.fr/ontology/toolId'];
+                                                item.name = data['http://purl.org/dc/elements/1.1/title'];
+                                                item.description = data['http://purl.org/dc/elements/1.1/description'];
+                                                item.documentation = data['http://www.ortolang.fr/ontology/toolHelp'];
+                                                item.url = data['http://www.ortolang.fr/ontology/toolUrl'];
+                                                item.meta = data;
+                                                item.active = true;
+
+                                                register(new OrtolangTool(item));
+                                            }
+                                        });
+                                    }).error(function (error) {
+                                        console.error('An issue occurred when trying to get the tool list: %o', error);
+                                    });
+                                }
+                            }
+                        }, function (reason) {
+                            console.error('An issue occurred when trying to get the tool list: %o', reason);
+                        }
+                    );
+            });
         }
 
         function getTool(toolKey) {
             return registry[toolKey];
         }
 
-        function removeTool(toolKey) {
+        function desactivateTool(toolKey) {
             if (registry[toolKey]) {
-                delete registry[toolKey];
-                console.log('The tool "%s" has been removed from registry', toolKey);
+                registry[toolKey].active = false;
+                console.log('The tool "%s" has been desactivated', toolKey);
             }
             console.error('There is no tool with the id "%s" in registry', toolKey);
         }
@@ -191,7 +273,8 @@ angular.module('ortolangMarketApp')
 
         return {
             getRegistry: getRegistry,
+            getActiveRegistry: getActiveRegistry,
             getTool: getTool,
-            removeTool: removeTool
+            desactivateTool: desactivateTool
         };
     }]);

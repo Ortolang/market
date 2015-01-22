@@ -8,7 +8,9 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolsListCtrl', ['$scope', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('ToolsListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$alert', function ($scope, ToolManager, $rootScope, $translate, $alert) {
+
+        var saveBt, successJob;
 
         // ***************** //
         // Editor visibility //
@@ -42,6 +44,7 @@ angular.module('ortolangMarketApp')
 
         $scope.selectTool = function(tool) {
             $scope.selectedTool = tool;
+            $scope.loadConfig();
         };
 
         $scope.resetSelectedTool = function() {
@@ -53,57 +56,54 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.loadToolsList = function() {
-            // $scope.tools = [
-            //     {id: 'tika', name: 'Tika', description: 'Detects and extracts metadata and text content.'},
-            //     {id: 'sample-tool', name: 'Sample tool', description: 'Dumb tool for demonstration purpose.'}
-            // ];
-            // Loads all objects
-            ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(function (oobjects) {
-                var index = 0;
-                var items = [];
-                angular.forEach(oobjects.entries, function (entry) {
-                    items.push({key: entry, rang: index});
-                    index++;
-                });
-
-                loadMetadata(items);
-            });
+            $scope.tools = ToolManager.getRegistry();
         };
-        
-        function loadMetadata(items) {
 
-            angular.forEach(items, function (item) {
-                // Loads properties of each object
-                ObjectResource.get({oKey: item.key}).$promise
-                    .then(function (oobject) {
+        $scope.loadConfig = function () {
+            ToolManager.getTool($scope.selectedTool.getKey()).getExecutionForm().$promise.then(
+                function success (config) {
+                    $scope.generateForm(config);
+                },
+                function error (error) {
+                    console.error('The tool server for "%s" is not responding.', $scope.selectedTool.getName(), error);
+                    $scope.formData = undefined;
+                }
+            );
+        };
 
-                        if (oobject.object.root === true) {
-                            if (oobject.object.metadatas.length > 0) {
-                                
-                                var metaKey = oobject.object.metadatas[0].key;
+        $scope.hasToolConfig = function() {
+            return $scope.formData !== undefined;
+        };
 
-                                DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                    N3Serializer.fromN3(metaContent).then(function (data) {
-                                       
-                                        if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Outil') {
-                                            item.id = data['http://www.ortolang.fr/ontology/toolId'];
-                                            item.name = data['http://purl.org/dc/elements/1.1/title'];
-                                            item.description = data['http://purl.org/dc/elements/1.1/description'];
-                                            item.meta = data;
+        $scope.generateForm = function (configJSON) {
+            $scope.formData = {};
+            $scope.formFields = configJSON;
+            $scope.formOptions = {
+                uniqueFormId: 'toolConfig',
+                hideSubmit: false,
+                submitCopy: saveBt
+            };
+        };
 
-                                            $scope.tools.push(item);
-                                        }
-                                    });
-                                }).error(function (error) {
-                                    console.error('error during process : ' + error);
-                                });
-                            }
-                        }
-                    }, function (reason) {
-                        console.error(reason);
-                });
-            });
-        }
+
+        // ***************** //
+        // Alert visibility //
+        // ***************** //
+
+        $scope.fail = false;
+
+        $scope.showError = function () {
+            $scope.fail = true;
+        };
+
+        $scope.hideError = function () {
+            $scope.fail = false;
+        };
+
+        $scope.isShowError = function () {
+            return $scope.fail === true;
+        };
+
 
         // ********* //
         // Listeners //
@@ -114,12 +114,41 @@ angular.module('ortolangMarketApp')
             $scope.show();
         });
 
+        $scope.onSubmit = function () {
+            ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.formData).$promise.then(
+                function success(response) {
+                    console.log(response);
+                    $rootScope.$broadcast('tool-job-created');
+                    $scope.hide();
+                    $alert({title: $scope.selectedTool.getName(), content: successJob, placement: 'top-right', type: 'success', show: true});
+                },
+                function error(error) {
+                    console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), error);
+                    $scope.showError();
+                }
+            );
+        };
+
+        $rootScope.$on('$translateChangeSuccess', function () {
+            initTranslations();
+        });
+
+        function initTranslations() {
+            $translate([
+                'TOOLS.RUN_TOOL',
+                'TOOLS.WAS_SUCCESS'
+            ]).then(function (translations) {
+                saveBt = translations['TOOLS.RUN_TOOL'];
+                successJob = translations['TOOLS.WAS_SUCCESS'];
+            });
+
+        }
 
         function init() {
+            initTranslations();
             $scope.tools = [];
             $scope.loadToolsList();
             $scope.selectedTool = undefined;
-
         }
 
         init();

@@ -8,16 +8,16 @@
             </div>
             <div id="browser-toolbar" role="toolbar">
                 <div class="btn-toolbar" style="margin-left: 10px; float: left;">
-                    
+
                     <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
                         <a ng-click="resetSelectedTool()" class="btn"><i class="fa fa-chevron-left"></i> {{'TOOLS.BACK_TO_TOOL_LIST' | translate}}</a>
                     </div>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" style="margin-right: 10px;">
-                    
-                    <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
-                        <buton class="btn btn-primary" ng-click="submitMetadataForm()">
-                            <span ng-class="icons.browser.publish"></span> Executer
+
+                    <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected() && hasToolConfig()">
+                        <buton class="btn btn-primary" ng-click="onSubmit()">
+                            <span ng-class="icons.browser.publish"></span> {{'TOOLS.RUN_TOOL' | translate}}
                         </buton>
                     </div>
                 </div>
@@ -44,16 +44,34 @@
                                 <div class="list-group" >
                                     <dl class="dl-vertical">
                                         <dt translate="NAME"></dt>
-                                        <dd>{{selectedTool.name}}</dd>
+                                        <dd>{{selectedTool.getName()}}</dd>
                                         <dt translate="DESCRIPTION"></dt>
-                                        <dd>{{selectedTool.description}}</dd>
+                                        <dd>{{selectedTool.getDescription()}}</dd>
                                         <dt translate="TOOLS.DOCUMENTATION"></dt>
-                                        <dd ng-bind-html="selectedTool.meta['http://www.ortolang.fr/ontology/toolHelp']"></dd>
+                                        <dd ng-bind-html="selectedTool.getDocumentation()"></dd>
                                     </dl>
                                 </div>
                             <!-- </div> -->
+                            <div class="panel panel-default" ng-show="hasToolConfig()">
+                                <div class="panel-heading">
+                                    <span class="fa fa-gears"></span> <span translate="TOOLS.CONFIGURATION">}</span>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="list-group" >
+                                        <!-- formulaire -->
+                                        <formly-form result="formData" fields="formFields" options="formOptions" ng-submit="onSubmit()">
+                                        </formly-form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert am-fade alert-danger" ng-show="isShowError()">
+                                <button type="button" class="close ng-scope" ng-click="hideError()">×</button>
+                                <strong>{{selectedTool.getName()}}</strong>&nbsp;
+                                <span>{{'TOOLS.FAIL' | translate }}.</span>
+                            </div>
                         </div>
-                </div>   
+                </div>
             </div>
         </div>
     </div>

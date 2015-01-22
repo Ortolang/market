@@ -26,6 +26,7 @@ angular.module('ortolangMarketApp')
             translationsCompleteTask,
             translationsProcess,
             translationsJustCompleted,
+            translationsToolJob,
             processModal,
             completeTaskModal,
             processesTimeout,
@@ -141,7 +142,7 @@ angular.module('ortolangMarketApp')
                     }
                 });
                 activeProcesses = getActiveProcesses();
-                $rootScope.activeProcessesNbr = activeProcesses.length;
+                $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
                 if ($rootScope.activeProcessesNbr === 0) {
                     $timeout.cancel(processesTimeout);
                     $timeout.cancel(tasksTimeout);
@@ -239,7 +240,7 @@ angular.module('ortolangMarketApp')
         function refreshTools() {
             $rootScope.toolJobs = [];
             var promises = [];
-            angular.forEach(ToolManager.getRegistry(), function (tool) {
+            angular.forEach(ToolManager.getActiveRegistry(), function (tool) {
                 promises.push(ToolManager.getTool(tool.getKey()).getJobs().$promise.then(
                     function (data) {
                         angular.forEach(data.entries, function (job) {
@@ -249,18 +250,23 @@ angular.module('ortolangMarketApp')
                         $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
                     }, function (error) {
                         console.log('The server of tool "%s" is not responding', tool.getKey());
-                        ToolManager.removeTool(tool.getKey());
+                        ToolManager.desactivateTool(tool.getKey());
                     }
                 ));
             });
 
             $q.all(promises).then(
                 function success() {
-                    activeToolJobs = getActiveToolJobs();
                     completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
-                    console.log('completedToolJobs', completedToolJobs);
-                    $rootScope.activeToolJobsNbr = activeToolJobs.length;
-                    if ($rootScope.activeToolJobsNbr === 0) {
+                    var justCompletedTools = $filter('filter')(activeToolJobs, function (activeToolJob) {
+                        return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
+                    });
+                    angular.forEach(justCompletedTools, function (justCompletedTool) {
+                        $alert({title: translationsToolJob, content: justCompletedTool.name + translationsJustCompleted, placement: 'top-right', type: 'success', show: true});
+                    });
+                    activeToolJobs = getActiveToolJobs();
+                    $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
+                    if (activeToolJobs.length === 0) {
                         $timeout.cancel(toolJobsTimeout);
                     }
                     if ($rootScope.selectedProcess) {
@@ -360,7 +366,11 @@ angular.module('ortolangMarketApp')
         });
 
         $rootScope.$on('tool-job-created', function () {
-            forceRefreshToolJobs();
+            forceRefresh();
+        });
+
+        $rootScope.$on('tool-list-registered', function () {
+            forceRefresh();
         });
 
         // *********************** //
@@ -372,12 +382,14 @@ angular.module('ortolangMarketApp')
                 'PROCESSES.START_PROCESS',
                 'TASKS.COMPLETE_TASK',
                 'PROCESSES.PROCESS',
-                'PROCESSES.JUST_COMPLETED'
+                'PROCESSES.JUST_COMPLETED',
+                'TOOLS.TOOL'
             ]).then(function (translations) {
                 translationsStartProcess = translations['PROCESSES.START_PROCESS'];
                 translationsCompleteTask = translations['TASKS.COMPLETE_TASK'];
                 translationsProcess = translations['PROCESSES.PROCESS'];
                 translationsJustCompleted = translations['PROCESSES.JUST_COMPLETED'];
+                translationsToolJob = translations['TOOLS.TOOL'];
             });
         }
 
