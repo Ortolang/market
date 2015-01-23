@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
         this.create = function (profile) {
             this.id = profile.key;
             this.userId = profile.key;
-            this.name = profile.fullname;
+            this.name = profile.givenName + ' ' + profile.familyName;
             this.email = profile.email;
             this.status = profile.status;
             this.userMember = profile.groups;
