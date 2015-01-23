@@ -107,7 +107,7 @@ angular.module('ortolangMarketApp')
                     if ($scope.browserService.canDelete && $scope.isHead && !$scope.hasOnlyParentSelected()) {
                         $scope.contextMenuItems.push({text: $scope.translationsDelete, icon: icons.browser.delete, action: 'delete'});
                     }
-                    if ($scope.contextMenuItems[$scope.contextMenuItems.length-1].divider) {
+                    if ($scope.contextMenuItems[$scope.contextMenuItems.length - 1].divider) {
                         $scope.contextMenuItems.pop();
                     }
                     activateContextMenu();
