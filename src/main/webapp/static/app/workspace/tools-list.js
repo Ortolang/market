@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolsListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$alert', function ($scope, ToolManager, $rootScope, $translate, $alert) {
+    .controller('ToolsListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', function ($scope, ToolManager, $rootScope, $translate) {
 
         var saveBt, successJob;
 
