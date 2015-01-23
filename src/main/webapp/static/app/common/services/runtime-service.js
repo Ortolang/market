@@ -145,6 +145,7 @@ angular.module('ortolangMarketApp')
                     if ($rootScope.activeProcessesNbr === 0) {
                         $timeout.cancel(processesTimeout);
                         $timeout.cancel(tasksTimeout);
+                        $timeout.cancel(toolJobsTimeout);
                     }
                     if ($rootScope.selectedProcess) {
                         $rootScope.selectedProcess = $filter('filter')($rootScope.processes, {key: $rootScope.selectedProcess.key})[0];
@@ -240,9 +241,9 @@ angular.module('ortolangMarketApp')
 
             function refreshTools() {
                 $rootScope.toolJobs = [];
-                //var promises = [];
+                var promises = [];
                 angular.forEach(ToolManager.getActiveRegistry(), function (tool) {
-                    //promises.push(
+                    promises.push(
                     ToolManager.getTool(tool.getKey()).getJobs().$promise.then(
                         function (data) {
                             angular.forEach(data.entries, function (job) {
@@ -252,40 +253,40 @@ angular.module('ortolangMarketApp')
                             $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
                         }, function () {
                             console.warn('The server of tool "%s" is not responding', tool.getKey());
-                            ToolManager.desactivateTool(tool.getKey());
+                            ToolManager.disableTool(tool.getKey());
                         }
-                    );//);
+                    ));
                 });
 
-                //$q.all(promises).then(
-                //    function success() {
-                console.info($rootScope.toolJobs);
-                completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
-                var justCompletedTools = $filter('filter')(activeToolJobs, function (activeToolJob) {
-                    return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
-                });
-                angular.forEach(justCompletedTools, function (justCompletedTool) {
-                    $alert({title: translationsToolJob, content: justCompletedTool.name + translationsJustCompleted, placement: 'top-right', type: 'success', show: true});
-                });
-                activeToolJobs = getActiveToolJobs();
-                $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
-                if ($rootScope.activeProcessesNbr === 0) {
-                    $timeout.cancel(toolJobsTimeout);
-                    $timeout.cancel(processesTimeout);
-                    $timeout.cancel(tasksTimeout);
-                }
-                if ($rootScope.selectedProcess) {
-                    $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
-                    ToolManager.getTool($rootScope.selectedProcess.key).getLog($rootScope.selectedProcess.id).$promise.then(function (data) {
-                        $rootScope.selectedProcess.log = data;
-                    });
-                }
-                //    },
-                //    function error () {
-                //        console.error('An error occurred while trying to refresh the tool list', error);
-                //        $timeout.cancel(toolJobsTimeout);
-                //    }
-                //);
+                $q.all(promises).then(
+                    function success() {
+                        console.info($rootScope.toolJobs);
+                        completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
+                        var justCompletedTools = $filter('filter')(activeToolJobs, function (activeToolJob) {
+                            return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
+                        });
+                        angular.forEach(justCompletedTools, function (justCompletedTool) {
+                            $alert({title: translationsToolJob, content: justCompletedTool.name + translationsJustCompleted, placement: 'top-right', type: 'success', show: true});
+                        });
+                        activeToolJobs = getActiveToolJobs();
+                        $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
+                        if ($rootScope.activeProcessesNbr === 0) {
+                            $timeout.cancel(toolJobsTimeout);
+                            $timeout.cancel(processesTimeout);
+                            $timeout.cancel(tasksTimeout);
+                        }
+                        if ($rootScope.selectedProcess) {
+                            $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
+                            ToolManager.getTool($rootScope.selectedProcess.key).getLog($rootScope.selectedProcess.id).$promise.then(function (data) {
+                                $rootScope.selectedProcess.log = data;
+                            });
+                        }
+                    },
+                    function error () {
+                        console.error('An error occurred while trying to refresh the tool list', error);
+                        $timeout.cancel(toolJobsTimeout);
+                    }
+                );
                 toolJobsTimeout = $timeout(refreshTools, timeout);
             }
 

@@ -248,10 +248,10 @@ angular.module('ortolangMarketApp')
             }
 
 
-            function desactivateTool(toolKey) {
+            function disableTool(toolKey) {
                 if (registry[toolKey]) {
                     registry[toolKey].active = false;
-                    console.warn('The tool "%s" has been desactivated', toolKey);
+                    console.warn('The tool "%s" has been disabled', toolKey);
                     return;
                 }
                 console.error('There is no tool with the id "%s" in registry', toolKey);
@@ -296,7 +296,7 @@ angular.module('ortolangMarketApp')
                 getRegistry: getRegistry,
                 getActiveRegistry: getActiveRegistry,
                 getTool: getTool,
-                deactivateTool: desactivateTool,
+                disableTool: disableTool,
                 checkGrant: checkGrant
             };
         }]);
