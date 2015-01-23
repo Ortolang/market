@@ -42,36 +42,37 @@ angular.module('ortolangMarketApp')
 
         // Tools list //
 
-        $scope.selectTool = function(tool) {
+        $scope.selectTool = function (tool) {
             $scope.selectedTool = tool;
+            //ToolManager.checkGrant(tool.getKey());
             $scope.loadConfig();
         };
 
-        $scope.resetSelectedTool = function() {
+        $scope.resetSelectedTool = function () {
             $scope.selectedTool = undefined;
         };
 
-        $scope.hasToolSelected = function() {
+        $scope.hasToolSelected = function () {
             return $scope.selectedTool !== undefined;
         };
 
-        $scope.loadToolsList = function() {
+        $scope.loadToolsList = function () {
             $scope.tools = ToolManager.getRegistry();
         };
 
         $scope.loadConfig = function () {
             ToolManager.getTool($scope.selectedTool.getKey()).getExecutionForm().$promise.then(
-                function success (config) {
+                function success(config) {
                     $scope.generateForm(config);
                 },
-                function error (msg) {
+                function error(msg) {
                     console.error('The tool server for "%s" is not responding.', $scope.selectedTool.getName(), msg);
                     $scope.formData = undefined;
                 }
             );
         };
 
-        $scope.hasToolConfig = function() {
+        $scope.hasToolConfig = function () {
             return $scope.formData !== undefined;
         };
 

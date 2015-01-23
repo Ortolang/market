@@ -14,12 +14,11 @@
                     </div>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" style="margin-right: 10px;">
-
-                    <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected() && hasToolConfig()">
-                        <buton class="btn btn-primary" ng-click="onSubmit()">
-                            <span ng-class="icons.browser.publish"></span> {{'TOOLS.RUN_TOOL' | translate}}
-                        </buton>
-                    </div>
+                    <!--<div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected() && hasToolConfig()">-->
+                        <!--<buton class="btn btn-primary" ng-click="onSubmit()">-->
+                            <!--<span ng-class="icons.browser.publish"></span> {{'TOOLS.RUN_TOOL' | translate}}-->
+                        <!--</buton>-->
+                    <!--</div>-->
                 </div>
             </div>
             <div id="toolsListBody" class="aside-body" style="width: 700px; height: 100%">
@@ -29,7 +28,7 @@
 
                                 <div ng-repeat="tool in tools" class="media tool-item" ng-click="selectTool(tool)">
                                   <a class="pull-left">
-                                    <span ng-class="icons.browser.tools" class="fa-4x"/>
+                                    <span ng-class="icons.browser.tools" class="fa-4x"></span>
                                   </a>
                                   <div class="media-body">
                                     <h4 class="media-heading" ng-bind="tool.name"></h4>
