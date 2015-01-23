@@ -58,16 +58,6 @@ angular
                 templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
-            .when('/tools', {
-                templateUrl: 'tool/tools.html',
-                controller: 'ToolsCtrl',
-                requiresAuthentication: true
-            })
-            .when('/tools/:toolKey', {
-                templateUrl: 'tool/tool.html',
-                controller: 'ToolCtrl',
-                requiresAuthentication: true
-            })
             .when('/processes/', {
                 templateUrl: 'processes/processes.html',
                 controller: 'ProcessesCtrl',

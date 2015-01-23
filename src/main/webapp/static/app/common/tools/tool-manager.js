@@ -34,10 +34,6 @@ angular.module('ortolangMarketApp')
             }, this);
 
             this.resource = $resource(this.url, {}, {
-                getDefinition: {
-                    url: this.url + '/definition',
-                    method: 'GET'
-                },
                 getExecutionForm: {
                     url: this.url + '/execution-form',
                     method: 'GET',
@@ -108,10 +104,6 @@ angular.module('ortolangMarketApp')
 
             getResource: function () {
                 return this.resource;
-            },
-
-            getDefinition: function () {
-                return this.resource.getDefinition({language:$translate.use()});
             },
 
             getExecutionForm: function () {
@@ -261,6 +253,7 @@ angular.module('ortolangMarketApp')
             if (registry[toolKey]) {
                 registry[toolKey].active = false;
                 console.log('The tool "%s" has been desactivated', toolKey);
+                return;
             }
             console.error('There is no tool with the id "%s" in registry', toolKey);
         }
