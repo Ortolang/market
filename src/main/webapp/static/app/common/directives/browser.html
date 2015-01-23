@@ -1,7 +1,7 @@
 <div id="browser-wrapper" ng-controller="BrowserCtrl">
 
     <div class="row">
-        <div id="browser-toolbar" ng-click="checkSelection($event)">
+        <div id="browser-toolbar" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)">
             <div ng-if="displayAsideWorkspaceList()" class="col-md-2 toolbar-aside">
                 <div class="btn title" translate="BROWSER.MY_WORKSPACES"></div>
             </div>
@@ -162,14 +162,14 @@
             </section>
         </div>
 
-        <div ng-if="browserService.canAdd && isHead" ng-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
+        <div ng-if="browserService.canAdd && isHead" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
             <div ng-include="'common/directives/browser-line-template.html'"></div>
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
             <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{ortolangType: 'object'}">
             <!--<input id="object-upload-folder-select" type="file" nv-file-select="" uploader="uploader" multiple="" webkitdirectory ng-hide="true" options="{ortolangType: 'object'}">-->
         </div>
 
-        <div ng-if="!browserService.canAdd || !isHead" ng-click="checkSelection($event)" ng-class="middleCssClass()">
+        <div ng-if="!browserService.canAdd || !isHead" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="middleCssClass()">
             <div ng-include="'common/directives/browser-line-template.html'"></div>
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
         </div>
