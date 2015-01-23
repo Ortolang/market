@@ -11,9 +11,8 @@
             </div>
         </div>
     </section>
-    <br/>
 
-    <section ng-if="items.length>0" id="redactor-choices" class="row">
+    <section ng-if="items.length>0" class="row">
         <div class="col-md-12">
             <header>
                 <h3>Nouveautés</h3>
@@ -24,8 +23,6 @@
             </div>
         </div>
     </section>
-
-    
      <section ng-if="corpus.length>0" class="row">
         <div class="col-md-12">
             <header>
@@ -34,7 +31,7 @@
 
             <div class="flex-row">
 
-                    <item class="flex-column market-item" ng-repeat="item in corpus | orderBy:'rang':false" data-entry="item" data-template="market/directives/item.html" data-category="'Corpus'" ng-click="clickItem(item)"></item>
+                    <item class="flex-column medium-item" ng-repeat="item in corpus | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" data-category="'Corpus'" ng-click="clickItem(item)"></item>
 
             </div>
         </div>
@@ -47,7 +44,7 @@
 
             <div class="flex-row">
 
-                    <item class="flex-column market-item" ng-repeat="item in outils | orderBy:'rang':false" data-entry="item" data-template="market/directives/item.html" data-category="'Outil'" ng-click="clickItem(item)"></item>
+                    <item class="flex-column medium-item" ng-repeat="item in outils | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" data-category="'Outil'" ng-click="clickItem(item)"></item>
                 
             </div>
         </div>
@@ -60,7 +57,7 @@
 
             <div class="flex-row">
 
-                    <item class="flex-column market-item" ng-repeat="item in lexiques | orderBy:'rang':false" data-entry="item" data-template="market/directives/item.html" data-category="'Lexique'" ng-click="clickItem(item)"></item>
+                    <item class="flex-column medium-item" ng-repeat="item in lexiques | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" data-category="'Lexique'" ng-click="clickItem(item)"></item>
                
             </div>
         </div>
@@ -72,7 +69,7 @@
             </header>
 
             <div class="flex-row">
-                <item class="flex-column market-item" ng-repeat="item in free | orderBy:'rang':false"data-entry="item" data-template="market/directives/item.html" data-status="'Libre'" ng-click="clickItem(item)"></item>
+                <item class="flex-column medium-item" ng-repeat="item in free | orderBy:'rang':false"data-entry="item" data-template="market/directives/medium-item.html" data-status="'Libre'" ng-click="clickItem(item)"></item>
             </div>
         </div>
     </section>
