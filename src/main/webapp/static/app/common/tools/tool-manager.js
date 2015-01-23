@@ -183,8 +183,7 @@ angular.module('ortolangMarketApp')
                 return;
             }
             registry[tool.getKey()] = tool;
-            console.debug('register tool : ', (registry[tool.getKey()]));
-            $rootScope.$broadcast('tool-list-registered');
+            console.info('register tool : ', (registry[tool.getKey()]));
         }
 
         function populateToolList() {
@@ -212,36 +211,38 @@ angular.module('ortolangMarketApp')
             angular.forEach(items, function (item) {
                 // Loads properties of each object
                 ObjectResource.get({oKey: item.key}).$promise
-                        .then(function (oobject) {
-                            if (oobject.object.root === true) {
-                                if (oobject.object.metadatas.length > 0) {
+                    .then(function (oobject) {
+                        if (oobject.object.root === true) {
+                            if (oobject.object.metadatas.length > 0) {
 
-                                    var metaKey = oobject.object.metadatas[0].key;
+                                var metaKey = oobject.object.metadatas[0].key;
 
-                                    DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                        N3Serializer.fromN3(metaContent).then(function (data) {
+                                DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
+                                    N3Serializer.fromN3(metaContent).then(function (data) {
 
-                                            if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Outil') {
-                                                item.id = data['http://www.ortolang.fr/ontology/toolId'];
-                                                item.name = data['http://purl.org/dc/elements/1.1/title'];
-                                                item.description = data['http://purl.org/dc/elements/1.1/description'];
-                                                item.documentation = data['http://www.ortolang.fr/ontology/toolHelp'];
-                                                item.url = data['http://www.ortolang.fr/ontology/toolUrl'];
-                                                item.meta = data;
-                                                item.active = true;
+                                        if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Outil') {
+                                            item.id = data['http://www.ortolang.fr/ontology/toolId'];
+                                            item.name = data['http://purl.org/dc/elements/1.1/title'];
+                                            item.description = data['http://purl.org/dc/elements/1.1/description'];
+                                            item.documentation = data['http://www.ortolang.fr/ontology/toolHelp'];
+                                            item.url = data['http://www.ortolang.fr/ontology/toolUrl'];
+                                            item.meta = data;
+                                            item.active = true;
 
-                                                register(new OrtolangTool(item));
+                                            register(new OrtolangTool(item));
+                                            if(item.rang === items.length-1) {
+                                                $rootScope.$broadcast('tool-list-registered');
                                             }
-                                        });
-                                    }).error(function (error) {
-                                        console.error('An issue occurred when trying to get the tool list: %o', error);
+                                        }
                                     });
-                                }
+                                }).error(function (error) {
+                                    console.error('An issue occurred when trying to get the tool list: %o', error);
+                                });
                             }
-                        }, function (reason) {
-                            console.error('An issue occurred when trying to get the tool list: %o', reason);
                         }
-                    );
+                    }, function (reason) {
+                        console.error('An issue occurred when trying to get the tool list: %o', reason);
+                    });
             });
         }
 
@@ -252,7 +253,7 @@ angular.module('ortolangMarketApp')
         function desactivateTool(toolKey) {
             if (registry[toolKey]) {
                 registry[toolKey].active = false;
-                console.log('The tool "%s" has been desactivated', toolKey);
+                console.warn('The tool "%s" has been desactivated', toolKey);
                 return;
             }
             console.error('There is no tool with the id "%s" in registry', toolKey);

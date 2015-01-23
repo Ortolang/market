@@ -18,9 +18,8 @@ angular.module('ortolangMarketApp')
         'FormResource',
         'RuntimeResource',
         'ToolManager',
-        'Url',
         '$q',
-        function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolManager, Url, $q) {
+        function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolManager, $q) {
 
         var translationsStartProcess,
             translationsCompleteTask,
@@ -146,6 +145,7 @@ angular.module('ortolangMarketApp')
                 if ($rootScope.activeProcessesNbr === 0) {
                     $timeout.cancel(processesTimeout);
                     $timeout.cancel(tasksTimeout);
+                    $timeout.cancel(toolJobsTimeout);
                 }
                 if ($rootScope.selectedProcess) {
                     $rootScope.selectedProcess = $filter('filter')($rootScope.processes, {key: $rootScope.selectedProcess.key})[0];
@@ -239,24 +239,26 @@ angular.module('ortolangMarketApp')
 
         function refreshTools() {
             $rootScope.toolJobs = [];
-            var promises = [];
+            //var promises = [];
             angular.forEach(ToolManager.getActiveRegistry(), function (tool) {
-                promises.push(ToolManager.getTool(tool.getKey()).getJobs().$promise.then(
+                //promises.push(
+                    ToolManager.getTool(tool.getKey()).getJobs().$promise.then(
                     function (data) {
                         angular.forEach(data.entries, function (job) {
                             job.name = tool.getName();
                             job.key = tool.getKey();
                         });
                         $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
-                    }, function (error) {
-                        console.log('The server of tool "%s" is not responding', tool.getKey());
+                    }, function () {
+                        console.warn('The server of tool "%s" is not responding', tool.getKey());
                         ToolManager.desactivateTool(tool.getKey());
                     }
-                ));
+                );//);
             });
 
-            $q.all(promises).then(
-                function success() {
+            //$q.all(promises).then(
+            //    function success() {
+                    console.info($rootScope.toolJobs);
                     completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
                     var justCompletedTools = $filter('filter')(activeToolJobs, function (activeToolJob) {
                         return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
@@ -266,8 +268,10 @@ angular.module('ortolangMarketApp')
                     });
                     activeToolJobs = getActiveToolJobs();
                     $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
-                    if (activeToolJobs.length === 0) {
+                    if ($rootScope.activeProcessesNbr === 0) {
                         $timeout.cancel(toolJobsTimeout);
+                        $timeout.cancel(processesTimeout);
+                        $timeout.cancel(tasksTimeout);
                     }
                     if ($rootScope.selectedProcess) {
                         $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
@@ -275,12 +279,12 @@ angular.module('ortolangMarketApp')
                             $rootScope.selectedProcess.log = data;
                         });
                     }
-                },
-                function error () {
-                    console.error('An error occurred while trying to refresh the tool list', error);
-                    $timeout.cancel(toolJobsTimeout);
-                }
-            );
+            //    },
+            //    function error () {
+            //        console.error('An error occurred while trying to refresh the tool list', error);
+            //        $timeout.cancel(toolJobsTimeout);
+            //    }
+            //);
             toolJobsTimeout = $timeout(refreshTools, timeout);
         }
 
