@@ -1,4 +1,4 @@
-<div ng-mouseover="showCaption='show-caption'" ng-mouseleave="showCaption=''">
+<div>
 	<img ng-if="image == undefined" class="logo" holder-js="holder.js/160x160/custom/text:{{'NO_IMAGE_PROVIDED' | translate}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
 	<img ng-if="image" class="logo" ng-src="{{image}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
 	<div class="caption" ng-class="showCaption">
