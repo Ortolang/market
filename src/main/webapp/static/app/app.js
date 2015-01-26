@@ -68,6 +68,12 @@ angular
                 controller: 'TasksCtrl',
                 requiresAuthentication: true
             })
+            .when('/presentation', {
+                templateUrl: 'presentation/presentation.html'
+            })
+            .when('/documentation', {
+                templateUrl: 'documentation/documentation.html'
+            })
             .when('/404', {
                 templateUrl: '404.html'
             })

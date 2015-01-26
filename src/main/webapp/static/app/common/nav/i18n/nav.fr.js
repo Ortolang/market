@@ -23,6 +23,8 @@ angular.module('ortolangMarketApp')
                 LANGUAGE: 'Langue',
                 FRENCH: 'Français',
                 ENGLISH: 'Anglais'
-            }
+            },
+            DOCUMENTATION: 'Documentation',
+            PRESENTATION: 'Présentation'
         }
     });
