@@ -92,9 +92,11 @@ angular.module('ortolangMarketApp')
         // ***************** //
 
         $scope.fail = false;
+        $scope.failMsg = undefined;
 
-        $scope.showError = function () {
+        $scope.showError = function (msg) {
             $scope.fail = true;
+            $scope.failMsg = msg;
         };
 
         $scope.hideError = function () {
@@ -124,7 +126,7 @@ angular.module('ortolangMarketApp')
                 },
                 function error(msg) {
                     console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);
-                    $scope.showError();
+                    $scope.showError(msg);
                 }
             );
         };

@@ -251,9 +251,11 @@ angular.module('ortolangMarketApp')
                                 job.key = tool.getKey();
                             });
                             $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
-                        }, function () {
+                        }, function (reason) {
                             console.warn('The server of tool "%s" is not responding', tool.getKey());
-                            ToolManager.disableTool(tool.getKey());
+                            if(reason.status!=='401') {
+                                ToolManager.disableTool(tool.getKey());
+                            }
                         }
                     ));
                 });

@@ -67,7 +67,7 @@
                             <div class="alert am-fade alert-danger" ng-show="isShowError()">
                                 <button type="button" class="close ng-scope" ng-click="hideError()">×</button>
                                 <strong>{{selectedTool.getName()}}</strong>&nbsp;
-                                <span>{{'TOOLS.FAIL' | translate }}.</span>
+                                <span>{{'TOOLS.FAIL' | translate }} : <i>{{failMsg.statusText}}</i></span>
                             </div>
                         </div>
                 </div>
