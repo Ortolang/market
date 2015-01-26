@@ -16,8 +16,8 @@
                             <span ng-class="icons.browser.remove"></span> Annuler
                         </buton>
                     </div>
-                    <div class="btn-group ">
-                        <buton class="btn btn-default" ng-click="download()">
+                    <div ng-if="selectedMetadata!==undefined" class="btn-group ">
+                        <buton class="btn btn-default" ng-click="download(selectedMetadata)">
                             <span ng-class="icons.browser.download"></span> Download
                         </buton>
                     </div>
