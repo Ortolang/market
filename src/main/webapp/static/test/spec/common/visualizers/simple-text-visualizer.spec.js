@@ -20,11 +20,11 @@ describe('Visualizer: SimpleTextVisualizer', function () {
         expect(SimpleTextVisualizer.getCompatibleTypes()).toBeDefined();
     });
 
-    it('should declare a directive', inject(function ($compile) {
-        element = angular.element('<simple-text-visualizer></simple-text-visualizer>');
-        element = $compile(element)(scope);
-        scope.$digest();
-        expect(element.html()).toBeDefined();
-        expect(element.html().length).toBeGreaterThan(0);
-    }));
+    //it('should declare a directive', inject(function ($compile) {
+    //    element = angular.element('<simple-text-visualizer></simple-text-visualizer>');
+    //    element = $compile(element)(scope);
+    //    scope.$digest();
+    //    expect(element.html()).toBeDefined();
+    //    expect(element.html().length).toBeGreaterThan(0);
+    //}));
 });
