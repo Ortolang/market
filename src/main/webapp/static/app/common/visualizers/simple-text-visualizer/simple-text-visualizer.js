@@ -16,6 +16,7 @@ angular.module('ortolangVisualizers')
             compatibleTypes: {
                 'text/plain': true,
                 'text/html': true,
+                'text/x-php': true,
                 'text/css': true,
                 'text/xml': true,
                 'application/xml': true,
@@ -39,12 +40,48 @@ angular.module('ortolangVisualizers')
  * # ortolangVisualizers
  */
 angular.module('ortolangVisualizers')
-    .directive('simpleTextVisualizer', [function () {
+    .directive('simpleTextVisualizer', ['DownloadResource', '$window', function (DownloadResource, $window) {
 
         return {
             templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
             restrict: 'E',
-            scope: true
+            scope: true,
+            link: {
+                pre: function (scope, element, attrs) {
+                    var mimeType = scope.elements[0].mimeType,
+                        limit = 20000;
+                    if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml') {
+                        scope.language = 'xml';
+                    } else if (mimeType === 'text/html') {
+                        scope.language = 'html';
+                    } else if (mimeType === 'text/css') {
+                        scope.language = 'css';
+                    } else if (mimeType === 'text/x-php') {
+                        scope.language = 'php';
+                    } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
+                        scope.language = 'javascript';
+                    } else {
+                        scope.language = undefined;
+                    }
+                    DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
+                        if (scope.elements[0].size >= limit) {
+                            scope.data = data.substr(0, limit);
+                            scope.seeMore = function () {
+                                scope.data = scope.fullData.substr(0, scope.data.length + limit);
+                            };
+                            scope.fullData = data;
+                        } else {
+                            scope.data = data;
+                        }
+                    }).error(function (error) {
+                        console.error(error);
+                    });
+                },
+                post: function () {
+                    var height = $window.innerHeight - 4 * parseInt(angular.element('.modal-dialog.modal-lg').css('margin-top'), 10);
+                    angular.element('.highlight').css('height', height);
+                }
+            }
         };
     }]);
 

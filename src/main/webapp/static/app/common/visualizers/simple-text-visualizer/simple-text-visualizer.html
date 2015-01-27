@@ -1,2 +1,5 @@
-<p><strong>{{elements[0].name}}</strong></p>
-<div hljs include="elements[0].downloadUrl"></div>
+<p>
+    <strong>{{elements[0].name}}</strong> <i ng-if="fullData" translate="SIMPLE_TEXT_VISUALISER.EXCERPT"></i>
+    <button ng-if="fullData" class="btn btn-default btn-xs pull-right" ng-click="seeMore()" translate="SIMPLE_TEXT_VISUALISER.SEE_MORE"></button>
+</p>
+<div hljs source="data" language="{{language}}" class="highlight"></div>

@@ -284,7 +284,7 @@ angular.module('ortolangMarketApp')
                             });
                         }
                     },
-                    function error () {
+                    function error() {
                         console.error('An error occurred while trying to refresh the tool list', error);
                         $timeout.cancel(toolJobsTimeout);
                     }
