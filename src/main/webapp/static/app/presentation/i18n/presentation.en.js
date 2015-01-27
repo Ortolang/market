@@ -86,6 +86,7 @@ angular.module('ortolangMarketApp')
             '</ul>',
             TITLE_PARTNERS: 'Partners',
             INSTITUTIONS: 'Institutions',
-            PARTNERS: 'Partners'
+            PARTNERS: 'Partners',
+            TITLE_ROADMAP: 'Roadmap'
         }
     });

@@ -82,6 +82,7 @@ angular.module('ortolangMarketApp')
             '</ul>',
             TITLE_PARTNERS: 'Partenaires',
             INSTITUTIONS: 'Institutions',
-            PARTNERS: 'Unités support du projet'
+            PARTNERS: 'Unités support du projet',
+            TITLE_ROADMAP: 'Roadmap'
         }
     });
