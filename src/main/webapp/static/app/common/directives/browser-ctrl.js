@@ -95,6 +95,10 @@ angular.module('ortolangMarketApp')
                     clearContextMenuItems();
                     if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
                         $scope.contextMenuItems.push({text: $scope.translationsNewCollection, icon: icons.browser.plus, action: 'addCollection'});
+                        // TODO Support importing files into selected directory
+                        if ($scope.hasOnlyParentSelected()) {
+                            $scope.contextMenuItems.push({text: $scope.translationsUploadFiles, icon: icons.browser.upload, action: 'uploadFiles'});
+                        }
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.browserService.canPreview && $scope.visualizers) {
@@ -106,7 +110,9 @@ angular.module('ortolangMarketApp')
                     }
                     if ($scope.browserService.canDelete && $scope.isHead && !$scope.hasOnlyParentSelected()) {
                         $scope.contextMenuItems.push({text: $scope.translationsDelete, icon: icons.browser.delete, action: 'delete'});
+                        $scope.contextMenuItems.push({divider: true});
                     }
+                    //$scope.contextMenuItems.push({text: $scope.otherViewMode.name, icon: $scope.otherViewMode.icon, action: 'switchViewMode'});
                     if ($scope.contextMenuItems[$scope.contextMenuItems.length - 1].divider) {
                         $scope.contextMenuItems.pop();
                     }
@@ -485,6 +491,10 @@ angular.module('ortolangMarketApp')
                         angular.element('#object-upload-file-select').click();
                     });
                     break;
+                case 'switchViewMode':
+                    $scope.switchViewMode();
+                    deactivateContextMenu();
+                    break;
                 case 'uploadFolder':
                     angular.element('#object-upload-folder-select').click();
                     break;
@@ -569,7 +579,7 @@ angular.module('ortolangMarketApp')
                 }
                 var element = $compile(visualizer.getElement())(isolatedScope),
                     visualizerModal = $('.visualizer-modal');
-                visualizerModal.find('.modal-header strong').text(visualizer.getName());
+                //visualizerModal.find('.modal-header strong').text(visualizer.getName());
                 visualizerModal.find('.modal-body').empty().append(element);
                 visualizerModal.modal('show');
                 $scope.contextMenu();

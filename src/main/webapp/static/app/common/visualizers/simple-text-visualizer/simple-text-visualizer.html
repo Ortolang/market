@@ -1,2 +1,7 @@
-<p><strong>{{elements[0].name}}</strong></p>
-<div hljs include="elements[0].downloadUrl"></div>
+<p>
+    <strong>{{elements[0].name}}</strong>
+    <!--<button ng-show="language" ng-click="highlight = !highlight" class="btn btn-default pull-right">Highlight</button>-->
+    <button ng-if="fullData" class="btn btn-default btn-xs pull-right" ng-click="seeFullData()" translate="SIMPLE_TEXT_VISUALISER.SEE_FULL_DATA"></button>
+</p>
+<div hljs source="data" language="{{language}}" class="highlight"></div>
+<!--<pre ng-hide="highlight">{{data}}</pre>-->
