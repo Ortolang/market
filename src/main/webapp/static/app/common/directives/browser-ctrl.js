@@ -33,8 +33,8 @@ angular.module('ortolangMarketApp')
         'FileSelectBrowserService',
         function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
-            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation,
-                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren;
+            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft, marketItemHeader,
+                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight;
 
             // *********************** //
             //        Breadcrumb       //
@@ -79,14 +79,18 @@ angular.module('ortolangMarketApp')
             $scope.contextMenu = function (clickEvent, sameChild) {
                 // TODO Context menu could be optimized when clicking on a same child but context menu deactivated
                 // If right click
+                if (!marketItemHeader) {
+                    marketItemHeader = angular.element('#market-item').find('header').innerHeight();
+                }
                 if (clickEvent && clickEvent.button === 2) {
                     $scope.contextMenuStyle = {
                         position: 'absolute',
                         display: 'block',
                         // Fix dropdown offset because of margin-left on page wrapper
-                        left: clickEvent.pageX + 'px',
+                        left: clickEvent.pageX - pageWrapperMarginLeft - 18 + 'px',
                         // Fix dropdown offset because of navbar and toolbar
-                        top: clickEvent.pageY + 'px'
+                        //top: clickEvent.clientY - 50 + 'px'
+                        top: clickEvent.pageY - marketItemHeader - browserToolbarHeight + 'px'
                     };
                     // If the context menu has already been build no need to do it again
                     if ($scope.isContextMenuActive && sameChild) {
@@ -361,7 +365,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.checkSelection = function (clickEvent) {
-                if ($scope.workspace && !($(clickEvent.target).parent('tr').length || $(clickEvent.target).parent('td').length ||
+                if (($scope.workspace || $scope.browserService === MarketBrowserService) && !($(clickEvent.target).parent('tr').length || $(clickEvent.target).parent('td').length ||
                         $(clickEvent.target).parent('.browsed-element-child').length ||
                         $(clickEvent.target).parent().parent('.browsed-element-child').length ||
                         $(clickEvent.target).parents('#context-menu').length ||
@@ -879,10 +883,12 @@ angular.module('ortolangMarketApp')
             $scope.resizeBrowser = function () {
                 if (!$scope.browserService.isFileSelect) {
                     console.debug('Resizing browser');
-                    var topOffset = $('#main-navbar').innerHeight(),
-                        height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-                        browserToolbarHeight = $('#browser-toolbar').innerHeight();
-
+                    var topOffset = $('#main-navbar').outerHeight(),
+                        height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+                    browserToolbarHeight = $('#browser-toolbar').outerHeight();
+                    if ($scope.browserService === MarketBrowserService) {
+                        topOffset += $('#market-item').find('header').outerHeight();
+                    }
                     height = height - topOffset;
                     if (height < 1) {
                         height = 1;
@@ -991,6 +997,7 @@ angular.module('ortolangMarketApp')
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
                 clearPreviousFilteringQueries();
+                pageWrapperMarginLeft = parseInt(angular.element('#page-wrapper').css('margin-left'), 10);
             }
 
             function initScopeVariables() {
