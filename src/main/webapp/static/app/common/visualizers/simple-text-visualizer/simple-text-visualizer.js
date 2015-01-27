@@ -48,7 +48,8 @@ angular.module('ortolangVisualizers')
             scope: true,
             link: {
                 pre: function (scope, element, attrs) {
-                    var mimeType = scope.elements[0].mimeType;
+                    var mimeType = scope.elements[0].mimeType,
+                        limit = 20000;
                     if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml') {
                         scope.language = 'xml';
                     } else if (mimeType === 'text/html') {
@@ -62,12 +63,11 @@ angular.module('ortolangVisualizers')
                     } else {
                         scope.language = undefined;
                     }
-                    scope.highlight = true;
                     DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
-                        if (scope.elements[0].size >= 20000) {
-                            scope.data = data.substr(0, 20000);
-                            scope.seeFullData = function () {
-                                scope.data = scope.fullData;
+                        if (scope.elements[0].size >= limit) {
+                            scope.data = data.substr(0, limit);
+                            scope.seeMore = function () {
+                                scope.data = scope.fullData.substr(0, scope.data.length + limit);
                             };
                             scope.fullData = data;
                         } else {

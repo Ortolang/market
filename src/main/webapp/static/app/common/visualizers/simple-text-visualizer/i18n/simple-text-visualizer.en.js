@@ -10,6 +10,7 @@
 angular.module('ortolangMarketApp')
     .constant('SIMPLE_TEXT_VISUALISER_EN', {
         SIMPLE_TEXT_VISUALISER: {
-            SEE_FULL_DATA: 'See the whole content'
+            SEE_MORE: 'See more content',
+            EXCERPT: '(excerpt)'
         }
     });
