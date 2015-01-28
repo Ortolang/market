@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .constant('NAV_FR', {
         NAV: {
-            MARKET: 'Portail',
+            MARKET: 'Resources',
             MY_WORKSPACES: 'Mes espaces',
             TOOLS: 'Outils',
             PROCESSES: 'Processus',
