@@ -1,7 +1,7 @@
 <nav ng-controller="SideNavCtrl" class="side-nav ng-cloak" role="navigation" ng-cloak>
     <ul class="side-nav-list">
-        <li ng-if="!element.authenticated || authenticated" class="side-nav-list-item" ng-repeat="element in sortedNavElements" ng-class="element.active">
-            <a ng-href="#{{element.path}}" ng-click="select($event, element)" ng-class="element.class">
+        <li ng-if="(!element.hidden || element.active) && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-repeat="element in sortedNavElements" ng-class="element.active">
+            <a ng-href="#{{element.path}}" ng-click="select(element)" ng-class="element.class">
                 <span class="icon-container" ng-class="element.iconCss"></span>
                 <!--<span ng-if="element.badge" class="badge" ng-class="element.badge().class">{{element.badge().value > 0 ? element.badge().value : ''}}</span>-->
                 <span class="item-description">{{element.description}}</span>

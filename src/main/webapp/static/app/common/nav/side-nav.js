@@ -22,11 +22,15 @@ angular.module('ortolangMarketApp')
             });
         }
 
-        $scope.select = function ($event, element) {
+        $scope.select = function (element) {
             angular.forEach($scope.navElements, function (value) {
                 value.active = value.class === element.class ? 'active' : undefined;
             });
             sortNavElements();
+        };
+
+        $rootScope.selectTasks = function () {
+            $scope.select({class: 'tasks'});
         };
 
         $rootScope.$on('$translateChangeSuccess', function () {
@@ -135,6 +139,7 @@ angular.module('ortolangMarketApp')
                             };
                         },
                         active: undefined,
+                        hidden: true,
                         authenticated: true
                     },
                     {
