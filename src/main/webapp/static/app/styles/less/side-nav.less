@@ -10,9 +10,7 @@
       &.active {
         height: @side-bar-item-active-height;
         > a {
-          background-color: @side-bar-item-active-color;
           .icon-container {
-            background-color: @side-bar-item-active-color;
             line-height: @side-bar-item-active-height;
           }
           .item-description {
@@ -33,7 +31,7 @@
           position: relative;
           text-align: center;
           z-index: 5;
-          width: @side-bar-item-height + 10px;
+          width: @side-bar-item-height + 14px;
           line-height: @side-bar-item-height;
           color: #FFFFFF;
         }
@@ -47,41 +45,67 @@
         }
       }
 
-      &:not(.active) > a {
+      &.active > a {
+        &.market {
+          background-color: @market-primary;
+        }
+
+        &.presentation {
+          background-color: @presentation-primary;
+        }
+
+        &.documentation {
+          background-color: @documentation-primary;
+        }
+
+        &.workspaces:not(.active) {
+          background-color: @workspace-primary;
+        }
+
+        &.processes {
+          background-color: @processes-primary;
+        }
+
+        &.tasks {
+          background-color: @tasks-primary;
+        }
+      }
+
+      > a {
 
         &.market {
           &:hover, .icon-container {
-            background-color: #b3c833;
+            background-color: @market-primary;
           }
         }
 
         &.presentation {
           &:hover, .icon-container {
-            background-color: #ce5043;
+            background-color: @presentation-primary;
           }
         }
 
         &.documentation {
           &:hover, .icon-container {
-            background-color: @orange-lighter;
+            background-color: @documentation-primary;
           }
         }
 
         &.workspaces:not(.active) {
           &:hover, .icon-container {
-            background-color: @ortolang-blue;
+            background-color: @workspace-primary;
           }
         }
 
         &.processes {
           &:hover, .icon-container {
-            background-color: #3f5ca9;
+            background-color: @processes-primary;
           }
         }
 
         &.tasks {
           &:hover, .icon-container {
-            background-color: #658092;
+            background-color: @tasks-primary;
           }
         }
 
