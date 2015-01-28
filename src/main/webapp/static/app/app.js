@@ -69,7 +69,8 @@ angular
                 requiresAuthentication: true
             })
             .when('/presentation', {
-                templateUrl: 'presentation/presentation.html'
+                templateUrl: 'presentation/information.html'
+                /*templateUrl: 'presentation/presentation.html'*/
                 /*templateUrl: 'presentation/partners.html'*/
                 /*templateUrl: 'presentation/roadmap.html'*/
                 /*templateUrl: 'presentation/legal-informations.html'*/
