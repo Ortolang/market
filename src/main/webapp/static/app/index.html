@@ -27,7 +27,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,300' rel='stylesheet' type='text/css'>
 </head>
 
-<body ng-controller="AuthCtrl">
+<body ng-controller="AuthCtrl" id="top">
 
 <div id="wrapper" >
 
@@ -38,6 +38,9 @@
         <div class="container-fluid ng-cloak" ng-view="" ng-cloak>
         </div>
     </div>
+
+    <div ng-include="'common/nav/footer.html'"></div>
+
 </div>
 
 <!-- build:js(.) scripts/oldieshim.js -->
@@ -144,6 +147,7 @@
 <script src="common/visualizers/diff-visualizer/diff-visualizer.js"></script>
 <script src="common/nav/side-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
+<script src="common/nav/footer.js"></script>
 <script src="common/nav/i18n/nav.fr.js"></script>
 <script src="common/nav/i18n/nav.en.js"></script>
 <script src="common/i18n/common.fr.js"></script>

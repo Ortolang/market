@@ -26,6 +26,8 @@ angular.module('ortolangMarketApp')
             },
             DOCUMENTATION: 'Documentation',
             PRESENTATION: 'Presentation',
-            STATE_SUPPORT: ' is a beneficiary of French State support via its  “Investissements d\'avenir” program (ANR-11-EQPX-0032).'
+            STATE_SUPPORT: ' is a beneficiary of French State support via its  “Investissements d\'avenir” program (ANR-11-EQPX-0032).',
+            BACK_TOP: 'Back to top',
+            TEAM: 'Ortolang team'
         }
     });

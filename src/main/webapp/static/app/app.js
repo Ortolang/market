@@ -68,13 +68,23 @@ angular
                 controller: 'TasksCtrl',
                 requiresAuthentication: true
             })
-            .when('/presentation', {
+            .when('/partners', {
+                templateUrl: 'presentation/partners.html'
+            })
+            .when('/roadmap', {
+                templateUrl: 'presentation/roadmap.html'
+            })
+            .when('/information', {
                 templateUrl: 'presentation/information.html'
-                /*templateUrl: 'presentation/presentation.html'*/
-                /*templateUrl: 'presentation/partners.html'*/
-                /*templateUrl: 'presentation/roadmap.html'*/
-                /*templateUrl: 'presentation/legal-informations.html'*/
-                /*templateUrl: 'presentation/careers.html'*/
+            })
+            .when('/presentation', {
+                templateUrl: 'presentation/presentation.html'
+            })
+            .when('/legal-informations', {
+                templateUrl: 'presentation/legal-informations.html'
+            })
+            .when('/careers', {
+                templateUrl: 'presentation/careers.html'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
