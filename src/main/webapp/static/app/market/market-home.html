@@ -1,16 +1,20 @@
 <div id="market-home">
 
-    <section class="row" id="search-market">
-        <div class="col-md-offset-3 col-md-6">
-            <p class="lead text-center" translate="MARKET.PUNCH_LINE"></p>
-            <div class="input-group">
-                <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
-                <span class="input-group-btn">
-                    <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-            </div>
-        </div>
-    </section>
+    <!--<section class="row" id="search-market">-->
+        <!--<div class="col-md-offset-3 col-md-6">-->
+            <!--<p class="lead text-center" translate="MARKET.PUNCH_LINE"></p>-->
+            <!--<div class="input-group">-->
+                <!--<input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>-->
+
+    <div class="row">
+        <div id="browser-toolbar"></div>
+    </div>
 
     <section ng-if="items.length>0" class="row">
         <div class="col-md-12">
@@ -45,7 +49,7 @@
             <div class="flex-row">
 
                     <item class="flex-column medium-item" ng-repeat="item in outils | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" data-category="'Outil'" ng-click="clickItem(item)"></item>
-                
+
             </div>
         </div>
     </section>
@@ -58,7 +62,7 @@
             <div class="flex-row">
 
                     <item class="flex-column medium-item" ng-repeat="item in lexiques | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" data-category="'Lexique'" ng-click="clickItem(item)"></item>
-               
+
             </div>
         </div>
     </section>

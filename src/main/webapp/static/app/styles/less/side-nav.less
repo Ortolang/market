@@ -1,27 +1,27 @@
 .side-nav {
-    > ul {
+  .side-nav-list {
     margin: 0;
-    padding: @padding-large-vertical 0;
-    > li {
+    padding: 0 0 @padding-large-vertical 0;
+
+    .side-nav-list-item {
       list-style: none;
-      text-align: center;
-      vertical-align: baseline;
       height: @side-bar-item-height;
-      margin-bottom: @padding-base-vertical;
 
-      &.active:not(:hover) {
-
-        > a, > div {
-          i {
-            background-color: lighten(#000, 85%);
-            border-radius: 50%;
+      &.active {
+        height: @side-bar-item-active-height;
+        > a {
+          background-color: @side-bar-item-active-color;
+          .icon-container {
+            background-color: @side-bar-item-active-color;
+            line-height: @side-bar-item-active-height;
           }
-
+          .item-description {
+            color: #FFFFFF;
+          }
         }
-
       }
 
-      > a, > div {
+      > a {
         display: block;
         position: relative;
         text-decoration: none;
@@ -29,67 +29,81 @@
         cursor: pointer;
         transition: 0s;
 
-        &:hover {
-          background-color: @side-bar-item-bg;
-          color: @side-bar-item-active-color;
-          .badge, .badge.tasks, .badge.processes {
-            color: @orange-lighter;
-            background-color: #FFFFFF;
-          }
-          .nav-description {
-            width: 200px;
-            display: block;
-            background-color: @side-bar-item-bg;
-            color: @side-bar-item-active-color;
-            padding-left: @side-bar-width - @padding-small-horizontal;
-            transition-delay: 0.1s;
-            transition-duration: 0.2s;
-            transition-property: width, color, padding;
-          }
-          transition: 0.1s;
-        }
-
-        &.activated .nav-description {
-          display: none;
-        }
-
-        i {
+        .icon-container {
           position: relative;
+          text-align: center;
           z-index: 5;
-          height: @side-bar-item-height;
-          width: @side-bar-item-height;
+          width: @side-bar-item-height + 10px;
           line-height: @side-bar-item-height;
+          color: #FFFFFF;
         }
 
-        .badge {
-          position: absolute;
-          top: -1px;
-          right: 5px;
-          z-index: 1000;
-          &.processes {
-            background-color: @btn-danger-bg;
-          }
-          &.tasks {
-            background-color: @btn-success-bg;
-          }
-        }
-
-        .nav-description {
-          box-sizing: border-box;
-          color: rgba(0,0,0,0);
-          background-color: rgba(0,0,0,0);
-          text-align: left;
-          width: @side-bar-width;
+        .item-description {
+          padding-left: @padding-base-horizontal;
           overflow: hidden;
           text-overflow: ellipsis;
-          position: absolute;
-          top: 0;
-          left: 0;
-          line-height: @side-bar-item-height;
-          height: 100%;
           white-space: nowrap;
-          transition: all 0 ease 0;
+          vertical-align: super;
         }
+      }
+
+      &:not(.active) > a {
+
+        &.market {
+          &:hover, .icon-container {
+            background-color: #b3c833;
+          }
+        }
+
+        &.presentation {
+          &:hover, .icon-container {
+            background-color: #ce5043;
+          }
+        }
+
+        &.documentation {
+          &:hover, .icon-container {
+            background-color: @orange-lighter;
+          }
+        }
+
+        &.workspaces:not(.active) {
+          &:hover, .icon-container {
+            background-color: @ortolang-blue;
+          }
+        }
+
+        &.processes {
+          &:hover, .icon-container {
+            background-color: #3f5ca9;
+          }
+        }
+
+        &.tasks {
+          &:hover, .icon-container {
+            background-color: #658092;
+          }
+        }
+
+        &:hover {
+          .item-description {
+            color: #FFFFFF;
+          }
+        }
+
+//        .badge {
+//          position: absolute;
+//          top: -1px;
+//          right: 5px;
+//          z-index: 1000;
+//          &.processes {
+//            background-color: @btn-danger-bg;
+//          }
+//          &.tasks {
+//            background-color: @btn-success-bg;
+//          }
+//        }
+
       }
     }
   }

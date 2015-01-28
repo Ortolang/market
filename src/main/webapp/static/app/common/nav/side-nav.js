@@ -10,13 +10,23 @@
 angular.module('ortolangMarketApp')
     .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', function ($rootScope, $scope, $route, $translate) {
 
+        function sortNavElements() {
+            $scope.sortedNavElements = angular.copy($scope.navElements).sort(function (a, b) {
+                if (a.active === 'active') {
+                    return -100;
+                } else if (b.active === 'active') {
+                    return 100;
+                } else {
+                    return 0;
+                }
+            });
+        }
+
         $scope.select = function ($event, element) {
-            angular.element($event.target).parent().addClass('activated').on('mouseleave', function () {
-                angular.element(this).removeClass('activated').off('mouseleave');
-            });
             angular.forEach($scope.navElements, function (value) {
-                value.active = value === element ? 'active' : undefined;
+                value.active = value.class === element.class ? 'active' : undefined;
             });
+            sortNavElements();
         };
 
         $rootScope.$on('$translateChangeSuccess', function () {
@@ -40,6 +50,7 @@ angular.module('ortolangMarketApp')
                     break;
                 }
             }
+            sortNavElements();
         }
 
         function initTranslations() {
@@ -66,31 +77,40 @@ angular.module('ortolangMarketApp')
 
                 $scope.navElements = [
                     {
+                        class: 'market',
                         path: '/market',
                         description: $scope.translationsMarket,
                         iconCss: 'fa fa-home fa-2x',
-                        active: undefined
+                        active: undefined,
+                        authenticated: false
                     },
                     {
-                      path: '/presentation',
+                        class: 'presentation',
+                        path: '/presentation',
                         description: $scope.translationPresentation,
                         iconCss: 'fa fa-info fa-2x',
-                        active: undefined
+                        active: undefined,
+                        authenticated: false
                     },
                     {
+                        class: 'documentation',
                         path: '/documentation',
                         description: $scope.translationDocumentation,
                         iconCss: 'fa fa-book fa-2x',
-                        active: undefined
+                        active: undefined,
+                        authenticated: false
                     },
                     {
+                        class: 'workspaces',
                         path: '/workspaces',
                         otherPath: '/workspaces',
                         description: $scope.translationsMyWorkspaces,
                         iconCss: 'fa fa-cloud fa-2x',
-                        active: undefined
+                        active: undefined,
+                        authenticated: true
                     },
                     {
+                        class: 'processes',
                         path: '/processes',
                         description: $scope.translationsProcesses,
                         iconCss: 'fa fa-tasks fa-2x',
@@ -100,9 +120,11 @@ angular.module('ortolangMarketApp')
                                 class: 'processes'
                             };
                         },
-                        active: undefined
+                        active: undefined,
+                        authenticated: true
                     },
                     {
+                        class: 'tasks',
                         path: '/tasks',
                         description: $scope.translationsTasks,
                         iconCss: 'fa fa-bell fa-2x',
@@ -112,13 +134,15 @@ angular.module('ortolangMarketApp')
                                 class: 'tasks'
                             };
                         },
-                        active: undefined
+                        active: undefined,
+                        authenticated: true
                     },
                     {
                         path: '/profile',
                         description: $scope.translationProfile,
                         iconCss: 'fa fa-user fa-2x',
-                        active: undefined
+                        active: undefined,
+                        authenticated: true
                     }
                 ];
                 init();
