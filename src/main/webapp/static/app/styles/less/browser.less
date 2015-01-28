@@ -91,7 +91,7 @@
   }
 
   span.root {
-    color: @ortolang-blue;
+    color: @workspace-primary;
     font-style: italic;
     text-transform: lowercase;
 
@@ -102,7 +102,7 @@
 
   .snapshots {
     .active div {
-      color: @orange-lighter;
+      color: @workspace-primary;
       font-weight: bold;
     }
   }
@@ -247,7 +247,7 @@
         }
         &.active {
           .name-wrapper {
-            background-color: @ortolang-blue;
+            background-color: @workspace-primary;
             color: @gray-lightest;
           }
           .preview span {
@@ -292,7 +292,7 @@ table.workspace-elements {
   .user-select-mixin;
   tr.active {
     td {
-      background-color: @ortolang-blue;
+      background-color: @workspace-primary;
       color: #FFF;
       span.glyphicon.type, span.fa.type {
         color: inherit;
@@ -348,7 +348,7 @@ table.workspace-elements {
       text-overflow: ellipsis;
       overflow: hidden;
       &:hover {
-        background-color: @orange-lighter;
+        background-color: @workspace-primary;
         color: #FFFFFF;
         cursor: pointer;
       }
@@ -360,7 +360,7 @@ table.workspace-elements {
           height: 100%;
           margin-top: -@padding-large-vertical;
           width: 5px;
-          background-color: @orange-lighter;
+          background-color: @workspace-primary;
         }
         &:hover {
           cursor: default;
@@ -378,6 +378,9 @@ table.workspace-elements {
 
   .btn-secondary {
     .button-variant(@btn-secondary-color; @btn-secondary-bg; @btn-secondary-border);
+  }
+  .btn-workspace {
+    .button-variant(@btn-workspace-color; @btn-workspace-bg; @btn-workspace-border);
   }
 }
 
