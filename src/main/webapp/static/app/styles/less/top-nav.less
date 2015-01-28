@@ -46,11 +46,23 @@
       top: 2px;
       margin-right: @padding-xs-horizontal;
       display: inline-block;
+      padding-right: 0;
+
+      &.fa-tasks, &.fa-bell {
+        padding-right: 15px;
+        margin-right: 0;
+      }
 
       .badge {
-        vertical-align: text-bottom;
+        position: absolute;
+        right: 5px;
+        top: 6px;
         &.tasks {
           background-color: @market-primary;
+        }
+        &.processes {
+          background-color: @processes-primary;
+
         }
       }
     }

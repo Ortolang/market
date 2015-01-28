@@ -33,6 +33,14 @@ angular.module('ortolangMarketApp')
             $scope.select({class: 'tasks'});
         };
 
+        $rootScope.selectProcesses = function () {
+            $scope.select({class: 'processes'});
+        };
+
+        $rootScope.selectHome = function () {
+            $scope.select({class: 'market'});
+        };
+
         $rootScope.$on('$translateChangeSuccess', function () {
             initTranslations();
         });
@@ -125,6 +133,7 @@ angular.module('ortolangMarketApp')
                             };
                         },
                         active: undefined,
+                        hidden: true,
                         authenticated: true
                     },
                     {

@@ -1,15 +1,17 @@
 <nav ng-controller="TopNavCtrl" id="main-navbar" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
-        <a class="navbar-brand" href="/#/">
+        <a class="navbar-brand" href="/#/" ng-click="selectHome()">
             <img class="ortolang-logo" src="assets/images/logo-ortolang-white.png"/>
             <span class="text-uppercase">Ortolang</span>
         </a>
     </div>
 
     <ul class="nav navbar-top-links navbar-right ng-cloak" ng-cloak>
-        <li>
-            <a class="fa fa-bell" href="/#/tasks" ng-click="selectTasks()"> <span class="badge tasks">{{tasks && tasks.length > 0 ? tasks.length : ''}}</span></a>
-
+        <li ng-if="authenticated">
+            <a class="fa fa-tasks" href="/#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip> <span class="badge processes">{{activeProcessesNbr && activeProcessesNbr > 0 ? activeProcessesNbr : ''}}</span></a>
+        </li>
+        <li ng-if="authenticated">
+            <a class="fa fa-bell" href="/#/tasks" ng-click="selectTasks()" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip> <span class="badge tasks">{{tasks && tasks.length > 0 ? tasks.length : ''}}</span></a>
         </li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">
@@ -28,7 +30,6 @@
                 <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
             </ul>
         </li>
-        <li ng-if="!authenticated"><a ng-click="register()"><span class="fa fa-bookmark fa-fw"></span> {{'NAV.REGISTER' | translate}}</a></li>
         <li ng-if="!authenticated"><a ng-click="login()"><span class="fa fa-user fa-fw"></span> {{'LOG_IN' | translate}}</a></li>
     </ul>
 </nav>
