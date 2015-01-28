@@ -56,7 +56,7 @@
           background-color: @documentation-primary;
         }
 
-        &.workspaces:not(.active) {
+        &.workspaces {
           background-color: @workspace-primary;
         }
 
@@ -66,6 +66,10 @@
 
         &.tasks {
           background-color: @tasks-primary;
+        }
+
+        &.profile {
+          background-color: @profile-primary;
         }
       }
 
@@ -89,7 +93,7 @@
           }
         }
 
-        &.workspaces:not(.active) {
+        &.workspaces {
           &:hover, .icon-container {
             background-color: @workspace-primary;
           }
@@ -109,7 +113,7 @@
 
         &.profile {
           &:hover, .icon-container {
-            background-color: #9450a9;
+            background-color: @profile-primary;
           }
         }
 
