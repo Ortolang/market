@@ -74,7 +74,8 @@ angular.module('ortolangMarketApp')
                 {id:'contributor', label: 'Contribution'},
                 {id:'corpora', label: 'Corpus'},
                 {id:'annotation', label: 'Enrichissement'},
-                {id:'tool', label: 'Outil'}
+                {id:'tool', label: 'Outil'},
+                {id:'website', label: 'Site web'}
             ];
             $scope.selectedTab = 'info';
 
