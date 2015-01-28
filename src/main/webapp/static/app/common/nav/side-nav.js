@@ -138,6 +138,7 @@ angular.module('ortolangMarketApp')
                         authenticated: true
                     },
                     {
+                        class: 'profile',
                         path: '/profile',
                         description: $scope.translationProfile,
                         iconCss: 'fa fa-user fa-2x',
