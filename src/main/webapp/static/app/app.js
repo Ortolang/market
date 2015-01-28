@@ -75,6 +75,11 @@ angular
                 /*templateUrl: 'presentation/legal-informations.html'*/
                 /*templateUrl: 'presentation/careers.html'*/
             })
+            .when('/profile', {
+                templateUrl: 'profile/profile.html',
+                controller: 'ProfileCtrl',
+                requiresAuthentication: true
+            })
             .when('/documentation', {
                 templateUrl: 'documentation/documentation.html'
             })
