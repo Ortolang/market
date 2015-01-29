@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', function ($scope, $translate, AuthService) {
+    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'Runtime', function ($scope, $translate, AuthService, Runtime) {
 
         $scope.login = function () {
             AuthService.login();
