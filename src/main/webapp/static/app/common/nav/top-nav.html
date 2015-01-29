@@ -27,6 +27,7 @@
                 <span class="fa fa-user fa-fw"></span> {{currentUser.name}} <span class="fa fa-caret-down"></span>
             </a>
             <ul class="dropdown-menu dropdown-user">
+                <li ng-click="selectProfile()"><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                 <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
             </ul>
         </li>

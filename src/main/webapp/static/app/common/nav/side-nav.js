@@ -41,6 +41,10 @@ angular.module('ortolangMarketApp')
             $scope.select({class: 'market'});
         };
 
+        $rootScope.selectProfile = function () {
+            $scope.select({class: 'profile'});
+        };
+
         $rootScope.$on('$translateChangeSuccess', function () {
             initTranslations();
         });
@@ -74,7 +78,6 @@ angular.module('ortolangMarketApp')
                 'NAV.TASKS',
                 'NAV.SETTINGS',
                 'NAV.PRESENTATION',
-                'NAV.DOCUMENTATION',
                 'NAV.PROFILE'
             ]).then(function (translations) {
                 $scope.translationsMarket = translations['NAV.MARKET'];
@@ -84,7 +87,6 @@ angular.module('ortolangMarketApp')
                 $scope.translationsTasks = translations['NAV.TASKS'];
                 $scope.translationsSettings = translations['NAV.SETTINGS'];
                 $scope.translationPresentation = translations['NAV.PRESENTATION'];
-                $scope.translationDocumentation = translations['NAV.DOCUMENTATION'];
                 $scope.translationProfile = translations['NAV.PROFILE'];
 
                 $scope.navElements = [
@@ -101,14 +103,6 @@ angular.module('ortolangMarketApp')
                         path: '/information',
                         description: $scope.translationPresentation,
                         iconCss: 'fa fa-info fa-2x',
-                        active: undefined,
-                        authenticated: false
-                    },
-                    {
-                        class: 'documentation',
-                        path: '/documentation',
-                        description: $scope.translationDocumentation,
-                        iconCss: 'fa fa-book fa-2x',
                         active: undefined,
                         authenticated: false
                     },
@@ -157,6 +151,7 @@ angular.module('ortolangMarketApp')
                         description: $scope.translationProfile,
                         iconCss: 'fa fa-user fa-2x',
                         active: undefined,
+                        hidden: true,
                         authenticated: true
                     }
                 ];
