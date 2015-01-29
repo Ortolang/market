@@ -1,4 +1,66 @@
 .presentation-color-highlight {
-  color: #008BD0;
+  color: @ortolang-blue;
   margin-left: -15px;
+}
+.carousel {
+  max-height: 300px;
+  overflow: hidden;
+
+  .carousel-inner {
+    .item {
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      img {
+        margin: 0 auto;
+      }
+    }
+  }
+  .carousel-caption {
+    position: relative;
+    text-align: left;
+    bottom: 0;
+    left:0;
+    right:0;
+    text-shadow: none;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 20%;
+    padding-right: 20%;
+    background-color: @top-navbar-bg-color;
+
+    a:link {
+      color: @highlight-bg-color;
+    }
+    a:visited {
+      text-decoration: none;
+      color: @highlight-bg-color;;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: @highlight-bg-color;
+    }
+  }
+}
+.informationToolBar &>.active &>a,.informationToolBar &>.active &>a:hover,.informationToolBar &>li &>a:hover,.informationToolBar &>li &>li &>a:hover {
+  text-decoration: none;
+  border-radius:0;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  border-bottom-color: @presentation-primary;
+  color: #000 !important;
+  background-color: transparent !important;
+  max-height: @side-bar-item-height;
+}
+.informationToolBar {
+  margin-bottom: -25px;
+  padding-bottom: 0;
+  height: @side-bar-item-height;
+  max-height: @side-bar-item-height;
+  font-size: 12px;
+
+  & > li {
+    & > a {
+      border-radius:0;
+    }
+  }
 }

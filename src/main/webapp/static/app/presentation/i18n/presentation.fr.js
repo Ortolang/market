@@ -10,6 +10,22 @@
 angular.module('ortolangMarketApp')
     .constant('PRES_FR', {
         PRES: {
+            ORTOLANG: 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
+            INFO:'<p>ORTOLANG est un <b>équipement d’excellence</b> validé dans le cadre des <a href="http://investissement-avenir.gouvernement.fr/" target="_BLANK">investissements d’avenir</a>. ' +
+            'Son but est de proposer une infrastructure en réseau offrant un <b>réservoir de données</b> (corpus, lexiques, dictionnaires, etc.) et d’outils sur <b>la langue et son traitement</b> ' +
+            'clairement disponibles et documentés qui :</p>' +
+            '<ul>' +
+            '   <li>permette, au travers d’une véritable <b>mutualisation</b>, à la recherche sur l’analyse, la <b>modélisation</b> et le <b>traitement automatique</b> de notre langue de se hisser au ' +
+            '<b>meilleur niveau international</b> ;</li>' +
+            '   <li><b>facilite l’usage</b> et le transfert des ressources et <b>outils</b> mis en place au sein des <b>laboratoires publics</b> vers les <b>partenaires industriels</b> ' +
+            'en particulier vers les PME qui souvent ne peuvent pas se permettre de développer de telles ressources et outils de traitement de la langue compte tenu de leurs coûts de réalisation ;</li>' +
+            '   <li><b>valorise</b> le français et les langues de France à travers un <b>partage des connaissances</b> sur notre langue accumulées par les laboratoires publics.</li>' +
+            '</ul>',
+            PROJET: '<p>ORTOLANG est un service <strong>spécialisé pour la langue</strong>, complémentaire de l\'offre générale proposée par <a href="http://www.huma-num.fr/" target="_Blank">Huma-Num</a> ' +
+            '(très grande infrastructure de recherche).</p>' +
+            '<p>En savoir <a href="/#/presentation" title="Présentation de Ortolang">plus sur le projet…</a></p>',
+            INNOVATIVE_SHS: 'Retrouver ORTOLANG à la Seconde édition du salon Innovatives SHS de l\'INSHS',
+            FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG',
             TITLE_PRESENTATION: 'Présentation',
             PRESENTATION: '<p>ORTOLANG est un <b>équipement d’excellence</b> validé dans le cadre des <a href="http://investissement-avenir.gouvernement.fr" target="_BLANK">investissements d’avenir</a>. ' +
             'Son but est de proposer une infrastructure en réseau offrant un <b>réservoir de données</b> (corpus, lexiques, dictionnaires, etc.) et d’outils sur <b>la langue et son traitement</b> clairement ' +
@@ -80,9 +96,16 @@ angular.module('ortolangMarketApp')
             '   <li>traitement Automatique des Langues (<a target="_blank" href="http://www.loria.fr">LORIA</a>, <a target="_blank" href="http://www.lpl-aix.fr">LPL</a>, ' +
             '<a target="_blank" href="http://www.atilf.fr">ATILF</a>).</li>' +
             '</ul>',
+            LINK_DOCUMENTATION: '<p>Une <a href="/#/documentation" title="Documentation Utilisateur">documentation utilisateur</a> est disponible pour vous aider ' +
+            'à effectuer des recherches.</p>' +
+            '<p>Vous pouvez également accèder au <a href="http://dev.ortolang.fr/" target="_blank" >site communautaire</a> de l\'équipe de développement du projet ORTOLANG.</p>',
+            LINK_PARTNERS: 'ORTOLANG réunit des compétences variées grâce à un ensemble de <a href="/#/partners" title="Partenaires">partenaires</a>.',
+            LINK_ROADMAP: 'Le planning de réalisation globale des versions majeures d\'ORTOLANG est visible dans la <a href="/#/roadmap" title="roadmap">roadmap générale</a>.',
             TITLE_PARTNERS: 'Partenaires',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Unités support du projet',
-            TITLE_ROADMAP: 'Roadmap'
+            TITLE_ROADMAP: 'Roadmap',
+            TITLE_DOCUMENTATION: 'Documentation',
+            TITLE_LEGAL_INFORMATIONS: 'Mentions légales'
         }
     });

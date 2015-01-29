@@ -79,7 +79,7 @@ angular.module('ortolangMarketApp')
                 'NAV.PROCESSES',
                 'NAV.TASKS',
                 'NAV.SETTINGS',
-                'NAV.PRESENTATION',
+                'NAV.INFORMATION',
                 'NAV.PROFILE'
             ]).then(function (translations) {
                 $scope.translationsMarket = translations['NAV.MARKET'];
@@ -90,7 +90,7 @@ angular.module('ortolangMarketApp')
                 $scope.translationsProcesses = translations['NAV.PROCESSES'];
                 $scope.translationsTasks = translations['NAV.TASKS'];
                 $scope.translationsSettings = translations['NAV.SETTINGS'];
-                $scope.translationPresentation = translations['NAV.PRESENTATION'];
+                $scope.translationInformation = translations['NAV.INFORMATION'];
                 $scope.translationProfile = translations['NAV.PROFILE'];
 
                 $scope.navElements = [
@@ -121,7 +121,7 @@ angular.module('ortolangMarketApp')
                     {
                         class: 'presentation',
                         path: '/information',
-                        description: $scope.translationPresentation,
+                        description: $scope.translationInformation,
                         iconCss: 'fa fa-info fa-2x',
                         active: undefined,
                         authenticated: false

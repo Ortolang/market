@@ -10,6 +10,22 @@
 angular.module('ortolangMarketApp')
     .constant('PRES_EN', {
         PRES: {
+            ORTOLANG: 'Open Resources and TOols for LANGuage',
+            INFO: '<p>ORTOLANG is an <b>EQUIPEX project</b> accepted in February 2012 in the framework of <a href="http://investissement-avenir.gouvernement.fr/" target="_BLANK">investissements d’avenir</a>' +
+            'Its aim is to construct a network infrastructure including a repository of language data (corpora, lexicons, dictionaries etc.) and readily available, well-documented tools for its processing. ' +
+            'Expected outcomes comprize:</p>' +
+            '<ul>' +
+            '   <li>promoting research on analysis, <strong>modelling</strong> and <strong>automatic processing</strong> of our language to their <strong>highest international levels</strong> ' +
+            'thanks to <strong>effective resource pooling</strong>;</li>' +
+            '   <li><strong>facilitating the use</strong> and transfer of resources and <strong>tools</strong> set up within <strong>public laboratories</strong> to <strong>industrial partners</strong>, ' +
+            'notably SMEs which often cannot develop such resources and tools for language processing given the cost of investment ;</li>' +
+            '   <li><strong>promoting French language and the regional languages of France</strong> by sharing expertise acquired by public laboratories.</li>' +
+            '</ul>',
+            PROJET: '<p>ORTOLANG is a service <strong>for the language</strong>, which is complementary to the service offered by <a href="http://www.huma-num.fr/" target="_Blank">Huma-Num</a> ' +
+            '(très grande infrastructure de recherche).</p>' +
+            '<p>More <a href="/#/presentation" title="Présentation de Ortolang">about this project…</a></p>',
+            INNOVATIVE_SHS: 'Meet ORTOLANG at the 2nd conference  of the exposition "Innovatives SHS de l\'INSHS"',
+            FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
             TITLE_PRESENTATION: 'Presentation',
             PRESENTATION: '<p>ORTOLANG is an <strong>EQUIPEX project</strong> accepted in February 2012 in the framework of  <a href="http://investissement-avenir.gouvernement.fr/" target="_BLANK">' +
             'investissements d’avenir</a>. Its aim is to construct a network infrastructure including a repository of <strong>language data</strong> (corpora, lexicons, dictionaries etc.) and ' +
@@ -84,9 +100,16 @@ angular.module('ortolangMarketApp')
             '   <li>automatic processing of language (<a target="_blank"  href="http://www.loria.fr/">LORIA</a>, <a  href="http://www.lpl-aix.fr/">LPL</a>, ' +
             '<a target="_blank"  href="http://www.atilf.fr/">ATILF</a>).</li>' +
             '</ul>',
+            LINK_DOCUMENTATION: '<p>A <a href="/#/documentation" title="user\'s documentation">user\'s documentation</a> is available for facilitating ' +
+            'your queries.</p>' +
+            '<p>You may also access the <a href="http://dev.ortolang.fr/" target="_blank" >community development site</a> of ORTOLANG project.</p>',
+            LINK_PARTNERS: 'ORTOLANG brings together diverse fields of expertise from its <a href="/#/partners" title="partners">partners</a>.',
+            LINK_ROADMAP: 'A planning of major ORTOLANG version building stages is displayed in the <a href="/#/roadmap" title="roadmap">general roadmap</a>.',
             TITLE_PARTNERS: 'Partners',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Partners',
-            TITLE_ROADMAP: 'Roadmap'
+            TITLE_ROADMAP: 'Roadmap',
+            TITLE_DOCUMENTATION: 'Documentation',
+            TITLE_LEGAL_INFORMATIONS: 'Legal notices'
         }
     });

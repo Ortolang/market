@@ -26,8 +26,7 @@ angular.module('ortolangMarketApp')
                 FRENCH: 'French',
                 ENGLISH: 'English'
             },
-            DOCUMENTATION: 'Documentation',
-            PRESENTATION: 'Presentation',
+            INFORMATION: 'Information',
             STATE_SUPPORT: ' is a beneficiary of French State support via its  “Investissements d\'avenir” program (ANR-11-EQPX-0032).',
             BACK_TOP: 'Back to top',
             TEAM: 'Ortolang team'
