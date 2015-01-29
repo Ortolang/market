@@ -25,6 +25,9 @@
         color: @side-bar-item-color;
         cursor: pointer;
         transition: 0s;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         .icon-container {
           text-align: center;
@@ -36,9 +39,6 @@
 
         .item-description {
           padding-left: @padding-base-horizontal;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
           vertical-align: super;
         }
       }
@@ -46,6 +46,14 @@
       &.active > a {
         &.market {
           background-color: @market-primary;
+        }
+
+        &.corpus {
+          background-color: @corpus-primary;
+        }
+
+        &.integrated-projects {
+          background-color: @integrated-projects-primary;
         }
 
         &.presentation {
@@ -78,6 +86,18 @@
         &.market {
           &:hover, .icon-container {
             background-color: @market-primary;
+          }
+        }
+
+        &.corpus {
+          &:hover, .icon-container {
+            background-color: @corpus-primary;
+          }
+        }
+
+        &.integrated-projects {
+          &:hover, .icon-container {
+            background-color: @integrated-projects-primary;
           }
         }
 

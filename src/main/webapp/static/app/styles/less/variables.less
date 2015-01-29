@@ -14,6 +14,7 @@
 @gray-lightest: lighten(#000, 97.25%);
 
 //== Colors
+@default-primary: #334D5C;
 @ortolang-blue: #008bd0;
 @tool: #65b32e;
 @highlight-bg-color: #fdf6e3;
@@ -21,11 +22,14 @@
 @top-navbar-bg-color: #475b6e;
 @workspace-primary: @ortolang-blue;
 @market-primary: #DF5A49;
-@presentation-primary: #E27A3F;
+@presentation-primary: #45B29D;
 @documentation-primary: #EFC94C;
-@processes-primary: @tasks-primary;
-@tasks-primary: #334D5C;
-@profile-primary: #45B29D;
+@processes-primary: @default-primary;
+@tasks-primary: @default-primary;
+@profile-primary: @default-primary;
+@corpus-primary: #E27A3F;
+@integrated-projects-primary: #EFC94C;
+@processes-badge: #45B29D;
 
 // Bootstrap override
 @brand-primary: @ortolang-blue;
@@ -55,7 +59,7 @@
 @dform-input-col: 10;
 
 //== Side Nav
-@side-bar-width: 200px;
+@side-bar-width: 210px;
 @side-bar-item-height: 50px;
 @side-bar-item-color: @gray;
 @side-bar-item-active-height: 55px;

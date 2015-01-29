@@ -72,6 +72,8 @@ angular.module('ortolangMarketApp')
         function initTranslations() {
             return $translate([
                 'NAV.MARKET',
+                'NAV.CORPUS',
+                'NAV.INTEGRATED_PROJECTS',
                 'NAV.MY_WORKSPACES',
                 'NAV.TOOLS',
                 'NAV.PROCESSES',
@@ -81,6 +83,8 @@ angular.module('ortolangMarketApp')
                 'NAV.PROFILE'
             ]).then(function (translations) {
                 $scope.translationsMarket = translations['NAV.MARKET'];
+                $scope.translationsCorpus = translations['NAV.CORPUS'];
+                $scope.translationsIntegratedProjects = translations['NAV.INTEGRATED_PROJECTS'];
                 $scope.translationsMyWorkspaces = translations['NAV.MY_WORKSPACES'];
                 $scope.translationsTools = translations['NAV.TOOLS'];
                 $scope.translationsProcesses = translations['NAV.PROCESSES'];
@@ -95,6 +99,22 @@ angular.module('ortolangMarketApp')
                         path: '/market',
                         description: $scope.translationsMarket,
                         iconCss: 'fa fa-home fa-2x',
+                        active: undefined,
+                        authenticated: false
+                    },
+                    {
+                        class: 'corpus',
+                        path: '/market',
+                        description: $scope.translationsCorpus,
+                        iconCss: 'fa fa-book fa-2x',
+                        active: undefined,
+                        authenticated: false
+                    },
+                    {
+                        class: 'integrated-projects',
+                        path: '/market',
+                        description: $scope.translationsIntegratedProjects,
+                        iconCss: 'fa fa-briefcase fa-2x',
                         active: undefined,
                         authenticated: false
                     },
