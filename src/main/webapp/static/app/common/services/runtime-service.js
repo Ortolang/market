@@ -432,4 +432,7 @@ angular.module('ortolangMarketApp')
                 getToolStates: getToolStates,
                 getToolDownloadUrl: getToolDownloadUrl
             };
-        }]);
+        }]).run(['Runtime', function (Runtime) {
+            // force Runtime to run by injecting it. Without this, Runtime only runs
+            // when a controller or something else asks for it via DI.
+    }]);

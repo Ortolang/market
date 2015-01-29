@@ -14,11 +14,11 @@ angular.module('ortolangMarketApp')
             $scope.sortedNavElements = angular.copy($scope.navElements).sort(function (a, b) {
                 if (a.active === 'active') {
                     return -100;
-                } else if (b.active === 'active') {
-                    return 100;
-                } else {
-                    return 0;
                 }
+                if (b.active === 'active') {
+                    return 100;
+                }
+                return 0;
             });
         }
 
