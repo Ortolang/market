@@ -48,6 +48,9 @@ angular.module('ortolangMarketApp')
                                 DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                     N3Serializer.fromN3(metaContent).then(function (data) {
                                        
+                                        if ( data['http://purl.org/dc/elements/1.1/title'] && data['http://purl.org/dc/elements/1.1/title']==='Littéracie Avancée') {
+                                            $scope.news.push(item);
+                                        }
                                         if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Site web') {
                                             $scope.website.push(item);
                                         }
