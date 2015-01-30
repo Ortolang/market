@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $location, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('MarketHomeCtrl', ['$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $routeParams, $location, ObjectResource, DownloadResource, N3Serializer) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
@@ -48,6 +48,9 @@ angular.module('ortolangMarketApp')
                                 DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                     N3Serializer.fromN3(metaContent).then(function (data) {
                                        
+                                        if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Site web') {
+                                            $scope.website.push(item);
+                                        }
                                         if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Corpus') {
                                             $scope.corpus.push(item);
                                         }
@@ -56,9 +59,6 @@ angular.module('ortolangMarketApp')
                                         }
                                         if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Outil') {
                                             $scope.outils.push(item);
-                                        }
-                                        if ( data['http://www.ortolang.fr/ontology/statusOfUse'] && data['http://www.ortolang.fr/ontology/statusOfUse']==='Libre') {
-                                            $scope.free.push(item);
                                         }
                                     });
                                 }).error(function (error) {
@@ -78,13 +78,16 @@ angular.module('ortolangMarketApp')
             $scope.corpus = [];
             $scope.lexiques = [];
             $scope.outils = [];
-            $scope.free = [];
+            $scope.website = [];
+            $scope.news = [];
 
             $scope.content = '';
         }
 
         function init() {
             initScopeVariables();
+
+            $scope.section = $routeParams.section;
             loadObjects();
         }
         init();

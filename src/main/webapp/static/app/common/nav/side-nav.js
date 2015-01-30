@@ -96,7 +96,7 @@ angular.module('ortolangMarketApp')
                 $scope.navElements = [
                     {
                         class: 'market',
-                        path: '/market',
+                        path: '/market?section=news',
                         description: $scope.translationsMarket,
                         iconCss: 'fa fa-home fa-2x',
                         active: undefined,
@@ -104,7 +104,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'corpus',
-                        path: '/market',
+                        path: '/market?section=corpus',
                         description: $scope.translationsCorpus,
                         iconCss: 'fa fa-book fa-2x',
                         active: undefined,
@@ -112,7 +112,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'integrated-projects',
-                        path: '/market',
+                        path: '/market?section=website',
                         description: $scope.translationsIntegratedProjects,
                         iconCss: 'fa fa-briefcase fa-2x',
                         active: undefined,
