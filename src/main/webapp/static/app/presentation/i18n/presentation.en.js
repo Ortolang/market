@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
             '(très grande infrastructure de recherche).</p>' +
             '<p>More <a href="/#/presentation" title="Présentation de Ortolang">about this project…</a></p>',
             INNOVATIVE_SHS: 'Meet ORTOLANG at the 2nd conference  of the exposition "Innovatives SHS de l\'INSHS"',
+            NEWSLETTERS: 'Newsletters',
             FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
             TITLE_PRESENTATION: 'Presentation',
             PRESENTATION: '<p>ORTOLANG is an <strong>EQUIPEX project</strong> accepted in February 2012 in the framework of  <a href="http://investissement-avenir.gouvernement.fr/" target="_BLANK">' +
@@ -101,8 +102,8 @@ angular.module('ortolangMarketApp')
             '<a target="_blank"  href="http://www.atilf.fr/">ATILF</a>).</li>' +
             '</ul>',
             LINK_DOCUMENTATION: '<p>A <a href="/#/documentation" title="user\'s documentation">user\'s documentation</a> is available for facilitating ' +
-            'your queries.</p>' +
-            '<p>You may also access the <a href="http://dev.ortolang.fr/" target="_blank" >community development site</a> of ORTOLANG project.</p>',
+            'your queries.</p>',
+            LINK_COMMUNITY: '<p>You may also access the <a href="http://dev.ortolang.fr/" target="_blank" >community development site</a> of ORTOLANG project.</p>',
             LINK_PARTNERS: 'ORTOLANG brings together diverse fields of expertise from its <a href="/#/partners" title="partners">partners</a>.',
             LINK_ROADMAP: 'A planning of major ORTOLANG version building stages is displayed in the <a href="/#/roadmap" title="roadmap">general roadmap</a>.',
             TITLE_PARTNERS: 'Partners',
@@ -110,6 +111,8 @@ angular.module('ortolangMarketApp')
             PARTNERS: 'Partners',
             TITLE_ROADMAP: 'Roadmap',
             TITLE_DOCUMENTATION: 'Documentation',
-            TITLE_LEGAL_INFORMATIONS: 'Legal notices'
+            TITLE_LEGAL_INFORMATIONS: 'Legal notices',
+            TITLE_COMMUNITY: 'Community development site',
+            TITLE_CONTACT: 'Contact'
         }
     });
