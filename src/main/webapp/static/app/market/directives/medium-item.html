@@ -1,5 +1,5 @@
 <div>
-	<img ng-if="image == undefined" class="logo" holder-js="holder.js/160x160/custom/text:{{'NO_IMAGE_PROVIDED' | translate}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
+	<img ng-if="imgtitle !== undefined" class="logo" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
 	<img ng-if="image" class="logo" ng-src="{{image}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
 	<div class="caption" ng-class="showCaption">
 	    <h4 ng-bind="meta['http://purl.org/dc/elements/1.1/title']" class="title"></h4>

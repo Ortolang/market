@@ -41,8 +41,15 @@ angular.module('ortolangMarketApp')
                                                 }, function (reason) {
                                                     console.error(reason);
                                                 });
+                                            } else {
+                                                if(data['http://purl.org/dc/elements/1.1/title']) {
+                                                    scope.imgtitle = data['http://purl.org/dc/elements/1.1/title'].substring(0,2);
+                                                    scope.imgtheme = data['http://purl.org/dc/elements/1.1/title'].substring(0,1).toLowerCase();
+                                                } else {
+                                                    scope.imgtitle = '';
+                                                    scope.imgtheme = 'custom';
+                                                }
                                             }
-
                                         });
                                     }).error(function (error) {
                                         console.error('error during process : ' + error);
