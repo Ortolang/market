@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
             '(très grande infrastructure de recherche).</p>' +
             '<p>En savoir <a href="/#/presentation" title="Présentation de Ortolang">plus sur le projet…</a></p>',
             INNOVATIVE_SHS: 'Retrouver ORTOLANG à la Seconde édition du salon Innovatives SHS de l\'INSHS',
+            NEWSLETTERS: 'Lettres d\'information',
             FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG',
             TITLE_PRESENTATION: 'Présentation',
             PRESENTATION: '<p>ORTOLANG est un <b>équipement d’excellence</b> validé dans le cadre des <a href="http://investissement-avenir.gouvernement.fr" target="_BLANK">investissements d’avenir</a>. ' +
@@ -97,8 +98,8 @@ angular.module('ortolangMarketApp')
             '<a target="_blank" href="http://www.atilf.fr">ATILF</a>).</li>' +
             '</ul>',
             LINK_DOCUMENTATION: '<p>Une <a href="/#/documentation" title="Documentation Utilisateur">documentation utilisateur</a> est disponible pour vous aider ' +
-            'à effectuer des recherches.</p>' +
-            '<p>Vous pouvez également accèder au <a href="http://dev.ortolang.fr/" target="_blank" >site communautaire</a> de l\'équipe de développement du projet ORTOLANG.</p>',
+            'à effectuer des recherches.</p>',
+            LINK_COMMUNITY: '<p>Vous pouvez également accèder au <a href="http://dev.ortolang.fr/" target="_blank" >site communautaire</a> de l\'équipe de développement du projet ORTOLANG.</p>',
             LINK_PARTNERS: 'ORTOLANG réunit des compétences variées grâce à un ensemble de <a href="/#/partners" title="Partenaires">partenaires</a>.',
             LINK_ROADMAP: 'Le planning de réalisation globale des versions majeures d\'ORTOLANG est visible dans la <a href="/#/roadmap" title="roadmap">roadmap générale</a>.',
             TITLE_PARTNERS: 'Partenaires',
@@ -106,6 +107,8 @@ angular.module('ortolangMarketApp')
             PARTNERS: 'Unités support du projet',
             TITLE_ROADMAP: 'Roadmap',
             TITLE_DOCUMENTATION: 'Documentation',
-            TITLE_LEGAL_INFORMATIONS: 'Mentions légales'
+            TITLE_LEGAL_INFORMATIONS: 'Mentions légales',
+            TITLE_COMMUNITY: 'Site communautaire',
+            TITLE_CONTACT: 'Contact'
         }
     });

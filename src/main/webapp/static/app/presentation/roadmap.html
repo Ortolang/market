@@ -3,20 +3,20 @@
         <ul class="nav nav-justified informationToolBar">
             <li role="information"><a href="/#/information">{{'NAV.INFORMATION' | translate}}</a></li>
             <li role="presentation"><a href="/#/presentation">{{'PRES.TITLE_PRESENTATION' | translate}}</a></li>
-            <li role="ortolang-charter"><a href="#">Charte d'Ortolang</a></li>
+            <!--<li role="ortolang-charter"><a href="#">Charte d'Ortolang</a></li>-->
             <li role="partners"><a href="/#/partners">{{'PRES.TITLE_PARTNERS' | translate}}</a></li>
             <li role="roadmap" class="active"><a href="/#/roadmap">{{'PRES.TITLE_ROADMAP' | translate}}</a></li>
             <li role="newsletter" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    Lettres d'information <span class="caret"></span>
+                    {{'PRES.NEWSLETTERS' | translate}} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Première lettre d'information</a></li>
+                    <li><a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf" translate="PRES.FIRST_NEWSLETTER" ></a></li>
                 </ul>
             </li>
             <li role="legal-informations"><a href="/#/legal-informations">{{'PRES.TITLE_LEGAL_INFORMATIONS' | translate}}</a></li>
-            <li role="site communautaire"><a href="http://dev.ortolang.fr/" target="_blank" >Site communautaire</a></li>
-            <li role="contact"><a href="mailto:contact@ortolang.fr">Contact</a></li>
+            <li role="site communautaire"><a href="http://dev.ortolang.fr/" target="_blank" >{{ 'PRES.TITLE_COMMUNITY' | translate }}</a></li>
+            <li role="contact"><a href="mailto:contact@ortolang.fr">{{ 'PRES.TITLE_CONTACT' | translate }}</a></li>
         </ul>
     </div>
 
@@ -29,7 +29,7 @@
         <div class="section">
             <!-- <h2 id="Planning_de_ralisation">Planning de réalisation</h2> -->
 
-            <p><img src="assets/images/Roadmap.png" alt="Roadmap"></p>
+            <p><img src="assets/images/Roadmap.png" alt="Roadmap" class="img-responsive center-block"></p>
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
                     <h3 id="a2013.Q4_Ortolang_Infra">2013.Q4 Ortolang Infra</h3>
