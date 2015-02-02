@@ -19,12 +19,13 @@
                             <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
                         </span>
             </td>
-            <td ng-if="!(child.type === 'collection')">
+            <td ng-if="child.type !== 'collection'">
                 <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
             </td>
             <td>{{::child.mimeType | contentType}}</td>
             <td>{{::child.modification | date : dateFormat}}</td>
-            <td>{{::child.size | bytes}}</td>
+            <td ng-if="child.type === 'collection'">-</td>
+            <td ng-if="child.type !== 'collection'">{{::child.size | bytes}}</td>
         </tr>
         </tbody>
     </table>
