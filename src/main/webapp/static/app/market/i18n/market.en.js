@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp')
             LOCATION: 'Location',
             CONTRIBUTOR: 'Contributor',
             DOWNLOAD: 'Download',
+            DOWNLOAD_ALL: 'You will download a complete archive of this resource {{value && value !=="" ? "("+value+")" : ""}}',
             LICENCE_DETAIL: 'Licence information',
             RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}',
             SITE: 'Website'

@@ -129,7 +129,7 @@
                     <p ng-bind="item['http://www.ortolang.fr/ontology/conditionsOfUse']"></p>
                     <p><a ng-if="item['http://purl.org/dc/terms/licence']" ng-href="{{item['http://purl.org/dc/terms/licence']}}" translate="MARKET.LICENCE_DETAIL" target="_BLANK"></a></p>
                     <div class="btn-group btn-group-justified">
-                        <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD" data-title="Vous allez télécharger la totalité des données de cette resssource ({{item['http://www.ortolang.fr/ontology/datasize']}})" data-placement="bottom" bs-tooltip></a>
+                        <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></a>
                         <div class="btn-group">
                             <button class="btn btn-default btn-block" ng-click="browse = !browse">{{'MARKET.BROWSE' | translate}}</button>
                         </div>

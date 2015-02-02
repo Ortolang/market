@@ -48,6 +48,10 @@ angular.module('ortolangMarketApp')
                                     if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
                                         loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
                                     }
+                                    
+                                    if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
+                                        $scope.datasizeToPrint = {'value':$scope.item['http://www.ortolang.fr/ontology/datasize']};
+                                    }
                                 });
                             }).error(function (reason) {
                                 console.error(reason);
