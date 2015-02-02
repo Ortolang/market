@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
             LAST_MODIFICATION: 'Dernière modification',
             CLOCK: 'Horloge',
             KEY: 'Clé',
-            ELEMENT: '{{value}} élement{{value > 1 ? "s" : ""}}',
+            ELEMENT: '{{value}} élement{{value > 1 ? "s" : ""}}<br/>({{size | bytes}})',
             VIEW_MODE_TILE: 'Mode grille',
             VIEW_MODE_LINE: 'Mode liste',
             SORT_BY: 'Trier par',

@@ -13,7 +13,16 @@
     <!--</section>-->
 
     <div class="row">
-        <div id="browser-toolbar"></div>
+        <div id="browser-toolbar">
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+                    <span class="input-group-btn">
+                        <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <section ng-if="section==='news' && news.length>0" class="row">

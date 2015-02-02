@@ -9,7 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .controller('FooterCtrl', [ '$scope', '$location', '$anchorScroll', function ($scope, $location, $anchorScroll) {
-        $scope.goTop = function() {
+        $scope.goTop = function () {
             // set the location.hash to the id of
             // the element you wish to scroll to.
             $location.hash('top');
@@ -17,5 +17,4 @@ angular.module('ortolangMarketApp')
             // call $anchorScroll()
             $anchorScroll();
         };
-    }]
-);
+    }]);

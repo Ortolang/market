@@ -1,0 +1,148 @@
+.side-nav {
+  position: relative;
+
+  .side-nav-active-item {
+    height: @side-bar-item-active-height;
+    &.copy {
+      position: absolute;
+      z-index: 1000;
+      background-color: @ortolang-blue;
+      top: 0;
+      transition: all ease 0.7s;
+
+      > a {
+        .icon-container {
+          line-height: @side-bar-item-active-height;
+        }
+        .item-description {
+          color: #FFFFFF;
+        }
+      }
+
+      &.ng-hide-add, &.ng-hide-remove {
+        transition: all ease 0.7s;
+      }
+    }
+    &.active {
+      > a {
+        background-color: @ortolang-blue;
+        .icon-container {
+          line-height: @side-bar-item-active-height;
+        }
+        .item-description {
+          color: #FFFFFF;
+        }
+      }
+    }
+    &.active.animated {
+      > a {
+        transition: all ease 0.5s;
+        opacity: 0;
+      }
+      border-bottom: 1px solid @navbar-default-border;
+    }
+  }
+
+  .side-nav-list .side-nav-list-item, .side-nav-active-item {
+    width: @side-bar-width;
+    > a {
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      color: @side-bar-item-color;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .icon-container {
+        text-align: center;
+        z-index: 5;
+        width: @side-bar-item-height + 14px;
+        line-height: @side-bar-item-height;
+        color: #FFFFFF;
+      }
+
+      .item-description {
+        vertical-align: super;
+      }
+    }
+  }
+
+  .side-nav-list {
+    margin: 0;
+    padding: 0;
+
+    .side-nav-list-item {
+      list-style: none;
+      height: @side-bar-item-height;
+      width: @side-bar-width;
+
+      &.divider {
+        height: 0;
+        padding: 5px 0;
+        > span {
+          display: block;
+          border-top: 1px solid @navbar-default-border;
+        }
+      }
+
+      &.active {
+        height: @side-bar-item-active-height;
+        > a {
+          background-color: @ortolang-blue;
+          .icon-container {
+            line-height: @side-bar-item-active-height;
+          }
+          .item-description {
+            color: #FFFFFF;
+          }
+        }
+      }
+
+      &:not(.active) > a {
+        .icon-container {
+          color: #b8b8b8;
+        }
+        &:hover {
+          background-color: #FFC107;
+          .icon-container {
+            background-color: #FFC107;
+            color: #FFFFFF;
+          }
+        }
+      }
+
+      > a {
+
+        &:hover {
+          .item-description {
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
+  }
+}
+
+.marianne {
+  font-size: 8px;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  img {
+    height: auto;
+    max-width: 50%;
+  }
+  span {
+    display: block;
+  }
+}
+
+@media(min-width:768px) {
+  #side-nav-wrapper {
+    position: absolute;
+    width: @side-bar-width;
+    z-index: 10;
+  }
+}

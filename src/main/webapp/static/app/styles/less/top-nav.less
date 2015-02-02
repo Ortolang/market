@@ -3,7 +3,7 @@
   border: none;
 
   a.dropdown-toggle, .navbar-brand {
-    color: @gray-lightest;
+    color: @top-navbar-color;
   }
 
   .navbar-brand {
@@ -27,13 +27,13 @@
     }
     cursor: pointer;
     > a {
-      color: @gray-lightest;
+      color: @top-navbar-color;
       &:hover, &:focus {
         background-color: inherit;
       }
     }
     .dropdown-menu .language {
-      color: @gray-lightest;
+      color: @top-navbar-color;
       &.active div {
         font-weight: bold;
         background-color: @top-navbar-bg-color;
@@ -58,7 +58,7 @@
         right: 5px;
         top: 6px;
         &.tasks {
-          background-color: @market-primary;
+          background-color: @tasks-badge;
         }
         &.processes {
           background-color: @processes-badge;

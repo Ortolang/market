@@ -66,6 +66,7 @@
                                 <li><div ng-click="order(['type','name'], false)" translate="BROWSER.SORT.TYPE_NAME"></div></li>
                                 <li><div ng-click="order('mimeType', false)" translate="BROWSER.SORT.MIME_TYPE"></div></li>
                                 <li><div ng-click="order('modification', false)" translate="BROWSER.SORT.DATE"></div></li>
+                                <li><div ng-click="order('size', false)" translate="SIZE"></div></li>
                             </ul>
                         </div>
                         <div id="filter-query-wrapper" class="btn-group">
@@ -206,7 +207,7 @@
                                 <dt translate="BROWSER.KEY" class="key"></dt>
                                 <dd>{{selectedElements[0].key.substring(0,12)}}... <span data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" bs-tooltip><button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"><span class="octicon octicon-clippy"></span></button></span></dd>
                                 <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
-                                <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></dd>
+                                <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length, size: collectionSize()}"></dd>
                                 <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>
                                 <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
                             </dl>

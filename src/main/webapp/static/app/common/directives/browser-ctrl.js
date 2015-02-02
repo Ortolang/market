@@ -385,6 +385,16 @@ angular.module('ortolangMarketApp')
                 return size;
             };
 
+            $scope.collectionSize = function () {
+                var size = 0;
+                angular.forEach($scope.parent.elements, function (element) {
+                    if (element.type === 'object') {
+                        size += element.size;
+                    }
+                });
+                return size;
+            };
+
             // *********************** //
             //         Delete          //
             // *********************** //
@@ -884,12 +894,13 @@ angular.module('ortolangMarketApp')
                 if (!$scope.browserService.isFileSelect) {
                     console.debug('Resizing browser');
                     var topOffset = $('#main-navbar').outerHeight(),
-                        height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+                        height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+                        bottomOffset = angular.element('footer.footer').outerHeight();
                     browserToolbarHeight = $('#browser-toolbar').outerHeight();
                     if ($scope.browserService === MarketBrowserService) {
                         topOffset += $('#market-item').find('header').outerHeight();
                     }
-                    height = height - topOffset;
+                    height = height - topOffset - bottomOffset;
                     if (height < 1) {
                         height = 1;
                     }
@@ -1039,7 +1050,7 @@ angular.module('ortolangMarketApp')
                 $scope.contextMenuItems = [];
                 // Filter
                 $scope.orderProp = ['type', 'name'];
-                $scope.dateFormat = 'medium';
+                $scope.dateFormat = 'short';
                 $scope.reverse = false;
                 // Visualizers
                 $scope.visualizers = undefined;

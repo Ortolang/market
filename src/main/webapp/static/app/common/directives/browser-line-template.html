@@ -1,10 +1,11 @@
 <div ng-if="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
     <table ng-init="resizeBrowser()" ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
-        <thead>
+        <thead class="small">
         <tr>
             <th ng-click="order('name', 'toggle')" translate="NAME"></th>
             <th ng-click="order('mimeType', 'toggle')" translate="TYPE"></th>
             <th ng-click="order('modification', 'toggle')" translate="BROWSER.LAST_MODIFICATION"></th>
+            <th ng-click="order('size', 'toggle')" translate="SIZE"></th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
             </td>
             <td>{{::child.mimeType | contentType}}</td>
             <td>{{::child.modification | date : dateFormat}}</td>
+            <td>{{::child.size | bytes}}</td>
         </tr>
         </tbody>
     </table>

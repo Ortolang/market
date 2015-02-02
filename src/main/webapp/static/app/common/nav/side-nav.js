@@ -8,25 +8,33 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', function ($rootScope, $scope, $route, $translate) {
-
-        function sortNavElements() {
-            $scope.sortedNavElements = angular.copy($scope.navElements).sort(function (a, b) {
-                if (a.active === 'active') {
-                    return -100;
-                }
-                if (b.active === 'active') {
-                    return 100;
-                }
-                return 0;
-            });
-        }
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', '$timeout', function ($rootScope, $scope, $route, $translate, $animate, $timeout) {
 
         $scope.select = function (element) {
+            $scope.selectedElementCopy = element;
             angular.forEach($scope.navElements, function (value) {
-                value.active = value.class === element.class ? 'active' : undefined;
+                if (value.class === element.class) {
+                    value.active =  'active';
+                    if (value.hidden) {
+                        $scope.selectedElement = value;
+                    } else {
+                        var clickedElement = $('.side-nav').find('.' + element.class).parent(),
+                            copy = angular.element('.side-nav-active-item.copy'),
+                            real = angular.element('#side-nav-active-item');
+                        $rootScope.navPosition = clickedElement.position().top;
+                        real.addClass('animated');
+                        $animate.removeClass(copy, 'ng-hide').then(function () {
+                            $scope.$apply(function () {
+                                $scope.selectedElement = value;
+                                real.removeClass('animated');
+                                copy.addClass('ng-hide');
+                            });
+                        });
+                    }
+                } else {
+                    value.active =  undefined;
+                }
             });
-            sortNavElements();
         };
 
         $rootScope.selectTasks = function () {
@@ -49,6 +57,10 @@ angular.module('ortolangMarketApp')
             initTranslations();
         });
 
+        $scope.getCssClass = function (element) {
+            return (element.active ? 'active ' : '') + (element.class === 'divider' ? 'divider' : '');
+        };
+
         // *********************** //
         //           Init          //
         // *********************** //
@@ -63,10 +75,10 @@ angular.module('ortolangMarketApp')
                 if ($route.current.originalPath.match(regExp) ||
                         (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
                     $scope.navElements[i].active = 'active';
+                    $scope.selectedElement = $scope.navElements[i];
                     break;
                 }
             }
-            sortNavElements();
         }
 
         function initTranslations() {
@@ -76,6 +88,7 @@ angular.module('ortolangMarketApp')
                 'NAV.INTEGRATED_PROJECTS',
                 'NAV.MY_WORKSPACES',
                 'NAV.TOOLS',
+                'NAV.LEXICONS',
                 'NAV.PROCESSES',
                 'NAV.TASKS',
                 'NAV.SETTINGS',
@@ -87,6 +100,7 @@ angular.module('ortolangMarketApp')
                 $scope.translationsIntegratedProjects = translations['NAV.INTEGRATED_PROJECTS'];
                 $scope.translationsMyWorkspaces = translations['NAV.MY_WORKSPACES'];
                 $scope.translationsTools = translations['NAV.TOOLS'];
+                $scope.translationsLexicons = translations['NAV.LEXICONS'];
                 $scope.translationsProcesses = translations['NAV.PROCESSES'];
                 $scope.translationsTasks = translations['NAV.TASKS'];
                 $scope.translationsSettings = translations['NAV.SETTINGS'];
@@ -98,7 +112,7 @@ angular.module('ortolangMarketApp')
                         class: 'market',
                         path: '/market?section=news',
                         description: $scope.translationsMarket,
-                        iconCss: 'fa fa-home fa-2x',
+                        iconCss: 'fa fa-fw fa-home fa-2x',
                         active: undefined,
                         authenticated: false
                     },
@@ -106,7 +120,7 @@ angular.module('ortolangMarketApp')
                         class: 'corpus',
                         path: '/market?section=corpus',
                         description: $scope.translationsCorpus,
-                        iconCss: 'fa fa-book fa-2x',
+                        iconCss: 'fa fa-fw fa-book fa-2x',
                         active: undefined,
                         authenticated: false
                     },
@@ -114,7 +128,28 @@ angular.module('ortolangMarketApp')
                         class: 'integrated-projects',
                         path: '/market?section=website',
                         description: $scope.translationsIntegratedProjects,
-                        iconCss: 'fa fa-briefcase fa-2x',
+                        iconCss: 'fa fa-fw fa-briefcase fa-2x',
+                        active: undefined,
+                        authenticated: false
+                    },
+                    {
+                        class: 'tools',
+                        path: '/market',
+                        description: $scope.translationsTools,
+                        iconCss: 'fa fa-fw fa-cubes fa-2x',
+                        active: undefined,
+                        authenticated: false
+                    },
+                    {
+                        class: 'lexicons',
+                        path: '/market',
+                        description: $scope.translationsLexicons,
+                        iconCss: 'fa fa-fw fa-quote-right fa-2x',
+                        active: undefined,
+                        authenticated: false
+                    },
+                    {
+                        class: 'divider',
                         active: undefined,
                         authenticated: false
                     },
@@ -122,7 +157,7 @@ angular.module('ortolangMarketApp')
                         class: 'presentation',
                         path: '/information',
                         description: $scope.translationInformation,
-                        iconCss: 'fa fa-info fa-2x',
+                        iconCss: 'fa fa-fw fa-info fa-2x',
                         active: undefined,
                         authenticated: false
                     },
@@ -131,7 +166,7 @@ angular.module('ortolangMarketApp')
                         path: '/workspaces',
                         otherPath: '/workspaces',
                         description: $scope.translationsMyWorkspaces,
-                        iconCss: 'fa fa-cloud fa-2x',
+                        iconCss: 'fa fa-fw fa-cloud fa-2x',
                         active: undefined,
                         authenticated: true
                     },
@@ -139,13 +174,7 @@ angular.module('ortolangMarketApp')
                         class: 'processes',
                         path: '/processes',
                         description: $scope.translationsProcesses,
-                        iconCss: 'fa fa-tasks fa-2x',
-                        badge: function () {
-                            return {
-                                value: $rootScope.activeProcessesNbr,
-                                class: 'processes'
-                            };
-                        },
+                        iconCss: 'fa fa-fw fa-tasks fa-2x',
                         active: undefined,
                         hidden: true,
                         authenticated: true
@@ -154,13 +183,7 @@ angular.module('ortolangMarketApp')
                         class: 'tasks',
                         path: '/tasks',
                         description: $scope.translationsTasks,
-                        iconCss: 'fa fa-bell fa-2x',
-                        badge: function () {
-                            return {
-                                value: $rootScope.tasks ? $rootScope.tasks.length : 0,
-                                class: 'tasks'
-                            };
-                        },
+                        iconCss: 'fa fa-fw fa-bell fa-2x',
                         active: undefined,
                         hidden: true,
                         authenticated: true
@@ -169,7 +192,7 @@ angular.module('ortolangMarketApp')
                         class: 'profile',
                         path: '/profile',
                         description: $scope.translationProfile,
-                        iconCss: 'fa fa-user fa-2x',
+                        iconCss: 'fa fa-fw fa-user fa-2x',
                         active: undefined,
                         hidden: true,
                         authenticated: true

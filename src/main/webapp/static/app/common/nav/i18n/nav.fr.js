@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
             INTEGRATED_PROJECTS: 'Projets Intégrés',
             MY_WORKSPACES: 'Mes espaces',
             TOOLS: 'Outils',
+            LEXICONS: 'Lexiques',
             PROCESSES: 'Processus',
             TASKS: 'Tâches',
             SETTINGS: 'Paramètres',
