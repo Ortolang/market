@@ -20,7 +20,9 @@ angular.module('ortolangMarketApp')
             LOCATION: 'Localisation',
             CONTRIBUTOR: 'Contribution',
             DOWNLOAD: 'Téléchargement',
+            DOWNLOAD_ALL: 'Vous allez télécharger la totalité des données de cette resssource ({{value}})',
             LICENCE_DETAIL: 'Détails sur la license',
-            RESULTS_LABEL: '{{value}} résultat{{value > 1 ? "s" : ""}}'
+            RESULTS_LABEL: '{{value}} résultat{{value > 1 ? "s" : ""}}',
+            SITE: 'Accéder à l\'application web'
         }
     });

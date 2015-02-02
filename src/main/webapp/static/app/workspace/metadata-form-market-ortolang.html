@@ -19,18 +19,25 @@
         <!-- </div> -->
 
         <div class="form-group" show-errors>
-            <label>Titre *</label>
+            <label>Nom de la ressource *</label>
             <input type="text" name="title" ng-model="md['http://purl.org/dc/elements/1.1/title']" class="form-control" required>
         </div>
 
         <div class="form-group" show-errors>
-            <label>Description *</label>
+            <label>Description de la ressource *</label>
             <textarea class="form-control" name="description" ng-model="md['http://purl.org/dc/elements/1.1/description']" rows="10" required></textarea>
         </div>
 
         <div class="form-group">
             <label>Contenu </label>
             <textarea class="form-control" name="extent" ng-model="md['http://purl.org/dc/terms/extent']" rows="2"></textarea>
+            <p>Description technique de la ressource. Préciser le nombre de fichier et le format.</p>
+        </div>
+
+        <div class="form-group" show-errors>
+            <label>Taille de l'ensemble des données à télécharger</label>
+            <input type="text" name="datasize" ng-model="md['http://www.ortolang.fr/ontology/datasize']" class="form-control">
+            <p class="">Permet de prévenir l'utilisateur de la taille des données avant le téléchargement.</p>
         </div>
 
         <div class="form-group">
@@ -40,14 +47,9 @@
         </div>
 
         <div class="form-group">
-            <label>Origine des données </label>
-            <input type="text" name="provenance" ng-model="md['http://www.ortolang.fr/ontology/provenance']" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label>Origine spaciale des données </label>
+            <label>Lieu de création des données </label>
             <!-- <input type="text" name="spacial" ng-model="md['http://purl.org/dc/terms/spacial']" class="form-control"> -->
-            <div auto-complete sparql="sparqlSpartial" model="md['http://purl.org/dc/terms/spacial']" name="'spacial'" placeholder="'Code ISOXXX'"></div>
+            <div auto-complete sparql="sparqlSpartial" model="md['http://purl.org/dc/terms/spacial']" name="'spacial'" placeholder="'Pays'"></div>
         </div>
 
         <div class="form-group">
@@ -76,9 +78,8 @@
             </div>
             <input type="hidden" name="preview" ng-model="md['http://www.ortolang.fr/ontology/preview']" class="form-control">
         </div>
-
-
     </div>
+
     <div class="col-md-9" ng-show="selectedTab=='rights'">
 
         <sparql-select label="'Droit d\'utilisation'" default-value="'Choisir les conditions d\'utilisation'" sparql="sparqlConditionsOfUse" model="md['http://www.ortolang.fr/ontology/statusOfUse']" required="'required'" name="'statusOfUse'"></sparql-select>
@@ -121,6 +122,15 @@
         </div>
     </div>
 
+    <div class="col-md-9" ng-show="selectedTab=='website'">
+
+        <div class="form-group">
+            <label>Url du site </label>
+            <input type="text" name="applicationUrl" ng-model="md['http://www.ortolang.fr/ontology/applicationUrl']" class="form-control">
+        </div>
+
+    </div>
+    
     <div class="col-md-9" ng-show="selectedTab=='corpora'">
 
         <div class="form-group">
@@ -211,20 +221,6 @@
 
     </div>
 
-
-    <div class="col-md-9" ng-show="selectedTab=='website'">
-
-        <div class="form-group">
-            <label>Url de l'application </label>
-            <input type="text" name="applicationUrl" ng-model="md['http://www.ortolang.fr/ontology/applicationUrl']" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label>Langue de navigation </label>
-            <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/navigationLanguage']" name="'navigationLanguage'" placeholder="'Langue'"></div>
-        </div>
-
-    </div>
 
 </div>
 
