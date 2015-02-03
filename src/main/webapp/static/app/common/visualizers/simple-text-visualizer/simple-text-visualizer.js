@@ -82,8 +82,8 @@ angular.module('ortolangVisualizers')
                         console.error(error);
                     });
                 },
-                post: function () {
-                    var height = $window.innerHeight - 6 * parseInt(angular.element('.modal-dialog.modal-lg').css('margin-top'), 10);
+                post: function (scope) {
+                    var height = $window.innerHeight - (scope.fullData ? 6 : 4) * parseInt(angular.element('.modal-dialog.modal-lg').css('margin-top'), 10);
                     angular.element('.highlight').css('height', height);
                 }
             }

@@ -1,0 +1,25 @@
+.toolbar {
+  padding-top: @padding-large-vertical;
+  padding-bottom: @padding-large-vertical;
+  margin-bottom: 2 * @padding-large-vertical;
+  border-bottom: 1px solid @navbar-default-border;
+  min-height: @toolbar-min-height;
+  background-color: @navbar-default-bg;
+
+  .btn-toolbar.btn-toolbar-right .btn-group {
+    float: right;
+    > .btn-group {
+      float: left;
+    }
+  }
+
+  span.divider {
+    border-left: 1px solid @navbar-default-border;
+    float: right;
+    position: relative;
+    margin: -@padding-large-vertical (@padding-large-horizontal - @padding-xs-horizontal) -@padding-large-vertical @padding-large-horizontal;
+    display: inline-block;
+    min-height: 54px;
+  }
+
+}

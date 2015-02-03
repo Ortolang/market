@@ -2,26 +2,36 @@
   color: @ortolang-blue;
   margin-left: inherit;
 }
-.informationToolBar &>.active &>a,.informationToolBar &>.active &>a:hover,.informationToolBar &>li &>a:hover,.informationToolBar &>li &>li &>a:hover {
-  text-decoration: none;
-  border-radius:0;
-  border-bottom-width: 4px;
-  border-bottom-style: solid;
-  border-bottom-color: @ortolang-blue;;
-  color: #000 !important;
-  background-color: transparent !important;
-  max-height: @side-bar-item-height;
-}
-.informationToolBar {
-  margin-bottom: -25px;
-  padding-bottom: 0;
-  height: @side-bar-item-height;
-  max-height: @side-bar-item-height;
-  font-size: 12px;
-
-  & > li {
-    & > a {
-      border-radius:0;
+.information-toolbar {
+  > ul {
+    margin: -@padding-large-vertical 0;
+    > li {
+      + li {
+        margin-left: 0;
+      }
+      > a {
+        line-height: @toolbar-min-height;
+        color: inherit;
+        padding: 0 2 * @padding-large-horizontal;
+      }
+      &.active, &:hover, &.open {
+        border-bottom: 4px solid @workspace-primary;
+        > a {
+          background: none;
+          color: inherit;
+          border-radius: 0;
+          text-decoration: none;
+          margin-bottom: -4px;
+          &:hover {
+            background: none;
+            color: inherit;
+            border-bottom-color: @ortolang-blue;
+          }
+        }
+        &.active, &.open {
+          border-bottom-color: @workspace-primary;
+        }
+      }
     }
   }
 }
