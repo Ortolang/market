@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.clickItem = function (item) {
-            $location.path('/market/' + item.root);
+            $location.path('/market/item/' + item.root);
         };
 
 
@@ -49,7 +49,7 @@ angular.module('ortolangMarketApp')
                     if (entry.explain) {
                         entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
                     }
-                    
+
                     $scope.items.push(entry);
                 });
             });

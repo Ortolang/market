@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.clickItem = function (entry) {
-            $location.path('/market/' + entry.key);
+            $location.path('/market/item/' + entry.key);
         };
 
         function loadObjects() {
@@ -42,12 +42,12 @@ angular.module('ortolangMarketApp')
 
                         if (oobject.object.root === true) {
                             if (oobject.object.metadatas.length > 0) {
-                                
+
                                 var metaKey = oobject.object.metadatas[0].key;
 
                                 DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                     N3Serializer.fromN3(metaContent).then(function (data) {
-                                       
+
                                         if ( data['http://purl.org/dc/elements/1.1/title'] && data['http://purl.org/dc/elements/1.1/title']==='Littéracie Avancée') {
                                             $scope.news.push(item);
                                         }

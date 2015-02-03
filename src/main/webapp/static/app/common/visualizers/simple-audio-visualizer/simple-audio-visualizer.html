@@ -1,11 +1,4 @@
-<div>
-    <p>{{elements[0].name}}</p>
-    <audio id="simple-html5-audio" controls ng-switch="elements[0].mimeType">
-        <source ng-switch-when="audio/vorbis" src="{{elements[0].downloadUrl}}" type="audio/ogg">
-        <source ng-switch-when="audio/ogg" src="{{elements[0].downloadUrl}}" type="audio/ogg">
-        <source ng-switch-when="audio/mpeg" src="{{elements[0].downloadUrl}}" type="audio/mpeg">
-        <source ng-switch-when="audio/mp3" src="{{elements[0].downloadUrl}}" type="audio/mpeg">
-        <source ng-switch-when="audio/mp4" src="{{elements[0].downloadUrl}}" type="audio/mpeg">
-        <source ng-switch-when="audio/webm" src="{{elements[0].downloadUrl}}" type="audio/webm">
-    </audio>
+<div class="modal-body">
+    <p><strong>{{elements[0].name}}</strong></p>
+    <audio id="simple-html5-audio" controls ng-src="{{elements[0].downloadUrl}}"></audio>
 </div>

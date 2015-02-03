@@ -37,19 +37,28 @@ angular.module('ortolangVisualizers')
  * # ortolangVisualizers
  */
 angular.module('ortolangVisualizers')
-    .directive('simpleVideoVisualizer', [function () {
+    .directive('simpleVideoVisualizer', ['Download', function (Download) {
 
         return {
             templateUrl: 'common/visualizers/simple-video-visualizer/simple-video-visualizer.html',
             restrict: 'E',
             scope: true,
-            link: function (scope, element, attrs) {
-                angular.element('.visualizer-modal').on('hide.bs.modal', function () {
-                    var simpleHtml5Video = angular.element('#simple-html5-video');
-                    if (simpleHtml5Video.length === 1) {
-                        simpleHtml5Video[0].pause();
-                    }
-                });
+            link: {
+                pre: function (scope, element, attrs) {
+                    angular.forEach(scope.elements, function (element) {
+                        Download.getDownloadUrl(element).then(function (url) {
+                            element.downloadUrl = url;
+                        });
+                    });
+                },
+                post: function (scope, element, attrs) {
+                    angular.element('.visualizer-modal').on('hide.bs.modal', function () {
+                        var simpleHtml5Video = angular.element('#simple-html5-video');
+                        if (simpleHtml5Video.length === 1) {
+                            simpleHtml5Video[0].pause();
+                        }
+                    });
+                }
             }
         };
     }]);

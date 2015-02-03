@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
         }
 
         function buildChildBrowseUrl(child, parent, root) {
-            return '/market/' + child.key;
+            return '/market/item/' + child.key;
         }
 
         return {
