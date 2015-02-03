@@ -36,7 +36,7 @@ angular
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
-                redirectTo: '/market'
+                redirectTo: '/market/news'
             })
             .when('/market/:section', {
                 templateUrl: 'market/market-home.html',
