@@ -50,7 +50,7 @@ module.exports = function (grunt) {
             },
             less: {
                 files: ['<%= yeoman.app %>/styles/less/{,*/}*.less'],
-                tasks: ['less']
+                tasks: ['less:development']
             },
             gruntfile: {
                 files: ['Gruntfile.js']
@@ -129,9 +129,7 @@ module.exports = function (grunt) {
             all: {
                 src: [
                     'Gruntfile.js',
-                    '<%= yeoman.app %>/{,*/}*.js',
-                    '!<%= yeoman.app %>/scripts/keycloak.js',
-                    '!<%= yeoman.app %>/scripts/keycloak.min.js'
+                    '<%= yeoman.app %>/{,*/}*.js'
                 ]
             },
             test: {
@@ -354,7 +352,6 @@ module.exports = function (grunt) {
                         cwd: '<%= yeoman.app %>',
                         dest: '<%= yeoman.dist %>',
                         src: [
-                            'scripts/keycloak.js',
                             'keycloak.json'
                         ]
                     }, {
