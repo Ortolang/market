@@ -38,11 +38,11 @@ angular
             .when('/', {
                 redirectTo: '/market'
             })
-            .when('/market', {
+            .when('/market/:section', {
                 templateUrl: 'market/market-home.html',
                 controller: 'MarketHomeCtrl'
             })
-            .when('/market/:itemKey', {
+            .when('/market/item/:itemKey', {
                 templateUrl: 'market/market-item.html',
                 controller: 'MarketItemCtrl'
             })
@@ -101,7 +101,9 @@ angular
     .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
-            'self'
+            'self',
+            'http://localhost:8080/**',
+            'https://localhost:8443/**'
         ]);
     }])
     .config(['$tooltipProvider', function ($tooltipProvider) {

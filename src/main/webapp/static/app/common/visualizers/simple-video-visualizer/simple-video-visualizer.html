@@ -1,8 +1,4 @@
-<div>
-    <p>{{elements[0].name}}</p>
-    <video id="simple-html5-video" controls ng-switch="elements[0].mimeType">
-        <source ng-switch-when="video/ogg" src="{{elements[0].downloadUrl}}" type="video/ogg">
-        <source ng-switch-when="video/mp4" src="{{elements[0].downloadUrl}}" type="video/mp4">
-        <source ng-switch-when="application/octet-stream" src="{{elements[0].downloadUrl}}" type="video/webm">
-    </video>
+<div class="modal-body">
+    <p><strong>{{elements[0].name}}</strong></p>
+    <video id="simple-html5-video" controls ng-switch="elements[0].mimeType" ng-src="{{elements[0].downloadUrl}}"></video>
 </div>

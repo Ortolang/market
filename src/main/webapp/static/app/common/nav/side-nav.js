@@ -66,13 +66,17 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         function init() {
-            var regExp, regExpBis, i;
+            var regExp, regExpBis, i, currentPath;
             for (i = 0; i < $scope.navElements.length; i++) {
                 regExp = new RegExp('^' + $scope.navElements[i].path);
                 if ($scope.navElements[i].otherPath) {
                     regExpBis = new RegExp('^' + $scope.navElements[i].otherPath);
                 }
-                if ($route.current.originalPath.match(regExp) ||
+                currentPath = $route.current.originalPath;
+                if (currentPath.indexOf(':section') !== -1) {
+                    currentPath = currentPath.replace(':section', $route.current.params.section);
+                }
+                if (currentPath.match(regExp) ||
                         (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
                     $scope.navElements[i].active = 'active';
                     $scope.selectedElement = $scope.navElements[i];
@@ -110,7 +114,7 @@ angular.module('ortolangMarketApp')
                 $scope.navElements = [
                     {
                         class: 'market',
-                        path: '/market?section=news',
+                        path: '/market/news',
                         description: $scope.translationsMarket,
                         iconCss: 'fa fa-fw fa-home fa-2x',
                         active: undefined,
@@ -118,7 +122,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'corpus',
-                        path: '/market?section=corpus',
+                        path: '/market/corpus',
                         description: $scope.translationsCorpus,
                         iconCss: 'fa fa-fw fa-book fa-2x',
                         active: undefined,
@@ -126,7 +130,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'integrated-projects',
-                        path: '/market?section=websites',
+                        path: '/market/websites',
                         description: $scope.translationsIntegratedProjects,
                         iconCss: 'fa fa-fw fa-briefcase fa-2x',
                         active: undefined,
@@ -134,7 +138,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'tools',
-                        path: '/market?section=tools',
+                        path: '/market/tools',
                         description: $scope.translationsTools,
                         iconCss: 'fa fa-fw fa-cubes fa-2x',
                         active: undefined,
@@ -142,7 +146,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'lexicons',
-                        path: '/market?section=lexicons',
+                        path: '/market/lexicons',
                         description: $scope.translationsLexicons,
                         iconCss: 'fa fa-fw fa-quote-right fa-2x',
                         active: undefined,
@@ -164,7 +168,6 @@ angular.module('ortolangMarketApp')
                     {
                         class: 'workspaces',
                         path: '/workspaces',
-                        otherPath: '/workspaces',
                         description: $scope.translationsMyWorkspaces,
                         iconCss: 'fa fa-fw fa-cloud fa-2x',
                         active: undefined,

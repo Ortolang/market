@@ -11,6 +11,6 @@ angular.module('ortolangMarketApp')
     .constant('SIMPLE_TEXT_VISUALISER_EN', {
         SIMPLE_TEXT_VISUALISER: {
             SEE_MORE: 'See more content',
-            EXCERPT: '(excerpt)'
+            EXCERPT: 'Only an excerpt of the content is displayed due to the important size of the file'
         }
     });

@@ -23,10 +23,10 @@
     <br/>
 
     <section class="col-md-12">
-        <h1>
-            <span class="presentation-color-highlight">ORTOLANG</span>
-        </h1>
-        <p class="lead" translate="PRES.ORTOLANG"></p>
+        <!--<h1>-->
+            <!--<span class="presentation-color-highlight">ORTOLANG</span>-->
+        <!--</h1>-->
+        <!--<p class="lead" translate="PRES.ORTOLANG"></p>-->
         <div class="section" translate="PRES.INFO">
 
         </div>
@@ -84,20 +84,20 @@
     </section>
 
     <br><br>
-    <section class="col-md-12 row">
+    <section class="col-md-12">
         <div class="col-sm-4">
-            <h2><span class="fa fa-book"></span> {{ 'PRES.TITLE_DOCUMENTATION' | translate }}</h2>
+            <h3><span class="fa fa-book"></span> {{ 'PRES.TITLE_DOCUMENTATION' | translate }}</h3>
             <!--<p translate="PRES.LINK_DOCUMENTATION" ></p>-->
             <p translate="PRES.LINK_COMMUNITY" ></p>
 
         </div>
         <div class="col-sm-4">
-            <h2 id="Partenaires"><span class="fa fa-users"></span> {{ 'PRES.TITLE_PARTNERS' | translate }}</h2>
+            <h3 id="Partenaires"><span class="fa fa-users"></span> {{ 'PRES.TITLE_PARTNERS' | translate }}</h3>
             <p translate="PRES.LINK_PARTNERS" ></p>
 
         </div>
         <div class="col-sm-4">
-            <h2 id="Planning"><span class="fa fa-calendar-o"></span> {{ 'PRES.TITLE_ROADMAP' | translate }}</h2>
+            <h3 id="Planning"><span class="fa fa-calendar-o"></span> {{ 'PRES.TITLE_ROADMAP' | translate }}</h3>
             <p translate="PRES.LINK_ROADMAP" ></p>
         </div>
     </section>
@@ -106,7 +106,7 @@
 </div>
 <script type='text/javascript'>
     $(document).ready(function() {
-        $('.carousel').carousel({
+        $('#myCarousel').carousel({
             interval: 8000
         })
     });

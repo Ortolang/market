@@ -38,19 +38,28 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('simpleAudioVisualizer', [function () {
+    .directive('simpleAudioVisualizer', ['Download', function (Download) {
 
         return {
             templateUrl: 'common/visualizers/simple-audio-visualizer/simple-audio-visualizer.html',
-            restrict: 'E',
+            restrict: 'AE',
             scope: true,
-            link: function (scope, element, attrs) {
-                angular.element('.visualizer-modal').on('hide.bs.modal', function () {
-                    var simpleHtml5VAudio = angular.element('#simple-html5-audio');
-                    if (simpleHtml5VAudio.length === 1) {
-                        simpleHtml5VAudio[0].pause();
-                    }
-                });
+            link: {
+                pre: function (scope, element, attrs) {
+                    angular.forEach(scope.elements, function (element) {
+                        Download.getDownloadUrl(element).then(function (url) {
+                            element.downloadUrl = url;
+                        });
+                    });
+                },
+                post: function (scope, element, attrs) {
+                    angular.element('.visualizer-modal').on('hide.bs.modal', function () {
+                        var simpleHtml5VAudio = angular.element('#simple-html5-audio');
+                        if (simpleHtml5VAudio.length === 1) {
+                            simpleHtml5VAudio[0].pause();
+                        }
+                    });
+                }
             }
         };
     }]);
