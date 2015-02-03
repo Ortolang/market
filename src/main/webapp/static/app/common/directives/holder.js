@@ -31,8 +31,19 @@ angular.module('ortolangMarketApp')
                     foreground: '#FFFFFF',
                     fontweight: 'normal',
                     size:56,
+                }).addTheme('d', {
+                    background: '#00c0a0',
+                    foreground: '#FFFFFF',
+                    fontweight: 'normal',
+                    size:56,
                 }).addTheme('s', {
                     background: '#efc94c',
+                    foreground: '#FFFFFF',
+                    fontweight: 'normal',
+                    size:56,
+                })
+                .addTheme('m', {
+                    background: '#EB8200',
                     foreground: '#FFFFFF',
                     fontweight: 'normal',
                     size:56,

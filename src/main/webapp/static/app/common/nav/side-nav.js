@@ -126,7 +126,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'integrated-projects',
-                        path: '/market?section=website',
+                        path: '/market?section=websites',
                         description: $scope.translationsIntegratedProjects,
                         iconCss: 'fa fa-fw fa-briefcase fa-2x',
                         active: undefined,
@@ -134,7 +134,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'tools',
-                        path: '/market',
+                        path: '/market?section=tools',
                         description: $scope.translationsTools,
                         iconCss: 'fa fa-fw fa-cubes fa-2x',
                         active: undefined,
@@ -142,7 +142,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'lexicons',
-                        path: '/market',
+                        path: '/market?section=lexicons',
                         description: $scope.translationsLexicons,
                         iconCss: 'fa fa-fw fa-quote-right fa-2x',
                         active: undefined,

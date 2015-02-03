@@ -42,7 +42,13 @@ angular.module('ortolangMarketApp')
                                             console.error(reason);
                                         });
                                     } else {
-                                        $scope.item.image = 'assets/images/no-image.png';
+                                        if(data['http://purl.org/dc/elements/1.1/title']) {
+                                            $scope.imgtitle = data['http://purl.org/dc/elements/1.1/title'].substring(0,2);
+                                            $scope.imgtheme = data['http://purl.org/dc/elements/1.1/title'].substring(0,1).toLowerCase();
+                                        } else {
+                                            $scope.imgtitle = '';
+                                            $scope.imgtheme = 'custom';
+                                        }
                                     }
 
                                     if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {

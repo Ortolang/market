@@ -2,6 +2,7 @@
     <header>
         <div class="media">
             <a class="pull-left">
+                <img ng-if="imgtitle !== undefined" class="logo" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
                 <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image"/>
             </a>
             <div class="media-body">
