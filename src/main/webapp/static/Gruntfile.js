@@ -507,6 +507,10 @@ module.exports = function (grunt) {
                         {
                             match: /<!--<script src="config\.jsp"><\/script>-->/,
                             replacement: '<script src="config.jsp"></script>'
+                        },
+                        {
+                            match: 'version',
+                            replacement: require('./bower.json').version
                         }
                     ]
                 },
@@ -514,7 +518,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%= yeoman.dist %>',
-                        src: ['scripts/scripts.js', 'index.html'],
+                        src: ['scripts/scripts.js', 'index.html', 'common/nav/footer.html'],
                         dest: '<%= yeoman.dist %>/'
                     }
                 ]
