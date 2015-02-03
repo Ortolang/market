@@ -74,9 +74,6 @@ angular
             .when('/roadmap', {
                 templateUrl: 'presentation/roadmap.html'
             })
-            .when('/information', {
-                templateUrl: 'presentation/information.html'
-            })
             .when('/presentation', {
                 templateUrl: 'presentation/presentation.html'
             })

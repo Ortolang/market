@@ -155,7 +155,7 @@ angular.module('ortolangMarketApp')
                     },
                     {
                         class: 'presentation',
-                        path: '/information',
+                        path: '/presentation',
                         description: $scope.translationInformation,
                         iconCss: 'fa fa-fw fa-info fa-2x',
                         active: undefined,

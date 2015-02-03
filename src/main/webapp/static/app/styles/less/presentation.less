@@ -2,45 +2,6 @@
   color: @ortolang-blue;
   margin-left: inherit;
 }
-.carousel {
-  max-height: 300px;
-  overflow: hidden;
-
-  .carousel-inner {
-    .item {
-      -webkit-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-      img {
-        margin: 0 auto;
-      }
-    }
-  }
-  .carousel-caption {
-    position: relative;
-    text-align: left;
-    bottom: 0;
-    left:0;
-    right:0;
-    text-shadow: none;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 20%;
-    padding-right: 20%;
-    background-color: @top-navbar-bg-color;
-
-    a:link {
-      color: @highlight-bg-color;
-    }
-    a:visited {
-      text-decoration: none;
-      color: @highlight-bg-color;;
-    }
-    a:hover {
-      text-decoration: underline;
-      color: @highlight-bg-color;
-    }
-  }
-}
 .informationToolBar &>.active &>a,.informationToolBar &>.active &>a:hover,.informationToolBar &>li &>a:hover,.informationToolBar &>li &>li &>a:hover {
   text-decoration: none;
   border-radius:0;
@@ -63,4 +24,7 @@
       border-radius:0;
     }
   }
+}
+.section {
+  text-align: justify;
 }
