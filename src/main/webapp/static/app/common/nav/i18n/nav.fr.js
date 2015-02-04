@@ -34,7 +34,7 @@ angular.module('ortolangMarketApp')
                 PRESENTATION: 'Présentation',
                 PARTNERS: 'Partenaires',
                 ROADMAP: 'Feuille de route',
-                NEWSLETTERS: 'Lettres d\'informations'
+                NEWSLETTER: 'Lettre d\'information'
             },
             STATE_SUPPORT: ' bénéficie d\'une aide de l’Etat au titre du programme « Investissements d’avenir » (ANR-­‐11-­‐EQPX-­‐0032).',
             BACK_TOP: 'Haut de page',

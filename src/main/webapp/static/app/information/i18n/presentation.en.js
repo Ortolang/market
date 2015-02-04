@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
         PRES: {
             ORTOLANG: 'Open Resources and TOols for LANGuage',
             INNOVATIVE_SHS: 'Meet ORTOLANG at the 2nd conference  of the exposition "Innovatives SHS de l\'INSHS"',
-            NEWSLETTERS: 'Newsletters',
+            NEWSLETTER: 'Newsletter',
             FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
             TITLE_PRESENTATION: 'Presentation',
             PRESENTATION: '<p>ORTOLANG is an EQUIPEX project accepted in February 2012 in the framework of  <a href="http://investissement-avenir.gouvernement.fr/" target="_BLANK">' +
@@ -99,7 +99,7 @@ angular.module('ortolangMarketApp')
             PARTNERS: 'Partners',
             TITLE_ROADMAP: 'Roadmap',
             TITLE_DOCUMENTATION: 'Documentation',
-            TITLE_LEGAL_INFORMATIONS: 'Legal notices',
+            TITLE_LEGAL_INFORMATION: 'Legal notices',
             TITLE_COMMUNITY: 'Community development site',
             TITLE_CONTACT: 'Contact us'
         }

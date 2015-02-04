@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
         PRES: {
             ORTOLANG: 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
             INNOVATIVE_SHS: 'Retrouver ORTOLANG à la Seconde édition du salon Innovatives SHS de l\'INSHS',
-            NEWSLETTERS: 'Lettres d\'information',
+            NEWSLETTER: 'Lettre d\'information',
             FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG',
             TITLE_PRESENTATION: 'Présentation',
             PRESENTATION: '<p>ORTOLANG est un équipement d’excellence validé dans le cadre des <a href="http://investissement-avenir.gouvernement.fr" target="_BLANK">investissements d’avenir</a>. ' +
@@ -95,7 +95,7 @@ angular.module('ortolangMarketApp')
             PARTNERS: 'Unités support du projet',
             TITLE_ROADMAP: 'Planning de réalisation',
             TITLE_DOCUMENTATION: 'Documentation',
-            TITLE_LEGAL_INFORMATIONS: 'Mentions légales',
+            TITLE_LEGAL_INFORMATION: 'Mentions légales',
             TITLE_COMMUNITY: 'Site communautaire',
             TITLE_CONTACT: 'Contactez-nous'
         }

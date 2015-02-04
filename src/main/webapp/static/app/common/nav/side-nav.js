@@ -41,6 +41,10 @@ angular.module('ortolangMarketApp')
             $scope.select({class: 'tasks'});
         };
 
+        $rootScope.selectInformation = function () {
+            $scope.select({class: 'information'});
+        };
+
         $rootScope.selectProcesses = function () {
             $scope.select({class: 'processes'});
         };
@@ -171,11 +175,12 @@ angular.module('ortolangMarketApp')
                         authenticated: false
                     },
                     {
-                        class: 'presentation',
-                        path: '/presentation',
+                        class: 'information',
+                        path: '/information',
                         description: $scope.translationInformation,
                         iconCss: 'fa fa-fw fa-info fa-2x',
                         active: undefined,
+                        hidden: true,
                         authenticated: false
                     },
                     {
