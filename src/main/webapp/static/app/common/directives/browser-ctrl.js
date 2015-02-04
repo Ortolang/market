@@ -33,7 +33,7 @@ angular.module('ortolangMarketApp')
         'FileSelectBrowserService',
         function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
-            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft, marketItemHeader,
+            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft, marketItemHeader, footerHeight,
                 previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight;
 
             // *********************** //
@@ -80,7 +80,10 @@ angular.module('ortolangMarketApp')
                 // TODO Context menu could be optimized when clicking on a same child but context menu deactivated
                 // If right click
                 if (!marketItemHeader) {
-                    marketItemHeader = angular.element('#market-item').find('header').innerHeight();
+                    marketItemHeader = angular.element('#market-item').find('header').outerHeight();
+                }
+                if (!footerHeight) {
+                    footerHeight = angular.element('.footer').outerHeight();
                 }
                 if (clickEvent && clickEvent.button === 2) {
                     $scope.contextMenuStyle = {
@@ -89,8 +92,7 @@ angular.module('ortolangMarketApp')
                         // Fix dropdown offset because of margin-left on page wrapper
                         left: clickEvent.pageX - pageWrapperMarginLeft - 18 + 'px',
                         // Fix dropdown offset because of navbar and toolbar
-                        //top: clickEvent.clientY - 50 + 'px'
-                        top: clickEvent.pageY - marketItemHeader - browserToolbarHeight + 'px'
+                        top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 8 - footerHeight + 'px'
                     };
                     // If the context menu has already been build no need to do it again
                     if ($scope.isContextMenuActive && sameChild) {
@@ -117,7 +119,7 @@ angular.module('ortolangMarketApp')
                         $scope.contextMenuItems.push({divider: true});
                     }
                     //$scope.contextMenuItems.push({text: $scope.otherViewMode.name, icon: $scope.otherViewMode.icon, action: 'switchViewMode'});
-                    if ($scope.contextMenuItems[$scope.contextMenuItems.length - 1].divider) {
+                    if ($scope.contextMenuItems.length > 0 && $scope.contextMenuItems[$scope.contextMenuItems.length - 1].divider) {
                         $scope.contextMenuItems.pop();
                     }
                     activateContextMenu();

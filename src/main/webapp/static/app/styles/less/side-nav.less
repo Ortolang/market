@@ -1,15 +1,108 @@
 .side-nav {
+  position: relative;
+
+  .side-nav-active-item {
+    height: @side-bar-item-active-height;
+    &.copy {
+      position: absolute;
+      z-index: 1000;
+      background-color: @ortolang-blue;
+      top: 0;
+      transition: all ease 0.7s;
+
+      > a {
+        .icon-container {
+          line-height: @side-bar-item-active-height;
+        }
+        .item-description {
+          color: #FFFFFF;
+        }
+      }
+
+      &.ng-hide-add, &.ng-hide-remove {
+        transition: all ease 0.7s;
+      }
+    }
+    &.active {
+      > a {
+        background-color: @ortolang-blue;
+        .icon-container {
+          line-height: @side-bar-item-active-height;
+        }
+        .item-description {
+          color: #FFFFFF;
+        }
+        &.tasks {
+          background-color: @tasks-primary;
+        }
+        &.processes {
+          background-color: @processes-primary;
+        }
+//        &.presentation {
+//          background-color: @workspace-primary;
+//        }
+//        &.workspaces {
+//          background-color: @workspace-primary;
+//        }
+      }
+    }
+    &.active.animated {
+      > a {
+        transition: all ease 0.5s;
+        opacity: 0;
+      }
+      border-bottom: 1px solid @navbar-default-border;
+    }
+  }
+
+  .side-nav-list .side-nav-list-item, .side-nav-active-item {
+    width: @side-bar-width;
+    > a {
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      color: @side-bar-item-color;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .icon-container {
+        text-align: center;
+        z-index: 5;
+        width: @side-bar-item-height + 14px;
+        line-height: @side-bar-item-height;
+        color: #FFFFFF;
+      }
+
+      .item-description {
+        vertical-align: super;
+      }
+    }
+  }
+
   .side-nav-list {
     margin: 0;
-    padding: 0 0 @padding-large-vertical 0;
+    padding: 0;
 
     .side-nav-list-item {
       list-style: none;
       height: @side-bar-item-height;
+      width: @side-bar-width;
+
+      &.divider {
+        height: 0;
+        padding: 5px 0;
+        > span {
+          display: block;
+          border-top: 1px solid @navbar-default-border;
+        }
+      }
 
       &.active {
         height: @side-bar-item-active-height;
         > a {
+          background-color: @ortolang-blue;
           .icon-container {
             line-height: @side-bar-item-active-height;
           }
@@ -19,161 +112,49 @@
         }
       }
 
-      > a {
-        display: block;
-        text-decoration: none;
-        color: @side-bar-item-color;
-        cursor: pointer;
-        transition: 0s;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
+      &:not(.active) > a {
         .icon-container {
-          text-align: center;
-          z-index: 5;
-          width: @side-bar-item-height + 14px;
-          line-height: @side-bar-item-height;
-          color: #FFFFFF;
+          color: #b8b8b8;
         }
-
-        .item-description {
-          padding-left: @padding-base-horizontal;
-          vertical-align: super;
-        }
-      }
-
-      &.active > a {
-        &.market {
-          background-color: @market-primary;
-        }
-
-        &.corpus {
-          background-color: @corpus-primary;
-        }
-
-        &.integrated-projects {
-          background-color: @integrated-projects-primary;
-        }
-
-        &.presentation {
-          background-color: @presentation-primary;
-        }
-
-        &.documentation {
-          background-color: @documentation-primary;
-        }
-
-        &.workspaces {
-          background-color: @workspace-primary;
-        }
-
-        &.processes {
-          background-color: @processes-primary;
-        }
-
-        &.tasks {
-          background-color: @tasks-primary;
-        }
-
-        &.profile {
-          background-color: @profile-primary;
+        &:hover {
+          background-color: #FFC107;
+          .icon-container {
+            background-color: #FFC107;
+            color: #FFFFFF;
+          }
         }
       }
 
       > a {
-
-        &.market {
-          &:hover, .icon-container {
-            background-color: @market-primary;
-          }
-        }
-
-        &.corpus {
-          &:hover, .icon-container {
-            background-color: @corpus-primary;
-          }
-        }
-
-        &.integrated-projects {
-          &:hover, .icon-container {
-            background-color: @integrated-projects-primary;
-          }
-        }
-
-        &.presentation {
-          &:hover, .icon-container {
-            background-color: @presentation-primary;
-          }
-        }
-
-        &.documentation {
-          &:hover, .icon-container {
-            background-color: @documentation-primary;
-          }
-        }
-
-        &.workspaces {
-          &:hover, .icon-container {
-            background-color: @workspace-primary;
-          }
-        }
-
-        &.processes {
-          &:hover, .icon-container {
-            background-color: @processes-primary;
-          }
-        }
-
-        &.tasks {
-          &:hover, .icon-container {
-            background-color: @tasks-primary;
-          }
-        }
-
-        &.profile {
-          &:hover, .icon-container {
-            background-color: @profile-primary;
-          }
-        }
 
         &:hover {
           .item-description {
             color: #FFFFFF;
           }
         }
-
-//        .badge {
-//          position: absolute;
-//          top: -1px;
-//          right: 5px;
-//          z-index: 1000;
-//          &.processes {
-//            background-color: @btn-danger-bg;
-//          }
-//          &.tasks {
-//            background-color: @btn-success-bg;
-//          }
-//        }
-
       }
-    }
-  }
-  .state-support {
-    line-height: 15px;
-    font-size: 50%;
-
-    > img {
-      height: auto;
-      max-width: 50%;
     }
   }
 }
 
+.marianne {
+  font-size: 8px;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  img {
+    height: auto;
+    max-width: 50%;
+  }
+  span {
+    display: block;
+  }
+}
+
 @media(min-width:768px) {
-  .side-nav {
-    z-index: 10;
+  #side-nav-wrapper {
     position: absolute;
     width: @side-bar-width;
+    z-index: 10;
   }
 }

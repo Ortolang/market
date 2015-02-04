@@ -8,23 +8,24 @@
             <div class="media-body">
                 <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
 
-                <!-- Par : <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a> -->
-                <p>Production de <span ng-repeat="producer in item['http://www.ortolang.fr/ontology/producer']"><a ng-href='#/search?producer="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
-                <p ng-if="item['http://www.ortolang.fr/ontology/applicationUrl']">Site web : <a href="{{item['http://www.ortolang.fr/ontology/applicationUrl']}}" ng-bind="item['http://www.ortolang.fr/ontology/applicationUrl']" target="_BLANK"></a></p>
-                <!-- Category : Corpora -->
-                <p ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']">Langue principale du corpus : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/primaryLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a></span></p>
-                <!-- <p ng-if="item['http://www.ortolang.fr/ontology/discourseType']">Type discursif : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/discourseType']}}" ng-bind="item['http://www.ortolang.fr/ontology/discourseType']"></a></p> -->
-                <!-- <p ng-if="item['http://www.ortolang.fr/ontology/linguisticField']">Domaines linguistiques : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/linguisticField']}}" ng-bind="item['http://www.ortolang.fr/ontology/linguisticField']"></a></p> -->
-                <!-- Category : Tool -->
-                <p ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']">Langages de programmation : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/programmingLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
-                <p ng-if="item['http://www.ortolang.fr/ontology/opearatingSystem']">Systèmes d'exploitation supportés : <span ng-repeat="os in item['http://www.ortolang.fr/ontology/opearatingSystem']"><a href="#/search?content={{os}}" ng-bind="os"></a><span ng-if="!$last">, </span></span></p>
-                <p ng-if="item['http://www.ortolang.fr/ontology/toolSupport']">Type de support : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/toolSupport']}}" ng-bind="item['http://www.ortolang.fr/ontology/toolSupport']"></a></p>
-                <!-- Category : Annotation -->
-                <p ng-if="item['http://www.ortolang.fr/ontology/language']">Langues concernés par cet objet : <span ng-repeat="language in item['http://www.ortolang.fr/ontology/language']"><a href="#/search?content={{language}}" ng-bind="language"></a><span ng-if="!$last">, </span></span></p>
-                
+                <div ng-hide="browse">
+                    <!-- Par : <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a> -->
+                    <p>Production de <span ng-repeat="producer in item['http://www.ortolang.fr/ontology/producer']"><a ng-href='#/search?producer="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
+                    <p ng-if="item['http://www.ortolang.fr/ontology/applicationUrl']">Site web : <a href="{{item['http://www.ortolang.fr/ontology/applicationUrl']}}" ng-bind="item['http://www.ortolang.fr/ontology/applicationUrl']" target="_BLANK"></a></p>
+                    <!-- Category : Corpora -->
+                    <p ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']">Langue principale du corpus : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/primaryLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a></span></p>
+                    <!-- <p ng-if="item['http://www.ortolang.fr/ontology/discourseType']">Type discursif : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/discourseType']}}" ng-bind="item['http://www.ortolang.fr/ontology/discourseType']"></a></p> -->
+                    <!-- <p ng-if="item['http://www.ortolang.fr/ontology/linguisticField']">Domaines linguistiques : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/linguisticField']}}" ng-bind="item['http://www.ortolang.fr/ontology/linguisticField']"></a></p> -->
+                    <!-- Category : Tool -->
+                    <p ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']">Langages de programmation : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/programmingLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
+                    <p ng-if="item['http://www.ortolang.fr/ontology/opearatingSystem']">Systèmes d'exploitation supportés : <span ng-repeat="os in item['http://www.ortolang.fr/ontology/opearatingSystem']"><a href="#/search?content={{os}}" ng-bind="os"></a><span ng-if="!$last">, </span></span></p>
+                    <p ng-if="item['http://www.ortolang.fr/ontology/toolSupport']">Type de support : <a href="#/search?content={{item['http://www.ortolang.fr/ontology/toolSupport']}}" ng-bind="item['http://www.ortolang.fr/ontology/toolSupport']"></a></p>
+                    <!-- Category : Annotation -->
+                    <p ng-if="item['http://www.ortolang.fr/ontology/language']">Langues concernés par cet objet : <span ng-repeat="language in item['http://www.ortolang.fr/ontology/language']"><a href="#/search?content={{language}}" ng-bind="language"></a><span ng-if="!$last">, </span></span></p>
+                </div>
+                <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">Retourner à la fiche</button>
             </div>
         </div>
-        <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">Retourner à la fiche</button>
     </header>
 
     <div class="row">
@@ -126,7 +127,7 @@
             <div class="panel panel-default license-panel">
                 <div class="panel-heading" translate="MARKET.DOWNLOAD"></div>
                 <div class="panel-body">
-                    
+
                     <p ng-bind="item['http://www.ortolang.fr/ontology/conditionsOfUse']"></p>
                     <p><a ng-if="item['http://purl.org/dc/terms/licence']" ng-href="{{item['http://purl.org/dc/terms/licence']}}" translate="MARKET.LICENCE_DETAIL" target="_BLANK"></a></p>
                     <div class="btn-group btn-group-justified">

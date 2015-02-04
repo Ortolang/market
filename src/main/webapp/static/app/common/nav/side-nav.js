@@ -87,24 +87,28 @@ angular.module('ortolangMarketApp')
 
         function initTranslations() {
             return $translate([
+                'NAV.HOME',
                 'NAV.MARKET',
                 'NAV.CORPUS',
                 'NAV.INTEGRATED_PROJECTS',
                 'NAV.MY_WORKSPACES',
                 'NAV.TOOLS',
                 'NAV.LEXICONS',
+                'NAV.ITEM',
                 'NAV.PROCESSES',
                 'NAV.TASKS',
                 'NAV.SETTINGS',
                 'NAV.INFORMATION',
                 'NAV.PROFILE'
             ]).then(function (translations) {
+                $scope.translationsHome = translations['NAV.HOME'];
                 $scope.translationsMarket = translations['NAV.MARKET'];
                 $scope.translationsCorpus = translations['NAV.CORPUS'];
                 $scope.translationsIntegratedProjects = translations['NAV.INTEGRATED_PROJECTS'];
                 $scope.translationsMyWorkspaces = translations['NAV.MY_WORKSPACES'];
                 $scope.translationsTools = translations['NAV.TOOLS'];
                 $scope.translationsLexicons = translations['NAV.LEXICONS'];
+                $scope.translationsItem = translations['NAV.ITEM'];
                 $scope.translationsProcesses = translations['NAV.PROCESSES'];
                 $scope.translationsTasks = translations['NAV.TASKS'];
                 $scope.translationsSettings = translations['NAV.SETTINGS'];
@@ -115,7 +119,7 @@ angular.module('ortolangMarketApp')
                     {
                         class: 'market',
                         path: '/market/news',
-                        description: $scope.translationsMarket,
+                        description: $scope.translationsHome,
                         iconCss: 'fa fa-fw fa-home fa-2x',
                         active: undefined,
                         authenticated: false
@@ -150,6 +154,15 @@ angular.module('ortolangMarketApp')
                         description: $scope.translationsLexicons,
                         iconCss: 'fa fa-fw fa-quote-right fa-2x',
                         active: undefined,
+                        authenticated: false
+                    },
+                    {
+                        class: 'item',
+                        path: '/market/item',
+                        description: $scope.translationsItem,
+                        iconCss: 'fa fa-fw fa-cube fa-2x',
+                        active: undefined,
+                        hidden: true,
                         authenticated: false
                     },
                     {
