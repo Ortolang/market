@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="toolbar information-toolbar">
+        <ul class="nav nav-pills">
+            <li role="presentation"><a href="/#/presentation">{{'PRES.TITLE_PRESENTATION' | translate}}</a></li>
+            <!--<li role="ortolang-charter"><a href="#">Charte d'Ortolang</a></li>-->
+            <li role="partners"><a href="/#/presentation/partners">{{'PRES.TITLE_PARTNERS' | translate}}</a></li>
+            <li role="roadmap"><a href="/#/presentation/roadmap">{{'PRES.TITLE_ROADMAP' | translate}}</a></li>
+            <li role="newsletter" class="active"><a href="/#/presentation/newsletter">{{'PRES.NEWSLETTERS' | translate}}</a></li>
+            <li role="legal-informations"><a href="/#/presentation/legal-informations">{{'PRES.TITLE_LEGAL_INFORMATIONS' | translate}}</a></li>
+        </ul>
+    </div>
+
+    <br/>
+    <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+
+        <div class="section">
+            <h3>Télécharger la lettre d'information</h3>
+            <hr>
+            <p>Vous pouvez suivre l'actualité d'Ortolang en lisant sa lettre d'information.</p>
+            <p>Le numéro déjà paru est téléchargeable ci-dessous :</p>
+            <br/>
+            <ul class="fa-ul">
+                <li><i class="fa-li fa fa-download"></i><a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf" translate="PRES.FIRST_NEWSLETTER" ></a> (2.9 Mo)</li>
+            </ul>
+        </div>
+        <br/>
+        <div class="section">
+            <h3>Abonnement</h3>
+            <hr>
+            <!-- <h2 id="Prsentation_du_projet">Pr&eacute;sentation du projet</h2> -->
+            <p>Si vous souhaitez recevoir les prochaines lettres d'information d'Ortolang sur votre messagerie, veuillez remplir ce formulaire.</p>
+            <br>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputTitle" class="col-sm-2 control-label">Civilité</label>
+                    <div class="col-sm-10">
+                        <select name="title" id="inputTitle">
+                            <option selected="selected" value="">Sélectionnez</option>
+                            <option value="m">M.</option>
+                            <option value="mlle">Mlle</option>
+                            <option value="mme">Mme</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputFirstName" class="col-sm-2 control-label">Prénom</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Prénom">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputLastName" class="col-sm-2 control-label">Nom</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputLastName" placeholder="Nom">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">Adresse email *</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">S'abonner</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

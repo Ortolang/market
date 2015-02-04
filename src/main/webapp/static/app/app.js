@@ -36,7 +36,7 @@ angular
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
-                redirectTo: '/market'
+                redirectTo: '/market/news'
             })
             .when('/market/:section', {
                 templateUrl: 'market/market-home.html',
@@ -68,20 +68,20 @@ angular
                 controller: 'TasksCtrl',
                 requiresAuthentication: true
             })
-            .when('/partners', {
+            .when('/presentation/partners', {
                 templateUrl: 'presentation/partners.html'
             })
-            .when('/roadmap', {
+            .when('/presentation/roadmap', {
                 templateUrl: 'presentation/roadmap.html'
             })
             .when('/presentation', {
                 templateUrl: 'presentation/presentation.html'
             })
-            .when('/legal-informations', {
-                templateUrl: 'presentation/legal-informations.html'
+            .when('/presentation/newsletter', {
+                templateUrl: 'presentation/newsletter.html'
             })
-            .when('/careers', {
-                templateUrl: 'presentation/careers.html'
+            .when('/presentation/legal-informations', {
+                templateUrl: 'presentation/legal-informations.html'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',

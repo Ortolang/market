@@ -93,7 +93,7 @@ angular.module('ortolangMarketApp')
             TITLE_PARTNERS: 'Partenaires',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Unités support du projet',
-            TITLE_ROADMAP: 'Roadmap',
+            TITLE_ROADMAP: 'Planning de réalisation',
             TITLE_DOCUMENTATION: 'Documentation',
             TITLE_LEGAL_INFORMATIONS: 'Mentions légales',
             TITLE_COMMUNITY: 'Site communautaire',

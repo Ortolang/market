@@ -6,7 +6,7 @@
                 <button type="button" class="close" ng-click="hideEditor()">&times;</button>
                 <h4 class="aside-title">{{userMetadataFormat.name}} de <em>{{hasOnlyRootCollectionSelected() ? workspace.name : selectedElements[0].name}}</em></h4>
             </div>
-            <div id="browser-toolbar" role="toolbar">
+            <div class="toolbar" role="toolbar">
                 <div class="btn-toolbar" style="margin-left: 10px; float: left;">
                     <div class="btn-group ">
                         <buton class="btn btn-success" ng-click="submitMetadataForm()">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right" style="margin-right: 10px;">
-                    
+
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             Fr

@@ -1,104 +1,138 @@
 <div class="row">
-    <div id="browser-toolbar">
-        <ul class="nav nav-justified informationToolBar">
+    <div class="toolbar information-toolbar">
+        <ul class="nav nav-pills">
             <li role="presentation"><a href="/#/presentation">{{'PRES.TITLE_PRESENTATION' | translate}}</a></li>
             <!--<li role="ortolang-charter"><a href="#">Charte d'Ortolang</a></li>-->
-            <li role="partners"><a href="/#/partners">{{'PRES.TITLE_PARTNERS' | translate}}</a></li>
-            <li role="roadmap" class="active"><a href="/#/roadmap">{{'PRES.TITLE_ROADMAP' | translate}}</a></li>
-            <li role="newsletter" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    {{'PRES.NEWSLETTERS' | translate}} <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf" translate="PRES.FIRST_NEWSLETTER" ></a></li>
-                </ul>
-            </li>
-            <li role="legal-informations"><a href="/#/legal-informations">{{'PRES.TITLE_LEGAL_INFORMATIONS' | translate}}</a></li>
-            <li role="site communautaire"><a href="http://dev.ortolang.fr/" target="_blank" >{{ 'PRES.TITLE_COMMUNITY' | translate }}</a></li>
-            <li role="contact"><a href="mailto:contact@ortolang.fr">{{ 'PRES.TITLE_CONTACT' | translate }}</a></li>
+            <li role="partners"><a href="/#/presentation/partners">{{'PRES.TITLE_PARTNERS' | translate}}</a></li>
+            <li role="roadmap" class="active"><a href="/#/presentation/roadmap">{{'PRES.TITLE_ROADMAP' | translate}}</a></li>
+            <li role="newsletter"><a href="/#/presentation/newsletter">{{'PRES.NEWSLETTERS' | translate}}</a></li>
+            <li role="legal-informations"><a href="/#/presentation/legal-informations">{{'PRES.TITLE_LEGAL_INFORMATIONS' | translate}}</a></li>
         </ul>
     </div>
 
-    <br/>
-    <div class="col-md-12">
-        <h1>
-            <span class="presentation-color-highlight" translate="PRES.TITLE_ROADMAP"></span>
-        </h1>
-        <p class="lead">Planning de réalisation</p>
-        <div class="section">
-            <!-- <h2 id="Planning_de_ralisation">Planning de réalisation</h2> -->
+    <div class="col-md-offset-1 col-md-10 col-md-offset-1">
 
-            <p><img src="assets/images/Roadmap.png" alt="Roadmap" class="img-responsive center-block"></p>
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    <h3 id="a2013.Q4_Ortolang_Infra">2013.Q4 Ortolang Infra</h3>
-                    <ul>
-                        <li>Déploiement de <b>l’infrastructure matérielle</b></li>
-                        <li>Définition de la solution de sauvegarde</li>
-                        <li>Déploiement des <b>outils</b> de Génie Logiciel</li>
-                    </ul>
+        <ul class="timeline">
+            <li>
+                <div class="timeline-badge"><i class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Q2 Ortolang V5</h4>
+                        <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> 2016</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li><b>Ouverture officielle</b> au public de la version finale d’Ortolang</li>
+                            <li>Outils de <b>supervision</b></li>
+                            <li>Outils <b>statistiques</b></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-xs-6 col-sm-4">
-                    <h3 id="a2014.Q1_Ortolang_V0">2014.Q1 Ortolang V0</h3>
-                    <ul>
-                        <li>Déploiement des plateformes <b>CNRTL</b> et <b>SLDR</b> sur une infrastructure <b>provisoire</b></li>
-                        <li>Catégorisation des <b>outils et ressources</b> intiaux</li>
-                        <li>Définition de <b>l’architecture du centre de diffusion</b></li>
-                        <li>Déploiement de <b>l’infrastructure de sauvegarde</b></li>
-                    </ul>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-badge"><i class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Q1 Ortolang V4</h4>
+                        <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> 2016</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Centre de <b>Diffusion Version 4</b></li>
+                            <li>Portail <b>Thématique Version 3</b></li>
+                            <li>Centres Thématiques Version 1</li>
+                            <li>Ouverture au <b>public restreinte</b> (test)</li>
+                            <li><b>Documentation</b> complète (utilisation, exploitation, maintenance)</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-xs-6 col-sm-4">
-                    <h3 id="a2014.Q3_Ortolang_V1">2014.Q3 Ortolang V1</h3>
-                    <ul>
-                        <li>Centre de <b>Diffusion Version 1</b></li>
-                        <li>Intégration de quelques <b>ressources pilotes</b></li>
-                        <li><b>Architecture du portail</b> d’hébergement des centres thématiques</li>
-                    </ul>
+            </li>
+            <li>
+                <div class="timeline-badge"><i class="glyphicon glyphicon-unchecked"></i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Q3 Ortolang V3</h4>
+                        <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> 2015</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Centre de <b>Diffusion Version 3</b></li>
+                            <li>Procédures pour <b>l’archivage pérenne</b></li>
+                            <li>Portail <b>Thématique Version 2</b></li>
+                            <li>Centre Thématique sur l’écrit Version 1</li>
+                            <li>Centres Thématiques spécifiques Version béta</li>
+                            <li>Intégration des <b>outils en ligne</b></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    <h3 id="a2015.Q1_Ortolang_V2">2015.Q1 Ortolang V2</h3>
-                    <ul>
-                        <li>Centre de <b>Diffusion Version 2</b></li>
-                        <li>Intégration de toutes les ressources initiales</li>
-                        <li>Procédures pour le <b>dépôt de ressources</b></li>
-                        <li>Portail <b>Thématique Version 1</b></li>
-                        <li>Centre Thématique sur l’écrit Version béta</li>
-                    </ul>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-badge warning"><i class="glyphicon glyphicon-edit"></i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Q1 Ortolang V2</h4>
+                        <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> 2015</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Centre de <b>Diffusion Version 2</b></li>
+                            <li>Intégration de toutes les ressources initiales</li>
+                            <li>Procédures pour le <b>dépôt de ressources</b></li>
+                            <li>Portail <b>Thématique Version 1</b></li>
+                            <li>Centre Thématique sur l’écrit Version béta</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-xs-6 col-sm-4">
-                    <h3 id="a2015.Q3_Ortolang_V3">2015.Q3 Ortolang V3</h3>
-                    <ul>
-                        <li>Centre de <b>Diffusion Version 3</b></li>
-                        <li>Procédures pour <b>l’archivage pérenne</b></li>
-                        <li>Portail <b>Thématique Version 2</b></li>
-                        <li>Centre Thématique sur l’écrit Version 1</li>
-                        <li>Centres Thématiques spécifiques Version béta</li>
-                        <li>Intégration des <b>outils en ligne</b></li>
-                    </ul>
+            </li>
+            <li>
+                <div class="timeline-badge success"><i class="glyphicon glyphicon-check"></i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Q3 Ortolang V1</h4>
+                        <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> 2014</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Centre de <b>Diffusion Version 1</b></li>
+                            <li>Intégration de quelques <b>ressources pilotes</b></li>
+                            <li><b>Architecture du portail</b> d’hébergement des centres thématiques</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-xs-6 col-sm-4">
-                    <h3 id="a2016.Q1_Ortolang_V4">2016.Q1 Ortolang V4</h3>
-                    <ul>
-                        <li>Centre de <b>Diffusion Version 4</b></li>
-                        <li>Portail <b>Thématique Version 3</b></li>
-                        <li>Centres Thématiques Version 1</li>
-                        <li>Ouverture au <b>public restreinte</b> (test)</li>
-                        <li><b>Documentation</b> complète (utilisation, exploitation, maintenance)</li>
-                    </ul>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-badge success"><i class="glyphicon glyphicon-check"></i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Q1 Ortolang V0</h4>
+                        <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> 2014</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Déploiement des plateformes <b>CNRTL</b> et <b>SLDR</b> sur une infrastructure <b>provisoire</b></li>
+                            <li>Catégorisation des <b>outils et ressources</b> intiaux</li>
+                            <li>Définition de <b>l’architecture du centre de diffusion</b></li>
+                            <li>Déploiement de <b>l’infrastructure de sauvegarde</b></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    <h3 id="a2016.Q2_Ortolang_V5">2016.Q2 Ortolang V5</h3>
-                    <ul>
-                        <li><b>Ouverture officielle</b> au public de la version finale d’Ortolang</li>
-                        <li>Outils de <b>supervision</b></li>
-                        <li>Outils <b>statistiques</b></li>
-                    </ul>
+            </li>
+            <li>
+                <div class="timeline-badge success"><i class="glyphicon glyphicon-check"></i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Q4 Ortolang Infra</h4>
+                        <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> 2013</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Déploiement de <b>l’infrastructure matérielle</b></li>
+                            <li>Définition de la solution de sauvegarde</li>
+                            <li>Déploiement des <b>outils</b> de Génie Logiciel</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
 </div>
