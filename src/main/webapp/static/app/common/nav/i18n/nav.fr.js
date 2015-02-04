@@ -29,7 +29,13 @@ angular.module('ortolangMarketApp')
                 FRENCH: 'Français',
                 ENGLISH: 'Anglais'
             },
-            INFORMATION: 'Information',
+            INFORMATION: {
+                INFORMATION: 'Information',
+                PRESENTATION: 'Présentation',
+                PARTNERS: 'Partenaires',
+                ROADMAP: 'Feuille de route',
+                NEWSLETTERS: 'Lettres d\'informations'
+            },
             STATE_SUPPORT: ' bénéficie d\'une aide de l’Etat au titre du programme « Investissements d’avenir » (ANR-­‐11-­‐EQPX-­‐0032).',
             BACK_TOP: 'Haut de page',
             TEAM: 'Équipe Ortolang'

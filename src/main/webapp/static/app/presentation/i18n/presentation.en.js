@@ -82,7 +82,7 @@ angular.module('ortolangMarketApp')
             'and <a target="_blank"  href="http://www.atilf.fr/">ATILF</a>),</li>' +
             '   <li>experimental linguistics (<a target="_blank"  href="http://www.lpl-aix.fr/">LPL</a>, <a target="_blank"  href="http://www.atilf.fr/">ATILF</a>),' +
             '</li>' +
-            '   <li>language production and perceptio (<a target="_blank"  href="http://www.lpl-aix.fr/">LPL</a>, ' +
+            '   <li>language production and perception (<a target="_blank"  href="http://www.lpl-aix.fr/">LPL</a>, ' +
             '<a target="_blank"  href="http://www.modyco.fr/">MoDyCo</a>),</li>' +
             '   <li>diachronic studies (<a target="_blank"  href="http://www.atilf.fr/">ATILF</a>, <a target="_blank"  href="http://www.lll.cnrs.fr/">LLL</a>),</li>' +
             '   <li>sociolinguistics (<a target="_blank"  href="http://www.lll.cnrs.fr/">LLL</a>, <a target="_blank"  href="http://www.modyco.fr/">MoDyCo</a>),</li>' +
