@@ -2,7 +2,8 @@
 
 angular.element(document).ready(function () {
     var keycloakAuth = new Keycloak('keycloak.json');
-    keycloakAuth.init({ onLoad: 'check-sso' }).success(function () {
+
+    function keycloackInitCallback() {
         /**
          * @ngdoc service
          * @name ortolangMarketApp.AuthService
@@ -42,7 +43,11 @@ angular.element(document).ready(function () {
             }]);
 
         angular.bootstrap(document, ['ortolangMarketApp'], { strictDi: true });
-    }).error(function (error) {
-        console.error('An error occurred while initializing Keycloak', error);
+    }
+
+    keycloakAuth.init({ onLoad: 'check-sso' }).success(function () {
+        keycloackInitCallback();
+    }).error(function () {
+        keycloackInitCallback();
     });
 });
