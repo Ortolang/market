@@ -18,58 +18,66 @@
     }
   }
 
-  .navbar-nav.navbar-collapse.collapse:not(.in) {
-    border: none;
-  }
-
-  ul.navbar-nav > li {
-    cursor: pointer;
-    &.open > a {
-      background-color: inherit;
-    }
-    > a {
-      padding-top: 0;
-      padding-bottom: 0;
-      line-height: @navbar-height;
-      color: @top-navbar-color;
-      &:hover, &:focus {
-        background-color: inherit;
-        color: @top-navbar-color;
+  ul.navbar-nav {
+    &.navbar-collapse.collapse {
+      &.in {
+        .open .dropdown-menu > li > a {
+          color: @top-navbar-color;
+        }
       }
-      &.dropdown-toggle {
+      &:not(.in) {
+        border: none;
+      }
+    }
+    > li {
+      cursor: pointer;
+      &.open > a {
+        background-color: inherit;
+      }
+      > a {
+        padding-top: 0;
+        padding-bottom: 0;
+        line-height: @navbar-height;
+        color: @top-navbar-color;
         &:hover, &:focus {
           background-color: inherit;
+          color: @top-navbar-color;
+        }
+        &.dropdown-toggle {
+          &:hover, &:focus {
+            background-color: inherit;
+          }
         }
       }
-    }
 
-    .dropdown-menu {
-      .language {
-        &.active div {
-          font-weight: bold;
-          background-color: @top-navbar-bg-color;
-          color: #FFFFFF;
+      .dropdown-menu {
+        .language {
+          &.active div {
+            font-weight: bold;
+            background-color: @top-navbar-bg-color;
+            color: #FFFFFF;
+          }
         }
       }
-    }
 
-    .badge {
-      position: absolute;
-      right: 10px;
-      top: 6px;
-      &.tasks {
-        background-color: @tasks-badge;
+      .badge {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+        &.tasks {
+          background-color: @tasks-badge;
+        }
+        &.processes {
+          background-color: @processes-badge;
+        }
       }
-      &.processes {
-        background-color: @processes-badge;
-      }
-    }
 
-    .fa:not(.fa-caret-down) {
-      margin-right: @padding-xs-horizontal;
-      font-size: 1.5em;
-      position: relative;
-      top: 2px;
+      .fa:not(.fa-caret-down) {
+        margin-right: @padding-xs-horizontal;
+        font-size: 1.5em;
+        position: relative;
+        top: 2px;
+      }
     }
   }
 

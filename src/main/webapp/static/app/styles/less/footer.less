@@ -1,6 +1,5 @@
 .footer {
   height: 50px;
-  margin-left: @side-bar-width;
   border-top: 1px solid @navbar-default-border;
   color: @gray-light;
   p {
@@ -18,5 +17,11 @@
         color: @gray;
       }
     }
+  }
+}
+
+@media(min-width: @grid-float-breakpoint) {
+  .footer {
+    margin-left: @side-bar-width;
   }
 }
