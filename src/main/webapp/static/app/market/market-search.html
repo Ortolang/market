@@ -13,17 +13,33 @@
         </div>
     </div>
 
-
-    <section id="results" class="row">
-        <div class="col-md-10">
-            <header>
-                <h3 translate="MARKET.RESULTS_LABEL" data-translate-values="{value: items.length}"></h3>
-            </header>
-
-            <div ng-repeat="item in items">
-                <item data-entry="item" template="market/directives/result.html" class="row market-item" ng-click="clickItem(item)"></item>
+    <div id="results">
+        <div id="results_toolbar" class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-8">
+                    <ul class="nav nav-pills nav-results-filters informationToolBar">
+                        <li role="filter" ng-class="selectedType===''?'active':''"><a ng-click="resetFilter()" translate="MARKET.ALL_TYPE"></a></li>
+                        <li role="filter" ng-class="selectedType==='Corpus'?'active':''"><a ng-click="filter('type', 'Corpus')" translate="MARKET.CORPORA"></a></li>
+                        <li role="filter" ng-class="selectedType==='Lexiques'?'active':''"><a ng-click="filter('type', 'Lexiques')" translate="MARKET.LEXICONS"></a></li>
+                        <li role="filter" ng-class="selectedType==='Outils'?'active':''"><a ng-click="filter('type', 'Outils')" translate="MARKET.TOOLS"></a></li>
+                        <li role="filter" ng-class="selectedType==='Site web'?'active':''"><a ng-click="filter('type', 'Site web')" translate="MARKET.WEBSITES"></a></li>
+                    <ul>
+                </ul>
             </div>
         </div>
-    </section>
+        <div id="results_count" class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-8">
+                <small translate="MARKET.RESULTS_LABEL" data-translate-values="{value: items.length}"></small>
+            </div>
+        </div>
+        <div id="results_list" class="row">
+            <div ng-repeat="item in itemsFiltered">
+                <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
+            </div>
+        </div>
+    </div>
 
 </div>

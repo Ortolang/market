@@ -10,6 +10,11 @@
 angular.module('ortolangMarketApp')
     .constant('MARKET_EN', {
         MARKET: {
+            ALL_TYPE: 'All',
+            CORPORA: 'Corpora',
+            LEXICONS: 'Lexcon',
+            TOOLS: 'Tools',
+            WEBSITES: 'Websites',
             PUNCH_LINE: 'Search Ortolang',
             REDACTOR_CHOICES: 'Redactor choices',
             CONDITIONS_OF_USE: 'Conditions of use',

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'IndexResultResource', function ($scope, $location, $routeParams, ObjectResource, DownloadResource, N3Serializer, IndexResultResource) {
+    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$filter', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'IndexResultResource', function ($scope, $location, $routeParams, $filter, ObjectResource, DownloadResource, N3Serializer, IndexResultResource) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
@@ -16,8 +16,24 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        $scope.clickItem = function (item) {
-            $location.path('/market/item/' + item.root);
+        $scope.filter = function(filterID, filterValue) {
+            if(filterID && filterValue) {
+
+                if(filterID==='type') {
+                    $scope.itemsFiltered = $filter('filter')($scope.items,{'meta':{'http://www.ortolang.fr/ontology/type':filterValue}});
+
+                    $scope.selectedType = filterValue;
+                } else {
+                    $scope.itemsFiltered = $filter('filter')($scope.items,{'meta':{filterID:filterValue}});
+                }
+                
+            }
+        };
+
+        $scope.resetFilter = function() {
+            $scope.itemsFiltered = angular.copy($scope.items);
+
+            $scope.selectedType = '';
         };
 
 
@@ -32,7 +48,7 @@ angular.module('ortolangMarketApp')
             if (contentSplit.length > 0) {
                 angular.forEach(contentSplit, function (contentPart) {
                     var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
-                    query += ' AND (CONTENT:' + str + '~ OR CONTENT:' + str + '*)';
+                    query += ' AND CONTENT:' + str + '*';
                 });
             }
 
@@ -51,15 +67,23 @@ angular.module('ortolangMarketApp')
                     }
 
                     $scope.items.push(entry);
+                    $scope.itemsFiltered.push(entry);
                 });
+
+                // $scope.itemsFiltered = angular.copy($scope.items);
             });
         }
 
 
         // Scope variables
         function initScopeVariables() {
+            // All items find by the query
             $scope.items = [];
+            // List of items filtered by one or more facets
+            $scope.itemsFiltered = [];
             $scope.content = '';
+
+            $scope.selectedType = '';
         }
 
         function init() {
