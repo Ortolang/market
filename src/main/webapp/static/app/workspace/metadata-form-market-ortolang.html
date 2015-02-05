@@ -15,7 +15,7 @@
             <!-- <select name="type" class="form-control" ng-model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" ng-options="cat.id as cat.label for cat in categories" required>
                 <option value="">Choisir une catégorie</option>
             </select> -->
-            <sparql-select label="'Catégorie de la ressource'" default-value="'Choisir une catégorie'" sparql="sparqlCategories" model="md['http://www.ortolang.fr/ontology/type']" required="'required'" name="'type'"></sparql-select>
+            <sparql-select label="'Types de ressource'" default-value="'Choisir une catégorie'" sparql="sparqlCategories" model="md['http://www.ortolang.fr/ontology/type']" required="'required'" name="'type'"></sparql-select>
         <!-- </div> -->
 
         <div class="form-group" show-errors>
@@ -53,14 +53,14 @@
         </div>
 
         <div class="form-group">
-            <label>Origine temporelle des données</label>
+            <label>Période de création des données</label>
             <input type="text" name="temporal" ng-model="md['http://purl.org/dc/terms/temporal']" class="form-control">
         </div>
 
         <div class="form-group">
             <label>Illustration </label>
             <div class="input-group">
-                <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="icons.imageFile"></span> {{image.name}}</span>
+                <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="icons.imageFile"></span> {{image.path}}</span>
                 <span class="input-group-btn">
                 <button class="btn btn-default" ng-click="fileImageSelectModal.show()" type="button">Selectionner</button>
                 </span>
@@ -71,7 +71,7 @@
         <div class="form-group">
             <label>Aperçu </label>
             <div class="input-group">
-                <span class="form-control" ng-click="folderSelectModal.show()"><span ng-class="icons.folder"></span> {{preview.name}}</span>
+                <span class="form-control" ng-click="folderSelectModal.show()"><span ng-class="icons.folder"></span> {{preview.path}}</span>
                 <span class="input-group-btn">
                 <button class="btn btn-default" ng-click="folderSelectModal.show()" type="button">Selectionner</button>
                 </span>
@@ -85,13 +85,19 @@
         <sparql-select label="'Droit d\'utilisation'" default-value="'Choisir les conditions d\'utilisation'" sparql="sparqlConditionsOfUse" model="md['http://www.ortolang.fr/ontology/statusOfUse']" required="'required'" name="'statusOfUse'"></sparql-select>
 
         <div class="form-group">
-            <label>Commentaire </label>
+            <label>Description des conditions d'utilisation </label>
             <textarea name="conditionsOfUse" ng-model="md['http://www.ortolang.fr/ontology/conditionsOfUse']" class="form-control"></textarea>
         </div>
 
         <div class="form-group">
-            <label>Licence</label>
-            <input type="text" name="licence" ng-model="md['http://purl.org/dc/terms/licence']" class="form-control">
+            <label>Licence à accepter</label>                
+            <div class="input-group">
+                <span class="form-control" ng-click="fileLicenceSelectModal.show()"><span ng-class="icons.textFile"></span> {{licence.path}}</span>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="fileLicenceSelectModal.show()" type="button">Selectionner</button>
+                </span>
+            </div>
+            <input type="hidden" name="licence" ng-model="md['http://www.ortolang.fr/ontology/licence']" class="form-control">
         </div>
     </div>
 

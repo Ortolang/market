@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$sce', '$routeParams', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $sce, $routeParams, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$window', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, $window, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -55,6 +55,10 @@ angular.module('ortolangMarketApp')
                                         loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
                                     }
                                     
+                                    if($scope.item['http://www.ortolang.fr/ontology/licence']!==undefined && $scope.item['http://www.ortolang.fr/ontology/licence']!=='') {
+                                        loadLicence(key, $scope.item['http://www.ortolang.fr/ontology/licence']);
+                                    }
+                                    
                                     if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
                                         $scope.datasizeToPrint = {'value':$scope.item['http://www.ortolang.fr/ontology/datasize']};
                                     }
@@ -80,6 +84,14 @@ angular.module('ortolangMarketApp')
 
         $scope.browse = false;
 
+        function loadPreview(collection, previewPath) {
+            ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function(oobject) {
+                $scope.previewCollection = oobject;
+            }, function (reason) {
+                console.error(reason);
+            });
+        }
+
         $scope.showPreview = function (preview) {
             if(preview !== undefined && preview !== '') {
 
@@ -93,14 +105,6 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        function loadPreview(collection, previewPath) {
-            ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function(oobject) {
-                $scope.previewCollection = oobject;
-            }, function (reason) {
-                console.error(reason);
-            });
-        }
-
         function finishPreview(visualizer, oobject) {
 
             oobject.object.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
@@ -110,9 +114,22 @@ angular.module('ortolangMarketApp')
 
             var element = $compile(visualizer.getElement())(isolatedScope),
                 visualizerModal = $('.visualizer-modal');
-            visualizerModal.find('.modal-header strong').text(visualizer.getName());
-            visualizerModal.find('.modal-body').empty().append(element);
+            visualizerModal.find('.modal-content').empty().append(element);
             visualizerModal.modal('show');
+        }
+
+        function loadLicence(collection, licencePath) {
+            ObjectResource.element({oKey: collection, path: licencePath}).$promise.then(function(oobject) {
+                $scope.licenceDataObject = oobject;
+
+                DownloadResource.download({oKey: $scope.licenceDataObject.key}).success(function (data) {
+                    $scope.licenceData = data;
+                }).error(function (error) {
+                    console.error(error);
+                });
+            }, function (reason) {
+                console.error(reason);
+            });
         }
 
         // Scope variables
@@ -122,7 +139,6 @@ angular.module('ortolangMarketApp')
             $scope.item = undefined; // RDF representation of the object
             $scope.previewCollection = undefined;
             $scope.marketItemTemplate = undefined; // Show info, browse, ...
-            $scope.description = $sce.trustAsHtml('The layout&lt;br/&gt; inside.');
         }
 
         function init() {

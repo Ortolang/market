@@ -52,7 +52,7 @@ angular.module('ortolangVisualizers')
                         limit = 20000;
                     if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml') {
                         scope.language = 'xml';
-                    } else if (mimeType === 'text/html') {
+                    } else if (mimeType === 'text/html' || mimeType === 'text/plain') {
                         scope.language = 'html';
                     } else if (mimeType === 'text/css') {
                         scope.language = 'css';
