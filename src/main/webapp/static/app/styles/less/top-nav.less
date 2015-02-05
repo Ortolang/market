@@ -1,105 +1,86 @@
 .navbar.navbar-default {
   background-color: @top-navbar-bg-color;
   border: none;
+  margin-bottom: 0;
 
   a.dropdown-toggle, .navbar-brand {
     color: @top-navbar-color;
   }
 
   .navbar-brand {
-    padding: 0 0 0 15px;
+    padding-top: 0;
+    padding-bottom: 0;
     line-height: @navbar-height;
     .ortolang-logo {
       height: 28px;
       margin-right: 6px;
+      display: inline;
     }
   }
 
-  a.dropdown-toggle {
-    &:hover, &:focus {
-      background-color: inherit;
-    }
+  .navbar-nav.navbar-collapse.collapse:not(.in) {
+    border: none;
   }
 
-  ul.navbar-top-links > li {
+  ul.navbar-nav > li {
+    cursor: pointer;
+    &:last-child {
+      margin-right: @navbar-padding-horizontal;
+    }
     &.open > a {
       background-color: inherit;
     }
-    cursor: pointer;
     > a {
+      padding-top: 0;
+      padding-bottom: 0;
+      line-height: @navbar-height;
       color: @top-navbar-color;
       &:hover, &:focus {
         background-color: inherit;
+        color: @top-navbar-color;
+      }
+      &.dropdown-toggle {
+        &:hover, &:focus {
+          background-color: inherit;
+        }
       }
     }
-    .dropdown-menu .language {
-      color: @top-navbar-color;
-      &.active div {
-        font-weight: bold;
-        background-color: @top-navbar-bg-color;
-        color: #FFFFFF;
+
+    .dropdown-menu {
+      .language {
+        &.active div {
+          font-weight: bold;
+          background-color: @top-navbar-bg-color;
+          color: #FFFFFF;
+        }
       }
     }
+
+    .badge {
+      position: absolute;
+      right: 10px;
+      top: 6px;
+      &.tasks {
+        background-color: @tasks-badge;
+      }
+      &.processes {
+        background-color: @processes-badge;
+      }
+    }
+
     .fa:not(.fa-caret-down) {
+      margin-right: @padding-xs-horizontal;
       font-size: 1.5em;
       position: relative;
       top: 2px;
-      margin-right: @padding-xs-horizontal;
-      display: inline-block;
-      padding-right: 0;
-
-      &.fa-tasks, &.fa-bell {
-        padding-right: 15px;
-        margin-right: 0;
-      }
-
-      .badge {
-        position: absolute;
-        right: 5px;
-        top: 6px;
-        &.tasks {
-          background-color: @tasks-badge;
-        }
-        &.processes {
-          background-color: @processes-badge;
-        }
-      }
     }
   }
-}
 
-// FROM SB ADMIN 2
-.navbar-top-links li {
-  display: inline-block;
-}
-
-.navbar-top-links li:last-child {
-  margin-right: 15px;
-}
-
-.navbar-top-links li a {
-  padding: 15px;
-  min-height: 50px;
-}
-
-.navbar-top-links .dropdown-menu li {
-  display: block;
-}
-
-.navbar-top-links .dropdown-menu li:last-child {
-  margin-right: 0;
-}
-
-.navbar-top-links .dropdown-menu li a {
-  padding: 3px 20px;
-  min-height: 0;
-}
-
-.navbar-top-links .dropdown-menu li a div {
-  white-space: normal;
-}
-
-.navbar-top-links .dropdown-user {
-  right: 0;
-  left: auto;
+  .navbar-toggle {
+    border: none;
+    background-color: @top-navbar-color;
+    .icon-bar {
+      background-color: @top-navbar-bg-color;
+    }
+  }
 }
