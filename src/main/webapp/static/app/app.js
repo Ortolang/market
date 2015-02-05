@@ -71,28 +71,14 @@ angular
             .when('/information', {
                 redirectTo: '/information/presentation'
             })
-            .when('/information/partners', {
-                templateUrl: 'information/partners.html'
-            })
-            .when('/information/roadmap', {
-                templateUrl: 'information/roadmap.html'
-            })
-            .when('/information/presentation', {
-                templateUrl: 'information/presentation.html'
-            })
-            .when('/information/newsletter', {
-                templateUrl: 'information/newsletter.html'
-            })
-            .when('/information/legal-information', {
-                templateUrl: 'information/legal-information.html'
+            .when('/information/:section', {
+                templateUrl: 'information/information.html',
+                controller: 'InformationCtrl'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
                 controller: 'ProfileCtrl',
                 requiresAuthentication: true
-            })
-            .when('/documentation', {
-                templateUrl: 'documentation/documentation.html'
             })
             .when('/404', {
                 templateUrl: '404.html'

@@ -1,13 +1,13 @@
 <footer class="footer" ng-controller="FooterCtrl">
     <div class="container-fluid">
         <p class="pull-right small">
-            <a href="http://dev.ortolang.fr/" target="_blank" >{{ 'PRES.TITLE_COMMUNITY' | translate }}</a>
+            <a href="https://dev.ortolang.fr/" target="_blank" >{{ 'NAV.COMMUNITY_WEBSITE' | translate }}</a>
             &bull;
-            <a href="mailto:contact@ortolang.fr">{{ 'PRES.TITLE_CONTACT' | translate }}</a>
+            <a ng-click="selectInformation()" ng-href="#/information/legal-notices">{{ 'NAV.LEGAL_NOTICES' | translate }}</a>
             &bull;
-            <a href="/#/information/legal-information">{{ 'PRES.TITLE_LEGAL_INFORMATION' | translate }}</a>
+            <a href="mailto:contact@ortolang.fr">{{ 'NAV.CONTACT' | translate }}</a>
             &bull;
-            <a href="" ng-click="goTop()" translate="NAV.BACK_TOP"></a>
+            <a href="" ng-click="backToTop()" translate="NAV.BACK_TO_TOP"></a>
         </p>
         <p class="text-center small">© 2015 <a href="http://dev.ortolang.fr/team-list.html" translate="NAV.TEAM"></a> | @@version</p>
     </div>
