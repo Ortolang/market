@@ -34,6 +34,7 @@ angular.module('ortolangMarketApp')
                                         N3Serializer.fromN3(metaContent).then(function (data) {
                                             scope.oobject = oobject;
                                             scope.meta = data;
+                                            scope.entry.meta = data;
                                             if(data['http://www.ortolang.fr/ontology/image']) {
                                                 
                                                 ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {

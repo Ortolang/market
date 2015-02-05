@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
             AuthService.logout();
         };
 
-        $scope.currentLanguage = $translate.preferredLanguage();
+        $scope.currentLanguage = $translate.use();
 
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey).then(function (langKey) {

@@ -294,56 +294,44 @@
 
 #market-search {
 
-    #search-market {
-        padding-top: 4*@padding-large-vertical;
-        padding-bottom: 5*@padding-large-vertical;
-        background-color: @navbar-default-bg;
-        // border-bottom: 1px solid @navbar-default-border;
+    #results {
+        #results_toolbar {
+            padding-top: @padding-large-vertical;
+            padding-bottom: @padding-large-vertical;
+            border-bottom: 1px solid @navbar-default-border;
+            min-height: 55px;
+
+            .nav-results-filters {
+                li {
+                    cursor: pointer;
+                }
+            }
+        }
     }
+
+    
 
     h3 {
         color: @market-primary;
         display: inline-block;
     }
 
-    .market-item {
-        background-color: #FFFFFF;
-        padding-top: @padding-large-vertical;
-        margin-left: @padding-large-vertical;
-
-        cursor: pointer;
-        &:hover {
-            .title {
-                color: @ortolang-blue;
-            }
-        }
-
-        .thumbnail {
-          border: 0;
-          background-color: #FFFFFF;
-        }
-
-        .title {
-            overflow: hidden;
-            position: relative;
-            color: inherit;
-        }
-        .description {
+    .description {
           overflow: hidden;
           max-height: 100px;
           text-align: justify;
         }
 
-        .producers {
-            a {
-                font-weight: 200;
-            }
-        }
-
-        .item-element {
-          border-left: 4px solid @market-primary;
-          padding : @padding-large-vertical;
+    .producers {
+        a {
+            font-weight: 200;
         }
     }
+
+    .item-element {
+      border-left: 4px solid @market-primary;
+      padding : @padding-large-vertical;
+    }
+      
 }
 

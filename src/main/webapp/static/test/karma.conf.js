@@ -40,6 +40,7 @@ module.exports = function (config) {
             'bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js',
             'bower_components/angular-diff-match-patch/angular-diff-match-patch.js',
             'bower_components/google-diff-match-patch/javascript/diff_match_patch_uncompressed.js',
+            'bower_components/keycloak/dist/keycloak.js',
             'app/**/*.js',
             'test/mock/**/*.js',
             'test/spec/**/*.js',

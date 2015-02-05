@@ -10,6 +10,11 @@
 angular.module('ortolangMarketApp')
     .constant('MARKET_FR', {
         MARKET: {
+            ALL_TYPE: 'Tous',
+            CORPORA: 'Corpus',
+            LEXICONS: 'Lexiques',
+            TOOLS: 'Outils',
+            WEBSITES: 'Sites web',
             PUNCH_LINE: 'Cherchez dans Ortolang',
             REDACTOR_CHOICES: 'Choix de l\'équipe',
             CONDITIONS_OF_USE: 'Conditions d\'utilisation',
@@ -21,8 +26,9 @@ angular.module('ortolangMarketApp')
             CONTRIBUTOR: 'Contribution',
             DOWNLOAD: 'Téléchargement',
             DOWNLOAD_ALL: 'Vous allez télécharger la totalité des données de cette ressource {{value && value !=="" ? "("+value+")" : ""}}',
+            DOWNLOAD_AGREEMENT: 'Le téléchargement de cette ressource vaut acceptation de la licence d\'utilisation.',
             LICENCE_DETAIL: 'Détails sur la license',
-            RESULTS_LABEL: '{{value}} résultat{{value > 1 ? "s" : ""}}',
+            RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
             SITE: 'Accéder à l\'application web'
         }
     });

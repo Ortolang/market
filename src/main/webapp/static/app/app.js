@@ -68,28 +68,8 @@ angular
                 controller: 'TasksCtrl',
                 requiresAuthentication: true
             })
-            .when('/information', {
-                redirectTo: '/information/presentation',
-                controller: 'InformationCtrl'
-            })
-            .when('/information/partners', {
-                templateUrl: 'information/partners.html',
-                controller: 'InformationCtrl'
-            })
-            .when('/information/roadmap', {
-                templateUrl: 'information/roadmap.html',
-                controller: 'InformationCtrl'
-            })
-            .when('/information/presentation', {
-                templateUrl: 'information/presentation.html',
-                controller: 'InformationCtrl'
-            })
-            .when('/information/newsletter', {
-                templateUrl: 'information/newsletter.html',
-                controller: 'InformationCtrl'
-            })
-            .when('/information/legal-notices', {
-                templateUrl: 'information/legal-notices.html',
+            .when('/information/:section', {
+                templateUrl: 'information/information.html',
                 controller: 'InformationCtrl'
             })
             .when('/profile', {

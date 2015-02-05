@@ -36,8 +36,11 @@ angular.module('ortolangMarketApp')
                 ROADMAP: 'Roadmap',
                 NEWSLETTER: 'Newsletter'
             },
+            COMMUNITY_WEBSITE: 'Community website',
+            CONTACT: 'Contact us',
+            LEGAL_NOTICES: 'Legal notices',
             STATE_SUPPORT: ' is a beneficiary of French State support via its  “Investissements d\'avenir” program (ANR-11-EQPX-0032).',
-            BACK_TOP: 'Back to top',
+            BACK_TO_TOP: 'Back to top',
             TEAM: 'Ortolang team'
         }
     });
