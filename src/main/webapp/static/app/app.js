@@ -31,7 +31,9 @@ angular
         'ui.bootstrap.showErrors',
         'pascalprecht.translate',
         'zeroclipboard',
-        'diff-match-patch'
+        'diff-match-patch',
+        'angular-md5',
+        'xeditable'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
@@ -72,7 +74,7 @@ angular
                 templateUrl: 'information/information.html',
                 controller: 'InformationCtrl'
             })
-            .when('/profile', {
+            .when('/profile/:section', {
                 templateUrl: 'profile/profile.html',
                 controller: 'ProfileCtrl',
                 requiresAuthentication: true
@@ -101,6 +103,9 @@ angular
         uiZeroclipConfigProvider.setZcConf({
             swfPath: '/vendor/ZeroClipboard.swf'
         });
+    }])
+    .run(['editableOptions', function(editableOptions) {
+        editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
     }]);
 
 /**

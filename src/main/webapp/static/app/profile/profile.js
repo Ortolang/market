@@ -8,14 +8,20 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope',
-        function ($scope) {
+    .controller('ProfileCtrl', ['$scope', '$routeParams',
+        function ($scope, $routeParams) {
             console.debug($scope.$parent.authenticated);
-            if($scope.$parent.authenticated) {
-                var user = $scope.$parent.currentUser;
-                console.debug($scope.$parent);
+            //if($scope.$parent.authenticated) {
+            //    var user = $scope.$parent.currentUser;
+            //    console.debug($scope.$parent);
+            //
+            //    console.debug(user.name);
+            //}
 
-                console.debug(user.name);
-            }
+            $scope.section = $routeParams.section;
+            $scope.isVisible = true;
+            $scope.user = {
+                name: 'awesome user'
+            };
         }
 ]);

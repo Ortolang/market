@@ -1,0 +1,45 @@
+<!--<multi-avatar data-facebook-id='678872827' data-github-username='' data-email=''></multi-avatar>-->
+<!--<multi-avatar data-facebook-id='' data-github-username='najai' data-email=''></multi-avatar>-->
+<!--<multi-avatar data-facebook-id='' data-github-username='' data-email='celine.moro@gmail.com'></multi-avatar>-->
+<!--<multi-avatar data-facebook-id='' data-github-username='' data-email=''></multi-avatar>-->
+
+<div class="col-md-offset-1 col-md-10 col-md-offset-1">
+    <h1>{{"NAV.PROFILE" | translate}}</h1>
+    <hr>
+    <div class="row profile">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div>
+                <div>
+                    <multi-avatar data-facebook-id='678872827' data-github-username='' data-email=''></multi-avatar>
+                </div>
+                <hr>
+                <div class="list-group">
+                    <a href="#/profile/personal-infos" class="list-group-item" ng-class="{active: section === 'personal-infos'}">
+                        <span class="fa fa-user fa-fw" aria-hidden="true"></span> {{"PROFILE.NAV.PERSONAL_INFOS" | translate}}
+                    </a>
+                    <a href="#/profile/about-me" class="list-group-item" ng-class="{active: section === 'about-me'}">
+                        <span class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></span> {{"PROFILE.NAV.ABOUT_ME" | translate}}
+                    </a>
+                    <a href="#/profile/settings" class="list-group-item" ng-class="{active: section === 'settings'}">
+                        <span class="fa fa-gears fa-fw" aria-hidden="true"></span> {{"PROFILE.NAV.SETTINGS" | translate}}
+                    </a>
+                    <a href="#/profile/events" class="list-group-item" ng-class="{active: section === 'events'}">
+                        <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> {{"PROFILE.NAV.EVENTS" | translate}}
+                    </a>
+                    <a href="#/profile/contributions" class="list-group-item" ng-class="{active: section === 'contributions'}">
+                        <span class="fa fa-book fa-fw" aria-hidden="true"></span> {{"PROFILE.NAV.CONTRIBUTIONS" | translate}}
+                    </a>
+                    <a href="#/profile/friends" class="list-group-item" ng-class="{active: section === 'friends'}">
+                        <span class="fa fa-users fa-fw" aria-hidden="true"></span> {{"PROFILE.NAV.FRIENDS" | translate}}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9">
+            <div ng-include="'PROFILE.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
+        </div>
+    </div>
+</div>

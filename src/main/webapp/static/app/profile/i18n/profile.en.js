@@ -10,6 +10,22 @@
 angular.module('ortolangMarketApp')
     .constant('PROFILE_EN', {
         PROFILE: {
+            NAV: {
+                PERSONAL_INFOS: 'Personal informations',
+                SETTINGS: 'Settings',
+                ABOUT_ME: 'About me',
+                EVENTS: 'Recent activity',
+                CONTRIBUTIONS: 'Contributions',
+                FRIENDS: 'My friends'
+            },
+            PATH: {
+                PERSONAL_INFOS: 'profile/en/personal-infos.html',
+                SETTINGS: 'profile/en/settings.html',
+                ABOUT_ME: 'profile/en/about-me.html',
+                EVENTS: 'profile/en/events.html',
+                CONTRIBUTIONS: 'profile/en/contributions.html',
+                FRIENDS: 'profile/en/friends.html'
+            }
         }
     });
 /**
