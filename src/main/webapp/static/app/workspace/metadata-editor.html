@@ -1,7 +1,7 @@
 <div class="aside-backdrop am-fade metadataEditor-backdrop" ng-show="isEditorShow()" ng-click="hideEditor()"></div>
-<div class="aside right am-fade-and-slide-right metadataEditor" ng-show="isEditorShow()" tabindex="-1" role="dialog">
-    <div class="aside-dialog">
-        <div class="aside-content">
+<div class="aside right am-fade-and-slide-right metadataEditor" ng-show="isEditorShow()" tabindex="-1" role="dialog" style="width:1000px">
+    <!-- <div class="aside-dialog"> -->
+        <!-- <div class="aside-content"> -->
             <div class="metadataEditorHeader">
                 <button type="button" class="close" ng-click="hideEditor()">&times;</button>
                 <h4 class="aside-title">{{userMetadataFormat.name}} de <em>{{hasOnlyRootCollectionSelected() ? workspace.name : selectedElements[0].name}}</em></h4>
@@ -41,17 +41,17 @@
                     </div>
                 </div>
             </div>
-            <div id="metadataEditorBody" class="aside-body">
+            <!-- <div id="metadataEditorBody" class="aside-body" style="width: 1000px;"> -->
                 <blockquote>
                     <p>{{userMetadataFormat.description}}</p>
                 </blockquote>
                 <hr/>
-                <div style="width: 700px; height: 100%" class="row">
-                    <div class="col-md-12">
+                <!-- <div class="row"> -->
+                    <!-- <div class="col-md-12"> -->
                         <div ng-include="metadataForm"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
 </div>

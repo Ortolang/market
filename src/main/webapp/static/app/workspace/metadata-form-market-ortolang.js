@@ -82,6 +82,29 @@ angular.module('ortolangMarketApp')
             deregisterFileLicenceSelectModal();
         });
 
+
+        // *********************** //
+        //          Resize         //
+        // *********************** //
+
+        function resizeAsideBody () {
+            var topOffset = 53,
+            bottomOffset = 51,
+            toolbar = 55 + 20,
+            blockquote = 70 + 20,
+            hr = 1 + 20,
+            height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+
+        height = height - topOffset - bottomOffset - toolbar - blockquote - hr;
+        if (height < 1) {
+            height = 1;
+        }
+        if (height > topOffset) {
+                $('#metadata-form-panels').css('height', height + 'px');
+            }
+        }
+
+
         function init() {
             $scope.tabs = [
                 {id:'info', label:'Renseignements'},
@@ -142,4 +165,5 @@ angular.module('ortolangMarketApp')
         }
 
         init();
+        resizeAsideBody();
     }]);
