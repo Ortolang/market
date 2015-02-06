@@ -141,6 +141,17 @@
                 </div>
             </div>
 
+            <div class="panel panel-default derogation-panel" ng-if="item['http://www.ortolang.fr/ontology/derogation']">
+                <div class="panel-heading" translate="MARKET.DEROGATION"></div>
+                <div class="panel-body">
+
+                    <p>
+                        {{item['http://www.ortolang.fr/ontology/derogation']}}<span ng-if="item['http://www.ortolang.fr/ontology/derogation']==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
+                    </p>
+                    
+                </div>
+            </div>
+
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">

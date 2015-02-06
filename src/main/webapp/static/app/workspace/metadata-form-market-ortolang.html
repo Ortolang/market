@@ -100,6 +100,16 @@
                 </div>
                 <input type="hidden" name="licence" ng-model="md['http://www.ortolang.fr/ontology/licence']" class="form-control">
             </div>
+
+            <div class="form-group">
+                <label>Code du patrimoine attaché à cette ressource </label>
+                <select name="derogation" ng-model="md['http://www.ortolang.fr/ontology/derogation']" class="form-control">
+                    <option value=""></option>
+                    <option value="AR038">AR038 - Documents librement communicables.</option>
+                </select>
+                <p>Catégorie de dérogation au principe de libre communicabilité des archives publiques</p>
+            </div>
+
         </div>
 
         <div class="metadata-form-panel" ng-show="selectedTab=='contributor'">
