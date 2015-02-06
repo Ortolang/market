@@ -10,28 +10,19 @@
 <!--<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>-->
 <!--</button>-->
 
-<form class="form-horizontal" role="form" editable-form="">
-    <div class="form-group">
+<form class="form-horizontal" role="form">
+     <div class="form-group">
         <label class="col-lg-3 control-label" for="firstName">First name:</label>
 
         <div class="col-lg-8 input-group">
             <div class="input-group">
-                <a editable-text="user.name">{{ user.name || 'empty' }}</a>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-3 control-label" for="firstName">First name:</label>
-
-        <div class="col-lg-8 input-group">
-            <div class="input-group">
-                <input id="firstName" class="form-control" value="Jane" type="text">
-                    <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isVisible = !isVisible" class="btn"
-                                ng-class="{'fa fa-unlock': isVisible, 'fa fa-lock': !isVisible}"
-                                aria-hidden="true">
-                        </button>
-                    </span>
+                <input id="firstName" class="form-control" value="{{user.firstName}}" type="text">
+                <span class="input-group-addon" style="padding: 0">
+                    <button ng-click="isLocked.firstName = !isLocked.firstName" class="btn"
+                            ng-class="{'fa fa-unlock': isLocked.firstName, 'fa fa-lock': !isLocked.firstName}"
+                            aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+                    </button>
+                </span>
             </div>
         </div>
     </div>
@@ -40,26 +31,26 @@
 
         <div class="col-lg-8 input-group">
             <div class="input-group">
-                <input id="lastName" class="form-control" value="Bishop" type="text">
+                <input id="lastName" class="form-control" value="{{user.lastName}}" type="text">
                     <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isVisible = !isVisible" class="btn"
-                                ng-class="{'fa fa-unlock': isVisible, 'fa fa-lock': !isVisible}"
-                                aria-hidden="true">
+                        <button ng-click="isLocked.lastName = !isLocked.lastName" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.lastName, 'fa fa-lock': !isLocked.lastName}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
                         </button>
                     </span>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-lg-3 control-label" for="company">Company:</label>
+        <label class="col-lg-3 control-label" for="organisation">Organisation:</label>
 
         <div class="col-lg-8 input-group">
             <div class="input-group">
-                <input id="company" class="form-control" value="" type="text">
+                <input id="organisation" class="form-control" value="{{user.organisation}}" type="text">
                     <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isVisible = !isVisible" class="btn"
-                                ng-class="{'fa fa-unlock': isVisible, 'fa fa-lock': !isVisible}"
-                                aria-hidden="true">
+                        <button ng-click="isLocked.organisation = !isLocked.organisation" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.organisation, 'fa fa-lock': !isLocked.organisation}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
                         </button>
                     </span>
             </div>
@@ -70,11 +61,11 @@
 
         <div class="col-lg-8 input-group">
             <div class="input-group">
-                <input id="email" class="form-control" value="janesemail@gmail.com" type="text">
+                <input id="email" class="form-control" value="{{user.email}}" type="text">
                     <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isVisible = !isVisible" class="btn"
-                                ng-class="{'fa fa-unlock': isVisible, 'fa fa-lock': !isVisible}"
-                                aria-hidden="true">
+                        <button ng-click="isLocked.email = !isLocked.email" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.email, 'fa fa-lock': !isLocked.email}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
                         </button>
                     </span>
             </div>
@@ -105,11 +96,11 @@
 
         <div class="col-lg-8 input-group">
             <div class="input-group">
-                <input id="username" class="form-control" value="janeuser" type="text">
+                <input id="username" class="form-control" value="{{user.username}}" type="text">
                     <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isVisible = !isVisible" class="btn"
-                                ng-class="{'fa fa-unlock': isVisible, 'fa fa-lock': !isVisible}"
-                                aria-hidden="true">
+                        <button ng-click="isLocked.username = !isLocked.username" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.username, 'fa fa-lock': !isLocked.username}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
                         </button>
                     </span>
             </div>

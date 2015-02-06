@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
                 EVENTS: 'profile/fr/events.html',
                 CONTRIBUTIONS: 'profile/fr/contributions.html',
                 FRIENDS: 'profile/fr/friends.html'
-            }
+            },
+            VISIBILITY: 'Rendre visible ?'
         }
     });
