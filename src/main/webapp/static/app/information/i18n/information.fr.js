@@ -19,19 +19,23 @@ angular.module('ortolangMarketApp')
             PATH: {
                 PRESENTATION: 'information/fr/presentation.html',
                 PARTNERS: 'information/partners.html',
-                ROADMAP: 'information/roadmap.html',
+                ROADMAP: 'information/fr/roadmap.html',
                 NEWSLETTER: 'information/newsletter.html',
-                LEGAL_NOTICES: 'information/fr/legal-notices.html'
+                LEGAL_NOTICES: 'information/fr/legal-notices.html',
+                NEWS: 'information/fr/news.html'
             },
             NEWSLETTER: {
-                FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG'
+                FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG',
+                DOWNLOAD_NEWSLETTER: 'Télécharger la lettre d\'information',
+                FOLLOW_NEWSLETTER: 'Vous pouvez suivre l\'actualité d\'Ortolang en lisant sa lettre d\'information.',
+                PAST_ISSUES: 'Les numéros déjà parus sont téléchargeables ci-dessous :',
+                SUBSCRIPTION: 'Abonnement',
+                INFO_SUBSCRIBE: 'Cliquez ici si vous souhaitez vous abonner et recevoir les prochaines lettres d\'information d\'Ortolang sur votre messagerie.',
+                SUBSCRIBE: 'S\'abonner'
             },
-            INNOVATIVE_SHS: 'Retrouver ORTOLANG à la Seconde édition du salon Innovatives SHS de l\'INSHS',
-            LINK_DOCUMENTATION: '<p>Une <a href="/#/documentation" title="Documentation Utilisateur">documentation utilisateur</a> est disponible pour vous aider ' +
-            'à effectuer des recherches.</p>',
-            LINK_COMMUNITY: '<p>Vous pouvez également accèder au <a href="http://dev.ortolang.fr/" target="_blank" >site communautaire</a> de l\'équipe de développement du projet ORTOLANG.</p>',
-            LINK_PARTNERS: 'ORTOLANG réunit des compétences variées grâce à un ensemble de <a href="/#/partners" title="Partenaires">partenaires</a>.',
-            LINK_ROADMAP: 'Le planning de réalisation globale des versions majeures d\'ORTOLANG est visible dans la <a href="/#/roadmap" title="roadmap">roadmap générale</a>.',
+            NEWS: 'Actualités',
+            INNOVATIVE_SHS: 'Retrouvez ORTOLANG à la Seconde édition du salon Innovatives SHS de l\'INSHS, à la Cité des sciences et de l\'industrie de Paris, les 16 et 17 juin 2015.',
+            MORE: 'Plus d\'informations',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Unités support du projet'
         }

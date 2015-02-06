@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
         $scope.select = function (element) {
             $scope.selectedElementCopy = element;
-            angular.forEach($scope.navElements, function (value) {
+            angular.forEach($rootScope.sideNavElements, function (value) {
                 if (value.class === element.class) {
                     value.active =  'active';
                     if (value.hidden) {
@@ -71,10 +71,10 @@ angular.module('ortolangMarketApp')
 
         function init() {
             var regExp, regExpBis, i, currentPath;
-            for (i = 0; i < $scope.navElements.length; i++) {
-                regExp = new RegExp('^' + $scope.navElements[i].path);
-                if ($scope.navElements[i].otherPath) {
-                    regExpBis = new RegExp('^' + $scope.navElements[i].otherPath);
+            for (i = 0; i < $rootScope.sideNavElements.length; i++) {
+                regExp = new RegExp('^' + $rootScope.sideNavElements[i].path);
+                if ($rootScope.sideNavElements[i].otherPath) {
+                    regExpBis = new RegExp('^' + $rootScope.sideNavElements[i].otherPath);
                 }
                 currentPath = $route.current.originalPath;
                 if (currentPath.indexOf(':section') !== -1) {
@@ -82,8 +82,8 @@ angular.module('ortolangMarketApp')
                 }
                 if (currentPath.match(regExp) ||
                         (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
-                    $scope.navElements[i].active = 'active';
-                    $scope.selectedElement = $scope.navElements[i];
+                    $rootScope.sideNavElements[i].active = 'active';
+                    $scope.selectedElement = $rootScope.sideNavElements[i];
                     break;
                 }
             }
@@ -119,13 +119,14 @@ angular.module('ortolangMarketApp')
                 $scope.translationInformation = translations['NAV.INFORMATION'];
                 $scope.translationProfile = translations['NAV.PROFILE'];
 
-                $scope.navElements = [
+                $rootScope.sideNavElements = [
                     {
                         class: 'market',
                         path: '/market/news',
                         description: $scope.translationsHome,
                         iconCss: 'fa fa-fw fa-home fa-2x',
                         active: undefined,
+                        hidden: false,
                         authenticated: false
                     },
                     {
@@ -134,6 +135,7 @@ angular.module('ortolangMarketApp')
                         description: $scope.translationsCorpus,
                         iconCss: 'fa fa-fw fa-book fa-2x',
                         active: undefined,
+                        hidden: false,
                         authenticated: false
                     },
                     {
@@ -142,6 +144,7 @@ angular.module('ortolangMarketApp')
                         description: $scope.translationsIntegratedProjects,
                         iconCss: 'fa fa-fw fa-briefcase fa-2x',
                         active: undefined,
+                        hidden: false,
                         authenticated: false
                     },
                     {
@@ -150,6 +153,7 @@ angular.module('ortolangMarketApp')
                         description: $scope.translationsTools,
                         iconCss: 'fa fa-fw fa-cubes fa-2x',
                         active: undefined,
+                        hidden: false,
                         authenticated: false
                     },
                     {
@@ -158,6 +162,7 @@ angular.module('ortolangMarketApp')
                         description: $scope.translationsLexicons,
                         iconCss: 'fa fa-fw fa-quote-right fa-2x',
                         active: undefined,
+                        hidden: false,
                         authenticated: false
                     },
                     {
@@ -189,6 +194,7 @@ angular.module('ortolangMarketApp')
                         description: $scope.translationsMyWorkspaces,
                         iconCss: 'fa fa-fw fa-cloud fa-2x',
                         active: undefined,
+                        hidden: false,
                         authenticated: true
                     },
                     {

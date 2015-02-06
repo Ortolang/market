@@ -1,47 +1,61 @@
-<nav ng-controller="TopNavCtrl" id="main-navbar" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="/#/" ng-click="selectHome()">
-            <img class="ortolang-logo" src="assets/images/logo-ortolang-white.png"/>
-            <span class="text-uppercase">Ortolang</span>
-        </a>
-    </div>
+<nav ng-controller="TopNavCtrl" id="main-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button ng-click="toggleNavbar()" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsed">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/#/" ng-click="selectHome()">
+                <img class="ortolang-logo" src="assets/images/logo-ortolang-white.png"/>
+                <span class="text-uppercase">Ortolang</span>
+            </a>
+        </div>
 
-    <ul class="nav navbar-top-links navbar-right ng-cloak" ng-cloak>
-        <li ng-if="authenticated">
-            <a class="fa fa-tasks" href="/#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip> <span class="badge processes">{{activeProcessesNbr && activeProcessesNbr > 0 ? activeProcessesNbr : ''}}</span></a>
-        </li>
-        <li ng-if="authenticated">
-            <a class="fa fa-bell" href="/#/tasks" ng-click="selectTasks()" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip> <span class="badge tasks">{{tasks && tasks.length > 0 ? tasks.length : ''}}</span></a>
-        </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">
-                <span class="fa fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li ng-click="selectInformation()"><a href="/#/information/presentation" translate="NAV.INFORMATION.PRESENTATION"></a></li>
-                <li ng-click="selectInformation()"><a href="/#/information/partners" translate="NAV.INFORMATION.PARTNERS"></a></li>
-                <li ng-click="selectInformation()"><a href="/#/information/roadmap" translate="NAV.INFORMATION.ROADMAP"></a></li>
-                <li ng-click="selectInformation()"><a href="/#/information/newsletter" translate="NAV.INFORMATION.NEWSLETTER"></a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">
-                <span class="fa fa-globe"></span> {{'NAV.LANGUAGE' | translate}} <span class="fa fa-caret-down"></span>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li ng-click="changeLanguage('en')" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
-                <li ng-click="changeLanguage('fr')" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
-            </ul>
-        </li>
-        <li class="dropdown" ng-if="authenticated">
-            <a class="dropdown-toggle" data-toggle="dropdown">
-                <span class="fa fa-user fa-fw"></span> {{currentUser.name}} <span class="fa fa-caret-down"></span>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li ng-click="selectProfile()"><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
-            </ul>
-        </li>
-        <li ng-if="!authenticated"><a ng-click="login()"><span class="fa fa-user fa-fw"></span> {{'LOG_IN' | translate}}</a></li>
-    </ul>
+        <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse ng-cloak" ng-cloak>
+            <li ng-show="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hidden: false}:true">
+                <a ng-href="#{{element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="element.iconCss"></span> {{element.description}}</a>
+            </li>
+            <li ng-if="authenticated">
+                <a href="/#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
+                    <span class="fa fa-tasks"></span><span class="badge processes">{{activeProcessesNbr && activeProcessesNbr > 0 ? activeProcessesNbr : ''}}</span>
+                </a>
+            </li>
+            <li ng-if="authenticated">
+                <a href="/#/tasks" ng-click="selectTasks()" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
+                    <span class="fa fa-bell"></span><span class="badge tasks">{{tasks && tasks.length > 0 ? tasks.length : ''}}</span>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fa fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-click="selectInformation()"><a href="/#/information/presentation"><span class="fa fa-info fa-fw"></span> {{'NAV.INFORMATION.PRESENTATION' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="/#/information/partners"><span class="fa fa-users fa-fw"></span> {{'NAV.INFORMATION.PARTNERS' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="/#/information/roadmap"><span class="fa fa-calendar fa-fw"></span> {{'NAV.INFORMATION.ROADMAP' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="/#/information/newsletter"><span class="fa fa-newspaper-o fa-fw"></span> {{'NAV.INFORMATION.NEWSLETTER' | translate}}</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fa fa-globe"></span> {{'NAV.LANGUAGE' | translate}} <span class="fa fa-caret-down"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-click="changeLanguage('en')" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                    <li ng-click="changeLanguage('fr')" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
+                </ul>
+            </li>
+            <li class="dropdown" ng-if="authenticated">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="fa fa-user fa-fw"></span> {{currentUser.name}} <span class="fa fa-caret-down"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-click="selectProfile()"><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
+                </ul>
+            </li>
+            <li ng-if="!authenticated"><a ng-click="login()"><span class="fa fa-user fa-fw"></span> {{'LOG_IN' | translate}}</a></li>
+        </ul>
+    </div>
 </nav>

@@ -19,19 +19,23 @@ angular.module('ortolangMarketApp')
             PATH: {
                 PRESENTATION: 'information/en/presentation.html',
                 PARTNERS: 'information/partners.html',
-                ROADMAP: 'information/roadmap.html',
+                ROADMAP: 'information/fr/roadmap.html',
                 NEWSLETTER: 'information/newsletter.html',
-                LEGAL_NOTICES: 'information/fr/legal-notices.html'
+                LEGAL_NOTICES: 'information/en/legal-notices.html',
+                NEWS: 'information/fr/news.html'
             },
             NEWSLETTER: {
-                FIRST_NEWSLETTER: 'ORTOLANG first newsletter'
+                FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
+                DOWNLOAD_NEWSLETTER: 'Download the newsletter',
+                FOLLOW_NEWSLETTER: 'You can follow the news of Ortolang by reading its newsletter.',
+                PAST_ISSUES: 'Former issues of the newsletter can be found below :',
+                SUBSCRIPTION: 'Subscription',
+                INFO_SUBSCRIBE: 'Click here if you want to subscribe and receive the next newsletters of Ortolang.',
+                SUBSCRIBE: 'Subscribe'
             },
+            NEWS: 'News',
             INNOVATIVE_SHS: 'Meet ORTOLANG at the 2nd conference  of the exposition "Innovatives SHS de l\'INSHS"',
-            LINK_DOCUMENTATION: '<p>A <a href="/#/documentation" title="user\'s documentation">user\'s documentation</a> is available for facilitating ' +
-            'your queries.</p>',
-            LINK_COMMUNITY: '<p>You may also access the <a href="http://dev.ortolang.fr/" target="_blank" >community development site</a> of ORTOLANG project.</p>',
-            LINK_PARTNERS: 'ORTOLANG brings together diverse fields of expertise from its <a href="/#/partners" title="partners">partners</a>.',
-            LINK_ROADMAP: 'A planning of major ORTOLANG version building stages is displayed in the <a href="/#/roadmap" title="roadmap">general roadmap</a>.',
+            MORE: 'Read more',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Partners'
         }

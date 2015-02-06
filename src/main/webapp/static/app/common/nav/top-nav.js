@@ -10,6 +10,12 @@
 angular.module('ortolangMarketApp')
     .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'Runtime', function ($scope, $translate, AuthService, Runtime) {
 
+        $scope.navbarCollapsed = false;
+
+        $scope.toggleNavbar = function () {
+            $scope.navbarCollapsed = !$scope.navbarCollapsed;
+        };
+
         $scope.login = function () {
             AuthService.login();
         };

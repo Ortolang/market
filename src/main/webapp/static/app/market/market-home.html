@@ -26,20 +26,17 @@
     </div>
     <section ng-if="section==='news'" class="row">
         <div class="col-md-8">
-            <!--<h1>-->
-            <!--<span class="presentation-color-highlight">ORTOLANG</span>-->
-            <!--</h1>-->
-            <h3 translate="PRES.ORTOLANG"></h3>
-            <div translate="PRES.PRESENTATION"></div>
+            <div ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
         </div>
         <div class="col-md-4">
             <div class="well">
-                <h4>Actualités</h4>
-                <p>Retrouvez-nous au salon Innovatives SHS, à la Cité des sciences et de l'industrie de Paris, les 16 et 17 juin 2015.</p>
-                <p><small><a href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank">Plus d'information...</a></small></p>
+                <h4 translate="INFORMATION.NEWS"></h4>
+                <p translate="INFORMATION.INNOVATIVE_SHS"></p>
+                <p><small><a href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank">{{'INFORMATION.MORE' | translate}}...</a></small></p>
                 <br/>
-                <p>La première lettre d'information d'Ortolang est disponible en téléchargement <a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf">ici</a>.</p>
-                <p><small><a href="/#/information/newsletter">S'abonner et consulter les lettres déjà parues...</a></small></p>
+                <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
+                <p><small><a href="/#/information/newsletter">{{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></small></p>
+
             </div>
         </div>
     </section>

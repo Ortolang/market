@@ -3,7 +3,7 @@
 // Sets the min-height of #page-wrapper to window size
 $(function () {
     $(window).bind('load resize', function () {
-        var topOffset = 53,
+        var topOffset = 54,
             bottomOffset = 51,
             height = (this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height;
 

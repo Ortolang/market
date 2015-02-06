@@ -68,9 +68,6 @@ angular
                 controller: 'TasksCtrl',
                 requiresAuthentication: true
             })
-            .when('/information', {
-                redirectTo: '/information/presentation'
-            })
             .when('/information/:section', {
                 templateUrl: 'information/information.html',
                 controller: 'InformationCtrl'
