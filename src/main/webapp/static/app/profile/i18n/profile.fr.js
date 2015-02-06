@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
                 ABOUT_ME: 'A propos de moi',
                 EVENTS: 'Acivité récente',
                 CONTRIBUTIONS: 'Contributions',
-                FRIENDS: 'Mes amis'
+                FRIENDS: 'Collaborateurs'
             },
             PATH: {
                 PERSONAL_INFOS: 'profile/fr/personal-infos.html',

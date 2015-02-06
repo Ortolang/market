@@ -1,0 +1,14 @@
+<h3>{{ 'PROFILE.NAV.ABOUT_ME' | translate }}</h3>
+<br>
+<label class="control-label">Décrivez-vous en quelques mots: </label>
+
+<button ng-click="isLocked.desc = !isLocked.desc" class="btn pull-left"
+        ng-class="{'fa fa-unlock': isLocked.desc, 'fa fa-lock': !isLocked.desc}"
+        aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+</button>
+
+<div>
+    <span editable-textarea="user.desc" e-cols="100" e-rows="10" >
+        <pre>{{ user.desc || 'no description' }}</pre>
+    </span>
+</div>
