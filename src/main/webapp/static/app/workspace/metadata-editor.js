@@ -18,7 +18,6 @@ angular.module('ortolangMarketApp')
 
         $scope.showEditor = function () {
             $scope.editorVisibility = true;
-            $scope.resizeAsideBody();
         };
 
         $scope.hideEditor = function () {
@@ -148,25 +147,5 @@ angular.module('ortolangMarketApp')
             sendForm(content, contentType);
         });
 
-
-        // *********************** //
-        //          Resize         //
-        // *********************** //
-
-        $scope.resizeAsideBody = function () {
-            var topOffset = $('#main-navbar').innerHeight(),
-                height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-
-            height = height - topOffset;
-            if (height < 1) {
-                height = 1;
-            }
-            if (height > topOffset) {
-                if ($rootScope.uploadQueueStatus === 'active') {
-                    height -= angular.element('.upload-queue').innerHeight();
-                }
-                $('#metadataEditorBody').css('height', height + 'px');
-            }
-        };
 
     }]);
