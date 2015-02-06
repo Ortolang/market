@@ -6,9 +6,10 @@
         ng-class="{'fa fa-unlock': isLocked.desc, 'fa fa-lock': !isLocked.desc}"
         aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
 </button>
+<br>
 
-<div>
-    <span editable-textarea="user.desc" e-cols="100" e-rows="10" >
-        <pre>{{ user.desc || 'no description' }}</pre>
-    </span>
+<div class="editableWysiwyg">
+    <div editable-text-area="user.desc" ng-bind-html="user.desc"></div>
 </div>
+<br>
+<br>

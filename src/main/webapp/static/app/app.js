@@ -33,7 +33,8 @@ angular
         'zeroclipboard',
         'diff-match-patch',
         'angular-md5',
-        'xeditable'
+        'xeditable',
+        'textAngular'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
