@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
                 ROADMAP: 'information/fr/roadmap.html',
                 NEWSLETTER: 'information/newsletter.html',
                 LEGAL_NOTICES: 'information/en/legal-notices.html',
-                NEWS: 'information/fr/news.html'
+                NEWS: 'information/en/news.html'
             },
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
