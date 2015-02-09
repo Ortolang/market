@@ -104,7 +104,12 @@
                         <button class="btn btn-default" ng-click="fileLicenceSelectModal.show()" type="button">Selectionner</button>
                     </span>
                 </div>
-                <input type="hidden" name="licence" ng-model="md['http://www.ortolang.fr/ontology/licence']" class="form-control">
+                <input type="hidden" name="licence" ng-model="md['http://www.ortolang.fr/ontology/license']" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Site web de la licence </label>
+                <input type="text" name="licenseWebsite" ng-model="md['http://www.ortolang.fr/ontology/licenseWebsite']" class="form-control"></input>
             </div>
 
             <div class="form-group">

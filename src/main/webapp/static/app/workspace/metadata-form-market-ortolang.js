@@ -22,10 +22,6 @@ angular.module('ortolangMarketApp')
                 delete md['http://www.ortolang.fr/ontology/toolUrl'];
             }
 
-            if($scope.licenceOfUse===false) {
-                delete md['http://www.ortolang.fr/ontology/licence'];
-            }
-
             if (form.$invalid) {
                 console.debug('not ready');
                 return;

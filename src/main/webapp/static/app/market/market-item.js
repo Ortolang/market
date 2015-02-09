@@ -55,8 +55,8 @@ angular.module('ortolangMarketApp')
                                         loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
                                     }
                                     
-                                    if($scope.item['http://www.ortolang.fr/ontology/licence']!==undefined && $scope.item['http://www.ortolang.fr/ontology/licence']!=='') {
-                                        loadLicence(key, $scope.item['http://www.ortolang.fr/ontology/licence']);
+                                    if($scope.item['http://www.ortolang.fr/ontology/license']!==undefined && $scope.item['http://www.ortolang.fr/ontology/license']!=='') {
+                                        loadLicence(key, $scope.item['http://www.ortolang.fr/ontology/license']);
                                     }
                                     
                                     if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
