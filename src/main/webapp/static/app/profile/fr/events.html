@@ -1,0 +1,17 @@
+
+<ul class="timeline-one-side">
+    <li ng-repeat="(key, value) in events  | orderBy:'date':true | limitTo:-limitDisplay">
+        <div class="timeline-badge {{ (badge[value.type])? badge[value.type].color : badge['default'].color }}">
+          <i class="fa {{ (badge[value.type])? badge[value.type].icon : badge['default'].icon }} fa-stack-1x"></i>
+        </div>
+        <div class="timeline-panel">
+            <div class="timeline-heading">
+                <p><small class="text-muted"><i class="glyphicon glyphicon-calendar"></i> {{ value.date |  date:'medium'}}</small> - <small> {{ value.title }}</small></p>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<button ng-if="events.length > limitDisplay" type="button" class="btn btn-default btn-lg btn-block" ng-click="raiseLimit()">See more</button>
+
+<br>

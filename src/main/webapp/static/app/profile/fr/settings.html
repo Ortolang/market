@@ -1,6 +1,81 @@
-<h3>Avec x-editable form</h3>
+<h3>Avec x-editable fields</h3>
 <br>
 
+<div id="formSettings" class="form-horizontal" >
+    <div class="form-group">
+        <!-- editable username (text with validation) -->
+        <label class="col-md-3 control-label">First name: </label>
+        <button ng-click="isLocked.firstName = !isLocked.firstName" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.firstName, 'fa fa-lock': !isLocked.firstName}"
+                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+        </button>
+        <div class="col-md-7" style="padding-top: 5px;">
+            <span editable-text="user.firstName" e-name="firstName" e-required>{{ user.firstName || 'empty' }}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <!-- editable username (text with validation) -->
+        <label class="col-md-3 control-label">First name: </label>
+        <button ng-click="isLocked.lastName = !isLocked.lastName" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.lastName, 'fa fa-lock': !isLocked.lastName}"
+                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+        </button>
+        <div class="col-md-7" style="padding-top: 5px;">
+            <span editable-text="user.lastName" e-name="lastName" e-required e-style="width:100%;margin-top:-5px;">{{ user.lastName || 'empty' }}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <!-- editable username (text with validation) -->
+        <label class="col-md-3 control-label" for="username0">Username: </label>
+        <button ng-click="isLocked.username = !isLocked.username" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.username, 'fa fa-lock': !isLocked.username}"
+                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+        </button>
+        <div class="col-md-7" style="padding-top: 5px;">
+            <span id="username0" editable-text="user.username" e-name="username" e-required e-style="width:100%;margin-top:-5px;">{{ user.username || 'empty' }}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <!-- editable status (select-local) -->
+        <label class="col-md-3 control-label">Status: </label>
+        <button ng-click="isLocked.status = !isLocked.status" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.status, 'fa fa-lock': !isLocked.status}"
+                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+        </button>
+        <div class="col-md-7" style="padding-top: 5px;">
+                <span editable-select="user.status" e-name="status" e-ng-options="s.value as s.text for s in statuses" e-style="width:100%;margin-top:-5px;">
+                    {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
+                </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="organisation0">Organisation:</label>
+        <button ng-click="isLocked.organisation = !isLocked.organisation" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.organisation, 'fa fa-lock': !isLocked.organisation}"
+                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+        </button>
+        <div class="col-lg-7" style="padding-top: 5px;">
+            <span id="organisation0" editable-text="user.organisation" e-name="organisation" e-style="width:100%;margin-top:-5px;">{{ user.organisation || 'empty' }}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="email0">Email:</label>
+        <button ng-click="isLocked.email = !isLocked.email" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.email, 'fa fa-lock': !isLocked.email}"
+                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+        </button>
+        <div class="col-lg-7" style="padding-top: 5px;">
+            <span id="email0" editable-email="user.email" e-name="email" e-style="width:100%;margin-top:-5px;">{{ user.email || 'empty'}}</span>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h3>Avec x-editable form</h3>
+<br>
 <form editable-form class="form-horizontal" name="editableForm">
     <div class="form-group">
         <!-- editable username (text with validation) -->
@@ -10,7 +85,7 @@
                 aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
         </button>
         <div class="col-md-7">
-            <span editable-text="user.firstName" e-name="firstName" e-required >{{ user.firstName || 'empty' }}</span>
+            <span editable-text="user.firstName" e-name="firstName" e-required e-placeholder="Enter First Name" e-value="{{user.firstName}}">{{ user.firstName || 'empty' }}</span>
         </div>
     </div>
 
