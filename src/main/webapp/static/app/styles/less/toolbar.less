@@ -23,3 +23,81 @@
   }
 
 }
+
+.nav-pills-toolbar {
+  > ul {
+    margin: -@padding-large-vertical 0;
+    > li {
+      + li {
+        margin-left: 0;
+      }
+      > a {
+        line-height: @toolbar-min-height;
+        color: inherit;
+        padding: 0 2 * @padding-large-horizontal;
+      }
+      &.active, &:hover, &.open {
+        border-bottom: 4px solid @default-primary;
+        > a {
+          background: none;
+          color: inherit;
+          border-radius: 0;
+          text-decoration: none;
+          margin-bottom: -4px;
+          &:hover, &:focus {
+            background: none;
+            color: inherit;
+            border-bottom-color: @default-primary;
+          }
+        }
+        &.active, &.open {
+          border-bottom-color: @default-primary;
+        }
+      }
+    }
+  }
+}
+
+.information-toolbar {
+  > ul {
+    > li {
+      &.active, &:hover, &.open {
+        border-bottom: 4px solid @information-primary;
+        > a {
+          &:hover, &:focus {
+            border-bottom-color: @information-primary;
+          }
+        }
+        &.active, &.open {
+          border-bottom-color: @information-primary;
+        }
+      }
+    }
+  }
+}
+
+.processes-toolbar {
+  > ul {
+    > li {
+      &.active, &:hover, &.open {
+        border-bottom: 4px solid @processes-primary;
+        > a {
+          &:hover, &:focus {
+            border-bottom-color: @processes-primary;
+          }
+        }
+        &.active, &.open {
+          border-bottom-color: @processes-primary;
+        }
+      }
+      &.active {
+        > a {
+          > .badge {
+            color: #ffffff;
+            background-color: @processes-primary;
+          }
+        }
+      }
+    }
+  }
+}
