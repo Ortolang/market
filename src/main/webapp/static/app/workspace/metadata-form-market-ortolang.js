@@ -110,7 +110,7 @@ angular.module('ortolangMarketApp')
                 {id:'info', label:'Renseignements'},
                 {id: 'rights', label: 'Droits'},
                 {id:'contributor', label: 'Contribution'},
-                {id:'website', label: 'Site web'},
+                {id:'application', label: 'Application'},
                 {id:'corpora', label: 'Corpus'},
                 {id:'annotation', label: 'Enrichissement'},
                 {id:'tool', label: 'Outil'}

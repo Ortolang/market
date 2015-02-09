@@ -35,16 +35,22 @@
                 <p>Description technique de la ressource. Préciser le nombre de fichier et le format.</p>
             </div>
 
-            <div class="form-group" show-errors>
+            <div class="form-group">
                 <label>Taille des données à télécharger</label>
                 <input type="text" name="datasize" ng-model="md['http://www.ortolang.fr/ontology/datasize']" class="form-control">
                 <p class="">Permet de prévenir l'utilisateur de la taille des données avant le téléchargement.</p>
+                <p><span class="text-danger fa fa-exclamation-circle"></span> Si le champs est vide, le bouton de téléchargement n'est pas visible</p>
             </div>
 
             <div class="form-group">
                 <label>Mots clés</label>
-                <input type="text" name="keywords" ng-model="md['http://www.ortolang.fr/ontology/keywords']" placeholder="Mots clés" class="form-control">
                 <div auto-complete model="md['http://www.ortolang.fr/ontology/keywords']" name="'keywords'" placeholder="'Mots-clés'"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Site web</label>
+                <input type="text" name="website" ng-model="md['http://www.ortolang.fr/ontology/website']" class="form-control">
+                <p class="">Adresse du site web contenant des informations sur la ressource.</p>
             </div>
 
             <div class="form-group">
@@ -171,10 +177,10 @@
 
         </div>
 
-        <div class="metadata-form-panel" ng-show="selectedTab=='website'">
+        <div class="metadata-form-panel" ng-show="selectedTab=='application'">
 
             <div class="form-group">
-                <label>Url du site </label>
+                <label>Url de l'application </label>
                 <input type="text" name="applicationUrl" ng-model="md['http://www.ortolang.fr/ontology/applicationUrl']" class="form-control">
             </div>
 
@@ -191,7 +197,7 @@
 
             <div class="form-group">
                 <label>Type linguistique </label>
-                <input type="text" name="linguisticSubject" ng-model="md['http://www.ortolang.fr/ontology/linguisticSubject']" class="form-control">
+                <input type="text" name="linguisticDataType" ng-model="md['http://www.ortolang.fr/ontology/linguisticDataType']" class="form-control">
             </div>
 
             <div class="form-group">
@@ -201,7 +207,8 @@
 
             <div class="form-group">
                 <label>Domaines linguistiques </label>
-                <input type="text" name="linguisticField" ng-model="md['http://www.ortolang.fr/ontology/linguisticField']" class="form-control">
+                <!-- <input type="text" name="linguisticSubject" ng-model="md['http://www.ortolang.fr/ontology/linguisticSubject']" class="form-control"> -->
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/linguisticSubject']" name="'linguisticSubject'" placeholder="''"></div>
             </div>
         </div>
 

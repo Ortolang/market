@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $routeParams, $location, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('MarketHomeCtrl', ['$scope', '$routeParams', '$location', '$window', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $routeParams, $location, $window, ObjectResource, DownloadResource, N3Serializer) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
@@ -17,7 +17,11 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.clickItem = function (entry) {
-            $location.path('/market/item/' + entry.key);
+            if (entry.meta && entry.meta['http://www.ortolang.fr/ontology/applicationUrl']) {
+                $window.open(entry.meta['http://www.ortolang.fr/ontology/applicationUrl']);
+            } else {
+                $location.path('/market/item/' + entry.key);
+            }
         };
 
         function loadObjects() {
