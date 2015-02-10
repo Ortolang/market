@@ -1,8 +1,8 @@
-<div class="alert alert-info alert-dismissable">
-    <a class="panel-close close" data-dismiss="alert">×</a>
-    <i class="fa fa-coffee"></i>
-    This is an <strong>.alert</strong>. Use this to show important messages to the user.
-</div>
+<!--<div class="alert alert-info alert-dismissable">-->
+    <!--<a class="panel-close close" data-dismiss="alert">×</a>-->
+    <!--<i class="fa fa-coffee"></i>-->
+    <!--This is an <strong>.alert</strong>. Use this to show important messages to the user.-->
+<!--</div>-->
 <h3>{{"PROFILE.NAV.PERSONAL_INFOS" | translate}}</h3>
 <br>
 
@@ -12,44 +12,28 @@
 
 <form class="form-horizontal" role="form">
      <div class="form-group">
-        <label class="col-lg-3 control-label" for="firstName">First name:</label>
+        <label class="col-lg-3 control-label" for="user_civility">Civilité:</label>
 
-        <div class="col-lg-8 input-group">
-            <div class="input-group">
-                <input id="firstName" class="form-control" value="{{user.firstName}}" type="text">
-                <span class="input-group-addon" style="padding: 0">
-                    <button ng-click="isLocked.firstName = !isLocked.firstName" class="btn"
-                            ng-class="{'fa fa-unlock': isLocked.firstName, 'fa fa-lock': !isLocked.firstName}"
-                            aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-                    </button>
-                </span>
+         <div class="col-lg-8 input-group">
+             <div class="ui-select">
+                 <select id="user_civility" class="form-control">
+                     <option value="none">Choisissez...</option>
+                     <option value="m">M.</option>
+                     <option value="mme">Mme</option>
+                     <option value="other">Autre</option>
+                 </select>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-3 control-label" for="lastName">Last name:</label>
+     </div>
+     <div class="form-group">
+        <label class="col-lg-3 control-label" for="lastName">Name:</label>
 
         <div class="col-lg-8 input-group">
             <div class="input-group">
-                <input id="lastName" class="form-control" value="{{user.lastName}}" type="text">
+                <input id="lastName" class="form-control" value="{{user.name}}" type="text" placeholder="Prénom Nom">
                     <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isLocked.lastName = !isLocked.lastName" class="btn"
-                                ng-class="{'fa fa-unlock': isLocked.lastName, 'fa fa-lock': !isLocked.lastName}"
-                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-                        </button>
-                    </span>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-3 control-label" for="organisation">Organisation:</label>
-
-        <div class="col-lg-8 input-group">
-            <div class="input-group">
-                <input id="organisation" class="form-control" value="{{user.organisation}}" type="text">
-                    <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isLocked.organisation = !isLocked.organisation" class="btn"
-                                ng-class="{'fa fa-unlock': isLocked.organisation, 'fa fa-lock': !isLocked.organisation}"
+                        <button ng-click="isLocked.name = !isLocked.name" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.name, 'fa fa-lock': !isLocked.name}"
                                 aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
                         </button>
                     </span>
@@ -72,34 +56,75 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-lg-3 control-label" for="user_time_zone">Time Zone:</label>
-
-        <div class="col-lg-8 input-group">
-            <div class="ui-select">
-                <select id="user_time_zone" class="form-control">
-                    <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                    <option value="Alaska">(GMT-09:00) Alaska</option>
-                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                    <option value="Arizona">(GMT-07:00) Arizona</option>
-                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US
-                        &amp; Canada)
-                    </option>
-                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
         <label class="col-md-3 control-label" for="username">Username:</label>
 
         <div class="col-lg-8 input-group">
             <div class="input-group">
-                <input id="username" class="form-control" value="{{user.username}}" type="text">
+                <input id="username" class="form-control" value="{{user.userId}}" type="text">
                     <span class="input-group-addon" style="padding: 0">
-                        <button ng-click="isLocked.username = !isLocked.username" class="btn"
-                                ng-class="{'fa fa-unlock': isLocked.username, 'fa fa-lock': !isLocked.username}"
+                        <button ng-click="isLocked.userId = !isLocked.userId" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.userId, 'fa fa-lock': !isLocked.userId}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+                        </button>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="organisation">Organisation:</label>
+
+        <div class="col-lg-8 input-group">
+            <div class="input-group">
+                <input id="organisation" class="form-control" value="{{user.organisation}}" type="text">
+                    <span class="input-group-addon" style="padding: 0">
+                        <button ng-click="isLocked.organisation = !isLocked.organisation" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.organisation, 'fa fa-lock': !isLocked.organisation}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+                        </button>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="fonction">Fonction:</label>
+
+        <div class="col-lg-8 input-group">
+            <div class="input-group">
+                <input id="fonction" class="form-control" value="{{user.fonction}}" type="text">
+                    <span class="input-group-addon" style="padding: 0">
+                        <button ng-click="isLocked.fonction = !isLocked.fonction" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.fonction, 'fa fa-lock': !isLocked.fonction}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+                        </button>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="recherche">Domaines de recherche:</label>
+
+        <div class="col-lg-8 input-group">
+            <div class="input-group">
+                <input id="recherche" class="form-control" value="{{user.recherche}}" type="text">
+                    <span class="input-group-addon" style="padding: 0">
+                        <button ng-click="isLocked.recherche = !isLocked.recherche" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.recherche, 'fa fa-lock': !isLocked.recherche}"
+                                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+                        </button>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-3 control-label" for="url-pro">URL page pro:</label>
+
+        <div class="col-lg-8 input-group">
+            <div class="input-group">
+                <input id="url-pro" class="form-control" value="{{user.urlPro}}" type="url"
+                       pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?" />
+                    <span class="input-group-addon" style="padding: 0">
+                        <button ng-click="isLocked.urlPro = !isLocked.urlPro" class="btn"
+                                ng-class="{'fa fa-unlock': isLocked.urlPro, 'fa fa-lock': !isLocked.urlPro}"
                                 aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
                         </button>
                     </span>

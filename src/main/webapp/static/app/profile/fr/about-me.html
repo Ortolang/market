@@ -7,9 +7,9 @@
         aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
 </button>
 <br>
-
+<br>
 <div class="editableWysiwyg">
-    <div editable-text-area="user.desc" ng-bind-html="user.desc"></div>
+    <div editable-text-area="user.desc" ng-bind-html="user.desc ? user.desc : 'empty'"></div>
 </div>
 <br>
 <br>

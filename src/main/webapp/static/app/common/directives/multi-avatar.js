@@ -12,26 +12,43 @@ angular.module('ortolangMarketApp')
         return {
             restrict: 'E',
             link:function(scope, element, attrs) {
+                var services = [
+                    {id: 'facebook', tpl: '<img src="http://graph.facebook.com/{id}/picture?width={width}&height={height}" class="{classImg}"/>'} ,
+                    {id: 'twitter', tpl: '<img src="https://pbs.twimg.com/profile_images/{id}_bigger.jpeg" style="width:{width}px; height:{height}px" class="{classImg}"/>'} ,
+                    {id: 'github', tpl: '<img src="https://identicons.github.com/{id}.png" style="width:{width}px; height:{height}px" class="{classImg}"/>'} ,
+                    {id: 'gravatar', tpl: '<img src="https://secure.gravatar.com/avatar/{id}?s=200&d=mm" style="width:{width}px; height:{height}px" class="{classImg}"/>'}
+                ];
 
-                var facebookId = attrs.facebookId;
-                var githubUsername = attrs.githubUsername;
-                var email = attrs.email;
-
-                var tag = '';
-                if ((facebookId !== null) && (facebookId !== undefined) && (facebookId !== '')) {
-                    tag = '<img src="http://graph.facebook.com/' + facebookId + '/picture?width=200&height=200" class="img-responsive"/>';
-                } else if ((githubUsername !== null) && (githubUsername !== undefined) && (githubUsername !== '')){
-                    tag = '<img src="https://identicons.github.com/' + githubUsername + '.png" style="width:200px; height:200px" class="img-responsive"/>';
-                } else {
-                    var hash;
-                    if ((email !== null) && (email !== undefined) && (email !== '')){
-                        hash = md5.createHash(email.toLowerCase());
+                console.debug(attrs);
+                for (var s=0; s<services.length; s++) {
+                    var service = services[s],
+                        attr = service.id + 'Id',
+                        id = attrs[attr],
+                        thumbnail = attrs.thumbnail,
+                        width, height,
+                        classImg = 'img-responsive img-rounded';
+                    var isGravatar = attr === 'gravatarId';
+                    console.debug(attr, id);
+                    if ((thumbnail !== null) && (thumbnail === 'true')) {
+                        width = 30;
+                        height = 30;
+                        classImg = 'img-circle profile-image';
+                    } else {
+                        width = 200;
+                        height = 200;
                     }
-                    var src = 'https://secure.gravatar.com/avatar/' + hash + '?s=200&d=mm';
-                    tag = '<img src=' + src + ' class="img-responsive"/>';
+                    if (isGravatar || (id && id.length > 0)) {
+                        if (!id) {
+                            id = '';
+                        }
+                        if (isGravatar && id.split('@').length>1) {
+                            id = md5.createHash(id.toLowerCase());
+                        }
+                        var tag = service.tpl.replace('{id}', id).replace('{classImg}', classImg).replace('{width}', width).replace('{height}', height);
+                        element.append(tag);
+                        return;
+                    }
                 }
-
-                element.append(tag);
             }
         };
     }]);
