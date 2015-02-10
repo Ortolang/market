@@ -17,8 +17,8 @@
         <div id="results_toolbar" class="row">
             <div class="col-md-1">
             </div>
-            <div class="col-md-8">
-                <ul class="nav nav-pills nav-results-filters informationToolBar">
+            <div class="col-md-8 nav-pills-toolbar market-toolbar">
+                <ul class="nav nav-pills nav-results-filters">
                     <li role="filter" ng-class="selectedType===''?'active':''"><a ng-click="resetFilter()" translate="MARKET.ALL_TYPE"></a></li>
                     <li role="filter" ng-class="selectedType==='Corpus'?'active':''"><a ng-click="filter('type', 'Corpus')" translate="MARKET.CORPORA"></a></li>
                     <li role="filter" ng-class="selectedType==='Lexiques'?'active':''"><a ng-click="filter('type', 'Lexiques')" translate="MARKET.LEXICONS"></a></li>

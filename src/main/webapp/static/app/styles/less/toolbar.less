@@ -101,3 +101,21 @@
     }
   }
 }
+
+.market-toolbar {
+  > ul {
+    > li {
+      &.active, &:hover, &.open {
+        border-bottom: 4px solid @market-primary;
+        > a {
+          &:hover, &:focus {
+            border-bottom-color: @market-primary;
+          }
+        }
+        &.active, &.open {
+          border-bottom-color: @market-primary;
+        }
+      }
+    }
+  }
+}

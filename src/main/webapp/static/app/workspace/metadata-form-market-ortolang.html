@@ -20,12 +20,12 @@
             <!-- </div> -->
 
             <div class="form-group" show-errors>
-                <label>Nom de la ressource *</label>
+                <label>Nom de la ressource <span class="text-danger">*</span></label>
                 <input type="text" name="title" ng-model="md['http://purl.org/dc/elements/1.1/title']" class="form-control" required>
             </div>
 
             <div class="form-group" show-errors>
-                <label>Description de la ressource *</label>
+                <label>Description de la ressource <span class="text-danger">*</span></label>
                 <textarea class="form-control" name="description" ng-model="md['http://purl.org/dc/elements/1.1/description']" rows="10" required></textarea>
             </div>
 
@@ -126,59 +126,34 @@
         <div class="metadata-form-panel" ng-show="selectedTab=='contributor'">
 
             <div class="form-group">
-                <label>Producteurs *</label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/producer']" name="'producer'" placeholder="'Producteurs institutionnels'" required="'required'"></div>
-                <!-- <input type="text" name="producer" ng-model="md['http://www.ortolang.fr/ontology/producer']" class="form-control" required> -->
+                <label>Producteurs <span class="text-danger">*</span></label>
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/producer']" name="'producer'" placeholder="'[Entrer un nom puis taper sur Entrer]'" required="'required'"></div>
             </div>
 
             <div class="form-group">
                 <label>Responsables scientifique </label>
-                <!-- <input type="text" name="researcher" ng-model="md['http://www.ortolang.fr/ontology/researcher']" class="form-control"> -->
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/researcher']" name="'researcher'" placeholder="'Responsable scientifique'"></div>
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/researcher']" name="'researcher'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
                 <label>Responsables informatique </label>
-                <!-- <input type="text" name="manager" ng-model="md['http://www.ortolang.fr/ontology/manager']" class="form-control"> -->
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/manager']" name="'manager'" placeholder="'Responsable informatique'"></div>
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/manager']" name="'manager'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
                 <label>Responsables technique </label>
-                <!-- <input type="text" name="developper" ng-model="md['http://www.ortolang.fr/ontology/developper']" class="form-control"> -->
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/developper']" name="'developper'" placeholder="'Responsable technique'"></div>
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/developper']" name="'developper'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
-                
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th colspan="5">
-                            <select class="form-control">
-                                <option>Ajouter un contributeur...</option>
-                                <option>Responsable scientifique</option>
-                            </select>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Type de contribution</th>
-                        <th>Identité de la personne</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="researcher in md['http://www.ortolang.fr/ontology/researcher']">
-                        <td>Responsable scientifique</td>
-                        <td>
-                            <input type="text" name="researcher" class="form-control" ng-model="researcher"></input>
-                        </td>
-                        <td>   
+            <div class="form-group">
+                <label>Auteurs </label>
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/author']" name="'author'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
+            </div>
 
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+            <div class="form-group">
+                <label>Compilateurs </label>
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/compiler']" name="'compiler'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
+            </div>
 
         </div>
 
@@ -202,12 +177,18 @@
 
             <div class="form-group">
                 <label>Type linguistique </label>
-                <input type="text" name="linguisticDataType" ng-model="md['http://www.ortolang.fr/ontology/linguisticDataType']" class="form-control">
+                <!-- <input type="text" name="linguisticDataType" ng-model="md['http://www.ortolang.fr/ontology/linguisticDataType']" class="form-control"> -->
+                <select name="linguisticDataType" ng-model="md['http://www.ortolang.fr/ontology/linguisticDataType']" class="form-control">
+                    <option value="">Choisir un type linguistique</option>
+                    <option value="primary_text">primary_text</option>
+                    <option value="lexicon">lexicon</option>
+                    <option value="language_description">language_description</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label>Type discursif </label>
-                <input type="text" name="discourseType" ng-model="md['http://www.ortolang.fr/ontology/discourseType']" class="form-control">
+                <div auto-complete model="md['http://www.ortolang.fr/ontology/discourseType']" name="'discourseType'" placeholder="'[Entrer un type puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
