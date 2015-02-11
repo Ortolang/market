@@ -55,6 +55,8 @@ angular.module('ortolangMarketApp')
                 {value: 4, text: 'status4'}
             ];
 
+            $scope.user = undefined;
+
             if ($scope.$parent.authenticated) {
 
                 ProfileResource.connected().$promise.then(function (profile) {

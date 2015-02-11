@@ -1,8 +1,3 @@
-<!--<multi-avatar data-facebook-id='678872827' data-github-username='' data-email=''></multi-avatar>-->
-<!--<multi-avatar data-facebook-id='' data-github-username='najai' data-email=''></multi-avatar>-->
-<!--<multi-avatar data-facebook-id='' data-github-username='' data-email='celine.moro@gmail.com'></multi-avatar>-->
-<!--<multi-avatar data-facebook-id='' data-github-username='' data-email=''></multi-avatar>-->
-
 <div class="col-md-offset-1 col-md-10 col-md-offset-1">
     <h1>{{"NAV.PROFILE" | translate}}</h1>
     <hr>
@@ -11,7 +6,7 @@
         <div class="col-md-3">
             <div>
                 <div>
-                    <multi-avatar data-facebook-id='' data-twitter-id='' data-github-id='{{user.userId}}' data-gravatar-id='{{user.email}}'></multi-avatar>
+                    <multi-avatar ng-if="user" data-facebook-id='' data-twitter-id='' data-github-id='{{user.userId}}' data-gravatar-id='{{user.email}}'></multi-avatar>
                 </div>
                 <hr>
                 <div class="list-group">
