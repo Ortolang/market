@@ -1,96 +1,99 @@
-<div id="market-home">
-
+<div class="container-fluid container-main">
     <div class="row">
         <div class="toolbar">
             <div class="col-sm-7">
                 <div class="input-group">
                     <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
-                    <span class="input-group-btn">
-                        <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
+                <span class="input-group-btn">
+                    <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
                 </div>
             </div>
         </div>
     </div>
-    <section ng-if="section==='news'" class="row">
-        <div class="col-md-8">
-            <div ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
-        </div>
-        <div class="col-md-4">
-            <div class="well">
-                <h4 translate="INFORMATION.NEWS"></h4>
-                <p translate="INFORMATION.INNOVATIVE_SHS"></p>
-                <p><small><a href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank">{{'INFORMATION.MORE' | translate}}...</a></small></p>
-                <br/>
-                <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
-                <p><small><a href="/#/information/newsletter">{{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></small></p>
-
+<!--</div>-->
+<!--<div class="container-fluid container-main">-->
+    <div class="market-home">
+        <section ng-if="section==='news'" class="row">
+            <div class="col-md-8">
+                <div ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
             </div>
-        </div>
-    </section>
+            <div class="col-md-4">
+                <div class="well">
+                    <h4 translate="INFORMATION.NEWS"></h4>
+                    <p translate="INFORMATION.INNOVATIVE_SHS"></p>
+                    <p><small><a href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank">{{'INFORMATION.MORE' | translate}}...</a></small></p>
+                    <br/>
+                    <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
+                    <p><small><a href="/#/information/newsletter">{{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></small></p>
 
-    <section ng-if="section==='news' && news.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3>Nouveautés</h3>
-            </header>
-            <div class="flex-row">
+                </div>
+            </div>
+        </section>
+
+        <section ng-if="section==='news' && news.length>0" class="row">
+            <div class="col-md-12">
+                <header>
+                    <h3>Nouveautés</h3>
+                </header>
+                <div class="flex-row">
 
                     <item class="flex-column medium-item" ng-repeat="item in news" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
+                </div>
             </div>
-        </div>
-    </section>
-     <section ng-if="section==='corpus' && corpus.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3>Corpus</h3>
-            </header>
+        </section>
+        <section ng-if="section==='corpus' && corpus.length>0" class="row">
+            <div class="col-md-12">
+                <header>
+                    <h3>Corpus</h3>
+                </header>
 
-            <div class="flex-row">
+                <div class="flex-row">
 
                     <item class="flex-column medium-item" ng-repeat="item in corpus | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
 
+                </div>
             </div>
-        </div>
-    </section>
-     <section ng-if="section==='tools' && outils.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3>Outils</h3>
-            </header>
+        </section>
+        <section ng-if="section==='tools' && outils.length>0" class="row">
+            <div class="col-md-12">
+                <header>
+                    <h3>Outils</h3>
+                </header>
 
-            <div class="flex-row">
+                <div class="flex-row">
 
                     <item class="flex-column medium-item" ng-repeat="item in outils | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
 
+                </div>
             </div>
-        </div>
-    </section>
-     <section ng-if="section==='lexicons' && lexiques.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3>Lexiques</h3>
-            </header>
+        </section>
+        <section ng-if="section==='lexicons' && lexiques.length>0" class="row">
+            <div class="col-md-12">
+                <header>
+                    <h3>Lexiques</h3>
+                </header>
 
-            <div class="flex-row">
+                <div class="flex-row">
 
                     <item class="flex-column medium-item" ng-repeat="item in lexiques | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
 
+                </div>
             </div>
-        </div>
-    </section>
-     <section ng-if="section==='websites' && website.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3>Projets intégrés</h3>
-            </header>
+        </section>
+        <section ng-if="section==='websites' && website.length>0" class="row">
+            <div class="col-md-12">
+                <header>
+                    <h3>Projets intégrés</h3>
+                </header>
 
-            <div class="flex-row">
+                <div class="flex-row">
 
                     <item class="flex-column medium-item" ng-repeat="item in website | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
 
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+    </div>
 </div>

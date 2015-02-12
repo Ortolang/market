@@ -1,4 +1,4 @@
-<section id="market-item">
+<section class="market-item">
     <header>
         <div class="media">
             <a class="pull-left">
@@ -136,13 +136,13 @@
 
         <aside ng-show="!browse" class="col-md-4">
 
-            <div class="panel panel-default license-panel" ng-if="datasizeToPrint || item['http://www.ortolang.fr/ontology/conditionsOfUse'] || licenceDataObject">
+            <div class="panel panel-default license-panel" ng-show="datasizeToPrint || item['http://www.ortolang.fr/ontology/conditionsOfUse'] || licenceDataObject">
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
 
                     <p ng-bind="item['http://www.ortolang.fr/ontology/conditionsOfUse']"></p>
                     <p><a ng-if="licenceDataObject" ng-click="showPreview(licenceDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
-                    <div class="btn-group btn-group-justified" ng-if="datasizeToPrint">
+                    <div class="btn-group btn-group-justified" ng-show="datasizeToPrint">
 
                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></a>
 

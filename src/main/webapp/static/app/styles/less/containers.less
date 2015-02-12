@@ -1,0 +1,9 @@
+.container-main {
+  padding: 0 floor(@container-main-padding/2) floor(@container-main-padding/2);
+}
+
+@media (min-width: 768px) {
+  .container-main {
+    padding: 0 @container-main-padding @container-main-padding;
+  }
+}

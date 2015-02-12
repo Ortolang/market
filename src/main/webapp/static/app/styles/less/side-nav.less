@@ -1,3 +1,16 @@
+#side-nav-wrapper {
+  display: none !important;
+}
+
+@media(min-width: @grid-float-breakpoint) {
+  #side-nav-wrapper {
+    display: block !important;
+    position: absolute;
+    width: @side-bar-width;
+    z-index: 10;
+  }
+}
+
 .side-nav {
   position: relative;
 
@@ -148,18 +161,5 @@
   }
   span {
     display: block;
-  }
-}
-
-#side-nav-wrapper {
-  display: none !important;
-}
-
-@media(min-width: @grid-float-breakpoint) {
-  #side-nav-wrapper {
-    display: block !important;
-    position: absolute;
-    width: @side-bar-width;
-    z-index: 10;
   }
 }

@@ -1,3 +1,10 @@
+.toolbar:not(.browser-toolbar) {
+  margin-left: -@container-main-padding;
+  margin-right: -@container-main-padding;
+  padding-left: @container-main-padding;
+  padding-right: @container-main-padding;
+}
+
 .toolbar {
   padding-top: @padding-large-vertical;
   padding-bottom: @padding-large-vertical;
@@ -25,18 +32,25 @@
 }
 
 .nav-pills-toolbar {
-  > ul {
-    margin: -@padding-large-vertical 0;
+  ul.nav-pills {
+    margin: -@padding-large-vertical -@nav-pills-toolbar-item-side-padding;
     > li {
+      &:first-child {
+        margin-left: -@container-main-padding + @nav-pills-toolbar-item-side-padding;
+        padding-left: @container-main-padding - @nav-pills-toolbar-item-side-padding;
+      }
       + li {
         margin-left: 0;
       }
       > a {
         line-height: @toolbar-min-height;
         color: inherit;
-        padding: 0 2 * @padding-large-horizontal;
+        padding: 0 @nav-pills-toolbar-item-side-padding;
       }
-      &.active, &:hover, &.open {
+      &:hover {
+        cursor: pointer;
+      }
+      &.active {
         border-bottom: 4px solid @default-primary;
         > a {
           background: none;
@@ -47,11 +61,7 @@
           &:hover, &:focus {
             background: none;
             color: inherit;
-            border-bottom-color: @default-primary;
           }
-        }
-        &.active, &.open {
-          border-bottom-color: @default-primary;
         }
       }
     }
@@ -59,36 +69,20 @@
 }
 
 .information-toolbar {
-  > ul {
+  ul.nav-pills {
     > li {
-      &.active, &:hover, &.open {
+      &.active {
         border-bottom: 4px solid @information-primary;
-        > a {
-          &:hover, &:focus {
-            border-bottom-color: @information-primary;
-          }
-        }
-        &.active, &.open {
-          border-bottom-color: @information-primary;
-        }
       }
     }
   }
 }
 
 .processes-toolbar {
-  > ul {
+  ul.nav-pills {
     > li {
-      &.active, &:hover, &.open {
+      &.active {
         border-bottom: 4px solid @processes-primary;
-        > a {
-          &:hover, &:focus {
-            border-bottom-color: @processes-primary;
-          }
-        }
-        &.active, &.open {
-          border-bottom-color: @processes-primary;
-        }
       }
       &.active {
         > a {
@@ -103,18 +97,10 @@
 }
 
 .market-toolbar {
-  > ul {
+  ul.nav-pills {
     > li {
-      &.active, &:hover, &.open {
+      &.active {
         border-bottom: 4px solid @market-primary;
-        > a {
-          &:hover, &:focus {
-            border-bottom-color: @market-primary;
-          }
-        }
-        &.active, &.open {
-          border-bottom-color: @market-primary;
-        }
       }
     }
   }

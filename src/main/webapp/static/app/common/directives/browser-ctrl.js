@@ -34,7 +34,8 @@ angular.module('ortolangMarketApp')
         function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft, marketItemHeader, footerHeight,
-                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight;
+                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight,
+                topNavWrapper, footerWrapper;
 
             // *********************** //
             //        Breadcrumb       //
@@ -80,10 +81,10 @@ angular.module('ortolangMarketApp')
                 // TODO Context menu could be optimized when clicking on a same child but context menu deactivated
                 // If right click
                 if (!marketItemHeader) {
-                    marketItemHeader = angular.element('#market-item').find('header').outerHeight();
+                    marketItemHeader = angular.element('.market-item').find('header').outerHeight();
                 }
                 if (!footerHeight) {
-                    footerHeight = angular.element('.footer').outerHeight();
+                    footerHeight = angular.element('#footer-wrapper').outerHeight();
                 }
                 if (clickEvent && clickEvent.button === 2) {
                     $scope.contextMenuStyle = {
@@ -894,12 +895,12 @@ angular.module('ortolangMarketApp')
             $scope.resizeBrowser = function () {
                 if (!$scope.browserService.isFileSelect) {
                     console.debug('Resizing browser');
-                    var topOffset = $('#main-navbar').outerHeight(),
+                    var topOffset = topNavWrapper.outerHeight(),
                         height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-                        bottomOffset = angular.element('footer.footer').outerHeight();
-                    browserToolbarHeight = $('#browser-toolbar').outerHeight();
+                        bottomOffset = footerWrapper.outerHeight();
+                    browserToolbarHeight = $('.browser-toolbar').outerHeight();
                     if ($scope.browserService === MarketBrowserService) {
-                        topOffset += $('#market-item').find('header').outerHeight();
+                        topOffset += angular.element('.market-item').find('header').outerHeight();
                     }
                     height = height - topOffset - bottomOffset;
                     if (height < 1) {
@@ -1009,7 +1010,9 @@ angular.module('ortolangMarketApp')
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
                 clearPreviousFilteringQueries();
-                pageWrapperMarginLeft = parseInt(angular.element('#page-wrapper').css('margin-left'), 10);
+                pageWrapperMarginLeft = parseInt(angular.element('#main-wrapper').css('margin-left'), 10);
+                topNavWrapper = angular.element('#top-nav-wrapper');
+                footerWrapper = angular.element('#footer-wrapper');
             }
 
             function initScopeVariables() {
