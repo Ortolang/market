@@ -37,11 +37,11 @@ angular.module('ortolangMarketApp')
         };
 
 
-        function loadObjects(content, producer) {
+        function loadObjects(content) {
 
             var query = ' STATUS:PUBLISHED', contentSplit = [];
 
-            if (content && content !== '') {
+            if (content && content !== '' && content[0]!=='"') {
                 contentSplit = content.split(' ');
             }
 
@@ -50,10 +50,8 @@ angular.module('ortolangMarketApp')
                     var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
                     query += ' AND CONTENT:' + str + '*';
                 });
-            }
-
-            if (producer && producer !== '') {
-                query += ' AND CONTENT:' + producer;
+            } else {
+                query += ' AND CONTENT:' + content;
             }
 
             console.debug('query : ' + query);
@@ -90,8 +88,7 @@ angular.module('ortolangMarketApp')
             initScopeVariables();
 
             $scope.content = $routeParams.content;
-            var producer = ($routeParams.producer !== undefined && $routeParams.producer !== '') ? $routeParams.producer : undefined;
-            loadObjects($routeParams.content, producer);
+            loadObjects($routeParams.content);
         }
         init();
 
