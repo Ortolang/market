@@ -31,14 +31,14 @@
     <div class="row">
 
         <div ng-show="!browse" class="col-md-8">
-            <section ng-show="!browse" id="description">
+            <section id="description">
                 <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
                 <article>
                     <p ng-bind-html="item['http://purl.org/dc/elements/1.1/description']"></p>
                 </article>
             </section>
 
-            <section ng-show="!browse" id="preview" ng-if="previewCollection">
+            <section id="preview" ng-if="previewCollection">
                 <header><span class="glyphicon glyphicon-eye-open fa-fw" style="font-size: 20px;"></span> {{'MARKET.PREVIEW' | translate}}</header>
                 <article>
                     <div class="browsed-element-children-wrapper">
@@ -56,7 +56,7 @@
                 </article>
             </section>
 
-            <section ng-show="!browse" id="keywords" ng-if="item['http://purl.org/dc/terms/extent'] || item['http://purl.org/dc/terms/keywords']">
+            <section id="keywords" ng-if="item['http://purl.org/dc/terms/extent'] || item['http://purl.org/dc/terms/keywords']">
                 <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
                 <article>
                     <div class="row">
@@ -80,7 +80,7 @@
                 </article>
             </section>
 
-            <section ng-show="!browse" id="contributor" ng-if="item['http://www.ortolang.fr/ontology/researcher'] || item['http://www.ortolang.fr/ontology/manager'] || item['http://www.ortolang.fr/ontology/developper']">
+            <section id="contributor" ng-if="item['http://www.ortolang.fr/ontology/researcher'] || item['http://www.ortolang.fr/ontology/manager'] || item['http://www.ortolang.fr/ontology/developper']">
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
                 <article class="row" ng-if="item['http://www.ortolang.fr/ontology/researcher']">
