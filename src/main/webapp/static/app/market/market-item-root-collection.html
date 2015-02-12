@@ -84,7 +84,7 @@
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
                 <article class="row" ng-if="item['http://www.ortolang.fr/ontology/researcher']">
-                    <h4>Responsable scientifique</h4>
+                    <h4>Responsables scientifique</h4>
                     <ul>
                         <li ng-repeat="researcher in item['http://www.ortolang.fr/ontology/researcher']">
                             <a ng-href="#/search?content={{researcher}}" ng-bind="researcher"></a>
@@ -93,18 +93,34 @@
 
                 </article>
                 <article class="row" ng-if="item['http://www.ortolang.fr/ontology/manager']">
-                    <h4>Responsable informatique</h4>
+                    <h4>Responsables informatique</h4>
                     <ul>
                         <li ng-repeat="manager in item['http://www.ortolang.fr/ontology/manager']">
                             <a ng-href="#/search?content={{manager}}" ng-bind="manager"></a>
                         </li>
                     </ul>
                 </article>
-                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/developper']">
-                    <h4>Responsable technique</h4>
+                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/developer']">
+                    <h4>Responsables technique</h4>
                     <ul>
-                        <li ng-repeat="developper in item['http://www.ortolang.fr/ontology/developper']">
-                            <a ng-href="#/search?content={{developper}}" ng-bind="developper"></a>
+                        <li ng-repeat="developer in item['http://www.ortolang.fr/ontology/developer']">
+                            <a ng-href="#/search?content={{developer}}" ng-bind="developer"></a>
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/author']">
+                    <h4>Auteurs</h4>
+                    <ul>
+                        <li ng-repeat="author in item['http://www.ortolang.fr/ontology/author']">
+                            <a ng-href="#/search?content={{author}}" ng-bind="author"></a>
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/compiler']">
+                    <h4>Compilateurs</h4>
+                    <ul>
+                        <li ng-repeat="compiler in item['http://www.ortolang.fr/ontology/compiler']">
+                            <a ng-href="#/search?content={{compiler}}" ng-bind="compiler"></a>
                         </li>
                     </ul>
                 </article>
