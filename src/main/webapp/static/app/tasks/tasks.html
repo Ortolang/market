@@ -1,35 +1,37 @@
-<div class="row">
-    <div class="toolbar"></div>
-    <br/>
-    <section class="col-md-12">
-        <div class="panel panel-default">
-            <!--<div class="panel-heading" translate="TASKS"></div>-->
-            <div ng-if="!tasks || tasks.length == 0" class="panel-body">
-                <p translate="TASKS.NO_TASK"></p>
+<div class="container-fluid container-main">
+    <div class="row">
+        <div class="toolbar"></div>
+        <br/>
+        <section class="col-md-12">
+            <div class="panel panel-default">
+                <!--<div class="panel-heading" translate="TASKS"></div>-->
+                <div ng-if="!tasks || tasks.length == 0" class="panel-body">
+                    <p translate="TASKS.NO_TASK"></p>
+                </div>
+                <table ng-if="tasks && tasks.length !== 0" class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th translate="NAME"></th>
+                        <th translate="DESCRIPTION"></th>
+                        <th translate="TASKS.ASSIGNEE"></th>
+                        <th translate="ACTIONS"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="task in tasks">
+                        <td>{{::task.id}}</td>
+                        <td>{{::task.name}}</td>
+                        <td>{{::task.description}}</td>
+                        <td>{{task.assignee}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-default" ng-click="Runtime.claimTask(task)" translate="TASKS.CLAIM"></button>
+                            <button class="btn btn-sm btn-success" ng-click="Runtime.completeTask(task)" translate="TASKS.COMPLETE_TASK"></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <table ng-if="tasks && tasks.length !== 0" class="table table-responsive">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th translate="NAME"></th>
-                    <th translate="DESCRIPTION"></th>
-                    <th translate="TASKS.ASSIGNEE"></th>
-                    <th translate="ACTIONS"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="task in tasks">
-                    <td>{{::task.id}}</td>
-                    <td>{{::task.name}}</td>
-                    <td>{{::task.description}}</td>
-                    <td>{{task.assignee}}</td>
-                    <td>
-                        <button class="btn btn-sm btn-default" ng-click="Runtime.claimTask(task)" translate="TASKS.CLAIM"></button>
-                        <button class="btn btn-sm btn-success" ng-click="Runtime.completeTask(task)" translate="TASKS.COMPLETE_TASK"></button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+        </section>
+    </div>
 </div>

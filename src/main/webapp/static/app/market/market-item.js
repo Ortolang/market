@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
                                     $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
                                     if(data['http://www.ortolang.fr/ontology/image']) {
-                                        
+
                                         ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
                                             $scope.item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
                                         }, function (reason) {
@@ -54,11 +54,11 @@ angular.module('ortolangMarketApp')
                                     if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
                                         loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
                                     }
-                                    
+
                                     if($scope.item['http://www.ortolang.fr/ontology/license']!==undefined && $scope.item['http://www.ortolang.fr/ontology/license']!=='') {
                                         loadLicence(key, $scope.item['http://www.ortolang.fr/ontology/license']);
                                     }
-                                    
+
                                     if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
                                         $scope.datasizeToPrint = {'value':$scope.item['http://www.ortolang.fr/ontology/datasize']};
                                     }
@@ -70,8 +70,8 @@ angular.module('ortolangMarketApp')
                     } else {
                         $scope.marketItemTemplate = 'market/market-item-collection.html';
                     }
-                } else if (oobject.type === 'object') {
-                    $scope.marketItemTemplate = 'market/market-item-data-object.html';
+                //} else if (oobject.type === 'object') {
+                //    $scope.marketItemTemplate = 'market/market-item-data-object.html';
                 } else if (oobject.type === 'link') {
                     console.debug('follow link');
                 } else {
