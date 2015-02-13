@@ -83,8 +83,12 @@
     background-color: #FFFFFF;
     padding-bottom: 3*@padding-large-vertical;
 
-    &:nth-child(even) {
-      background-color: @navbar-default-bg;
+    &:nth-child(odd) {
+      background-color: #f1f1f1;
+      margin-left: -@container-main-padding;
+      margin-right: -@container-main-padding;
+      padding-left: @container-main-padding - floor(@grid-gutter-width/2);
+      padding-right: @container-main-padding - floor(@grid-gutter-width/2);
     }
   }
 
