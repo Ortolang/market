@@ -13,7 +13,7 @@
 
 .side-nav {
   position: relative;
-  background-color: @navbar-default-bg;
+  background-color: @default-bg;
   z-index: 1;
 
   .side-nav-active-item {
@@ -30,7 +30,7 @@
           line-height: @side-bar-item-active-height;
         }
         .item-description {
-          color: #FFFFFF;
+          color: @inverse-text-color;
         }
       }
 
@@ -45,7 +45,7 @@
           line-height: @side-bar-item-active-height;
         }
         .item-description {
-          color: #FFFFFF;
+          color: @inverse-text-color;
         }
         &.tasks {
           background-color: @tasks-primary;
@@ -87,7 +87,7 @@
         z-index: 5;
         width: @side-bar-item-height + 14px;
         line-height: @side-bar-item-height;
-        color: #FFFFFF;
+        color: @inverse-text-color;
       }
 
       .item-description {
@@ -122,7 +122,7 @@
             line-height: @side-bar-item-active-height;
           }
           .item-description {
-            color: #FFFFFF;
+            color: @inverse-text-color;
           }
         }
       }
@@ -135,7 +135,7 @@
           background-color: #FFC107;
           .icon-container {
             background-color: #FFC107;
-            color: #FFFFFF;
+            color: @inverse-text-color;
           }
         }
       }
@@ -144,7 +144,7 @@
 
         &:hover {
           .item-description {
-            color: #FFFFFF;
+            color: @inverse-text-color;
           }
         }
       }

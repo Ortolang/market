@@ -77,12 +77,12 @@
 }
 
 .browser-aside {
-  background-color: @navbar-default-bg;
+  background-color: @default-bg;
   padding-top: 2 * @padding-large-vertical;
   padding-bottom: @padding-large-vertical;
   &.browser-aside-left {
     border-right: 1px solid @navbar-default-border;
-    background-color: #FFFFFF;
+    background-color: @main-bg;
   }
   &.browser-aside-right {
     border-left: 1px solid @navbar-default-border;
@@ -318,7 +318,7 @@ table.workspace-elements {
       overflow: hidden;
       &:hover {
         background-color: @workspace-primary;
-        color: #FFFFFF;
+        color: @inverse-text-color;
         cursor: pointer;
       }
       &.active {

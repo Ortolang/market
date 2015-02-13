@@ -12,7 +12,7 @@
   margin-bottom: 2 * @padding-large-vertical;
   border-bottom: 1px solid @navbar-default-border;
   min-height: @toolbar-min-height;
-  background-color: @navbar-default-bg;
+  background-color: @default-bg;
 
   .btn-toolbar.btn-toolbar-right .btn-group {
     float: right;
@@ -88,7 +88,7 @@
       &.active {
         > a {
           > .badge {
-            color: #ffffff;
+            color: @inverse-text-color;
             background-color: @processes-primary;
           }
         }

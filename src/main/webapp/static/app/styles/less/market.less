@@ -1,5 +1,5 @@
 .license-panel, .metadata-panel {
-  background-color: lighten(#000, 97.25%);
+  background-color: @gray-lightest;
   .panel-heading {
     font-size: @font-size-h4;
     font-weight: 200;
@@ -75,16 +75,20 @@
   #search-market {
     padding-top: 4*@padding-large-vertical;
     padding-bottom: 5*@padding-large-vertical;
-    background-color: @navbar-default-bg;
+    background-color: @default-bg;
     border-bottom: 1px solid @navbar-default-border;
   }
 
+  .flex-row :first-child {
+    margin-left: 0;
+  }
+
   section {
-    background-color: #FFFFFF;
+    background-color: @main-bg;
     padding-bottom: 3*@padding-large-vertical;
 
     &:nth-child(odd) {
-      background-color: #f1f1f1;
+      background-color: @alternate-bg;
       margin-left: -@container-main-padding;
       margin-right: -@container-main-padding;
       padding-left: @container-main-padding - floor(@grid-gutter-width/2);
@@ -101,7 +105,7 @@
     margin: 5px;
     border: 1px solid #dddddd;
     line-height: 1.42857143;
-    background-color: #FFFFFF;
+    background-color: @main-bg;
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
     box-shadow: 0 0 5px rgba(0,0,0,0.10);
     width: 162px;
@@ -130,7 +134,7 @@
       position: relative;
       color: inherit;
       font-size: 13px;
-      margin: 10px;
+      margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
     }
     .caption {
       /*overflow: hidden;*/
@@ -180,7 +184,7 @@
     margin: 5px;
     border: 1px solid #dddddd;
     line-height: 1.42857143;
-    background-color: #FFFFFF;
+    background-color: @main-bg;
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
     box-shadow: 0 0 5px rgba(0,0,0,0.10);
     width: 258px;
@@ -228,7 +232,7 @@
     margin-left: -@container-main-padding;
     margin-right: -@container-main-padding;
     padding: 15px @container-main-padding;
-    background-color: @navbar-default-bg;
+    background-color: @default-bg;
     border-bottom: 1px solid @navbar-default-border;
     .media .pull-left {
       padding-right: 2 * @padding-large-horizontal;
@@ -240,7 +244,7 @@
     .image {
       max-width: 200px;
       max-height: 200px;
-      background-color: #fff;
+      background-color: @main-bg;
     }
   }
 
