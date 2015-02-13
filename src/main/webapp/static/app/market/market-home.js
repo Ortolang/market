@@ -8,7 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $routeParams, $location, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('MarketHomeCtrl', ['$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'N3Serializer', '$http', '$templateCache',
+        function ($scope, $routeParams, $location, ObjectResource, DownloadResource, N3Serializer, $http, $templateCache) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
@@ -92,6 +93,7 @@ angular.module('ortolangMarketApp')
 
             $scope.section = $routeParams.section;
             loadObjects();
+
         }
         init();
 

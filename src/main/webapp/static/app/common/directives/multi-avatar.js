@@ -19,7 +19,6 @@ angular.module('ortolangMarketApp')
                     {id: 'gravatar', tpl: '<img src="https://secure.gravatar.com/avatar/{id}?s=200&d=mm" style="width:{width}px; height:{height}px" class="{classImg}"/>'}
                 ];
 
-                console.debug(attrs);
                 for (var s=0; s<services.length; s++) {
                     var service = services[s],
                         attr = service.id + 'Id',
@@ -28,7 +27,6 @@ angular.module('ortolangMarketApp')
                         width, height,
                         classImg = 'img-responsive img-rounded';
                     var isGravatar = attr === 'gravatarId';
-                    console.debug(attr, id);
                     if ((thumbnail !== null) && (thumbnail === 'true')) {
                         width = 30;
                         height = 30;

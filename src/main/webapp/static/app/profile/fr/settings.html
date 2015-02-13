@@ -1,170 +1,54 @@
-<h3>Avec x-editable fields</h3>
+<h3>Préférences d'affichage</h3>
 <br>
 
 <div id="formSettings" class="form-horizontal" >
     <div class="form-group">
-        <!-- editable username (text with validation) -->
-        <label class="col-md-3 control-label">First name: </label>
+        <label class="col-md-3 control-label" for="preferredAvatar">Avatar: </label>
         <button ng-click="isLocked.firstName = !isLocked.firstName" class="btn pull-left"
                 ng-class="{'fa fa-unlock': isLocked.firstName, 'fa fa-lock': !isLocked.firstName}"
                 aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
         </button>
         <div class="col-md-7" style="padding-top: 5px;">
-            <span editable-text="user.firstName" e-name="firstName" e-required>{{ user.firstName || 'empty' }}</span>
+            <span id="preferredAvatar" editable-radiolist="user.preferredAvatar" e-ng-options="s.value as s.text for s in avatars">
+                {{ showPreferredAvatar() }}
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
-        <!-- editable username (text with validation) -->
-        <label class="col-md-3 control-label">First name: </label>
-        <button ng-click="isLocked.lastName = !isLocked.lastName" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.lastName, 'fa fa-lock': !isLocked.lastName}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
+    <div class="form-group" ng-if="user.preferredAvatar==1">
+        <label class="col-md-3 control-label" for="facebookId">Facebook id: </label>
         <div class="col-md-7" style="padding-top: 5px;">
-            <span editable-text="user.lastName" e-name="lastName" e-required e-style="width:100%;margin-top:-5px;">{{ user.lastName || 'empty' }}</span>
+            <span id="facebookId" editable-text="user.facebookId" e-name="facebookId" e-placeholder="Enter your facebook avatar id" e-value="{{user.facebookId}}">
+                {{ user.facebookId || 'empty' }}
+            </span>
+            <span class="help-block">More informations about how to get you facebook user id : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.</span>
         </div>
     </div>
-
-    <div class="form-group">
-        <!-- editable username (text with validation) -->
-        <label class="col-md-3 control-label" for="username0">Username: </label>
-        <button ng-click="isLocked.username = !isLocked.username" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.username, 'fa fa-lock': !isLocked.username}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
+    <div class="form-group" ng-if="user.preferredAvatar==2">
+        <label class="col-md-3 control-label" for="twitterId">Twitter id: </label>
         <div class="col-md-7" style="padding-top: 5px;">
-            <span id="username0" editable-text="user.username" e-name="username" e-required e-style="width:100%;margin-top:-5px;">{{ user.username || 'empty' }}</span>
+            <span id="twitterId" editable-text="user.twitterId" e-name="twitterId" e-placeholder="Enter your twitter avatar id" e-value="{{user.twitterId}}">
+                {{ user.twitterId || 'empty' }}
+            </span>
+            <span class="help-block">More informations about how to get you twitter user id : <a href="http://mytwitterid.com/" target="_blank">http://mytwitterid.com/</a>.</span>
         </div>
     </div>
-
-    <div class="form-group">
-        <!-- editable status (select-local) -->
-        <label class="col-md-3 control-label">Status: </label>
-        <button ng-click="isLocked.status = !isLocked.status" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.status, 'fa fa-lock': !isLocked.status}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
+    <div class="form-group" ng-if="user.preferredAvatar==3" for="githubUsername">
+        <label class="col-md-3 control-label">Github username: </label>
         <div class="col-md-7" style="padding-top: 5px;">
-                <span editable-select="user.status" e-name="status" e-ng-options="s.value as s.text for s in statuses" e-style="width:100%;margin-top:-5px;">
-                    {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
-                </span>
+            <span id="githubUsername" editable-text="user.githubUsername" e-name="githubUsername" e-placeholder="Enter your username in gitHub" e-value="{{user.githubUsername}}">
+                {{ user.githubUsername || 'empty' }}
+            </span>
+            <span class="help-block">Please enter your username for gitHub.</span>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-lg-3 control-label" for="organisation0">Organisation:</label>
-        <button ng-click="isLocked.organisation = !isLocked.organisation" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.organisation, 'fa fa-lock': !isLocked.organisation}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-lg-7" style="padding-top: 5px;">
-            <span id="organisation0" editable-text="user.organisation" e-name="organisation" e-style="width:100%;margin-top:-5px;">{{ user.organisation || 'empty' }}</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-3 control-label" for="email0">Email:</label>
-        <button ng-click="isLocked.email = !isLocked.email" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.email, 'fa fa-lock': !isLocked.email}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-lg-7" style="padding-top: 5px;">
-            <span id="email0" editable-email="user.email" e-name="email" e-style="width:100%;margin-top:-5px;">{{ user.email || 'empty'}}</span>
+    <div class="form-group" ng-if="user.preferredAvatar==4" for="gravatarEmail">
+        <label class="col-md-3 control-label">Gravatar email: </label>
+        <div class="col-md-7" style="padding-top: 5px;">
+            <span id="gravatarEmail" editable-email="user.gravatarEmail" e-name="gravatarEmail" e-placeholder="Enter the email mapped with gravatar" e-style="width:100%;margin-top:-5px;">
+                {{ user.gravatarEmail || 'empty'}}
+            </span>
+            <span class="help-block">Please enter your email address mapped with gravatar. You can create your own gravatar here : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.</span>
         </div>
     </div>
 </div>
-
-<hr>
-<h3>Avec x-editable form</h3>
-<br>
-<form editable-form class="form-horizontal" name="editableForm">
-    <div class="form-group">
-        <!-- editable username (text with validation) -->
-        <label class="col-md-3 control-label">First name: </label>
-        <button ng-click="isLocked.firstName = !isLocked.firstName" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.firstName, 'fa fa-lock': !isLocked.firstName}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-md-7">
-            <span editable-text="user.firstName" e-name="firstName" e-required e-placeholder="Enter First Name" e-value="{{user.firstName}}">{{ user.firstName || 'empty' }}</span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <!-- editable username (text with validation) -->
-        <label class="col-md-3 control-label">First name: </label>
-        <button ng-click="isLocked.lastName = !isLocked.lastName" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.lastName, 'fa fa-lock': !isLocked.lastName}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-md-7">
-            <span editable-text="user.lastName" e-name="lastName" e-required >{{ user.lastName || 'empty' }}</span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <!-- editable username (text with validation) -->
-        <label class="col-md-3 control-label" for="username">Username: </label>
-        <button ng-click="isLocked.username = !isLocked.username" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.username, 'fa fa-lock': !isLocked.username}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-md-7">
-            <span id="username" editable-text="user.username" e-name="username" e-required >{{ user.username || 'empty' }}</span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <!-- editable status (select-local) -->
-        <label class="col-md-3 control-label">Status: </label>
-        <button ng-click="isLocked.status = !isLocked.status" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.status, 'fa fa-lock': !isLocked.status}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-md-7">
-            <span editable-select="user.status" e-name="status" e-ng-options="s.value as s.text for s in statuses" >
-                {{ (statuses | filter:{value: user.status})[0].text || 'Not set' }}
-            </span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-3 control-label" for="organisation">Organisation:</label>
-        <button ng-click="isLocked.organisation = !isLocked.organisation" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.organisation, 'fa fa-lock': !isLocked.organisation}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-lg-7">
-            <span id="organisation" editable-text="user.organisation" e-name="organisation">{{ user.organisation || 'empty' }}</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-3 control-label" for="email">Email:</label>
-        <button ng-click="isLocked.email = !isLocked.email" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.email, 'fa fa-lock': !isLocked.email}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
-        <div class="col-lg-7">
-            <span id="email" editable-email="user.email" e-name="email">{{ user.email || 'empty'}}</span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label"></label>
-
-        <div class="col-md-8">
-            <!-- button to show form -->
-            <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
-                Edit
-            </button>
-            <!-- buttons to submit / cancel form -->
-            <span ng-show="editableForm.$visible">
-                <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-                    Save
-                </button>
-                <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
-                    Cancel
-                </button>
-            </span>
-        </div>
-    </div>
-</form>
-
