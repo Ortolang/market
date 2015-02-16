@@ -1,5 +1,4 @@
-
-.metadataEditor {
+.metadata-editor {
 	-webkit-transition:all ease-in-out 0.25s;
 	transition:all ease-in-out 0.25s;
 	z-index: 1000;
@@ -13,25 +12,25 @@
 
 }
 
-.metadataEditorHeader {
+.metadata-editor-header {
 	padding: 15px;
 	border-bottom: 1px solid #e5e5e5;
 	min-height: 16.43px;
 	padding: 6px 15px;
 	background: @side-bar-item-bg;
-	color: #ffffff;
+	color: @inverse-text-color;
 }
 
-.metadataList {
+.metadata-list {
 	-webkit-transition:all ease-in-out 0.25s;
   transition:all ease-in-out 0.25s;
 }
 
-.metadataEditor-backdrop {
+.metadata-editor-backdrop {
 	z-index: 1000;
 }
 
-.metadataList.middle {
+.metadata-list.middle {
 	right: 35rem;
 }
 
@@ -127,12 +126,12 @@
         z-index: 200;
 
         li {
-            color: #333333;
+            color: @text-color;
             font-weight: 600;
             padding: 4px 25px;
             font-size: 1em;
             cursor: pointer;
-            background: #f2f2f2;
+            background: @alternate-bg;
             border-bottom: 1px solid #dddddd;
         }
 

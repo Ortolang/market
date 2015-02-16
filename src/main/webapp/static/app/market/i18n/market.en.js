@@ -22,6 +22,7 @@ angular.module('ortolangMarketApp')
             ADD_TO_FAVOURITES: 'Add to my favourites',
             USE_IN_MY_PROJECT: 'Use in my project',
             ADDITIONAL_INFORMATION: 'Additional information',
+            PREVIEW: 'Preview',
             LOCATION: 'Location',
             CONTRIBUTOR: 'Contributor',
             DOWNLOAD: 'Download',

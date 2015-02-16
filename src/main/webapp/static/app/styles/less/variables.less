@@ -14,6 +14,12 @@
 @gray-lightest: lighten(#000, 97.25%);
 
 //== Colors
+@main-bg: #ffffff;
+@default-bg: @navbar-default-bg;
+@alternate-bg: darken(@default-bg, 3%);
+@text-color: @gray-dark;
+@inverse-text-color: #ffffff;
+
 @default-primary: #45B29D;
 @ortolang-blue: #008bd0;
 @tool: #65b32e;
@@ -31,8 +37,8 @@
 @tasks-badge: #DF5A49;
 @processes-badge: #45B29D;
 
-@processes-primary: @default-primary;
-@tasks-primary: @default-primary;
+@processes-primary: @tasks-badge;
+@tasks-primary: @tasks-badge;
 @profile-primary: @default-primary;
 @information-primary: @default-primary;
 
@@ -76,8 +82,12 @@
 
 //== Toolbar
 @toolbar-min-height: 55px;
+@nav-pills-toolbar-item-side-padding: 2 * @padding-base-horizontal;
 
 //== Border radius
 //@border-radius-base: 0;
 //@border-radius-large: 0;
 //@border-radius-small: 0;
+
+@page-wrapper-padding: 40px;
+@container-main-padding: 48px;

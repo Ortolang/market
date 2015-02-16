@@ -1,6 +1,6 @@
 <nav ng-controller="SideNavCtrl" class="side-nav ng-cloak" role="navigation" ng-cloak>
     <div id="side-nav-active-item" class="side-nav-active-item active">
-        <a ng-href="#{{selectedElement.path}}" ng-class="selectedElement.class">
+        <a ng-href="#{{selectedElement.hidden && selectedElement.hiddenPath ? selectedElement.hiddenPath : selectedElement.path}}" ng-class="selectedElement.class">
             <span class="icon-container" ng-class="selectedElement.iconCss"></span>
             <span class="item-description">{{selectedElement.description}}</span>
         </a>

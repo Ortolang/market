@@ -1,12 +1,19 @@
-<div class="row">
-    <div class="toolbar information-toolbar">
-        <ul ng-if="section !== 'legal-notices'" class="nav nav-pills">
-            <li ng-class="{active: section === 'presentation'}"><a href="#/information/presentation">{{'INFORMATION.NAV.PRESENTATION' | translate}}</a></li>
-            <li ng-class="{active: section === 'partners'}"><a href="#/information/partners">{{'INFORMATION.NAV.PARTNERS' | translate}}</a></li>
-            <li ng-class="{active: section === 'roadmap'}"><a href="#/information/roadmap">{{'INFORMATION.NAV.ROADMAP' | translate}}</a></li>
-            <li ng-class="{active: section === 'newsletter'}"><a href="#/information/newsletter">{{'INFORMATION.NAV.NEWSLETTER' | translate}}</a></li>
-        </ul>
+<div class="container-fluid container-main">
+    <div class="row">
+        <div class="toolbar nav-pills-toolbar information-toolbar">
+            <div class="col-md-12">
+                <ul ng-if="section !== 'legal-notices'" class="nav nav-pills">
+                    <li ng-class="{active: section === 'presentation'}"><a href="#/information/presentation">{{'INFORMATION.NAV.PRESENTATION' | translate}}</a></li>
+                    <li ng-class="{active: section === 'partners'}"><a href="#/information/partners">{{'INFORMATION.NAV.PARTNERS' | translate}}</a></li>
+                    <li ng-class="{active: section === 'roadmap'}"><a href="#/information/roadmap">{{'INFORMATION.NAV.ROADMAP' | translate}}</a></li>
+                    <li ng-class="{active: section === 'newsletter'}"><a href="#/information/newsletter">{{'INFORMATION.NAV.NEWSLETTER' | translate}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--<div class="container-fluid container-main">-->
+    <div class="row">
+        <div class="col-md-10" ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
     </div>
 </div>
-
-<div ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>

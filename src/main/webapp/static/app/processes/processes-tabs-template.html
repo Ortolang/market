@@ -1,9 +1,11 @@
-<div class="col-md-12">
-    <ul class="nav processes-tabs-nav" ng-class="$navClass" role="tablist">
-        <li ng-repeat="$pane in $panes track by $index" ng-class="$index == $panes.$active ? $activeClass : ''">
-            <a role="tab" data-toggle="tab" ng-click="$setActive($index)" data-index="{{ $index }}" ng-bind-html="$pane.title"></a>
-        </li>
-    </ul>
+<div class="toolbar nav-pills-toolbar processes-toolbar">
+    <div class="col-md-12">
+        <ul class="nav processes-tabs-nav" ng-class="$navClass" role="tablist">
+            <li ng-repeat="$pane in $panes track by $index" ng-class="$index == $panes.$active ? $activeClass : ''">
+                <a role="tab" data-toggle="tab" ng-click="$setActive($index)" data-index="{{ $index }}" ng-bind-html="$pane.title"></a>
+            </li>
+        </ul>
+    </div>
 </div>
 <div ng-transclude class="tab-content">
 </div>

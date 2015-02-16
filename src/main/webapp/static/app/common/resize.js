@@ -1,6 +1,6 @@
 'use strict';
 
-// Sets the min-height of #page-wrapper to window size
+// Sets the min-height of #main-wrapper to window size
 $(function () {
     $(window).bind('load resize', function () {
         var topOffset = 54,
@@ -12,7 +12,7 @@ $(function () {
             height = 1;
         }
         if (height > topOffset) {
-            $('#page-wrapper').css('min-height', height + 'px');
+            $('#main-wrapper').css('min-height', height + 'px');
             $('#side-nav-wrapper').css('min-height', height + 'px');
         }
     });

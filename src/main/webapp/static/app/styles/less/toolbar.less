@@ -1,10 +1,18 @@
+.toolbar.browser-toolbar, .toolbar.side-panel-toolbar {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .toolbar {
-  padding-top: @padding-large-vertical;
-  padding-bottom: @padding-large-vertical;
+  margin-left: -@container-main-padding + floor(@grid-gutter-width/2);
+  margin-right: -@container-main-padding + floor(@grid-gutter-width/2);
+  padding: @padding-large-vertical (@container-main-padding - floor(@grid-gutter-width/2));
   margin-bottom: 2 * @padding-large-vertical;
   border-bottom: 1px solid @navbar-default-border;
   min-height: @toolbar-min-height;
-  background-color: @navbar-default-bg;
+  background-color: @default-bg;
 
   .btn-toolbar.btn-toolbar-right .btn-group {
     float: right;
@@ -22,4 +30,79 @@
     min-height: 54px;
   }
 
+}
+
+.nav-pills-toolbar {
+  ul.nav-pills {
+    margin: -@padding-large-vertical -@nav-pills-toolbar-item-side-padding;
+    > li {
+      &:first-child {
+        margin-left: -@container-main-padding + @nav-pills-toolbar-item-side-padding;
+        padding-left: @container-main-padding - @nav-pills-toolbar-item-side-padding;
+      }
+      + li {
+        margin-left: 0;
+      }
+      > a {
+        line-height: @toolbar-min-height;
+        color: inherit;
+        padding: 0 @nav-pills-toolbar-item-side-padding;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+      &.active {
+        border-bottom: 4px solid @default-primary;
+        > a {
+          background: none;
+          color: inherit;
+          border-radius: 0;
+          text-decoration: none;
+          margin-bottom: -4px;
+          &:hover, &:focus {
+            background: none;
+            color: inherit;
+          }
+        }
+      }
+    }
+  }
+}
+
+.information-toolbar {
+  ul.nav-pills {
+    > li {
+      &.active {
+        border-bottom: 4px solid @information-primary;
+      }
+    }
+  }
+}
+
+.processes-toolbar {
+  ul.nav-pills {
+    > li {
+      &.active {
+        border-bottom: 4px solid @processes-primary;
+      }
+      &.active {
+        > a {
+          > .badge {
+            color: @inverse-text-color;
+            background-color: @processes-primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.market-toolbar {
+  ul.nav-pills {
+    > li {
+      &.active {
+        border-bottom: 4px solid @market-primary;
+      }
+    }
+  }
 }

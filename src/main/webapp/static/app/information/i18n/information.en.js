@@ -19,10 +19,10 @@ angular.module('ortolangMarketApp')
             PATH: {
                 PRESENTATION: 'information/en/presentation.html',
                 PARTNERS: 'information/partners.html',
-                ROADMAP: 'information/fr/roadmap.html',
+                ROADMAP: 'information/en/roadmap.html',
                 NEWSLETTER: 'information/newsletter.html',
                 LEGAL_NOTICES: 'information/en/legal-notices.html',
-                NEWS: 'information/fr/news.html'
+                NEWS: 'information/en/news.html'
             },
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'ORTOLANG first newsletter',

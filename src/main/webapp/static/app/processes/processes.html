@@ -1,169 +1,168 @@
-<div class="row">
-    <div class="toolbar"></div>
-</div>
-<div class="row" bs-active-pane="activeTab" data-nav-class="nav-pills" data-template="processes/processes-tabs-template.html" bs-tabs>
-    <div data-title="{{'PROCESSES' | translate}} <span class='badge'>{{Runtime.activeProcessesNumber()}}</span>" bs-pane>
-        <section id="processes" class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading" translate="PROCESSES"></div>
-                <div ng-if="!Runtime.hasActiveProcesses()" class="panel-body">
-                    <p translate="PROCESSES.NO_ACTIVE_PROCCESS"></p>
+<div class="container-fluid container-main">
+    <div class="row" bs-active-pane="activeTab" data-nav-class="nav-pills" data-template="processes/processes-tabs-template.html" bs-tabs>
+        <div data-title="{{'PROCESSES' | translate}} <span class='badge'>{{Runtime.activeProcessesNumber()}}</span>" bs-pane>
+            <section id="processes" class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="PROCESSES"></div>
+                    <div ng-if="!Runtime.hasActiveProcesses()" class="panel-body">
+                        <p translate="PROCESSES.NO_ACTIVE_PROCCESS"></p>
+                    </div>
+                    <table ng-if="Runtime.hasActiveProcesses()" class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th translate="NAME"></th>
+                            <th translate="TYPE"></th>
+                            <th translate="PROCESSES.STATE"></th>
+                            <th translate="PROCESSES.ACTIVITY"></th>
+                            <th translate="ACTIONS"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="process in Runtime.getActiveProcesses()">
+                            <td>{{::process.name}}</td>
+                            <td>{{::process.type}}</td>
+                            <td>{{process.state}}</td>
+                            <td>{{process.activity}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table ng-if="Runtime.hasActiveProcesses()" class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th translate="NAME"></th>
-                        <th translate="TYPE"></th>
-                        <th translate="PROCESSES.STATE"></th>
-                        <th translate="PROCESSES.ACTIVITY"></th>
-                        <th translate="ACTIONS"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="process in Runtime.getActiveProcesses()">
-                        <td>{{::process.name}}</td>
-                        <td>{{::process.type}}</td>
-                        <td>{{process.state}}</td>
-                        <td>{{process.activity}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section ng-if="Runtime.hasProcessesWithState(Runtime.getStates().aborted)" id="aborted-processes" class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading" translate="PROCESSES.ABORTED_PROCESSES"></div>
-                <table class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th translate="NAME"></th>
-                        <th translate="TYPE"></th>
-                        <th translate="PROCESSES.STATE"></th>
-                        <th translate="ACTIONS"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().aborted}">
-                        <td>{{::process.name}}</td>
-                        <td>{{::process.type}}</td>
-                        <td>{{::process.state}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section id="completed-processes" class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading" translate="PROCESSES.COMPLETED_PROCESSES"></div>
-                <div ng-if="!Runtime.hasProcessesWithState(Runtime.getStates().completed)" class="panel-body">
-                    <p translate="PROCESSES.NO_COMPLETED_PROCESS"></p>
+            </section>
+            <section ng-if="Runtime.hasProcessesWithState(Runtime.getStates().aborted)" id="aborted-processes" class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="PROCESSES.ABORTED_PROCESSES"></div>
+                    <table class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th translate="NAME"></th>
+                            <th translate="TYPE"></th>
+                            <th translate="PROCESSES.STATE"></th>
+                            <th translate="ACTIONS"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().aborted}">
+                            <td>{{::process.name}}</td>
+                            <td>{{::process.type}}</td>
+                            <td>{{::process.state}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table ng-if="Runtime.hasProcessesWithState(Runtime.getStates().completed)" class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th translate="NAME"></th>
-                        <th translate="TYPE"></th>
-                        <th translate="ACTIONS"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().completed}" ng-class="{hidden: $index >= completedProcessessDisplayed}">
-                        <td>{{::process.name}}</td>
-                        <td>{{::process.type}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="panel-footer toggle-show-all" ng-if="Runtime.getProcessesWithState(Runtime.getStates().completed).length > completedProcessessDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
-            </div>
-            <button class="btn btn-success" ng-click="Runtime.createProcessFromForm('test-process-start-form')">Start test process</button>
-            <br/>
-            <br/>
-        </section>
-    </div>
-    <div data-title="{{'TOOLS.TOOLS' | translate}} <span class='badge'>{{Runtime.activeToolJobsNumber()}}</span>" bs-pane>
-        <section id="tool-jobs" class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading" translate="TOOLS.TOOLS"></div>
-                <div ng-if="!Runtime.hasActiveToolJobs()" class="panel-body">
-                    <p translate="TOOLS.NO_ACTIVE_TOOL_PROCCESS"></p>
+            </section>
+            <section id="completed-processes" class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="PROCESSES.COMPLETED_PROCESSES"></div>
+                    <div ng-if="!Runtime.hasProcessesWithState(Runtime.getStates().completed)" class="panel-body">
+                        <p translate="PROCESSES.NO_COMPLETED_PROCESS"></p>
+                    </div>
+                    <table ng-if="Runtime.hasProcessesWithState(Runtime.getStates().completed)" class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th translate="NAME"></th>
+                            <th translate="TYPE"></th>
+                            <th translate="ACTIONS"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().completed}" ng-class="{hidden: $index >= completedProcessessDisplayed}">
+                            <td>{{::process.name}}</td>
+                            <td>{{::process.type}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="panel-footer toggle-show-all" ng-if="Runtime.getProcessesWithState(Runtime.getStates().completed).length > completedProcessessDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
                 </div>
-                <table ng-if="Runtime.hasActiveToolJobs()" class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th translate="NAME"></th>
-                        <th translate="PROCESSES.STATE"></th>
-                        <th translate="TOOLS.PARAMETERS"></th>
-                        <th translate="ACTIONS" ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().pending)" ></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="job in Runtime.getActiveToolJobs()">
-                        <td>{{::job.name}}</td>
-                        <td>{{job.status}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
-                        <td ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().pending)" ><button class="btn btn-sm btn-default" ng-click="abortToolJob(job)" translate="TOOLS.ABORT"></button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().error)" id="aborted-tool-jobs" class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading" translate="TOOLS.ABORTED_PROCESSES"></div>
-                <table class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th translate="NAME"></th>
-                        <th translate="PROCESSES.STATE"></th>
-                        <th translate="TOOLS.PARAMETERS"></th>
-                        <th translate="ACTIONS"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().error}">
-                        <td>{{::job.name}}</td>
-                        <td>{{::job.status}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section id="completed-tool_jobs" class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading" translate="TOOLS.COMPLETED_TOOL_PROCESSES"></div>
-                <div ng-if="!Runtime.hasToolJobsWithState(Runtime.getToolStates().completed)" class="panel-body">
-                    <p translate="TOOLS.NO_COMPLETED_TOOL_PROCESS"></p>
+                <button class="btn btn-success" ng-click="Runtime.createProcessFromForm('test-process-start-form')">Start test process</button>
+                <br/>
+                <br/>
+            </section>
+        </div>
+        <div data-title="{{'TOOLS.TOOLS' | translate}} <span class='badge'>{{Runtime.activeToolJobsNumber()}}</span>" bs-pane>
+            <section id="tool-jobs" class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="TOOLS.TOOLS"></div>
+                    <div ng-if="!Runtime.hasActiveToolJobs()" class="panel-body">
+                        <p translate="TOOLS.NO_ACTIVE_TOOL_PROCCESS"></p>
+                    </div>
+                    <table ng-if="Runtime.hasActiveToolJobs()" class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th translate="NAME"></th>
+                            <th translate="PROCESSES.STATE"></th>
+                            <th translate="TOOLS.PARAMETERS"></th>
+                            <th translate="ACTIONS" ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().pending)" ></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="job in Runtime.getActiveToolJobs()">
+                            <td>{{::job.name}}</td>
+                            <td>{{job.status}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
+                            <td ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().pending)" ><button class="btn btn-sm btn-default" ng-click="abortToolJob(job)" translate="TOOLS.ABORT"></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().completed)" class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th translate="NAME"></th>
-                        <th translate="RESULT"></th>
-                        <th translate="TOOLS.PARAMETERS"></th>
-                        <th translate="START"></th>
-                        <th translate="STOP"></th>
-                        <th translate="ACTIONS"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="job in Runtime.getToolJobsWithState(Runtime.getToolStates().completed)" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
-                        <td>{{::job.name}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showResult(job)" translate="PROCESSES.VIEW_RESULT"></button></td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
-                        <td>{{job.start | date:'medium'}}</td>
-                        <td>{{job.stop | date:'medium'}}</td>
-                        <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="panel-footer toggle-show-all" ng-if="Runtime.getToolJobsResultValid.length > completedToolJobsDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
-            </div>
-            <br/>
-        </section>
+            </section>
+            <section ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().error)" id="aborted-tool-jobs" class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="TOOLS.ABORTED_PROCESSES"></div>
+                    <table class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th translate="NAME"></th>
+                            <th translate="PROCESSES.STATE"></th>
+                            <th translate="TOOLS.PARAMETERS"></th>
+                            <th translate="ACTIONS"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getToolStates().error}">
+                            <td>{{::job.name}}</td>
+                            <td>{{::job.status}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="completed-tool_jobs" class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="TOOLS.COMPLETED_TOOL_PROCESSES"></div>
+                    <div ng-if="!Runtime.hasToolJobsWithState(Runtime.getToolStates().completed)" class="panel-body">
+                        <p translate="TOOLS.NO_COMPLETED_TOOL_PROCESS"></p>
+                    </div>
+                    <table ng-if="Runtime.hasToolJobsWithState(Runtime.getToolStates().completed)" class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <th translate="NAME"></th>
+                            <th translate="RESULT"></th>
+                            <th translate="TOOLS.PARAMETERS"></th>
+                            <th translate="START"></th>
+                            <th translate="STOP"></th>
+                            <th translate="ACTIONS"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="job in Runtime.getToolJobsWithState(Runtime.getToolStates().completed)" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
+                            <td>{{::job.name}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showResult(job)" translate="PROCESSES.VIEW_RESULT"></button></td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
+                            <td>{{job.start | date:'medium'}}</td>
+                            <td>{{job.stop | date:'medium'}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="panel-footer toggle-show-all" ng-if="Runtime.getToolJobsResultValid.length > completedToolJobsDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
+                </div>
+                <br/>
+            </section>
+        </div>
     </div>
 </div>
