@@ -13,17 +13,30 @@
     </div>
         <section ng-if="section==='news'" class="row">
             <div class="col-md-8">
+                <h3 translate="ORTOLANG"></h3>
+            </div>
+            <div class="clearfix visible-xs-block"></div>
+            <div class="col-md-8">
+                <hr>
                 <div ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
             </div>
             <div class="col-md-4">
-                <div class="well">
+                <div class="news-well well">
                     <h4 translate="INFORMATION.NEWS"></h4>
                     <p translate="INFORMATION.INNOVATIVE_SHS"></p>
                     <p><small><a href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank">{{'INFORMATION.MORE' | translate}}...</a></small></p>
                     <br/>
                     <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
                     <p><small><a href="/#/information/newsletter">{{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></small></p>
-
+                </div>
+                <div class="media small marianne" >
+                    <div class="media-left">
+                        <img src="assets/images/mariane-avenir.png"/>
+                    </div>
+                    <div class="media-body">
+                        <p>ORTOLANG {{'NAV.STATE_SUPPORT' | translate}}</p>
+                        <p><i>ORTOLANG ISSN 2417-7482</i></p>
+                    </div>
                 </div>
             </div>
         </section>
