@@ -10,7 +10,10 @@
 angular.module('ortolangMarketApp')
     .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', '$timeout', function ($rootScope, $scope, $route, $translate, $animate, $timeout) {
 
-        $scope.select = function (element) {
+        $scope.select = function (element, animate) {
+            if (animate === undefined) {
+                animate = true;
+            }
             $scope.selectedElementCopy = element;
             angular.forEach($rootScope.sideNavElements, function (value) {
                 if (value.class === element.class) {
@@ -22,14 +25,18 @@ angular.module('ortolangMarketApp')
                             copy = angular.element('.side-nav-active-item.copy'),
                             real = angular.element('#side-nav-active-item');
                         $rootScope.navPosition = clickedElement.position().top;
-                        real.addClass('animated');
-                        $animate.removeClass(copy, 'ng-hide').then(function () {
-                            $scope.$apply(function () {
-                                $scope.selectedElement = value;
-                                real.removeClass('animated');
-                                copy.addClass('ng-hide');
+                        if (animate) {
+                            real.addClass('animated');
+                            $animate.removeClass(copy, 'ng-hide').then(function () {
+                                $scope.$apply(function () {
+                                    $scope.selectedElement = value;
+                                    real.removeClass('animated');
+                                    copy.addClass('ng-hide');
+                                });
                             });
-                        });
+                        } else {
+                            $scope.selectedElement = value;
+                        }
                     }
                 } else {
                     value.active =  undefined;
@@ -38,23 +45,23 @@ angular.module('ortolangMarketApp')
         };
 
         $rootScope.selectTasks = function () {
-            $scope.select({class: 'tasks'});
+            $scope.select({class: 'tasks'}, false);
         };
 
         $rootScope.selectInformation = function () {
-            $scope.select({class: 'information'});
+            $scope.select({class: 'information'}, false);
         };
 
         $rootScope.selectProcesses = function () {
-            $scope.select({class: 'processes'});
+            $scope.select({class: 'processes'}, false);
         };
 
         $rootScope.selectHome = function () {
-            $scope.select({class: 'market'});
+            $scope.select({class: 'market'}, false);
         };
 
         $rootScope.selectProfile = function () {
-            $scope.select({class: 'profile'});
+            $scope.select({class: 'profile'}, false);
         };
 
         $rootScope.$on('$translateChangeSuccess', function () {

@@ -42,6 +42,8 @@ angular.module('ortolangMarketApp')
             LEGAL_NOTICES: 'Legal notices',
             STATE_SUPPORT: ' is a beneficiary of French State support via its  “Investissements d\'avenir” program (ANR-11-EQPX-0032).',
             BACK_TO_TOP: 'Back to top',
-            TEAM: 'Ortolang team'
+            TEAM: 'Ortolang team',
+            BETA_VERSION: 'beta',
+            BETA_VERSION_TOOLTIP: 'ORTOLANG is currently under development.<br/>Some features are thus not yet available.'
         }
     });

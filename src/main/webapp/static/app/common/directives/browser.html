@@ -1,8 +1,8 @@
 <div class="container-fluid">
-    <div id="browser-wrapper" ng-controller="BrowserCtrl">
+    <div id="browser-wrapper" ng-class="{'market-browser-wrapper': isMarket()}" ng-controller="BrowserCtrl">
 
         <div class="row">
-            <div class="toolbar browser-toolbar" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)">
+            <div class="toolbar browser-toolbar" ng-class="{'market-browser-toolbar': isMarket()}" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)">
                 <div ng-if="displayAsideWorkspaceList()" class="col-md-2 toolbar-aside">
                     <!--<div class="btn title" translate="BROWSER.MY_WORKSPACES"></div>-->
                 </div>

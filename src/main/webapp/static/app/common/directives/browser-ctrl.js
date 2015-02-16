@@ -93,7 +93,7 @@ angular.module('ortolangMarketApp')
                         // Fix dropdown offset because of margin-left on page wrapper
                         left: clickEvent.pageX - pageWrapperMarginLeft - 18 + 'px',
                         // Fix dropdown offset because of navbar and toolbar
-                        top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 8 - footerHeight + 'px'
+                        top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 4 + 'px'
                     };
                     // If the context menu has already been build no need to do it again
                     if ($scope.isContextMenuActive && sameChild) {
@@ -368,7 +368,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.checkSelection = function (clickEvent) {
-                if (($scope.workspace || $scope.browserService === MarketBrowserService) && !($(clickEvent.target).parent('tr').length || $(clickEvent.target).parent('td').length ||
+                if (($scope.workspace || $scope.isMarket()) && !($(clickEvent.target).parent('tr').length || $(clickEvent.target).parent('td').length ||
                         $(clickEvent.target).parent('.browsed-element-child').length ||
                         $(clickEvent.target).parent().parent('.browsed-element-child').length ||
                         $(clickEvent.target).parents('#context-menu').length ||
@@ -899,7 +899,7 @@ angular.module('ortolangMarketApp')
                         height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
                         bottomOffset = footerWrapper.outerHeight();
                     browserToolbarHeight = $('.browser-toolbar').outerHeight();
-                    if ($scope.browserService === MarketBrowserService) {
+                    if ($scope.isMarket()) {
                         topOffset += angular.element('.market-item').find('header').outerHeight();
                     }
                     height = height - topOffset - bottomOffset;
@@ -997,11 +997,13 @@ angular.module('ortolangMarketApp')
                 return !$scope.forceWorkspace && $scope.browserService.displayAsideWorkspaceList;
             };
 
+            $scope.isMarket = function () {
+                return $scope.browserService === MarketBrowserService;
+            };
+
             // *********************** //
             //           Init          //
             // *********************** //
-
-
 
             function initLocalVariables() {
                 viewModeLine = {id: 'line', icon: icons.browser.viewModeLine};
