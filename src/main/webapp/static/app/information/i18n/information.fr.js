@@ -40,6 +40,6 @@ angular.module('ortolangMarketApp')
             MORE: 'Plus d\'informations',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Unités support du projet',
-            DOWNLOAD_CONVENTION: 'Télécharger la charte au format pdf'
+            DOWNLOAD_CONVENTION: 'Télécharger la charte d\'Ortolang au format pdf'
         }
     });
