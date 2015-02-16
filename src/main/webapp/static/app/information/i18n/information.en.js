@@ -14,7 +14,8 @@ angular.module('ortolangMarketApp')
                 PRESENTATION: 'Presentation',
                 PARTNERS: 'Partners',
                 ROADMAP: 'Roadmap',
-                NEWSLETTER: 'Newsletter'
+                NEWSLETTER: 'Newsletter',
+                CONVENTION: 'Ortolang\'s convention'
             },
             PATH: {
                 PRESENTATION: 'information/en/presentation.html',
@@ -22,7 +23,8 @@ angular.module('ortolangMarketApp')
                 ROADMAP: 'information/en/roadmap.html',
                 NEWSLETTER: 'information/newsletter.html',
                 LEGAL_NOTICES: 'information/en/legal-notices.html',
-                NEWS: 'information/en/news.html'
+                NEWS: 'information/en/news.html',
+                CONVENTION: 'information/fr/convention.html'
             },
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
