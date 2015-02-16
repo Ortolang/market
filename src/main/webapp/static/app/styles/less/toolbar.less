@@ -35,6 +35,24 @@
     min-height: 54px;
   }
 
+  .dropdown-menu {
+    li {
+      a {
+        position: relative;
+        .badge {
+          position: absolute;
+          right: @padding-base-horizontal;
+        }
+      }
+      &.active {
+        .badge {
+          color: @ortolang-blue;
+          background-color: @main-bg;
+        }
+      }
+    }
+  }
+
 }
 
 .nav-pills-toolbar {

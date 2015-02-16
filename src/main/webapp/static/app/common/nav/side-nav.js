@@ -64,6 +64,10 @@ angular.module('ortolangMarketApp')
             $scope.select({class: 'profile'}, false);
         };
 
+        $rootScope.selectSearch = function () {
+            $scope.select({class: 'search'}, false);
+        };
+
         $rootScope.$on('$translateChangeSuccess', function () {
             initTranslations();
         });
@@ -110,7 +114,8 @@ angular.module('ortolangMarketApp')
                 'NAV.TASKS',
                 'NAV.SETTINGS',
                 'NAV.INFORMATION',
-                'NAV.PROFILE'
+                'NAV.PROFILE',
+                'NAV.SEARCH'
             ]).then(function (translations) {
                 $scope.translationsHome = translations['NAV.HOME'];
                 $scope.translationsMarket = translations['NAV.MARKET'];
@@ -125,6 +130,7 @@ angular.module('ortolangMarketApp')
                 $scope.translationsSettings = translations['NAV.SETTINGS'];
                 $scope.translationInformation = translations['NAV.INFORMATION'];
                 $scope.translationProfile = translations['NAV.PROFILE'];
+                $scope.translationSearch = translations['NAV.SEARCH'];
 
                 $rootScope.sideNavElements = [
                     {
@@ -228,6 +234,15 @@ angular.module('ortolangMarketApp')
                         path: '/profile',
                         description: $scope.translationProfile,
                         iconCss: 'fa fa-fw fa-user fa-2x',
+                        active: undefined,
+                        hidden: true,
+                        authenticated: true
+                    },
+                    {
+                        class: 'search',
+                        path: '/search',
+                        description: $scope.translationSearch,
+                        iconCss: 'fa fa-fw fa-search fa-2x',
                         active: undefined,
                         hidden: true,
                         authenticated: true

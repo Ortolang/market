@@ -1,9 +1,20 @@
-<div id="market-search">
+<div id="market-search" class="container-fluid container-main">
 
     <div class="row">
         <div class="toolbar">
             <div class="col-sm-7">
                 <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{selectedTypeTranslation | translate}} <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-class="selectedType===''?'active':''"><a ng-click="resetFilter()">{{'MARKET.ALL_TYPE' | translate}} <span class="badge">{{items.length}}</span></a></li>
+                            <li class="divider"></li>
+                            <li ng-class="selectedType==='Corpus'?'active':''"><a ng-click="filter('type', 'Corpus', 'MARKET.CORPORA')" translate="MARKET.CORPORA"></a></li>
+                            <li ng-class="selectedType==='Lexiques'?'active':''"><a ng-click="filter('type', 'Lexiques', 'MARKET.LEXICONS')" translate="MARKET.LEXICONS"></a></li>
+                            <li ng-class="selectedType==='Outils'?'active':''"><a ng-click="filter('type', 'Outils', 'MARKET.TOOLS')" translate="MARKET.TOOLS"></a></li>
+                            <li ng-class="selectedType==='Site web'?'active':''"><a ng-click="filter('type', 'Site web', 'MARKET.WEBSITES')" translate="MARKET.WEBSITES"></a></li>
+                        </ul>
+                    </div>
                     <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
                     <span class="input-group-btn">
                         <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -14,22 +25,7 @@
     </div>
 
     <div id="results">
-        <div id="results_toolbar" class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-8 nav-pills-toolbar market-toolbar">
-                <ul class="nav nav-pills nav-results-filters">
-                    <li role="filter" ng-class="selectedType===''?'active':''"><a ng-click="resetFilter()" translate="MARKET.ALL_TYPE"></a></li>
-                    <li role="filter" ng-class="selectedType==='Corpus'?'active':''"><a ng-click="filter('type', 'Corpus')" translate="MARKET.CORPORA"></a></li>
-                    <li role="filter" ng-class="selectedType==='Lexiques'?'active':''"><a ng-click="filter('type', 'Lexiques')" translate="MARKET.LEXICONS"></a></li>
-                    <li role="filter" ng-class="selectedType==='Outils'?'active':''"><a ng-click="filter('type', 'Outils')" translate="MARKET.TOOLS"></a></li>
-                    <li role="filter" ng-class="selectedType==='Site web'?'active':''"><a ng-click="filter('type', 'Site web')" translate="MARKET.WEBSITES"></a></li>
-                </ul>
-            </div>
-        </div>
         <div id="results_count" class="row">
-            <div class="col-md-1">
-            </div>
             <div class="col-md-8">
                 <small translate="MARKET.RESULTS_LABEL" data-translate-values="{value: items.length}"></small>
             </div>
