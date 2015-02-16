@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
             INNOVATIVE_SHS: 'Retrouvez ORTOLANG à la Seconde édition du salon Innovatives SHS de l\'INSHS, à la Cité des sciences et de l\'industrie de Paris, les 16 et 17 juin 2015.',
             MORE: 'Plus d\'informations',
             INSTITUTIONS: 'Institutions',
-            PARTNERS: 'Unités support du projet'
+            PARTNERS: 'Unités support du projet',
+            DOWNLOAD_CONVENTION: 'Télécharger la charte au format pdf'
         }
     });

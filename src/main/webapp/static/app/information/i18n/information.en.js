@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
             INNOVATIVE_SHS: 'Meet ORTOLANG at the 2nd conference  of the exposition "Innovatives SHS de l\'INSHS"',
             MORE: 'Read more',
             INSTITUTIONS: 'Institutions',
-            PARTNERS: 'Partners'
+            PARTNERS: 'Partners',
+            DOWNLOAD_CONVENTION: 'Download the convention (pdf)'
         }
     });
