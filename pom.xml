@@ -52,7 +52,8 @@
     </pluginRepositories>
 
     <build>
-        <plugins>
+	<finalName>ortolang-market</finalName>
+	<plugins>
             <plugin>
                 <groupId>pl.allegro</groupId>
                 <artifactId>grunt-maven-plugin</artifactId>
@@ -102,6 +103,15 @@
                             <directory>target-grunt/dist</directory>
                         </resource>
                     </webResources>
+		    <archive>
+      			<manifest>
+				<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                		<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+			</manifest>
+			<manifestEntries>
+				<Artefact-Version>${project.version}</Artefact-Version>
+      			</manifestEntries>
+  		    </archive>
                 </configuration>
             </plugin>
             <plugin>
