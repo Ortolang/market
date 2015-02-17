@@ -13,12 +13,12 @@
     </div>
         <section ng-if="section==='news'" class="row">
             <div class="col-md-8">
-                <h3 translate="ORTOLANG"></h3>
+                <h3 class="ortolang-title" translate="ORTOLANG"></h3>
             </div>
             <div class="clearfix visible-xs-block"></div>
             <div class="col-md-8">
-                <hr>
-                <div ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
+                <hr/>
+                <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
             </div>
             <div class="col-md-4">
                 <div class="news-well well">
@@ -31,12 +31,12 @@
                     <p><a class="btn btn-sm btn-default" href="/#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
                 </div>
                 <div class="media small marianne" >
-                    <div class="media-left">
-                        <img src="assets/images/mariane-avenir.png"/>
+                    <div class="media-body text-center">
+                        <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
+                        <i>ORTOLANG ISSN 2417&ndash;7482</i>
                     </div>
-                    <div class="media-body">
-                        <p>ORTOLANG {{'NAV.STATE_SUPPORT' | translate}}</p>
-                        <p><i>ORTOLANG ISSN 2417-7482</i></p>
+                    <div class="media-right">
+                        <img src="assets/images/mariane-avenir.png"/>
                     </div>
                 </div>
             </div>

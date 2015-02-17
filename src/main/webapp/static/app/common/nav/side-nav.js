@@ -190,7 +190,7 @@ angular.module('ortolangMarketApp')
                     {
                         class: 'divider',
                         active: undefined,
-                        authenticated: false
+                        authenticated: true
                     },
                     {
                         class: 'information',
