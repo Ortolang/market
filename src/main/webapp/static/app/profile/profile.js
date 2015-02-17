@@ -72,7 +72,6 @@ angular.module('ortolangMarketApp')
             if ($scope.$parent.authenticated) {
 
                 ProfileResource.connected().$promise.then(function (profile) {
-                    console.debug('profil:', profile);
                     $scope.user = profile;
                     $scope.user.userId = $scope.$parent.currentUser.userId;
                     $scope.user.name = $scope.$parent.currentUser.name;
@@ -92,6 +91,8 @@ angular.module('ortolangMarketApp')
                         $scope.user.preferredAvatar = 0;
                     }
                     //$scope.user.urlPros = [{index:0, url:'http://bli.com'},{index:1, url:'http://bli2.com'}];
+
+                    console.debug('user:', $scope.user);
                 });
             }
 
@@ -105,11 +106,13 @@ angular.module('ortolangMarketApp')
                 console.debug($scope.urlPros);
             };
 
-            $scope.removeUrlPro = function(idx) {
-                var selected = $filter('filter')($scope.urlPros, {index: idx});
-                var index = $scope.urlPros.indexOf(selected);
-                $scope.urlPros.splice(index,1);
-                $scope.user.urlPros.splice(idx,1);
+            $scope.removeUrlPro = function(item) {
+                var index = $scope.urlPros.indexOf(item);
+                var index2 = $scope.user.urlPros.indexOf(item);
+                if (index !== -1) {
+                    $scope.urlPros.splice(index, 1);
+                    $scope.user.urlPros.splice(index2, 1);
+                }
             };
 
             $scope.showPreferredAvatar = function() {
@@ -124,8 +127,6 @@ angular.module('ortolangMarketApp')
 
             $scope.updateUser = function(data) {
                 $scope.user.urlPros.push(data);
-                console.debug('url', data);
-                console.debug('urlPros', $scope.user.urlPros);
             };
 
         }

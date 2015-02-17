@@ -20,14 +20,26 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-3 control-label">Name:</label>
-        <button ng-click="isLocked.name = !isLocked.name" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.name, 'fa fa-lock': !isLocked.name}"
+        <label class="col-md-3 control-label">Prénom:</label>
+        <button ng-click="isLocked.givenName = !isLocked.givenName" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.givenName, 'fa fa-lock': !isLocked.givenName}"
                 aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
         </button>
         <div class="col-md-7" style="padding-top: 5px;">
-             <span editable-text="user.name" e-name="name" e-placeholder="Prénom Nom" e-value="{{user.name}}" >
-                {{ user.name || 'empty' }}
+             <span editable-text="user.givenName" e-name="givenName" e-placeholder="Prénom" e-value="{{user.givenName}}" >
+                {{ user.givenName || 'empty' }}
+             </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Nom:</label>
+        <button ng-click="isLocked.familyName = !isLocked.familyName" class="btn pull-left"
+                ng-class="{'fa fa-unlock': isLocked.familyName, 'fa fa-lock': !isLocked.familyName}"
+                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+        </button>
+        <div class="col-md-7" style="padding-top: 5px;">
+             <span editable-text="user.familyName" e-name="familyName" e-placeholder="Nom" e-value="{{user.familyName}}" >
+                {{ user.familyName || 'empty' }}
              </span>
         </div>
     </div>
@@ -98,19 +110,13 @@
                 ng-class="{'fa fa-unlock': isLocked.urlPro, 'fa fa-lock': !isLocked.urlPro}"
                 aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
         </button>
-        <!--<div class="col-md-7" style="padding-top: 5px;">-->
-             <!--<span editable-url="user.urlPro" e-name="url-pro" e-value="{{user.urlPro}}"-->
-                   <!--e-pattern="^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?">-->
-                <!--{{ user.urlPro || 'empty' }}-->
-             <!--</span>-->
-        <!--</div>-->
-        <div class="col-md-7" style="padding-top: 5px;">
+        <div class="col-md-7" style="padding-top: 5px;" ng-style="overflow:hidden;">
             <div data-ng-repeat="value in urlPros" style="padding-bottom: 10px;">
                 <span editable-url="value.url" e-name="urlPro[value.index]" e-value="{{value.url}}"
                       onbeforesave="updateUser($data)" e-pattern="https?://.+">
                     {{ value.url || 'empty' }}
                  </span>
-                <button class="btn pull-left fa fa-times btn-xs btn-danger" ng-click="removeUrlPro(value.index)"
+                <button class="btn pull-left fa fa-times btn-xs btn-danger" ng-click="removeUrlPro(value)"
                         style="margin-right: 25px; margin-top: 2px;" bs-tooltip data-title="Remove Url" >
                 </button>
             </div>

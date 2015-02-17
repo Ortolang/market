@@ -18,12 +18,12 @@ angular.module('ortolangMarketApp')
                     {id: 'github', tpl: '<img src="https://identicons.github.com/{id}.png" style="width:{width}px; height:{height}px" class="{classImg}"/>'} ,
                     {id: 'gravatar', tpl: '<img src="https://secure.gravatar.com/avatar/{id}?s=200&d=mm" style="width:{width}px; height:{height}px" class="{classImg}"/>'}
                 ];
+                var thumbnail = attrs.thumbnail;
 
                 for (var s=0; s<services.length; s++) {
                     var service = services[s],
                         attr = service.id + 'Id',
                         id = attrs[attr],
-                        thumbnail = attrs.thumbnail,
                         width, height,
                         classImg = 'img-responsive img-rounded';
                     var isGravatar = attr === 'gravatarId';
