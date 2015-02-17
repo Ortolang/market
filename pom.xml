@@ -4,7 +4,7 @@
     <groupId>fr.ortolang.diffusion</groupId>
     <artifactId>market</artifactId>
     <name>Ortolang Diffusion Marketplace Client</name>
-    <version>1.4.0</version>
+    <version>1.4.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <url>http://www.ortolang.fr</url>
 
@@ -18,7 +18,7 @@
 	<connection>scm:git:git@forge.ortolang.fr:ortolang-market.git</connection>
 	<developerConnection>scm:git:git@forge.ortolang.fr:ortolang-market.git</developerConnection>
 	<url>http://git.ortolang.fr/ortolang-market.git/</url>
-	<tag>market-1.4.0</tag>
+	<tag>HEAD</tag>
     </scm>
 
     <properties>
