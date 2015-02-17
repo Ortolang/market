@@ -8,10 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$routeParams', '$location', '$window', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $routeParams, $location, $window, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('MarketHomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $rootScope, $routeParams, $location, $window, ObjectResource, DownloadResource, N3Serializer) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
+                $rootScope.selectSearch();
                 $location.search('content', $scope.content).path('/search');
             }
         };
@@ -32,7 +33,6 @@ angular.module('ortolangMarketApp')
                     $scope.items.push({key: entry, rang: index});
                     index++;
                 });
-
                 loadMetadata();
             });
         }
@@ -52,19 +52,19 @@ angular.module('ortolangMarketApp')
                                 DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                     N3Serializer.fromN3(metaContent).then(function (data) {
 
-                                        if ( data['http://purl.org/dc/elements/1.1/title'] && data['http://purl.org/dc/elements/1.1/title']==='Littéracie Avancée') {
+                                        if (data['http://purl.org/dc/elements/1.1/title']) {
                                             $scope.news.push(item);
                                         }
-                                        if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Site web') {
+                                        if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Site web') {
                                             $scope.website.push(item);
                                         }
-                                        if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Corpus') {
+                                        if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Corpus') {
                                             $scope.corpus.push(item);
                                         }
-                                        if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Lexique') {
+                                        if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Lexique') {
                                             $scope.lexiques.push(item);
                                         }
-                                        if ( data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type']==='Outil') {
+                                        if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Outil') {
                                             $scope.outils.push(item);
                                         }
                                     });
@@ -75,7 +75,7 @@ angular.module('ortolangMarketApp')
                         }
                     }, function (reason) {
                         console.error(reason);
-                });
+                    });
             });
         }
 

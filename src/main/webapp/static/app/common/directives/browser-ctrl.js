@@ -91,7 +91,7 @@ angular.module('ortolangMarketApp')
                         position: 'absolute',
                         display: 'block',
                         // Fix dropdown offset because of margin-left on page wrapper
-                        left: clickEvent.pageX - pageWrapperMarginLeft - 18 + 'px',
+                        left: clickEvent.pageX - pageWrapperMarginLeft - ($scope.isMarket() ? 50 : 18) + 'px',
                         // Fix dropdown offset because of navbar and toolbar
                         top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 4 + 'px'
                     };
