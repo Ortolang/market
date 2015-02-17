@@ -103,7 +103,6 @@ angular.module('ortolangMarketApp')
                     newItemNo = lastItem.index + 1;
                 }
                 $scope.urlPros.push({index:newItemNo, url:''});
-                console.debug($scope.urlPros);
             };
 
             $scope.removeUrlPro = function(item) {

@@ -110,7 +110,7 @@
                 ng-class="{'fa fa-unlock': isLocked.urlPro, 'fa fa-lock': !isLocked.urlPro}"
                 aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
         </button>
-        <div class="col-md-7" style="padding-top: 5px;" ng-style="overflow:hidden;">
+        <div class="col-md-7" style="padding-top: 5px;" ng-style="overflow:hidden;height:auto;">
             <div data-ng-repeat="value in urlPros" style="padding-bottom: 10px;">
                 <span editable-url="value.url" e-name="urlPro[value.index]" e-value="{{value.url}}"
                       onbeforesave="updateUser($data)" e-pattern="https?://.+">
@@ -123,5 +123,6 @@
             <a class="btn pull-left fa fa-plus" ng-click="addNewUrlPro()"> Add URL</a>
         </div>
     </div>
+    <div style="clear:both;"></div>
 
 </div>

@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
                 SETTINGS: 'Préférences d\'affichage',
                 ABOUT_ME: 'A propos de moi',
                 EVENTS: 'Acivité récente',
+                PUBLICATIONS: 'Publications',
                 CONTRIBUTIONS: 'Contributions',
                 FRIENDS: 'Collaborateurs'
             },
@@ -23,6 +24,7 @@ angular.module('ortolangMarketApp')
                 SETTINGS: 'profile/fr/settings.html',
                 ABOUT_ME: 'profile/fr/about-me.html',
                 EVENTS: 'profile/fr/events.html',
+                PUBLICATIONS: 'profile/fr/publications.html',
                 CONTRIBUTIONS: 'profile/fr/contributions.html',
                 FRIENDS: 'profile/fr/friends.html'
             },
