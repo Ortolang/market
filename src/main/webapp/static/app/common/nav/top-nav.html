@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/#/" ng-click="selectHome()" data-title="{{'NAV.BETA_VERSION_TOOLTIP' | translate}}" data-html="true" bs-tooltip data-placement="right" data-template="common/nav/beta-tooltip-template.html">
+            <a class="navbar-brand" href="#/" ng-click="selectHome()" data-title="{{'NAV.BETA_VERSION_TOOLTIP' | translate}}" data-html="true" bs-tooltip data-placement="right" data-template="common/nav/beta-tooltip-template.html">
                 <img class="ortolang-logo" src="assets/images/logo-ortolang-white.png"/>
                 <span>ORTOLANG</span>
                 <span class="beta-version">&nbsp;({{'NAV.BETA_VERSION' | translate}})</span>
@@ -18,12 +18,12 @@
                 <a ng-href="#{{element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="element.iconCss"></span> {{element.description}}</a>
             </li>
             <li ng-if="authenticated">
-                <a href="/#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
+                <a href="#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-tasks"></span><span class="badge processes">{{activeProcessesNbr && activeProcessesNbr > 0 ? activeProcessesNbr : ''}}</span>
                 </a>
             </li>
             <li ng-if="authenticated">
-                <a href="/#/tasks" ng-click="selectTasks()" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
+                <a href="#/tasks" ng-click="selectTasks()" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-bell"></span><span class="badge tasks">{{tasks && tasks.length > 0 ? tasks.length : ''}}</span>
                 </a>
             </li>
@@ -32,11 +32,11 @@
                     <span class="fa fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-click="selectInformation()"><a href="/#/information/presentation"><span class="fa fa-info fa-fw"></span> {{'NAV.INFORMATION.PRESENTATION' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="/#/information/convention"><span class="fa fa-pencil-square-o fa-fw"></span> {{'NAV.INFORMATION.CONVENTION' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="/#/information/partners"><span class="fa fa-users fa-fw"></span> {{'NAV.INFORMATION.PARTNERS' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="/#/information/roadmap"><span class="fa fa-calendar fa-fw"></span> {{'NAV.INFORMATION.ROADMAP' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="/#/information/newsletter"><span class="fa fa-newspaper-o fa-fw"></span> {{'NAV.INFORMATION.NEWSLETTER' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="#/information/presentation"><span class="fa fa-info fa-fw"></span> {{'NAV.INFORMATION.PRESENTATION' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="#/information/convention"><span class="fa fa-pencil-square-o fa-fw"></span> {{'NAV.INFORMATION.CONVENTION' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="#/information/partners"><span class="fa fa-users fa-fw"></span> {{'NAV.INFORMATION.PARTNERS' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="#/information/roadmap"><span class="fa fa-calendar fa-fw"></span> {{'NAV.INFORMATION.ROADMAP' | translate}}</a></li>
+                    <li ng-click="selectInformation()"><a href="#/information/newsletter"><span class="fa fa-newspaper-o fa-fw"></span> {{'NAV.INFORMATION.NEWSLETTER' | translate}}</a></li>
                 </ul>
             </li>
             <li class="dropdown">
