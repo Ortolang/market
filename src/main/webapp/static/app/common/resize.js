@@ -13,7 +13,6 @@ $(function () {
         }
         if (height > topOffset) {
             $('#main-wrapper').css('min-height', height + 'px');
-            $('#side-nav-wrapper').css('min-height', height + 'px');
         }
     });
 });
