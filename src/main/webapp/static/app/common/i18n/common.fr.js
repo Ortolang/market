@@ -27,5 +27,9 @@ angular.module('ortolangMarketApp')
         DOWNLOAD: 'Télécharger',
         START: 'Début',
         STOP: 'Fin',
-        ORTOLANG: 'Outils et Ressources pour un Traitement Optimisé de la LANGue'
+        ORTOLANG: 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
+        CORPORA: 'Corpus',
+        LEXICONS: 'Lexiques',
+        TOOLS: 'Outils',
+        INTEGRATED_PROJECTS: 'Projets Intégrés'
     });

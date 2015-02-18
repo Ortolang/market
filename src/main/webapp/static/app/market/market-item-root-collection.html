@@ -78,7 +78,7 @@
 
                         <div ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']" class="col-md-3">
                             <dl>
-                                <dt translate="MARKET.PRIMARYLANGUAGE"></dt>
+                                <dt translate="MARKET.PRIMARY_LANGUAGE"></dt>
                                 <dd ng-repeat="pLang in item['http://www.ortolang.fr/ontology/primaryLanguage']">
                                     <a ng-href="#/search?content={{pLang}}">{{pLang}}</a>
                                 </dd>
@@ -87,7 +87,7 @@
 
                         <div ng-if="item['http://www.ortolang.fr/ontology/discourseType']" class="col-md-3">
                             <dl>
-                                <dt translate="MARKET.DISCOURSETYPE"></dt>
+                                <dt translate="MARKET.DISCOURSE_TYPE"></dt>
                                 <dd ng-repeat="discType in item['http://www.ortolang.fr/ontology/discourseType']">
                                     <a ng-href="#/search?content={{discType}}">{{discType}}</a>
                                 </dd>
@@ -96,7 +96,7 @@
 
                         <div ng-if="item['http://www.ortolang.fr/ontology/linguisticSubject']" class="col-md-3">
                             <dl>
-                                <dt translate="MARKET.LINGUISTICSUBJECT"></dt>
+                                <dt translate="MARKET.LINGUISTIC_SUBJECT"></dt>
                                 <dd ng-repeat="lingSubj in item['http://www.ortolang.fr/ontology/linguisticSubject']">
                                     <a ng-href="#/search?content={{lingSubj}}">{{lingSubj}}</a>
                                 </dd>
