@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
                                             $scope.website.push(item);
                                         }
                                         if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Corpus') {
-                                            $scope.corpus.push(item);
+                                            $scope.corpora.push(item);
                                         }
                                         if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Lexique') {
                                             $scope.lexiques.push(item);
@@ -82,7 +82,7 @@ angular.module('ortolangMarketApp')
         // Scope variables
         function initScopeVariables() {
             $scope.items = [];
-            $scope.corpus = [];
+            $scope.corpora = [];
             $scope.lexiques = [];
             $scope.outils = [];
             $scope.website = [];

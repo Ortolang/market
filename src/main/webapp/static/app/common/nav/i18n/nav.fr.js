@@ -11,13 +11,8 @@ angular.module('ortolangMarketApp')
     .constant('NAV_FR', {
         NAV: {
             HOME: 'Accueil',
-            MARKET: 'Nouveautés',
             SEARCH: 'Recherche',
-            CORPUS: 'Corpus',
-            INTEGRATED_PROJECTS: 'Projets Intégrés',
             MY_WORKSPACES: 'Mes espaces',
-            TOOLS: 'Outils',
-            LEXICONS: 'Lexiques',
             ITEM: 'Objet',
             PROCESSES: 'Processus',
             TASKS: 'Tâches',
