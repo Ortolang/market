@@ -13,17 +13,31 @@
     </div>
         <section ng-if="section==='news'" class="row">
             <div class="col-md-8">
-                <div ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
+                <h3 class="ortolang-title" translate="ORTOLANG"></h3>
+            </div>
+            <div class="clearfix visible-xs-block"></div>
+            <div class="col-md-8">
+                <hr/>
+                <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
             </div>
             <div class="col-md-4">
-                <div class="well">
-                    <h4 translate="INFORMATION.NEWS"></h4>
+                <div class="news-well well">
+                    <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'INFORMATION.NEWS' | translate}}</p>
+                    <hr/>
                     <p translate="INFORMATION.INNOVATIVE_SHS"></p>
-                    <p><small><a href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank">{{'INFORMATION.MORE' | translate}}...</a></small></p>
-                    <br/>
-                    <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="http://www.ortolang.fr/resources/Lettre_information_ORTOLANG.pdf">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
-                    <p><small><a href="/#/information/newsletter">{{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></small></p>
-
+                    <p><a class="btn btn-sm btn-default" href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank"><span class="fa fa-fw fa-plus"></span> {{'INFORMATION.MORE' | translate}}...</a></p>
+                    <hr/>
+                    <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="resources/Lettre_information_ORTOLANG.pdf" target="_blank">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
+                    <p><a class="btn btn-sm btn-default" href="/#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
+                </div>
+                <div class="media small marianne" >
+                    <div class="media-body text-center">
+                        <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
+                        <i>ORTOLANG ISSN 2417&ndash;7482</i>
+                    </div>
+                    <div class="media-right">
+                        <img src="assets/images/mariane-avenir.png"/>
+                    </div>
                 </div>
             </div>
         </section>

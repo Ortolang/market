@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+addDefaultImplementationEntries: true
+Build-Jdk: 1.7.0_45
+Built-By: jerome
+addDefaultSpecificationEntries: true
+Artefact-Version: Fen.1-SNAPSHOT
+Created-By: Apache Maven 3.1.1
+

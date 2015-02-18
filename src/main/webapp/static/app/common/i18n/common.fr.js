@@ -26,5 +26,6 @@ angular.module('ortolangMarketApp')
         NO_IMAGE_PROVIDED: 'Pas d\'image disponible',
         DOWNLOAD: 'Télécharger',
         START: 'Début',
-        STOP: 'Fin'
+        STOP: 'Fin',
+        ORTOLANG: 'Outils et Ressources pour un Traitement Optimisé de la LANGue'
     });

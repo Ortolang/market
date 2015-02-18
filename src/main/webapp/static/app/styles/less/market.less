@@ -1,5 +1,5 @@
 .license-panel, .metadata-panel {
-  background-color: @gray-lightest;
+  background-color: @main-bg;
   .panel-heading {
     font-size: @font-size-h4;
     font-weight: 200;
@@ -271,6 +271,20 @@
         list-style: none;
         padding-left: 20px;
       }
+
+      dt {
+        padding-bottom: @padding-base-vertical;
+      }
+
+      dd {
+        padding-left: @padding-base-horizontal;
+      }
+
+      .extent {
+        ul {
+          list-style: inherit;
+        }
+      }
     }
     p {
       text-align: justify;
@@ -311,23 +325,6 @@
 
 #market-search {
 
-  #results {
-    #results_toolbar {
-      padding-top: @padding-large-vertical;
-      padding-bottom: @padding-large-vertical;
-      border-bottom: 1px solid @navbar-default-border;
-      min-height: 55px;
-
-      .nav-results-filters {
-        li {
-          cursor: pointer;
-        }
-      }
-    }
-  }
-
-
-
   h3 {
     color: @market-primary;
     display: inline-block;
@@ -352,3 +349,36 @@
 
 }
 
+.ortolang-title {
+  margin-bottom: 0;
+}
+
+.news-well {
+  margin-top: 20px;
+  .lead {
+    margin-top: @padding-base-vertical;
+  }
+  hr {
+    border-color: @well-border;
+  }
+}
+
+.marianne {
+  img {
+    max-width: 100px;
+  }
+  .media-body {
+    vertical-align: middle;
+  }
+}
+
+.huma-num {
+  width: 80px;
+}
+
+.ortolang-description ul {
+  margin-bottom: 20px;
+  li {
+    margin-bottom: @padding-base-vertical;
+  }
+}

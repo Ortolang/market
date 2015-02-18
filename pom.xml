@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.ortolang.diffusion</groupId>
     <artifactId>market</artifactId>
     <name>Ortolang Diffusion Marketplace Client</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.5.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <url>http://www.ortolang.fr</url>
 
     <parent>
         <groupId>fr.ortolang</groupId>
         <artifactId>ortolang</artifactId>
-        <version>0.2</version>
+        <version>1.4.0</version>
     </parent>
+
+    <scm>
+	<connection>scm:git:git@forge.ortolang.fr:ortolang-market.git</connection>
+	<developerConnection>scm:git:git@forge.ortolang.fr:ortolang-market.git</developerConnection>
+	<url>http://git.ortolang.fr/ortolang-market.git/</url>
+	<tag>HEAD</tag>
+    </scm>
 
     <properties>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
@@ -52,7 +58,8 @@
     </pluginRepositories>
 
     <build>
-        <plugins>
+	<finalName>ortolang-market</finalName>
+	<plugins>
             <plugin>
                 <groupId>pl.allegro</groupId>
                 <artifactId>grunt-maven-plugin</artifactId>
@@ -102,6 +109,15 @@
                             <directory>target-grunt/dist</directory>
                         </resource>
                     </webResources>
+		    <archive>
+      			<manifest>
+				<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                		<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+			</manifest>
+			<manifestEntries>
+				<Artefact-Version>${project.version}</Artefact-Version>
+      			</manifestEntries>
+  		    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -118,6 +134,25 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${version.sonar.maven.plugin}</version>
             </plugin>
+	    <plugin>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>license-maven-plugin</artifactId>
+		<version>1.8</version>
+		<configuration>
+			<licenseName>lgpl_v3</licenseName>
+			<strictChecking>true</strictChecking>
+			<encoding>UTF-8</encoding>
+			<offline>true</offline>
+		</configuration>
+		<executions>
+			<execution>
+				<id>download-licenses</id>
+				<goals>
+					<goal>download-licenses</goal>
+				</goals>
+			</execution>
+		</executions>
+	    </plugin>
         </plugins>
     </build>
 
