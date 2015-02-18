@@ -19,8 +19,7 @@ angular.module('ortolangMarketApp')
             download: {
                 url: Url.urlBase() + '/rest/objects/:oKey/download',
                 method: 'GET',
-                isArray: false,
-                responseType: 'blob'
+                isArray: false
             },
             downloadTicket: {
                 url: Url.urlBase() + '/rest/objects/:oKey/download/ticket',
