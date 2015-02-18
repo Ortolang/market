@@ -28,11 +28,33 @@ angular.module('ortolangMarketApp')
             AuthService.logout();
         };
 
-        $scope.currentLanguage = $translate.use();
+        // *********************** //
+        //        Language         //
+        // *********************** //
+
+        function storeLanguage() {
+            if (localStorage !== undefined) {
+                localStorage.setItem('language', $scope.currentLanguage);
+            }
+        }
+
+        function initLanguage() {
+            if (localStorage !== undefined) {
+                var storedLanguage = localStorage.getItem('language');
+                if (storedLanguage === 'fr' || storedLanguage === 'en') {
+                    $translate.use(storedLanguage);
+                    return storedLanguage;
+                }
+            }
+            return $translate.use();
+        }
+
+        $scope.currentLanguage = initLanguage();
 
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey).then(function (langKey) {
                 $scope.currentLanguage = langKey;
+                storeLanguage();
             });
         };
 
