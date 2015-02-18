@@ -8,42 +8,34 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PublicationsCtrl', ['$scope', '$http',
-        function ($scope, $http) {
+    .controller('PublicationsCtrl', ['$scope',
+        function ($scope) {
+
+            var firstName = 'Claire', lastName = 'Gardent',
+            url = 'https://api.archives-ouvertes.fr/search/?q=authFullName_t:' + firstName.toLowerCase() + '+' + lastName.toLowerCase() + '&wt=json&sort=producedDate_tdate desc';
+
+            function createCORSRequest(method, url){
+                var xhr = new XMLHttpRequest();
+                if ('withCredentials' in xhr){
+                    xhr.open(method, url, true);
+                } else if (typeof XDomainRequest !== 'undefined'){
+                    xhr = new XDomainRequest();
+                    xhr.open(method, url);
+                } else {
+                    xhr = null;
+                }
+                return xhr;
+            }
 
             $scope.publications = [];
 
-            $scope.loadPublications = function () {
-                //$http.get('http://api.archives-ouvertes.fr/search/?q=vin&wt=xml')
-                ////$http.get('http://api.archives-ouvertes.fr/ref/authorstructure/?firstName_t=jean&lastName_t=dupont&wt=xml')
-                ////$http.get('http://api.archives-ouvertes.fr/ref/structure/?q=authFullName_t:Claire+Gardent&wt=json')
-                //    .success(function (data) {
-                //        console.debug('publications : ', data);
-                //        $scope.publications = data;
-                //    })
-                $scope.solrUrl = 'http://api.archives-ouvertes.fr/ref/structure';
-                $scope.query = 'text';
-
-                $http({
-                    method: 'JSONP',
-                    url: $scope.solrUrl,
-                    params: {
-                        'json.wrf': 'JSON_CALLBACK',
-                        'q': $scope.query
-                        }
-                    })
-                    .success(function (data) {
-                        console.debug('publications : ', data);
-                        $scope.publications = data;
-
-                    }).error(function (reason) {
-                            console.error('Fail to retrieve publications. ', reason);
-                        }
-                    );
-
-            };
-
-            console.debug('publi !');
-            $scope.loadPublications();
+            var request = createCORSRequest('get', url);
+            if (request){
+                request.onload = function(){
+                    $scope.publications = angular.fromJson(request.responseText);
+                    console.log('publi : ',$scope.publications.response);
+                };
+                request.send();
+            }
         }
 ]);

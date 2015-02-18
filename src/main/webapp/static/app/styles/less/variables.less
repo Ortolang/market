@@ -4,32 +4,27 @@
 @import "/bower_components/bootstrap/less/variables.less";
 
 //== Fonts
+//
 @font-family-sans-serif:  "Open Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
 
-//== Colors test
-@blue-dark: #005883;
-@blue-lighter: #19B3FF;
-@orange-dark: #834900;
-@orange-lighter: #EB8200;
-@gray-lightest: lighten(#000, 97.25%);
-
 //== Colors
+//
+// ## Background ##
+@body-bg: @navbar-default-bg;
 @main-bg: #ffffff;
 @default-bg: @navbar-default-bg;
 @alternate-bg: darken(@default-bg, 3%);
+@highlight-bg-color: #fdf6e3;
+
+// ## Color ##
 @text-color: @gray-dark;
 @inverse-text-color: #ffffff;
 
 @default-primary: #45B29D;
 @ortolang-blue: #008bd0;
 @tool: #65b32e;
-@highlight-bg-color: #fdf6e3;
-@body-bg: @navbar-default-bg;
 
-@top-navbar-bg-color: #475b6e;
-@top-navbar-color: @gray-lightest;
 @market-primary: @ortolang-blue;
-@corpus-primary: #EFC94C;
 @integrated-projects-primary: #45B29D;
 @documentation-primary: #E27A3F;
 @workspace-primary: #FFC107;
@@ -42,37 +37,37 @@
 @profile-primary: @default-primary;
 @information-primary: @default-primary;
 
-// Bootstrap override
-@brand-primary: @ortolang-blue;
-@icon-font-path: "/bower_components/bootstrap/dist/fonts/";
-
 //== Buttons
 //
-@btn-secondary-color:              #fff;
-@btn-secondary-bg:                 @orange-lighter;
+@btn-secondary-color:              @inverse-text-color;
+@btn-secondary-bg:                 @workspace-primary;
 @btn-secondary-border:             darken(@btn-secondary-bg, 5%);
 
-@btn-workspace-color:              #fff;
+@btn-tertiary-color:              @inverse-text-color;
+@btn-tertiary-bg:                 @tasks-primary;
+@btn-tertiary-border:             darken(@btn-tertiary-bg, 5%);
+
+@btn-workspace-color:              @inverse-text-color;
 @btn-workspace-bg:                 @workspace-primary;
 @btn-workspace-border:             darken(@btn-workspace-bg, 5%);
 
 //== Type
 //
-//##
 @browser-offset-horizontal: 120px;
 
-//== width
-//
-@products-select-width: 220px;
-
 // Grid for dform
+//
 @dform-label-col: 2;
 @dform-input-col: 10;
 
 //== Top Nav
-@navbar-height: 54px;
+//
+@top-navbar-bg-color: #475b6e;
+@top-navbar-color: @default-bg;
+@top-navbar-height: 54px;
 
 //== Side Nav
+//
 @side-bar-width: 210px;
 @side-bar-item-height: 50px;
 @side-bar-item-color: @gray;
@@ -81,6 +76,7 @@
 @side-bar-item-bg: @workspace-primary;
 
 //== Toolbar
+//
 @toolbar-min-height: 55px;
 @nav-pills-toolbar-item-side-padding: 2 * @padding-base-horizontal;
 
@@ -91,3 +87,9 @@
 
 @page-wrapper-padding: 40px;
 @container-main-padding: 48px;
+
+//== Bootstrap override
+//
+@brand-primary: @ortolang-blue;
+@icon-font-path: "/bower_components/bootstrap/dist/fonts/";
+@navbar-height: @top-navbar-height;

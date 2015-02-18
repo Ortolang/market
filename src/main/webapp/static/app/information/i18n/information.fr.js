@@ -14,7 +14,8 @@ angular.module('ortolangMarketApp')
                 PRESENTATION: 'Présentation',
                 PARTNERS: 'Partenaires',
                 ROADMAP: 'Planning de réalisation',
-                NEWSLETTER: 'Lettre d\'information'
+                NEWSLETTER: 'Lettre d\'information',
+                CONVENTION: 'Charte d\'Ortolang'
             },
             PATH: {
                 PRESENTATION: 'information/fr/presentation.html',
@@ -22,7 +23,8 @@ angular.module('ortolangMarketApp')
                 ROADMAP: 'information/fr/roadmap.html',
                 NEWSLETTER: 'information/newsletter.html',
                 LEGAL_NOTICES: 'information/fr/legal-notices.html',
-                NEWS: 'information/fr/news.html'
+                NEWS: 'information/fr/news.html',
+                CONVENTION: 'information/fr/convention.html'
             },
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG',
@@ -37,6 +39,7 @@ angular.module('ortolangMarketApp')
             INNOVATIVE_SHS: 'Retrouvez ORTOLANG à la Seconde édition du salon Innovatives SHS de l\'INSHS, à la Cité des sciences et de l\'industrie de Paris, les 16 et 17 juin 2015.',
             MORE: 'Plus d\'informations',
             INSTITUTIONS: 'Institutions',
-            PARTNERS: 'Unités support du projet'
+            PARTNERS: 'Unités support du projet',
+            DOWNLOAD_CONVENTION: 'Télécharger la charte d\'Ortolang au format pdf'
         }
     });

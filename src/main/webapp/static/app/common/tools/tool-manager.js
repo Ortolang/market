@@ -265,17 +265,21 @@ angular.module('ortolangMarketApp')
             function checkPopup(toolKey) {
                 if (grantPopup.closed) {
                     $timeout.cancel(grantTimeout);
-                    checkGrant(toolKey);
+                    checkGrant(toolKey, true);
                 } else {
-                    grantTimeout = $timeout(checkPopup, 500);
+                    grantTimeout = $timeout(function () {checkPopup(toolKey);}, grantTimeoutDelay);
                 }
             }
 
-            function checkGrant(toolKey) {
+            function checkGrant(toolKey, recheck) {
                 getTool(toolKey).getAuthStatus().then(function (response) {
                     if (response.url) {
-                        grantPopup = $window.open(response.url, '', 'width=400, height=600, top=200, left=200');
-                        grantTimeout = $timeout(checkPopup(toolKey), grantTimeoutDelay);
+                        if (recheck) {
+                            console.log('CANCEL Grant');
+                        } else {
+                            grantPopup = $window.open(response.url, '', 'width=400, height=600, top=200, left=200');
+                            grantTimeout = $timeout(function () {checkPopup(toolKey);}, grantTimeoutDelay);
+                        }
                     } else {
                         console.log('Grant OK!');
                     }

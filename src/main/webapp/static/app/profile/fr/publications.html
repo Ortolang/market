@@ -1,1 +1,17 @@
-<div ng-controller="PublicationsCtrl"></div>
+<div ng-controller="PublicationsCtrl">
+ <table class="table">
+    <tbody>
+    <tr ng-repeat="publication in publications.response.docs">
+        <td colspan="2">
+            <div>
+                <a data-original-title="Voir la ressource" href="{{publication.uri_s}}" data-toggle="tooltip" title="Voir la ressource sur HAL" data-placement="bottom" target="_blank">
+                    <span class="fa fa-book" aria-hidden="true"></span>
+                </a>
+            </div>
+        </td>
+        <td colspan="2">
+            <span hljs source="{{publication.label_s}}" ></span>
+        </td>
+    </tr>
+ </table>
+</div>

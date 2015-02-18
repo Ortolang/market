@@ -4,6 +4,10 @@
 
 #browser-wrapper {
   position: relative;
+  &.market-browser-wrapper {
+    margin-left: -(floor(@grid-gutter-width/2));
+    margin-right: -(floor(@grid-gutter-width/2));
+  }
 }
 
 .toolbar.browser-toolbar {
@@ -217,7 +221,7 @@
         &.active {
           .name-wrapper {
             background-color: #727272;
-            color: @gray-lightest;
+            color: @inverse-text-color;
           }
           .preview span {
             color: darken(@gray-lighter, 50%);
@@ -261,7 +265,7 @@ table.workspace-elements {
   .user-select-mixin;
   tr.active {
     td {
-      background-color: #ababab;
+      background-color: @gray-light;
       color: #FFF;
       span.glyphicon.type, span.fa.type {
         color: inherit;
@@ -269,7 +273,7 @@ table.workspace-elements {
     }
     &:hover {
       td {
-        background-color: #727272;
+        background-color: @gray-light;
       }
     }
   }
@@ -345,9 +349,6 @@ table.workspace-elements {
     }
   }
 
-  .btn-secondary {
-    .button-variant(@btn-secondary-color; @btn-secondary-bg; @btn-secondary-border);
-  }
   .btn-workspace {
     .button-variant(@btn-workspace-color; @btn-workspace-bg; @btn-workspace-border);
   }

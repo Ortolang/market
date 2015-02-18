@@ -26,5 +26,10 @@ angular.module('ortolangMarketApp')
         NO_IMAGE_PROVIDED: 'No image provided',
         DOWNLOAD: 'Download',
         START: 'Start',
-        STOP: 'Stop'
+        STOP: 'Stop',
+        ORTOLANG: 'Open Resources and TOols for LANGuage',
+        CORPORA: 'Corpora',
+        LEXICONS: 'Lexicons',
+        TOOLS: 'Tools',
+        INTEGRATED_PROJECTS: 'Integrated Projects'
     });

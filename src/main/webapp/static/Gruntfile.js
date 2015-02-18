@@ -71,7 +71,7 @@ module.exports = function (grunt) {
         connect: {
             options: {
                 port: 9000,
-                protocol: 'https',
+                protocol: 'http',
                 key: grunt.file.read('server.key').toString(),
                 cert: grunt.file.read('server.crt').toString(),
                 // Change this to '0.0.0.0' to access the server from outside.
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    protocol: 'https',
+                    protocol: 'http',
                     key: grunt.file.read('server.key').toString(),
                     cert: grunt.file.read('server.crt').toString(),
                     open: true,
@@ -303,67 +303,59 @@ module.exports = function (grunt) {
             }
         },
 
-        // Replace Google CDN references
-        cdnify: {
-            dist: {
-                html: ['<%= yeoman.dist %>/*.html']
-            }
-        },
-
         // Copies remaining files to places other tasks can use
         copy: {
             dist: {
-                files: [
-                    {
-                        expand: true,
-                        dot: true,
-                        cwd: '<%= yeoman.app %>',
-                        dest: '<%= yeoman.dist %>',
-                        src: [
-                            '*.{ico,png,txt}',
-                            '**/*.html',
-                            'assets/**/*',
-                            'fonts/**/*'
-                        ]
-                    }, {
-                        expand: true,
-                        cwd: '.tmp/images',
-                        dest: '<%= yeoman.dist %>/assets/images',
-                        src: ['generated/*']
-                    }, {
-                        expand: true,
-                        cwd: 'bower_components/bootstrap/dist',
-                        src: 'fonts/*',
-                        dest: '<%= yeoman.dist %>'
-                    }, {
-                        expand: true,
-                        cwd: 'bower_components/components-font-awesome',
-                        src: 'fonts/*',
-                        dest: '<%= yeoman.dist %>'
-                    }, {
-                        expand: true,
-                        cwd: 'bower_components/octicons/octicons',
-                        src: [
-                            '*',
-                            '!*.{css,scss,md}'
-                        ],
-                        dest: '<%= yeoman.dist %>/fonts'
-                    }, {
-                        expand: true,
-                        cwd: '<%= yeoman.app %>',
-                        dest: '<%= yeoman.dist %>',
-                        src: [
-                            'keycloak.json'
-                        ]
-                    }, {
-                        expand: true,
-                        cwd: 'bower_components/zeroclipboard/dist',
-                        src: [
-                            '*.swf'
-                        ],
-                        dest: '<%= yeoman.dist %>/vendor'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        '*.{ico,png,txt}',
+                        '**/*.html',
+                        'assets/**/*',
+                        'fonts/**/*',
+                        'resources/**/*'
+                    ]
+                }, {
+                    expand: true,
+                    cwd: '.tmp/images',
+                    dest: '<%= yeoman.dist %>/assets/images',
+                    src: ['generated/*']
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/bootstrap/dist',
+                    src: 'fonts/*',
+                    dest: '<%= yeoman.dist %>'
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/components-font-awesome',
+                    src: 'fonts/*',
+                    dest: '<%= yeoman.dist %>'
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/octicons/octicons',
+                    src: [
+                        '*',
+                        '!*.{css,scss,md}'
+                    ],
+                    dest: '<%= yeoman.dist %>/fonts'
+                }, {
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        'keycloak.json'
+                    ]
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/zeroclipboard/dist',
+                    src: [
+                        '*.swf'
+                    ],
+                    dest: '<%= yeoman.dist %>/vendor'
+                }]
             },
             devDist: {
                 files: [{
@@ -373,7 +365,8 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.dist %>',
                     src: [
                         '**/*.js',
-                        'fonts/**/*'
+                        'fonts/**/*',
+                        'resources/**/*'
                     ]
                 }, {
                     expand: true,
@@ -568,7 +561,6 @@ module.exports = function (grunt) {
         'concat',
         'ngAnnotate',
         'copy:dist',
-        'cdnify',
         'cssmin',
         'uglify',
         'replace:dist',

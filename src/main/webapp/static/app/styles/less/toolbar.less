@@ -5,6 +5,11 @@
   padding-right: 0;
 }
 
+.toolbar.browser-toolbar.market-browser-toolbar {
+  margin-left: -@container-main-padding + floor(@grid-gutter-width/2);
+  margin-right: -@container-main-padding + floor(@grid-gutter-width/2);
+}
+
 .toolbar {
   margin-left: -@container-main-padding + floor(@grid-gutter-width/2);
   margin-right: -@container-main-padding + floor(@grid-gutter-width/2);
@@ -28,6 +33,24 @@
     margin: -@padding-large-vertical (@padding-large-horizontal - @padding-xs-horizontal) -@padding-large-vertical @padding-large-horizontal;
     display: inline-block;
     min-height: 54px;
+  }
+
+  .dropdown-menu {
+    li {
+      a {
+        position: relative;
+        .badge {
+          position: absolute;
+          right: @padding-base-horizontal;
+        }
+      }
+      &.active {
+        .badge {
+          color: @ortolang-blue;
+          background-color: @main-bg;
+        }
+      }
+    }
   }
 
 }

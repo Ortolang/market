@@ -10,11 +10,16 @@
   .navbar-brand {
     padding-top: 0;
     padding-bottom: 0;
-    line-height: @navbar-height;
+    line-height: @top-navbar-height;
     .ortolang-logo {
       height: 28px;
       margin-right: 6px;
       display: inline;
+    }
+    .beta-version {
+      font-weight: 300;
+      font-style: italic;
+      font-size: 75%;
     }
   }
 
@@ -37,7 +42,7 @@
       > a {
         padding-top: 0;
         padding-bottom: 0;
-        line-height: @navbar-height;
+        line-height: @top-navbar-height;
         color: @top-navbar-color;
         &:hover, &:focus {
           background-color: inherit;
@@ -90,3 +95,13 @@
   }
 }
 
+.beta-version.tooltip {
+  .tooltip-inner {
+    max-width: 400px;
+    background-color: @main-bg;
+    color: @top-navbar-bg-color;
+  }
+  .tooltip-arrow {
+    border-right-color: @main-bg;
+  }
+}

@@ -22,7 +22,11 @@
 @import "processes";
 @import "footer";
 @import "timeline";
+<<<<<<< HEAD
 @import "profile";
+=======
+@import "information";
+>>>>>>> origin/giromon
 
 
 body {
@@ -31,4 +35,12 @@ body {
 
 .nav > li > a {
   color: @text-color;
+}
+
+.btn-secondary {
+  .button-variant(@btn-secondary-color; @btn-secondary-bg; @btn-secondary-border);
+}
+
+.btn-tertiary {
+  .button-variant(@btn-tertiary-color; @btn-tertiary-bg; @btn-tertiary-border);
 }

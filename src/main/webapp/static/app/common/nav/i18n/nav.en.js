@@ -14,9 +14,8 @@ angular.module('ortolangMarketApp')
             MARKET: 'New pdf',
             CORPUS: 'Corpus',
             INTEGRATED_PROJECTS: 'Integrated Projects',
+            SEARCH: 'Search',
             MY_WORKSPACES: 'My workspaces',
-            TOOLS: 'Tools',
-            LEXICONS: 'Lexicons',
             ITEM: 'Item',
             PROCESSES: 'Processes',
             TASKS: 'Tasks',
@@ -34,13 +33,16 @@ angular.module('ortolangMarketApp')
                 PRESENTATION: 'Presentation',
                 PARTNERS: 'Partners',
                 ROADMAP: 'Roadmap',
-                NEWSLETTER: 'Newsletter'
+                NEWSLETTER: 'Newsletter',
+                CONVENTION: 'Ortolang\'s convention'
             },
             COMMUNITY_WEBSITE: 'Community website',
             CONTACT: 'Contact us',
             LEGAL_NOTICES: 'Legal notices',
-            STATE_SUPPORT: ' is a beneficiary of French State support via its  “Investissements d\'avenir” program (ANR-11-EQPX-0032).',
+            STATE_SUPPORT: 'ORTOLANG is a beneficiary of French State support via its  “Investissements d\'avenir” program',
             BACK_TO_TOP: 'Back to top',
-            TEAM: 'Ortolang team'
+            TEAM: 'Ortolang team',
+            BETA_VERSION: 'beta',
+            BETA_VERSION_TOOLTIP: 'ORTOLANG is currently under development.<br/>Some features are thus not yet available.'
         }
     });
