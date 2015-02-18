@@ -186,7 +186,7 @@ angular.module('ortolangMarketApp')
                     return;
                 }
                 registry[tool.getKey()] = tool;
-                console.info('register tool : ', (registry[tool.getKey()]));
+                //console.info('register tool : ', (registry[tool.getKey()]));
             }
 
             function populateToolList() {

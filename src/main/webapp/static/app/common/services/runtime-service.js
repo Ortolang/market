@@ -244,25 +244,27 @@ angular.module('ortolangMarketApp')
                 var promises = [];
                 angular.forEach(ToolManager.getActiveRegistry(), function (tool) {
                     promises.push(
-                    ToolManager.getTool(tool.getKey()).getJobs().$promise.then(
-                        function (data) {
-                            angular.forEach(data.entries, function (job) {
-                                job.name = tool.getName();
-                                job.key = tool.getKey();
-                            });
-                            $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
-                        }, function (reason) {
-                            console.warn('The server of tool "%s" is not responding', tool.getKey());
-                            if(reason.status!=='401') {
-                                ToolManager.disableTool(tool.getKey());
+                        ToolManager.getTool(tool.getKey()).getJobs().$promise.then(
+                            function (data) {
+                                angular.forEach(data.entries, function (job) {
+                                    job.name = tool.getName();
+                                    job.key = tool.getKey();
+                                });
+                                $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
+                            },
+                            function (reason) {
+                                console.warn('The server of tool "%s" is not responding', tool.getKey());
+                                if (reason.status !== '401') {
+                                    ToolManager.disableTool(tool.getKey());
+                                }
                             }
-                        }
-                    ));
+                        )
+                    );
                 });
 
                 $q.all(promises).then(
                     function success() {
-                        console.info($rootScope.toolJobs);
+                        //console.info($rootScope.toolJobs);
                         completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
                         var justCompletedTools = $filter('filter')(activeToolJobs, function (activeToolJob) {
                             return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
