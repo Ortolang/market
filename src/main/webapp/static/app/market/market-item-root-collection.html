@@ -71,7 +71,7 @@
                             <dl>
                                 <dt translate="MARKET.KEYWORDS"></dt>
                                 <dd ng-repeat="keyword in item['http://www.ortolang.fr/ontology/keywords']">
-                                    <a ng-href="#/search?content={{keyword}}">{{keyword}}</a>
+                                    <a ng-href='#/search?content="{{keyword}}"'>{{keyword}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -80,7 +80,7 @@
                             <dl>
                                 <dt translate="MARKET.PRIMARYLANGUAGE"></dt>
                                 <dd ng-repeat="pLang in item['http://www.ortolang.fr/ontology/primaryLanguage']">
-                                    <a ng-href="#/search?content={{pLang}}">{{pLang}}</a>
+                                    <a ng-href='#/search?content="{{pLang}}"'>{{pLang}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -89,7 +89,7 @@
                             <dl>
                                 <dt translate="MARKET.DISCOURSETYPE"></dt>
                                 <dd ng-repeat="discType in item['http://www.ortolang.fr/ontology/discourseType']">
-                                    <a ng-href="#/search?content={{discType}}">{{discType}}</a>
+                                    <a ng-href='#/search?content="{{discType}}"'>{{discType}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -98,7 +98,7 @@
                             <dl>
                                 <dt translate="MARKET.LINGUISTICSUBJECT"></dt>
                                 <dd ng-repeat="lingSubj in item['http://www.ortolang.fr/ontology/linguisticSubject']">
-                                    <a ng-href="#/search?content={{lingSubj}}">{{lingSubj}}</a>
+                                    <a ng-href='#/search?content="{{lingSubj}}"'>{{lingSubj}}</a>
                                 </dd>
                             </dl>
                         </div>
