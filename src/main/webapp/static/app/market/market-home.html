@@ -45,28 +45,28 @@
         <section ng-if="section==='news' && news.length>0" class="row">
             <div class="col-md-12">
                 <header>
-                    <h3>Nouveautés</h3>
+                    <h3 translate="MARKET.NEW_RESOURCES"></h3>
                 </header>
                 <div class="flex-row">
                     <item class="flex-column medium-item" ng-repeat="item in news" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
                 </div>
             </div>
         </section>
-        <section ng-if="section==='corpus' && corpus.length>0" class="row">
+        <section ng-if="section==='corpora' && corpora.length>0" class="row">
             <div class="col-md-12">
                 <header>
-                    <h3>Corpus</h3>
+                    <h3 translate="CORPORA"></h3>
                 </header>
 
                 <div class="flex-row">
-                    <item class="flex-column medium-item" ng-repeat="item in corpus | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
+                    <item class="flex-column medium-item" ng-repeat="item in corpora | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
                 </div>
             </div>
         </section>
         <section ng-if="section==='tools' && outils.length>0" class="row">
             <div class="col-md-12">
                 <header>
-                    <h3>Outils</h3>
+                    <h3 translate="TOOLS"></h3>
                 </header>
 
                 <div class="flex-row">
@@ -77,7 +77,7 @@
         <section ng-if="section==='lexicons' && lexiques.length>0" class="row">
             <div class="col-md-12">
                 <header>
-                    <h3>Lexiques</h3>
+                    <h3 translate="LEXICONS"></h3>
                 </header>
 
                 <div class="flex-row">
@@ -88,7 +88,7 @@
         <section ng-if="section==='websites' && website.length>0" class="row">
             <div class="col-md-12">
                 <header>
-                    <h3>Projets intégrés</h3>
+                    <h3 translate="INTEGRATED_PROJECTS"></h3>
                 </header>
 
                 <div class="flex-row">

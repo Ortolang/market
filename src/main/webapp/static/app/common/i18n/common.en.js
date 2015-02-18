@@ -27,5 +27,9 @@ angular.module('ortolangMarketApp')
         DOWNLOAD: 'Download',
         START: 'Start',
         STOP: 'Stop',
-        ORTOLANG: 'Open Resources and TOols for LANGuage'
+        ORTOLANG: 'Open Resources and TOols for LANGuage',
+        CORPORA: 'Corpora',
+        LEXICONS: 'Lexicons',
+        TOOLS: 'Tools',
+        INTEGRATED_PROJECTS: 'Integrated Projects'
     });

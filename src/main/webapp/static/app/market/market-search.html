@@ -9,9 +9,9 @@
                         <ul class="dropdown-menu" role="menu">
                             <li ng-class="selectedType===''?'active':''"><a ng-click="resetFilter()">{{'MARKET.ALL_TYPE' | translate}} <span class="badge">{{items.length}}</span></a></li>
                             <li class="divider"></li>
-                            <li ng-class="selectedType==='Corpus'?'active':''"><a ng-click="filter('type', 'Corpus', 'MARKET.CORPORA')" translate="MARKET.CORPORA"></a></li>
-                            <li ng-class="selectedType==='Lexiques'?'active':''"><a ng-click="filter('type', 'Lexiques', 'MARKET.LEXICONS')" translate="MARKET.LEXICONS"></a></li>
-                            <li ng-class="selectedType==='Outils'?'active':''"><a ng-click="filter('type', 'Outils', 'MARKET.TOOLS')" translate="MARKET.TOOLS"></a></li>
+                            <li ng-class="selectedType==='Corpus'?'active':''"><a ng-click="filter('type', 'Corpus', 'CORPORA')" translate="CORPORA"></a></li>
+                            <li ng-class="selectedType==='Lexiques'?'active':''"><a ng-click="filter('type', 'Lexiques', 'LEXICONS')" translate="LEXICONS"></a></li>
+                            <li ng-class="selectedType==='Outils'?'active':''"><a ng-click="filter('type', 'Outils', 'TOOLS')" translate="TOOLS"></a></li>
                             <li ng-class="selectedType==='Site web'?'active':''"><a ng-click="filter('type', 'Site web', 'MARKET.WEBSITES')" translate="MARKET.WEBSITES"></a></li>
                         </ul>
                     </div>

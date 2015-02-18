@@ -103,12 +103,11 @@ angular.module('ortolangMarketApp')
         function initTranslations() {
             return $translate([
                 'NAV.HOME',
-                'NAV.MARKET',
-                'NAV.CORPUS',
-                'NAV.INTEGRATED_PROJECTS',
+                'CORPORA',
+                'INTEGRATED_PROJECTS',
                 'NAV.MY_WORKSPACES',
-                'NAV.TOOLS',
-                'NAV.LEXICONS',
+                'TOOLS',
+                'LEXICONS',
                 'NAV.ITEM',
                 'NAV.PROCESSES',
                 'NAV.TASKS',
@@ -118,12 +117,11 @@ angular.module('ortolangMarketApp')
                 'NAV.SEARCH'
             ]).then(function (translations) {
                 $scope.translationsHome = translations['NAV.HOME'];
-                $scope.translationsMarket = translations['NAV.MARKET'];
-                $scope.translationsCorpus = translations['NAV.CORPUS'];
-                $scope.translationsIntegratedProjects = translations['NAV.INTEGRATED_PROJECTS'];
+                $scope.translationsCorpora = translations.CORPORA;
+                $scope.translationsIntegratedProjects = translations.INTEGRATED_PROJECTS;
                 $scope.translationsMyWorkspaces = translations['NAV.MY_WORKSPACES'];
-                $scope.translationsTools = translations['NAV.TOOLS'];
-                $scope.translationsLexicons = translations['NAV.LEXICONS'];
+                $scope.translationsTools = translations.TOOLS;
+                $scope.translationsLexicons = translations.LEXICONS;
                 $scope.translationsItem = translations['NAV.ITEM'];
                 $scope.translationsProcesses = translations['NAV.PROCESSES'];
                 $scope.translationsTasks = translations['NAV.TASKS'];
@@ -143,9 +141,9 @@ angular.module('ortolangMarketApp')
                         authenticated: false
                     },
                     {
-                        class: 'corpus',
-                        path: '/market/corpus',
-                        description: $scope.translationsCorpus,
+                        class: 'corpora',
+                        path: '/market/corpora',
+                        description: $scope.translationsCorpora,
                         iconCss: 'fa fa-fw fa-book fa-2x',
                         active: undefined,
                         hidden: false,
