@@ -5,8 +5,12 @@
 #browser-wrapper {
   position: relative;
   &.market-browser-wrapper {
-    margin-left: -(floor(@grid-gutter-width/2));
-    margin-right: -(floor(@grid-gutter-width/2));
+    margin-left: -@container-main-padding;
+    margin-right: -@container-main-padding;
+    .workspace-elements-wrapper, .browsed-element-children-wrapper {
+      padding-left: @container-main-padding - floor(@grid-gutter-width/2);
+      padding-right: @container-main-padding - floor(@grid-gutter-width/2);
+    }
   }
 }
 
