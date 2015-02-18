@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', 'User', 'AuthService', 'ProfileResource', function ($scope, User, AuthService, ProfileResource) {
+    .controller('AuthCtrl', ['$scope', '$route', 'User', 'AuthService', 'ProfileResource', function ($scope, $route, User, AuthService, ProfileResource) {
 
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
@@ -31,6 +31,10 @@ angular.module('ortolangMarketApp')
             if (AuthService.isAuthenticated()) {
                 getUser();
             }
+        };
+
+        $scope.footerPath = function () {
+            return $route.current && $route.current.originalPath === '/workspaces' ? '' : 'common/nav/footer.html';
         };
 
         // Initialize session
