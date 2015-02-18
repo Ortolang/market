@@ -30,6 +30,12 @@ angular.module('ortolangMarketApp')
         }
 
         function download(params, config) {
+            if (!config) {
+                config = {};
+            }
+            if (!config.transformResponse) {
+                config.transformResponse = [];
+            }
             return $http.get(buildDownloadUrl(params), config);
         }
 
