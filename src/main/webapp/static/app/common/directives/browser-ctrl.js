@@ -911,8 +911,10 @@ angular.module('ortolangMarketApp')
                         if ($rootScope.uploadQueueStatus === 'active') {
                             height -= angular.element('.upload-queue').innerHeight();
                         }
-                        $('.browser-aside').css('min-height', (height - browserToolbarHeight) + 'px');
-                        var browserWrapper = $('#browser-wrapper');
+                        var browserWrapper = angular.element('#browser-wrapper'),
+                            browserAside = angular.element('.browser-aside');
+                        browserAside.css('min-height', (height - browserToolbarHeight) + 'px');
+                        browserAside.find('.my-workspaces').css('height', (height - browserToolbarHeight - 80) + 'px');
                         browserWrapper.find('.table-wrapper.workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
                         browserWrapper.find('.browsed-element-children-wrapper').css('height', (height - browserToolbarHeight) + 'px');
                     }
