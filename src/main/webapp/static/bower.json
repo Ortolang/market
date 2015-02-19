@@ -22,7 +22,7 @@
     "n3js": "~0.2.7",
     "angular-bootstrap-show-errors": "~2.0.0",
     "angular-sanitize": "~1.2.x",
-    "angular-translate": "~2.4.2",
+    "angular-translate": "~2.6.0",
     "angular-zeroclipboard": "~0.3.2",
     "zeroclipboard": "~2.1.6",
     "holderjs": "~2.4.1",

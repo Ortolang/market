@@ -76,9 +76,6 @@
                     </table>
                     <div class="panel-footer toggle-show-all" ng-if="Runtime.getProcessesWithState(Runtime.getStates().completed).length > completedProcessessDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
                 </div>
-                <button class="btn btn-success" ng-click="Runtime.createProcessFromForm('test-process-start-form')">Start test process</button>
-                <br/>
-                <br/>
             </section>
         </div>
         <div data-title="{{'TOOLS.TOOLS' | translate}} <span class='badge'>{{Runtime.activeToolJobsNumber()}}</span>" bs-pane>

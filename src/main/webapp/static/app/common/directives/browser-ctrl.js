@@ -33,9 +33,9 @@ angular.module('ortolangMarketApp')
         'FileSelectBrowserService',
         function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
-            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft, marketItemHeader, footerHeight,
-                previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight,
-                topNavWrapper, footerWrapper;
+            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
+                marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
+                previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper;
 
             // *********************** //
             //        Breadcrumb       //
@@ -44,10 +44,10 @@ angular.module('ortolangMarketApp')
             function populateBreadcrumbDropdownMenu() {
                 $scope.breadcrumbDropdownItems = [];
                 if ($scope.browserService.canAdd && $scope.isHead) {
-                    $scope.breadcrumbDropdownItems.push({text: $scope.translationsNewCollection, icon: icons.browser.plus, action: 'addCollection'});
+                    $scope.breadcrumbDropdownItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
                     $scope.breadcrumbDropdownItems.push({divider: true});
-                    $scope.breadcrumbDropdownItems.push({text: $scope.translationsUploadFiles, icon: icons.browser.upload, action: 'uploadFiles'});
-                    //$scope.breadcrumbDropdownItems.push({text: $scope.translationsUploadFolder, icon: icons.browser.upload, action: 'uploadFolder'});
+                    $scope.breadcrumbDropdownItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
+                    //$scope.breadcrumbDropdownItems.push({text: 'BROWSER.UPLOAD_FOLDER', icon: icons.browser.upload, action: 'uploadFolder'});
                 }
             }
 
@@ -101,25 +101,25 @@ angular.module('ortolangMarketApp')
                     }
                     clearContextMenuItems();
                     if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
-                        $scope.contextMenuItems.push({text: $scope.translationsNewCollection, icon: icons.browser.plus, action: 'addCollection'});
+                        $scope.contextMenuItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
                         // TODO Support importing files into selected directory
                         if ($scope.hasOnlyParentSelected()) {
-                            $scope.contextMenuItems.push({text: $scope.translationsUploadFiles, icon: icons.browser.upload, action: 'uploadFiles'});
+                            $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
                         }
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.browserService.canPreview && $scope.visualizers) {
-                        $scope.contextMenuItems.push({text: $scope.translationsPreview, icon: icons.browser.preview, action: 'preview'});
+                        $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                         $scope.contextMenuItems.push({divider: true});
                     }
                     if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
-                        $scope.contextMenuItems.push({text: $scope.translationsDownload, icon: icons.browser.download, action: 'download'});
+                        $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
                     }
                     if ($scope.browserService.canDelete && $scope.isHead && !$scope.hasOnlyParentSelected()) {
-                        $scope.contextMenuItems.push({text: $scope.translationsDelete, icon: icons.browser.delete, action: 'delete'});
+                        $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
                         $scope.contextMenuItems.push({divider: true});
                     }
-                    //$scope.contextMenuItems.push({text: $scope.otherViewMode.name, icon: $scope.otherViewMode.icon, action: 'switchViewMode'});
+                    //$scope.contextMenuItems.push({text: $scope.otherViewMode.text, icon: $scope.otherViewMode.icon, action: 'switchViewMode'});
                     if ($scope.contextMenuItems.length > 0 && $scope.contextMenuItems[$scope.contextMenuItems.length - 1].divider) {
                         $scope.contextMenuItems.pop();
                     }
@@ -714,11 +714,6 @@ angular.module('ortolangMarketApp')
                 }
             });
 
-            $rootScope.$on('$translateChangeSuccess', function () {
-                console.debug('%s caught event "$translateChangeSuccess"', $scope.browserService.getId());
-                initTranslations();
-            });
-
             $rootScope.$on('browserAskChangeWorkspace', function ($event, workspace) {
                 console.debug('%s caught event "browserAskChangeWorkspace"', $scope.browserService.getId());
                 initWorkspaceVariables(workspace);
@@ -1008,8 +1003,8 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function initLocalVariables() {
-                viewModeLine = {id: 'line', icon: icons.browser.viewModeLine};
-                viewModeTile = {id: 'tile', icon: icons.browser.viewModeTile};
+                viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'BROWSER.VIEW_MODE_LINE'};
+                viewModeTile = {id: 'tile', icon: icons.browser.viewModeTile, text: 'BROWSER.VIEW_MODE_TILE'};
                 browseUsingLocation = false;
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
@@ -1067,29 +1062,6 @@ angular.module('ortolangMarketApp')
                 $scope.workspaceMembers = undefined;
             }
 
-            function initTranslations() {
-                return $translate([
-                    'BROWSER.VIEW_MODE_LINE',
-                    'BROWSER.VIEW_MODE_TILE',
-                    'BROWSER.NEW_COLLECTION',
-                    'BROWSER.PREVIEW',
-                    'BROWSER.DELETE',
-                    'DOWNLOAD',
-                    'BROWSER.UPLOAD_FILES',
-                    'BROWSER.UPLOAD_FOLDER'
-                ]).then(function (translations) {
-                    $scope.translationsNewCollection = translations['BROWSER.NEW_COLLECTION'];
-                    $scope.translationsPreview = translations['BROWSER.PREVIEW'];
-                    $scope.translationsDelete = translations['BROWSER.DELETE'];
-                    $scope.translationsDownload = translations['DOWNLOAD'];
-                    $scope.translationsUploadFiles = translations['BROWSER.UPLOAD_FILES'];
-                    $scope.translationsUploadFolder = translations['BROWSER.UPLOAD_FOLDER'];
-                    viewModeLine.name = translations['BROWSER.VIEW_MODE_LINE'];
-                    viewModeTile.name = translations['BROWSER.VIEW_MODE_TILE'];
-                    populateBreadcrumbDropdownMenu();
-                });
-            }
-
             function initWorkspaceVariables(workspace, root, path) {
                 if (workspace) {
                     $scope.workspace = workspace;
@@ -1105,9 +1077,9 @@ angular.module('ortolangMarketApp')
             }
 
             function init() {
-                initTranslations();
                 initLocalVariables();
                 initScopeVariables();
+                populateBreadcrumbDropdownMenu();
                 if ($scope.wskey || $scope.itemKey) {
                     getParentData();
                 } else {

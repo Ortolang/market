@@ -10,8 +10,6 @@
 angular.module('ortolangMarketApp')
     .controller('ToolsListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', function ($scope, ToolManager, $rootScope, $translate) {
 
-        var saveBt, successJob;
-
         // ***************** //
         // Editor visibility //
         // ***************** //
@@ -82,7 +80,7 @@ angular.module('ortolangMarketApp')
             $scope.formOptions = {
                 uniqueFormId: 'toolConfig',
                 hideSubmit: false,
-                submitCopy: saveBt
+                submitCopy: $translate.instant('TOOLS.RUN_TOOL')
             };
         };
 
@@ -131,23 +129,7 @@ angular.module('ortolangMarketApp')
             );
         };
 
-        $rootScope.$on('$translateChangeSuccess', function () {
-            initTranslations();
-        });
-
-        function initTranslations() {
-            $translate([
-                'TOOLS.RUN_TOOL',
-                'TOOLS.WAS_SUCCESS'
-            ]).then(function (translations) {
-                saveBt = translations['TOOLS.RUN_TOOL'];
-                successJob = translations['TOOLS.WAS_SUCCESS'];
-            });
-
-        }
-
         function init() {
-            initTranslations();
             $scope.tools = [];
             $scope.loadToolsList();
             $scope.selectedTool = undefined;

@@ -26,7 +26,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)" class="{{item.divider ? 'divider' : ''}}"><div><span ng-class="item.icon"></span> {{item.text}}</div></li>
+                                <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)" class="{{item.divider ? 'divider' : ''}}"><div><span ng-class="item.icon"></span> {{item.text | translate}}</div></li>
                             </ul>
                         </div>
 
@@ -51,15 +51,15 @@
                         </div>
                     </div>
                     <div ng-if="!browserService.hasBreadcrumb" class="browser-breadcrumb">
-                        <button data-ng-disabled="keyHistory && keyHistory.back.length === 0" class="btn btn-default" ng-click="goBack()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
-                        <button data-ng-disabled="keyHistory && keyHistory.forward.length === 0" class="btn btn-default" ng-click="goForward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
+                        <button data-ng-disabled="keyHistory && keyHistory.back.length === 0" class="btn btn-default" ng-click="goBack()" data-title="{{'BROWSER.BACK' | translate}}" data-placement="bottom" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
+                        <button data-ng-disabled="keyHistory && keyHistory.forward.length === 0" class="btn btn-default" ng-click="goForward()" data-title="{{'BROWSER.FORWARD' | translate}}" data-placement="bottom" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
                         <button class="btn btn-default" disabled>{{parent.name}}</button>
                     </div>
                     <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
                         <div class="btn-group">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" bs-tooltip>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="bottom" bs-tooltip>
                                     <span ng-class="icons.browser.sort"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -71,7 +71,7 @@
                                 </ul>
                             </div>
                             <div id="filter-query-wrapper" class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.FILTER' | translate}}" bs-tooltip>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.FILTER' | translate}}" data-placement="bottom" bs-tooltip>
                                     <span ng-class="icons.browser.search"></span>
                                 </button>
                                 <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
@@ -90,13 +90,13 @@
                         </div>
 
                         <div ng-if="browserService.canSwitchViewMode" class="btn-group">
-                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{otherViewMode.name}}" bs-tooltip>
+                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{otherViewMode.text | translate}}" data-placement="bottom" bs-tooltip>
                                 <span ng-class="otherViewMode.icon"></span>
                             </button>
                         </div>
 
                         <div class="btn-group">
-                            <button ng-if="browserService.canChangeRoot && !forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSION' | translate}}" bs-tooltip>
+                            <button ng-if="browserService.canChangeRoot && !forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSION' | translate}}"  data-placement="bottom" bs-tooltip>
                                 <span ng-class="icons.browser.history"></span>
                             </button>
                             <ul ng-if="browserService.canChangeRoot && !forceHead" class="dropdown-menu dropdown-menu-right snapshots" role="menu">
@@ -114,7 +114,7 @@
 
 
                         <div ng-if="browserService.canExecuteTool" class="btn-group">
-                            <button class="btn btn-default" ng-click="showToolsList()" data-title="{{'BROWSER.TOOLS' | translate}}" bs-tooltip>
+                            <button class="btn btn-default" ng-click="showToolsList()" data-title="{{'BROWSER.TOOLS' | translate}}" data-placement="bottom" bs-tooltip>
                                 <span ng-class="icons.browser.tools"></span>
                             </button>
                         </div>
@@ -305,8 +305,8 @@
         <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" id="context-menu" class="dropdown clearfix open">
             <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="item in contextMenuItems" class="{{item.divider ? 'divider' : ''}}">
-                    <a ng-if="item.href" tabindex="-1" ng-href="{{item.href}}"><span ng-class="item.icon"></span> {{item.text}}</a>
-                    <div ng-if="!item.href" ng-click="doAction(item.action)" tabindex="-1"><span ng-class="item.icon"></span> {{item.text}}</div>
+                    <a ng-if="item.href" tabindex="-1" ng-href="{{item.href}}"><span ng-class="item.icon"></span> {{item.text | translate}}</a>
+                    <div ng-if="!item.href" ng-click="doAction(item.action)" tabindex="-1"><span ng-class="item.icon"></span> {{item.text | translate}}</div>
                 </li>
             </ul>
         </div>

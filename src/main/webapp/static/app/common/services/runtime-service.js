@@ -21,12 +21,7 @@ angular.module('ortolangMarketApp')
         '$q',
         function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolManager, $q) {
 
-            var translationsStartProcess,
-                translationsCompleteTask,
-                translationsProcess,
-                translationsJustCompleted,
-                translationsToolJob,
-                processModal,
+            var processModal,
                 completeTaskModal,
                 processesTimeout,
                 tasksTimeout,
@@ -59,7 +54,7 @@ angular.module('ortolangMarketApp')
                     modalScope.formFields = JSON.parse(form.definition);
                     modalScope.formOptions = {
                         uniqueFormId: formKey,
-                        submitCopy: translationsStartProcess
+                        submitCopy: $translate.instant('PROCESSES.START_PROCESS')
                     };
                     modalScope.onSubmit = function () {
                         RuntimeResource.createProcess(modalScope.formData, function () {
@@ -135,7 +130,7 @@ angular.module('ortolangMarketApp')
                         return $filter('filter')(completedProcesses, {key: activeProcess.key}).length > 0;
                     });
                     angular.forEach(justCompletedProcesses, function (justCompletedProcess) {
-                        $alert({title: translationsProcess, content: justCompletedProcess.name + translationsJustCompleted, placement: 'top-right', type: 'success', show: true});
+                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: justCompletedProcess.name}), placement: 'top-right', type: 'success', show: true});
                         if (justCompletedProcess.type === 'publish-workspace') {
                             $rootScope.$broadcast('publishWorkspaceCompleted');
                         }
@@ -208,7 +203,7 @@ angular.module('ortolangMarketApp')
                     modalScope.formFields = JSON.parse(form.definition);
                     modalScope.formOptions = {
                         uniqueFormId: task.form + '-' + task.id,
-                        submitCopy: translationsCompleteTask
+                        submitCopy: $translate.instant('TASKS.COMPLETE_TASK')
                     };
                     modalScope.onSubmit = function () {
                         var variables = [], type;
@@ -270,7 +265,7 @@ angular.module('ortolangMarketApp')
                             return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
                         });
                         angular.forEach(justCompletedTools, function (justCompletedTool) {
-                            $alert({title: translationsToolJob, content: justCompletedTool.name + translationsJustCompleted, placement: 'top-right', type: 'success', show: true});
+                            $alert({title: $translate.instant('TOOLS.TOOL'), content: $translate('PROCESSES.JUST_COMPLETED', {name: justCompletedTool.name}), placement: 'top-right', type: 'success', show: true});
                         });
                         activeToolJobs = getActiveToolJobs();
                         $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
@@ -360,10 +355,6 @@ angular.module('ortolangMarketApp')
             //          Events         //
             // *********************** //
 
-            $rootScope.$on('$translateChangeSuccess', function () {
-                initTranslations();
-            });
-
             function forceRefresh(delay) {
                 forceRefreshProcesses(delay);
                 forceRefreshTasks(delay);
@@ -386,24 +377,7 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
-            function initTranslations() {
-                $translate([
-                    'PROCESSES.START_PROCESS',
-                    'TASKS.COMPLETE_TASK',
-                    'PROCESSES.PROCESS',
-                    'PROCESSES.JUST_COMPLETED',
-                    'TOOLS.TOOL'
-                ]).then(function (translations) {
-                    translationsStartProcess = translations['PROCESSES.START_PROCESS'];
-                    translationsCompleteTask = translations['TASKS.COMPLETE_TASK'];
-                    translationsProcess = translations['PROCESSES.PROCESS'];
-                    translationsJustCompleted = translations['PROCESSES.JUST_COMPLETED'];
-                    translationsToolJob = translations['TOOLS.TOOL'];
-                });
-            }
-
             function init() {
-                initTranslations();
                 refreshProcesses();
                 refreshTasks();
                 refreshTools();
