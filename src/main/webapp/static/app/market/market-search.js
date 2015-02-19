@@ -51,7 +51,8 @@ angular.module('ortolangMarketApp')
                     query += ' AND CONTENT:' + str + '*';
                 });
             } else {
-                query += ' AND CONTENT:' + content;
+                var str = content.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
+                query += ' AND CONTENT:' + str;
             }
 
             console.debug('query : ' + query);

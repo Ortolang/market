@@ -268,8 +268,9 @@
       margin-left: @padding-large-horizontal;
 
       ul {
-        list-style: none;
-        padding-left: 20px;
+        list-style: inherit;
+        padding-left: @padding-base-horizontal;
+        margin-left: @padding-base-horizontal/2;
       }
 
       dt {
@@ -280,10 +281,8 @@
         padding-left: @padding-base-horizontal;
       }
 
-      .extent {
-        ul {
-          list-style: inherit;
-        }
+      ul.list-contributor {
+        list-style: none;
       }
     }
     p {
