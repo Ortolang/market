@@ -4,12 +4,9 @@
 <div id="formSettings" class="form-horizontal" >
     <div class="form-group">
         <label class="col-md-3 control-label" for="preferredAvatar">Avatar: </label>
-        <button ng-click="isLocked.firstName = !isLocked.firstName" class="btn pull-left"
-                ng-class="{'fa fa-unlock': isLocked.firstName, 'fa fa-lock': !isLocked.firstName}"
-                aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
-        </button>
         <div class="col-md-7" style="padding-top: 5px;">
-            <span id="preferredAvatar" editable-radiolist="user.preferredAvatar" e-ng-options="s.value as s.text for s in avatars">
+            <span id="preferredAvatar" editable-radiolist="user.preferredAvatar" e-ng-options="s.value as s.text for s in avatars" buttons="no"
+                  onbeforesave="updateUserProfile('preferredAvatar',$data)">
                 {{ showPreferredAvatar() }}
             </span>
         </div>

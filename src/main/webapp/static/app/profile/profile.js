@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$routeParams', 'ProfileResource', '$filter',
-        function ($scope, $routeParams, ProfileResource, $filter) {
+    .controller('ProfileCtrl', ['$scope', '$routeParams', 'ProfileResource', '$filter', '$window',
+        function ($scope, $routeParams, ProfileResource, $filter, $window) {
 
             /*
              * Route
@@ -128,6 +128,32 @@ angular.module('ortolangMarketApp')
                 $scope.user.urlPros.push(data);
             };
 
+            $scope.resize = function () {
+                console.debug('Resizing');
+                var profileContainerHeight = angular.element('#profile-container').outerHeight();
+                //console.debug('new height : ', profileContainerHeight);
+                angular.element('#main-wrapper').css({'height': profileContainerHeight + 'px'});
+            };
+
+            $scope.$watch(
+                function() {
+                    return angular.element('#profile-content').outerHeight();
+                },
+                function(newValue, oldValue) {
+                    if(newValue !== oldValue) {
+                        $scope.resize();
+                    }
+                }
+            );
+
+            angular.element($window).bind('resize', function () {
+                $scope.resize();
+            });
+
+            $scope.updateUserProfile = function(field, data) {
+                //console.debug(field, data);
+                //post data
+            };
         }
 ]);
 

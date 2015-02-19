@@ -1,4 +1,4 @@
-<div class="col-md-offset-1 col-md-10 col-md-offset-1">
+<div id="profile-container" class="container-fluid col-md-offset-1 col-md-10 col-md-offset-1" >
     <h1>{{"NAV.PROFILE" | translate}}</h1>
     <hr>
     <div class="row profile">
@@ -37,7 +37,10 @@
 
         <!-- edit form column -->
         <div class="col-md-9">
-            <div ng-include="'PROFILE.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
+            <div id="profile-content" ng-include="'PROFILE.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
         </div>
+    </div>
+    <div style="margin-top: 30px">
+        <pre>{{ user | json }}</pre>
     </div>
 </div>

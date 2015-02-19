@@ -1,17 +1,15 @@
-<div ng-controller="PublicationsCtrl">
- <table class="table">
-    <tbody>
-    <tr ng-repeat="publication in publications.response.docs">
-        <td colspan="2">
-            <div>
-                <a data-original-title="Voir la ressource" href="{{publication.uri_s}}" data-toggle="tooltip" title="Voir la ressource sur HAL" data-placement="bottom" target="_blank">
-                    <span class="fa fa-book" aria-hidden="true"></span>
-                </a>
-            </div>
-        </td>
-        <td colspan="2">
-            <span hljs source="{{publication.label_s}}" ></span>
-        </td>
-    </tr>
- </table>
+<div ng-controller="PublicationsCtrl" class="container-fluid">
+ <div id="publications-result" ng-cloak ng-init="getPublications()">
+     <div>
+         <small>{{publications.length}} résultats trouvés sur <a href="https://hal.archives-ouvertes.fr" target="_blank">HAL</a>.</small>
+         <br/>
+     </div>
+     <hr>
+    <div id="publications-list">
+         <div ng-repeat="publication in publications track by $index" class="text-justify">
+            <p><span class="label label-{{ doctype[publication[3]].color }}"> {{doctype[publication[3]].value}}</span>
+            <span ng-bind-html="publication[4]" class="small"></span></p>
+        </div>
+    </div>
+ </div>
 </div>
