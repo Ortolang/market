@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', '$timeout', function ($rootScope, $scope, $route, $translate, $animate, $timeout) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', function ($rootScope, $scope, $route, $translate, $animate) {
 
         $scope.select = function (element, animate) {
             if (animate === undefined) {

@@ -157,7 +157,7 @@
                         <li><div ng-click="createWorkspace()" translate="BROWSER.WORKSPACE"></div></li>
                     </ul>
                 </div>
-                <section id="my-workspaces">
+                <section class="my-workspaces">
                     <ul class="list-unstyled">
                         <li ng-repeat="ws in wsList.entries" ng-click="changeWorkspace(ws)" ng-class="isActiveWorkspace(ws)"><span></span>{{ws.name}}</li>
                     </ul>
