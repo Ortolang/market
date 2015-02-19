@@ -15,7 +15,7 @@
 
         <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse ng-cloak" ng-cloak>
             <li ng-show="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hidden: false}:true">
-                <a ng-href="#{{element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="element.iconCss"></span> {{element.description}}</a>
+                <a ng-href="#{{element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="element.iconCss"></span> {{element.description | translate}}</a>
             </li>
             <li ng-if="authenticated">
                 <a href="#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" data-bs-enabled="!navbarCollapsed" bs-tooltip>
