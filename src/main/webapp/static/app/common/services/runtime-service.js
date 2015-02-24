@@ -137,6 +137,7 @@ angular.module('ortolangMarketApp')
                     });
                     activeProcesses = getActiveProcesses();
                     $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
+                    console.debug('$rootScope.activeProcessesNbr : ' + $rootScope.activeProcessesNbr);
                     if ($rootScope.activeProcessesNbr === 0) {
                         $timeout.cancel(processesTimeout);
                         $timeout.cancel(tasksTimeout);
@@ -268,12 +269,6 @@ angular.module('ortolangMarketApp')
                             $alert({title: $translate.instant('TOOLS.TOOL'), content: $translate('PROCESSES.JUST_COMPLETED', {name: justCompletedTool.name}), placement: 'top-right', type: 'success', show: true});
                         });
                         activeToolJobs = getActiveToolJobs();
-                        $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
-                        if ($rootScope.activeProcessesNbr === 0) {
-                            $timeout.cancel(toolJobsTimeout);
-                            $timeout.cancel(processesTimeout);
-                            $timeout.cancel(tasksTimeout);
-                        }
                         if ($rootScope.selectedProcess) {
                             $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
                             ToolManager.getTool($rootScope.selectedProcess.key).getLog($rootScope.selectedProcess.id).$promise.then(function (data) {
@@ -358,7 +353,6 @@ angular.module('ortolangMarketApp')
             function forceRefresh(delay) {
                 forceRefreshProcesses(delay);
                 forceRefreshTasks(delay);
-                forceRefreshToolJobs(delay);
             }
 
             $rootScope.$on('process-created', function () {
@@ -366,11 +360,11 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('tool-job-created', function () {
-                forceRefresh();
+                forceRefreshToolJobs();
             });
 
             $rootScope.$on('tool-list-registered', function () {
-                forceRefresh();
+                forceRefreshToolJobs();
             });
 
             // *********************** //
