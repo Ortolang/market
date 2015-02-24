@@ -24,6 +24,13 @@ angular.module('ortolangMarketApp')
         }
 
         /**
+         * Update default avatar
+         */
+        $scope.$on('updateDefaultAvatar', function(event, data) {
+            $scope.currentUser.favoriteAvatar = data;
+        });
+
+        /**
          * Initialize scope var from the session
          */
         $scope.initializeSession = function () {

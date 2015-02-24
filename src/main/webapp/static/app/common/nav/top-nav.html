@@ -50,7 +50,9 @@
             </li>
             <li class="dropdown" ng-if="authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <multi-avatar ng-if="currentUser" data-facebook-id="" data-twitter-id="" data-github-id="{{currentUser.userId}}" data-gravatar-id="{{currentUser.email}}" data-thumbnail="true" ></multi-avatar>
+                    <multi-avatar ng-if="currentUser.avatarIds" data-img-id="small-avatar" data-favorite-avatar="currentUser.favoriteAvatar"
+                                  data-avatar-ids="currentUser.avatarIds" data-thumbnail="true"></multi-avatar>
+
                     {{currentUser.name}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">

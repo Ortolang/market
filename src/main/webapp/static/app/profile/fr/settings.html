@@ -1,51 +1,56 @@
-<h3>Préférences d'affichage</h3>
-<br>
+<div  ng-controller="SettingsCtrl" class="container-fluid">
+    <h3>Préférences d'affichage</h3>
+    <br>
 
-<div id="formSettings" class="form-horizontal" >
-    <div class="form-group">
-        <label class="col-md-3 control-label" for="preferredAvatar">Avatar: </label>
-        <div class="col-md-7" style="padding-top: 5px;">
-            <span id="preferredAvatar" editable-radiolist="user.preferredAvatar" e-ng-options="s.value as s.text for s in avatars" buttons="no"
-                  onbeforesave="updateUserProfile('preferredAvatar',$data)">
-                {{ showPreferredAvatar() }}
-            </span>
+    <div id="formSettings" class="form-horizontal" >
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="favoriteAvatar">Avatar: </label>
+            <div class="col-md-7" style="padding-top: 5px;">
+                <span id="favoriteAvatar" editable-radiolist="user.favoriteAvatar" e-ng-options="s.value as s.text for s in avatars" buttons="no">
+                    {{ showfavoriteAvatar($data) }}
+                </span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group" ng-if="user.preferredAvatar==1">
-        <label class="col-md-3 control-label" for="facebookId">Facebook id: </label>
-        <div class="col-md-7" style="padding-top: 5px;">
-            <span id="facebookId" editable-text="user.facebookId" e-name="facebookId" e-placeholder="Enter your facebook avatar id" e-value="{{user.facebookId}}">
-                {{ user.facebookId || 'empty' }}
-            </span>
-            <span class="help-block">More informations about how to get you facebook user id : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.</span>
+        <div class="form-group" ng-if="user.favoriteAvatar==1">
+            <label class="col-md-3 control-label" for="facebookId">Facebook id: </label>
+            <div class="col-md-7" style="padding-top: 5px;">
+                <span id="facebookId" editable-text="user.facebookId" e-name="facebookId" e-placeholder="Enter your facebook avatar id" e-value="{{user.facebookId}}"
+                      onbeforesave="updateUserAvatar('facebook', $data)">
+                    {{ user.facebookId || 'empty' }}
+                </span>
+                <span class="help-block">More informations about how to get you facebook user id : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group" ng-if="user.preferredAvatar==2">
-        <label class="col-md-3 control-label" for="twitterId">Twitter id: </label>
-        <div class="col-md-7" style="padding-top: 5px;">
-            <span id="twitterId" editable-text="user.twitterId" e-name="twitterId" e-placeholder="Enter your twitter avatar id" e-value="{{user.twitterId}}">
-                {{ user.twitterId || 'empty' }}
-            </span>
-            <span class="help-block">More informations about how to get you twitter user id : <a href="http://mytwitterid.com/" target="_blank">http://mytwitterid.com/</a>.</span>
+        <div class="form-group" ng-if="user.favoriteAvatar==2">
+            <label class="col-md-3 control-label" for="twitterId">Twitter id: </label>
+            <div class="col-md-7" style="padding-top: 5px;">
+                <span id="twitterId" editable-text="user.twitterId" e-name="twitterId" e-placeholder="Enter your twitter avatar id" e-value="{{user.twitterId}}"
+                      onbeforesave="updateUserAvatar('twitter', $data)">
+                    {{ user.twitterId || 'empty' }}
+                </span>
+                <span class="help-block">More informations about how to get you twitter user id : <a href="http://mytwitterid.com/" target="_blank">http://mytwitterid.com/</a>.</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group" ng-if="user.preferredAvatar==3" for="githubUsername">
-        <label class="col-md-3 control-label">Github username: </label>
-        <div class="col-md-7" style="padding-top: 5px;">
-            <span id="githubUsername" editable-text="user.githubUsername" e-name="githubUsername" e-placeholder="Enter your username in gitHub" e-value="{{user.githubUsername}}">
-                {{ user.githubUsername || 'empty' }}
-            </span>
-            <span class="help-block">Please enter your username for gitHub.</span>
+        <div class="form-group" ng-if="$parent.currentUser.favoriteAvatar==3">
+            <label class="col-md-3 control-label" for="githubUsername">Github username: </label>
+            <div class="col-md-7" style="padding-top: 5px;">
+                <span id="githubUsername" editable-text="user.githubId" e-name="githubId" e-placeholder="Enter your username in gitHub" e-value="{{user.githubId}}"
+                      onbeforesave="updateUserAvatar('github', $data)">
+                    {{ user.githubId || 'empty' }}
+                </span>
+                <span class="help-block">Please enter your username for gitHub.</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group" ng-if="user.preferredAvatar==4" for="gravatarEmail">
-        <label class="col-md-3 control-label">Gravatar email: </label>
-        <div class="col-md-7" style="padding-top: 5px;">
-            <span id="gravatarEmail" editable-email="user.gravatarEmail" e-name="gravatarEmail" e-placeholder="Enter the email mapped with gravatar" e-style="width:100%;margin-top:-5px;">
-                {{ user.gravatarEmail || 'empty'}}
-            </span>
-            <span class="help-block">Please enter your email address mapped with gravatar. You can create your own gravatar here : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.</span>
+        <div class="form-group" ng-if="user.favoriteAvatar==4">
+            <label class="col-md-3 control-label" for="gravatarEmail">Gravatar email: </label>
+            <div class="col-md-7" style="padding-top: 5px;">
+                <span id="gravatarEmail" editable-email="user.gravatarId" e-name="gravatarId" e-placeholder="Enter the email mapped with gravatar" e-style="width:100%;margin-top:-5px;"
+                      e-value="{{user.gravatarId}}" onbeforesave="updateUserAvatar('gravatar', $data)">
+                    {{ user.gravatarId || 'empty'}}
+                </span>
+                <span class="help-block">Please enter your email address mapped with gravatar. You can create your own gravatar here : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.</span>
+            </div>
         </div>
     </div>
 </div>

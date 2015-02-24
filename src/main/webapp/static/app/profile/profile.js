@@ -8,18 +8,36 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$routeParams', 'ProfileResource', '$filter', '$window',
-        function ($scope, $routeParams, ProfileResource, $filter, $window) {
+    .controller('ProfileCtrl', ['$scope', '$routeParams', 'ProfileResource', '$filter', '$window', 'User',
+        function ($scope, $routeParams, ProfileResource, $filter, $window, User) {
 
             /*
              * Route
              */
-
             $scope.section = $routeParams.section;
 
             /*
-             * FORMS
+             * INIT
              */
+
+            $scope.avatars = [
+                {value: 1, text: 'Facebook'},
+                //{value: 2, text: 'Twitter'},
+                {value: 3, text: 'GitHub'},
+                {value: 4, text: 'Gravatar'}
+            ];
+
+            $scope.civilities = [
+                {value: 'none', text: 'Choisissez...'},
+                {value: 'M', text: 'Monsieur'},
+                {value: 'Mme', text: 'Madame'},
+                {value: 'other', text: 'Autre'}
+            ];
+
+            $scope.domaines = ['Linguistique', 'Informatique', 'Traitement automatique de la langue'];
+
+            $scope.urlPros = [];
+            $scope.user = undefined;
 
             //$scope.isLocked = {
             //    firstName: true,
@@ -48,88 +66,45 @@ angular.module('ortolangMarketApp')
             //    'd’un boa tous les deux en fourrure et qui, assise bien droite, tendait vers le spectateur un lourd manchon de fourrure où tout son avant-bras avait disparu. <br></p><p></p>'
             //};
 
-            $scope.avatars = [
-                {value: 0, text: 'Default'},
-                {value: 1, text: 'Facebook'},
-                {value: 2, text: 'Twitter'},
-                {value: 3, text: 'GitHub'},
-                {value: 4, text: 'Gravatar'}
-            ];
 
-            $scope.civilities = [
-                {value: 'none', text: 'Choisissez...'},
-                {value: 'M', text: 'Monsieur'},
-                {value: 'Mme', text: 'Madame'},
-                {value: 'other', text: 'Autre'}
-            ];
-
-            $scope.domaines = ['Linguistique', 'Informatique', 'Traitement automatique de la langue'];
-
-            $scope.urlPros = [];
-
-            $scope.user = {civility : 'none', urlPros : [], preferredAvatar : 0 };
-
-            if ($scope.$parent.authenticated) {
-
-                ProfileResource.connected().$promise.then(function (profile) {
-                    $scope.user = profile;
-                    $scope.user.userId = $scope.$parent.currentUser.userId;
-                    $scope.user.name = $scope.$parent.currentUser.name;
-                    if($scope.user.civility === undefined) {
-                        $scope.user.civility = 'none';
-                    }
-                    if($scope.user.urlPros === undefined) {
-                        $scope.user.urlPros = [];
-                        $scope.urlPros=[];
-                    }
-                    else {
-                        angular.forEach($scope.user.urlPros, function (index, url) {
-                            $scope.urlPros.push({index:index, url:url});
-                        });
-                    }
-                    if($scope.user.preferredAvatar === undefined) {
-                        $scope.user.preferredAvatar = 0;
-                    }
-                    //$scope.user.urlPros = [{index:0, url:'http://bli.com'},{index:1, url:'http://bli2.com'}];
-
-                    console.debug('user:', $scope.user);
+            $scope.user = $scope.$parent.currentUser;
+            if($scope.user.civility === undefined) {
+                $scope.user.civility = 'none';
+            }
+            if($scope.user.urlPros === undefined) {
+                $scope.user.urlPros = [];
+                $scope.urlPros=[];
+            }
+            else {
+                angular.forEach($scope.user.urlPros, function (index, url) {
+                    $scope.urlPros.push({index:index, url:url});
                 });
             }
 
-            $scope.addNewUrlPro = function() {
-                var lastItem, newItemNo = 0;
-                if($scope.urlPros.length>0) {
-                    lastItem = $scope.urlPros[$scope.urlPros.length - 1];
-                    newItemNo = lastItem.index + 1;
+            //Complete for more infos ?
+            //ProfileResource.connected().$promise.then(function (profile) {
+            //    $scope.user.profile = profile;
+            //});
+
+            $scope.$watch(
+                function (){
+                    return $scope.user;
+                },
+                function(newValue, oldValue) {
+                    console.debug('change detected',newValue, oldValue);
+                    if ($scope.$parent.currentUser !== newValue) {
+                        $scope.$parent.currentUser = User.load(newValue);
+                        console.debug('updating currentUser', $scope.user, $scope.$parent.currentUser);
+                    }
                 }
-                $scope.urlPros.push({index:newItemNo, url:''});
-            };
+            );
 
-            $scope.removeUrlPro = function(item) {
-                var index = $scope.urlPros.indexOf(item);
-                var index2 = $scope.user.urlPros.indexOf(item);
-                if (index !== -1) {
-                    $scope.urlPros.splice(index, 1);
-                    $scope.user.urlPros.splice(index2, 1);
-                }
-            };
-
-            $scope.showPreferredAvatar = function() {
-                var selected = $filter('filter')($scope.avatars, {value: $scope.user.preferredAvatar});
-                return ($scope.user.preferredAvatar && selected.length) ? selected[0].text : 'Default avatar';
-            };
-
-            $scope.showCivility = function() {
-                var selected = $filter('filter')($scope.civilities, {value: $scope.user.civility});
-                return ($scope.user.civility && selected.length) ? selected[0].text : 'empty';
-            };
-
-            $scope.updateUser = function(data) {
-                $scope.user.urlPros.push(data);
-            };
+            /**
+             * RESIZE CONTAINER
+             */
 
             $scope.resize = function () {
-                console.debug('Resizing');
+                //console.debug('Resizing');
                 var profileContainerHeight = angular.element('#profile-container').outerHeight();
                 //console.debug('new height : ', profileContainerHeight);
                 angular.element('#main-wrapper').css({'height': profileContainerHeight + 'px'});
@@ -150,10 +125,6 @@ angular.module('ortolangMarketApp')
                 $scope.resize();
             });
 
-            $scope.updateUserProfile = function(field, data) {
-                //console.debug(field, data);
-                //post data
-            };
         }
 ]);
 
