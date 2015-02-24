@@ -637,11 +637,14 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.goBack = function () {
+                // Hide manually to prevent tooltip to stay visible
+                angular.element('.tooltip').scope().$parent.$hide();
                 $scope.keyHistory.forward.push($scope.itemKey);
                 browseToKey($scope.keyHistory.back.pop(), true);
             };
 
             $scope.goForward = function () {
+                angular.element('.tooltip').scope().$parent.$hide();
                 $scope.keyHistory.back.push($scope.itemKey);
                 browseToKey($scope.keyHistory.forward.pop(), true);
             };
