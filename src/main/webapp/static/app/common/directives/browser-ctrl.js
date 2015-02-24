@@ -217,7 +217,7 @@ angular.module('ortolangMarketApp')
                 }
                 angular.forEach(filteredElements, function (child) {
                     console.debug('Requesting data of child %s', child.name);
-                    $scope.browserService.getData({oKey: $scope.itemKey, wskey: $scope.wskey, path: $scope.path + child.name, root: $scope.root})
+                    $scope.browserService.getData({oKey: child.key, wskey: $scope.wskey, path: $scope.path + child.name, root: $scope.root})
                         .$promise.then(function (data) {
                             if ($scope.browserService.getDataResource === 'object') {
                                 data = data.object;
@@ -273,7 +273,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.download = function (element) {
-                Download.downloadInNewWindow(element);
+                Download.download(element);
             };
 
             // *********************** //

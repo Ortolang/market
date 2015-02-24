@@ -137,7 +137,6 @@ angular.module('ortolangMarketApp')
                     });
                     activeProcesses = getActiveProcesses();
                     $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
-                    console.debug('$rootScope.activeProcessesNbr : ' + $rootScope.activeProcessesNbr);
                     if ($rootScope.activeProcessesNbr === 0) {
                         $timeout.cancel(processesTimeout);
                         $timeout.cancel(tasksTimeout);
