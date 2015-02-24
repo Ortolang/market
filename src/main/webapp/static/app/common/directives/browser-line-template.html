@@ -12,16 +12,9 @@
         <tr ng-repeat="child in filteredChildren() | orderBy:orderProp:orderReverse"
             ng-click="clickChild($event, child)"
             ng-right-click="clickChild($event, child)"
-            ng-dblclick="doubleClickChild($event, child)"
+            ng-dblclick="doubleClickChild(child)"
             ng-class="{active : isSelected(child)}">
-            <td ng-if="child.type === 'collection'">
-                        <span ng-click="browseToChild(child)" class="collection">
-                            <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
-                        </span>
-            </td>
-            <td ng-if="child.type !== 'collection'">
-                <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
-            </td>
+            <td><span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
             <td>{{::child.modification | date : dateFormat}}</td>
             <td ng-if="child.type === 'collection'">-</td>

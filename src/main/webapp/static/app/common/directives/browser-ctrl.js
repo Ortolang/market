@@ -80,50 +80,51 @@ angular.module('ortolangMarketApp')
             $scope.contextMenu = function (clickEvent, sameChild) {
                 // TODO Context menu could be optimized when clicking on a same child but context menu deactivated
                 // If right click
-                if (!marketItemHeader) {
-                    marketItemHeader = angular.element('.market-item').find('header').outerHeight();
-                }
-                if (!footerHeight) {
-                    footerHeight = angular.element('#footer-wrapper').outerHeight();
-                }
                 if (clickEvent && clickEvent.button === 2) {
-                    $scope.contextMenuStyle = {
-                        position: 'absolute',
-                        display: 'block',
-                        // Fix dropdown offset because of margin-left on page wrapper
-                        left: clickEvent.pageX - pageWrapperMarginLeft - 18 + 'px',
-                        // Fix dropdown offset because of navbar and toolbar
-                        top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 4 + 'px'
-                    };
                     // If the context menu has already been build no need to do it again
-                    if ($scope.isContextMenuActive && sameChild) {
-                        return;
-                    }
-                    clearContextMenuItems();
-                    if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
-                        $scope.contextMenuItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
-                        // TODO Support importing files into selected directory
-                        if ($scope.hasOnlyParentSelected()) {
-                            $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
+                    if (!($scope.isContextMenuActive && sameChild)) {
+                        clearContextMenuItems();
+                        if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && $scope.selectedElements[0].type === 'collection') {
+                            $scope.contextMenuItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
+                            // TODO Support importing files into selected directory
+                            if ($scope.hasOnlyParentSelected()) {
+                                $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
+                            }
+                            $scope.contextMenuItems.push({divider: true});
                         }
-                        $scope.contextMenuItems.push({divider: true});
+                        if ($scope.browserService.canPreview && $scope.visualizers) {
+                            $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
+                            $scope.contextMenuItems.push({divider: true});
+                        }
+                        if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
+                            $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
+                        }
+                        if ($scope.browserService.canDelete && $scope.isHead && !$scope.hasOnlyParentSelected()) {
+                            $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
+                            $scope.contextMenuItems.push({divider: true});
+                        }
+                        //$scope.contextMenuItems.push({text: $scope.otherViewMode.text, icon: $scope.otherViewMode.icon, action: 'switchViewMode'});
+                        if ($scope.contextMenuItems.length > 0 && $scope.contextMenuItems[$scope.contextMenuItems.length - 1].divider) {
+                            $scope.contextMenuItems.pop();
+                        }
+                        activateContextMenu();
                     }
-                    if ($scope.browserService.canPreview && $scope.visualizers) {
-                        $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
-                        $scope.contextMenuItems.push({divider: true});
+                    if ($scope.contextMenuItems.length > 0) {
+                        if (!marketItemHeader) {
+                            marketItemHeader = angular.element('.market-item').find('header').outerHeight();
+                        }
+                        if (!footerHeight) {
+                            footerHeight = angular.element('#footer-wrapper').outerHeight();
+                        }
+                        $scope.contextMenuStyle = {
+                            position: 'absolute',
+                            display: 'block',
+                            // Fix dropdown offset because of margin-left on page wrapper
+                            left: clickEvent.pageX - pageWrapperMarginLeft - 18 + 'px',
+                            // Fix dropdown offset because of navbar and toolbar
+                            top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 4 + 'px'
+                        };
                     }
-                    if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
-                        $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
-                    }
-                    if ($scope.browserService.canDelete && $scope.isHead && !$scope.hasOnlyParentSelected()) {
-                        $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
-                        $scope.contextMenuItems.push({divider: true});
-                    }
-                    //$scope.contextMenuItems.push({text: $scope.otherViewMode.text, icon: $scope.otherViewMode.icon, action: 'switchViewMode'});
-                    if ($scope.contextMenuItems.length > 0 && $scope.contextMenuItems[$scope.contextMenuItems.length - 1].divider) {
-                        $scope.contextMenuItems.pop();
-                    }
-                    activateContextMenu();
                 } else {
                     deactivateContextMenu();
                 }
@@ -195,10 +196,10 @@ angular.module('ortolangMarketApp')
                         } else {
                             newSelectedElement(data);
                         }
+                        checkCompatibleVisualizers();
                         if (!refresh) {
                             $scope.contextMenu(clickEvent, false);
                         }
-                        checkCompatibleVisualizers();
                     });
             }
 
@@ -319,43 +320,39 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.clickChild = function (clickEvent, child) {
-                // Target with attribute ng-click equalling browseToChild means that we don't need
-                // to select the child since a browseToChild is about to occur
-                if (angular.element(clickEvent.target).attr('ng-click') !== 'browseToChild(child)') {
-                    var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
-                    if ($scope.isSelected(child)) {
-                        if (modKey) {
-                            deselectChild(child);
-                            return;
-                        }
-                        if (clickEvent.button === 0) {
-                            if (!$scope.hasOnlyOneElementSelected()) {
-                                // Check if the user left-clicked again on the same element
-                                if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
-                                    deselectOthers(child);
-                                } else {
-                                    // If it's the first time do nothing; if it's the second time deselect the others
-                                    if (isClickedOnce) {
-                                        deselectOthers(child);
-                                        isClickedOnce = false;
-                                    } else {
-                                        isClickedOnce = true;
-                                    }
-                                }
-                            }
-                        } else {
-                            isClickedOnce = false;
-                        }
-                        $scope.contextMenu(clickEvent, true);
+                var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
+                if ($scope.isSelected(child)) {
+                    if (modKey) {
+                        deselectChild(child);
                         return;
                     }
-                    // Get detailed info on the selected child
-                    if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
-                            modKey && !$scope.hasOnlyParentSelected()) {
-                        getChildData(child, false, clickEvent, true);
+                    if (clickEvent.button === 0) {
+                        if (!$scope.hasOnlyOneElementSelected()) {
+                            // Check if the user left-clicked again on the same element
+                            if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
+                                deselectOthers(child);
+                            } else {
+                                // If it's the first time do nothing; if it's the second time deselect the others
+                                if (isClickedOnce) {
+                                    deselectOthers(child);
+                                    isClickedOnce = false;
+                                } else {
+                                    isClickedOnce = true;
+                                }
+                            }
+                        }
                     } else {
-                        getChildData(child, false, clickEvent, false);
+                        isClickedOnce = false;
                     }
+                    $scope.contextMenu(clickEvent, true);
+                    return;
+                }
+                // Get detailed info on the selected child
+                if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
+                    modKey && !$scope.hasOnlyParentSelected()) {
+                    getChildData(child, false, clickEvent, true);
+                } else {
+                    getChildData(child, false, clickEvent, false);
                 }
             };
 
@@ -369,10 +366,10 @@ angular.module('ortolangMarketApp')
 
             $scope.checkSelection = function (clickEvent) {
                 if (($scope.workspace || $scope.isMarket()) && !($(clickEvent.target).parent('tr').length || $(clickEvent.target).parent('td').length ||
-                        $(clickEvent.target).parent('.browsed-element-child').length ||
-                        $(clickEvent.target).parent().parent('.browsed-element-child').length ||
-                        $(clickEvent.target).parents('#context-menu').length ||
-                        $(clickEvent.target).parents('.btn-toolbar').length)) {
+                    $(clickEvent.target).parent('.browsed-element-child').length ||
+                    $(clickEvent.target).parent().parent('.browsed-element-child').length ||
+                    $(clickEvent.target).parents('#context-menu').length ||
+                    $(clickEvent.target).parents('.btn-toolbar').length)) {
                     deselectChildren();
                     $scope.contextMenu(clickEvent, false);
                 }
@@ -431,7 +428,7 @@ angular.module('ortolangMarketApp')
                             path = $scope.parent.path + '/';
 
                         if ($scope.hasOnlyOneElementSelected() && !$scope.hasOnlyParentSelected() &&
-                                $scope.selectedElements[0].type === 'collection') {
+                            $scope.selectedElements[0].type === 'collection') {
                             path += $scope.selectedElements[0].name + '/';
                         }
                         path += addCollectionModalScope.newCollectionName;
@@ -489,34 +486,34 @@ angular.module('ortolangMarketApp')
 
             $scope.doAction = function (name) {
                 switch (name) {
-                case 'download':
-                    $scope.download($scope.selectedElements[0]);
-                    deactivateContextMenu();
-                    break;
-                case 'addCollection':
-                    $scope.addCollection();
-                    break;
-                case 'delete':
-                    $scope.clickDelete();
-                    break;
-                case 'preview':
-                    $scope.clickPreview();
-                    break;
-                case 'uploadFiles':
-                    // Using $timeout to prevent '$apply already in progress' error
-                    $timeout(function () {
-                        angular.element('#object-upload-file-select').click();
-                    });
-                    break;
-                case 'switchViewMode':
-                    $scope.switchViewMode();
-                    deactivateContextMenu();
-                    break;
-                case 'uploadFolder':
-                    angular.element('#object-upload-folder-select').click();
-                    break;
-                default:
-                    break;
+                    case 'download':
+                        $scope.download($scope.selectedElements[0]);
+                        deactivateContextMenu();
+                        break;
+                    case 'addCollection':
+                        $scope.addCollection();
+                        break;
+                    case 'delete':
+                        $scope.clickDelete();
+                        break;
+                    case 'preview':
+                        $scope.clickPreview();
+                        break;
+                    case 'uploadFiles':
+                        // Using $timeout to prevent '$apply already in progress' error
+                        $timeout(function () {
+                            angular.element('#object-upload-file-select').click();
+                        });
+                        break;
+                    case 'switchViewMode':
+                        $scope.switchViewMode();
+                        deactivateContextMenu();
+                        break;
+                    case 'uploadFolder':
+                        angular.element('#object-upload-folder-select').click();
+                        break;
+                    default:
+                        break;
                 }
             };
 
@@ -603,16 +600,16 @@ angular.module('ortolangMarketApp')
 
             $scope.clickPreview = function (_visualizer_) {
                 //if (_visualizer_ || $scope.visualizers) {
-                    var visualizer = _visualizer_ || $scope.visualizers[0];
-                    if (visualizer.needAllChildrenData) {
-                        // TODO Won't work for visualizers accepting multiple
-                        if (visualizer.isAcceptingSingle()) {
-                            getChildrenDataOfTypes(visualizer.getCompatibleTypes(), true, visualizer);
-                        }
-                    } else {
-                        $scope.children = undefined;
-                        finishPreview(visualizer);
+                var visualizer = _visualizer_ || $scope.visualizers[0];
+                if (visualizer.needAllChildrenData) {
+                    // TODO Won't work for visualizers accepting multiple
+                    if (visualizer.isAcceptingSingle()) {
+                        getChildrenDataOfTypes(visualizer.getCompatibleTypes(), true, visualizer);
                     }
+                } else {
+                    $scope.children = undefined;
+                    finishPreview(visualizer);
+                }
                 //}
             };
 
@@ -649,7 +646,7 @@ angular.module('ortolangMarketApp')
                 browseToKey($scope.keyHistory.forward.pop(), true);
             };
 
-            $scope.browseToChild = function (child) {
+            function browseToChild(child) {
                 if ($scope.browserService.getDataResource !== 'object' && (!browseUsingLocation || $scope.browserService.isFileSelect)) {
                     $scope.browseToPath($scope.parent.path + '/' + child.name);
                 } else if ($scope.browserService.getDataResource === 'object' && (!browseUsingLocation)) {
@@ -657,7 +654,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     $location.path($scope.browserService.buildChildBrowseUrl(child, $scope.parent, $scope.root));
                 }
-            };
+            }
 
             function getSelectedElementsCopy() {
                 var selectedElementsCopy = angular.copy($scope.selectedElements),
@@ -685,9 +682,9 @@ angular.module('ortolangMarketApp')
                 return $scope.forceMimeTypes ? matchingSelectedElements : selectedElementsCopy;
             }
 
-            $scope.doubleClickChild = function ($event, child) {
+            $scope.doubleClickChild = function (child) {
                 if (child.type === 'collection') {
-                    $scope.browseToChild(child);
+                    browseToChild(child);
                 } else {
                     if ($scope.browserService.isFileSelect) {
                         var elements = getSelectedElementsCopy();
@@ -811,8 +808,8 @@ angular.module('ortolangMarketApp')
                 //console.count('Browser filteredChildren');
                 if ($scope.parent && $scope.parent.elements) {
                     if ($scope.filterNameQuery === previousFilterNameQuery &&
-                            $scope.filterMimeTypeQuery === previousFilterMimeTypeQuery &&
-                            type === previousFilterType) {
+                        $scope.filterMimeTypeQuery === previousFilterMimeTypeQuery &&
+                        type === previousFilterType) {
                         if (type) {
                             return previousFilteredChildren[type] || $scope.parent.elements;
                         }
@@ -847,7 +844,7 @@ angular.module('ortolangMarketApp')
 
             angular.element('#filter-query-wrapper').on('hide.bs.dropdown', function () {
                 if (($scope.filterNameQuery !== undefined && $scope.filterNameQuery.length !== 0) ||
-                        ($scope.filterMimeTypeQuery !== undefined && $scope.filterMimeTypeQuery.length !== 0)) {
+                    ($scope.filterMimeTypeQuery !== undefined && $scope.filterMimeTypeQuery.length !== 0)) {
                     return false;
                 }
             });

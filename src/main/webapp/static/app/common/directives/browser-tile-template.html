@@ -6,7 +6,7 @@
                 <div class="browsed-element-child"
                      ng-click="clickChild($event, child)"
                      ng-right-click="clickChild($event, child)"
-                     ng-dblclick="doubleClickChild($event, child)"
+                     ng-dblclick="doubleClickChild(child)"
                      ng-class="{active : isSelected(child), collection: type === 'collection'}">
                     <div ng-if="type === 'object'" class="preview">
                         <span class="fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
