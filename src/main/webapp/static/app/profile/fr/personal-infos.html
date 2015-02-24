@@ -15,7 +15,7 @@
                     aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
-                 <span id="civility" editable-select="user.civility" e-name="civility" e-ng-options="s.value as s.text for s in civilities">
+                 <span id="civility" editable-select="user.civility" e-name="civility" e-ng-options="s.value as s.text for s in civilities" data-onaftersave="updateCurrentUser()">
                     {{ showCivility() }}
                  </span>
             </div>
@@ -27,7 +27,7 @@
                     aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
-                 <span editable-text="user.firstname" e-name="firstname" e-placeholder="Prénom" e-value="{{user.firstname}}" >
+                 <span editable-text="user.firstname" e-name="firstname" e-placeholder="Prénom" e-value="{{user.firstname}}" data-onaftersave="updateCurrentUser()">
                     {{ user.firstname || 'empty' }}
                  </span>
             </div>
@@ -39,7 +39,7 @@
                     aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
-                 <span editable-text="user.lastname" e-name="lastname" e-placeholder="Nom" e-value="{{user.lastname}}" >
+                 <span editable-text="user.lastname" e-name="lastname" e-placeholder="Nom" e-value="{{user.lastname}}" data-onaftersave="updateCurrentUser()">
                     {{ user.lastname || 'empty' }}
                  </span>
             </div>
@@ -48,10 +48,10 @@
             <label class="col-md-3 control-label">Email:</label>
             <button ng-click="isLocked.email = !isLocked.email" class="btn pull-left"
                     ng-class="{'fa fa-unlock': isLocked.email, 'fa fa-lock': !isLocked.email}"
-                    aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
+                    aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}">
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
-                 <span editable-email="user.email" e-name="email" e-value="{{user.email}}" >
+                 <span editable-email="user.email" e-name="email" e-value="{{user.email}}" data-onaftersave="updateCurrentUser()">
                     {{ user.email || 'empty' }}
                  </span>
             </div>
@@ -63,7 +63,7 @@
                     aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
-                 <span editable-text="user.userId" e-name="userId" e-value="{{user.userId}}" >
+                 <span editable-text="user.userId" e-name="userId" e-value="{{user.userId}}" data-onaftersave="updateCurrentUser()">
                     {{ user.userId || 'empty' }}
                  </span>
             </div>
@@ -75,7 +75,7 @@
                     aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
-                 <span editable-text="user.organisation" e-name="organisation" e-value="{{user.organisation}}" >
+                 <span editable-text="user.organisation" e-name="organisation" e-value="{{user.organisation}}" data-onaftersave="updateCurrentUser()">
                     {{ user.organisation || 'empty' }}
                  </span>
             </div>
@@ -87,7 +87,7 @@
                     aria-hidden="true" bs-tooltip data-title="{{'PROFILE.VISIBILITY' | translate}}" >
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
-                 <span editable-text="user.fonction" e-name="fonction" e-value="{{user.fonction}}" >
+                 <span editable-text="user.fonction" e-name="fonction" e-value="{{user.fonction}}" data-onaftersave="updateCurrentUser()">
                     {{ user.fonction || 'empty' }}
                  </span>
             </div>
@@ -100,7 +100,7 @@
             </button>
             <div class="col-md-7" style="padding-top: 5px;">
                  <span editable-text="user.domaine" e-name="domaine" e-value="{{user.domaine}}" e-autocomplete="off"
-                       e-ng-options="domaine for domaine in domaines | filter:$viewValue | limitTo:8" e-bs-typeahead>
+                       e-ng-options="domaine for domaine in domaines | filter:$viewValue | limitTo:8" e-bs-typeahead data-onaftersave="updateCurrentUser()">
                     {{ user.domaine || 'empty' }}
                  </span>
             </div>
@@ -114,7 +114,7 @@
             <div class="col-md-7" style="padding-top: 5px;">
                 <div data-ng-repeat="value in urlPros" style="padding-bottom: 10px;">
                     <span editable-url="value.url" e-name="urlPro[value.index]" e-value="{{value.url}}"
-                          onbeforesave="updateUser($data)" e-pattern="https?://.+">
+                          onbeforesave="updateUser($data)" e-pattern="https?://.+" data-onaftersave="updateCurrentUser()">
                         {{ value.url || 'empty' }}
                      </span>
                     <button class="btn pull-left fa fa-times btn-xs btn-danger" ng-click="removeUrlPro(value)"

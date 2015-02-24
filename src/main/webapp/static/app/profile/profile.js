@@ -86,18 +86,11 @@ angular.module('ortolangMarketApp')
             //    $scope.user.profile = profile;
             //});
 
-            $scope.$watch(
-                function (){
-                    return $scope.user;
-                },
-                function(newValue, oldValue) {
-                    console.debug('change detected',newValue, oldValue);
-                    if ($scope.$parent.currentUser !== newValue) {
-                        $scope.$parent.currentUser = User.load(newValue);
-                        console.debug('updating currentUser', $scope.user, $scope.$parent.currentUser);
-                    }
-                }
-            );
+            $scope.updateCurrentUser = function() {
+                $scope.user.name = $scope.user.firstname + ' ' + $scope.user.lastname;
+                $scope.$parent.currentUser = User.load($scope.user);
+            };
+
 
             /**
              * RESIZE CONTAINER

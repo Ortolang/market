@@ -46,8 +46,8 @@ angular.module('ortolangMarketApp')
             this.id = user.id;
             this.userId = user.userId;
             this.name = user.name;
-            this.firstname = user.givenName;
-            this.lastname = user.familyName;
+            this.firstname = (user.firstname)? user.firstname : user.givenName;
+            this.lastname = (user.lastname)? user.lastname : user.familyName;
             this.email = user.email;
             this.status = user.status;
             this.userMember = user.userMember;

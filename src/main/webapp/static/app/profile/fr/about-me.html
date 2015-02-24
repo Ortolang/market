@@ -9,7 +9,7 @@
 <br>
 <br>
 <div class="editableWysiwyg">
-    <div editable-text-area="user.desc" ng-bind-html="user.desc ? user.desc : 'empty'"></div>
+    <div editable-text-area="user.desc" ng-bind-html="user.desc ? user.desc : 'empty'" data-onaftersave="updateCurrentUser()"></div>
 </div>
 <br>
 <br>
