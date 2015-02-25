@@ -1,5 +1,11 @@
 <div ng-if="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
     <table ng-init="resizeBrowser()" ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
+        <colgroup>
+            <col/>
+            <col/>
+            <col/>
+            <col class="size" />
+        </colgroup>
         <thead class="small">
         <tr>
             <th ng-click="order('name', 'toggle')" translate="NAME"></th>
@@ -9,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="child in filteredChildren() | orderBy:orderProp:orderReverse"
+        <tr ng-repeat="child in filteredOrderedChildren() track by child.key"
             ng-click="clickChild($event, child)"
             ng-right-click="clickChild($event, child)"
             ng-dblclick="doubleClickChild(child)"

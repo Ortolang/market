@@ -59,6 +59,13 @@ angular.module('ortolangMarketApp')
             EDIT_PRESENTATION_METADATA: 'Éditer les métadonées de présentation',
             DRAFT: 'Non publié',
             PUBLISHED: 'Publié',
-            CREATED: '{{author}} a créé'
+            CREATED: '{{author}} a créé',
+            SHORTCUTS: {
+                SHORTCUTS: 'Raccourcis clavier',
+                FILTER: 'Filtrer les éléments',
+                UP: 'Naviguer vers le haut',
+                DOWN: 'Naviguer vers le bas',
+                VIEW_MODE: 'Changer de mode de vue (liste/grille)'
+            }
         }
     });

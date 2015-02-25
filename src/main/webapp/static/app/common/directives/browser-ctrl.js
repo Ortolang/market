@@ -599,18 +599,18 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.clickPreview = function (_visualizer_) {
-                //if (_visualizer_ || $scope.visualizers) {
-                var visualizer = _visualizer_ || $scope.visualizers[0];
-                if (visualizer.needAllChildrenData) {
-                    // TODO Won't work for visualizers accepting multiple
-                    if (visualizer.isAcceptingSingle()) {
-                        getChildrenDataOfTypes(visualizer.getCompatibleTypes(), true, visualizer);
+                if (_visualizer_ || $scope.visualizers) {
+                    var visualizer = _visualizer_ || $scope.visualizers[0];
+                    if (visualizer.needAllChildrenData) {
+                        // TODO Won't work for visualizers accepting multiple
+                        if (visualizer.isAcceptingSingle()) {
+                            getChildrenDataOfTypes(visualizer.getCompatibleTypes(), true, visualizer);
+                        }
+                    } else {
+                        $scope.children = undefined;
+                        finishPreview(visualizer);
                     }
-                } else {
-                    $scope.children = undefined;
-                    finishPreview(visualizer);
                 }
-                //}
             };
 
             $scope.browseToPath = function (path) {
@@ -753,6 +753,10 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.showCheatsheet = function ($event) {
+                hotkeys.get('?').callback($event);
+            };
+
             // *********************** //
             //          Filter         //
             // *********************** //
@@ -804,6 +808,11 @@ angular.module('ortolangMarketApp')
                 };
             };
 
+            $scope.filteredOrderedChildren = function () {
+                $scope.filteredOrderedChildrenArray = $filter('orderBy')($scope.filteredChildren(), $scope.orderProp, $scope.orderReverse);
+                return $scope.filteredOrderedChildrenArray;
+            };
+
             $scope.filteredChildren = function (type) {
                 //console.count('Browser filteredChildren');
                 if ($scope.parent && $scope.parent.elements) {
@@ -849,15 +858,111 @@ angular.module('ortolangMarketApp')
                 }
             });
 
+            function navigate(down) {
+                if (angular.element('.visualizer-modal.in').length === 0 && $scope.isViewModeLine()) {
+                    var i;
+                    if ($scope.hasOnlyOneElementSelected()) {
+                        if ($scope.selectedElements[0].key === $scope.parent.key) {
+                            if (down) {
+                                getChildData($scope.filteredOrderedChildrenArray[0], false, undefined, false);
+                            } else {
+                                getChildData($scope.filteredOrderedChildrenArray[$scope.filteredOrderedChildrenArray.length - 1], false, undefined, false);
+                            }
+                        } else {
+                            for (i = 0; i < $scope.filteredOrderedChildrenArray.length; i++) {
+                                if ($scope.filteredOrderedChildrenArray[i].key === $scope.selectedElements[0].key) {
+                                    if (down) {
+                                        i++;
+                                    } else {
+                                        i--;
+                                    }
+                                    break;
+                                }
+                            }
+                            if (i >= 0 && i < $scope.filteredOrderedChildrenArray.length) {
+                                getChildData($scope.filteredOrderedChildrenArray[i], false, undefined, false);
+                            }
+                        }
+                    } else {
+                        var j, k = 0;
+                        for (i = 0; i < $scope.filteredOrderedChildrenArray.length; i++) {
+                            for (j = 0; j < $scope.selectedElements.length; j++) {
+                                if ($scope.filteredOrderedChildrenArray[i].key === $scope.selectedElements[j].key) {
+                                    k++;
+                                    break;
+                                }
+                            }
+                            if (k === $scope.selectedElements.length) {
+                                if (down) {
+                                    i++;
+                                } else {
+                                    i--;
+                                }
+                                break;
+                            }
+                        }
+                        if (i >= 0) {
+                            if (i >= $scope.filteredOrderedChildrenArray.length) {
+                                i = $scope.filteredOrderedChildrenArray.length -1;
+                            }
+                            getChildData($scope.filteredOrderedChildrenArray[i], false, undefined, false);
+                        }
+                    }
+                }
+            }
+
             hotkeys.bindTo($scope)
                 .add({
                     combo: 'mod+f',
-                    description: 'Filter',
+                    description: $translate.instant('BROWSER.SHORTCUTS.FILTER'),
                     callback: function (event) {
                         event.preventDefault();
                         var filterWrapper = $('#filter-query-wrapper');
                         filterWrapper.find('button').dropdown('toggle');
                         filterWrapper.find('#filter-input').focus();
+                    }
+                })
+                .add({
+                    combo: 'down',
+                    description: $translate.instant('BROWSER.SHORTCUTS.DOWN'),
+                    callback: function (event) {
+                        event.preventDefault();
+                        navigate(true);
+                    }
+                })
+                .add({
+                    combo: 'up',
+                    description: $translate.instant('BROWSER.SHORTCUTS.UP'),
+                    callback: function (event) {
+                        event.preventDefault();
+                        navigate(false);
+                    }
+                })
+                .add({
+                    combo: 'space',
+                    description: $translate.instant('BROWSER.PREVIEW'),
+                    callback: function (event) {
+                        event.preventDefault();
+                        if (angular.element('.visualizer-modal.in').length > 0) {
+                            angular.element('.visualizer-modal').modal('hide');
+                        } else {
+                            $scope.clickPreview();
+                        }
+                    }
+                }).add({
+                    combo: 'mod+v',
+                    description: $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
+                    callback: function (event) {
+                        event.preventDefault();
+                        $scope.switchViewMode();
+                    }
+                })
+                .add({
+                    combo: 'mod+n',
+                    description: $translate.instant('BROWSER.NEW_COLLECTION'),
+                    callback: function (event) {
+                        event.preventDefault();
+                        $scope.addCollection();
                     }
                 });
 

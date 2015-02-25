@@ -1,7 +1,7 @@
 <div ng-if="!isViewModeLine()" class="row browsed-element-children-wrapper">
     <div ng-init="resizeBrowser()" class="col-md-12">
         <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
-            <div ng-repeat="child in filteredChildren(type) | orderBy:orderProp:orderReverse"
+            <div ng-repeat="child in filteredChildren(type) | orderBy:orderProp:orderReverse track by child.key"
                  ng-class="tileCssClasses()" class="browsed-element-child-wrapper">
                 <div class="browsed-element-child"
                      ng-click="clickChild($event, child)"

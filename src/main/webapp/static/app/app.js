@@ -97,6 +97,9 @@ angular
             container: 'body'
         });
     }])
+    .config(['hotkeysProvider', function (hotkeysProvider) {
+        hotkeysProvider.cheatSheetDescription = undefined;
+    }])
     .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
         uiZeroclipConfigProvider.setZcConf({
             swfPath: '/vendor/ZeroClipboard.swf'
