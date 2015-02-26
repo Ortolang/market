@@ -35,11 +35,13 @@
 </div>
 <div id="footer-wrapper" ng-include="footerPath()"></div>
 
-<!-- build:js(.) scripts/oldieshim.js -->
 <!--[if lt IE 9]>
 <script type="text/javascript">
     window.location = "ie.html";
 </script>
+<![endif]-->
+<!-- build:js(.) scripts/oldieshim.js -->
+<!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>
 <![endif]-->
 <!-- endbuild -->
