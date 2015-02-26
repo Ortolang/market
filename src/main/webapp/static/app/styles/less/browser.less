@@ -53,8 +53,11 @@
     }
   }
   .dropdown-menu.filter {
-    padding-left: @padding-xs-horizontal;
-    padding-right: @padding-xs-horizontal;
+    padding: @padding-large-horizontal;
+    min-width: 215px;
+    .form-control-feedback {
+      pointer-events: auto;
+    }
   }
 
   .dropdown-toggle {
