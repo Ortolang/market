@@ -42,8 +42,9 @@ angular.module('ortolangMarketApp')
 
         $scope.selectTool = function (tool) {
             $scope.selectedTool = tool;
-            //ToolManager.checkGrant(tool.getKey());
-            $scope.loadConfig();
+            ToolManager.checkGrant(tool.getKey()).then(function () {
+                $scope.loadConfig();
+            });
         };
 
         $scope.resetSelectedTool = function () {
@@ -117,8 +118,7 @@ angular.module('ortolangMarketApp')
 
         $scope.onSubmit = function () {
             ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.formData).$promise.then(
-                function success(response) {
-                    console.log(response);
+                function success() {
                     $rootScope.$broadcast('tool-job-created');
                     $scope.hide();
                 },

@@ -46,6 +46,8 @@ angular.module('ortolangMarketApp')
             PUBLISH: 'Publier l\'espace de travail',
             PREVIEW_WORKSPACE: 'Aperçu avant publication',
             VERSION: 'Versions de l\'espace de travail',
+            HEAD: 'Version actuelle',
+            PREVIOUS_VERSIONS: 'Versions précédentes',
             BACK: 'Revenir',
             FORWARD: 'Avancer',
             TOGGLE_DROPDOWN: 'Menu déroulant',

@@ -1,31 +1,24 @@
-.charteToc {
+.charte-toc {
   transition: .8s;
   overflow: hidden;
   ol {
     & > li {
-      padding-top: 0;
+      padding-top: 15px;
+      padding-left: 5px;
+      margin-left: -20px;
+
+      & > ul {
+        list-style-type: disc;
+      }
     }
+  }
+  @media (min-width: 768px) and (max-width: 979px) {
+    ol { list-style: decimal inside; }
   }
 }
 
-.charteToc.hidden {
+.charte-toc.hidden {
   max-height: 0;
-}
-
-ol {
-  & > li {
-    padding-top: 15px;
-    padding-left: 5px;
-    margin-left: -20px;
-
-    & > ul {
-      list-style-type: disc;
-    }
-  }
-}
-
-@media (min-width: 768px) and (max-width: 979px) {
-  ol { list-style: decimal inside; }
 }
 
 .small-ordered-list {

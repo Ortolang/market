@@ -106,13 +106,15 @@
                             </button>
                             <ul ng-if="browserService.canChangeRoot && !forceHead" class="dropdown-menu dropdown-menu-right snapshots" role="menu">
                                 <li ng-click="changeRoot('head')" ng-class="{active: root === 'head'}">
-                                    <div>Head</div>
+                                    <div>{{'BROWSER.HEAD' | translate}}</div>
                                 </li>
                                 <li ng-if="workspace.snapshots.length !== 0" class="divider"></li>
-                                <li ng-repeat="snapshot in workspace.snapshots"
-                                    ng-class="{active: root === snapshot.name}"
-                                    ng-click="changeRoot(snapshot)">
-                                    <div>{{snapshot.name}}</div>
+                                <li ng-if="workspace.snapshots.length !== 0" class="dropdown-header">{{'BROWSER.PREVIOUS_VERSIONS' | translate}}</li>
+                                <li ng-repeat="workspaceSnapshot in workspaceHistory | orderBy:'date':true track by workspaceSnapshot.key"
+                                    ng-if="workspaceSnapshot.name"
+                                    ng-class="{active: root === workspaceSnapshot.name}"
+                                    ng-click="changeRoot(workspaceSnapshot)">
+                                    <div>{{workspaceSnapshot.name}}</div>
                                 </li>
                             </ul>
                         </div>
@@ -164,7 +166,7 @@
                 </div>
                 <section class="my-workspaces">
                     <ul class="list-unstyled">
-                        <li ng-repeat="ws in wsList.entries" ng-click="changeWorkspace(ws)" ng-class="isActiveWorkspace(ws)"><span></span>{{ws.name}}</li>
+                        <li ng-repeat="workspace in workspaceList.entries track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="isActiveWorkspace(workspace)"><span></span>{{workspace.name}}</li>
                     </ul>
                 </section>
             </div>
@@ -273,7 +275,7 @@
                     <div class="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
                         <div data-title="{{'BROWSER.HISTORY' | translate}}" bs-pane>
                             <ul class="list-unstyled">
-                                <li ng-repeat="snapshotHistory in snapshotsHistory | orderBy:'date':true" class="panel panel-default" ng-if="getSnapshotNameFromHistory(snapshotHistory)" ng-click="changeRoot(getSnapshotFromHistory(snapshotHistory))">
+                                <li ng-repeat="workspaceSnapshot in workspaceHistory | orderBy:'date':true track by workspaceSnapshot.key" class="panel panel-default" ng-if="workspaceSnapshot.name" ng-click="changeRoot(workspaceSnapshot)">
                                     <div class="panel-body workspace-snapshot">
                                         <div class="media">
                                             <div class="pull-left">
@@ -281,12 +283,11 @@
                                             </div>
                                             <div class="media-body">
                                                 <p class="creation">
-                                                    <span translate="BROWSER.CREATED" data-translate-values="{author: snapshotHistory.author}"></span>
-                                                    <strong class="snapshot-name">{{getSnapshotNameFromHistory(snapshotHistory)}}</strong>
-                                                    <span class="small publication-status" ng-class="[snapshotHistory.publicationStatus, icons.browser.published]" data-title="{{snapshotHistory.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="left" bs-tooltip></span>
+                                                    <span translate="BROWSER.CREATED" data-translate-values="{author: workspaceSnapshot.author}"></span>
+                                                    <strong class="snapshot-name">{{workspaceSnapshot.name}}</strong>
+                                                    <span class="small publication-status" ng-class="[workspaceSnapshot.publicationStatus, icons.browser.published]" data-title="{{workspaceSnapshot.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="left" bs-tooltip></span>
                                                 </p>
-                                                <span class="date small">{{snapshotHistory.date | date:'medium'}}</span>
-                                                <!--<br/><span class="small">{{snapshotHistory.key}}</span>-->
+                                                <span class="date small">{{workspaceSnapshot.date | date:'medium'}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -296,7 +297,7 @@
 
                         <div data-title="{{'BROWSER.MEMBERS' | translate}}" bs-pane>
                             <ul class="list-group">
-                                <li ng-repeat="member in workspaceMembers.members" class="list-group-item">{{member}}</li>
+                                <li ng-repeat="member in workspaceMembers.members track by member.key" class="list-group-item">{{member}}</li>
                             </ul>
                         </div>
                     </div>

@@ -245,8 +245,21 @@ angular.module('ortolangMarketApp')
 
             function getSnapshotsHistory() {
                 ObjectResource.history({oKey: $scope.workspace.head}, function (data) {
-                    $scope.snapshotsHistory = data.entries;
+                    $scope.workspaceHistory = data.entries;
+                    angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
+                        workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
+                    });
                 });
+            }
+
+            function getSnapshotNameFromHistory(workspaceSnapshot) {
+                if ($scope.workspace.snapshots) {
+                    var filteredSnapshot = $filter('filter')($scope.workspace.snapshots, {key: workspaceSnapshot.key}, true);
+                    if (filteredSnapshot.length === 1) {
+                        return filteredSnapshot[0].name;
+                    }
+                }
+                return undefined;
             }
 
             function getWorkspaceMembers() {
@@ -254,24 +267,6 @@ angular.module('ortolangMarketApp')
                     $scope.workspaceMembers = data.object;
                 });
             }
-
-            $scope.getSnapshotFromHistory = function (snapshotHistory) {
-                if ($scope.workspace.snapshots) {
-                    var filteredSnapshot = $filter('filter')($scope.workspace.snapshots, {key: snapshotHistory.key}, true);
-                    if (filteredSnapshot.length === 1) {
-                        return filteredSnapshot[0];
-                    }
-                }
-                return undefined;
-            };
-
-            $scope.getSnapshotNameFromHistory = function (snapshotHistory) {
-                var snapshot = $scope.getSnapshotFromHistory(snapshotHistory);
-                if (snapshot) {
-                    return snapshot.name;
-                }
-                return undefined;
-            };
 
             $scope.download = function (element) {
                 Download.download(element);
@@ -911,12 +906,20 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function preventDefault(event) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else { // IE
+                    event.returnValue = false;
+                }
+            }
+
             hotkeys.bindTo($scope)
                 .add({
                     combo: 'mod+f',
                     description: $translate.instant('BROWSER.SHORTCUTS.FILTER'),
                     callback: function (event) {
-                        event.preventDefault();
+                        preventDefault(event);
                         var filterWrapper = $('#filter-query-wrapper');
                         filterWrapper.find('button').dropdown('toggle');
                         filterWrapper.find('#filter-input').focus();
@@ -926,7 +929,7 @@ angular.module('ortolangMarketApp')
                     combo: 'down',
                     description: $translate.instant('BROWSER.SHORTCUTS.DOWN'),
                     callback: function (event) {
-                        event.preventDefault();
+                        preventDefault(event);
                         navigate(true);
                     }
                 })
@@ -934,7 +937,7 @@ angular.module('ortolangMarketApp')
                     combo: 'up',
                     description: $translate.instant('BROWSER.SHORTCUTS.UP'),
                     callback: function (event) {
-                        event.preventDefault();
+                        preventDefault(event);
                         navigate(false);
                     }
                 })
@@ -942,7 +945,7 @@ angular.module('ortolangMarketApp')
                     combo: 'space',
                     description: $translate.instant('BROWSER.PREVIEW'),
                     callback: function (event) {
-                        event.preventDefault();
+                        preventDefault(event);
                         if (angular.element('.visualizer-modal.in').length > 0) {
                             angular.element('.visualizer-modal').modal('hide');
                         } else {
@@ -953,7 +956,7 @@ angular.module('ortolangMarketApp')
                     combo: 'mod+v',
                     description: $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
                     callback: function (event) {
-                        event.preventDefault();
+                        preventDefault(event);
                         $scope.switchViewMode();
                     }
                 })
@@ -961,7 +964,7 @@ angular.module('ortolangMarketApp')
                     combo: 'mod+n',
                     description: $translate.instant('BROWSER.NEW_COLLECTION'),
                     callback: function (event) {
-                        event.preventDefault();
+                        preventDefault(event);
                         $scope.addCollection();
                     }
                 });
@@ -976,7 +979,7 @@ angular.module('ortolangMarketApp')
                         createWorkspaceModal;
                     createWorkspaceModalScope.createWorkspace = function () {
                         WorkspaceResource.save({name: createWorkspaceModalScope.newWorkspaceName, type: 'user'}, function () {
-                            $scope.wsList = WorkspaceResource.get();
+                            $scope.workspaceList = WorkspaceResource.get();
                             createWorkspaceModal.hide();
                         });
                     };
@@ -1132,7 +1135,7 @@ angular.module('ortolangMarketApp')
                 }
                 console.debug('Initializing browser using %s', $scope.browserService.getId());
                 if ($scope.browserService !== MarketBrowserService) {
-                    $scope.wsList = WorkspaceResource.get();
+                    $scope.workspaceList = WorkspaceResource.get();
                 }
                 $scope.wskey = $routeParams.wskey;
                 $scope.root = $routeParams.root;
@@ -1163,7 +1166,7 @@ angular.module('ortolangMarketApp')
                 // Visualizers
                 $scope.visualizers = undefined;
                 // Workspace
-                $scope.snapshotsHistory = undefined;
+                $scope.workspaceHistory = undefined;
                 $scope.workspaceMembers = undefined;
             }
 
@@ -1188,7 +1191,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.wskey || $scope.itemKey) {
                     getParentData();
                 } else {
-                    $scope.wsList.$promise.then(function (data) {
+                    $scope.workspaceList.$promise.then(function (data) {
                         if ($scope.forceWorkspace) {
                             var filteredWorkspace = $filter('filter')(data.entries, {key: $scope.forceWorkspace}, true);
                             if (filteredWorkspace.length !== 1) {

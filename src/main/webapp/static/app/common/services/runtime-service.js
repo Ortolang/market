@@ -140,7 +140,6 @@ angular.module('ortolangMarketApp')
                     if ($rootScope.activeProcessesNbr === 0) {
                         $timeout.cancel(processesTimeout);
                         $timeout.cancel(tasksTimeout);
-                        $timeout.cancel(toolJobsTimeout);
                     }
                     if ($rootScope.selectedProcess) {
                         $rootScope.selectedProcess = $filter('filter')($rootScope.processes, {key: $rootScope.selectedProcess.key})[0];
@@ -235,17 +234,16 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function refreshTools() {
-                $rootScope.toolJobs = [];
-                var promises = [];
-                angular.forEach(ToolManager.getActiveRegistry(), function (tool) {
+                var toolJobsTemp = [], promises = [];
+                angular.forEach(ToolManager.getActiveTools(), function (tool) {
                     promises.push(
                         ToolManager.getTool(tool.getKey()).getJobs().$promise.then(
                             function (data) {
                                 angular.forEach(data.entries, function (job) {
-                                    job.name = tool.getName();
-                                    job.key = tool.getKey();
+                                    job.toolName = tool.getName();
+                                    job.toolKey = tool.getKey();
                                 });
-                                $rootScope.toolJobs = $rootScope.toolJobs.concat(data.entries);
+                                toolJobsTemp = toolJobsTemp.concat(data.entries);
                             },
                             function (reason) {
                                 console.warn('The server of tool "%s" is not responding', tool.getKey());
@@ -259,19 +257,22 @@ angular.module('ortolangMarketApp')
 
                 $q.all(promises).then(
                     function success() {
-                        //console.info($rootScope.toolJobs);
+                        $rootScope.toolJobs = toolJobsTemp;
                         completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
-                        var justCompletedTools = $filter('filter')(activeToolJobs, function (activeToolJob) {
+                        var justCompletedToolJobs = $filter('filter')(activeToolJobs, function (activeToolJob) {
                             return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
                         });
-                        angular.forEach(justCompletedTools, function (justCompletedTool) {
-                            $alert({title: $translate.instant('TOOLS.TOOL'), content: $translate('PROCESSES.JUST_COMPLETED', {name: justCompletedTool.name}), placement: 'top-right', type: 'success', show: true});
+                        angular.forEach(justCompletedToolJobs, function (justCompletedToolJob) {
+                            $alert({title: $translate.instant('TOOLS.TOOL'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: justCompletedToolJob.toolName}), placement: 'top-right', type: 'success', show: true});
                         });
                         activeToolJobs = getActiveToolJobs();
-                        if ($rootScope.selectedProcess) {
-                            $rootScope.selectedProcess = $filter('filter')($rootScope.toolJobs, {key: $rootScope.selectedProcess.key})[0];
-                            ToolManager.getTool($rootScope.selectedProcess.key).getLog($rootScope.selectedProcess.id).$promise.then(function (data) {
-                                $rootScope.selectedProcess.log = data;
+                        $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
+                        if (activeToolJobs.length === 0) {
+                            $timeout.cancel(toolJobsTimeout);
+                        }
+                        if ($rootScope.selectedProcess && $rootScope.selectedProcess.toolName) {
+                            ToolManager.getTool($rootScope.selectedProcess.toolKey).getLog($rootScope.selectedProcess.id).$promise.then(function (data) {
+                                $rootScope.selectedProcess.log = data.log;
                             });
                         }
                     },
@@ -303,7 +304,7 @@ angular.module('ortolangMarketApp')
             }
 
             function selectToolJob(toolJob) {
-                ToolManager.getTool(toolJob.key).getLog(toolJob.id).$promise.then(function (data) {
+                ToolManager.getTool(toolJob.toolKey).getLog(toolJob.id).$promise.then(function (data) {
                     $rootScope.selectedProcess.log = data.log;
                 });
                 $rootScope.selectedProcess = toolJob;
@@ -363,7 +364,7 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('tool-list-registered', function () {
-                forceRefreshToolJobs();
+                refreshTools();
             });
 
             // *********************** //
@@ -373,7 +374,6 @@ angular.module('ortolangMarketApp')
             function init() {
                 refreshProcesses();
                 refreshTasks();
-                refreshTools();
             }
             init();
 
