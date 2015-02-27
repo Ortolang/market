@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
                 PARTNERS: 'Partners',
                 ROADMAP: 'Roadmap',
                 NEWSLETTER: 'Newsletter',
-                CONVENTION: 'Ortolang\'s convention'
+                POLICY: 'Ortolang\'s policy'
             },
             COMMUNITY_WEBSITE: 'Community website',
             CONTACT: 'Contact us',

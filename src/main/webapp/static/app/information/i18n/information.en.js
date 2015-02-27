@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
                 PARTNERS: 'Partners',
                 ROADMAP: 'Roadmap',
                 NEWSLETTER: 'Newsletter',
-                CONVENTION: 'Ortolang\'s convention'
+                POLICY: 'Ortolang\'s policy'
             },
             PATH: {
                 PRESENTATION: 'information/en/presentation.html',
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                 NEWSLETTER: 'information/newsletter.html',
                 LEGAL_NOTICES: 'information/en/legal-notices.html',
                 NEWS: 'information/en/news.html',
-                CONVENTION: 'information/fr/convention.html'
+                POLICY: 'information/fr/policy.html'
             },
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
@@ -40,6 +40,6 @@ angular.module('ortolangMarketApp')
             MORE: 'Read more',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Partners',
-            DOWNLOAD_CONVENTION: 'Download the convention (pdf)'
+            DOWNLOAD_POLICY: 'Download the policy | French only'
         }
     });

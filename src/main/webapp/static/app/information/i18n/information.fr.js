@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
                 PARTNERS: 'Partenaires',
                 ROADMAP: 'Planning de réalisation',
                 NEWSLETTER: 'Lettre d\'information',
-                CONVENTION: 'Charte d\'Ortolang'
+                POLICY: 'Charte d\'Ortolang'
             },
             PATH: {
                 PRESENTATION: 'information/fr/presentation.html',
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                 NEWSLETTER: 'information/newsletter.html',
                 LEGAL_NOTICES: 'information/fr/legal-notices.html',
                 NEWS: 'information/fr/news.html',
-                CONVENTION: 'information/fr/convention.html'
+                POLICY: 'information/fr/policy.html'
             },
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG',
@@ -40,6 +40,6 @@ angular.module('ortolangMarketApp')
             MORE: 'Plus d\'informations',
             INSTITUTIONS: 'Institutions',
             PARTNERS: 'Unités support du projet',
-            DOWNLOAD_CONVENTION: 'Télécharger la charte d\'Ortolang au format pdf'
+            DOWNLOAD_POLICY: 'Télécharger la charte'
         }
     });
