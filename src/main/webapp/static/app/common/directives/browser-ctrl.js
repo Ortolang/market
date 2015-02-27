@@ -914,60 +914,65 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            hotkeys.bindTo($scope)
-                .add({
-                    combo: 'mod+f',
-                    description: $translate.instant('BROWSER.SHORTCUTS.FILTER'),
-                    callback: function (event) {
-                        preventDefault(event);
-                        var filterWrapper = $('#filter-query-wrapper');
-                        filterWrapper.find('button').dropdown('toggle');
-                        filterWrapper.find('#filter-input').focus();
-                    }
-                })
-                .add({
-                    combo: 'down',
-                    description: $translate.instant('BROWSER.SHORTCUTS.DOWN'),
-                    callback: function (event) {
-                        preventDefault(event);
-                        navigate(true);
-                    }
-                })
-                .add({
-                    combo: 'up',
-                    description: $translate.instant('BROWSER.SHORTCUTS.UP'),
-                    callback: function (event) {
-                        preventDefault(event);
-                        navigate(false);
-                    }
-                })
-                .add({
-                    combo: 'space',
-                    description: $translate.instant('BROWSER.PREVIEW'),
-                    callback: function (event) {
-                        preventDefault(event);
-                        if (angular.element('.visualizer-modal.in').length > 0) {
-                            angular.element('.visualizer-modal').modal('hide');
-                        } else {
-                            $scope.clickPreview();
+            function bindHotkeys() {
+                hotkeys.bindTo($scope)
+                    .add({
+                        combo: 'mod+f',
+                        description: $translate.instant('BROWSER.SHORTCUTS.FILTER'),
+                        callback: function (event) {
+                            preventDefault(event);
+                            var filterWrapper = $('#filter-query-wrapper');
+                            filterWrapper.find('button').dropdown('toggle');
+                            filterWrapper.find('#filter-input').focus();
                         }
-                    }
-                }).add({
-                    combo: 'mod+v',
-                    description: $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
-                    callback: function (event) {
-                        preventDefault(event);
-                        $scope.switchViewMode();
-                    }
-                })
-                .add({
-                    combo: 'mod+n',
-                    description: $translate.instant('BROWSER.NEW_COLLECTION'),
-                    callback: function (event) {
-                        preventDefault(event);
-                        $scope.addCollection();
-                    }
-                });
+                    })
+                    .add({
+                        combo: 'down',
+                        description: $translate.instant('BROWSER.SHORTCUTS.DOWN'),
+                        callback: function (event) {
+                            preventDefault(event);
+                            navigate(true);
+                        }
+                    })
+                    .add({
+                        combo: 'up',
+                        description: $translate.instant('BROWSER.SHORTCUTS.UP'),
+                        callback: function (event) {
+                            preventDefault(event);
+                            navigate(false);
+                        }
+                    })
+                    .add({
+                        combo: 'space',
+                        description: $translate.instant('BROWSER.PREVIEW'),
+                        callback: function (event) {
+                            preventDefault(event);
+                            if (angular.element('.visualizer-modal.in').length > 0) {
+                                angular.element('.visualizer-modal').modal('hide');
+                            } else {
+                                $scope.clickPreview();
+                            }
+                        }
+                    }).add({
+                        combo: 'mod+v',
+                        description: $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
+                        callback: function (event) {
+                            preventDefault(event);
+                            $scope.switchViewMode();
+                        }
+                    });
+                if ($scope.browserService.canAdd) {
+                    hotkeys.bindTo($scope).add({
+                            combo: 'mod+n',
+                            description: $translate.instant('BROWSER.NEW_COLLECTION'),
+                            callback: function (event) {
+                                preventDefault(event);
+                                $scope.addCollection();
+                            }
+                        });
+                }
+            }
+
 
             // *********************** //
             //     Create Workspace    //
@@ -1134,6 +1139,7 @@ angular.module('ortolangMarketApp')
                     $scope.browserService = MarketBrowserService;
                 }
                 console.log('Initializing browser using %s', $scope.browserService.getId());
+                bindHotkeys();
                 if ($scope.browserService !== MarketBrowserService) {
                     $scope.workspaceList = WorkspaceResource.get();
                 }
