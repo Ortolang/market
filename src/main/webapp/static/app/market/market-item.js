@@ -73,9 +73,9 @@ angular.module('ortolangMarketApp')
                 //} else if (oobject.type === 'object') {
                 //    $scope.marketItemTemplate = 'market/market-item-data-object.html';
                 } else if (oobject.type === 'link') {
-                    console.debug('follow link');
+                    console.log('follow link');
                 } else {
-                    console.debug('load item key not found view');
+                    console.log('load item key not found view');
                 }
             }, function (reason) {
                 console.error(reason);

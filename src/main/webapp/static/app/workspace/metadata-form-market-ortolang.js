@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
             }
 
             if (form.$invalid) {
-                console.debug('not ready');
+                console.log('not ready');
                 return;
             }
 
@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
          * Listeners
          *************/
         var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
-            console.debug('metadata-form-market-ortolang caught event "browserSelectedElements-folderSelectModal" (selected elements: %o)', elements);
+            console.log('metadata-form-market-ortolang caught event "browserSelectedElements-folderSelectModal" (selected elements: %o)', elements);
             if (!$scope.md) {
                 $scope.md = {};
             }
@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
         });
 
         var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
-            console.debug('metadata-form-market-ortolang caught event "browserSelectedElements-fileImageSelectModal" (selected elements: %o)', elements);
+            console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileImageSelectModal" (selected elements: %o)', elements);
             if (!$scope.md) {
                 $scope.md = {};
             }
@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp')
         });
 
         var deregisterFileLicenceSelectModal = $rootScope.$on('browserSelectedElements-fileLicenceSelectModal', function ($event, elements) {
-            console.debug('metadata-form-market-ortolang caught event "browserSelectedElements-fileLicenceSelectModal" (selected elements: %o)', elements);
+            console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileLicenceSelectModal" (selected elements: %o)', elements);
             if (!$scope.md) {
                 $scope.md = {};
             }

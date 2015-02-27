@@ -89,7 +89,7 @@ angular.module('ortolangMarketApp')
                             console.error('Parse error : ', error);
                             deferred.reject();
                         } else {
-                            // console.debug('Parse success !', mdFromN3);
+                            // console.log('Parse success !', mdFromN3);
                             deferred.resolve(mdFromN3);
                         }
                     });

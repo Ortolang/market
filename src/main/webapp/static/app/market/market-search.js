@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
                 query += ' AND CONTENT:' + str;
             }
 
-            console.debug('query : ' + query);
+            console.log('query : ' + query);
             // Loads all objects
             IndexResultResource.get({query: query}).$promise.then(function (results) {
 
