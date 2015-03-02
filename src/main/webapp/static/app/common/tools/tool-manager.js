@@ -270,7 +270,9 @@ angular.module('ortolangMarketApp')
                     $timeout.cancel(grantTimeout);
                     checkGrant(toolKey, deferred);
                 } else {
-                    grantTimeout = $timeout(function () {checkPopup(toolKey, deferred);}, grantTimeoutDelay);
+                    grantTimeout = $timeout(function () {
+                        checkPopup(toolKey, deferred);
+                    }, grantTimeoutDelay);
                 }
             }
 
@@ -283,7 +285,9 @@ angular.module('ortolangMarketApp')
                             previousDeferred.reject();
                         } else {
                             grantPopup = $window.open(response.url, '', 'width=400, height=600, top=200, left=200');
-                            grantTimeout = $timeout(function () {checkPopup(toolKey, deferred);}, grantTimeoutDelay);
+                            grantTimeout = $timeout(function () {
+                                checkPopup(toolKey, deferred);
+                            }, grantTimeoutDelay);
                         }
                     } else {
                         // Grant OK
