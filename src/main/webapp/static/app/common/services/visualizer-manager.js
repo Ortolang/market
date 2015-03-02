@@ -85,7 +85,7 @@ angular.module('ortolangVisualizers')
         };
 
     }])
-    .provider('VisualizerFactory', ['VisualizerManagerProvider', function (VisualizerManagerProvider) {
+    .provider('VisualizerFactory', function () {
 
         // Constructor
         function OrtolangVisualizer(config) {
@@ -142,9 +142,9 @@ angular.module('ortolangVisualizers')
                 // If mimetype is given with an array of compatible file extensions
                 if (angular.isObject(compatibleTypes[element.mimeType])) {
                     // check if the file extension is compatible
-                    return compatibleTypes[element.mimeType][element.name.substr((~-element.name.lastIndexOf('.') >>> 0) + 2)] || false;
+                    return compatibleTypes[element.mimeType][element.name.substr((~-element.name.lastIndexOf('.') >>> 0) + 2)];
                 }
-                return compatibleTypes[element.mimeType] || false;
+                return compatibleTypes[element.mimeType];
             },
 
             isCompatible: function (elements) {
@@ -169,7 +169,6 @@ angular.module('ortolangVisualizers')
         };
 
         this.make = function (config) {
-//            console.info('Start making visualizer \'' + config.name + '\'');
             if (!config.id || !config.compatibleTypes) {
                 console.error('id and compatiblesTypes are mandatory', config);
                 return undefined;
@@ -187,8 +186,4 @@ angular.module('ortolangVisualizers')
             };
         };
 
-    }])
-    .run(['VisualizerFactory', function (VisualizerFactory) {
-        // force VisualizerFactory to run by injecting it. Without this, VisualizerFactory only runs
-        // when a controller or something else asks for it via DI.
-    }]);
+    });
