@@ -61,10 +61,10 @@ angular.module('ortolangMarketApp')
 
         $scope.loadConfig = function () {
             ToolManager.getTool($scope.selectedTool.getKey()).getExecutionForm().$promise.then(
-                function success(config) {
+                function (config) {
                     $scope.generateForm(config);
                 },
-                function error(msg) {
+                function (msg) {
                     console.error('The tool server for "%s" is not responding.', $scope.selectedTool.getName(), msg);
                     $scope.formData = undefined;
                 }
@@ -118,11 +118,11 @@ angular.module('ortolangMarketApp')
 
         $scope.onSubmit = function () {
             ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.formData).$promise.then(
-                function success() {
+                function () {
                     $rootScope.$broadcast('tool-job-created');
                     $scope.hide();
                 },
-                function error(msg) {
+                function (msg) {
                     console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);
                     $scope.showError(msg);
                 }

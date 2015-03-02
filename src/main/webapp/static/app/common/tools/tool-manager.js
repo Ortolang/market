@@ -241,11 +241,11 @@ angular.module('ortolangMarketApp')
                     });
                 });
                 $q.all(promises).then(
-                    function success() {
+                    function () {
                         $rootScope.$broadcast('tool-list-registered');
                         deferred.resolve();
                     },
-                    function error() {
+                    function () {
                         deferred.reject();
                     });
             }

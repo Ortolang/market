@@ -256,7 +256,7 @@ angular.module('ortolangMarketApp')
                 });
 
                 $q.all(promises).then(
-                    function success() {
+                    function () {
                         $rootScope.toolJobs = toolJobsTemp;
                         completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
                         var justCompletedToolJobs = $filter('filter')(activeToolJobs, function (activeToolJob) {
@@ -276,7 +276,7 @@ angular.module('ortolangMarketApp')
                             });
                         }
                     },
-                    function error() {
+                    function () {
                         console.error('An error occurred while trying to refresh the tool list', error);
                         $timeout.cancel(toolJobsTimeout);
                     }

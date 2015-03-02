@@ -40,10 +40,10 @@ angular.module('ortolangMarketApp')
             $scope.abortToolJob = function (job) {
                 Runtime.selectProcess(job);
                 ToolManager.getTool(job.toolKey).abortJob(job.id).$promise.then(
-                    function success() {
+                    function () {
                         $alert({title: job.toolName, content: 'annulé', placement: 'top-right', type: 'success', show: true});
                     },
-                    function error() {
+                    function () {
                         $alert({title: job.toolName, content: 'pas annulé', placement: 'top-right', type: 'danger', show: true});
                     }
                 );
