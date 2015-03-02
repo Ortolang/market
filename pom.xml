@@ -24,10 +24,9 @@
     <properties>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
         <version.grunt.maven.plugin>1.4.1</version.grunt.maven.plugin>
-        <version.sonar.maven.plugin>2.4</version.sonar.maven.plugin>
+        <version.sonar.maven.plugin>2.5</version.sonar.maven.plugin>
         <sonar.language>js</sonar.language>
         <sonar.sources>src/main/webapp/static/app</sonar.sources>
-        <sonar.exclusions>src/main/webapp/static/app/scripts/keycloak*</sonar.exclusions>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
