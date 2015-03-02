@@ -108,8 +108,9 @@ angular.module('ortolangMarketApp')
 
                 getExecutionForm: function () {
                     if (!this.getActive()) {
-                        throw ('The tool "%s" is not active', this.getKey());
-                    } else if (this.config) {
+                        throw ('The tool "' + this.getKey() + '" is not active');
+                    }
+                    if (this.config) {
                         return this.config;
                     }
                     return this.resource.getExecutionForm({language: $translate.use()});
