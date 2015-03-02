@@ -36,7 +36,7 @@ angular.module('ortolangMarketApp')
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
                 marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
-                previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper, lastSelectedElement;
+                previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper, lastSelectedElement, lastShiftSelectedElement;
 
             // *********************** //
             //        Breadcrumb       //
@@ -179,7 +179,6 @@ angular.module('ortolangMarketApp')
 
             function selectChild(child, push, clickEvent, refresh) {
                 clickEvent = clickEvent || undefined;
-                push = !!push;
                 var deferred, promise;
                 if (push) {
                     deferred = $q.defer();
@@ -188,16 +187,22 @@ angular.module('ortolangMarketApp')
                 } else {
                     promise = getChildData(child);
                 }
+                if (!push || push !== 'shift') {
+                    lastShiftSelectedElement = undefined;
+                }
                 promise.then(function (data) {
                     if ($scope.browserService.getDataResource === 'object') {
                         data = data.object;
                     }
                     if (push) {
                         pushSelectedElement(data);
+                        if (push !== 'shift') {
+                            lastSelectedElement = data;
+                        }
                     } else {
                         newSelectedElement(data);
+                        lastSelectedElement = data;
                     }
-                    lastSelectedElement = data;
                     checkCompatibleVisualizers();
                     if (!refresh) {
                         $scope.contextMenu(clickEvent, false);
@@ -338,7 +343,7 @@ angular.module('ortolangMarketApp')
 
             $scope.clickChild = function (child, $event) {
                 var modKey = isMacOs ? $event.metaKey : $event.ctrlKey;
-                if ($scope.isSelected(child)) {
+                if ($scope.isSelected(child) && !$event.shiftKey) {
                     if (modKey) {
                         deselectChild(child);
                     } else if ($event.button === 0) {
@@ -365,25 +370,54 @@ angular.module('ortolangMarketApp')
                     if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
                             (modKey || $event.shiftKey) && !$scope.hasOnlyParentSelected()) {
                         if (modKey) {
-                            selectChild(child, true, $event);
+                            selectChild(child, 'mod', $event);
                         } else if ($event.shiftKey) {
                             var lastSelectedElementIndex = getChildIndex(lastSelectedElement),
+                                lastShiftSelectedElementIndex = lastShiftSelectedElement ? getChildIndex(lastShiftSelectedElement) : undefined,
                                 childIndex = getChildIndex(child),
                                 i,
                                 j,
-                                filteredOrderedChildren = $scope.filteredOrderedChildren();
-                            if (lastSelectedElementIndex < childIndex) {
-                                i = lastSelectedElementIndex + 1;
-                                j = childIndex;
-                            } else {
-                                i = childIndex;
-                                j = lastSelectedElementIndex;
-                            }
-                            for (i; i <= j; i++) {
-                                if (!$scope.isSelected(filteredOrderedChildren[i])) {
-                                    selectChild(filteredOrderedChildren[i], true, $event);
+                                filteredOrderedChildren = $scope.filteredOrderedChildren(),
+                                skip = false;
+                            if (lastShiftSelectedElementIndex) {
+                                if (childIndex < lastShiftSelectedElementIndex) {
+                                    if (childIndex > lastSelectedElementIndex) {
+                                        i = childIndex + 1;
+                                        j = lastShiftSelectedElementIndex;
+                                        skip = true;
+                                    } else {
+                                        i = lastSelectedElementIndex + 1;
+                                        j = lastShiftSelectedElementIndex;
+                                    }
+                                } else {
+                                    if (childIndex < lastSelectedElementIndex) {
+                                        i = lastShiftSelectedElementIndex;
+                                        j = childIndex - 1;
+                                        skip = true;
+                                    } else {
+                                        i = lastShiftSelectedElementIndex;
+                                        j = lastSelectedElementIndex - 1;
+                                    }
+                                }
+                                for (i; i <= j; i++) {
+                                    deselectChild(filteredOrderedChildren[i]);
                                 }
                             }
+                            if (!skip) {
+                                if (lastSelectedElementIndex < childIndex) {
+                                    i = lastSelectedElementIndex + 1;
+                                    j = childIndex;
+                                } else {
+                                    i = childIndex;
+                                    j = lastSelectedElementIndex;
+                                }
+                                for (i; i <= j; i++) {
+                                    if (!$scope.isSelected(filteredOrderedChildren[i])) {
+                                        selectChild(filteredOrderedChildren[i], 'shift', $event);
+                                    }
+                                }
+                            }
+                            lastShiftSelectedElement = filteredOrderedChildren[childIndex];
                         }
                     } else {
                         selectChild(child, false, $event);
