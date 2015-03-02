@@ -744,7 +744,7 @@ angular.module('ortolangMarketApp')
                     }
                 });
                 if ($scope.forceMimeTypes && !isForceMimeTypesArray) {
-                    matchingSelectedElements = $filter('filter')(selectedElementsCopy, {mimeType: $scope.forceMimeTypes}, false)
+                    matchingSelectedElements = $filter('filter')(selectedElementsCopy, {mimeType: $scope.forceMimeTypes}, false);
                 }
                 return $scope.forceMimeTypes ? matchingSelectedElements : selectedElementsCopy;
             }
