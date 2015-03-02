@@ -34,33 +34,33 @@ angular.module('ortolangMarketApp')
                                     $scope.item = angular.copy(data);
                                     $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
-                                    if(data['http://www.ortolang.fr/ontology/image']) {
+                                    if (data['http://www.ortolang.fr/ontology/image']) {
 
-                                        ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
+                                        ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function (oobject) {
                                             $scope.item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
                                         }, function (reason) {
                                             console.error(reason);
                                         });
                                     } else {
-                                        if(data['http://purl.org/dc/elements/1.1/title']) {
-                                            $scope.imgtitle = data['http://purl.org/dc/elements/1.1/title'].substring(0,2);
-                                            $scope.imgtheme = data['http://purl.org/dc/elements/1.1/title'].substring(0,1).toLowerCase();
+                                        if (data['http://purl.org/dc/elements/1.1/title']) {
+                                            $scope.imgtitle = data['http://purl.org/dc/elements/1.1/title'].substring(0, 2);
+                                            $scope.imgtheme = data['http://purl.org/dc/elements/1.1/title'].substring(0, 1).toLowerCase();
                                         } else {
                                             $scope.imgtitle = '';
                                             $scope.imgtheme = 'custom';
                                         }
                                     }
 
-                                    if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
+                                    if ($scope.item['http://www.ortolang.fr/ontology/preview'] !== undefined && $scope.item['http://www.ortolang.fr/ontology/preview'] !== '') {
                                         loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
                                     }
 
-                                    if($scope.item['http://www.ortolang.fr/ontology/license']!==undefined && $scope.item['http://www.ortolang.fr/ontology/license']!=='') {
+                                    if ($scope.item['http://www.ortolang.fr/ontology/license'] !== undefined && $scope.item['http://www.ortolang.fr/ontology/license'] !== '') {
                                         loadLicence(key, $scope.item['http://www.ortolang.fr/ontology/license']);
                                     }
 
-                                    if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
-                                        $scope.datasizeToPrint = {'value':$scope.item['http://www.ortolang.fr/ontology/datasize']};
+                                    if ($scope.item['http://www.ortolang.fr/ontology/datasize'] !== undefined && $scope.item['http://www.ortolang.fr/ontology/datasize'] !== '') {
+                                        $scope.datasizeToPrint = {'value': $scope.item['http://www.ortolang.fr/ontology/datasize']};
                                     }
                                 });
                             }).error(function (reason) {
@@ -70,8 +70,8 @@ angular.module('ortolangMarketApp')
                     } else {
                         $scope.marketItemTemplate = 'market/market-item-collection.html';
                     }
-                //} else if (oobject.type === 'object') {
-                //    $scope.marketItemTemplate = 'market/market-item-data-object.html';
+                    //} else if (oobject.type === 'object') {
+                    //    $scope.marketItemTemplate = 'market/market-item-data-object.html';
                 } else if (oobject.type === 'link') {
                     console.log('follow link');
                 } else {
@@ -85,7 +85,7 @@ angular.module('ortolangMarketApp')
         $scope.browse = false;
 
         function loadPreview(collection, previewPath) {
-            ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function(oobject) {
+            ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function (oobject) {
                 $scope.previewCollection = oobject;
             }, function (reason) {
                 console.error(reason);
@@ -93,12 +93,12 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.showPreview = function (preview) {
-            if(preview !== undefined && preview !== '') {
+            if (preview !== undefined && preview !== '') {
 
                 ObjectResource.get({oKey: preview}).$promise.then(function (oobject) {
                     var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
 
-                    if(visualizers.length > 0) {
+                    if (visualizers.length > 0) {
                         finishPreview(visualizers[0], oobject);
                     }
                 });
@@ -134,18 +134,22 @@ angular.module('ortolangMarketApp')
 
         // Scope variables
         function initScopeVariables() {
-            $scope.itemKey = undefined; // Key of the object
-            $scope.oobject = undefined; // Ortolang representation of the object
-            $scope.item = undefined; // RDF representation of the object
+            // Key of the object
+            $scope.itemKey = undefined;
+            // Ortolang representation of the object
+            $scope.oobject = undefined;
+            // RDF representation of the object
+            $scope.item = undefined;
             $scope.previewCollection = undefined;
-            $scope.marketItemTemplate = undefined; // Show info, browse, ...
+            // Show info, browse, ...
+            $scope.marketItemTemplate = undefined;
         }
 
         function init() {
             initScopeVariables();
             loadItem($routeParams.itemKey);
-
         }
+
         init();
 
     }]);

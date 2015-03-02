@@ -18,24 +18,22 @@ angular.module('ortolangMarketApp')
 
         $scope.show = function () {
             $scope.visibility = true;
-            // $scope.resizeAsideBody();
         };
 
         $scope.hide = function () {
             $scope.visibility = false;
-            // resetMetadataFormat();
         };
 
         $scope.toggle = function () {
-            if ($scope.visibility === true) {
+            if ($scope.visibility) {
                 $scope.hide();
             } else {
                 $scope.show();
             }
         };
 
-        $scope.isShow = function () {
-            return $scope.visibility === true;
+        $scope.isVisible = function () {
+            return $scope.visibility;
         };
 
         // Tools list //
@@ -103,7 +101,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.isShowError = function () {
-            return $scope.fail === true;
+            return $scope.fail;
         };
 
 

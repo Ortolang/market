@@ -9,14 +9,15 @@
  */
 angular.module('ortolangMarketApp')
     .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', 'WorkspaceElementResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource, WorkspaceElementResource) {
-        $scope.selectTab = function(tabName) {
+
+        $scope.selectTab = function (tabName) {
             $scope.selectedTab = tabName;
         };
 
         $scope.submitMetadata = function (form, md) {
             // $scope.$broadcast('show-errors-check-validity');
 
-            if($scope.onlineTool===false) {
+            if (!$scope.onlineTool) {
                 delete md['http://www.ortolang.fr/ontology/toolHelp'];
                 delete md['http://www.ortolang.fr/ontology/toolId'];
                 delete md['http://www.ortolang.fr/ontology/toolUrl'];
@@ -68,7 +69,7 @@ angular.module('ortolangMarketApp')
 
 
         var deregistration = $rootScope.$on('metadata-form-submit', function () {
-           $scope.submitMetadata($scope.metadataMarketform, $scope.md);
+            $scope.submitMetadata($scope.metadataMarketform, $scope.md);
         });
 
         $scope.$on('$destroy', function () {
@@ -83,19 +84,19 @@ angular.module('ortolangMarketApp')
         //          Resize         //
         // *********************** //
 
-        function resizeAsideBody () {
+        function resizeAsideBody() {
             var topOffset = 53,
-            bottomOffset = 51,
-            toolbar = 55 + 20,
-            blockquote = 70 + 20,
-            hr = 1 + 20,
-            height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+                bottomOffset = 51,
+                toolbar = 55 + 20,
+                blockquote = 70 + 20,
+                hr = 1 + 20,
+                height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
 
-        height = height - topOffset - bottomOffset - toolbar - blockquote - hr;
-        if (height < 1) {
-            height = 1;
-        }
-        if (height > topOffset) {
+            height = height - topOffset - bottomOffset - toolbar - blockquote - hr;
+            if (height < 1) {
+                height = 1;
+            }
+            if (height > topOffset) {
                 $('#metadata-form-panels').css('height', height + 'px');
             }
         }
@@ -103,13 +104,13 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.tabs = [
-                {id:'info', label:'Renseignements'},
+                {id: 'info', label: 'Renseignements'},
                 {id: 'rights', label: 'Droits'},
-                {id:'contributor', label: 'Contribution'},
-                {id:'application', label: 'Application'},
-                {id:'corpora', label: 'Corpus'},
-                {id:'annotation', label: 'Enrichissement'},
-                {id:'tool', label: 'Outil'}
+                {id: 'contributor', label: 'Contribution'},
+                {id: 'application', label: 'Application'},
+                {id: 'corpora', label: 'Corpus'},
+                {id: 'annotation', label: 'Enrichissement'},
+                {id: 'tool', label: 'Outil'}
             ];
             $scope.selectedTab = 'info';
 
