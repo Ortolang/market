@@ -366,8 +366,7 @@ angular.module('ortolangMarketApp')
                     }
                     $scope.contextMenu($event, true);
                 } else {
-                    // Get detailed info on the selected child
-                    if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
+                    if ((!$scope.browserService.isFileSelect || $scope.fileSelectAcceptMultiple) &&
                             (modKey || $event.shiftKey) && !$scope.hasOnlyParentSelected()) {
                         if (modKey) {
                             selectChild(child, 'mod', $event);
@@ -913,6 +912,7 @@ angular.module('ortolangMarketApp')
                 }
                 $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
                 $scope.orderProp = predicate;
+                lastShiftSelectedElement = undefined;
             };
 
             $scope.openFilter = function (event) {
