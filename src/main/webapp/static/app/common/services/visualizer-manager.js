@@ -134,7 +134,7 @@ angular.module('ortolangVisualizers')
             },
 
             isAcceptingMultiple: function () {
-                return this.acceptMultiple;
+                return !!this.acceptMultiple;
             },
 
             isCompatibleHelper: function (element, _compatibleTypes_) {
@@ -150,22 +150,21 @@ angular.module('ortolangVisualizers')
             isCompatible: function (elements) {
                 if (elements.length === 1) {
                     return this.isAcceptingSingle() && this.isCompatibleHelper(elements[0]);
-                } else {
-                    if (this.isAcceptingMultiple()) {
-                        var compatibleTypesArray = angular.copy(this.compatibleTypes);
-                        angular.forEach(elements, function (element) {
-                            var j;
-                            for (j = 0; j < compatibleTypesArray.length; j++) {
-                                if (this.isCompatibleHelper(element, compatibleTypesArray[j])) {
-                                    compatibleTypesArray.splice(j, 1);
-                                    break;
-                                }
-                            }
-                        }, this);
-                        return compatibleTypesArray.length === 0;
-                    }
                 }
-
+                if (this.isAcceptingMultiple() && elements.length === this.compatibleTypes.length) {
+                    var compatibleTypesArray = angular.copy(this.compatibleTypes);
+                    angular.forEach(elements, function (element) {
+                        var j;
+                        for (j = 0; j < compatibleTypesArray.length; j++) {
+                            if (this.isCompatibleHelper(element, compatibleTypesArray[j])) {
+                                compatibleTypesArray.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }, this);
+                    return compatibleTypesArray.length === 0;
+                }
+                return false;
             }
         };
 

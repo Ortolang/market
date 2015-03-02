@@ -16,8 +16,8 @@
         </thead>
         <tbody>
         <tr ng-repeat="child in filteredOrderedChildren() track by child.key"
-            ng-click="clickChild($event, child)"
-            ng-right-click="clickChild($event, child)"
+            ng-click="clickChild(child, $event)"
+            ng-right-click="clickChild(child, $event)"
             ng-dblclick="doubleClickChild(child)"
             ng-class="{active : isSelected(child)}">
             <td><span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}</td>

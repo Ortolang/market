@@ -18,6 +18,7 @@ angular.module('ortolangMarketApp')
         '$filter',
         '$timeout',
         '$window',
+        '$q',
         '$translate',
         '$modal',
         'hotkeys',
@@ -31,11 +32,11 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
                 marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
-                previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper;
+                previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper, lastSelectedElement;
 
             // *********************** //
             //        Breadcrumb       //
@@ -172,35 +173,45 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            function buildChildDownloadUrl(data) {
-                return $scope.browserService.buildChildDownloadUrl(data, $scope.parent, $scope.root);
-            }
-
             $scope.getChildBrowseUrl = function (child) {
                 return $scope.browserService.buildChildBrowseUrl(child, $scope.parent, $scope.root);
             };
 
-            function getChildData(child, refresh, clickEvent, isPush) {
+            function selectChild(child, push, clickEvent, refresh) {
                 clickEvent = clickEvent || undefined;
-                $scope.browserService.getData({oKey: child.key, wskey: $scope.wskey, path: $scope.path + '/' + child.name, root: $scope.root})
-                    .$promise.then(function (data) {
-                        if ($scope.browserService.getDataResource === 'object') {
-                            data = data.object;
-                        }
-                        if (!refresh) {
-                            data.downloadUrl = buildChildDownloadUrl(data);
-                        }
-                        child.element = data;
-                        if (isPush) {
-                            pushSelectedElement(data);
-                        } else {
-                            newSelectedElement(data);
-                        }
-                        checkCompatibleVisualizers();
-                        if (!refresh) {
-                            $scope.contextMenu(clickEvent, false);
-                        }
-                    });
+                push = !!push;
+                var deferred, promise;
+                if (push) {
+                    deferred = $q.defer();
+                    deferred.resolve(child);
+                    promise = deferred.promise;
+                } else {
+                    promise = getChildData(child);
+                }
+                promise.then(function (data) {
+                    if ($scope.browserService.getDataResource === 'object') {
+                        data = data.object;
+                    }
+                    if (push) {
+                        pushSelectedElement(data);
+                    } else {
+                        newSelectedElement(data);
+                    }
+                    lastSelectedElement = data;
+                    checkCompatibleVisualizers();
+                    if (!refresh) {
+                        $scope.contextMenu(clickEvent, false);
+                    }
+                });
+            }
+
+            function getChildData(child) {
+                return $scope.browserService.getData({
+                    oKey: child.key,
+                    wskey: $scope.wskey,
+                    path: $scope.path + '/' + child.name,
+                    root: $scope.root
+                }).$promise;
             }
 
             function getChildrenDataOfTypes(mimeTypes, isPreview, visualizer) {
@@ -223,7 +234,7 @@ angular.module('ortolangMarketApp')
                             if ($scope.browserService.getDataResource === 'object') {
                                 data = data.object;
                             }
-                            data.downloadUrl = buildChildDownloadUrl(data);
+                            data.downloadUrl = $scope.browserService.buildChildDownloadUrl(data, $scope.parent, $scope.root);
                             data.selected = $scope.isSelected(data);
                             $scope.children.push(data);
                             console.log('Successfully retrieved data of child %s: %o', child.name, data);
@@ -239,7 +250,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.hasOnlyParentSelected()) {
                     getParentData(true, true);
                 } else if ($scope.hasOnlyOneElementSelected()) {
-                    getChildData($scope.selectedElements[0], true, undefined, false);
+                    selectChild($scope.selectedElements[0]);
                 }
             };
 
@@ -304,8 +315,8 @@ angular.module('ortolangMarketApp')
                 checkCompatibleVisualizers();
             }
 
-            function deselectOthers(element) {
-                $scope.selectedElements = $filter('filter')($scope.selectedElements, {key: element.key}, true);
+            function deselectOthers(child) {
+                selectChild(child);
             }
 
             function deselectChildren() {
@@ -314,14 +325,23 @@ angular.module('ortolangMarketApp')
                 clearVisualizers();
             }
 
-            $scope.clickChild = function (clickEvent, child) {
-                var modKey = isMacOs ? clickEvent.metaKey : clickEvent.ctrlKey;
+            function getChildIndex(child) {
+                var i,
+                    filteredOrderedChildren = $scope.filteredOrderedChildren();
+                for (i = 0; i < filteredOrderedChildren.length; i++) {
+                    if (filteredOrderedChildren[i].key === child.key) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            $scope.clickChild = function (child, $event) {
+                var modKey = isMacOs ? $event.metaKey : $event.ctrlKey;
                 if ($scope.isSelected(child)) {
                     if (modKey) {
                         deselectChild(child);
-                        return;
-                    }
-                    if (clickEvent.button === 0) {
+                    } else if ($event.button === 0) {
                         if (!$scope.hasOnlyOneElementSelected()) {
                             // Check if the user left-clicked again on the same element
                             if (child.key !== $scope.selectedElements[$scope.selectedElements.length - 1].key) {
@@ -339,15 +359,35 @@ angular.module('ortolangMarketApp')
                     } else {
                         isClickedOnce = false;
                     }
-                    $scope.contextMenu(clickEvent, true);
-                    return;
-                }
-                // Get detailed info on the selected child
-                if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
-                    modKey && !$scope.hasOnlyParentSelected()) {
-                    getChildData(child, false, clickEvent, true);
+                    $scope.contextMenu($event, true);
                 } else {
-                    getChildData(child, false, clickEvent, false);
+                    // Get detailed info on the selected child
+                    if (($scope.fileSelectAcceptMultiple || !$scope.browserService.isFileSelect) &&
+                            (modKey || $event.shiftKey) && !$scope.hasOnlyParentSelected()) {
+                        if (modKey) {
+                            selectChild(child, true, $event);
+                        } else if ($event.shiftKey) {
+                            var lastSelectedElementIndex = getChildIndex(lastSelectedElement),
+                                childIndex = getChildIndex(child),
+                                i,
+                                j,
+                                filteredOrderedChildren = $scope.filteredOrderedChildren();
+                            if (lastSelectedElementIndex < childIndex) {
+                                i = lastSelectedElementIndex + 1;
+                                j = childIndex;
+                            } else {
+                                i = childIndex;
+                                j = lastSelectedElementIndex;
+                            }
+                            for (i; i <= j; i++) {
+                                if (!$scope.isSelected(filteredOrderedChildren[i])) {
+                                    selectChild(filteredOrderedChildren[i], true, $event);
+                                }
+                            }
+                        }
+                    } else {
+                        selectChild(child, false, $event);
+                    }
                 }
             };
 
@@ -462,14 +502,14 @@ angular.module('ortolangMarketApp')
             //        Metadata         //
             // *********************** //
 
-            $rootScope.$on('completeMetadataUpload', function () {
-                console.log('%s caught event "completeMetadataUpload"', $scope.browserService.getId());
-                if ($scope.hasOnlyParentSelected()) {
-                    getParentData(true);
-                } else {
-                    getChildData(true);
-                }
-            });
+            //$rootScope.$on('completeMetadataUpload', function () {
+            //    console.log('%s caught event "completeMetadataUpload"', $scope.browserService.getId());
+            //    if ($scope.hasOnlyParentSelected()) {
+            //        getParentData(true);
+            //    } else {
+            //        getChildData(true);
+            //    }
+            //});
 
             $scope.showMetadata = function () {
                 $rootScope.$broadcast('metadata-list-show');
@@ -502,7 +542,6 @@ angular.module('ortolangMarketApp')
                         break;
                     case 'switchViewMode':
                         $scope.switchViewMode();
-                        deactivateContextMenu();
                         break;
                     case 'uploadFolder':
                         angular.element('#object-upload-folder-select').click();
@@ -859,9 +898,9 @@ angular.module('ortolangMarketApp')
                     if ($scope.hasOnlyOneElementSelected()) {
                         if ($scope.selectedElements[0].key === $scope.parent.key) {
                             if (down) {
-                                getChildData($scope.filteredOrderedChildrenArray[0], false, undefined, false);
+                                selectChild($scope.filteredOrderedChildrenArray[0]);
                             } else {
-                                getChildData($scope.filteredOrderedChildrenArray[$scope.filteredOrderedChildrenArray.length - 1], false, undefined, false);
+                                selectChild($scope.filteredOrderedChildrenArray[$scope.filteredOrderedChildrenArray.length - 1]);
                             }
                         } else {
                             for (i = 0; i < $scope.filteredOrderedChildrenArray.length; i++) {
@@ -875,7 +914,7 @@ angular.module('ortolangMarketApp')
                                 }
                             }
                             if (i >= 0 && i < $scope.filteredOrderedChildrenArray.length) {
-                                getChildData($scope.filteredOrderedChildrenArray[i], false, undefined, false);
+                                selectChild($scope.filteredOrderedChildrenArray[i]);
                             }
                         }
                     } else {
@@ -900,7 +939,7 @@ angular.module('ortolangMarketApp')
                             if (i >= $scope.filteredOrderedChildrenArray.length) {
                                 i = $scope.filteredOrderedChildrenArray.length -1;
                             }
-                            getChildData($scope.filteredOrderedChildrenArray[i], false, undefined, false);
+                            selectChild($scope.filteredOrderedChildrenArray[i]);
                         }
                     }
                 }
@@ -1074,6 +1113,7 @@ angular.module('ortolangMarketApp')
 
             $scope.switchViewMode = function () {
                 clearPreviousFilteringQueries();
+                deactivateContextMenu();
                 if ($scope.viewMode === viewModeLine) {
                     setViewMode(viewModeTile.id);
                 } else {

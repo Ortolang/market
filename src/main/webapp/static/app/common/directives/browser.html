@@ -227,7 +227,7 @@
                             </div>
                         </div>
 
-                        <div data-title="{{'BROWSER.METADATA' | translate}}" bs-pane>
+                        <div data-title="{{'BROWSER.METADATA' | translate}}" disabled="{{selectedElements.length > 1}}" bs-pane>
                             <div ng-include="'workspace/browser-sidebar-metadata.html'" ng-controller="BrowserSidebarMetadataCtrl"></div>
                         </div>
                     </div>

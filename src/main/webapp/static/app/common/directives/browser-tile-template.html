@@ -4,8 +4,8 @@
             <div ng-repeat="child in filteredChildren(type) | orderBy:orderProp:orderReverse track by child.key"
                  ng-class="tileCssClasses()" class="browsed-element-child-wrapper">
                 <div class="browsed-element-child"
-                     ng-click="clickChild($event, child)"
-                     ng-right-click="clickChild($event, child)"
+                     ng-click="clickChild(child, $event)"
+                     ng-right-click="clickChild(child, $event)"
                      ng-dblclick="doubleClickChild(child)"
                      ng-class="{active : isSelected(child), collection: type === 'collection'}">
                     <div ng-if="type === 'object'" class="preview">
