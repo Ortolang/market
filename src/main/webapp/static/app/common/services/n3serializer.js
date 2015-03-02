@@ -30,19 +30,16 @@ angular.module('ortolangMarketApp')
              **/
             fromN3: function (content) {
 
-                var deferred = $q.defer();
-                var mdFromN3 = {};
                 // ${target} :
                 // ${targetKey}
-                var find = '\\$\\{target\\}';
-                var re = new RegExp(find, 'g');
-                var contentPurify = content.replace(re, 'info:otl/target');
-                // var contentPurify = content;
-
-                var N3Util = N3.Util;
-                var parser = N3.Parser();
-
-                var blankNodes = [];
+                var deferred = $q.defer(),
+                    mdFromN3 = {},
+                    find = '\\$\\{target\\}',
+                    re = new RegExp(find, 'g'),
+                    contentPurify = content.replace(re, 'info:otl/target'),
+                    N3Util = N3.Util,
+                    parser = N3.Parser(),
+                    blankNodes = [];
 
                 parser.parse(contentPurify,
                     function (error, triple) {
@@ -62,27 +59,23 @@ angular.module('ortolangMarketApp')
 
                                     }
                                 }
-                            } else {
-                                if (blankNodes[triple.subject]) {
+                            } else if (blankNodes[triple.subject] &&
+                                    triple.predicate === N3Util.expandQName('rdfs:member', prefixesRDF)) {
 
-                                    if (triple.predicate === N3Util.expandQName('rdfs:member', prefixesRDF)) {
+                                // if(!angular.isArray(blankNodes[triple.subject])) {
+                                //     blankNodes[triple.subject] = [];
+                                // }
 
-                                        // if(!angular.isArray(blankNodes[triple.subject])) {
-                                        //     blankNodes[triple.subject] = [];
-                                        // }
+                                if (N3Util.isLiteral(triple.object)) {
+                                    blankNodes[triple.subject].push(angular.copy(N3Util.getLiteralValue(triple.object)));
+                                } else {
+                                    // if(N3Util.isBlank(triple.object)) {
+                                    // mdFromN3[triple.predicate] = blankNode;
+                                    // blankNodeName = triple.object;
+                                    // } else {
+                                    blankNodes[triple.subject].push(triple.object);
 
-                                        if (N3Util.isLiteral(triple.object)) {
-                                            blankNodes[triple.subject].push(angular.copy(N3Util.getLiteralValue(triple.object)));
-                                        } else {
-                                            // if(N3Util.isBlank(triple.object)) {
-                                            // mdFromN3[triple.predicate] = blankNode;
-                                            // blankNodeName = triple.object;
-                                            // } else {
-                                            blankNodes[triple.subject].push(triple.object);
-
-                                            // }
-                                        }
-                                    }
+                                    // }
                                 }
                             }
                         } else if (error) {
