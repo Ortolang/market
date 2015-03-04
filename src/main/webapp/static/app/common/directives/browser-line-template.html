@@ -23,8 +23,8 @@
             <td><span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
             <td>{{::child.modification | date : dateFormat}}</td>
-            <td ng-if="child.type === 'collection'">-</td>
-            <td ng-if="child.type !== 'collection'">{{::child.size | bytes}}</td>
+            <td ng-if="::isCollection(child)">-</td>
+            <td ng-if="::!isCollection(child)">{{::child.size | bytes}}</td>
         </tr>
         </tbody>
     </table>

@@ -67,7 +67,11 @@ angular.module('ortolangMarketApp')
                 FILTER: 'Filter elements',
                 UP: 'Navigate up',
                 DOWN: 'Navigate down',
-                VIEW_MODE: 'Change view mode (line/tile)'
+                VIEW_MODE: 'Change view mode (line/tile)',
+                SELECT_ALL: 'Select all',
+                ENTER: 'Preview / Open folder',
+                NEW_COLLECTION: 'New Folder',
+                DELETE: 'Remove selected items'
             }
         }
     });

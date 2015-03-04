@@ -214,10 +214,10 @@
                                     <dd>{{selectedElements[0].clock}}</dd>
                                     <dt translate="BROWSER.KEY" class="key"></dt>
                                     <dd>{{selectedElements[0].key.substring(0,12)}}... <span data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="left" bs-tooltip><button class="btn btn-default btn-sm" ui-zeroclip zeroclip-model="selectedElements[0].key"><span class="octicon octicon-clippy"></span></button></span></dd>
-                                    <dt ng-if="selectedElements[0].type === 'collection'" translate="SIZE"></dt>
-                                    <dd ng-if="selectedElements[0].type === 'collection'" translate="BROWSER.ELEMENT_WITH_SIZE" translate-values="{value: selectedElements[0].elements.length, size: collectionSize()}"></dd>
-                                    <dt ng-if="selectedElements[0].type === 'object'" translate="SIZE"></dt>
-                                    <dd ng-if="selectedElements[0].type === 'object'">{{selectedElements[0].size | bytes}}</dd>
+                                    <dt ng-if="isCollection(selectedElements[0])" translate="SIZE"></dt>
+                                    <dd ng-if="isCollection(selectedElements[0])" translate="BROWSER.ELEMENT_WITH_SIZE" translate-values="{value: selectedElements[0].elements.length, size: collectionSize()}"></dd>
+                                    <dt ng-if="!isCollection(selectedElements[0])" translate="SIZE"></dt>
+                                    <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
                                 </dl>
 
                                 <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
