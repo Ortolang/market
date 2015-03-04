@@ -30,7 +30,8 @@ angular.module('ortolangMarketApp')
                             var metaKey = oobject.object.metadatas[0].key;
 
                             DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                N3Serializer.fromN3(metaContent).then(function (data) {
+                                // N3Serializer.fromN3(metaContent).then(function (data) {
+                                    var data = angular.fromJson(metaContent);
                                     $scope.item = angular.copy(data);
                                     $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
@@ -62,7 +63,7 @@ angular.module('ortolangMarketApp')
                                     if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
                                         $scope.datasizeToPrint = {'value':$scope.item['http://www.ortolang.fr/ontology/datasize']};
                                     }
-                                });
+                                // });
                             }).error(function (reason) {
                                 console.error(reason);
                             });

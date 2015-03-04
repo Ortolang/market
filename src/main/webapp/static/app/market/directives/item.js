@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', [ 'ObjectResource', 'DownloadResource', 'N3Serializer',  function (ObjectResource, DownloadResource, N3Serializer) {
+    .directive('item', [ 'ObjectResource', 'DownloadResource',  function (ObjectResource, DownloadResource) {
         return {
             restrict: 'EA',
             scope: {
@@ -31,7 +31,8 @@ angular.module('ortolangMarketApp')
                                     var metaKey = oobject.object.metadatas[0].key;
 
                                     DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                        N3Serializer.fromN3(metaContent).then(function (data) {
+                                        // N3Serializer.fromN3(metaContent).then(function (data) {
+                                            var data = angular.fromJson(metaContent);
                                             scope.oobject = oobject;
                                             scope.meta = data;
                                             scope.entry.meta = data;
@@ -52,9 +53,9 @@ angular.module('ortolangMarketApp')
                                                 }
                                             }
                                         });
-                                    }).error(function (error) {
-                                        console.error('error during process : ' + error);
-                                    });
+                                    // }).error(function (error) {
+                                    //     console.error('error during process : ' + error);
+                                    // });
                                 }
                             }
                         }, function (reason) {

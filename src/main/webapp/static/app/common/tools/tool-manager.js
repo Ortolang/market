@@ -221,8 +221,8 @@ angular.module('ortolangMarketApp')
                                     var metaKey = oobject.object.metadatas[0].key;
 
                                     DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                        N3Serializer.fromN3(metaContent).then(function (data) {
-
+                                        // N3Serializer.fromN3(metaContent).then(function (data) {
+                                            var data = angular.fromJson(metaContent);
                                             if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Outil') {
                                                 item.id = data['http://www.ortolang.fr/ontology/toolId'];
                                                 item.name = data['http://purl.org/dc/elements/1.1/title'];
@@ -238,9 +238,9 @@ angular.module('ortolangMarketApp')
                                                 }
                                             }
                                         });
-                                    }).error(function (error) {
-                                        console.error('An issue occurred when trying to get the tool list: %o', error);
-                                    });
+                                    // }).error(function (error) {
+                                    //     console.error('An issue occurred when trying to get the tool list: %o', error);
+                                    // });
                                 }
                             }
                         });

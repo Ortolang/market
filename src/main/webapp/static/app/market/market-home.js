@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $rootScope, $routeParams, $location, $window, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('MarketHomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'ObjectResource', 'DownloadResource', function ($scope, $rootScope, $routeParams, $location, $window, ObjectResource, DownloadResource) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
@@ -50,8 +50,8 @@ angular.module('ortolangMarketApp')
                                 var metaKey = oobject.object.metadatas[0].key;
 
                                 DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                    N3Serializer.fromN3(metaContent).then(function (data) {
-
+                                    // N3Serializer.fromN3(metaContent).then(function (data) {
+                                        var data = angular.fromJson(metaContent);
                                         if (data['http://purl.org/dc/elements/1.1/title'] && data['http://purl.org/dc/elements/1.1/title'] === 'Littéracie Avancée') {
                                             $scope.news.push(item);
                                         }
@@ -68,9 +68,9 @@ angular.module('ortolangMarketApp')
                                             $scope.outils.push(item);
                                         }
                                     });
-                                }).error(function (error) {
-                                    console.error('error during process : ' + error);
-                                });
+                                // }).error(function (error) {
+                                //     console.error('error during process : ' + error);
+                                // });
                             }
                         }
                     }, function (reason) {

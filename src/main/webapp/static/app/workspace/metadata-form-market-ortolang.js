@@ -27,8 +27,8 @@ angular.module('ortolangMarketApp')
                 return;
             }
 
-            var content = N3Serializer.toN3(md),
-                contentType = 'text/n3';
+            var content = angular.toJson(md),
+                contentType = 'text/json';
 
             $rootScope.$broadcast('metadata-editor-create', content, contentType);
         };
@@ -144,9 +144,10 @@ angular.module('ortolangMarketApp')
             $scope.fileLicenceSelectModal = $modal({scope: fileLicenceSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
 
             if ($scope.selectedMetadataContent !== undefined) {
-                var mdFromN3 = N3Serializer.fromN3($scope.selectedMetadataContent);
-                mdFromN3.then(function (data) {
-                    $scope.md = angular.copy(data);
+                // var mdFromN3 = N3Serializer.fromN3($scope.selectedMetadataContent);
+                $scope.md = angular.fromJson($scope.selectedMetadataContent);
+                // mdFromN3.then(function (data) {
+                    // $scope.md = angular.copy(data);
                     WorkspaceElementResource.get({path: $scope.md['http://www.ortolang.fr/ontology/preview'], wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
                         $scope.preview = data;
                     });
@@ -156,7 +157,7 @@ angular.module('ortolangMarketApp')
                     WorkspaceElementResource.get({path: $scope.md['http://www.ortolang.fr/ontology/licence'], wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
                         $scope.licence = data;
                     });
-                });
+                // });
             }
         }
 
