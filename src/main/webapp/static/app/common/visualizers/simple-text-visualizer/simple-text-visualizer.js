@@ -63,6 +63,7 @@ angular.module('ortolangVisualizers')
                     } else {
                         scope.language = undefined;
                     }
+                    scope.truncated = scope.elements[0].size >= limit;
                     DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
                         if (scope.elements[0].size >= limit) {
                             scope.data = data.substr(0, limit);
@@ -83,7 +84,7 @@ angular.module('ortolangVisualizers')
                     });
                 },
                 post: function (scope) {
-                    var height = $window.innerHeight - (scope.fullData ? 6 : 4) * parseInt(angular.element('.modal-dialog.modal-lg').css('margin-top'), 10);
+                    var height = $window.innerHeight - (scope.truncated ? 6 : 4) * parseInt(angular.element('.modal-dialog.modal-lg').css('margin-top'), 10);
                     angular.element('.highlight').css('height', height);
                 }
             }
