@@ -13,10 +13,10 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         WorkspaceElementResource,
         md = {
             id: 'oai_dc',
-                name: 'OAI Dublin Core',
-                description: 'Les métadonnées OAI Dublin core permettent d\'être accessible via la protocole OAI-PMH.',
-                view: 'workspace/metadata-form-oai_dc.html',
-                displayed: true
+            name: 'OAI Dublin Core',
+            description: 'Les métadonnées OAI Dublin core permettent d\'être accessible via la protocole OAI-PMH.',
+            view: 'workspace/metadata-form-oai_dc.html',
+            displayed: true
         };
 
     // Initialize the controller and a mock scope
@@ -26,12 +26,12 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         sample = _sample_;
         WorkspaceElementResource = _WorkspaceElementResource_;
 
-        scope.refreshSelectedElement = function() {
+        scope.refreshSelectedElement = function () {
             return 'michel';
         };
 
-        spyOn(scope, 'refreshSelectedElement').andCallFake(function() {return 'michel';});
-        spyOn(rootScope, '$broadcast').andCallThrough();
+        spyOn(scope, 'refreshSelectedElement').and.callFake(function () {return 'michel'; });
+        spyOn(rootScope, '$broadcast').and.callThrough();
 
         BrowserSidebarMetadataCtrl = $controller('BrowserSidebarMetadataCtrl', {
             $scope: scope,
@@ -40,19 +40,19 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         });
     }));
 
-    it('should show MetadataEditorList', function() {
+    it('should show MetadataEditorList', function () {
         scope.showMetadataEditorList();
 
         expect(scope.metadataEditorListVisibility).toBe(true);
     });
 
-    it('should hide MetadataEditorList', function() {
+    it('should hide MetadataEditorList', function () {
         scope.hideMetadataEditorList();
 
         expect(scope.metadataEditorListVisibility).toBe(false);
     });
 
-    it('should toggle MetadataEditorList', function() {
+    it('should toggle MetadataEditorList', function () {
         expect(scope.metadataEditorListVisibility).toBe(false);
 
         scope.toggleMetadataEditorList();
@@ -62,23 +62,23 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         expect(scope.metadataEditorListVisibility).toBe(false);
     });
 
-    it('should check if MetadataEditorList is show', function() {
+    it('should check if MetadataEditorList is show', function () {
         expect(scope.isMetadataEditorListShow()).toBe(false);
 
         scope.showMetadataEditorList();
         expect(scope.isMetadataEditorListShow()).toBe(true);
     });
 
-    it('should send metadata-editor-show event with correct metadata format', function() {
+    it('should send metadata-editor-show event with correct metadata format', function () {
         scope.showMetadataEditor('oai_dc');
 
         expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-editor-show', md);
 
     });
 
-    it('should send metadata-editor-edit event with correct metadata', function() {
+    it('should send metadata-editor-edit event with correct metadata', function () {
 
-        scope.selectedElements = [{workspace:'sys',path:'path'}];
+        scope.selectedElements = [{workspace: 'sys', path: 'path'}];
 
         scope.editMetadata(md);
         scope.$digest();
@@ -93,7 +93,7 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         expect(console.error).toHaveBeenCalled();
     });
 
-    it('should send metadata-preview event with correct metadata', function() {
+    it('should send metadata-preview event with correct metadata', function () {
         scope.previewMetadata('oai_dc');
 
         expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-preview', 'oai_dc');
