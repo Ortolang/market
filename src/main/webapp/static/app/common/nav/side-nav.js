@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
                     } else {
                         var clickedElement = $('.side-nav').find('.' + element.class).parent(),
                             copy = angular.element('.side-nav-active-item.copy'),
-                            real = angular.element('#side-nav-active-item');
+                            real = angular.element('.side-nav-active-item.real');
                         $rootScope.navPosition = clickedElement.position().top;
                         if (animate) {
                             real.addClass('animated');
@@ -130,7 +130,7 @@ angular.module('ortolangMarketApp')
             {
                 class: 'divider',
                 active: undefined,
-                authenticated: true
+                authenticated: false
             },
             {
                 class: 'information',
@@ -139,7 +139,7 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.INFORMATION',
                 iconCss: 'fa fa-fw fa-info fa-2x',
                 active: undefined,
-                hidden: true,
+                hidden: false,
                 authenticated: false
             },
             {

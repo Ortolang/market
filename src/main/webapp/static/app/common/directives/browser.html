@@ -66,7 +66,7 @@
                         </div>
 
                         <div ng-if="browserService.displayAsideInfo" class="btn-group">
-                            <button ng-class="{'btn-off': settings.aside.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:settings.aside}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                            <button ng-class="{'btn-inverse': !settings.aside.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:settings.aside}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
                                 <span ng-class="icons.browser.info"></span>
                             </button>
                         </div>

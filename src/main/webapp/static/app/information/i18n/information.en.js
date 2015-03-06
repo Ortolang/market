@@ -10,13 +10,6 @@
 angular.module('ortolangMarketApp')
     .constant('INFORMATION_EN', {
         INFORMATION: {
-            NAV: {
-                PRESENTATION: 'Presentation',
-                PARTNERS: 'Partners',
-                ROADMAP: 'Roadmap',
-                NEWSLETTER: 'Newsletter',
-                POLICY: 'Ortolang\'s policy'
-            },
             PATH: {
                 PRESENTATION: 'information/en/presentation.html',
                 PARTNERS: 'information/partners.html',
