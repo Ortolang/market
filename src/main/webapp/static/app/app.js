@@ -94,7 +94,8 @@ angular
     }])
     .config(['$tooltipProvider', function ($tooltipProvider) {
         angular.extend($tooltipProvider.defaults, {
-            container: 'body'
+            container: 'body',
+            trigger: 'hover click focus'
         });
     }])
     .config(['hotkeysProvider', function (hotkeysProvider) {

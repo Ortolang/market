@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
             },
             INFO: '{{hideInfo ? "Afficher" : "Masquer"}} les détails',
             WORKSPACE_LIST: '{{hideWorkspaceList ? "Afficher" : "Masquer"}} la liste des espaces de travail',
+            SETTINGS: 'Paramètres',
             PREVIEW: 'Visualiser',
             DELETE: 'Supprimer',
             UPLOAD: 'Importer',

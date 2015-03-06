@@ -56,16 +56,17 @@
                     <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
                         <div ng-if="!browserService.isFileSelect" class="btn-group">
-                            <button class="btn btn-default" ng-click="showCheatsheet($event)" data-title="{{'BROWSER.SHORTCUTS' | translate}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
-                                <span ng-class="icons.browser.shortcuts"></span>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SETTINGS' | translate}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                                <span ng-class="icons.browser.settings"></span>
                             </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><div ng-click="showCheatsheet($event)" translate="BROWSER.SHORTCUTS"></div></li>
+                                <li ng-if="displayAsideWorkspaceList()"><div ng-click="toggleWorkspaceList()" data-translate-values="settings.aside" translate="BROWSER.WORKSPACE_LIST"></div></li>
+                            </ul>
                         </div>
 
-                        <div ng-if="displayAsideWorkspaceList() || browserService.displayAsideInfo" class="btn-group">
-                            <button ng-if="displayAsideWorkspaceList()" ng-class="{'btn-off': settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen}" class="btn btn-default" ng-click="toggleWorkspaceList()" data-title="{{'BROWSER.WORKSPACE_LIST' | translate:settings.aside}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
-                                <span ng-class="icons.browser.workspaceList"></span>
-                            </button>
-                            <button ng-if="browserService.displayAsideInfo" ng-class="{'btn-off': settings.aside.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:settings.aside}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                        <div ng-if="browserService.displayAsideInfo" class="btn-group">
+                            <button ng-class="{'btn-off': settings.aside.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:settings.aside}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
                                 <span ng-class="icons.browser.info"></span>
                             </button>
                         </div>

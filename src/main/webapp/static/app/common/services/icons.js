@@ -54,6 +54,7 @@ angular.module('ortolangMarketApp')
                 history: 'glyphicon glyphicon-time',
                 published: 'glyphicon glyphicon-globe',
                 shortcuts: 'glyphicon glyphicon-question-sign',
-                tools: 'fa fa-puzzle-piece'
+                tools: 'fa fa-fw fa-cube',
+                settings: 'glyphicon glyphicon-cog'
             }
         });
