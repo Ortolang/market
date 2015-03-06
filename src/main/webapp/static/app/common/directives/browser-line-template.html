@@ -23,8 +23,7 @@
             <td><span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
             <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>
-            <td ng-if="::isCollection(child)" ng-hide="isScreenMd">-</td>
-            <td ng-if="::!isCollection(child)" ng-hide="isScreenMd">{{::child.size | bytes}}</td>
+            <td ng-hide="isScreenMd">{{::child.size | bytes}}</td>
         </tr>
         </tbody>
     </table>
