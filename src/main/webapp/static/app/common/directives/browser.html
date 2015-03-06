@@ -230,7 +230,7 @@
                     <p class="lead workspace-name">{{wsName}}</p>
                     <div class="btn-toolbar workspace-toolbar" role="toolbar" ng-controller="BrowserSidebarMetadataCtrl">
                         <div class="btn-group" role="group">
-                            <button ng-if="!hasPresentationMetadata()" class="btn btn-default" ng-click="showMetadataEditor('market-ortolang-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA' | translate}}" bs-tooltip>
+                            <button ng-if="!hasPresentationMetadata()" class="btn btn-default" ng-click="showMetadataEditor('ortolang-item-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA' | translate}}" bs-tooltip>
                                 <span class="octicon octicon-book"></span>
                             </button>
 
@@ -256,10 +256,10 @@
                             </button>
                         </div>
                         <div ng-if="!hasPresentationMetadata()" class="btn-group" role="group">
-                            <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('market-ortolang-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
+                            <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('ortolang-item-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
                                 <span ng-class="icons.browser.preview"></span>
                             </button>
-                            <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('market-ortolang-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
+                            <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('ortolang-item-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
                                 <span ng-class="icons.browser.publish"></span>
                             </button>
                         </div>

@@ -34,7 +34,7 @@ angular.module('ortolangMarketApp')
 
         $scope.metadataFormats = [
             {
-                id: 'market-ortolang-json',
+                id: 'ortolang-item-json',
                 name: 'Item',
                 description: 'Les métadonnées de présentation permettent de paramétrer l\'affichage de la ressource dans la partie consultation du site.',
                 view: 'workspace/metadata-form-market-ortolang.html',
