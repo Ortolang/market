@@ -32,13 +32,18 @@ angular.element(document).ready(function () {
                     $window.location = logoutUrl;
                 }
 
+                function forceReload() {
+                    $window.location.reload();
+                }
+
                 return {
                     login: login,
                     register: register,
                     logout: logout,
                     getToken: function () { return keycloakAuth.token; },
                     getKeycloak: function () { return keycloakAuth; },
-                    isAuthenticated: isAuthenticated
+                    isAuthenticated: isAuthenticated,
+                    forceReload: forceReload
                 };
             }]);
 

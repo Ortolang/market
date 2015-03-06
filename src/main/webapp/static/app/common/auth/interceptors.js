@@ -17,10 +17,10 @@ angular.module('ortolangMarketApp')
                         AuthService.getKeycloak().updateToken(5).success(function () {
                             config.headers = config.headers || {};
                             config.headers.Authorization = 'Bearer ' + AuthService.getToken();
-
                             deferred.resolve(config);
                         }).error(function () {
                             deferred.reject('Failed to refresh token');
+                            AuthService.forceReload();
                         });
                     }
                     return deferred.promise;

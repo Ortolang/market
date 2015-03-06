@@ -37,6 +37,8 @@ angular.module('ortolangMarketApp')
                 MIME_TYPE: 'Type Mime',
                 DATE: 'Date'
             },
+            INFO: '{{hideInfo ? "Afficher" : "Masquer"}} les détails',
+            WORKSPACE_LIST: '{{hideWorkspaceList ? "Afficher" : "Masquer"}} la liste des espaces de travail',
             PREVIEW: 'Visualiser',
             DELETE: 'Supprimer',
             UPLOAD: 'Importer',
@@ -67,11 +69,14 @@ angular.module('ortolangMarketApp')
                 FILTER: 'Filtrer les éléments',
                 UP: 'Naviguer vers le haut',
                 DOWN: 'Naviguer vers le bas',
+                BACKSPACE: 'Revenir en arrière',
                 VIEW_MODE: 'Changer de mode de vue (liste/grille)',
                 SELECT_ALL: 'Tout selectionner',
                 ENTER: 'Visualiser / Ouvrir le dossier',
                 NEW_COLLECTION: 'Nouveau dossier',
-                DELETE: 'Supprimer les éléments sélectionnés'
+                DELETE: 'Supprimer les éléments sélectionnés',
+                INFO: 'Afficher / Masquer les détails',
+                WORKSPACE_LIST: 'Afficher / Masquer la liste des espaces de travail'
             }
         }
     });

@@ -19,9 +19,17 @@
     font-weight: bold;
   }
 
+  .btn-toolbar {
+    margin-left: 0;
+  }
+
+  .btn.btn-off {
+    color: fadeout(@gray-dark, 40%);
+  }
+
   .browser-breadcrumb {
     .btn.btn-default {
-      padding: @padding-base-vertical (@padding-small-horizontal - 2);
+      padding: @padding-base-vertical;
     }
     .breadcrumb-part {
       display: inline;
@@ -32,6 +40,12 @@
         color: @btn-default-border;
         padding: (@padding-base-vertical + 2) 3px (@padding-base-vertical - 2) 3px;
       }
+      .last-breadcrumb-part {
+        font-weight: bold;
+      }
+    }
+    .aside-left-collapsed {
+      margin-left: 20px;
     }
     button, a {
       background-color: transparent;
@@ -91,10 +105,63 @@
   &.browser-aside-left {
     border-right: 1px solid @navbar-default-border;
     background-color: @main-bg;
+    overflow: hidden;
+    .btn-collapse {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      cursor: pointer;
+      padding: @padding-small-vertical;
+      border-left: 1px solid @navbar-default-border;
+      border-top: 1px solid @navbar-default-border;
+      border-bottom: 1px solid @navbar-default-border;
+      background-color: @default-bg;
+      > span {
+        opacity: 0.5;
+      }
+      &:hover {
+        >span {
+          opacity: 1;
+        }
+      }
+    }
   }
   &.browser-aside-right {
     border-left: 1px solid @navbar-default-border;
   }
+  &.browser-aside-over {
+    position: absolute;
+    z-index: 1010;
+    width: 220px;
+  }
+}
+
+.browser-aside-left-collapsed {
+  position: absolute;
+  top: @toolbar-min-height;
+  bottom: 0;
+  background-color: @default-bg;
+  padding-left: 6px;
+  padding-right: 4px;
+  border-right: 1px solid @navbar-default-border;
+  z-index: 1009;
+  cursor: pointer;
+  display: table;
+  > span {
+    display: table-cell;
+    vertical-align: middle;
+    opacity: 0.6;
+  }
+  &:hover {
+    background-color: @alternate-bg;
+    > span {
+      opacity: 1;
+    }
+  }
+}
+
+.browser-middle-collapsed {
+  padding-left: 35px;
 }
 
 .browser-aside-info {
@@ -115,6 +182,21 @@
 
   p.lead span {
     padding-right: @padding-base-horizontal;
+  }
+  button.close {
+    float: right;
+    line-height: 1;
+    font-size: 25px;
+    font-weight: inherit;
+    opacity: 0.3;
+    position: relative;
+    top: 3px;
+    &:hover {
+      opacity: 0.6;
+    }
+    span {
+      padding: 0;
+    }
   }
 
   #metadata .input-group {
@@ -276,6 +358,9 @@ table.workspace-elements {
     &.size {
       width: 110px;
     }
+    &.type {
+      width: 150px;
+    }
   }
   > tbody > tr > td {
     padding-top: @padding-large-vertical;
@@ -376,4 +461,8 @@ table.workspace-elements {
   height: 100%;
   overflow: auto;
   background-color: #fdf6e3;
+}
+
+.file-select-modal-body {
+  padding: 0;
 }
