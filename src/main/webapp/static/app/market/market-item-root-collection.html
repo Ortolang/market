@@ -6,12 +6,12 @@
                 <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image"/>
             </a>
             <div class="media-body">
-                <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
+                <h1>{{item.title}}</h1>
 
                 <div ng-hide="browse">
                     <!-- Par : <a ng-href="#/search?content={{item['http://www.ortolang.fr/ontology/researcher']}}" ng-if="item['http://www.ortolang.fr/ontology/researcher']" href="#" class="author">{{item['http://www.ortolang.fr/ontology/researcher']}}</a> -->
-                    <p>Produit par : <span ng-repeat="producer in item['http://www.ortolang.fr/ontology/producer']"><a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
-                    <p ng-if="item['http://www.ortolang.fr/ontology/website']">Site web : <a href="{{item['http://www.ortolang.fr/ontology/website']}}" ng-bind="item['http://www.ortolang.fr/ontology/website']" target="_BLANK"></a></p>
+                    <p>Produit par : <span ng-repeat="producer in item.producer"><a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
+                    <p ng-if="item.website">Site web : <a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></p>
                     <!-- Category : Corpora -->
                     <!-- <p ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']">Langue principale du corpus : <span ng-repeat="pl in item['http://www.ortolang.fr/ontology/primaryLanguage']"><a href="#/search?content={{pl}}" ng-bind="pl"></a></span></p> -->
                     <!-- <p ng-if="item['http://www.ortolang.fr/ontology/discourseType']">Type discursif : <span ng-repeat="ls in item['http://www.ortolang.fr/ontology/discourseType']"><a href="#/search?content={{ls}}" ng-bind="ls"></a><span ng-if="!$last">, </span></span></p> -->
@@ -34,7 +34,7 @@
             <section id="description">
                 <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
                 <article>
-                    <p ng-bind-html="item['http://purl.org/dc/elements/1.1/description']"></p>
+                    <p ng-bind-html="item.description"></p>
                 </article>
             </section>
 

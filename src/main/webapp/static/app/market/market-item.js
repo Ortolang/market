@@ -8,79 +8,112 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$window', 'icons', 'ObjectResource', 'DownloadResource', 'N3Serializer', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, $window, icons, ObjectResource, DownloadResource, N3Serializer, VisualizerManager, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$window', 'icons', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, $window, icons, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
 
-            ObjectResource.get({oKey: key}).$promise.then(function (oobject) {
-                $scope.oobject = oobject;
-                $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
+            if ($routeParams.view === 'browse') {
+                $scope.marketItemTemplate = 'market/market-item-collection.html';
+                return;
+            }
 
-                if (oobject.type === 'collection') {
-                    if (oobject.object.root === true) {
+            var queryStr = 'select * from OrtolangObject where ortolang_status = \'published\' and ortolang_key = \''+key+'\' ';
+            console.log(queryStr);
+            JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
+                if(jsonResults.length===1) {
 
-                        if ($routeParams.view === 'browse') {
-                            $scope.marketItemTemplate = 'market/market-item-collection.html';
-                            return;
+                    $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: key});
+                    var ortolangObject = angular.fromJson(jsonResults[0]);
+
+                    var queryOrtolangMeta = 'select from '+ortolangObject.ortolang_meta;
+                    JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
+                        $scope.item = angular.fromJson(jsonObject[0]);
+
+                        $scope.marketItemTemplate = 'market/market-item-root-collection.html';
+
+                        $scope.imgtitle = '';
+                        $scope.imgtheme = 'custom';
+                        if($scope.item.title) {
+                            $scope.imgtitle = $scope.item.title.substring(0,2);
+                            $scope.imgtheme = $scope.item.title.substring(0,1).toLowerCase();
                         }
-
-                        if (oobject.object.metadatas.length > 0) {
-
-                            var metaKey = oobject.object.metadatas[0].key;
-
-                            DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                // N3Serializer.fromN3(metaContent).then(function (data) {
-                                    var data = angular.fromJson(metaContent);
-                                    $scope.item = angular.copy(data);
-                                    $scope.marketItemTemplate = 'market/market-item-root-collection.html';
-
-                                    if(data['http://www.ortolang.fr/ontology/image']) {
-
-                                        ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
-                                            $scope.item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
-                                        }, function (reason) {
-                                            console.error(reason);
-                                        });
-                                    } else {
-                                        if(data['http://purl.org/dc/elements/1.1/title']) {
-                                            $scope.imgtitle = data['http://purl.org/dc/elements/1.1/title'].substring(0,2);
-                                            $scope.imgtheme = data['http://purl.org/dc/elements/1.1/title'].substring(0,1).toLowerCase();
-                                        } else {
-                                            $scope.imgtitle = '';
-                                            $scope.imgtheme = 'custom';
-                                        }
-                                    }
-
-                                    if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
-                                        loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
-                                    }
-
-                                    if($scope.item['http://www.ortolang.fr/ontology/license']!==undefined && $scope.item['http://www.ortolang.fr/ontology/license']!=='') {
-                                        loadLicence(key, $scope.item['http://www.ortolang.fr/ontology/license']);
-                                    }
-
-                                    if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
-                                        $scope.datasizeToPrint = {'value':$scope.item['http://www.ortolang.fr/ontology/datasize']};
-                                    }
-                                // });
-                            }).error(function (reason) {
-                                console.error(reason);
-                            });
-                        }
-                    } else {
-                        $scope.marketItemTemplate = 'market/market-item-collection.html';
-                    }
-                //} else if (oobject.type === 'object') {
-                //    $scope.marketItemTemplate = 'market/market-item-data-object.html';
-                } else if (oobject.type === 'link') {
-                    console.debug('follow link');
-                } else {
-                    console.debug('load item key not found view');
+                    }, function (reason) {
+                    console.error(reason);
+                });
                 }
             }, function (reason) {
                 console.error(reason);
             });
+
+            // ObjectResource.get({oKey: key}).$promise.then(function (oobject) {
+            //     $scope.oobject = oobject;
+            //     $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
+
+            //     if (oobject.type === 'collection') {
+            //         if (oobject.object.root === true) {
+
+            //             if ($routeParams.view === 'browse') {
+            //                 $scope.marketItemTemplate = 'market/market-item-collection.html';
+            //                 return;
+            //             }
+
+            //             if (oobject.object.metadatas.length > 0) {
+
+            //                 var metaKey = oobject.object.metadatas[0].key;
+
+            //                 DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
+            //                     // N3Serializer.fromN3(metaContent).then(function (data) {
+            //                         var data = angular.fromJson(metaContent);
+            //                         $scope.item = angular.copy(data);
+            //                         $scope.marketItemTemplate = 'market/market-item-root-collection.html';
+
+            //                         if(data['http://www.ortolang.fr/ontology/image']) {
+
+            //                             ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function(oobject) {
+            //                                 $scope.item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+            //                             }, function (reason) {
+            //                                 console.error(reason);
+            //                             });
+            //                         } else {
+            //                             if(data['http://purl.org/dc/elements/1.1/title']) {
+            //                                 $scope.imgtitle = data['http://purl.org/dc/elements/1.1/title'].substring(0,2);
+            //                                 $scope.imgtheme = data['http://purl.org/dc/elements/1.1/title'].substring(0,1).toLowerCase();
+            //                             } else {
+            //                                 $scope.imgtitle = '';
+            //                                 $scope.imgtheme = 'custom';
+            //                             }
+            //                         }
+
+            //                         if($scope.item['http://www.ortolang.fr/ontology/preview']!==undefined && $scope.item['http://www.ortolang.fr/ontology/preview']!=='') {
+            //                             loadPreview(key, $scope.item['http://www.ortolang.fr/ontology/preview']);
+            //                         }
+
+            //                         if($scope.item['http://www.ortolang.fr/ontology/license']!==undefined && $scope.item['http://www.ortolang.fr/ontology/license']!=='') {
+            //                             loadLicence(key, $scope.item['http://www.ortolang.fr/ontology/license']);
+            //                         }
+
+            //                         if($scope.item['http://www.ortolang.fr/ontology/datasize']!==undefined && $scope.item['http://www.ortolang.fr/ontology/datasize']!=='') {
+            //                             $scope.datasizeToPrint = {'value':$scope.item['http://www.ortolang.fr/ontology/datasize']};
+            //                         }
+            //                     // });
+            //                 }).error(function (reason) {
+            //                     console.error(reason);
+            //                 });
+            //             }
+            //         } else {
+            //             $scope.marketItemTemplate = 'market/market-item-collection.html';
+            //         }
+            //     //} else if (oobject.type === 'object') {
+            //     //    $scope.marketItemTemplate = 'market/market-item-data-object.html';
+            //     } else if (oobject.type === 'link') {
+            //         console.debug('follow link');
+            //     } else {
+            //         console.debug('load item key not found view');
+            //     }
+            // }, function (reason) {
+            //     console.error(reason);
+            // });
         }
 
         $scope.browse = false;
