@@ -12,7 +12,7 @@
         </a>
     </div>
     <ul class="side-nav-list">
-        <li ng-show="!element.hidden && !element.active && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-repeat="element in sideNavElements" ng-class="getCssClass(element)">
+        <li ng-show="!element.hiddenSideNav && !element.active && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-repeat="element in sideNavElements" ng-class="getCssClass(element)">
             <a ng-if="element.class !== 'divider'" ng-href="#{{element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="select(element)" ng-class="element.class">
                 <span class="icon-container" ng-class="element.iconCss"></span>
                 <span class="item-description">{{element.description | translate}}</span>

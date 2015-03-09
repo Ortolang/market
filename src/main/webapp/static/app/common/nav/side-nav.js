@@ -79,7 +79,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.HOME',
                 iconCss: 'fa fa-fw fa-home fa-2x',
                 active: undefined,
-                hidden: false,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
                 authenticated: false
             },
             {
@@ -88,7 +89,8 @@ angular.module('ortolangMarketApp')
                 description: 'CORPORA',
                 iconCss: 'fa fa-fw fa-book fa-2x',
                 active: undefined,
-                hidden: false,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
                 authenticated: false
             },
             {
@@ -97,7 +99,8 @@ angular.module('ortolangMarketApp')
                 description: 'INTEGRATED_PROJECTS',
                 iconCss: 'fa fa-fw fa-briefcase fa-2x',
                 active: undefined,
-                hidden: false,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
                 authenticated: false
             },
             {
@@ -106,7 +109,8 @@ angular.module('ortolangMarketApp')
                 description: 'TOOLS',
                 iconCss: 'fa fa-fw fa-cubes fa-2x',
                 active: undefined,
-                hidden: false,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
                 authenticated: false
             },
             {
@@ -115,7 +119,8 @@ angular.module('ortolangMarketApp')
                 description: 'LEXICONS',
                 iconCss: 'fa fa-fw fa-quote-right fa-2x',
                 active: undefined,
-                hidden: false,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
                 authenticated: false
             },
             {
@@ -124,7 +129,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.ITEM',
                 iconCss: 'fa fa-fw fa-cube fa-2x',
                 active: undefined,
-                hidden: true,
+                hiddenSideNav: true,
+                hiddenTopNav: true,
                 authenticated: false
             },
             {
@@ -139,7 +145,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.INFORMATION',
                 iconCss: 'fa fa-fw fa-info fa-2x',
                 active: undefined,
-                hidden: false,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
                 authenticated: false
             },
             {
@@ -148,7 +155,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.MY_WORKSPACES',
                 iconCss: 'fa fa-fw fa-cloud fa-2x',
                 active: undefined,
-                hidden: false,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
                 authenticated: true
             },
             {
@@ -157,7 +165,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.PROCESSES',
                 iconCss: 'fa fa-fw fa-tasks fa-2x',
                 active: undefined,
-                hidden: true,
+                hiddenSideNav: true,
+                hiddenTopNav: false,
                 authenticated: true
             },
             {
@@ -166,7 +175,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.TASKS',
                 iconCss: 'fa fa-fw fa-bell fa-2x',
                 active: undefined,
-                hidden: true,
+                hiddenSideNav: true,
+                hiddenTopNav: false,
                 authenticated: true
             },
             {
@@ -175,7 +185,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.PROFILE',
                 iconCss: 'fa fa-fw fa-user fa-2x',
                 active: undefined,
-                hidden: true,
+                hiddenSideNav: true,
+                hiddenTopNav: true,
                 authenticated: true
             },
             {
@@ -184,7 +195,8 @@ angular.module('ortolangMarketApp')
                 description: 'NAV.SEARCH',
                 iconCss: 'fa fa-fw fa-search fa-2x',
                 active: undefined,
-                hidden: true,
+                hiddenSideNav: true,
+                hiddenTopNav: true,
                 authenticated: true
             }
         ];
