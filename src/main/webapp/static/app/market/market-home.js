@@ -49,7 +49,7 @@ angular.module('ortolangMarketApp')
                 ortolangType = 'Outil';
             }
             //TODO news (propriete star/new?)
-            var queryStr = 'select ortolang_key as key, ortolang_meta.title as title, ortolang_meta.description as description from OrtolangObject where ortolang_status = \'published\' and ortolang_meta.type = \''+ortolangType+'\' ';
+            var queryStr = 'select ortolang_key as key, ortolang_meta.title as title, ortolang_meta.description, ortolang_meta.image as image from OrtolangObject where ortolang_status = \'published\' and ortolang_meta.type = \''+ortolangType+'\' ';
             console.log(queryStr);
             JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
                 angular.forEach(jsonResults, function(jsonResult) {

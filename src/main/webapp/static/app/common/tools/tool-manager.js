@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'DownloadResource', 'N3Serializer',
-        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, DownloadResource, N3Serializer) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'DownloadResource', 'JsonResultResource',
+        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, DownloadResource, JsonResultResource) {
 
             // ---
             // ORTOLANG TOOL DEFINITION
@@ -190,63 +190,34 @@ angular.module('ortolangMarketApp')
             }
 
             function populateToolList() {
-                var deferred = $q.defer();
-                ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(
-                    function (oobjects) {
-                        var index = 0;
-                        var items = [];
-                        angular.forEach(oobjects.entries, function (entry) {
-                            items.push({key: entry, rang: index});
-                            index++;
+
+                var queryStr = 'select ortolang_key as key, ortolang_meta.title as title, ortolang_meta.description as description, ortolang_meta.toolId as toolId, ortolang_meta.toolHelp as toolHelp, ortolang_meta.toolUrl as toolUrl from OrtolangObject where ortolang_status = \'published\' and ortolang_meta.type = \'Outil\' ';
+                console.log(queryStr);
+                JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
+                        
+                        angular.forEach(angular.fromJson(jsonResults), function (itemMeta) {
+                            var item = {};
+                            
+                            var data = angular.fromJson(itemMeta);
+                            item.key = data.key;
+                            item.id = data.toolId;
+                            item.name = data.title;
+                            item.description = data.description;
+                            item.documentation = data.toolHelp;
+                            item.url = data.toolUrl;
+                            item.meta = data;
+                            item.active = true;
+
+                            register(new OrtolangTool(item));
+                            console.log('register '+item.name);
                         });
+                        console.log('fin populate tool list');
+                        $rootScope.$broadcast('tool-list-registered');
 
-                        loadMetadata(items);
-                    },
-                    function (error) {
-                        console.error('An issue occurred when trying to get the tool list: %o', error);
-                        deferred.reject();
-                    }
-                );
-                return deferred.promise;
-            }
-
-            function loadMetadata(items) {
-                angular.forEach(items, function (item) {
-                    // Loads properties of each object
-                    ObjectResource.get({oKey: item.key}).$promise
-                        .then(function (oobject) {
-                            if (oobject.object.root === true) {
-                                if (oobject.object.metadatas.length > 0) {
-
-                                    var metaKey = oobject.object.metadatas[0].key;
-
-                                    DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                        // N3Serializer.fromN3(metaContent).then(function (data) {
-                                            var data = angular.fromJson(metaContent);
-                                            if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Outil') {
-                                                item.id = data['http://www.ortolang.fr/ontology/toolId'];
-                                                item.name = data['http://purl.org/dc/elements/1.1/title'];
-                                                item.description = data['http://purl.org/dc/elements/1.1/description'];
-                                                item.documentation = data['http://www.ortolang.fr/ontology/toolHelp'];
-                                                item.url = data['http://www.ortolang.fr/ontology/toolUrl'];
-                                                item.meta = data;
-                                                item.active = true;
-
-                                                register(new OrtolangTool(item));
-                                                if (item.rang === items.length - 1) {
-                                                    $rootScope.$broadcast('tool-list-registered');
-                                                }
-                                            }
-                                        });
-                                    // }).error(function (error) {
-                                    //     console.error('An issue occurred when trying to get the tool list: %o', error);
-                                    // });
-                                }
-                            }
-                        });
+                }, function (reason) {
+                    console.error('An issue occurred when trying to get the tool list: %o', reason);
                 });
             }
-
 
             function disableTool(toolKey) {
                 if (registry[toolKey]) {

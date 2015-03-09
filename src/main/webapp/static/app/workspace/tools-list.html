@@ -43,9 +43,9 @@
                                 <div class="list-group" >
                                     <dl class="dl-vertical">
                                         <dt translate="NAME"></dt>
-                                        <dd>{{selectedTool.getName()}}</dd>
+                                        <dd ng-bind="selectedTool.getName()"></dd>
                                         <dt translate="DESCRIPTION"></dt>
-                                        <dd>{{selectedTool.getDescription()}}</dd>
+                                        <dd ng-bind-html="selectedTool.getDescription()"></dd>
                                         <dt translate="TOOLS.DOCUMENTATION"></dt>
                                         <dd ng-bind-html="selectedTool.getDocumentation()"></dd>
                                     </dl>
