@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$filter', 'IndexResultResource', function ($scope, $location, $routeParams, $filter, IndexResultResource) {
+    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$filter', 'JsonResultResource', function ($scope, $location, $routeParams, $filter, JsonResultResource) {
 
         $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
 
@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
         $scope.filter = function (filterID, filterValue, filterTranslation) {
             if (filterID && filterValue) {
                 if (filterID === 'type') {
-                    $scope.itemsFiltered = $filter('filter')($scope.items, {'meta': {'http://www.ortolang.fr/ontology/type': filterValue}});
+                    $scope.itemsFiltered = $filter('filter')($scope.items, {'type': filterValue});
                     $scope.selectedType = filterValue;
                     $scope.selectedTypeTranslation = filterTranslation;
                 } else {
@@ -39,36 +39,76 @@ angular.module('ortolangMarketApp')
 
         function loadObjects(content) {
 
-            var query = ' STATUS:PUBLISHED', contentSplit = [];
+            // var query = ' STATUS:PUBLISHED', contentSplit = [];
+            var query = 'SELECT ortolang_key as key, ortolang_meta.type as type, ortolang_meta.title as title, ortolang_meta.description as description, ortolang_meta.producer as producer FROM OrtolangObject WHERE ortolang_status = \'published\' ', contentSplit = [];
 
-            if (content && content !== '' && content[0] !== '"') {
-                contentSplit = content.split(' ');
-            }
+            // if (content && content !== '' && content[0] !== '"') {
+            //     contentSplit = content.split(' ');
+            // }
 
-            if (contentSplit.length > 0) {
-                angular.forEach(contentSplit, function (contentPart) {
-                    var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
-                    query += ' AND CONTENT:' + str + '*';
-                });
-            } else {
-                query += ' AND CONTENT:' + content;
-            }
+            // if (contentSplit.length > 0) {
+            //     angular.forEach(contentSplit, function (contentPart) {
+            //         var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
+            //         query += ' AND ortolang_meta.* containsText \'' + str + '\' OR ortolang_meta.producer IN \'' + str + '\'';
+            //     });
+            // } else {
+            //     query += ' AND ortolang_meta.* containsText \'' + content + '\' OR ortolang_meta.producer IN \'' + content + '\'';
+            // }
+
+            query += ' AND '+textFacetToQuery('*', content) + ' OR '+ arrayFacetToQuery('producer', content) +' OR '+ arrayFacetToQuery('researcher', content);
 
             console.debug('query : ' + query);
             // Loads all objects
-            IndexResultResource.get({query: query}).$promise.then(function (results) {
+            JsonResultResource.get({query: query}).$promise.then(function (results) {
 
                 angular.forEach(results, function (entry) {
 
-                    if (entry.explain) {
-                        entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
-                    }
-                    $scope.items.push(entry);
-                    $scope.itemsFiltered.push(entry);
+                    // if (entry.explain) {
+                    //     entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
+                    // }
+                    var jsEntry = angular.fromJson(entry);
+                    $scope.items.push(jsEntry);
+                    $scope.itemsFiltered.push(jsEntry);
                 });
 
                 // $scope.itemsFiltered = angular.copy($scope.items);
             });
+        }
+
+        function textFacetToQuery(name, content) {
+            var contentSplit = [], query = '';
+            if (content && content !== '' && content[0] !== '"') {
+                contentSplit = content.split(' ');
+            }
+            if (contentSplit.length > 0) {
+                query += '(';
+                angular.forEach(contentSplit, function (contentPart) {
+                    var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
+                    query += 'ortolang_meta.'+name+' containsText \'' + str + '\'';
+                }); //TODO ajouter AND
+                query += ')';
+            } else {
+                query += ' ortolang_meta.'+name+' containsText \'' + content + '\'';
+            }
+
+            return query;
+        }
+
+        function arrayFacetToQuery(name, content) {
+            var contentSplit = [], query = '';
+            if (content && content !== '' && content[0] !== '"') {
+                contentSplit = content.split(' ');
+            }
+            if (contentSplit.length > 0) {
+                angular.forEach(contentSplit, function (contentPart) {
+                    var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
+                    query += ' ortolang_meta.'+name+' IN \'' + str + '\'';
+                });
+            } else {
+                query += ' ortolang_meta.'+name+' IN \'' + content + '\'';
+            }
+
+            return query;
         }
 
 

@@ -24,9 +24,9 @@ angular.module('ortolangMarketApp')
                 if(jsonResults.length===1) {
 
                     $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: key});
-                    var ortolangObject = angular.fromJson(jsonResults[0]);
+                    $scope.ortolangObject = angular.fromJson(jsonResults[0]);
 
-                    var queryOrtolangMeta = 'select from '+ortolangObject.ortolang_meta;
+                    var queryOrtolangMeta = 'select from '+$scope.ortolangObject.ortolang_meta;
                     JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
                         $scope.item = angular.fromJson(jsonObject[0]);
 

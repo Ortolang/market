@@ -19,7 +19,6 @@ angular.module('ortolangMarketApp')
             },
             link: {
                 post : function (scope) {
-                    console.log('entry : '+scope.entry);
                     var key = (scope.entry.root!==undefined)?scope.entry.root:scope.entry.key;
 
                     if(scope.entry.image) {
