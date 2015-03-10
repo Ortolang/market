@@ -191,7 +191,7 @@ angular.module('ortolangMarketApp')
 
             function populateToolList() {
 
-                var queryStr = 'select ortolang_key as key, ortolang_meta.title as title, ortolang_meta.description as description, ortolang_meta.toolId as toolId, ortolang_meta.toolHelp as toolHelp, ortolang_meta.toolUrl as toolUrl from OrtolangObject where ortolang_status = \'published\' and ortolang_meta.type = \'Outil\' ';
+                var queryStr = 'select key, meta.title as title, meta.description as description, meta.toolId as toolId, meta.toolHelp as toolHelp, meta.toolUrl as toolUrl from collection where status = \'published\' and meta.type = \'Outil\' ';
                 console.log(queryStr);
                 JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
                         

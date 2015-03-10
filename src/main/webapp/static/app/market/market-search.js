@@ -40,22 +40,9 @@ angular.module('ortolangMarketApp')
         function loadObjects(content) {
 
             // var query = ' STATUS:PUBLISHED', contentSplit = [];
-            var query = 'SELECT ortolang_key as key, ortolang_meta.type as type, ortolang_meta.title as title, ortolang_meta.description as description, ortolang_meta.producer as producer FROM OrtolangObject WHERE ortolang_status = \'published\' ', contentSplit = [];
+            var query = 'SELECT key, meta.type as type, meta.title as title, meta.description as description, meta.producer as producer FROM collection WHERE status = \'published\' ';
 
-            // if (content && content !== '' && content[0] !== '"') {
-            //     contentSplit = content.split(' ');
-            // }
-
-            // if (contentSplit.length > 0) {
-            //     angular.forEach(contentSplit, function (contentPart) {
-            //         var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
-            //         query += ' AND ortolang_meta.* containsText \'' + str + '\' OR ortolang_meta.producer IN \'' + str + '\'';
-            //     });
-            // } else {
-            //     query += ' AND ortolang_meta.* containsText \'' + content + '\' OR ortolang_meta.producer IN \'' + content + '\'';
-            // }
-
-            query += ' AND '+textFacetToQuery('*', content) + ' OR '+ arrayFacetToQuery('producer', content) +' OR '+ arrayFacetToQuery('researcher', content);
+            query += ' AND ' + textFacetToQuery('*', content) + ' OR '+ arrayFacetToQuery('producer', content) +' OR '+ arrayFacetToQuery('researcher', content);
 
             console.debug('query : ' + query);
             // Loads all objects
@@ -63,15 +50,11 @@ angular.module('ortolangMarketApp')
 
                 angular.forEach(results, function (entry) {
 
-                    // if (entry.explain) {
-                    //     entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
-                    // }
                     var jsEntry = angular.fromJson(entry);
                     $scope.items.push(jsEntry);
                     $scope.itemsFiltered.push(jsEntry);
                 });
 
-                // $scope.itemsFiltered = angular.copy($scope.items);
             });
         }
 
@@ -84,11 +67,11 @@ angular.module('ortolangMarketApp')
                 query += '(';
                 angular.forEach(contentSplit, function (contentPart) {
                     var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
-                    query += 'ortolang_meta.'+name+' containsText \'' + str + '\'';
-                }); //TODO ajouter AND
+                    query += 'meta.'+name+' containsText \'' + str + '\'';
+                });
                 query += ')';
             } else {
-                query += ' ortolang_meta.'+name+' containsText \'' + content + '\'';
+                query += ' meta.'+name+' containsText \'' + content + '\'';
             }
 
             return query;
@@ -102,10 +85,10 @@ angular.module('ortolangMarketApp')
             if (contentSplit.length > 0) {
                 angular.forEach(contentSplit, function (contentPart) {
                     var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
-                    query += ' ortolang_meta.'+name+' IN \'' + str + '\'';
+                    query += ' meta.'+name+' IN \'' + str + '\'';
                 });
             } else {
-                query += ' ortolang_meta.'+name+' IN \'' + content + '\'';
+                query += ' meta.'+name+' IN \'' + content + '\'';
             }
 
             return query;

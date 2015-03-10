@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
 
             if(ortolangType!=='') {
                 //TODO news (propriete star/new?)
-                var queryStr = 'select ortolang_key as key, ortolang_meta.title as title, ortolang_meta.description, ortolang_meta.image as image from OrtolangObject where ortolang_status = \'published\' and ortolang_meta.type = \''+ortolangType+'\'';
+                var queryStr = 'select key, meta.title as title, meta.description, meta.image as image from collection where status = \'published\' and meta.type = \''+ortolangType+'\'';
                 JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
                     angular.forEach(jsonResults, function(jsonResult) {
                         $scope.items.push(angular.fromJson(jsonResult));

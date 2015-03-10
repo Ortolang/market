@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
                 return;
             }
 
-            var queryStr = 'select * from OrtolangObject where ortolang_status = \'published\' and ortolang_key = \''+key+'\' ';
+            var queryStr = 'select * from collection where status = \'published\' and key = \''+key+'\' ';
             console.log(queryStr);
             JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
                 if(jsonResults.length===1) {
@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
                     $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: key});
                     $scope.ortolangObject = angular.fromJson(jsonResults[0]);
 
-                    var queryOrtolangMeta = 'select from '+$scope.ortolangObject.ortolang_meta;
+                    var queryOrtolangMeta = 'select from '+$scope.ortolangObject.meta;
                     JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
                         $scope.item = angular.fromJson(jsonObject[0]);
 
