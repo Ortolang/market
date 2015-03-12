@@ -125,6 +125,40 @@
                                 </dd>
                             </dl>
                         </div>
+
+                        <div ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
+                                <dd ng-repeat="progLang in item['http://www.ortolang.fr/ontology/programmingLanguage']">
+                                    <a ng-href='#/search?content="{{progLang}}"'>{{progLang}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item['http://www.ortolang.fr/ontology/opearatingSystem']" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
+                                <dd ng-repeat="opsys in item['http://www.ortolang.fr/ontology/opearatingSystem']">
+                                    <a ng-href='#/search?content="{{opsys}}"'>{{opsys}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item['http://www.ortolang.fr/ontology/toolSupport']" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.SUPPORT_TOOL"></dt>
+                                <dd ng-bind-html="item['http://www.ortolang.fr/ontology/toolSupport']"></dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item['http://www.ortolang.fr/ontology/language']" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.LANGUAGE"></dt>
+                                <dd ng-repeat="lang in item['http://www.ortolang.fr/ontology/language']">
+                                    <a ng-href='#/search?content="{{lang}}"'>{{lang}}</a>
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
                 </article>
             </section>

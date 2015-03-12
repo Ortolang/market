@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.toggleEditor = function () {
-            if ($scope.editorVisibility === true) {
+            if ($scope.editorVisibility) {
                 $scope.hideEditor();
             } else {
                 $scope.showEditor();
@@ -34,7 +34,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.isEditorShow = function () {
-            return $scope.editorVisibility === true;
+            return $scope.editorVisibility;
         };
 
         // ******** //

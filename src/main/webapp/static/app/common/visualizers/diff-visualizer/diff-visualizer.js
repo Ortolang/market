@@ -40,7 +40,7 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('diffVisualizer', ['$http', function ($http) {
+    .directive('diffVisualizer', ['DownloadResource', function (DownloadResource) {
 
         return {
             templateUrl: 'common/visualizers/diff-visualizer/diff-visualizer.html',
@@ -49,10 +49,11 @@ angular.module('ortolangVisualizers')
             link: function (scope, element, attrs) {
                 scope.leftObjName = scope.elements[0].name;
                 scope.rightObjName = scope.elements[1].name;
-                $http.get(scope.elements[0].downloadUrl).success(function (data) {
+
+                DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
                     scope.leftObj = data;
                 });
-                $http.get(scope.elements[1].downloadUrl).success(function (data) {
+                DownloadResource.download({oKey: scope.elements[1].key}).success(function (data) {
                     scope.rightObj = data;
                 });
 

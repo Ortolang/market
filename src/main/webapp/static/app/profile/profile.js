@@ -10,12 +10,12 @@
 angular.module('ortolangMarketApp')
     .controller('ProfileCtrl', ['$scope',
         function ($scope) {
-            console.debug($scope.$parent.authenticated);
+            console.log($scope.$parent.authenticated);
             if($scope.$parent.authenticated) {
                 var user = $scope.$parent.currentUser;
-                console.debug($scope.$parent);
+                console.log($scope.$parent);
 
-                console.debug(user.name);
+                console.log(user.name);
             }
         }
 ]);

@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.toggleMetadataEditorList = function () {
-            if ($scope.metadataEditorListVisibility === true) {
+            if ($scope.metadataEditorListVisibility) {
                 $scope.hideMetadataEditorList();
             } else {
                 $scope.showMetadataEditorList();
@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.isMetadataEditorListShow = function () {
-            return $scope.metadataEditorListVisibility === true;
+            return $scope.metadataEditorListVisibility;
         };
 
         $scope.metadataFormats = [

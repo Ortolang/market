@@ -26,11 +26,10 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.showToolLog = function (toolJob) {
-                Runtime.selectToolJob(toolJob);
-                console.debug(toolJob.log);
+            $scope.showToolLog = function (job) {
+                Runtime.selectToolJob(job);
                 $modal({
-                    title: toolJob.name,
+                    title: job.toolName,
                     html: true,
                     scope: $scope,
                     template: 'processes/process-log-modal-template.html',
@@ -38,22 +37,22 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.abortToolJob = function (toolJob) {
-                Runtime.selectProcess(toolJob);
-                ToolManager.getTool(toolJob.key).abortJob(toolJob.id).$promise.then(
-                    function success() {
-                        $alert({title: toolJob.name, content: 'annulé', placement: 'top-right', type: 'success', show: true});
+            $scope.abortToolJob = function (job) {
+                Runtime.selectProcess(job);
+                ToolManager.getTool(job.toolKey).abortJob(job.id).$promise.then(
+                    function () {
+                        $alert({title: job.toolName, content: 'annulé', placement: 'top-right', type: 'success', show: true});
                     },
-                    function error() {
-                        $alert({title: toolJob.name, content: 'pas annulé', placement: 'top-right', type: 'danger', show: true});
+                    function () {
+                        $alert({title: job.toolName, content: 'pas annulé', placement: 'top-right', type: 'danger', show: true});
                     }
                 );
             };
 
-            $scope.showToolParam = function (toolJob) {
-                Runtime.selectToolJob(toolJob);
+            $scope.showToolParam = function (job) {
+                Runtime.selectToolJob(job);
                 $modal({
-                    title: toolJob.name,
+                    title: job.toolName,
                     html: true,
                     scope: $scope,
                     template: 'tool/tool-tpl-parameters.html',
@@ -61,14 +60,14 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.showResult = function (toolJob) {
-                Runtime.selectProcess(toolJob);
-                ToolManager.getTool(toolJob.key).getResult(toolJob.id).$promise.then(function (data) {
+            $scope.showResult = function (job) {
+                Runtime.selectProcess(job);
+                ToolManager.getTool(job.toolKey).getResult(job.id).$promise.then(function (data) {
                     $scope.results = data;
-                    $scope.jname = toolJob.name;
-                    $scope.job = toolJob;
+                    $scope.jname = job.toolName;
+                    $scope.job = job;
                     $modal({
-                        title: toolJob.name,
+                        title: job.toolName,
                         html: true,
                         scope: $scope,
                         template: 'tool/tool-result-modal-template.html',

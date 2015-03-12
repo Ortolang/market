@@ -1,10 +1,13 @@
-<p>
-    {{leftObjName}}
-    <button class="btn btn-default btn-sm" ng-click="switchDiff()"><span class="octicon octicon-mirror"></span></button>
-    {{rightObjName}}
-</p>
-<br/>
-<pre diff left-obj="leftObj" right-obj="rightObj"></pre>
-<pre processing-diff left-obj="leftObj" right-obj="rightObj"></pre>
-<pre semantic-diff left-obj="leftObj" right-obj="rightObj"></pre>
-<pre line-diff left-obj="leftObj" right-obj="rightObj"></pre>
+<div class="modal-header">
+    <p>
+        {{leftObjName}}
+        <button class="btn btn-default btn-sm" ng-click="switchDiff()"><span class="octicon octicon-mirror"></span></button>
+        {{rightObjName}}
+    </p>
+</div>
+<div class="modal-body">
+    <pre diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre processing-diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre semantic-diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre line-diff left-obj="leftObj" right-obj="rightObj"></pre>
+</div>

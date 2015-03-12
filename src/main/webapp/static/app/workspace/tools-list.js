@@ -10,8 +10,6 @@
 angular.module('ortolangMarketApp')
     .controller('ToolsListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', function ($scope, ToolManager, $rootScope, $translate) {
 
-        var saveBt, successJob;
-
         // ***************** //
         // Editor visibility //
         // ***************** //
@@ -20,32 +18,31 @@ angular.module('ortolangMarketApp')
 
         $scope.show = function () {
             $scope.visibility = true;
-            // $scope.resizeAsideBody();
         };
 
         $scope.hide = function () {
             $scope.visibility = false;
-            // resetMetadataFormat();
         };
 
         $scope.toggle = function () {
-            if ($scope.visibility === true) {
+            if ($scope.visibility) {
                 $scope.hide();
             } else {
                 $scope.show();
             }
         };
 
-        $scope.isShow = function () {
-            return $scope.visibility === true;
+        $scope.isVisible = function () {
+            return $scope.visibility;
         };
 
         // Tools list //
 
         $scope.selectTool = function (tool) {
             $scope.selectedTool = tool;
-            //ToolManager.checkGrant(tool.getKey());
-            $scope.loadConfig();
+            ToolManager.checkGrant(tool.getKey()).then(function () {
+                $scope.loadConfig();
+            });
         };
 
         $scope.resetSelectedTool = function () {
@@ -62,10 +59,10 @@ angular.module('ortolangMarketApp')
 
         $scope.loadConfig = function () {
             ToolManager.getTool($scope.selectedTool.getKey()).getExecutionForm().$promise.then(
-                function success(config) {
+                function (config) {
                     $scope.generateForm(config);
                 },
-                function error(msg) {
+                function (msg) {
                     console.error('The tool server for "%s" is not responding.', $scope.selectedTool.getName(), msg);
                     $scope.formData = undefined;
                 }
@@ -82,7 +79,7 @@ angular.module('ortolangMarketApp')
             $scope.formOptions = {
                 uniqueFormId: 'toolConfig',
                 hideSubmit: false,
-                submitCopy: saveBt
+                submitCopy: $translate.instant('TOOLS.RUN_TOOL')
             };
         };
 
@@ -104,7 +101,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.isShowError = function () {
-            return $scope.fail === true;
+            return $scope.fail;
         };
 
 
@@ -119,35 +116,18 @@ angular.module('ortolangMarketApp')
 
         $scope.onSubmit = function () {
             ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.formData).$promise.then(
-                function success(response) {
-                    console.log(response);
+                function () {
                     $rootScope.$broadcast('tool-job-created');
                     $scope.hide();
                 },
-                function error(msg) {
+                function (msg) {
                     console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);
                     $scope.showError(msg);
                 }
             );
         };
 
-        $rootScope.$on('$translateChangeSuccess', function () {
-            initTranslations();
-        });
-
-        function initTranslations() {
-            $translate([
-                'TOOLS.RUN_TOOL',
-                'TOOLS.WAS_SUCCESS'
-            ]).then(function (translations) {
-                saveBt = translations['TOOLS.RUN_TOOL'];
-                successJob = translations['TOOLS.WAS_SUCCESS'];
-            });
-
-        }
-
         function init() {
-            initTranslations();
             $scope.tools = [];
             $scope.loadToolsList();
             $scope.selectedTool = undefined;

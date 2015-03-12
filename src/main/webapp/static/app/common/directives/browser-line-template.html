@@ -1,31 +1,29 @@
 <div ng-if="isViewModeLine()" class="table-wrapper workspace-elements-wrapper">
     <table ng-init="resizeBrowser()" ng-if="parent.elements" class="table table-hover table-responsive workspace-elements">
+        <colgroup>
+            <col/>
+            <col ng-class="{type: isScreenMd}"/>
+            <col ng-hide="isScreenMd"/>
+            <col ng-hide="isScreenMd" class="size" />
+        </colgroup>
         <thead class="small">
         <tr>
             <th ng-click="order('name', 'toggle')" translate="NAME"></th>
             <th ng-click="order('mimeType', 'toggle')" translate="TYPE"></th>
-            <th ng-click="order('modification', 'toggle')" translate="BROWSER.LAST_MODIFICATION"></th>
-            <th ng-click="order('size', 'toggle')" translate="SIZE"></th>
+            <th ng-hide="isScreenMd" ng-click="order('modification', 'toggle')" translate="BROWSER.LAST_MODIFICATION"></th>
+            <th ng-hide="isScreenMd" ng-click="order('size', 'toggle')" translate="SIZE"></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="child in filteredChildren() | orderBy:orderProp:orderReverse"
-            ng-click="clickChild($event, child)"
-            ng-right-click="clickChild($event, child)"
-            ng-dblclick="doubleClickChild($event, child)"
+        <tr ng-repeat="child in filteredOrderedChildren() track by child.key"
+            ng-click="clickChild(child, $event)"
+            ng-right-click="clickChild(child, $event)"
+            ng-dblclick="doubleClickChild(child)"
             ng-class="{active : isSelected(child)}">
-            <td ng-if="child.type === 'collection'">
-                        <span ng-click="browseToChild(child)" class="collection">
-                            <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
-                        </span>
-            </td>
-            <td ng-if="child.type !== 'collection'">
-                <span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}
-            </td>
+            <td><span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
-            <td>{{::child.modification | date : dateFormat}}</td>
-            <td ng-if="child.type === 'collection'">-</td>
-            <td ng-if="child.type !== 'collection'">{{::child.size | bytes}}</td>
+            <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>
+            <td ng-hide="isScreenMd">{{::child.size | bytes}}</td>
         </tr>
         </tbody>
     </table>

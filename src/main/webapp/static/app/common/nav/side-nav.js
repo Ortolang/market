@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
                     } else {
                         var clickedElement = $('.side-nav').find('.' + element.class).parent(),
                             copy = angular.element('.side-nav-active-item.copy'),
-                            real = angular.element('#side-nav-active-item');
+                            real = angular.element('.side-nav-active-item.real');
                         $rootScope.navPosition = clickedElement.position().top;
                         if (animate) {
                             real.addClass('animated');
@@ -68,13 +68,138 @@ angular.module('ortolangMarketApp')
             $scope.select({class: 'search'}, false);
         };
 
-        $rootScope.$on('$translateChangeSuccess', function () {
-            initTranslations();
-        });
-
         $scope.getCssClass = function (element) {
             return (element.active ? 'active ' : '') + (element.class === 'divider' ? 'divider' : '');
         };
+
+        $rootScope.sideNavElements = [
+            {
+                class: 'market',
+                path: '/market/news',
+                description: 'NAV.HOME',
+                iconCss: 'fa fa-fw fa-home fa-2x',
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: false
+            },
+            {
+                class: 'corpora',
+                path: '/market/corpora',
+                description: 'CORPORA',
+                iconCss: 'fa fa-fw fa-book fa-2x',
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: false
+            },
+            {
+                class: 'integrated-projects',
+                path: '/market/websites',
+                description: 'INTEGRATED_PROJECTS',
+                iconCss: 'fa fa-fw fa-briefcase fa-2x',
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: false
+            },
+            {
+                class: 'tools',
+                path: '/market/tools',
+                description: 'TOOLS',
+                iconCss: 'fa fa-fw fa-cubes fa-2x',
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: false
+            },
+            {
+                class: 'lexicons',
+                path: '/market/lexicons',
+                description: 'LEXICONS',
+                iconCss: 'fa fa-fw fa-quote-right fa-2x',
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: false
+            },
+            {
+                class: 'item',
+                path: '/market/item',
+                description: 'NAV.ITEM',
+                iconCss: 'fa fa-fw fa-cube fa-2x',
+                active: undefined,
+                hiddenSideNav: true,
+                hiddenTopNav: true,
+                authenticated: false
+            },
+            {
+                class: 'divider',
+                active: undefined,
+                authenticated: false
+            },
+            {
+                class: 'information',
+                path: '/information',
+                hiddenPath: '/information/presentation',
+                description: 'NAV.INFORMATION',
+                iconCss: 'fa fa-fw fa-info fa-2x',
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: false
+            },
+            {
+                class: 'workspaces',
+                path: '/workspaces',
+                description: 'NAV.MY_WORKSPACES',
+                iconCss: 'fa fa-fw fa-cloud fa-2x',
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: true
+            },
+            {
+                class: 'processes',
+                path: '/processes',
+                description: 'NAV.PROCESSES',
+                iconCss: 'fa fa-fw fa-tasks fa-2x',
+                active: undefined,
+                hiddenSideNav: true,
+                hiddenTopNav: false,
+                authenticated: true
+            },
+            {
+                class: 'tasks',
+                path: '/tasks',
+                description: 'NAV.TASKS',
+                iconCss: 'fa fa-fw fa-bell fa-2x',
+                active: undefined,
+                hiddenSideNav: true,
+                hiddenTopNav: false,
+                authenticated: true
+            },
+            {
+                class: 'profile',
+                path: '/profile',
+                description: 'NAV.PROFILE',
+                iconCss: 'fa fa-fw fa-user fa-2x',
+                active: undefined,
+                hiddenSideNav: true,
+                hiddenTopNav: true,
+                authenticated: true
+            },
+            {
+                class: 'search',
+                path: '/search',
+                description: 'NAV.SEARCH',
+                iconCss: 'fa fa-fw fa-search fa-2x',
+                active: undefined,
+                hiddenSideNav: true,
+                hiddenTopNav: true,
+                authenticated: true
+            }
+        ];
 
         // *********************** //
         //           Init          //
@@ -100,156 +225,5 @@ angular.module('ortolangMarketApp')
             }
         }
 
-        function initTranslations() {
-            return $translate([
-                'NAV.HOME',
-                'CORPORA',
-                'INTEGRATED_PROJECTS',
-                'NAV.MY_WORKSPACES',
-                'TOOLS',
-                'LEXICONS',
-                'NAV.ITEM',
-                'NAV.PROCESSES',
-                'NAV.TASKS',
-                'NAV.SETTINGS',
-                'NAV.INFORMATION',
-                'NAV.PROFILE',
-                'NAV.SEARCH'
-            ]).then(function (translations) {
-                $scope.translationsHome = translations['NAV.HOME'];
-                $scope.translationsCorpora = translations.CORPORA;
-                $scope.translationsIntegratedProjects = translations.INTEGRATED_PROJECTS;
-                $scope.translationsMyWorkspaces = translations['NAV.MY_WORKSPACES'];
-                $scope.translationsTools = translations.TOOLS;
-                $scope.translationsLexicons = translations.LEXICONS;
-                $scope.translationsItem = translations['NAV.ITEM'];
-                $scope.translationsProcesses = translations['NAV.PROCESSES'];
-                $scope.translationsTasks = translations['NAV.TASKS'];
-                $scope.translationsSettings = translations['NAV.SETTINGS'];
-                $scope.translationInformation = translations['NAV.INFORMATION'];
-                $scope.translationProfile = translations['NAV.PROFILE'];
-                $scope.translationSearch = translations['NAV.SEARCH'];
-
-                $rootScope.sideNavElements = [
-                    {
-                        class: 'market',
-                        path: '/market/news',
-                        description: $scope.translationsHome,
-                        iconCss: 'fa fa-fw fa-home fa-2x',
-                        active: undefined,
-                        hidden: false,
-                        authenticated: false
-                    },
-                    {
-                        class: 'corpora',
-                        path: '/market/corpora',
-                        description: $scope.translationsCorpora,
-                        iconCss: 'fa fa-fw fa-book fa-2x',
-                        active: undefined,
-                        hidden: false,
-                        authenticated: false
-                    },
-                    {
-                        class: 'integrated-projects',
-                        path: '/market/websites',
-                        description: $scope.translationsIntegratedProjects,
-                        iconCss: 'fa fa-fw fa-briefcase fa-2x',
-                        active: undefined,
-                        hidden: false,
-                        authenticated: false
-                    },
-                    {
-                        class: 'tools',
-                        path: '/market/tools',
-                        description: $scope.translationsTools,
-                        iconCss: 'fa fa-fw fa-cubes fa-2x',
-                        active: undefined,
-                        hidden: false,
-                        authenticated: false
-                    },
-                    {
-                        class: 'lexicons',
-                        path: '/market/lexicons',
-                        description: $scope.translationsLexicons,
-                        iconCss: 'fa fa-fw fa-quote-right fa-2x',
-                        active: undefined,
-                        hidden: false,
-                        authenticated: false
-                    },
-                    {
-                        class: 'item',
-                        path: '/market/item',
-                        description: $scope.translationsItem,
-                        iconCss: 'fa fa-fw fa-cube fa-2x',
-                        active: undefined,
-                        hidden: true,
-                        authenticated: false
-                    },
-                    {
-                        class: 'divider',
-                        active: undefined,
-                        authenticated: true
-                    },
-                    {
-                        class: 'information',
-                        path: '/information',
-                        hiddenPath: '/information/presentation',
-                        description: $scope.translationInformation,
-                        iconCss: 'fa fa-fw fa-info fa-2x',
-                        active: undefined,
-                        hidden: true,
-                        authenticated: false
-                    },
-                    {
-                        class: 'workspaces',
-                        path: '/workspaces',
-                        description: $scope.translationsMyWorkspaces,
-                        iconCss: 'fa fa-fw fa-cloud fa-2x',
-                        active: undefined,
-                        hidden: false,
-                        authenticated: true
-                    },
-                    {
-                        class: 'processes',
-                        path: '/processes',
-                        description: $scope.translationsProcesses,
-                        iconCss: 'fa fa-fw fa-tasks fa-2x',
-                        active: undefined,
-                        hidden: true,
-                        authenticated: true
-                    },
-                    {
-                        class: 'tasks',
-                        path: '/tasks',
-                        description: $scope.translationsTasks,
-                        iconCss: 'fa fa-fw fa-bell fa-2x',
-                        active: undefined,
-                        hidden: true,
-                        authenticated: true
-                    },
-                    {
-                        class: 'profile',
-                        path: '/profile',
-                        description: $scope.translationProfile,
-                        iconCss: 'fa fa-fw fa-user fa-2x',
-                        active: undefined,
-                        hidden: true,
-                        authenticated: true
-                    },
-                    {
-                        class: 'search',
-                        path: '/search',
-                        description: $scope.translationSearch,
-                        iconCss: 'fa fa-fw fa-search fa-2x',
-                        active: undefined,
-                        hidden: true,
-                        authenticated: true
-                    }
-                ];
-                init();
-            });
-        }
-
-        initTranslations();
-
+        init();
     }]);

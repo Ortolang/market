@@ -48,11 +48,13 @@ angular.module('ortolangMarketApp')
                 sort: 'glyphicon glyphicon-sort',
                 metadata: 'glyphicon glyphicon-list',
                 info: 'glyphicon glyphicon-info-sign',
+                workspaceList: 'glyphicon glyphicon-th-list',
                 publish: 'glyphicon glyphicon-ok',
                 snapshot: 'glyphicon glyphicon-floppy-disk',
                 history: 'glyphicon glyphicon-time',
-                draft: 'octicon octicon-beer',
                 published: 'glyphicon glyphicon-globe',
-                tools: 'fa fa-puzzle-piece'
+                shortcuts: 'glyphicon glyphicon-question-sign',
+                tools: 'fa fa-fw fa-cube',
+                settings: 'glyphicon glyphicon-cog'
             }
         });

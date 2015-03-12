@@ -26,8 +26,14 @@
   ul.navbar-nav {
     &.navbar-collapse.collapse {
       &.in {
-        .open .dropdown-menu > li > a {
-          color: @top-navbar-color;
+        .open .dropdown-menu > li {
+          > a, > div {
+            color: @top-navbar-color;
+            padding: 5px 15px 5px 25px;
+          }
+          > div:hover {
+            background: none;
+          }
         }
       }
       &:not(.in) {
@@ -78,7 +84,6 @@
       }
 
       .fa:not(.fa-caret-down) {
-        margin-right: @padding-xs-horizontal;
         font-size: 1.5em;
         position: relative;
         top: 2px;
