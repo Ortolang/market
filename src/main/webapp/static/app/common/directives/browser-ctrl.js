@@ -154,7 +154,7 @@ angular.module('ortolangMarketApp')
                 clearPreviousFilteringQueries();
                 angular.forEach($scope.parent.elements, function (value) {
                     if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
-                        $scope.allChildrenMimeTypes.push(value.mimeType);
+                        $scope.allChildrenMimeTypes.push({value: value.mimeType, label: '<span class="' + $filter('mimeTypeIconCss')(value.mimeType) + '"></span>&nbsp; ' + value.mimeType});
                     }
                 });
                 if ($scope.browserService.getDataResource !== 'object') {

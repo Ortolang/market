@@ -20,7 +20,7 @@
             ng-right-click="clickChild(child, $event)"
             ng-dblclick="doubleClickChild(child)"
             ng-class="{active : isSelected(child)}">
-            <td><span class="{{::child.mimeType | mimeTypeIconCss}} type"></span>{{::child.name}}</td>
+            <td><span class="type" ng-class="::child.mimeType | mimeTypeIconCss"></span>{{::child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
             <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>
             <td ng-hide="isScreenMd">{{::child.size | bytes}}</td>
