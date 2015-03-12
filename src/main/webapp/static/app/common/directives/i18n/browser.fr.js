@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
             CLOCK: 'Horloge',
             KEY: 'Clé',
             ELEMENT: '{{value}} élement{{value > 1 ? "s" : ""}}',
-            ELEMENT_WITH_SIZE: '{{value}} élement{{value > 1 ? "s" : ""}}<br/>({{size | bytes}})',
+            ELEMENT_WITH_SIZE: '{{value}} élement{{value > 1 ? "s" : ""}}<br/>({{size.exact ? "" : "au moins"}} {{size.value | bytes}})',
             VIEW_MODE_TILE: 'Mode grille',
             VIEW_MODE_LINE: 'Mode liste',
             SORT_BY: 'Trier par',

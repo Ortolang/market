@@ -477,28 +477,29 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.selectedElementsSize = function () {
-                var i, size = 0;
-                if ($scope.selectedElements) {
-                    for (i = 0; i < $scope.selectedElements.length; i++) {
-                        if ($scope.selectedElements[i].type === 'object') {
-                            size += $scope.selectedElements[i].size;
+            function getCollectionSize(collection) {
+                var i, value = 0, exact = true;
+                if (collection) {
+                    for (i = 0; i < collection.length; i++) {
+                        if (collection[i].type === 'object') {
+                            value += collection[i].size;
+                        } else if (collection[i].type === 'collection' && exact) {
+                            exact = false;
                         }
                     }
                 }
-                return size;
+                return {value: value, exact: exact};
+            }
+
+            $scope.selectedElementsSize = function () {
+                return getCollectionSize($scope.selectedElements);
             };
 
             $scope.collectionSize = function () {
-                var i, size = 0;
-                if ($scope.parent.elements) {
-                    for (i = 0; i < $scope.parent.elements.length; i++) {
-                        if ($scope.parent.elements[i].type === 'object') {
-                            size += $scope.parent.elements[i].size;
-                        }
-                    }
+                if ($scope.parent) {
+                    return getCollectionSize($scope.parent.elements);
                 }
-                return size;
+                return undefined;
             };
 
             // *********************** //
