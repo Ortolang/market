@@ -70,7 +70,8 @@ angular
             })
             .when('/information/:section', {
                 templateUrl: 'information/information.html',
-                controller: 'InformationCtrl'
+                controller: 'InformationCtrl',
+                reloadOnSearch: false
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',

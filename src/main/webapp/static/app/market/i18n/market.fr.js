@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
             WEBSITES: 'Sites web',
             WEBSITE: 'Site web',
             SEARCH_PAGE: 'Rechercher dans le contenu',
-            PUNCH_LINE: 'Cherchez dans Ortolang',
             REDACTOR_CHOICES: 'Choix de l\'équipe',
             CONDITIONS_OF_USE: 'Conditions d\'utilisation',
             BROWSE: 'Voir le contenu',

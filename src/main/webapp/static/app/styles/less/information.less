@@ -1,30 +1,36 @@
-.charte-toc {
-  transition: .8s;
-  overflow: hidden;
-  ol {
-    & > li {
-      padding-top: 15px;
-      padding-left: 5px;
-      margin-left: -20px;
+.policy-wrapper {
+  .policy-contents {
+    h4, ol li {
+      cursor: pointer;
+    }
+    > ol {
+      & > li {
+        padding-top: @padding-large-vertical;
+        padding-left: @padding-xs-horizontal;
+        margin-left: -20px;
 
-      & > ul {
-        list-style-type: disc;
+        & > ul {
+          list-style-type: disc;
+        }
+      }
+      ol {
+        padding-top: @padding-large-vertical;
       }
     }
   }
-  @media (min-width: 768px) and (max-width: 979px) {
-    ol { list-style: decimal inside; }
+
+  ol > li {
+    ul > li {
+      padding-top: @padding-large-vertical;
+    }
+    padding-bottom: @padding-large-vertical;
   }
-}
 
-.charte-toc.hidden {
-  max-height: 0;
-}
-
-.small-ordered-list {
-  list-style-type:lower-latin;
-  margin-left:20px;
-  & > li {
-    padding-top: 0px;
+  .small-ordered-list {
+    list-style-type: lower-latin;
+    margin-left: 20px;
+    & > li {
+      padding-top: 0;
+    }
   }
 }

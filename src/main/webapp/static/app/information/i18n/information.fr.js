@@ -22,10 +22,10 @@ angular.module('ortolangMarketApp')
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'Première lettre d\'information d\'ORTOLANG',
                 DOWNLOAD_NEWSLETTER: 'Télécharger la lettre d\'information',
-                FOLLOW_NEWSLETTER: 'Vous pouvez suivre l\'actualité d\'Ortolang en lisant sa lettre d\'information.',
+                FOLLOW_NEWSLETTER: 'Vous pouvez suivre l\'actualité d\'ORTOLANG en lisant sa lettre d\'information.',
                 PAST_ISSUES: 'Les numéros déjà parus sont téléchargeables ci-dessous :',
                 SUBSCRIPTION: 'Abonnement',
-                INFO_SUBSCRIBE: 'Cliquez ici si vous souhaitez vous abonner et recevoir les prochaines lettres d\'information d\'Ortolang sur votre messagerie.',
+                INFO_SUBSCRIBE: 'Cliquez ici si vous souhaitez vous abonner et recevoir les prochaines lettres d\'information d\'ORTOLANG sur votre messagerie.',
                 SUBSCRIBE: 'S\'abonner'
             },
             NEWS: 'Actualités',

@@ -33,7 +33,7 @@ angular.module('ortolangMarketApp')
                 MIME_TYPE: 'Type Mime'
             },
             SORT: {
-                TYPE_NAME: 'Type Ortolang',
+                TYPE_NAME: 'Type ORTOLANG',
                 MIME_TYPE: 'Type Mime',
                 DATE: 'Date'
             },

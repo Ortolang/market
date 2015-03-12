@@ -22,10 +22,10 @@ angular.module('ortolangMarketApp')
             NEWSLETTER: {
                 FIRST_NEWSLETTER: 'ORTOLANG first newsletter',
                 DOWNLOAD_NEWSLETTER: 'Download the newsletter',
-                FOLLOW_NEWSLETTER: 'You can follow the news of Ortolang by reading its newsletter.',
+                FOLLOW_NEWSLETTER: 'You can follow the news of ORTOLANG by reading its newsletter.',
                 PAST_ISSUES: 'Former issues of the newsletter can be found below :',
                 SUBSCRIPTION: 'Subscription',
-                INFO_SUBSCRIBE: 'Click here if you want to subscribe and receive the next newsletters of Ortolang.',
+                INFO_SUBSCRIBE: 'Click here if you want to subscribe and receive the next newsletters of ORTOLANG.',
                 SUBSCRIBE: 'Subscribe'
             },
             NEWS: 'News',

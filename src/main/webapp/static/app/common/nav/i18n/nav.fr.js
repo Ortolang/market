@@ -31,14 +31,14 @@ angular.module('ortolangMarketApp')
                 PARTNERS: 'Partenaires',
                 ROADMAP: 'Feuille de route',
                 NEWSLETTER: 'Lettre d\'information',
-                POLICY: 'Charte d\'Ortolang'
+                POLICY: 'Charte d\'ORTOLANG'
             },
             COMMUNITY_WEBSITE: 'Site communautaire',
             CONTACT: 'Contactez-nous',
             LEGAL_NOTICES: 'Mentions légales',
             STATE_SUPPORT: 'ORTOLANG bénéficie d\'une aide de l’Etat au titre du programme « Investissements d’avenir »',
             BACK_TO_TOP: 'Haut de page',
-            TEAM: 'Équipe Ortolang',
+            TEAM: 'Équipe ORTOLANG',
             BETA_VERSION: 'pré-version',
             BETA_VERSION_TOOLTIP: 'ORTOLANG est en cours de développement.<br/>Ainsi certaines fonctionnalités ne sont pas encore accessibles.'
         }
