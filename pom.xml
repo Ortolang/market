@@ -4,14 +4,14 @@
     <groupId>fr.ortolang.diffusion</groupId>
     <artifactId>market</artifactId>
     <name>Ortolang Diffusion Marketplace Client</name>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>1.5.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <url>http://www.ortolang.fr</url>
 
     <parent>
         <groupId>fr.ortolang</groupId>
         <artifactId>ortolang</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>1.5.1-SNAPSHOT</version>
     </parent>
 
     <scm>
