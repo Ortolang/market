@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
                             DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
                                 N3Serializer.fromN3(metaContent).then(function (data) {
 
-                                    if (data['http://purl.org/dc/elements/1.1/title'] && data['http://purl.org/dc/elements/1.1/title'] === 'Littéracie Avancée') {
+                                    if (data['http://purl.org/dc/elements/1.1/title'] && data['http://purl.org/dc/elements/1.1/title'] === 'Littéracie Avancée' || data['http://purl.org/dc/elements/1.1/title'] === 'Corpus 14' || data['http://purl.org/dc/elements/1.1/title'] === 'CoMeRe (Communication médiée par les réseaux)') {
                                         $scope.news.push(item);
                                     }
                                     if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Site web') {
