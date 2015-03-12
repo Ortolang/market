@@ -96,7 +96,7 @@
                                     </div>
                                     <div ng-if="!forceMimeTypes" class="has-feedback">
                                         <label class="control-label" for="filter-mime-type-input" translate="BROWSER.FILTER.MIME_TYPE"></label>
-                                        <input id="filter-mime-type-input" ng-model="$parent.filterMimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" ng-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
+                                        <input id="filter-mime-type-input" ng-model="$parent.filterMimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" bs-options="childrenMimeType for childrenMimeType in allChildrenMimeTypes" bs-typeahead>
                                         <span ng-show="$parent.filterMimeTypeQuery" ng-click="$parent.filterMimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                                     </div>
                                 </div>
