@@ -4,30 +4,30 @@
     <groupId>fr.ortolang.diffusion</groupId>
     <artifactId>market</artifactId>
     <name>Ortolang Diffusion Marketplace Client</name>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <url>http://www.ortolang.fr</url>
 
     <parent>
         <groupId>fr.ortolang</groupId>
         <artifactId>ortolang</artifactId>
-        <version>1.4.0</version>
+        <version>1.6.0-SNAPSHOT</version>
     </parent>
 
     <scm>
-	<connection>scm:git:git@forge.ortolang.fr:ortolang-market.git</connection>
-	<developerConnection>scm:git:git@forge.ortolang.fr:ortolang-market.git</developerConnection>
-	<url>http://git.ortolang.fr/ortolang-market.git/</url>
-	<tag>HEAD</tag>
+        <connection>scm:git:git@forge.ortolang.fr:ortolang-market.git</connection>
+        <developerConnection>scm:git:git@forge.ortolang.fr:ortolang-market.git</developerConnection>
+        <url>http://git.ortolang.fr/ortolang-market.git/</url>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
-        <version.grunt.maven.plugin>1.4.1</version.grunt.maven.plugin>
-        <version.sonar.maven.plugin>2.4</version.sonar.maven.plugin>
+        <version.grunt.maven.plugin>1.5.0</version.grunt.maven.plugin>
+        <version.clean.maven.plugin>2.6.1</version.clean.maven.plugin>
+        <version.sonar.maven.plugin>2.5</version.sonar.maven.plugin>
         <sonar.language>js</sonar.language>
         <sonar.sources>src/main/webapp/static/app</sonar.sources>
-        <sonar.exclusions>src/main/webapp/static/app/scripts/keycloak*</sonar.exclusions>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -58,8 +58,8 @@
     </pluginRepositories>
 
     <build>
-	<finalName>ortolang-market</finalName>
-	<plugins>
+        <finalName>ortolang-market</finalName>
+        <plugins>
             <plugin>
                 <groupId>pl.allegro</groupId>
                 <artifactId>grunt-maven-plugin</artifactId>
@@ -109,15 +109,15 @@
                             <directory>target-grunt/dist</directory>
                         </resource>
                     </webResources>
-		    <archive>
-      			<manifest>
-				<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                		<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-			</manifest>
-			<manifestEntries>
-				<Artefact-Version>${project.version}</Artefact-Version>
-      			</manifestEntries>
-  		    </archive>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Artefact-Version>${project.version}</Artefact-Version>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -134,25 +134,41 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${version.sonar.maven.plugin}</version>
             </plugin>
-	    <plugin>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>license-maven-plugin</artifactId>
-		<version>1.8</version>
-		<configuration>
-			<licenseName>lgpl_v3</licenseName>
-			<strictChecking>true</strictChecking>
-			<encoding>UTF-8</encoding>
-			<offline>true</offline>
-		</configuration>
-		<executions>
-			<execution>
-				<id>download-licenses</id>
-				<goals>
-					<goal>download-licenses</goal>
-				</goals>
-			</execution>
-		</executions>
-	    </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${version.clean.maven.plugin}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>target-grunt/**/*</include>
+                                <include>target-grunt</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <licenseName>lgpl_v3</licenseName>
+                    <strictChecking>true</strictChecking>
+                    <encoding>UTF-8</encoding>
+                    <offline>true</offline>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>download-licenses</id>
+                        <goals>
+                            <goal>download-licenses</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

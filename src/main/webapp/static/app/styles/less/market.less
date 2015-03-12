@@ -24,13 +24,15 @@
   -ms-flex-direction: row;
   flex-direction: row;
 
-  -webkit-justify-content: flex-start;
-  justify-content: flex-start;
-
   -webkit-flex-wrap: wrap;
   -moz-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 
   -webkit-align-content: stretch;
   -moz-align-content: stretch;
@@ -53,8 +55,6 @@
   -webkit-align-self: auto;
   -ms-flex-item-align: auto;
   align-self: auto;
-
-  // width: 252px;
 }
 
 /*
@@ -114,11 +114,6 @@
 
     cursor: pointer;
     &:hover {
-      //            border-color: @market-primary;
-      //            outline: 0;
-      //            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-      //            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-
       .title {
         color: @market-primary;
       }
@@ -137,18 +132,9 @@
       margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
     }
     .caption {
-      /*overflow: hidden;*/
-      /*height: 36px;*/
-      //            height: 170px;
       background-color: white;
-
       -webkit-transition:all 0.5s linear;
-      -moz-transition:all 0.5s linear;
       transition:all 0.5s linear;
-
-      /*&:hover {
-          transform: translateY(-100%);
-      }*/
     }
 
     .caption.show-caption {
@@ -157,7 +143,6 @@
 
     .caption.show-caption.ng-add {
       -webkit-transition:all 0.2s linear;
-      -moz-transition:all 0.2s linear;
       transition:all 0.2s linear;
     }
 
@@ -251,7 +236,7 @@
   aside {
     padding-top: 3*@padding-large-vertical;
     #preview-license {
-        cursor: pointer;
+      cursor: pointer;
     }
 
   }
@@ -268,8 +253,9 @@
       margin-left: @padding-large-horizontal;
 
       ul {
-        list-style: none;
-        padding-left: 20px;
+        list-style: inherit;
+        padding-left: @padding-base-horizontal;
+        margin-left: @padding-base-horizontal/2;
       }
 
       dt {
@@ -280,10 +266,8 @@
         padding-left: @padding-base-horizontal;
       }
 
-      .extent {
-        ul {
-          list-style: inherit;
-        }
+      ul.list-contributor {
+        list-style: none;
       }
     }
     p {

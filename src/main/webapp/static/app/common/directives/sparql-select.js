@@ -17,21 +17,21 @@ angular.module('ortolangMarketApp')
                 label: '=',
                 required: '=',
                 defaultValue: '=',
-                name:'='
+                name: '='
             },
             templateUrl: 'common/directives/sparql-select.html',
             link: {
                 pre : function (scope, element, attrs) {
                     scope.categories = [];
-                    
-                    if(scope.required) {
+
+                    if (scope.required) {
                         element.find('select').attr('required', 'required');
                         scope.requiredLabel = '*';
                     }
 
                     var queryStr = scope.sparql;
-                    SemanticResultResource.get({query: queryStr}).$promise.then(function(sparqlResults) {
-                        sparqlResults.results.bindings.forEach(function(result) {
+                    SemanticResultResource.get({query: queryStr}).$promise.then(function (sparqlResults) {
+                        sparqlResults.results.bindings.forEach(function (result) {
                             scope.categories.push(result.label.value);
                         });
                     });

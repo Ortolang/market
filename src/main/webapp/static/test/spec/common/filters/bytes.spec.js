@@ -15,8 +15,8 @@ describe('Filter: bytes', function () {
         expect(bytes('text')).toBe('-');
     });
 
-    it('should return zero when filesize is equal zero', function () {
-        expect(bytes(0)).toBe('0 bytes');
+    it('should return nothing when filesize is equal zero', function () {
+        expect(bytes(0)).toBe('-');
     });
 
     it('should round the filesize based on the configured precision', function () {

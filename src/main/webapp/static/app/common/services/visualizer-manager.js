@@ -85,7 +85,7 @@ angular.module('ortolangVisualizers')
         };
 
     }])
-    .provider('VisualizerFactory', ['VisualizerManagerProvider', function (VisualizerManagerProvider) {
+    .provider('VisualizerFactory', function () {
 
         // Constructor
         function OrtolangVisualizer(config) {
@@ -134,7 +134,7 @@ angular.module('ortolangVisualizers')
             },
 
             isAcceptingMultiple: function () {
-                return this.acceptMultiple;
+                return !!this.acceptMultiple;
             },
 
             isCompatibleHelper: function (element, _compatibleTypes_) {
@@ -142,35 +142,33 @@ angular.module('ortolangVisualizers')
                 // If mimetype is given with an array of compatible file extensions
                 if (angular.isObject(compatibleTypes[element.mimeType])) {
                     // check if the file extension is compatible
-                    return compatibleTypes[element.mimeType][element.name.substr((~-element.name.lastIndexOf('.') >>> 0) + 2)] || false;
+                    return compatibleTypes[element.mimeType][element.name.substr((~-element.name.lastIndexOf('.') >>> 0) + 2)];
                 }
-                return compatibleTypes[element.mimeType] || false;
+                return compatibleTypes[element.mimeType];
             },
 
             isCompatible: function (elements) {
                 if (elements.length === 1) {
                     return this.isAcceptingSingle() && this.isCompatibleHelper(elements[0]);
-                } else {
-                    if (this.isAcceptingMultiple()) {
-                        var compatibleTypesArray = angular.copy(this.compatibleTypes);
-                        angular.forEach(elements, function (element) {
-                            var j;
-                            for (j = 0; j < compatibleTypesArray.length; j++) {
-                                if (this.isCompatibleHelper(element, compatibleTypesArray[j])) {
-                                    compatibleTypesArray.splice(j, 1);
-                                    break;
-                                }
-                            }
-                        }, this);
-                        return compatibleTypesArray.length === 0;
-                    }
                 }
-
+                if (this.isAcceptingMultiple() && elements.length === this.compatibleTypes.length) {
+                    var compatibleTypesArray = angular.copy(this.compatibleTypes);
+                    angular.forEach(elements, function (element) {
+                        var j;
+                        for (j = 0; j < compatibleTypesArray.length; j++) {
+                            if (this.isCompatibleHelper(element, compatibleTypesArray[j])) {
+                                compatibleTypesArray.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }, this);
+                    return compatibleTypesArray.length === 0;
+                }
+                return false;
             }
         };
 
         this.make = function (config) {
-//            console.info('Start making visualizer \'' + config.name + '\'');
             if (!config.id || !config.compatibleTypes) {
                 console.error('id and compatiblesTypes are mandatory', config);
                 return undefined;
@@ -188,8 +186,4 @@ angular.module('ortolangVisualizers')
             };
         };
 
-    }])
-    .run(['VisualizerFactory', function (VisualizerFactory) {
-        // force VisualizerFactory to run by injecting it. Without this, VisualizerFactory only runs
-        // when a controller or something else asks for it via DI.
-    }]);
+    });

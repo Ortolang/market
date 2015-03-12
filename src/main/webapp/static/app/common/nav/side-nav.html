@@ -1,28 +1,23 @@
 <nav ng-controller="SideNavCtrl" class="side-nav ng-cloak" role="navigation" ng-cloak>
-    <div id="side-nav-active-item" class="side-nav-active-item active">
-        <a ng-href="#{{selectedElement.hidden && selectedElement.hiddenPath ? selectedElement.hiddenPath : selectedElement.path}}" ng-class="selectedElement.class">
+    <div class="side-nav-active-item real active">
+        <a ng-href="#{{selectedElement.hiddenPath ? selectedElement.hiddenPath : selectedElement.path}}" ng-class="selectedElement.class">
             <span class="icon-container" ng-class="selectedElement.iconCss"></span>
-            <span class="item-description">{{selectedElement.description}}</span>
+            <span class="item-description">{{selectedElement.description | translate}}</span>
         </a>
     </div>
     <div class="side-nav-active-item copy side-nav-animation ng-hide">
         <a ng-href="#{{selectedElementCopy.path}}" ng-class="selectedElementCopy.class">
             <span class="icon-container" ng-class="selectedElementCopy.iconCss"></span>
-            <span class="item-description">{{selectedElementCopy.description}}</span>
+            <span class="item-description">{{selectedElementCopy.description | translate}}</span>
         </a>
     </div>
     <ul class="side-nav-list">
-        <li ng-show="!element.hidden && !element.active && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-repeat="element in sideNavElements" ng-class="getCssClass(element)">
-            <a ng-if="element.class !== 'divider'" ng-href="#{{element.path}}" ng-click="select(element)" ng-class="element.class">
+        <li ng-show="!element.hiddenSideNav && !element.active && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-repeat="element in sideNavElements" ng-class="getCssClass(element)">
+            <a ng-if="element.class !== 'divider'" ng-href="#{{element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="select(element)" ng-class="element.class">
                 <span class="icon-container" ng-class="element.iconCss"></span>
-                <span class="item-description">{{element.description}}</span>
+                <span class="item-description">{{element.description | translate}}</span>
             </a>
             <span ng-if="element.class === 'divider'"></span>
         </li>
     </ul>
 </nav>
-<!--<div class="marianne center-block text-center" >-->
-    <!--<span>ORTOLANG ISSN 2417-7482</span>-->
-    <!--<img src="assets/images/mariane-avenir.png">-->
-    <!--<span>ORTOLANG {{'NAV.STATE_SUPPORT' | translate}}</span>-->
-<!--</div>-->

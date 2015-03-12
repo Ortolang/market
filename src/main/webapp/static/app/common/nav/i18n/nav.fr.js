@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
                 PARTNERS: 'Partenaires',
                 ROADMAP: 'Feuille de route',
                 NEWSLETTER: 'Lettre d\'information',
-                CONVENTION: 'Charte d\'Ortolang'
+                POLICY: 'Charte d\'Ortolang'
             },
             COMMUNITY_WEBSITE: 'Site communautaire',
             CONTACT: 'Contactez-nous',

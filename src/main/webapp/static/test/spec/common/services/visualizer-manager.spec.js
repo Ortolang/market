@@ -93,11 +93,11 @@ describe('Service: VisualizerManager', function () {
     });
 
     it('should be possible to know if a visualizer is compatible with a mime type', function () {
-        expect(fakeVisualizer.isCompatible([{mimeType: 'foo/fake'}])).toBe(true);
-        expect(fakeVisualizer.isCompatible([{mimeType: 'foo/bar'}])).toBe(false);
-        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'fake.foo'}])).toBe(true);
-        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'fake.bar'}])).toBe(true);
-        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'foobar.fake'}])).toBe(false);
+        expect(fakeVisualizer.isCompatible([{mimeType: 'foo/fake'}])).toBeTruthy();
+        expect(fakeVisualizer.isCompatible([{mimeType: 'foo/bar'}])).toBeFalsy();
+        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'fake.foo'}])).toBeTruthy();
+        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'fake.bar'}])).toBeTruthy();
+        expect(fakeVisualizer.isCompatible([{mimeType: 'application/fake-stream', name: 'foobar.fake'}])).toBeFalsy();
     });
 
     it('should be possible to register a new visualizer', function () {

@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
 
         function getData(config) {
             if (config.path) {
+                delete config.oKey;
                 return WorkspaceElementResource.get(config);
             }
             console.error('path must be provided', config);

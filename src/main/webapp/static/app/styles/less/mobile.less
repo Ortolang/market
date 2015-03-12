@@ -1,0 +1,28 @@
+@media (max-width: @grid-float-breakpoint-max) {
+  #side-nav-wrapper {
+    display: none !important;
+  }
+
+  #top-nav-wrapper {
+    .fa:not(.fa-caret-down) {
+      margin-right: @padding-small-horizontal;
+    }
+  }
+}
+
+@media(min-width: @grid-float-breakpoint) {
+  #side-nav-wrapper {
+    display: block !important;
+    position: absolute;
+    width: @side-bar-width;
+  }
+
+  #top-nav-wrapper {
+    .hidden-description {
+      display: none;
+    }
+    .fa:not(.fa-caret-down) {
+      margin-right: 0;
+    }
+  }
+}

@@ -12,24 +12,24 @@ angular.module('ortolangMarketApp')
 
         function getDownloadUrl(element) {
             var deferred = $q.defer();
-            ObjectResource.downloadTicket({oKey: element.key, hash: element.stream}, function(data) {
-                var content = window.btoa(element.name + ':' + element.size + ':' + element.mimeType);
-                var url = Url.urlBase() + '/download/' + element.stream + '?t=' + data.t + '&c=' + content;
+            ObjectResource.downloadTicket({oKey: element.key, hash: element.stream}, function (data) {
+                var content = window.btoa(element.name + ':' + element.size + ':' + element.mimeType),
+                    url = Url.urlBase() + '/download/' + element.stream + '?t=' + data.t + '&c=' + content;
                 deferred.resolve(url);
-            }, function(error) {
+            }, function (error) {
                 deferred.reject(error);
             });
             return deferred.promise;
         }
 
-        function downloadInNewWindow(element) {
+        function download(element) {
             getDownloadUrl(element).then(function (url) {
-                $window.open(url);
+                $window.location = url;
             });
         }
 
         return {
             getDownloadUrl: getDownloadUrl,
-            downloadInNewWindow: downloadInNewWindow
+            download: download
         };
     }]);

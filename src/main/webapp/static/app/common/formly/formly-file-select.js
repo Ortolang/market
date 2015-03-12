@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
                     };
 
                     var unbindListener = $rootScope.$on('browserSelectedElements-' + scope.id, function ($event, elements) {
-                        console.debug('formlyFileSelect with id "%s" caught event "browserSelectedElements-%s" (selected elements: %o)', scope.id, scope.id, elements);
+                        console.log('formlyFileSelect with id "%s" caught event "browserSelectedElements-%s" (selected elements: %o)', scope.id, scope.id, elements);
                         scope.value = elements[0].key;
                         scope.displayedValue = elements[0];
                         scope.fileSelectModal.hide();

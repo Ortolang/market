@@ -1,15 +1,3 @@
-#side-nav-wrapper {
-  display: none !important;
-}
-
-@media(min-width: @grid-float-breakpoint) {
-  #side-nav-wrapper {
-    display: block !important;
-    position: absolute;
-    width: @side-bar-width;
-  }
-}
-
 .side-nav {
   position: relative;
   background-color: @default-bg;
@@ -17,6 +5,20 @@
 
   .side-nav-active-item {
     height: @side-bar-item-active-height;
+    > a, &.active > a {
+      &.information {
+        background-color: @information-primary;
+      }
+      &.tasks {
+        background-color: @tasks-primary;
+      }
+      &.processes {
+        background-color: @processes-primary;
+      }
+//      &.workspaces {
+//        background-color: @workspace-primary;
+//      }
+    }
     &.copy {
       position: absolute;
       z-index: 1000;
@@ -46,18 +48,6 @@
         .item-description {
           color: @inverse-text-color;
         }
-        &.tasks {
-          background-color: @tasks-primary;
-        }
-        &.processes {
-          background-color: @processes-primary;
-        }
-        &.information {
-          background-color: @information-primary;
-        }
-//        &.workspaces {
-//          background-color: @workspace-primary;
-//        }
       }
     }
     &.active.animated {

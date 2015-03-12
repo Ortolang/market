@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('User', function User() {
+    .service('User', function () {
         /**
          * Create a new user
          * @param profile
