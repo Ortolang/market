@@ -14,6 +14,24 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/profiles/connected',
                 method: 'GET'
             },
+            update: {
+                url: Url.urlBase() + '/rest/profiles/:userId/infos',
+                method: 'POST'
+            },
+            getInfos: {
+                url: Url.urlBase() + '/rest/profiles/:userId/infos',
+                method: 'GET',
+                isArray: true
+            },
+            getFriends: {
+                url: Url.urlBase() + '/rest/profiles/:userId/friends',
+                method: 'GET',
+                isArray: true
+            },
+            read: {
+                url: Url.urlBase() + '/rest/profiles/:userId',
+                method: 'GET'
+            },
             put: {
                 method: 'PUT'
             }

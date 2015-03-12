@@ -22,6 +22,7 @@ angular.module('ortolangMarketApp')
             this.email = profile.email;
             this.status = profile.status;
             this.userMember = profile.groups;
+            this.desc = profile.desc;
             if(profile.favoriteAvatar === undefined || profile.favoriteAvatar === '') {
                 this.favoriteAvatar = '0';
             } else {
@@ -36,6 +37,7 @@ angular.module('ortolangMarketApp')
             } else {
                 this.avatarIds = profile.avatarIds;
             }
+            this.isLocked = profile.isLocked;
             return this;
         };
         /**
@@ -51,6 +53,7 @@ angular.module('ortolangMarketApp')
             this.email = user.email;
             this.status = user.status;
             this.userMember = user.userMember;
+            this.desc = user.desc;
             if(user.favoriteAvatar === undefined || user.favoriteAvatar === '') {
                 this.favoriteAvatar = '0';
             } else {
@@ -65,6 +68,7 @@ angular.module('ortolangMarketApp')
             } else {
                 this.avatarIds = user.avatarIds;
             }
+            this.isLocked = user.isLocked;
             return this;
         };
         /**
