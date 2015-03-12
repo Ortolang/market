@@ -42,13 +42,13 @@
             </div>
         </section>
 
-        <section ng-if="section==='news' && news.length>0" class="row">
+        <section ng-if="section==='news' && items.length>0" class="row">
             <div class="col-md-12">
                 <header>
                     <h3 translate="MARKET.NEW_RESOURCES"></h3>
                 </header>
                 <div class="flex-row">
-                    <item class="flex-column medium-item" ng-repeat="item in news" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
+                    <item class="flex-column medium-item" ng-repeat="item in items" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
                 </div>
             </div>
         </section>

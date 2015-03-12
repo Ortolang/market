@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource) {
+    .controller('MarketHomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderService', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderService) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
@@ -18,11 +18,11 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.clickItem = function (entry) {
-            // if (entry.meta && entry.meta['http://www.ortolang.fr/ontology/applicationUrl']) {
-            //     $window.open(entry.meta['http://www.ortolang.fr/ontology/applicationUrl']);
-            // } else {
+            if (entry.applicationUrl) {
+                $window.open(entry.applicationUrl);
+            } else {
                 $location.path('/market/item/' + entry.key);
-            // }
+            }
         };
 
         // Scope variables
@@ -38,28 +38,36 @@ angular.module('ortolangMarketApp')
         }
 
         function searchType(type) {
-            var ortolangType = '';
+            var queryBuilder = QueryBuilderService.make({projection: 'key, meta.title as title, meta.description as description, meta.image as image, meta.applicationUrl as applicationUrl', source: 'collection'});
+            
+            queryBuilder.equals('status', 'published');
+
             if(type==='corpora') {
-                ortolangType = 'Corpus';
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Corpus');
             } else if(type==='websites') {
-                ortolangType = 'Site web';
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Site web');
             } else if(type==='lexicons') {
-                ortolangType = 'Lexique';
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Lexique');
             } else if(type==='tools') {
-                ortolangType = 'Outil';
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Outil');
+            } else if(type==='news') {
+                queryBuilder.and();
+                queryBuilder.in('meta.title', ['Littéracie avancée', 'Corpus14', 'Comere']);
             }
 
-            if(ortolangType!=='') {
-                //TODO news (propriete star/new?)
-                var queryStr = 'select key, meta.title as title, meta.description, meta.image as image from collection where status = \'published\' and meta.type = \''+ortolangType+'\'';
-                JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
-                    angular.forEach(jsonResults, function(jsonResult) {
-                        $scope.items.push(angular.fromJson(jsonResult));
-                    });
-                }, function (reason) {
-                    console.error(reason);
+            var query = queryBuilder.toString();
+            console.debug('query : ' + query);
+            JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                angular.forEach(jsonResults, function(jsonResult) {
+                    $scope.items.push(angular.fromJson(jsonResult));
                 });
-            } 
+            }, function (reason) {
+                console.error(reason);
+            });
         }
 
         function init() {
