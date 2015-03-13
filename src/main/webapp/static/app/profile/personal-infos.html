@@ -3,7 +3,7 @@
     <br>
 
     <div id="formInfos" class="form-horizontal" >
-        <div class="form-group" ng-repeat="item in user.infos">
+        <div class="form-group" ng-repeat="item in user.infos track by item.name">
             <label class="col-md-3 control-label" for="item.name">{{"PROFILE.INFOS." + item.name.toUpperCase() | translate}} :</label>
 
             <div toggle-visibility class="pull-left" data-options="visibilityOptions" data-selected-option="item.visibility"
@@ -55,12 +55,16 @@
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='ENUM'">
                  <span id="item.name" editable-select="item.value" e-name="item.name" e-ng-options="s.value as s.text for s in {{item.source}}"
                        data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
-                     {{ item.value || 'empty' }}
+                     {{ showValue(item.value, item.source) || 'empty' }}
                  </span>
             </div>
 
+            <!--<sparql-select label="'Types de ressource'" default-value="'Choisir une catégorie'" sparql="sparqlCategories"
+            model="md['http://www.ortolang.fr/ontology/type']" required="'required'" name="'type'"></sparql-select>-->
             <!--missing MULTI-VALUE-->
 
+            <p class="col-md-offset-3 col-md-7 help-block" ng-if="item.helper" translate="{{'PROFILE.INFOS.HELPER.' + item.name.toUpperCase()}}">
+            </p>
         </div>
     </div>
 </div>

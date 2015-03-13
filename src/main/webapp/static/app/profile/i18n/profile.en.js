@@ -56,15 +56,32 @@ angular.module('ortolangMarketApp')
                 MAIL : 'Alternate email',
                 TEL_PRO : 'Professional phone',
                 TEL : 'Personal phone',
-                FAX : 'Fax'
+                FAX : 'Fax',
+                HELPER: {
+                    TITRE: 'Professional title: Dr., Prof., etc. '
+                }
             },
             SETTINGS: {
+                AVATAR : 'Avatar',
                 ORCID : 'Identifiant ORCID',
                 VIAF : 'Identifiant VIAF',
                 MYIDREF : 'IdRef',
                 LINKEDIN : 'Page Linkedin',
                 VIDAEO : 'Identifiant Viadeo',
-                LANGUE_MESSAGES : 'Preferred interface language'
+                LANGUE_MESSAGES : 'Preferred interface language',
+                FACEBOOK : 'Identifiant Facebook',
+                GITHUB : 'Identifiant Github',
+                GRAVATAR : 'Identifiant Gravatar',
+                HELPER : {
+                    ORCID : 'Persistent digital identifiers: <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>',
+                    VIAF : 'Persistent digital identifiers:  <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>',
+                    MYIDREF : 'Persistent digital identifiers:  <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
+                    LINKEDIN : 'Persistent digital identifiers:  <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>',
+                    VIADEO : 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>',
+                    FACEBOOK : 'More informations about how to get you facebook user id : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.',
+                    GITHUB : 'Please enter your username for gitHub.',
+                    GRAVATAR : 'Please enter your email address mapped with gravatar : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.'
+                }
             }
         }
     });

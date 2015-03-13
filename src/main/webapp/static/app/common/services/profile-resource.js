@@ -23,6 +23,15 @@ angular.module('ortolangMarketApp')
                 method: 'GET',
                 isArray: true
             },
+            getSettings: {
+                url: Url.urlBase() + '/rest/profiles/:userId/settings',
+                method: 'GET',
+                isArray: true
+            },
+            updateSettings: {
+                url: Url.urlBase() + '/rest/profiles/:userId/settings',
+                method: 'POST'
+            },
             getFriends: {
                 url: Url.urlBase() + '/rest/profiles/:userId/friends',
                 method: 'GET',
