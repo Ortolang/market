@@ -170,14 +170,18 @@
   .dl-horizontal {
     dt {
       width: @browser-offset-horizontal - 20;
-      font-weight: normal;
-      &.key {
-        padding-top: @padding-small-vertical - 1;
-      }
+      font-weight: 600;
+      padding-bottom: @padding-base-vertical;
     }
     dd {
       margin-left: @browser-offset-horizontal;
       word-break: break-all;
+      .copy-key {
+        margin-left: 4px;
+      }
+      .copy-key, .calculate-size {
+        cursor: pointer;
+      }
     }
   }
 

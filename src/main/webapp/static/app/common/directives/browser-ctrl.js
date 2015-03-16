@@ -215,6 +215,9 @@ angular.module('ortolangMarketApp')
             }
 
             function selectAll() {
+                if ($scope.hasOnlyParentSelected()) {
+                    $scope.selectedElements = [];
+                }
                 angular.forEach($scope.parent.elements, function (child) {
                     if (!$scope.isSelected(child)) {
                         selectChild(child, 'shift');
@@ -478,17 +481,27 @@ angular.module('ortolangMarketApp')
             };
 
             function getCollectionSize(collection) {
-                var i, value = 0, exact = true;
+                var i,
+                    size = {
+                        value: 0,
+                        elementNumber: 0,
+                        collectionNumber: 0,
+                        partial: false
+                    };
+                console.table(collection);
                 if (collection) {
                     for (i = 0; i < collection.length; i++) {
                         if (collection[i].type === 'object') {
-                            value += collection[i].size;
-                        } else if (collection[i].type === 'collection' && exact) {
-                            exact = false;
+                            size.value += collection[i].size;
+                            size.elementNumber += 1;
+                        } else if (collection[i].type === 'collection') {
+                            size.elementNumber += 1;
+                            size.collectionNumber += 1;
+                            size.partial = true;
                         }
                     }
                 }
-                return {value: value, exact: exact};
+                return size;
             }
 
             $scope.selectedElementsSize = function () {
@@ -496,10 +509,24 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.collectionSize = function () {
-                if ($scope.parent) {
+                if ($scope.hasOnlyParentSelected()) {
                     return getCollectionSize($scope.parent.elements);
                 }
-                return undefined;
+                return getCollectionSize($scope.selectedElements[0].elements);
+            };
+
+            $scope.calculateCollectionSize = function () {
+                var oKey;
+                if ($scope.hasOnlyParentSelected()) {
+                    oKey = $scope.parent.key;
+                } else if ($scope.selectedElements[0].type === 'collection') {
+                    oKey = $scope.selectedElements[0].key;
+                } else {
+                    return;
+                }
+                ObjectResource.size({oKey: oKey}, function (data) {
+                    $scope.selectedElements[0].realSize = data.size;
+                });
             };
 
             // *********************** //
