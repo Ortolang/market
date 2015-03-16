@@ -488,7 +488,6 @@ angular.module('ortolangMarketApp')
                         collectionNumber: 0,
                         partial: false
                     };
-                console.table(collection);
                 if (collection) {
                     for (i = 0; i < collection.length; i++) {
                         if (collection[i].type === 'object') {

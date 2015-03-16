@@ -40,31 +40,38 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('diffVisualizer', ['DownloadResource', function (DownloadResource) {
+    .directive('diffVisualizer', ['$window', 'DownloadResource', function ($window, DownloadResource) {
 
         return {
             templateUrl: 'common/visualizers/diff-visualizer/diff-visualizer.html',
             restrict: 'E',
             scope: true,
-            link: function (scope, element, attrs) {
-                scope.leftObjName = scope.elements[0].name;
-                scope.rightObjName = scope.elements[1].name;
+            link: {
+                pre: function (scope, element, attrs) {
+                    scope.leftObjName = scope.elements[0].name;
+                    scope.rightObjName = scope.elements[1].name;
 
-                DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
-                    scope.leftObj = data;
-                });
-                DownloadResource.download({oKey: scope.elements[1].key}).success(function (data) {
-                    scope.rightObj = data;
-                });
+                    DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
+                        scope.leftObj = data;
+                    });
+                    DownloadResource.download({oKey: scope.elements[1].key}).success(function (data) {
+                        scope.rightObj = data;
+                    });
 
-                scope.switchDiff = function () {
-                    var tmp = scope.leftObj,
-                        tmpBis = scope.leftObjName;
-                    scope.leftObj = scope.rightObj;
-                    scope.leftObjName = scope.rightObjName;
-                    scope.rightObj = tmp;
-                    scope.rightObjName = tmpBis;
-                };
+                    scope.switchDiff = function () {
+                        var tmp = scope.leftObj,
+                            tmpBis = scope.leftObjName;
+                        scope.leftObj = scope.rightObj;
+                        scope.leftObjName = scope.rightObjName;
+                        scope.rightObj = tmp;
+                        scope.rightObjName = tmpBis;
+                    };
+                },
+                post: function () {
+                    var modalDialog = angular.element('.visualizer-modal').find('.modal-dialog.modal-lg'),
+                        height = $window.innerHeight - 4 * parseInt(modalDialog.css('margin-top'), 10);
+                    modalDialog.find('.diff').css('height', height);
+                }
             }
         };
     }]);

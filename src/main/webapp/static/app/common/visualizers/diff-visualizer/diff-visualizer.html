@@ -3,11 +3,17 @@
         {{leftObjName}}
         <button class="btn btn-default btn-sm" ng-click="switchDiff()"><span class="octicon octicon-mirror"></span></button>
         {{rightObjName}}
+        <span class="pull-right btn-group">
+            <button class="btn btn-sm btn-default" ng-click="diff = 1" ng-class="{'btn-inverse': diff === 1}">default</button>
+            <button class="btn btn-sm btn-default" ng-click="diff = 2" ng-class="{'btn-inverse': diff === 2}">processing-diff</button>
+            <button class="btn btn-sm btn-default" ng-click="diff = 3" ng-class="{'btn-inverse': diff === 3}">semantic-diff</button>
+            <button class="btn btn-sm btn-default" ng-click="diff = 4" ng-class="{'btn-inverse': diff === 4}">line-diff</button>
+        </span>
     </p>
 </div>
-<div class="modal-body">
-    <pre diff left-obj="leftObj" right-obj="rightObj"></pre>
-    <pre processing-diff left-obj="leftObj" right-obj="rightObj"></pre>
-    <pre semantic-diff left-obj="leftObj" right-obj="rightObj"></pre>
-    <pre line-diff left-obj="leftObj" right-obj="rightObj"></pre>
+<div class="modal-body diff" ng-init="diff = 1">
+    <pre ng-if="diff === 1" diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre ng-if="diff === 2" processing-diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre ng-if="diff === 3" semantic-diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre ng-if="diff === 4" line-diff left-obj="leftObj" right-obj="rightObj"></pre>
 </div>
