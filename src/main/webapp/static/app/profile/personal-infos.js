@@ -39,10 +39,19 @@ angular.module('ortolangMarketApp')
                 $scope.user.infos = [];
                 var result = [];
                 angular.forEach(infos, function(info) {
-                    var visibilitySelected = $filter('filter')($scope.visibilityOptions, {value: info.visibility});
-                    var itemInfo = $filter('filter')($scope.infos, {name: info.name});
-                    var item = {name:info.name, value:info.value, type: info.type, source: info.source, visibility: visibilitySelected[0], helper: itemInfo[0].helper};
-                    result.push(item);
+                    var visibilitySelected = $filter('filter')($scope.visibilityOptions, {value: info.visibility}, true);
+                    var itemInfo = $filter('filter')($scope.infos, {name: info.name}, true);
+                    if (itemInfo.length > 0) {
+                        var item = {
+                            name: info.name,
+                            value: info.value,
+                            type: info.type,
+                            source: info.source,
+                            visibility: visibilitySelected[0],
+                            helper: itemInfo[0].helper
+                        };
+                        result.push(item);
+                    }
                 });
 
                 if (result.length <= 0) {
@@ -50,7 +59,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     angular.forEach($scope.infos, function(info) {
                         var fieldName = info.name;
-                        var filledField = $filter('filter')(result, {name: fieldName});
+                        var filledField = $filter('filter')(result, {name: fieldName}, true);
                         if (filledField.length <= 0) {
                             $scope.user.infos.push(info);
                         } else {
@@ -66,8 +75,8 @@ angular.module('ortolangMarketApp')
              */
 
             $scope.showValue = function (value, source) {
-                var item = $filter('filter')($scope[source], {value: value});
-                if(item.length <= 0) {
+                var item = $filter('filter')($scope[source], {value: value}, true);
+                if (item.length <= 0 || item === undefined) {
                     return 'empty';
                 } else {
                     return item[0].text;

@@ -23,20 +23,8 @@ angular.module('ortolangMarketApp')
             this.status = profile.status;
             this.userMember = profile.groups;
             this.desc = profile.desc;
-            if(profile.favoriteAvatar === undefined || profile.favoriteAvatar === '') {
-                this.favoriteAvatar = '0';
-            } else {
-                this.favoriteAvatar = profile.favoriteAvatar;
-            }
-            if(profile.avatarIds === undefined || profile.avatarIds.length === 0) {
-                this.avatarIds = [
-                    { id: '1', name: 'facebook', value: ''},
-                    //{ id: '2', name: 'twitter', value: ''},
-                    { id: '3', name: 'github', value: profile.key},
-                    { id: '4', name: 'gravatar', value: profile.email}];
-            } else {
-                this.avatarIds = profile.avatarIds;
-            }
+            this.favoriteAvatar = profile.favoriteAvatar;
+            this.avatarIds = profile.avatarIds;
             this.isLocked = profile.isLocked;
             return this;
         };
@@ -54,20 +42,8 @@ angular.module('ortolangMarketApp')
             this.status = user.status;
             this.userMember = user.userMember;
             this.desc = user.desc;
-            if(user.favoriteAvatar === undefined || user.favoriteAvatar === '') {
-                this.favoriteAvatar = '0';
-            } else {
-                this.favoriteAvatar = user.favoriteAvatar;
-            }
-            if(user.avatarIds === undefined || user.avatarIds.length === 0) {
-                this.avatarIds = [
-                    { id: '1', name: 'facebook', value: ''},
-                    //{ id: '2', name: 'twitter', value: ''},
-                    { id: '3', name: 'github', value: user.key},
-                    { id: '4', name: 'gravatar', value: user.email}];
-            } else {
-                this.avatarIds = user.avatarIds;
-            }
+            this.favoriteAvatar = user.favoriteAvatar;
+            this.avatarIds = user.avatarIds;
             this.isLocked = user.isLocked;
             return this;
         };

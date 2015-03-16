@@ -25,7 +25,6 @@ angular.module('ortolangMarketApp')
 
                 $scope.visibilityOptions = [];
 
-                //initTranslation();
                 $scope.visibilityOptions = [
                     {value: 'EVERYBODY', label: $translate.instant('PROFILE.VISIBILITY.EVERYBODY'), icon: 'fa fa-unlock'},
                     {value: 'FRIENDS', label: $translate.instant('PROFILE.VISIBILITY.FRIENDS'), icon: 'fa fa-users'},
@@ -65,9 +64,9 @@ angular.module('ortolangMarketApp')
 
                 $scope.user = $scope.$parent.currentUser;
 
-                ProfileResource.getFriends({userId: $scope.user.id}).$promise.then(function (friends) {
-                    $scope.friends = friends;
-                });
+                //ProfileResource.getFriends({userId: $scope.user.id}).$promise.then(function (friends) {
+                //    $scope.friends = friends;
+                //});
             }
 
             init();

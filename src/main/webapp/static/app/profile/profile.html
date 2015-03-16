@@ -1,4 +1,4 @@
-<div ng-cloak id="profile-container" class="container-fluid col-md-offset-1 col-md-10 col-md-offset-1" ng-show="user">
+<div ng-cloak id="profile-container" class="container-fluid col-md-offset-1 col-md-10 col-md-offset-1">
     <h1>{{"NAV.PROFILE" | translate}}</h1>
     <hr>
     <div class="row profile">
@@ -6,11 +6,11 @@
         <div class="col-md-3">
             <div>
                 <div>
-                    <multi-avatar ng-show="user" data-img-id="big-avatar" data-favorite-avatar="user.favoriteAvatar"
+                    <multi-avatar data-img-id="big-avatar" data-favorite-avatar="user.favoriteAvatar"
                                   data-avatar-ids="user.avatarIds"></multi-avatar>
                 </div>
                 <hr>
-                <div class="list-group" ng-show="user">
+                <div class="list-group">
                     <a href="#/profile/personal-infos" class="list-group-item" ng-class="{active: section === 'personal-infos'}">
                         <span class="fa fa-user fa-fw" aria-hidden="true"></span> {{"PROFILE.NAV.PERSONAL_INFOS" | translate}}
                     </a>
@@ -41,7 +41,7 @@
             <div id="profile-content" ng-include="'PROFILE.PATH.' + section.toUpperCase().replace('-', '_') | translate" ng-show="user"></div>
         </div>
     </div>
-    <div style="margin-top: 30px" ng-show="user">
-        <pre>{{ user | json }}</pre>
-    </div>
+    <!--<div style="margin-top: 30px" ng-show="user">-->
+        <!--<pre>{{ user | json }}</pre>-->
+    <!--</div>-->
 </div>

@@ -64,12 +64,8 @@
                 <span editable-radiolist="item.value" e-name="{{item.name}}" e-ng-options="s.value as s.text for s in {{item.source}}" buttons="no"
                       data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
                      {{ showValue(item.name, item.value, item.source) || 'empty' }}
-                 </span>
-            <div>
-
-            <!--<sparql-select label="'Types de ressource'" default-value="'Choisir une catégorie'" sparql="sparqlCategories"
-            model="md['http://www.ortolang.fr/ontology/type']" required="'required'" name="'type'"></sparql-select>-->
-            <!--missing MULTI-VALUE-->
+                </span>
+            </div>
 
             <p class="col-md-offset-3 col-md-7 help-block" ng-if="item.helper" translate="{{'PROFILE.SETTINGS.HELPER.' + item.name.toUpperCase()}}">
             </p>
