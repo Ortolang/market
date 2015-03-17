@@ -1,0 +1,20 @@
+<div ng-controller="AboutMeCtrl" class="container-fluid">
+    <h3>{{"PROFILE.NAV.ABOUT_ME" | translate}}</h3>
+    <br>
+
+    <div id="formSettings" class="form-horizontal" >
+        <br>
+        <label class="control-label">{{ 'PROFILE.ABOUT_ME.PRESENTATION' | translate }}: </label>
+
+        <div toggle-visibility class="pull-left" data-options="visibilityOptions" data-selected-option="user.presentation.visibility"
+             ng-click="updateCurrentUser(user.presentation.name, user.presentation.value, user.presentation.type, user.presentation.source, user.presentation.visibility.value)"></div>
+        <br>
+        <br>
+        <div class="editableWysiwyg">
+            <div editable-text-area="user.presentation.value" ng-bind-html="user.presentation.value ? user.presentation.value : 'empty'"
+                 data-onaftersave="updateCurrentUser(user.presentation.name, user.presentation.value, user.presentation.type, user.presentation.source, user.presentation.visibility.value)"></div>
+        </div>
+        <br>
+        <br>
+    </div>
+</div>

@@ -21,8 +21,8 @@ angular.module('ortolangMarketApp')
             },
             PATH: {
                 PERSONAL_INFOS: 'profile/personal-infos.html',
-                SETTINGS: 'profile/en/settings.html',
-                ABOUT_ME: 'profile/en/about-me.html',
+                SETTINGS: 'profile/settings.html',
+                ABOUT_ME: 'profile/about-me.html',
                 EVENTS: 'profile/en/events.html',
                 PUBLICATIONS: 'profile/en/publications.html',
                 CONTRIBUTIONS: 'profile/en/contributions.html',
@@ -60,6 +60,9 @@ angular.module('ortolangMarketApp')
                 HELPER: {
                     TITRE: 'Professional title: Dr., Prof., etc. '
                 }
+            },
+            ABOUT_ME : {
+                PRESENTATION: 'Describe yourself in a few words'
             },
             SETTINGS: {
                 AVATAR : 'Avatar',
