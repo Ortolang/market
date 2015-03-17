@@ -16,7 +16,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div ng-repeat="pane in results" class="tab-pane fade {{pane.active? 'active in' : ''}}" id="{{pane.key}}">
-                        <div onload="result = pane; toolJob=job;" ng-include="'tool/tool-tpl-'+ pane.type +'.html'"></div>
+                        <div onload="result = pane; toolJob=job;" ng-include="'common/tools/tool-tpl-'+ pane.type +'.html'"></div>
                     </div>
                 </div>
             </div>
