@@ -23,7 +23,7 @@
     "angular-zeroclipboard": "0.4.1",
     "angular-bootstrap-toggle-switch": "0.5.2",
     "angular-diff-match-patch": "0.1.7",
-    "highlightjs": "8.4",
+    "highlightjs": "prismsoundzero/highlightjs#8.4.0",
     "bootstrap": "3.3.4",
     "bootstrap-additions": "0.2.3",
     "zeroclipboard": "2.2.0",
