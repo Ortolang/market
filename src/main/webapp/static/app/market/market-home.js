@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.equals('meta.type', 'Outil');
             } else if(type==='news') {
                 queryBuilder.and();
-                queryBuilder.in('meta.title', ['Littéracie avancée', 'Corpus14', 'Comere']);
+                queryBuilder.in('meta.title', ['Littéracie Avancée', 'Corpus14', 'Comere']);
             }
 
             var query = queryBuilder.toString();
