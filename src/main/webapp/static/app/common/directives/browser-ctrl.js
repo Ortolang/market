@@ -657,7 +657,7 @@ angular.module('ortolangMarketApp')
             // ***************** //
 
             $scope.showToolsList = function () {
-                $rootScope.$broadcast('tools-list-show');
+                $rootScope.$broadcast('tool-list-show');
             };
 
 

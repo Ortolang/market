@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             AVAILABLE_TOOLS_SERVER: 'Available tool servers',
             CHOOSE: 'Choose',
             DOCUMENTATION: 'Documentation',
+            TOOL_LIST: 'Tool list',
             BACK_TO_TOOL_LIST: 'Back to tool list',
             CONFIGURATION: 'Configuration',
             DELAY: 'Delete deadline',

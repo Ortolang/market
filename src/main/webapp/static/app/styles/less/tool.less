@@ -1,53 +1,53 @@
+.tool-list {
+  -webkit-transition:all ease-in-out 0.25s;
+  transition:all ease-in-out 0.25s;
+  z-index: 1000;
 
+  .aside-body {
+    overflow: hidden;
 
-.toolsList {
-	-webkit-transition:all ease-in-out 0.25s;
-	transition:all ease-in-out 0.25s;
-	z-index: 1000;
+    .tool-item {
 
-	.aside-body {
-		overflow: hidden;
+      border: 1px solid #e5e5e5;
+      padding: 15px;
+      background-color: #F1F1F3;
+      -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
+      box-shadow: 0 0 5px rgba(0,0,0,0.10);
 
-		.tool-item {
+      cursor: pointer;
+      &:hover {
+        .media-heading {
+          color: @ortolang-blue;
+        }
+      }
 
-			border: 1px solid #e5e5e5;
-			padding: 15px;
-			background-color: #F1F1F3;
-			-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
-			box-shadow: 0 0 5px rgba(0,0,0,0.10);
-
-			cursor: pointer;
-	        &:hover {
-	            .media-heading {
-	                color: @ortolang-blue;
-	            }
-	        }
-
-	        .description {
-	        	overflow: hidden;
-				max-height: 100px;
-				/*width: 225px;*/
-				text-align: justify;
-	        }
-		}
-	}
+      .description {
+        overflow: hidden;
+        max-height: 100px;
+        text-align: justify;
+      }
+    }
+  }
 
 }
 
-.toolsListHeader {
-	border-bottom: 1px solid #e5e5e5;
-	min-height: 16.43px;
-	padding: 6px 15px;
-	background: @tool;
-	color: @inverse-text-color;
+.tool-list-header {
+  border-bottom: 1px solid #e5e5e5;
+  min-height: @navbar-height;
+  padding: 6px 15px;
+  background: @tool;
+  color: @inverse-text-color;
 
-	.close {
-		color: @inverse-text-color;
-		opacity: 0.8;
-	}
+  .close {
+    color: @inverse-text-color;
+    opacity: 0.8;
+  }
 }
 
-.toolsList-backdrop {
-	z-index: 1000;
+.tool-list-backdrop {
+  z-index: 1000;
 }
 
+#tool-list-body {
+  width: 700px;
+}

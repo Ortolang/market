@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
                     title: job.toolName,
                     html: true,
                     scope: $scope,
-                    template: 'tool/tool-tpl-parameters.html',
+                    template: 'common/tools/tool-tpl-parameters.html',
                     show: true
                 });
             };
@@ -70,7 +70,7 @@ angular.module('ortolangMarketApp')
                         title: job.toolName,
                         html: true,
                         scope: $scope,
-                        template: 'tool/tool-result-modal-template.html',
+                        template: 'common/tools/tool-result-modal-template.html',
                         show: true
                     });
                 });

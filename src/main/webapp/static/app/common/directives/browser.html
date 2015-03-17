@@ -339,7 +339,7 @@
 
         <div ng-show="!browserService.isFileSelect" ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
 
-        <div ng-show="browserService.canExecuteTool" ng-include="'workspace/tools-list.html'" ng-controller="ToolsListCtrl"></div>
+        <div ng-show="browserService.canExecuteTool" ng-include="'common/tools/tool-list.html'" ng-controller="ToolListCtrl"></div>
 
         <div ng-include="'workspace/metadata-preview.html'"></div>
 

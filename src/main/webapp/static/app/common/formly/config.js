@@ -1,13 +1,20 @@
 'use strict';
 
 angular.module('ortolangMarketApp')
-    .config(['formlyTemplateProvider', 'formlyOptionsProvider', function (formlyTemplateProvider, formlyOptionsProvider) {
-        formlyTemplateProvider.setTemplateUrl('select', 'common/formly/ortolang-formly-select.html');
-        formlyTemplateProvider.setTemplateUrl('dataobject', 'common/formly/ortolang-formly-file-select.html');
-        formlyTemplateProvider.setTemplateUrl('label', 'common/formly/ortolang-formly-label.html');
-        formlyTemplateProvider.setTemplateUrl('number', 'common/formly/ortolang-formly-decimal.html');
-        formlyTemplateProvider.setTemplateUrl('preview', 'common/formly/tool-tpl-text-preview.html');
-        formlyOptionsProvider.setOption({
-            submitButtonTemplate: '<button class="btn btn-success" type="submit" ng-show="!options.hideSubmit">{{options.submitCopy || "SUBMIT" | translate}}</button>'
-        });
+    .config(['formlyConfigProvider', function (formlyConfigProvider) {
+        formlyConfigProvider.setType([
+            {
+                name: 'dataobject',
+                templateUrl: 'common/formly/ortolang-formly-file-select.html'
+            },
+            {
+                name: 'number',
+                template: '<input type="number" class="form-control" step="{{options.templateOptions.step !== undefined ? options.templateOptions.step : 1}}" ng-model="model[options.key]">',
+                wrapper: ['bootstrapLabel', 'bootstrapHasError']
+            },
+            {
+                name: 'preview',
+                templateUrl: 'common/formly/tool-tpl-text-preview.html'
+            }
+        ]);
     }]);

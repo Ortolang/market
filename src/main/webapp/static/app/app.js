@@ -28,6 +28,7 @@ angular
         'hljs',
         'cfp.hotkeys',
         'formly',
+        'formlyBootstrap',
         'ui.bootstrap.showErrors',
         'pascalprecht.translate',
         'zeroclipboard',

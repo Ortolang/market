@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:ToolsListCtrl
+ * @name ortolangMarketApp.controller:ToolListCtrl
  * @description
- * # ToolsListCtrl
+ * # ToolListCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolsListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', function ($scope, ToolManager, $rootScope, $translate) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', function ($scope, ToolManager, $rootScope, $translate) {
 
         // ***************** //
         // Editor visibility //
@@ -77,10 +77,10 @@ angular.module('ortolangMarketApp')
             $scope.formData = {};
             $scope.formFields = configJSON;
             $scope.formOptions = {
-                uniqueFormId: 'toolConfig',
                 hideSubmit: false,
                 submitCopy: $translate.instant('TOOLS.RUN_TOOL')
             };
+            $scope.formOptionsCopy = angular.copy($scope.formOptions);
         };
 
 
@@ -109,7 +109,7 @@ angular.module('ortolangMarketApp')
         // Listeners //
         // ********* //
 
-        $scope.$on('tools-list-show', function () {
+        $scope.$on('tool-list-show', function () {
             $scope.resetSelectedTool();
             $scope.show();
         });
