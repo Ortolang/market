@@ -40,6 +40,11 @@
         "angular-locale_fr.js"
       ]
     },
+    "api-check": {
+      "main": [
+          "dist/apiCheck.min.js"
+      ]
+    },
     "google-diff-match-patch": {
       "main": [
         "javascript/diff_match_patch_uncompressed.js"
