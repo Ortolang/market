@@ -14,6 +14,50 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/profiles/connected',
                 method: 'GET'
             },
+            search: {
+                url: Url.urlBase() + '/rest/profiles/search',
+                method: 'POST',
+                isArray: true
+            },
+            update: {
+                url: Url.urlBase() + '/rest/profiles/:userId/infos',
+                method: 'POST'
+            },
+            getInfos: {
+                url: Url.urlBase() + '/rest/profiles/:userId/infos',
+                method: 'GET',
+                isArray: true
+            },
+            getSettings: {
+                url: Url.urlBase() + '/rest/profiles/:userId/settings',
+                method: 'GET',
+                isArray: true
+            },
+            getSetting: {
+                url: Url.urlBase() + '/rest/profiles/:userId/settings/:name',
+                method: 'GET'
+            },
+            updateSettings: {
+                url: Url.urlBase() + '/rest/profiles/:userId/settings',
+                method: 'POST'
+            },
+            getPresentation: {
+                url: Url.urlBase() + '/rest/profiles/:userId/aboutme/:name',
+                method: 'GET'
+            },
+            updatePresentation: {
+                url: Url.urlBase() + '/rest/profiles/:userId/aboutme',
+                method: 'POST'
+            },
+            getFriends: {
+                url: Url.urlBase() + '/rest/profiles/:userId/friends',
+                method: 'GET',
+                isArray: true
+            },
+            read: {
+                url: Url.urlBase() + '/rest/profiles/:userId',
+                method: 'GET'
+            },
             put: {
                 method: 'PUT'
             }

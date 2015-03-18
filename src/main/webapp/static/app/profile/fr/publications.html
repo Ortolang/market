@@ -1,0 +1,15 @@
+<div ng-controller="PublicationsCtrl" class="container-fluid">
+ <div id="publications-result" ng-cloak ng-init="getPublications()">
+     <div>
+         <small>{{publications.length}} résultats trouvés sur <a href="https://hal.archives-ouvertes.fr" target="_blank">HAL</a>.</small>
+         <br/>
+     </div>
+     <hr>
+    <div id="publications-list">
+         <div ng-repeat="publication in publications track by $index" class="text-justify">
+            <p><span class="label label-{{ doctype[publication[3]].color }}"> {{doctype[publication[3]].value}}</span>
+            <span ng-bind-html="publication[4]" class="small"></span></p>
+        </div>
+    </div>
+ </div>
+</div>

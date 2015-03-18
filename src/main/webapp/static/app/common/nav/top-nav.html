@@ -54,11 +54,14 @@
             </li>
             <li class="dropdown" ng-if="authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-fw fa-user"></span> {{currentUser.name}} <span class="fa fa-caret-down"></span>
+                    <multi-avatar ng-if="currentUser.avatarIds" data-img-id="small-avatar" data-favorite-avatar="currentUser.favoriteAvatar"
+                                  data-avatar-ids="currentUser.avatarIds" data-thumbnail="true"></multi-avatar>
+
+                    {{currentUser.name}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-show="navbarCollapsed" ng-click="selectProfile(); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                    <li ng-hide="navbarCollapsed" ng-click="selectProfile()"><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-show="navbarCollapsed" ng-click="selectProfile(); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/#/profile/personal-infos" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-hide="navbarCollapsed" ng-click="selectProfile()"><a href="/#/profile/personal-infos" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                     <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
                 </ul>
             </li>

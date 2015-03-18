@@ -32,7 +32,10 @@ angular
         'ui.bootstrap.showErrors',
         'pascalprecht.translate',
         'zeroclipboard',
-        'diff-match-patch'
+        'diff-match-patch',
+        'angular-md5',
+        'xeditable',
+        'textAngular'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
@@ -74,7 +77,7 @@ angular
                 controller: 'InformationCtrl',
                 reloadOnSearch: false
             })
-            .when('/profile', {
+            .when('/profile/:section', {
                 templateUrl: 'profile/profile.html',
                 controller: 'ProfileCtrl',
                 requiresAuthentication: true
@@ -108,6 +111,7 @@ angular
             swfPath: '/vendor/ZeroClipboard.swf'
         });
     }]);
+
 
 /**
  * @ngdoc overview

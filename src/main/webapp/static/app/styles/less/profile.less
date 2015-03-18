@@ -1,0 +1,73 @@
+.profile {
+  .list-group-item {
+    border: none;
+  }
+  .list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+  .list-group-item:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  form[name="editableForm"] > div {
+    height: auto;
+    padding: 5px 0;
+  }
+
+  form[name="editableForm"] .title {
+    display: inline;
+    font-weight: bold;
+    padding-top: 5px;
+    vertical-align: top;
+    min-width: 90px;
+  }
+
+  form[name="editableForm"] .editable {
+    display: inline;
+    padding-top: 5px;
+    vertical-align: top;
+
+  }
+
+  form[name="editableForm"] .control-label {
+    padding-top: 0;
+  }
+
+  form[name="editableForm"] .editable-wrap, form[name="editableForm"] .editable-input {
+    display: inline;
+    width: 100%;
+  }
+
+  .editableWysiwyg .editable-wrap, .editableWysiwyg .editable-input {
+    white-space: normal;
+    padding-bottom: 5px;
+  }
+
+  .editableWysiwyg .editable-click{
+    color: #000000;
+  }
+
+  .editableWysiwyg .btn-toolbar .btn-group {
+    padding-bottom: 5px;
+  }
+
+  #formSettings .editable-buttons {
+    margin-top: -5px;
+  }
+
+  #formSettings .editable-input, #formSettings .editable-select {
+    width:100%;
+    margin-top: -5px;
+  }
+}
+
+.ta-scroll-window > .ta-bind, .ta-editor.ta-html, .ta-scroll-window.form-control {
+  width:920px;
+}
+
+.profile-image {
+  max-height: 30px;
+  margin-right: 5px;
+}
+
