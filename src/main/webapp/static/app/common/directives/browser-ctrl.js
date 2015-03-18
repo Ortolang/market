@@ -585,6 +585,9 @@ angular.module('ortolangMarketApp')
                         addCollectionModal.hide();
                         deactivateContextMenu();
                     };
+                    addCollectionModalScope.$on('modal.show', function () {
+                        angular.element('#new-collection-modal').find('[autofocus]:first').focus();
+                    });
                     addCollectionModal = $modal({
                         scope: addCollectionModalScope,
                         template: 'workspace/templates/add-collection-modal.html',
@@ -695,6 +698,9 @@ angular.module('ortolangMarketApp')
                         getSnapshotsHistory();
                     });
                 };
+                snapshotModalScope.$on('modal.show', function () {
+                    angular.element('#snapshot-workspace-form').find('[autofocus]:first').focus();
+                });
                 snapshotModal = $modal({
                     scope: snapshotModalScope,
                     template: 'workspace/templates/snapshot-modal.html',
@@ -1222,6 +1228,9 @@ angular.module('ortolangMarketApp')
                             createWorkspaceModal.hide();
                         });
                     };
+                    createWorkspaceModalScope.$on('modal.show', function () {
+                        angular.element('#create-workspace-modal').find('[autofocus]:first').focus();
+                    });
                     createWorkspaceModal = $modal({
                         scope: createWorkspaceModalScope,
                         template: 'workspace/templates/create-workspace-modal.html',

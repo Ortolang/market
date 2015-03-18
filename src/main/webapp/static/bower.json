@@ -42,7 +42,7 @@
     },
     "api-check": {
       "main": [
-          "dist/apiCheck.min.js"
+          "dist/apiCheck.js"
       ]
     },
     "google-diff-match-patch": {

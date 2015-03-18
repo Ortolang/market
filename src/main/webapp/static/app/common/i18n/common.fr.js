@@ -31,5 +31,6 @@ angular.module('ortolangMarketApp')
         CORPORA: 'Corpus',
         LEXICONS: 'Lexiques',
         TOOLS: 'Outils',
-        INTEGRATED_PROJECTS: 'Projets Intégrés'
+        INTEGRATED_PROJECTS: 'Projets Intégrés',
+        SELECT_WORKSPACE_ELEMENT: 'Selectionner un élément'
     });

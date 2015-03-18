@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('formlyFileSelect', [ '$rootScope', '$modal', function ($rootScope, $modal) {
+    .directive('formlyFileSelect', [ '$rootScope', '$modal', '$translate', function ($rootScope, $modal, $translate) {
         return {
             restrict: 'A',
             scope: {
@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
                     var fileSelectModalScope = $rootScope.$new(true);
                     fileSelectModalScope.acceptMultiple = false;
                     fileSelectModalScope.fileSelectId = scope.id;
-                    scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: scope.options.label || 'Select workspace element', template: 'common/directives/file-select-modal-template.html', show: false});
+                    scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: scope.options.label || $translate.instant('SELECT_WORKSPACE_ELEMENT'), template: 'common/directives/file-select-modal-template.html', show: false});
 
                     scope.showModal = function () {
                         scope.fileSelectModal.show();
