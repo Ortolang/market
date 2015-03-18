@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
                 PERSONAL_INFOS: 'Informations personnelles',
                 SETTINGS: 'Préférences',
                 ABOUT_ME: 'A propos de moi',
-                EVENTS: 'Acivité récente',
+                EVENTS: 'Activité récente',
                 PUBLICATIONS: 'Publications',
                 CONTRIBUTIONS: 'Contributions',
                 FRIENDS: 'Collaborateurs'

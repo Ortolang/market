@@ -14,6 +14,11 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/profiles/connected',
                 method: 'GET'
             },
+            search: {
+                url: Url.urlBase() + '/rest/profiles/search',
+                method: 'POST',
+                isArray: true
+            },
             update: {
                 url: Url.urlBase() + '/rest/profiles/:userId/infos',
                 method: 'POST'
@@ -27,6 +32,10 @@ angular.module('ortolangMarketApp')
                 url: Url.urlBase() + '/rest/profiles/:userId/settings',
                 method: 'GET',
                 isArray: true
+            },
+            getSetting: {
+                url: Url.urlBase() + '/rest/profiles/:userId/settings/:name',
+                method: 'GET'
             },
             updateSettings: {
                 url: Url.urlBase() + '/rest/profiles/:userId/settings',

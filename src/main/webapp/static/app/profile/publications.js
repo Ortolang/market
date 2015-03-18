@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PublicationsCtrl', ['$scope',
-        function ($scope) {
+    .controller('PublicationsCtrl', ['$scope', 'ProfileResource',
+        function ($scope, ProfileResource) {
 
             function createCORSRequest(method, url){
                 var xhr = new XMLHttpRequest();
@@ -80,6 +80,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.getPublications = function() {
+                // otherwise use names
                 //var name = 'Falk+Ingrid',
                 var name = $scope.$parent.currentUser.firstname + '+' + $scope.$parent.currentUser.lastname,
                     url = 'https://api.archives-ouvertes.fr/search/?q=authFullName_t:' + name.toLowerCase() + '&wt=csv&sort=producedDate_tdate desc&indent=true',

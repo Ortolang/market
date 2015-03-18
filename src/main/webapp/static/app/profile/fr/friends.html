@@ -1,9 +1,30 @@
-<div id="market-home" ng-controller="ContributionsCtrl">
+<div id="market-home" ng-controller="FriendsCtrl">
+    <section>
+        <form class="well form-search">
+            <label>Search:</label>
+            <input type="text" ng-model="search.user" class="input-medium search-query" placeholder="Search a collaborator...">
+            <button type="submit" class="btn" ng-click="search(search.user)">Search</button>
+            <p class="help-block">Try for example: "anonymous"</p>
+        </form>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="flex-row">
+                    <div ng-repeat="user in search.result">
+                        {{user.fullName}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <pre ng-model="result">
+            {{search.result}}
+        </pre>
+    </section>
+
     <section ng-if="friends.length>0" class="row">
         <div class="col-md-12">
             <div class="flex-row">
                 <div ng-repeat="friend in friends">
-                    friend
+                    {{friend}}
                 </div>
             </div>
         </div>

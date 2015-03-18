@@ -42,12 +42,12 @@ angular.module('ortolangMarketApp')
                     {value: 'M', text: $translate.instant('PROFILE.CIVILITY.MISTER')}
                 ];
 
-                $http.get('profile/countries.json')
+                $http.get('profile/resources/countries.json')
                     .then(function(res){
                         $scope.countries = res.data;
                     });
 
-                $http.get('profile/states.json')
+                $http.get('profile/resources/states.json')
                     .then(function(res){
                         $scope.states = res.data;
                     });
@@ -61,12 +61,8 @@ angular.module('ortolangMarketApp')
 
 
                 $scope.user = undefined;
-
                 $scope.user = $scope.$parent.currentUser;
 
-                //ProfileResource.getFriends({userId: $scope.user.id}).$promise.then(function (friends) {
-                //    $scope.friends = friends;
-                //});
             }
 
             init();
