@@ -33,15 +33,20 @@
     }
     .breadcrumb-part {
       display: inline;
-      &::before {
+      &:after {
         content: '\f054';
         font-family: "fontawesome";
         float: left;
         color: @btn-default-border;
         padding: (@padding-base-vertical + 2) 3px (@padding-base-vertical - 2) 3px;
       }
-      .last-breadcrumb-part {
-        font-weight: bold;
+      &:last-child {
+        &:after {
+          content: none;
+        }
+        button {
+          font-weight: bold;
+        }
       }
     }
     .aside-left-collapsed {
@@ -167,20 +172,24 @@
 
 .browser-aside-info {
   overflow: hidden;
-  .dl-horizontal {
+  dl {
     dt {
-      width: @browser-offset-horizontal - 20;
       font-weight: 600;
-      padding-bottom: @padding-base-vertical;
     }
-    dd {
-      margin-left: @browser-offset-horizontal;
-      word-break: break-all;
-      .copy-key {
-        margin-left: 4px;
+    &.dl-horizontal {
+      dt {
+        width: @browser-offset-horizontal - 20;
+        padding-bottom: @padding-base-vertical;
       }
-      .copy-key, .calculate-size {
-        cursor: pointer;
+      dd {
+        margin-left: @browser-offset-horizontal;
+        word-break: break-all;
+        .copy-key {
+          margin-left: 4px;
+        }
+        .copy-key, .calculate-size {
+          cursor: pointer;
+        }
       }
     }
   }

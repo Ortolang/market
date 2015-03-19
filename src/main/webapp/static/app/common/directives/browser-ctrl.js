@@ -596,6 +596,38 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.editDescription = function () {
+                if ($scope.browserService.canAdd && $scope.isHead && $scope.hasOnlyOneElementSelected()) {
+                    var editDescriptionModalScope = $rootScope.$new(true),
+                        editDescriptionModal;
+                    editDescriptionModalScope.selectedElement = $scope.selectedElements[0];
+                    editDescriptionModalScope.editDescription = function () {
+                        // Delete properties that are not part of the representation
+                        if (!!editDescriptionModalScope.selectedElement.realSize) {
+                            delete editDescriptionModalScope.selectedElement.realSize;
+                        }
+                        WorkspaceElementResource.put({wskey: $scope.wskey }, editDescriptionModalScope.selectedElement, function () {
+                            getParentData(true).then(function () {
+                                editDescriptionModal.hide();
+                                deactivateContextMenu();
+                            });
+                        });
+                    };
+                    editDescriptionModalScope.cancel = function () {
+                        editDescriptionModal.hide();
+                        deactivateContextMenu();
+                    };
+                    editDescriptionModalScope.$on('modal.show', function () {
+                        angular.element('#new-collection-modal').find('[autofocus]:first').focus();
+                    });
+                    editDescriptionModal = $modal({
+                        scope: editDescriptionModalScope,
+                        template: 'workspace/templates/edit-description-modal.html',
+                        show: true
+                    });
+                }
+            };
+
             $rootScope.$on('uploaderCompleteItemUpload', function () {
                 console.log('%s caught event "uploaderCompleteItemUpload"', $scope.browserService.getId());
                 getParentData(true, $scope.hasOnlyParentSelected());
@@ -708,6 +740,17 @@ angular.module('ortolangMarketApp')
                 });
             };
 
+            $scope.showMembers = function () {
+                var workspaceMembersModalScope = $rootScope.$new(true);
+                workspaceMembersModalScope.wsName = $scope.wsName;
+                workspaceMembersModalScope.members = $scope.workspaceMembers.members;
+
+                $modal({
+                    scope: workspaceMembersModalScope,
+                    template: 'workspace/templates/workspace-members-modal.html',
+                    show: true
+                });
+            };
 
             // *********************** //
             //       Visualizers       //
@@ -1492,10 +1535,11 @@ angular.module('ortolangMarketApp')
                             var key = $scope.settings.wskey || $scope.forceWorkspace,
                                 filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
                             if (filteredWorkspace.length !== 1) {
-                                console.error('No workspace with key "%s" available', $scope.forceWorkspace);
-                                return;
+                                console.error('No workspace with key "%s" available', $scope.forceWorkspace, $scope.settings.wskey );
+                                $scope.workspace = data.entries[0];
+                            } else {
+                                $scope.workspace = filteredWorkspace[0];
                             }
-                            $scope.workspace = filteredWorkspace[0];
                         } else {
                             $scope.workspace = data.entries[0];
                         }

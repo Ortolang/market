@@ -37,6 +37,13 @@ angular.module('ortolangMarketApp')
             ADD_COLLECTION_MODAL: {
                 TITLE: 'Add a new folder',
                 SUBMIT: 'Add'
+            },
+            EDIT_DESCRIPTION_MODAL: {
+                TITLE: 'Edit description of {{name}}',
+                SUBMIT: 'Edit'
+            },
+            WORKSPACE_MEMBERS_MODAL: {
+                TITLE: 'Members of {{name}}'
             }
         }
     });
