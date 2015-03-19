@@ -67,7 +67,7 @@ angular.module('ortolangMarketApp')
             if (!$scope.md) {
                 $scope.md = {};
             }
-            $scope.md.licence = elements[0].path;
+            $scope.md.license = elements[0].path;
             $scope.licence = elements[0];
             $scope.fileLicenceSelectModal.hide();
         });
@@ -158,8 +158,8 @@ angular.module('ortolangMarketApp')
                 WorkspaceElementResource.get({path: $scope.md.image, wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
                     $scope.image = data;
                 });
-                WorkspaceElementResource.get({path: $scope.md.licence, wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
-                    $scope.licence = data;
+                WorkspaceElementResource.get({path: $scope.md.license, wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
+                    $scope.license = data;
                 });
             }
         }
