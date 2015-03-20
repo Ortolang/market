@@ -21,7 +21,9 @@ angular.module('ortolangMarketApp')
             completedProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'COMPLETED', type: 'publish-workspace'},
             pendingProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'PENDING', type: 'publish-workspace'},
             sampleN3 = {'http://www.ortolang.fr/ontology/preview':'k1', image : 'assets/images/no-image.png'},
-            workspaceElement = {format: 'market-ortolang-n3'};
+            workspaceElement = {format: 'market-ortolang-n3'},
+            query1Result = '{"key":"k1","title":"Dede","description":"Description de Dede"}',
+            ridItem = '#0:0';
 
         return {
             rootCollectionKey : rootCollectionKey,
@@ -34,6 +36,12 @@ angular.module('ortolangMarketApp')
             sampleCode : sampleCode,
             sampleN3 : sampleN3,
             workspaceElement: workspaceElement,
+            
+            query1Result: query1Result,
+            query1Results: [query1Result],
+            ridItem: ridItem,
+            queryItem: ['{"key":"'+rootCollectionKey+'","ortolang_meta":"'+ridItem+'"}'],
+
             oobjectSample : {object:{root:true, metadatas: [{key: metadataObjectKey}]}, type: 'collection'},
             oobjectWithoutMetaSample : {object:{root:true, metadatas: []}},
             oobjectWithOtherMetaSample : {object:{root:true, metadatas: [{key: unknowMetadataObjectKey}]}, type: 'collection'},

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$filter', 'IndexResultResource', function ($scope, $location, $routeParams, $filter, IndexResultResource) {
+    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$filter', 'JsonResultResource', 'QueryBuilderService', function ($scope, $location, $routeParams, $filter, JsonResultResource, QueryBuilderService) {
 
         $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
 
@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
         $scope.filter = function (filterID, filterValue, filterTranslation) {
             if (filterID && filterValue) {
                 if (filterID === 'type') {
-                    $scope.itemsFiltered = $filter('filter')($scope.items, {'meta': {'http://www.ortolang.fr/ontology/type': filterValue}});
+                    $scope.itemsFiltered = $filter('filter')($scope.items, {'type': filterValue});
                     $scope.selectedType = filterValue;
                     $scope.selectedTypeTranslation = filterTranslation;
                 } else {
@@ -39,39 +39,38 @@ angular.module('ortolangMarketApp')
 
         function loadObjects(content) {
 
-            var query = ' STATUS:PUBLISHED', contentSplit = [];
+            var queryBuilder = QueryBuilderService.make({projection: 'key, meta.type as type, meta.title as title, meta.description as description, meta.producer as producer', source: 'collection'});
+            
+            queryBuilder.equals('status', 'published');
 
-            if (content && content !== '' && content[0] !== '"') {
-                contentSplit = content.split(' ');
+            var contentSplit = [];
+            if (content && content !== '') {
+                contentSplit = queryBuilder.tokenize(content);
             }
-
             if (contentSplit.length > 0) {
                 angular.forEach(contentSplit, function (contentPart) {
-                    var str = contentPart.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
-                    query += ' AND CONTENT:' + str + '*';
+                    queryBuilder.and();
+                    queryBuilder.containsText('meta.*', contentPart);
                 });
             } else {
-                var str = content.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
-                query += ' AND CONTENT:' + str;
+                queryBuilder.and();
+                queryBuilder.containsText('meta.*', content);
             }
 
-            console.log('query : ' + query);
+            var query = queryBuilder.toString();
+            console.debug('query : ' + query);
             // Loads all objects
-            IndexResultResource.get({query: query}).$promise.then(function (results) {
+            JsonResultResource.get({query: query}).$promise.then(function (results) {
 
                 angular.forEach(results, function (entry) {
 
-                    if (entry.explain) {
-                        entry.explain = entry.explain.replace(/highlighted/gi, 'strong');
-                    }
-                    $scope.items.push(entry);
-                    $scope.itemsFiltered.push(entry);
+                    var jsEntry = angular.fromJson(entry);
+                    $scope.items.push(jsEntry);
+                    $scope.itemsFiltered.push(jsEntry);
                 });
 
-                // $scope.itemsFiltered = angular.copy($scope.items);
             });
         }
-
 
         // Scope variables
         function initScopeVariables() {

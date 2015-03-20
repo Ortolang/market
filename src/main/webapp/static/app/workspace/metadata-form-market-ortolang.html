@@ -16,52 +16,51 @@
                 <!-- <select name="type" class="form-control" ng-model="md['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']" ng-options="cat.id as cat.label for cat in categories" required>
                     <option value="">Choisir une catégorie</option>
                 </select> -->
-                <sparql-select label="'Types de ressource'" default-value="'Choisir une catégorie'" sparql="sparqlCategories" model="md['http://www.ortolang.fr/ontology/type']" required="'required'" name="'type'"></sparql-select>
+                <sparql-select label="'Types de ressource'" default-value="'Choisir une catégorie'" sparql="sparqlCategories" model="md.type" required="'required'" name="'type'"></sparql-select>
             <!-- </div> -->
 
             <div class="form-group" show-errors>
                 <label>Nom de la ressource <span class="text-danger">*</span></label>
-                <input type="text" name="title" ng-model="md['http://purl.org/dc/elements/1.1/title']" class="form-control" required>
+                <input type="text" name="title" ng-model="md.title" class="form-control" required>
             </div>
 
             <div class="form-group" show-errors>
                 <label>Description de la ressource <span class="text-danger">*</span></label>
-                <textarea class="form-control" name="description" ng-model="md['http://purl.org/dc/elements/1.1/description']" rows="10" required></textarea>
+                <textarea class="form-control" name="description" ng-model="md.description" rows="10" required></textarea>
             </div>
 
             <div class="form-group">
                 <label>Contenu </label>
-                <textarea class="form-control" name="extent" ng-model="md['http://purl.org/dc/terms/extent']" rows="2"></textarea>
+                <textarea class="form-control" name="extent" ng-model="md.extent" rows="2"></textarea>
                 <p>Description technique de la ressource. Préciser le nombre de fichier et le format.</p>
             </div>
 
             <div class="form-group">
                 <label>Taille des données à télécharger</label>
-                <input type="text" name="datasize" ng-model="md['http://www.ortolang.fr/ontology/datasize']" class="form-control">
+                <input type="text" name="datasize" ng-model="md.datasize" class="form-control">
                 <p class="">Permet de prévenir l'utilisateur de la taille des données avant le téléchargement.</p>
                 <p><span class="text-danger fa fa-exclamation-circle"></span> Si le champs est vide, le bouton de téléchargement n'est pas visible</p>
             </div>
 
             <div class="form-group">
                 <label>Mots clés</label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/keywords']" name="'keywords'" placeholder="'Mots-clés'"></div>
+                <div auto-complete model="md.keywords" name="'keywords'" placeholder="'Mots-clés'"></div>
             </div>
 
             <div class="form-group">
                 <label>Site web</label>
-                <input type="text" name="website" ng-model="md['http://www.ortolang.fr/ontology/website']" class="form-control">
+                <input type="text" name="website" ng-model="md.website" class="form-control">
                 <p class="">Adresse du site web contenant des informations sur la ressource.</p>
             </div>
 
             <div class="form-group">
                 <label>Lieu de création des données </label>
-                <!-- <input type="text" name="spacial" ng-model="md['http://purl.org/dc/terms/spacial']" class="form-control"> -->
-                <div auto-complete sparql="sparqlSpartial" model="md['http://purl.org/dc/terms/spacial']" name="'spacial'" placeholder="'Pays'"></div>
+                <div auto-complete sparql="sparqlSpartial" model="md.spacial" name="'spacial'" placeholder="'Pays'"></div>
             </div>
 
             <div class="form-group">
                 <label>Période de création des données</label>
-                <input type="text" name="temporal" ng-model="md['http://purl.org/dc/terms/temporal']" class="form-control">
+                <input type="text" name="temporal" ng-model="md.temporal" class="form-control">
             </div>
 
             <div class="form-group">
@@ -72,7 +71,7 @@
                     <button class="btn btn-default" ng-click="fileImageSelectModal.show()" type="button">Selectionner</button>
                     </span>
                 </div>
-                <input type="hidden" name="image" ng-model="md['http://www.ortolang.fr/ontology/image']" class="form-control">
+                <input type="hidden" name="image" ng-model="md.image" class="form-control">
             </div>
 
             <div class="form-group">
@@ -83,17 +82,17 @@
                     <button class="btn btn-default" ng-click="folderSelectModal.show()" type="button">Selectionner</button>
                     </span>
                 </div>
-                <input type="hidden" name="preview" ng-model="md['http://www.ortolang.fr/ontology/preview']" class="form-control">
+                <input type="hidden" name="preview" ng-model="md.preview" class="form-control">
             </div>
         </div>
 
         <div class="metadata-form-panel" ng-show="selectedTab=='rights'">
 
-            <sparql-select label="'Droit d\'utilisation'" default-value="'Choisir les conditions d\'utilisation'" sparql="sparqlConditionsOfUse" model="md['http://www.ortolang.fr/ontology/statusOfUse']" required="'required'" name="'statusOfUse'"></sparql-select>
+            <sparql-select label="'Droit d\'utilisation'" default-value="'Choisir les conditions d\'utilisation'" sparql="sparqlConditionsOfUse" model="md.statusOfUse" required="'required'" name="'statusOfUse'"></sparql-select>
 
             <div class="form-group">
                 <label>Description des conditions d'utilisation </label>
-                <textarea name="conditionsOfUse" ng-model="md['http://www.ortolang.fr/ontology/conditionsOfUse']" class="form-control"></textarea>
+                <textarea name="conditionsOfUse" ng-model="md.conditionsOfUse" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
@@ -104,17 +103,17 @@
                         <button class="btn btn-default" ng-click="fileLicenceSelectModal.show()" type="button">Selectionner</button>
                     </span>
                 </div>
-                <input type="hidden" name="licence" ng-model="md['http://www.ortolang.fr/ontology/license']" class="form-control">
+                <input type="hidden" name="license" ng-model="md.license" class="form-control">
             </div>
 
             <div class="form-group">
                 <label>Site web de la licence </label>
-                <input type="text" name="licenseWebsite" ng-model="md['http://www.ortolang.fr/ontology/licenseWebsite']" class="form-control"></input>
+                <input type="text" name="licenseWebsite" ng-model="md.licenseWebsite" class="form-control"></input>
             </div>
 
             <div class="form-group">
                 <label>Code du patrimoine attaché à cette ressource </label>
-                <select name="derogation" ng-model="md['http://www.ortolang.fr/ontology/derogation']" class="form-control">
+                <select name="derogation" ng-model="md.derogation" class="form-control">
                     <option value=""></option>
                     <option value="AR038">AR038 - Documents librement communicables.</option>
                 </select>
@@ -127,32 +126,32 @@
 
             <div class="form-group">
                 <label>Producteurs <span class="text-danger">*</span></label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/producer']" name="'producer'" placeholder="'[Entrer un nom puis taper sur Entrer]'" required="'required'"></div>
+                <div auto-complete model="md.producer" name="'producer'" placeholder="'[Entrer un nom puis taper sur Entrer]'" required="'required'"></div>
             </div>
 
             <div class="form-group">
-                <label>Responsables scientifique </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/researcher']" name="'researcher'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
+                <label>Responsables scientifiques </label>
+                <div auto-complete model="md.researcher" name="'researcher'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
-                <label>Responsables informatique </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/manager']" name="'manager'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
+                <label>Responsables informatiques </label>
+                <div auto-complete model="md.manager" name="'manager'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
-                <label>Responsables technique </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/developer']" name="'developer'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
+                <label>Responsables techniques </label>
+                <div auto-complete model="md.developer" name="'developer'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
                 <label>Auteurs </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/author']" name="'author'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
+                <div auto-complete model="md.author" name="'author'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
                 <label>Compilateurs </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/compiler']" name="'compiler'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
+                <div auto-complete model="md.compiler" name="'compiler'" placeholder="'[Entrer un nom puis taper sur Entrer]'"></div>
             </div>
 
         </div>
@@ -161,7 +160,7 @@
 
             <div class="form-group">
                 <label>Url de l'application </label>
-                <input type="text" name="applicationUrl" ng-model="md['http://www.ortolang.fr/ontology/applicationUrl']" class="form-control">
+                <input type="text" name="applicationUrl" ng-model="md.applicationUrl" class="form-control">
             </div>
 
         </div>
@@ -170,15 +169,13 @@
 
             <div class="form-group">
                 <label>Langue principale du corpus </label>
-                <!-- <input type="text" name="primaryLanguage" ng-model="md['http://www.ortolang.fr/ontology/primaryLanguage']" class="form-control"> -->
-                <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/primaryLanguage']" name="'primaryLanguage'" placeholder="'Langue'"></div>
+                <div auto-complete sparql="sparqlLanguage" model="md.primaryLanguage" name="'primaryLanguage'" placeholder="'Langue'"></div>
 
             </div>
 
             <div class="form-group">
                 <label>Type linguistique </label>
-                <!-- <input type="text" name="linguisticDataType" ng-model="md['http://www.ortolang.fr/ontology/linguisticDataType']" class="form-control"> -->
-                <select name="linguisticDataType" ng-model="md['http://www.ortolang.fr/ontology/linguisticDataType']" class="form-control">
+                <select name="linguisticDataType" ng-model="md.linguisticDataType" class="form-control">
                     <option value="">Choisir un type linguistique</option>
                     <option value="primary_text">primary_text</option>
                     <option value="lexicon">lexicon</option>
@@ -188,22 +185,21 @@
 
             <div class="form-group">
                 <label>Type discursif </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/discourseType']" name="'discourseType'" placeholder="'[Entrer un type puis taper sur Entrer]'"></div>
+                <div auto-complete model="md.discourseType" name="'discourseType'" placeholder="'[Entrer un type puis taper sur Entrer]'"></div>
             </div>
 
             <div class="form-group">
                 <label>Domaines linguistiques </label>
-                <!-- <input type="text" name="linguisticSubject" ng-model="md['http://www.ortolang.fr/ontology/linguisticSubject']" class="form-control"> -->
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/linguisticSubject']" name="'linguisticSubject'" placeholder="''"></div>
+                <div auto-complete model="md.linguisticSubject" name="'linguisticSubject'" placeholder="''"></div>
             </div>
         </div>
 
 
         <div class="metadata-form-panel" ng-show="selectedTab=='annotation'">
 
-            <div class="form-group">
+           <div class="form-group">
                 <label>Langues concernés par cet objet </label>
-                <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/language']" name="'language'" placeholder="'Langue'"></div>
+                <div auto-complete sparql="sparqlLanguage" model="md.language" name="'language'" placeholder="'Langue'"></div>
             </div>
 
         </div>
@@ -212,17 +208,17 @@
 
             <div class="form-group">
                 <label>Languages de programmation </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/programmingLanguage']" name="'programmingLanguage'" placeholder="'Language de programmation'"></div>
+                <div auto-complete model="md.programmingLanguage" name="'programmingLanguage'" placeholder="'Language de programmation'"></div>
             </div>
 
             <div class="form-group">
                 <label>Systèmes d'exploitation compatibles </label>
-                <div auto-complete model="md['http://www.ortolang.fr/ontology/opearatingSystem']" name="'opearatingSystem'" placeholder="'Système d\'exploitation'"></div>
+                <div auto-complete model="md.opearatingSystem" name="'opearatingSystem'" placeholder="'Système d\'exploitation'"></div>
             </div>
 
             <div class="form-group">
                 <label>Type de support </label>
-                <select name="toolSupport" ng-model="md['http://www.ortolang.fr/ontology/toolSupport']" class="form-control">
+                <select name="toolSupport" ng-model="md.toolSupport" class="form-control">
                     <option value=""></option>
                     <option value="Software">Software</option>
                     <option value="Hardware">Hardware</option>
@@ -231,7 +227,7 @@
 
             <div class="form-group">
                 <label>Langues traitées par l'outil </label>
-                <div auto-complete sparql="sparqlLanguage" model="md['http://www.ortolang.fr/ontology/toolLanguage']" name="'toolLanguage'" placeholder="'Langue'"></div>
+                <div auto-complete sparql="sparqlLanguage" model="md.toolLanguage" name="'toolLanguage'" placeholder="'Langue'"></div>
 
             </div>
 
@@ -246,17 +242,17 @@
 
                 <div class="form-group">
                     <label>Identifiant de l'outil en ligne </label>
-                    <input type="text" name="toolId" ng-model="md['http://www.ortolang.fr/ontology/toolId']" class="form-control">
+                    <input type="text" name="toolId" ng-model="md.toolId" class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label>Adresse de l'outil en ligne </label>
-                    <input type="text" name="toolUrl" ng-model="md['http://www.ortolang.fr/ontology/toolUrl']" class="form-control">
+                    <input type="text" name="toolUrl" ng-model="md.toolUrl" class="form-control">
                 </div>
                 
                 <div class="form-group">
                     <label>Aide </label>
-                    <textarea rows="5" name="toolHelp" ng-model="md['http://www.ortolang.fr/ontology/toolHelp']" class="form-control"></textarea>
+                    <textarea rows="5" name="toolHelp" ng-model="md.toolHelp" class="form-control"></textarea>
                 </div>
                 
             </div>

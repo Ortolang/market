@@ -8,19 +8,24 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'N3Serializer', 'ObjectResource', 'WorkspaceElementResource', function ($scope, $rootScope, $modal, N3Serializer, ObjectResource, WorkspaceElementResource) {
-
-        $scope.selectTab = function (tabName) {
+    .controller('MetadataFormMarketOrtolangCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'WorkspaceElementResource', function ($scope, $rootScope, $modal, ObjectResource, WorkspaceElementResource) {
+        $scope.selectTab = function(tabName) {
             $scope.selectedTab = tabName;
         };
 
         $scope.submitMetadata = function (form, md) {
             // $scope.$broadcast('show-errors-check-validity');
 
-            if (!$scope.onlineTool) {
-                delete md['http://www.ortolang.fr/ontology/toolHelp'];
-                delete md['http://www.ortolang.fr/ontology/toolId'];
-                delete md['http://www.ortolang.fr/ontology/toolUrl'];
+            if($scope.onlineTool===false) {
+                delete md.toolHelp;
+                delete md.toolId;
+                delete md.toolUrl;
+            }
+
+            for(var propertyName in md) {
+                if(md[propertyName].length===0) {
+                    delete md[propertyName];
+                }
             }
 
             if (form.$invalid) {
@@ -28,8 +33,8 @@ angular.module('ortolangMarketApp')
                 return;
             }
 
-            var content = N3Serializer.toN3(md),
-                contentType = 'text/n3';
+            var content = angular.toJson(md),
+                contentType = 'text/json';
 
             $rootScope.$broadcast('metadata-editor-create', content, contentType);
         };
@@ -42,7 +47,7 @@ angular.module('ortolangMarketApp')
             if (!$scope.md) {
                 $scope.md = {};
             }
-            $scope.md['http://www.ortolang.fr/ontology/preview'] = elements[0].path;
+            $scope.md.preview = elements[0].path;
             $scope.preview = elements[0];
             $scope.folderSelectModal.hide();
         });
@@ -52,7 +57,7 @@ angular.module('ortolangMarketApp')
             if (!$scope.md) {
                 $scope.md = {};
             }
-            $scope.md['http://www.ortolang.fr/ontology/image'] = elements[0].path;
+            $scope.md.image = elements[0].path;
             $scope.image = elements[0];
             $scope.fileImageSelectModal.hide();
         });
@@ -62,7 +67,7 @@ angular.module('ortolangMarketApp')
             if (!$scope.md) {
                 $scope.md = {};
             }
-            $scope.md['http://www.ortolang.fr/ontology/licence'] = elements[0].path;
+            $scope.md.license = elements[0].path;
             $scope.licence = elements[0];
             $scope.fileLicenceSelectModal.hide();
         });
@@ -145,18 +150,16 @@ angular.module('ortolangMarketApp')
             $scope.fileLicenceSelectModal = $modal({scope: fileLicenceSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
 
             if ($scope.selectedMetadataContent !== undefined) {
-                var mdFromN3 = N3Serializer.fromN3($scope.selectedMetadataContent);
-                mdFromN3.then(function (data) {
-                    $scope.md = angular.copy(data);
-                    WorkspaceElementResource.get({path: $scope.md['http://www.ortolang.fr/ontology/preview'], wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
-                        $scope.preview = data;
-                    });
-                    WorkspaceElementResource.get({path: $scope.md['http://www.ortolang.fr/ontology/image'], wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
-                        $scope.image = data;
-                    });
-                    WorkspaceElementResource.get({path: $scope.md['http://www.ortolang.fr/ontology/licence'], wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
-                        $scope.licence = data;
-                    });
+                $scope.md = angular.fromJson($scope.selectedMetadataContent);
+
+                WorkspaceElementResource.get({path: $scope.md.preview, wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
+                    $scope.preview = data;
+                });
+                WorkspaceElementResource.get({path: $scope.md.image, wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
+                    $scope.image = data;
+                });
+                WorkspaceElementResource.get({path: $scope.md.license, wskey: $scope.wskey, root: $scope.root}).$promise.then(function (data) {
+                    $scope.license = data;
                 });
             }
         }

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketHomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'ObjectResource', 'DownloadResource', 'N3Serializer', function ($scope, $rootScope, $routeParams, $location, $window, ObjectResource, DownloadResource, N3Serializer) {
+    .controller('MarketHomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderService', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderService) {
 
         $scope.search = function () {
             if ($scope.content !== '') {
@@ -18,64 +18,12 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.clickItem = function (entry) {
-            if (entry.meta && entry.meta['http://www.ortolang.fr/ontology/applicationUrl']) {
-                $window.open(entry.meta['http://www.ortolang.fr/ontology/applicationUrl']);
+            if (entry.applicationUrl) {
+                $window.open(entry.applicationUrl);
             } else {
                 $location.path('/market/item/' + entry.key);
             }
         };
-
-        function loadMetadata() {
-
-            angular.forEach($scope.items, function (item) {
-                // Loads properties of each object
-                ObjectResource.get({oKey: item.key}).$promise
-                    .then(function (oobject) {
-
-                        if (oobject.object.root === true && oobject.object.metadatas.length > 0) {
-
-                            var metaKey = oobject.object.metadatas[0].key;
-
-                            DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
-                                N3Serializer.fromN3(metaContent).then(function (data) {
-
-                                    if (data['http://purl.org/dc/elements/1.1/title'] && data['http://purl.org/dc/elements/1.1/title'] === 'Littéracie Avancée' || data['http://purl.org/dc/elements/1.1/title'] === 'Corpus 14' || data['http://purl.org/dc/elements/1.1/title'] === 'CoMeRe (Communication médiée par les réseaux)') {
-                                        $scope.news.push(item);
-                                    }
-                                    if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Site web') {
-                                        $scope.website.push(item);
-                                    }
-                                    if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Corpus') {
-                                        $scope.corpora.push(item);
-                                    }
-                                    if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Lexique') {
-                                        $scope.lexiques.push(item);
-                                    }
-                                    if (data['http://www.ortolang.fr/ontology/type'] && data['http://www.ortolang.fr/ontology/type'] === 'Outil') {
-                                        $scope.outils.push(item);
-                                    }
-                                });
-                            }).error(function (error) {
-                                console.error('error during process : ' + error);
-                            });
-                        }
-                    }, function (reason) {
-                        console.error(reason);
-                    });
-            });
-        }
-
-        function loadObjects() {
-            // Loads all objects
-            ObjectResource.get({items: 'true', status: 'PUBLISHED'}).$promise.then(function (oobjects) {
-                var index = 0;
-                angular.forEach(oobjects.entries, function (entry) {
-                    $scope.items.push({key: entry, rang: index});
-                    index++;
-                });
-                loadMetadata();
-            });
-        }
 
         // Scope variables
         function initScopeVariables() {
@@ -89,11 +37,46 @@ angular.module('ortolangMarketApp')
             $scope.content = '';
         }
 
+        function searchType(type) {
+            var queryBuilder = QueryBuilderService.make({projection: 'key, meta.title as title, meta.description as description, meta.image as image, meta.applicationUrl as applicationUrl', source: 'collection'});
+            
+            queryBuilder.equals('status', 'published');
+
+            if(type==='corpora') {
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Corpus');
+            } else if(type==='websites') {
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Site web');
+            } else if(type==='lexicons') {
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Lexique');
+            } else if(type==='tools') {
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Outil');
+            } else if(type==='news') {
+                queryBuilder.and();
+                queryBuilder.in('meta.title', ['Littéracie Avancée', 'Corpus14', 'Comere']);
+            }
+
+            var query = queryBuilder.toString();
+            console.debug('query : ' + query);
+            JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                angular.forEach(jsonResults, function(jsonResult) {
+                    $scope.items.push(angular.fromJson(jsonResult));
+                });
+            }, function (reason) {
+                console.error(reason);
+            });
+        }
+
         function init() {
             initScopeVariables();
 
+            $scope.items = [];
             $scope.section = $routeParams.section;
-            loadObjects();
+            // loadObjects();
+            searchType($scope.section);
         }
         init();
 

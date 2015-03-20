@@ -44,7 +44,7 @@ angular.module('ortolangMarketApp')
             PRODUCER: 'Producer',
             DOWNLOAD: 'Download',
             DOWNLOAD_ALL: 'You will download a complete archive of this resource {{value && value !=="" ? "("+value+")" : ""}}',
-            LICENCE_DETAIL: 'Licence information',
+            LICENCE_DETAIL: 'License information',
             DEROGATION: 'Code du patrimoine',
             RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}',
             SITE: 'Website'
