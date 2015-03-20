@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserSidebarMetadataCtrl', ['$scope', '$rootScope', 'WorkspaceElementResource', function ($scope, $rootScope, WorkspaceElementResource) {
+    .controller('BrowserSidebarMetadataCtrl', ['$scope', '$rootScope', 'WorkspaceElementResource', 'MetadataFormatResource', function ($scope, $rootScope, WorkspaceElementResource, MetadataFormatResource) {
 
         $scope.metadataEditorListVisibility = false;
 
@@ -32,29 +32,13 @@ angular.module('ortolangMarketApp')
             return $scope.metadataEditorListVisibility === true;
         };
 
-        $scope.metadataFormats = [
-            {
-                id: 'ortolang-item-json',
-                name: 'Item',
-                description: 'Les métadonnées de présentation permettent de paramétrer l\'affichage de la ressource dans la partie consultation du site.',
-                view: 'workspace/metadata-form-market-ortolang.html',
-                displayed: false
-            },
-            {
-                id: 'oai_dc',
-                name: 'OAI Dublin Core',
-                description: 'Les métadonnées OAI Dublin core permettent d\'être accessible via la protocole OAI-PMH.',
-                view: 'workspace/metadata-form-oai_dc.html',
-                displayed: true
-            }
-        ];
 
         $scope.userMetadataFormat = null;
 
         $scope.showMetadataEditor = function (format) {
             var metadataFormat;
             angular.forEach($scope.metadataFormats, function (md) {
-                if (md.id === format) {
+                if (md.name === format) {
                     metadataFormat = md;
                 }
             });
@@ -67,7 +51,7 @@ angular.module('ortolangMarketApp')
                 function (data) {
                     var metadataFormat;
                     angular.forEach($scope.metadataFormats, function (md) {
-                        if (md.id === data.format) {
+                        if (md.name === data.format) {
                             metadataFormat = md;
                         }
                     });
@@ -95,5 +79,43 @@ angular.module('ortolangMarketApp')
             );
         };
 
+        function loadMetadataFormats() {
+            MetadataFormatResource.get().$promise.then(
+                function(data) {
+                    angular.forEach(data.entries, function(entry) {
+                        if(entry.name === 'ortolang-item-json') {
+                            entry.view = 'workspace/metadata-form-market-ortolang.html';
+                            entry.displayed = false;
+                        }
+                        $scope.metadataFormats.push(entry);
+                    });
+                },
+                function(reason) {
+                    console.error('Cant list metadata formats ; failed cause '+reason+' !');
+                }
+            );
+        }
+
+        function init() {
+            $scope.metadataFormats = [];
+            // $scope.metadataFormats = [
+            //     {
+            //         id: 'ortolang-item-json',
+            //         name: 'Item',
+            //         description: 'Les métadonnées de présentation permettent de paramétrer l\'affichage de la ressource dans la partie consultation du site.',
+            //         view: 'workspace/metadata-form-market-ortolang.html',
+            //         displayed: false
+            //     },
+            //     {
+            //         id: 'oai_dc',
+            //         name: 'OAI Dublin Core',
+            //         description: 'Les métadonnées OAI Dublin core permettent d\'être accessible via la protocole OAI-PMH.',
+            //         view: 'workspace/metadata-form.html',
+            //         displayed: true
+            //     }
+            // ];
+            loadMetadataFormats();
+        }
+        init();
 
     }]);

@@ -52,6 +52,10 @@ angular.module('ortolangMarketApp')
 
                 $scope.metadataForm = view;
 
+                // Loads JSON config
+                console.log('load config');
+                generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
+
                 $scope.showEditor();
             }).error(function () {
                 resetMetadata();
@@ -69,6 +73,16 @@ angular.module('ortolangMarketApp')
                 }
             );
         };
+
+        function generateForm (configJSON) {
+            $scope.formData = {};
+            $scope.formFields = configJSON;
+            $scope.formOptions = {
+                uniqueFormId: 'toolConfig',
+                hideSubmit: true,
+                submitCopy: 'submit'
+            };
+        }
 
         $scope.submitMetadataForm = function() {
             $rootScope.$broadcast('metadata-form-submit');
@@ -101,8 +115,8 @@ angular.module('ortolangMarketApp')
             fd.append('path', currentPath);
             fd.append('type', 'metadata');
 
-            fd.append('format', $scope.userMetadataFormat.id);
-            fd.append('name', encodeURIComponent($scope.userMetadataFormat.name));
+            fd.append('format', $scope.userMetadataFormat.name);
+            fd.append('name', 'Item');
 
             var blob = new Blob([content], { type: contentType});
 
@@ -133,6 +147,11 @@ angular.module('ortolangMarketApp')
             resetMetadata();
             $scope.userMetadataFormat = metadataFormat;
             $scope.metadataForm = metadataFormat.view;
+
+             // Loads JSON config
+            console.log('load config');
+            generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
+
             $scope.showEditor();
         });
 
