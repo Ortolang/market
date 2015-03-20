@@ -64,6 +64,8 @@
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li><div ng-click="showCheatsheet($event)" translate="BROWSER.SHORTCUTS"></div></li>
                                 <li ng-if="displayAsideWorkspaceList()"><div ng-click="toggleWorkspaceList()" data-translate-values="settings.aside" translate="BROWSER.WORKSPACE_LIST"></div></li>
+                                <li class="bg-success" ng-if="isSuperUser()"><div ui-zeroclip zeroclip-model="workspace.key">{{'BROWSER.WORKSPACE_KEY' | translate}}</div></li>
+                                <li class="bg-success" ng-if="isSuperUser()"><div ui-zeroclip zeroclip-model="getToken()">{{'BROWSER.BEARER_TOKEN' | translate}}</div></li>
                             </ul>
                         </div>
 
