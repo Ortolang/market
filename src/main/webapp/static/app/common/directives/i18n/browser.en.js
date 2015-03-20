@@ -82,6 +82,8 @@ angular.module('ortolangMarketApp')
                 DELETE: 'Remove selected items',
                 INFO: 'Display / Hide details',
                 WORKSPACE_LIST: 'Display / Hide workspace list'
-            }
+            },
+            WORKSPACE_KEY: 'Copy workspace key',
+            BEARER_TOKEN: 'Copy token'
         }
     });

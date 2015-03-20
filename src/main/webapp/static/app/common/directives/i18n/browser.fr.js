@@ -82,6 +82,8 @@ angular.module('ortolangMarketApp')
                 DELETE: 'Supprimer les éléments sélectionnés',
                 INFO: 'Afficher / Masquer les détails',
                 WORKSPACE_LIST: 'Afficher / Masquer la liste des espaces de travail'
-            }
+            },
+            WORKSPACE_KEY: 'Copier la clé du workspace',
+            BEARER_TOKEN: 'Copier le token'
         }
     });

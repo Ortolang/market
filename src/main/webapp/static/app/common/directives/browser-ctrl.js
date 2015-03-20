@@ -26,13 +26,14 @@ angular.module('ortolangMarketApp')
         'ObjectResource',
         'Download',
         'Runtime',
+        'AuthService',
         'WorkspaceElementResource',
         'VisualizerManager',
         'icons',
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
                 marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
@@ -1440,6 +1441,14 @@ angular.module('ortolangMarketApp')
 
             $scope.isMarket = function () {
                 return $scope.browserService === MarketBrowserService;
+            };
+
+            $scope.isSuperUser = function () {
+                return AuthService.isSuperUser();
+            };
+
+            $scope.getToken = function () {
+                return 'Bearer: ' + AuthService.getToken();
             };
 
             // *********************** //

@@ -20,6 +20,10 @@ angular.element(document).ready(function () {
                     return keycloakAuth.authenticated;
                 }
 
+                function isSuperUser() {
+                    return isAuthenticated() && keycloakAuth.tokenParsed.preferred_username === 'root';
+                }
+
                 function login() {
                     $window.location = keycloakAuth.createLoginUrl();
                 }
@@ -43,7 +47,8 @@ angular.element(document).ready(function () {
                     getToken: function () { return keycloakAuth.token; },
                     getKeycloak: function () { return keycloakAuth; },
                     isAuthenticated: isAuthenticated,
-                    forceReload: forceReload
+                    forceReload: forceReload,
+                    isSuperUser: isSuperUser
                 };
             }]);
 
