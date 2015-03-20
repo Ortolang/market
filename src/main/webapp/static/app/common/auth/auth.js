@@ -46,8 +46,8 @@ angular.module('ortolangMarketApp')
                 //        $scope.currentUser = User.create(profile);
                 //    },
                 //    function error() {
-                //        profile.avatarIds = avatarIds;
-                //        $scope.currentUser = User.create(profile);
+                profile.avatarIds = avatarIds;
+                $scope.currentUser = User.create(profile);
                 //    }
                 //);
             });
