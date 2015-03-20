@@ -28,28 +28,28 @@ angular.module('ortolangMarketApp')
                 ];
                 profile.favoriteAvatar = '0';
                 profile.avatarIds = [];
-                ProfileResource.getSettings({userId: profile.key}).$promise.then(
-                    function success(settings) {
-                        angular.forEach(settings, function(setting) {
-                            if(setting.name === 'avatar') {
-                                profile.favoriteAvatar = setting.value;
-                            }
-                        });
-                        angular.forEach(avatarIds, function(avatarId) {
-                            var itemSetting = $filter('filter')(settings, {name: avatarId.name}, true);
-                            if (itemSetting.length <= 0) {
-                                profile.avatarIds.push(avatarId);
-                            } else {
-                                profile.avatarIds.push({id: avatarId.id, name: avatarId.name, value: itemSetting[0].value});
-                            }
-                        });
-                        $scope.currentUser = User.create(profile);
-                    },
-                    function error() {
-                        profile.avatarIds = avatarIds;
-                        $scope.currentUser = User.create(profile);
-                    }
-                );
+                //ProfileResource.getSettings({userId: profile.key}).$promise.then(
+                //    function success(settings) {
+                //        angular.forEach(settings, function(setting) {
+                //            if(setting.name === 'avatar') {
+                //                profile.favoriteAvatar = setting.value;
+                //            }
+                //        });
+                //        angular.forEach(avatarIds, function(avatarId) {
+                //            var itemSetting = $filter('filter')(settings, {name: avatarId.name}, true);
+                //            if (itemSetting.length <= 0) {
+                //                profile.avatarIds.push(avatarId);
+                //            } else {
+                //                profile.avatarIds.push({id: avatarId.id, name: avatarId.name, value: itemSetting[0].value});
+                //            }
+                //        });
+                //        $scope.currentUser = User.create(profile);
+                //    },
+                //    function error() {
+                //        profile.avatarIds = avatarIds;
+                //        $scope.currentUser = User.create(profile);
+                //    }
+                //);
             });
         }
 
