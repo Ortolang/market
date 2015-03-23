@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
 
         function searchType(type) {
             var queryBuilder = QueryBuilderService.make({projection: 'key, meta.title as title, meta.description as description, meta.image as image, meta.applicationUrl as applicationUrl', source: 'collection'});
-            
+
             queryBuilder.equals('status', 'published');
 
             if(type==='corpora') {
@@ -60,7 +60,7 @@ angular.module('ortolangMarketApp')
             }
 
             var query = queryBuilder.toString();
-            console.debug('query : ' + query);
+            console.log('query : ' + query);
             JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
                 angular.forEach(jsonResults, function(jsonResult) {
                     $scope.items.push(angular.fromJson(jsonResult));
