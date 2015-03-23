@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
 
             $scope.showLog = function (process) {
                 Runtime.selectProcess(process);
+                $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
                 $modal({
                     title: process.name,
                     html: true,
