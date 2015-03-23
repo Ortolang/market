@@ -213,6 +213,7 @@ angular.module('ortolangMarketApp')
                         $scope.contextMenu(clickEvent, false);
                     }
                 });
+                return promise;
             }
 
             function selectAll() {
@@ -1063,13 +1064,13 @@ angular.module('ortolangMarketApp')
 
             function navigate(down) {
                 if (angular.element('.visualizer-modal.in').length === 0 && $scope.isViewModeLine()) {
-                    var i;
+                    var i, promise;
                     if ($scope.hasOnlyOneElementSelected()) {
                         if ($scope.selectedElements[0].key === $scope.parent.key) {
                             if (down) {
-                                selectChild($scope.filteredOrderedChildrenArray[0]);
+                                promise = selectChild($scope.filteredOrderedChildrenArray[0]);
                             } else {
-                                selectChild($scope.filteredOrderedChildrenArray[$scope.filteredOrderedChildrenArray.length - 1]);
+                                promise = selectChild($scope.filteredOrderedChildrenArray[$scope.filteredOrderedChildrenArray.length - 1]);
                             }
                         } else {
                             for (i = 0; i < $scope.filteredOrderedChildrenArray.length; i++) {
@@ -1083,7 +1084,7 @@ angular.module('ortolangMarketApp')
                                 }
                             }
                             if (i >= 0 && i < $scope.filteredOrderedChildrenArray.length) {
-                                selectChild($scope.filteredOrderedChildrenArray[i]);
+                                promise = selectChild($scope.filteredOrderedChildrenArray[i]);
                             }
                         }
                     } else {
@@ -1108,8 +1109,20 @@ angular.module('ortolangMarketApp')
                             if (i >= $scope.filteredOrderedChildrenArray.length) {
                                 i = $scope.filteredOrderedChildrenArray.length -1;
                             }
-                            selectChild($scope.filteredOrderedChildrenArray[i]);
+                            promise = selectChild($scope.filteredOrderedChildrenArray[i]);
                         }
+                    }
+                    if (promise) {
+                        promise.then(function () {
+                            var element = angular.element('tr[data-key="' + $scope.selectedElements[0].key + '"]'),
+                                parent = angular.element('.table-wrapper'),
+                                elementTop = element.position().top;
+                            if (elementTop < 0) {
+                                parent.scrollTop(parent.scrollTop() + elementTop - 6);
+                            } else if (elementTop > parent.outerHeight() - element.outerHeight()) {
+                                parent.scrollTop(parent.scrollTop() + elementTop - parent.outerHeight() + element.outerHeight() + 6);
+                            }
+                        });
                     }
                 }
             }
