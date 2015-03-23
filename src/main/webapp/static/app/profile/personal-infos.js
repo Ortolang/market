@@ -38,6 +38,7 @@ angular.module('ortolangMarketApp')
             ProfileResource.getInfos({userId: $scope.user.id}).$promise.then(function (infos) {
                 $scope.user.infos = [];
                 var result = [];
+                infos = infos.entries;
                 angular.forEach(infos, function(info) {
                     var visibilitySelected = $filter('filter')($scope.visibilityOptions, {value: info.visibility}, true);
                     var itemInfo = $filter('filter')($scope.infos, {name: info.name}, true);

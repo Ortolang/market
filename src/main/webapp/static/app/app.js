@@ -77,6 +77,9 @@ angular
                 controller: 'InformationCtrl',
                 reloadOnSearch: false
             })
+            .when('/profile/', {
+                redirectTo: '/profile/personal-infos'
+            })
             .when('/profile/:section', {
                 templateUrl: 'profile/profile.html',
                 controller: 'ProfileCtrl',
