@@ -10,5 +10,10 @@
 angular.module('ortolangMarketApp')
     .factory('MetadataFormatResource', ['$resource', 'Url', function ($resource, Url) {
         return $resource(Url.urlBase() + '/rest/metadataformats/:mdfKey', {}, {
+        	download: {
+                url: Url.urlBase() + '/rest/metadataformats/:mdfKey/download',
+                method: 'GET',
+                isArray: false
+            }
         });
     }]);

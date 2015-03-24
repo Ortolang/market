@@ -35,7 +35,8 @@ angular
         'diff-match-patch',
         'angular-md5',
         'xeditable',
-        'textAngular'
+        'textAngular',
+        'schemaForm'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider

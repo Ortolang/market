@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
         // ******** //
 
         $scope.selectedMetadata = undefined;
-        $scope.selectedMetadataContent = undefined;
+        $scope.selectedMetadataContent = undefined; //TODO remove this property
 
         function loadMetadataContent(view, metadata) {
             $scope.selectedMetadata = metadata;
@@ -50,11 +50,14 @@ angular.module('ortolangMarketApp')
             DownloadResource.download({oKey: metadata.key}).success(function (data) {
                 $scope.selectedMetadataContent = data;
 
-                $scope.metadataForm = view;
+                $scope.metadataForm = $scope.userMetadataFormat.view;
 
                 // Loads JSON config
-                console.log('load config');
-                generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
+                // console.log('load config');
+                // generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
+                $scope.schema = $scope.userMetadataFormat.schemaContent;
+                $scope.form = angular.fromJson('["*",{"type": "submit","title": "OK"}]');
+                $scope.model = angular.fromJson(data);
 
                 $scope.showEditor();
             }).error(function () {
@@ -85,7 +88,7 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.submitMetadataForm = function() {
-            $rootScope.$broadcast('metadata-form-submit');
+            $rootScope.$broadcast('metadata-form-submit', $scope.model);
         };
 
         function resetMetadata() {
@@ -149,14 +152,19 @@ angular.module('ortolangMarketApp')
             $scope.metadataForm = metadataFormat.view;
 
              // Loads JSON config
-            console.log('load config');
-            generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
+            // console.log('load config');
+            // generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
+            // $scope.schema = {"type": "object","title": "Comment","properties": {"name":  {"title": "Name","type": "string"},"email":  {"title": "Email","type": "string","pattern": "^\\S+@\\S+$","description": "Email will be used for evil."}},"required": ["name","email"]};
+            $scope.schema = metadataFormat.schemaContent;
+            $scope.form = angular.fromJson('["*",{"type": "submit","title": "OK"}]');
+            $scope.model = {};
+
 
             $scope.showEditor();
         });
 
         $scope.$on('metadata-editor-edit', function (event, metadataFormat, metadata) {
-
+            resetMetadata();
             $scope.userMetadataFormat = metadataFormat;
 
             loadMetadataContent(metadataFormat.view, metadata);

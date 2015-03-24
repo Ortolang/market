@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserSidebarMetadataCtrl', ['$scope', '$rootScope', 'WorkspaceElementResource', 'MetadataFormatResource', function ($scope, $rootScope, WorkspaceElementResource, MetadataFormatResource) {
+    .controller('BrowserSidebarMetadataCtrl', ['$scope', '$rootScope', 'WorkspaceElementResource', 'MetadataFormatResource', 'ObjectResource', function ($scope, $rootScope, WorkspaceElementResource, MetadataFormatResource, ObjectResource) {
 
         $scope.metadataEditorListVisibility = false;
 
@@ -84,10 +84,19 @@ angular.module('ortolangMarketApp')
                 function(data) {
                     angular.forEach(data.entries, function(entry) {
                         if(entry.name === 'ortolang-item-json') {
-                            entry.view = 'workspace/metadata-form-market-ortolang.html';
+                            entry.view = 'workspace/metadata-form-schema.html';
                             entry.displayed = false;
                         }
-                        $scope.metadataFormats.push(entry);
+                        MetadataFormatResource.download({mdfKey:entry.key}).$promise.then(
+                            function(schema) {
+                                entry.schemaContent = schema;
+
+                                $scope.metadataFormats.push(entry);
+                            },
+                            function(reason) {
+                                console.error('Cant get schema of metadata formats '+entry.name+' ; failed cause '+reason+' !');
+                            }
+                        );
                     });
                 },
                 function(reason) {
