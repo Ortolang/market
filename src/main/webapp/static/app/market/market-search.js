@@ -40,7 +40,7 @@ angular.module('ortolangMarketApp')
         function loadObjects(content) {
 
             var queryBuilder = QueryBuilderService.make({projection: 'key, meta.type as type, meta.title as title, meta.description as description, meta.producer as producer', source: 'collection'});
-            
+
             queryBuilder.equals('status', 'published');
 
             var contentSplit = [];
@@ -58,7 +58,7 @@ angular.module('ortolangMarketApp')
             }
 
             var query = queryBuilder.toString();
-            console.debug('query : ' + query);
+            console.log('query : ' + query);
             // Loads all objects
             JsonResultResource.get({query: query}).$promise.then(function (results) {
 

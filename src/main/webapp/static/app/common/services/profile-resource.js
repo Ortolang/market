@@ -25,8 +25,7 @@ angular.module('ortolangMarketApp')
             },
             getInfos: {
                 url: Url.urlBase() + '/rest/profiles/:userId/infos',
-                method: 'GET',
-                isArray: true
+                method: 'GET'
             },
             getSettings: {
                 url: Url.urlBase() + '/rest/profiles/:userId/settings',

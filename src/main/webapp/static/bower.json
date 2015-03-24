@@ -28,9 +28,9 @@
     "zeroclipboard": "2.2.0",
     "holderjs": "2.5.2",
     "keycloak": "1.1.0",
-    "angular-md5": "0.1.7",
-    "angular-xeditable": "0.1.8",
-    "textAngular": "1.3.11",
+    "angular-md5" : "0.1.7",
+    "angular-xeditable" : "0.1.9",
+    "textAngular" : "1.3.11",
     "tv4": "1.1.9",
     "objectpath":"1.0.5",
     "angular-schema-form": "0.7.13"
