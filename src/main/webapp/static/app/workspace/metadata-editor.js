@@ -77,16 +77,6 @@ angular.module('ortolangMarketApp')
             );
         };
 
-        function generateForm (configJSON) {
-            $scope.formData = {};
-            $scope.formFields = configJSON;
-            $scope.formOptions = {
-                uniqueFormId: 'toolConfig',
-                hideSubmit: true,
-                submitCopy: 'submit'
-            };
-        }
-
         $scope.submitMetadataForm = function() {
             $rootScope.$broadcast('metadata-form-submit', $scope.model);
         };

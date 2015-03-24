@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BrowserSidebarMetadataCtrl', ['$scope', '$rootScope', 'WorkspaceElementResource', 'MetadataFormatResource', 'ObjectResource', function ($scope, $rootScope, WorkspaceElementResource, MetadataFormatResource, ObjectResource) {
+    .controller('BrowserSidebarMetadataCtrl', ['$scope', '$rootScope', 'WorkspaceElementResource', 'MetadataFormatResource', function ($scope, $rootScope, WorkspaceElementResource, MetadataFormatResource) {
 
         $scope.metadataEditorListVisibility = false;
 
@@ -107,22 +107,6 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.metadataFormats = [];
-            // $scope.metadataFormats = [
-            //     {
-            //         id: 'ortolang-item-json',
-            //         name: 'Item',
-            //         description: 'Les métadonnées de présentation permettent de paramétrer l\'affichage de la ressource dans la partie consultation du site.',
-            //         view: 'workspace/metadata-form-market-ortolang.html',
-            //         displayed: false
-            //     },
-            //     {
-            //         id: 'oai_dc',
-            //         name: 'OAI Dublin Core',
-            //         description: 'Les métadonnées OAI Dublin core permettent d\'être accessible via la protocole OAI-PMH.',
-            //         view: 'workspace/metadata-form.html',
-            //         displayed: true
-            //     }
-            // ];
             loadMetadataFormats();
         }
         init();

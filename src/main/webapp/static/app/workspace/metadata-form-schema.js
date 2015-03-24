@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataFormSchemaCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'WorkspaceElementResource', function ($scope, $rootScope, $modal, ObjectResource, WorkspaceElementResource) {
+    .controller('MetadataFormSchemaCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
         $scope.selectTab = function(tabName) {
             $scope.selectedTab = tabName;
         };
