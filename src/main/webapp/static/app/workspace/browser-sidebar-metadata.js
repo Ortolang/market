@@ -35,10 +35,10 @@ angular.module('ortolangMarketApp')
 
         $scope.userMetadataFormat = null;
 
-        $scope.showMetadataEditor = function (format) {
+        $scope.showMetadataEditor = function (formatName) {
             var metadataFormat;
             angular.forEach($scope.metadataFormats, function (md) {
-                if (md.name === format) {
+                if (md.name === formatName) {
                     metadataFormat = md;
                 }
             });
@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
                 function (data) {
                     var metadataFormat;
                     angular.forEach($scope.metadataFormats, function (md) {
-                        if (md.name === data.format) {
+                        if (md.key === data.format) {
                             metadataFormat = md;
                         }
                     });
