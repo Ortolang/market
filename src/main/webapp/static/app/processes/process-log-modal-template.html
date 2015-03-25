@@ -6,7 +6,7 @@
                 <h4 class="modal-title" ng-bind="title"></h4>
             </div>
             <div class="modal-body process-log">
-                <pre>{{selectedProcess.log}}</pre>
+                <pre ng-style="{'max-height': maxProcessLogHeight}">{{selectedProcess.log}}</pre>
             </div>
         </div>
     </div>

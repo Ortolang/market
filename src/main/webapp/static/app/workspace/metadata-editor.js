@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource) {
+    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource, FormResource) {
 
         // ***************** //
         // Editor visibility //
@@ -42,17 +42,26 @@ angular.module('ortolangMarketApp')
         // ******** //
 
         $scope.selectedMetadata = undefined;
-        $scope.selectedMetadataContent = undefined;
+        $scope.selectedMetadataContent = undefined; //TODO remove this property
 
         function loadMetadataContent(view, metadata) {
             $scope.selectedMetadata = metadata;
 
-            DownloadResource.download({oKey: metadata.key}).success(function (data) {
-                $scope.selectedMetadataContent = data;
+            DownloadResource.download({oKey: metadata.key}).success(function (metadataContent) {
+                $scope.selectedMetadataContent = metadataContent;
 
-                $scope.metadataForm = view;
+                $scope.metadataForm = $scope.userMetadataFormat.view;
 
-                $scope.showEditor();
+                FormResource.get({formKey: $scope.userMetadataFormat.form}).$promise.then(function (userForm) {
+                    $scope.form = angular.fromJson(userForm.definition);
+                    $scope.schema = $scope.userMetadataFormat.schemaContent;
+                    $scope.model = angular.fromJson(metadataContent);
+                    
+                    $scope.showEditor();
+                }, function (reason) {
+                    console.log('unable to load form '+$scope.userMetadataFormat.form+' cause of '+reason);
+                });
+
             }).error(function () {
                 resetMetadata();
             });
@@ -71,7 +80,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.submitMetadataForm = function() {
-            $rootScope.$broadcast('metadata-form-submit');
+            $rootScope.$broadcast('metadata-form-submit', $scope.model);
         };
 
         function resetMetadata() {
@@ -101,8 +110,8 @@ angular.module('ortolangMarketApp')
             fd.append('path', currentPath);
             fd.append('type', 'metadata');
 
-            fd.append('format', $scope.userMetadataFormat.id);
-            fd.append('name', encodeURIComponent($scope.userMetadataFormat.name));
+            fd.append('format', $scope.userMetadataFormat.key);
+            fd.append('name', $scope.userMetadataFormat.name);
 
             var blob = new Blob([content], { type: contentType});
 
@@ -112,17 +121,17 @@ angular.module('ortolangMarketApp')
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             })
-                .success(function () {
+            .success(function () {
 
-                    $scope.hideEditor();
-                    resetMetadataFormat();
-                    $scope.refreshSelectedElement();
-                })
-                .error(function (error) {
-                    console.error('creation of metadata failed !', error);
-                    $scope.hideEditor();
-                    resetMetadataFormat();
-                });
+                $scope.hideEditor();
+                resetMetadataFormat();
+                $scope.refreshSelectedElement();
+            })
+            .error(function (error) {
+                console.error('creation of metadata failed !', error);
+                $scope.hideEditor();
+                resetMetadataFormat();
+            });
         }
 
         // ********* //
@@ -133,11 +142,20 @@ angular.module('ortolangMarketApp')
             resetMetadata();
             $scope.userMetadataFormat = metadataFormat;
             $scope.metadataForm = metadataFormat.view;
-            $scope.showEditor();
+
+            FormResource.get({formKey: metadataFormat.form}).$promise.then(function (data) {
+                $scope.form = angular.fromJson(data.definition);
+                $scope.schema = metadataFormat.schemaContent;
+                $scope.model = {};
+
+                $scope.showEditor();
+            }, function (reason) {
+                console.log('unable to load form '+metadataFormat.form+' cause of '+reason);
+            });
         });
 
         $scope.$on('metadata-editor-edit', function (event, metadataFormat, metadata) {
-
+            resetMetadata();
             $scope.userMetadataFormat = metadataFormat;
 
             loadMetadataContent(metadataFormat.view, metadata);

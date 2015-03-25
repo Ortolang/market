@@ -6,11 +6,19 @@
                 <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image"/>
             </a>
             <div class="media-body">
-                <h1>{{item['http://purl.org/dc/elements/1.1/title']}}</h1>
+                <h1>{{item.title}}</h1>
 
                 <div ng-hide="browse">
-                    <p>{{'MARKET.PRODUCER' | translate}} : <span ng-repeat="producer in item['http://www.ortolang.fr/ontology/producer']"><a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
-                    <p ng-if="item['http://www.ortolang.fr/ontology/website']">{{'MARKET.WEBSITE' | translate}} : <a href="{{item['http://www.ortolang.fr/ontology/website']}}" ng-bind="item['http://www.ortolang.fr/ontology/website']" target="_BLANK"></a></p>
+                    
+                    <p>Produit par : <span ng-repeat="producer in item.producer"><a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
+                    <p ng-if="item.website">Site web : <a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></p>
+                    
+                    <!-- Category : Tool -->
+                    <p ng-if="item.programmingLanguage">Langages de programmation : <span ng-repeat="pl in item.programmingLanguage"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
+                    <p ng-if="item.opearatingSystem">Systèmes d'exploitation supportés : <span ng-repeat="os in item.opearatingSystem"><a href="#/search?content={{os}}" ng-bind="os"></a><span ng-if="!$last">, </span></span></p>
+                    <p ng-if="item.toolSupport">Type de support : <a href="#/search?content={{item.toolSupport}}" ng-bind="item.toolSupport"></a></p>
+                    <!-- Category : Annotation -->
+                    <p ng-if="item.language">Langues concernés par cet objet : <span ng-repeat="language in item.language"><a href="#/search?content={{language}}" ng-bind="language"></a><span ng-if="!$last">, </span></span></p>
                 </div>
                 <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">{{'MARKET.GOBACKINFO' | translate}}</button>
             </div>
@@ -23,7 +31,7 @@
             <section id="description">
                 <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
                 <article>
-                    <p ng-bind-html="item['http://purl.org/dc/elements/1.1/description']"></p>
+                    <p ng-bind-html="item.description"></p>
                 </article>
             </section>
 
@@ -45,117 +53,49 @@
                 </article>
             </section>
 
-            <section id="keywords" ng-if="item['http://purl.org/dc/terms/extent'] || item['http://purl.org/dc/terms/keywords'] || item['http://www.ortolang.fr/ontology/primaryLanguage'] || item['http://www.ortolang.fr/ontology/discourseType'] || item['http://www.ortolang.fr/ontology/linguisticSubject'] || item['http://www.ortolang.fr/ontology/programmingLanguage'] || item['http://www.ortolang.fr/ontology/opearatingSystem'] || item['http://www.ortolang.fr/ontology/toolSupport'] || item['http://www.ortolang.fr/ontology/language']">
+            <section id="keywords" ng-if="item.extent || item.keywords || item.primaryLanguage || item.discourseType || item.linguisticSubject">
                 <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
                 <article>
                     <div class="row">
-                        <div ng-if="item['http://purl.org/dc/terms/extent']" class="col-md-3">
+                        <div ng-if="item.extent" class="col-md-3 extent">
                             <dl>
                                 <dt translate="MARKET.EXTENT"></dt>
-                                <dd ng-bind-html="item['http://purl.org/dc/terms/extent']"></dd>
+                                <dd ng-bind-html="item.extent"></dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item['http://www.ortolang.fr/ontology/keywords']" class="col-md-3">
+                        <div ng-if="item.keywords" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.KEYWORDS"></dt>
-                                <dd ng-repeat="keyword in item['http://www.ortolang.fr/ontology/keywords']">
-                                    <a ng-href='#/search?content="{{keyword}}"'>{{keyword}}</a>
+                                <dd ng-repeat="keyword in item.keywords">
+                                    <a ng-href="#/search?content={{keyword}}">{{keyword}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item['http://www.ortolang.fr/ontology/primaryLanguage']" class="col-md-3">
+                        <div ng-if="item.primaryLanguage" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.PRIMARY_LANGUAGE"></dt>
-                                <dd ng-repeat="pLang in item['http://www.ortolang.fr/ontology/primaryLanguage']">
-                                    <a ng-href='#/search?content="{{pLang}}"'>{{pLang}}</a>
+                                <dd ng-repeat="pLang in item.primaryLanguage">
+                                    <a ng-href="#/search?content={{pLang}}">{{pLang}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item['http://www.ortolang.fr/ontology/discourseType']" class="col-md-3">
+                        <div ng-if="item.discourseType" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.DISCOURSE_TYPE"></dt>
-                                <dd ng-repeat="discType in item['http://www.ortolang.fr/ontology/discourseType']">
-                                    <a ng-href='#/search?content="{{discType}}"'>{{discType}}</a>
+                                <dd ng-repeat="discType in item.discourseType">
+                                    <a ng-href="#/search?content={{discType}}">{{discType}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item['http://www.ortolang.fr/ontology/linguisticSubject']" class="col-md-3">
+                        <div ng-if="item.linguisticSubject" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.LINGUISTIC_SUBJECT"></dt>
-                                <dd ng-repeat="lingSubj in item['http://www.ortolang.fr/ontology/linguisticSubject']">
-                                    <a ng-href='#/search?content="{{lingSubj}}"'>{{lingSubj}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
-                                <dd ng-repeat="progLang in item['http://www.ortolang.fr/ontology/programmingLanguage']">
-                                    <a ng-href='#/search?content="{{progLang}}"'>{{progLang}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/opearatingSystem']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
-                                <dd ng-repeat="opsys in item['http://www.ortolang.fr/ontology/opearatingSystem']">
-                                    <a ng-href='#/search?content="{{opsys}}"'>{{opsys}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/toolSupport']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.SUPPORT_TOOL"></dt>
-                                <dd ng-bind-html="item['http://www.ortolang.fr/ontology/toolSupport']"></dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/language']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.LANGUAGE"></dt>
-                                <dd ng-repeat="lang in item['http://www.ortolang.fr/ontology/language']">
-                                    <a ng-href='#/search?content="{{lang}}"'>{{lang}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/programmingLanguage']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
-                                <dd ng-repeat="progLang in item['http://www.ortolang.fr/ontology/programmingLanguage']">
-                                    <a ng-href='#/search?content="{{progLang}}"'>{{progLang}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/opearatingSystem']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
-                                <dd ng-repeat="opsys in item['http://www.ortolang.fr/ontology/opearatingSystem']">
-                                    <a ng-href='#/search?content="{{opsys}}"'>{{opsys}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/toolSupport']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.SUPPORT_TOOL"></dt>
-                                <dd ng-bind-html="item['http://www.ortolang.fr/ontology/toolSupport']"></dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item['http://www.ortolang.fr/ontology/language']" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.LANGUAGE"></dt>
-                                <dd ng-repeat="lang in item['http://www.ortolang.fr/ontology/language']">
-                                    <a ng-href='#/search?content="{{lang}}"'>{{lang}}</a>
+                                <dd ng-repeat="lingSubj in item.linguisticSubject">
+                                    <a ng-href="#/search?content={{lingSubj}}">{{lingSubj}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -163,22 +103,22 @@
                 </article>
             </section>
 
-            <section id="contributor" ng-if="item['http://www.ortolang.fr/ontology/researcher'] || item['http://www.ortolang.fr/ontology/manager'] || item['http://www.ortolang.fr/ontology/developer'] || item['http://www.ortolang.fr/ontology/author'] || item['http://www.ortolang.fr/ontology/compiler']">
+            <section id="contributor" ng-if="item.researcher || item.manager || item.developer || item.author || item.compiler">
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
-                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/researcher']">
-                    <h4 translate="MARKET.RESEARCHER"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="researcher in item['http://www.ortolang.fr/ontology/researcher']">
+                <article class="row" ng-if="item.researcher">
+                    <h4>Responsables scientifiques</h4>
+                    <ul>
+                        <li ng-repeat="researcher in item.researcher">
                             <a ng-href='#/search?content="{{researcher}}"' ng-bind="researcher"></a>
                         </li>
                     </ul>
 
                 </article>
-                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/manager']">
-                    <h4 translate="MARKET.MANAGER"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="manager in item['http://www.ortolang.fr/ontology/manager']">
+                <article class="row" ng-if="item.manager">
+                    <h4>Responsables informatiques</h4>
+                    <ul>
+                        <li ng-repeat="manager in item.manager">
                             <a ng-href='#/search?content="{{manager}}"' ng-bind="manager"></a>
                         </li>
                     </ul>
@@ -191,18 +131,18 @@
                         </li>
                     </ul>
                 </article>
-                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/author']">
-                    <h4 translate="MARKET.AUTHOR"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="author in item['http://www.ortolang.fr/ontology/author']">
+                <article class="row" ng-if="item.author">
+                    <h4>Auteurs</h4>
+                    <ul>
+                        <li ng-repeat="author in item.author">
                             <a ng-href='#/search?content="{{author}}"' ng-bind="author"></a>
                         </li>
                     </ul>
                 </article>
-                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/compiler']">
-                    <h4 translate="MARKET.COMPILER"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="compiler in item['http://www.ortolang.fr/ontology/compiler']">
+                <article class="row" ng-if="item.compiler">
+                    <h4>Compilateurs</h4>
+                    <ul>
+                        <li ng-repeat="compiler in item.compiler">
                             <a ng-href='#/search?content="{{compiler}}"' ng-bind="compiler"></a>
                         </li>
                     </ul>
@@ -219,11 +159,11 @@
 
         <aside ng-show="!browse" class="col-md-4">
 
-            <div class="panel panel-default license-panel" ng-show="datasizeToPrint || item['http://www.ortolang.fr/ontology/conditionsOfUse'] || licenceDataObject">
+            <div class="panel panel-default license-panel" ng-show="datasizeToPrint || item.conditionsOfUse || licenceDataObject">
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
 
-                    <p ng-show="item['http://www.ortolang.fr/ontology/conditionsOfUse']" ng-bind="item['http://www.ortolang.fr/ontology/conditionsOfUse']"></p>
+                    <p ng-show="item.conditionsOfUse" ng-bind="item.conditionsOfUse"></p>
                     <p ng-show="licenceDataObject"><a id="preview-license" ng-click="showPreview(licenceDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" ng-show="datasizeToPrint">
 
@@ -236,12 +176,12 @@
                 </div>
             </div>
 
-            <div class="panel panel-default derogation-panel" ng-show="item['http://www.ortolang.fr/ontology/derogation']">
+            <div class="panel panel-default derogation-panel" ng-show="item.derogation">
                 <div class="panel-heading" translate="MARKET.DEROGATION"></div>
                 <div class="panel-body">
 
                     <p>
-                        {{item['http://www.ortolang.fr/ontology/derogation']}}<span ng-if="item['http://www.ortolang.fr/ontology/derogation']==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
+                        {{item.derogation}}<span ng-if="item.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
                     </p>
 
                 </div>
@@ -261,14 +201,14 @@
             </div>
             <br/> -->
 
-            <div ng-if="item['http://purl.org/dc/terms/spacial'] || item['http://purl.org/dc/terms/temporal']" class="panel panel-default metadata-panel">
+            <div ng-if="item.spacial || item.temporal" class="panel panel-default metadata-panel">
                 <div class="panel-heading" translate="MARKET.LOCATION"></div>
                 <div class="panel-body">
                     <dl class="dl-horizontal">
-                        <dt ng-if="item['http://purl.org/dc/terms/spacial']" translate="MARKET.SPACIAL"></dt>
-                        <dd ng-repeat="spacial in item['http://purl.org/dc/terms/spacial']">{{spacial}}<span ng-if="!$last">, </span></dd>
-                        <dt ng-if="item['http://purl.org/dc/terms/temporal']" translate="MARKET.TEMPORAL"></dt>
-                        <dd ng-if="item['http://purl.org/dc/terms/temporal']">{{item['http://purl.org/dc/terms/temporal']}}</dd>
+                        <dt ng-if="item.spacial" translate="MARKET.SPACIAL"></dt>
+                        <dd ng-repeat="spacial in item.spacial">{{spacial}}<span ng-if="!$last">, </span></dd>
+                        <dt ng-if="item.temporal" translate="MARKET.TEMPORAL"></dt>
+                        <dd ng-if="item.temporal">{{item.temporal}}</dd>
                     </dl>
                 </div>
             </div>

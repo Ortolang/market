@@ -21,6 +21,7 @@ angular.module('ortolangVisualizers')
                 'text/xml': true,
                 'application/xml': true,
                 'application/rdf+xml': true,
+                'application/xslt+xml': true,
                 'text/javascript': true,
                 'application/javascript': true
             }

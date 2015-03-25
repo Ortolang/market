@@ -177,7 +177,8 @@ module.exports = function (grunt) {
                 options: {
                     exclude: [
                         'bower_components/highlightjs/styles/default.css',
-                        'bower_components/bootstrap/dist/css/bootstrap.css'
+                        'bower_components/bootstrap/dist/css/bootstrap.css',
+                        'bower_components/bootstrap-css-only/css/bootstrap.css'
                     ],
                     ignorePath:  /\.\.\//
                 }

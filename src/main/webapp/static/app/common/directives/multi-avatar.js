@@ -111,7 +111,7 @@ angular.module('ortolangMarketApp')
                     if(newValue !== oldValue && newValue !== undefined) {
                         var service = $filter('filter')(services, {id: scope.favoriteAvatar});
                         var currentAvatarId = $filter('filter')(newValue, {id: scope.favoriteAvatar});
-                        console.debug('new id: ', currentAvatarId[0].value);
+                        console.log('new id: ', currentAvatarId[0].value);
                         var tag = retrieveAvatar(service[0], currentAvatarId[0].value);
                         angular.element('#' + scope.imgId).remove() ;
                         element.append(tag);

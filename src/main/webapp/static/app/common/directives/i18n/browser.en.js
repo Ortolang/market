@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
             INFORMATION: 'Information',
             METADATA: 'Metadata',
             DESCRIPTION: 'Description',
+            NO_DESCRIPTION_PROVIDED: 'Add a description',
             AUTHOR: 'Author',
             CREATION: 'Creation',
             MODIFICATION: 'Modification',
@@ -59,6 +60,7 @@ angular.module('ortolangMarketApp')
             COPY_TO_CLIPBOARD: 'Copy to clipboard',
             MEMBERS: 'Members',
             HISTORY: 'History',
+            NO_PREVIOUS_VERSIONS: 'No previous versions',
             TOOLS: 'Tools',
             SNAPSHOT: 'Save workspace state',
             CREATE_PRESENTATION_METADATA_FIRST: 'You must create presentation metadata first',
@@ -80,6 +82,8 @@ angular.module('ortolangMarketApp')
                 DELETE: 'Remove selected items',
                 INFO: 'Display / Hide details',
                 WORKSPACE_LIST: 'Display / Hide workspace list'
-            }
+            },
+            WORKSPACE_KEY: 'Copy workspace key',
+            BEARER_TOKEN: 'Copy token'
         }
     });

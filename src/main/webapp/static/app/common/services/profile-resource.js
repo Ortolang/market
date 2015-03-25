@@ -38,6 +38,10 @@ angular.module('ortolangMarketApp')
             },
             put: {
                 method: 'PUT'
+            },
+            size: {
+                method: 'GET',
+                url: Url.urlBase() + '/rest/profiles/:userId/size'
             }
         });
     }]);

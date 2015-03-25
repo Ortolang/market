@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
             INFORMATION: 'Informations',
             METADATA: 'Métadonnées',
             DESCRIPTION: 'Description',
+            NO_DESCRIPTION_PROVIDED: 'Ajouter une description',
             AUTHOR: 'Auteur',
             CREATION: 'Création',
             MODIFICATION: 'Modification',
@@ -59,6 +60,7 @@ angular.module('ortolangMarketApp')
             COPY_TO_CLIPBOARD: 'Copier',
             MEMBERS: 'Membres',
             HISTORY: 'Historique',
+            NO_PREVIOUS_VERSIONS: 'Pas de version encore crée',
             TOOLS: 'Outils',
             SNAPSHOT: 'Sauvegarder l\'état de l\'espace',
             CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
@@ -80,6 +82,8 @@ angular.module('ortolangMarketApp')
                 DELETE: 'Supprimer les éléments sélectionnés',
                 INFO: 'Afficher / Masquer les détails',
                 WORKSPACE_LIST: 'Afficher / Masquer la liste des espaces de travail'
-            }
+            },
+            WORKSPACE_KEY: 'Copier la clé du workspace',
+            BEARER_TOKEN: 'Copier le token'
         }
     });

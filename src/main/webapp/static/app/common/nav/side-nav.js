@@ -182,6 +182,7 @@ angular.module('ortolangMarketApp')
             {
                 class: 'profile',
                 path: '/profile',
+                hiddenPath: '/profile/personal-infos',
                 description: 'NAV.PROFILE',
                 iconCss: 'fa fa-fw fa-user fa-2x',
                 active: undefined,

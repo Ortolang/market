@@ -8,14 +8,14 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PublicationsCtrl', ['$scope', 'ProfileResource',
-        function ($scope, ProfileResource) {
+    .controller('PublicationsCtrl', ['$scope',
+        function ($scope) {
 
-            function createCORSRequest(method, url){
+            function createCORSRequest(method, url) {
                 var xhr = new XMLHttpRequest();
-                if ('withCredentials' in xhr){
+                if ('withCredentials' in xhr) {
                     xhr.open(method, url, true);
-                } else if (typeof XDomainRequest !== 'undefined'){
+                } else if (XDomainRequest !== undefined) {
                     xhr = new XDomainRequest();
                     xhr.open(method, url);
                 } else {
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                 return xhr;
             }
 
-            function csvToArray(strData, strDelimiter ){
+            function csvToArray(strData, strDelimiter) {
                 strDelimiter = (strDelimiter || ',');
                 var objPattern = new RegExp(
                     ('(\\' + strDelimiter + '|\\r?\\n|\\r|^)' + // Delimiters
@@ -32,16 +32,16 @@ angular.module('ortolangMarketApp')
                     '([^\"\\' + strDelimiter + '\\r\\n]*))'), // Standard fields.
                     'gi'
                 );
-                var arrData = [[]];
-                var arrMatches = null;
-                arrMatches = objPattern.exec( strData );
+                var arrData = [[]],
+                    arrMatches = null;
+                arrMatches = objPattern.exec(strData);
                 while (arrMatches) {
-                    var strMatchedDelimiter = arrMatches[ 1 ];
-                    if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter ){
-                        arrData.push( [] );
+                    var strMatchedDelimiter = arrMatches[1];
+                    if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
+                        arrData.push([]);
                     }
                     var strMatchedValue;
-                    if (arrMatches[ 2 ]){
+                    if (arrMatches[2]) {
                         strMatchedValue = arrMatches[ 2 ].replace(new RegExp( '\"\"', 'g' ),'\"');
                     } else {
                         strMatchedValue = arrMatches[ 3 ];
@@ -49,12 +49,11 @@ angular.module('ortolangMarketApp')
                     arrData[ arrData.length - 1 ].push( strMatchedValue );
                     arrMatches = objPattern.exec( strData );
                 }
-                return( arrData );
+                return (arrData);
             }
 
             $scope.publications = undefined;
-            $scope.doctype =
-            {
+            $scope.doctype = {
                 'ART': {'value': 'Article dans des revues', 'color': 'danger'},
                 'COMM': {'value': 'Communication dans un congrès', 'color': 'danger'},
                 'POSTER': {'value': 'Poster', 'color': 'danger'},
@@ -79,7 +78,7 @@ angular.module('ortolangMarketApp')
                 'OTHERREPORT': {'value': 'Autre rapport, séminaire, workshop', 'color': 'warning'}
             };
 
-            $scope.getPublications = function() {
+            $scope.getPublications = function () {
                 // otherwise use names
                 //var name = 'Falk+Ingrid',
                 var name = $scope.$parent.currentUser.firstname + '+' + $scope.$parent.currentUser.lastname,

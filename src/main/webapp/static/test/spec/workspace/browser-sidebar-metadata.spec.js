@@ -11,20 +11,15 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         rootScope,
         sample,
         WorkspaceElementResource,
-        md = {
-            id: 'oai_dc',
-            name: 'OAI Dublin Core',
-            description: 'Les métadonnées OAI Dublin core permettent d\'être accessible via la protocole OAI-PMH.',
-            view: 'workspace/metadata-form-oai_dc.html',
-            displayed: true
-        };
+        MetadataFormatResource;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, _WorkspaceElementResource_, _sample_) {
+    beforeEach(inject(function ($controller, $rootScope, _WorkspaceElementResource_, _MetadataFormatResource_, _sample_) {
         scope = $rootScope.$new();
         rootScope = $rootScope;
         sample = _sample_;
         WorkspaceElementResource = _WorkspaceElementResource_;
+        MetadataFormatResource = _MetadataFormatResource_;
 
         scope.refreshSelectedElement = function () {
             return 'michel';
@@ -36,7 +31,8 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         BrowserSidebarMetadataCtrl = $controller('BrowserSidebarMetadataCtrl', {
             $scope: scope,
             $rootScope: rootScope,
-            WorkspaceElementResource: WorkspaceElementResource
+            WorkspaceElementResource: WorkspaceElementResource,
+            MetadataFormatResource: MetadataFormatResource
         });
     }));
 
@@ -69,29 +65,16 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         expect(scope.isMetadataEditorListShow()).toBe(true);
     });
 
-    it('should send metadata-editor-show event with correct metadata format', function () {
-        scope.showMetadataEditor('oai_dc');
+    // it('should send metadata-editor-show event with correct metadata format', function () {
+    //     var md = {name:'ortolang-item-json', description:'desc'};
+    //     MetadataFormatResource.setDefaultValue({entries:[md]});
 
-        expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-editor-show', md);
+    //     scope.$digest();
+    //     scope.showMetadataEditor('ortolang-item-json');
 
-    });
+    //     expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-editor-show', md);
 
-    it('should send metadata-editor-edit event with correct metadata', function () {
-
-        scope.selectedElements = [{workspace: 'sys', path: 'path'}];
-
-        scope.editMetadata(md);
-        scope.$digest();
-
-        // expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-editor-edit', md, sample().workspaceElement);
-
-        spyOn(console, 'error');
-
-        scope.editMetadata({name: 'metadata-not-known'});
-        scope.$digest();
-
-        expect(console.error).toHaveBeenCalled();
-    });
+    // });
 
     it('should send metadata-preview event with correct metadata', function () {
         scope.previewMetadata('oai_dc');
@@ -99,22 +82,4 @@ describe('Controller: BrowserSidebarMetadataCtrl', function () {
         expect(rootScope.$broadcast).toHaveBeenCalledWith('metadata-preview', 'oai_dc');
     });
 
-    // it('should call delete method on workspace element', function() {
-
-    //     scope.selectedElements = [{workspace:'sys',path:'path'}];
-
-    //     scope.deleteMetadata(md);
-    //     scope.$digest();
-
-    //     expect(scope.selectedMetadata).toBeUndefined();
-    //     expect(scope.refreshSelectedElement).toHaveBeenCalled();
-
-    //     spyOn(console, 'error');
-
-    //     scope.deleteMetadata({name: 'metadata-not-known'});
-    //     scope.$digest();
-
-    //     expect(console.error).toHaveBeenCalled();
-
-    // });
 });

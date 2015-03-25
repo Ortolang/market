@@ -77,9 +77,9 @@ angular.module('ortolangMarketApp')
              */
 
             $scope.resize = function () {
-                //console.debug('Resizing');
+                //console.log('Resizing');
                 var profileContainerHeight = angular.element('#profile-container').outerHeight();
-                //console.debug('new height : ', profileContainerHeight);
+                //console.log('new height : ', profileContainerHeight);
                 angular.element('#main-wrapper').css({'height': profileContainerHeight + 'px'});
             };
 

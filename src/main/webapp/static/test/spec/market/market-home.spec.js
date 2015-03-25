@@ -8,47 +8,40 @@ describe('Controller: MarketHomeCtrl', function () {
 
   var controllerCreator,
     scope,
-    ObjectResource,
-    DownloadResource, 
-    N3Serializer,
+    JsonResultResource,
     sample;
 
   // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, _ObjectResource_, _DownloadResource_, _N3Serializer_, _sample_) {
+    beforeEach(inject(function ($controller, $rootScope, _JsonResultResource_, _sample_) {
         scope = $rootScope.$new();
         sample = _sample_;
-        ObjectResource = _ObjectResource_;
-        DownloadResource = _DownloadResource_;
-        N3Serializer = _N3Serializer_;
+        JsonResultResource = _JsonResultResource_;
 
-      controllerCreator = function() {
-          return $controller('MarketHomeCtrl', {
+      controllerCreator = function(routeParams) {
+        return $controller('MarketHomeCtrl', {
             $scope: scope,
-            ObjectResource: ObjectResource,
-            DownloadResource: DownloadResource,
-            N3Serializer: N3Serializer
-          }
+            $routeParams: routeParams,
+            JsonResultResource: JsonResultResource
+        }
         );
       };
 
     }));
 
     afterEach(function() {
-      ObjectResource.clear();
+      JsonResultResource.clear();
     });
 
-    it('should load objects', function() {
+    // it('should load objects', function() {
+    //   var ortolangType = 'Corpus';
+    //   var query = 'select ortolang_key as key, ortolang_meta.title as title, ortolang_meta.description, ortolang_meta.image as image from OrtolangObject where ortolang_status = \'published\' and ortolang_meta.type = \''+ortolangType+'\'';
+    //   JsonResultResource.when({query:query}, sample().query1Results);
 
-      ObjectResource.when({items: 'true', status: 'PUBLISHED'}, {entries: [sample().rootCollectionKey]});
-      ObjectResource.when({oKey: sample().rootCollectionKey}, sample().oobjectSample);
+    //   controllerCreator({section: 'corpora'});
 
-      controllerCreator();
+    //   scope.$digest();
 
-      scope.$digest();
-
-      expect(scope.items).toBeDefined();
-      expect(scope.items.length).toBe(1);
-      expect(scope.items[0]).toEqualData({ key : sample().rootCollectionKey, rang: 0 });
-    });
-
+    //   expect(scope.items).toBeDefined();
+    //   expect(scope.items.length).toBe(1);
+    // });
 });
