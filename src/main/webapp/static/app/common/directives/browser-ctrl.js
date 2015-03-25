@@ -1064,9 +1064,9 @@ angular.module('ortolangMarketApp')
                 }
             });
 
-            function navigate(down) {
+            function navigate(down, event) {
                 if (angular.element('.visualizer-modal.in').length === 0 && $scope.isViewModeLine()) {
-                    var i, promise;
+                    var i, deferred, promise;
                     if ($scope.hasOnlyOneElementSelected()) {
                         if ($scope.selectedElements[0].key === $scope.parent.key) {
                             if (down) {
@@ -1086,15 +1086,36 @@ angular.module('ortolangMarketApp')
                                 }
                             }
                             if (i >= 0 && i < $scope.filteredOrderedChildrenArray.length) {
-                                promise = selectChild($scope.filteredOrderedChildrenArray[i]);
+                                if (event.shiftKey) {
+                                    deferred = $q.defer();
+                                    promise = deferred.promise;
+                                    $scope.clickChild($scope.filteredOrderedChildrenArray[i], event);
+                                    deferred.resolve();
+                                } else {
+                                    promise = selectChild($scope.filteredOrderedChildrenArray[i]);
+                                }
                             }
                         }
                     } else {
-                        var j, k = 0;
+                        var j, k = 0, lastSelectedElementIndex, lastShiftSelectedElementIndex;
+                        if (event.shiftKey) {
+                            lastSelectedElementIndex = lastSelectedElement ? getChildIndex(lastSelectedElement) : undefined;
+                            lastShiftSelectedElementIndex = lastShiftSelectedElement ? getChildIndex(lastShiftSelectedElement) : undefined;
+                        }
                         for (i = 0; i < $scope.filteredOrderedChildrenArray.length; i++) {
                             for (j = 0; j < $scope.selectedElements.length; j++) {
                                 if ($scope.filteredOrderedChildrenArray[i].key === $scope.selectedElements[j].key) {
                                     k++;
+                                    break;
+                                }
+                            }
+                            if (lastShiftSelectedElementIndex && k === 1) {
+                                if (lastShiftSelectedElementIndex < lastSelectedElementIndex) {
+                                    if (down) {
+                                        i++;
+                                    } else {
+                                        i--;
+                                    }
                                     break;
                                 }
                             }
@@ -1111,12 +1132,21 @@ angular.module('ortolangMarketApp')
                             if (i >= $scope.filteredOrderedChildrenArray.length) {
                                 i = $scope.filteredOrderedChildrenArray.length -1;
                             }
-                            promise = selectChild($scope.filteredOrderedChildrenArray[i]);
+                            if (event.shiftKey) {
+                                if (lastSelectedElementIndex) {
+                                    deferred = $q.defer();
+                                    promise = deferred.promise;
+                                    $scope.clickChild($scope.filteredOrderedChildrenArray[i], event);
+                                    deferred.resolve();
+                                }
+                            } else {
+                                promise = selectChild($scope.filteredOrderedChildrenArray[i]);
+                            }
                         }
                     }
                     if (promise) {
                         promise.then(function () {
-                            var element = angular.element('tr[data-key="' + $scope.selectedElements[0].key + '"]'),
+                            var element = angular.element('tr[data-key="' + $scope.selectedElements[$scope.selectedElements.length - 1].key + '"]'),
                                 parent = angular.element('.table-wrapper'),
                                 elementTop = element.position() ? element.position().top : undefined;
                             if (elementTop < 0) {
@@ -1149,19 +1179,19 @@ angular.module('ortolangMarketApp')
             function bindHotkeys() {
                 hotkeys.bindTo($scope)
                     .add({
-                        combo: 'up',
+                        combo: ['up', 'shift+up'],
                         description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.UP'),
                         callback: function (event) {
                             preventDefault(event);
-                            navigate(false);
+                            navigate(false, event);
                         }
                     })
                     .add({
-                        combo: 'down',
+                        combo: ['down', 'shift+down'],
                         description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.DOWN'),
                         callback: function (event) {
                             preventDefault(event);
-                            navigate(true);
+                            navigate(true, event);
                         }
                     })
                     .add({
