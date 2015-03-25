@@ -118,8 +118,7 @@ angular.module('ortolangMarketApp')
             fd.append('path', currentPath);
             fd.append('type', 'metadata');
 
-            // TODO put serialNumber of metadata format if update ?
-            // fd.append('format', $scope.userMetadataFormat.name);
+            fd.append('format', $scope.userMetadataFormat.key);
             fd.append('name', $scope.userMetadataFormat.name);
 
             var blob = new Blob([content], { type: contentType});
@@ -130,17 +129,17 @@ angular.module('ortolangMarketApp')
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             })
-                .success(function () {
+            .success(function () {
 
-                    $scope.hideEditor();
-                    resetMetadataFormat();
-                    $scope.refreshSelectedElement();
-                })
-                .error(function (error) {
-                    console.error('creation of metadata failed !', error);
-                    $scope.hideEditor();
-                    resetMetadataFormat();
-                });
+                $scope.hideEditor();
+                resetMetadataFormat();
+                $scope.refreshSelectedElement();
+            })
+            .error(function (error) {
+                console.error('creation of metadata failed !', error);
+                $scope.hideEditor();
+                resetMetadataFormat();
+            });
         }
 
         // ********* //
@@ -152,13 +151,6 @@ angular.module('ortolangMarketApp')
             $scope.userMetadataFormat = metadataFormat;
             $scope.metadataForm = metadataFormat.view;
 
-             // Loads JSON config
-            // console.log('load config');
-            // generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
-            // $scope.schema = {"type": "object","title": "Comment","properties": {"name":  {"title": "Name","type": "string"},"email":  {"title": "Email","type": "string","pattern": "^\\S+@\\S+$","description": "Email will be used for evil."}},"required": ["name","email"]};
-            
-            // $scope.form = angular.fromJson('["*",{"type": "submit","title": "OK"}]');
-            
             FormResource.get({formKey: metadataFormat.form}).$promise.then(function (data) {
                 $scope.form = angular.fromJson(data.definition);
                 $scope.schema = metadataFormat.schemaContent;
