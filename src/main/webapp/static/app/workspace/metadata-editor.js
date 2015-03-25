@@ -52,14 +52,6 @@ angular.module('ortolangMarketApp')
 
                 $scope.metadataForm = $scope.userMetadataFormat.view;
 
-                // Loads JSON formly config
-                // console.log('load config');
-                // generateForm('[{"key":"title", "type":"text","label":"Titre"}]');
-
-                // $scope.schema = $scope.userMetadataFormat.schemaContent;
-                // $scope.form = angular.fromJson('["*",{"type": "submit","title": "OK"}]');
-                // $scope.model = angular.fromJson(metadataContent);
-
                 FormResource.get({formKey: $scope.userMetadataFormat.form}).$promise.then(function (userForm) {
                     $scope.form = angular.fromJson(userForm.definition);
                     $scope.schema = $scope.userMetadataFormat.schemaContent;
@@ -67,7 +59,7 @@ angular.module('ortolangMarketApp')
                     
                     $scope.showEditor();
                 }, function (reason) {
-                    console.log('unable to load form '+metadataFormat.form+' cause of '+reason);
+                    console.log('unable to load form '+$scope.userMetadataFormat.form+' cause of '+reason);
                 });
 
             }).error(function () {
