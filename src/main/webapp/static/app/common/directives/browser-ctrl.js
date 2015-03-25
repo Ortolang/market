@@ -408,7 +408,7 @@ angular.module('ortolangMarketApp')
                                 j,
                                 filteredOrderedChildren = $scope.filteredOrderedChildren(),
                                 skip = false;
-                            if (lastShiftSelectedElementIndex) {
+                            if (lastShiftSelectedElementIndex !== undefined) {
                                 if (childIndex < lastShiftSelectedElementIndex) {
                                     if (childIndex > lastSelectedElementIndex) {
                                         i = childIndex + 1;
@@ -1101,6 +1101,9 @@ angular.module('ortolangMarketApp')
                         if (event.shiftKey) {
                             lastSelectedElementIndex = lastSelectedElement ? getChildIndex(lastSelectedElement) : undefined;
                             lastShiftSelectedElementIndex = lastShiftSelectedElement ? getChildIndex(lastShiftSelectedElement) : undefined;
+                            if ((!down && lastShiftSelectedElementIndex === 0) || (down && lastShiftSelectedElementIndex === $scope.filteredOrderedChildrenArray.length - 1)) {
+                                return;
+                            }
                         }
                         for (i = 0; i < $scope.filteredOrderedChildrenArray.length; i++) {
                             for (j = 0; j < $scope.selectedElements.length; j++) {
@@ -1109,11 +1112,11 @@ angular.module('ortolangMarketApp')
                                     break;
                                 }
                             }
-                            if (lastShiftSelectedElementIndex && k === 1) {
+                            if (lastShiftSelectedElementIndex !== undefined && k === 1) {
                                 if (lastShiftSelectedElementIndex < lastSelectedElementIndex) {
                                     if (down) {
                                         i++;
-                                    } else {
+                                    } else if (i !== 0){
                                         i--;
                                     }
                                     break;
@@ -1130,10 +1133,10 @@ angular.module('ortolangMarketApp')
                         }
                         if (i >= 0) {
                             if (i >= $scope.filteredOrderedChildrenArray.length) {
-                                i = $scope.filteredOrderedChildrenArray.length -1;
+                                i = $scope.filteredOrderedChildrenArray.length - 1;
                             }
                             if (event.shiftKey) {
-                                if (lastSelectedElementIndex) {
+                                if (lastSelectedElementIndex !== undefined) {
                                     deferred = $q.defer();
                                     promise = deferred.promise;
                                     $scope.clickChild($scope.filteredOrderedChildrenArray[i], event);
@@ -1149,10 +1152,14 @@ angular.module('ortolangMarketApp')
                             var element = angular.element('tr[data-key="' + $scope.selectedElements[$scope.selectedElements.length - 1].key + '"]'),
                                 parent = angular.element('.table-wrapper'),
                                 elementTop = element.position() ? element.position().top : undefined;
-                            if (elementTop < 0) {
-                                parent.scrollTop(parent.scrollTop() + elementTop - 6);
-                            } else if (elementTop > parent.outerHeight() - element.outerHeight()) {
-                                parent.scrollTop(parent.scrollTop() + elementTop - parent.outerHeight() + element.outerHeight() + 6);
+                            if ($scope.selectedElements[$scope.selectedElements.length - 1].key === $scope.filteredOrderedChildrenArray[0].key) {
+                                parent.scrollTop(0);
+                            } else {
+                                if (elementTop < 0) {
+                                    parent.scrollTop(parent.scrollTop() + elementTop - 6);
+                                } else if (elementTop > parent.outerHeight() - element.outerHeight()) {
+                                    parent.scrollTop(parent.scrollTop() + elementTop - parent.outerHeight() + element.outerHeight() + 6);
+                                }
                             }
                         });
                     }
