@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
             }, this);
         }
 
-        
+
         // Methods
         QueryBuilder.prototype = {
 
@@ -37,21 +37,21 @@ angular.module('ortolangMarketApp')
             },
 
             equals : function (name, content) {
-                this.conditions += name+' = \'' + this.sanitize(content) + '\'';
+                this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
             },
 
             containsText : function (name, content) {
-                this.conditions += name+' containsText \'' + this.sanitize(content) + '\'';
+                this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
             },
 
             in : function (name, arrayOfContent) {
-                var inValue = '';
-                var builder = this;
-                angular.forEach(arrayOfContent, function(content) { 
-                    inValue += ((inValue!=='')?', ':'') + '\'' + builder.sanitize(content) + '\'';
+                var inValue = '',
+                    builder = this;
+                angular.forEach(arrayOfContent, function (content) {
+                    inValue += ((inValue !== '') ? ', ' : '') + '\'' + builder.sanitize(content) + '\'';
                 });
-                if(inValue!=='') {
-                    this.conditions += name+' IN [' + inValue + ']';
+                if (inValue !== '') {
+                    this.conditions += name + ' IN [' + inValue + ']';
                 }
             },
 
@@ -72,8 +72,8 @@ angular.module('ortolangMarketApp')
             },
 
             toString : function () {
-                return 'SELECT '+this.projection+' FROM '+this.source+((this.conditions!=='')?' WHERE '+this.conditions:'');
-            },
+                return 'SELECT ' + this.projection + ' FROM ' + this.source + ((this.conditions !== '') ? ' WHERE ' + this.conditions : '');
+            }
         };
 
         this.make = function (config) {
