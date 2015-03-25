@@ -14,18 +14,7 @@ angular.module('ortolangMarketApp')
             /**
              * INIT
              */
-            $scope.settings = [
-                {name: 'avatar', value: '4', type: 'RADIO', source: 'avatars', visibility: $scope.visibilityOptions[0], helper:false},
-                {name: 'facebook', value: '', type: 'STRING', source: '', visibility: $scope.visibilityOptions[0], helper:true},
-                {name: 'github', value: $scope.user.userId, type: 'STRING', source: '', visibility: $scope.visibilityOptions[0], helper:false},
-                {name: 'gravatar', value: $scope.user.email, type: 'EMAIL', source: '', visibility: $scope.visibilityOptions[0], helper:true},
-                {name: 'orcid', value: '', type: 'STRING', source: '', visibility: $scope.visibilityOptions[0], helper:true},
-                {name: 'viaf', value: '', type: 'STRING', source: '', visibility: $scope.visibilityOptions[0], helper:true},
-                {name: 'myidref', value: '', type: 'STRING', source: '', visibility: $scope.visibilityOptions[0], helper:true},
-                {name: 'linkedin', value: '', type: 'URL', source: '', visibility: $scope.visibilityOptions[0], helper:true},
-                {name: 'viadeo', value: '', type: 'STRING', source: '', visibility: $scope.visibilityOptions[0], helper:true},
-                {name: 'langue_messages', value: 'fr', type: 'ENUM', source: 'lang', visibility: $scope.visibilityOptions[0], helper:false}
-            ];
+            var category = 'settings';
 
             $scope.user.facebookId = ($filter('filter')($scope.user.avatarIds, {id: 1}))[0].value;
             //$scope.user.twitterId = ($filter('filter')($scope.user.avatarIds, {id: 2}))[0].value;
@@ -33,42 +22,64 @@ angular.module('ortolangMarketApp')
             $scope.user.gravatarId = ($filter('filter')($scope.user.avatarIds, {id: 4}))[0].value;
 
 
-            ProfileResource.getSettings({userId: $scope.user.id}).$promise.then(function (settings) {
+            ProfileResource.getInfos({userId: $scope.user.id}, category).$promise.then(function (settings) {
                 $scope.user.settings = [];
                 var result = [];
-                angular.forEach(settings, function(setting) {
-                    var visibilitySelected = $filter('filter')($scope.visibilityOptions, {value: setting.visibility}, true);
-                    var itemSetting = $filter('filter')($scope.settings, {name: setting.name}, true);
-                    if(itemSetting.length > 0) {
-                        var item = {
-                            name: setting.name,
-                            value: setting.value,
-                            type: setting.type,
-                            source: setting.source,
-                            visibility: visibilitySelected[0],
-                            helper: itemSetting[0].helper
-                        };
-                        result.push(item);
-                    }
-                });
+                if (settings.size > 0) {
+                    angular.forEach(settings.entries, function (setting) {
+                        var visibilitySelected = $filter('filter')($scope.visibilityOptions, {value: setting.visibility}, true);
+                        var settingName = setting.name.split('.')[1];
+                        var itemSetting = $filter('filter')($scope.fields[category], {name: settingName}, true);
+                        if (itemSetting.length > 0) {
+                            var item = {
+                                name: settingName,
+                                value: setting.value,
+                                type: setting.type,
+                                source: setting.source,
+                                visibility: visibilitySelected[0],
+                                helper: itemSetting[0].helper
+                            };
+                            result.push(item);
+                        }
+                    });
+                }
 
                 if (result.length <= 0) {
-                    $scope.user.settings = $scope.settings;
+                    // Initialisation des champs
+                    angular.forEach($scope.fields[category], function( setting ){
+                        var item = setting;
+                        item.visibility = $scope.visibilityOptions[0];
+                        if(item.name === 'github') {
+                            item.value = $scope.user.userId;
+                        }
+                        if(item.name === 'gravatar') {
+                            item.value = $scope.user.email;
+                        }
+                        $scope.user.settings.push(item);
+                    });
                 } else {
-                    angular.forEach($scope.settings, function(setting) {
+                    // Initialisation des champs
+                    angular.forEach($scope.fields[category], function (setting) {
                         var fieldName = setting.name, item;
                         var filledField = $filter('filter')(result, {name: fieldName}, true);
                         if (filledField.length <= 0) {
                             item = setting;
+                            item.visibility = $scope.visibilityOptions[0];
+                            if(item.name === 'github') {
+                                item.value = $scope.user.userId;
+                            }
+                            if(item.name === 'gravatar') {
+                                item.value = $scope.user.email;
+                            }
                         } else {
                             item = filledField[0];
                         }
                         $scope.user.settings.push(item);
 
-                        if(setting.name === 'avatar') {
+                        if (setting.name === 'avatar') {
                             $scope.user.favoriteAvatar = item.value;
                         }
-                        angular.forEach( $scope.user.avatarIds, function(avatarId, idx) {
+                        angular.forEach($scope.user.avatarIds, function (avatarId, idx) {
                             if (avatarId.name === item.name) {
                                 $scope.user.avatarIds[idx].value = item.value;
                             }
@@ -111,14 +122,14 @@ angular.module('ortolangMarketApp')
                 }
 
                 var formData = {
-                    name: name,
+                    name: category + '.' + name,
                     value: value,
                     type: type,
                     source: source,
                     visibility: visibility
                 };
 
-                ProfileResource.updateSettings({userId: $scope.user.id}, formData);
+                ProfileResource.update({userId: $scope.user.id}, formData);
             };
         }
     ]);

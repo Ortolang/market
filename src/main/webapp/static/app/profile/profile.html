@@ -6,7 +6,7 @@
         <div class="col-md-3">
             <div>
                 <div>
-                    <multi-avatar data-img-id="big-avatar" data-favorite-avatar="user.favoriteAvatar"
+                    <multi-avatar ng-if="user.avatarIds" data-img-id="big-avatar" data-favorite-avatar="user.favoriteAvatar"
                                   data-avatar-ids="user.avatarIds"></multi-avatar>
                 </div>
                 <hr>
@@ -38,7 +38,7 @@
 
         <!-- edit form column -->
         <div class="col-md-9">
-            <div id="profile-content" ng-include="'PROFILE.PATH.' + section.toUpperCase().replace('-', '_') | translate" ng-show="user"></div>
+            <div id="profile-content" ng-include="'PROFILE.PATH.' + section.toUpperCase().replace('-', '_') | translate" ng-if="user"></div>
         </div>
     </div>
     <!--<div style="margin-top: 30px" ng-show="user">-->

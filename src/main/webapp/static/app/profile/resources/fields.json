@@ -1,0 +1,37 @@
+{
+    "infos": [
+        {"name": "civilite", "value": "none", "type": "ENUM", "source": "civilities", "visibility": "", "helper": false},
+        {"name": "titre", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": true},
+        {"name": "prenom", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
+        {"name": "nom", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
+        {"name": "organisme", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
+        {"name": "metier", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
+        {"name": "domaine_recherche", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
+        {"name": "adresse", "value": "", "type": "TEXT", "source": "", "visibility": "", "helper": false},
+        {"name": "ville", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
+        {"name": "cp", "value": "", "type": "NUMBER", "source": "", "visibility": "", "helper": false},
+        {"name": "site_perso", "value": "", "type": "URL", "source": "", "visibility": "", "helper": false},
+        {"name": "pays_id", "value": "", "type": "ENUM", "source": "countries", "visibility": "", "helper": false},
+        {"name": "etat_id", "value": "", "type": "ENUM", "source": "states", "visibility": "", "helper": false},
+        {"name": "mail_pro", "value": "", "type": "EMAIL", "source": "", "visibility": "", "helper": false},
+        {"name": "mail", "value": "", "type": "EMAIL", "source": "", "visibility": "", "helper": false},
+        {"name": "tel_pro", "value": "", "type": "TEL", "source": "", "visibility": "", "helper": false},
+        {"name": "tel", "value": "", "type": "TEL", "source": "", "visibility": "", "helper": false},
+        {"name": "fax", "value": "", "type": "TEL", "source": "", "visibility": "", "helper": false}
+    ],
+    "settings": [
+        {"name": "avatar", "value": "4", "type": "RADIO", "source": "avatars", "visibility": "", "helper":false},
+        {"name": "facebook", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
+        {"name": "github", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":false},
+        {"name": "gravatar", "value": "", "type": "EMAIL", "source": "", "visibility": "", "helper":true},
+        {"name": "orcid", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
+        {"name": "viaf", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
+        {"name": "myidref", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
+        {"name": "linkedin", "value": "", "type": "URL", "source": "", "visibility": "", "helper":true},
+        {"name": "viadeo", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
+        {"name": "langue_messages", "value": "fr", "type": "ENUM", "source": "lang", "visibility": "", "helper":false}
+    ],
+    "aboutme": [
+        {"name": "presentation", "value": "", "type": "TEXT", "source": "", "visibility": "", "helper": false}
+    ]
+}

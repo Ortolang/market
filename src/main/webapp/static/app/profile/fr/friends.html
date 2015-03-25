@@ -1,16 +1,20 @@
 <div id="market-home" ng-controller="FriendsCtrl">
-    <section>
-        <form class="well form-search">
-            <label>Search:</label>
-            <input type="text" ng-model="search.user" class="input-medium search-query" placeholder="Search a collaborator...">
-            <button type="submit" class="btn" ng-click="search(search.user)">Search</button>
-            <p class="help-block">Try for example: "anonymous"</p>
-        </form>
+    <section class="well">
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input ng-model="search.user" ng-keyup="$event.keyCode == 13 &amp;&amp; search(search.user)" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Rechercher" type="text">
+                <span class="input-group-btn">
+                    <button ng-click="search(search.user)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+        <hr>
+        RESULTS :
         <div class="row">
             <div class="col-md-12">
                 <div class="flex-row">
                     <div ng-repeat="user in search.result">
-                        {{user.fullName}}
+                        {{user.givenName}} {{user.familyName}}
                     </div>
                 </div>
             </div>

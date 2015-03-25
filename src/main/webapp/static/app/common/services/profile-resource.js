@@ -25,29 +25,7 @@ angular.module('ortolangMarketApp')
             },
             getInfos: {
                 url: Url.urlBase() + '/rest/profiles/:userId/infos',
-                method: 'GET',
-                isArray: true
-            },
-            getSettings: {
-                url: Url.urlBase() + '/rest/profiles/:userId/settings',
-                method: 'GET',
-                isArray: true
-            },
-            getSetting: {
-                url: Url.urlBase() + '/rest/profiles/:userId/settings/:name',
                 method: 'GET'
-            },
-            updateSettings: {
-                url: Url.urlBase() + '/rest/profiles/:userId/settings',
-                method: 'POST'
-            },
-            getPresentation: {
-                url: Url.urlBase() + '/rest/profiles/:userId/aboutme/:name',
-                method: 'GET'
-            },
-            updatePresentation: {
-                url: Url.urlBase() + '/rest/profiles/:userId/aboutme',
-                method: 'POST'
             },
             getFriends: {
                 url: Url.urlBase() + '/rest/profiles/:userId/friends',

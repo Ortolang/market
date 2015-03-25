@@ -14,20 +14,19 @@ angular.module('ortolangMarketApp')
             /**
              * INIT
              */
-            $scope.aboutMe = [
-                {name: 'presentation', value: '', type: 'TEXT', source: '', visibility: $scope.visibilityOptions[0], helper: false}
-            ];
+            var category = 'aboutme';
 
             $scope.user.presentation = undefined;
-            ProfileResource.getPresentation({userId: $scope.user.id, name: 'presentation'}).$promise.then(function (aboutmeList) {
+            ProfileResource.getInfos({userId: $scope.user.id}, category).$promise.then(function (aboutmeList) {
                 var presentation;
-                if(aboutmeList.length > 0) {
-                    angular.forEach(aboutmeList, function (aboutme) {
+                if(aboutmeList.size > 0) {
+                    angular.forEach(aboutmeList.entries, function (aboutme) {
                         var visibilitySelected = $filter('filter')($scope.visibilityOptions, {value: aboutme.visibility}, true);
-                        var itemInfo = $filter('filter')($scope.aboutMe, {name: aboutme.name}, true);
+                        var aboutmeName = aboutme.name.split('.')[1];
+                        var itemInfo = $filter('filter')($scope.fields[category], {name: aboutmeName}, true);
                         if (itemInfo.length > 0) {
                             presentation = {
-                                name: aboutme.name,
+                                name: aboutmeName,
                                 value: aboutme.value,
                                 type: aboutme.type,
                                 source: aboutme.source,
@@ -40,7 +39,11 @@ angular.module('ortolangMarketApp')
                 }
 
                 if ($scope.user.presentation === undefined) {
-                    $scope.user.presentation = $scope.aboutMe[0];
+                    // Initialisation du champ
+                    var item = $scope.fields[category][0];
+                    item.visibility = $scope.visibilityOptions[0];
+
+                    $scope.user.presentation = item;
                 }
             });
 
@@ -53,14 +56,14 @@ angular.module('ortolangMarketApp')
                 $scope.$parent.currentUser = User.load($scope.user);
 
                 var formData = {
-                    name: name,
+                    name: category + '.' + name,
                     value: value,
                     type: type,
                     source: source,
                     visibility: visibility
                 };
 
-                ProfileResource.updatePresentation({userId: $scope.user.id}, formData);
+                ProfileResource.update({userId: $scope.user.id}, formData);
             };
         }
     ]);

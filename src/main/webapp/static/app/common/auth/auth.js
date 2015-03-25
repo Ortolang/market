@@ -28,21 +28,30 @@ angular.module('ortolangMarketApp')
                 ];
                 profile.favoriteAvatar = '0';
                 profile.avatarIds = [];
-                ProfileResource.getSettings({userId: profile.key}).$promise.then(
+                ProfileResource.getInfos({userId: profile.key}, 'settings').$promise.then(
                     function success(settings) {
-                        angular.forEach(settings, function(setting) {
-                            if(setting.name === 'avatar') {
-                                profile.favoriteAvatar = setting.value;
-                            }
-                        });
-                        angular.forEach(avatarIds, function(avatarId) {
-                            var itemSetting = $filter('filter')(settings, {name: avatarId.name}, true);
-                            if (itemSetting.length <= 0) {
-                                profile.avatarIds.push(avatarId);
-                            } else {
-                                profile.avatarIds.push({id: avatarId.id, name: avatarId.name, value: itemSetting[0].value});
-                            }
-                        });
+                        if (settings.size > 0) {
+                            angular.forEach(settings.entries, function (setting) {
+                                var settingName = setting.name.split('.');
+                                if (settingName[1] === 'avatar') {
+                                    profile.favoriteAvatar = setting.value;
+                                }
+                            });
+                            angular.forEach(avatarIds, function (avatarId) {
+                                var itemSetting = $filter('filter')(settings.entries, {name: 'settings.' + avatarId.name}, true);
+                                if (itemSetting.length <= 0) {
+                                    profile.avatarIds.push(avatarId);
+                                } else {
+                                    profile.avatarIds.push({
+                                        id: avatarId.id,
+                                        name: avatarId.name,
+                                        value: itemSetting[0].value
+                                    });
+                                }
+                            });
+                        } else {
+                            profile.avatarIds = avatarIds;
+                        }
                         $scope.currentUser = User.create(profile);
                     },
                     function error() {

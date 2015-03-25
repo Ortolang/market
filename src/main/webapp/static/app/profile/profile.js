@@ -23,12 +23,17 @@ angular.module('ortolangMarketApp')
 
             function init() {
 
+                $http.get('profile/resources/fields.json')
+                    .then(function(res){
+                        $scope.fields = res.data;
+                    });
+
                 $scope.visibilityOptions = [];
 
                 $scope.visibilityOptions = [
-                    {value: 'EVERYBODY', label: $translate.instant('PROFILE.VISIBILITY.EVERYBODY'), icon: 'fa fa-unlock'},
-                    {value: 'FRIENDS', label: $translate.instant('PROFILE.VISIBILITY.FRIENDS'), icon: 'fa fa-users'},
-                    {value: 'NOBODY', label: $translate.instant('PROFILE.VISIBILITY.NOBODY'), icon: 'fa fa-lock'}
+                    {value: 0, label: $translate.instant('PROFILE.VISIBILITY.EVERYBODY'), icon: 'fa fa-unlock'},
+                    {value: 1, label: $translate.instant('PROFILE.VISIBILITY.FRIENDS'), icon: 'fa fa-users'},
+                    {value: 2, label: $translate.instant('PROFILE.VISIBILITY.NOBODY'), icon: 'fa fa-lock'}
                 ];
                 $scope.selectedVisibility = $scope.visibilityOptions[0];
 
@@ -59,13 +64,13 @@ angular.module('ortolangMarketApp')
                     {value: 4, text: 'Gravatar'}
                 ];
 
-
                 $scope.user = undefined;
                 $scope.user = $scope.$parent.currentUser;
 
             }
 
             init();
+
 
             /**
              * RESIZE CONTAINER
