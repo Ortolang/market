@@ -1,6 +1,6 @@
 {
     "infos": [
-        {"name": "civilite", "value": "none", "type": "ENUM", "source": "civilities", "visibility": "", "helper": false},
+        {"name": "civilite", "value": "", "type": "ENUM", "source": "civilities", "visibility": "", "helper": false},
         {"name": "titre", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": true},
         {"name": "prenom", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
         {"name": "nom", "value": "", "type": "STRING", "source": "", "visibility": "", "helper": false},
@@ -20,7 +20,7 @@
         {"name": "fax", "value": "", "type": "TEL", "source": "", "visibility": "", "helper": false}
     ],
     "settings": [
-        {"name": "avatar", "value": "4", "type": "RADIO", "source": "avatars", "visibility": "", "helper":false},
+        {"name": "avatar", "value": "", "type": "ENUM", "source": "avatars", "visibility": "", "helper":false},
         {"name": "facebook", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
         {"name": "github", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":false},
         {"name": "gravatar", "value": "", "type": "EMAIL", "source": "", "visibility": "", "helper":true},
@@ -29,7 +29,7 @@
         {"name": "myidref", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
         {"name": "linkedin", "value": "", "type": "URL", "source": "", "visibility": "", "helper":true},
         {"name": "viadeo", "value": "", "type": "STRING", "source": "", "visibility": "", "helper":true},
-        {"name": "langue_messages", "value": "fr", "type": "ENUM", "source": "lang", "visibility": "", "helper":false}
+        {"name": "langue_messages", "value": "", "type": "ENUM", "source": "lang", "visibility": "", "helper":false}
     ],
     "aboutme": [
         {"name": "presentation", "value": "", "type": "TEXT", "source": "", "visibility": "", "helper": false}

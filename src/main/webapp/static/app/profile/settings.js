@@ -94,7 +94,7 @@ angular.module('ortolangMarketApp')
 
             $scope.showValue = function (name, value, source) {
                 if(name === 'avatar') {
-                    var selected = $filter('filter')($scope.user.avatarIds, {id: value}, true);
+                    var selected = $filter('filter')($scope.user.avatarIds, {id: String(value)}, true);
                     return (value && selected.length) ? selected[0].name : 'Default avatar';
 
                 } else {
@@ -129,6 +129,7 @@ angular.module('ortolangMarketApp')
                     visibility: visibility
                 };
 
+                //console.debug(formData);
                 ProfileResource.update({userId: $scope.user.id}, formData);
             };
         }

@@ -11,61 +11,61 @@
                  ng-click="updateCurrentUser(item.name, item.value, item.type, item.source, item.visibility.value)"></div>
 
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='STRING'">
-                <span editable-text="item.value" e-name="{{item.name}}" e-placeholder="{{item.name}}" e-value="{{item.value}}"
+                <span data-editable-text="item.value" data-e-name="{{item.name}}" data-e-placeholder="{{item.name}}" data-e-value="{{item.value}}"
                       data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
                     {{ item.value || 'empty' }}
                 </span>
             </div>
 
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='TEXT'">
-                <span editable-textarea="item.value" e-name="{{item.name}}" e-placeholder="{{item.name}}" e-value="{{item.value}}"
+                <span editable-textarea="item.value" data-e-name="{{item.name}}" data-e-placeholder="{{item.name}}" data-e-value="{{item.value}}"
                       data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
                     {{ item.value || 'empty' }}
                 </span>
             </div>
 
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='EMAIL'">
-                <span editable-email="item.value" e-name="{{item.name}}" e-placeholder="{{item.name}}" e-value="{{item.value}}"
+                <span data-editable-email="item.value" data-e-name="{{item.name}}" data-e-placeholder="{{item.name}}" data-e-value="{{item.value}}"
                       data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
                     {{ item.value || 'empty' }}
                 </span>
             </div>
 
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='URL'">
-                <span editable-url="item.value" e-name="{{item.name}}" e-placeholder="{{item.name}}" e-value="{{item.value}}" e-pattern="https?://.+"
+                <span data-editable-url="item.value" data-e-name="{{item.name}}" data-e-placeholder="{{item.name}}" data-e-value="{{item.value}}" data-e-pattern="https?://.+"
                       data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)" >
                     {{ item.value || 'empty' }}
                 </span>
             </div>
 
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='TEL'">
-                <span editable-text="item.value" e-name="{{item.name}}" e-placeholder="{{item.name}}" e-value="{{item.value}}"
-                      e-pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
+                <span data-editable-text="item.value" data-e-name="{{item.name}}" data-e-placeholder="{{item.name}}" data-e-value="{{item.value}}"
+                      data-e-pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
                       data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
                     {{ item.value || 'empty' }}
                 </span>
             </div>
 
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='NUMBER'">
-                <span editable-number="item.value" e-name="{{item.name}}" e-placeholder="{{item.name}}" e-value="{{item.value}}"
+                <span data-editable-number="item.value" data-e-name="{{item.name}}" data-e-placeholder="{{item.name}}" data-e-value="{{item.value}}"
                       data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
                     {{ item.value || 'empty' }}
                 </span>
             </div>
 
             <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='ENUM'">
-                 <span id="item.name" editable-select="item.value" e-name="item.name" e-ng-options="s.value as s.text for s in {{item.source}}"
+                 <span id="item.name" editable-select="item.value" data-e-name="item.name" data-e-ng-options="s.value as s.text for s in {{item.source}}"
                        data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
                      {{ showValue(item.name, item.value, item.source) || 'empty' }}
                  </span>
             </div>
 
-            <div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='RADIO'">
-                <span editable-radiolist="item.value" e-name="{{item.name}}" e-ng-options="s.value as s.text for s in {{item.source}}" buttons="no"
-                      data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">
-                     {{ showValue(item.name, item.value, item.source) || 'empty' }}
-                </span>
-            </div>
+            <!--<div class="col-md-7" style="padding-top: 5px;" ng-if="item.type==='RADIO'">-->
+                <!--<span editable-radiolist="item.value" data-e-name="{{item.name}}" data-e-ng-options="s.value as s.text for s in {{item.source}}" buttons="no"-->
+                      <!--data-onaftersave="updateCurrentUser(item.name, $data, item.type, item.source, item.visibility.value)">-->
+                     <!--{{ showValue(item.name, item.value, item.source) || 'empty' }}-->
+                <!--</span>-->
+            <!--</div>-->
 
             <p class="col-md-offset-3 col-md-7 help-block" ng-if="item.helper" translate="{{'PROFILE.SETTINGS.HELPER.' + item.name.toUpperCase()}}">
             </p>
