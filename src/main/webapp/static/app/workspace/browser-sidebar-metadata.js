@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
                 function (data) {
                     var metadataFormat;
                     angular.forEach($scope.metadataFormats, function (md) {
-                        if (md.key === data.format) {
+                        if (md.id === data.format) {
                             metadataFormat = md;
                         }
                     });
@@ -87,7 +87,7 @@ angular.module('ortolangMarketApp')
                             entry.view = 'workspace/metadata-form-schema.html';
                             entry.displayed = false;
                         }
-                        MetadataFormatResource.download({mdfKey:entry.key}).$promise.then(
+                        MetadataFormatResource.download({id:entry.id}).$promise.then(
                             function(schema) {
                                 entry.schemaContent = schema;
 
