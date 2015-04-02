@@ -159,12 +159,12 @@
 
         <aside ng-show="!browse" class="col-md-4">
 
-            <div class="panel panel-default license-panel" ng-show="datasizeToPrint || item.conditionsOfUse || licenceDataObject">
+            <div class="panel panel-default license-panel" ng-show="datasizeToPrint || item.conditionsOfUse || licenseDataObject">
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
 
                     <p ng-show="item.conditionsOfUse" ng-bind="item.conditionsOfUse"></p>
-                    <p ng-show="licenceDataObject"><a id="preview-license" ng-click="showPreview(licenceDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
+                    <p ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" ng-show="datasizeToPrint">
 
                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></a>

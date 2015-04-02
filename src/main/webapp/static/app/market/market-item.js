@@ -51,8 +51,8 @@ angular.module('ortolangMarketApp')
                             loadPreview(key, $scope.item.preview);
                         }
 
-                        if($scope.item.licence!==undefined && $scope.item.licence!=='') {
-                            loadLicence(key, $scope.item.licence);
+                        if($scope.item.license!==undefined && $scope.item.license!=='') {
+                            loadLicense(key, $scope.item.license);
                         }
 
                         if($scope.item.datasize!==undefined && $scope.item.datasize!=='') {
@@ -103,15 +103,9 @@ angular.module('ortolangMarketApp')
             visualizerModal.modal('show');
         }
 
-        function loadLicence(collection, licencePath) {
-            ObjectResource.element({oKey: collection, path: licencePath}).$promise.then(function(oobject) {
-                $scope.licenceDataObject = oobject;
-
-                DownloadResource.download({oKey: $scope.licenceDataObject.key}).success(function (data) {
-                    $scope.licenceData = data;
-                }).error(function (error) {
-                    console.error(error);
-                });
+        function loadLicense(collection, licensePath) {
+            ObjectResource.element({oKey: collection, path: licensePath}).$promise.then(function(oobject) {
+                $scope.licenseDataObject = oobject;
             }, function (reason) {
                 console.error(reason);
             });
