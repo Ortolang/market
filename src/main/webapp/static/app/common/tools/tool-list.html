@@ -8,44 +8,68 @@
             </div>
             <div class="toolbar side-panel-toolbar" role="toolbar">
                 <div class="btn-toolbar">
-                    <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
-                        <a ng-click="resetSelectedTool()" class="btn"><i class="fa fa-chevron-left"></i> {{'TOOLS.BACK_TO_TOOL_LIST' | translate}}</a>
+                    <div class="col-sm-12">
+                        <div class="input-group" ng-show="!hasToolSelected()">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{selectedTypeTranslation | translate}} <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-class="selectedType===''?'active':''"><a ng-click="resetFilter()">{{'MARKET.ALL_TYPE' | translate}} <span class="badge">{{getSize(filteredTools)}}</span></a></li>
+                                    <li class="divider"></li>
+                                    <li ng-class="selectedType==='ecrit'?'active':''"><a ng-click="filter('content', 'ecrit', 'TOOLS.TREATED_CONTENT.WRITTEN')" translate="TOOLS.TREATED_CONTENT.WRITTEN"></a></li>
+                                    <li ng-class="selectedType==='oral'?'active':''"><a ng-click="filter('content', 'oral', 'TOOLS.TREATED_CONTENT.ORAL')" translate="TOOLS.TREATED_CONTENT.ORAL"></a></li>
+                                    <li ng-class="selectedType==='vidéo'?'active':''"><a ng-click="filter('content', 'video', 'TOOLS.TREATED_CONTENT.VIDEO')" translate="TOOLS.TREATED_CONTENT.VIDEO"></a></li>
+                                </ul>
+                            </div>
+                            <input ng-model="searchContent" ng-keyup="$event.keyCode == 13 && search(searchContent)" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+                            <span class="input-group-btn">
+                                <button ng-click="search(searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                        <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
+                            <a ng-click="resetSelectedTool()" class="btn"><i class="fa fa-chevron-left"></i> {{'TOOLS.BACK_TO_TOOL_LIST' | translate}}</a>
+                        </div>
                     </div>
                 </div>
                 <div class="btn-toolbar btn-toolbar-right">
-                    <!--<div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected() && hasToolConfig()">-->
-                    <!--<buton class="btn btn-primary" ng-click="onSubmit()">-->
-                    <!--<span ng-class="icons.browser.publish"></span> {{'TOOLS.RUN_TOOL' | translate}}-->
-                    <!--</buton>-->
-                    <!--</div>-->
+                    <!--<div auto-complete data-model="searchContent" data-list="keywords" data-name="'search'" data-placeholder="'Rechercher'"></div>-->
                 </div>
             </div>
             <div id="tool-list-body" class="aside-body">
                 <div class="row">
                     <div class="am-fade-and-slide-left col-xs-12" ng-show="!hasToolSelected()">
 
-                        <div ng-repeat="tool in tools" class="media tool-item" ng-click="selectTool(tool)">
-                            <a class="pull-left">
-                                <span ng-class="icons.browser.tools" class="fa-4x"></span>
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading" ng-bind="tool.name"></h4>
-                                <p class="description" ng-bind-html="tool.description"></p>
+                        <div id="results_count" class="row">
+                            <div class="col-md-8">
+                                <small>{{getSize(filteredTools)}} {{'TOOLS.FOUND_TOOLS' | translate }}</small>
+                            </div>
+                        </div>
+                        <br/>
+                        <div id="results_list" >
+                            <div ng-repeat="tool in filteredTools | orderBy: tool.title" class="media tool-item" >
+                                <a class="pull-left" href="#/market/item/{{tool.key}}" target="_blank" bs-tooltip data-title="{{'TOOLS.DOCUMENTATION' | translate }}">
+                                    <span ng-class="icons.browser.tools" class="fa-4x"></span>
+                                </a>
+                                <div class="media-body">
+                                    <h4 ng-bind="tool.name" class="media-heading"></h4>
+                                    <span ng-repeat="category in tool.categories" style="line-height: 1.7;">
+                                        <span class="label label-default" style="background-color: #5BC0DE;">{{category}}</span>
+                                        <!--<span ng-repeat="tag in category.tag">-->
+                                            <!--<span class="label label-default" style="background-color:{{subcategoriesColors[category.subcategory]}};">{{tag}}</span>-->
+                                        <!--</span>-->
+                                    </span>
+                                </div>
+                                <div class="media-right media-middle  btn btn-default" ng-show="tool.active">
+                                    <a ng-click="selectTool(tool)" bs-tooltip data-title="{{'TOOLS.RUN_TOOL' | translate }}">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-gear fa-stack-2x"></i>
+                                        </span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="am-fade-and-slide-right col-xs-12" ng-show="hasToolSelected()">
-                        <div class="list-group" >
-                            <dl class="dl-vertical">
-                                <dt translate="NAME"></dt>
-                                <dd>{{selectedTool.getName()}}</dd>
-                                <dt translate="DESCRIPTION"></dt>
-                                <dd>{{selectedTool.getDescription()}}</dd>
-                                <dt translate="TOOLS.DOCUMENTATION"></dt>
-                                <dd ng-bind-html="selectedTool.getDocumentation()"></dd>
-                            </dl>
-                        </div>
                         <div class="panel panel-default" ng-show="hasToolConfig()">
                             <div class="panel-heading">
                                 <span class="fa fa-gears"></span> <span translate="TOOLS.CONFIGURATION">}</span>
