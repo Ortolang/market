@@ -17,7 +17,8 @@ angular.module('ortolangVisualizers')
                 'image/jpg': true,
                 'image/jpeg': true,
                 'image/png': true,
-                'image/gif': true
+                'image/gif': true,
+                'image/svg+xml': true
             }
         });
 
