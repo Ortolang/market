@@ -1,4 +1,5 @@
 'use strict';
+/*jshint camelcase: false */
 
 /**
  * @ngdoc function
@@ -189,7 +190,7 @@ angular.module('ortolangMarketApp')
                 $scope.avatars = [
                     {value: '', text: 'PROFILE.SETTINGS.DEFAULT_AVATAR'},
                     {value: 'FACEBOOK', text: 'Facebook'},
-                    //'TWITTER': {value: 'TWITTER', text: 'Twitter'},
+                    //{value: 'TWITTER', text: 'Twitter'},
                     {value: 'GITHUB', text: 'GitHub'},
                     {value: 'GRAVATAR', text: 'Gravatar'}
                 ];
