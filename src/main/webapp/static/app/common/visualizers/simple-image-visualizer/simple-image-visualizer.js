@@ -18,8 +18,7 @@ angular.module('ortolangVisualizers')
                 'image/jpeg': true,
                 'image/png': true,
                 'image/gif': true
-            },
-            needAllChildrenData: true
+            }
         });
 
         VisualizerManagerProvider.$get().register(visualizer);
@@ -46,9 +45,7 @@ angular.module('ortolangVisualizers')
             scope: true,
             link: {
                 pre: function (scope, element, attrs) {
-                    if ($filter('filter')(scope.elements, {selected: true}, true).length === 0) {
-                        scope.elements[0].selected = true;
-                    }
+                    scope.elements[0].selected = true;
                     scope.imageElements = [];
                     angular.forEach(scope.elements, function (element) {
                         Download.getDownloadUrl(element).then(function (url) {

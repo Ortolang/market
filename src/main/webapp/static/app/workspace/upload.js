@@ -90,7 +90,7 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                console.info(fileItem.file.name + ' successfully uploaded', fileItem, response, status, headers);
+                //console.info(fileItem.file.name + ' successfully uploaded', fileItem, response, status, headers);
                 if (fileItem.ortolangType === 'object') {
                     $rootScope.$emit('uploaderCompleteItemUpload');
                     $timeout(function () {
