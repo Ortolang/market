@@ -10,25 +10,36 @@
 angular.module('ortolangMarketApp')
     .directive('multiAvatar', ['md5', '$filter', function (md5, $filter) {
         return {
-            restrict: 'E',
-            scope :{
+            restrict: 'AE',
+            scope : {
                 favoriteAvatar: '=',
                 avatarIds: '=',
-                imgId:'@',
+                imgId: '@',
                 thumbnail: '@'
             },
-            link:function(scope, element) {
+            link: function (scope, element) {
 
                 /**
                  * Services
-                 * @type {{value: number, id: string, tpl: string}[]}
                  */
-                var services = [
-                    {id:1, name: 'facebook', tpl: '<img id="{imgId}" src="http://graph.facebook.com/{id}/picture?width={width}&height={height}" class="{classImg}"/>'} ,
-                    //{id:2, name: 'twitter', tpl: '<img id="{imgId}" src="https://pbs.twimg.com/profile_images/{id}_bigger.jpeg" style="width:{width}px; height:{height}px" class="{classImg}"/>'} ,
-                    {id:3, name: 'github', tpl: '<img id="{imgId}" src="https://identicons.github.com/{id}.png" style="width:{width}px; height:{height}px" class="{classImg}"/>'} ,
-                    {id:4, name: 'gravatar', tpl: '<img id="{imgId}" src="https://secure.gravatar.com/avatar/{id}?s=200&d=mm" style="width:{width}px; height:{height}px" class="{classImg}"/>'}
-                ];
+                var services = {
+                    'FACEBOOK': {
+                        id: 'FACEBOOK',
+                        name: 'facebook',
+                        tpl: '<img id="{imgId}" src="http://graph.facebook.com/{id}/picture?width={width}&height={height}" class="{classImg}"/>'
+                    },
+                    //'TWITTER': {id: 'TWITTER', name: 'twitter', tpl: '<img id="{imgId}" src="https://pbs.twimg.com/profile_images/{id}_bigger.jpeg" class="{classImg}"/>'},
+                    'GITHUB': {
+                        id: 'GITHUB',
+                        name: 'github',
+                        tpl: '<img id="{imgId}" src="https://identicons.github.com/{id}.png" class="{classImg}"/>'
+                    },
+                    'GRAVATAR': {
+                        id: 'GRAVATAR',
+                        name: 'gravatar',
+                        tpl: '<img id="{imgId}" src="https://secure.gravatar.com/avatar/{id}?s=200&d=mm" class="{classImg}"/>'
+                    }
+                };
 
                 /**
                  * Retrieve an avatar and return the filled template
@@ -37,10 +48,9 @@ angular.module('ortolangMarketApp')
                  * @returns {string}
                  */
                 function retrieveAvatar(service, id) {
-                    console.info('trying to retrieve avatar '+ service.name, id);
                     var width, height,
-                        classImg = 'img-responsive img-rounded';
-                    var isGravatar = service.name === 'gravatar';
+                        classImg = 'img-responsive img-rounded',
+                        isGravatar = service.name === 'gravatar';
                     if ((scope.thumbnail !== null) && (scope.thumbnail === 'true')) {
                         width = 30;
                         height = 30;
@@ -53,7 +63,7 @@ angular.module('ortolangMarketApp')
                         if (!id) {
                             id = '';
                         }
-                        if (isGravatar && id.split('@').length>1) {
+                        if (isGravatar && id.split('@').length > 1) {
                             id = md5.createHash(id.toLowerCase());
                         }
                         return service.tpl.replace('{id}', id).replace('{classImg}', classImg).replace('{width}', width).replace('{height}', height).replace('{imgId}', scope.imgId);
@@ -64,24 +74,23 @@ angular.module('ortolangMarketApp')
                  * Initialize avatar
                  */
                 function getAvatars() {
-                    var tag, service, attr;
-                    if (scope.favoriteAvatar !== '0'){
-                        service = $filter('filter')(services, {id: scope.favoriteAvatar});
-                        attr = $filter('filter')(scope.avatarIds, {id: scope.favoriteAvatar});
-                        tag = retrieveAvatar(service[0], attr[0].value);
+                    var tag, service, attr, i;
+                    if (scope.favoriteAvatar !== '0') {
+                        service = services[scope.favoriteAvatar];
+                        attr = scope.avatarIds[scope.favoriteAvatar];
+                        tag = retrieveAvatar(service, attr.value);
                         element.append(tag);
-                    }
-                    else {
-                        for (var i = 0, len = scope.avatarIds.length; i < len; i++) {
+                    } else {
+                        for (i = 0; i < scope.avatarIds.length; i++) {
                             attr = scope.avatarIds[i].value;
                             if (attr !== '') {
-                                service = $filter('filter')(services, {id: scope.avatarIds[i].id});
-                                tag = retrieveAvatar(service[0], attr);
+                                service = services[scope.avatarIds[i].id];
+                                tag = retrieveAvatar(service, attr);
                                 if (angular.element('#' + scope.imgId).length) {
                                     angular.element('#' + scope.imgId).remove();
                                 }
                                 element.append(tag);
-                                scope.$emit('updateDefaultAvatar', service[0].id);
+                                scope.$emit('updateDefaultAvatar', service.id);
                                 break;
                             }
                         }
@@ -89,15 +98,16 @@ angular.module('ortolangMarketApp')
                 }
 
                 /**
-                * Watch the field data-favorite-avatar and replace the current avatar if needed
-                */
-                scope.$watch('favoriteAvatar', function( newValue, oldValue ) {
-                    if(newValue !== oldValue && newValue !== undefined) {
-                        var currentAvatarId = $filter('filter')(scope.avatarIds, {id: newValue});
-                        var service, tag;
-                        if( currentAvatarId !== undefined && currentAvatarId[0].value !== '') {
-                            service = $filter('filter')(services, {id: newValue});
-                            tag = retrieveAvatar(service[0], currentAvatarId[0].value);
+                 * Watch the field data-favorite-avatar and replace the current avatar if needed
+                 */
+                scope.$watch('favoriteAvatar', function (newValue, oldValue) {
+                    if (newValue !== oldValue && newValue !== undefined) {
+                        var currentAvatarId = scope.avatarIds[newValue],
+                            service,
+                            tag;
+                        if (currentAvatarId !== undefined && currentAvatarId.value !== '') {
+                            service = services[newValue];
+                            tag = retrieveAvatar(service, currentAvatarId.value);
                             angular.element('#' + scope.imgId).remove();
                             element.append(tag);
                         }
@@ -105,15 +115,14 @@ angular.module('ortolangMarketApp')
                 }, true);
 
                 /**
-                * Watch the field data-avatar-ids and replace the current avatar if needed
-                */
-                scope.$watch('avatarIds', function( newValue, oldValue ) {
-                    if(newValue !== oldValue && newValue !== undefined) {
-                        var service = $filter('filter')(services, {id: scope.favoriteAvatar});
-                        var currentAvatarId = $filter('filter')(newValue, {id: scope.favoriteAvatar});
-                        console.log('new id: ', currentAvatarId[0].value);
-                        var tag = retrieveAvatar(service[0], currentAvatarId[0].value);
-                        angular.element('#' + scope.imgId).remove() ;
+                 * Watch the field data-avatar-ids and replace the current avatar if needed
+                 */
+                scope.$watch('avatarIds', function (newValue, oldValue) {
+                    if (newValue !== oldValue && newValue !== undefined) {
+                        var service = services[scope.favoriteAvatar],
+                            currentAvatarId = newValue[scope.favoriteAvatar],
+                            tag = retrieveAvatar(service, currentAvatarId.value);
+                        angular.element('#' + scope.imgId).remove();
                         element.append(tag);
                     }
                 }, true);

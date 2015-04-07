@@ -24,7 +24,7 @@
                 <td ng-if="!uploader.isHTML5"><span ng-class="item.type | ortolangElementIconCss" class="type"></span> <strong>{{ item.file.name }}</strong></td>
                 <td>{{ item.wsName }}</td>
                 <td>{{ item.file.path }}</td>
-                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size | bytes }}</td>
+                <td class="text-nowrap" ng-show="uploader.isHTML5">{{ item.file.size | bytes }}</td>
                 <td ng-show="uploader.isHTML5">
                     <div class="progress" style="margin-bottom: 0;">
                         <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
@@ -35,7 +35,7 @@
                     <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                     <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                 </td>
-                <td nowrap>
+                <td class="text-nowrap">
                     <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
                         <span class="glyphicon glyphicon-upload"></span> {{'WORKSPACE.UPLOAD' | translate}}
                     </button>

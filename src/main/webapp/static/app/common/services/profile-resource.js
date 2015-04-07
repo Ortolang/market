@@ -9,7 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .factory('ProfileResource', ['$resource', 'Url', function ($resource, Url) {
-        return $resource(Url.urlBase() + '/rest/profiles/:userId', {userId: '@key'}, {
+        return $resource(Url.urlBase() + '/rest/profiles/:key', {key: '@key'}, {
             connected: {
                 url: Url.urlBase() + '/rest/profiles/connected',
                 method: 'GET'
@@ -20,20 +20,20 @@ angular.module('ortolangMarketApp')
                 isArray: true
             },
             update: {
-                url: Url.urlBase() + '/rest/profiles/:userId/infos',
+                url: Url.urlBase() + '/rest/profiles/:key/infos',
                 method: 'POST'
             },
             getInfos: {
-                url: Url.urlBase() + '/rest/profiles/:userId/infos',
+                url: Url.urlBase() + '/rest/profiles/:key/infos',
                 method: 'GET'
             },
             getFriends: {
-                url: Url.urlBase() + '/rest/profiles/:userId/friends',
+                url: Url.urlBase() + '/rest/profiles/:key/friends',
                 method: 'GET',
                 isArray: true
             },
             read: {
-                url: Url.urlBase() + '/rest/profiles/:userId',
+                url: Url.urlBase() + '/rest/profiles/:key',
                 method: 'GET'
             },
             put: {
@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
             },
             size: {
                 method: 'GET',
-                url: Url.urlBase() + '/rest/profiles/:userId/size'
+                url: Url.urlBase() + '/rest/profiles/:key/size'
             }
         });
     }]);

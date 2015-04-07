@@ -1598,8 +1598,10 @@ angular.module('ortolangMarketApp')
                             if (filteredWorkspace.length !== 1) {
                                 console.error('No workspace with key "%s" available', $scope.forceWorkspace, $scope.settings.wskey );
                                 $scope.workspace = data.entries[0];
-                                $scope.settings.wskey = $scope.workspace.key;
-                                storeSettings();
+                                if ($scope.workspace) {
+                                    $scope.settings.wskey = $scope.workspace.key;
+                                    storeSettings();
+                                }
                             } else {
                                 $scope.workspace = filteredWorkspace[0];
                             }

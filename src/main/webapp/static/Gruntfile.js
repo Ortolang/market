@@ -519,6 +519,90 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+
+        htmlangular: {
+            options: {
+                tmplext: 'html',
+                concurrentJobs: '3',
+                customtags: [
+                    'formly-form',
+                    'item',
+                    'multi-avatar',
+                    'sparql-select',
+                    'toggle-switch'
+                ],
+                customattrs: [
+                    'translate',
+                    'browser',
+                    'hljs',
+                    'source',
+                    'holder-js',
+                    'bs-tooltip',
+                    'bs-active-pane',
+                    'bs-pane',
+                    'bs-tabs',
+                    'toggle-visibility',
+                    'editable-text',
+                    'editable-textarea',
+                    'editable-email',
+                    'editable-url',
+                    'editable-number',
+                    'editable-select',
+                    'editable-radiolist',
+                    'e-ng-options',
+                    'e-name',
+                    'e-placeholder',
+                    'e-value',
+                    'e-pattern',
+                    'buttons',
+                    'nv-file-over',
+                    'nv-file-drop',
+                    'uploader',
+                    'options',
+                    'show-errors',
+                    'sf-schema',
+                    'sf-form',
+                    'sf-model',
+                    'sparql',
+                    'placeholder',
+                    'name',
+                    'model',
+                    'auto-complete',
+                    'required',
+                    'aria-expanded'
+                ],
+                relaxerror: [
+                    'Bad value',
+                    'A table row was 8 columns wide and exceeded the column count established by the first row (7).'
+                ],
+                reportpath: 'target/html-angular-validate-report.json',
+                w3clocal: 'http://localhost/w3c-validator/check'
+            },
+            files: {
+                src: [
+                    '<%= yeoman.app %>/*/*.html',
+                    '<%= yeoman.app %>/404.html'
+                ]
+            }
+        },
+
+        validation: {
+            options: {
+                reset: grunt.option('reset') || false,
+                stoponerror: false,
+                relaxerror: [
+                    //'Bad value X-UA-Compatible for attribute http-equiv on element meta.',
+                    //'Attribute value using wrong case character'
+                ],
+                serverUrl: 'http://localhost/w3c-validator/check'
+            },
+            files: {
+                src: [
+                    '<%= yeoman.app %>/index.html',
+                    '<%= yeoman.app %>/ie.html'
+                ]
+            }
         }
     });
 

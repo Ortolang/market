@@ -1,0 +1,18 @@
+<div class="col-sm-3">
+    <div class="user-avatar" multi-avatar ng-if="User.avatarIds"
+                  data-img-id="big-avatar"
+                  data-favorite-avatar="User.favoriteAvatar"
+                  data-avatar-ids="User.avatarIds"></div>
+    <div class="list-group" role="tablist">
+        <a  class="list-group-item"
+            ng-repeat="$pane in $panes track by $index"
+            ng-class="$index == $panes.$active ? $activeClass : ''"
+            role="tab"
+            data-toggle="tab"
+            ng-click="$setActive($index)"
+            data-index="{{$index}}"
+            ng-bind-html="$pane.title"></a>
+    </div>
+</div>
+<div class="col-sm-9 tab-content" ng-transclude>
+</div>

@@ -1,0 +1,55 @@
+<label class="col-sm-5 col-md-3 control-label" for="{{::item.name}}">{{"PROFILE." + item.name.toUpperCase() | translate}} :</label>
+
+<div class="col-sm-7 col-md-8">
+
+    <div ng-switch="::item.forceVisibilities">
+        <button ng-switch-when="333" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="icons.everybody"></span></button>
+        <button ng-switch-when="300" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="icons.nobody"></span></button>
+        <div ng-switch-default toggle-visibility class="pull-left" data-options="::getVisibilityOptions(item.forceVisibilities)" data-profile-data="item"
+             data-onaftersave="updateUserProfileData(item)"></div>
+    </div>
+
+    <span ng-if="item.type==='STRING'" class="xeditable-placeholder" data-editable-text="item.value" data-e-name="{{::item.name}}" data-e-placeholder="{{'PROFILE.' + item.name.toUpperCase() | translate}}" data-e-value="{{item.value}}"
+          data-onaftersave="updateUserProfileData(item)">
+        {{item.value || emptyText}}
+    </span>
+
+    <span ng-if="item.type==='TEXT'" class="xeditable-placeholder" editable-textarea="item.value" data-e-name="{{::item.name}}" data-e-placeholder="{{'PROFILE.' + item.name.toUpperCase() | translate}}" data-e-value="{{item.value}}"
+          data-onaftersave="updateUserProfileData(item)">
+        {{item.value || emptyText}}
+    </span>
+
+    <span ng-if="item.type==='EMAIL'" class="xeditable-placeholder" data-editable-email="item.value" data-e-name="{{::item.name}}" data-e-placeholder="{{'PROFILE.' + item.name.toUpperCase() | translate}}" data-e-value="{{item.value}}"
+          data-onaftersave="updateUserProfileData(item)">
+        {{item.value || emptyText}}
+    </span>
+
+    <span ng-if="item.type==='URL'" class="xeditable-placeholder" data-editable-url="item.value" data-e-name="{{::item.name}}" data-e-placeholder="{{'PROFILE.' + item.name.toUpperCase() | translate}}" data-e-value="{{item.value}}" data-e-pattern="https?://.+"
+          data-onaftersave="updateUserProfileData(item)" >
+        {{item.value || emptyText}}
+    </span>
+
+    <span ng-if="item.type==='TEL'" class="xeditable-placeholder" data-editable-text="item.value" data-e-name="{{::item.name}}" data-e-placeholder="{{'PROFILE.' + item.name.toUpperCase() | translate}}" data-e-value="{{item.value}}"
+          data-e-pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
+          data-onaftersave="updateUserProfileData(item)">
+        {{item.value || emptyText}}
+    </span>
+
+    <span ng-if="item.type==='NUMBER'" class="xeditable-placeholder" data-editable-number="item.value" data-e-name="{{::item.name}}" data-e-placeholder="{{'PROFILE.' + item.name.toUpperCase() | translate}}" data-e-value="{{item.value}}"
+          data-onaftersave="updateUserProfileData(item)">
+        {{item.value || emptyText}}
+    </span>
+
+     <span ng-if="item.type==='ENUM'" class="xeditable-placeholder" id="{{::item.name}}" editable-select="item.value" data-e-name="item.name" data-e-ng-options="s.value as (s.text | translate) for s in {{item.source}}"
+           data-onaftersave="updateUserProfileData(item)">
+         {{(showValue(item.value, item.source) | translate) || emptyText}}
+     </span>
+
+    <span ng-if="item.type==='ADDRESS'" class="xeditable-placeholder" e-ng-keypress="preventSubmitOnEnter($event, $data, item)" id="{{::item.name}}" editable-address="item.value" data-e-name="item.name" data-e-placeholder="{{'PROFILE.' + item.name.toUpperCase() | translate}}" data-e-value="{{item.value}}"
+          data-onbeforesave="checkAddress(item, $data)"
+          data-onaftersave="updateUserAddress(item)">
+        {{item.value || emptyText}}
+     </span>
+</div>
+
+<p class="col-md-offset-3 col-md-7 help-block" ng-if="item.helper" translate="{{'PROFILE.HELPER.' + item.name.toUpperCase()}}"></p>

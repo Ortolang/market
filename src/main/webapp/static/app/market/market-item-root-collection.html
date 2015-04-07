@@ -2,17 +2,17 @@
     <header>
         <div class="media">
             <a class="pull-left">
-                <img ng-if="imgtitle !== undefined" class="logo" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
-                <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image"/>
+                <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
             </a>
             <div class="media-body">
                 <h1>{{item.title}}</h1>
 
                 <div ng-hide="browse">
-                    
+
                     <p>Produit par : <span ng-repeat="producer in item.producer"><a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
                     <p ng-if="item.website">Site web : <a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></p>
-                    
+
                     <!-- Category : Tool -->
                     <p ng-if="item.programmingLanguage">Langages de programmation : <span ng-repeat="pl in item.programmingLanguage"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
                     <p ng-if="item.opearatingSystem">Systèmes d'exploitation supportés : <span ng-repeat="os in item.opearatingSystem"><a href="#/search?content={{os}}" ng-bind="os"></a><span ng-if="!$last">, </span></span></p>

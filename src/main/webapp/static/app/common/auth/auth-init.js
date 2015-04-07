@@ -12,9 +12,10 @@ angular.element(document).ready(function () {
          * Factory in the ortolangMarketApp.
          */
         angular.module('ortolangMarketApp')
-            .factory('AuthService', ['$window', function ($window) {
+            .factory('AuthService', ['$window', '$q', function ($window, $q) {
 
-                var logoutUrl = keycloakAuth.authServerUrl + '/realms/ortolang/tokens/logout?redirect_uri=' + logoutRedirectUrl;
+                var logoutUrl = keycloakAuth.authServerUrl + '/realms/ortolang/tokens/logout?redirect_uri=' + logoutRedirectUrl,
+                    deferred = $q.defer();
 
                 function isAuthenticated() {
                     return keycloakAuth.authenticated;
@@ -40,6 +41,14 @@ angular.element(document).ready(function () {
                     $window.location.reload();
                 }
 
+                function sessionInitialized() {
+                    return deferred.promise;
+                }
+
+                function resolveSessionInitialized() {
+                    deferred.resolve();
+                }
+
                 return {
                     login: login,
                     register: register,
@@ -48,7 +57,9 @@ angular.element(document).ready(function () {
                     getKeycloak: function () { return keycloakAuth; },
                     isAuthenticated: isAuthenticated,
                     forceReload: forceReload,
-                    isSuperUser: isSuperUser
+                    isSuperUser: isSuperUser,
+                    sessionInitialized: sessionInitialized,
+                    resolveSessionInitialized: resolveSessionInitialized
                 };
             }]);
 

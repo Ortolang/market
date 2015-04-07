@@ -199,6 +199,16 @@ angular.module('ortolangMarketApp')
                 hiddenSideNav: true,
                 hiddenTopNav: true,
                 authenticated: true
+            },
+            {
+                class: '404',
+                path: '/404',
+                description: 'NAV.404',
+                iconCss: 'fa fa-fw fa-exclamation fa-2x',
+                active: undefined,
+                hiddenSideNav: true,
+                hiddenTopNav: true,
+                authenticated: true
             }
         ];
 
