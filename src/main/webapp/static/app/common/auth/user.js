@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .service('User', function () {
 
         this.initialised = false;
+        this.profileDatas = {};
 
         this.name = function () {
             if (this.givenName) {
@@ -19,21 +20,20 @@ angular.module('ortolangMarketApp')
             return '';
         };
 
-        this.getFavoriteLanguage = function () {
-            var profileData = this.getProfileData('settings', 'language');
-            return profileData ? profileData.value : undefined;
+        this.getProfileData = function (name) {
+            return this.profileDatas[name];
         };
 
-        this.getProfileData = function (category, name) {
-            if (this[category]) {
-                var i = 0;
-                for (i; i < this[category].length; i++) {
-                    if (this[category][i].name.split('.')[1] === name) {
-                        return this[category][i];
-                    }
+        this.getAvatarId = function (service) {
+            var avatarId = this.getProfileData(service)
+            if (!avatarId) {
+                if (service === 'github') {
+                    avatarId = this.key;
+                } else if (service === 'gravatar') {
+                    avatarId = this.email;
                 }
             }
-            return undefined;
+            return avatarId || '';
         };
 
         this.preInit = function (profile) {
@@ -49,9 +49,7 @@ angular.module('ortolangMarketApp')
             this.status = profile.status;
             this.groups = profile.groups;
             this.desc = profile.desc;
-            this.infos = profile.infos;
-            this.settings = profile.settings;
-            this.aboutme = profile.aboutme;
+            this.profileDatas = profile.profileDatas;
             this.favoriteAvatar = profile.favoriteAvatar;
             this.avatarIds = profile.avatarIds;
             this.isLocked = profile.isLocked;

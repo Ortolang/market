@@ -108,7 +108,7 @@
   padding-top: 2 * @padding-large-vertical;
   padding-bottom: @padding-large-vertical;
   &.browser-aside-left {
-    border-right: 1px solid @navbar-default-border;
+    border-right: @default-border;
     background-color: @main-bg;
     overflow: hidden;
     .btn-collapse {
@@ -117,9 +117,9 @@
       right: 0;
       cursor: pointer;
       padding: @padding-small-vertical;
-      border-left: 1px solid @navbar-default-border;
-      border-top: 1px solid @navbar-default-border;
-      border-bottom: 1px solid @navbar-default-border;
+      border-left: @default-border;
+      border-top: @default-border;
+      border-bottom: @default-border;
       background-color: @default-bg;
       z-index: 10;
       > span {
@@ -133,7 +133,7 @@
     }
   }
   &.browser-aside-right {
-    border-left: 1px solid @navbar-default-border;
+    border-left: @default-border;
   }
   &.browser-aside-over {
     position: absolute;
@@ -149,7 +149,7 @@
   background-color: @default-bg;
   padding-left: 6px;
   padding-right: 4px;
-  border-right: 1px solid @navbar-default-border;
+  border-right: @default-border;
   z-index: 1009;
   cursor: pointer;
   display: table;

@@ -1,5 +1,11 @@
-<div ng-controller="SettingsCtrl" class="form-horizontal profile-settings-form">
-    <div class="form-group" ng-repeat="item in settingsItems track by item.name">
-        <div ng-include="'profile/fields-template.html'"></div>
+<div class="form-horizontal profile-settings-form">
+    <div class="well">
+        <div class="form-group">
+            <div profile-data-field data-profile-data="fields.language" data-source="languages" data-label-class="col-sm-5 col-md-3" data-input-class="col-sm-7 col-md-5" data-help-class="col-md-offset-3 col-sm-offset-5 col-sm-7 col-md-8"></div>
+            <div profile-data-field data-profile-data="fields.avatar" data-source="avatars" data-label-class="col-sm-5 col-md-3" data-input-class="col-sm-7 col-md-5" data-help-class="col-md-offset-3 col-sm-offset-5 col-sm-7 col-md-8"></div>
+            <div profile-data-field data-profile-data="fields.facebook" data-source="avatars" data-label-class="col-sm-5 col-md-3" data-input-class="col-sm-7 col-md-5" data-help-class="col-md-offset-3 col-sm-offset-5 col-sm-7 col-md-8"></div>
+            <div profile-data-field data-profile-data="fields.github" data-source="avatars" data-label-class="col-sm-5 col-md-3" data-input-class="col-sm-7 col-md-5" data-help-class="col-md-offset-3 col-sm-offset-5 col-sm-7 col-md-8"></div>
+            <div profile-data-field data-profile-data="fields.gravatar" data-source="avatars" data-label-class="col-sm-5 col-md-3" data-input-class="col-sm-7 col-md-5" data-help-class="col-md-offset-3 col-sm-offset-5 col-sm-7 col-md-8"></div>
+        </div>
     </div>
 </div>

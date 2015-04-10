@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('multiAvatar', ['md5', '$filter', function (md5, $filter) {
+    .directive('multiAvatar', ['md5', function (md5) {
         return {
             restrict: 'AE',
             scope : {

@@ -38,7 +38,7 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('simpleImageVisualizer', ['$filter', 'Download', function ($filter, Download) {
+    .directive('simpleImageVisualizer', ['Download', function (Download) {
 
         return {
             templateUrl: 'common/visualizers/simple-image-visualizer/simple-image-visualizer.html',

@@ -26,42 +26,23 @@ angular.module('ortolangMarketApp')
                     'GITHUB': {id: 'GITHUB', name: 'github', value: profile.key},
                     'GRAVATAR': {id: 'GRAVATAR', name: 'gravatar', value: profile.email}
                 };
-                profile.favoriteAvatar = '0';
                 ProfileResource.getInfos({key: profile.key}).$promise.then(
                     function success(data) {
-                        profile.infos = [];
-                        profile.settings = [];
-                        profile.aboutme = [];
                         profile.avatarIds = [];
+                        profile.profileDatas = {};
                         angular.forEach(data.entries, function (profileData) {
-                            var profileDataName = profileData.name.split('.');
-                            switch (profileDataName[0]) {
-                                case 'infos':
-                                    profile.infos.push(profileData);
-                                    break;
-                                case 'settings':
-                                    profile.settings.push(profileData);
-                                    break;
-                                case 'aboutme':
-                                    profile.aboutme.push(profileData);
-                                    break;
-                            }
+                            profile.profileDatas[profileData.name] = profileData;
                         });
                         User.create(profile);
                         User.avatarIds = {};
                         angular.forEach(avatarIds, function (avatarId) {
-                            var itemSetting = User.getProfileData('settings', avatarId.name);
+                            var itemSetting = User.getProfileData(avatarId.name);
+                            User.avatarIds[avatarId.id] = avatarId;
                             if (itemSetting) {
-                                User.avatarIds[avatarId.id] = {
-                                    id: avatarId.id,
-                                    name: avatarId.name,
-                                    value: itemSetting.value
-                                };
-                            } else {
-                                User.avatarIds[avatarId.id] = avatarId;
+                                User.avatarIds[avatarId.id].value = itemSetting.value;
                             }
                         });
-                        var favoriteAvatar = User.getProfileData('settings', 'avatar');
+                        var favoriteAvatar = User.getProfileData('avatar');
                         User.favoriteAvatar = favoriteAvatar ? favoriteAvatar.value : 'GITHUB';
                         AuthService.resolveSessionInitialized();
                     },

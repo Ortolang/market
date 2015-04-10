@@ -98,7 +98,7 @@ angular.module('ortolangMarketApp')
                         if (uploader.queue.length === 0) {
                             $rootScope.deactivateUploadQueue();
                         }
-                    }, 800);
+                    }, 1500);
                 } else if (fileItem.ortolangType === 'metadata') {
                     $rootScope.$emit('completeMetadataUpload');
                 }

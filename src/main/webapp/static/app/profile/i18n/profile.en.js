@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
                 PERSONAL_INFOS: 'Personal informations',
                 SETTINGS: 'Settings',
                 ABOUT_ME: 'About me',
+                IDENTIFIERS: 'External identifiers',
                 EVENTS: 'Recent activity',
                 PUBLICATIONS: 'Publications',
                 CONTRIBUTIONS: 'Contributions',
@@ -39,7 +40,7 @@ angular.module('ortolangMarketApp')
                 MISTER: 'M.',
                 MISSUS: 'Mrs.'
             },
-            INFOS: {
+            FIELDS: {
                 CIVILITY: 'Gender',
                 TITLE: 'Professional title',
                 GIVEN_NAME: 'First name',
@@ -54,12 +55,8 @@ angular.module('ortolangMarketApp')
                 RESCUE_EMAIL: 'Rescue e-mail',
                 PROFESSIONAL_TEL: 'Professional phone',
                 TEL: 'Personal phone',
-                FAX: 'Fax'
-            },
-            ABOUTME: {
-                PRESENTATION: 'Describe yourself in a few words'
-            },
-            SETTINGS: {
+                FAX: 'Fax',
+                PRESENTATION: 'Describe yourself in a few words',
                 AVATAR: 'Avatar',
                 DEFAULT_AVATAR: 'Default',
                 ORCID: 'Identifiant ORCID',
@@ -73,18 +70,14 @@ angular.module('ortolangMarketApp')
                 GRAVATAR: 'Identifiant Gravatar'
             },
             HELPER: {
-                INFOS: {
-                    TITLE: 'Professional title: Dr., Prof., etc. '
-                },
-                SETTINGS: {
-                    ORCID: 'Persistent digital identifiers: <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>.',
-                    VIAF: 'Persistent digital identifiers:  <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>.',
-                    MYIDREF: 'Persistent digital identifiers:  <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>.',
-                    LINKEDIN: 'Persistent digital identifiers:  <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>.',
-                    VIADEO: 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>.',
-                    FACEBOOK: 'More informations about how to get you facebook user id : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.',
-                    GRAVATAR: 'Please enter your email address mapped with gravatar : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.'
-                }
+                TITLE: 'Professional title: Dr., Prof., etc. ',
+                ORCID: 'Persistent digital identifiers: <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>.',
+                VIAF: 'Persistent digital identifiers:  <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>.',
+                MYIDREF: 'Persistent digital identifiers:  <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>.',
+                LINKEDIN: 'Persistent digital identifiers:  <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>.',
+                VIADEO: 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>.',
+                FACEBOOK: 'More informations about how to get you facebook user id : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.',
+                GRAVATAR: 'Please enter your email address mapped with gravatar : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.'
             }
         }
     });

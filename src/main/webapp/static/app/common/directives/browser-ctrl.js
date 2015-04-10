@@ -158,9 +158,9 @@ angular.module('ortolangMarketApp')
                         $scope.allChildrenMimeTypes.push({value: value.mimeType, label: '<span class="' + $filter('mimeTypeIconCss')(value.mimeType) + '"></span>&nbsp; ' + value.mimeType});
                     }
                 });
-                if ($scope.browserService.getDataResource !== 'object') {
-                    getWorkspaceData();
-                }
+                //if ($scope.browserService.getDataResource !== 'object') {
+                //    getWorkspaceData();
+                //}
             }
 
             function getParentData(refresh, forceNewSelection) {
@@ -1319,8 +1319,9 @@ angular.module('ortolangMarketApp')
                     var createWorkspaceModalScope = $rootScope.$new(),
                         createWorkspaceModal;
                     createWorkspaceModalScope.createWorkspace = function () {
-                        WorkspaceResource.save({name: createWorkspaceModalScope.newWorkspaceName, type: 'user'}, function () {
+                        WorkspaceResource.createWorkspace({name: createWorkspaceModalScope.newWorkspaceName, type: 'user'}, function (newWorkspace) {
                             $scope.workspaceList = WorkspaceResource.get();
+                            $scope.changeWorkspace(newWorkspace);
                             createWorkspaceModal.hide();
                         });
                     };
@@ -1596,7 +1597,7 @@ angular.module('ortolangMarketApp')
                             var key = $scope.settings.wskey || $scope.forceWorkspace,
                                 filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
                             if (filteredWorkspace.length !== 1) {
-                                console.error('No workspace with key "%s" available', $scope.forceWorkspace, $scope.settings.wskey );
+                                console.error('No workspace with key "%s" available', key);
                                 $scope.workspace = data.entries[0];
                                 if ($scope.workspace) {
                                     $scope.settings.wskey = $scope.workspace.key;

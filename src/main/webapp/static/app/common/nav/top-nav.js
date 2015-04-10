@@ -40,16 +40,22 @@ angular.module('ortolangMarketApp')
         }
 
         function initLanguage() {
+            var favoriteLanguage, storedLanguage;
             if (AuthService.isAuthenticated()) {
-                $translate.use(User.getFavoriteLanguage()).then(function (language) {
+                favoriteLanguage = User.getProfileData('language');
+            }
+            if (!favoriteLanguage && localStorage !== undefined) {
+                storedLanguage = localStorage.getItem('language');
+                if (storedLanguage !== 'fr' && storedLanguage !== 'en') {
+                    storedLanguage = undefined;
+                }
+            }
+            if (favoriteLanguage || storedLanguage) {
+                $translate.use(favoriteLanguage ? favoriteLanguage.value : storedLanguage).then(function (language) {
                     $scope.currentLanguage = language;
                 });
-            } else if (localStorage !== undefined) {
-                var storedLanguage = localStorage.getItem('language');
-                if (storedLanguage === 'fr' || storedLanguage === 'en') {
-                    $translate.use(storedLanguage);
-                    return storedLanguage;
-                }
+            } else {
+                $scope.currentLanguage = $translate.use();
             }
         }
 

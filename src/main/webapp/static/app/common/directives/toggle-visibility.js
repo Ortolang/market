@@ -19,7 +19,6 @@ angular.module('ortolangMarketApp')
             templateUrl: 'common/directives/toggle-visibility-template.html',
 
             link: function (scope) {
-
                 scope.selectOption = function (option) {
                     scope.profileData.visibility = option;
                     scope.onaftersave(scope.profileData);

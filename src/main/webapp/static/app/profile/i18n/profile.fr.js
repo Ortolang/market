@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
                 PERSONAL_INFOS: 'Informations personnelles',
                 SETTINGS: 'Préférences',
                 ABOUT_ME: 'A propos de moi',
+                IDENTIFIERS: 'Identifiants externes',
                 EVENTS: 'Activité récente',
                 PUBLICATIONS: 'Publications',
                 CONTRIBUTIONS: 'Contributions',
@@ -39,7 +40,7 @@ angular.module('ortolangMarketApp')
                 MISTER: 'Monsieur',
                 MISSUS: 'Madame'
             },
-            INFOS: {
+            FIELDS: {
                 CIVILITY: 'Civilité',
                 TITLE: 'Titre professionnel',
                 GIVEN_NAME: 'Prénom',
@@ -54,12 +55,8 @@ angular.module('ortolangMarketApp')
                 RESCUE_EMAIL: 'E-mail de secours',
                 PROFESSIONAL_TEL: 'Téléphone professionnel',
                 TEL: 'Téléphone personnel',
-                FAX: 'Fax'
-            },
-            ABOUTME: {
-                PRESENTATION: 'Décrivez-vous en quelques mots'
-            },
-            SETTINGS: {
+                FAX: 'Fax',
+                PRESENTATION: 'Décrivez-vous en quelques mots',
                 AVATAR: 'Avatar',
                 DEFAULT_AVATAR: 'Avatar par défaut',
                 ORCID: 'Identifiant ORCID',
@@ -73,18 +70,14 @@ angular.module('ortolangMarketApp')
                 GRAVATAR: 'Identifiant Gravatar'
             },
             HELPER: {
-                INFOS: {
-                    TITLE: 'Titre professionnel : Dr., Prof. etc.'
-                },
-                SETTINGS: {
-                    ORCID: 'Identifiant personnel pérenne : <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>',
-                    VIAF: 'Identifiant personnel pérenne : <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>',
-                    MYIDREF: 'Identifiant personnel pérenne : <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
-                    LINKEDIN: 'Identifiant personnel pérenne : <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>',
-                    VIADEO: 'Identifiant personnel pérenne : <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>',
-                    FACEBOOK: 'Pour obtenir votre identifiant facebook, visitez ce lien : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.',
-                    GRAVATAR: 'Adresse email liée à votre compte gravatar : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.'
-                }
+                TITLE: 'Titre professionnel : Dr., Prof. etc.',
+                ORCID: 'Identifiant personnel pérenne : <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>',
+                VIAF: 'Identifiant personnel pérenne : <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>',
+                MYIDREF: 'Identifiant personnel pérenne : <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
+                LINKEDIN: 'Identifiant personnel pérenne : <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>',
+                VIADEO: 'Identifiant personnel pérenne : <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>',
+                FACEBOOK: 'Pour obtenir votre identifiant facebook, visitez ce lien : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.',
+                GRAVATAR: 'Adresse email liée à votre compte gravatar : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.'
             }
         }
     });

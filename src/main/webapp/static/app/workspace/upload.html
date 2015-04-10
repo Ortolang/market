@@ -12,21 +12,21 @@
                 <th translate="NAME"></th>
                 <th translate="WORKSPACE"></th>
                 <th translate="WORKSPACE.PATH">Path</th>
-                <th ng-show="uploader.isHTML5" translate="SIZE"></th>
-                <th ng-show="uploader.isHTML5" translate="WORKSPACE.PROGRESS"></th>
+                <th ng-show="::uploader.isHTML5" translate="SIZE"></th>
+                <th ng-show="::uploader.isHTML5" translate="WORKSPACE.PROGRESS"></th>
                 <th translate="WORKSPACE.STATUS"></th>
-                <th translate="ACTIONS"></th>
+                <!--<th translate="ACTIONS"></th>-->
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in uploader.queue">
-                <td ng-if="uploader.isHTML5"><span ng-class="item.file.type | mimeTypeIconCss" class="type"></span> <strong>{{ item.file.name }}</strong></td>
-                <td ng-if="!uploader.isHTML5"><span ng-class="item.type | ortolangElementIconCss" class="type"></span> <strong>{{ item.file.name }}</strong></td>
-                <td>{{ item.wsName }}</td>
-                <td>{{ item.file.path }}</td>
-                <td class="text-nowrap" ng-show="uploader.isHTML5">{{ item.file.size | bytes }}</td>
-                <td ng-show="uploader.isHTML5">
-                    <div class="progress" style="margin-bottom: 0;">
+            <tr ng-repeat="item in uploader.queue track by item.file.name">
+                <td ng-if="::uploader.isHTML5"><span ng-class="item.file.type | mimeTypeIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
+                <td ng-if="::!uploader.isHTML5"><span ng-class="item.type | ortolangElementIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
+                <td>{{::item.wsName}}</td>
+                <td>{{::item.file.path}}</td>
+                <td class="text-nowrap" ng-show="::uploader.isHTML5">{{::item.file.size | bytes}}</td>
+                <td ng-show="::uploader.isHTML5">
+                    <div class="progress">
                         <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
                     </div>
                 </td>
@@ -35,17 +35,17 @@
                     <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                     <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                 </td>
-                <td class="text-nowrap">
-                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                        <span class="glyphicon glyphicon-upload"></span> {{'WORKSPACE.UPLOAD' | translate}}
-                    </button>
-                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                        <span class="glyphicon glyphicon-ban-circle"></span> {{'CANCEL' | translate}}
-                    </button>
-                    <button type="button" class="btn btn-danger btn-xs" ng-click="clearItem(item)">
-                        <span class="glyphicon glyphicon-trash"></span> {{'WORKSPACE.CLEAR' | translate}}
-                    </button>
-                </td>
+                <!--<td class="text-nowrap">-->
+                    <!--<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">-->
+                        <!--<span class="glyphicon glyphicon-upload"></span> {{'WORKSPACE.UPLOAD' | translate}}-->
+                    <!--</button>-->
+                    <!--<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">-->
+                        <!--<span class="glyphicon glyphicon-ban-circle"></span> {{'CANCEL' | translate}}-->
+                    <!--</button>-->
+                    <!--<button type="button" class="btn btn-danger btn-xs" ng-click="clearItem(item)">-->
+                        <!--<span class="glyphicon glyphicon-trash"></span> {{'WORKSPACE.CLEAR' | translate}}-->
+                    <!--</button>-->
+                <!--</td>-->
             </tr>
             </tbody>
         </table>

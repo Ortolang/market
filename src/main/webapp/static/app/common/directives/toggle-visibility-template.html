@@ -8,7 +8,7 @@
             <a ng-click="selectOption(option)">
                 <span ng-class="option.icon" ng-if="option.icon"></span>
                 <span ng-bind="option.label | translate"></span>
-                <span class="glyphicon glyphicon-ok visibility-selected-option" ng-if="option === profileData.visibility"></span>
+                <span class="glyphicon glyphicon-ok visibility-selected-option" ng-if="option.value === profileData.visibility.value"></span>
             </a>
         </li>
     </ul>
