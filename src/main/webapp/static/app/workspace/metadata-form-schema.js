@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataFormSchemaCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+    .controller('MetadataFormSchemaCtrl', ['$scope', '$rootScope', '$window', function ($scope, $rootScope, $window) {
         $scope.selectTab = function(tabName) {
             $scope.selectedTab = tabName;
         };
@@ -16,6 +16,11 @@ angular.module('ortolangMarketApp')
         $scope.submitMetadata = function (form, model) {
             // $scope.$broadcast('show-errors-check-validity');
             $scope.$broadcast('schemaFormValidate');
+
+            if (form.$invalid) {
+                console.log('not ready');
+                return;
+            }
 
             if($scope.onlineTool===false) {
                 delete model.toolHelp;
@@ -31,11 +36,6 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            if (form.$invalid) {
-                console.log('not ready');
-                return;
-            }
-
             var content = angular.toJson(model),
                 contentType = 'text/json';
 
@@ -46,11 +46,45 @@ angular.module('ortolangMarketApp')
             $scope.submitMetadata($scope.metadataMarketform, model);
         });
 
+        var deregistrationSchemaRendered = $rootScope.$on('sf-render-finished', function (event, schema) {
+            console.log("render finished");
+            resizeAsideBody();
+        });
+        // *********************** //
+        //          Resize         //
+        // *********************** //
+
+        function resizeAsideBody() {
+            console.log("resizeAsideBody");
+            var topOffset = 53,
+                bottomOffset = 51,
+                toolbar = 55 + 20,
+                blockquote = 70 + 20,
+                hr = 1 + 20,
+                height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+
+            height = height - topOffset - bottomOffset - toolbar - blockquote - hr;
+            if (height < 1) {
+                height = 1;
+            }
+            if (height > topOffset) {
+                console.log("resizeAsideBody  with height "+height);
+                $('.tab-content').css('height', height + 'px');
+            }
+        }
+
         $scope.$on('$destroy', function () {
             deregistration();
+            deregistrationSchemaRendered();
             // deregisterFolderSelectModal();
             // deregisterFileImageSelectModal();
             // deregisterFileLicenceSelectModal();
+        });
+
+        // resizeAsideBody();
+
+        angular.element($window).bind('resize', function () {
+            resizeAsideBody();
         });
 
     }]);
