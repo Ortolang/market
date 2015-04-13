@@ -32,5 +32,10 @@ angular.module('ortolangMarketApp')
         LEXICONS: 'Lexicons',
         TOOLS: 'Tools',
         INTEGRATED_PROJECTS: 'Integrated Projects',
-        SELECT_WORKSPACE_ELEMENT: 'Select workspace element'
+        SELECT_WORKSPACE_ELEMENT: 'Select workspace element',
+        404: {
+            TITLE: 'Page not found',
+            BODY: 'Sorry, but we can\'t find the page you are looking for. Maybe you should try heading home.',
+            BUTTON: 'Home'
+        }
     });

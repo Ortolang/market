@@ -33,6 +33,13 @@ angular.module('ortolangMarketApp')
             VIEW_PARAM: 'Voir les paramètres',
             PARAMETERS: 'Paramètres',
             ABORT: 'Annuler',
-            ABORTED: 'est annulé'
+            ABORTED: 'est annulé',
+            TREATED_CONTENT: {
+                WRITTEN: 'Traitement de l\'écrit',
+                ORAL: 'Traitement de l\'oral',
+                VIDEO: 'Traitement vidéo'
+            },
+            FOUND_TOOLS: 'outil(s) trouvé(s)'
+
         }
     });

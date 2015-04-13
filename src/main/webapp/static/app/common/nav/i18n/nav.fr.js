@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
             STATE_SUPPORT: 'ORTOLANG bénéficie d\'une aide de l’Etat au titre du programme « Investissements d’avenir »',
             BACK_TO_TOP: 'Haut de page',
             TEAM: 'Équipe ORTOLANG',
+            404: 'Erreur',
             BETA_VERSION: 'pré-version',
             BETA_VERSION_TOOLTIP: 'ORTOLANG est en cours de développement.<br/>Ainsi certaines fonctionnalités ne sont pas encore accessibles.'
         }

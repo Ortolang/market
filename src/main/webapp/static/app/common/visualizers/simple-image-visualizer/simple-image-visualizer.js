@@ -17,9 +17,9 @@ angular.module('ortolangVisualizers')
                 'image/jpg': true,
                 'image/jpeg': true,
                 'image/png': true,
-                'image/gif': true
-            },
-            needAllChildrenData: true
+                'image/gif': true,
+                'image/svg+xml': true
+            }
         });
 
         VisualizerManagerProvider.$get().register(visualizer);
@@ -38,7 +38,7 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('simpleImageVisualizer', ['$filter', 'Download', function ($filter, Download) {
+    .directive('simpleImageVisualizer', ['Download', function (Download) {
 
         return {
             templateUrl: 'common/visualizers/simple-image-visualizer/simple-image-visualizer.html',
@@ -46,9 +46,7 @@ angular.module('ortolangVisualizers')
             scope: true,
             link: {
                 pre: function (scope, element, attrs) {
-                    if ($filter('filter')(scope.elements, {selected: true}, true).length === 0) {
-                        scope.elements[0].selected = true;
-                    }
+                    scope.elements[0].selected = true;
                     scope.imageElements = [];
                     angular.forEach(scope.elements, function (element) {
                         Download.getDownloadUrl(element).then(function (url) {

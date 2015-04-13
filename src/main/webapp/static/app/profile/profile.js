@@ -8,99 +8,71 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$routeParams', 'ProfileResource', '$filter', '$window', 'User', '$rootScope', '$translate', '$http',
-        function ($scope, $routeParams, ProfileResource, $filter, $window, User, $rootScope, $translate, $http) {
+    .controller('ProfileCtrl', ['$scope', '$rootScope', 'AuthService', '$translate', '$http', 'User', 'Profile', 'icons',
+        function ($scope, $rootScope, AuthService, $translate, $http, User, Profile, icons) {
 
+            var fieldTemplates;
+            $scope.User = User;
+            $scope.icons = icons;
 
-            /*
-             * Route
-             */
-            $scope.section = $routeParams.section;
+            $rootScope.$on('$translateChangeSuccess', function () {
+                $scope.emptyText = $translate.instant('PROFILE.EMPTY');
+            });
 
-            /*
-             * INIT
-             */
+            function initFields() {
+                var result = {},
+                    field,
+                    profileData;
+                angular.forEach(fieldTemplates, function (fieldTemplate, profileDataName) {
+                    profileData = User.getProfileData(profileDataName);
+                    field = {
+                        name: profileDataName,
+                        type: fieldTemplate.type,
+                        helper: fieldTemplate.helper,
+                        alias: fieldTemplate.alias,
+                        forceVisibilities: fieldTemplate.forceVisibilities
+                    };
+                    if (profileData) {
+                        field.value = fieldTemplate.alias ? User[fieldTemplate.alias] : profileData.value;
+                        field.visibility = Profile.getVisibilityOptions()[profileData.visibility];
+                    } else {
+                        field.value = field.alias ? User[field.alias] : '';
+                        field.visibility = fieldTemplate.visibility ? Profile.getVisibilityOptions()[fieldTemplate.visibility] : Profile.getVisibilityOptions().EVERYBODY;
+                    }
+                    result[profileDataName] = field;
+                });
+                $scope.fields = result;
+            }
+
+            $scope.languages = [
+                {value: 'fr', text: 'NAV.LANGUAGE.FRENCH'},
+                {value: 'en', text: 'NAV.LANGUAGE.ENGLISH'}
+            ];
+
+            $scope.civilities = [
+                {value: 'Mme', text: 'PROFILE.CIVILITY.MISSUS'},
+                {value: 'M', text: 'PROFILE.CIVILITY.MISTER'}
+            ];
+
+            $scope.avatars = [
+                {value: '', text: 'PROFILE.FIELDS.DEFAULT_AVATAR'},
+                {value: 'FACEBOOK', text: 'Facebook'},
+                //{value: 'TWITTER', text: 'Twitter'},
+                {value: 'GITHUB', text: 'GitHub'},
+                {value: 'GRAVATAR', text: 'Gravatar'}
+            ];
 
             function init() {
+                $scope.activeTab = 0;
+                $scope.emptyText = $translate.instant('PROFILE.EMPTY');
 
-                $http.get('profile/resources/fields.json')
-                    .then(function(res){
-                        $scope.fields = res.data;
+                $http.get('profile/resources/fields.json').then(function (res) {
+                    fieldTemplates = res.data;
+                    AuthService.sessionInitialized().then(function () {
+                        initFields();
                     });
-
-                $scope.visibilityOptions = [];
-
-                $scope.visibilityOptions = [
-                    {value: 0, label: $translate.instant('PROFILE.VISIBILITY.EVERYBODY'), icon: 'fa fa-unlock'},
-                    {value: 1, label: $translate.instant('PROFILE.VISIBILITY.FRIENDS'), icon: 'fa fa-users'},
-                    {value: 2, label: $translate.instant('PROFILE.VISIBILITY.NOBODY'), icon: 'fa fa-lock'}
-                ];
-                $scope.selectedVisibility = $scope.visibilityOptions[0];
-
-                $scope.lang = [
-                    {value: 'fr', text: $translate.instant('NAV.LANGUAGE.FRENCH')},
-                    {value: 'en', text: $translate.instant('NAV.LANGUAGE.ENGLISH')}
-                ];
-
-                $scope.civilities = [
-                    {value: 'Mme', text: $translate.instant('PROFILE.CIVILITY.MISSUS')},
-                    {value: 'M', text: $translate.instant('PROFILE.CIVILITY.MISTER')}
-                ];
-
-                $http.get('profile/resources/countries.json')
-                    .then(function(res){
-                        $scope.countries = res.data;
-                    });
-
-                $http.get('profile/resources/states.json')
-                    .then(function(res){
-                        $scope.states = res.data;
-                    });
-
-                $scope.avatars = [
-                    {value: 1, text: 'Facebook'},
-                    //{value: 2, text: 'Twitter'},
-                    {value: 3, text: 'GitHub'},
-                    {value: 4, text: 'Gravatar'}
-                ];
-
-                $scope.user = undefined;
-                $scope.user = $scope.$parent.currentUser;
-
+                });
             }
 
             init();
-
-
-            /**
-             * RESIZE CONTAINER
-             */
-
-            $scope.resize = function () {
-                //console.log('Resizing');
-                var profileContainerHeight = angular.element('#profile-container').outerHeight();
-                //console.log('new height : ', profileContainerHeight);
-                angular.element('#main-wrapper').css({'height': profileContainerHeight + 'px'});
-            };
-
-            $scope.$watch(
-                function() {
-                    return angular.element('#profile-content').outerHeight();
-                },
-                function(newValue, oldValue) {
-                    if(newValue !== oldValue) {
-                        $scope.resize();
-                    }
-                }
-            );
-
-            angular.element($window).bind('resize', function () {
-                $scope.resize();
-            });
-        }
-]);
-
-angular.module('ortolangMarketApp')
-    .run(['editableOptions', function(editableOptions) {
-        editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-    }]);
+        }]);

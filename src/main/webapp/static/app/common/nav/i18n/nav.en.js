@@ -42,6 +42,7 @@ angular.module('ortolangMarketApp')
             STATE_SUPPORT: 'ORTOLANG is a beneficiary of French State support via its  “Investissements d\'avenir” program',
             BACK_TO_TOP: 'Back to top',
             TEAM: 'ORTOLANG team',
+            404: 'Error',
             BETA_VERSION: 'beta',
             BETA_VERSION_TOOLTIP: 'ORTOLANG is currently under development.<br/>Some features are thus not yet available.'
         }

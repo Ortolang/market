@@ -8,7 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', function ($scope, ToolManager, $rootScope, $translate) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter',
+        function ($scope, ToolManager, $rootScope, $translate, $http, $filter) {
 
         // ***************** //
         // Editor visibility //
@@ -53,8 +54,27 @@ angular.module('ortolangMarketApp')
             return $scope.selectedTool !== undefined;
         };
 
+        $scope.getSize = function (obj) {
+            var size = 0;
+            for(var k in obj){
+                size++;
+            }
+            return size;
+        };
+
         $scope.loadToolsList = function () {
             $scope.tools = ToolManager.getRegistry();
+            $scope.filteredTools = $scope.tools;
+            //console.log($scope.filteredTools);
+
+            //test
+            $scope.subcategoriesColors = {'misc': '#F0AD4E', 'segmentation': '#5BC0DE', 'étiquetage': '#5CB85C', 'analyse': '#D9534F'};
+            //$http.get('common/tools/data-test.json')
+            //    .then(function(res){
+            //        $scope.tools = res.data;
+            //        $scope.filteredTools = res.data;
+            //    });
+
         };
 
         $scope.loadConfig = function () {
@@ -81,6 +101,53 @@ angular.module('ortolangMarketApp')
                 submitCopy: $translate.instant('TOOLS.RUN_TOOL')
             };
             $scope.formOptionsCopy = angular.copy($scope.formOptions);
+        };
+
+        // Tool List search/filter
+
+        $scope.search = function (data) {
+            var filtered = [];
+            if (data !== '' && data !== undefined) {
+                var searchTerms = data.split(' ');
+                searchTerms.forEach(function(term) {
+                    if (term && term.length) {
+                        term = $filter('removeAccents')(term);
+                        //var tmpFiltered = $filter('filter')($scope.tools, term);
+                        var tmpFiltered = $filter('filter')($scope.tools, function (tool) {
+                            var toolNoAccent =  $filter('removeAccents')(JSON.stringify(tool).toLowerCase());
+                            if(toolNoAccent.search(term.toLowerCase()) !== -1) {
+                                return tool;
+                            }
+                        });
+                        filtered = filtered.concat(tmpFiltered);
+                    }
+                });
+            } else {
+                filtered = $scope.tools;
+            }
+            $scope.filteredTools = filtered;
+        };
+
+
+        $scope.filter = function (filterID, filterValue, filterTranslation) {
+            if (filterID && filterValue) {
+                if (filterID === 'content') {
+                    var registry = ToolManager.toArray($scope.tools);
+                    $scope.filteredTools = $filter('filter')(registry, { 'content' : filterValue});
+                    $scope.selectedType = filterValue;
+                    $scope.selectedTypeTranslation = filterTranslation;
+                } else {
+                    $scope.filteredTools = $filter('filter')($scope.tools, {'meta': {filterID: filterValue}});
+                }
+            }
+        };
+
+
+        $scope.resetFilter = function () {
+            $scope.filteredTools = angular.copy($scope.tools);
+            $scope.selectedType = '';
+            $scope.searchContent = '';
+            $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
         };
 
 
@@ -128,7 +195,9 @@ angular.module('ortolangMarketApp')
         };
 
         function init() {
-            $scope.tools = [];
+            $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
+            $scope.tools = {};
+            $scope.searchContent = '';
             $scope.loadToolsList();
             $scope.selectedTool = undefined;
         }

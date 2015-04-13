@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'DownloadResource', 'JsonResultResource',
-        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, DownloadResource, JsonResultResource) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'QueryBuilderService',
+        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, DownloadResource, JsonResultResource, QueryBuilderService) {
 
             // ---
             // ORTOLANG TOOL DEFINITION
@@ -26,6 +26,8 @@ angular.module('ortolangMarketApp')
                 this.url = undefined;
                 this.config = undefined;
                 this.active = undefined;
+                this.content = undefined;
+                this.categories = undefined;
 
                 angular.forEach(config, function (value, key) {
                     if (this.hasOwnProperty(key)) {
@@ -100,6 +102,14 @@ angular.module('ortolangMarketApp')
 
                 getUrl: function () {
                     return this.url;
+                },
+
+                getContent: function () {
+                    return this.content;
+                },
+
+                getCategories: function () {
+                    return this.categories;
                 },
 
                 getResource: function () {
@@ -191,28 +201,48 @@ angular.module('ortolangMarketApp')
 
             function populateToolList() {
 
-                var queryStr = 'select key, meta.title as title, meta.description as description, meta.toolId as toolId, meta.toolHelp as toolHelp, meta.toolUrl as toolUrl from collection where status = \'published\' and meta.type = \'Outil\' ';
-                console.log(queryStr);
-                JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
-                        
-                        angular.forEach(angular.fromJson(jsonResults), function (itemMeta) {
-                            var item = {};
-                            
-                            var data = angular.fromJson(itemMeta);
-                            item.key = data.key;
-                            item.id = data.toolId;
-                            item.name = data.title;
-                            item.description = data.description;
-                            item.documentation = data.toolHelp;
-                            item.url = data.toolUrl;
-                            item.meta = data;
-                            item.active = true;
+                var queryBuilder = QueryBuilderService.make(
+                    {
+                        projection:
+                        'key, meta.title as title, ' +
+                        'meta.description as description, ' +
+                        'meta.image as image, ' +
+                        'meta.toolId as toolId, ' +
+                        'meta.toolHelp as toolHelp, ' +
+                        'meta.toolUrl as toolUrl, ' +
+                        'meta.toolContent as toolContent, ' +
+                        'meta.toolCategory as toolCategory',
+                        source: 'collection'
+                    });
+                queryBuilder.equals('status', 'published');
+                queryBuilder.and();
+                queryBuilder.equals('meta.type', 'Outil');
 
-                            register(new OrtolangTool(item));
-                            console.log('register '+item.name);
-                        });
-                        console.log('fin populate tool list');
-                        $rootScope.$broadcast('tool-list-registered');
+                var query = queryBuilder.toString();
+                console.log('query : ' + query);
+                JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                    angular.forEach(jsonResults, function(itemMeta) {
+                        var item = {};
+
+                        var data = angular.fromJson(itemMeta);
+                        item.key = data.key;
+                        item.id = data.toolId;
+                        item.name = data.title;
+                        item.description = data.description;
+                        item.documentation = data.toolHelp;
+                        item.url = data.toolUrl;
+                        item.content = data.toolContent;
+                        item.categories = data.toolCategory;
+                        item.meta = data;
+                        if(item.url !== undefined && item.url !== '') {
+                            item.active = true;
+                        }
+
+                        register(new OrtolangTool(item));
+                        console.log('register '+item.name);
+                    });
+                    console.log('fin populate tool list');
+                    $rootScope.$broadcast('tool-list-registered');
 
                 }, function (reason) {
                     console.error('An issue occurred when trying to get the tool list: %o', reason);
@@ -232,6 +262,17 @@ angular.module('ortolangMarketApp')
                 return registry[toolKey];
             }
 
+            function getKeys() {
+                return Object.keys(registry);
+            }
+
+            function toArray(obj) {
+                var output = [];
+                Object.keys(obj).forEach(function (key) {
+                    output.push(getTool(key));
+                });
+                return output;
+            }
 
             function checkPopup(toolKey, deferred) {
                 if (grantPopup.closed) {
@@ -271,6 +312,7 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+
             // *********************** //
             //           Init          //
             // *********************** //
@@ -286,6 +328,8 @@ angular.module('ortolangMarketApp')
                 getActiveTools: getActiveTools,
                 getTool: getTool,
                 disableTool: disableTool,
-                checkGrant: checkGrant
+                checkGrant: checkGrant,
+                getKeys: getKeys,
+                toArray: toArray
             };
         }]);

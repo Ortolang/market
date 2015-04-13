@@ -14,7 +14,7 @@
   z-index: 1000;
   background-color: @default-bg;
   display: none;
-  border-top: 1px solid @navbar-default-border;
+  border-top: @default-border;
 
   &.active {
     display: block;
@@ -22,5 +22,9 @@
 
   h4 {
     display: inline;
+  }
+
+  .progress {
+    margin-bottom: 0;
   }
 }
