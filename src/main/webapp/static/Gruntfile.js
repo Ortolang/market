@@ -314,7 +314,7 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{ico,png,txt}',
+                        '*.{ico,png,txt,json,xml}',
                         '**/*.html',
                         'assets/**/*',
                         'fonts/**/*',
@@ -571,11 +571,14 @@ module.exports = function (grunt) {
                     'model',
                     'auto-complete',
                     'required',
-                    'aria-expanded'
+                    'aria-expanded',
+                    'profile-data-field',
+                    'multi-avatar'
                 ],
                 relaxerror: [
                     'Bad value',
-                    'A table row was 8 columns wide and exceeded the column count established by the first row (7).'
+                    'Element img is missing required attribute src.',
+                    'A table row was 7 columns wide and exceeded the column count established by the first row (6).'
                 ],
                 reportpath: 'target/html-angular-validate-report.json',
                 w3clocal: 'http://localhost/w3c-validator/check'
@@ -593,8 +596,9 @@ module.exports = function (grunt) {
                 reset: grunt.option('reset') || false,
                 stoponerror: false,
                 relaxerror: [
-                    //'Bad value X-UA-Compatible for attribute http-equiv on element meta.',
-                    //'Attribute value using wrong case character'
+                    'Attribute ng-controller not allowed on element body at this point',
+                    'Attribute ng-include not allowed on element div at this point.',
+                    'Element main not allowed'
                 ],
                 serverUrl: 'http://localhost/w3c-validator/check'
             },
