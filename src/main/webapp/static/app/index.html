@@ -6,7 +6,24 @@
     <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
     <title>ORTOLANG</title>
 
-    <link rel="icon shortcut" href="assets/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="styles/custom-bootstrap.css" />
     <!-- build:css(.) styles/vendor.css -->
@@ -34,9 +51,7 @@
 
 <div id="top-nav-wrapper" ng-include="'common/nav/top-nav.html'"></div>
 <div id="side-nav-wrapper" ng-include="'common/nav/side-nav.html'"></div>
-<div id="main-wrapper">
-    <main ng-view="" class="ng-cloak" ng-cloak></main>
-</div>
+<main id="main-wrapper" ng-view role="main" ng-cloak></main>
 <div id="footer-wrapper" ng-include="footerPath()"></div>
 
 <!--[if lt IE 10]>
@@ -75,7 +90,6 @@
 <script src="bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js"></script>
 <script src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
 <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-<script src="bower_components/google-diff-match-patch/javascript/diff_match_patch_uncompressed.js"></script>
 <script src="bower_components/angular-diff-match-patch/angular-diff-match-patch.js"></script>
 <script src="bower_components/holderjs/holder.js"></script>
 <script src="bower_components/keycloak/dist/keycloak.js"></script>
@@ -125,6 +139,9 @@
 <script src="common/directives/multi-avatar.js"></script>
 <script src="common/directives/editable-text-area.js"></script>
 <script src="common/directives/toggle-visibility.js"></script>
+<script src="common/directives/google-auto-complete.js"></script>
+<script src="common/directives/xeditable-address.js"></script>
+<script src="common/directives/profile-data-field.js"></script>
 <script src="common/directives/i18n/browser.fr.js"></script>
 <script src="common/directives/i18n/browser.en.js"></script>
 <script src="common/formly/formly-file-select.js"></script>
@@ -154,6 +171,7 @@
 <script src="common/services/metadatamanager.js"></script>
 <script src="common/services/visualizer-manager.js"></script>
 <script src="common/services/file-select-browser.js"></script>
+<script src="common/services/profile.js"></script>
 <script src="common/tools/tool-manager.js"></script>
 <script src="common/visualizers/simple-audio-visualizer/simple-audio-visualizer.js"></script>
 <script src="common/visualizers/simple-image-visualizer/simple-image-visualizer.js"></script>
@@ -208,10 +226,11 @@
 <script src="profile/events.js"></script>
 <script src="profile/publications.js"></script>
 <script src="profile/contributions.js"></script>
-<script src="profile/personal-infos.js"></script>
-<script src="profile/settings.js"></script>
-<script src="profile/about-me.js"></script>
 <script src="profile/friends.js"></script>
+<script src="common/schema-form/tablearray.js"></script>
+<script src="common/schema-form/bootstrap-tablearray.js"></script>
+<script src="common/schema-form/vertical-tab/bootstrap-vertical-tab.js"></script>
 <!-- endbuild -->
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 </body>
 </html>

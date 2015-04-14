@@ -79,10 +79,15 @@ angular
                 controller: 'InformationCtrl',
                 reloadOnSearch: false
             })
-            .when('/profile/:section', {
+            .when('/profile/', {
                 templateUrl: 'profile/profile.html',
                 controller: 'ProfileCtrl',
-                requiresAuthentication: true
+                requiresAuthentication: true,
+                resolve: {
+                    func: ['AuthService', function (AuthService) {
+                        return AuthService.sessionInitialized;
+                    }]
+                }
             })
             .when('/404', {
                 templateUrl: '404.html'
@@ -112,6 +117,15 @@ angular
         uiZeroclipConfigProvider.setZcConf({
             swfPath: '/vendor/ZeroClipboard.swf'
         });
+    }])
+    .run(['editableOptions', 'editableThemes', function (editableOptions, editableThemes) {
+        var copy = editableThemes.bs3;
+        copy.formTpl = '<form class="" role="form"></form>';
+        copy.controlsTpl = '<div class="editable-controls input-group" ng-class="{\'has-error\': $error}"></div>';
+        copy.buttonsTpl = '<span class="input-group-btn"></span>';
+        copy.submitTpl = '<button type="submit" class="btn btn-default"><span></span></button>';
+        editableThemes.bs3 = copy;
+        editableOptions.theme = 'bs3';
     }]);
 
 

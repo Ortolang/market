@@ -1,6 +1,7 @@
 .profile {
   .list-group-item {
     border: none;
+    cursor: pointer;
   }
   .list-group-item:first-child {
     border-top-right-radius: 0;
@@ -52,14 +53,63 @@
     padding-bottom: 5px;
   }
 
-  #formSettings .editable-buttons {
-    margin-top: -5px;
+  .profile-settings-form {
+    .editable-input, .editable-select {
+      width: 100%;
+    }
+  }
+  .help-block {
+    padding-left: 59px;
   }
 
-  #formSettings .editable-input, #formSettings .editable-select {
-    width:100%;
-    margin-top: -5px;
+  .user-avatar {
+    margin-bottom: 3 * @padding-large-vertical;
   }
+
+  .visibility-options li a {
+    padding-right: 42px;
+    position: relative;
+    .visibility-selected-option {
+      position: absolute;
+      text-align: center;
+      top: 8px;
+      right: 0;
+    }
+  }
+
+  .editable-error {
+    .text-emphasis-variant(@state-danger-text);
+    font-weight: bold;
+  }
+
+  .input-group {
+    select {
+      -webkit-appearance: none;
+    }
+    .editable-input {
+      width: 100%;
+    }
+  }
+  .profile-data-visibility {
+    margin-left: -(@grid-gutter-width / 2);
+    margin-right: @grid-gutter-width / 2;
+  }
+
+  .well {
+    border: none;
+    background-color: @default-bg;
+
+    box-shadow: none;
+  }
+}
+
+.xeditable-placeholder {
+  padding-top: (@padding-base-vertical + 1);
+  display: inline-block;
+}
+
+.editable-wrap .editable-controls {
+  margin-left: 0;
 }
 
 .ta-scroll-window > .ta-bind, .ta-editor.ta-html, .ta-scroll-window.form-control {
@@ -71,3 +121,6 @@
   margin-right: 5px;
 }
 
+.profile-toolbar {
+  margin-bottom: 4 * @padding-large-vertical;
+}

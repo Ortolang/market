@@ -11,6 +11,9 @@ angular.module('ortolangMarketApp')
     .factory('WorkspaceResource', ['$resource', 'Url', function ($resource, Url) {
 
         return $resource(Url.urlBase() + '/rest/workspaces/:wskey', {}, {
+            createWorkspace: {
+                method: 'POST'
+            },
             query: {
                 method: 'GET',
                 isArray: false

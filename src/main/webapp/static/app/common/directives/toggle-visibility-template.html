@@ -1,14 +1,14 @@
-<div class="btn-group">
-    <button type="button" class="btn dropdown-toggle" ng-class="dropdownToggleClass" data-toggle="dropdown"
-            bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{bindableSelectedOption.label}}">
-        <span ng-class="bindableSelectedOption.icon" ng-if="bindableSelectedOption.icon"></span>
+<div class="btn-group profile-data-visibility">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+            bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{profileData.visibility.label | translate}}">
+        <span ng-class="profileData.visibility.icon"></span>
     </button>
-    <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="option in bindableOptions">
+    <ul class="dropdown-menu visibility-options" role="menu">
+        <li ng-repeat="option in options track by option.value">
             <a ng-click="selectOption(option)">
                 <span ng-class="option.icon" ng-if="option.icon"></span>
-                <span ng-bind="option.label"></span>
-                <span class="glyphicon glyphicon-ok icon-ok check-mark" ng-if="option === bindableSelectedOption"></span>
+                <span ng-bind="option.label | translate"></span>
+                <span class="glyphicon glyphicon-ok visibility-selected-option" ng-if="option.value === profileData.visibility.value"></span>
             </a>
         </li>
     </ul>

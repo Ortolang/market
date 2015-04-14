@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$route', 'User', 'AuthService', 'ProfileResource', '$filter', function ($scope, $route, User, AuthService, ProfileResource, $filter) {
+    .controller('AuthCtrl', ['$scope', '$route', 'User', 'AuthService', 'ProfileResource', '$translate', function ($scope, $route, User, AuthService, ProfileResource, $translate) {
 
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
@@ -19,44 +19,37 @@ angular.module('ortolangMarketApp')
                     profile.email = AuthService.getKeycloak().idTokenParsed.email;
                     ProfileResource.put({}, profile);
                 }
-                // INIT avatar & settings
-                var avatarIds = [
-                    { id: '1', name: 'facebook', value: ''},
-                    //{ id: '2', name: 'twitter', value: ''},
-                    { id: '3', name: 'github', value: profile.key},
-                    { id: '4', name: 'gravatar', value: profile.email}
-                ];
-                profile.favoriteAvatar = '0';
-                profile.avatarIds = [];
-                ProfileResource.getInfos({userId: profile.key}, 'settings').$promise.then(
-                    function success(settings) {
-                        if (settings.size > 0) {
-                            angular.forEach(settings.entries, function (setting) {
-                                var settingName = setting.name.split('.');
-                                if (settingName[1] === 'avatar') {
-                                    profile.favoriteAvatar = setting.value;
-                                }
-                            });
-                            angular.forEach(avatarIds, function (avatarId) {
-                                var itemSetting = $filter('filter')(settings.entries, {name: 'settings.' + avatarId.name}, true);
-                                if (itemSetting.length <= 0) {
-                                    profile.avatarIds.push(avatarId);
-                                } else {
-                                    profile.avatarIds.push({
-                                        id: avatarId.id,
-                                        name: avatarId.name,
-                                        value: itemSetting[0].value
-                                    });
-                                }
-                            });
-                        } else {
-                            profile.avatarIds = avatarIds;
-                        }
-                        $scope.currentUser = User.create(profile);
+                User.preInit(profile);
+                var avatarIds = {
+                    'FACEBOOK': {id: 'FACEBOOK', name: 'facebook', value: ''},
+                    //{ id: 'TWITTER', name: 'twitter', value: ''},
+                    'GITHUB': {id: 'GITHUB', name: 'github', value: profile.key},
+                    'GRAVATAR': {id: 'GRAVATAR', name: 'gravatar', value: profile.email}
+                };
+                ProfileResource.getInfos({key: profile.key}).$promise.then(
+                    function success(data) {
+                        profile.avatarIds = [];
+                        profile.profileDatas = {};
+                        angular.forEach(data.entries, function (profileData) {
+                            profile.profileDatas[profileData.name] = profileData;
+                        });
+                        User.create(profile);
+                        User.avatarIds = {};
+                        angular.forEach(avatarIds, function (avatarId) {
+                            var itemSetting = User.getProfileData(avatarId.name);
+                            User.avatarIds[avatarId.id] = avatarId;
+                            if (itemSetting) {
+                                User.avatarIds[avatarId.id].value = itemSetting.value;
+                            }
+                        });
+                        var favoriteAvatar = User.getProfileData('avatar');
+                        User.favoriteAvatar = favoriteAvatar ? favoriteAvatar.value : 'GITHUB';
+                        AuthService.resolveSessionInitialized();
                     },
                     function error() {
                         profile.avatarIds = avatarIds;
-                        $scope.currentUser = User.create(profile);
+                        User.create(profile);
+                        AuthService.resolveSessionInitialized();
                     }
                 );
             });
@@ -65,8 +58,8 @@ angular.module('ortolangMarketApp')
         /**
          * Update default avatar
          */
-        $scope.$on('updateDefaultAvatar', function(event, data) {
-            $scope.currentUser.favoriteAvatar = data;
+        $scope.$on('updateDefaultAvatar', function (event, data) {
+            User.favoriteAvatar = data;
         });
 
         /**

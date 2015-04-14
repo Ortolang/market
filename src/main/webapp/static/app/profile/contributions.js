@@ -8,10 +8,10 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributionsCtrl', ['$scope', 'ObjectResource', 'DownloadResource',
-        function ($scope, ObjectResource, DownloadResource) {
+    .controller('ContributionsCtrl', ['$scope', 'User', 'ObjectResource', 'DownloadResource',
+        function ($scope, User, ObjectResource, DownloadResource) {
 
-            angular.forEach($scope.user.userMember, function(key) {
+            angular.forEach(User.groups, function (key) {
                 ObjectResource.get({oKey: key}).$promise.then(function (oobject) {
                     $scope.oobject = oobject;
                     $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});

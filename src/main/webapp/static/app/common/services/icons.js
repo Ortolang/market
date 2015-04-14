@@ -33,6 +33,10 @@ angular.module('ortolangMarketApp')
                 metadata: 'glyphicon glyphicon-list-alt',
                 unknown: 'glyphicon glyphicon-minus'
             },
+            // Visibility
+            everybody: 'fa fa-fw fa-globe',
+            friends: 'fa fa-fw fa-users',
+            nobody: 'fa fa-fw fa-lock',
             // Browser
             browser: {
                 home: 'glyphicon glyphicon-home',

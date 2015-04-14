@@ -11,91 +11,89 @@
             </div>
         </div>
     </div>
-        <section ng-if="section==='news'" class="row">
-            <div class="col-md-8">
-                <h3 class="ortolang-title" translate="ORTOLANG"></h3>
-            </div>
-            <div class="clearfix visible-xs-block"></div>
-            <div class="col-md-8">
+    <section ng-if="section==='news'" class="row">
+        <div class="col-md-8">
+            <h3 class="ortolang-title" translate="ORTOLANG"></h3>
+        </div>
+        <div class="clearfix visible-xs-block"></div>
+        <div class="col-md-8">
+            <hr/>
+            <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="news-well well">
+                <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'INFORMATION.NEWS' | translate}}</p>
                 <hr/>
-                <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
+                <p translate="INFORMATION.INNOVATIVE_SHS"></p>
+                <p><a class="btn btn-sm btn-default" href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank"><span class="fa fa-fw fa-plus"></span> {{'INFORMATION.MORE' | translate}}...</a></p>
+                <hr/>
+                <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="resources/Lettre_information_ORTOLANG.pdf" target="_blank">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
+                <p><a class="btn btn-sm btn-default" href="/#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
             </div>
-            <div class="col-md-4">
-                <div class="news-well well">
-                    <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'INFORMATION.NEWS' | translate}}</p>
-                    <hr/>
-                    <p translate="INFORMATION.INNOVATIVE_SHS"></p>
-                    <p><a class="btn btn-sm btn-default" href="http://www.cvt-athena.fr/actualites/evenements-a-venir/78-seconde-edition-du-salon-innovatives-shs-en-partenariat-entre-l-inshs-et-le-cvt-athena-les-16-et-17-juin-2015.html" target="_blank"><span class="fa fa-fw fa-plus"></span> {{'INFORMATION.MORE' | translate}}...</a></p>
-                    <hr/>
-                    <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="resources/Lettre_information_ORTOLANG.pdf" target="_blank">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
-                    <p><a class="btn btn-sm btn-default" href="/#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
+            <div class="media small marianne" >
+                <div class="media-body text-center">
+                    <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
+                    <i>ORTOLANG ISSN 2417&ndash;7482</i>
                 </div>
-                <div class="media small marianne" >
-                    <div class="media-body text-center">
-                        <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
-                        <i>ORTOLANG ISSN 2417&ndash;7482</i>
-                    </div>
-                    <div class="media-right">
-                        <img src="assets/images/mariane-avenir.png"/>
-                    </div>
+                <div class="media-right">
+                    <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section ng-if="section==='news' && items.length>0" class="row">
-            <div class="col-md-12">
-                <header>
-                    <h3 translate="MARKET.NEW_RESOURCES"></h3>
-                </header>
-                <div class="flex-row">
-                    <item class="flex-column medium-item" ng-repeat="item in items" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-                </div>
+    <section ng-if="section==='news' && items.length>0" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3 translate="MARKET.NEW_RESOURCES"></h3>
+            </header>
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
-        </section>
-        <section ng-if="section==='corpora' && items.length>0" class="row">
-            <div class="col-md-12">
-                <header>
-                    <h3 translate="CORPORA"></h3>
-                </header>
+        </div>
+    </section>
+    <section ng-if="section==='corpora' && items.length>0" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3 translate="CORPORA"></h3>
+            </header>
 
-                <div class="flex-row">
-                    <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-                </div>
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
-        </section>
-        <section ng-if="section==='tools' && items.length>0" class="row">
-            <div class="col-md-12">
-                <header>
-                    <h3 translate="TOOLS"></h3>
-                </header>
+        </div>
+    </section>
+    <section ng-if="section==='tools' && items.length>0" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3 translate="TOOLS"></h3>
+            </header>
 
-                <div class="flex-row">
-                    <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-                </div>
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
-        </section>
-        <section ng-if="section==='lexicons' && items.length>0" class="row">
-            <div class="col-md-12">
-                <header>
-                    <h3 translate="LEXICONS"></h3>
-                </header>
+        </div>
+    </section>
+    <section ng-if="section==='lexicons' && items.length>0" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3 translate="LEXICONS"></h3>
+            </header>
 
-                <div class="flex-row">
-                    <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-                </div>
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
-        </section>
-        <section ng-if="section==='websites' && items.length>0" class="row">
-            <div class="col-md-12">
-                <header>
-                    <h3 translate="INTEGRATED_PROJECTS"></h3>
-                </header>
+        </div>
+    </section>
+    <section ng-if="section==='websites' && items.length>0" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3 translate="INTEGRATED_PROJECTS"></h3>
+            </header>
 
-                <div class="flex-row">
-                    <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-                </div>
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
-        </section>
-
-    <!--</div>-->
+        </div>
+    </section>
 </div>

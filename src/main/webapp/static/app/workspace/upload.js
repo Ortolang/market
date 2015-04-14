@@ -90,7 +90,7 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                console.info(fileItem.file.name + ' successfully uploaded', fileItem, response, status, headers);
+                //console.info(fileItem.file.name + ' successfully uploaded', fileItem, response, status, headers);
                 if (fileItem.ortolangType === 'object') {
                     $rootScope.$emit('uploaderCompleteItemUpload');
                     $timeout(function () {
@@ -98,7 +98,7 @@ angular.module('ortolangMarketApp')
                         if (uploader.queue.length === 0) {
                             $rootScope.deactivateUploadQueue();
                         }
-                    }, 800);
+                    }, 1500);
                 } else if (fileItem.ortolangType === 'metadata') {
                     $rootScope.$emit('completeMetadataUpload');
                 }

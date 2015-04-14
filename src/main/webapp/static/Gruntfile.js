@@ -124,7 +124,8 @@ module.exports = function (grunt) {
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
+                reporter: require('jshint-stylish'),
+                force: true
             },
             all: {
                 src: [
@@ -313,7 +314,7 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{ico,png,txt}',
+                        '*.{ico,png,txt,json,xml}',
                         '**/*.html',
                         'assets/**/*',
                         'fonts/**/*',
@@ -517,6 +518,94 @@ module.exports = function (grunt) {
                         src: ['scripts/scripts.js', 'index.html', 'common/nav/footer.html'],
                         dest: '<%= yeoman.dist %>/'
                     }
+                ]
+            }
+        },
+
+        htmlangular: {
+            options: {
+                tmplext: 'html',
+                concurrentJobs: '3',
+                customtags: [
+                    'formly-form',
+                    'item',
+                    'multi-avatar',
+                    'sparql-select',
+                    'toggle-switch'
+                ],
+                customattrs: [
+                    'translate',
+                    'browser',
+                    'hljs',
+                    'source',
+                    'holder-js',
+                    'bs-tooltip',
+                    'bs-active-pane',
+                    'bs-pane',
+                    'bs-tabs',
+                    'toggle-visibility',
+                    'editable-text',
+                    'editable-textarea',
+                    'editable-email',
+                    'editable-url',
+                    'editable-number',
+                    'editable-select',
+                    'editable-radiolist',
+                    'e-ng-options',
+                    'e-name',
+                    'e-placeholder',
+                    'e-value',
+                    'e-pattern',
+                    'buttons',
+                    'nv-file-over',
+                    'nv-file-drop',
+                    'uploader',
+                    'options',
+                    'show-errors',
+                    'sf-schema',
+                    'sf-form',
+                    'sf-model',
+                    'sparql',
+                    'placeholder',
+                    'name',
+                    'model',
+                    'auto-complete',
+                    'required',
+                    'aria-expanded',
+                    'profile-data-field',
+                    'multi-avatar'
+                ],
+                relaxerror: [
+                    'Bad value',
+                    'Element img is missing required attribute src.',
+                    'A table row was 7 columns wide and exceeded the column count established by the first row (6).'
+                ],
+                reportpath: 'target/html-angular-validate-report.json',
+                w3clocal: 'http://localhost/w3c-validator/check'
+            },
+            files: {
+                src: [
+                    '<%= yeoman.app %>/*/*.html',
+                    '<%= yeoman.app %>/404.html'
+                ]
+            }
+        },
+
+        validation: {
+            options: {
+                reset: grunt.option('reset') || false,
+                stoponerror: false,
+                relaxerror: [
+                    'Attribute ng-controller not allowed on element body at this point',
+                    'Attribute ng-include not allowed on element div at this point.',
+                    'Element main not allowed'
+                ],
+                serverUrl: 'http://localhost/w3c-validator/check'
+            },
+            files: {
+                src: [
+                    '<%= yeoman.app %>/index.html',
+                    '<%= yeoman.app %>/ie.html'
                 ]
             }
         }

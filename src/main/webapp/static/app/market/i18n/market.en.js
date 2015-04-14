@@ -47,6 +47,7 @@ angular.module('ortolangMarketApp')
             LICENCE_DETAIL: 'License information',
             DEROGATION: 'Code du patrimoine',
             RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}',
-            SITE: 'Website'
+            SITE: 'Website',
+            THUMBNAIL: 'Thumbnail'
         }
     });

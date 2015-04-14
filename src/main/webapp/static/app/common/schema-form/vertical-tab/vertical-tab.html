@@ -1,0 +1,20 @@
+<div ng-init="selected = { tab: 0 }" 
+    class="schema-form-verticaltab {{form.htmlClass}}">
+    <ul class="nav nav-pills nav-stacked nav-metadata">
+        <li ng-repeat="tab in form.tabs" 
+            ng-disabled="form.readonly"
+            ng-class="{active :selected.tab === $index}" 
+            ng-click="$event.preventDefault() || (selected.tab = $index)">
+            <a href="#" ng-bind="tab.title"></a>
+        </li>
+    </ul>
+    
+    <div id="metadata-form-panels">
+        <div class="metadata-form-panel" 
+            ng-disabled="form.readonly"
+            ng-repeat="tab in form.tabs"
+            ng-show="selected.tab === $index">
+            <bootstrap-decorator ng-repeat="tabItem in tab.items" form="tabItem"></bootstrap-decorator>
+        </div>
+    </div>
+</div>

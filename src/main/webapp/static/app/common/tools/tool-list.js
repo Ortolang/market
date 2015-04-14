@@ -65,7 +65,7 @@ angular.module('ortolangMarketApp')
         $scope.loadToolsList = function () {
             $scope.tools = ToolManager.getRegistry();
             $scope.filteredTools = $scope.tools;
-            console.debug($scope.filteredTools);
+            //console.log($scope.filteredTools);
 
             //test
             //$scope.subcategoriesColors = {'misc': '#F0AD4E', 'segmentation': '#5BC0DE', 'étiquetage': '#5CB85C', 'analyse': '#D9534F'};
