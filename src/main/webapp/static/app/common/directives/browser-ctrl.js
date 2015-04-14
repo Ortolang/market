@@ -936,8 +936,12 @@ angular.module('ortolangMarketApp')
                         getParentData();
                         $scope.settings.wskey = workspace.key;
                         storeSettings();
-                    } else if ($scope.path !== '/') {
-                        $scope.browseToPath('/');
+                    } else {
+                        if ($scope.path !== '/') {
+                            $scope.browseToPath('/');
+                        } else {
+                            deselectChildren();
+                        }
                     }
                 }
             };
