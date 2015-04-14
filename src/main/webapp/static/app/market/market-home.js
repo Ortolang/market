@@ -38,25 +38,25 @@ angular.module('ortolangMarketApp')
         }
 
         function searchType(type) {
-            var queryBuilder = QueryBuilderService.make({projection: 'key, meta.title as title, meta.description as description, meta.image as image, meta.applicationUrl as applicationUrl', source: 'collection'});
+            var queryBuilder = QueryBuilderService.make({projection: 'key, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl', source: 'collection'});
 
             queryBuilder.equals('status', 'published');
 
             if(type==='corpora') {
                 queryBuilder.and();
-                queryBuilder.equals('meta.type', 'Corpus');
+                queryBuilder.equals('meta_ortolang-item-json.type', 'Corpus');
             } else if(type==='websites') {
                 queryBuilder.and();
-                queryBuilder.equals('meta.type', 'Site web');
+                queryBuilder.equals('meta_ortolang-item-json.type', 'Site web');
             } else if(type==='lexicons') {
                 queryBuilder.and();
-                queryBuilder.equals('meta.type', 'Lexique');
+                queryBuilder.equals('meta_ortolang-item-json.type', 'Lexique');
             } else if(type==='tools') {
                 queryBuilder.and();
-                queryBuilder.equals('meta.type', 'Outil');
+                queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
             } else if(type==='news') {
                 queryBuilder.and();
-                queryBuilder.in('meta.title', ['Littéracie Avancée', 'Corpus14', 'Comere']);
+                queryBuilder.in('meta_ortolang-item-json.title', ['Littéracie Avancée', 'Corpus14', 'Comere']);
             }
 
             var query = queryBuilder.toString();

@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
 
         function loadObjects(content) {
 
-            var queryBuilder = QueryBuilderService.make({projection: 'key, meta.type as type, meta.title as title, meta.description as description, meta.producer as producer', source: 'collection'});
+            var queryBuilder = QueryBuilderService.make({projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.producer as producer', source: 'collection'});
 
             queryBuilder.equals('status', 'published');
 
@@ -50,11 +50,11 @@ angular.module('ortolangMarketApp')
             if (contentSplit.length > 0) {
                 angular.forEach(contentSplit, function (contentPart) {
                     queryBuilder.and();
-                    queryBuilder.containsText('meta.*', contentPart);
+                    queryBuilder.containsText('meta_ortolang-item-json.*', contentPart);
                 });
             } else {
                 queryBuilder.and();
-                queryBuilder.containsText('meta.*', content);
+                queryBuilder.containsText('meta_ortolang-item-json.*', content);
             }
 
             var query = queryBuilder.toString();
