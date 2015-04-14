@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$http', '$timeout', 'FileUploader', 'Url', 'AuthService',
-        function ($scope, $rootScope, $http, $timeout, FileUploader, Url, AuthService) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', 'FileUploader', 'Url', 'AuthService',
+        function ($scope, $rootScope, $window, $timeout, FileUploader, Url, AuthService) {
 
             var uploader;
 
@@ -21,14 +21,16 @@ angular.module('ortolangMarketApp')
                     autoUpload: true,
                     removeAfterUpload: false,
                     queueLimit: 100,
-                    filters: [{
-                        name: 'noFolder',
-                        fn: function (item) {
-                            return item.type.length !== 0 ||
-                                (item.name.indexOf('.') !== -1 && item.name.lastIndexOf('.') + 5 >= item.name.length - 1);
+                    filters: [
+                        {
+                            name: 'noFolder',
+                            fn: function (item) {
+                                return !(!item.type && (this.isMacOs || item.size % 4096 === 0));
+                            }
                         }
-                    }]
+                    ]
                 });
+                uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
             }
 
             $rootScope.toggleUploadQueueStatus = function () {
@@ -90,7 +92,6 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                //console.info(fileItem.file.name + ' successfully uploaded', fileItem, response, status, headers);
                 if (fileItem.ortolangType === 'object') {
                     $rootScope.$emit('uploaderCompleteItemUpload');
                     $timeout(function () {
