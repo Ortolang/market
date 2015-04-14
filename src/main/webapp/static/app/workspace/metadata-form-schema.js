@@ -48,14 +48,14 @@ angular.module('ortolangMarketApp')
 
         var deregistrationSchemaRendered = $rootScope.$on('sf-render-finished', function (event, schema) {
             console.log("render finished");
-            resizeAsideBody();
+            resizeMetadataPanel();
         });
         // *********************** //
         //          Resize         //
         // *********************** //
 
-        function resizeAsideBody() {
-            console.log("resizeAsideBody");
+        function resizeMetadataPanel() {
+            console.log("resizeMetadataPanel");
             var topOffset = 53,
                 bottomOffset = 51,
                 toolbar = 55 + 20,
@@ -68,23 +68,18 @@ angular.module('ortolangMarketApp')
                 height = 1;
             }
             if (height > topOffset) {
-                console.log("resizeAsideBody  with height "+height);
-                $('.tab-content').css('height', height + 'px');
+                
+                $('.metadata-form-panel').css('height', height + 'px');
             }
         }
 
         $scope.$on('$destroy', function () {
             deregistration();
             deregistrationSchemaRendered();
-            // deregisterFolderSelectModal();
-            // deregisterFileImageSelectModal();
-            // deregisterFileLicenceSelectModal();
         });
 
-        // resizeAsideBody();
-
-        angular.element($window).bind('resize', function () {
-            resizeAsideBody();
+        angular.element($window).bind('load resize', function () {
+            resizeMetadataPanel();
         });
 
     }]);
