@@ -930,16 +930,20 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.changeWorkspace = function (workspace) {
-                if (!$scope.forceWorkspace && workspace.key !== $scope.wskey) {
-                    initWorkspaceVariables(workspace);
-                    getParentData();
-                    $scope.settings.wskey = workspace.key;
-                    storeSettings();
+                if (!$scope.forceWorkspace) {
+                    if (!$scope.isActiveWorkspace(workspace)) {
+                        initWorkspaceVariables(workspace);
+                        getParentData();
+                        $scope.settings.wskey = workspace.key;
+                        storeSettings();
+                    } else if ($scope.path !== '/') {
+                        $scope.browseToPath('/');
+                    }
                 }
             };
 
             $scope.isActiveWorkspace = function (workspace) {
-                return $scope.wskey === workspace.key ? 'active' : '';
+                return $scope.wskey === workspace.key;
             };
 
             $scope.changeRoot = function (snapshot) {

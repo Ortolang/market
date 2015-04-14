@@ -176,12 +176,14 @@
                 <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
                     <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><div ng-click="createWorkspace()" translate="BROWSER.WORKSPACE"></div></li>
+                        <li><div ng-click="createWorkspace()"><span ng-class="icons.browser.workspace"></span> {{'BROWSER.WORKSPACE' | translate}}</div></li>
+                        <li class="divider"></li>
+                        <li><div ng-click="addCollection()"><span ng-class="icons.browser.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
                     </ul>
                 </div>
                 <section class="my-workspaces">
                     <ul class="list-unstyled">
-                        <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="isActiveWorkspace(workspace)"><span></span>{{workspace.name}}</li>
+                        <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
                     </ul>
                 </section>
             </div>

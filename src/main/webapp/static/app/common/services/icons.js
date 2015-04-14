@@ -60,6 +60,7 @@ angular.module('ortolangMarketApp')
                 shortcuts: 'glyphicon glyphicon-question-sign',
                 tools: 'fa fa-fw fa-cube',
                 settings: 'glyphicon glyphicon-cog',
-                members: 'fa fa-fw fa-users'
+                members: 'fa fa-fw fa-users',
+                workspace: 'glyphicon glyphicon-book'
             }
         });
