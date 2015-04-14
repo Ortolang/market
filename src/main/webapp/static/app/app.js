@@ -36,7 +36,8 @@ angular
         'angular-md5',
         'xeditable',
         'textAngular',
-        'schemaForm'
+        'schemaForm',
+        'ngTagsInput'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider

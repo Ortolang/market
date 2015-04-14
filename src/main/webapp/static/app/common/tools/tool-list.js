@@ -68,12 +68,15 @@ angular.module('ortolangMarketApp')
             console.debug($scope.filteredTools);
 
             //test
-            $scope.subcategoriesColors = {'misc': '#F0AD4E', 'segmentation': '#5BC0DE', 'étiquetage': '#5CB85C', 'analyse': '#D9534F'};
+            //$scope.subcategoriesColors = {'misc': '#F0AD4E', 'segmentation': '#5BC0DE', 'étiquetage': '#5CB85C', 'analyse': '#D9534F'};
             //$http.get('common/tools/data-test.json')
             //    .then(function(res){
             //        $scope.tools = res.data;
             //        $scope.filteredTools = res.data;
             //    });
+
+            $scope.keywords = ['autre', 'extracteur de texte', 'tokenizer', 'chunker', 'lemmatizer', 'segmentation en phrases', 'étiquetage morphologique', 'étiquetage syntaxique', 'parser', 'coreference', 'reconnaissance d\'entités nommées', 'génération de texte', 'traduction automatique', 'alignement texte-parole',
+            'xml', 'text', 'pdf', 'doc', 'csv', 'tsv', 'praat-textgrid', 'penn-treebank formatted tree', 'tout'];
 
         };
 
@@ -88,6 +91,7 @@ angular.module('ortolangMarketApp')
                 }
             );
         };
+
 
         $scope.hasToolConfig = function () {
             return $scope.formData !== undefined;
@@ -104,6 +108,10 @@ angular.module('ortolangMarketApp')
         };
 
         // Tool List search/filter
+
+        $scope.loadToolTags = function(query) {
+            return $filter('filter')($scope.keywords, {query});
+        };
 
         $scope.search = function (data) {
             var filtered = [];

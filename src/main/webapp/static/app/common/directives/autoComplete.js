@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
                 placeholder: '=',
                 required: '=',
                 name: '=',
-                list: '='
+                tSuggestions: '='
             },
             templateUrl: 'common/directives/autocomplete-template.html',
             link: function (scope, elem, attrs) {
@@ -64,8 +64,8 @@ angular.module('ortolangMarketApp')
                                 scope.selectedIndex = -1;
                             }
                         });
-                    } else if (scope.searchText !== '' && scope.list !== undefined) {
-                        scope.suggestions = scope.list;
+                    } else if (scope.searchText !== '' && scope.tSuggestions !== undefined) {
+                        scope.suggestions = scope.tSuggestions;
                         scope.selectedIndex = -1;
                     } else {
                         scope.suggestions = [];

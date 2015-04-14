@@ -26,8 +26,9 @@ angular.module('ortolangMarketApp')
                 this.url = undefined;
                 this.config = undefined;
                 this.active = undefined;
-                this.content = undefined;
+                this.inputData = undefined;
                 this.categories = undefined;
+                this.image = undefined;
 
                 angular.forEach(config, function (value, key) {
                     if (this.hasOwnProperty(key)) {
@@ -51,7 +52,7 @@ angular.module('ortolangMarketApp')
                         transformRequest: function (data) {
                             return $.param(data);
                         },
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                        headers: {'inputData-Type': 'application/x-www-form-urlencoded'}
                     },
                     abort: {
                         url: this.url + '/jobs/:jobId/abort',
@@ -104,8 +105,12 @@ angular.module('ortolangMarketApp')
                     return this.url;
                 },
 
-                getContent: function () {
-                    return this.content;
+                getInputData: function () {
+                    return this.inputData;
+                },
+
+                getImage: function () {
+                    return this.image;
                 },
 
                 getCategories: function () {
@@ -207,11 +212,11 @@ angular.module('ortolangMarketApp')
                         'key, meta.title as title, ' +
                         'meta.description as description, ' +
                         'meta.image as image, ' +
-                        'meta.toolId as toolId, ' +
-                        'meta.toolHelp as toolHelp, ' +
-                        'meta.toolUrl as toolUrl, ' +
-                        'meta.toolContent as toolContent, ' +
-                        'meta.toolCategory as toolCategory',
+                        'meta.toolId as id, ' +
+                        'meta.toolHelp as help, ' +
+                        'meta.toolUrl as url, ' +
+                        'meta.toolInputData as inputData, ' +
+                        'meta.toolFunctionality as functionality ',
                         source: 'collection'
                     });
                 queryBuilder.equals('status', 'published');
@@ -221,25 +226,37 @@ angular.module('ortolangMarketApp')
                 var query = queryBuilder.toString();
                 console.log('query : ' + query);
                 JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                    //console.debug(jsonResults);
                     angular.forEach(jsonResults, function(itemMeta) {
                         var item = {};
 
                         var data = angular.fromJson(itemMeta);
                         item.key = data.key;
-                        item.id = data.toolId;
+                        item.id = data.id;
                         item.name = data.title;
                         item.description = data.description;
-                        item.documentation = data.toolHelp;
-                        item.url = data.toolUrl;
-                        item.content = data.toolContent;
-                        item.categories = data.toolCategory;
+                        item.documentation = data.help;
+                        item.url = data.url;
+                        item.inputData = data.inputData;
+                        item.categories = data.functionality;
                         item.meta = data;
                         if(item.url !== undefined && item.url !== '') {
                             item.active = true;
                         }
 
-                        register(new OrtolangTool(item));
-                        console.log('register '+item.name);
+                        if(data.image !== undefined && data.image !== '') {
+                            ObjectResource.element({oKey: item.key, path: data.image}).$promise.then(function(oobject) {
+                                item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+
+                                register(new OrtolangTool(item));
+                                console.log('register '+item.name);
+                            }, function (reason) {
+                                console.error(reason);
+                            });
+                        } else {
+                            register(new OrtolangTool(item));
+                            console.log('register '+item.name);
+                        }
                     });
                     console.log('fin populate tool list');
                     $rootScope.$broadcast('tool-list-registered');
