@@ -13,7 +13,7 @@
             </a>
         </div>
 
-        <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse ng-cloak" ng-cloak>
+        <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse" ng-cloak>
             <li ng-show="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hiddenTopNav : false}:true">
                 <a ng-href="#{{element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="element.iconCss"></span> {{element.description | translate}}</a>
             </li>
