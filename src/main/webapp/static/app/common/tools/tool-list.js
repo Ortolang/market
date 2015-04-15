@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter',
-        function ($scope, ToolManager, $rootScope, $translate, $http, $filter) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'MetadataFormatResource',
+        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, MetadataFormatResource) {
 
         // ***************** //
         // Editor visibility //
@@ -65,19 +65,21 @@ angular.module('ortolangMarketApp')
         $scope.loadToolsList = function () {
             $scope.tools = ToolManager.getRegistry();
             $scope.filteredTools = $scope.tools;
-            //console.log($scope.filteredTools);
 
-            //test
-            //$scope.subcategoriesColors = {'misc': '#F0AD4E', 'segmentation': '#5BC0DE', 'étiquetage': '#5CB85C', 'analyse': '#D9534F'};
-            //$http.get('common/tools/data-test.json')
-            //    .then(function(res){
-            //        $scope.tools = res.data;
-            //        $scope.filteredTools = res.data;
-            //    });
+            $http.get('common/tools/functionality.json', { cache: true}).then(function(response) {
+                $scope.keywords = response.data.inputData;
+                $scope.keywords = $scope.keywords.concat(response.data.categories);
+                $scope.keywords = $scope.keywords.concat(response.data.functionalities);
+            });
 
-            $scope.keywords = ['autre', 'extracteur de texte', 'tokenizer', 'chunker', 'lemmatizer', 'segmentation en phrases', 'étiquetage morphologique', 'étiquetage syntaxique', 'parser', 'coreference', 'reconnaissance d\'entités nommées', 'génération de texte', 'traduction automatique', 'alignement texte-parole',
-            'xml', 'text', 'pdf', 'doc', 'csv', 'tsv', 'praat-textgrid', 'penn-treebank formatted tree', 'tout'];
-
+            MetadataFormatResource.download({name:'ortolang-item-json'}).$promise.then(
+                function(schema) {
+                    console.debug(angular.fromJson(schema));
+                },
+                function(reason) {
+                    console.error('Cant get schema of metadata formats "ortolang-item-json" ; failed cause '+reason+' !');
+                }
+            );
         };
 
         $scope.loadConfig = function () {
@@ -110,51 +112,31 @@ angular.module('ortolangMarketApp')
         // Tool List search/filter
 
         $scope.loadToolTags = function(query) {
-            return $filter('filter')($scope.keywords, {query});
+            return $filter('filter')($scope.keywords, query);
         };
 
         $scope.search = function (data) {
-            var filtered = [];
-            if (data !== '' && data !== undefined) {
-                var searchTerms = data.split(' ');
-                searchTerms.forEach(function(term) {
-                    if (term && term.length) {
-                        term = $filter('removeAccents')(term);
-                        //var tmpFiltered = $filter('filter')($scope.tools, term);
-                        var tmpFiltered = $filter('filter')($scope.tools, function (tool) {
-                            var toolNoAccent =  $filter('removeAccents')(JSON.stringify(tool).toLowerCase());
+            var filtered = ToolManager.toArray($scope.tools);
+            if (data !== undefined && data.length) {
+                data.forEach(function(term) {
+                    if (term.text && term.text.length) {
+                        term = $filter('removeAccents')(term.text);
+                        filtered = $filter('filter')(filtered, function (tool) {
+                            var toolNoAccent =  $filter('removeAccents')(JSON.stringify(tool.categories).toLowerCase());
+                            toolNoAccent = toolNoAccent + $filter('removeAccents')(JSON.stringify(tool.inputData).toLowerCase());
                             if(toolNoAccent.search(term.toLowerCase()) !== -1) {
                                 return tool;
                             }
                         });
-                        filtered = filtered.concat(tmpFiltered);
                     }
                 });
-            } else {
-                filtered = $scope.tools;
             }
             $scope.filteredTools = filtered;
         };
 
-
-        $scope.filter = function (filterID, filterValue, filterTranslation) {
-            if (filterID && filterValue) {
-                if (filterID === 'content') {
-                    var registry = ToolManager.toArray($scope.tools);
-                    $scope.filteredTools = $filter('filter')(registry, { 'content' : filterValue});
-                    $scope.selectedType = filterValue;
-                    $scope.selectedTypeTranslation = filterTranslation;
-                } else {
-                    $scope.filteredTools = $filter('filter')($scope.tools, {'meta': {filterID: filterValue}});
-                }
-            }
-        };
-
-
         $scope.resetFilter = function () {
             $scope.filteredTools = angular.copy($scope.tools);
             $scope.selectedType = '';
-            $scope.searchContent = '';
             $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
         };
 

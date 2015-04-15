@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc directive
- * @name ortolangMarketApp.directive:autoComplete
+ * @name ortolangMarketApp.directive:autoCompleteSparqL
  * @description
- * # autoComplete
+ * # autoCompleteSparqL
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('autoComplete', ['SemanticResultResource', function (SemanticResultResource) {
+    .directive('autoCompleteSparqL', ['SemanticResultResource', function (SemanticResultResource) {
         return {
             restrict: 'AE',
             scope: {
@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
                 name: '=',
                 tSuggestions: '='
             },
-            templateUrl: 'common/directives/autocomplete-template.html',
+            templateUrl: 'common/directives/autocomplete-sparql-template.html',
             link: function (scope, elem, attrs) {
 
                 scope.suggestions = [];

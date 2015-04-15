@@ -4,35 +4,15 @@
         <div class="aside-content">
             <div class="tool-list-header">
                 <button type="button" class="close" ng-click="hide()">&times;</button>
-                <h4 class="aside-title" translate="TOOLS.TOOL_LIST"></h4>
+                <h4 class="aside-title" >{{'TOOLS.TOOL_LIST' | translate}}</h4>
             </div>
-            <div class="toolbar side-panel-toolbar" role="toolbar">
+            <div class="toolbar side-panel-toolbar fixed-top" role="toolbar">
                 <div class="btn-toolbar">
                     <div class="col-sm-12">
-                        <!--<div class="input-group" ng-show="!hasToolSelected()">-->
-                            <!--<div class="input-group-btn">-->
-                                <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{selectedTypeTranslation | translate}} <span class="caret"></span></button>-->
-                                <!--<ul class="dropdown-menu" role="menu">-->
-                                    <!--<li ng-class="selectedType===''?'active':''"><a ng-click="resetFilter()">{{'MARKET.ALL_TYPE' | translate}} <span class="badge">{{getSize(filteredTools)}}</span></a></li>-->
-                                    <!--<li class="divider"></li>-->
-                                    <!--<li ng-class="selectedType==='ecrit'?'active':''"><a ng-click="filter('content', 'ecrit', 'TOOLS.TREATED_CONTENT.WRITTEN')" translate="TOOLS.TREATED_CONTENT.WRITTEN"></a></li>-->
-                                    <!--<li ng-class="selectedType==='oral'?'active':''"><a ng-click="filter('content', 'oral', 'TOOLS.TREATED_CONTENT.ORAL')" translate="TOOLS.TREATED_CONTENT.ORAL"></a></li>-->
-                                    <!--<li ng-class="selectedType==='vidéo'?'active':''"><a ng-click="filter('content', 'video', 'TOOLS.TREATED_CONTENT.VIDEO')" translate="TOOLS.TREATED_CONTENT.VIDEO"></a></li>-->
-                                <!--</ul>-->
-                            <!--</div>-->
-                            <!--<input ng-model="searchContent" ng-keyup="$event.keyCode == 13 && search(searchContent)" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">-->
-                            <!--<span class="input-group-btn">-->
-                                <!--<button ng-click="search(searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>-->
-                            <!--</span>-->
-                        <!--</div>-->
-
                         <div class="input-group" ng-show="!hasToolSelected()">
-                            <tags-input ng-model="tags" class="tool-tags">
-                                <auto-complete source="loadToolTags($query)"
-                                               min-length="0"
-                                               load-on-focus="true"
-                                               load-on-empty="true">
-                                </auto-complete>
+                            <tags-input ng-model="toolList.searchContent" class="tool-tags" data-placeholder="{{'SEARCH' | translate}}"
+                                        ng-keyup="$event.keyCode == 13 && search(toolList.searchContent)" onTagAdded="search(toolList.searchContent)" on-tag-removed="search(toolList.searchContent)">
+                                <auto-complete source="loadToolTags($query)" min-length="0" load-on-focus="true"></auto-complete>
                             </tags-input>
                             <span class="input-group-btn">
                                 <button ng-click="search(searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -49,7 +29,6 @@
             <div id="tool-list-body" class="aside-body">
                 <div class="row">
                     <div class="am-fade-and-slide-left col-xs-12" ng-show="!hasToolSelected()">
-
                         <div id="results_count" class="row">
                             <div class="col-md-8">
                                 <small>{{getSize(filteredTools)}} {{'TOOLS.FOUND_TOOLS' | translate }}</small>
@@ -57,7 +36,7 @@
                         </div>
                         <br/>
                         <div id="results_list" >
-                            <div ng-repeat="tool in filteredTools | orderBy: tool.title" class="media tool-item" >
+                            <div ng-repeat="tool in filteredTools  | orderBy: tool.title " class="media tool-item" >
                                 <a class="pull-left" href="#/market/item/{{tool.key}}" target="_blank" bs-tooltip data-title="{{'TOOLS.DOCUMENTATION' | translate }}">
                                     <span ng-class="icons.browser.tools" class="fa-4x" ng-if="!tool.image"></span>
                                     <img ng-if="tool.image" ng-src="{{tool.image}}" class="thumbnail image" />
@@ -65,10 +44,10 @@
                                 <div class="media-body">
                                     <h4 ng-bind="tool.name" class="media-heading"></h4>
                                     <span ng-repeat="category in tool.categories" style="line-height: 1.7;">
-                                        <span class="label label-default" style="background-color: #D4C5F9;">{{category}}</span>
+                                        <span class="label label-gray">{{category}}</span>
                                     </span>
                                     <span ng-repeat="input in tool.inputData" style="line-height: 1.7;">
-                                        <span class="label label-default" style="background-color: #BFE5BF;">{{input}}</span>
+                                        <span class="label label-blue">{{input}}</span>
                                     </span>
                                 </div>
                                 <div class="media-right media-middle run btn btn-default" ng-show="tool.active">

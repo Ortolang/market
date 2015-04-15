@@ -226,7 +226,7 @@ angular.module('ortolangMarketApp')
                 var query = queryBuilder.toString();
                 console.log('query : ' + query);
                 JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                    //console.debug(jsonResults);
+                    console.debug(jsonResults);
                     angular.forEach(jsonResults, function(itemMeta) {
                         var item = {};
 
