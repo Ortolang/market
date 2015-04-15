@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$window', 'icons', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', '$compile', function ($rootScope, $scope, $routeParams, $window, icons, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$window', 'icons', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderService', '$compile', function ($rootScope, $scope, $routeParams, $window, icons, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderService, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -18,15 +18,20 @@ angular.module('ortolangMarketApp')
                 return;
             }
 
-            var queryStr = 'select * from collection where status = \'published\' and key = \''+key+'\' ';
-            console.log(queryStr);
-            JsonResultResource.get({query: queryStr}).$promise.then(function (jsonResults) {
+            var queryBuilder = QueryBuilderService.make({projection: '*', source: 'collection'});
+            queryBuilder.equals('status', 'published');
+            queryBuilder.and();
+            queryBuilder.equals('key', key);
+
+            // var queryStr = 'select * from collection where status = \'published\' and key = \''+key+'\' ';
+            console.log(queryBuilder.toString());
+            JsonResultResource.get({query: queryBuilder.toString()}).$promise.then(function (jsonResults) {
                 if(jsonResults.length===1) {
 
                     $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: key});
                     $scope.ortolangObject = angular.fromJson(jsonResults[0]);
 
-                    var queryOrtolangMeta = 'select from '+$scope.ortolangObject.meta;
+                    var queryOrtolangMeta = 'select from '+$scope.ortolangObject['meta_ortolang-item-json'];
                     JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
                         $scope.item = angular.fromJson(jsonObject[0]);
 

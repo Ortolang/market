@@ -17,6 +17,7 @@ angular.module('ortolangVisualizers')
                 'video/mp4': true,
                 'video/ogg': true,
                 'video/webm': true,
+                'video/quicktime': true,
                 'application/octet-stream': {webm: true}
             }
         });

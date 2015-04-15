@@ -10,15 +10,18 @@
 
                 <div ng-hide="browse">
 
-                    <p>Produit par : <span ng-repeat="producer in item.producer"><a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="lab"></a><span ng-if="!$last">, </span></span></p>
-                    <p ng-if="item.website">Site web : <a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></p>
-
-                    <!-- Category : Tool -->
-                    <p ng-if="item.programmingLanguage">Langages de programmation : <span ng-repeat="pl in item.programmingLanguage"><a href="#/search?content={{pl}}" ng-bind="pl"></a><span ng-if="!$last">, </span></span></p>
-                    <p ng-if="item.opearatingSystem">Systèmes d'exploitation supportés : <span ng-repeat="os in item.opearatingSystem"><a href="#/search?content={{os}}" ng-bind="os"></a><span ng-if="!$last">, </span></span></p>
-                    <p ng-if="item.toolSupport">Type de support : <a href="#/search?content={{item.toolSupport}}" ng-bind="item.toolSupport"></a></p>
-                    <!-- Category : Annotation -->
-                    <p ng-if="item.language">Langues concernés par cet objet : <span ng-repeat="language in item.language"><a href="#/search?content={{language}}" ng-bind="language"></a><span ng-if="!$last">, </span></span></p>
+                    <p><span translate="MARKET.PRODUCER"></span> : 
+                        <ul>
+                            <li ng-repeat="producer in item.producer">
+                                <a ng-href='#/search?content="{{producer}}"' ng-bind="producer"></a>
+                            </li>
+                        </ul>
+                    </p>
+                    <p ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
+                        <ul>
+                            <li><a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
+                        </ul>
+                    </p>
                 </div>
                 <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">{{'MARKET.GOBACKINFO' | translate}}</button>
             </div>
@@ -99,6 +102,43 @@
                                 </dd>
                             </dl>
                         </div>
+
+                        <div ng-if="item.programmingLanguage" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
+                                <dd ng-repeat="pl in item.programmingLanguage">
+                                    <a ng-href="#/search?content={{pl}}">{{pl}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.opearatingSystem" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
+                                <dd ng-repeat="os in item.opearatingSystem">
+                                    <a ng-href="#/search?content={{os}}">{{os}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.toolSupport" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.SUPPORT_TOOL"></dt>
+                                <dd>
+                                    <a ng-href="#/search?content={{item.toolSupport}}">{{item.toolSupport}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.language" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.LANGUAGE"></dt>
+                                <dd ng-repeat="lang in item.language">
+                                    <a ng-href="#/search?content={{lang}}">{{lang}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
                     </div>
                 </article>
             </section>
@@ -107,8 +147,8 @@
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
                 <article class="row" ng-if="item.researcher">
-                    <h4>Responsables scientifiques</h4>
-                    <ul>
+                    <h4 translate="MARKET.RESEARCHER"></h4>
+                    <ul class="list-contributor">
                         <li ng-repeat="researcher in item.researcher">
                             <a ng-href='#/search?content="{{researcher}}"' ng-bind="researcher"></a>
                         </li>
@@ -116,32 +156,32 @@
 
                 </article>
                 <article class="row" ng-if="item.manager">
-                    <h4>Responsables informatiques</h4>
-                    <ul>
+                    <h4 translate="MARKET.MANAGER"></h4>
+                    <ul class="list-contributor">
                         <li ng-repeat="manager in item.manager">
                             <a ng-href='#/search?content="{{manager}}"' ng-bind="manager"></a>
                         </li>
                     </ul>
                 </article>
-                <article class="row" ng-if="item['http://www.ortolang.fr/ontology/developer']">
+                <article class="row" ng-if="item.developer">
                     <h4 translate="MARKET.DEVELOPER"></h4>
                     <ul class="list-contributor">
-                        <li ng-repeat="developer in item['http://www.ortolang.fr/ontology/developer']">
+                        <li ng-repeat="developer in item.developer">
                             <a ng-href='#/search?content="{{developer}}"' ng-bind="developer"></a>
                         </li>
                     </ul>
                 </article>
                 <article class="row" ng-if="item.author">
-                    <h4>Auteurs</h4>
-                    <ul>
+                    <h4 translate="MARKET.AUTHOR"></h4>
+                    <ul class="list-contributor">
                         <li ng-repeat="author in item.author">
                             <a ng-href='#/search?content="{{author}}"' ng-bind="author"></a>
                         </li>
                     </ul>
                 </article>
                 <article class="row" ng-if="item.compiler">
-                    <h4>Compilateurs</h4>
-                    <ul>
+                    <h4 translate="MARKET.COMPILER"></h4>
+                    <ul class="list-contributor">
                         <li ng-repeat="compiler in item.compiler">
                             <a ng-href='#/search?content="{{compiler}}"' ng-bind="compiler"></a>
                         </li>
@@ -163,7 +203,7 @@
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
 
-                    <p ng-show="item.conditionsOfUse" ng-bind="item.conditionsOfUse"></p>
+                    <p ng-show="item.conditionsOfUse" ng-bind-html="item.conditionsOfUse"></p>
                     <p ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" ng-show="datasizeToPrint">
 

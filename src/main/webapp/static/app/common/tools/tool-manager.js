@@ -209,24 +209,23 @@ angular.module('ortolangMarketApp')
                 var queryBuilder = QueryBuilderService.make(
                     {
                         projection:
-                        'key, meta.title as title, ' +
-                        'meta.description as description, ' +
-                        'meta.image as image, ' +
-                        'meta.toolId as id, ' +
-                        'meta.toolHelp as help, ' +
-                        'meta.toolUrl as url, ' +
-                        'meta.toolInputData as inputData, ' +
-                        'meta.toolFunctionality as functionality ',
+                        'key, meta_ortolang-item-json.title as title, ' +
+                        'meta_ortolang-item-json.description as description, ' +
+                        'meta_ortolang-item-json.image as image, ' +
+                        'meta_ortolang-item-json.toolId as id, ' +
+                        'meta_ortolang-item-json.toolHelp as help, ' +
+                        'meta_ortolang-item-json.toolUrl as url, ' +
+                        'meta_ortolang-item-json.toolInputData as inputData, ' +
+                        'meta_ortolang-item-json.toolFunctionality as functionality ',
                         source: 'collection'
                     });
                 queryBuilder.equals('status', 'published');
                 queryBuilder.and();
-                queryBuilder.equals('meta.type', 'Outil');
+                queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
 
                 var query = queryBuilder.toString();
                 console.log('query : ' + query);
                 JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                    console.debug(jsonResults);
                     angular.forEach(jsonResults, function(itemMeta) {
                         var item = {};
 

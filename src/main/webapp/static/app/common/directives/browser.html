@@ -52,7 +52,7 @@
                     <div ng-if="!browserService.hasBreadcrumb" class="browser-breadcrumb">
                         <button data-ng-disabled="keyHistory && keyHistory.back.length === 0" class="btn btn-default" ng-click="goBack()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
                         <button data-ng-disabled="keyHistory && keyHistory.forward.length === 0" class="btn btn-default" ng-click="goForward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
-                        <button class="btn btn-default" disabled>{{parent.name}}</button>
+                        <button class="btn btn-default" disabled>{{parent.root ? '/' : parent.name}}</button>
                     </div>
 
                     <div class="btn-toolbar btn-toolbar-right" role="toolbar">
@@ -176,12 +176,14 @@
                 <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
                     <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><div ng-click="createWorkspace()" translate="BROWSER.WORKSPACE"></div></li>
+                        <li><div ng-click="createWorkspace()"><span ng-class="icons.browser.workspace"></span> {{'BROWSER.WORKSPACE' | translate}}</div></li>
+                        <li class="divider"></li>
+                        <li><div ng-click="addCollection()"><span ng-class="icons.browser.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
                     </ul>
                 </div>
                 <section class="my-workspaces">
                     <ul class="list-unstyled">
-                        <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="isActiveWorkspace(workspace)"><span></span>{{workspace.name}}</li>
+                        <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
                     </ul>
                 </section>
             </div>
@@ -239,6 +241,13 @@
                                         <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
                                     </dl>
                                     <hr/>
+                                    <dl class="dl-horizontal">
+                                        <dt>Permissions</dt>
+                                        <dd>
+                                            <acl-select element="selectedElements[0]"></acl-select>
+                                        </dd>
+                                    </dl>
+                                    <hr/>
                                     <p>
                                         <button class="btn btn-default pull-right" ng-click="editDescription()"><span class="fa fa-pencil"></span></button>
                                         <span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>
@@ -250,6 +259,7 @@
                                     <dt translate="SIZE"></dt>
                                     <dd translate="BROWSER.FULL_SIZE" translate-values="{size: selectedElementsSize()}"></dd>
                                 </dl>
+
                             </div>
                         </div>
 
@@ -325,6 +335,13 @@
                                     </span>
                                     <span ng-show="parent.realSize" translate="BROWSER.ELEMENT_WITH_SIZE" translate-values="{value: parent.elements.length, size: parent.realSize}"></span>
                                     <span ng-show="parent.size === 0" translate="BROWSER.ELEMENT" translate-values="{value: parent.elements.length}"></span>
+                                </dd>
+                            </dl>
+                            <hr/>
+                            <dl class="dl-horizontal">
+                                <dt>Permissions</dt>
+                                <dd>
+                                    <acl-select element="parent"></acl-select>
                                 </dd>
                             </dl>
                             <hr/>
