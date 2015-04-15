@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.getAvatarId = function (service) {
-            var avatarId = this.getProfileData(service)
+            var avatarId = this.getProfileData(service);
             if (!avatarId) {
                 if (service === 'github') {
                     avatarId = this.key;
