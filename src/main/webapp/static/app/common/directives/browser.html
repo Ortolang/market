@@ -239,6 +239,13 @@
                                         <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
                                     </dl>
                                     <hr/>
+                                    <dl class="dl-horizontal">
+                                        <dt>Permissions</dt>
+                                        <dd>
+                                            <acl-select element="selectedElements[0]"></acl-select>
+                                        </dd>
+                                    </dl>
+                                    <hr/>
                                     <p>
                                         <button class="btn btn-default pull-right" ng-click="editDescription()"><span class="fa fa-pencil"></span></button>
                                         <span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>
@@ -250,6 +257,7 @@
                                     <dt translate="SIZE"></dt>
                                     <dd translate="BROWSER.FULL_SIZE" translate-values="{size: selectedElementsSize()}"></dd>
                                 </dl>
+
                             </div>
                         </div>
 
@@ -325,6 +333,13 @@
                                     </span>
                                     <span ng-show="parent.realSize" translate="BROWSER.ELEMENT_WITH_SIZE" translate-values="{value: parent.elements.length, size: parent.realSize}"></span>
                                     <span ng-show="parent.size === 0" translate="BROWSER.ELEMENT" translate-values="{value: parent.elements.length}"></span>
+                                </dd>
+                            </dl>
+                            <hr/>
+                            <dl class="dl-horizontal">
+                                <dt>Permissions</dt>
+                                <dd>
+                                    <acl-select element="parent"></acl-select>
                                 </dd>
                             </dl>
                             <hr/>
