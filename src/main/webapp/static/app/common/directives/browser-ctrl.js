@@ -33,7 +33,8 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        'MetadataFormatResource',
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, MetadataFormatResource) {
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
                 marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
@@ -639,22 +640,45 @@ angular.module('ortolangMarketApp')
             //        Metadata         //
             // *********************** //
 
-            //$rootScope.$on('completeMetadataUpload', function () {
-            //    console.log('%s caught event "completeMetadataUpload"', $scope.browserService.getId());
-            //    if ($scope.hasOnlyParentSelected()) {
-            //        getParentData(true);
-            //    } else {
-            //        getChildData(true);
-            //    }
-            //});
+            $scope.showMetadataItem = function () {
+                //TODO pre load metadataFormat
+                MetadataFormatResource.get({name: 'ortolang-item-json'}).$promise.then( 
+                    function(data) {
+                        if(data.entries.length>0) {
 
-            $scope.showMetadata = function () {
-                $rootScope.$broadcast('metadata-list-show');
+                            var entry = data.entries[0];
+                            MetadataFormatResource.download({name:'ortolang-item-json'}).$promise.then(
+                                function(schema) {
+                                    entry.schemaContent = schema;
+                                    entry.view = 'workspace/metadata-form-schema.html';
+                                    entry.displayed = false;
+
+                                    // $scope.metadataFormats.push(entry);
+                                    WorkspaceElementResource.get({wskey: $scope.selectedElements[0].workspace, path: $scope.selectedElements[0].path, metadata: 'ortolang-item-json'}).$promise.then(
+                                        function (data) {
+                                            $rootScope.$broadcast('metadata-editor-edit', entry, data);
+                                        },
+                                        function (reason) {
+                                            $rootScope.$broadcast('metadata-editor-show', entry);
+                                        }
+                                    );
+                                    
+                                },
+                                function(reason) {
+                                    console.error('Cant get schema of metadata formats '+entry.name+' ; failed cause '+reason+' !');
+                                }
+                            );
+                        }
+                    },
+                    function(reason) {
+                        console.error('Cant get metadata formats for item ; failed cause '+reason+' !');
+                    }
+                );
             };
 
-            $scope.hasPresentationMetadata = function () {
-                return $scope.hasOnlyRootCollectionSelected() && $scope.selectedElements && $scope.selectedElements[0].metadatas.length !== 0;
-            };
+            $scope.hasPresentationMetadata = function() {
+                return $scope.hasOnlyRootCollectionSelected && $scope.selectedElements && $filter('filter')($scope.selectedElements[0].metadatas, {'name': 'ortolang-item-json'}).length>0
+            }
 
             $scope.doAction = function (name) {
                 switch (name) {

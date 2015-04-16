@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource, FormResource) {
+    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', 'MetadataFormatResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource, FormResource, MetadataFormatResource) {
 
         // ***************** //
         // Editor visibility //
@@ -66,18 +66,6 @@ angular.module('ortolangMarketApp')
                 resetMetadata();
             });
         }
-
-        $scope.deleteMetadata = function () {
-            WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.selectedElements[0].path, metadataname: $scope.selectedMetadata.name}).$promise.then(
-                function () {
-                    $scope.selectedMetadata = undefined;
-                    $scope.refreshSelectedElement();
-                },
-                function (reason) {
-                    console.error('Cant delete metadata with name ' + $scope.selectedMetadata.name + ' failed cause '+reason+' !');
-                }
-            );
-        };
 
         $scope.submitMetadataForm = function() {
             $rootScope.$broadcast('metadata-form-submit', $scope.model);
@@ -164,6 +152,4 @@ angular.module('ortolangMarketApp')
         $scope.$on('metadata-editor-create', function (event, content, contentType) {
             sendForm(content, contentType);
         });
-
-
     }]);

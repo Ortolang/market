@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         return {
             restrict: 'E',
             scope: {
+                readonly: '=',
                 element: '='
             },
             templateUrl: 'common/directives/acl-select.html',
@@ -79,7 +80,6 @@ angular.module('ortolangMarketApp')
                             loadACL(scope.element);
                         }
                     });
-
                 }
             }
         };

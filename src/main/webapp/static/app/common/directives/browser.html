@@ -212,60 +212,55 @@
                     </p>
 
 
-                    <div class="browser-side-tabs" bs-tabs data-nav-class="nav-justified">
-                        <div data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
-                            <div class="information">
-                                <div ng-if="hasOnlyOneElementSelected()">
-                                    <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
-                                        <dt translate="BROWSER.AUTHOR"></dt>
-                                        <dd>{{selectedElements[0].author}}</dd>
-                                        <dt translate="TYPE"></dt>
-                                        <dd>{{selectedElements[0].mimeType | contentType}}</dd>
-                                        <dt translate="BROWSER.CREATION"></dt>
-                                        <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
-                                        <dt translate="BROWSER.MODIFICATION"></dt>
-                                        <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
-                                        <dt translate="BROWSER.KEY"></dt>
-                                        <dd>{{selectedElements[0].key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="selectedElements[0].key"></span></span></dd>
-                                        <dt ng-if="isCollection(selectedElements[0])" translate="SIZE"></dt>
-                                        <dd ng-if="isCollection(selectedElements[0])">
-                                            <span ng-hide="selectedElements[0].realSize || selectedElements[0].size === 0">
-                                                <span translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></span>
-                                                <br/>
-                                                <i><span class="calculate-size" ng-click="calculateCollectionSize()" translate="{{'BROWSER.CALCULATE_SIZE' | translate}}"></span></i>
-                                            </span>
-                                            <span ng-show="selectedElements[0].realSize" translate="BROWSER.ELEMENT_WITH_SIZE" translate-values="{value: selectedElements[0].elements.length, size: selectedElements[0].realSize}"></span>
-                                            <span ng-show="selectedElements[0].size === 0" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></span>
-                                        </dd>
-                                        <dt ng-if="!isCollection(selectedElements[0])" translate="SIZE"></dt>
-                                        <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
-                                    </dl>
-                                    <hr/>
-                                    <dl class="dl-horizontal">
-                                        <dt>Permissions</dt>
-                                        <dd>
-                                            <acl-select element="selectedElements[0]"></acl-select>
-                                        </dd>
-                                    </dl>
-                                    <hr/>
-                                    <p>
-                                        <button class="btn btn-default pull-right" ng-click="editDescription()"><span class="fa fa-pencil"></span></button>
-                                        <span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>
-                                        <span ng-show="selectedElements[0].description">{{selectedElements[0].description}}</span>
-                                    </p>
-                                </div>
-
-                                <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
-                                    <dt translate="SIZE"></dt>
-                                    <dd translate="BROWSER.FULL_SIZE" translate-values="{size: selectedElementsSize()}"></dd>
+                    <div class="browser-side-tabs" data-nav-class="nav-justified">
+                        <div class="information">
+                            <div ng-if="hasOnlyOneElementSelected()">
+                                <dl ng-if="hasOnlyOneElementSelected()" class="dl-horizontal">
+                                    <dt translate="BROWSER.AUTHOR"></dt>
+                                    <dd>{{selectedElements[0].author}}</dd>
+                                    <dt translate="TYPE"></dt>
+                                    <dd>{{selectedElements[0].mimeType | contentType}}</dd>
+                                    <dt translate="BROWSER.CREATION"></dt>
+                                    <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
+                                    <dt translate="BROWSER.MODIFICATION"></dt>
+                                    <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
+                                    <dt translate="BROWSER.KEY"></dt>
+                                    <dd>{{selectedElements[0].key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="selectedElements[0].key"></span></span></dd>
+                                    <dt ng-if="isCollection(selectedElements[0])" translate="SIZE"></dt>
+                                    <dd ng-if="isCollection(selectedElements[0])">
+                                        <span ng-hide="selectedElements[0].realSize || selectedElements[0].size === 0">
+                                            <span translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></span>
+                                            <br/>
+                                            <i><span class="calculate-size" ng-click="calculateCollectionSize()" translate="{{'BROWSER.CALCULATE_SIZE' | translate}}"></span></i>
+                                        </span>
+                                        <span ng-show="selectedElements[0].realSize" translate="BROWSER.ELEMENT_WITH_SIZE" translate-values="{value: selectedElements[0].elements.length, size: selectedElements[0].realSize}"></span>
+                                        <span ng-show="selectedElements[0].size === 0" translate="BROWSER.ELEMENT" translate-values="{value: selectedElements[0].elements.length}"></span>
+                                    </dd>
+                                    <dt ng-if="!isCollection(selectedElements[0])" translate="SIZE"></dt>
+                                    <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
                                 </dl>
-
+                                <hr/>
+                                <dl class="dl-horizontal">
+                                    <dt>Permissions</dt>
+                                    <dd>
+                                        <acl-select data-element="selectedElements[0]" data-readonly="root !== 'head'"></acl-select>
+                                    </dd>
+                                </dl>
+                                <hr/>
+                                <p>
+                                    <button class="btn btn-default pull-right" ng-click="editDescription()"><span class="fa fa-pencil"></span></button>
+                                    <span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>
+                                    <span ng-show="selectedElements[0].description">{{selectedElements[0].description}}</span>
+                                </p>
                             </div>
+
+                            <dl ng-if="!hasOnlyOneElementSelected()" class="dl-horizontal">
+                                <dt translate="SIZE"></dt>
+                                <dd translate="BROWSER.FULL_SIZE" translate-values="{size: selectedElementsSize()}"></dd>
+                            </dl>
+
                         </div>
 
-                        <div data-title="{{'BROWSER.METADATA' | translate}}" disabled="{{selectedElements.length > 1}}" bs-pane>
-                            <div ng-include="'workspace/browser-sidebar-metadata.html'" ng-controller="BrowserSidebarMetadataCtrl"></div>
-                        </div>
                     </div>
                 </div>
 
@@ -274,38 +269,19 @@
                         <button ng-click="toggleAsideInfo()" type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <span>{{wsName}}</span>
                     </p>
-                    <div class="btn-toolbar workspace-toolbar" role="toolbar" ng-controller="BrowserSidebarMetadataCtrl">
+                    <div class="btn-toolbar workspace-toolbar" role="toolbar">
                         <div class="btn-group" role="group">
-                            <button ng-if="!hasPresentationMetadata()" class="btn btn-default" ng-click="showMetadataEditor('ortolang-item-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA' | translate}}" bs-tooltip>
+                            <button class="btn btn-default" ng-click="showMetadataItem()" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA' | translate}}" bs-tooltip>
                                 <span class="octicon octicon-book"></span>
                             </button>
-
-                            <div ng-if="hasPresentationMetadata()" id="list-metadata">
-                                <div ng-repeat="metadata in selectedElements[0].metadatas">
-                                    <button type="button" class="btn btn-default" ng-click="editMetadata(metadata)"  data-title="{{'BROWSER.EDIT_PRESENTATION_METADATA' | translate}}" bs-tooltip>
-                                        <span class="octicon octicon-book"></span>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                         <div class="btn-group">
                             <button ng-if="browserService.canAdd && isHead" data-ng-disabled="!workspace.changed" ng-click="snapshotWorkspace()" class="btn btn-default" data-title="{{'BROWSER.SNAPSHOT' | translate}}" bs-tooltip>
                                 <span ng-class="icons.browser.snapshot"></span>
                             </button>
                         </div>
-                        <div ng-if="hasPresentationMetadata()" class="btn-group" role="group">
-                            <button ng-if="browserService.canAdd && isHead" class="btn btn-default" data-title="{{'BROWSER.PREVIEW_WORKSPACE' | translate}}" bs-tooltip data-ng-disabled="!hasPresentationMetadata()">
-                                <span ng-class="icons.browser.preview"></span>
-                            </button>
+                        <div class="btn-group" role="group">
                             <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="publishWorkspace()" data-title="{{'BROWSER.PUBLISH' | translate}}" bs-tooltip data-ng-disabled="!hasPresentationMetadata()">
-                                <span ng-class="icons.browser.publish"></span>
-                            </button>
-                        </div>
-                        <div ng-if="!hasPresentationMetadata()" class="btn-group" role="group">
-                            <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('ortolang-item-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
-                                <span ng-class="icons.browser.preview"></span>
-                            </button>
-                            <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="showMetadataEditor('ortolang-item-json')" data-title="{{'BROWSER.CREATE_PRESENTATION_METADATA_FIRST' | translate}}" bs-tooltip>
                                 <span ng-class="icons.browser.publish"></span>
                             </button>
                         </div>
@@ -341,7 +317,7 @@
                             <dl class="dl-horizontal">
                                 <dt>Permissions</dt>
                                 <dd>
-                                    <acl-select element="parent"></acl-select>
+                                    <acl-select data-readonly="root !== 'head'" data-element="parent"></acl-select>
                                 </dd>
                             </dl>
                             <hr/>
