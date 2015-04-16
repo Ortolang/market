@@ -47,6 +47,7 @@ angular.module('ortolangMarketApp')
             DELETE: 'Supprimer',
             UPLOAD: 'Importer',
             UPLOAD_FILES: 'Importer des fichiers',
+            UPLOAD_ZIP: 'Importer un zip',
             UPLOAD_FOLDER: 'Importer un dossier',
             NEW_COLLECTION: 'Nouveau dossier',
             PUBLISH: 'Publier l\'espace de travail',

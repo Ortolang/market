@@ -1,0 +1,15 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" translate="WORKSPACE.UPLOAD_ZIP_COMPLETED_MODAL.TITLE"></h4>
+            </div>
+            <div class="modal-body" translate="WORKSPACE.UPLOAD_ZIP_COMPLETED_MODAL.BODY" translate-values="{archiveName: archiveName, wsName: wsName}"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="showLog()" translate="WORKSPACE.UPLOAD_ZIP_COMPLETED_MODAL.SHOW_LOG"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="WORKSPACE.UPLOAD_ZIP_COMPLETED_MODAL.BACKGROUND_PROCESSING"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -86,6 +86,15 @@ angular.module('ortolangMarketApp')
                 $rootScope.selectedProcess = process;
             }
 
+            function selectProcessByKey(key) {
+                var process = $filter('filter')($rootScope.processes, {key: key});
+                if (process && process.length > 0) {
+                    selectProcess(process[0]);
+                    return process[0];
+                }
+                return undefined;
+            }
+
             function getActiveProcesses() {
                 return $filter('filter')($rootScope.processes, function (value) {
                     return !(value.state === states.completed || value.state === states.aborted);
@@ -382,6 +391,7 @@ angular.module('ortolangMarketApp')
                 createProcessFromForm: createProcessFromForm,
                 createProcess: createProcess,
                 selectProcess: selectProcess,
+                selectProcessByKey: selectProcessByKey,
                 activeProcessesNumber: activeProcessesNumber,
                 getActiveProcesses: getActiveProcesses,
                 hasActiveProcesses: hasActiveProcesses,

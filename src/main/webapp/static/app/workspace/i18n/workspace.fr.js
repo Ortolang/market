@@ -44,6 +44,24 @@ angular.module('ortolangMarketApp')
             },
             WORKSPACE_MEMBERS_MODAL: {
                 TITLE: 'Membres de {{name}}'
+            },
+            UPLOAD_ZIP_MODAL: {
+                TITLE: 'Importer un zip',
+                SUBMIT: 'Importer',
+                ZIP_FILE: 'Fichier zip',
+                ROOT: 'Dossier',
+                ROOT_HELP: 'Nom du dossier dans lequel décompresser l\'archive zip.<br/>Laisser vide pour décompresser dans le dossier actuel : "{{wsName}}{{path === "/" ? "" : path}}/"',
+                ROOT_HELP_FILLED: 'Le zip sera décompressé dans "{{wsName}}{{path === "/" ? "" : path}}/{{root}}"',
+                OVERWRITE: 'Remplacer en cas de fichiers existants'
+            },
+            UPLOAD_ZIP_COMPLETED_MODAL: {
+                TITLE: 'Importation du contenu du Zip en cours',
+                BODY: 'Le contenu de l\'archive "{{archiveName}}" est en train d\'être importé dans l\'espace de travail "{{wsName}}".',
+                SHOW_LOG: 'Voir la progression',
+                BACKGROUND_PROCESSING: 'Mettre en arrière plan'
+            },
+            PROCESS_NAMES: {
+                IMPORT_ZIP: 'Importation de "{{zipName}}" dans l\'espace de travail "{{wsName}}"'
             }
         }
     });

@@ -50,6 +50,7 @@ angular.module('ortolangMarketApp')
                     $scope.breadcrumbDropdownItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
                     $scope.breadcrumbDropdownItems.push({divider: true});
                     $scope.breadcrumbDropdownItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
+                    $scope.breadcrumbDropdownItems.push({text: 'BROWSER.UPLOAD_ZIP', icon: icons.browser.uploadZip, action: 'uploadZip'});
                     //$scope.breadcrumbDropdownItems.push({text: 'BROWSER.UPLOAD_FOLDER', icon: icons.browser.upload, action: 'uploadFolder'});
                 }
             }
@@ -92,6 +93,7 @@ angular.module('ortolangMarketApp')
                             // TODO Support importing files into selected directory
                             if ($scope.hasOnlyParentSelected()) {
                                 $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
+                                $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_ZIP', icon: icons.browser.uploadZip, action: 'uploadZip'});
                             }
                             $scope.contextMenuItems.push({divider: true});
                         }
@@ -553,6 +555,56 @@ angular.module('ortolangMarketApp')
             };
 
             // *********************** //
+            //       Upload Zip        //
+            // *********************** //
+
+            function uploadZip() {
+                var uploadZipModal, uploadZipModalScope = $rootScope.$new(true);
+                uploadZipModalScope.parent = $scope.parent;
+                uploadZipModalScope.wsName = $scope.wsName;
+                uploadZipModalScope.overwrite = false;
+                uploadZipModalScope.root = '';
+                uploadZipModalScope.uploadZip = function () {
+                    var files = angular.element('#upload-zip-file').prop('files');
+                    $rootScope.uploader.addToQueue(files, {
+                        'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.wsName}),
+                        'ziproot': $scope.parent.path + '/' + uploadZipModalScope.root,
+                        'overwrite': uploadZipModalScope.overwrite,
+                        'wskey': $scope.wskey,
+                        'ortolangType': 'zip'
+                    });
+                    uploadZipModalScope.cancel();
+                };
+                uploadZipModalScope.cancel = function () {
+                    uploadZipModal.hide();
+                    deactivateContextMenu();
+                };
+                uploadZipModal = $modal({
+                    scope: uploadZipModalScope,
+                    template: 'workspace/templates/upload-zip-modal.html',
+                    show: true
+                });
+            }
+
+            $rootScope.$on('uploaderZipUploadCompleted', function ($event, fileItem, response) {
+                var uploadZipCompletedModalScope = $rootScope.$new(true),
+                    uploadZipCompletedModal;
+                uploadZipCompletedModalScope.archiveName = fileItem.file.name;
+                uploadZipCompletedModalScope.wsName = fileItem.wsName;
+                uploadZipCompletedModalScope.process = response;
+                uploadZipCompletedModalScope.showLog = function () {
+                    uploadZipCompletedModal.hide();
+                    $rootScope.selectProcesses();
+                    $location.url('/processes/?pKey=' + uploadZipCompletedModalScope.process.key);
+                };
+                uploadZipCompletedModal = $modal({
+                    scope: uploadZipCompletedModalScope,
+                    template: 'workspace/templates/upload-zip-completed-modal.html',
+                    show: true
+                });
+            });
+
+            // *********************** //
             //     Add Collection      //
             // *********************** //
 
@@ -631,18 +683,13 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $rootScope.$on('uploaderCompleteItemUpload', function () {
-                //console.log('%s caught event "uploaderCompleteItemUpload"', $scope.browserService.getId());
-                getParentData(true, $scope.hasOnlyParentSelected());
-            });
-
             // *********************** //
             //        Metadata         //
             // *********************** //
 
             $scope.showMetadataItem = function () {
                 //TODO pre load metadataFormat
-                MetadataFormatResource.get({name: 'ortolang-item-json'}).$promise.then( 
+                MetadataFormatResource.get({name: 'ortolang-item-json'}).$promise.then(
                     function(data) {
                         if(data.entries.length>0) {
 
@@ -662,7 +709,7 @@ angular.module('ortolangMarketApp')
                                             $rootScope.$broadcast('metadata-editor-show', entry);
                                         }
                                     );
-                                    
+
                                 },
                                 function(reason) {
                                     console.error('Cant get schema of metadata formats '+entry.name+' ; failed cause '+reason+' !');
@@ -676,9 +723,9 @@ angular.module('ortolangMarketApp')
                 );
             };
 
-            $scope.hasPresentationMetadata = function() {
-                return $scope.hasOnlyRootCollectionSelected && $scope.selectedElements && $filter('filter')($scope.selectedElements[0].metadatas, {'name': 'ortolang-item-json'}).length>0
-            }
+            $scope.hasPresentationMetadata = function () {
+                return $scope.hasOnlyRootCollectionSelected && $scope.selectedElements && $filter('filter')($scope.selectedElements[0].metadatas, {'name': 'ortolang-item-json'}).length > 0;
+            };
 
             $scope.doAction = function (name) {
                 switch (name) {
@@ -700,6 +747,9 @@ angular.module('ortolangMarketApp')
                         $timeout(function () {
                             angular.element('#object-upload-file-select').click();
                         });
+                        break;
+                    case 'uploadZip':
+                        uploadZip();
                         break;
                     case 'switchViewMode':
                         $scope.switchViewMode();
@@ -951,6 +1001,11 @@ angular.module('ortolangMarketApp')
                 console.log('%s caught event "publishWorkspaceCompleted"', $scope.browserService.getId());
                 getParentData(true);
                 getSnapshotsHistory();
+            });
+
+            $rootScope.$on('uploaderObjectUploadCompleted', function () {
+                //console.log('%s caught event "uploaderObjectUploadCompleted"', $scope.browserService.getId());
+                getParentData(true, $scope.hasOnlyParentSelected());
             });
 
             $scope.changeWorkspace = function (workspace) {

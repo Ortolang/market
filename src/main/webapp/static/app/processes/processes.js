@@ -8,23 +8,29 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProcessesCtrl', ['$scope', '$modal', 'Runtime', 'ToolManager', '$alert',
-        function ($scope, $modal, Runtime, ToolManager, $alert) {
+    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert',
+        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert) {
 
             $scope.Runtime = Runtime;
 
             $scope.completedProcessessDisplayed = 3;
 
-            $scope.showLog = function (process) {
-                Runtime.selectProcess(process);
-                $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
-                $modal({
-                    title: process.name,
-                    html: true,
-                    scope: $scope,
-                    template: 'processes/process-log-modal-template.html',
-                    show: true
-                });
+            $scope.showLog = function (process, processKey) {
+                if (processKey) {
+                    process = Runtime.selectProcessByKey(processKey);
+                } else {
+                    Runtime.selectProcess(process);
+                }
+                if (process) {
+                    $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
+                    $modal({
+                        title: process.name,
+                        html: true,
+                        scope: $scope,
+                        template: 'processes/process-log-modal-template.html',
+                        show: true
+                    });
+                }
             };
 
             $scope.showToolLog = function (job) {
@@ -83,4 +89,8 @@ angular.module('ortolangMarketApp')
             $scope.showAll = function ($event) {
                 $($event.target).addClass('hidden').prev('table').addClass('show-all');
             };
+
+            if ($routeParams.pKey) {
+                $scope.showLog(undefined, $routeParams.pKey);
+            }
         }]);

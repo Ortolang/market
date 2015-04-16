@@ -1,0 +1,41 @@
+<div class="modal" id="upload-zip-modal" tabindex="-1" role="dialog" aria-labelledby="upload-zip-modal-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" id="upload-zip-modal-label" translate="WORKSPACE.UPLOAD_ZIP_MODAL.TITLE"></h4>
+            </div>
+            <form class="form-horizontal" role="form" ng-submit="uploadZip()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="upload-zip-file" class="col-sm-3 control-label" translate="WORKSPACE.UPLOAD_ZIP_MODAL.ZIP_FILE"></label>
+                        <div class="col-sm-9">
+                            <input required type="file" id="upload-zip-file" accept=".zip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="upload-zip-root" class="col-sm-3 control-label" translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT"></label>
+                        <div class="col-sm-9">
+                            <input ng-model="$parent.root" type="text" class="form-control" id="upload-zip-root" placeholder="{{'WORKSPACE.UPLOAD_ZIP_MODAL.ROOT' | translate}}">
+                        </div>
+                        <span ng-show="$parent.root.length === 0" class="help-block col-sm-offset-3 col-sm-9"  translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT_HELP" data-translate-values="{path: parent.path, root: $parent.root, wsName: wsName}"></span>
+                        <span ng-show="$parent.root.length > 0" class="help-block col-sm-offset-3 col-sm-9"  translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT_HELP_FILLED" data-translate-values="{path: parent.path, root: $parent.root, wsName: wsName}"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <div class="checkbox">
+                                <label for="upload-zip-overwrite">
+                                    <input type="checkbox" ng-model="$parent.overwrite" id="upload-zip-overwrite"/> {{'WORKSPACE.UPLOAD_ZIP_MODAL.OVERWRITE' | translate}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary add-collection" translate="WORKSPACE.UPLOAD_ZIP_MODAL.SUBMIT"></button>
+                    <button type="button" class="btn btn-default" ng-click="cancel()" translate="CANCEL"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

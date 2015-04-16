@@ -13,6 +13,15 @@ angular.module('ortolangMarketApp')
 
             var uploader;
 
+            function clearItem(fileItem) {
+                $timeout(function () {
+                    fileItem.remove();
+                    if (uploader.queue.length === 0) {
+                        $rootScope.deactivateUploadQueue();
+                    }
+                }, 1500);
+            }
+
             if ($rootScope.uploader) {
                 uploader = $rootScope.uploader;
             } else {
@@ -66,24 +75,41 @@ angular.module('ortolangMarketApp')
                 fileItem.headers = {
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
-                fileItem.wskey = angular.copy($scope.wskey);
+                fileItem.wskey = fileItem.wskey || angular.copy($scope.wskey);
                 fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
-                if (fileItem.ortolangType === 'object') {
-                    fileItem.file.path = angular.copy($scope.parent.path) + '/';
-                    if (fileItem._file.webkitRelativePath) {
-                        fileItem.formData.push({path: fileItem.file.path + fileItem._file.webkitRelativePath});
-                        fileItem.file.path += fileItem._file.webkitRelativePath.replace(fileItem.file.name, '');
-                    } else {
-                        fileItem.formData.push({path: fileItem.file.path + fileItem.file.name});
-                    }
-                } else if (fileItem.ortolangType === 'metadata') {
-                    fileItem.file.path = angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
-                    fileItem.formData.push({path: fileItem.file.path});
-                    fileItem.formData.push({name: fileItem.file.name});
-                } else {
-                    console.error('No ortolang type provided');
-                    uploader.removeFromQueue(fileItem);
+                switch (fileItem.ortolangType) {
+                    case 'object':
+                        fileItem.file.path = angular.copy($scope.parent.path) + '/';
+                        if (fileItem._file.webkitRelativePath) {
+                            fileItem.formData.push({path: fileItem.file.path + fileItem._file.webkitRelativePath});
+                            fileItem.file.path += fileItem._file.webkitRelativePath.replace(fileItem.file.name, '');
+                        } else {
+                            fileItem.formData.push({path: fileItem.file.path + fileItem.file.name});
+                        }
+                        break;
+
+                    case 'metadata':
+                        fileItem.file.path = angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
+                        fileItem.formData.push({path: fileItem.file.path});
+                        fileItem.formData.push({name: fileItem.file.name});
+                        break;
+
+                    case 'zip':
+                        fileItem.url = Url.urlBase() + '/rest/runtime/processes/';
+                        fileItem.alias = 'zippath';
+                        fileItem.formData = [];
+                        fileItem.formData.push({'process-type': 'import-zip'});
+                        fileItem.formData.push({'process-name': fileItem['process-name']});
+                        fileItem.formData.push({'wskey': fileItem.wskey});
+                        fileItem.formData.push({'ziproot': fileItem.ziproot});
+                        fileItem.formData.push({'overwrite': fileItem.overwrite});
+                        break;
+
+                    default:
+                        console.error('No ortolang type provided');
+                        uploader.removeFromQueue(fileItem);
+                        break;
                 }
             };
 
@@ -92,16 +118,18 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                if (fileItem.ortolangType === 'object') {
-                    $rootScope.$emit('uploaderCompleteItemUpload');
-                    $timeout(function () {
-                        fileItem.remove();
-                        if (uploader.queue.length === 0) {
-                            $rootScope.deactivateUploadQueue();
-                        }
-                    }, 1500);
-                } else if (fileItem.ortolangType === 'metadata') {
-                    $rootScope.$emit('completeMetadataUpload');
+                switch (fileItem.ortolangType) {
+                    case 'object':
+                        $rootScope.$emit('uploaderObjectUploadCompleted');
+                        break;
+                    case 'zip':
+                        $rootScope.$emit('uploaderZipUploadCompleted', fileItem, response);
+                        $rootScope.$emit('process-created');
+                        break;
+                    case 'metadata':
+                        $rootScope.$emit('metadataUploadCompleted');
+                        break;
                 }
+                clearItem(fileItem);
             };
         }]);
