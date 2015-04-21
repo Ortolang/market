@@ -75,7 +75,7 @@ angular.module('ortolangMarketApp')
         $rootScope.sideNavElements = [
             {
                 class: 'market',
-                path: '/market/news',
+                path: '/market/home',
                 description: 'NAV.HOME',
                 iconCss: 'fa fa-fw fa-home fa-2x',
                 active: undefined,
@@ -95,7 +95,7 @@ angular.module('ortolangMarketApp')
             },
             {
                 class: 'integrated-projects',
-                path: '/market/websites',
+                path: '/market/applications',
                 description: 'INTEGRATED_PROJECTS',
                 iconCss: 'fa fa-fw fa-briefcase fa-2x',
                 active: undefined,

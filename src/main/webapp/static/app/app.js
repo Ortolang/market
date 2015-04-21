@@ -42,11 +42,27 @@ angular
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
-                redirectTo: '/market/news'
+                redirectTo: '/market/home'
             })
-            .when('/market/:section', {
-                templateUrl: 'market/market-home.html',
-                controller: 'MarketHomeCtrl'
+            .when('/market/home', {
+                templateUrl: 'market/home.html',
+                controller: 'HomeCtrl'
+            })
+            .when('/market/corpora', {
+                templateUrl: 'market/corpora.html',
+                controller: 'CorporaCtrl'
+            })
+            .when('/market/tools', {
+                templateUrl: 'market/tools.html',
+                controller: 'ToolsCtrl'
+            })
+            .when('/market/lexicons', {
+                templateUrl: 'market/lexicons.html',
+                controller: 'LexiconsCtrl'
+            })
+            .when('/market/applications', {
+                templateUrl: 'market/applications.html',
+                controller: 'ApplicationsCtrl'
             })
             .when('/market/item/:itemKey', {
                 templateUrl: 'market/market-item.html',

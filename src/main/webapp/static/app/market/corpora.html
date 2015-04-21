@@ -1,0 +1,58 @@
+<div class="market-home container-fluid container-main">
+    <div class="row">
+        <div class="toolbar">
+            <div class="col-sm-12">
+                <div class="input-group">
+                    <input ng-model="content" ng-keyup="$event.keyCode == 13 && searchContent(content)" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+                    <span class="input-group-btn">
+                        <button ng-click="searchContent(content)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="toolbar toolbar-options">
+            <div class="col-sm-12">
+                <div class="btn-toolbar">
+                   
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{selectedTypeTranslation | translate}} <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-class="selectedType===''?'active':''" role="menuitem"><a ng-click="resetFilterType()">{{'CORPORA' | translate}} <span class="badge">{{items.length}}</span></a></li>
+                                <li class="divider" role="menuitem"></li>
+                                <li ng-class="selectedType==='Corpus'?'active':''" role="menuitem"><a ng-click="filter('type', 'Corpus', 'CORPORA')" translate="MARKET.WRITINGS_CORPORA"></a></li>
+                                <li ng-class="selectedType==='Lexiques'?'active':''" role="menuitem"><a ng-click="filter('type', 'Lexiques', 'LEXICONS')" translate="MARKET.ORAL_CORPORA"></a></li>
+                                <li ng-class="selectedType==='Outils'?'active':''" role="menuitem"><a ng-click="filter('type', 'Outils', 'TOOLS')" translate="MARKET.MULTIMODAL_CORPORA"></a></li>
+                            </ul>
+                        </div>
+                    
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{selectedLangTranslation | translate}} <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-class="selectedLang===''?'active':''" role="menuitem"><a ng-click="resetFilter()">{{'CORPORA' | translate}} <span class="badge">{{items.length}}</span></a></li>
+                                <li class="divider" role="menuitem"></li>
+                                <li ng-class="selectedLang==='Corpus'?'active':''" role="menuitem"><a ng-click="filter('type', 'Corpus', 'CORPORA')" translate="MARKET.WRITINGS_CORPORA"></a></li>
+                                <li ng-class="selectedLang==='Lexiques'?'active':''" role="menuitem"><a ng-click="filter('type', 'Lexiques', 'LEXICONS')" translate="MARKET.ORAL_CORPORA"></a></li>
+                                <li ng-class="selectedLang==='Outils'?'active':''" role="menuitem"><a ng-click="filter('type', 'Outils', 'TOOLS')" translate="MARKET.MULTIMODAL_CORPORA"></a></li>
+                            </ul>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section ng-if="items.length>0" class="row">
+        <div class="col-md-12">
+            <header>
+                <h3 translate="CORPORA"></h3>
+            </header>
+
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
+            </div>
+        </div>
+    </section>
+</div>

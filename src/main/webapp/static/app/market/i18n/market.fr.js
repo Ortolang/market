@@ -49,6 +49,11 @@ angular.module('ortolangMarketApp')
             DEROGATION: 'Code du patrimoine',
             RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
             SITE: 'Accéder à l\'application web',
-            THUMBNAIL: 'Miniature'
+            THUMBNAIL: 'Miniature',
+            CORPORA_TYPE: 'Type de corpus',
+            WRITINGS_CORPORA: 'Corpus Ecrit',
+            ORAL_CORPORA: 'Corpus Oral',
+            MULTIMODAL_CORPORA: 'Corpus Multimodal',
+            LANG_TYPE: 'Toutes les Langues'
         }
     });
