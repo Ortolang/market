@@ -8,14 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('CorporaCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderService', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderService) {
-
-        // $scope.search = function () {
-        //     if ($scope.content !== '') {
-        //         $rootScope.selectSearch();
-        //         $location.search('content', $scope.content).path('/search');
-        //     }
-        // };
+    .controller('CorporaCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', '$filter', 'JsonResultResource', 'QueryBuilderService', 'FacetedFilterManager', 'FacetedFilter', function ($scope, $rootScope, $routeParams, $location, $window, $filter, JsonResultResource, QueryBuilderService, FacetedFilterManager, FacetedFilter) {
 
         $scope.clickItem = function (entry) {
             if (entry.applicationUrl) {
@@ -25,60 +18,81 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        $scope.addFilter = function (filterID, filterValue, filterTranslation) {
-            var filters = {};
-            if (filterID && filterValue) {
-                if (filterID === 'type') {
-                    filters.type = filterValue;
+        $scope.setFilter = function (filter, option) {
+            filter.value = option.value;
+            filter.selected = option.label;
 
-                    $scope.selectedType = filterValue;
-                    $scope.selectedTypeTranslation = filterTranslation;
-                }
-            }
+            $scope.filtersManager.addFilter(filter);
 
-            $scope.applyFilters(filters);
+            applyFilters();
         };
 
-        $scope.removeFilter = function(filterID) {
-            if($scope.filters[filterID]) {
-                delete $scope.filters[filterID];
-                applyFilters($scope.filters);
+        function applyFilters () {
+            var filters = {};
+
+            angular.forEach($scope.filtersManager.getFilters(), function(filter) {
+                filters[filter.id] = filter.value;
+            });
+
+            if (filters) {
+                $scope.itemsFiltered = $filter('filter')($scope.items, filters);
             }
         }
 
-        $scope.applyFilters = function (filters) {
-            if (filters) {
-                $scope.filters = filters;
-                $scope.itemsFiltered = $filter('filter')($scope.items, filters);
-            }
+        $scope.resetFilter = function () {
+            $scope.filtersManager.resetFilter();
+            applyFilters();
         };
 
-        $scope.resetFilterType = function () {
-            $scope.removeFilter('type');
+        function loadFilter(filterID) {
 
-            $scope.selectedType = '';
-            $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
-        };
-
+        }
 
         // Scope variables
         function initScopeVariables() {
             $scope.items = [];
             $scope.itemsFiltered = [];
 
-            $scope.filters = {};
+            $scope.filtersManager = FacetedFilterManager.make();
 
-            $scope.selectedType = '';
-            $scope.selectedTypeTranslation = 'MARKET.CORPORA_TYPE';
-
-            $scope.selectedLang = '';
-            $scope.selectedLangTranslation = 'MARKET.LANG_TYPE';
+            $scope.filters = [];
+            $scope.filters.push(FacetedFilter.make({
+                id: 'statusOfUse', 
+                label: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+                selected: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+                resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+                options: [{
+                    label: 'MARKET.CORPORA.FREE_USE', 
+                    value: 'Libre'
+                }, {
+                    label: 'MARKET.CORPORA.FREE_NC_USE', 
+                    value: 'Libre sans utilisation commerciale'
+                }, {
+                    label: 'MARKET.CORPORA.RESTRICTED_USE', 
+                    value: 'Négociation nécessaire.CORPORA'
+                }] 
+            }));
+            $scope.filters.push(FacetedFilter.make({
+                id: 'primaryLanguage', 
+                label: 'MARKET.CORPORA.ALL_LANG', 
+                selected: 'MARKET.CORPORA.ALL_LANG', 
+                resetLabel: 'MARKET.CORPORA.ALL_LANG',
+                options: [
+                    {
+                        label: 'MARKET.CORPORA.FRENCH_LANG',
+                        value: 'Français'
+                    }
+                ]
+            }));
 
             $scope.content = '';
         }
 
         $scope.searchContent = function(content) {
-            var queryBuilder = QueryBuilderService.make({projection: 'key, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl', source: 'collection'});
+            var queryBuilder = QueryBuilderService.make({
+                projection: 'key, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.statusOfUse as statusOfUse, meta_ortolang-item-json.primaryLanguage as primaryLanguage', 
+                source: 'collection'
+            });
 
             queryBuilder.equals('status', 'published');
             queryBuilder.and();
@@ -106,7 +120,7 @@ angular.module('ortolangMarketApp')
             }, function (reason) {
                 console.error(reason);
             });
-        }
+        };
 
         function init() {
             initScopeVariables();

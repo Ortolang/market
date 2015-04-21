@@ -50,10 +50,19 @@ angular.module('ortolangMarketApp')
             RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
             SITE: 'Accéder à l\'application web',
             THUMBNAIL: 'Miniature',
-            CORPORA_TYPE: 'Type de corpus',
-            WRITINGS_CORPORA: 'Corpus Ecrit',
-            ORAL_CORPORA: 'Corpus Oral',
-            MULTIMODAL_CORPORA: 'Corpus Multimodal',
-            LANG_TYPE: 'Toutes les Langues'
+            CORPORA: {
+                  CORPORA_TYPE: 'Tout corpus',
+                  WRITTEN_CORPORA: 'Corpus Ecrit',
+                  ORAL_CORPORA: 'Corpus Oral',
+                  MULTIMODAL_CORPORA: 'Corpus Multimodal',
+                  ALL_STATUSOFUSE: 'Tous droits d\'utilisation',
+                  FREE_USE: 'Libre',
+                  FREE_NC_USE: 'Libre sans utilisation commerciale',
+                  RESTRICTED_USE: 'Négociation nécessaire',
+                  ALL_LANG: 'Toutes les Langues',
+                  FRENCH_LANG: 'Français'
+            },
+            
+            
         }
     });
