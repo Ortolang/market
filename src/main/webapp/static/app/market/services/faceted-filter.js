@@ -72,7 +72,19 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.options = options;
             },
 
+            putOption: function(option) {
+                var i = 0;
+                for (i; i < this.options.length; i++) {
+                    if (this.options[i].getValue() === option.getValue()) {
+                        this.options[i].incrementLength();
+                        return;
+                    }
+                }
+                this.options.push(option);
+            },
+
             reset: function() {
+                this.value = undefined;
                 this.selected = this.resetLabel;
             }
         };

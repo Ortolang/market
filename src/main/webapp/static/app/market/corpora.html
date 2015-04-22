@@ -17,9 +17,9 @@
                         <div ng-repeat="filter in facetedFilters" class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.selected | translate}} <span class="caret"></span></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li ng-class="filter.value===undefined?'active':''" role="menuitem"><a ng-click="resetFilter()">{{filter.resetLabel | translate}} <span class="badge">{{items.length}}</span></a></li>
+                                <li ng-class="filter.selected===filter.resetLabel?'active':''" role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
                                 <li class="divider" role="menuitem"></li>
-                                <li ng-repeat="option in filter.getOptions()" ng-class="filter.value===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)" translate="{{option.label}}"></a></li>
+                                <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} <!-- <span class="badge">{{option.getLength()}}</span> --></a></li>
                             </ul>
                         </div>
                     
@@ -31,12 +31,12 @@
 
     <section ng-if="items.length>0" class="row">
         <div class="col-md-12">
-            <header>
+            <!-- <header>
                 <h3 translate="CORPORA"></h3>
-            </header>
+            </header> -->
 
             <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in itemsFiltered" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
+                <item class="flex-column medium-item" ng-repeat="item in items | filter:applyFilters:true" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
         </div>
     </section>

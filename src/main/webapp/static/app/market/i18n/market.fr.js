@@ -51,11 +51,11 @@ angular.module('ortolangMarketApp')
             SITE: 'Accéder à l\'application web',
             THUMBNAIL: 'Miniature',
             CORPORA: {
-                  CORPORA_TYPE: 'Tout corpus',
+                  CORPORA_TYPE: 'Tout les corpus',
                   WRITTEN_CORPORA: 'Corpus Ecrit',
                   ORAL_CORPORA: 'Corpus Oral',
                   MULTIMODAL_CORPORA: 'Corpus Multimodal',
-                  ALL_STATUSOFUSE: 'Tous droits d\'utilisation',
+                  ALL_STATUSOFUSE: 'Tout les droits d\'utilisations',
                   FREE_USE: 'Libre',
                   FREE_NC_USE: 'Libre sans utilisation commerciale',
                   RESTRICTED_USE: 'Négociation nécessaire',

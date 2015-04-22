@@ -44,7 +44,7 @@ angular.module('ortolangMarketApp')
                 for (i; i < this.filters.length; i++) {
                     if (this.filters[i].id === filter.id) {
                         filter.reset();
-                        delete this.filters[i];
+                        this.filters.splice(i, 1);
                         return this.filters;
                     }
                 }
