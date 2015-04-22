@@ -18,14 +18,29 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        $scope.setFilter = function (filter, option) {
-            filter.value = option.value;
-            filter.selected = option.label;
-
-            $scope.filtersManager.addFilter(filter);
+        $scope.setFilter = function (filter, value) {
+            addFilter(filter, value);
 
             applyFilters();
         };
+
+        function addFilter (filter, value) {
+
+            var label;
+            angular.forEach(filter.options, function(facetedOption) {
+                if(facetedOption.value === value) {
+                    label = facetedOption.label;
+                    return filter;
+                }
+            });
+
+            if(label !== undefined) {
+                filter.value = value;
+                filter.selected = label;
+
+                $scope.filtersManager.addFilter(filter);
+            }
+        }
 
         function applyFilters () {
             var filters = {};
@@ -43,50 +58,6 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.resetFilter();
             applyFilters();
         };
-
-        function loadFilter(filterID) {
-
-        }
-
-        // Scope variables
-        function initScopeVariables() {
-            $scope.items = [];
-            $scope.itemsFiltered = [];
-
-            $scope.filtersManager = FacetedFilterManager.make();
-
-            $scope.filters = [];
-            $scope.filters.push(FacetedFilter.make({
-                id: 'statusOfUse', 
-                label: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
-                selected: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
-                resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
-                options: [{
-                    label: 'MARKET.CORPORA.FREE_USE', 
-                    value: 'Libre'
-                }, {
-                    label: 'MARKET.CORPORA.FREE_NC_USE', 
-                    value: 'Libre sans utilisation commerciale'
-                }, {
-                    label: 'MARKET.CORPORA.RESTRICTED_USE', 
-                    value: 'Négociation nécessaire.CORPORA'
-                }] 
-            }));
-            $scope.filters.push(FacetedFilter.make({
-                id: 'primaryLanguage', 
-                label: 'MARKET.CORPORA.ALL_LANG', 
-                selected: 'MARKET.CORPORA.ALL_LANG', 
-                resetLabel: 'MARKET.CORPORA.ALL_LANG',
-                options: [
-                    {
-                        label: 'MARKET.CORPORA.FRENCH_LANG',
-                        value: 'Français'
-                    }
-                ]
-            }));
-
-            $scope.content = '';
-        }
 
         $scope.searchContent = function(content) {
             var queryBuilder = QueryBuilderService.make({
@@ -122,11 +93,63 @@ angular.module('ortolangMarketApp')
             });
         };
 
+
+        // Scope variables
+        function initScopeVariables() {
+            $scope.items = [];
+            $scope.itemsFiltered = [];
+
+            $scope.filtersManager = FacetedFilterManager.make();
+
+            $scope.facetedFilters = [];
+            $scope.facetedFilters.push(FacetedFilter.make({
+                id: 'statusOfUse', 
+                label: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+                selected: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+                resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+                options: [{
+                    label: 'MARKET.CORPORA.FREE_USE', 
+                    value: 'Libre'
+                }, {
+                    label: 'MARKET.CORPORA.FREE_NC_USE', 
+                    value: 'Libre sans utilisation commerciale'
+                }, {
+                    label: 'MARKET.CORPORA.RESTRICTED_USE', 
+                    value: 'Négociation nécessaire'
+                }] 
+            }));
+            $scope.facetedFilters.push(FacetedFilter.make({
+                id: 'primaryLanguage', 
+                label: 'MARKET.CORPORA.ALL_LANG', 
+                selected: 'MARKET.CORPORA.ALL_LANG', 
+                resetLabel: 'MARKET.CORPORA.ALL_LANG',
+                options: [
+                    {
+                        label: 'MARKET.CORPORA.FRENCH_LANG',
+                        value: 'Français'
+                    }
+                ]
+            }));
+
+            $scope.content = '';
+        }
+
         function init() {
             initScopeVariables();
 
             $scope.content = $routeParams.content;
             $scope.searchContent($scope.content);
+
+            for(var paramName in $routeParams) {
+                var i = 0;
+                for (i; i < $scope.facetedFilters.length; i++) {
+                    if ($scope.facetedFilters[i].id === paramName) {
+                        addFilter($scope.facetedFilters[i], $routeParams[paramName]);
+                    }
+                }
+            }
+
+            applyFilters();
         }
         init();
 

@@ -14,12 +14,12 @@
             <div class="col-sm-12">
                 <div class="btn-toolbar">
                    
-                        <div ng-repeat="filter in filters" class="btn-group">
+                        <div ng-repeat="filter in facetedFilters" class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.selected | translate}} <span class="caret"></span></button>
                             <ul class="dropdown-menu" role="menu">
                                 <li ng-class="filter.value===undefined?'active':''" role="menuitem"><a ng-click="resetFilter()">{{filter.resetLabel | translate}} <span class="badge">{{items.length}}</span></a></li>
                                 <li class="divider" role="menuitem"></li>
-                                <li ng-repeat="option in filter.getOptions()" ng-class="filter.value===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option)" translate="{{option.label}}"></a></li>
+                                <li ng-repeat="option in filter.getOptions()" ng-class="filter.value===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)" translate="{{option.label}}"></a></li>
                             </ul>
                         </div>
                     
