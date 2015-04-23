@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
 
         $scope.search = function () {
             if ($scope.content !== '') {
-                $location.search('content', $scope.content).path('/search');
+                $location.url('/search?content=' + $scope.content);
             }
         };
 
@@ -111,17 +111,17 @@ angular.module('ortolangMarketApp')
                     length: 0
                 },
                 {
-                    name: 'Lexiques',
+                    name: 'Lexique',
                     translation: 'LEXICONS',
                     length: 0
                 },
                 {
-                    name: 'Outils',
+                    name: 'Outil',
                     translation: 'TOOLS',
                     length: 0
                 },
                 {
-                    name: 'Applications',
+                    name: 'Application',
                     translation: 'INTEGRATED_PROJECTS',
                     length: 0
                 }

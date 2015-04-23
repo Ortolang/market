@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', 'MetadataFormatResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource, FormResource, MetadataFormatResource) {
+    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource, FormResource) {
 
         // ***************** //
         // Editor visibility //
