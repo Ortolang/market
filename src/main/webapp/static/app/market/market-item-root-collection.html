@@ -13,7 +13,7 @@
                     <p><span translate="MARKET.PRODUCER"></span> : 
                         <ul>
                             <li ng-repeat="producer in item.producer">
-                                <a ng-href='#/search?content="{{producer}}"' ng-bind="producer"></a>
+                                <a ng-href='#/search?content={{producer}}&operator=contains&field=meta_ortolang-item-json.producer' ng-bind="producer"></a>
                             </li>
                         </ul>
                     </p>
@@ -80,7 +80,7 @@
                             <dl>
                                 <dt translate="MARKET.PRIMARY_LANGUAGE"></dt>
                                 <dd ng-repeat="pLang in item.primaryLanguage">
-                                    <a ng-href="#/search?content={{pLang}}">{{pLang}}</a>
+                                    <a ng-href="#/search?content={{pLang}}&operator=contains&field=meta_ortolang-item-json.primaryLanguage">{{pLang}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -89,7 +89,7 @@
                             <dl>
                                 <dt translate="MARKET.DISCOURSE_TYPE"></dt>
                                 <dd ng-repeat="discType in item.discourseType">
-                                    <a ng-href="#/search?content={{discType}}">{{discType}}</a>
+                                    <a ng-href="#/search?content={{discType}}&operator=contains&field=meta_ortolang-item-json.discourseType">{{discType}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -98,7 +98,7 @@
                             <dl>
                                 <dt translate="MARKET.LINGUISTIC_SUBJECT"></dt>
                                 <dd ng-repeat="lingSubj in item.linguisticSubject">
-                                    <a ng-href="#/search?content={{lingSubj}}">{{lingSubj}}</a>
+                                    <a ng-href="#/search?content={{lingSubj}}&operator=contains&field=meta_ortolang-item-json.linguisticSubject">{{lingSubj}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -107,7 +107,7 @@
                             <dl>
                                 <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
                                 <dd ng-repeat="pl in item.programmingLanguage">
-                                    <a ng-href="#/search?content={{pl}}">{{pl}}</a>
+                                    <a ng-href="#/search?content={{pl}}&operator=contains&field=meta_ortolang-item-json.programmingLanguage">{{pl}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -116,7 +116,7 @@
                             <dl>
                                 <dt translate="MARKET.OPERATING_SYSTEM"></dt>
                                 <dd ng-repeat="os in item.opearatingSystem">
-                                    <a ng-href="#/search?content={{os}}">{{os}}</a>
+                                    <a ng-href="#/search?content={{os}}&operator=contains&field=meta_ortolang-item-json.opearatingSystem">{{os}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -134,7 +134,7 @@
                             <dl>
                                 <dt translate="MARKET.LANGUAGE"></dt>
                                 <dd ng-repeat="lang in item.language">
-                                    <a ng-href="#/search?content={{lang}}">{{lang}}</a>
+                                    <a ng-href="#/search?content={{lang}}&operator=contains&field=meta_ortolang-item-json.language">{{lang}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -150,7 +150,7 @@
                     <h4 translate="MARKET.RESEARCHER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="researcher in item.researcher">
-                            <a ng-href='#/search?content="{{researcher}}"' ng-bind="researcher"></a>
+                            <a ng-href='#/search?content={{researcher}}&operator=contains&field=meta_ortolang-item-json.researcher' ng-bind="researcher"></a>
                         </li>
                     </ul>
 
@@ -159,7 +159,7 @@
                     <h4 translate="MARKET.MANAGER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="manager in item.manager">
-                            <a ng-href='#/search?content="{{manager}}"' ng-bind="manager"></a>
+                            <a ng-href='#/search?content={{manager}}&operator=contains&field=meta_ortolang-item-json.manager' ng-bind="manager"></a>
                         </li>
                     </ul>
                 </article>
@@ -167,7 +167,7 @@
                     <h4 translate="MARKET.DEVELOPER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="developer in item.developer">
-                            <a ng-href='#/search?content="{{developer}}"' ng-bind="developer"></a>
+                            <a ng-href='#/search?content={{developer}}&operator=contains&field=meta_ortolang-item-json.developer' ng-bind="developer"></a>
                         </li>
                     </ul>
                 </article>
@@ -175,7 +175,7 @@
                     <h4 translate="MARKET.AUTHOR"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="author in item.author">
-                            <a ng-href='#/search?content="{{author}}"' ng-bind="author"></a>
+                            <a ng-href='#/search?content={{author}}&operator=contains&field=meta_ortolang-item-json.author' ng-bind="author"></a>
                         </li>
                     </ul>
                 </article>
@@ -183,7 +183,7 @@
                     <h4 translate="MARKET.COMPILER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="compiler in item.compiler">
-                            <a ng-href='#/search?content="{{compiler}}"' ng-bind="compiler"></a>
+                            <a ng-href='#/search?content={{compiler}}&operator=contains&field=meta_ortolang-item-json.compiler' ng-bind="compiler"></a>
                         </li>
                     </ul>
                 </article>

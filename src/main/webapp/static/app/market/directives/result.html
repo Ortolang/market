@@ -13,7 +13,7 @@
             <p ng-bind-html="entry.description" class="description"></p>
             <p class="producers">
                 <span ng-repeat="producer in entry.producer">
-                    <a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
+                    <a ng-href='#/search?content={{producer}}&operator=contains&field=meta_ortolang-item-json.producer' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
                 </span>
             </p>
             <!-- <div ng-if="entry.key != entry.root" class="item-element">
