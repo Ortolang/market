@@ -224,7 +224,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
 
                 var query = queryBuilder.toString();
-                console.log('query : ' + query);
+                //console.log('query : ' + query);
                 JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
                     angular.forEach(jsonResults, function(itemMeta) {
                         var item = {};
@@ -257,7 +257,7 @@ angular.module('ortolangMarketApp')
                             console.log('register '+item.name);
                         }
                     });
-                    console.log('fin populate tool list');
+                    //console.log('fin populate tool list');
                     $rootScope.$broadcast('tool-list-registered');
 
                 }, function (reason) {

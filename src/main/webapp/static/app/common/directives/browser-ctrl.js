@@ -34,7 +34,8 @@ angular.module('ortolangMarketApp')
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
         'MetadataFormatResource',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, MetadataFormatResource) {
+        'AtmosphereService',
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, MetadataFormatResource, AtmosphereService) {
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
                 marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
@@ -143,6 +144,10 @@ angular.module('ortolangMarketApp')
                 WorkspaceResource.get({wskey: $scope.workspace.key}).$promise.then(function (data) {
                     $scope.workspace = data;
                 });
+            }
+
+            function refreshWorkspaceList() {
+                $scope.workspaceList = WorkspaceResource.get();
             }
 
             function finishGetParentData(element, refresh, forceNewSelection) {
@@ -1008,6 +1013,25 @@ angular.module('ortolangMarketApp')
                 getParentData(true, $scope.hasOnlyParentSelected());
             });
 
+            $rootScope.$on('core.workspace.update', function ($event, eventMessage) {
+                if ($scope.workspace.key === eventMessage.fromObject) {
+                    var path = eventMessage.arguments.path;
+                    path = path.substring(0, path.lastIndexOf('/') + 1);
+                    if ($scope.path === path) {
+                        getParentData(true);
+                    }
+                }
+            });
+
+            $rootScope.$on('core.workspace.create', function ($event, eventMessage) {
+                $scope.workspaceList.$promise.then(function () {
+                    var workspace = $filter('filter')($scope.workspaceList.entries, {key: eventMessage.fromObject});
+                    if (!workspace || workspace.length !== 1) {
+                        refreshWorkspaceList();
+                    }
+                });
+            });
+
             $scope.changeWorkspace = function (workspace) {
                 if (!$scope.forceWorkspace) {
                     if (!$scope.isActiveWorkspace(workspace)) {
@@ -1407,7 +1431,7 @@ angular.module('ortolangMarketApp')
                         createWorkspaceModal;
                     createWorkspaceModalScope.createWorkspace = function () {
                         WorkspaceResource.createWorkspace({name: createWorkspaceModalScope.newWorkspaceName, type: 'user'}, function (newWorkspace) {
-                            $scope.workspaceList = WorkspaceResource.get();
+                            refreshWorkspaceList();
                             $scope.changeWorkspace(newWorkspace);
                             createWorkspaceModal.hide();
                         });
@@ -1621,7 +1645,7 @@ angular.module('ortolangMarketApp')
                 console.log('Initializing browser using %s', $scope.browserService.getId());
                 bindHotkeys();
                 if ($scope.browserService !== MarketBrowserService) {
-                    $scope.workspaceList = WorkspaceResource.get();
+                    refreshWorkspaceList();
                 }
                 $scope.wskey = $routeParams.wskey;
                 $scope.root = $routeParams.root;
@@ -1680,6 +1704,12 @@ angular.module('ortolangMarketApp')
                     getParentData();
                 } else {
                     $scope.workspaceList.$promise.then(function (data) {
+                        AtmosphereService.getSocket().then(function (socket) {
+                            socket.push(atmosphere.util.stringifyJSON({typePattern: 'core.workspace.create', fromPattern: ''}));
+                            angular.forEach(data.entries, function (workspace) {
+                                socket.push(atmosphere.util.stringifyJSON({typePattern: 'core.workspace.update', fromPattern: workspace.key}));
+                            });
+                        });
                         if ($scope.settings.wskey || $scope.forceWorkspace) {
                             var key = $scope.settings.wskey || $scope.forceWorkspace,
                                 filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);

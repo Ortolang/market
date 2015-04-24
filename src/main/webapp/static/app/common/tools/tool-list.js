@@ -66,15 +66,15 @@ angular.module('ortolangMarketApp')
             $scope.tools = ToolManager.getRegistry();
             $scope.filteredTools = $scope.tools;
 
-            $http.get('common/tools/functionality.json', { cache: true}).then(function(response) {
-                $scope.keywords = response.data.inputData;
-                $scope.keywords = $scope.keywords.concat(response.data.categories);
-                $scope.keywords = $scope.keywords.concat(response.data.functionalities);
-            });
+            //$http.get('common/tools/functionality.json', { cache: true}).then(function(response) {
+            //    $scope.keywords = response.data.inputData;
+            //    $scope.keywords = $scope.keywords.concat(response.data.categories);
+            //    $scope.keywords = $scope.keywords.concat(response.data.functionalities);
+            //});
 
             MetadataFormatResource.download({name:'ortolang-item-json'}).$promise.then(
                 function(schema) {
-                    console.debug(angular.fromJson(schema));
+                    //console.log(angular.fromJson(schema));
                 },
                 function(reason) {
                     console.error('Cant get schema of metadata formats "ortolang-item-json" ; failed cause '+reason+' !');
