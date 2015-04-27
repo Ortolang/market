@@ -329,6 +329,31 @@
 
 #market-search {
 
+  .toolbar {
+    
+    span.divider {
+      border-left: @default-border;
+      float: left;
+      position: relative;
+      margin: -@padding-large-vertical (@padding-large-horizontal - @padding-xs-horizontal) -@padding-large-vertical @padding-large-horizontal;
+      display: inline-block;
+      min-height: 54px;
+    }
+  }
+
+  .toolbar-options {
+    background-color: @main-bg;
+
+    .btn {
+
+      &:hover {
+        border-color: @btn-default-border;
+        background-color: @main-bg;
+      }
+      border-color: @main-bg;
+    }
+  }
+
   h3 {
     color: @market-primary;
     display: inline-block;

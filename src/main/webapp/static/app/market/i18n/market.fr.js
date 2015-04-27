@@ -50,6 +50,7 @@ angular.module('ortolangMarketApp')
             RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
             SITE: 'Accéder à l\'application web',
             THUMBNAIL: 'Miniature',
+            ALL_RESOURCE: 'Tout type de ressource',
             CORPORA: {
                   CORPORA_TYPE: 'Tout les corpus',
                   WRITTEN_CORPORA: 'Corpus Ecrit',

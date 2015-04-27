@@ -1,28 +1,36 @@
 <div class="market-home container-fluid container-main">
     <div class="row">
         <div class="toolbar">
-            <div class="col-sm-6">
-                <div class="input-group">
-                    <input ng-model="content" ng-keyup="$event.keyCode == 13 && searchContent(content)" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
-                    <span class="input-group-btn">
-                        <button ng-click="searchContent(content)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="toolbar toolbar-options">
-            <div class="col-sm-12">
-                <div class="btn-toolbar">
-                   
-                        <div ng-repeat="filter in facetedFilters" class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.selected | translate}} <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li ng-class="filter.selected===filter.resetLabel?'active':''" role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
-                                <li class="divider" role="menuitem"></li>
-                                <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} <!-- <span class="badge">{{option.getLength()}}</span> --></a></li>
-                            </ul>
+            <div class="row">
+                <div class="col-sm-7">
+                        <div class="input-group">
+                            <input ng-model="content" ng-keyup="$event.keyCode == 13 && search(content)" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+                            <span class="input-group-btn">
+                                <button ng-click="search(content)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
                         </div>
                     
+                </div>
+                <div class="col-sm-5">
+                    <div class="btn-toolbar btn-toolbar-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="bottom" bs-tooltip>
+                                <span ng-class="'glyphicon glyphicon-sort'"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><div ng-click="order('name', false)" translate="NAME"></div></li>
+                                <li><div ng-click="order(['type','name'], false)" translate="BROWSER.SORT.TYPE_NAME"></div></li>
+                                <li><div ng-click="order('mimeType', false)" translate="BROWSER.SORT.MIME_TYPE"></div></li>
+                                <li><div ng-click="order('modification', false)" translate="BROWSER.SORT.DATE"></div></li>
+                                <li><div ng-click="order('size', false)" translate="SIZE"></div></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{settings.viewMode.text | translate}}" data-placement="bottom" bs-tooltip>
+                                <span ng-class="'glyphicon glyphicon-th-large'"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,7 +44,7 @@
             </header> -->
 
             <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items | filter:applyFilters:true" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
+                <item class="flex-column medium-item" ng-repeat="item in items" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
         </div>
     </section>
