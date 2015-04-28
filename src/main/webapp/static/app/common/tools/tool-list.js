@@ -66,15 +66,11 @@ angular.module('ortolangMarketApp')
             $scope.tools = ToolManager.getRegistry();
             $scope.filteredTools = $scope.tools;
 
-            $http.get('common/tools/functionality.json', { cache: true}).then(function(response) {
-                $scope.keywords = response.data.inputData;
-                $scope.keywords = $scope.keywords.concat(response.data.categories);
-                $scope.keywords = $scope.keywords.concat(response.data.functionalities);
-            });
-
             MetadataFormatResource.download({name:'ortolang-item-json'}).$promise.then(
-                function(schema) {
-                    console.debug(angular.fromJson(schema));
+                function(data) {
+                    var schema = angular.fromJson(data);
+                    $scope.keywords = schema.properties.toolFunctionality.items.enum;
+                    $scope.keywords = $scope.keywords.concat(schema.properties.toolInputData.items.enum);
                 },
                 function(reason) {
                     console.error('Cant get schema of metadata formats "ortolang-item-json" ; failed cause '+reason+' !');
@@ -111,6 +107,11 @@ angular.module('ortolangMarketApp')
 
         // Tool List search/filter
 
+        $scope.addTag = function (tag, tagList) {
+            tagList.push({text:tag.replace(new RegExp('\\s', 'g'), '-')});
+            $scope.search(tagList);
+        };
+
         $scope.loadToolTags = function(query) {
             return $filter('filter')($scope.keywords, query);
         };
@@ -122,8 +123,11 @@ angular.module('ortolangMarketApp')
                     if (term.text && term.text.length) {
                         term = $filter('removeAccents')(term.text);
                         filtered = $filter('filter')(filtered, function (tool) {
-                            var toolNoAccent =  $filter('removeAccents')(JSON.stringify(tool.categories).toLowerCase());
+                            var toolNoAccent =  $filter('removeAccents')(JSON.stringify(tool.functionalities).toLowerCase());
                             toolNoAccent = toolNoAccent + $filter('removeAccents')(JSON.stringify(tool.inputData).toLowerCase());
+                            //search in names too
+                            toolNoAccent = toolNoAccent + tool.name.toLowerCase();
+                            toolNoAccent = toolNoAccent.replace(new RegExp('\\s', 'g'), '-');
                             if(toolNoAccent.search(term.toLowerCase()) !== -1) {
                                 return tool;
                             }

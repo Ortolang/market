@@ -15,7 +15,7 @@
                                 <auto-complete source="loadToolTags($query)" min-length="0" load-on-focus="true"></auto-complete>
                             </tags-input>
                             <span class="input-group-btn">
-                                <button ng-click="search(searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                <button ng-click="search(toolList.searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
                         </div>
                         <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
@@ -36,18 +36,19 @@
                         </div>
                         <br/>
                         <div id="results_list" >
-                            <div ng-repeat="tool in filteredTools  | orderBy: tool.title " class="media tool-item" >
+                            <div ng-repeat="tool in filteredTools track by $index | orderBy: tool.title " class="media tool-item" >
                                 <a class="pull-left" href="#/market/item/{{tool.key}}" target="_blank" bs-tooltip data-title="{{'TOOLS.DOCUMENTATION' | translate }}">
                                     <span ng-class="icons.browser.tools" class="fa-4x" ng-if="!tool.image"></span>
                                     <img ng-if="tool.image" ng-src="{{tool.image}}" class="thumbnail image" />
                                 </a>
                                 <div class="media-body">
                                     <h4 ng-bind="tool.name" class="media-heading"></h4>
-                                    <span ng-repeat="category in tool.categories" style="line-height: 1.7;">
-                                        <span class="label label-gray">{{category}}</span>
+                                    <span ng-repeat="functionality in tool.functionalities track by $index" style="line-height: 1.7;">
+                                        <a ng-click="addTag(functionality, toolList.searchContent);"><span class="label label-gray">{{functionality}}</span></a>
                                     </span>
-                                    <span ng-repeat="input in tool.inputData" style="line-height: 1.7;">
-                                        <span class="label label-blue">{{input}}</span>
+                                    <br>
+                                    <span ng-repeat="input in tool.inputData track by $index" style="line-height: 1.7;">
+                                        <a ng-click="addTag(input, toolList.searchContent);"><span class="label label-blue">{{input}}</span></a>
                                     </span>
                                 </div>
                                 <div class="media-right media-middle run btn btn-default" ng-show="tool.active">

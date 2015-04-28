@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
                 this.config = undefined;
                 this.active = undefined;
                 this.inputData = undefined;
-                this.categories = undefined;
+                this.functionalities = undefined;
                 this.image = undefined;
 
                 angular.forEach(config, function (value, key) {
@@ -113,7 +113,7 @@ angular.module('ortolangMarketApp')
                     return this.image;
                 },
 
-                getCategories: function () {
+                getFunctionalities: function () {
                     return this.categories;
                 },
 
@@ -236,8 +236,12 @@ angular.module('ortolangMarketApp')
                         item.description = data.description;
                         item.documentation = data.help;
                         item.url = data.url;
-                        item.inputData = data.inputData;
-                        item.categories = data.functionality;
+                        item.inputData = data.inputData.filter(function(elem, pos) {
+                            return data.inputData.indexOf(elem) === pos;
+                        });
+                        item.functionalities = data.functionality.filter(function(elem, pos) {
+                            return data.functionality.indexOf(elem) === pos;
+                        });
                         item.meta = data;
                         if(item.url !== undefined && item.url !== '') {
                             item.active = true;
