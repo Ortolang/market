@@ -125,7 +125,7 @@ angular.module('ortolangMarketApp')
                         break;
                     case 'zip':
                         $rootScope.$emit('uploaderZipUploadCompleted', fileItem, response);
-                        $rootScope.$emit('process-created');
+                        $rootScope.$emit('process-created', response);
                         break;
                     case 'metadata':
                         $rootScope.$emit('metadataUploadCompleted');

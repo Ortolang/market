@@ -15,16 +15,17 @@ angular.module('ortolangMarketApp')
         '$modal',
         '$alert',
         '$translate',
+        'AuthService',
         'FormResource',
         'RuntimeResource',
+        'AtmosphereService',
         'ToolManager',
+        'User',
         '$q',
-        function ($rootScope, $filter, $timeout, $modal, $alert, $translate, FormResource, RuntimeResource, ToolManager, $q) {
+        function ($rootScope, $filter, $timeout, $modal, $alert, $translate, AuthService, FormResource, RuntimeResource, AtmosphereService, ToolManager, User, $q) {
 
             var processModal,
                 completeTaskModal,
-                processesTimeout,
-                tasksTimeout,
                 toolJobsTimeout,
                 states = {
                     pending: 'PENDING',
@@ -41,11 +42,49 @@ angular.module('ortolangMarketApp')
                     error: 'ERROR',
                     canceled: 'ABORTED'
                 },
+                lastTasksRefresh,
+                lastProcessesRefresh,
                 timeout = 5000,
                 activeProcesses = [],
-                completedProcesses,
                 activeToolJobs = [],
+                history = {},
                 completedToolJobs;
+
+
+            // *********************** //
+            //       Subscription      //
+            // *********************** //
+
+            function subscribeToProcesses(processes) {
+                if (!angular.isArray(processes)) {
+                    processes = [processes];
+                }
+                angular.forEach(processes, function (process) {
+                    AtmosphereService.addFilter({typePattern: 'runtime.process.*', fromPattern: process.key});
+                });
+            }
+
+            function initialSubscriptions() {
+                AuthService.sessionInitialized().then(function () {
+                    AtmosphereService.addFilter({typePattern: 'runtime.process.create', throwedByPattern: User.key});
+                    angular.forEach(User.groups, function (group) {
+                        AtmosphereService.addFilter({typePattern: 'runtime.task.*', fromPattern: '', argumentsPatterns: {group: group}});
+                    });
+                    AtmosphereService.addFilter({typePattern: 'runtime.task.*', fromPattern: '', argumentsPatterns: {user: User.key}});
+                });
+            }
+
+            // *********************** //
+            //        Processes        //
+            // *********************** //
+
+            function pushNewProcess(process) {
+                $rootScope.processes.push(process);
+                if (process.state !== states.completed && process.state !== states.aborted) {
+                    activeProcesses.push(process);
+                    subscribeToProcesses(process);
+                }
+            }
 
             function createProcessFromForm(formKey, template) {
                 FormResource.get({formKey: formKey}, {}, function (form) {
@@ -57,8 +96,8 @@ angular.module('ortolangMarketApp')
                         submitCopy: $translate.instant('PROCESSES.START_PROCESS')
                     };
                     modalScope.onSubmit = function () {
-                        RuntimeResource.createProcess(modalScope.formData, function () {
-                            forceRefresh();
+                        RuntimeResource.createProcess(modalScope.formData, function (process) {
+                            pushNewProcess(process);
                         });
                         processModal.hide();
                     };
@@ -77,8 +116,8 @@ angular.module('ortolangMarketApp')
             }
 
             function createProcess(data) {
-                RuntimeResource.createProcess(data, function () {
-                    forceRefresh();
+                RuntimeResource.createProcess(data, function (process) {
+                    pushNewProcess(process);
                 });
             }
 
@@ -101,7 +140,7 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            function activeProcessesNumber() {
+            function getActiveProcessesNumber() {
                 if ($rootScope.processes) {
                     return getActiveProcesses().length;
                 }
@@ -109,7 +148,7 @@ angular.module('ortolangMarketApp')
             }
 
             function hasActiveProcesses() {
-                return activeProcessesNumber() > 0;
+                return getActiveProcessesNumber() > 0;
             }
 
             function getProcessesWithState(state, not) {
@@ -131,45 +170,22 @@ angular.module('ortolangMarketApp')
                 return false;
             }
 
-            function refreshProcesses() {
-                RuntimeResource.processes().$promise.then(function (data) {
-                    $rootScope.processes = data.entries;
-                    completedProcesses = getProcessesWithState(states.completed);
-                    var justCompletedProcesses = $filter('filter')(activeProcesses, function (activeProcess) {
-                        return $filter('filter')(completedProcesses, {key: activeProcess.key}).length > 0;
-                    });
-                    angular.forEach(justCompletedProcesses, function (justCompletedProcess) {
-                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: justCompletedProcess.name}), placement: 'top-right', type: 'success', show: true});
-                        if (justCompletedProcess.type === 'publish-workspace') {
-                            $rootScope.$broadcast('publishWorkspaceCompleted');
+            function getProcesses(date, refresh) {
+                if (!date || lastProcessesRefresh < date) {
+                    lastProcessesRefresh = Date.now();
+                    console.log('REFRESHING PROCESSES');
+                    RuntimeResource.processes().$promise.then(function (data) {
+                        $rootScope.processes = data.entries;
+                        activeProcesses = getActiveProcesses();
+                        if (!refresh) {
+                            subscribeToProcesses(activeProcesses);
                         }
+                        if ($rootScope.selectedProcess) {
+                            $rootScope.selectedProcess = $filter('filter')($rootScope.processes, {key: $rootScope.selectedProcess.key})[0];
+                        }
+                    }, function (error) {
+                        console.error('An error occurred while trying to refresh the process list', error);
                     });
-                    activeProcesses = getActiveProcesses();
-                    $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
-                    if ($rootScope.activeProcessesNbr === 0) {
-                        $timeout.cancel(processesTimeout);
-                        $timeout.cancel(tasksTimeout);
-                    }
-                    if ($rootScope.selectedProcess) {
-                        $rootScope.selectedProcess = $filter('filter')($rootScope.processes, {key: $rootScope.selectedProcess.key})[0];
-                    }
-                }, function (error) {
-                    console.error('An error occurred while trying to refresh the process list', error);
-                    $timeout.cancel(processesTimeout);
-                });
-                processesTimeout = $timeout(refreshProcesses, timeout);
-            }
-
-            function forceRefreshProcesses(delay) {
-                if (processesTimeout) {
-                    $timeout.cancel(processesTimeout);
-                    $timeout.cancel(tasksTimeout);
-                    $timeout.cancel(toolJobsTimeout);
-                }
-                if (delay) {
-                    $timeout(refreshProcesses, delay);
-                } else {
-                    refreshProcesses();
                 }
             }
 
@@ -177,30 +193,21 @@ angular.module('ortolangMarketApp')
             //          Tasks          //
             // *********************** //
 
-            function refreshTasks() {
-                RuntimeResource.tasks().$promise.then(function (data) {
-                    $rootScope.tasks = data.entries;
-                }, function (error) {
-                    console.error('An error occurred while trying to refresh the task list', error);
-                    $timeout.cancel(tasksTimeout);
-                });
-                tasksTimeout = $timeout(refreshTasks, timeout);
-            }
-
-            function forceRefreshTasks(delay) {
-                if (tasksTimeout) {
-                    $timeout.cancel(tasksTimeout);
-                }
-                if (delay) {
-                    $timeout(refreshTasks, delay);
-                } else {
-                    refreshTasks();
+            function getTasks(date) {
+                if (!date || lastTasksRefresh < date) {
+                    lastTasksRefresh = Date.now();
+                    console.log('REFRESHING TASKS');
+                    RuntimeResource.tasks().$promise.then(function (data) {
+                        $rootScope.tasks = data.entries;
+                    }, function (error) {
+                        console.error('An error occurred while trying to refresh the task list', error);
+                    });
                 }
             }
 
             function claimTask(task) {
                 RuntimeResource.claimTask({tId: task.id}, {}, function () {
-                    forceRefreshTasks();
+                    getTasks();
                 });
             }
 
@@ -224,7 +231,7 @@ angular.module('ortolangMarketApp')
                             variables.push({name: key, value: modalScope.formData[key], type: type});
                         });
                         RuntimeResource.completeTask({tId: task.id}, {'variables':  variables}, function () {
-                            forceRefreshTasks();
+                            getTasks();
                         });
                         completeTaskModal.hide();
                     };
@@ -359,13 +366,8 @@ angular.module('ortolangMarketApp')
             //          Events         //
             // *********************** //
 
-            function forceRefresh(delay) {
-                forceRefreshProcesses(delay);
-                forceRefreshTasks(delay);
-            }
-
-            $rootScope.$on('process-created', function () {
-                forceRefresh();
+            $rootScope.$on('process-created', function (event, process) {
+                pushNewProcess(process);
             });
 
             $rootScope.$on('tool-job-created', function () {
@@ -376,13 +378,58 @@ angular.module('ortolangMarketApp')
                 refreshTools();
             });
 
+            $rootScope.$on('runtime.process.update-state', function (event, message) {
+                event.stopPropagation();
+                if (message.arguments.state === states.completed) {
+                    var process = $filter('filter')(activeProcesses, {key: message.fromObject});
+                    if (process.length > 0) {
+                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), placement: 'top-right', type: 'success', show: true});
+                    }
+                }
+                getProcesses(message.date, true);
+            });
+
+            $rootScope.$on('runtime.process.create', function (event, message) {
+                event.stopPropagation();
+                getProcesses(message.date, true);
+            });
+
+            $rootScope.$on('runtime.process.log', function (event, message) {
+                event.stopPropagation();
+                getProcesses(message.date, true);
+            });
+
+            function processTaskEvent(event, message) {
+                event.stopPropagation();
+                getTasks(message.date);
+            }
+
+            $rootScope.$on('runtime.task.created', function (event, message) {
+                // If we receive the same message we don't process it again
+                if (history['runtime.task.created'] && history['runtime.task.created'].date === message.date) {
+                    return;
+                }
+                history['runtime.task.created'] = message;
+                processTaskEvent(event, message);
+                $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), placement: 'top-right', type: 'danger', show: true});
+            });
+
+            $rootScope.$on('runtime.task.assigned', function (event, message) {
+                processTaskEvent(event, message);
+            });
+
+            $rootScope.$on('runtime.task.completed', function (event, message) {
+                processTaskEvent(event, message);
+            });
+
             // *********************** //
             //           Init          //
             // *********************** //
 
             function init() {
-                refreshProcesses();
-                refreshTasks();
+                getProcesses();
+                getTasks();
+                initialSubscriptions();
             }
             init();
 
@@ -392,7 +439,7 @@ angular.module('ortolangMarketApp')
                 createProcess: createProcess,
                 selectProcess: selectProcess,
                 selectProcessByKey: selectProcessByKey,
-                activeProcessesNumber: activeProcessesNumber,
+                getActiveProcessesNumber: getActiveProcessesNumber,
                 getActiveProcesses: getActiveProcesses,
                 hasActiveProcesses: hasActiveProcesses,
                 hasProcessesWithState: hasProcessesWithState,

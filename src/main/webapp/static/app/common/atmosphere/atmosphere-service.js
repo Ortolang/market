@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
             connected = $q.defer(),
             config = {
                 contentType: 'application/json',
-                logLevel: 'debug',
+                logLevel: 'info',
                 transport: 'websocket',
                 fallbackTransport: 'long-polling',
                 trackMessageLength: true,
@@ -106,19 +106,35 @@ angular.module('ortolangMarketApp')
             });
         }
 
-        function getSocket() {
-            return connected.promise.then(function () {
-                return socket;
-            });
-        }
+        //function getSocket() {
+        //    return connected.promise.then(function () {
+        //        return socket;
+        //    });
+        //}
 
         function isConnected() {
             return connected.promise;
         }
 
+        function pushFilter(action, filter) {
+            connected.promise.then(function () {
+                socket.push(atmosphere.util.stringifyJSON({action: action, filter: filter}));
+            });
+        }
+
+        function addFilter(filter) {
+            pushFilter('ADD', filter);
+        }
+
+        function removeFilter(filter) {
+            pushFilter('REMOVE', filter);
+        }
+
         return {
             subscribe: subscribe,
-            getSocket: getSocket,
+            //getSocket: getSocket,
+            addFilter: addFilter,
+            removeFilter: removeFilter,
             isConnected: isConnected
         };
     }]);
