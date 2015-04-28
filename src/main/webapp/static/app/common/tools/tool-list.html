@@ -51,9 +51,9 @@
                                         <a ng-click="addTag(input, toolList.searchContent);"><span class="label label-blue">{{input}}</span></a>
                                     </span>
                                 </div>
-                                <div class="media-right media-middle run btn btn-default" ng-show="tool.active">
+                                <div class="media-right" ng-show="tool.active">
                                     <a ng-click="selectTool(tool)" bs-tooltip data-title="{{'TOOLS.RUN_TOOL' | translate }}" >
-                                        <span class="fa-stack fa-lg">
+                                        <span class="fa-stack fa-lg run thumbnail">
                                             <i class="fa fa-gear fa-stack-2x"></i>
                                         </span>
                                     </a>
