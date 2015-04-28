@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Corpus');
             } else if(type==='websites') {
                 queryBuilder.and();
-                queryBuilder.equals('meta_ortolang-item-json.type', 'Site web');
+                queryBuilder.equals('meta_ortolang-item-json.type', 'Application');
             } else if(type==='lexicons') {
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Lexique');
