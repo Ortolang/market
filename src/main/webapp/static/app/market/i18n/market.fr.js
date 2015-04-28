@@ -53,9 +53,7 @@ angular.module('ortolangMarketApp')
             ALL_RESOURCE: 'Tout type de ressource',
             CORPORA: {
                   CORPORA_TYPE: 'Tout les corpus',
-                  WRITTEN_CORPORA: 'Corpus Ecrit',
-                  ORAL_CORPORA: 'Corpus Oral',
-                  MULTIMODAL_CORPORA: 'Corpus Multimodal',
+                  ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
                   ALL_STATUSOFUSE: 'Tout les droits d\'utilisations',
                   FREE_USE: 'Libre',
                   FREE_NC_USE: 'Libre sans utilisation commerciale',

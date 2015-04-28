@@ -12,11 +12,14 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
         // Constructor
         function FacetedFilter(config) {
             this.id = undefined;
+            this.alias = undefined;
             this.value = undefined;
             this.label = undefined;
+            this.type = 'string';
             this.resetLabel = '';
             this.selected = undefined;
             this.options = [];
+            this.subFilters = [];
 
             angular.forEach(config, function (value, key) {
                 if (this.hasOwnProperty(key)) {
@@ -30,6 +33,14 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
 
             getId: function () {
                 return this.id;
+            },
+
+            getAlias: function () {
+                return this.alias;
+            },
+
+            setAlias: function(alias) {
+                this.alias = alias;
             },
 
             getValue: function () {
@@ -46,6 +57,14 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
 
             setLabel: function(label) {
                 this.label = label;
+            },
+
+            getType: function () {
+                return this.type;
+            },
+
+            setType: function(type) {
+                this.type = type;
             },
 
             getSelected: function () {
@@ -81,6 +100,18 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                     }
                 }
                 this.options.push(option);
+            },
+
+            getSubFilters: function () {
+                return this.subFilters;
+            },
+
+            setSubFilters: function(subFilters) {
+                this.subFilters = subFilters;
+            },
+
+            putSubFilter: function(subFilter) {
+                this.subFilters.push(subFilter);
             },
 
             reset: function() {

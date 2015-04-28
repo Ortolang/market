@@ -49,20 +49,16 @@ angular
                 controller: 'HomeCtrl'
             })
             .when('/market/corpora', {
-                templateUrl: 'market/corpora.html',
-                controller: 'CorporaCtrl'
+                templateUrl: 'market/corpora.html'
             })
             .when('/market/tools', {
-                templateUrl: 'market/tools.html',
-                controller: 'ToolsCtrl'
+                templateUrl: 'market/tools.html'
             })
             .when('/market/lexicons', {
-                templateUrl: 'market/lexicons.html',
-                controller: 'LexiconsCtrl'
+                templateUrl: 'market/lexicons.html'
             })
             .when('/market/applications', {
-                templateUrl: 'market/applications.html',
-                controller: 'ApplicationsCtrl'
+                templateUrl: 'market/applications.html'
             })
             .when('/market/item/:itemKey', {
                 templateUrl: 'market/market-item.html',

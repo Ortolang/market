@@ -42,18 +42,90 @@ angular.module('ortolangMarketApp')
         function applyFilters () {
             var filters = {};
 
+            //TODO clean removes
+            $scope.subFacetedFilters = [];
+
             angular.forEach($scope.filtersManager.getFilters(), function(filter) {
-                filters[filter.id] = filter.value;
+
+                if(filter.getType() === 'string') {
+                    filters[filter.id] = filter.value;
+                } else if(filter.getType() === 'array') {
+                    filters[filter.id] = [filter.value];
+                } else {
+                    filters[filter.id] = filter.value;
+                }
+
+                angular.forEach(filter.getSubFilters(), function(subFilter) {
+                    $scope.subFacetedFilters.push(subFilter);
+                });
             });
 
             if (filters) {
-                $scope.applyFilters = filters;
+                // $scope.applyFilters = filters;
+                $scope.searchContent($scope.content, filters);
             }
         }
 
         $scope.removeFilter = function (filter) {
             $scope.filtersManager.removeFilter(filter);
             applyFilters();
+        };
+
+        $scope.searchContent = function (content, filters) {
+            var queryBuilder = QueryBuilderService.make({
+                projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.statusOfUse as statusOfUse, meta_ortolang-item-json.primaryLanguage as primaryLanguage, meta_ortolang-item-json.typeOfCorpus as typeOfCorpus, meta_ortolang-item-json.annotationLevel as annotationLevel', 
+                source: 'collection'
+            });
+
+            queryBuilder.equals('status', 'published');
+            
+            var contentSplit = [];
+            if (content && content !== '') {
+                contentSplit = queryBuilder.tokenize(content);
+            }
+            if (contentSplit.length > 0) {
+                angular.forEach(contentSplit, function (contentPart) {
+                    queryBuilder.and();
+                    queryBuilder.containsText('any()', contentPart);
+                });
+            }
+
+            for(var filterName in filters) {
+                queryBuilder.and();
+                if(angular.isArray(filters[filterName])) {
+                    queryBuilder.in(filterName, filters[filterName]);
+                } else {
+                    queryBuilder.equals(filterName, filters[filterName]);
+                }
+            }
+
+            var query = queryBuilder.toString();
+            console.log('query : ' + query);
+            JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                //TODO clean removes
+                $scope.items = [];
+
+                angular.forEach(jsonResults, function(jsonResult) {
+                    var jsEntry = angular.fromJson(jsonResult);
+                    $scope.items.push(jsEntry);
+
+                    var i = 0;
+                    for (i; i < $scope.facetedFilters.length; i++) {
+                        if (jsEntry[$scope.facetedFilters[i].getAlias()]) {
+                            addOptionFilter($scope.facetedFilters[i], jsEntry[$scope.facetedFilters[i].getAlias()]);
+                        }
+                    }
+
+                    i = 0;
+                    for (i; i < $scope.subFacetedFilters.length; i++) {
+                        if (jsEntry[$scope.subFacetedFilters[i].getAlias()]) {
+                            addOptionFilter($scope.subFacetedFilters[i], jsEntry[$scope.subFacetedFilters[i].getAlias()]);
+                        }
+                    }
+                });
+            }, function (reason) {
+                console.error(reason);
+            });
         };
 
         function addOptionFilter (filter, optionValue) {
@@ -74,44 +146,6 @@ angular.module('ortolangMarketApp')
             }
         }
 
-        $scope.searchContent = function (content) {
-            var queryBuilder = QueryBuilderService.make({
-                projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.statusOfUse as statusOfUse, meta_ortolang-item-json.primaryLanguage as primaryLanguage', 
-                source: 'collection'
-            });
-
-            queryBuilder.equals('status', 'published');
-            
-            var contentSplit = [];
-            if (content && content !== '') {
-                contentSplit = queryBuilder.tokenize(content);
-            }
-            if (contentSplit.length > 0) {
-                angular.forEach(contentSplit, function (contentPart) {
-                    queryBuilder.and();
-                    queryBuilder.containsText('meta_ortolang-item-json.*', contentPart);
-                });
-            }
-
-            var query = queryBuilder.toString();
-            console.log('query : ' + query);
-            JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                angular.forEach(jsonResults, function(jsonResult) {
-                    var jsEntry = angular.fromJson(jsonResult);
-                    $scope.items.push(jsEntry);
-
-                    var i = 0;
-                    for (i; i < $scope.facetedFilters.length; i++) {
-                        if (jsEntry[$scope.facetedFilters[i].id]) {
-                            addOptionFilter($scope.facetedFilters[i], jsEntry[$scope.facetedFilters[i].id]);
-                        }
-                    }
-                });
-            }, function (reason) {
-                console.error(reason);
-            });
-        };
-
 
         // Scope variables
         function initScopeVariables() {
@@ -121,8 +155,29 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager = FacetedFilterManager.make();
 
             $scope.facetedFilters = [];
+            $scope.subFacetedFilters = [];
+
+            var annotationLevelFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.annotationLevel',
+                alias: 'annotationLevel',
+                type: 'array',
+                label: 'MARKET.CORPORA.ANNOTATION_LEVEL', 
+                selected: 'MARKET.CORPORA.ANNOTATION_LEVEL', 
+                resetLabel: 'MARKET.CORPORA.ANNOTATION_LEVEL'
+            });
+
+            var corpusTypeFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.typeOfCorpus',
+                alias: 'typeOfCorpus',
+                label: 'MARKET.CORPORA.CORPORA_TYPE', 
+                selected: 'MARKET.CORPORA.CORPORA_TYPE', 
+                resetLabel: 'MARKET.CORPORA.CORPORA_TYPE',
+                subFilters: [annotationLevelFilter]
+            });
+
             $scope.facetedFilters.push(FacetedFilter.make({
-                id: 'type', 
+                id: 'meta_ortolang-item-json.type', 
+                alias: 'type',
                 label: 'MARKET.ALL_RESOURCE', 
                 selected: 'MARKET.ALL_RESOURCE', 
                 resetLabel: 'MARKET.ALL_RESOURCE',
@@ -141,37 +196,42 @@ angular.module('ortolangMarketApp')
                         label: 'Outil', 
                         value: 'Outil',
                         length: 1
+                    }),
+                    OptionFacetedFilter.make({
+                        label: 'Projet intégré', 
+                        value: 'Application',
+                        length: 1
                     })
-                ]
+                ],
+                subFilters: [corpusTypeFilter]
                 
             }));
 
             
-            $scope.facetedFilters.push(FacetedFilter.make({
-                id: 'statusOfUse', 
-                label: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
-                selected: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
-                resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE',
-                
-                
-            }));
+            // $scope.facetedFilters.push(FacetedFilter.make({
+            //     id: 'meta_ortolang-item-json.statusOfUse', 
+            //     alias: 'statusOfUse',
+            //     label: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+            //     selected: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
+            //     resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE',
+            // }));
 
-            $scope.facetedFilters.push(FacetedFilter.make({
-                id: 'primaryLanguage', 
-                label: 'MARKET.CORPORA.ALL_LANG', 
-                selected: 'MARKET.CORPORA.ALL_LANG', 
-                resetLabel: 'MARKET.CORPORA.ALL_LANG'
-            }));
+            // $scope.facetedFilters.push(FacetedFilter.make({
+            //     id: 'meta_ortolang-item-json.primaryLanguage', 
+            //     alias: 'primaryLanguage',
+            //     label: 'MARKET.CORPORA.ALL_LANG', 
+            //     selected: 'MARKET.CORPORA.ALL_LANG', 
+            //     resetLabel: 'MARKET.CORPORA.ALL_LANG'
+            // }));
 
             $scope.content = '';
         }
 
         function init() {
             initScopeVariables();
-            $rootScope.selectSearch();
+            // $rootScope.selectSearch();
 
             $scope.content = $routeParams.content;
-            $scope.searchContent($routeParams.content);
 
             for(var paramName in $routeParams) {
                 var i = 0;
@@ -181,6 +241,8 @@ angular.module('ortolangMarketApp')
                     }
                 }
             }
+
+            // $scope.searchContent($routeParams.content);
 
             applyFilters();
         }

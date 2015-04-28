@@ -40,8 +40,14 @@ angular.module('ortolangMarketApp')
                 this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
             },
 
+            contains : function (name, content) {
+                //TODO if content is an array
+                this.conditions += name + ' contains \'' + this.sanitize(content) + '\'';
+            },
+
             containsText : function (name, content) {
-                this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
+                this.conditions += 'any() traverse(0,3) (' + name + '.toLowerCase().indexOf(\'' + this.sanitize(content.toLowerCase()) + '\') > -1 )';
+                // this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
             },
 
             in : function (name, arrayOfContent) {
@@ -68,7 +74,7 @@ angular.module('ortolangMarketApp')
             },
 
             sanitize : function (content) {
-                return content.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-');
+                return content.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-').replace(/'/g, '\\\'');
             },
 
             toString : function () {
