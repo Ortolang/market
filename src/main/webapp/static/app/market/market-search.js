@@ -11,65 +11,54 @@ angular.module('ortolangMarketApp')
     .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$filter', 'JsonResultResource', 'QueryBuilderService', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, $location, $routeParams, $rootScope, $filter, JsonResultResource, QueryBuilderService, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
 
         $scope.search = function () {
-            if ($scope.content !== '') {
-                $location.search('content', $scope.content).path('/search');
-            }
-        };
-
-        $scope.setFilter = function (filter, value) {
-            addFilter(filter, value);
-
-            applyFilters();
-        };
-
-        function addFilter (filter, value) {
-
-            var label;
-            angular.forEach(filter.options, function(facetedOption) {
-                if(facetedOption.getValue() === value) {
-                    label = facetedOption.getLabel();
-                }
-            });
-
-            if(label !== undefined) {
-                filter.value = value;
-                filter.selected = label;
-
-                $scope.filtersManager.addFilter(filter);
-            }
-        }
-
-        function applyFilters () {
+            
             var filters = {};
-
-            //TODO clean removes
-            $scope.subFacetedFilters = [];
-
             angular.forEach($scope.filtersManager.getFilters(), function(filter) {
 
                 if(filter.getType() === 'string') {
                     filters[filter.id] = filter.value;
                 } else if(filter.getType() === 'array') {
-                    filters[filter.id] = [filter.value];
+                    filters[filter.id] = [filter.value]; //TODO add to array if exits
                 } else {
                     filters[filter.id] = filter.value;
                 }
-
-                angular.forEach(filter.getSubFilters(), function(subFilter) {
-                    $scope.subFacetedFilters.push(subFilter);
-                });
             });
 
-            if (filters) {
-                // $scope.applyFilters = filters;
-                $scope.searchContent($scope.content, filters);
+            if ($scope.content && $scope.content !== '') {
+                filters.content = $scope.content;
             }
-        }
+            $location.search(filters).path('/search');
+            
+        };
+
+        $scope.setFilter = function (filter, value) {
+            addFilter(filter, value);
+            // applyFilters();
+            $scope.search();
+        };
 
         $scope.removeFilter = function (filter) {
             $scope.filtersManager.removeFilter(filter);
-            applyFilters();
+            // applyFilters();
+            $scope.search();
         };
+
+        function addFilter (filter, value) {
+
+            var opt;
+            angular.forEach(filter.options, function(facetedOption) {
+                if(facetedOption.getValue() === value) {
+                    opt = facetedOption;
+                }
+            });
+
+            if(opt !== undefined) {
+                filter.value = value;
+                filter.selected = opt;
+
+                $scope.filtersManager.addFilter(filter);
+            }
+        }
 
         $scope.searchContent = function (content, filters) {
             var queryBuilder = QueryBuilderService.make({
@@ -116,12 +105,12 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
-                    i = 0;
-                    for (i; i < $scope.subFacetedFilters.length; i++) {
-                        if (jsEntry[$scope.subFacetedFilters[i].getAlias()]) {
-                            addOptionFilter($scope.subFacetedFilters[i], jsEntry[$scope.subFacetedFilters[i].getAlias()]);
-                        }
-                    }
+                    // i = 0;
+                    // for (i; i < $scope.subFacetedFilters.length; i++) {
+                    //     if (jsEntry[$scope.subFacetedFilters[i].getAlias()]) {
+                    //         addOptionFilter($scope.subFacetedFilters[i], jsEntry[$scope.subFacetedFilters[i].getAlias()]);
+                    //     }
+                    // }
                 });
             }, function (reason) {
                 console.error(reason);
@@ -147,45 +136,87 @@ angular.module('ortolangMarketApp')
         }
 
 
+        function applyFilters () {
+            var filters = {};
+
+            angular.forEach($scope.filtersManager.getFilters(), function(filter) {
+
+                if(filter.getType() === 'string') {
+                    filters[filter.id] = filter.value;
+                } else if(filter.getType() === 'array') {
+                    filters[filter.id] = [filter.value];
+                } else {
+                    filters[filter.id] = filter.value;
+                }
+                $scope.visibleFacetedFilters.addFilter(filter);
+
+                angular.forEach(filter.selected.getSubFilters(), function(subFilter) {
+                    $scope.visibleFacetedFilters.addFilter(subFilter);
+                });
+            });
+
+            if (filters) {
+                // $scope.applyFilters = filters;
+                $scope.searchContent($scope.content, filters);
+            }
+        }
+
         // Scope variables
         function initScopeVariables() {
             $scope.items = [];
-            $scope.applyFilters = {};
+            // $scope.applyFilters = {};
 
             $scope.filtersManager = FacetedFilterManager.make();
 
             $scope.facetedFilters = [];
-            $scope.subFacetedFilters = [];
+            $scope.visibleFacetedFilters = FacetedFilterManager.make();
 
             var annotationLevelFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.annotationLevel',
                 alias: 'annotationLevel',
                 type: 'array',
-                label: 'MARKET.CORPORA.ANNOTATION_LEVEL', 
-                selected: 'MARKET.CORPORA.ANNOTATION_LEVEL', 
+                label: 'MARKET.CORPORA.ANNOTATION_LEVEL',
                 resetLabel: 'MARKET.CORPORA.ANNOTATION_LEVEL'
             });
+            $scope.facetedFilters.push(annotationLevelFilter);
 
             var corpusTypeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.typeOfCorpus',
                 alias: 'typeOfCorpus',
-                label: 'MARKET.CORPORA.CORPORA_TYPE', 
-                selected: 'MARKET.CORPORA.CORPORA_TYPE', 
+                label: 'MARKET.CORPORA.CORPORA_TYPE',
                 resetLabel: 'MARKET.CORPORA.CORPORA_TYPE',
-                subFilters: [annotationLevelFilter]
+                options: [
+                    OptionFacetedFilter.make({
+                        label: 'Écrit', 
+                        value: 'Écrit',
+                        length: 1,
+                        subFilters: [annotationLevelFilter]
+                    }),
+                    OptionFacetedFilter.make({
+                        label: 'Oral', 
+                        value: 'Oral',
+                        length: 1
+                    }),
+                    OptionFacetedFilter.make({
+                        label: 'Multimodal', 
+                        value: 'Multimodal',
+                        length: 1
+                    })
+                ]
             });
+            $scope.facetedFilters.push(corpusTypeFilter);
 
-            $scope.facetedFilters.push(FacetedFilter.make({
+            var typeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.type', 
                 alias: 'type',
-                label: 'MARKET.ALL_RESOURCE', 
-                selected: 'MARKET.ALL_RESOURCE', 
+                label: 'MARKET.ALL_RESOURCE',  
                 resetLabel: 'MARKET.ALL_RESOURCE',
                 options: [
                     OptionFacetedFilter.make({
                         label: 'Corpus', 
                         value: 'Corpus',
-                        length: 1
+                        length: 1,
+                        subFilters: [corpusTypeFilter]
                     }),
                     OptionFacetedFilter.make({
                         label: 'Lexique', 
@@ -202,11 +233,11 @@ angular.module('ortolangMarketApp')
                         value: 'Application',
                         length: 1
                     })
-                ],
-                subFilters: [corpusTypeFilter]
+                ]
                 
-            }));
-
+            });
+            $scope.facetedFilters.push(typeFilter);
+            $scope.visibleFacetedFilters.addFilter(typeFilter);
             
             // $scope.facetedFilters.push(FacetedFilter.make({
             //     id: 'meta_ortolang-item-json.statusOfUse', 
@@ -238,6 +269,7 @@ angular.module('ortolangMarketApp')
                 for (i; i < $scope.facetedFilters.length; i++) {
                     if ($scope.facetedFilters[i].id === paramName) {
                         addFilter($scope.facetedFilters[i], $routeParams[paramName]);
+
                     }
                 }
             }

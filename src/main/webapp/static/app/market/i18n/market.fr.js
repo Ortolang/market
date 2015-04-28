@@ -55,11 +55,7 @@ angular.module('ortolangMarketApp')
                   CORPORA_TYPE: 'Tout les corpus',
                   ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
                   ALL_STATUSOFUSE: 'Tout les droits d\'utilisations',
-                  FREE_USE: 'Libre',
-                  FREE_NC_USE: 'Libre sans utilisation commerciale',
-                  RESTRICTED_USE: 'Négociation nécessaire',
-                  ALL_LANG: 'Toutes les Langues',
-                  FRENCH_LANG: 'Français'
+                  ALL_LANG: 'Toutes les Langues'
             },
             
             

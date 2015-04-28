@@ -41,23 +41,23 @@
             <div class="col-sm-12">
                 <div class="btn-toolbar">
                    
-                    <div ng-repeat="filter in facetedFilters" class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.selected | translate}} <span class="caret"></span></button>
+                    <div ng-repeat="filter in visibleFacetedFilters.getFilters()" class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-class="filter.selected===filter.resetLabel?'active':''" role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
+                            <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
                             <li class="divider" role="menuitem"></li>
-                            <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} <!-- <span class="badge">{{option.getLength()}}</span> --></a></li>
+                            <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected.label===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} <!-- <span class="badge">{{option.getLength()}}</span> --></a></li>
                         </ul>
                     </div>
                     
-                    <div ng-repeat="filter in subFacetedFilters" class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.selected | translate}} <span class="caret"></span></button>
+                    <!-- <div ng-repeat="filter in subFacetedFilters" class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-class="filter.selected===filter.resetLabel?'active':''" role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
+                            <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
                             <li class="divider" role="menuitem"></li>
-                            <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} <!-- <span class="badge">{{option.getLength()}}</span> --></a></li>
+                            <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected.label===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} </a></li>
                         </ul>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div id="results_list" class="row">
-        <div ng-repeat="item in items | filter:applyFilters:true">
+        <div ng-repeat="item in items">
             <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
         </div>
     </div>

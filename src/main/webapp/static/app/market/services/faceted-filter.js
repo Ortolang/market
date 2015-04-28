@@ -19,7 +19,6 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             this.resetLabel = '';
             this.selected = undefined;
             this.options = [];
-            this.subFilters = [];
 
             angular.forEach(config, function (value, key) {
                 if (this.hasOwnProperty(key)) {
@@ -75,6 +74,10 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.selected = selected;
             },
 
+            getSelectedLabel: function() {
+                return (this.selected)?this.selected.getLabel():this.resetLabel;
+            },
+
             getResetLabel: function () {
                 return this.resetLabel;
             },
@@ -102,21 +105,9 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.options.push(option);
             },
 
-            getSubFilters: function () {
-                return this.subFilters;
-            },
-
-            setSubFilters: function(subFilters) {
-                this.subFilters = subFilters;
-            },
-
-            putSubFilter: function(subFilter) {
-                this.subFilters.push(subFilter);
-            },
-
             reset: function() {
                 this.value = undefined;
-                this.selected = this.resetLabel;
+                this.selected = undefined;
             }
         };
 

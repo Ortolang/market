@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
             link: function (scope) {
                 
                 scope.search = function (content) {
-                    if (content !== '') {
+                    if (content && content !== '') {
                         $rootScope.selectSearch();
                         $location.url('/search?content='+content+'&meta_ortolang-item-json.type='+scope.type);
                     }

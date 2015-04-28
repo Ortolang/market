@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
         FacetedFilterManager.prototype = {
 
             getFilters: function() {
-                return this.filters;
+                return this.filters.slice();
             },
 
             addFilter : function (filter) {
@@ -45,9 +45,13 @@ angular.module('ortolangMarketApp')
                     if (this.filters[i].id === filter.id) {
                         filter.reset();
                         this.filters.splice(i, 1);
-                        return this.filters;
+                        return this.getFilters();
                     }
                 }
+            },
+
+            clear: function() {
+                this.filters = [];
             },
 
             resetFilter: function() {

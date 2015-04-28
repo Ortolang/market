@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp').provider('OptionFacetedFilter', function () 
             this.value = undefined;
             this.label = undefined;
             this.length = 0;
+            this.subFilters = [];
 
             angular.forEach(config, function (value, key) {
                 if (this.hasOwnProperty(key)) {
@@ -39,6 +40,18 @@ angular.module('ortolangMarketApp').provider('OptionFacetedFilter', function () 
 
             setLabel: function(label) {
                 this.label = label;
+            },
+
+            getSubFilters: function () {
+                return this.subFilters;
+            },
+
+            setSubFilters: function(subFilters) {
+                this.subFilters = subFilters;
+            },
+
+            putSubFilter: function(subFilter) {
+                this.subFilters.push(subFilter);
             },
 
             getLength: function () {
