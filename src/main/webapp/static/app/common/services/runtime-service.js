@@ -60,17 +60,17 @@ angular.module('ortolangMarketApp')
                     processes = [processes];
                 }
                 angular.forEach(processes, function (process) {
-                    AtmosphereService.addFilter({typePattern: 'runtime.process.*', fromPattern: process.key});
+                    AtmosphereService.addFilter({typePattern: 'runtime\\.process\\..*', fromPattern: process.key});
                 });
             }
 
             function initialSubscriptions() {
                 AuthService.sessionInitialized().then(function () {
-                    AtmosphereService.addFilter({typePattern: 'runtime.process.create', throwedByPattern: User.key});
+                    AtmosphereService.addFilter({typePattern: 'runtime\\.process\\.create', throwedByPattern: User.key});
                     angular.forEach(User.groups, function (group) {
-                        AtmosphereService.addFilter({typePattern: 'runtime.task.*', fromPattern: '', argumentsPatterns: {group: group}});
+                        AtmosphereService.addFilter({typePattern: 'runtime\\.task\\..*', argumentsPatterns: {group: group}});
                     });
-                    AtmosphereService.addFilter({typePattern: 'runtime.task.*', fromPattern: '', argumentsPatterns: {user: User.key}});
+                    AtmosphereService.addFilter({typePattern: 'runtime\\.task\\..*', argumentsPatterns: {user: User.key}});
                 });
             }
 

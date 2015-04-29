@@ -1704,9 +1704,9 @@ angular.module('ortolangMarketApp')
                     getParentData();
                 } else {
                     $scope.workspaceList.$promise.then(function (data) {
-                        AtmosphereService.addFilter({typePattern: 'core.workspace.create', fromPattern: ''});
+                        AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.create'});
                         angular.forEach(data.entries, function (workspace) {
-                            AtmosphereService.addFilter({typePattern: 'core.workspace.update', fromPattern: workspace.key});
+                            AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.update', fromPattern: workspace.key});
                         });
                         if ($scope.settings.wskey || $scope.forceWorkspace) {
                             var key = $scope.settings.wskey || $scope.forceWorkspace,
