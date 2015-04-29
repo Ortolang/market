@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
         $scope.search = function () {
             
-            var filters = {};
+            var filters = {}, params = {};
             angular.forEach($scope.filtersManager.getFilters(), function(filter) {
 
                 if(filter.getType() === 'string') {
@@ -23,42 +23,23 @@ angular.module('ortolangMarketApp')
                     filters[filter.id] = filter.value;
                 }
             });
-
+            params.filters = angular.toJson(filters);
             if ($scope.content && $scope.content !== '') {
-                filters.content = $scope.content;
+                params.content = $scope.content;
             }
-            $location.search(filters).path('/search');
+            $location.search(params).path('/search');
             
         };
 
         $scope.setFilter = function (filter, value) {
             addFilter(filter, value);
-            // applyFilters();
             $scope.search();
         };
 
         $scope.removeFilter = function (filter) {
             $scope.filtersManager.removeFilter(filter);
-            // applyFilters();
             $scope.search();
         };
-
-        function addFilter (filter, value) {
-
-            var opt;
-            angular.forEach(filter.options, function(facetedOption) {
-                if(facetedOption.getValue() === value) {
-                    opt = facetedOption;
-                }
-            });
-
-            if(opt !== undefined) {
-                filter.value = value;
-                filter.selected = opt;
-
-                $scope.filtersManager.addFilter(filter);
-            }
-        }
 
         $scope.searchContent = function (content, filters) {
             var queryBuilder = QueryBuilderService.make({
@@ -105,6 +86,8 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
+                    setVisibleFilters(filters);
+
                     // i = 0;
                     // for (i; i < $scope.subFacetedFilters.length; i++) {
                     //     if (jsEntry[$scope.subFacetedFilters[i].getAlias()]) {
@@ -135,24 +118,76 @@ angular.module('ortolangMarketApp')
             }
         }
 
+        function setSelectedOptionFilter(filter, value) {
+            var opt;
+            // angular.forEach(filter.options, function(facetedOption) {
+            var iFacetedOption = 0;
+            for (iFacetedOption; iFacetedOption < filter.options.length; iFacetedOption++) {
+                var facetedOption = filter.options[iFacetedOption];
+
+                if(angular.isArray(value)) {
+                    var iValue = 0;
+                    for (iValue; iValue < value.length; iValue++) {
+                        if (facetedOption.getValue() === value[iValue]) {
+                            opt = facetedOption; //TODO opt may be an array
+                            break;
+                        }
+                    }
+                } else {
+
+                    if(facetedOption.getValue() === value) {
+                        opt = facetedOption;
+                        break;
+                    }
+                }
+            };
+
+            if(opt !== undefined) {
+                filter.selected = opt;
+            }
+        }
+
+        function setVisibleFilters(model) {
+
+            angular.forEach($scope.filtersManager.getFilters(), function(filter) {
+                $scope.visibleFacetedFilters.addFilter(filter);
+
+                if(model[filter.getId()]) {
+                    setSelectedOptionFilter(filter, model[filter.getId()]);
+                }
+
+                if(filter.selected) {
+
+                    angular.forEach(filter.selected.getSubFilters(), function(subFilter) {
+                        $scope.visibleFacetedFilters.addFilter(subFilter);
+
+                        // if(model[subFilter.getId()]) {
+                        //     setSelectedOptionFilter(subFilter, model[subFilter.getId()]);
+                        // }
+                    });
+                }
+            });
+        }
+
+        function addFilter (filter, value) {
+
+            filter.value = value;
+
+            $scope.filtersManager.addFilter(filter);
+        }
 
         function applyFilters () {
             var filters = {};
 
             angular.forEach($scope.filtersManager.getFilters(), function(filter) {
 
-                if(filter.getType() === 'string') {
+                // if(filter.getType() === 'string') {
+                //     filters[filter.id] = filter.value;
+                // } else if(filter.getType() === 'array') {
+                //     filters[filter.id] = [filter.value];
+                // } else {
                     filters[filter.id] = filter.value;
-                } else if(filter.getType() === 'array') {
-                    filters[filter.id] = [filter.value];
-                } else {
-                    filters[filter.id] = filter.value;
-                }
-                $scope.visibleFacetedFilters.addFilter(filter);
-
-                angular.forEach(filter.selected.getSubFilters(), function(subFilter) {
-                    $scope.visibleFacetedFilters.addFilter(subFilter);
-                });
+                // }
             });
 
             if (filters) {
@@ -264,15 +299,28 @@ angular.module('ortolangMarketApp')
 
             $scope.content = $routeParams.content;
 
-            for(var paramName in $routeParams) {
-                var i = 0;
-                for (i; i < $scope.facetedFilters.length; i++) {
-                    if ($scope.facetedFilters[i].id === paramName) {
-                        addFilter($scope.facetedFilters[i], $routeParams[paramName]);
+            var filters = $routeParams.filters;
 
+            if(filters) {
+                var filtersO = angular.fromJson(filters);
+
+                for(var paramName in filtersO) {
+                    var i = 0;
+                    for (i; i < $scope.facetedFilters.length; i++) {
+                        if ($scope.facetedFilters[i].id === paramName) {
+                            addFilter($scope.facetedFilters[i], filtersO[paramName]);
+                        }
                     }
                 }
             }
+            // for(var paramName in $routeParams) {
+            //     var i = 0;
+            //     for (i; i < $scope.facetedFilters.length; i++) {
+            //         if ($scope.facetedFilters[i].id === paramName) {
+            //             addFilter($scope.facetedFilters[i], $routeParams[paramName]);
+            //         }
+            //     }
+            // }
 
             // $scope.searchContent($routeParams.content);
 
