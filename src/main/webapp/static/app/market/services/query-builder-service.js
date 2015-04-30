@@ -32,6 +32,10 @@ angular.module('ortolangMarketApp')
                 this.projection = properties;
             },
 
+            addProjection : function(propertyName, propertyAlias) {
+                this.projection += ', ' + propertyName + ' as ' + propertyAlias;
+            },
+
             from : function (cls) {
                 this.source = cls;
             },

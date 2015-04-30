@@ -98,7 +98,6 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 var i = 0;
                 for (i; i < this.options.length; i++) {
                     if (this.options[i].getValue() === option.getValue()) {
-                        this.options[i].incrementLength();
                         return;
                     }
                 }

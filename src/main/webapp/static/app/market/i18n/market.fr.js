@@ -54,10 +54,17 @@ angular.module('ortolangMarketApp')
             CORPORA: {
                   CORPORA_TYPE: 'Tout les corpus',
                   ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
+                  TEXT_FORMAT: 'Tout format de texte',
+                  TEXT_ENCODING: 'Tout encodages de caractères',
                   ALL_STATUSOFUSE: 'Tout les droits d\'utilisations',
-                  ALL_LANG: 'Toutes les Langues'
-            },
-            
-            
+                  ALL_LANG: 'Toutes les Langues',
+                  ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',
+                  ALL_TOOL_INPUTDATA: 'Tout type d\'entrée',
+                  ALL_TRANSCRIPTION_TYPE: 'Tout type de transcription',
+                  ALL_TRANSCRIPTION_FORMAT: 'Tout format de transcription',
+                  ALL_TYPE_OF_SPEECH: 'Tout type de parole',
+                  ALL_TRANSCRIPTION_ENCODING: 'Tout encodage de caractères',
+                  ALL_SIGNAL: 'Tout signal'
+            }
         }
     });
