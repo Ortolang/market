@@ -1,6 +1,6 @@
 <div class="container-fluid container-main">
     <div class="row" bs-active-pane="activeTab" data-nav-class="nav-pills" data-template="processes/processes-tabs-template.html" bs-tabs>
-        <div data-title="{{'PROCESSES' | translate}} <span class='badge'>{{Runtime.activeProcessesNumber()}}</span>" bs-pane>
+        <div data-title="{{'PROCESSES' | translate}} <span class='badge'>{{Runtime.getActiveProcessesNumber()}}</span>" bs-pane>
             <section id="processes" class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading" translate="PROCESSES"></div>
@@ -165,4 +165,5 @@
             </section>
         </div>
     </div>
+    <button class="btn btn-default" ng-click="test()">Test</button>
 </div>

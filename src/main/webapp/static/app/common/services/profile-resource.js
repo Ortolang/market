@@ -42,6 +42,10 @@ angular.module('ortolangMarketApp')
             size: {
                 method: 'GET',
                 url: Url.urlBase() + '/rest/profiles/:key/size'
+            },
+            ticket: {
+                method: 'GET',
+                url: Url.urlBase() + '/rest/profiles/:key/ticket'
             }
         });
     }]);

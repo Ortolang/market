@@ -19,7 +19,7 @@
             </li>
             <li ng-if="authenticated" ng-hide="navbarCollapsed">
                 <a href="#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
-                    <span class="fa fa-fw fa-tasks"></span><span class="badge processes">{{activeProcessesNbr && activeProcessesNbr > 0 ? activeProcessesNbr : ''}}</span>
+                    <span class="fa fa-fw fa-tasks"></span><span class="badge processes">{{Runtime.getActiveProcessesNumber() === 0 ? '' : Runtime.getActiveProcessesNumber()}}</span>
                     <span class="hidden-description" translate="PROCESSES"></span>
                 </a>
             </li>

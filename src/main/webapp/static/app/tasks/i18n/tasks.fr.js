@@ -10,10 +10,12 @@
 angular.module('ortolangMarketApp')
     .constant('TASKS_FR', {
         TASKS: {
+            TASK: 'Tâche',
             TASKS: 'Tâches',
             NO_TASK: 'Pas de tâches',
             ASSIGNEE: 'Assignée à',
-            CLAIM: 'Se l\'assigner',
-            COMPLETE_TASK: 'Compléter la tâche'
+            CLAIM: 'Prendre en charge',
+            COMPLETE_TASK: 'Compléter la tâche',
+            TASK_CREATED: 'une nouvelle tâche vient d\'être ajoutée'
         }
     });
