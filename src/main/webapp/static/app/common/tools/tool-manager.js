@@ -52,7 +52,7 @@ angular.module('ortolangMarketApp')
                         transformRequest: function (data) {
                             return $.param(data);
                         },
-                        headers: {'inputData-Type': 'application/x-www-form-urlencoded'}
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     },
                     abort: {
                         url: this.url + '/jobs/:jobId/abort',
