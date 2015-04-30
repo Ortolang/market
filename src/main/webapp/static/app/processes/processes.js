@@ -93,4 +93,12 @@ angular.module('ortolangMarketApp')
             if ($routeParams.pKey) {
                 $scope.showLog(undefined, $routeParams.pKey);
             }
+
+            $scope.test = function () {
+                Runtime.createProcess({
+                    'process-type': 'test',
+                    'process-name': 'Test process',
+                    'name': 'John'
+                });
+            };
         }]);

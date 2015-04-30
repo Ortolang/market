@@ -34,7 +34,8 @@ angular.module('ortolangMarketApp')
                         {
                             name: 'noFolder',
                             fn: function (item) {
-                                return !(!item.type && (this.isMacOs || item.size % 4096 === 0));
+                                return !(!item.type && ((!this.isMacOs && item.size % 4096 === 0) ||
+                                    (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 5 < item.name.length - 1))));
                             }
                         }
                     ]
@@ -124,7 +125,7 @@ angular.module('ortolangMarketApp')
                         break;
                     case 'zip':
                         $rootScope.$emit('uploaderZipUploadCompleted', fileItem, response);
-                        $rootScope.$emit('process-created');
+                        $rootScope.$emit('process-created', response);
                         break;
                     case 'metadata':
                         $rootScope.$emit('metadataUploadCompleted');
