@@ -40,14 +40,27 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.setFilter = function (filter, value) {
+            removeSubFilter(filter);
             addFilter(filter, value);
             $scope.search();
         };
 
         $scope.removeFilter = function (filter) {
+            removeSubFilter(filter);
             $scope.filtersManager.removeFilter(filter);
             $scope.search();
         };
+
+        function removeSubFilter (filter) {
+            if(filter.getSelected()) {
+                var opt = filter.getSelected();
+                angular.forEach(opt.getSubFilters(), function(subFilter) {
+                    removeSubFilter(subFilter);
+
+                    $scope.filtersManager.removeFilter(subFilter);
+                });
+            }
+        }
 
         $scope.searchContent = function (content, filters) {
             var queryBuilder = QueryBuilderService.make({
@@ -63,6 +76,7 @@ angular.module('ortolangMarketApp')
             queryBuilder.addProjection('meta_ortolang-item-json.textEncoding', 'textEncoding');
 
             queryBuilder.addProjection('meta_ortolang-item-json.annotationLevel', 'annotationLevel');
+            queryBuilder.addProjection('meta_ortolang-item-json.transcriptionType', 'transcriptionType');
             queryBuilder.addProjection('meta_ortolang-item-json.transcriptionFormat', 'transcriptionFormat');
             queryBuilder.addProjection('meta_ortolang-item-json.typeOfSpeech', 'typeOfSpeech');
             queryBuilder.addProjection('meta_ortolang-item-json.transcriptionEncoding', 'transcriptionEncoding');
@@ -161,7 +175,7 @@ angular.module('ortolangMarketApp')
                         break;
                     }
                 }
-            };
+            }
 
             if(opt !== undefined) {
                 filter.selected = opt;
