@@ -24,7 +24,10 @@ angular.module('ortolangMarketApp')
         '$q',
         function ($rootScope, $filter, $timeout, $modal, $alert, $translate, AuthService, FormResource, RuntimeResource, AtmosphereService, ToolManager, User, $q) {
 
-            var processModal,
+            var processes = [],
+                tasks = [],
+                toolJobs = [],
+                processModal,
                 completeTaskModal,
                 toolJobsTimeout,
                 states = {
@@ -55,11 +58,11 @@ angular.module('ortolangMarketApp')
             //       Subscription      //
             // *********************** //
 
-            function subscribeToProcesses(processes) {
-                if (!angular.isArray(processes)) {
-                    processes = [processes];
+            function subscribeToProcesses(processesToSubscribeTo) {
+                if (!angular.isArray(processesToSubscribeTo)) {
+                    processesToSubscribeTo = [processesToSubscribeTo];
                 }
-                angular.forEach(processes, function (process) {
+                angular.forEach(processesToSubscribeTo, function (process) {
                     AtmosphereService.addFilter({typePattern: 'runtime\\.process\\..*', fromPattern: process.key});
                 });
             }
@@ -79,7 +82,7 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function pushNewProcess(process) {
-                $rootScope.processes.push(process);
+                processes.push(process);
                 if (process.state !== states.completed && process.state !== states.aborted) {
                     activeProcesses.push(process);
                     subscribeToProcesses(process);
@@ -116,7 +119,7 @@ angular.module('ortolangMarketApp')
             }
 
             function createProcess(data) {
-                RuntimeResource.createProcess(data, function (process) {
+                RuntimeResource.createProcess(data).$promise.then(function (process) {
                     pushNewProcess(process);
                 });
             }
@@ -126,7 +129,7 @@ angular.module('ortolangMarketApp')
             }
 
             function selectProcessByKey(key) {
-                var process = $filter('filter')($rootScope.processes, {key: key});
+                var process = $filter('filter')(processes, {key: key});
                 if (process && process.length > 0) {
                     selectProcess(process[0]);
                     return process[0];
@@ -135,13 +138,13 @@ angular.module('ortolangMarketApp')
             }
 
             function getActiveProcesses() {
-                return $filter('filter')($rootScope.processes, function (value) {
+                return $filter('filter')(processes, function (value) {
                     return !(value.state === states.completed || value.state === states.aborted);
                 });
             }
 
             function getActiveProcessesNumber() {
-                if ($rootScope.processes) {
+                if (processes) {
                     return getActiveProcesses().length;
                 }
                 return 0;
@@ -152,17 +155,17 @@ angular.module('ortolangMarketApp')
             }
 
             function getProcessesWithState(state, not) {
-                if ($rootScope.processes) {
-                    return $filter('filter')($rootScope.processes, {state: (not ? '!' : '') + state});
+                if (processes) {
+                    return $filter('filter')(processes, {state: (not ? '!' : '') + state});
                 }
                 return [];
             }
 
             function hasProcessesWithState(state) {
-                if ($rootScope.processes) {
+                if (processes) {
                     var i;
-                    for (i = 0; i < $rootScope.processes.length; i++) {
-                        if ($rootScope.processes[i].state === state) {
+                    for (i = 0; i < processes.length; i++) {
+                        if (processes[i].state === state) {
                             return true;
                         }
                     }
@@ -173,15 +176,14 @@ angular.module('ortolangMarketApp')
             function getProcesses(date, refresh) {
                 if (!date || lastProcessesRefresh < date) {
                     lastProcessesRefresh = Date.now();
-                    console.log('REFRESHING PROCESSES');
                     RuntimeResource.processes().$promise.then(function (data) {
-                        $rootScope.processes = data.entries;
+                        processes = data.entries;
                         activeProcesses = getActiveProcesses();
                         if (!refresh) {
                             subscribeToProcesses(activeProcesses);
                         }
                         if ($rootScope.selectedProcess) {
-                            $rootScope.selectedProcess = $filter('filter')($rootScope.processes, {key: $rootScope.selectedProcess.key})[0];
+                            $rootScope.selectedProcess = $filter('filter')(processes, {key: $rootScope.selectedProcess.key})[0];
                         }
                     }, function (error) {
                         console.error('An error occurred while trying to refresh the process list', error);
@@ -196,9 +198,8 @@ angular.module('ortolangMarketApp')
             function getTasks(date) {
                 if (!date || lastTasksRefresh < date) {
                     lastTasksRefresh = Date.now();
-                    console.log('REFRESHING TASKS');
                     RuntimeResource.tasks().$promise.then(function (data) {
-                        $rootScope.tasks = data.entries;
+                        tasks = data.entries;
                     }, function (error) {
                         console.error('An error occurred while trying to refresh the task list', error);
                     });
@@ -273,7 +274,7 @@ angular.module('ortolangMarketApp')
 
                 $q.all(promises).then(
                     function () {
-                        $rootScope.toolJobs = toolJobsTemp;
+                        toolJobs = toolJobsTemp;
                         completedToolJobs = getToolJobsWithState(toolJobStatus.completed);
                         var justCompletedToolJobs = $filter('filter')(activeToolJobs, function (activeToolJob) {
                             return $filter('filter')(completedToolJobs, {id: activeToolJob.id}).length > 0;
@@ -282,7 +283,6 @@ angular.module('ortolangMarketApp')
                             $alert({title: $translate.instant('TOOLS.TOOL'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: justCompletedToolJob.toolName}), placement: 'top-right', type: 'success', show: true});
                         });
                         activeToolJobs = getActiveToolJobs();
-                        $rootScope.activeProcessesNbr = activeProcesses.length + activeToolJobs.length;
                         if (activeToolJobs.length === 0) {
                             $timeout.cancel(toolJobsTimeout);
                         }
@@ -327,13 +327,13 @@ angular.module('ortolangMarketApp')
             }
 
             function getActiveToolJobs() {
-                return $filter('filter')($rootScope.toolJobs, function (job) {
+                return $filter('filter')(toolJobs, function (job) {
                     return !(job.status === toolJobStatus.completed || job.status === toolJobStatus.error);
                 });
             }
 
             function activeToolJobNumber() {
-                if ($rootScope.toolJobs) {
+                if (toolJobs) {
                     return getActiveToolJobs().length;
                 }
                 return 0;
@@ -344,17 +344,17 @@ angular.module('ortolangMarketApp')
             }
 
             function getToolJobsWithState(state, not) {
-                if ($rootScope.toolJobs) {
-                    return $filter('filter')($rootScope.toolJobs, {status: (not ? '!' : '') + state});
+                if (toolJobs) {
+                    return $filter('filter')(toolJobs, {status: (not ? '!' : '') + state});
                 }
                 return [];
             }
 
             function hasToolJobsWithState(state) {
-                if ($rootScope.toolJobs) {
+                if (toolJobs) {
                     var i;
-                    for (i = 0; i < $rootScope.toolJobs.length; i++) {
-                        if ($rootScope.toolJobs[i].status === state) {
+                    for (i = 0; i < toolJobs.length; i++) {
+                        if (toolJobs[i].status === state) {
                             return true;
                         }
                     }
@@ -435,6 +435,7 @@ angular.module('ortolangMarketApp')
 
             return {
                 // Processes
+                getProcesses: function () { return processes; },
                 createProcessFromForm: createProcessFromForm,
                 createProcess: createProcess,
                 selectProcess: selectProcess,
@@ -446,9 +447,11 @@ angular.module('ortolangMarketApp')
                 getProcessesWithState: getProcessesWithState,
                 getStates: getStates,
                 // Tasks
+                getTasks: function () { return tasks; },
                 claimTask: claimTask,
                 completeTask: completeTask,
                 // Tools
+                getToolJobs: function () { return toolJobs; },
                 selectToolJob: selectToolJob,
                 activeToolJobsNumber: activeToolJobNumber,
                 getActiveToolJobs: getActiveToolJobs,

@@ -3,12 +3,15 @@
 describe('Factory: Runtime', function () {
 
     // load the controller's module
-    beforeEach(module('ortolangMarketApp'));
+    //beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
 
-    var Runtime, sample, $rootScope;
+    var Runtime, RuntimeResource, sample, $rootScope, AuthService;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_$rootScope_, _Runtime_, _sample_) {
+    beforeEach(inject(function (_$rootScope_, _RuntimeResource_, _Runtime_, _sample_, _AuthService_) {
+        RuntimeResource = _RuntimeResource_;
+        AuthService = _AuthService_;
         Runtime = _Runtime_;
         sample = _sample_;
         $rootScope = _$rootScope_;
@@ -28,26 +31,31 @@ describe('Factory: Runtime', function () {
     it('should be possible to know if there are some active processes', function () {
         expect(Runtime.hasActiveProcesses).toBeDefined();
         expect(Runtime.hasActiveProcesses()).toBe(false);
-        $rootScope.processes = [sample().pendingProcess];
-        expect(Runtime.hasActiveProcesses()).toBe(true);
-        $rootScope.processes = [sample().runningProcess];
-        expect(Runtime.hasActiveProcesses()).toBe(true);
-        $rootScope.processes = [sample().completedProcess];
+        Runtime.createProcess('completedProcess');
+        $rootScope.$apply();
         expect(Runtime.hasActiveProcesses()).toBe(false);
+        Runtime.createProcess('pendingProcess');
+        $rootScope.$apply();
+        expect(Runtime.hasActiveProcesses()).toBe(true);
+        Runtime.createProcess('runningProcess');
+        $rootScope.$apply();
+        expect(Runtime.hasActiveProcesses()).toBe(true);
     });
 
     it('should be possible to know if there are some processes of a given type', function () {
         var states = Runtime.getStates();
         expect(Runtime.hasProcessesWithState).toBeDefined();
-        $rootScope.processes = [];
-        $rootScope.processes.push(sample().pendingProcess);
+        Runtime.createProcess('pendingProcess');
+        $rootScope.$apply();
         expect(Runtime.hasProcessesWithState(states.pending)).toBe(true);
         expect(Runtime.hasProcessesWithState(states.completed)).toBe(false);
         expect(Runtime.hasProcessesWithState(states.running)).toBe(false);
-        $rootScope.processes.push(sample().completedProcess);
+        Runtime.createProcess('completedProcess');
+        $rootScope.$apply();
         expect(Runtime.hasProcessesWithState(states.completed)).toBe(true);
         expect(Runtime.hasProcessesWithState('TOTO')).toBe(false);
-        $rootScope.processes.push(sample().runningProcess);
+        Runtime.createProcess('runningProcess');
+        $rootScope.$apply();
         expect(Runtime.hasProcessesWithState(states.running)).toBe(true);
     });
 
