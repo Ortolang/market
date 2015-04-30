@@ -30,6 +30,10 @@ describe('Factory: Runtime', function () {
         expect(Runtime.hasActiveProcesses()).toBe(false);
         $rootScope.processes = [sample().pendingProcess];
         expect(Runtime.hasActiveProcesses()).toBe(true);
+        $rootScope.processes = [sample().runningProcess];
+        expect(Runtime.hasActiveProcesses()).toBe(true);
+        $rootScope.processes = [sample().completedProcess];
+        expect(Runtime.hasActiveProcesses()).toBe(false);
     });
 
     it('should be possible to know if there are some processes of a given type', function () {
@@ -39,9 +43,12 @@ describe('Factory: Runtime', function () {
         $rootScope.processes.push(sample().pendingProcess);
         expect(Runtime.hasProcessesWithState(states.pending)).toBe(true);
         expect(Runtime.hasProcessesWithState(states.completed)).toBe(false);
+        expect(Runtime.hasProcessesWithState(states.running)).toBe(false);
         $rootScope.processes.push(sample().completedProcess);
         expect(Runtime.hasProcessesWithState(states.completed)).toBe(true);
         expect(Runtime.hasProcessesWithState('TOTO')).toBe(false);
+        $rootScope.processes.push(sample().runningProcess);
+        expect(Runtime.hasProcessesWithState(states.running)).toBe(true);
     });
 
 });

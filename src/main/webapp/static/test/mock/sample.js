@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp')
             publishWorkspaceProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'COMPLETED', type: 'publish-workspace'},
             completedProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'COMPLETED', type: 'publish-workspace'},
             pendingProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'PENDING', type: 'publish-workspace'},
+            runningProcess = {activity: 'FOO', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'RUNNING', type: 'publish-workspace'},
             sampleN3 = {'http://www.ortolang.fr/ontology/preview':'k1', image : 'assets/images/no-image.png'},
             workspaceElement = {format: 'market-ortolang-n3'},
             query1Result = '{"key":"k1","title":"Dede","description":"Description de Dede"}',
@@ -36,7 +37,7 @@ angular.module('ortolangMarketApp')
             sampleCode : sampleCode,
             sampleN3 : sampleN3,
             workspaceElement: workspaceElement,
-            
+
             query1Result: query1Result,
             query1Results: [query1Result],
             ridItem: ridItem,
@@ -53,6 +54,7 @@ angular.module('ortolangMarketApp')
             publishWorkspaceProcess: publishWorkspaceProcess,
             completedProcess: completedProcess,
             pendingProcess: pendingProcess,
+            runningProcess: runningProcess,
             processList: {entries: [publishWorkspaceProcess]}
         };
     });
