@@ -8,7 +8,9 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$filter', 'JsonResultResource', 'QueryBuilderService', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, $location, $routeParams, $rootScope, $filter, JsonResultResource, QueryBuilderService, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$filter', 'icons', 'JsonResultResource', 'QueryBuilderService', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, $location, $routeParams, $rootScope, $filter, icons, JsonResultResource, QueryBuilderService, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+
+        var viewModeLine, viewModeTile;
 
         $scope.search = function () {
             
@@ -110,7 +112,6 @@ angular.module('ortolangMarketApp')
             var query = queryBuilder.toString();
             console.log('query : ' + query);
             JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                //TODO clean removes
                 $scope.items = [];
 
                 angular.forEach(jsonResults, function(jsonResult) {
@@ -154,9 +155,8 @@ angular.module('ortolangMarketApp')
         }
 
         function setSelectedOptionFilter(filter, value) {
-            var opt;
-            // angular.forEach(filter.options, function(facetedOption) {
-            var iFacetedOption = 0;
+            var opt,
+                iFacetedOption = 0;
             for (iFacetedOption; iFacetedOption < filter.options.length; iFacetedOption++) {
                 var facetedOption = filter.options[iFacetedOption];
 
@@ -195,10 +195,6 @@ angular.module('ortolangMarketApp')
 
                     angular.forEach(filter.selected.getSubFilters(), function(subFilter) {
                         $scope.visibleFacetedFilters.addFilter(subFilter);
-
-                        // if(model[subFilter.getId()]) {
-                        //     setSelectedOptionFilter(subFilter, model[subFilter.getId()]);
-                        // }
                     });
                 }
             });
@@ -219,9 +215,27 @@ angular.module('ortolangMarketApp')
             });
 
             if (filters) {
-                // $scope.applyFilters = filters;
                 $scope.searchContent($scope.content, filters);
             }
+        }
+
+        $scope.toggleOrderBy = function(orderProp){
+            if($scope.orderProp !== orderProp) {
+                $scope.orderDirection = false;
+                $scope.orderProp = orderProp;
+            } else {
+                $scope.orderDirection = !$scope.orderDirection;
+            }
+        };
+
+        $scope.switchViewMode = function() {
+            $scope.viewMode = ($scope.viewMode.id === viewModeLine.id) ? viewModeTile : viewModeLine;
+        };
+
+        function initLocalVariables() {
+
+            viewModeLine = {id: 'line', icon: icons.browser.viewModeTile, text: 'BROWSER.VIEW_MODE_TILE'};
+            viewModeTile = {id: 'tile', icon: icons.browser.viewModeLine, text: 'BROWSER.VIEW_MODE_LINE'};
         }
 
         // Scope variables
@@ -305,6 +319,16 @@ angular.module('ortolangMarketApp')
             });
             $scope.facetedFilters.push(signalFilter);
 
+
+            var primaryLanguage = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.primaryLanguage', 
+                alias: 'primaryLanguage',
+                type: 'array',
+                label: 'MARKET.CORPORA.ALL_LANG',
+                resetLabel: 'MARKET.CORPORA.ALL_LANG'
+            });
+            $scope.facetedFilters.push(primaryLanguage);
+
             var corpusTypeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.typeOfCorpus',
                 alias: 'typeOfCorpus',
@@ -315,7 +339,7 @@ angular.module('ortolangMarketApp')
                         label: 'Écrit', 
                         value: 'Écrit',
                         length: 1,
-                        subFilters: [annotationLevelFilter, textFormatFilter, textEncodingFilter]
+                        subFilters: [annotationLevelFilter, textFormatFilter, textEncodingFilter, primaryLanguage]
                     }),
                     OptionFacetedFilter.make({
                         label: 'Oral', 
@@ -384,30 +408,24 @@ angular.module('ortolangMarketApp')
             $scope.facetedFilters.push(typeFilter);
             $scope.visibleFacetedFilters.addFilter(typeFilter);
             
-
-
-            // $scope.facetedFilters.push(FacetedFilter.make({
-            //     id: 'meta_ortolang-item-json.statusOfUse', 
-            //     alias: 'statusOfUse',
-            //     label: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
-            //     selected: 'MARKET.CORPORA.ALL_STATUSOFUSE', 
-            //     resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE',
-            // }));
-
-            // $scope.facetedFilters.push(FacetedFilter.make({
-            //     id: 'meta_ortolang-item-json.primaryLanguage', 
-            //     alias: 'primaryLanguage',
-            //     label: 'MARKET.CORPORA.ALL_LANG', 
-            //     selected: 'MARKET.CORPORA.ALL_LANG', 
-            //     resetLabel: 'MARKET.CORPORA.ALL_LANG'
-            // }));
+            var statusOfUse = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.statusOfUse', 
+                alias: 'statusOfUse',
+                label: 'MARKET.CORPORA.ALL_STATUSOFUSE',
+                resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE'
+            });
+            $scope.facetedFilters.push(statusOfUse);
+            $scope.visibleFacetedFilters.addFilter(statusOfUse);
 
             $scope.content = '';
+            $scope.orderProp = 'title';
+            $scope.orderDirection = false;
+            $scope.viewMode = viewModeLine;
         }
 
         function init() {
+            initLocalVariables();
             initScopeVariables();
-            // $rootScope.selectSearch();
 
             $scope.content = $routeParams.content;
 

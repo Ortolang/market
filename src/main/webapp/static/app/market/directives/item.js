@@ -18,8 +18,14 @@ angular.module('ortolangMarketApp')
                 return attr.template;
             },
             link: {
-                post : function (scope) {
+                pre : function (scope) {
                     var key = (scope.entry.root !== undefined) ? scope.entry.root : scope.entry.key;
+
+                    if (scope.entry.applicationUrl) {
+                        scope.itemUrl = scope.entry.applicationUrl;
+                    } else {
+                        scope.itemUrl = '#/market/item/' + scope.entry.key;
+                    }
 
                     if(scope.entry.image) {
                                                 

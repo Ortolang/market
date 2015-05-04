@@ -65,6 +65,8 @@ angular.module('ortolangMarketApp')
                   ALL_TYPE_OF_SPEECH: 'Tout type de parole',
                   ALL_TRANSCRIPTION_ENCODING: 'Tout encodage de caractères',
                   ALL_SIGNAL: 'Tout signal'
-            }
+            },
+            ALPHABETIC: 'Alphabétique',
+            CREATION_DATE: 'Date de création'
         }
     });

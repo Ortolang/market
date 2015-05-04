@@ -18,16 +18,13 @@
                                 <span ng-class="'glyphicon glyphicon-sort'"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li><div ng-click="order('name', false)" translate="NAME"></div></li>
-                                <li><div ng-click="order(['type','name'], false)" translate="BROWSER.SORT.TYPE_NAME"></div></li>
-                                <li><div ng-click="order('mimeType', false)" translate="BROWSER.SORT.MIME_TYPE"></div></li>
-                                <li><div ng-click="order('modification', false)" translate="BROWSER.SORT.DATE"></div></li>
-                                <li><div ng-click="order('size', false)" translate="SIZE"></div></li>
+                                <li><div ng-click="toggleOrderBy('title')" translate="MARKET.ALPHABETIC"></div></li>
+                                <li><div ng-click="toggleOrderBy('creationDate')" translate="MARKET.CREATION_DATE"></div></li>
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{settings.viewMode.text | translate}}" data-placement="bottom" bs-tooltip>
-                                <span ng-class="'glyphicon glyphicon-th-large'"></span>
+                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{viewMode.text | translate}}" data-placement="bottom" bs-tooltip>
+                                <span ng-class="viewMode.icon"></span>
                             </button>
                         </div>
                     </div>
@@ -40,7 +37,6 @@
         <div class="toolbar toolbar-options">
             <div class="col-sm-12">
                 <div class="btn-toolbar">
-                   
                     <div ng-repeat="filter in visibleFacetedFilters.getFilters()" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
@@ -49,16 +45,6 @@
                             <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected.label===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} <!-- <span class="badge">{{option.getLength()}}</span> --></a></li>
                         </ul>
                     </div>
-                    
-                    <!-- <div ng-repeat="filter in subFacetedFilters" class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
-                            <li class="divider" role="menuitem"></li>
-                            <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected.label===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} </a></li>
-                        </ul>
-                    </div> -->
-
                 </div>
             </div>
         </div>
@@ -69,8 +55,19 @@
             <small translate="MARKET.RESULTS_LABEL" data-translate-values="{value: items.length}"></small>
         </div>
     </div>
-    <div id="results_list" class="row">
-        <div ng-repeat="item in items">
+
+    <div ng-if="viewMode.id === 'tile'" class="row market-home">
+        <div class="col-md-12">
+
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:orderProp:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>
+            </div>
+        </div>
+    </div>
+    
+    <div ng-if="viewMode.id === 'line'" id="results_list" class="row">
+
+        <div ng-repeat="item in items | orderBy:orderProp:orderDirection" class="col-md-8">
             <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
         </div>
     </div>

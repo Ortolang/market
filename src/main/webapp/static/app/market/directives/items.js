@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', [ '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderService',  function ($rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderService) {
+    .directive('items', [ '$rootScope', '$routeParams', '$location', 'JsonResultResource', 'QueryBuilderService',  function ($rootScope, $routeParams, $location, JsonResultResource, QueryBuilderService) {
         return {
             restrict: 'E',
             scope: {
@@ -21,14 +21,6 @@ angular.module('ortolangMarketApp')
                     if (content && content !== '') {
                         $rootScope.selectSearch();
                         $location.url('/search?content='+content+'&filters='+angular.toJson({'meta_ortolang-item-json.type':scope.type}));
-                    }
-                };
-
-                scope.clickItem = function (entry) {
-                    if (entry.applicationUrl) {
-                        $window.open(entry.applicationUrl);
-                    } else {
-                        $location.path('/market/item/' + entry.key);
                     }
                 };
 
