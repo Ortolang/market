@@ -74,14 +74,19 @@
                                             <!--<button class="btn btn-success" type="submit" ng-show="!formOptionsCopy.hideSubmit">{{(formOptionsCopy.submitCopy || "SUBMIT") | translate}}</button>-->
                                         <!--</formly-form>-->
                                     <!--</form>-->
-                                <pre>{{formFields | json}}</pre>
-                                <form ng-submit="onSubmit()" novalidate>
-                                    <formly-form model="model" fields="formFields">
-                                        <button type="submit" class="btn btn-primary submit-button">Submit</button>
-                                    </formly-form>
-                                </form>
-                                <pre>{{model | json}}</pre>
                                 <!--</div>-->
+                                <div ng-if="config.loadingData.$$status.state === 0" style="margin:20px 0;font-size:2em">
+                                    <strong>Loading...</strong>
+                                </div>
+                                <div ng-if="config.loadingData.$$status.state !== 0">
+                                    <form ng-submit="onSubmit()" novalidate>
+                                        <formly-form model="config.model" fields="config.formFields">
+                                            <button type="submit" class="btn btn-primary submit-button">Submit</button>
+                                        </formly-form>
+                                    </form>
+                                    <br>
+                                    <pre>{{config.model | json}}</pre>
+                                </div>
                             </div>
                         </div>
                         <div class="alert am-fade alert-danger" ng-show="isShowError()">

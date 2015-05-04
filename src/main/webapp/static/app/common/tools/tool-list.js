@@ -42,6 +42,7 @@ angular.module('ortolangMarketApp')
 
             $scope.selectTool = function (tool) {
                 $scope.selectedTool = tool;
+                $scope.config = {};
                 ToolManager.checkGrant(tool.getKey()).then(function () {
                     loadConfig();
                 });
@@ -80,49 +81,22 @@ angular.module('ortolangMarketApp')
             }
 
             function loadConfig() {
-                ToolManager.getTool($scope.selectedTool.getKey()).getExecutionForm().$promise.then(
-                    function (config) {
-                        console.debug(config);
 
-                        config = [
-                            {
-                                key: 'text',
-                                type: 'input',
-                                templateOptions: {
-                                    label: 'Text',
-                                    placeholder: 'Formly is terrific!'
-                                }
-                            },
-                            {
-                                key: 'story',
-                                type: 'textarea',
-                                templateOptions: {
-                                    label: 'Some sweet story',
-                                    placeholder: 'It allows you to build and maintain your forms with the ease of JavaScript :-)'
-                                }
-                            }
-                        ];
-                        generateForm(config);
+                $scope.config.loadingData = ToolManager.getTool($scope.selectedTool.getKey()).getExecutionForm().$promise.then(
+                    function (result) {
+                        $scope.config.model = {};
+                        $scope.config.formFields = result;
+                        $scope.config.originalFields = angular.copy($scope.config.formFields);
                     },
                     function (msg) {
                         console.error('The tool server for "%s" is not responding.', $scope.selectedTool.getName(), msg);
-                        $scope.model = undefined;
+                        $scope.config.model = undefined;
                     }
                 );
             }
 
-            function generateForm(configJSON) {
-                $scope.model = {};
-                $scope.formFields = configJSON;
-                //$scope.formOptions = {
-                //    hideSubmit: false,
-                //    submitCopy: $translate.instant('TOOLS.RUN_TOOL')
-                //};
-                $scope.originalFields = angular.copy($scope.formFields);
-            }
-
             $scope.hasToolConfig = function () {
-                return $scope.model !== undefined;
+                return $scope.config.model !== undefined;
             };
 
 
@@ -213,6 +187,7 @@ angular.module('ortolangMarketApp')
                 $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
                 $scope.tools = {};
                 $scope.searchContent = '';
+                $scope.config = {};
                 loadToolsList();
                 $scope.selectedTool = undefined;
             }
