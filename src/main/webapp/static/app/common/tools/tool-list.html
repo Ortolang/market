@@ -68,13 +68,20 @@
                                 <span class="fa fa-gears"></span> <span translate="TOOLS.CONFIGURATION">}</span>
                             </div>
                             <div class="panel-body">
-                                <div class="list-group" >
-                                    <form ng-submit="onSubmit()" novalidate>
-                                        <formly-form model="formData" form-id="formOptions.uniqueFormId" fields="formFields" options="formOptions">
-                                            <button class="btn btn-success" type="submit" ng-show="!formOptionsCopy.hideSubmit">{{(formOptionsCopy.submitCopy || "SUBMIT") | translate}}</button>
-                                        </formly-form>
-                                    </form>
-                                </div>
+                                <!--<div class="list-group" >-->
+                                    <!--<form ng-submit="onSubmit()" novalidate>-->
+                                        <!--<formly-form model="formData" form-id="formOptions.uniqueFormId" fields="formFields" options="formOptions">-->
+                                            <!--<button class="btn btn-success" type="submit" ng-show="!formOptionsCopy.hideSubmit">{{(formOptionsCopy.submitCopy || "SUBMIT") | translate}}</button>-->
+                                        <!--</formly-form>-->
+                                    <!--</form>-->
+                                <pre>{{formFields | json}}</pre>
+                                <form ng-submit="onSubmit()" novalidate>
+                                    <formly-form model="model" fields="formFields">
+                                        <button type="submit" class="btn btn-primary submit-button">Submit</button>
+                                    </formly-form>
+                                </form>
+                                <pre>{{model | json}}</pre>
+                                <!--</div>-->
                             </div>
                         </div>
                         <div class="alert am-fade alert-danger" ng-show="isShowError()">
