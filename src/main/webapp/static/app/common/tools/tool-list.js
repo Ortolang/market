@@ -86,6 +86,7 @@ angular.module('ortolangMarketApp')
                     function (result) {
                         $scope.config.model = result[0];
                         $scope.config.formFields = result[1];
+                        console.debug(result[1]);
                         $scope.config.originalFields = angular.copy($scope.config.formFields);
                     },
                     function (msg) {
