@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/" ng-click="selectHome()" data-title="{{'NAV.BETA_VERSION_TOOLTIP' | translate}}" data-html="true" bs-tooltip data-placement="right" data-template="common/nav/beta-tooltip-template.html">
+            <a class="navbar-brand" href="#/" data-title="{{'NAV.BETA_VERSION_TOOLTIP' | translate}}" data-html="true" bs-tooltip data-placement="right" data-template="common/nav/beta-tooltip-template.html">
                 <img class="ortolang-logo" src="assets/images/logo-ortolang-white.png"/>
                 <span>ORTOLANG</span>
                 <span class="beta-version">&nbsp;({{'NAV.BETA_VERSION' | translate}})</span>
@@ -18,14 +18,15 @@
                 <a ng-href="#{{element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="element.iconCss"></span> {{element.description | translate}}</a>
             </li>
             <li ng-if="authenticated" ng-hide="navbarCollapsed">
-                <a href="#/processes" ng-click="selectProcesses()" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
+                <a href="#/processes" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-fw fa-tasks"></span><span class="badge processes">{{Runtime.getActiveProcessesNumber() === 0 ? '' : Runtime.getActiveProcessesNumber()}}</span>
                     <span class="hidden-description" translate="PROCESSES"></span>
                 </a>
             </li>
             <li ng-if="authenticated" ng-hide="navbarCollapsed">
-                <a href="#/tasks" ng-click="selectTasks()" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
-                    <span class="fa fa-fw fa-bell"></span><span class="badge tasks">{{tasks && tasks.length > 0 ? tasks.length : ''}}</span>
+                <a>{{Runtime.tasks()}}</a>
+                <a href="#/tasks" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
+                    <span class="fa fa-fw fa-bell"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
                     <span class="hidden-description" translate="TASKS"></span>
                 </a>
             </li>
@@ -34,11 +35,11 @@
                     <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-click="selectInformation()"><a href="#/information/presentation"><span class="fa fa-info fa-fw"></span> {{'NAV.INFORMATION.PRESENTATION' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="#/information/policy"><span class="fa fa-pencil-square-o fa-fw"></span> {{'NAV.INFORMATION.POLICY' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="#/information/partners"><span class="fa fa-users fa-fw"></span> {{'NAV.INFORMATION.PARTNERS' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="#/information/roadmap"><span class="fa fa-calendar fa-fw"></span> {{'NAV.INFORMATION.ROADMAP' | translate}}</a></li>
-                    <li ng-click="selectInformation()"><a href="#/information/newsletter"><span class="fa fa-newspaper-o fa-fw"></span> {{'NAV.INFORMATION.NEWSLETTER' | translate}}</a></li>
+                    <li><a href="#/information/presentation"><span class="fa fa-info fa-fw"></span> {{'NAV.INFORMATION.PRESENTATION' | translate}}</a></li>
+                    <li><a href="#/information/policy"><span class="fa fa-pencil-square-o fa-fw"></span> {{'NAV.INFORMATION.POLICY' | translate}}</a></li>
+                    <li><a href="#/information/partners"><span class="fa fa-users fa-fw"></span> {{'NAV.INFORMATION.PARTNERS' | translate}}</a></li>
+                    <li><a href="#/information/roadmap"><span class="fa fa-calendar fa-fw"></span> {{'NAV.INFORMATION.ROADMAP' | translate}}</a></li>
+                    <li><a href="#/information/newsletter"><span class="fa fa-newspaper-o fa-fw"></span> {{'NAV.INFORMATION.NEWSLETTER' | translate}}</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -59,8 +60,8 @@
                     {{User.name()}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-show="navbarCollapsed" ng-click="selectProfile(); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/#/profile/personal-infos" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                    <li ng-hide="navbarCollapsed" ng-click="selectProfile()"><a href="/#/profile/" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-show="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-hide="navbarCollapsed"><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                     <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
                 </ul>
             </li>

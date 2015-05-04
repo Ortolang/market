@@ -599,8 +599,7 @@ angular.module('ortolangMarketApp')
                 uploadZipCompletedModalScope.process = response;
                 uploadZipCompletedModalScope.showLog = function () {
                     uploadZipCompletedModal.hide();
-                    $rootScope.selectProcesses();
-                    $location.url('/processes/?pKey=' + uploadZipCompletedModalScope.process.key);
+                    $location.url('/processes?pKey=' + uploadZipCompletedModalScope.process.key);
                 };
                 uploadZipCompletedModal = $modal({
                     scope: uploadZipCompletedModalScope,
@@ -1468,7 +1467,7 @@ angular.module('ortolangMarketApp')
                     }
                     if (height > topOffset) {
                         height -= 1;
-                        if ($rootScope.uploadQueueStatus === 'active') {
+                        if ($rootScope.uploader.uploadQueueStatus === 'active') {
                             height -= angular.element('.upload-queue').innerHeight();
                         }
                         var browserWrapper = angular.element('#browser-wrapper'),
@@ -1489,9 +1488,8 @@ angular.module('ortolangMarketApp')
                 $scope.resizeBrowser();
             });
 
-            $rootScope.$watch('uploadQueueStatus', function (newValue, oldValue) {
+            $rootScope.$watch('uploader.uploadQueueStatus', function (newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    console.log('uploadQueueStatus changed (old: %s, new: %s)', oldValue, newValue);
                     $scope.resizeBrowser();
                 }
             });

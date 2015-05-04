@@ -17,9 +17,19 @@ angular.module('ortolangMarketApp')
                 $timeout(function () {
                     fileItem.remove();
                     if (uploader.queue.length === 0) {
-                        $rootScope.deactivateUploadQueue();
+                        deactivateUploadQueue();
                     }
                 }, 1500);
+            }
+
+            function activateUploadQueue() {
+                uploader.uploadQueueStatus = 'active';
+                var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+                $('.upload-queue').find('.upload-elements-wrapper').css('max-height', height / 3);
+            }
+
+            function deactivateUploadQueue() {
+                uploader.uploadQueueStatus = undefined;
             }
 
             if ($rootScope.uploader) {
@@ -40,30 +50,21 @@ angular.module('ortolangMarketApp')
                         }
                     ]
                 });
+                uploader.uploadQueueStatus = undefined;
                 uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
             }
 
-            $rootScope.toggleUploadQueueStatus = function () {
-                if ($rootScope.uploadQueueStatus) {
-                    $rootScope.deactivateUploadQueue();
+            $scope.toggleUploadQueueStatus = function () {
+                if (uploader.uploadQueueStatus) {
+                    deactivateUploadQueue();
                 } else {
-                    $rootScope.activateUploadQueue();
+                    activateUploadQueue();
                 }
             };
 
-            $rootScope.activateUploadQueue = function () {
-                $rootScope.uploadQueueStatus = 'active';
-                var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-                $('.upload-queue').find('.upload-elements-wrapper').css('max-height', height / 3);
-            };
-
-            $rootScope.deactivateUploadQueue = function () {
-                $rootScope.uploadQueueStatus = undefined;
-            };
-
             $scope.clearUploaderQueue = function () {
-                $rootScope.uploader.clearQueue();
-                $rootScope.deactivateUploadQueue();
+                uploader.clearQueue();
+                deactivateUploadQueue();
             };
 
             $scope.clearItem = function (item) {
@@ -115,7 +116,7 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onAfterAddingAll = function () {
-                $rootScope.activateUploadQueue();
+                activateUploadQueue();
             };
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {

@@ -5,10 +5,10 @@
         <section class="col-md-12">
             <div class="panel panel-default">
                 <!--<div class="panel-heading" translate="TASKS"></div>-->
-                <div ng-if="!tasks || tasks.length == 0" class="panel-body">
+                <div ng-if="Runtime.getTasks().length == 0" class="panel-body">
                     <p translate="TASKS.NO_TASK"></p>
                 </div>
-                <table ng-if="tasks && tasks.length !== 0" class="table table-responsive">
+                <table ng-if="Runtime.getTasks().length !== 0" class="table table-responsive">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -19,7 +19,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="task in tasks">
+                    <tr ng-repeat="task in Runtime.getTasks()">
                         <td>{{::task.id}}</td>
                         <td>{{::task.name}}</td>
                         <td>{{::task.description}}</td>

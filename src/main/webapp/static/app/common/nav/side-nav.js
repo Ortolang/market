@@ -8,14 +8,16 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', function ($rootScope, $scope, $route, $translate, $animate) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', 'Nav', function ($rootScope, $scope, $route, $translate, $animate, Nav) {
+
+        $scope.sideNavElements = Nav.getSideNavElements();
 
         $scope.select = function (element, animate) {
             if (animate === undefined) {
                 animate = true;
             }
             $scope.selectedElementCopy = element;
-            angular.forEach($rootScope.sideNavElements, function (value) {
+            angular.forEach(Nav.getSideNavElements(), function (value) {
                 if (value.class === element.class) {
                     value.active =  'active';
                     if (value.hidden) {
@@ -44,173 +46,9 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        $rootScope.selectTasks = function () {
-            $scope.select({class: 'tasks'}, false);
-        };
-
-        $rootScope.selectInformation = function () {
-            $scope.select({class: 'information'}, false);
-        };
-
-        $rootScope.selectProcesses = function () {
-            $scope.select({class: 'processes'}, false);
-        };
-
-        $rootScope.selectHome = function () {
-            $scope.select({class: 'market'}, false);
-        };
-
-        $rootScope.selectProfile = function () {
-            $scope.select({class: 'profile'}, false);
-        };
-
-        $rootScope.selectSearch = function () {
-            $scope.select({class: 'search'}, false);
-        };
-
         $scope.getCssClass = function (element) {
             return (element.active ? 'active ' : '') + (element.class === 'divider' ? 'divider' : '');
         };
-
-        $rootScope.sideNavElements = [
-            {
-                class: 'market',
-                path: '/market/news',
-                description: 'NAV.HOME',
-                iconCss: 'fa fa-fw fa-home fa-2x',
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: false
-            },
-            {
-                class: 'corpora',
-                path: '/market/corpora',
-                description: 'CORPORA',
-                iconCss: 'fa fa-fw fa-book fa-2x',
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: false
-            },
-            {
-                class: 'integrated-projects',
-                path: '/market/websites',
-                description: 'INTEGRATED_PROJECTS',
-                iconCss: 'fa fa-fw fa-briefcase fa-2x',
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: false
-            },
-            {
-                class: 'tools',
-                path: '/market/tools',
-                description: 'TOOLS',
-                iconCss: 'fa fa-fw fa-cubes fa-2x',
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: false
-            },
-            {
-                class: 'lexicons',
-                path: '/market/lexicons',
-                description: 'LEXICONS',
-                iconCss: 'fa fa-fw fa-quote-right fa-2x',
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: false
-            },
-            {
-                class: 'item',
-                path: '/market/item',
-                description: 'NAV.ITEM',
-                iconCss: 'fa fa-fw fa-cube fa-2x',
-                active: undefined,
-                hiddenSideNav: true,
-                hiddenTopNav: true,
-                authenticated: false
-            },
-            {
-                class: 'divider',
-                active: undefined,
-                authenticated: false
-            },
-            {
-                class: 'information',
-                path: '/information',
-                hiddenPath: '/information/presentation',
-                description: 'NAV.INFORMATION',
-                iconCss: 'fa fa-fw fa-info fa-2x',
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: false
-            },
-            {
-                class: 'workspaces',
-                path: '/workspaces',
-                description: 'NAV.MY_WORKSPACES',
-                iconCss: 'fa fa-fw fa-cloud fa-2x',
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: true
-            },
-            {
-                class: 'processes',
-                path: '/processes',
-                description: 'NAV.PROCESSES',
-                iconCss: 'fa fa-fw fa-tasks fa-2x',
-                active: undefined,
-                hiddenSideNav: true,
-                hiddenTopNav: false,
-                authenticated: true
-            },
-            {
-                class: 'tasks',
-                path: '/tasks',
-                description: 'NAV.TASKS',
-                iconCss: 'fa fa-fw fa-bell fa-2x',
-                active: undefined,
-                hiddenSideNav: true,
-                hiddenTopNav: false,
-                authenticated: true
-            },
-            {
-                class: 'profile',
-                path: '/profile',
-                hiddenPath: '/profile/personal-infos',
-                description: 'NAV.PROFILE',
-                iconCss: 'fa fa-fw fa-user fa-2x',
-                active: undefined,
-                hiddenSideNav: true,
-                hiddenTopNav: true,
-                authenticated: true
-            },
-            {
-                class: 'search',
-                path: '/search',
-                description: 'NAV.SEARCH',
-                iconCss: 'fa fa-fw fa-search fa-2x',
-                active: undefined,
-                hiddenSideNav: true,
-                hiddenTopNav: true,
-                authenticated: true
-            },
-            {
-                class: '404',
-                path: '/404',
-                description: 'NAV.404',
-                iconCss: 'fa fa-fw fa-exclamation fa-2x',
-                active: undefined,
-                hiddenSideNav: true,
-                hiddenTopNav: true,
-                authenticated: true
-            }
-        ];
 
         // *********************** //
         //           Init          //
@@ -218,10 +56,10 @@ angular.module('ortolangMarketApp')
 
         function init() {
             var regExp, regExpBis, i, currentPath;
-            for (i = 0; i < $rootScope.sideNavElements.length; i++) {
-                regExp = new RegExp('^' + $rootScope.sideNavElements[i].path);
-                if ($rootScope.sideNavElements[i].otherPath) {
-                    regExpBis = new RegExp('^' + $rootScope.sideNavElements[i].otherPath);
+            for (i = 0; i < Nav.getSideNavElements().length; i++) {
+                regExp = new RegExp('^' + Nav.getSideNavElements()[i].path);
+                if (Nav.getSideNavElements()[i].otherPath) {
+                    regExpBis = new RegExp('^' + Nav.getSideNavElements()[i].otherPath);
                 }
                 currentPath = $route.current.originalPath;
                 if (currentPath.indexOf(':section') !== -1) {
@@ -229,12 +67,39 @@ angular.module('ortolangMarketApp')
                 }
                 if (currentPath.match(regExp) ||
                         (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
-                    $rootScope.sideNavElements[i].active = 'active';
-                    $scope.selectedElement = $rootScope.sideNavElements[i];
+                    Nav.getSideNavElements()[i].active = 'active';
+                    $scope.selectedElement = Nav.getSideNavElements()[i];
                     break;
                 }
             }
         }
 
-        init();
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            console.log('$routeChangeSuccess', current, previous);
+            if (!previous) {
+                init();
+            } else {
+                switch (current.$$route.originalPath) {
+                    case '/':
+                        $scope.select({class: 'market'}, false);
+                        break;
+                    case '/tasks':
+                        $scope.select({class: 'tasks'}, false);
+                        break;
+                    case '/processes':
+                        $scope.select({class: 'processes'}, false);
+                        break;
+                    case '/profile':
+                        $scope.select({class: 'profile'}, false);
+                        break;
+                    case '/search':
+                        $scope.select({class: 'search'}, false);
+                        break;
+                    case '/information/:section':
+                        $scope.select({class: 'information'}, false);
+                        break;
+                }
+            }
+        });
+
     }]);

@@ -12,7 +12,6 @@ angular.module('ortolangMarketApp')
 
         $scope.search = function () {
             if ($scope.content !== '') {
-                $rootScope.selectSearch();
                 $location.search('content', $scope.content).path('/search');
             }
         };
