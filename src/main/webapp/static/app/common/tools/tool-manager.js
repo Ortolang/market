@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
                 this.meta = undefined;
                 this.url = undefined;
                 this.config = undefined;
+                this.model = undefined;
                 this.active = undefined;
                 this.inputData = undefined;
                 this.functionalities = undefined;
@@ -41,6 +42,10 @@ angular.module('ortolangMarketApp')
                         url: this.url + '/execution-form',
                         method: 'GET',
                         isArray: true
+                    },
+                    getDefaultForm: {
+                        url: this.url + '/default-form',
+                        method: 'GET'
                     },
                     getJobs: {
                         url: this.url + '/jobs',
@@ -129,6 +134,20 @@ angular.module('ortolangMarketApp')
                         return this.config;
                     }
                     return this.resource.getExecutionForm({language: $translate.use()});
+                },
+
+                getModelForm: function () {
+                    if (!this.getActive()) {
+                        throw ('The tool "' + this.getKey() + '" is not active');
+                    }
+                    if (this.model) {
+                        return this.model;
+                    }
+                    return this.resource.getDefaultForm({});
+                },
+
+                getForm: function () {
+                    return $q.all([this.getModelForm(), this.getExecutionForm()]);
                 },
 
                 getActive: function () {

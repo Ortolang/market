@@ -82,10 +82,10 @@ angular.module('ortolangMarketApp')
 
             function loadConfig() {
 
-                $scope.config.loadingData = ToolManager.getTool($scope.selectedTool.getKey()).getExecutionForm().$promise.then(
+                $scope.config.loadingData = ToolManager.getTool($scope.selectedTool.getKey()).getForm().then(
                     function (result) {
-                        $scope.config.model = {};
-                        $scope.config.formFields = result;
+                        $scope.config.model = result[0];
+                        $scope.config.formFields = result[1];
                         $scope.config.originalFields = angular.copy($scope.config.formFields);
                     },
                     function (msg) {
