@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('aclSelect', ['$http', '$filter', 'Url', 'DownloadResource', 'WorkspaceElementResource', function ($http, $filter, Url, DownloadResource, WorkspaceElementResource) {
+    .directive('aclSelect', ['$http', '$filter', 'url', 'DownloadResource', 'WorkspaceElementResource', function ($http, $filter, url, DownloadResource, WorkspaceElementResource) {
         return {
             restrict: 'E',
             scope: {
@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
 
                     scope.sendACL = function (model) {
                         console.log('Send ACL');
-                        var uploadUrl = Url.urlBase() + '/rest/workspaces/' + scope.element.workspace + '/elements/',
+                        var uploadUrl = url.api + '/rest/workspaces/' + scope.element.workspace + '/elements/',
                             fd = new FormData(),
                             currentPath = scope.element.path,
                             content = angular.toJson({template:model}),

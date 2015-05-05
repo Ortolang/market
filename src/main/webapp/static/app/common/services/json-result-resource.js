@@ -8,9 +8,9 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('JsonResultResource', ['$resource', 'Url', function ($resource, Url) {
+    .factory('JsonResultResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(Url.urlBase() + '/rest/objects/json', {}, {
+        return $resource(url.api + '/rest/objects/json', {}, {
             get: {
                 method: 'GET',
                 isArray: true

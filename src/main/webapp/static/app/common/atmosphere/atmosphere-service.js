@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AtmosphereService', ['$rootScope', '$q', '$timeout', 'AtmosphereListener', 'Url', 'ProfileResource', 'User', function ($rootScope, $q, $timeout, AtmosphereListener, Url, ProfileResource, User) {
+    .factory('AtmosphereService', ['$rootScope', '$q', '$timeout', 'AtmosphereListener', 'url', 'ProfileResource', 'User', function ($rootScope, $q, $timeout, AtmosphereListener, url, ProfileResource, User) {
 
         var responseParameterDelegateFunctions = ['onOpen', 'onClientTimeout', 'onReopen', 'onMessage', 'onClose', 'onError'],
             delegateFunctions = responseParameterDelegateFunctions,
@@ -73,7 +73,7 @@ angular.module('ortolangMarketApp')
                 if (data.t) {
                     var result = {},
                         request = config;
-                    request.url = Url.urlBase() + '/sub/' + User.key;
+                    request.url = url.api + '/sub/' + User.key;
                     request.headers = {t: data.t};
                     angular.extend(request, AtmosphereListener);
                     angular.forEach(request, function (value, property) {

@@ -47,9 +47,7 @@ angular.module('ortolangVisualizers')
             link: {
                 pre: function (scope, element, attrs) {
                     angular.forEach(scope.elements, function (element) {
-                        Download.getDownloadUrl(element).then(function (url) {
-                            element.downloadUrl = url;
-                        });
+                        element.downloadUrl = Download.getDownloadUrl(element);
                     });
                 },
                 post: function (scope, element, attrs) {

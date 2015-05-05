@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', 'FileUploader', 'Url', 'AuthService',
-        function ($scope, $rootScope, $window, $timeout, FileUploader, Url, AuthService) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', 'FileUploader', 'url', 'AuthService',
+        function ($scope, $rootScope, $window, $timeout, FileUploader, url, AuthService) {
 
             var uploader;
 
@@ -78,7 +78,7 @@ angular.module('ortolangMarketApp')
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
                 fileItem.wskey = fileItem.wskey || angular.copy($scope.wskey);
-                fileItem.url = Url.urlBase() + '/rest/workspaces/' + fileItem.wskey + '/elements';
+                fileItem.url = url.api + '/rest/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
                     case 'object':
@@ -98,7 +98,7 @@ angular.module('ortolangMarketApp')
                         break;
 
                     case 'zip':
-                        fileItem.url = Url.urlBase() + '/rest/runtime/processes/';
+                        fileItem.url = url.api + '/rest/runtime/processes/';
                         fileItem.alias = 'zippath';
                         fileItem.formData = [];
                         fileItem.formData.push({'process-type': 'import-zip'});

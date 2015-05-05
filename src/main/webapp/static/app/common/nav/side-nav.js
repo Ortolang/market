@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', 'Nav', function ($rootScope, $scope, $route, $translate, $animate, Nav) {
 
         $scope.sideNavElements = Nav.getSideNavElements();
+        $scope.selectedElement = undefined;
 
         $scope.select = function (element, animate) {
             if (animate === undefined) {
@@ -20,14 +21,14 @@ angular.module('ortolangMarketApp')
             angular.forEach(Nav.getSideNavElements(), function (value) {
                 if (value.class === element.class) {
                     value.active =  'active';
-                    if (value.hidden) {
+                    if (value.hiddenSideNav) {
                         $scope.selectedElement = value;
                     } else {
-                        var clickedElement = $('.side-nav').find('.' + element.class).parent(),
-                            copy = angular.element('.side-nav-active-item.copy'),
-                            real = angular.element('.side-nav-active-item.real');
-                        $rootScope.navPosition = clickedElement.position().top;
                         if (animate) {
+                            var clickedElement = $('.side-nav').find('.' + element.class).parent(),
+                                copy = angular.element('.side-nav-active-item.copy'),
+                                real = angular.element('.side-nav-active-item.real');
+                            $rootScope.navPosition = clickedElement.position().top;
                             real.addClass('animated');
                             $animate.removeClass(copy, 'ng-hide').then(function () {
                                 $scope.$apply(function () {
@@ -44,10 +45,6 @@ angular.module('ortolangMarketApp')
                     value.active =  undefined;
                 }
             });
-        };
-
-        $scope.getCssClass = function (element) {
-            return (element.active ? 'active ' : '') + (element.class === 'divider' ? 'divider' : '');
         };
 
         // *********************** //
@@ -74,11 +71,10 @@ angular.module('ortolangMarketApp')
             }
         }
 
+        init();
+
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            console.log('$routeChangeSuccess', current, previous);
-            if (!previous) {
-                init();
-            } else {
+            if (previous) {
                 switch (current.$$route.originalPath) {
                     case '/':
                         $scope.select({class: 'market'}, false);

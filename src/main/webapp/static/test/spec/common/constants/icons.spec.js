@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: icons', function () {
+describe('Constant: icons', function () {
 
     // load the service's module
     beforeEach(module('ortolangMarketApp'));
