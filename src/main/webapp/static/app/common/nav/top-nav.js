@@ -8,9 +8,9 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'Nav', function ($scope, $translate, AuthService, User, Runtime, Nav) {
+    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', function ($scope, $translate, AuthService, User, Runtime, sideNavElements) {
 
-        $scope.sideNavElements = Nav.getSideNavElements();
+        $scope.sideNavElements = sideNavElements;
         $scope.navbarCollapsed = false;
         $scope.User = User;
         $scope.Runtime = Runtime;

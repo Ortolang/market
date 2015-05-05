@@ -1,12 +1,12 @@
 <nav ng-controller="SideNavCtrl" class="side-nav" role="navigation" ng-cloak>
     <div class="side-nav-active-item real active">
-        <a ng-href="#{{selectedElement.hiddenPath ? selectedElement.hiddenPath : selectedElement.path}}" ng-class="selectedElement.class">
+        <a ng-class="selectedElement.class" ng-href="#{{selectedElement.hiddenPath ? selectedElement.hiddenPath : selectedElement.path}}">
             <span class="icon-container" ng-class="selectedElement.iconCss"></span>
             <span class="item-description">{{selectedElement.description | translate}}</span>
         </a>
     </div>
     <div class="side-nav-active-item copy side-nav-animation ng-hide">
-        <a ng-href="#{{selectedElementCopy.path}}" ng-class="selectedElementCopy.class">
+        <a ng-class="selectedElementCopy.class" ng-href="#{{selectedElementCopy.hiddenPath ? selectedElementCopy.hiddenPath : selectedElementCopy.path}}">
             <span class="icon-container" ng-class="selectedElementCopy.iconCss"></span>
             <span class="item-description">{{selectedElementCopy.description | translate}}</span>
         </a>
