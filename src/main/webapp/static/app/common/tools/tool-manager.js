@@ -307,7 +307,7 @@ angular.module('ortolangMarketApp')
 
             function toArray(obj) {
                 var output = [];
-                Object.keys(obj).forEach(function (key) {
+                angular.forEach(obj, function (value, key) {
                     output.push(getTool(key));
                 });
                 return output;

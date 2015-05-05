@@ -94,10 +94,7 @@ angular.module('ortolangMarketApp')
                     var modalScope = $rootScope.$new();
                     modalScope.formData = {};
                     modalScope.formFields = JSON.parse(form.definition);
-                    modalScope.formOptions = {
-                        uniqueFormId: formKey,
-                        submitCopy: $translate.instant('PROCESSES.START_PROCESS')
-                    };
+                    modalScope.submitText = $translate.instant('PROCESSES.START_PROCESS');
                     modalScope.onSubmit = function () {
                         RuntimeResource.createProcess(modalScope.formData, function (process) {
                             pushNewProcess(process);
@@ -217,19 +214,16 @@ angular.module('ortolangMarketApp')
                     var modalScope = $rootScope.$new();
                     modalScope.formData = {};
                     modalScope.formFields = JSON.parse(form.definition);
-                    modalScope.formOptions = {
-                        uniqueFormId: task.form + '-' + task.id,
-                        submitCopy: $translate.instant('TASKS.COMPLETE_TASK')
-                    };
+                    modalScope.submitText = $translate.instant('TASKS.COMPLETE_TASK');
                     modalScope.onSubmit = function () {
                         var variables = [], type;
-                        angular.forEach(Object.keys(modalScope.formData), function (key) {
-                            if (modalScope.formData[key] === true || modalScope.formData[key] === false) {
+                        angular.forEach(modalScope.formData, function (value, key) {
+                            if (value === true || value === false) {
                                 type = 'boolean';
-                            } else if (angular.isString(modalScope.formData[key])) {
+                            } else if (angular.isString(value)) {
                                 type = 'string';
                             }
-                            variables.push({name: key, value: modalScope.formData[key], type: type});
+                            variables.push({name: key, value: value, type: type});
                         });
                         RuntimeResource.completeTask({tId: task.id}, {'variables':  variables}, function () {
                             getTasks();
