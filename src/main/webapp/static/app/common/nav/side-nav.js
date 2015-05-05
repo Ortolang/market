@@ -80,7 +80,7 @@ angular.module('ortolangMarketApp')
         init();
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            if (previous && current.$$route.originalPath !== previous.$$route.originalPath) {
+            if (previous) {
                 switch (current.$$route.originalPath) {
                     case '/':
                         $scope.select({class: 'market'}, false);
