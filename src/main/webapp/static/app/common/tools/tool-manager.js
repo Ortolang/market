@@ -25,9 +25,10 @@ angular.module('ortolangMarketApp')
                 this.meta = undefined;
                 this.url = undefined;
                 this.config = undefined;
+                this.model = undefined;
                 this.active = undefined;
                 this.inputData = undefined;
-                this.categories = undefined;
+                this.functionalities = undefined;
                 this.image = undefined;
 
                 angular.forEach(config, function (value, key) {
@@ -42,6 +43,10 @@ angular.module('ortolangMarketApp')
                         method: 'GET',
                         isArray: true
                     },
+                    getDefaultForm: {
+                        url: this.url + '/default-form',
+                        method: 'GET'
+                    },
                     getJobs: {
                         url: this.url + '/jobs',
                         method: 'GET'
@@ -52,7 +57,7 @@ angular.module('ortolangMarketApp')
                         transformRequest: function (data) {
                             return $.param(data);
                         },
-                        headers: {'inputData-Type': 'application/x-www-form-urlencoded'}
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     },
                     abort: {
                         url: this.url + '/jobs/:jobId/abort',
@@ -113,7 +118,7 @@ angular.module('ortolangMarketApp')
                     return this.image;
                 },
 
-                getCategories: function () {
+                getFunctionalities: function () {
                     return this.categories;
                 },
 
@@ -129,6 +134,20 @@ angular.module('ortolangMarketApp')
                         return this.config;
                     }
                     return this.resource.getExecutionForm({language: $translate.use()});
+                },
+
+                getModelForm: function () {
+                    if (!this.getActive()) {
+                        throw ('The tool "' + this.getKey() + '" is not active');
+                    }
+                    if (this.model) {
+                        return this.model;
+                    }
+                    return this.resource.getDefaultForm({});
+                },
+
+                getForm: function () {
+                    return $q.all([this.getModelForm(), this.getExecutionForm()]);
                 },
 
                 getActive: function () {
@@ -224,7 +243,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
 
                 var query = queryBuilder.toString();
-                console.log('query : ' + query);
+                //console.log('query : ' + query);
                 JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
                     angular.forEach(jsonResults, function(itemMeta) {
                         var item = {};
@@ -236,8 +255,12 @@ angular.module('ortolangMarketApp')
                         item.description = data.description;
                         item.documentation = data.help;
                         item.url = data.url;
-                        item.inputData = data.inputData;
-                        item.categories = data.functionality;
+                        item.inputData = data.inputData.filter(function(elem, pos) {
+                            return data.inputData.indexOf(elem) === pos;
+                        });
+                        item.functionalities = data.functionality.filter(function(elem, pos) {
+                            return data.functionality.indexOf(elem) === pos;
+                        });
                         item.meta = data;
                         if(item.url !== undefined && item.url !== '') {
                             item.active = true;
@@ -257,7 +280,7 @@ angular.module('ortolangMarketApp')
                             console.log('register '+item.name);
                         }
                     });
-                    console.log('fin populate tool list');
+                    //console.log('fin populate tool list');
                     $rootScope.$broadcast('tool-list-registered');
 
                 }, function (reason) {
@@ -284,7 +307,7 @@ angular.module('ortolangMarketApp')
 
             function toArray(obj) {
                 var output = [];
-                Object.keys(obj).forEach(function (key) {
+                angular.forEach(obj, function (value, key) {
                     output.push(getTool(key));
                 });
                 return output;

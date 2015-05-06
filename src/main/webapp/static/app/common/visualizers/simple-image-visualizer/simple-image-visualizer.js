@@ -49,10 +49,8 @@ angular.module('ortolangVisualizers')
                     scope.elements[0].selected = true;
                     scope.imageElements = [];
                     angular.forEach(scope.elements, function (element) {
-                        Download.getDownloadUrl(element).then(function (url) {
-                            element.downloadUrl = url;
-                            scope.imageElements.push(element);
-                        });
+                        element.downloadUrl = Download.getDownloadUrl(element);
+                        scope.imageElements.push(element);
                     });
                 }
             }

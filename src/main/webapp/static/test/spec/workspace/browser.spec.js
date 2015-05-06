@@ -11,7 +11,7 @@ describe('Controller: BrowserCtrl', function () {
         $rootScope,
         $q,
         $httpBackend,
-        Url,
+        url,
         $routeParams;
 
         //mockParentData = {
@@ -36,17 +36,17 @@ describe('Controller: BrowserCtrl', function () {
         //};
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, _$rootScope_, _$q_, _$httpBackend_, _Url_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _$q_, _$httpBackend_, _url_) {
         $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
         $q = _$q_;
-        Url = _Url_;
+        url = _url_;
         $routeParams =  {wsName: 'system', root: 'head', path: '/'};
         $httpBackend = _$httpBackend_;
 
         //var queryPromise = $q.defer();
 
-        //var url = Url.urlBase() + '/rest/workspaces/' + $routeParams.wsName + '/elements';
+        //var url = url.api() + '/rest/workspaces/' + $routeParams.wsName + '/elements';
         //url += '?path=%2F&root=head';
         //$httpBackend.whenGET(url).respond(queryPromise.promise.then(undefined, undefined));
         //console.log(url);

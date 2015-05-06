@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
             restrict: 'A',
             scope: {
                 options: '=',
-                value: '=',
+                model: '=',
                 id: '='
             },
             templateUrl: 'common/formly/ortolang-formly-file-select-template.html',
@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
                     var fileSelectModalScope = $rootScope.$new(true);
                     fileSelectModalScope.acceptMultiple = false;
                     fileSelectModalScope.fileSelectId = scope.id;
-                    scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: scope.options.label || $translate.instant('SELECT_WORKSPACE_ELEMENT'), template: 'common/directives/file-select-modal-template.html', show: false});
+                    scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: scope.options.labelProp || $translate.instant('SELECT_WORKSPACE_ELEMENT'), template: 'common/directives/file-select-modal-template.html', show: false});
 
                     scope.showModal = function () {
                         scope.fileSelectModal.show();
@@ -30,7 +30,7 @@ angular.module('ortolangMarketApp')
 
                     var unbindListener = $rootScope.$on('browserSelectedElements-' + scope.id, function ($event, elements) {
                         console.log('formlyFileSelect with id "%s" caught event "browserSelectedElements-%s" (selected elements: %o)', scope.id, scope.id, elements);
-                        scope.value = elements[0].key;
+                        scope.model = elements[0].key;
                         scope.displayedValue = elements[0];
                         scope.fileSelectModal.hide();
                         $event.stopPropagation();

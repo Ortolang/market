@@ -8,10 +8,10 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolsResource', ['$resource', 'Url', function ($resource, Url) {
-        return $resource(Url.urlBase() + '/rest/tools', {}, {
+    .factory('ToolsResource', ['$resource', 'url', function ($resource, url) {
+        return $resource(url.api + '/rest/tools', {}, {
             getToolsList: {
-                url: Url.urlBase() + '/rest/tools/list',
+                url: url.api + '/rest/tools/list',
                 method: 'GET',
                 isArray: false
             }

@@ -38,12 +38,12 @@ describe('Controller: UploadCtrl', function () {
     it('should be able to toggle upload queue status', function () {
         var i, previousStatus;
         for (i = 0; i < 2; i++) {
-            previousStatus = $rootScope.uploadQueueStatus;
-            $rootScope.toggleUploadQueueStatus();
+            previousStatus = $rootScope.uploader.uploadQueueStatus;
+            scope.toggleUploadQueueStatus();
             if (previousStatus === 'active') {
-                expect($rootScope.uploadQueueStatus).toBeUndefined();
+                expect($rootScope.uploader.uploadQueueStatus).toBeUndefined();
             } else {
-                expect($rootScope.uploadQueueStatus).toEqual('active');
+                expect($rootScope.uploader.uploadQueueStatus).toEqual('active');
             }
         }
     });
@@ -68,13 +68,13 @@ describe('Controller: UploadCtrl', function () {
         expect($rootScope.uploader.queue.length).toEqual(0);
     });
 
-    // it('should be possible to clear an item from queue', function () {
-    //     $rootScope.uploader.addToQueue(sample().fileUploadMock, {ortolangType: 'object'});
-    //     expect($rootScope.uploader.queue.length).toEqual(1);
-    //     scope.resizeBrowser = function () { };
-    //     scope.clearItem($rootScope.uploader.getNotUploadedItems()[0]);
-    //     expect($rootScope.uploader.queue.length).toEqual(0);
-    // });
+    //it('should be possible to clear an item from queue', function () {
+    //    $rootScope.uploader.addToQueue(sample().fileUploadMock, {ortolangType: 'object'});
+    //    expect($rootScope.uploader.queue.length).toEqual(1);
+        //console.log($rootScope.uploader.getNotUploadedItems());
+        //scope.clearItem([0]);
+        //expect($rootScope.uploader.queue.length).toEqual(0);
+    //});
 
     // it('should be possible to clear the entire queue', function () {
     //     $rootScope.uploader.addToQueue(sample().fileUploadMock, {ortolangType: 'object'});

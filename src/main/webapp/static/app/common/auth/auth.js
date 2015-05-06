@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$route', 'User', 'AuthService', 'ProfileResource', '$translate', function ($scope, $route, User, AuthService, ProfileResource, $translate) {
+    .controller('AuthCtrl', ['$scope', '$route', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $route, User, AuthService, ProfileResource, AtmosphereService) {
 
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
@@ -45,11 +45,13 @@ angular.module('ortolangMarketApp')
                         var favoriteAvatar = User.getProfileData('avatar');
                         User.favoriteAvatar = favoriteAvatar ? favoriteAvatar.value : 'GITHUB';
                         AuthService.resolveSessionInitialized();
+                        AtmosphereService.subscribe();
                     },
                     function error() {
                         profile.avatarIds = avatarIds;
                         User.create(profile);
                         AuthService.resolveSessionInitialized();
+                        AtmosphereService.subscribe();
                     }
                 );
             });

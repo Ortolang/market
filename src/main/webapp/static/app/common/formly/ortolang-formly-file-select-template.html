@@ -1,6 +1,6 @@
 <div class="form-group" show-errors>
     <label for="{{id}}">
-        {{options.label || 'Select workspace element'}}
+        {{options.to.labelProp || 'Select workspace element'}}
         {{options.required ? '*' : ''}}
     </label>
     <div class="input-group">
@@ -20,7 +20,7 @@
            aria-describedby="{{id}}_description"
            ng-required="options.required"
            ng-init="value = options.default.id"
-           data-ng-disabled="options.disabled"
-           data-ng-model="value"
+           ng-disabled="options.disabled"
+           ng-model="model[options.key]"
            class="form-control"/>
 </div>

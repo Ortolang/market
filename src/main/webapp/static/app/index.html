@@ -80,7 +80,7 @@
 <script src="bower_components/angular-hotkeys/build/hotkeys.min.js"></script>
 <script src="bower_components/highlightjs/highlight.pack.js"></script>
 <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
-<script src="bower_components/api-check/dist/apiCheck.js"></script>
+<script src="bower_components/api-check/dist/api-check.js"></script>
 <script src="bower_components/angular-formly/dist/formly.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js"></script>
@@ -90,6 +90,7 @@
 <script src="bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js"></script>
 <script src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
 <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="bower_components/google-diff-match-patch/diff_match_patch_uncompressed.js"></script>
 <script src="bower_components/angular-diff-match-patch/angular-diff-match-patch.js"></script>
 <script src="bower_components/holderjs/holder.js"></script>
 <script src="bower_components/keycloak/dist/keycloak.js"></script>
@@ -107,6 +108,7 @@
 <script src="bower_components/angular-schema-form/dist/schema-form.js"></script>
 <script src="bower_components/angular-schema-form/dist/bootstrap-decorator.js"></script>
 <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+<script src="bower_components/atmosphere/atmosphere.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -120,9 +122,14 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
 <script src="common/resize.js"></script>
+<script src="common/constants/url.js"></script>
+<script src="common/constants/icons.js"></script>
 <script src="common/auth/auth-init.js"></script>
 <script src="common/auth/interceptors.js"></script>
 <script src="common/auth/auth.js"></script>
+<script src="common/auth/user.js"></script>
+<script src="common/atmosphere/atmosphere-service.js"></script>
+<script src="common/atmosphere/atmosphere-listener.js"></script>
 <script src="common/filters/bytes.js"></script>
 <script src="common/filters/content-type.js"></script>
 <script src="common/filters/ortolang-element-icon-css.js"></script>
@@ -146,15 +153,12 @@
 <script src="common/directives/i18n/browser.en.js"></script>
 <script src="common/formly/formly-file-select.js"></script>
 <script src="common/formly/config.js"></script>
-<script src="common/services/url.js"></script>
 <script src="common/services/workspace-resource.js"></script>
-<script src="common/auth/user.js"></script>
 <script src="common/services/profile-resource.js"></script>
 <script src="common/services/runtime-service.js"></script>
 <script src="common/services/runtime-resource.js"></script>
 <script src="common/services/form-resource.js"></script>
 <script src="common/services/metadata-format-resource.js"></script>
-<script src="common/services/param.js"></script>
 <script src="common/services/object-resource.js"></script>
 <script src="common/services/download.js"></script>
 <script src="common/services/workspace-element-resource.js"></script>
@@ -164,7 +168,6 @@
 <script src="common/services/index-result-resource.js"></script>
 <script src="common/services/semantic-result-resource.js"></script>
 <script src="common/services/json-result-resource.js"></script>
-<script src="common/services/icons.js"></script>
 <script src="common/services/market-browser.js"></script>
 <script src="common/services/workspace-browser.js"></script>
 <script src="common/services/metadataformat.js"></script>
@@ -180,6 +183,7 @@
 <script src="common/visualizers/simple-text-visualizer/i18n/simple-text-visualizer.en.js"></script>
 <script src="common/visualizers/simple-text-visualizer/simple-text-visualizer.js"></script>
 <script src="common/visualizers/diff-visualizer/diff-visualizer.js"></script>
+<script src="common/nav/side-nav-elements.js"></script>
 <script src="common/nav/side-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
 <script src="common/nav/footer.js"></script>
@@ -190,9 +194,12 @@
 <script src="common/i18n/common.en.js"></script>
 <script src="common/i18n/config.fr.js"></script>
 <script src="common/i18n/config.en.js"></script>
-<script src="workspace/upload.js"></script>
 <script src="common/directives/browser-ctrl.js"></script>
 <script src="common/directives/sparql-select.js"></script>
+<script src="common/tools/tool-list.js"></script>
+<script src="common/tools/i18n/tools.fr.js"></script>
+<script src="common/tools/i18n/tools.en.js"></script>
+<script src="workspace/upload.js"></script>
 <script src="workspace/i18n/workspace.fr.js"></script>
 <script src="workspace/i18n/workspace.en.js"></script>
 <script src="workspace/metadata-editor.js"></script>
@@ -200,9 +207,6 @@
 <script src="workspace/metadata-preview.js"></script>
 <script src="workspace/metadata-editor.js"></script>
 <script src="workspace/metadata-form-schema.js"></script>
-<script src="common/tools/tool-list.js"></script>
-<script src="common/tools/i18n/tools.fr.js"></script>
-<script src="common/tools/i18n/tools.en.js"></script>
 <script src="processes/processes.js"></script>
 <script src="processes/i18n/processes.fr.js"></script>
 <script src="processes/i18n/processes.en.js"></script>

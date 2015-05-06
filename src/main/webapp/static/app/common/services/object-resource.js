@@ -8,34 +8,30 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ObjectResource', ['$resource', 'Url', function ($resource, Url) {
+    .factory('ObjectResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(Url.urlBase() + '/rest/objects/:oKey/', {}, {
+        return $resource(url.api + '/rest/objects/:oKey/', {}, {
             keys: {
-                url: Url.urlBase() + '/rest/objects/:oKey/keys',
+                url: url.api + '/rest/objects/:oKey/keys',
                 method: 'GET',
                 isArray: false
             },
             download: {
-                url: Url.urlBase() + '/rest/objects/:oKey/download',
+                url: url.api + '/rest/objects/:oKey/download',
                 method: 'GET',
                 isArray: false
             },
-            downloadTicket: {
-                url: Url.urlBase() + '/rest/objects/:oKey/download/ticket',
-                method: 'GET'
-            },
             history: {
-                url: Url.urlBase() + '/rest/objects/:oKey/history',
+                url: url.api + '/rest/objects/:oKey/history',
                 method: 'GET'
             },
             element: {
-                url: Url.urlBase() + '/rest/objects/:oKey/element',
+                url: url.api + '/rest/objects/:oKey/element',
                 method: 'GET',
                 isArray: false
             },
             size: {
-                url: Url.urlBase() + '/rest/objects/:oKey/size',
+                url: url.api + '/rest/objects/:oKey/size',
                 method: 'GET'
             }
         });

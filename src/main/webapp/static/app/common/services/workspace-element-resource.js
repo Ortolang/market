@@ -8,10 +8,10 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('WorkspaceElementResource', ['$resource', 'Url',
-        function ($resource, Url) {
+    .factory('WorkspaceElementResource', ['$resource', 'url',
+        function ($resource, url) {
 
-            return $resource(Url.urlBase() + '/rest/workspaces/:wskey/elements/', {}, {
+            return $resource(url.api + '/rest/workspaces/:wskey/elements/', {}, {
                 put: {
                     method: 'PUT'
                 }

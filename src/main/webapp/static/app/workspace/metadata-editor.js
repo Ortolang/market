@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'Url', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', 'MetadataFormatResource', function ($scope, $rootScope, $http, Url, DownloadResource, WorkspaceElementResource, FormResource, MetadataFormatResource) {
+    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'url', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', function ($scope, $rootScope, $http, url, DownloadResource, WorkspaceElementResource, FormResource) {
 
         // ***************** //
         // Editor visibility //
@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                     $scope.form = angular.fromJson(userForm.definition);
                     $scope.schema = $scope.userMetadataFormat.schemaContent;
                     $scope.model = angular.fromJson(metadataContent);
-                    
+
                     $scope.showEditor();
                 }, function (reason) {
                     console.log('unable to load form '+$scope.userMetadataFormat.form+' cause of '+reason);
@@ -91,7 +91,7 @@ angular.module('ortolangMarketApp')
 
         function sendForm(content, contentType) {
 
-            var uploadUrl = Url.urlBase() + '/rest/workspaces/' + $scope.selectedElements[0].workspace + '/elements/',
+            var uploadUrl = url.api + '/rest/workspaces/' + $scope.selectedElements[0].workspace + '/elements/',
                 fd = new FormData(),
                 currentPath = $scope.selectedElements[0].path;
 

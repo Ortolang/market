@@ -53,5 +53,6 @@ angular.module('ortolangMarketApp')
                 'en_UK': 'en'
             })
             .preferredLanguage('fr')
-            .fallbackLanguage('fr');
+            .fallbackLanguage('fr')
+            .useSanitizeValueStrategy('escaped');
     }]);

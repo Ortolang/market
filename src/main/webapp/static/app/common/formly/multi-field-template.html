@@ -1,0 +1,14 @@
+<div class="row">
+    <div formly-field
+         ng-repeat="field in to.fields track by $index"
+         ng-if="!field.hide"
+         class="{{::colClass[$index]}} formly-field {{field.type ? 'formly-field-' + field.type : ''}}"
+         data-options="field"
+         data-model="field.model || model"
+         data-fields="fields"
+         data-form="form"
+         data-form-id="formId"
+         data-form-state="options.formState"
+         data-index="$index">
+    </div>
+</div>

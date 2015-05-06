@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FormResource', ['$resource', 'Url', function ($resource, Url) {
-        return $resource(Url.urlBase() + '/rest/forms/:formKey', {}, {
+    .factory('FormResource', ['$resource', 'url', function ($resource, url) {
+        return $resource(url.api + '/rest/forms/:formKey', {}, {
         });
     }]);

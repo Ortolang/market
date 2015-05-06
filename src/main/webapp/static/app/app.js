@@ -76,22 +76,25 @@ angular
                 templateUrl: 'workspace/workspace.html',
                 requiresAuthentication: true
             })
-            .when('/processes/', {
+            .when('/processes', {
                 templateUrl: 'processes/processes.html',
                 controller: 'ProcessesCtrl',
                 requiresAuthentication: true
             })
-            .when('/tasks/', {
+            .when('/tasks', {
                 templateUrl: 'tasks/tasks.html',
                 controller: 'TasksCtrl',
                 requiresAuthentication: true
+            })
+            .when('/information', {
+                redirectTo: '/information/presentation'
             })
             .when('/information/:section', {
                 templateUrl: 'information/information.html',
                 controller: 'InformationCtrl',
                 reloadOnSearch: false
             })
-            .when('/profile/', {
+            .when('/profile', {
                 templateUrl: 'profile/profile.html',
                 controller: 'ProfileCtrl',
                 requiresAuthentication: true,

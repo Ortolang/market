@@ -12,7 +12,6 @@ angular.module('ortolangMarketApp')
 
         $scope.search = function () {
             if ($scope.content !== '') {
-                $rootScope.selectSearch();
                 $location.search('content', $scope.content).path('/search');
             }
         };
@@ -47,7 +46,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Corpus');
             } else if(type==='websites') {
                 queryBuilder.and();
-                queryBuilder.equals('meta_ortolang-item-json.type', 'Site web');
+                queryBuilder.equals('meta_ortolang-item-json.type', 'Application');
             } else if(type==='lexicons') {
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Lexique');
@@ -56,7 +55,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
             } else if(type==='news') {
                 queryBuilder.and();
-                queryBuilder.in('meta_ortolang-item-json.title', ['Littéracie Avancée', 'Corpus14', 'Comere']);
+                queryBuilder.in('meta_ortolang-item-json.title', ['Littéracie Avancée', 'Corpus 14', 'CoMeRe (Communication médiée par les réseaux)']);
             }
 
             var query = queryBuilder.toString();

@@ -3,7 +3,6 @@
 describe('Visualizer: SimpleAudioVisualizer', function () {
 
     // load the service's module
-    beforeEach(module('ortolangMarketApp'));
     beforeEach(module('ortolangMarketAppMock'));
     beforeEach(module('common/visualizers/simple-audio-visualizer/simple-audio-visualizer.html'));
 
