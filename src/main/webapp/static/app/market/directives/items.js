@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', [ '$rootScope', '$routeParams', '$location', 'JsonResultResource', 'QueryBuilderService',  function ($rootScope, $routeParams, $location, JsonResultResource, QueryBuilderService) {
+    .directive('items', [ '$rootScope', '$routeParams', '$location', 'icons', 'JsonResultResource', 'QueryBuilderService',  function ($rootScope, $routeParams, $location, icons, JsonResultResource, QueryBuilderService) {
         return {
             restrict: 'E',
             scope: {
@@ -17,11 +17,26 @@ angular.module('ortolangMarketApp')
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
                 
+                var viewModeLine, viewModeTile;
+
                 scope.search = function (content) {
                     if (content && content !== '') {
                         $rootScope.selectSearch();
-                        $location.url('/search?content='+content+'&filters='+angular.toJson({'meta_ortolang-item-json.type':scope.type}));
+                        $location.url('/search?content='+content+'&filters='+angular.toJson({'meta_ortolang-item-json.type':scope.type})+'&viewMode='+scope.viewMode.id);
                     }
+                };
+
+                scope.toggleOrderBy = function(orderProp){
+                    if(scope.orderProp !== orderProp) {
+                        scope.orderDirection = false;
+                        scope.orderProp = orderProp;
+                    } else {
+                        scope.orderDirection = !scope.orderDirection;
+                    }
+                };
+
+                scope.switchViewMode = function() {
+                    scope.viewMode = (scope.viewMode.id === viewModeLine.id) ? viewModeTile : viewModeLine;
                 };
 
                 function load () {
@@ -46,12 +61,30 @@ angular.module('ortolangMarketApp')
                     });
                 }
 
+                function setViewMode(id) {
+                    if(id === viewModeLine.id) {
+                        scope.viewMode = viewModeLine;
+                    } else if(id === viewModeTile.id) {
+                        scope.viewMode = viewModeTile;
+                    }
+                }
+
+                function initLocalVariables() {
+                    viewModeLine = {id: 'line', icon: icons.browser.viewModeTile, text: 'BROWSER.VIEW_MODE_TILE'};
+                    viewModeTile = {id: 'tile', icon: icons.browser.viewModeLine, text: 'BROWSER.VIEW_MODE_LINE'};
+                }
+
                 // Scope variables
                 function initScopeVariables() {
                     scope.items = [];
+
+                    scope.orderProp = 'title';
+                    scope.orderDirection = false;
+                    scope.viewMode = viewModeTile;
                 }
 
                 function init() {
+                    initLocalVariables();
                     initScopeVariables();
 
                     load();

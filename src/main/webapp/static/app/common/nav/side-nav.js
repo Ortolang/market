@@ -68,6 +68,22 @@ angular.module('ortolangMarketApp')
             $scope.select({class: 'search'}, false);
         };
 
+        $rootScope.selectCorpora = function () {
+            $scope.select({class: 'corpora'}, false);
+        };
+
+        $rootScope.selectLexicons = function () {
+            $scope.select({class: 'lexicons'}, false);
+        };
+
+        $rootScope.selectTools = function () {
+            $scope.select({class: 'tools'}, false);
+        };
+
+        $rootScope.selectIntegratedProjects = function () {
+            $scope.select({class: 'integrated-projects'}, false);
+        };
+
         $scope.getCssClass = function (element) {
             return (element.active ? 'active ' : '') + (element.class === 'divider' ? 'divider' : '');
         };

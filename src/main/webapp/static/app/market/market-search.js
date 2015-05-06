@@ -37,6 +37,7 @@ angular.module('ortolangMarketApp')
             if ($scope.content && $scope.content !== '') {
                 params.content = $scope.content;
             }
+            params.viewMode = $scope.viewMode.id;
             $location.search(params).path('/search');
             
         };
@@ -232,8 +233,15 @@ angular.module('ortolangMarketApp')
             $scope.viewMode = ($scope.viewMode.id === viewModeLine.id) ? viewModeTile : viewModeLine;
         };
 
-        function initLocalVariables() {
+        function setViewMode(id) {
+            if(id === viewModeLine.id) {
+                $scope.viewMode = viewModeLine;
+            } else if(id === viewModeTile.id) {
+                $scope.viewMode = viewModeTile;
+            }
+        }
 
+        function initLocalVariables() {
             viewModeLine = {id: 'line', icon: icons.browser.viewModeTile, text: 'BROWSER.VIEW_MODE_TILE'};
             viewModeTile = {id: 'tile', icon: icons.browser.viewModeLine, text: 'BROWSER.VIEW_MODE_LINE'};
         }
@@ -429,10 +437,26 @@ angular.module('ortolangMarketApp')
 
             $scope.content = $routeParams.content;
 
+            if($routeParams.viewMode) {
+                setViewMode($routeParams.viewMode);
+            }
+
             var filters = $routeParams.filters;
 
             if(filters) {
                 var filtersO = angular.fromJson(filters);
+
+                if(filtersO['meta_ortolang-item-json.type']) {
+                    if(filtersO['meta_ortolang-item-json.type'] === 'Corpus') {
+                        $rootScope.selectCorpora();
+                    } else if(filtersO['meta_ortolang-item-json.type'] === 'Lexique') {
+                        $rootScope.selectLexicons();
+                    } else if(filtersO['meta_ortolang-item-json.type'] === 'Outil') {
+                        $rootScope.selectTools();
+                    } else if(filtersO['meta_ortolang-item-json.type'] === 'Application') {
+                        $rootScope.selectIntegratedProjects();
+                    }
+                }
 
                 for(var paramName in filtersO) {
                     var i = 0;

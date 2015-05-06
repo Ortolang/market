@@ -1,5 +1,4 @@
 <div id="market-search" class="container-fluid container-main">
-
     <div class="row">
         <div class="toolbar">
             <div class="row">
@@ -33,7 +32,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-show="visibleFacetedFilters.getFilters().length > 0">
         <div class="toolbar toolbar-options">
             <div class="col-sm-12">
                 <div class="btn-toolbar">
@@ -42,7 +41,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.resetLabel | translate}}</a></li>
                             <li class="divider" role="menuitem"></li>
-                            <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected.label===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}} <!-- <span class="badge">{{option.getLength()}}</span> --></a></li>
+                            <li ng-repeat="option in filter.getOptions()" ng-class="filter.selected.label===option.value?'active':''" role="menuitem"><a ng-click="setFilter(filter, option.value)">{{option.label | translate}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,26 +49,44 @@
         </div>
     </div>
 
-    <div id="results_count" class="row">
-        <div class="col-md-8">
-            <small translate="MARKET.RESULTS_LABEL" data-translate-values="{value: items.length}"></small>
-        </div>
-    </div>
+    <!-- <div id="results_count" class="row">
+        <div class="toolbar toolbar-options">
+            <div class="col-md-2">
 
-    <div ng-if="viewMode.id === 'tile'" class="row market-home">
-        <div class="col-md-12">
-
-            <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:orderProp:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>
+            </div>
+            <div class="col-md-8">
+                <small translate="MARKET.RESULTS_LABEL" data-translate-values="{value: items.length}"></small>
             </div>
         </div>
-    </div>
-    
-    <div ng-if="viewMode.id === 'line'" id="results_list" class="row">
+    </div> -->
 
-        <div ng-repeat="item in items | orderBy:orderProp:orderDirection" class="col-md-8">
-            <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
+    <!-- <div class="row results_content"> -->
+
+        <!-- <div class="col-md-2 facets">
+            <div ng-repeat="filter in visibleFacetedFilters.getFilters()" class="facet">
+                <h4>{{filter.getLabel() | translate}}</h4>
+                <ul class="list-unstyled">
+                    <li ng-repeat="option in filter.getOptions()">
+                        <a  ng-click="setFilter(filter, option.value)">{{option.label | translate}}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+        <div class="col-md-10 content"> -->
+            <div ng-if="viewMode.id === 'tile'" class="row market-home">
+                <div class="col-md-12">
+                    <div class="flex-row">
+                        <item class="flex-column medium-item" ng-repeat="item in items | orderBy:orderProp:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>
+                    </div>
+                </div>
+            </div>
+            
+            <div ng-if="viewMode.id === 'line'" class="row">
 
+                <div ng-repeat="item in items | orderBy:orderProp:orderDirection" class="col-md-8 line">
+                    <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
+                </div>
+            </div>
+        <!-- </div> -->
+    <!-- </div> -->
 </div>

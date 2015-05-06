@@ -72,26 +72,6 @@
 
 .market-home {
 
-  .toolbar-options {
-    background-color: @main-bg;
-
-    .btn {
-
-      &:hover {
-        border-color: @btn-default-border;
-        background-color: @main-bg;
-      }
-      border-color: @main-bg;
-    }
-  }
-
-  #search-market {
-    padding-top: 4*@padding-large-vertical;
-    padding-bottom: 5*@padding-large-vertical;
-    background-color: @default-bg;
-    border-bottom: @default-border;
-  }
-
   .flex-row :first-child {
     margin-left: 0;
   }
@@ -182,53 +162,6 @@
       a {
         font-weight: 200;
       }
-    }
-  }
-
-  .market-item {
-    padding: 4px;
-    margin: 5px;
-    border: 1px solid #dddddd;
-    line-height: 1.42857143;
-    background-color: @main-bg;
-    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
-    box-shadow: 0 0 5px rgba(0,0,0,0.10);
-    width: 258px;
-
-    cursor: pointer;
-    &:hover {
-      .title {
-        color: @ortolang-blue;
-      }
-    }
-
-    >img {
-      max-height: 200px;
-      max-width: 250px;
-    }
-
-    .title {
-      overflow: hidden;
-      position: relative;
-      color: inherit;
-      height: 60px;
-    }
-    .description {
-      overflow: hidden;
-      max-height: 100px;
-      /*width: 225px;*/
-      text-align: justify;
-    }
-
-    .producers {
-      a {
-        font-weight: 200;
-      }
-    }
-
-    .item-element {
-      border-left: 4px solid @market-primary;
-      padding : @padding-large-vertical;
     }
   }
 }
@@ -335,17 +268,43 @@
   }
 }
 
+.market-list-line {
+
+  .line {
+    border-bottom: @default-border;
+    /* border-right: @default-border; */
+  }
+
+  .description {
+    overflow: hidden;
+    max-height: 81px;
+    text-align: justify;
+  }
+
+  .producers {
+    a {
+      font-weight: 200;
+    }
+  }
+}
+
 #market-search {
 
-  .toolbar {
-    
-    span.divider {
-      border-left: @default-border;
-      float: left;
-      position: relative;
-      margin: -@padding-large-vertical (@padding-large-horizontal - @padding-xs-horizontal) -@padding-large-vertical @padding-large-horizontal;
-      display: inline-block;
-      min-height: 54px;
+  .facets {
+    margin-left: -@container-main-padding + floor(@grid-gutter-width/2);
+    margin-top: -@container-main-padding + floor(@grid-gutter-width);
+    padding: @padding-large-vertical (@container-main-padding - floor(@grid-gutter-width/2));
+    margin-bottom: 2 * @padding-large-vertical;
+    min-height: @toolbar-min-height;
+  }
+
+  .content {
+    border-left: @default-border;
+    margin-top: -@container-main-padding + floor(@grid-gutter-width);
+
+    .line {
+      border-bottom: @default-border;
+      border-right: @default-border;
     }
   }
 
