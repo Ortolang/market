@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('WORKSPACE_FR', {
         WORKSPACE: {
             WORKSPACE: 'Workspace',
+            ALIAS: 'Identifiant',
             UPLOAD: 'Importer',
             UPLOAD_QUEUE: 'Importation',
             PROGRESS: 'Avancement',
@@ -23,6 +24,14 @@ angular.module('ortolangMarketApp')
             ADD_METADATA: 'Ajouter une métadonnée',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Créer un espace de travail',
+                AUTO_GENERATED: 'Générer automatiquement l\'identifiant',
+                MESSAGES: {
+                    AVAILABILITY: 'Identifiant déjà utilisé',
+                    MIN_LENGTH: 'L\'identifiant doit contenir au minimum 3 caractères'
+                },
+                HELP: {
+                    ALIAS: 'L\'identifiant est unique et ne pourra plus être modifié par la suite'
+                },
                 SUBMIT: 'Créer'
             },
             PUBLISH_MODAL: {

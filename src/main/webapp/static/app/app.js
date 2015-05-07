@@ -13,6 +13,7 @@ angular
         'ngAnimate',
         'ngRoute',
         'ngResource',
+        'ngMessages',
         'ngSanitize',
         'ortolangVisualizers',
         'angularFileUpload',

@@ -39,7 +39,8 @@ angular.module('ortolangMarketApp')
 
             var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
                 marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
-                previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper, lastSelectedElement, lastShiftSelectedElement;
+                previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper,
+                lastSelectedElement, lastShiftSelectedElement, modalScope;
 
             // *********************** //
             //        Breadcrumb       //
@@ -93,6 +94,7 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
                             // TODO Support importing files into selected directory
                             if ($scope.hasOnlyParentSelected()) {
+                                $scope.contextMenuItems.push({divider: true});
                                 $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
                                 $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_ZIP', icon: icons.browser.uploadZip, action: 'uploadZip'});
                             }
@@ -314,6 +316,13 @@ angular.module('ortolangMarketApp')
             $scope.download = function (element) {
                 Download.download(element);
             };
+
+            function createModalScope() {
+                modalScope = $scope.$new(true);
+                modalScope.$on('modal.hide', function () {
+                    modalScope.$destroy();
+                });
+            }
 
             // *********************** //
             //        Selection        //
@@ -564,45 +573,46 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function uploadZip() {
-                var uploadZipModal, uploadZipModalScope = $rootScope.$new(true);
-                uploadZipModalScope.parent = $scope.parent;
-                uploadZipModalScope.wsName = $scope.wsName;
-                uploadZipModalScope.overwrite = false;
-                uploadZipModalScope.root = '';
-                uploadZipModalScope.uploadZip = function () {
+                var uploadZipModal;
+                createModalScope();
+                modalScope.parent = $scope.parent;
+                modalScope.wsName = $scope.wsName;
+                modalScope.overwrite = false;
+                modalScope.root = '';
+                modalScope.uploadZip = function () {
                     var files = angular.element('#upload-zip-file').prop('files');
                     $rootScope.uploader.addToQueue(files, {
                         'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.wsName}),
-                        'ziproot': $scope.parent.path + '/' + uploadZipModalScope.root,
-                        'overwrite': uploadZipModalScope.overwrite,
+                        'ziproot': $scope.parent.path + '/' + modalScope.root,
+                        'overwrite': modalScope.overwrite,
                         'wskey': $scope.wskey,
                         'ortolangType': 'zip'
                     });
-                    uploadZipModalScope.cancel();
+                    modalScope.cancel();
                 };
-                uploadZipModalScope.cancel = function () {
+                modalScope.cancel = function () {
                     uploadZipModal.hide();
                     deactivateContextMenu();
                 };
                 uploadZipModal = $modal({
-                    scope: uploadZipModalScope,
+                    scope: modalScope,
                     template: 'workspace/templates/upload-zip-modal.html',
                     show: true
                 });
             }
 
             $rootScope.$on('uploaderZipUploadCompleted', function ($event, fileItem, response) {
-                var uploadZipCompletedModalScope = $rootScope.$new(true),
-                    uploadZipCompletedModal;
-                uploadZipCompletedModalScope.archiveName = fileItem.file.name;
-                uploadZipCompletedModalScope.wsName = fileItem.wsName;
-                uploadZipCompletedModalScope.process = response;
-                uploadZipCompletedModalScope.showLog = function () {
+                createModalScope();
+                var uploadZipCompletedModal;
+                modalScope.archiveName = fileItem.file.name;
+                modalScope.wsName = fileItem.wsName;
+                modalScope.process = response;
+                modalScope.showLog = function () {
                     uploadZipCompletedModal.hide();
-                    $location.url('/processes?pKey=' + uploadZipCompletedModalScope.process.key);
+                    $location.url('/processes?pKey=' + modalScope.process.key);
                 };
                 uploadZipCompletedModal = $modal({
-                    scope: uploadZipCompletedModalScope,
+                    scope: modalScope,
                     template: 'workspace/templates/upload-zip-completed-modal.html',
                     show: true
                 });
@@ -614,9 +624,9 @@ angular.module('ortolangMarketApp')
 
             $scope.addCollection = function () {
                 if ($scope.browserService.canAdd && $scope.isHead) {
-                    var addCollectionModalScope = $rootScope.$new(true),
-                        addCollectionModal;
-                    addCollectionModalScope.addCollection = function () {
+                    var addCollectionModal;
+                    createModalScope();
+                    modalScope.addCollection = function () {
                         var data,
                             path = $scope.parent.path + '/';
 
@@ -624,14 +634,14 @@ angular.module('ortolangMarketApp')
                             $scope.isCollection($scope.selectedElements[0])) {
                             path += $scope.selectedElements[0].name + '/';
                         }
-                        path += addCollectionModalScope.newCollectionName;
+                        path += modalScope.newCollectionName;
 
                         data = {
                             path: path,
                             type: 'collection'
                         };
-                        if (addCollectionModalScope.newCollectionDescription) {
-                            data.description = addCollectionModalScope.newCollectionDescription;
+                        if (modalScope.newCollectionDescription) {
+                            data.description = modalScope.newCollectionDescription;
                         }
                         WorkspaceElementResource.put({wskey: $scope.wskey }, data, function () {
                             getParentData(true).then(function () {
@@ -640,15 +650,15 @@ angular.module('ortolangMarketApp')
                             });
                         });
                     };
-                    addCollectionModalScope.cancel = function () {
+                    modalScope.cancel = function () {
                         addCollectionModal.hide();
                         deactivateContextMenu();
                     };
-                    addCollectionModalScope.$on('modal.show', function () {
+                    modalScope.$on('modal.show', function () {
                         angular.element('#new-collection-modal').find('[autofocus]:first').focus();
                     });
                     addCollectionModal = $modal({
-                        scope: addCollectionModalScope,
+                        scope: modalScope,
                         template: 'workspace/templates/add-collection-modal.html',
                         show: true
                     });
@@ -657,30 +667,30 @@ angular.module('ortolangMarketApp')
 
             $scope.editDescription = function () {
                 if ($scope.browserService.canAdd && $scope.isHead && $scope.hasOnlyOneElementSelected()) {
-                    var editDescriptionModalScope = $rootScope.$new(true),
-                        editDescriptionModal;
-                    editDescriptionModalScope.selectedElement = $scope.selectedElements[0];
-                    editDescriptionModalScope.editDescription = function () {
+                    var editDescriptionModal;
+                    createModalScope();
+                    modalScope.selectedElement = $scope.selectedElements[0];
+                    modalScope.editDescription = function () {
                         // Delete properties that are not part of the representation
-                        if (!!editDescriptionModalScope.selectedElement.realSize) {
-                            delete editDescriptionModalScope.selectedElement.realSize;
+                        if (!!modalScope.selectedElement.realSize) {
+                            delete modalScope.selectedElement.realSize;
                         }
-                        WorkspaceElementResource.put({wskey: $scope.wskey }, editDescriptionModalScope.selectedElement, function () {
+                        WorkspaceElementResource.put({wskey: $scope.wskey }, modalScope.selectedElement, function () {
                             getParentData(true).then(function () {
                                 editDescriptionModal.hide();
                                 deactivateContextMenu();
                             });
                         });
                     };
-                    editDescriptionModalScope.cancel = function () {
+                    modalScope.cancel = function () {
                         editDescriptionModal.hide();
                         deactivateContextMenu();
                     };
-                    editDescriptionModalScope.$on('modal.show', function () {
+                    modalScope.$on('modal.show', function () {
                         angular.element('#new-collection-modal').find('[autofocus]:first').focus();
                     });
                     editDescriptionModal = $modal({
-                        scope: editDescriptionModalScope,
+                        scope: modalScope,
                         template: 'workspace/templates/edit-description-modal.html',
                         show: true
                     });
@@ -781,10 +791,10 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             $scope.publishWorkspace = function () {
-                var publishModalScope = $rootScope.$new(true),
-                    publishModal;
-                publishModalScope.wsName = $scope.wsName;
-                publishModalScope.publish = function () {
+                var publishModal;
+                createModalScope();
+                modalScope.wsName = $scope.wsName;
+                modalScope.publish = function () {
                     Runtime.createProcess({
                         'process-type': 'publish-workspace',
                         'process-name': 'Publication of workspace: ' + $scope.wsName + ' (version ' + ($scope.workspace.snapshots.length + 1) + ')',
@@ -793,40 +803,40 @@ angular.module('ortolangMarketApp')
                     publishModal.hide();
                 };
                 publishModal = $modal({
-                    scope: publishModalScope,
+                    scope: modalScope,
                     template: 'workspace/templates/publish-modal.html',
                     show: true
                 });
             };
 
             $scope.snapshotWorkspace = function () {
-                var snapshotModalScope = $rootScope.$new(true),
-                    snapshotModal;
-                snapshotModalScope.wsName = $scope.wsName;
-                snapshotModalScope.snapshotname = 'Version ' + $scope.workspace.clock;
-                snapshotModalScope.snapshot = function () {
-                    WorkspaceResource.snapshots({wskey: $scope.wskey}, {snapshotname: snapshotModalScope.snapshotname}, function () {
+                var snapshotModal;
+                createModalScope();
+                modalScope.wsName = $scope.wsName;
+                modalScope.snapshotname = 'Version ' + $scope.workspace.clock;
+                modalScope.snapshot = function () {
+                    WorkspaceResource.snapshots({wskey: $scope.wskey}, {snapshotname: modalScope.snapshotname}, function () {
                         snapshotModal.hide();
                         getSnapshotsHistory();
                     });
                 };
-                snapshotModalScope.$on('modal.show', function () {
+                modalScope.$on('modal.show', function () {
                     angular.element('#snapshot-workspace-form').find('[autofocus]:first').focus();
                 });
                 snapshotModal = $modal({
-                    scope: snapshotModalScope,
+                    scope: modalScope,
                     template: 'workspace/templates/snapshot-modal.html',
                     show: true
                 });
             };
 
             $scope.showMembers = function () {
-                var workspaceMembersModalScope = $rootScope.$new(true);
-                workspaceMembersModalScope.wsName = $scope.wsName;
-                workspaceMembersModalScope.members = $scope.workspaceMembers.members;
+                createModalScope();
+                modalScope.wsName = $scope.wsName;
+                modalScope.members = $scope.workspaceMembers.members;
 
                 $modal({
-                    scope: workspaceMembersModalScope,
+                    scope: modalScope,
                     template: 'workspace/templates/workspace-members-modal.html',
                     show: true
                 });
@@ -1426,20 +1436,45 @@ angular.module('ortolangMarketApp')
 
             $scope.createWorkspace = function () {
                 if ($scope.browserService.canAdd) {
-                    var createWorkspaceModalScope = $rootScope.$new(),
-                        createWorkspaceModal;
-                    createWorkspaceModalScope.createWorkspace = function () {
-                        WorkspaceResource.createWorkspace({name: createWorkspaceModalScope.newWorkspaceName, type: 'user'}, function (newWorkspace) {
-                            refreshWorkspaceList();
-                            $scope.changeWorkspace(newWorkspace);
-                            createWorkspaceModal.hide();
-                        });
+                    var createWorkspaceModal,
+                        regExp = new RegExp(' +', 'g');
+                    createModalScope();
+                    modalScope.submit = function (createWorkspaceForm) {
+                        if (createWorkspaceForm.$valid) {
+                            WorkspaceResource.getAvailability({alias: modalScope.alias}, function (data) {
+                                if (data.available) {
+                                    WorkspaceResource.createWorkspace({name: modalScope.name, alias: modalScope.alias, type: 'user'}, function (newWorkspace) {
+                                        refreshWorkspaceList();
+                                        $scope.changeWorkspace(newWorkspace);
+                                        createWorkspaceModal.hide();
+                                    });
+                                } else {
+                                    createWorkspaceForm.alias.$setValidity('availability', false);
+                                    modalScope.checked = false;
+                                }
+                            });
+                        }
                     };
-                    createWorkspaceModalScope.$on('modal.show', function () {
+                    modalScope.checked = true;
+                    modalScope.normalizeAlias = function (alias, createWorkspaceForm) {
+                        modalScope.alias = alias ? alias.replace(regExp, '-').toLowerCase(): alias;
+                        if (!modalScope.checked && createWorkspaceForm) {
+                            createWorkspaceForm.alias.$setValidity('availability', true);
+                        }
+                    };
+                    modalScope.generateAlias = function () {
+                        if (modalScope.checked) {
+                            modalScope.normalizeAlias(modalScope.name);
+                        }
+                    };
+                    modalScope.$watch('name', function () {
+                        modalScope.generateAlias();
+                    });
+                    modalScope.$on('modal.show', function () {
                         angular.element('#create-workspace-modal').find('[autofocus]:first').focus();
                     });
                     createWorkspaceModal = $modal({
-                        scope: createWorkspaceModalScope,
+                        scope: modalScope,
                         template: 'workspace/templates/create-workspace-modal.html',
                         show: true
                     });

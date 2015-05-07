@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('WORKSPACE_EN', {
         WORKSPACE: {
             WORKSPACE: 'Workspace',
+            ALIAS: 'ID',
             UPLOAD: 'Upload',
             UPLOAD_QUEUE: 'Upload Queue',
             PROGRESS: 'Progress',
@@ -23,6 +24,14 @@ angular.module('ortolangMarketApp')
             ADD_METADATA: 'Add a metadata',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
+                AUTO_GENERATED: 'Auto-generated ID',
+                MESSAGES: {
+                    AVAILABILITY: 'ID already used',
+                    MIN_LENGTH: 'Minimum length of 3 characters'
+                },
+                HELP: {
+                    ALIAS: 'The ID is unique and it cannot be modified afterwards'
+                },
                 SUBMIT: 'Create'
             },
             PUBLISH_MODAL: {
