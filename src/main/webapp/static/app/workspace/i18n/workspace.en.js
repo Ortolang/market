@@ -71,6 +71,11 @@ angular.module('ortolangMarketApp')
             },
             PROCESS_NAMES: {
                 IMPORT_ZIP: 'Import of archive "{{zipName}}" into workspace "{{wsName}}"'
+            },
+            SEARCH_ERROR_MODAL: {
+                TITLE: 'Error',
+                BODY_PATH: '',
+                BODY_ALIAS: 'No workspace with ID \'{{alias}}\' found or you are not authorized to access this workspace.'
             }
         }
     });

@@ -71,6 +71,11 @@ angular.module('ortolangMarketApp')
             },
             PROCESS_NAMES: {
                 IMPORT_ZIP: 'Importation de "{{zipName}}" dans l\'espace de travail "{{wsName}}"'
+            },
+            SEARCH_ERROR_MODAL: {
+                TITLE: 'Erreur',
+                BODY_PATH: '',
+                BODY_ALIAS: 'Il n\'existe pas d\'espace de travail avec l\'identifiant \'{{alias}}\' ou vous n\'êtes pas autorisé à acceder à ce workspace.'
             }
         }
     });

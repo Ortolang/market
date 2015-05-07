@@ -142,12 +142,6 @@ angular.module('ortolangMarketApp')
             //         Get Data        //
             // *********************** //
 
-            function getWorkspaceData() {
-                WorkspaceResource.get({wskey: $scope.workspace.key}).$promise.then(function (data) {
-                    $scope.workspace = data;
-                });
-            }
-
             function refreshWorkspaceList() {
                 $scope.workspaceList = WorkspaceResource.get();
             }
@@ -168,21 +162,22 @@ angular.module('ortolangMarketApp')
                         $scope.allChildrenMimeTypes.push({value: value.mimeType, label: '<span class="' + $filter('mimeTypeIconCss')(value.mimeType) + '"></span>&nbsp; ' + value.mimeType});
                     }
                 });
-                //if ($scope.browserService.getDataResource !== 'object') {
-                //    getWorkspaceData();
-                //}
             }
 
             function getParentData(refresh, forceNewSelection) {
                 if (refresh === undefined) {
                     refresh = false;
                 }
-                var config = {oKey: $scope.itemKey, wskey: $scope.wskey, path: $scope.path, root: $scope.root},
+                var config = {oKey: $scope.itemKey, wskey: $scope.workspace.key, path: $scope.path, root: $scope.root},
                     promise;
                 //console.log('Getting parent data (refresh: %s, forceNewSelection: %s, config: %o)', refresh, forceNewSelection, config);
                 promise = $scope.browserService.getData(config).$promise;
                 promise.then(function (element) {
                     finishGetParentData(element, refresh, forceNewSelection);
+                }, function (response) {
+                    initWorkspaceVariables();
+                    getParentData();
+                    displaySearchErrorModal('PATH');
                 });
                 return promise;
             }
@@ -242,7 +237,7 @@ angular.module('ortolangMarketApp')
             function getChildData(child) {
                 return $scope.browserService.getData({
                     oKey: child.key,
-                    wskey: $scope.wskey,
+                    wskey: $scope.workspace.key,
                     path: $scope.path + '/' + child.name,
                     root: $scope.root
                 }).$promise;
@@ -263,7 +258,7 @@ angular.module('ortolangMarketApp')
                 }
                 angular.forEach(filteredElements, function (child) {
                     console.log('Requesting data of child %s', child.name);
-                    $scope.browserService.getData({oKey: child.key, wskey: $scope.wskey, path: $scope.path + child.name, root: $scope.root})
+                    $scope.browserService.getData({oKey: child.key, wskey: $scope.workspace.key, path: $scope.path + child.name, root: $scope.root})
                         .$promise.then(function (data) {
                             if ($scope.browserService.getDataResource === 'object') {
                                 data = data.object;
@@ -553,7 +548,7 @@ angular.module('ortolangMarketApp')
 
             function deleteElements(toBeDeletedElements) {
                 if (toBeDeletedElements.length !== 0) {
-                    WorkspaceElementResource.delete({wskey: $scope.wskey, path: $scope.parent.path + '/' + toBeDeletedElements.pop().name}, function () {
+                    WorkspaceElementResource.delete({wskey: $scope.workspace.key, path: $scope.parent.path + '/' + toBeDeletedElements.pop().name}, function () {
                         deleteElements(toBeDeletedElements);
                     });
                 } else {
@@ -576,16 +571,16 @@ angular.module('ortolangMarketApp')
                 var uploadZipModal;
                 createModalScope();
                 modalScope.parent = $scope.parent;
-                modalScope.wsName = $scope.wsName;
+                modalScope.wsName = $scope.workspace.name;
                 modalScope.overwrite = false;
                 modalScope.root = '';
                 modalScope.uploadZip = function () {
                     var files = angular.element('#upload-zip-file').prop('files');
                     $rootScope.uploader.addToQueue(files, {
-                        'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.wsName}),
+                        'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.workspace.name}),
                         'ziproot': $scope.parent.path + '/' + modalScope.root,
                         'overwrite': modalScope.overwrite,
-                        'wskey': $scope.wskey,
+                        'wskey': $scope.workspace.key,
                         'ortolangType': 'zip'
                     });
                     modalScope.cancel();
@@ -643,7 +638,7 @@ angular.module('ortolangMarketApp')
                         if (modalScope.newCollectionDescription) {
                             data.description = modalScope.newCollectionDescription;
                         }
-                        WorkspaceElementResource.put({wskey: $scope.wskey }, data, function () {
+                        WorkspaceElementResource.put({wskey: $scope.workspace.key }, data, function () {
                             getParentData(true).then(function () {
                                 addCollectionModal.hide();
                                 deactivateContextMenu();
@@ -675,7 +670,7 @@ angular.module('ortolangMarketApp')
                         if (!!modalScope.selectedElement.realSize) {
                             delete modalScope.selectedElement.realSize;
                         }
-                        WorkspaceElementResource.put({wskey: $scope.wskey }, modalScope.selectedElement, function () {
+                        WorkspaceElementResource.put({wskey: $scope.workspace.key }, modalScope.selectedElement, function () {
                             getParentData(true).then(function () {
                                 editDescriptionModal.hide();
                                 deactivateContextMenu();
@@ -793,12 +788,12 @@ angular.module('ortolangMarketApp')
             $scope.publishWorkspace = function () {
                 var publishModal;
                 createModalScope();
-                modalScope.wsName = $scope.wsName;
+                modalScope.wsName = $scope.workspace.name;
                 modalScope.publish = function () {
                     Runtime.createProcess({
                         'process-type': 'publish-workspace',
-                        'process-name': 'Publication of workspace: ' + $scope.wsName + ' (version ' + ($scope.workspace.snapshots.length + 1) + ')',
-                        'wskey': $scope.wskey
+                        'process-name': 'Publication of workspace: ' + $scope.workspace.name + ' (version ' + ($scope.workspace.snapshots.length + 1) + ')',
+                        'wskey': $scope.workspace.key
                     });
                     publishModal.hide();
                 };
@@ -812,10 +807,10 @@ angular.module('ortolangMarketApp')
             $scope.snapshotWorkspace = function () {
                 var snapshotModal;
                 createModalScope();
-                modalScope.wsName = $scope.wsName;
+                modalScope.wsName = $scope.workspace.name;
                 modalScope.snapshotname = 'Version ' + $scope.workspace.clock;
                 modalScope.snapshot = function () {
-                    WorkspaceResource.snapshots({wskey: $scope.wskey}, {snapshotname: modalScope.snapshotname}, function () {
+                    WorkspaceResource.snapshots({wskey: $scope.workspace.key}, {snapshotname: modalScope.snapshotname}, function () {
                         snapshotModal.hide();
                         getSnapshotsHistory();
                     });
@@ -832,7 +827,7 @@ angular.module('ortolangMarketApp')
 
             $scope.showMembers = function () {
                 createModalScope();
-                modalScope.wsName = $scope.wsName;
+                modalScope.wsName = $scope.workspace.name;
                 modalScope.members = $scope.workspaceMembers.members;
 
                 $modal({
@@ -890,10 +885,10 @@ angular.module('ortolangMarketApp')
 
             $scope.browseToPath = function (path) {
                 if (!browseUsingLocation || $scope.browserService.isFileSelect) {
-                    $scope.path = path;
+                    setPath(path);
                     getParentData();
                 } else {
-                    $location.path($scope.browserService.buildBrowseUrlFromPath($scope.wskey, path, $scope.root));
+                    $location.path($scope.browserService.buildBrowseUrlFromPath($scope.workspace.key, path, $scope.root));
                 }
                 clearVisualizers();
             };
@@ -1059,20 +1054,20 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.isActiveWorkspace = function (workspace) {
-                return $scope.wskey === workspace.key;
+                return $scope.workspace.key === workspace.key;
             };
 
-            $scope.changeRoot = function (snapshot) {
+            $scope.changeRoot = function (snapshotName) {
                 if ($scope.path === '/') {
-                    initWorkspaceVariables(undefined, snapshot.name);
+                    initWorkspaceVariables(undefined, snapshotName);
                     getParentData();
                 } else {
-                    $scope.browserService.getData({wskey: $scope.wskey, root: snapshot.name, path: $scope.path})
+                    $scope.browserService.getData({wskey: $scope.workspace.key, root: snapshotName, path: $scope.path})
                         .$promise.then(function (element) {
-                            initWorkspaceVariables(undefined, snapshot.name, $scope.path);
+                            initWorkspaceVariables(undefined, snapshotName, $scope.path);
                             finishGetParentData(element);
                         }, function () {
-                            initWorkspaceVariables(undefined, snapshot.name);
+                            initWorkspaceVariables(undefined, snapshotName);
                             getParentData();
                         });
                 }
@@ -1081,6 +1076,14 @@ angular.module('ortolangMarketApp')
             $scope.showCheatsheet = function ($event) {
                 hotkeys.get('?').callback($event);
             };
+
+            function displaySearchErrorModal(cause, params) {
+                $modal({
+                    title: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.TITLE'),
+                    content: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.BODY_' + cause, params),
+                    show: true
+                });
+            }
 
             // *********************** //
             //          Filter         //
@@ -1502,7 +1505,7 @@ angular.module('ortolangMarketApp')
                     }
                     if (height > topOffset) {
                         height -= 1;
-                        if ($rootScope.uploader.uploadQueueStatus === 'active') {
+                        if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
                             height -= angular.element('.upload-queue').innerHeight();
                         }
                         var browserWrapper = angular.element('#browser-wrapper'),
@@ -1680,9 +1683,6 @@ angular.module('ortolangMarketApp')
                 if ($scope.browserService !== MarketBrowserService) {
                     refreshWorkspaceList();
                 }
-                $scope.wskey = $routeParams.wskey;
-                $scope.root = $routeParams.root;
-                $scope.path = $routeParams.path;
                 $scope.itemKey = $routeParams.itemKey;
                 $scope.settings = {};
                 initSettings();
@@ -1715,15 +1715,22 @@ angular.module('ortolangMarketApp')
                 $scope.isScreenMd = false;
             }
 
+            function setPath(path) {
+                if ($scope.browserService === WorkspaceBrowserService) {
+                    $location.search('path', path);
+                }
+                $scope.path = path;
+            }
+
             function initWorkspaceVariables(workspace, root, path) {
                 if (workspace) {
                     $scope.workspace = workspace;
                 }
-                $scope.wskey = $scope.workspace.key;
-                $scope.wsName = $scope.workspace.name;
+                $location.search('alias', $scope.workspace.alias);
                 $scope.root = root || 'head';
+                $location.search('root', $scope.root);
                 $scope.isHead = $scope.root === 'head';
-                $scope.path = path || '/';
+                setPath(path || '/');
                 getSnapshotsHistory();
                 getWorkspaceMembers();
                 console.log('Browsing workspace "%s"', $scope.workspace.name);
@@ -1733,7 +1740,7 @@ angular.module('ortolangMarketApp')
                 initLocalVariables();
                 initScopeVariables();
                 populateBreadcrumbDropdownMenu();
-                if ($scope.wskey || $scope.itemKey) {
+                if ($scope.itemKey) {
                     getParentData();
                 } else {
                     $scope.workspaceList.$promise.then(function (data) {
@@ -1742,8 +1749,17 @@ angular.module('ortolangMarketApp')
                             AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.update', fromPattern: workspace.key});
                         });
                         if ($scope.settings.wskey || $scope.forceWorkspace) {
-                            var key = $scope.settings.wskey || $scope.forceWorkspace,
+                            var key = $scope.forceWorkspace || $scope.settings.wskey,
+                                filteredWorkspace;
+                            if ($location.search().alias) {
+                                filteredWorkspace = $filter('filter')(data.entries, {alias: $location.search().alias}, true);
+                                if (filteredWorkspace.length !== 1) {
+                                    displaySearchErrorModal('ALIAS', {alias: $location.search().alias});
+                                }
+                            }
+                            if (filteredWorkspace.length !== 1) {
                                 filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
+                            }
                             if (filteredWorkspace.length !== 1) {
                                 console.error('No workspace with key "%s" available', key);
                                 $scope.workspace = data.entries[0];
@@ -1758,7 +1774,7 @@ angular.module('ortolangMarketApp')
                             $scope.workspace = data.entries[0];
                         }
                         if ($scope.workspace) {
-                            initWorkspaceVariables();
+                            initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                             getParentData();
                         } else {
                             $scope.resizeBrowser();

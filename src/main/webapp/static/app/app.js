@@ -59,11 +59,8 @@ angular
             })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspace.html',
-                requiresAuthentication: true
-            })
-            .when('/workspaces/:wskey/:root/:path*\/browse', {
-                templateUrl: 'workspace/workspace.html',
-                requiresAuthentication: true
+                requiresAuthentication: true,
+                reloadOnSearch: false
             })
             .when('/processes', {
                 templateUrl: 'processes/processes.html',
