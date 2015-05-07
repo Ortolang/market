@@ -175,9 +175,13 @@ angular.module('ortolangMarketApp')
                 promise.then(function (element) {
                     finishGetParentData(element, refresh, forceNewSelection);
                 }, function (response) {
+                    if (response.data.match(/.*root\s\[.*] does not exists.*/)) {
+                        displaySearchErrorModal('ROOT', {root: $location.search().root});
+                    } else if (response.data.match(/.*path\s\[.*] does not exists.*/)) {
+                        displaySearchErrorModal('PATH', {path: $location.search().path});
+                    }
                     initWorkspaceVariables();
                     getParentData();
-                    displaySearchErrorModal('PATH');
                 });
                 return promise;
             }

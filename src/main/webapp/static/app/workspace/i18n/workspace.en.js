@@ -74,7 +74,8 @@ angular.module('ortolangMarketApp')
             },
             SEARCH_ERROR_MODAL: {
                 TITLE: 'Error',
-                BODY_PATH: '',
+                BODY_PATH: 'Wrong path \'{{path}}\'. You have been redirected to the root directory.',
+                BODY_ROOT: 'No snapshot with name \'{{root}}\' found. You have been redirected to the current version of the workspace.',
                 BODY_ALIAS: 'No workspace with ID \'{{alias}}\' found or you are not authorized to access this workspace.'
             }
         }

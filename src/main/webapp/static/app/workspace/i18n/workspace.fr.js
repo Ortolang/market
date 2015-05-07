@@ -74,7 +74,8 @@ angular.module('ortolangMarketApp')
             },
             SEARCH_ERROR_MODAL: {
                 TITLE: 'Erreur',
-                BODY_PATH: '',
+                BODY_PATH: 'Mauvais chemin \'{{path}}\'. Vous avez été redirigé vers le dossier racine de l\'espace de travail.',
+                BODY_ROOT: 'Il n\'existe pas de version avec le nom \'{{root}}\'. Vous avez été redirigé vers la version actuelle de l\'espace de travail.',
                 BODY_ALIAS: 'Il n\'existe pas d\'espace de travail avec l\'identifiant \'{{alias}}\' ou vous n\'êtes pas autorisé à acceder à ce workspace.'
             }
         }
