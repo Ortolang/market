@@ -1714,6 +1714,7 @@ angular.module('ortolangMarketApp')
                 // Visualizers
                 $scope.visualizers = undefined;
                 // Workspace
+                $scope.workspace = {};
                 $scope.workspaceHistory = undefined;
                 $scope.workspaceMembers = undefined;
                 $scope.isScreenMd = false;
