@@ -1754,7 +1754,7 @@ angular.module('ortolangMarketApp')
                         });
                         if ($scope.settings.wskey || $scope.forceWorkspace) {
                             var key = $scope.forceWorkspace || $scope.settings.wskey,
-                                filteredWorkspace;
+                                filteredWorkspace = [];
                             if ($location.search().alias) {
                                 filteredWorkspace = $filter('filter')(data.entries, {alias: $location.search().alias}, true);
                                 if (filteredWorkspace.length !== 1) {
