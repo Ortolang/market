@@ -42,7 +42,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().aborted} track by process.key">
+                        <tr ng-repeat="process in Runtime.getProcessesWithState(Runtime.getStates().aborted) track by process.key">
                             <td>{{::process.name}}</td>
                             <td>{{::process.type}}</td>
                             <td>{{::process.state}}</td>
@@ -67,7 +67,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="process in processes | filter:{state: Runtime.getStates().completed} track by process.key" ng-class="{hidden: $index >= completedProcessessDisplayed}">
+                        <tr ng-repeat="process in Runtime.getProcessesWithState(Runtime.getStates().completed) track by process.key" ng-class="{hidden: $index >= completedProcessessDisplayed}">
                             <td>{{::process.name}}</td>
                             <td>{{::process.type}}</td>
                             <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
