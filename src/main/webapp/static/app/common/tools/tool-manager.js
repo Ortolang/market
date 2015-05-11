@@ -54,10 +54,8 @@ angular.module('ortolangMarketApp')
                     createJob: {
                         url: this.url + '/jobs',
                         method: 'POST',
-                        transformRequest: function (data) {
-                            return $.param(data);
-                        },
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                        transformRequest: function (data) { return $.param(data); },
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
                     },
                     abort: {
                         url: this.url + '/jobs/:jobId/abort',
@@ -159,7 +157,7 @@ angular.module('ortolangMarketApp')
                 },
 
                 createJob: function (formData) {
-                    return this.resource.createJob({}, formData);
+                    return this.resource.createJob({}, angular.fromJson(angular.toJson(formData)));
                 },
 
                 abortJob: function (jobId) {

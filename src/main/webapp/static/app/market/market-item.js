@@ -43,7 +43,7 @@ angular.module('ortolangMarketApp')
                             }, function (reason) {
                                 console.error(reason);
                             });
-                        } else {                            
+                        } else {
                             $scope.imgtitle = '';
                             $scope.imgtheme = 'custom';
                             if($scope.item.title) {
