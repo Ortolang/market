@@ -49,9 +49,10 @@ angular
                 templateUrl: 'market/market-home.html',
                 controller: 'MarketHomeCtrl'
             })
-            .when('/market/item/:itemKey', {
+            .when('/market/:section/:itemKey', {
                 templateUrl: 'market/market-item.html',
-                controller: 'MarketItemCtrl'
+                controller: 'MarketItemCtrl',
+                reloadOnSearch: false
             })
             .when('/search', {
                 templateUrl: 'market/market-search.html',
