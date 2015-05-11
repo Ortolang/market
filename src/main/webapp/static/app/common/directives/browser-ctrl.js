@@ -905,7 +905,7 @@ angular.module('ortolangMarketApp')
                 $scope.itemKey = key;
                 getParentData();
                 $location.search('key', key);
-                $location.search('history', btoa(angular.toJson($scope.keyHistory)));
+                $location.search('history', btoa(angular.toJson($scope.keyHistory.back)));
             }
 
             $scope.goBack = function () {
@@ -1738,7 +1738,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.itemKey) {
                     if ($location.search().key && $location.search().history) {
                         $scope.itemKey = $location.search().key;
-                        $scope.keyHistory = angular.fromJson(atob($location.search().history));
+                        $scope.keyHistory.back = angular.fromJson(atob($location.search().history));
                     }
                     getParentData();
                 } else {
