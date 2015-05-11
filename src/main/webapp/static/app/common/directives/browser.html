@@ -11,16 +11,16 @@
                     <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
                         <div class="breadcrumb-part">
                             <button ng-if="breadcrumbParts.length > 0" class="btn btn-default" ng-class="{'aside-left-collapsed': settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen}" ng-click="browseToPath('/')">
-                                {{wsName}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
+                                {{workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                             </button>
                             <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" ng-class="{'aside-left-collapsed': settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen}" class="btn-group">
                                 <button type="button" class="btn btn-default">
-                                    {{wsName}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
+                                    {{workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                                 </button>
                             </div>
                             <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" ng-class="{'aside-left-collapsed': settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen}" class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    {{wsName}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
+                                    {{workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
@@ -126,7 +126,7 @@
                                 <li ng-repeat="workspaceSnapshot in workspaceHistory | orderBy:'date':true track by workspaceSnapshot.key"
                                     ng-if="workspaceSnapshot.name"
                                     ng-class="{active: root === workspaceSnapshot.name}"
-                                    ng-click="changeRoot(workspaceSnapshot)">
+                                    ng-click="changeRoot(workspaceSnapshot.name)">
                                     <div>{{workspaceSnapshot.name}}</div>
                                 </li>
                             </ul>
@@ -267,7 +267,7 @@
                 <div ng-show="hasOnlyRootCollectionSelected()">
                     <p class="lead workspace-name">
                         <button ng-click="toggleAsideInfo()" type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <span>{{wsName}}</span>
+                        <span>{{workspace.name}}</span>
                     </p>
                     <div class="btn-toolbar workspace-toolbar" role="toolbar">
                         <div class="btn-group" role="group">
@@ -329,7 +329,7 @@
                         <div data-title="{{'BROWSER.HISTORY' | translate}}" bs-pane>
                             <p ng-if="(workspaceHistory.length === 1 && !workspaceHistory[0].name) || workspaceHistory.length === 0"><i translate="BROWSER.NO_PREVIOUS_VERSIONS"></i></p>
                             <ul class="list-unstyled">
-                                <li ng-repeat="workspaceSnapshot in workspaceHistory | orderBy:'date':true track by workspaceSnapshot.key" class="panel panel-default" ng-if="workspaceSnapshot.name" ng-click="changeRoot(workspaceSnapshot)">
+                                <li ng-repeat="workspaceSnapshot in workspaceHistory | orderBy:'date':true track by workspaceSnapshot.key" class="panel panel-default" ng-if="workspaceSnapshot.name" ng-click="changeRoot(workspaceSnapshot.name)">
                                     <div class="panel-body workspace-snapshot">
                                         <div class="media">
                                             <div class="pull-left">

@@ -8,26 +8,33 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', 'Nav', function ($rootScope, $scope, $route, $translate, $animate, Nav) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', 'sideNavElements', function ($rootScope, $scope, $route, $translate, $animate, sideNavElements) {
 
-        $scope.sideNavElements = Nav.getSideNavElements();
+        $scope.sideNavElements = sideNavElements;
+        $scope.selectedElement = undefined;
+        var lastSelectedElementClass;
 
         $scope.select = function (element, animate) {
+            if (element.class === lastSelectedElementClass) {
+                return;
+            }
+            lastSelectedElementClass = element.class;
             if (animate === undefined) {
                 animate = true;
             }
             $scope.selectedElementCopy = element;
-            angular.forEach(Nav.getSideNavElements(), function (value) {
+            angular.forEach(sideNavElements, function (value) {
                 if (value.class === element.class) {
                     value.active =  'active';
-                    if (value.hidden) {
+                    if (value.hiddenSideNav) {
                         $scope.selectedElement = value;
                     } else {
-                        var clickedElement = $('.side-nav').find('.' + element.class).parent(),
-                            copy = angular.element('.side-nav-active-item.copy'),
-                            real = angular.element('.side-nav-active-item.real');
-                        $rootScope.navPosition = clickedElement.position().top;
                         if (animate) {
+                            var clickedElement = $('.side-nav').find('.' + element.class).parent(),
+                                copy = angular.element('.side-nav-active-item.copy'),
+                                real = angular.element('.side-nav-active-item.real');
+                            $rootScope.navPosition = clickedElement.position().top;
+                            console.log('$rootScope.navPosition', $rootScope.navPosition, element);
                             real.addClass('animated');
                             $animate.removeClass(copy, 'ng-hide').then(function () {
                                 $scope.$apply(function () {
@@ -46,20 +53,16 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        $scope.getCssClass = function (element) {
-            return (element.active ? 'active ' : '') + (element.class === 'divider' ? 'divider' : '');
-        };
-
         // *********************** //
         //           Init          //
         // *********************** //
 
         function init() {
             var regExp, regExpBis, i, currentPath;
-            for (i = 0; i < Nav.getSideNavElements().length; i++) {
-                regExp = new RegExp('^' + Nav.getSideNavElements()[i].path);
-                if (Nav.getSideNavElements()[i].otherPath) {
-                    regExpBis = new RegExp('^' + Nav.getSideNavElements()[i].otherPath);
+            for (i = 0; i < sideNavElements.length; i++) {
+                regExp = new RegExp('^' + sideNavElements[i].path);
+                if (sideNavElements[i].otherPath) {
+                    regExpBis = new RegExp('^' + sideNavElements[i].otherPath);
                 }
                 currentPath = $route.current.originalPath;
                 if (currentPath.indexOf(':section') !== -1) {
@@ -67,18 +70,17 @@ angular.module('ortolangMarketApp')
                 }
                 if (currentPath.match(regExp) ||
                         (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
-                    Nav.getSideNavElements()[i].active = 'active';
-                    $scope.selectedElement = Nav.getSideNavElements()[i];
+                    sideNavElements[i].active = 'active';
+                    $scope.selectedElement = sideNavElements[i];
                     break;
                 }
             }
         }
 
+        init();
+
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            console.log('$routeChangeSuccess', current, previous);
-            if (!previous) {
-                init();
-            } else {
+            if (previous) {
                 switch (current.$$route.originalPath) {
                     case '/':
                         $scope.select({class: 'market'}, false);

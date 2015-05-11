@@ -8,9 +8,9 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('SemanticResultResource', ['$resource', 'Url', function ($resource, Url) {
+    .factory('SemanticResultResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(Url.urlBase() + '/rest/objects/semantic', {}, {
+        return $resource(url.api + '/rest/objects/semantic', {}, {
             get: {
                 method: 'GET',
                 isArray: false

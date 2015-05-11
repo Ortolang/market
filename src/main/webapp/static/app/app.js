@@ -13,6 +13,7 @@ angular
         'ngAnimate',
         'ngRoute',
         'ngResource',
+        'ngMessages',
         'ngSanitize',
         'ortolangVisualizers',
         'angularFileUpload',
@@ -58,11 +59,8 @@ angular
             })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspace.html',
-                requiresAuthentication: true
-            })
-            .when('/workspaces/:wskey/:root/:path*\/browse', {
-                templateUrl: 'workspace/workspace.html',
-                requiresAuthentication: true
+                requiresAuthentication: true,
+                reloadOnSearch: false
             })
             .when('/processes', {
                 templateUrl: 'processes/processes.html',
@@ -73,6 +71,9 @@ angular
                 templateUrl: 'tasks/tasks.html',
                 controller: 'TasksCtrl',
                 requiresAuthentication: true
+            })
+            .when('/information', {
+                redirectTo: '/information/presentation'
             })
             .when('/information/:section', {
                 templateUrl: 'information/information.html',

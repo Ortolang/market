@@ -6,7 +6,7 @@ describe('Controller: SideNavCtrl', function () {
     beforeEach(module('ortolangMarketApp'));
 
     var SideNavCtrl,
-        Nav,
+        sideNavElements,
         scope,
         rootScope,
         route,
@@ -21,8 +21,8 @@ describe('Controller: SideNavCtrl', function () {
     }
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $route, $location, $httpBackend, _Nav_) {
-        Nav = _Nav_;
+    beforeEach(inject(function ($controller, $rootScope, $route, $location, $httpBackend, _sideNavElements_) {
+        sideNavElements = _sideNavElements_;
         scope = $rootScope.$new();
         rootScope = $rootScope;
         route = $route;
@@ -33,7 +33,8 @@ describe('Controller: SideNavCtrl', function () {
         changeLocation('market/market-home.html', '/market/news');
 
         SideNavCtrl = $controller('SideNavCtrl', {
-            $scope: scope
+            $scope: scope,
+            sideNavElements: sideNavElements
         });
     }));
 

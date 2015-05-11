@@ -8,7 +8,7 @@
             <div class="modal-body process-log">
                 <form ng-submit="onSubmit()" novalidate>
                     <formly-form model="formData" fields="formFields" options="formOptions">
-                        <button class="btn btn-success" type="submit" ng-show="!options.hideSubmit">{{(options.submitCopy || "SUBMIT") | translate}}</button>
+                        <button class="btn btn-success" type="submit" ng-show="!options.hideSubmit">{{(submitText || "SUBMIT") | translate}}</button>
                     </formly-form>
                 </form>
             </div>

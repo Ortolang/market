@@ -12,14 +12,14 @@ angular.module('ortolangMarketApp').animation('.side-nav-animation', ['$rootScop
     return {
         //animation that can be triggered before the class is removed
         beforeRemoveClass: function (element, className, done) {
-            //console.log('beforeRemoveClass', className);
+            console.log('beforeRemoveClass', className, $rootScope.navPosition);
             element.css({top: $rootScope.navPosition});
             done();
         },
 
         //animation that can be triggered after the class is removed
         removeClass: function (element, className, done) {
-            //console.log('removeClass', className);
+            console.log('removeClass', className);
             element.css({top: 0});
             done();
         }

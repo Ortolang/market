@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('WORKSPACE_EN', {
         WORKSPACE: {
             WORKSPACE: 'Workspace',
+            ALIAS: 'ID',
             UPLOAD: 'Upload',
             UPLOAD_QUEUE: 'Upload Queue',
             PROGRESS: 'Progress',
@@ -23,6 +24,14 @@ angular.module('ortolangMarketApp')
             ADD_METADATA: 'Add a metadata',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
+                AUTO_GENERATED: 'Auto-generated ID',
+                MESSAGES: {
+                    AVAILABILITY: 'ID already used',
+                    MIN_LENGTH: 'Minimum length of 3 characters'
+                },
+                HELP: {
+                    ALIAS: 'The ID is unique and it cannot be modified afterwards'
+                },
                 SUBMIT: 'Create'
             },
             PUBLISH_MODAL: {
@@ -62,6 +71,12 @@ angular.module('ortolangMarketApp')
             },
             PROCESS_NAMES: {
                 IMPORT_ZIP: 'Import of archive "{{zipName}}" into workspace "{{wsName}}"'
+            },
+            SEARCH_ERROR_MODAL: {
+                TITLE: 'Error',
+                BODY_PATH: 'Wrong path \'{{path}}\'. You have been redirected to the root directory.',
+                BODY_ROOT: 'No snapshot with name \'{{root}}\' found. You have been redirected to the current version of the workspace.',
+                BODY_ALIAS: 'No workspace with ID \'{{alias}}\' found or you are not authorized to access this workspace.'
             }
         }
     });

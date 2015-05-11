@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * @ngdoc service
+ * @ngdoc constant
  * @name ortolangMarketApp.icons
  * @description
  * # icons
- * Value in the ortolangMarketApp.
+ * Constant in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .value('icons',
+    .constant('icons',
         {
             // Files & folder
             folder: 'fa fa-folder-o',

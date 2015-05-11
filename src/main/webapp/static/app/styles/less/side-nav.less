@@ -4,8 +4,15 @@
   z-index: 1;
 
   .side-nav-active-item {
-    height: @side-bar-item-active-height;
-    > a, &.active > a {
+    height: @side-nav-item-active-height;
+    > a {
+      background-color: @ortolang-blue;
+      .item-description, .icon-container {
+        color: @inverse-text-color;
+      }
+      .icon-container {
+        line-height: @side-nav-item-active-height;
+      }
       &.information {
         background-color: @information-primary;
       }
@@ -15,39 +22,15 @@
       &.processes {
         background-color: @processes-primary;
       }
-//      &.workspaces {
-//        background-color: @workspace-primary;
-//      }
     }
     &.copy {
       position: absolute;
       z-index: 1000;
-      background-color: @ortolang-blue;
       top: 0;
       transition: all ease 0.7s;
 
-      > a {
-        .icon-container {
-          line-height: @side-bar-item-active-height;
-        }
-        .item-description {
-          color: @inverse-text-color;
-        }
-      }
-
       &.ng-hide-add, &.ng-hide-remove {
         transition: all ease 0.7s;
-      }
-    }
-    &.active {
-      > a {
-        background-color: @ortolang-blue;
-        .icon-container {
-          line-height: @side-bar-item-active-height;
-        }
-        .item-description {
-          color: @inverse-text-color;
-        }
       }
     }
     &.active.animated {
@@ -55,17 +38,16 @@
         transition: all ease 0.5s;
         opacity: 0;
       }
-      border-bottom: @default-border;
     }
   }
 
   .side-nav-list .side-nav-list-item, .side-nav-active-item {
-    width: @side-bar-width;
+    width: @side-nav-width;
     > a {
       width: 100%;
       display: block;
       text-decoration: none;
-      color: @side-bar-item-color;
+      color: @side-nav-item-color;
       cursor: pointer;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -74,9 +56,7 @@
       .icon-container {
         text-align: center;
         z-index: 5;
-        width: @side-bar-item-height + 14px;
-        line-height: @side-bar-item-height;
-        color: @inverse-text-color;
+        width: @side-nav-item-height + 14px;
       }
 
       .item-description {
@@ -91,8 +71,25 @@
 
     .side-nav-list-item {
       list-style: none;
-      height: @side-bar-item-height;
-      width: @side-bar-width;
+      height: @side-nav-item-height;
+      width: @side-nav-width;
+
+      > a {
+        .icon-container {
+          color: #b8b8b8;
+          line-height: @side-nav-item-height;
+        }
+        &:hover {
+          background-color: @side-nav-item-hover-bg;
+          .icon-container {
+            background-color: @side-nav-item-hover-bg;
+            color: @inverse-text-color;
+          }
+          .item-description {
+            color: @inverse-text-color;
+          }
+        }
+      }
 
       &.divider {
         height: 0;
@@ -100,40 +97,6 @@
         > span {
           display: block;
           border-top: @default-border;
-        }
-      }
-
-      &.active {
-        height: @side-bar-item-active-height;
-        > a {
-          background-color: @ortolang-blue;
-          .icon-container {
-            line-height: @side-bar-item-active-height;
-          }
-          .item-description {
-            color: @inverse-text-color;
-          }
-        }
-      }
-
-      &:not(.active) > a {
-        .icon-container {
-          color: #b8b8b8;
-        }
-        &:hover {
-          background-color: #FFC107;
-          .icon-container {
-            background-color: #FFC107;
-            color: @inverse-text-color;
-          }
-        }
-      }
-
-      > a {
-        &:hover {
-          .item-description {
-            color: @inverse-text-color;
-          }
         }
       }
     }

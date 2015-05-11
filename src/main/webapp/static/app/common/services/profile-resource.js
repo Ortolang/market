@@ -8,32 +8,32 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ProfileResource', ['$resource', 'Url', function ($resource, Url) {
-        return $resource(Url.urlBase() + '/rest/profiles/:key', {key: '@key'}, {
+    .factory('ProfileResource', ['$resource', 'url', function ($resource, url) {
+        return $resource(url.api + '/rest/profiles/:key', {key: '@key'}, {
             connected: {
-                url: Url.urlBase() + '/rest/profiles/connected',
+                url: url.api + '/rest/profiles/connected',
                 method: 'GET'
             },
             search: {
-                url: Url.urlBase() + '/rest/profiles/search',
+                url: url.api + '/rest/profiles/search',
                 method: 'POST',
                 isArray: true
             },
             update: {
-                url: Url.urlBase() + '/rest/profiles/:key/infos',
+                url: url.api + '/rest/profiles/:key/infos',
                 method: 'POST'
             },
             getInfos: {
-                url: Url.urlBase() + '/rest/profiles/:key/infos',
+                url: url.api + '/rest/profiles/:key/infos',
                 method: 'GET'
             },
             getFriends: {
-                url: Url.urlBase() + '/rest/profiles/:key/friends',
+                url: url.api + '/rest/profiles/:key/friends',
                 method: 'GET',
                 isArray: true
             },
             read: {
-                url: Url.urlBase() + '/rest/profiles/:key',
+                url: url.api + '/rest/profiles/:key',
                 method: 'GET'
             },
             put: {
@@ -41,11 +41,11 @@ angular.module('ortolangMarketApp')
             },
             size: {
                 method: 'GET',
-                url: Url.urlBase() + '/rest/profiles/:key/size'
+                url: url.api + '/rest/profiles/:key/size'
             },
             ticket: {
                 method: 'GET',
-                url: Url.urlBase() + '/rest/profiles/:key/ticket'
+                url: url.api + '/rest/profiles/:key/ticket'
             }
         });
     }]);

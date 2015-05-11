@@ -73,6 +73,7 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-i18n/angular-locale_fr.js"></script>
 <script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
@@ -90,7 +91,7 @@
 <script src="bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js"></script>
 <script src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
 <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-<script src="bower_components/google-diff-match-patch/javascript/diff_match_patch_uncompressed.js"></script>
+<script src="bower_components/google-diff-match-patch/diff_match_patch_uncompressed.js"></script>
 <script src="bower_components/angular-diff-match-patch/angular-diff-match-patch.js"></script>
 <script src="bower_components/holderjs/holder.js"></script>
 <script src="bower_components/keycloak/dist/keycloak.js"></script>
@@ -122,9 +123,12 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
 <script src="common/resize.js"></script>
+<script src="common/constants/url.js"></script>
+<script src="common/constants/icons.js"></script>
 <script src="common/auth/auth-init.js"></script>
 <script src="common/auth/interceptors.js"></script>
 <script src="common/auth/auth.js"></script>
+<script src="common/auth/user.js"></script>
 <script src="common/atmosphere/atmosphere-service.js"></script>
 <script src="common/atmosphere/atmosphere-listener.js"></script>
 <script src="common/filters/bytes.js"></script>
@@ -150,15 +154,12 @@
 <script src="common/directives/i18n/browser.en.js"></script>
 <script src="common/formly/formly-file-select.js"></script>
 <script src="common/formly/config.js"></script>
-<script src="common/services/url.js"></script>
 <script src="common/services/workspace-resource.js"></script>
-<script src="common/auth/user.js"></script>
 <script src="common/services/profile-resource.js"></script>
 <script src="common/services/runtime-service.js"></script>
 <script src="common/services/runtime-resource.js"></script>
 <script src="common/services/form-resource.js"></script>
 <script src="common/services/metadata-format-resource.js"></script>
-<script src="common/services/param.js"></script>
 <script src="common/services/object-resource.js"></script>
 <script src="common/services/download.js"></script>
 <script src="common/services/workspace-element-resource.js"></script>
@@ -168,7 +169,6 @@
 <script src="common/services/index-result-resource.js"></script>
 <script src="common/services/semantic-result-resource.js"></script>
 <script src="common/services/json-result-resource.js"></script>
-<script src="common/services/icons.js"></script>
 <script src="common/services/market-browser.js"></script>
 <script src="common/services/workspace-browser.js"></script>
 <script src="common/services/metadataformat.js"></script>
@@ -195,9 +195,14 @@
 <script src="common/i18n/common.en.js"></script>
 <script src="common/i18n/config.fr.js"></script>
 <script src="common/i18n/config.en.js"></script>
-<script src="workspace/upload.js"></script>
 <script src="common/directives/browser-ctrl.js"></script>
 <script src="common/directives/sparql-select.js"></script>
+<script src="common/tools/tool-list.js"></script>
+<script src="common/tools/i18n/tools.fr.js"></script>
+<script src="common/tools/i18n/tools.en.js"></script>
+<script src="common/forms/i18n/forms.fr.js"></script>
+<script src="common/forms/i18n/forms.en.js"></script>
+<script src="workspace/upload.js"></script>
 <script src="workspace/i18n/workspace.fr.js"></script>
 <script src="workspace/i18n/workspace.en.js"></script>
 <script src="workspace/metadata-editor.js"></script>
@@ -205,9 +210,6 @@
 <script src="workspace/metadata-preview.js"></script>
 <script src="workspace/metadata-editor.js"></script>
 <script src="workspace/metadata-form-schema.js"></script>
-<script src="common/tools/tool-list.js"></script>
-<script src="common/tools/i18n/tools.fr.js"></script>
-<script src="common/tools/i18n/tools.en.js"></script>
 <script src="processes/processes.js"></script>
 <script src="processes/i18n/processes.fr.js"></script>
 <script src="processes/i18n/processes.en.js"></script>

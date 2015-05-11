@@ -8,15 +8,15 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('RuntimeResource', ['$resource', 'Url', function ($resource, Url) {
-        return $resource(Url.urlBase() + '/rest/runtime/', {}, {
+    .factory('RuntimeResource', ['$resource', 'url', function ($resource, url) {
+        return $resource(url.api + '/rest/runtime/', {}, {
             processes: {
                 method: 'GET',
-                url: Url.urlBase() + '/rest/runtime/processes/:pcKey'
+                url: url.api + '/rest/runtime/processes/:pcKey'
             },
             tasks: {
                 method: 'GET',
-                url: Url.urlBase() + '/rest/runtime/tasks/:tId'
+                url: url.api + '/rest/runtime/tasks/:tId'
             },
             claimTask: {
                 method: 'POST',
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                     data.action = 'claim';
                     return angular.toJson(data);
                 },
-                url: Url.urlBase() + '/rest/runtime/tasks/:tId'
+                url: url.api + '/rest/runtime/tasks/:tId'
             },
             completeTask: {
                 method: 'POST',
@@ -32,27 +32,27 @@ angular.module('ortolangMarketApp')
                     data.action = 'complete';
                     return angular.toJson(data);
                 },
-                url: Url.urlBase() + '/rest/runtime/tasks/:tId'
+                url: url.api + '/rest/runtime/tasks/:tId'
             },
             createProcess: {
                 method: 'POST',
                 transformRequest: function (data) { return $.param(data); },
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                url: Url.urlBase() + '/rest/runtime/processes/'
+                url: url.api + '/rest/runtime/processes/'
             },
             types: {
                 method: 'GET',
-                url: Url.urlBase() + '/rest/runtime/types/'
+                url: url.api + '/rest/runtime/types/'
             },
             remoteProcesses: {
                 method: 'GET',
-                url: Url.urlBase() + '/rest/runtime/remote-processes/:rpKey'
+                url: url.api + '/rest/runtime/remote-processes/:rpKey'
             },
             createRemoteProcess: {
                 method: 'POST',
                 transformRequest: function (data) { return $.param(data); },
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                url: Url.urlBase() + '/rest/runtime/remote-processes/'
+                url: url.api + '/rest/runtime/remote-processes/'
             }
         });
     }]);

@@ -8,25 +8,25 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('DownloadResource', ['$http', 'Url', function ($http, Url) {
+    .factory('DownloadResource', ['$http', 'url', function ($http, url) {
 
         function buildDownloadUrl(params) {
-            var url;
+            var downloadUrl;
             if (params.wskey) {
-                url = Url.urlBase() + '/rest/workspaces/' + params.wskey + '/download?';
+                downloadUrl = url.api + '/rest/workspaces/' + params.wskey + '/download?';
                 if (params.path) {
-                    url += 'path=' + params.path + '&';
+                    downloadUrl += 'path=' + params.path + '&';
                 }
                 if (params.root) {
-                    url += 'root=' + params.root + '&';
+                    downloadUrl += 'root=' + params.root + '&';
                 }
                 if (params.metadata) {
-                    url += 'metadata=' + params.metadata;
+                    downloadUrl += 'metadata=' + params.metadata;
                 }
             } else if (params.oKey) {
-                url = Url.urlBase() + '/rest/objects/' + params.oKey + '/download';
+                downloadUrl = url.api + '/rest/objects/' + params.oKey + '/download';
             }
-            return url;
+            return downloadUrl;
         }
 
         function download(params, config) {

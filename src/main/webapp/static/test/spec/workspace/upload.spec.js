@@ -19,9 +19,13 @@ describe('Controller: UploadCtrl', function () {
         sample = _sample_;
         scope = $rootScope.$new();
         scopeBis = $rootScope.$new();
-        scope.wsName = 'system';
+        scope.workspace = {
+            name: 'system'
+        };
         scope.parent = {path: '/'};
-        scopeBis.wsName = 'test';
+        scopeBis.workspace = {
+            name: 'test'
+        };
         scopeBis.parent = {path: '/test'};
         UploadCtrlBis = $controller('UploadCtrl', {
             $scope: scopeBis
