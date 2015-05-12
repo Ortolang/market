@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
         'AtmosphereService',
         function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, MetadataFormatResource, AtmosphereService) {
 
-            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, browseUsingLocation, pageWrapperMarginLeft,
+            var isMacOs, isClickedOnce, viewModeLine, viewModeTile, pageWrapperMarginLeft,
                 marketItemHeader, footerHeight, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, topNavWrapper, footerWrapper,
                 lastSelectedElement, lastShiftSelectedElement, modalScope;
@@ -186,10 +186,6 @@ angular.module('ortolangMarketApp')
                 return promise;
             }
 
-            $scope.getChildBrowseUrl = function (child) {
-                return $scope.browserService.buildChildBrowseUrl(child, $scope.parent, $scope.root);
-            };
-
             function selectChild(child, push, clickEvent, refresh) {
                 clickEvent = clickEvent || undefined;
                 var deferred, promise;
@@ -267,7 +263,6 @@ angular.module('ortolangMarketApp')
                             if ($scope.browserService.getDataResource === 'object') {
                                 data = data.object;
                             }
-                            data.downloadUrl = $scope.browserService.buildChildDownloadUrl(data, $scope.parent, $scope.root);
                             data.selected = $scope.isSelected(data);
                             $scope.children.push(data);
                             console.log('Successfully retrieved data of child %s: %o', child.name, data);
@@ -887,13 +882,17 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.browseToPath = function (path) {
-                if (!browseUsingLocation || $scope.browserService.isFileSelect) {
-                    setPath(path);
-                    getParentData();
-                } else {
-                    $location.path($scope.browserService.buildBrowseUrlFromPath($scope.workspace.key, path, $scope.root));
+            function hideTooltip() {
+                // Hide manually to prevent tooltip to stay visible
+                var tooltip = angular.element('.tooltip');
+                if (tooltip.length > 0) {
+                    tooltip.scope().$parent.$hide();
                 }
+            }
+
+            $scope.browseToPath = function (path) {
+                setPath(path);
+                getParentData();
                 clearVisualizers();
             };
 
@@ -905,14 +904,8 @@ angular.module('ortolangMarketApp')
                 clearVisualizers();
                 $scope.itemKey = key;
                 getParentData();
-            }
-
-            function hideTooltip() {
-                // Hide manually to prevent tooltip to stay visible
-                var tooltip = angular.element('.tooltip');
-                if (tooltip.length > 0) {
-                    tooltip.scope().$parent.$hide();
-                }
+                $location.search('key', key);
+                $location.search('history', btoa(angular.toJson($scope.keyHistory.back)));
             }
 
             $scope.goBack = function () {
@@ -928,18 +921,16 @@ angular.module('ortolangMarketApp')
             };
 
             function browseToChild(child) {
-                if ($scope.browserService.getDataResource !== 'object' && (!browseUsingLocation || $scope.browserService.isFileSelect)) {
-                    $scope.browseToPath($scope.parent.path + '/' + child.name);
-                } else if ($scope.browserService.getDataResource === 'object' && (!browseUsingLocation)) {
+                if ($scope.browserService.getDataResource === 'object') {
                     browseToKey(child.key);
                 } else {
-                    $location.path($scope.browserService.buildChildBrowseUrl(child, $scope.parent, $scope.root));
+                    $scope.browseToPath($scope.parent.path + '/' + child.name);
                 }
             }
 
             function browseToParent() {
                 if ($scope.browserService.getDataResource !== 'object' &&
-                    (!browseUsingLocation || $scope.browserService.isFileSelect) && $scope.path !== '/') {
+                    ($scope.browserService.isFileSelect) && $scope.path !== '/') {
                     var pathPartsCopy = angular.copy($scope.parent.pathParts);
                     pathPartsCopy.pop();
                     $scope.browseToPath('/' + pathPartsCopy.join('/'));
@@ -1662,7 +1653,6 @@ angular.module('ortolangMarketApp')
             function initLocalVariables() {
                 viewModeLine = {id: 'line', icon: icons.browser.viewModeTile, text: 'BROWSER.VIEW_MODE_TILE'};
                 viewModeTile = {id: 'tile', icon: icons.browser.viewModeLine, text: 'BROWSER.VIEW_MODE_LINE'};
-                browseUsingLocation = false;
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
                 clearPreviousFilteringQueries();
@@ -1746,6 +1736,10 @@ angular.module('ortolangMarketApp')
                 initScopeVariables();
                 populateBreadcrumbDropdownMenu();
                 if ($scope.itemKey) {
+                    if ($location.search().key && $location.search().history) {
+                        $scope.itemKey = $location.search().key;
+                        $scope.keyHistory.back = angular.fromJson(atob($location.search().history));
+                    }
                     getParentData();
                 } else {
                     $scope.workspaceList.$promise.then(function (data) {

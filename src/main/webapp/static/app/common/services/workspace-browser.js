@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('WorkspaceBrowserService', ['WorkspaceElementResource', 'DownloadResource', function (WorkspaceElementResource, DownloadResource) {
+    .factory('WorkspaceBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
 
         function getData(config) {
             if (config.path) {
@@ -19,25 +19,10 @@ angular.module('ortolangMarketApp')
             return undefined;
         }
 
-        function buildChildDownloadUrl(data, parent, root) {
-            return DownloadResource.getDownloadUrl({wskey: parent.workspace, path: parent.path + '/' + data.name, root: root});
-        }
-
-        function buildChildBrowseUrl(child, parent, root) {
-            return '/workspaces/' + parent.workspace + '/' + root + '/' +  parent.path + '/' + child.name + '/browse';
-        }
-
-        function buildBrowseUrlFromPath(wskey, path, root) {
-            return '/workspaces/' + wskey + '/' + root + '/' + path + '/browse';
-        }
-
         return {
             getId: function () { return 'WorkspaceBrowserService'; },
             getData: getData,
             getDataResource: 'workspace',
-            buildChildDownloadUrl: buildChildDownloadUrl,
-            buildChildBrowseUrl: buildChildBrowseUrl,
-            buildBrowseUrlFromPath: buildBrowseUrlFromPath,
             canDelete: true,
             canAdd: true,
             canDownload: true,

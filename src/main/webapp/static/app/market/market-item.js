@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$window', 'icons', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderService', '$compile', function ($rootScope, $scope, $routeParams, $window, icons, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderService, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderService', '$compile', function ($rootScope, $scope, $routeParams, $location, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderService, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -72,8 +72,6 @@ angular.module('ortolangMarketApp')
             });
         }
 
-        $scope.browse = false;
-
         function loadPreview(collection, previewPath) {
             ObjectResource.element({oKey: collection, path: previewPath}).$promise.then(function (oobject) {
                 $scope.previewCollection = oobject;
@@ -92,6 +90,16 @@ angular.module('ortolangMarketApp')
                         finishPreview(visualizers[0], oobject);
                     }
                 });
+            }
+        };
+
+        $scope.browseContent = function () {
+            $scope.browse = !$scope.browse;
+            if ($scope.browse) {
+                $location.search('browse', true);
+            } else {
+                // Clear search parts by keeping only the path
+                $location.url($location.path());
             }
         };
 
@@ -127,6 +135,8 @@ angular.module('ortolangMarketApp')
             $scope.previewCollection = undefined;
             // Show info, browse, ...
             $scope.marketItemTemplate = undefined;
+
+            $scope.browse = $location.search().browse;
         }
 
         function init() {

@@ -253,12 +253,16 @@ angular.module('ortolangMarketApp')
                         item.description = data.description;
                         item.documentation = data.help;
                         item.url = data.url;
-                        item.inputData = data.inputData.filter(function(elem, pos) {
-                            return data.inputData.indexOf(elem) === pos;
-                        });
-                        item.functionalities = data.functionality.filter(function(elem, pos) {
-                            return data.functionality.indexOf(elem) === pos;
-                        });
+                        if (data.inputData) {
+                            item.inputData = data.inputData.filter(function(elem, pos) {
+                                return data.inputData.indexOf(elem) === pos;
+                            });
+                        }
+                        if (data.functionality) {
+                            item.functionalities = data.functionality.filter(function(elem, pos) {
+                                return data.functionality.indexOf(elem) === pos;
+                            });
+                        }
                         item.meta = data;
                         if(item.url !== undefined && item.url !== '') {
                             item.active = true;

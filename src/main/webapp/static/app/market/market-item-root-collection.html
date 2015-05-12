@@ -23,7 +23,7 @@
                         </ul>
                     </p>
                 </div>
-                <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">{{'MARKET.GOBACKINFO' | translate}}</button>
+                <button class="btn btn-default" ng-show="browse" ng-click="browseContent()">{{'MARKET.GOBACKINFO' | translate}}</button>
             </div>
         </div>
     </header>
@@ -210,7 +210,7 @@
                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></a>
 
                         <div class="btn-group">
-                            <button class="btn btn-default btn-block" ng-click="browse = !browse">{{'MARKET.BROWSE' | translate}}</button>
+                            <button class="btn btn-default btn-block" ng-click="browseContent()">{{'MARKET.BROWSE' | translate}}</button>
                         </div>
                     </div>
                 </div>

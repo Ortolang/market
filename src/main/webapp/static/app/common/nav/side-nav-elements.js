@@ -60,16 +60,6 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
-            class: 'item',
-            path: '/market/item',
-            description: 'NAV.ITEM',
-            iconCss: 'fa fa-fw fa-cube fa-2x',
-            active: undefined,
-            hiddenSideNav: true,
-            hiddenTopNav: true,
-            authenticated: false
-        },
-        {
             class: 'divider',
             active: undefined,
             authenticated: false
