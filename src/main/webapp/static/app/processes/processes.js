@@ -34,7 +34,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showToolLog = function (job) {
-                Runtime.selectToolJob(job);
+                Runtime.selectRemoteProcess(job);
                 $modal({
                     title: job.toolName,
                     html: true,
@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.abortToolJob = function (job) {
-                Runtime.selectProcess(job);
+                Runtime.selectRemoteProcess(job);
                 ToolManager.getTool(job.toolKey).abortJob(job.id).$promise.then(
                     function () {
                         $alert({title: job.toolName, content: 'annulé', placement: 'top-right', type: 'success', show: true});
@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showToolParam = function (job) {
-                Runtime.selectToolJob(job);
+                Runtime.selectRemoteProcess(job);
                 $modal({
                     title: job.toolName,
                     html: true,
@@ -68,7 +68,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showResult = function (job) {
-                Runtime.selectProcess(job);
+                Runtime.selectRemoteProcess(job);
                 ToolManager.getTool(job.toolKey).getResult(job.id).$promise.then(function (data) {
                     $scope.results = data;
                     $scope.jname = job.toolName;

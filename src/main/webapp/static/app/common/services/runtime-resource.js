@@ -47,12 +47,6 @@ angular.module('ortolangMarketApp')
             remoteProcesses: {
                 method: 'GET',
                 url: url.api + '/rest/runtime/remote-processes/:rpKey'
-            },
-            createRemoteProcess: {
-                method: 'POST',
-                transformRequest: function (data) { return $.param(data); },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                url: url.api + '/rest/runtime/remote-processes/'
             }
         });
     }]);
