@@ -5,10 +5,10 @@
  * @name ortolangMarketApp.FileSelectBrowserService
  * @description
  * # FileSelectBrowserService
- * Factory in the ortolangMarketApp.
+ * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FileSelectBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
+    .service('FileSelectBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
 
         function getData(config) {
             if (config.path) {
@@ -18,20 +18,20 @@ angular.module('ortolangMarketApp')
             return undefined;
         }
 
-        return {
-            getId: function () { return 'FileSelectBrowserService'; },
-            getData: getData,
-            getDataResource: 'workspace',
-            canDelete: false,
-            canAdd: false,
-            canDownload: false,
-            canPreview: false,
-            canChangeRoot: true,
-            hasBreadcrumb: true,
-            defaultViewMode: 'line',
-            canSwitchViewMode: false,
-            displayAsideInfo: false,
-            displayAsideWorkspaceList: true,
-            isFileSelect: true
-        };
+        this.id = 'FileSelectBrowserService';
+        this.getData = getData;
+        this.dataResource = 'workspace';
+        this.canDelete = false;
+        this.canAdd = false;
+        this.canDownload = false;
+        this.canPreview = false;
+        this.canChangeRoot = true;
+        this.hasBreadcrumb = true;
+        this.defaultViewMode = 'line';
+        this.canSwitchViewMode = false;
+        this.displayAsideInfo = false;
+        this.displayAsideWorkspaceList = true;
+        this.isFileSelect = true;
+
+        return this;
     }]);

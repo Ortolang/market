@@ -49,8 +49,8 @@
                 <ul class="dropdown-menu">
                     <li ng-show="navbarCollapsed" ng-click="changeLanguage('en'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
                     <li ng-show="navbarCollapsed" ng-click="changeLanguage('fr'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
-                    <li ng-hide="navbarCollapsed" ng-click="changeLanguage('en')" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
-                    <li ng-hide="navbarCollapsed" ng-click="changeLanguage('fr')" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
+                    <li ng-hide="navbarCollapsed" ng-click="changeLanguage('en')" class="language" ng-class="{active: Settings.language === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                    <li ng-hide="navbarCollapsed" ng-click="changeLanguage('fr')" class="language" ng-class="{active: Settings.language === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
                 </ul>
             </li>
             <li class="dropdown" ng-if="authenticated">

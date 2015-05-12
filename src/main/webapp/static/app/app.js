@@ -59,9 +59,10 @@ angular
                 controller: 'MarketSearchCtrl'
             })
             .when('/workspaces', {
-                templateUrl: 'workspace/workspace.html',
+                templateUrl: 'workspace/workspaces.html',
                 requiresAuthentication: true,
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                controller: 'WorkspacesCtrl'
             })
             .when('/processes', {
                 templateUrl: 'processes/processes.html',

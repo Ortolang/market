@@ -5,10 +5,10 @@
  * @name ortolangMarketApp.MarketBrowserService
  * @description
  * # MarketBrowserService
- * Factory in the ortolangMarketApp.
+ * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('MarketBrowserService', ['ObjectResource', function (ObjectResource) {
+    .service('MarketBrowserService', ['ObjectResource', function (ObjectResource) {
 
         function getData(config) {
             if (config.oKey) {
@@ -18,20 +18,20 @@ angular.module('ortolangMarketApp')
             return undefined;
         }
 
-        return {
-            getId: function () { return 'MarketBrowserService'; },
-            getData: getData,
-            getDataResource: 'object',
-            canDelete: false,
-            canAdd: false,
-            canDownload: true,
-            canPreview: true,
-            canChangeRoot: false,
-            hasBreadcrumb: false,
-            defaultViewMode: 'tile',
-            canSwitchViewMode: true,
-            displayAsideInfo: false,
-            displayAsideWorkspaceList: false,
-            isFileSelect: false
-        };
+        this.id = 'MarketBrowserService';
+        this.getData = getData;
+        this.dataResource = 'object';
+        this.canDelete = false;
+        this.canAdd = false;
+        this.canDownload = true;
+        this.canPreview = true;
+        this.canChangeRoot = false;
+        this.hasBreadcrumb = false;
+        this.defaultViewMode = 'tile';
+        this.canSwitchViewMode = true;
+        this.displayAsideInfo = false;
+        this.displayAsideWorkspaceList = false;
+        this.isFileSelect = false;
+
+        return this;
     }]);

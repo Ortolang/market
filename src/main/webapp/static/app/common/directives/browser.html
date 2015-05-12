@@ -3,22 +3,22 @@
 
         <div class="row">
             <div class="toolbar browser-toolbar" ng-class="{'market-browser-toolbar': isMarket()}" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)">
-                <div ng-if="displayAsideWorkspaceList()" ng-hide="settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside">
+                <div ng-if="displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside">
                     <!--<div class="btn title" translate="BROWSER.MY_WORKSPACES"></div>-->
                 </div>
 
-                <div ng-class="displayAsideWorkspaceList() && !(settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
+                <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
                     <div ng-if="browserService.hasBreadcrumb" class="browser-breadcrumb">
                         <div class="breadcrumb-part">
-                            <button ng-if="breadcrumbParts.length > 0" class="btn btn-default" ng-class="{'aside-left-collapsed': settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen}" ng-click="browseToPath('/')">
+                            <button ng-if="breadcrumbParts.length > 0" class="btn btn-default" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}" ng-click="browseToPath('/')">
                                 {{workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                             </button>
-                            <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" ng-class="{'aside-left-collapsed': settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen}" class="btn-group">
+                            <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}" class="btn-group">
                                 <button type="button" class="btn btn-default">
                                     {{workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                                 </button>
                             </div>
-                            <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" ng-class="{'aside-left-collapsed': settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen}" class="btn-group">
+                            <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}" class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                     {{workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                                     <span class="caret"></span>
@@ -63,14 +63,14 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li><div ng-click="showCheatsheet($event)" translate="BROWSER.SHORTCUTS"></div></li>
-                                <li ng-if="displayAsideWorkspaceList()"><div ng-click="toggleWorkspaceList()" data-translate-values="settings.aside" translate="BROWSER.WORKSPACE_LIST"></div></li>
+                                <li ng-if="displayAsideWorkspaceList()"><div ng-click="toggleWorkspaceList()" data-translate-values="browserSettings" translate="BROWSER.WORKSPACE_LIST"></div></li>
                                 <li class="bg-success" ng-if="isSuperUser()"><div ui-zeroclip zeroclip-model="workspace.key">{{'BROWSER.WORKSPACE_KEY' | translate}}</div></li>
                                 <li class="bg-success" ng-if="isSuperUser()"><div ui-zeroclip zeroclip-model="getToken()">{{'BROWSER.BEARER_TOKEN' | translate}}</div></li>
                             </ul>
                         </div>
 
                         <div ng-if="browserService.displayAsideInfo" class="btn-group">
-                            <button ng-class="{'btn-inverse': !settings.aside.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:settings.aside}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                            <button ng-class="{'btn-inverse': !browserSettings.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:browserSettings}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
                                 <span ng-class="icons.browser.info"></span>
                             </button>
                         </div>
@@ -108,8 +108,8 @@
                         </div>
 
                         <div ng-if="browserService.canSwitchViewMode" class="btn-group">
-                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{settings.viewMode.text | translate}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
-                                <span ng-class="settings.viewMode.icon"></span>
+                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{viewMode[browserSettings.viewMode].text | translate}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                                <span ng-class="viewMode[browserSettings.viewMode].icon"></span>
                             </button>
                         </div>
 
@@ -170,8 +170,8 @@
         </div>
 
         <div class="row">
-            <div class="browser-aside-left-collapsed" ng-hide="!(settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen)" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
-            <div ng-if="displayAsideWorkspaceList()" ng-hide="settings.aside.hideWorkspaceList || settings.aside.hideWorkspaceListMdScreen" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
+            <div class="browser-aside-left-collapsed" ng-hide="!(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen)" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
+            <div ng-if="displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
                 <span class="btn-collapse" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
                 <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
                     <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
@@ -200,7 +200,7 @@
                 <div ng-include="'common/directives/browser-tile-template.html'"></div>
             </div>
 
-            <div ng-if="browserService.displayAsideInfo" ng-hide="settings.aside.hideInfo" ng-class="isScreenMd ? 'col-sm-5' : 'col-sm-3'" class="browser-aside browser-aside-right browser-aside-info">
+            <div ng-if="browserService.displayAsideInfo" ng-hide="browserSettings.hideInfo" ng-class="isScreenMd ? 'col-sm-5' : 'col-sm-3'" class="browser-aside browser-aside-right browser-aside-info">
 
                 <div ng-show="!hasOnlyRootCollectionSelected()">
                     <p ng-if="hasOnlyOneElementSelected()" class="lead">
