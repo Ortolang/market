@@ -57,27 +57,21 @@ angular.module('ortolangMarketApp')
             });
         }
 
-        /**
-         * Update default avatar
-         */
         $scope.$on('updateDefaultAvatar', function (event, data) {
             User.favoriteAvatar = data;
+            event.stopPropagation();
         });
-
-        /**
-         * Initialize scope var from the session
-         */
-        $scope.initializeSession = function () {
-            $scope.authenticated = AuthService.isAuthenticated();
-            if (AuthService.isAuthenticated()) {
-                getUser();
-            }
-        };
 
         $scope.footerPath = function () {
             return $route.current && $route.current.originalPath === '/workspaces' ? '' : 'common/nav/footer.html';
         };
 
-        // Initialize session
-        $scope.initializeSession();
+        function initializeSession() {
+            $scope.authenticated = AuthService.isAuthenticated();
+            if (AuthService.isAuthenticated()) {
+                getUser();
+            }
+        }
+
+        initializeSession();
     }]);

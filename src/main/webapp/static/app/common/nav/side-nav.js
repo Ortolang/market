@@ -78,10 +78,6 @@ angular.module('ortolangMarketApp')
 
         init();
 
-        $rootScope.$on('$routeChangeStart', function (event, current, previous) {
-            console.log(event, current, previous);
-        });
-
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             if (previous) {
                 switch (current.$$route.originalPath) {

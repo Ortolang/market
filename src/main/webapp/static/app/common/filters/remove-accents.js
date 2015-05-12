@@ -9,7 +9,7 @@
  * Filter in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .filter('removeAccents', function() {
+    .filter('removeAccents', function () {
 
         return function (source) {
             var accent = [
@@ -19,17 +19,15 @@ angular.module('ortolangMarketApp')
                     /[\322-\330]/g, /[\362-\370]/g, // O, o
                     /[\331-\334]/g, /[\371-\374]/g, // U, u
                     /[\321]/g, /[\361]/g, // N, n
-                    /[\307]/g, /[\347]/g, // C, c
+                    /[\307]/g, /[\347]/g // C, c
                 ],
-                noaccent = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N', 'n', 'C', 'c'];
+                noaccent = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N', 'n', 'C', 'c'],
+                i;
 
-            for (var i = 0; i < accent.length; i++) {
+            for (i = 0; i < accent.length; i++) {
                 source = source.replace(accent[i], noaccent[i]);
             }
 
             return source;
         };
     });
-/**
- * Created by cmoro on 02/04/15.
- */

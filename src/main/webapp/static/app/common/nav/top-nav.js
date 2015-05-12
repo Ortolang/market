@@ -61,9 +61,13 @@ angular.module('ortolangMarketApp')
             }
         }
 
-        AuthService.sessionInitialized().then(function () {
+        if (AuthService.isAuthenticated()) {
+            AuthService.sessionInitialized().then(function () {
+                initLanguage();
+            });
+        } else {
             initLanguage();
-        });
+        }
 
         $scope.$on('askLanguageChange', function ($event, langKey) {
             $scope.changeLanguage(langKey);
