@@ -36,7 +36,7 @@ angular.module('ortolangMarketApp')
 
         function updateUserProfileData(profileData) {
             if (profileData.name === 'avatar') {
-                User.favoriteAvatar = profileData.value;
+                User.favoriteAvatar = profileData.value.length > 0 ? profileData.value : 'GITHUB';
             } else if (profileData.name === 'facebook' || profileData.name === 'twitter' ||
                     profileData.name === 'github' || profileData.name === 'gravatar') {
                 angular.forEach(User.avatarIds, function (avatarId) {

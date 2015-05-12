@@ -10,7 +10,6 @@
 angular.module('ortolangMarketApp')
     .service('User', function () {
 
-        this.initialised = false;
         this.profileDatas = {};
 
         this.name = function () {
@@ -53,7 +52,6 @@ angular.module('ortolangMarketApp')
             this.favoriteAvatar = profile.favoriteAvatar;
             this.avatarIds = profile.avatarIds;
             this.isLocked = profile.isLocked;
-            this.initialised = true;
             return this;
         };
 
