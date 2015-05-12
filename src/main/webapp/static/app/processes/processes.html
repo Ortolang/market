@@ -95,13 +95,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="job in Runtime.getActiveRemoteProcesses() track by process.key">
-                            <td>{{::job.toolname}}</td>
-                            <td>{{job.state}}</td>
-                            <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        <tr ng-repeat="process in Runtime.getActiveRemoteProcesses() track by process.key">
+                            <td>{{::process.processTool.name}}</td>
+                            <td>{{process.state}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolParam(process)" translate="TOOLS.VIEW_PARAM"></button></td>
                             <td>
-                                <button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button>
-                                <button ng-if="Runtime.hasRemoteProcessesWithState(Runtime.getStates().pending)" class="btn btn-sm btn-default" ng-click="abortToolJob(job)" translate="TOOLS.ABORT"></button>
+                                <button class="btn btn-sm btn-default" ng-click="showToolLog(process)" translate="PROCESSES.VIEW_LOG"></button>
+                                <button ng-if="Runtime.hasRemoteProcessesWithState(Runtime.getStates().pending)" class="btn btn-sm btn-default" ng-click="abortToolJob(process.job)" translate="TOOLS.ABORT"></button>
                             </td>
                         </tr>
                         </tbody>
@@ -126,13 +126,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="job in Runtime.getRemoteProcessesWithState(Runtime.getStates().completed) track by job.id" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
-                            <td>{{::job.toolName}}</td>
-                            <td>{{job.start | date:'medium'}}</td>
-                            <td>{{job.stop | date:'medium'}}</td>
-                            <td><button class="btn btn-sm btn-default" ng-click="showResult(job)" translate="PROCESSES.VIEW_RESULT"></button></td>
-                            <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
-                            <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
+                        <tr ng-repeat="process in Runtime.getRemoteProcessesWithState(Runtime.getStates().completed) track by process.key" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
+                            <!--<td>{{::job.name}}</td>-->
+                            <td>{{::process.processTool.name}}</td>
+                            <td>{{process.job.start | date:'medium'}}</td>
+                            <td>{{process.job.stop | date:'medium'}}</td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showResult(process)" translate="PROCESSES.VIEW_RESULT"></button></td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolParam(process)" translate="TOOLS.VIEW_PARAM"></button></td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showToolLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -153,9 +154,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getStates().error} track by job.id">
-                            <td>{{::job.toolName}}</td>
-                            <td>{{::job.status}}</td>
+                        <tr ng-repeat="job in toolJobs | filter:{status: Runtime.getStates().error} track by job.key">
+                            <!--<td>{{::job.name}}</td>-->
+                            <td>{{::process.processTool.name}}</td>
+                            <td>{{::process.status}}</td>
                             <td><button class="btn btn-sm btn-default" ng-click="showToolParam(job)" translate="TOOLS.VIEW_PARAM"></button></td>
                             <td><button class="btn btn-sm btn-default" ng-click="showToolLog(job)" translate="PROCESSES.VIEW_LOG"></button></td>
                         </tr>

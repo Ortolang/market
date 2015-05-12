@@ -51,6 +51,10 @@ angular.module('ortolangMarketApp')
                         url: this.url + '/jobs',
                         method: 'GET'
                     },
+                    getJob: {
+                        url: this.url + '/jobs/:jobid',
+                        method: 'GET'
+                    },
                     createJob: {
                         url: this.url + '/jobs',
                         method: 'POST',
@@ -156,6 +160,10 @@ angular.module('ortolangMarketApp')
                     return this.resource.getJobs();
                 },
 
+                getJob: function (jobid) {
+                    return this.resource.getJob({jobid:jobid});
+                },
+
                 createJob: function (formData) {
                     return this.resource.createJob({}, angular.fromJson(angular.toJson(formData)));
                 },
@@ -218,7 +226,7 @@ angular.module('ortolangMarketApp')
                     return;
                 }
                 registry[tool.getKey()] = tool;
-                //console.info('register tool : ', (registry[tool.getKey()]));
+                console.info('register tool : ', (registry[tool.getKey()]));
             }
 
             function populateToolList() {
