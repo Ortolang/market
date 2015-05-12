@@ -62,6 +62,20 @@ angular.module('ortolangMarketApp')
                 {value: 'GRAVATAR', text: 'Gravatar'}
             ];
 
+            function loadScript() {
+                if (angular.element('#google-maps-script').length === 0) {
+                    console.log('Loading Google Maps library');
+                    window.initialized = function () {
+                        console.log('Google Maps library loaded');
+                    };
+                    var script = document.createElement('script');
+                    script.id = 'google-maps-script';
+                    script.type = 'text/javascript';
+                    script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=initialized';
+                    document.body.appendChild(script);
+                }
+            }
+
             function init() {
                 $scope.activeTab = 0;
                 $scope.emptyText = $translate.instant('PROFILE.EMPTY');
@@ -72,6 +86,7 @@ angular.module('ortolangMarketApp')
                         initFields();
                     });
                 });
+                loadScript();
             }
 
             init();
