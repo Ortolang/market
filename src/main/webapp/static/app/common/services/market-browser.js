@@ -32,6 +32,7 @@ angular.module('ortolangMarketApp')
         this.displayAsideInfo = false;
         this.displayAsideWorkspaceList = false;
         this.isFileSelect = false;
+        this.workspace = {};
 
         return this;
     }]);

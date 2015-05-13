@@ -128,7 +128,7 @@ angular.module('ortolangMarketApp')
             var folderSelectModalScope = $rootScope.$new(true);
             folderSelectModalScope.acceptMultiple = false;
             folderSelectModalScope.forceMimeTypes = 'ortolang/collection';
-            folderSelectModalScope.forceWorkspace = $scope.workspace.key;
+            folderSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
             folderSelectModalScope.forceHead = true;
             folderSelectModalScope.fileSelectId = 'folderSelectModal';
             $scope.folderSelectModal = $modal({scope: folderSelectModalScope, title: 'Folder select', template: 'common/directives/file-select-modal-template.html', show: false});
@@ -136,7 +136,7 @@ angular.module('ortolangMarketApp')
             var fileImageSelectModalScope = $rootScope.$new(true);
             fileImageSelectModalScope.acceptMultiple = false;
             fileImageSelectModalScope.forceMimeTypes = 'image';
-            fileImageSelectModalScope.forceWorkspace = $scope.workspace.key;
+            fileImageSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
             fileImageSelectModalScope.forceHead = true;
             fileImageSelectModalScope.fileSelectId = 'fileImageSelectModal';
             $scope.fileImageSelectModal = $modal({scope: fileImageSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
@@ -144,7 +144,7 @@ angular.module('ortolangMarketApp')
             var fileLicenceSelectModalScope = $rootScope.$new(true);
             fileLicenceSelectModalScope.acceptMultiple = false;
             fileLicenceSelectModalScope.forceMimeTypes = 'text';
-            fileLicenceSelectModalScope.forceWorkspace = $scope.workspace.key;
+            fileLicenceSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
             fileLicenceSelectModalScope.forceHead = true;
             fileLicenceSelectModalScope.fileSelectId = 'fileLicenceSelectModal';
             $scope.fileLicenceSelectModal = $modal({scope: fileLicenceSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
@@ -152,13 +152,13 @@ angular.module('ortolangMarketApp')
             if ($scope.selectedMetadataContent !== undefined) {
                 $scope.md = angular.fromJson($scope.selectedMetadataContent);
 
-                WorkspaceElementResource.get({path: $scope.md.preview, wskey: $scope.workspace.key, root: $scope.root}).$promise.then(function (data) {
+                WorkspaceElementResource.get({path: $scope.md.preview, wskey: $scope.browserService.workspace.key, root: $scope.root}).$promise.then(function (data) {
                     $scope.preview = data;
                 });
-                WorkspaceElementResource.get({path: $scope.md.image, wskey: $scope.workspace.key, root: $scope.root}).$promise.then(function (data) {
+                WorkspaceElementResource.get({path: $scope.md.image, wskey: $scope.browserService.workspace.key, root: $scope.root}).$promise.then(function (data) {
                     $scope.image = data;
                 });
-                WorkspaceElementResource.get({path: $scope.md.license, wskey: $scope.workspace.key, root: $scope.root}).$promise.then(function (data) {
+                WorkspaceElementResource.get({path: $scope.md.license, wskey: $scope.browserService.workspace.key, root: $scope.root}).$promise.then(function (data) {
                     $scope.license = data;
                 });
             }

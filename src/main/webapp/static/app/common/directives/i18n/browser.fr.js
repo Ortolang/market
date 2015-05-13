@@ -59,7 +59,6 @@ angular.module('ortolangMarketApp')
             FORWARD: 'Avancer',
             TOGGLE_DROPDOWN: 'Menu déroulant',
             COPY_TO_CLIPBOARD: 'Copier',
-            MEMBERS: 'Membres',
             HISTORY: 'Historique',
             NO_PREVIOUS_VERSIONS: 'Pas de version encore crée',
             TOOLS: 'Outils',
