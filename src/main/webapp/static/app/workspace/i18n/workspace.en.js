@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         WORKSPACE: {
             WORKSPACE: 'Workspace',
             ALIAS: 'ID',
+            MEMBERS: 'Members',
             UPLOAD: 'Upload',
             UPLOAD_QUEUE: 'Upload Queue',
             PROGRESS: 'Progress',

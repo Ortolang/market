@@ -73,11 +73,11 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onAfterAddingFile = function (fileItem) {
-                fileItem.wsName = angular.copy($scope.workspace.name);
+                fileItem.wsName = angular.copy($scope.browserService.workspace.name);
                 fileItem.headers = {
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
-                fileItem.wskey = fileItem.wskey || angular.copy($scope.workspace.key);
+                fileItem.wskey = fileItem.wskey || angular.copy($scope.browserService.workspace.key);
                 fileItem.url = url.api + '/rest/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
