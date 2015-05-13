@@ -74,6 +74,7 @@ angular.module('ortolangMarketApp')
                     $scope.results = data;
                     $scope.jname = process.processTool.name;
                     $scope.process = process;
+                    $scope.switchStatus = [];
                     $modal({
                         title: process.processTool.name,
                         html: true,
@@ -90,6 +91,10 @@ angular.module('ortolangMarketApp')
 
             $scope.showAll = function ($event) {
                 $($event.target).addClass('hidden').prev('table').addClass('show-all');
+            };
+
+            $scope.getToolDownloadUrl = function (url, jobid, path) {
+                return url + '/jobs/' + jobid + '/download?path=' + path;
             };
 
             if ($routeParams.pKey) {

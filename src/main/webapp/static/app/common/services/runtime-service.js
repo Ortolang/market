@@ -303,10 +303,6 @@ angular.module('ortolangMarketApp')
                 return false;
             }
 
-            function getRemoteProcessDownloadUrl(toolUrl, jobId, path) {
-                return toolUrl + '/jobs/' + jobId + '/download?path=' + path;
-            }
-
             function getRemoteProcesses(date, refresh) {
                 if (!date || lastProcessesRefresh < date) {
                     remoteProcesses = [];
@@ -456,7 +452,6 @@ angular.module('ortolangMarketApp')
                 hasActiveRemoteProcesses: hasActiveRemoteProcesses,
                 hasRemoteProcessesWithState: hasRemoteProcessesWithState,
                 getRemoteProcessesWithState: getRemoteProcessesWithState,
-                getRemoteProcessDownloadUrl: getRemoteProcessDownloadUrl,
                 pushNewRemoteProcess: pushNewRemoteProcess
             };
         }]);

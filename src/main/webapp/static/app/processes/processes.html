@@ -125,7 +125,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="process in Runtime.getProcessesWithState(Runtime.getStates().aborted) track by process.key | orderBy: process.job.start | limitTo: 10">
+                        <tr ng-repeat="process in Runtime.getProcessesWithState(Runtime.getStates().aborted) track by process.key">
                             <td>{{::process.name}}</td>
                             <td>{{::process.state}}</td>
                             <td>{{process.job.start | date:'medium'}}</td>
@@ -155,7 +155,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="process in Runtime.getRemoteProcessesWithState(Runtime.getStates().completed) track by process.key | orderBy: process.job.start | limitTo: 10" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
+                        <tr ng-repeat="process in Runtime.getRemoteProcessesWithState(Runtime.getStates().completed) track by process.key" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
                             <!--<td>{{::job.name}}</td>-->
                             <td>{{::process.processTool.name}}</td>
                             <td>{{process.job.start | date:'medium'}}</td>

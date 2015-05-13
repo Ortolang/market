@@ -1,10 +1,34 @@
 <div>
     <h4><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</h4>
-    <ul class="list-unstyled">
-        <li ng-repeat="file in result.options">
-            <a ng-href="{{Runtime.getRemoteProcessDownloadUrl(process.processTool.url, process.job.id, file.url)}}">
-                {{file.name | split:'/':-1 }}
-            </a>
-        </li>
-    </ul>
+    <br>
+    <form>
+        <div formly-file-select data-options="{labelProp:'Voulez-vous sauvegarder ces fichiers dans un espace de travail ?'}" data-model="model[options.key]" data-id="id"></div>
+        <hr>
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>Nom du fichier</th>
+                <th>Sauvegarder ?</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="file in result.options" >
+                <td>{{file.name | split:'/':-1 }}</td>
+                <td>
+                    <toggle-switch
+                        model="switchStatus[file.name]"
+                        on-label="ok"
+                        off-label="non">
+                    <toggle-switch></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <!--<ul class="list-unstyled">-->
+        <!--<li ng-repeat="file in result.options">-->
+            <!--<a ng-href="{{getToolDownloadUrl(process.processTool.url, process.job.id, file.url)}}">-->
+                <!--{{file.name | split:'/':-1 }}-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
 </div>
