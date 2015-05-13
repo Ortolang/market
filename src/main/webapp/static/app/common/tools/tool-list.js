@@ -103,8 +103,7 @@ angular.module('ortolangMarketApp')
             function onSubmit () {
                 $scope.config.model.toolKey = $scope.selectedTool.getKey();
                 ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.config.model).$promise.then(
-                    function (process) {
-                        Runtime.pushNewRemoteProcess(process);
+                    function () {
                         $scope.hide();
                     },
                     function (msg) {

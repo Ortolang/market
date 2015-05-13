@@ -202,6 +202,7 @@ angular.module('ortolangMarketApp')
             // ---
 
             var registry = {},
+                loaded = false,
                 grantPopup,
                 grantTimeout,
                 grantTimeoutDelay = 500;
@@ -234,7 +235,8 @@ angular.module('ortolangMarketApp')
                 var queryBuilder = QueryBuilderService.make(
                     {
                         projection:
-                        'key, meta_ortolang-item-json.title as title, ' +
+                        'key, ' +
+                        'meta_ortolang-item-json.title as title, ' +
                         'meta_ortolang-item-json.description as description, ' +
                         'meta_ortolang-item-json.image as image, ' +
                         'meta_ortolang-item-json.toolId as id, ' +
@@ -248,8 +250,8 @@ angular.module('ortolangMarketApp')
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
 
+
                 var query = queryBuilder.toString();
-                //console.log('query : ' + query);
                 JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
                     angular.forEach(jsonResults, function(itemMeta) {
                         var item = {};
@@ -291,11 +293,16 @@ angular.module('ortolangMarketApp')
                         }
                     });
                     //console.log('fin populate tool list');
+                    loaded = true;
                     $rootScope.$broadcast('tool-list-registered');
 
                 }, function (reason) {
                     console.error('An issue occurred when trying to get the tool list: %o', reason);
                 });
+            }
+
+            function isRegistryLoaded() {
+                return loaded;
             }
 
             function disableTool(toolKey) {
@@ -366,6 +373,10 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
+            $rootScope.$on('core.workspace.create', function () {
+                populateToolList();
+            });
+
             function init() {
                 populateToolList();
             }
@@ -374,6 +385,7 @@ angular.module('ortolangMarketApp')
 
             return {
                 getRegistry: getRegistry,
+                isRegistryLoaded : isRegistryLoaded,
                 getActiveTools: getActiveTools,
                 getTool: getTool,
                 disableTool: disableTool,

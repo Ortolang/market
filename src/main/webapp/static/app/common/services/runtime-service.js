@@ -261,7 +261,7 @@ angular.module('ortolangMarketApp')
             }
 
             function selectRemoteProcess(remoteProcess) {
-                $rootScope.selectedRemoteProcess = remoteProcess;
+                $rootScope.selectedProcess = remoteProcess;
             }
 
             function selectRemoteProcessByKey(key) {
@@ -303,23 +303,34 @@ angular.module('ortolangMarketApp')
                 return false;
             }
 
+            function getRemoteProcessDownloadUrl(toolUrl, jobId, path) {
+                return toolUrl + '/jobs/' + jobId + '/download?path=' + path;
+            }
+
             function getRemoteProcesses(date, refresh) {
                 if (!date || lastProcessesRefresh < date) {
+                    remoteProcesses = [];
+                    var keys = [];
                     lastProcessesRefresh = Date.now();
                     RuntimeResource.remoteProcesses().$promise.then(function (data) {
                         angular.forEach( data.entries, function (process) {
                             var remoteProcess = process;
-                            remoteProcess.processTool = ToolManager.getTool(process.toolKey);
-                            remoteProcess.job = ToolManager.getTool(process.toolKey).getJob(process.jobId);
-                            remoteProcesses.push(remoteProcess);
+                            if(ToolManager.isRegistryLoaded()) {
+                                remoteProcess.processTool = ToolManager.getTool(process.toolKey);
+                                remoteProcess.job = ToolManager.getTool(process.toolKey).getJob(process.jobId);
+                                if (keys.indexOf(remoteProcess.key) === -1) {
+                                    keys.push(remoteProcess.key);
+                                    remoteProcesses.push(remoteProcess);
+                                }
+                            }
                         });
                         //console.debug(remoteProcesses);
                         activeRemoteProcesses = getActiveRemoteProcesses();
                         if (!refresh) {
                             subscribeToRemoteProcess(activeRemoteProcesses);
                         }
-                        if ($rootScope.selectedRemoteProcess) {
-                            $rootScope.selectedRemoteProcess = $filter('filter')(activeRemoteProcesses, {key: $rootScope.selectedRemoteProcess.key})[0];
+                        if ($rootScope.selectedProcess) {
+                            $rootScope.selectedProcess = $filter('filter')(activeRemoteProcesses, {key: $rootScope.selectedProcess.key})[0];
                         }
                     }, function (error) {
                         console.error('An error occurred while trying to refresh the remote process list', error);
@@ -379,8 +390,11 @@ angular.module('ortolangMarketApp')
                 processTaskEvent(event, message);
             });
 
+            $rootScope.$on('tool-list-registered', function () {
+                getRemoteProcesses();
+            });
+
             $rootScope.$on('runtime.remote.created', function () {
-                console.debug('BLI!!');
                 pushNewRemoteProcess(process);
             });
 
@@ -412,7 +426,6 @@ angular.module('ortolangMarketApp')
             function init() {
                 getProcesses();
                 getTasks();
-                getRemoteProcesses();
                 initialSubscriptions();
             }
             init();
@@ -443,6 +456,7 @@ angular.module('ortolangMarketApp')
                 hasActiveRemoteProcesses: hasActiveRemoteProcesses,
                 hasRemoteProcessesWithState: hasRemoteProcessesWithState,
                 getRemoteProcessesWithState: getRemoteProcessesWithState,
+                getRemoteProcessDownloadUrl: getRemoteProcessDownloadUrl,
                 pushNewRemoteProcess: pushNewRemoteProcess
             };
         }]);

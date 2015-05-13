@@ -2,7 +2,7 @@
     <h4><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</h4>
     <ul class="list-unstyled">
         <li ng-repeat="file in result.options">
-            <a ng-href="{{Runtime.getToolDownloadUrl(job.toolKey, job.id, file.url)}}">
+            <a ng-href="{{Runtime.getRemoteProcessDownloadUrl(process.processTool.url, process.job.id, file.url)}}">
                 {{file.name | split:'/':-1 }}
             </a>
         </li>

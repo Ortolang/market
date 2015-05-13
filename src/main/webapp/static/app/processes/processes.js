@@ -36,15 +36,12 @@ angular.module('ortolangMarketApp')
             $scope.showToolLog = function (process) {
                 Runtime.selectRemoteProcess(process);
                 $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
-                ToolManager.getTool(process.toolKey).getLog(process.jobId).$promise.then(function(data) {
-                    $scope.jobLog = data.log;
-                    $modal({
-                        title: process.processTool.name,
-                        html: true,
-                        scope: $scope,
-                        template: 'common/tools/tool-tpl-log.html',
-                        show: true
-                    });
+                $modal({
+                    title: process.processTool.name,
+                    html: true,
+                    scope: $scope,
+                    template: 'processes/process-log-modal-template.html',
+                    show: true
                 });
             };
 
@@ -62,7 +59,6 @@ angular.module('ortolangMarketApp')
 
             $scope.showToolParam = function (process) {
                 Runtime.selectRemoteProcess(process);
-                console.debug($scope.selectedRemoteProcess.job.parameters);
                 $modal({
                     title: process.processTool.name,
                     html: true,
@@ -77,16 +73,13 @@ angular.module('ortolangMarketApp')
                 ToolManager.getTool(process.toolKey).getResult(process.jobId).$promise.then(function (data) {
                     $scope.results = data;
                     $scope.jname = process.processTool.name;
-                    $scope.job = process;
-                    ToolManager.getTool(process.toolKey).getLog(process.jobId).$promise.then(function(data) {
-                        $scope.jobLog = data.log;
-                        $modal({
-                            title: process.processTool.name,
-                            html: true,
-                            scope: $scope,
-                            template: 'common/tools/tool-result-modal-template.html',
-                            show: true
-                        });
+                    $scope.process = process;
+                    $modal({
+                        title: process.processTool.name,
+                        html: true,
+                        scope: $scope,
+                        template: 'common/tools/tool-result-modal-template.html',
+                        show: true
                     });
                 });
 
