@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings) {
+    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment) {
 
         $scope.sideNavElements = sideNavElements;
         $scope.navbarCollapsed = false;
@@ -51,6 +51,7 @@ angular.module('ortolangMarketApp')
             } else {
                 Settings.language = $translate.use();
             }
+            amMoment.changeLocale(Settings.language);
         }
 
         if (AuthService.isAuthenticated()) {
@@ -69,6 +70,7 @@ angular.module('ortolangMarketApp')
             $translate.use(langKey).then(function (langKey) {
                 Settings.language = langKey;
                 Settings.store();
+                amMoment.changeLocale(langKey);
             });
         };
 

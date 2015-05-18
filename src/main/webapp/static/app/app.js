@@ -38,7 +38,8 @@ angular
         'xeditable',
         'textAngular',
         'schemaForm',
-        'ngTagsInput'
+        'ngTagsInput',
+        'angularMoment'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider

@@ -128,8 +128,9 @@
                         <tr ng-repeat="process in Runtime.getProcessesWithState(Runtime.getStates().aborted) track by process.key">
                             <td>{{::process.name}}</td>
                             <td>{{::process.state}}</td>
-                            <td>{{process.job.start | date:'medium'}}</td>
-                            <td>{{process.job.stop | date:'medium'}}</td>
+                            <!--<td>{{process.job.start | date:'medium'}}</td>-->
+                            <td><span am-time-ago="process.job.start"></span></td>
+                            <!--<td>{{process.job.stop | date:'medium'}}</td>-->
                             <td><button class="btn btn-sm btn-default" ng-click="showToolParam(process)" translate="TOOLS.VIEW_PARAM"></button></td>
                             <td><button class="btn btn-sm btn-default" ng-click="showToolLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
                         </tr>
@@ -158,8 +159,10 @@
                         <tr ng-repeat="process in Runtime.getRemoteProcessesWithState(Runtime.getStates().completed) track by process.key" ng-class="{hidden: $index >= completedToolJobsDisplayed}">
                             <!--<td>{{::job.name}}</td>-->
                             <td>{{::process.processTool.name}}</td>
-                            <td>{{process.job.start | date:'medium'}}</td>
-                            <td>{{process.job.stop | date:'medium'}}</td>
+                            <!--<td>{{process.job.start | date:'medium'}}</td>-->
+                            <td><span am-time-ago="process.job.start"></span></td>
+                            <!--<td>{{process.job.stop | date:'medium'}}</td>-->
+                            <td><span am-time-ago="process.job.stop"></span></td>
                             <td><button class="btn btn-sm btn-default" ng-click="showResult(process)" translate="PROCESSES.VIEW_RESULT"></button></td>
                             <td><button class="btn btn-sm btn-default" ng-click="showToolParam(process)" translate="TOOLS.VIEW_PARAM"></button></td>
                             <td><button class="btn btn-sm btn-default" ng-click="showToolLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
