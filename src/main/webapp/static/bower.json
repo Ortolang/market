@@ -51,6 +51,12 @@
       "main": [
         "diff_match_patch_uncompressed.js"
       ]
+    },
+    "moment": {
+      "main": [
+        "moment.js",
+        "locale/fr.js"
+      ]
     }
   },
   "appPath": "app",
