@@ -768,30 +768,6 @@ angular.module('ortolangMarketApp')
                 $rootScope.$broadcast('tool-list-show');
             };
 
-
-            // *********************** //
-            //       Publication       //
-            // *********************** //
-
-            $scope.publishWorkspace = function () {
-                var publishModal;
-                createModalScope();
-                modalScope.wsName = $scope.browserService.workspace.name;
-                modalScope.publish = function () {
-                    Runtime.createProcess({
-                        'process-type': 'publish-workspace',
-                        'process-name': 'Publication of workspace: ' + $scope.browserService.workspace.name + ' (version ' + ($scope.browserService.workspace.snapshots.length + 1) + ')',
-                        'wskey': $scope.browserService.workspace.key
-                    });
-                    publishModal.hide();
-                };
-                publishModal = $modal({
-                    scope: modalScope,
-                    template: 'workspace/templates/publish-modal.html',
-                    show: true
-                });
-            };
-
             $scope.snapshotWorkspace = function () {
                 var snapshotModal;
                 createModalScope();
@@ -1419,58 +1395,6 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-
-            // *********************** //
-            //     Create Workspace    //
-            // *********************** //
-
-            $scope.createWorkspace = function () {
-                if ($scope.browserService.canAdd) {
-                    var createWorkspaceModal,
-                        regExp = new RegExp(' +', 'g');
-                    createModalScope();
-                    modalScope.submit = function (createWorkspaceForm) {
-                        if (createWorkspaceForm.$valid) {
-                            WorkspaceResource.getAvailability({alias: modalScope.alias}, function (data) {
-                                if (data.available) {
-                                    WorkspaceResource.createWorkspace({name: modalScope.name, alias: modalScope.alias, type: 'user'}, function (newWorkspace) {
-                                        $scope.$emit('core.workspace.create', {fromObject: newWorkspace.key});
-                                        $scope.changeWorkspace(newWorkspace);
-                                        createWorkspaceModal.hide();
-                                    });
-                                } else {
-                                    createWorkspaceForm.alias.$setValidity('availability', false);
-                                    modalScope.checked = false;
-                                }
-                            });
-                        }
-                    };
-                    modalScope.checked = true;
-                    modalScope.normalizeAlias = function (alias, createWorkspaceForm) {
-                        modalScope.alias = alias ? alias.replace(regExp, '-').toLowerCase(): alias;
-                        if (!modalScope.checked && createWorkspaceForm) {
-                            createWorkspaceForm.alias.$setValidity('availability', true);
-                        }
-                    };
-                    modalScope.generateAlias = function () {
-                        if (modalScope.checked) {
-                            modalScope.normalizeAlias(modalScope.name);
-                        }
-                    };
-                    modalScope.$watch('name', function () {
-                        modalScope.generateAlias();
-                    });
-                    modalScope.$on('modal.show', function () {
-                        angular.element('#create-workspace-modal').find('[autofocus]:first').focus();
-                    });
-                    createWorkspaceModal = $modal({
-                        scope: modalScope,
-                        template: 'workspace/templates/create-workspace-modal.html',
-                        show: true
-                    });
-                }
-            };
-
             // *********************** //
             //          Resize         //
             // *********************** //
@@ -1689,7 +1613,9 @@ angular.module('ortolangMarketApp')
                 }
                 $scope.browserSettings.wskey = $scope.browserService.workspace.key;
                 Settings.store();
-                $location.search('alias', $scope.browserService.workspace.alias);
+                if ($scope.browserService.id === WorkspaceBrowserService.id) {
+                    $location.search('alias', $scope.browserService.workspace.alias);
+                }
                 setRoot(root || 'head');
                 setPath(path || '/');
                 getSnapshotsHistory();
@@ -1707,10 +1633,12 @@ angular.module('ortolangMarketApp')
                         $scope.keyHistory.back = angular.fromJson(atob($location.search().history));
                     }
                     getParentData();
-                } else {
+                } else if ($scope.isFileSelect) {
                     $scope.$on('initWorkspaceVariables', function () {
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                     });
+                } else {
+                    initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                 }
             }
             init();

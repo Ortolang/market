@@ -10,18 +10,18 @@
 
                 <div ng-hide="browse">
 
-                    <p><span translate="MARKET.PRODUCER"></span> :
+                    <div><span translate="MARKET.PRODUCER"></span> :
                         <ul>
                             <li ng-repeat="producer in item.producer">
                                 <a ng-href='#/search?content={{producer}}&operator=contains&field=meta_ortolang-item-json.producer' ng-bind="producer"></a>
                             </li>
                         </ul>
-                    </p>
-                    <p ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
+                    </div>
+                    <div ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
                         <ul>
                             <li><a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
                         </ul>
-                    </p>
+                    </div>
                 </div>
                 <button class="btn btn-default" ng-show="browse" ng-click="browseContent()">{{'MARKET.GOBACKINFO' | translate}}</button>
             </div>
