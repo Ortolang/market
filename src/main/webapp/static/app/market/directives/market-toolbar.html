@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="toolbar">
+        <div class="row">
+            <!-- <div class="col-sm-2 main-filter-option" ng-if="visibleFilter">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{visibleFilter.getSelectedLabel() | translate}}<span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="menuitem"><a ng-click="removeFilter(visibleFilter)">{{visibleFilter.getResetLabel() | translate}}</a></li>
+                        <li class="divider" role="menuitem"></li>
+                        <li ng-repeat="option in visibleFilter.getOptions()" ng-class="visibleFilter.getSelected().getLabel()===option.getLabel()?'active':''" role="menuitem"><a ng-click="setFilter(visibleFilter, option)">{{option.getLabel() | translate}}</a></li>
+                    </ul>
+                </div>
+                <span class="divider"></span>
+            </div> -->
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+                    <span class="input-group-btn">
+                        <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="col-sm-5">
+                <div class="btn-toolbar btn-toolbar-right" role="toolbar">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="bottom" bs-tooltip>
+                            <span ng-class="'glyphicon glyphicon-sort'"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><div ng-click="toggleOrderBy('title')" translate="MARKET.ALPHABETIC"></div></li>
+                            <li><div ng-click="toggleOrderBy('creationDate')" translate="MARKET.CREATION_DATE"></div></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{viewMode.text | translate}}" data-placement="bottom" bs-tooltip>
+                            <span ng-class="viewMode.icon"></span>
+                        </button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="primaryFacets.length > 0">
+    <div class="toolbar toolbar-options">
+        <div class="btn-toolbar">
+            <div ng-repeat="filter in primaryFacets" class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.getResetLabel() | translate}}</a></li>
+                    <li class="divider" role="menuitem"></li>
+                    <li ng-repeat="option in filter.getOptions()" ng-class="filter.getSelected().getValue()===option.getValue()?'active':''" role="menuitem"><a ng-click="setFilter(filter, option)">{{option.getLabel() | translate}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="secondaryFacets.length > 0">
+    <div class="toolbar toolbar-options">
+        <div class="btn-toolbar">
+            <div ng-repeat="filter in secondaryFacets" class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.getResetLabel() | translate}}</a></li>
+                    <li class="divider" role="menuitem"></li>
+                    <li ng-repeat="option in filter.getOptions()" ng-class="filter.getSelected().getValue()===option.getValue()?'active':''" role="menuitem"><a ng-click="setFilter(filter, option)">{{option.getLabel() | translate}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="secondaryFacets.length > 0">
+    <div class="toolbar toolbar-options toolbar-options-applied-filters">
+        <div class="btn-toolbar">
+            <div ng-repeat="filter in filtersManager.getFilters()" class="btn-group" ng-if="filter.hasSelectedElement()">
+                <button type="button" class="btn btn-default" role="button">{{filter.getLabel() | translate}} : {{filter.getSelected().getLabel() | translate}} <a ng-click="removeFilter(filter)">x</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="secondaryFacets.length > 0">
+    <div class="toolbar toolbar-options toolbar-options-sorted">
+        <div class="btn-toolbar">
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'MARKET.SHOW_IN' | translate}} : {{viewMode.text | translate}} <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li ng-repeat="vm in viewModes"><div ng-click="setViewMode(vm)">{{vm.text | translate}}</div></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'BROWSER.SORT_BY' | translate}} : {{orderProp.label | translate}} <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li ng-repeat="order in orderProps"><div ng-click="toggleOrderBy(order)">{{order.text | translate}}</div></li>
+                    <!-- <li><div ng-click="toggleOrderBy('creationDate')" translate="MARKET.SORT.CREATION_DATE"></div></li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,6 +19,7 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             this.resetLabel = '';
             this.selected = undefined;
             this.options = [];
+            this.lockOptions = false;
 
             angular.forEach(config, function (value, key) {
                 if (this.hasOwnProperty(key)) {
@@ -74,6 +75,10 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.selected = selected;
             },
 
+            hasSelectedElement: function() {
+                return this.selected !== undefined;
+            },            
+
             getSelectedLabel: function() {
                 return (this.selected)?this.selected.getLabel():this.resetLabel;
             },
@@ -90,18 +95,38 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 return this.options;
             },
 
+            getOption: function(value) {
+                var i = 0;
+                for (i; i < this.options.length; i++) {
+                    if (this.options[i].getValue() === value) {
+                        return this.options[i];
+                    }
+                }
+                return undefined;
+            },
+
             setOptions: function(options) {
-                this.options = options;
+                if(!this.lockOptions) {
+                    this.options = options;
+                }
             },
 
             putOption: function(option) {
-                var i = 0;
-                for (i; i < this.options.length; i++) {
-                    if (this.options[i].getValue() === option.getValue()) {
-                        return;
+                if(!this.lockOptions) {
+                    var i = 0;
+                    for (i; i < this.options.length; i++) {
+                        if (this.options[i].getValue() === option.getValue()) {
+                            return;
+                        }
                     }
+                    this.options.push(option);
                 }
-                this.options.push(option);
+            },
+
+            clearOptions: function () {
+                if(!this.lockOptions) {
+                    return this.options = [];
+                }
             },
 
             reset: function() {

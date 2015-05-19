@@ -1,61 +1,17 @@
-<div class="market-home container-fluid container-main">
-    <div class="row">
-        <div class="toolbar">
-            <div class="row">
-                <div class="col-sm-7">
-                    <div class="input-group">
-                        <input ng-model="content" ng-keyup="$event.keyCode == 13 && search(content)" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
-                        <span class="input-group-btn">
-                            <button ng-click="search(content)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="btn-toolbar btn-toolbar-right" role="toolbar">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="bottom" bs-tooltip>
-                                <span ng-class="'glyphicon glyphicon-sort'"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li><div ng-click="toggleOrderBy('title')" translate="MARKET.ALPHABETIC"></div></li>
-                                <li><div ng-click="toggleOrderBy('creationDate')" translate="MARKET.CREATION_DATE"></div></li>
-                            </ul>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-default" ng-click="switchViewMode()" data-title="{{viewMode.text | translate}}" data-placement="bottom" bs-tooltip>
-                                <span ng-class="viewMode.icon"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+<section ng-if="items.size()>0" class="row">
+
+    <div ng-if="viewMode.id === 'tile'" class="row market-home">
+        <div class="col-md-12">
+            <div class="flex-row">
+                <item class="flex-column medium-item" ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>
             </div>
         </div>
     </div>
+    
+    <div ng-if="viewMode.id === 'line'" class="row market-list-line">
+        <div ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" class="col-md-8 line">
+            <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
+        </div>
+    </div>
+</section>
 
-    <section ng-if="items.length>0" class="row">
-        <!-- <div class="col-md-12"> -->
-            <!-- <header>
-                <h3 translate="APPLICATIONS"></h3>
-            </header> -->
-
-            <!-- <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items" data-entry="item" data-template="market/directives/medium-item.html"></item>
-            </div> -->
-
-            <div ng-if="viewMode.id === 'tile'" class="row market-home">
-                <div class="col-md-12">
-                    <div class="flex-row">
-                        <item class="flex-column medium-item" ng-repeat="item in items | orderBy:orderProp:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>
-                    </div>
-                </div>
-            </div>
-            
-            <div ng-if="viewMode.id === 'line'" class="row market-list-line">
-
-                <div ng-repeat="item in items | orderBy:orderProp:orderDirection" class="col-md-8 line">
-                    <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
-                </div>
-            </div>
-        <!-- </div> -->
-    </section>
-</div>

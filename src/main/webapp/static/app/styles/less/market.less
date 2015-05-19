@@ -80,13 +80,13 @@
     background-color: @main-bg;
     padding-bottom: 3*@padding-large-vertical;
 
-    &:nth-child(odd) {
-      background-color: @alternate-bg;
-      margin-left: -@container-main-padding;
-      margin-right: -@container-main-padding;
-      padding-left: @container-main-padding - floor(@grid-gutter-width/2);
-      padding-right: @container-main-padding - floor(@grid-gutter-width/2);
-    }
+    // &:nth-child(odd) {
+    //   background-color: @alternate-bg;
+    //   margin-left: -@container-main-padding;
+    //   margin-right: -@container-main-padding;
+    //   padding-left: @container-main-padding - floor(@grid-gutter-width/2);
+    //   padding-right: @container-main-padding - floor(@grid-gutter-width/2);
+    // }
   }
 
   h3 {
@@ -286,6 +286,28 @@
       font-weight: 200;
     }
   }
+}
+
+.toolbar-options {
+  background-color: @main-bg;
+  margin-top: -2 * @padding-large-vertical;
+
+  .btn {
+
+    &:hover {
+      border-color: @btn-default-border;
+      background-color: @main-bg;
+    }
+    border-color: @main-bg;
+  }
+}
+
+.main-filter-option {
+  width: 220px;
+}
+
+.toolbar-options-sorted {
+  border-bottom: 0px;
 }
 
 #market-search {

@@ -51,8 +51,10 @@ angular.module('ortolangMarketApp')
             SITE: 'Accéder à l\'application web',
             THUMBNAIL: 'Miniature',
             ALL_RESOURCE: 'Tout type de ressource',
+            RESOURCE_TYPE: 'Type de ressource',
             CORPORA: {
-                  CORPORA_TYPE: 'Tout les corpus',
+                  CORPORA_TYPE: 'Type de corpus',
+                  ALL_CORPORA: 'Tout les corpus',
                   ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
                   TEXT_FORMAT: 'Tout format de texte',
                   TEXT_ENCODING: 'Tout encodages de caractères',
@@ -66,7 +68,14 @@ angular.module('ortolangMarketApp')
                   ALL_TRANSCRIPTION_ENCODING: 'Tout encodage de caractères',
                   ALL_SIGNAL: 'Tout signal'
             },
-            ALPHABETIC: 'Alphabétique',
-            CREATION_DATE: 'Date de création'
+            SORT: {
+                  TITLE: 'Titre',
+                  CREATION_DATE: 'Date de création'   
+            },
+            SHOW_IN: 'Présentation',
+            VIEW_MODE: {
+                  LINE: 'Par liste',
+                  GRID: 'Par icônes'      
+            }
         }
     });

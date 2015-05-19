@@ -447,15 +447,15 @@ angular.module('ortolangMarketApp')
                 var filtersO = angular.fromJson(filters);
 
                 if(filtersO['meta_ortolang-item-json.type']) {
-                    if(filtersO['meta_ortolang-item-json.type'] === 'Corpus') {
-                        $rootScope.selectCorpora();
-                    } else if(filtersO['meta_ortolang-item-json.type'] === 'Lexique') {
-                        $rootScope.selectLexicons();
-                    } else if(filtersO['meta_ortolang-item-json.type'] === 'Outil') {
-                        $rootScope.selectTools();
-                    } else if(filtersO['meta_ortolang-item-json.type'] === 'Application') {
-                        $rootScope.selectIntegratedProjects();
-                    }
+                    // if(filtersO['meta_ortolang-item-json.type'] === 'Corpus') {
+                    //     $rootScope.selectCorpora();
+                    // } else if(filtersO['meta_ortolang-item-json.type'] === 'Lexique') {
+                    //     $rootScope.selectLexicons();
+                    // } else if(filtersO['meta_ortolang-item-json.type'] === 'Outil') {
+                    //     $rootScope.selectTools();
+                    // } else if(filtersO['meta_ortolang-item-json.type'] === 'Application') {
+                    //     $rootScope.selectIntegratedProjects();
+                    // }
                 }
 
                 for(var paramName in filtersO) {
