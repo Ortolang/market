@@ -23,6 +23,8 @@ angular.module('ortolangMarketApp')
             CLEAR_ALL: 'Clear all',
             CANCEL_ALL: 'Cancel all',
             ADD_METADATA: 'Add a metadata',
+            SNAPSHOT: 'Save workspace state',
+            PUBLISH: 'Publish workspace',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
                 AUTO_GENERATED: 'Auto-generated ID',
@@ -52,8 +54,9 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Edit description of {{name}}',
                 SUBMIT: 'Edit'
             },
-            WORKSPACE_MEMBERS_MODAL: {
-                TITLE: 'Members of {{name}}'
+            ADD_MEMBER_MODAL: {
+                TITLE: 'Add a member to {{wsName}}',
+                SUBMIT: 'Add'
             },
             UPLOAD_ZIP_MODAL: {
                 TITLE: 'Upload a zip into "{{name === "root" ? "/" : "name" }}"',

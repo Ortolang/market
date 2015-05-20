@@ -106,12 +106,6 @@ angular.module('ortolangMarketApp')
             });
         }
 
-        //function getSocket() {
-        //    return connected.promise.then(function () {
-        //        return socket;
-        //    });
-        //}
-
         function isConnected() {
             return connected.promise;
         }
@@ -132,7 +126,6 @@ angular.module('ortolangMarketApp')
 
         return {
             subscribe: subscribe,
-            //getSocket: getSocket,
             addFilter: addFilter,
             removeFilter: removeFilter,
             isConnected: isConnected

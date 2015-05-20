@@ -74,7 +74,7 @@ angular.module('ortolangMarketApp')
                     });
                     AtmosphereService.addFilter({typePattern: 'runtime\\.task\\..*', argumentsPatterns: {user: User.key}});
                     AtmosphereService.addFilter({typePattern: 'runtime\\.remote\\.create', throwedByPattern: User.key});
-
+                    AtmosphereService.addFilter({typePattern: 'membership\\.group\\.add-member', argumentsPatterns: {member: User.key}});
                 });
             }
 
