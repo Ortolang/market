@@ -40,8 +40,9 @@ angular.module('ortolangMarketApp')
                 MIME_TYPE: 'Type Mime',
                 DATE: 'Date'
             },
-            INFO: '{{hideInfo ? "Afficher" : "Masquer"}} les détails',
-            WORKSPACE_LIST: '{{hideWorkspaceList ? "Afficher" : "Masquer"}} la liste des espaces de travail',
+            INFO: '{{hideInfo === "true" ? "Afficher" : "Masquer"}} les détails',
+            DASHBOARD: 'Retourner au tableau de bord',
+            WORKSPACE_LIST: '{{hideWorkspaceList === "true" ? "Afficher" : "Masquer"}} la liste des espaces de travail',
             SETTINGS: 'Paramètres',
             PREVIEW: 'Visualiser',
             DELETE: 'Supprimer',

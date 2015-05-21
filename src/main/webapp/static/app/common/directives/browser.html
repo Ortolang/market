@@ -2,7 +2,6 @@
 
     <div class="row toolbar browser-toolbar" ng-class="{'market-browser-toolbar': isMarket()}" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)">
         <div ng-if="displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside">
-            <!--<div class="btn title" translate="BROWSER.MY_WORKSPACES"></div>-->
         </div>
 
         <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
@@ -70,6 +69,12 @@
                 <div ng-if="browserService.displayAsideInfo" class="btn-group">
                     <button ng-class="{'btn-inverse': !browserSettings.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:browserSettings}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="icons.browser.info"></span>
+                    </button>
+                </div>
+
+                <div ng-if="isWorkspaceBrowserService" class="btn-group">
+                    <button class="btn btn-default" ng-click="toggleBrowsing()" data-title="{{'BROWSER.DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip>
+                        <span ng-class="icons.browser.dashboard"></span>
                     </button>
                 </div>
 
@@ -263,8 +268,6 @@
             </li>
         </ul>
     </div>
-
-    <div ng-show="!browserService.isFileSelect && !isMarket()" ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>
 
     <div ng-show="browserService.canExecuteTool" ng-include="'common/tools/tool-list.html'" ng-controller="ToolListCtrl"></div>
 
