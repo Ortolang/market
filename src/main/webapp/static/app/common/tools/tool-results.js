@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager',
-        function ($scope, $rootScope, $modal, ObjectResource, ToolManager) {
+    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$window',
+        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $window) {
 
             /*************
              * Listeners
@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
                 if (!$scope.data) {
                     $scope.data = {};
                 }
-                $scope.data.folder = elements[0].path;
+                $scope.data.path = elements[0].path;
                 $scope.data.wskey = elements[0].workspace;
                 $scope.folder = elements[0];
                 ObjectResource.get({oKey: elements[0].workspace}, function (data) {
@@ -28,7 +28,15 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.submit = function(){
-                ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data);
+                console.debug($scope.data);
+                ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data).$promise.then(
+                    function(success){
+                        $window.location.href = 'http://www.google.com';
+                    },
+                    function(error) {
+                        console.debug(error);
+                    }
+                );
             };
 
 
@@ -36,12 +44,16 @@ angular.module('ortolangMarketApp')
              * Methods
              **************/
 
-            $scope.init = function(filename){
-                $scope.data.files[filename] = true;
+            $scope.init = function(filename, index){
+                $scope.data['file-' + index] = filename;
             };
 
-            $scope.changeStatus = function(filename){
-                $scope.data.files[filename] = !$scope.data.files[filename];
+            $scope.changeStatus = function(filename, index){
+                if(! $scope.data.hasOwnProperty('file-' + index)) {
+                    $scope.data['file-' + index] = filename;
+                } else {
+                    delete $scope.data['file-' + index];
+                }
             };
 
             function init() {
@@ -59,7 +71,6 @@ angular.module('ortolangMarketApp')
 
                 $scope.folder = {};
                 $scope.data = {};
-                $scope.data.files = {};
 
             }
 

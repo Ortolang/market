@@ -12,10 +12,10 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="file in result.options" >
-                    <td ng-init="init(file.name)">
+                    <td ng-init="init(file.name, $index)">
                         <div class="col-md-7 tool-switch">
-                            <i class="fa fa-toggle-on active" ng-if="data.files[file.name] == true" ng-click="changeStatus(file.name);" bs-tooltip data-title="cliquer pour ignorer le fichier"></i>
-                            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="data.files[file.name] == false" ng-click="changeStatus(file.name);" bs-tooltip data-title="cliquer pour sauvegarder le fichier"></i>
+                            <i class="fa fa-toggle-on active" ng-if="data['file-'+$index]" ng-click="changeStatus(file.name, $index);" bs-tooltip data-title="cliquer pour ignorer le fichier"></i>
+                            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="!data['file-'+$index]" ng-click="changeStatus(file.name, $index);" bs-tooltip data-title="cliquer pour sauvegarder le fichier"></i>
                         </div>
                     </td>
                     <td>{{file.name | split:'/':-1 }}</td>
