@@ -50,8 +50,8 @@ angular.module('ortolangMarketApp')
             ];
 
             $scope.civilities = [
-                {value: 'Mme', text: 'PROFILE.CIVILITY.MISSUS'},
-                {value: 'M', text: 'PROFILE.CIVILITY.MISTER'}
+                {value: 'Ms', text: 'PROFILE.CIVILITY.MISSUS'},
+                {value: 'Mr', text: 'PROFILE.CIVILITY.MISTER'}
             ];
 
             $scope.avatars = [
