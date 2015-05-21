@@ -70,99 +70,43 @@
 
 }
 
-.market-home {
+.medium-item {
+  margin: 5px;
+  border: 1px solid #dddddd;
+  line-height: 1.42857143;
+  background-color: @main-bg;
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
+  box-shadow: 0 0 5px rgba(0,0,0,0.10);
+  width: 162px;
+  //        height: 230px;
+  overflow: hidden;
 
-  .flex-row :first-child {
-    margin-left: 0;
-  }
+  cursor: pointer;
 
-  section {
-    background-color: @main-bg;
-    padding-bottom: 3*@padding-large-vertical;
-
-    // &:nth-child(odd) {
-    //   background-color: @alternate-bg;
-    //   margin-left: -@container-main-padding;
-    //   margin-right: -@container-main-padding;
-    //   padding-left: @container-main-padding - floor(@grid-gutter-width/2);
-    //   padding-right: @container-main-padding - floor(@grid-gutter-width/2);
-    // }
-  }
-
-  h3 {
-    color: @market-primary;
-    display: inline-block;
-  }
-
-  .medium-item {
-    margin: 5px;
-    border: 1px solid #dddddd;
-    line-height: 1.42857143;
-    background-color: @main-bg;
-    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.10);
-    box-shadow: 0 0 5px rgba(0,0,0,0.10);
-    width: 162px;
-    //        height: 230px;
-    overflow: hidden;
-
-    cursor: pointer;
-
-    a {
-      color: inherit;
-      &:hover {
-        text-decoration: none;
-      }
-    }
-
+  a {
+    color: inherit;
     &:hover {
-      .title {
-        color: @market-primary;
-      }
+      text-decoration: none;
     }
+  }
 
-    .logo {
-      height: 160px;
-      width: 160px;
-      padding: 10px;
-    }
-
+  &:hover {
     .title {
-      position: relative;
-      color: inherit;
-      font-size: 13px;
-      margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
+      color: @market-primary;
     }
-    .caption {
-      background-color: white;
-      -webkit-transition:all 0.5s linear;
-      transition:all 0.5s linear;
-    }
+  }
 
-    .caption.show-caption {
-      transform: translateY(-100%);
-    }
+  .logo {
+    height: 160px;
+    width: 160px;
+    padding: 10px;
+  }
 
-    .caption.show-caption.ng-add {
-      -webkit-transition:all 0.2s linear;
-      transition:all 0.2s linear;
-    }
-
-    .caption.show-caption.ng-add.ng-add-active {
-      transform: translateY(-100%);
-    }
-
-    .description {
-      overflow: hidden;
-      max-height: 100px;
-      /*width: 225px;*/
-      text-align: justify;
-    }
-
-    .producers {
-      a {
-        font-weight: 200;
-      }
-    }
+  .title {
+    position: relative;
+    color: inherit;
+    font-size: 13px;
+    margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
   }
 }
 
@@ -289,9 +233,48 @@
 }
 
 .toolbar-options {
-  background-color: @main-bg;
+  
   margin-top: -2 * @padding-large-vertical;
 
+  dl {
+    margin-bottom: 0px;
+    dt {
+      width: 180px;
+      margin-right: @padding-large-vertical;
+      padding-top: @padding-base-vertical;
+      font-weight: inherit;
+    }
+  }
+}
+
+.toolbar-section {
+  margin-left: -@container-main-padding + floor(@grid-gutter-width/2);
+  margin-right: -@container-main-padding + floor(@grid-gutter-width/2);
+  padding: @padding-large-vertical (@container-main-padding - floor(@grid-gutter-width/2));
+  margin-bottom: 2 * @padding-large-vertical;
+  min-height: @toolbar-min-height;
+  background-color: @default-bg;
+  margin-top: -2 * @padding-large-vertical;
+
+  .btn-toolbar {
+    border-bottom: @default-border;
+    padding-bottom: @padding-large-vertical;
+  }
+
+  dl {
+    margin-bottom: 0px;
+    dt {
+      width: 180px;
+      margin-right: @padding-large-vertical;
+      padding-top: @padding-base-vertical;
+      font-weight: inherit;
+    }
+  }
+}
+
+.toolbar-options-sorted {
+  background-color: @main-bg;
+  
   .btn {
 
     &:hover {
@@ -299,6 +282,35 @@
       background-color: @main-bg;
     }
     border-color: @main-bg;
+    
+  }
+}
+
+.toolbar-options-applied-filters {
+  border-top: @default-border;
+  margin-top: -32px;
+
+  .btn-default {
+
+    &:hover {
+      border-color: @btn-default-border;
+      background-color: @main-bg;
+    }
+  }
+
+  .btn-primary {
+
+    &:hover {
+      border-color: @btn-primary-border;
+      color: @btn-primary-bg;
+      background-color: @btn-default-bg;
+    }
+    background-color: @main-bg;
+    color: @btn-primary-bg;
+  }
+
+  .close {
+    margin-left: 5px;
   }
 }
 
@@ -308,6 +320,8 @@
 
 .toolbar-options-sorted {
   border-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 #market-search {

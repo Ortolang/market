@@ -21,9 +21,7 @@ angular.module('ortolangMarketApp')
                 orderDirection: '=',
                 orderProps: '=',
                 filtersManager: '=',
-                preSelectedFilter: '=',
-                primaryFacets: '=',
-                secondaryFacets: '='
+                preSelectedFilter: '='
             },
             templateUrl: 'market/directives/market-toolbar.html',
             link: {
@@ -43,15 +41,17 @@ angular.module('ortolangMarketApp')
                             });
                         }
                         scope.filtersManager.addFilter(filter, opt);
-                        applyFilters();
+                        scope.applyFilters();
                     };
 
                     scope.removeFilter = function (filter) {
                         scope.filtersManager.removeFilter(filter);
-                        applyFilters();
+                        scope.applyFilters();
                     };
 
-                    function applyFilters() {
+                    scope.applyFilters = function() {
+                        scope.hideLowFacets();
+
                         var content = '';
                         scope.query = scope.filtersManager.toQuery(content);
                         // setVisibleFilters();
@@ -72,7 +72,7 @@ angular.module('ortolangMarketApp')
 
                     scope.setViewMode = function(view) {
                        scope.viewMode = view;
-                    }
+                    };
 
                     // function setVisibleFilters() {
                     //     scope.visibleFacets = [];
@@ -92,9 +92,37 @@ angular.module('ortolangMarketApp')
                         // });
                     // }
 
+                    scope.hasAppliedFacets = function() {
+                        var i = 0;
+                        for (i; i < scope.filtersManager.getFilters().length; i++) {
+                            if (scope.filtersManager.getFilters()[i].hasSelectedElement() && !scope.filtersManager.getFilters()[i].isLock()) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    };
+
+                    scope.showLowFacets = function() {
+                        scope.lowFacets = true;
+                    };
+
+                    scope.hideLowFacets = function() {
+                        scope.lowFacets = false;
+                    };
+
+                    scope.showFacets = function() {
+                        scope.facets = true;
+                    };
+
+                    scope.switchFacets = function() {
+                        scope.facets = !scope.facets;
+                    };
+
                     // Scope variables
                     function initScopeVariables() {
 
+                        scope.facets = false;
+                        scope.lowFacets = false;
                         // scope.visibleFacets = [];
                         // scope.orderProp = 'title';
                         // scope.orderDirection = false;
@@ -103,7 +131,7 @@ angular.module('ortolangMarketApp')
 
                     function init() {
                         // initLocalVariables();
-                        // initScopeVariables();
+                        initScopeVariables();
 
                         if(scope.preSelectedFilter) {
                             scope.setFilter(scope.preSelectedFilter, scope.preSelectedFilter.getOption('Corpus'));

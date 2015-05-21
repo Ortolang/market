@@ -1,6 +1,6 @@
-<section ng-if="items.size()>0" class="row">
+<section ng-if="items.size()>0" class="row items">
 
-    <div ng-if="viewMode.id === 'tile'" class="row market-home">
+    <div ng-if="viewMode.id === 'tile'" class="row">
         <div class="col-md-12">
             <div class="flex-row">
                 <item class="flex-column medium-item" ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>

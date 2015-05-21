@@ -52,13 +52,18 @@ angular.module('ortolangMarketApp')
             THUMBNAIL: 'Miniature',
             ALL_RESOURCE: 'Tout type de ressource',
             RESOURCE_TYPE: 'Type de ressource',
-            CORPORA: {
+            FACET: {
                   CORPORA_TYPE: 'Type de corpus',
                   ALL_CORPORA: 'Tout les corpus',
-                  ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
-                  TEXT_FORMAT: 'Tout format de texte',
-                  TEXT_ENCODING: 'Tout encodages de caractères',
+                  ANNOTATION_LEVEL: 'Niveaux d\'annotations',
+                  ALL_ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
+                  TEXT_FORMAT: 'Format',
+                  ALL_TEXT_FORMAT: 'Tout format de texte',
+                  TEXT_ENCODING: 'Type Encodage',
+                  ALL_TEXT_ENCODING: 'Tout encodages de caractères',
+                  STATUSOFUSE: 'Droits d\'utilisations',
                   ALL_STATUSOFUSE: 'Tout les droits d\'utilisations',
+                  CORPORA_LANG: 'Langue du corpus',
                   ALL_LANG: 'Toutes les Langues',
                   ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',
                   ALL_TOOL_INPUTDATA: 'Tout type d\'entrée',
@@ -76,6 +81,9 @@ angular.module('ortolangMarketApp')
             VIEW_MODE: {
                   LINE: 'Par liste',
                   GRID: 'Par icônes'      
-            }
+            },
+            FACETS: 'Options de recherche',
+            MORE_FACETS: 'Plus de filtres',
+            LESS_FACETS: 'Cacher les filtres'
         }
     });

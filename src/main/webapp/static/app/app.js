@@ -24,6 +24,7 @@ angular
         'mgcrea.ngStrap.dropdown',
         'mgcrea.ngStrap.typeahead',
         'mgcrea.ngStrap.alert',
+        'mgcrea.ngStrap.button',
         'toggle-switch',
         'hljs',
         'cfp.hotkeys',

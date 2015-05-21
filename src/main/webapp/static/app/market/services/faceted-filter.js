@@ -16,9 +16,11 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             this.value = undefined;
             this.label = undefined;
             this.type = 'string';
+            this.priority = 'low';
             this.resetLabel = '';
             this.selected = undefined;
             this.options = [];
+            this.lock = false;
             this.lockOptions = false;
 
             angular.forEach(config, function (value, key) {
@@ -67,6 +69,14 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.type = type;
             },
 
+            getPriority: function () {
+                return this.priority;
+            },
+
+            setPriority: function(priority) {
+                this.priority = priority;
+            },
+
             getSelected: function () {
                 return this.selected;
             },
@@ -89,6 +99,10 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
 
             setResetLabel: function(resetLabel) {
                 this.resetLabel = resetLabel;
+            },
+
+            isLock: function() {
+                return this.lock;
             },
 
             getOptions: function () {
