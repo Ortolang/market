@@ -30,8 +30,10 @@ angular.module('ortolangMarketApp')
             $scope.submit = function(){
                 console.debug($scope.data);
                 ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data).$promise.then(
-                    function(success){
-                        $window.location.href = 'http://www.google.com';
+                    function(){
+                        var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + $scope.data.path;
+                        $window.location.href = encodeURI(url);
+                        $scope.$hide();
                     },
                     function(error) {
                         console.debug(error);
