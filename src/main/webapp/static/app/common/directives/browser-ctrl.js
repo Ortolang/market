@@ -935,6 +935,12 @@ angular.module('ortolangMarketApp')
             //          Events         //
             // *********************** //
 
+            $scope.$on('$destroy', function () {
+                if ($scope.browserService.id === WorkspaceBrowserService.id) {
+                    $rootScope.browsing = false;
+                }
+            });
+
             $rootScope.$on('browserAskSelectedElements', function () {
                 console.log('%s caught event "browserAskSelectedElements"', $scope.browserService.id);
                 if ($scope.browserService.isFileSelect) {
@@ -1638,7 +1644,9 @@ angular.module('ortolangMarketApp')
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                     });
                 } else {
-                    initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
+                    $scope.$on('initWorkspaceVariables', function () {
+                        initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
+                    });
                 }
             }
             init();

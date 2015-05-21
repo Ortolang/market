@@ -4,6 +4,16 @@
   background-color: @main-bg;
 }
 
+#main-wrapper.no-footer {
+  min-height: calc(100% ~'-' @top-navbar-height);
+}
+
+#main-wrapper.no-footer.browsing {
+  min-height: initial;
+  height: 100%;
+  height: calc(100% ~'-' @top-navbar-height);
+}
+
 @media(min-width:768px) {
   #main-wrapper {
     position: inherit;
