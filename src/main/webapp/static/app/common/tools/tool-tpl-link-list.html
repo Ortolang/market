@@ -1,35 +1,74 @@
-<div>
-    <h4><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</h4>
-    <br>
-    <form>
-        <div formly-file-select data-options="{labelProp:'Voulez-vous sauvegarder ces fichiers dans un espace de travail ?'}" data-model="model[options.key]" data-id="id"></div>
-        <hr>
-        <table class="table table-responsive">
-            <thead>
-            <tr>
-                <th>Nom du fichier</th>
-                <th>Sauvegarder ?</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="file in result.options" >
-                <td>{{file.name | split:'/':-1 }}</td>
-                <td>
-                    <toggle-switch
-                        model="switchStatus[file.name]"
-                        on-label="ok"
-                        off-label="non">
-                    <toggle-switch></td>
-            </tr>
-            </tbody>
-        </table>
-        <button type="submit" ng-click="" >OK</button>
-    </form>
-    <!--<ul class="list-unstyled">-->
-        <!--<li ng-repeat="file in result.options">-->
-            <!--<a ng-href="{{getToolDownloadUrl(process.processTool.url, process.job.id, file.url)}}">-->
-                <!--{{file.name | split:'/':-1 }}-->
-            <!--</a>-->
-        <!--</li>-->
-    <!--</ul>-->
+<div class="row">
+    <div class="col-md-12">
+        <br>
+        <form name="saveResultsForm" novalidate role="form" ng-controller="ToolResultsCtrl">
+            <h5>Voulez-vous sauvegarder ces fichiers dans un espace de travail ?</h5>
+            <table class="table table-responsive">
+                <thead>
+                <tr>
+                    <th>Sauvegarder</th>
+                    <th>Nom du fichier</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="file in result.options" >
+                    <td ng-init="init(file.name)">
+                        <div class="col-md-7 tool-switch">
+                            <i class="fa fa-toggle-on active" ng-if="data.files[file.name] == true" ng-click="changeStatus(file.name);" bs-tooltip data-title="cliquer pour ignorer le fichier"></i>
+                            <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="data.files[file.name] == false" ng-click="changeStatus(file.name);" bs-tooltip data-title="cliquer pour sauvegarder le fichier"></i>
+                        </div>
+                    </td>
+                    <td>{{file.name | split:'/':-1 }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="fa fa-folder-o"></span>
+                </span>
+                <span class="form-control" ng-click="folderSelectModal.show()">
+                    {{folder.ws}}
+                    <span ng-repeat="part in folder.pathParts" >
+                        <span ng-if="folder.name" class="fa fa-chevron-right"></span>
+                        {{part}}
+                    </span>
+                </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="folderSelectModal.show()" type="button">Sélectionner un dossier</button>
+                </span>
+            </div>
+            <input type="hidden" name="wskey" ng-model="data.wskey" class="form-control">
+            <input type="hidden" name="folderPath" ng-model="data.folder" class="form-control">
+
+            <br>
+
+            <div class="btn-toolbar pull-right">
+                <div class="btn-group">
+                    <button class="btn btn-default" ng-click="$hide()">
+                        <span class="fa fa-remove"></span> Annuler
+                    </button>
+                    <button class="btn btn-primary" ng-click="submit()">
+                        <span class="fa fa-save"></span> Valider
+                    </button>
+                </div>
+                <!--<div ng-if="selectedMetadata!==undefined" class="btn-group ">-->
+                    <!--<button class="btn btn-default" ng-click="download(selectedMetadata)">-->
+                        <!--<span ng-class="icons.browser.download"></span> Download-->
+                    <!--</button>-->
+                <!--</div>--><!-- DOWNLOAD FILES -->
+            </div>
+
+            <br>
+            <!--<pre>{{data | json }}</pre>-->
+        </form>
+
+        <!--<ul class="list-unstyled">-->
+            <!--<li ng-repeat="file in result.options">-->
+                <!--<a ng-href="{{getToolDownloadUrl(process.processTool.url, process.job.id, file.url)}}">-->
+                    <!--{{file.name | split:'/':-1 }}-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    </div>
 </div>

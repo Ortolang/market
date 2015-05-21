@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert',
-        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert) {
+    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope',
+        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope) {
 
             $scope.Runtime = Runtime;
 
@@ -72,6 +72,8 @@ angular.module('ortolangMarketApp')
                 Runtime.selectRemoteProcess(process);
                 ToolManager.getTool(process.toolKey).getResult(process.jobId).$promise.then(function (data) {
                     $scope.results = data;
+                    $scope.jobId = process.jobId;
+                    $scope.toolKey = process.toolKey;
                     $scope.jname = process.processTool.name;
                     $scope.process = process;
                     $scope.switchStatus = [];
@@ -85,7 +87,6 @@ angular.module('ortolangMarketApp')
                 });
 
             };
-
 
             $scope.activeTab = 0;
 

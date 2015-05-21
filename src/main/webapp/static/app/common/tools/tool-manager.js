@@ -77,6 +77,13 @@ angular.module('ortolangMarketApp')
                         url: this.url + '/jobs/:jobId/result',
                         method: 'GET',
                         isArray: true
+                    },
+                    save: {
+                        url: this.url + '/jobs/:jobId/save',
+                        method: 'POST',
+                        transformRequest: function (data) { return $.param(data); },
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+
                     }
                 });
             }
@@ -194,6 +201,9 @@ angular.module('ortolangMarketApp')
 
                 getDownloadUrl: function (jobId, path) {
                     return this.url + '/jobs/' + jobId + '/download?path=' + path;
+                },
+                saveResult: function (jobId, formData) {
+                    return this.resource.save({jobId:jobId}, angular.fromJson(angular.toJson(formData)));
                 }
             };
 
