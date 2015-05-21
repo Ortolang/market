@@ -1405,7 +1405,7 @@ angular.module('ortolangMarketApp')
                     var topOffset = topNavWrapper.outerHeight(),
                         height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
                         bottomOffset = footerWrapper.outerHeight();
-                    browserToolbarHeight = $('.browser-toolbar').innerHeight();
+                    browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
                     if ($scope.isMarket()) {
                         topOffset += angular.element('.market-item').find('header').outerHeight();
                         height -= 1;
@@ -1419,7 +1419,7 @@ angular.module('ortolangMarketApp')
                         if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
                             height -= angular.element('.upload-queue').innerHeight();
                         }
-                        var browserWrapper = angular.element('#browser-wrapper'),
+                        var browserWrapper = angular.element('.browser-wrapper'),
                             browserAside = angular.element('.browser-aside');
                         browserAside.css('min-height', (height - browserToolbarHeight) + 'px');
                         browserAside.find('.my-workspaces').css('height', (height - browserToolbarHeight - 80) + 'px');

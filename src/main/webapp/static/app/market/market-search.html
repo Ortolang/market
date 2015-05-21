@@ -1,22 +1,20 @@
 <div id="market-search" class="container-fluid container-main">
 
-    <div class="row">
-        <div class="toolbar">
-            <div class="col-sm-7">
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{selectedTypeTranslation | translate}} <span class="caret"></span></button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-class="selectedType===''?'active':''" role="menuitem"><a ng-click="resetFilter()">{{'MARKET.ALL_TYPE' | translate}} <span class="badge">{{items.length}}</span></a></li>
-                            <li class="divider" role="menuitem"></li>
-                            <li ng-repeat="option in options" ng-class="selectedType===option.name?'active':''" role="menuitem"><a ng-click="filter('type', option.name, option.translation)"> {{option.translation | translate}} <span class="badge">{{option.length}}</span></a></li>
-                        </ul>
-                    </div>
-                    <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+    <div class="row toolbar">
+        <div class="col-sm-7">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{selectedTypeTranslation | translate}} <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-class="selectedType===''?'active':''" role="menuitem"><a ng-click="resetFilter()">{{'MARKET.ALL_TYPE' | translate}} <span class="badge">{{items.length}}</span></a></li>
+                        <li class="divider" role="menuitem"></li>
+                        <li ng-repeat="option in options" ng-class="selectedType===option.name?'active':''" role="menuitem"><a ng-click="filter('type', option.name, option.translation)"> {{option.translation | translate}} <span class="badge">{{option.length}}</span></a></li>
+                    </ul>
+                </div>
+                <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
                     <span class="input-group-btn">
                         <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
-                </div>
             </div>
         </div>
     </div>

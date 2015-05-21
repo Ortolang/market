@@ -1,13 +1,11 @@
 <div class="market-home container-fluid container-main">
-    <div class="row">
-        <div class="toolbar">
-            <div class="col-sm-12">
-                <div class="input-group">
-                    <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+    <div class="row toolbar">
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
                 <span class="input-group-btn">
                     <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
-                </div>
             </div>
         </div>
     </div>
