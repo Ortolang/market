@@ -134,4 +134,16 @@ angular.module('ortolangMarketApp')
                 }
                 clearItem(fileItem);
             };
+
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                if (AuthService.getKeycloak().isTokenExpired()) {
+                    AuthService.getKeycloak().updateToken(5).success(function () {
+                        fileItem.headers.Authorization = 'Bearer ' + AuthService.getToken();
+                        fileItem.upload();
+                    }).error(function () {
+                        console.error('Failed to refresh token');
+                        AuthService.forceReload();
+                    });
+                }
+            };
         }]);
