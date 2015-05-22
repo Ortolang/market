@@ -10,32 +10,38 @@
 angular.module('ortolangMarketAppMock')
     .factory('RuntimeResource', [ '$q', 'sample', function ($q, sample) {
 
-        var processes, tasks, createProcess;
-
-        processes = function (params) {
+        function processes(params) {
             var defer = $q.defer();
             defer.resolve({entries: []});
 
             return {$promise: defer.promise};
-        };
+        }
 
-        tasks = function (params) {
+        function tasks(params) {
             var defer = $q.defer();
             defer.resolve({entries: []});
 
             return {$promise: defer.promise};
-        };
+        }
 
-        createProcess = function (params) {
+        function createProcess(params) {
             var defer = $q.defer();
             defer.resolve(sample()[params]);
 
             return {$promise: defer.promise};
-        };
+        }
+
+        function remoteProcesses(params) {
+            var defer = $q.defer();
+            defer.resolve({entries: []});
+
+            return {$promise: defer.promise};
+        }
 
         return {
             processes: processes,
             tasks: tasks,
-            createProcess: createProcess
+            createProcess: createProcess,
+            remoteProcesses: remoteProcesses
         };
     }]);

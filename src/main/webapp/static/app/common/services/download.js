@@ -14,6 +14,10 @@ angular.module('ortolangMarketApp')
             return url.content + '/key/' + element.key;
         };
 
+        this.getPreviewUrl = function (element, large) {
+            return this.getDownloadUrl(element) + '?preview=' + (large ? 'large' : 'small');
+        };
+
         this.download = function (element) {
             $window.location = this.getDownloadUrl(element);
         };

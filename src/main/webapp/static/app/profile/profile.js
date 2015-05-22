@@ -50,8 +50,8 @@ angular.module('ortolangMarketApp')
             ];
 
             $scope.civilities = [
-                {value: 'Mme', text: 'PROFILE.CIVILITY.MISSUS'},
-                {value: 'M', text: 'PROFILE.CIVILITY.MISTER'}
+                {value: 'Ms', text: 'PROFILE.CIVILITY.MISSUS'},
+                {value: 'Mr', text: 'PROFILE.CIVILITY.MISTER'}
             ];
 
             $scope.avatars = [
@@ -61,6 +61,20 @@ angular.module('ortolangMarketApp')
                 {value: 'GITHUB', text: 'GitHub'},
                 {value: 'GRAVATAR', text: 'Gravatar'}
             ];
+
+            function loadScript() {
+                if (angular.element('#google-maps-script').length === 0) {
+                    console.log('Loading Google Maps library');
+                    window.initialized = function () {
+                        console.log('Google Maps library loaded');
+                    };
+                    var script = document.createElement('script');
+                    script.id = 'google-maps-script';
+                    script.type = 'text/javascript';
+                    script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=initialized';
+                    document.body.appendChild(script);
+                }
+            }
 
             function init() {
                 $scope.activeTab = 0;
@@ -72,6 +86,7 @@ angular.module('ortolangMarketApp')
                         initFields();
                     });
                 });
+                loadScript();
             }
 
             init();

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$route', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $route, User, AuthService, ProfileResource, AtmosphereService) {
+    .controller('AuthCtrl', ['$scope', '$rootScope', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $rootScope, User, AuthService, ProfileResource, AtmosphereService) {
 
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
@@ -57,27 +57,19 @@ angular.module('ortolangMarketApp')
             });
         }
 
-        /**
-         * Update default avatar
-         */
         $scope.$on('updateDefaultAvatar', function (event, data) {
             User.favoriteAvatar = data;
+            event.stopPropagation();
         });
 
-        /**
-         * Initialize scope var from the session
-         */
-        $scope.initializeSession = function () {
+        $rootScope.noFooter = false;
+
+        function initializeSession() {
             $scope.authenticated = AuthService.isAuthenticated();
             if (AuthService.isAuthenticated()) {
                 getUser();
             }
-        };
+        }
 
-        $scope.footerPath = function () {
-            return $route.current && $route.current.originalPath === '/workspaces' ? '' : 'common/nav/footer.html';
-        };
-
-        // Initialize session
-        $scope.initializeSession();
+        initializeSession();
     }]);

@@ -52,6 +52,7 @@ angular.module('ortolangMarketApp')
                 });
                 uploader.uploadQueueStatus = undefined;
                 uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                uploader.tokenJustRefreshed = false;
             }
 
             $scope.toggleUploadQueueStatus = function () {
@@ -73,11 +74,11 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onAfterAddingFile = function (fileItem) {
-                fileItem.wsName = angular.copy($scope.wsName);
+                fileItem.wsName = angular.copy($scope.browserService.workspace.name);
                 fileItem.headers = {
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
-                fileItem.wskey = fileItem.wskey || angular.copy($scope.wskey);
+                fileItem.wskey = fileItem.wskey || angular.copy($scope.browserService.workspace.key);
                 fileItem.url = url.api + '/rest/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
@@ -133,5 +134,22 @@ angular.module('ortolangMarketApp')
                         break;
                 }
                 clearItem(fileItem);
+            };
+
+            uploader.onCompleteAll = function () {
+                uploader.tokenJustRefreshed = false;
+            };
+
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                if (uploader.tokenJustRefreshed || AuthService.getKeycloak().isTokenExpired()) {
+                    uploader.tokenJustRefreshed = true;
+                    AuthService.getKeycloak().updateToken(5).success(function () {
+                        fileItem.headers.Authorization = 'Bearer ' + AuthService.getToken();
+                        fileItem.upload();
+                    }).error(function () {
+                        console.error('Failed to refresh token');
+                        AuthService.forceReload();
+                    });
+                }
             };
         }]);

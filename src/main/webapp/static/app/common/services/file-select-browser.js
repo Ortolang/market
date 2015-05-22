@@ -5,10 +5,10 @@
  * @name ortolangMarketApp.FileSelectBrowserService
  * @description
  * # FileSelectBrowserService
- * Factory in the ortolangMarketApp.
+ * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FileSelectBrowserService', ['WorkspaceElementResource', 'DownloadResource', function (WorkspaceElementResource, DownloadResource) {
+    .service('FileSelectBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
 
         function getData(config) {
             if (config.path) {
@@ -18,30 +18,21 @@ angular.module('ortolangMarketApp')
             return undefined;
         }
 
-        function buildChildDownloadUrl(data, parent, root) {
-            return DownloadResource.getDownloadUrl({wskey: parent.workspace, path: parent.path + '/' + data.name, root: root});
-        }
+        this.id = 'FileSelectBrowserService';
+        this.getData = getData;
+        this.dataResource = 'workspace';
+        this.canDelete = false;
+        this.canAdd = false;
+        this.canDownload = false;
+        this.canPreview = false;
+        this.canChangeRoot = true;
+        this.hasBreadcrumb = true;
+        this.defaultViewMode = 'line';
+        this.canSwitchViewMode = false;
+        this.displayAsideInfo = false;
+        this.displayAsideWorkspaceList = true;
+        this.isFileSelect = true;
+        this.workspace = {};
 
-        function buildChildBrowseUrl(child, parent, root) {
-            return '/workspaces/' + parent.workspace + '/' + root + '/' +  parent.path + '/' + child.name + '/browse';
-        }
-
-        return {
-            getId: function () { return 'FileSelectBrowserService'; },
-            getData: getData,
-            getDataResource: 'workspace',
-            buildChildDownloadUrl: buildChildDownloadUrl,
-            buildChildBrowseUrl: buildChildBrowseUrl,
-            canDelete: false,
-            canAdd: false,
-            canDownload: false,
-            canPreview: false,
-            canChangeRoot: true,
-            hasBreadcrumb: true,
-            defaultViewMode: 'line',
-            canSwitchViewMode: false,
-            displayAsideInfo: false,
-            displayAsideWorkspaceList: true,
-            isFileSelect: true
-        };
+        return this;
     }]);

@@ -60,7 +60,7 @@ describe('Controller: SideNavCtrl', function () {
 
     it('should select the right sideNavElements according to the route', function () {
         var workspaces = {
-            template: 'workspace/workspace.html',
+            template: 'workspace/workspaces.html',
             path: '/workspaces'
         };
         checkSelectedSideNavElement();

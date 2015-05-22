@@ -1,4 +1,4 @@
-#browser-wrapper {
+.browser-wrapper {
   position: relative;
   &.market-browser-wrapper {
     margin-left: -@container-main-padding;
@@ -171,6 +171,10 @@
 
 .browser-aside-info {
   overflow: hidden;
+  img.preview {
+    max-width: 100%;
+    margin-bottom: @padding-large-vertical;
+  }
   dl {
     dt {
       font-weight: 600;

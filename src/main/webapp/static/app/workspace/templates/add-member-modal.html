@@ -1,0 +1,20 @@
+<div class="modal" tabindex="-1" role="dialog" ng-controller="AddMemberCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" translate="WORKSPACE.ADD_MEMBER_MODAL.TITLE" translate-values="{wsName: wsName}"></h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li ng-repeat="profile in profiles.entries">{{profile.key}}</li>
+                </ul>
+                <pre>{{profiles.entries | json}}</pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="publish()" translate="WORKSPACE.ADD_MEMBER_MODAL.SUBMIT"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+            </div>
+        </div>
+    </div>
+</div>

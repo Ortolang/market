@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'MetadataFormatResource',
-        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, MetadataFormatResource) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'MetadataFormatResource', 'Runtime', 'RuntimeResource',
+        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, MetadataFormatResource, Runtime, RuntimeResource) {
 
 
             // ***************** //
@@ -86,7 +86,6 @@ angular.module('ortolangMarketApp')
                     function (result) {
                         $scope.config.model = result[0];
                         $scope.config.formFields = result[1];
-                        console.debug(result[1]);
                         $scope.config.originalFields = angular.copy($scope.config.formFields);
                     },
                     function (msg) {
@@ -99,6 +98,20 @@ angular.module('ortolangMarketApp')
             $scope.hasToolConfig = function () {
                 return $scope.config.model !== undefined;
             };
+
+
+            function onSubmit () {
+                $scope.config.model.toolKey = $scope.selectedTool.getKey();
+                ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.config.model).$promise.then(
+                    function () {
+                        $scope.hide();
+                    },
+                    function (msg) {
+                        console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);
+                        $scope.showError(msg);
+                    }
+                );
+            }
 
 
             // Tool List search/filter
@@ -171,18 +184,10 @@ angular.module('ortolangMarketApp')
                 $scope.show();
             });
 
-            function onSubmit () {
-                ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.model).$promise.then(
-                    function () {
-                        $rootScope.$broadcast('tool-job-created');
-                        $scope.hide();
-                    },
-                    function (msg) {
-                        console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);
-                        $scope.showError(msg);
-                    }
-                );
-            }
+
+            // ************** //
+            // Initialization //
+            // ************** //
 
             function init() {
                 $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';

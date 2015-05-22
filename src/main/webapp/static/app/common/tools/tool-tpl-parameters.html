@@ -8,7 +8,7 @@
             <div class="modal-body process-log">
                 <div class="list-group">
                     <!-- Links to detail level -->
-                    <dl class="dl-horizontal" ng-repeat="(param, value) in selectedProcess.parameters" class="list-group-item">
+                    <dl class="dl-horizontal list-group-item" ng-repeat="(param, value) in selectedProcess.job.parameters" >
                         <dt>{{param}} : </dt>
                         <dd>{{value}}</dd>
                     </dl>

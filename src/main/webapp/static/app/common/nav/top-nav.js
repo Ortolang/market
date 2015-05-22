@@ -8,11 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', function ($scope, $translate, AuthService, User, Runtime, sideNavElements) {
+    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment) {
 
         $scope.sideNavElements = sideNavElements;
         $scope.navbarCollapsed = false;
         $scope.User = User;
+        $scope.Settings = Settings;
         $scope.Runtime = Runtime;
 
         $scope.toggleNavbar = function () {
@@ -35,44 +36,41 @@ angular.module('ortolangMarketApp')
         //        Language         //
         // *********************** //
 
-        function storeLanguage() {
-            if (localStorage !== undefined) {
-                localStorage.setItem('language', $scope.currentLanguage);
-            }
-        }
-
         function initLanguage() {
-            var favoriteLanguage, storedLanguage;
+            var favoriteLanguage;
             if (AuthService.isAuthenticated()) {
                 favoriteLanguage = User.getProfileData('language');
             }
-            if (!favoriteLanguage && localStorage !== undefined) {
-                storedLanguage = localStorage.getItem('language');
-                if (storedLanguage !== 'fr' && storedLanguage !== 'en') {
-                    storedLanguage = undefined;
-                }
+            if (Settings.language && Settings.language !== 'fr' && Settings.language !== 'en') {
+                Settings.language = undefined;
             }
-            if (favoriteLanguage || storedLanguage) {
-                $translate.use(favoriteLanguage ? favoriteLanguage.value : storedLanguage).then(function (language) {
-                    $scope.currentLanguage = language;
+            if (favoriteLanguage || Settings.language) {
+                $translate.use(favoriteLanguage ? favoriteLanguage.value : Settings.language).then(function (language) {
+                    Settings.language = language;
                 });
             } else {
-                $scope.currentLanguage = $translate.use();
+                Settings.language = $translate.use();
             }
+            amMoment.changeLocale(Settings.language);
         }
 
-        AuthService.sessionInitialized().then(function () {
+        if (AuthService.isAuthenticated()) {
+            AuthService.sessionInitialized().then(function () {
+                initLanguage();
+            });
+        } else {
             initLanguage();
-        });
+        }
 
-        $scope.$on('askLanguageChange', function ($event, langKey) {
+        $scope.$on('askLanguageChange', function (event, langKey) {
             $scope.changeLanguage(langKey);
         });
 
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey).then(function (langKey) {
-                $scope.currentLanguage = langKey;
-                storeLanguage();
+                Settings.language = langKey;
+                Settings.store();
+                amMoment.changeLocale(langKey);
             });
         };
 

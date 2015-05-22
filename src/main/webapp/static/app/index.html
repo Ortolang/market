@@ -30,16 +30,16 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.min.css" />
+    <link rel="stylesheet" href="bower_components/highlightjs/build/styles/solarized_light.min.css" />
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
     <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/textAngular/src/textAngular.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
     <!-- endbower -->
-    <link rel="stylesheet" href="bower_components/highlightjs/styles/solarized_light.css" />
     <link rel="stylesheet" href="bower_components/octicons/octicons/octicons.css" />
     <link rel="stylesheet" href="bower_components/angular-diff-match-patch/demo.css" />
     <!-- endbuild -->
@@ -52,8 +52,8 @@
 
 <div id="top-nav-wrapper" ng-include="'common/nav/top-nav.html'"></div>
 <div id="side-nav-wrapper" ng-include="'common/nav/side-nav.html'"></div>
-<main id="main-wrapper" ng-view role="main" ng-cloak></main>
-<div id="footer-wrapper" ng-include="footerPath()"></div>
+<main id="main-wrapper" ng-view ng-class="{'no-footer': noFooter, 'browsing': browsing}" role="main" ng-cloak></main>
+<div id="footer-wrapper" ng-if="!noFooter" ng-include="'common/nav/footer.html'"></div>
 
 <!--[if lt IE 10]>
 <script type="text/javascript">
@@ -74,12 +74,13 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-i18n/angular-locale_fr.js"></script>
 <script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
 <script src="bower_components/angular-hotkeys/build/hotkeys.min.js"></script>
-<script src="bower_components/highlightjs/highlight.pack.js"></script>
+<script src="bower_components/highlightjs/build/highlight.min.js"></script>
 <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
 <script src="bower_components/api-check/dist/api-check.js"></script>
 <script src="bower_components/angular-formly/dist/formly.js"></script>
@@ -90,17 +91,18 @@
 <script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
 <script src="bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js"></script>
 <script src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
-<script src="bower_components/angular-mocks/angular-mocks.js"></script>
 <script src="bower_components/google-diff-match-patch/diff_match_patch_uncompressed.js"></script>
 <script src="bower_components/angular-diff-match-patch/angular-diff-match-patch.js"></script>
 <script src="bower_components/holderjs/holder.js"></script>
 <script src="bower_components/keycloak/dist/keycloak.js"></script>
 <script src="bower_components/angular-md5/angular-md5.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
-<script src="bower_components/rangy/rangy-core.min.js"></script>
-<script src="bower_components/rangy/rangy-cssclassapplier.min.js"></script>
-<script src="bower_components/rangy/rangy-selectionsaverestore.min.js"></script>
-<script src="bower_components/rangy/rangy-serializer.min.js"></script>
+<script src="bower_components/rangy/rangy-core.js"></script>
+<script src="bower_components/rangy/rangy-classapplier.js"></script>
+<script src="bower_components/rangy/rangy-highlighter.js"></script>
+<script src="bower_components/rangy/rangy-selectionsaverestore.js"></script>
+<script src="bower_components/rangy/rangy-serializer.js"></script>
+<script src="bower_components/rangy/rangy-textrange.js"></script>
 <script src="bower_components/textAngular/src/textAngular.js"></script>
 <script src="bower_components/textAngular/src/textAngular-sanitize.js"></script>
 <script src="bower_components/textAngular/src/textAngularSetup.js"></script>
@@ -110,6 +112,9 @@
 <script src="bower_components/angular-schema-form/dist/bootstrap-decorator.js"></script>
 <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
 <script src="bower_components/atmosphere/atmosphere.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/moment/locale/fr.js"></script>
+<script src="bower_components/angular-moment/angular-moment.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -122,7 +127,6 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
-<script src="common/resize.js"></script>
 <script src="common/constants/url.js"></script>
 <script src="common/constants/icons.js"></script>
 <script src="common/auth/auth-init.js"></script>
@@ -156,6 +160,7 @@
 <script src="common/formly/config.js"></script>
 <script src="common/services/workspace-resource.js"></script>
 <script src="common/services/profile-resource.js"></script>
+<script src="common/services/group-resource.js"></script>
 <script src="common/services/runtime-service.js"></script>
 <script src="common/services/runtime-resource.js"></script>
 <script src="common/services/form-resource.js"></script>
@@ -176,6 +181,7 @@
 <script src="common/services/visualizer-manager.js"></script>
 <script src="common/services/file-select-browser.js"></script>
 <script src="common/services/profile.js"></script>
+<script src="common/services/settings.js"></script>
 <script src="common/tools/tool-manager.js"></script>
 <script src="common/visualizers/simple-audio-visualizer/simple-audio-visualizer.js"></script>
 <script src="common/visualizers/simple-image-visualizer/simple-image-visualizer.js"></script>
@@ -188,7 +194,7 @@
 <script src="common/nav/side-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
 <script src="common/nav/footer.js"></script>
-<script src="common/nav/animation.js"></script>
+<script src="common/nav/side-nav-animation.js"></script>
 <script src="common/nav/i18n/nav.fr.js"></script>
 <script src="common/nav/i18n/nav.en.js"></script>
 <script src="common/i18n/common.fr.js"></script>
@@ -200,6 +206,9 @@
 <script src="common/tools/tool-list.js"></script>
 <script src="common/tools/i18n/tools.fr.js"></script>
 <script src="common/tools/i18n/tools.en.js"></script>
+<script src="common/forms/i18n/forms.fr.js"></script>
+<script src="common/forms/i18n/forms.en.js"></script>
+<script src="workspace/workspaces.js"></script>
 <script src="workspace/upload.js"></script>
 <script src="workspace/i18n/workspace.fr.js"></script>
 <script src="workspace/i18n/workspace.en.js"></script>
@@ -208,6 +217,7 @@
 <script src="workspace/metadata-preview.js"></script>
 <script src="workspace/metadata-editor.js"></script>
 <script src="workspace/metadata-form-schema.js"></script>
+<script src="workspace/templates/add-member-modal.js"></script>
 <script src="processes/processes.js"></script>
 <script src="processes/i18n/processes.fr.js"></script>
 <script src="processes/i18n/processes.en.js"></script>
@@ -242,6 +252,5 @@
 <script src="common/schema-form/bootstrap-tablearray.js"></script>
 <script src="common/schema-form/vertical-tab/bootstrap-vertical-tab.js"></script>
 <!-- endbuild -->
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 </body>
 </html>

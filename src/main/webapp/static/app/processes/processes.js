@@ -33,10 +33,11 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.showToolLog = function (job) {
-                Runtime.selectToolJob(job);
+            $scope.showToolLog = function (process) {
+                Runtime.selectRemoteProcess(process);
+                $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
                 $modal({
-                    title: job.toolName,
+                    title: process.processTool.name,
                     html: true,
                     scope: $scope,
                     template: 'processes/process-log-modal-template.html',
@@ -44,22 +45,22 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.abortToolJob = function (job) {
-                Runtime.selectProcess(job);
-                ToolManager.getTool(job.toolKey).abortJob(job.id).$promise.then(
+            $scope.abortToolJob = function (process) {
+                Runtime.selectRemoteProcess(process);
+                ToolManager.getTool(process.toolKey).abortJob(process.jobId).$promise.then(
                     function () {
-                        $alert({title: job.toolName, content: 'annulé', placement: 'top-right', type: 'success', show: true});
+                        $alert({title: process.processTool.name, content: 'annulé', placement: 'top-right', type: 'success', show: true});
                     },
                     function () {
-                        $alert({title: job.toolName, content: 'pas annulé', placement: 'top-right', type: 'danger', show: true});
+                        $alert({title: process.processTool.name, content: 'pas annulé', placement: 'top-right', type: 'danger', show: true});
                     }
                 );
             };
 
-            $scope.showToolParam = function (job) {
-                Runtime.selectToolJob(job);
+            $scope.showToolParam = function (process) {
+                Runtime.selectRemoteProcess(process);
                 $modal({
-                    title: job.toolName,
+                    title: process.processTool.name,
                     html: true,
                     scope: $scope,
                     template: 'common/tools/tool-tpl-parameters.html',
@@ -67,14 +68,15 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.showResult = function (job) {
-                Runtime.selectProcess(job);
-                ToolManager.getTool(job.toolKey).getResult(job.id).$promise.then(function (data) {
+            $scope.showResult = function (process) {
+                Runtime.selectRemoteProcess(process);
+                ToolManager.getTool(process.toolKey).getResult(process.jobId).$promise.then(function (data) {
                     $scope.results = data;
-                    $scope.jname = job.toolName;
-                    $scope.job = job;
+                    $scope.jname = process.processTool.name;
+                    $scope.process = process;
+                    $scope.switchStatus = [];
                     $modal({
-                        title: job.toolName,
+                        title: process.processTool.name,
                         html: true,
                         scope: $scope,
                         template: 'common/tools/tool-result-modal-template.html',
@@ -84,10 +86,15 @@ angular.module('ortolangMarketApp')
 
             };
 
+
             $scope.activeTab = 0;
 
             $scope.showAll = function ($event) {
                 $($event.target).addClass('hidden').prev('table').addClass('show-all');
+            };
+
+            $scope.getToolDownloadUrl = function (url, jobid, path) {
+                return url + '/jobs/' + jobid + '/download?path=' + path;
             };
 
             if ($routeParams.pKey) {

@@ -23,6 +23,14 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/rest/workspaces/:wskey/snapshots',
                 transformRequest: function (data) { return $.param(data); },
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            },
+            getKey: {
+                method: 'GET',
+                url: url.api + '/rest/workspaces/:alias/key'
+            },
+            getAvailability: {
+                method: 'GET',
+                url: url.api + '/rest/workspaces/:alias/available'
             }
         });
     }]);

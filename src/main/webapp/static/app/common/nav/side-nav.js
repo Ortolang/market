@@ -33,8 +33,7 @@ angular.module('ortolangMarketApp')
                             var clickedElement = $('.side-nav').find('.' + element.class).parent(),
                                 copy = angular.element('.side-nav-active-item.copy'),
                                 real = angular.element('.side-nav-active-item.real');
-                            $rootScope.navPosition = clickedElement.position().top;
-                            console.log('$rootScope.navPosition', $rootScope.navPosition, element);
+                            copy.attr('nav-position', clickedElement.position().top);
                             real.addClass('animated');
                             $animate.removeClass(copy, 'ng-hide').then(function () {
                                 $scope.$apply(function () {

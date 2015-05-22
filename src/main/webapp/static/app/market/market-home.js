@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
             if (entry.applicationUrl) {
                 $window.open(entry.applicationUrl);
             } else {
-                $location.path('/market/item/' + entry.key);
+                $location.path('/market/' + $scope.section + '/' + entry.key);
             }
         };
 
@@ -41,19 +41,19 @@ angular.module('ortolangMarketApp')
 
             queryBuilder.equals('status', 'published');
 
-            if(type==='corpora') {
+            if (type === 'corpora') {
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Corpus');
-            } else if(type==='websites') {
+            } else if (type === 'websites') {
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Application');
-            } else if(type==='lexicons') {
+            } else if (type === 'lexicons') {
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Lexique');
-            } else if(type==='tools') {
+            } else if (type === 'tools') {
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
-            } else if(type==='news') {
+            } else if (type === 'news') {
                 queryBuilder.and();
                 queryBuilder.in('meta_ortolang-item-json.title', ['Littéracie Avancée', 'Corpus 14', 'CoMeRe (Communication médiée par les réseaux)']);
             }

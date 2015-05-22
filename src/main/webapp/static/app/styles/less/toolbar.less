@@ -1,20 +1,19 @@
 .toolbar.browser-toolbar, .toolbar.side-panel-toolbar {
-  margin-left: 0;
-  margin-right: 0;
   padding-left: 0;
   padding-right: 0;
 }
 
 .toolbar.browser-toolbar.market-browser-toolbar {
-  margin-left: 0;
-  margin-right: 0;
   padding-left: @container-main-padding - floor(@grid-gutter-width/2);
   padding-right: @container-main-padding - floor(@grid-gutter-width/2);
 }
 
+.container-main .row.toolbar:not(.browser-toolbar) {
+  margin-left: -@container-main-padding;
+  margin-right: -@container-main-padding;
+}
+
 .toolbar {
-  margin-left: -@container-main-padding + floor(@grid-gutter-width/2);
-  margin-right: -@container-main-padding + floor(@grid-gutter-width/2);
   padding: @padding-large-vertical (@container-main-padding - floor(@grid-gutter-width/2));
   margin-bottom: 2 * @padding-large-vertical;
   border-bottom: @default-border;

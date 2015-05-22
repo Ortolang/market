@@ -13,6 +13,7 @@ angular
         'ngAnimate',
         'ngRoute',
         'ngResource',
+        'ngMessages',
         'ngSanitize',
         'ortolangVisualizers',
         'angularFileUpload',
@@ -38,7 +39,8 @@ angular
         'xeditable',
         'textAngular',
         'schemaForm',
-        'ngTagsInput'
+        'ngTagsInput',
+        'angularMoment'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
@@ -61,21 +63,20 @@ angular
             .when('/market/applications', {
                 templateUrl: 'market/applications.html'
             })
-            .when('/market/item/:itemKey', {
+            .when('/market/:section/:itemKey', {
                 templateUrl: 'market/market-item.html',
-                controller: 'MarketItemCtrl'
+                controller: 'MarketItemCtrl',
+                reloadOnSearch: false
             })
             .when('/search', {
                 templateUrl: 'market/market-search.html',
                 controller: 'MarketSearchCtrl'
             })
             .when('/workspaces', {
-                templateUrl: 'workspace/workspace.html',
-                requiresAuthentication: true
-            })
-            .when('/workspaces/:wskey/:root/:path*\/browse', {
-                templateUrl: 'workspace/workspace.html',
-                requiresAuthentication: true
+                templateUrl: 'workspace/workspaces.html',
+                requiresAuthentication: true,
+                reloadOnSearch: false,
+                controller: 'WorkspacesCtrl'
             })
             .when('/processes', {
                 templateUrl: 'processes/processes.html',

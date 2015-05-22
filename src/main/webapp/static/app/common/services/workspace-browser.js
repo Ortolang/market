@@ -5,10 +5,10 @@
  * @name ortolangMarketApp.WorkspaceBrowserService
  * @description
  * # WorkspaceBrowserService
- * Factory in the ortolangMarketApp.
+ * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('WorkspaceBrowserService', ['WorkspaceElementResource', 'DownloadResource', function (WorkspaceElementResource, DownloadResource) {
+    .service('WorkspaceBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
 
         function getData(config) {
             if (config.path) {
@@ -19,36 +19,22 @@ angular.module('ortolangMarketApp')
             return undefined;
         }
 
-        function buildChildDownloadUrl(data, parent, root) {
-            return DownloadResource.getDownloadUrl({wskey: parent.workspace, path: parent.path + '/' + data.name, root: root});
-        }
+        this.id = 'WorkspaceBrowserService';
+        this.getData = getData;
+        this.dataResource = 'workspace';
+        this.canDelete = true;
+        this.canAdd = true;
+        this.canDownload = true;
+        this.canPreview = true;
+        this.canChangeRoot = true;
+        this.hasBreadcrumb = true;
+        this.defaultViewMode = 'line';
+        this.canSwitchViewMode = true;
+        this.canExecuteTool = true;
+        this.displayAsideInfo = true;
+        this.displayAsideWorkspaceList = true;
+        this.isFileSelect = false;
+        this.workspace = {};
 
-        function buildChildBrowseUrl(child, parent, root) {
-            return '/workspaces/' + parent.workspace + '/' + root + '/' +  parent.path + '/' + child.name + '/browse';
-        }
-
-        function buildBrowseUrlFromPath(wskey, path, root) {
-            return '/workspaces/' + wskey + '/' + root + '/' + path + '/browse';
-        }
-
-        return {
-            getId: function () { return 'WorkspaceBrowserService'; },
-            getData: getData,
-            getDataResource: 'workspace',
-            buildChildDownloadUrl: buildChildDownloadUrl,
-            buildChildBrowseUrl: buildChildBrowseUrl,
-            buildBrowseUrlFromPath: buildBrowseUrlFromPath,
-            canDelete: true,
-            canAdd: true,
-            canDownload: true,
-            canPreview: true,
-            canChangeRoot: true,
-            hasBreadcrumb: true,
-            defaultViewMode: 'line',
-            canSwitchViewMode: true,
-            canExecuteTool: true,
-            displayAsideInfo: true,
-            displayAsideWorkspaceList: true,
-            isFileSelect: false
-        };
+        return this;
     }]);

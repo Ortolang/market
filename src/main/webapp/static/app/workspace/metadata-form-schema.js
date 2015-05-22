@@ -22,13 +22,13 @@ angular.module('ortolangMarketApp')
                 return;
             }
 
-            if($scope.onlineTool===false) {
+            if ($scope.onlineTool === false) {
                 delete model.toolHelp;
                 delete model.toolId;
                 delete model.toolUrl;
             }
 
-            for(var propertyName in model) {
+            for (var propertyName in model) {
                 if(model[propertyName].length===0) {
                     delete model[propertyName];
                 } else if(model[propertyName].length===1 && model[propertyName][0]===undefined) {
@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
         });
 
         var deregistrationSchemaRendered = $rootScope.$on('sf-render-finished', function (event, schema) {
-            console.log("render finished");
+            console.log('render finished');
             resizeMetadataPanel();
         });
         // *********************** //
@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         function resizeMetadataPanel() {
-            console.log("resizeMetadataPanel");
+            console.log('resizeMetadataPanel');
             var topOffset = 53,
                 bottomOffset = 51,
                 toolbar = 55 + 20,
@@ -68,7 +68,7 @@ angular.module('ortolangMarketApp')
                 height = 1;
             }
             if (height > topOffset) {
-                
+
                 $('.metadata-form-panel').css('height', height + 'px');
             }
         }

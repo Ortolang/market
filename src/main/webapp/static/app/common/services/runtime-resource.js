@@ -43,6 +43,10 @@ angular.module('ortolangMarketApp')
             types: {
                 method: 'GET',
                 url: url.api + '/rest/runtime/types/'
+            },
+            remoteProcesses: {
+                method: 'GET',
+                url: url.api + '/rest/runtime/remote-processes/:rpKey'
             }
         });
     }]);

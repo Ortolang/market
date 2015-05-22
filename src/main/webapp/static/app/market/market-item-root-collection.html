@@ -10,20 +10,20 @@
 
                 <div ng-hide="browse">
 
-                    <p><span translate="MARKET.PRODUCER"></span> : 
+                    <div><span translate="MARKET.PRODUCER"></span> :
                         <ul>
                             <li ng-repeat="producer in item.producers">
                                 <a ng-href='' ng-bind="producer"></a>
                             </li>
                         </ul>
-                    </p>
-                    <p ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
+                    </div>
+                    <div ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
                         <ul>
                             <li><a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
                         </ul>
-                    </p>
+                    </div>
                 </div>
-                <button class="btn btn-default" ng-show="browse" ng-click="browse = !browse">{{'MARKET.GOBACKINFO' | translate}}</button>
+                <button class="btn btn-default" ng-show="browse" ng-click="browseContent()">{{'MARKET.GOBACKINFO' | translate}}</button>
             </div>
         </div>
     </header>
@@ -195,7 +195,7 @@
                         <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></a>
 
                         <div class="btn-group">
-                            <button class="btn btn-default btn-block" ng-click="browse = !browse">{{'MARKET.BROWSE' | translate}}</button>
+                            <button class="btn btn-default btn-block" ng-click="browseContent()">{{'MARKET.BROWSE' | translate}}</button>
                         </div>
                     </div>
                 </div>
