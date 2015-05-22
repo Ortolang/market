@@ -52,6 +52,7 @@ angular.module('ortolangMarketApp')
                 });
                 uploader.uploadQueueStatus = undefined;
                 uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                uploader.tokenJustRefreshed = false;
             }
 
             $scope.toggleUploadQueueStatus = function () {
@@ -135,8 +136,13 @@ angular.module('ortolangMarketApp')
                 clearItem(fileItem);
             };
 
+            uploader.onCompleteAll = function () {
+                uploader.tokenJustRefreshed = false;
+            };
+
             uploader.onErrorItem = function (fileItem, response, status, headers) {
-                if (AuthService.getKeycloak().isTokenExpired()) {
+                if (uploader.tokenJustRefreshed || AuthService.getKeycloak().isTokenExpired()) {
+                    uploader.tokenJustRefreshed = true;
                     AuthService.getKeycloak().updateToken(5).success(function () {
                         fileItem.headers.Authorization = 'Bearer ' + AuthService.getToken();
                         fileItem.upload();

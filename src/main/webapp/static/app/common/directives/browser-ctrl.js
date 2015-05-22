@@ -279,6 +279,10 @@ angular.module('ortolangMarketApp')
                 Download.download(element);
             };
 
+            $scope.getPreviewUrl = function (element, large) {
+                return Download.getPreviewUrl(element, large);
+            };
+
             function createModalScope() {
                 modalScope = $scope.$new(true);
                 modalScope.$on('modal.hide', function () {
