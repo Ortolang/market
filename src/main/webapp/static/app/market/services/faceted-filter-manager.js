@@ -31,12 +31,11 @@ angular.module('ortolangMarketApp')
             },
 
             addFilter : function (filter, opt) {
-                filter.setValue(opt.getValue());
-                filter.setSelected(opt);
+                filter.putSelectedOption(opt);
 
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
-                    if (this.enabledFilters[i].id === filter.id) {
+                    if (this.enabledFilters[i].getId() === filter.getId()) {
                         return this.enabledFilters;
                     }
                 }
@@ -46,8 +45,8 @@ angular.module('ortolangMarketApp')
             removeFilter: function(filter) {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
-                    if (this.enabledFilters[i].id === filter.id) {
-                        filter.reset();
+                    if (this.enabledFilters[i].getId() === filter.getId()) {
+                        filter.clearSelectedOptions();
                         this.enabledFilters.splice(i, 1);
                         return this.getFilters();
                     }
@@ -61,7 +60,7 @@ angular.module('ortolangMarketApp')
             resetFilter: function() {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
-                    this.enabledFilters[i].reset();
+                    this.enabledFilters[i].clearSelectedOptions();
                     delete this.enabledFilters[i];
                 }
             },
@@ -80,26 +79,26 @@ angular.module('ortolangMarketApp')
                 return this.availabledFilters.push(filter);
             },
 
+            removeOptionFilter: function(filter, opt) {
+                filter.removeSelectedOption(opt);
+
+                if(!filter.hasSelectedOptions()) {
+                    this.removeFilter(filter);
+                }
+            },
+
             urlParam: function (content, viewMode) {
             
                 var filters = {}, params = {};
                 angular.forEach(this.enabledFilters, function(filter) {
 
-                    if(filter.getType() === 'string') {
-                        filters[filter.id] = filter.value;
-                    } else if(filter.getType() === 'array') {
-                        var arrValue= [];
-                        if(angular.isArray(filter.value)) {
-                            angular.forEach(filter.value, function(val) {
-                                arrValue.push(val);
-                            });
-                        } else {
-                            arrValue.push(filter.value);
-                        }
-                        filters[filter.id] = arrValue;
-                    } else {
-                        filters[filter.id] = filter.value;
-                    }
+                    var arrValue = [];
+                    angular.forEach(filter.getSelectedOptions(), function(opt) {
+                        arrValue.push(opt.getValue());
+                    });
+                    
+                    filters[filter.id] = arrValue;
+                    
                 });
                 params.filters = angular.toJson(filters);
 
@@ -114,19 +113,21 @@ angular.module('ortolangMarketApp')
 
             toQuery: function(content) {
                 var queryBuilder = QueryBuilderServiceProvider.$get().make({
-                    projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl', 
+                    projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate', 
                     source: 'collection'
                 });
 
                 // TODO made based on availabled filters
                 queryBuilder.addProjection('meta_ortolang-item-json.statusOfUse', 'statusOfUse');
-                queryBuilder.addProjection('meta_ortolang-item-json.primaryLanguage', 'primaryLanguage');
-                queryBuilder.addProjection('meta_ortolang-item-json.typeOfCorpus', 'typeOfCorpus');
+                queryBuilder.addProjection('meta_ortolang-item-json.corporaLanguages', 'corporaLanguages');
+                queryBuilder.addProjection('meta_ortolang-item-json.corporaType', 'corporaType');
 
-                queryBuilder.addProjection('meta_ortolang-item-json.textFormat', 'textFormat');
-                queryBuilder.addProjection('meta_ortolang-item-json.textEncoding', 'textEncoding');
+                queryBuilder.addProjection('meta_ortolang-item-json.corporaFormats', 'corporaFormats');
+                queryBuilder.addProjection('meta_ortolang-item-json.corporaFileEncodings', 'corporaFileEncodings');
+                queryBuilder.addProjection('meta_ortolang-item-json.corporaDataTypes', 'corporaDataTypes');
+                queryBuilder.addProjection('meta_ortolang-item-json.corporaLanguageType', 'corporaLanguageType');
 
-                queryBuilder.addProjection('meta_ortolang-item-json.annotationLevel', 'annotationLevel');
+                queryBuilder.addProjection('meta_ortolang-item-json.annotationLevels', 'annotationLevels');
                 queryBuilder.addProjection('meta_ortolang-item-json.transcriptionType', 'transcriptionType');
                 queryBuilder.addProjection('meta_ortolang-item-json.transcriptionFormat', 'transcriptionFormat');
                 queryBuilder.addProjection('meta_ortolang-item-json.typeOfSpeech', 'typeOfSpeech');
@@ -149,16 +150,13 @@ angular.module('ortolangMarketApp')
                     });
                 }
 
-                // for(var filterName in filters) {
                 angular.forEach(this.enabledFilters, function(filter) {
-
                     queryBuilder.and();
                     if(filter.getType() ==='array') {
-                        queryBuilder.in(filter.getId(), [filter.getValue()]);
+                        queryBuilder.in(filter.getId(), filter.getSelectedOptionsValues());
                     } else {
-                        queryBuilder.equals(filter.getId(), filter.getValue());
+                        queryBuilder.equals(filter.getId(), filter.getSelectedOptionsValues());
                     }
-                    
                 });
 
                 return queryBuilder.toString();

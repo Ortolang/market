@@ -1,0 +1,18 @@
+
+    <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+        <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.getResetLabel() | translate}}</a></li>
+        <li class="divider" role="menuitem"></li>
+        <li ng-repeat="option in filter.getOptions()" ng-class="filter.getSelected().getValue()===option.getValue()?'active':''" role="menuitem"><a ng-click="setFilter(filter, option)">{{option.getLabel() | translate}}</a></li>
+    </ul> -->
+<div class="row">
+	<div ng-repeat="option in filter.getOptions()" class="col-sm-2">
+	    <!-- <button type="button" class="btn btn-default" ng-click="setFilter(filter, option)" ng-model="button.checkbox[option.getLabel()]" bs-checkbox>{{option.getLabel() | translate}}</button> -->
+	    <div class="checkbox checkbox-primary">
+		    <input type="checkbox" id="checkbox{{option.getLabel()}}" ng-model="checkbox[option.getLabel()]" ng-change="switchFilter(filter, option)" ng-checked="filter.hasSelectedOption(option)">
+		    <label for="checkbox{{option.getLabel()}}">
+		        {{option.getLabel() | translate}}
+		    </label>
+		</div>
+	</div>
+</div>

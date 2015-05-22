@@ -41,7 +41,15 @@ angular.module('ortolangMarketApp')
             },
 
             equals : function (name, content) {
-                this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
+                if(angular.isArray(content)) {
+                    var optionalValues = '', sanitize = this.sanitize;
+                    angular.forEach(content, function(val) {
+                        optionalValues += (optionalValues===''?'':' OR ') + name + ' = \'' + sanitize(val) + '\'';
+                    });
+                    this.conditions += '(' + optionalValues + ')';
+                } else {
+                    this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
+                }
             },
 
             contains : function (name, content) {

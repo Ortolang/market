@@ -35,12 +35,23 @@ angular.module('ortolangMarketApp')
                     };
 
                     scope.setFilter = function(filter, opt) {
-                        if(filter.getSelected() && filter.getSelected().getValue() !== opt.getValue()) {
-                            angular.forEach(filter.getSelected().getSubFilters(), function(subFilter) {
-                                scope.filtersManager.removeFilter(subFilter);
-                            });
-                        }
+                        // if(filter.getSelected() && filter.getSelected().getValue() !== opt.getValue()) {
+                        //     angular.forEach(filter.getSelected().getSubFilters(), function(subFilter) {
+                        //         scope.filtersManager.removeFilter(subFilter);
+                        //     });
+                        // }
                         scope.filtersManager.addFilter(filter, opt);
+                        scope.applyFilters();
+                    };
+
+                    scope.switchFilter = function(filter, opt) {
+                        if(filter.hasSelectedOption(opt)) {
+                            scope.filtersManager.removeOptionFilter(filter, opt);
+                        } else {
+                            scope.filtersManager.addFilter(filter, opt);
+                        }
+                        
+                        // scope.filtersManager.addFilter(filter, opt);
                         scope.applyFilters();
                     };
 
@@ -95,7 +106,7 @@ angular.module('ortolangMarketApp')
                     scope.hasAppliedFacets = function() {
                         var i = 0;
                         for (i; i < scope.filtersManager.getFilters().length; i++) {
-                            if (scope.filtersManager.getFilters()[i].hasSelectedElement() && !scope.filtersManager.getFilters()[i].isLock()) {
+                            if (scope.filtersManager.getFilters()[i].hasSelectedOptions() && !scope.filtersManager.getFilters()[i].isLock()) {
                                 return true;
                             }
                         }

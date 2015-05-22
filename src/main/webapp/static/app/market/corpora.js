@@ -50,37 +50,53 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
 
-
-            var annotationLevelFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.annotationLevel',
-                alias: 'annotationLevel',
+            var annotationLevelsFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.annotationLevels',
+                alias: 'annotationLevels',
                 type: 'array',
                 label: 'MARKET.FACET.ANNOTATION_LEVEL',
                 resetLabel: 'MARKET.FACET.ALL_ANNOTATION_LEVEL'
             });
-            $scope.filtersManager.addAvailabledFilter(annotationLevelFilter);
+            $scope.filtersManager.addAvailabledFilter(annotationLevelsFilter);
 
-            var textFormatFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.textFormat',
-                alias: 'textFormat',
+            var corporaFormatsFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.corporaFormats',
+                alias: 'corporaFormats',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_FORMAT',
                 resetLabel: 'MARKET.FACET.ALL_TEXT_FORMAT'
             });
-            $scope.filtersManager.addAvailabledFilter(textFormatFilter);
+            $scope.filtersManager.addAvailabledFilter(corporaFormatsFilter);
 
-            var textEncodingFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.textEncoding',
-                alias: 'textEncoding',
+            var corporaDataTypesFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.corporaDataTypes',
+                alias: 'corporaDataTypes',
+                type: 'array',
+                label: 'MARKET.FACET.CORPORA_DATATYPES',
+                resetLabel: 'MARKET.FACET.ALL_CORPORA_DATATYPES'
+            });
+            $scope.filtersManager.addAvailabledFilter(corporaDataTypesFilter);
+
+            var corporaLanguageTypeFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.corporaLanguageType',
+                alias: 'corporaLanguageType',
+                label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
+                resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
+            });
+            $scope.filtersManager.addAvailabledFilter(corporaLanguageTypeFilter);
+
+            var corporaFileEncodingsFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.corporaFileEncodings',
+                alias: 'corporaFileEncodings',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_ENCODING',
                 resetLabel: 'MARKET.FACET.ALL_TEXT_ENCODING'
             });
-            $scope.filtersManager.addAvailabledFilter(textEncodingFilter);
+            $scope.filtersManager.addAvailabledFilter(corporaFileEncodingsFilter);
 
             var corpusTypeFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.typeOfCorpus',
-                alias: 'typeOfCorpus',
+                id: 'meta_ortolang-item-json.corporaType',
+                alias: 'corporaType',
                 label: 'MARKET.FACET.CORPORA_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA',
                 priority: 'high',
@@ -88,8 +104,7 @@ angular.module('ortolangMarketApp')
                     OptionFacetedFilter.make({
                         label: 'Écrit', 
                         value: 'Écrit',
-                        length: 1,
-                        subFilters: [annotationLevelFilter, textFormatFilter, textEncodingFilter]
+                        length: 1
                     }),
                     OptionFacetedFilter.make({
                         label: 'Oral', 
@@ -102,13 +117,15 @@ angular.module('ortolangMarketApp')
                         length: 1
                     })
                 ],
-                lockOptions: true
+                lockOptions: true,
+                view: 'checkbox-faceted-filter'
             });
             $scope.filtersManager.addAvailabledFilter(corpusTypeFilter);
 
             var languageFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.primaryLanguage',
-                alias: 'primaryLanguage',
+                id: 'meta_ortolang-item-json.corporaLanguages',
+                alias: 'corporaLanguages',
+                type: 'array',
                 label: 'MARKET.FACET.CORPORA_LANG',
                 resetLabel: 'MARKET.FACET.ALL_LANG',
                 priority: 'high'

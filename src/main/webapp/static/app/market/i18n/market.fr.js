@@ -65,6 +65,10 @@ angular.module('ortolangMarketApp')
                   ALL_STATUSOFUSE: 'Tout les droits d\'utilisations',
                   CORPORA_LANG: 'Langue du corpus',
                   ALL_LANG: 'Toutes les Langues',
+                  CORPORA_DATATYPES: 'Type de source',
+                  ALL_CORPORA_DATATYPES: 'Tout type de source',
+                  CORPORA_LANGUAGE_TYPE: 'Type de langue',
+                  ALL_CORPORA_LANGUAGE_TYPE: 'Tout type de langue',
                   ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',
                   ALL_TOOL_INPUTDATA: 'Tout type d\'entrée',
                   ALL_TRANSCRIPTION_TYPE: 'Tout type de transcription',
@@ -84,6 +88,6 @@ angular.module('ortolangMarketApp')
             },
             FACETS: 'Options de recherche',
             MORE_FACETS: 'Plus de filtres',
-            LESS_FACETS: 'Cacher les filtres'
+            LESS_FACETS: 'Cacher les filtres supplémentaires'
         }
     });

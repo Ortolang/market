@@ -13,15 +13,16 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
         function FacetedFilter(config) {
             this.id = undefined;
             this.alias = undefined;
-            this.value = undefined;
+            // this.value = [];
             this.label = undefined;
             this.type = 'string';
             this.priority = 'low';
             this.resetLabel = '';
-            this.selected = undefined;
+            this.selectedOptions = [];
             this.options = [];
             this.lock = false;
             this.lockOptions = false;
+            this.view = 'checkbox-faceted-filter';
 
             angular.forEach(config, function (value, key) {
                 if (this.hasOwnProperty(key)) {
@@ -45,13 +46,17 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.alias = alias;
             },
 
-            getValue: function () {
-                return this.value;
-            },
+            // getValues: function () {
+            //     return this.values;
+            // },
 
-            setValue: function(value) {
-                this.value = value;
-            },
+            // setValues: function(values) {
+            //     this.values = values;
+            // },
+
+            // isEmpty: function() {
+            //     return this.values.length <= 0;
+            // }
 
             getLabel: function () {
                 return this.label;
@@ -77,20 +82,62 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.priority = priority;
             },
 
-            getSelected: function () {
-                return this.selected;
+            getSelectedOptions: function () {
+                return this.selectedOptions;
             },
 
-            setSelected: function(selected) {
-                this.selected = selected;
+            setSelectedOptions: function(selectedOptions) {
+                this.selectedOptions = selectedOptions;
             },
 
-            hasSelectedElement: function() {
-                return this.selected !== undefined;
+            hasSelectedOption: function(option) {
+                var i = 0;
+                for (i; i < this.selectedOptions.length; i++) {
+                    if (this.selectedOptions[i].getValue() === option.getValue()) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+
+            putSelectedOption: function(option) {
+                if(!this.hasSelectedOption(option)) {
+                    this.selectedOptions.push(option);
+                }
+            },
+
+            removeSelectedOption: function(option) {
+                var i = 0;
+                for (i; i < this.selectedOptions.length; i++) {
+                    if (this.selectedOptions[i].getValue() === option.getValue()) {
+                        this.selectedOptions.splice(i, 1);
+                        return;
+                    }
+                }
+            },
+
+            clearSelectedOptions: function () {
+                return this.selectedOptions = [];
+            },
+
+            hasSelectedOptions: function() {
+                return this.selectedOptions.length > 0;
             },            
 
+            getSelectedOptionsValues: function () {
+                var valueArr = [];
+                angular.forEach(this.selectedOptions, function(opt) {
+                    valueArr.push(opt.getLabel());
+                });
+                return valueArr;
+            },
+
             getSelectedLabel: function() {
-                return (this.selected)?this.selected.getLabel():this.resetLabel;
+                var label = '';
+                angular.forEach(this.selectedOptions, function(opt) {
+                    label += (label===''?'':',') + opt.getLabel();
+                });
+                return label===''?this.resetLabel:label;
             },
 
             getResetLabel: function () {
@@ -103,6 +150,10 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
 
             isLock: function() {
                 return this.lock;
+            },
+
+            getView: function () {
+                return this.view;
             },
 
             getOptions: function () {
@@ -144,8 +195,8 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             },
 
             reset: function() {
-                this.value = undefined;
-                this.selected = undefined;
+                // this.value = undefined;
+                this.selectedOptions = [];
             }
         };
 
