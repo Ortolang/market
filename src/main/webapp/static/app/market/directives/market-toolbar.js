@@ -28,10 +28,10 @@ angular.module('ortolangMarketApp')
                 post : function (scope) {
                 
                     scope.search = function (content) {
-                        if (content && content !== '') {
-                            $rootScope.selectSearch();
-                            $location.url('/search?content='+content+'&filters='+angular.toJson({'meta_ortolang-item-json.type':scope.type})+'&viewMode='+scope.viewMode.id);
-                        }
+                        // if (content && content !== '') {
+                        //     $rootScope.selectSearch();
+                        //     $location.url('/search?content='+content+'&filters='+angular.toJson({'meta_ortolang-item-json.type':scope.type})+'&viewMode='+scope.viewMode.id);
+                        // }
                     };
 
                     scope.setFilter = function(filter, opt) {
@@ -63,8 +63,7 @@ angular.module('ortolangMarketApp')
                     scope.applyFilters = function() {
                         scope.hideLowFacets();
 
-                        var content = '';
-                        scope.query = scope.filtersManager.toQuery(content);
+                        scope.query = scope.filtersManager.toQuery(scope.content);
                         // setVisibleFilters();
                     }
 

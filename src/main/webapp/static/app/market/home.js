@@ -10,13 +10,6 @@
 angular.module('ortolangMarketApp')
     .controller('HomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderService', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderService) {
 
-        $scope.search = function () {
-            if ($scope.content !== '') {
-                $rootScope.selectSearch();
-                $location.search('content', $scope.content).path('/search');
-            }
-        };
-
         $scope.clickItem = function (entry) {
             if (entry.applicationUrl) {
                 $window.open(entry.applicationUrl);
@@ -28,11 +21,6 @@ angular.module('ortolangMarketApp')
         // Scope variables
         function initScopeVariables() {
             $scope.items = [];
-            $scope.corpora = [];
-            $scope.lexiques = [];
-            $scope.outils = [];
-            $scope.website = [];
-            $scope.news = [];
 
             $scope.content = '';
         }

@@ -12,8 +12,8 @@
 
                     <p><span translate="MARKET.PRODUCER"></span> : 
                         <ul>
-                            <li ng-repeat="producer in item.producer">
-                                <a ng-href='#/search?content={{producer}}&operator=contains&field=meta_ortolang-item-json.producer' ng-bind="producer"></a>
+                            <li ng-repeat="producer in item.producers">
+                                <a ng-href='' ng-bind="producer"></a>
                             </li>
                         </ul>
                     </p>
@@ -56,85 +56,70 @@
                 </article>
             </section>
 
-            <section id="keywords" ng-if="item.extent || item.keywords || item.primaryLanguage || item.discourseType || item.linguisticSubject">
+            <section id="keywords" ng-if="item.keywords || item.corporaLanguages || item.annotationLevels || item.corporaFormats || item.programmingLanguages || item.opearatingSystems || item.toolLanguages">
                 <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
                 <article>
                     <div class="row">
-                        <div ng-if="item.extent" class="col-md-3 extent">
-                            <dl>
-                                <dt translate="MARKET.EXTENT"></dt>
-                                <dd ng-bind-html="item.extent"></dd>
-                            </dl>
-                        </div>
 
                         <div ng-if="item.keywords" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.KEYWORDS"></dt>
                                 <dd ng-repeat="keyword in item.keywords">
-                                    <a ng-href="#/search?content={{keyword}}">{{keyword}}</a>
+                                    <a ng-href="">{{keyword}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.primaryLanguage" class="col-md-3">
+                        <div ng-if="item.corporaLanguages" class="col-md-3">
                             <dl>
-                                <dt translate="MARKET.PRIMARY_LANGUAGE"></dt>
-                                <dd ng-repeat="pLang in item.primaryLanguage">
-                                    <a ng-href="#/search?content={{pLang}}&operator=contains&field=meta_ortolang-item-json.primaryLanguage">{{pLang}}</a>
+                                <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
+                                <dd ng-repeat="pLang in item.corporaLanguages">
+                                    <a ng-href="">{{pLang}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.discourseType" class="col-md-3">
+                        <div ng-if="item.annotationLevels" class="col-md-3">
                             <dl>
-                                <dt translate="MARKET.DISCOURSE_TYPE"></dt>
-                                <dd ng-repeat="discType in item.discourseType">
-                                    <a ng-href="#/search?content={{discType}}&operator=contains&field=meta_ortolang-item-json.discourseType">{{discType}}</a>
+                                <dt translate="MARKET.FACET.ANNOTATION_LEVEL"></dt>
+                                <dd ng-repeat="annLevel in item.annotationLevels">
+                                    <a ng-href="">{{annLevel}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.linguisticSubject" class="col-md-3">
+                        <div ng-if="item.corporaFormats" class="col-md-3">
                             <dl>
-                                <dt translate="MARKET.LINGUISTIC_SUBJECT"></dt>
-                                <dd ng-repeat="lingSubj in item.linguisticSubject">
-                                    <a ng-href="#/search?content={{lingSubj}}&operator=contains&field=meta_ortolang-item-json.linguisticSubject">{{lingSubj}}</a>
+                                <dt translate="MARKET.FACET.TEXT_FORMAT"></dt>
+                                <dd ng-repeat="corpFormat in item.corporaFormats">
+                                    <a ng-href="">{{corpFormat}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.programmingLanguage" class="col-md-3">
+                        <div ng-if="item.programmingLanguages" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
-                                <dd ng-repeat="pl in item.programmingLanguage">
-                                    <a ng-href="#/search?content={{pl}}&operator=contains&field=meta_ortolang-item-json.programmingLanguage">{{pl}}</a>
+                                <dd ng-repeat="pl in item.programmingLanguages">
+                                    <a ng-href="">{{pl}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.opearatingSystem" class="col-md-3">
+                        <div ng-if="item.opearatingSystems" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.OPERATING_SYSTEM"></dt>
-                                <dd ng-repeat="os in item.opearatingSystem">
-                                    <a ng-href="#/search?content={{os}}&operator=contains&field=meta_ortolang-item-json.opearatingSystem">{{os}}</a>
+                                <dd ng-repeat="os in item.opearatingSystems">
+                                    <a ng-href="">{{os}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.toolSupport" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.SUPPORT_TOOL"></dt>
-                                <dd>
-                                    <a ng-href="#/search?content={{item.toolSupport}}">{{item.toolSupport}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item.language" class="col-md-3">
+                        <div ng-if="item.toolLanguages" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.LANGUAGE"></dt>
-                                <dd ng-repeat="lang in item.language">
-                                    <a ng-href="#/search?content={{lang}}&operator=contains&field=meta_ortolang-item-json.language">{{lang}}</a>
+                                <dd ng-repeat="lang in item.toolLanguages">
+                                    <a ng-href="">{{lang}}</a>
                                 </dd>
                             </dl>
                         </div>
@@ -143,47 +128,47 @@
                 </article>
             </section>
 
-            <section id="contributor" ng-if="item.researcher || item.manager || item.developer || item.author || item.compiler">
+            <section id="contributor" ng-if="item.researchers || item.managers || item.developers || item.authors || item.compilers">
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
-                <article class="row" ng-if="item.researcher">
+                <article class="row" ng-if="item.researchers">
                     <h4 translate="MARKET.RESEARCHER"></h4>
                     <ul class="list-contributor">
-                        <li ng-repeat="researcher in item.researcher">
-                            <a ng-href='#/search?content={{researcher}}&operator=contains&field=meta_ortolang-item-json.researcher' ng-bind="researcher"></a>
+                        <li ng-repeat="researcher in item.researchers">
+                            <a ng-href='' ng-bind="researcher"></a>
                         </li>
                     </ul>
 
                 </article>
-                <article class="row" ng-if="item.manager">
+                <article class="row" ng-if="item.managers">
                     <h4 translate="MARKET.MANAGER"></h4>
                     <ul class="list-contributor">
-                        <li ng-repeat="manager in item.manager">
-                            <a ng-href='#/search?content={{manager}}&operator=contains&field=meta_ortolang-item-json.manager' ng-bind="manager"></a>
+                        <li ng-repeat="manager in item.managers">
+                            <a ng-href='' ng-bind="manager"></a>
                         </li>
                     </ul>
                 </article>
-                <article class="row" ng-if="item.developer">
+                <article class="row" ng-if="item.developers">
                     <h4 translate="MARKET.DEVELOPER"></h4>
                     <ul class="list-contributor">
-                        <li ng-repeat="developer in item.developer">
-                            <a ng-href='#/search?content={{developer}}&operator=contains&field=meta_ortolang-item-json.developer' ng-bind="developer"></a>
+                        <li ng-repeat="developer in item.developers">
+                            <a ng-href='' ng-bind="developer"></a>
                         </li>
                     </ul>
                 </article>
-                <article class="row" ng-if="item.author">
+                <article class="row" ng-if="item.authors">
                     <h4 translate="MARKET.AUTHOR"></h4>
                     <ul class="list-contributor">
-                        <li ng-repeat="author in item.author">
-                            <a ng-href='#/search?content={{author}}&operator=contains&field=meta_ortolang-item-json.author' ng-bind="author"></a>
+                        <li ng-repeat="author in item.authors">
+                            <a ng-href='' ng-bind="author"></a>
                         </li>
                     </ul>
                 </article>
-                <article class="row" ng-if="item.compiler">
+                <article class="row" ng-if="item.compilers">
                     <h4 translate="MARKET.COMPILER"></h4>
                     <ul class="list-contributor">
-                        <li ng-repeat="compiler in item.compiler">
-                            <a ng-href='#/search?content={{compiler}}&operator=contains&field=meta_ortolang-item-json.compiler' ng-bind="compiler"></a>
+                        <li ng-repeat="compiler in item.compilers">
+                            <a ng-href='' ng-bind="compiler"></a>
                         </li>
                     </ul>
                 </article>
@@ -199,7 +184,7 @@
 
         <aside ng-show="!browse" class="col-md-4">
 
-            <div class="panel panel-default license-panel" ng-show="datasizeToPrint || item.conditionsOfUse || licenseDataObject">
+            <div class="panel panel-default license-panel" ng-show="item.type !== 'Application'">
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
 
@@ -240,18 +225,6 @@
                 </div>
             </div>
             <br/> -->
-
-            <div ng-if="item.spacial || item.temporal" class="panel panel-default metadata-panel">
-                <div class="panel-heading" translate="MARKET.LOCATION"></div>
-                <div class="panel-body">
-                    <dl class="dl-horizontal">
-                        <dt ng-if="item.spacial" translate="MARKET.SPACIAL"></dt>
-                        <dd ng-repeat="spacial in item.spacial">{{spacial}}<span ng-if="!$last">, </span></dd>
-                        <dt ng-if="item.temporal" translate="MARKET.TEMPORAL"></dt>
-                        <dd ng-if="item.temporal">{{item.temporal}}</dd>
-                    </dl>
-                </div>
-            </div>
         </aside>
     </div>
 </section>
