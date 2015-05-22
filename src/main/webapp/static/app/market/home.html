@@ -1,38 +1,43 @@
 <div class="market-home container-fluid container-main">
-<div class="row">
-        <div class="toolbar">
-            <div class="col-sm-12">
-                
-            </div>
+    <div class="row toolbar">
+        <div class="col-sm-12">
+            <!-- <div class="input-group">
+                <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+                <span class="input-group-btn">
+                    <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div> -->
         </div>
     </div>
     <section class="row">
         <div class="col-md-8">
             <h3 class="ortolang-title" translate="ORTOLANG"></h3>
-        </div>
-        <div class="clearfix visible-xs-block"></div>
-        <div class="col-md-8">
             <hr/>
             <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.NEWS' | translate"></div>
+            <hr/>
+            <div class="media small marianne" >
+                <div class="media-left">
+                    <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
+                </div>
+                <div class="media-body">
+                    <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
+                    <i>ORTOLANG ISSN 2417&ndash;7482</i>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="news-well well">
                 <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'INFORMATION.NEWS' | translate}}</p>
                 <hr/>
+                <img src="assets/images/InnovativesSHS_©CNRS2015.jpeg"/>
                 <p translate="INFORMATION.INNOVATIVE_SHS"></p>
-                <p><a class="btn btn-sm btn-default" href="http://innovatives.cnrs.fr/spip.php?article118" target="_blank"><span class="fa fa-fw fa-plus"></span> {{'INFORMATION.MORE' | translate}}...</a></p>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="http://innovatives.cnrs.fr/spip.php?article118" target="_blank"><span class="fa fa-fw fa-plus"></span> {{'INFORMATION.MORE' | translate}}</a>
+                    <a class="btn btn-sm btn-default" href="https://twitter.com/hashtag/InnovativesCNRS" target="_blank"><span class="fa fa-fw fa-twitter"></span> #InnovativesCNRS</a>
+                </div>
                 <hr/>
                 <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="resources/Lettre_information_ORTOLANG.pdf" target="_blank">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
                 <p><a class="btn btn-sm btn-default" href="/#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
-            </div>
-            <div class="media small marianne" >
-                <div class="media-body text-center">
-                    <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
-                    <i>ORTOLANG ISSN 2417&ndash;7482</i>
-                </div>
-                <div class="media-right">
-                    <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
-                </div>
             </div>
         </div>
     </section>

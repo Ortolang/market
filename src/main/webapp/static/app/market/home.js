@@ -30,7 +30,7 @@ angular.module('ortolangMarketApp')
 
             queryBuilder.equals('status', 'published');
             queryBuilder.and();
-            queryBuilder.in('meta_ortolang-item-json.title', ['Littéracie Avancée', 'Corpus14', 'Comere']);
+            queryBuilder.in('meta_ortolang-item-json.title', ['Littéracie Avancée', 'Corpus 14', 'CoMeRe (Communication médiée par les réseaux)']);
             
             var query = queryBuilder.toString();
             console.log('query : ' + query);
