@@ -19,42 +19,29 @@
                 </section>
             </div>
             <div class="col-sm-10 col-md-10 container-main workspace-dashboard">
-                <!--<header class="media">-->
-                <!--<a class="pull-left">-->
-                <!--<img ng-if="imageTitle" class="logo" ng-src="" holder-js="holder.js/160x160/{{imageTheme}}/text:{{imageTitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>-->
-                <!--<img ng-if="presentationMetadata.image" ng-src="{{imageUrl}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>-->
-                <!--</a>-->
-                <!--<div class="media-body">-->
-                <!--<h1>{{WorkspaceBrowserService.workspace.name}}</h1>-->
-                <!--<dl>-->
-                <!--<dt translate="WORKSPACE.ALIAS"></dt>-->
-                <!--<dd>{{WorkspaceBrowserService.workspace.alias}}</dd>-->
-                <!--<dt translate="BROWSER.KEY"></dt>-->
-                <!--<dd>{{WorkspaceBrowserService.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="WorkspaceBrowserService.workspace.key"></span></span></dd>-->
-                <!--</dl>-->
-                <!--<div class="btn-group">-->
-                <!--<button class="btn btn-default" ng-click="browse()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>-->
-                <!--</div>-->
-                <!--<div class="btn-group">-->
-                <!--<button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>-->
-                <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</header>-->
                 <h1>{{WorkspaceBrowserService.workspace.name}}</h1>
                 <br/>
+                <div>
+                    <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>
+                    <div class="btn-group">
+                        <button class="btn btn-default" ng-click="showMetadataItem()"><span class="octicon octicon-book"></span> {{'BROWSER.CREATE_PRESENTATION_METADATA' | translate}}</button>
+                        <button class="btn btn-default" data-ng-disabled="!WorkspaceBrowserService.workspace.changed" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>
+                        <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
+                    </div>
+                </div>
+                <hr/>
                 <div bs-tabs data-nav-class="nav-pills">
                     <section data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
+                        <br/>
                         <dl>
                             <dt translate="WORKSPACE.ALIAS"></dt>
                             <dd>{{WorkspaceBrowserService.workspace.alias}}</dd>
                             <dt translate="BROWSER.KEY"></dt>
                             <dd>{{WorkspaceBrowserService.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="WorkspaceBrowserService.workspace.key"></span></span></dd>
                         </dl>
-                        <button class="btn btn-default" ng-click="browse()">Browse</button>
-                        <button class="btn btn-default" ng-click="publish()">Publish</button>
                     </section>
                     <section data-title="{{'WORKSPACE.MEMBERS' | translate}}" bs-pane>
+                        <br/>
                         <ul class="list-group">
                             <li ng-repeat="member in workspaceMembers.members track by member.key" class="list-group-item">
                                 <span>{{member.givenName}} {{member.familyName}}</span>
@@ -65,8 +52,8 @@
                         <button class="btn btn-default" ng-click="addMember()"><span ng-class="icons.browser.plus"></span> Add member</button>
                     </section>
                 </div>
-                <hr/>
-                <pre>{{WorkspaceBrowserService.workspace | json}}</pre>
+                <!--<hr/>-->
+                <!--<pre>{{WorkspaceBrowserService.workspace | json}}</pre>-->
                 <!--<br>-->
                 <!--<pre>{{presentationMetadata | json}}</pre>-->
             </div>
@@ -74,3 +61,5 @@
         </div>
     </div>
 </div>
+
+<div ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>

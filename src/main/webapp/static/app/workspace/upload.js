@@ -52,6 +52,7 @@ angular.module('ortolangMarketApp')
                 });
                 uploader.uploadQueueStatus = undefined;
                 uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                uploader.tokenJustRefreshed = false;
             }
 
             $scope.toggleUploadQueueStatus = function () {
@@ -133,5 +134,22 @@ angular.module('ortolangMarketApp')
                         break;
                 }
                 clearItem(fileItem);
+            };
+
+            uploader.onCompleteAll = function () {
+                uploader.tokenJustRefreshed = false;
+            };
+
+            uploader.onErrorItem = function (fileItem, response, status, headers) {
+                if (uploader.tokenJustRefreshed || AuthService.getKeycloak().isTokenExpired()) {
+                    uploader.tokenJustRefreshed = true;
+                    AuthService.getKeycloak().updateToken(5).success(function () {
+                        fileItem.headers.Authorization = 'Bearer ' + AuthService.getToken();
+                        fileItem.upload();
+                    }).error(function () {
+                        console.error('Failed to refresh token');
+                        AuthService.forceReload();
+                    });
+                }
             };
         }]);
