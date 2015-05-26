@@ -88,6 +88,7 @@ angular.module('ortolangMarketApp')
             },
             FACETS: 'Options de recherche',
             MORE_FACETS: 'Plus de filtres',
-            LESS_FACETS: 'Cacher les filtres supplémentaires'
+            LESS_FACETS: 'Cacher les filtres supplémentaires',
+            NO_ITEM: 'Aucune ressource disponible'
         }
     });
