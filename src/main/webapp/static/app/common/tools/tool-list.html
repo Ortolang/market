@@ -48,7 +48,10 @@
                                     </span>
                                     <br>
                                     <span ng-repeat="input in tool.inputData track by $index" style="line-height: 1.7;">
-                                        <a ng-click="addTag(input, toolList.searchContent);"><span class="label label-blue">{{input}}</span></a>
+                                        <a ng-click="addTag(input, toolList.searchContent);"><span class="label label-blue">in: {{input}}</span></a>
+                                    </span>
+                                    <span ng-repeat="output in tool.outputData track by $index" style="line-height: 1.7;">
+                                        <a ng-click="addTag(output, toolList.searchContent);"><span class="label label-warning">out: {{output}}</span></a>
                                     </span>
                                 </div>
                                 <div class="media-right" ng-show="tool.getActive()">

@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
                 this.model = undefined;
                 this.active = undefined;
                 this.inputData = undefined;
+                this.outputData = undefined;
                 this.functionalities = undefined;
                 this.image = undefined;
 
@@ -121,6 +122,10 @@ angular.module('ortolangMarketApp')
 
                 getInputData: function () {
                     return this.inputData;
+                },
+
+                getOutputData: function () {
+                    return this.outputData;
                 },
 
                 getImage: function () {
@@ -253,7 +258,8 @@ angular.module('ortolangMarketApp')
                         'meta_ortolang-item-json.toolHelp as help, ' +
                         'meta_ortolang-item-json.toolUrl as url, ' +
                         'meta_ortolang-item-json.toolInputData as inputData, ' +
-                        'meta_ortolang-item-json.toolFunctionality as functionality ',
+                        'meta_ortolang-item-json.toolOutputData as outputData, ' +
+                        'meta_ortolang-item-json.toolFunctionalities as functionalities ',
                         source: 'collection'
                     });
                 queryBuilder.equals('status', 'published');
@@ -278,9 +284,14 @@ angular.module('ortolangMarketApp')
                                 return data.inputData.indexOf(elem) === pos;
                             });
                         }
-                        if (data.functionality) {
-                            item.functionalities = data.functionality.filter(function(elem, pos) {
-                                return data.functionality.indexOf(elem) === pos;
+                        if (data.outputData) {
+                            item.outputData = data.outputData.filter(function(elem, pos) {
+                                return data.outputData.indexOf(elem) === pos;
+                            });
+                        }
+                        if (data.functionalities) {
+                            item.functionalities = data.functionalities.filter(function(elem, pos) {
+                                return data.functionalities.indexOf(elem) === pos;
                             });
                         }
                         item.meta = data;

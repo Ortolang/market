@@ -1,12 +1,22 @@
 <div class="aside-backdrop am-fade tool-list-backdrop" ng-show="isVisible()" ng-click="hide()"></div>
-<div class="aside right am-fade-and-slide-right tool-results" ng-show="isVisible()" tabindex="-1" role="dialog">
+<div class="aside right am-fade-and-slide-right tool-results" ng-show="isVisible()" tabindex="-1" role="dialog" style="width:1000px">
     <div class="aside-dialog">
         <div class="aside-content">
             <div class="tool-list-header">
                 <button type="button" class="close" ng-click="hide()">&times;</button>
-                <h4 class="aside-title" ng-bind="title"></h4>
+                <h4 class="aside-title" ng-bind="jname"></h4>
             </div>
+
             <div  id="tool-list-body" class="aside-body">
+                <blockquote>
+                    <p>{{ 'TOOLS.DESCRIPTION.' + tab.type.toUpperCase().replace('-', '_')  | translate}}</p>
+                </blockquote>
+                <hr/>
+                <ul class="nav nav-pills nav-stacked nav-metadata">
+                    <li ng-repeat="tab in tabs" ng-class="{active : selectedTab==tab.id}">
+                        <a href="" ng-click="selectTab(tab.id)" ng-bind="tab.label"></a>
+                    </li>
+                </ul>
                 <div ng-if="results.length > 1">
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills">

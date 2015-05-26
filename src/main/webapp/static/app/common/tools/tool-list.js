@@ -71,8 +71,9 @@ angular.module('ortolangMarketApp')
                 MetadataFormatResource.download({name:'ortolang-item-json'}).$promise.then(
                     function(data) {
                         var schema = angular.fromJson(data);
-                        $scope.keywords = schema.properties.toolFunctionality.items.enum;
+                        $scope.keywords = schema.properties.toolFunctionalities.items.enum;
                         $scope.keywords = $scope.keywords.concat(schema.properties.toolInputData.items.enum);
+                        $scope.keywords = $scope.keywords.concat(schema.properties.toolOutputData.items.enum);
                     },
                     function(reason) {
                         console.error('Cant get schema of metadata formats "ortolang-item-json" ; failed cause ' + reason + ' !');

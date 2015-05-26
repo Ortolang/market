@@ -39,7 +39,10 @@ angular.module('ortolangMarketApp')
                 ORAL: 'Traitement de l\'oral',
                 VIDEO: 'Traitement vidéo'
             },
-            FOUND_TOOLS: 'outil(s) trouvé(s)'
-
+            FOUND_TOOLS: 'outil(s) trouvé(s)',
+            DESCRIPTION: {
+                TEXT_PREVIEW: 'Affichage d\'un extrait du résultat de l\'exécution de l\'outil',
+                LINK_LIST: 'Liste des fichiers générés à la suite de l\'exécution de l\'outil. Ils peuvent être sauvegardés dans un espace de travail ou téléchargés directement.'
+            }
         }
     });
