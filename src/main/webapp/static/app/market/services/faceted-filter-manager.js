@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .provider('FacetedFilterManager', ['QueryBuilderServiceProvider', function (QueryBuilderServiceProvider) {
+    .factory('FacetedFilterManager', ['QueryBuilderFactory', function (QueryBuilderFactory) {
 
         // Constructor
         function FacetedFilterManager(config) {
@@ -88,7 +88,7 @@ angular.module('ortolangMarketApp')
             },
 
             urlParam: function (content, viewMode) {
-            
+
                 var filters = {}, params = {};
                 angular.forEach(this.enabledFilters, function(filter) {
 
@@ -96,9 +96,9 @@ angular.module('ortolangMarketApp')
                     angular.forEach(filter.getSelectedOptions(), function(opt) {
                         arrValue.push(opt.getValue());
                     });
-                    
+
                     filters[filter.id] = arrValue;
-                    
+
                 });
                 params.filters = angular.toJson(filters);
 
@@ -108,12 +108,12 @@ angular.module('ortolangMarketApp')
                 }
                 params.viewMode = viewMode.id;
 
-                return params; 
+                return params;
             },
 
             toQuery: function(content) {
-                var queryBuilder = QueryBuilderServiceProvider.$get().make({
-                    projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate', 
+                var queryBuilder = QueryBuilderFactory.make({
+                    projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate',
                     source: 'collection'
                 });
 
@@ -138,7 +138,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.addProjection('meta_ortolang-item-json.toolInputData', 'toolInputData');
 
                 queryBuilder.equals('status', 'published');
-                
+
                 var contentSplit = [];
                 if (content && content !== '') {
                     contentSplit = queryBuilder.tokenize(content);
@@ -163,13 +163,12 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        this.make = function (config) {
+        function make(config) {
             return new FacetedFilterManager(config);
+        }
+
+        return {
+            make: make
         };
 
-        this.$get = function () {
-            return {
-                make: this.make
-            };
-        };
     }]);

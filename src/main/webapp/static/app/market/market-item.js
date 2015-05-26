@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderService', '$compile', function ($rootScope, $scope, $routeParams, $location, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderService, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
                 return;
             }
 
-            var queryBuilder = QueryBuilderService.make({projection: '*', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: '*', source: 'collection'});
             queryBuilder.equals('status', 'published');
             queryBuilder.and();
             queryBuilder.equals('key', key);

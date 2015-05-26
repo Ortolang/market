@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.QueryBuilderService
+ * @name ortolangMarketApp.QueryBuilderFactory
  * @description
- * # QueryBuilderService
+ * # QueryBuilderFactory
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .provider('QueryBuilderService', [function () {
+    .factory('QueryBuilderFactory', [function () {
 
         // Constructor
         function QueryBuilder(config) {
@@ -94,13 +94,12 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        this.make = function (config) {
+        function make(config) {
             return new QueryBuilder(config);
+        }
+
+        return {
+            make: make
         };
 
-        this.$get = function () {
-            return {
-                make: this.make
-            };
-        };
     }]);
