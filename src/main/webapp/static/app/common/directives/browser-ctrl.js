@@ -1248,7 +1248,7 @@ angular.module('ortolangMarketApp')
                         }
                     });
                 }
-                if ($scope.browserService.displayAsideWorkspaceList) {
+                if ($scope.browserService.displayAsideWorkspaceList && !$scope.isFileSelect) {
                     hotkeys.bindTo($scope).add({
                         combo: 'w',
                         description: $translate.instant('BROWSER.SHORTCUTS.WORKSPACE_LIST'),

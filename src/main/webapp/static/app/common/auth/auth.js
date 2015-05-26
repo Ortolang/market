@@ -20,35 +20,17 @@ angular.module('ortolangMarketApp')
                     ProfileResource.put({}, profile);
                 }
                 User.preInit(profile);
-                var avatarIds = {
-                    'FACEBOOK': {id: 'FACEBOOK', name: 'facebook', value: ''},
-                    //{ id: 'TWITTER', name: 'twitter', value: ''},
-                    'GITHUB': {id: 'GITHUB', name: 'github', value: profile.key},
-                    'GRAVATAR': {id: 'GRAVATAR', name: 'gravatar', value: profile.email}
-                };
                 ProfileResource.getInfos({key: profile.key}).$promise.then(
                     function success(data) {
-                        profile.avatarIds = [];
                         profile.profileDatas = {};
                         angular.forEach(data.entries, function (profileData) {
                             profile.profileDatas[profileData.name] = profileData;
                         });
                         User.create(profile);
-                        User.avatarIds = {};
-                        angular.forEach(avatarIds, function (avatarId) {
-                            var itemSetting = User.getProfileData(avatarId.name);
-                            User.avatarIds[avatarId.id] = avatarId;
-                            if (itemSetting) {
-                                User.avatarIds[avatarId.id].value = itemSetting.value;
-                            }
-                        });
-                        var favoriteAvatar = User.getProfileData('avatar');
-                        User.favoriteAvatar = favoriteAvatar ? favoriteAvatar.value : 'GITHUB';
                         AuthService.resolveSessionInitialized();
                         AtmosphereService.subscribe();
                     },
                     function error() {
-                        profile.avatarIds = avatarIds;
                         User.create(profile);
                         AuthService.resolveSessionInitialized();
                         AtmosphereService.subscribe();
@@ -56,11 +38,6 @@ angular.module('ortolangMarketApp')
                 );
             });
         }
-
-        $scope.$on('updateDefaultAvatar', function (event, data) {
-            User.favoriteAvatar = data;
-            event.stopPropagation();
-        });
 
         $rootScope.noFooter = false;
 

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('HomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderFactory', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderFactory) {
+    .controller('HomeCtrl', ['$scope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderFactory', function ($scope, $routeParams, $location, $window, JsonResultResource, QueryBuilderFactory) {
 
         $scope.clickItem = function (entry) {
             if (entry.applicationUrl) {
