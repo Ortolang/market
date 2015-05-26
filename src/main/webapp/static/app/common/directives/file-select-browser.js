@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('fileSelectBrowser', ['$filter', 'FileSelectBrowserService', 'WorkspaceResource', 'Settings', function ($filter, FileSelectBrowserService, WorkspaceResource, Settings) {
+    .directive('fileSelectBrowser', ['$filter', 'FileSelectBrowserService', 'WorkspaceResource', 'ObjectResource', 'Settings', function ($filter, FileSelectBrowserService, WorkspaceResource, ObjectResource, Settings) {
         return {
             restrict: 'A',
             scope: {
@@ -43,6 +43,26 @@ angular.module('ortolangMarketApp')
                             scope.$broadcast('initWorkspaceVariables');
                         }
                     });
+
+                    function getSnapshotNameFromHistory(workspaceSnapshot) {
+                        if (FileSelectBrowserService.workspace.snapshots) {
+                            var filteredSnapshot = $filter('filter')(FileSelectBrowserService.workspace.snapshots, {key: workspaceSnapshot.key}, true);
+                            if (filteredSnapshot.length === 1) {
+                                return filteredSnapshot[0].name;
+                            }
+                        }
+                        return undefined;
+                    }
+
+                    scope.getSnapshotsHistory = function () {
+                        ObjectResource.history({oKey: FileSelectBrowserService.workspace.head}, function (data) {
+                            scope.workspaceHistory = data.entries;
+                            angular.forEach(scope.workspaceHistory, function (workspaceSnapshot) {
+                                workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
+                            });
+                        });
+                    };
+
                     scope.isFileSelect = true;
                     scope.fileSelectAcceptMultiple = attrs.acceptMultiple &&
                         (attrs.acceptMultiple === 'true' || attrs.acceptMultiple === 'multiple');

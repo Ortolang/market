@@ -1,4 +1,4 @@
-<div class="browser-wrapper" ng-class="{'market-browser-wrapper': isMarket()}" ng-controller="BrowserCtrl">
+<div class="browser-wrapper" ng-class="{'market-browser-wrapper': isMarket(), 'file-select-browser-wrapper': isFileSelect}" ng-controller="BrowserCtrl">
 
     <div class="row toolbar browser-toolbar" ng-class="{'market-browser-toolbar': isMarket()}" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)">
         <div ng-if="displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside">
@@ -174,7 +174,7 @@
     <div class="row">
         <div class="browser-aside-left-collapsed" ng-hide="!(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen)" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
         <div ng-if="displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
-            <span class="btn-collapse" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
+            <span class="btn-collapse" ng-if="!isFileSelect" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
             <div ng-if="browserService.canAdd" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
                 <ul class="dropdown-menu" role="menu">
