@@ -77,15 +77,15 @@ angular.module('ortolangMarketApp')
                     $scope.jname = process.processTool.name;
                     $scope.process = process;
                     $scope.switchStatus = [];
-                    $modal({
-                        title: process.processTool.name,
-                        html: true,
-                        scope: $scope,
-                        template: 'common/tools/tool-result-modal-template.html',
-                        show: true
-                    });
+                    //$modal({
+                    //    title: process.processTool.name,
+                    //    html: true,
+                    //    scope: $scope,
+                    //    template: 'common/tools/tool-result-modal-template.html',
+                    //    show: true
+                    //});
+                    $rootScope.$broadcast('tool-results-show');
                 });
-
             };
 
             $scope.activeTab = 0;

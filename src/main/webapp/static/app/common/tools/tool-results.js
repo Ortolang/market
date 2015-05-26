@@ -11,34 +11,30 @@ angular.module('ortolangMarketApp')
     .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$window',
         function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $window) {
 
-            /*************
-             * Listeners
-             *************/
-            var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
-                if (!$scope.data) {
-                    $scope.data = {};
-                }
-                $scope.data.path = elements[0].path;
-                $scope.data.wskey = elements[0].workspace;
-                $scope.folder = elements[0];
-                ObjectResource.get({oKey: elements[0].workspace}, function (data) {
-                    $scope.folder.ws = data.object.alias;
-                });
-                $scope.folderSelectModal.hide();
-            });
+            // ***************** //
+            // Editor visibility //
+            // ***************** //
 
-            $scope.submit = function(){
-                console.debug($scope.data);
-                ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data).$promise.then(
-                    function(){
-                        var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + $scope.data.path;
-                        $window.location.href = encodeURI(url);
-                        $scope.$hide();
-                    },
-                    function(error) {
-                        console.debug(error);
-                    }
-                );
+            $scope.visibility = false;
+
+            $scope.show = function () {
+                $scope.visibility = true;
+            };
+
+            $scope.hide = function () {
+                $scope.visibility = false;
+            };
+
+            $scope.toggle = function () {
+                if ($scope.visibility) {
+                    $scope.hide();
+                } else {
+                    $scope.show();
+                }
+            };
+
+            $scope.isVisible = function () {
+                return $scope.visibility;
             };
 
 
@@ -57,6 +53,48 @@ angular.module('ortolangMarketApp')
                     delete $scope.data['file-' + index];
                 }
             };
+
+            $scope.submit = function(){
+                console.debug($scope.data);
+                ToolManager.checkGrant($scope.toolKey).then(function () {
+                    saveResult();
+                });
+            };
+
+            function saveResult() {
+                ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data).$promise.then(
+                    function(){
+                        var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + $scope.data.path;
+                        $window.location.href = encodeURI(url);
+                        $scope.$hide();
+                    },
+                    function(error) {
+                        console.debug(error);
+                    }
+                );
+            }
+
+
+            // ********* //
+            // Listeners //
+            // ********* //
+
+            var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
+                if (!$scope.data) {
+                    $scope.data = {};
+                }
+                $scope.data.path = elements[0].path;
+                $scope.data.wskey = elements[0].workspace;
+                $scope.folder = elements[0];
+                ObjectResource.get({oKey: elements[0].workspace}, function (data) {
+                    $scope.folder.ws = data.object.alias;
+                });
+                $scope.folderSelectModal.hide();
+            });
+
+            $scope.$on('tool-results-show', function () {
+                $scope.show();
+            });
 
             function init() {
                 var folderSelectModalScope = $rootScope.$new(true);
