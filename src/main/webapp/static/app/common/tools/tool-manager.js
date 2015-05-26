@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'QueryBuilderService',
-        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, DownloadResource, JsonResultResource, QueryBuilderService) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'QueryBuilderFactory',
+        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, DownloadResource, JsonResultResource, QueryBuilderFactory) {
 
             // ---
             // ORTOLANG TOOL DEFINITION
@@ -247,7 +247,7 @@ angular.module('ortolangMarketApp')
 
             function populateToolList() {
 
-                var queryBuilder = QueryBuilderService.make(
+                var queryBuilder = QueryBuilderFactory.make(
                     {
                         projection:
                         'key, ' +

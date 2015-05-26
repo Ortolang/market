@@ -8,12 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$filter', 'icons', 'JsonResultResource', 'QueryBuilderService', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, $location, $routeParams, $rootScope, $filter, icons, JsonResultResource, QueryBuilderService, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('MarketSearchCtrl', ['$scope', '$location', '$routeParams', '$rootScope', '$filter', 'icons', 'JsonResultResource', 'QueryBuilderFactory', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, $location, $routeParams, $rootScope, $filter, icons, JsonResultResource, QueryBuilderFactory, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
 
         var viewModeLine, viewModeTile;
 
         $scope.search = function () {
-            
+
             var filters = {}, params = {};
             angular.forEach($scope.filtersManager.getFilters(), function(filter) {
 
@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
             }
             params.viewMode = $scope.viewMode.id;
             $location.search(params).path('/search');
-            
+
         };
 
         $scope.setFilter = function (filter, value) {
@@ -66,8 +66,8 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.searchContent = function (content, filters) {
-            var queryBuilder = QueryBuilderService.make({
-                projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl', 
+            var queryBuilder = QueryBuilderFactory.make({
+                projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl',
                 source: 'collection'
             });
 
@@ -89,7 +89,7 @@ angular.module('ortolangMarketApp')
             queryBuilder.addProjection('meta_ortolang-item-json.toolInputData', 'toolInputData');
 
             queryBuilder.equals('status', 'published');
-            
+
             var contentSplit = [];
             if (content && content !== '') {
                 contentSplit = queryBuilder.tokenize(content);
@@ -141,14 +141,14 @@ angular.module('ortolangMarketApp')
             if(angular.isArray(optionValue)) {
                 angular.forEach(optionValue, function(opt) {
                     filter.putOption(OptionFacetedFilter.make({
-                        label: opt, 
+                        label: opt,
                         value: opt,
                         length: 1
                     }));
                 });
             } else {
                 filter.putOption(OptionFacetedFilter.make({
-                    label: optionValue, 
+                    label: optionValue,
                     value: optionValue,
                     length: 1
                 }));
@@ -329,7 +329,7 @@ angular.module('ortolangMarketApp')
 
 
             var primaryLanguage = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.primaryLanguage', 
+                id: 'meta_ortolang-item-json.primaryLanguage',
                 alias: 'primaryLanguage',
                 type: 'array',
                 label: 'MARKET.CORPORA.ALL_LANG',
@@ -344,19 +344,19 @@ angular.module('ortolangMarketApp')
                 resetLabel: 'MARKET.CORPORA.CORPORA_TYPE',
                 options: [
                     OptionFacetedFilter.make({
-                        label: 'Écrit', 
+                        label: 'Écrit',
                         value: 'Écrit',
                         length: 1,
                         subFilters: [annotationLevelFilter, textFormatFilter, textEncodingFilter, primaryLanguage]
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Oral', 
+                        label: 'Oral',
                         value: 'Oral',
                         length: 1,
                         subFilters: [transcriptionTypeFilter, transcriptionFormatFilter, typeOfSpeechFilter, transcriptionEncodingFilter, signalFilter]
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Multimodal', 
+                        label: 'Multimodal',
                         value: 'Multimodal',
                         length: 1
                     })
@@ -383,41 +383,41 @@ angular.module('ortolangMarketApp')
             $scope.facetedFilters.push(toolInputDataFilter);
 
             var typeFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.type', 
+                id: 'meta_ortolang-item-json.type',
                 alias: 'type',
-                label: 'MARKET.ALL_RESOURCE',  
+                label: 'MARKET.ALL_RESOURCE',
                 resetLabel: 'MARKET.ALL_RESOURCE',
                 options: [
                     OptionFacetedFilter.make({
-                        label: 'Corpus', 
+                        label: 'Corpus',
                         value: 'Corpus',
                         length: 1,
                         subFilters: [corpusTypeFilter]
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Lexique', 
+                        label: 'Lexique',
                         value: 'Lexique',
                         length: 1
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Outil', 
+                        label: 'Outil',
                         value: 'Outil',
                         length: 1,
                         subFilters: [toolFunctionalityFilter, toolInputDataFilter]
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Projet intégré', 
+                        label: 'Projet intégré',
                         value: 'Application',
                         length: 1
                     })
                 ]
-                
+
             });
             $scope.facetedFilters.push(typeFilter);
             $scope.visibleFacetedFilters.addFilter(typeFilter);
-            
+
             var statusOfUse = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.statusOfUse', 
+                id: 'meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
                 label: 'MARKET.CORPORA.ALL_STATUSOFUSE',
                 resetLabel: 'MARKET.CORPORA.ALL_STATUSOFUSE'

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('HomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderService', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderService) {
+    .controller('HomeCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$window', 'JsonResultResource', 'QueryBuilderFactory', function ($scope, $rootScope, $routeParams, $location, $window, JsonResultResource, QueryBuilderFactory) {
 
         $scope.clickItem = function (entry) {
             if (entry.applicationUrl) {
@@ -26,12 +26,12 @@ angular.module('ortolangMarketApp')
         }
 
         function searchType(type) {
-            var queryBuilder = QueryBuilderService.make({projection: 'key, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: 'key, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl', source: 'collection'});
 
             queryBuilder.equals('status', 'published');
             queryBuilder.and();
             queryBuilder.in('meta_ortolang-item-json.title', ['Littéracie Avancée', 'Corpus 14', 'CoMeRe (Communication médiée par les réseaux)']);
-            
+
             var query = queryBuilder.toString();
             console.log('query : ' + query);
             JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
