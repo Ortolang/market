@@ -49,6 +49,46 @@ angular.module('ortolangMarketApp')
             DEROGATION: 'Code du patrimoine',
             RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
             SITE: 'Accéder à l\'application web',
-            THUMBNAIL: 'Miniature'
+            THUMBNAIL: 'Miniature',
+            ALL_RESOURCE: 'Tout type de ressource',
+            RESOURCE_TYPE: 'Type de ressource',
+            FACET: {
+                  CORPORA_TYPE: 'Type de corpus',
+                  ALL_CORPORA: 'Tout les corpus',
+                  ANNOTATION_LEVEL: 'Niveaux d\'annotations',
+                  ALL_ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
+                  TEXT_FORMAT: 'Format',
+                  ALL_TEXT_FORMAT: 'Tout format de texte',
+                  TEXT_ENCODING: 'Type Encodage',
+                  ALL_TEXT_ENCODING: 'Tout encodages de caractères',
+                  STATUSOFUSE: 'Droits d\'utilisations',
+                  ALL_STATUSOFUSE: 'Tout les droits d\'utilisations',
+                  CORPORA_LANG: 'Langue du corpus',
+                  ALL_LANG: 'Toutes les Langues',
+                  CORPORA_DATATYPES: 'Type de source',
+                  ALL_CORPORA_DATATYPES: 'Tout type de source',
+                  CORPORA_LANGUAGE_TYPE: 'Type de langue',
+                  ALL_CORPORA_LANGUAGE_TYPE: 'Tout type de langue',
+                  ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',
+                  ALL_TOOL_INPUTDATA: 'Tout type d\'entrée',
+                  ALL_TRANSCRIPTION_TYPE: 'Tout type de transcription',
+                  ALL_TRANSCRIPTION_FORMAT: 'Tout format de transcription',
+                  ALL_TYPE_OF_SPEECH: 'Tout type de parole',
+                  ALL_TRANSCRIPTION_ENCODING: 'Tout encodage de caractères',
+                  ALL_SIGNAL: 'Tout signal'
+            },
+            SORT: {
+                  TITLE: 'Titre',
+                  CREATION_DATE: 'Date de création'   
+            },
+            SHOW_IN: 'Présentation',
+            VIEW_MODE: {
+                  LINE: 'Par liste',
+                  GRID: 'Par icônes'      
+            },
+            FACETS: 'Options de recherche',
+            MORE_FACETS: 'Plus de filtres',
+            LESS_FACETS: 'Cacher les filtres supplémentaires',
+            NO_ITEM: 'Aucune ressource disponible'
         }
     });

@@ -1,19 +1,19 @@
 <div class="market-home container-fluid container-main">
     <div class="row toolbar">
         <div class="col-sm-12">
-            <div class="input-group">
+            <!-- <div class="input-group">
                 <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
                 <span class="input-group-btn">
                     <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
-            </div>
+            </div> -->
         </div>
     </div>
-    <section ng-if="section==='news'" class="row">
+    <section class="row">
         <div class="col-md-8">
             <h3 class="ortolang-title" translate="ORTOLANG"></h3>
             <hr/>
-            <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.' + section.toUpperCase().replace('-', '_') | translate"></div>
+            <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.NEWS' | translate"></div>
             <hr/>
             <div class="media small marianne" >
                 <div class="media-left">
@@ -42,53 +42,10 @@
         </div>
     </section>
 
-    <section ng-if="section==='news' && items.length>0" class="row">
+    <section ng-if="items.length>0" class="row">
         <div class="col-md-12">
             <header>
                 <h3 translate="MARKET.NEW_RESOURCES"></h3>
-            </header>
-            <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-            </div>
-        </div>
-    </section>
-    <section ng-if="section==='corpora' && items.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3 translate="CORPORA"></h3>
-            </header>
-
-            <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-            </div>
-        </div>
-    </section>
-    <section ng-if="section==='tools' && items.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3 translate="TOOLS"></h3>
-            </header>
-
-            <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-            </div>
-        </div>
-    </section>
-    <section ng-if="section==='lexicons' && items.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3 translate="LEXICONS"></h3>
-            </header>
-
-            <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
-            </div>
-        </div>
-    </section>
-    <section ng-if="section==='websites' && items.length>0" class="row">
-        <div class="col-md-12">
-            <header>
-                <h3 translate="INTEGRATED_PROJECTS"></h3>
             </header>
 
             <div class="flex-row">

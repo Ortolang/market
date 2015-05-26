@@ -44,10 +44,38 @@ angular.module('ortolangMarketApp')
             CONTRIBUTOR: 'Contributor',
             DOWNLOAD: 'Download',
             DOWNLOAD_ALL: 'You will download a complete archive of this resource {{value && value !=="" ? "("+value+")" : ""}}',
+            DOWNLOAD_AGREEMENT: 'Download implies the accpetance of the licence',
             LICENCE_DETAIL: 'License information',
             DEROGATION: 'Code du patrimoine',
             RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}',
             SITE: 'Website',
-            THUMBNAIL: 'Thumbnail'
+            THUMBNAIL: 'Thumbnail',
+            ALL_RESOURCE: 'All type of resources',
+            RESOURCE_TYPE: 'Type of resource',
+            CORPORA: {
+                  CORPORA_TYPE: 'Type of corpora',
+                  ALL_CORPORA: 'All corpus',
+                  ANNOTATION_LEVEL: 'All annotation level',
+                  TEXT_FORMAT: 'All text format',
+                  TEXT_ENCODING: 'ALL text encodings',
+                  ALL_STATUSOFUSE: 'All status of use',
+                  ALL_LANG: 'All languages',
+                  ALL_TOOL_FUNCTIONALITY: 'All functionalities',
+                  ALL_TOOL_INPUTDATA: 'All input data',
+                  ALL_TRANSCRIPTION_TYPE: 'All type of transcription',
+                  ALL_TRANSCRIPTION_FORMAT: 'All transcription format',
+                  ALL_TYPE_OF_SPEECH: 'All type of speech',
+                  ALL_TRANSCRIPTION_ENCODING: 'All character encoding',
+                  ALL_SIGNAL: 'All signal'
+            },
+            SORT: {
+                  TITLE: 'Title',
+                  CREATION_DATE: 'Creation date'    
+            },
+            SHOW_IN: 'Show by',
+            VIEW_MODE: {
+                  LINE: 'List',
+                  GRID: 'Icons'
+            }
         }
     });

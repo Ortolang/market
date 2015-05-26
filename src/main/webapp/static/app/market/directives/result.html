@@ -1,26 +1,7 @@
-<!-- <div class="col-md-3 thumbnail">
-    <img ng-if="imgtitle !== undefined" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
-    <img ng-if="image" ng-src="{{image}}">
-</div> -->
-<div class="col-md-8">
-    <h4><a ng-href="#/market/item/{{entry.key}}">{{entry.title}}</a></h4>
-    <!-- <div sytle="display:inline"> -->
-        <!-- <div> -->
-            <!-- <img ng-if="imgtitle !== undefined" holder-js="holder.js/80x80/{{imgtheme}}/text:{{imgtitle}}"/>
-            <img ng-if="image" ng-src="{{image}}"> -->
-        <!-- </div> -->
-        <!-- </div> -->
-            <p ng-bind-html="entry.description" class="description"></p>
-            <p class="producers">
-                <span ng-repeat="producer in entry.producer">
-                    <a ng-href='#/search?content={{producer}}&operator=contains&field=meta_ortolang-item-json.producer' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
-                </span>
-            </p>
-            <!-- <div ng-if="entry.key != entry.root" class="item-element">
-                <p>
-                {{entry.name}}
-                </p>
-            </div> -->
-        <!-- </div> -->
-    <!-- </div> -->
-</div>
+<h4><a ng-href="{{itemUrl}}">{{entry.title}}</a></h4>
+<p ng-bind-html="entry.description" class="description"></p>
+<p class="producers">
+    <span ng-repeat="producer in entry.producer">
+        <a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
+    </span>
+</p>

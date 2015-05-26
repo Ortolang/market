@@ -32,21 +32,34 @@ angular.module('ortolangMarketApp')
                 this.projection = properties;
             },
 
+            addProjection : function(propertyName, propertyAlias) {
+                this.projection += ', ' + propertyName + ' as ' + propertyAlias;
+            },
+
             from : function (cls) {
                 this.source = cls;
             },
 
             equals : function (name, content) {
-                this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
+                if(angular.isArray(content)) {
+                    var optionalValues = '', sanitize = this.sanitize;
+                    angular.forEach(content, function(val) {
+                        optionalValues += (optionalValues===''?'':' OR ') + name + ' = \'' + sanitize(val) + '\'';
+                    });
+                    this.conditions += '(' + optionalValues + ')';
+                } else {
+                    this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
+                }
             },
 
             contains : function (name, content) {
+                //TODO if content is an array
                 this.conditions += name + ' contains \'' + this.sanitize(content) + '\'';
             },
 
             containsText : function (name, content) {
-                // this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
                 this.conditions += 'any() traverse(0,3) (' + name + '.toLowerCase().indexOf(\'' + this.sanitize(content.toLowerCase()) + '\') > -1 )';
+                // this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
             },
 
             in : function (name, arrayOfContent) {

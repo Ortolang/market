@@ -25,6 +25,7 @@ angular
         'mgcrea.ngStrap.dropdown',
         'mgcrea.ngStrap.typeahead',
         'mgcrea.ngStrap.alert',
+        'mgcrea.ngStrap.button',
         'toggle-switch',
         'hljs',
         'cfp.hotkeys',
@@ -44,11 +45,23 @@ angular
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
-                redirectTo: '/market/news'
+                redirectTo: '/market/home'
             })
-            .when('/market/:section', {
-                templateUrl: 'market/market-home.html',
-                controller: 'MarketHomeCtrl'
+            .when('/market/home', {
+                templateUrl: 'market/home.html',
+                controller: 'HomeCtrl'
+            })
+            .when('/market/corpora', {
+                templateUrl: 'market/corpora.html'
+            })
+            .when('/market/tools', {
+                templateUrl: 'market/tools.html'
+            })
+            .when('/market/lexicons', {
+                templateUrl: 'market/lexicons.html'
+            })
+            .when('/market/applications', {
+                templateUrl: 'market/applications.html'
             })
             .when('/market/:section/:itemKey', {
                 templateUrl: 'market/market-item.html',
