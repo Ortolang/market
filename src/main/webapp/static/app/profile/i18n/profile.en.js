@@ -51,23 +51,18 @@ angular.module('ortolangMarketApp')
                 ADDRESS: 'Address',
                 ADDRESS_ERROR: 'Please select an address from the list',
                 WEBSITE: 'Personal website',
-                PROFESSIONAL_EMAIL: 'Professional e-mail',
+                EMAIL: 'Professional e-mail',
                 RESCUE_EMAIL: 'Rescue e-mail',
                 PROFESSIONAL_TEL: 'Professional phone',
                 TEL: 'Personal phone',
                 FAX: 'Fax',
                 PRESENTATION: 'Describe yourself in a few words',
-                AVATAR: 'Avatar',
-                DEFAULT_AVATAR: 'Default',
                 ORCID: 'Identifiant ORCID',
                 VIAF: 'Identifiant VIAF',
                 MYIDREF: 'IdRef',
                 LINKEDIN: 'Page Linkedin',
                 VIADEO: 'Identifiant Viadeo',
-                LANGUAGE: 'Preferred interface language',
-                FACEBOOK: 'Identifiant Facebook',
-                GITHUB: 'Identifiant Github',
-                GRAVATAR: 'Identifiant Gravatar'
+                LANGUAGE: 'Preferred interface language'
             },
             HELPER: {
                 TITLE: 'Professional title: Dr., Prof., etc. ',
@@ -75,9 +70,7 @@ angular.module('ortolangMarketApp')
                 VIAF: 'Persistent digital identifiers:  <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>.',
                 MYIDREF: 'Persistent digital identifiers:  <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>.',
                 LINKEDIN: 'Persistent digital identifiers:  <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>.',
-                VIADEO: 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>.',
-                FACEBOOK: 'More informations about how to get you facebook user id : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.',
-                GRAVATAR: 'Please enter your email address mapped with gravatar : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.'
+                VIADEO: 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>.'
             }
         }
     });

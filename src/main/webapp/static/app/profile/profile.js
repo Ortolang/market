@@ -37,7 +37,11 @@ angular.module('ortolangMarketApp')
                         field.visibility = Profile.getVisibilityOptions()[profileData.visibility];
                     } else {
                         field.value = field.alias ? User[field.alias] : '';
-                        field.visibility = fieldTemplate.visibility ? Profile.getVisibilityOptions()[fieldTemplate.visibility] : Profile.getVisibilityOptions().EVERYBODY;
+                        if (fieldTemplate.alias === 'email') {
+                            field.visibility = Profile.getVisibilityOptions()[User.emailVisibility];
+                        } else {
+                            field.visibility = fieldTemplate.visibility ? Profile.getVisibilityOptions()[fieldTemplate.visibility] : Profile.getVisibilityOptions().EVERYBODY;
+                        }
                     }
                     result[profileDataName] = field;
                 });
@@ -52,14 +56,6 @@ angular.module('ortolangMarketApp')
             $scope.civilities = [
                 {value: 'Ms', text: 'PROFILE.CIVILITY.MISSUS'},
                 {value: 'Mr', text: 'PROFILE.CIVILITY.MISTER'}
-            ];
-
-            $scope.avatars = [
-                {value: '', text: 'PROFILE.FIELDS.DEFAULT_AVATAR'},
-                {value: 'FACEBOOK', text: 'Facebook'},
-                //{value: 'TWITTER', text: 'Twitter'},
-                {value: 'GITHUB', text: 'GitHub'},
-                {value: 'GRAVATAR', text: 'Gravatar'}
             ];
 
             function loadScript() {

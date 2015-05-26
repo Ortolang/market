@@ -42,11 +42,16 @@
                     </section>
                     <section data-title="{{'WORKSPACE.MEMBERS' | translate}}" bs-pane>
                         <br/>
-                        <ul class="list-group">
-                            <li ng-repeat="member in workspaceMembers.members track by member.key" class="list-group-item">
-                                <span>{{member.givenName}} {{member.familyName}}</span>
-                                <br/>
-                                <span class="small">{{member.email}}</span>
+                        <ul class="list-unstyled">
+                            <li ng-repeat="member in workspaceMembers.members track by member.key" class="media">
+                                <div class="media-left">
+                                    <img ng-src="http://www.gravatar.com/avatar/{{member.emailHash}}?d=retro&s=50" class="img-circle" />
+                                </div>
+                                <div class="media-body">
+                                    <span>{{member.givenName}} {{member.familyName}}</span>
+                                    <br/>
+                                    <span class="small">{{member.email}}</span>
+                                </div>
                             </li>
                         </ul>
                         <button class="btn btn-default" ng-click="addMember()"><span ng-class="icons.browser.plus"></span> Add member</button>

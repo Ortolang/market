@@ -23,18 +23,6 @@ angular.module('ortolangMarketApp')
             return this.profileDatas[name];
         };
 
-        this.getAvatarId = function (service) {
-            var avatarId = this.getProfileData(service);
-            if (!avatarId) {
-                if (service === 'github') {
-                    avatarId = this.key;
-                } else if (service === 'gravatar') {
-                    avatarId = this.email;
-                }
-            }
-            return avatarId || '';
-        };
-
         this.preInit = function (profile) {
             this.givenName = profile.givenName;
             this.familyName = profile.familyName;
@@ -45,12 +33,12 @@ angular.module('ortolangMarketApp')
             this.givenName = profile.givenName;
             this.familyName = profile.familyName;
             this.email = profile.email;
+            this.emailHash = profile.emailHash;
+            this.emailVisibility = profile.emailVisibility;
             this.status = profile.status;
             this.groups = profile.groups;
             this.desc = profile.desc;
             this.profileDatas = profile.profileDatas;
-            this.favoriteAvatar = profile.favoriteAvatar;
-            this.avatarIds = profile.avatarIds;
             this.isLocked = profile.isLocked;
             return this;
         };

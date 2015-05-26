@@ -51,23 +51,18 @@ angular.module('ortolangMarketApp')
                 ADDRESS: 'Adresse',
                 ADDRESS_ERROR: 'Veuillez selectionner une adresse parmi les propositions',
                 WEBSITE: 'Site web',
-                PROFESSIONAL_EMAIL: 'E-mail professionnel',
+                EMAIL: 'E-mail professionnel',
                 RESCUE_EMAIL: 'E-mail de secours',
                 PROFESSIONAL_TEL: 'Téléphone professionnel',
                 TEL: 'Téléphone personnel',
                 FAX: 'Fax',
                 PRESENTATION: 'Décrivez-vous en quelques mots',
-                AVATAR: 'Avatar',
-                DEFAULT_AVATAR: 'Avatar par défaut',
                 ORCID: 'Identifiant ORCID',
                 VIAF: 'Identifiant VIAF',
                 MYIDREF: 'IdRef',
                 LINKEDIN: 'Page Linkedin',
                 VIADEO: 'Identifiant Viadeo',
-                LANGUAGE: 'Langue d\'interface préférée',
-                FACEBOOK: 'Identifiant Facebook',
-                GITHUB: 'Identifiant Github',
-                GRAVATAR: 'Identifiant Gravatar'
+                LANGUAGE: 'Langue d\'interface préférée'
             },
             HELPER: {
                 TITLE: 'Titre professionnel : Dr., Prof. etc.',
@@ -75,9 +70,7 @@ angular.module('ortolangMarketApp')
                 VIAF: 'Identifiant personnel pérenne : <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>',
                 MYIDREF: 'Identifiant personnel pérenne : <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
                 LINKEDIN: 'Identifiant personnel pérenne : <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>',
-                VIADEO: 'Identifiant personnel pérenne : <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>',
-                FACEBOOK: 'Pour obtenir votre identifiant facebook, visitez ce lien : <a href="http://findmyfacebookid.com/" target="_blank">http://findmyfacebookid.com/</a>.',
-                GRAVATAR: 'Adresse email liée à votre compte gravatar : <a href="https://fr.gravatar.com/" target="_blank">https://fr.gravatar.com/</a>.'
+                VIADEO: 'Identifiant personnel pérenne : <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>'
             }
         }
     });

@@ -1,8 +1,5 @@
 <div class="col-sm-3">
-    <div class="user-avatar" multi-avatar ng-if="User.avatarIds"
-                  data-img-id="big-avatar"
-                  data-favorite-avatar="User.favoriteAvatar"
-                  data-avatar-ids="User.avatarIds"></div>
+    <img ng-src="http://www.gravatar.com/avatar/{{User.emailHash}}?d=retro&s=300" class="user-avatar img-responsive img-rounded" />
     <div class="list-group" role="tablist">
         <a  class="list-group-item"
             ng-repeat="$pane in $panes track by $index"
