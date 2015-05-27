@@ -14,17 +14,22 @@ angular.module('ortolangMarketApp')
             $scope.Runtime = Runtime;
 
             $scope.completedProcessessDisplayed = 3;
+            var name;
 
             $scope.showLog = function (process, processKey) {
                 if (processKey) {
                     process = Runtime.selectProcessByKey(processKey);
+                } else if(process.hasOwnProperty('processTool')) {
+                    Runtime.selectRemoteProcess(process);
+                    name = process.processTool.name;
                 } else {
                     Runtime.selectProcess(process);
+                    name = process.name;
                 }
                 if (process) {
                     $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
                     $modal({
-                        title: process.name,
+                        title: name,
                         html: true,
                         scope: $scope,
                         template: 'processes/process-log-modal-template.html',
@@ -33,17 +38,6 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.showToolLog = function (process) {
-                Runtime.selectRemoteProcess(process);
-                $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
-                $modal({
-                    title: process.processTool.name,
-                    html: true,
-                    scope: $scope,
-                    template: 'processes/process-log-modal-template.html',
-                    show: true
-                });
-            };
 
             $scope.abortToolJob = function (process) {
                 Runtime.selectRemoteProcess(process);

@@ -26,6 +26,7 @@ angular.module('ortolangMarketApp')
             var processes = [],
                 tasks = [],
                 remoteProcesses = [],
+                allProcesses = [],
                 processModal,
                 completeTaskModal,
                 states = {
@@ -335,6 +336,19 @@ angular.module('ortolangMarketApp')
             }
 
             // *********************** //
+            //          Misc           //
+            // *********************** //
+
+            function getAllProcesses() {
+                console.debug('processus actifs : ', getActiveProcesses(), getActiveRemoteProcesses());
+                return getActiveProcesses().concat(getActiveRemoteProcesses());
+            }
+
+            function getAllProcessesWithState(state, not) {
+                return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
+            }
+
+            // *********************** //
             //          Events         //
             // *********************** //
 
@@ -452,6 +466,9 @@ angular.module('ortolangMarketApp')
                 hasActiveRemoteProcesses: hasActiveRemoteProcesses,
                 hasRemoteProcessesWithState: hasRemoteProcessesWithState,
                 getRemoteProcessesWithState: getRemoteProcessesWithState,
-                pushNewRemoteProcess: pushNewRemoteProcess
+                pushNewRemoteProcess: pushNewRemoteProcess,
+                // Misc
+                getAllProcesses: getAllProcesses,
+                getAllProcessesWithState: getAllProcessesWithState
             };
         }]);
