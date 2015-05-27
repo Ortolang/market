@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
         NAV: {
             HOME: 'Accueil',
             SEARCH: 'Recherche',
-            MY_WORKSPACES: 'Mes espaces',
+            WORKSPACES: 'Mes espaces',
             ITEM: 'Objet',
             PROCESSES: 'Processus',
             TASKS: 'Tâches',

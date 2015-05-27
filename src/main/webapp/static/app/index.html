@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
-    <title>ORTOLANG</title>
+    <title ng-bind="'ORTOLANG' + (title ? ' | ' + (title | translate) : '') + subtitle">ORTOLANG</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -193,7 +193,6 @@
 <script src="common/nav/side-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
 <script src="common/nav/footer.js"></script>
-<script src="common/nav/side-nav-animation.js"></script>
 <script src="common/nav/i18n/nav.fr.js"></script>
 <script src="common/nav/i18n/nav.en.js"></script>
 <script src="common/i18n/common.fr.js"></script>
