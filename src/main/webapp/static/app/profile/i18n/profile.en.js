@@ -71,6 +71,13 @@ angular.module('ortolangMarketApp')
                 MYIDREF: 'Persistent digital identifiers:  <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>.',
                 LINKEDIN: 'Persistent digital identifiers:  <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>.',
                 VIADEO: 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>.'
+            },
+            EDIT_AVATAR_MODAL: {
+                TITLE: 'How to change your avatar?',
+                BODY_START: 'ORTOLANG uses your Gravatar as your profile picture:',
+                BODY_END: '<i>Your email address on ORTOLANG is <code>{{email}}</code></i>',
+                NO_GRAVATAR: '<b>You don\'t have a Gravatar yet:</b> a unique random image is used. To use your own avatar or photo, simply <a href="https://fr.gravatar.com/" target="_blank">create a Gravatar account</a> and add an avatar for your email address',
+                GRAVATAR: '<b>You already have a Gravatar account:</b> just <a href="https://fr.gravatar.com/emails" target="_blank">add/change the avatar linked to your email address</a>'
             }
         }
     });

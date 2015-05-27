@@ -101,6 +101,33 @@
 
     box-shadow: none;
   }
+
+  .avatar {
+    position: relative;
+    cursor: pointer;
+    .edit {
+      position: absolute;
+      display: none;
+      z-index: 10;
+      color: @side-nav-item-color;
+      top: 50%;
+      top: -webkit-calc(50% ~'-' 21px);
+      top: -moz-calc(50% ~'-' 21px);
+      top: calc(50% ~'-' 21px);
+      left: 50%;
+      left: -webkit-calc(50% ~'-' 18px);
+      left: -moz-calc(50% ~'-' 18px);
+      left: calc(50% ~'-' 18px);
+    }
+    &:hover {
+      img {
+        opacity: 0.6;
+      }
+      .edit {
+        display: block;
+      }
+    }
+  }
 }
 
 .xeditable-placeholder {
