@@ -118,7 +118,7 @@ angular.module('ortolangMarketApp')
                     })
                 ],
                 lockOptions: true,
-                view: 'checkbox-faceted-filter'
+                view: 'dropdown-faceted-filter'
             });
             $scope.filtersManager.addAvailabledFilter(corpusTypeFilter);
 
@@ -128,7 +128,8 @@ angular.module('ortolangMarketApp')
                 type: 'array',
                 label: 'MARKET.FACET.CORPORA_LANG',
                 resetLabel: 'MARKET.FACET.ALL_LANG',
-                priority: 'high'
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
             });
             $scope.filtersManager.addAvailabledFilter(languageFilter);
 
@@ -137,7 +138,8 @@ angular.module('ortolangMarketApp')
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUSOFUSE',
                 resetLabel: 'MARKET.FACET.ALL_STATUSOFUSE',
-                priority: 'high'
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
             });
             $scope.filtersManager.addAvailabledFilter(statusOfUseFilter);
 
@@ -148,7 +150,7 @@ angular.module('ortolangMarketApp')
 
             $scope.orderDirection = false;
             var orderTitle = {id: 'title', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
-            var orderCreationDate = {id: 'creationDate', label: 'MARKET.SORT.CREATION_DATE', text: 'MARKET.SORT.CREATION_DATE'};
+            var orderCreationDate = {id: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
             $scope.orderProps = [orderTitle, orderCreationDate];
             $scope.orderProp = orderTitle;
         }

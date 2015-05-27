@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
         }
 
         function searchType(type) {
-            var queryBuilder = QueryBuilderFactory.make({projection: 'key, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: 'key, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate', source: 'collection'});
 
             queryBuilder.equals('status', 'published');
             queryBuilder.and();

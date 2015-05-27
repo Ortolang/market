@@ -48,6 +48,8 @@ angular.module('ortolangMarketApp')
                     if (workspace) {
                         $location.search('alias', workspace.alias);
                         WorkspaceBrowserService.workspace = workspace;
+                        $scope.browserSettings.wskey = workspace.key;
+                        Settings.store();
                         getWorkspaceMembers(workspace.members);
                         //getPresentationMetadata(workspace);
                         if ($rootScope.browsing) {

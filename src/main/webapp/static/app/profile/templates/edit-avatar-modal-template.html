@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" translate="PROFILE.EDIT_AVATAR_MODAL.TITLE"></h4>
+            </div>
+            <div class="modal-body">
+                <p translate="PROFILE.EDIT_AVATAR_MODAL.BODY_START"></p>
+                <ul>
+                    <li translate="PROFILE.EDIT_AVATAR_MODAL.NO_GRAVATAR"></li>
+                    <li translate="PROFILE.EDIT_AVATAR_MODAL.GRAVATAR"></li>
+                </ul>
+                <p translate="PROFILE.EDIT_AVATAR_MODAL.BODY_END"  data-translate-values="{email: User.email}"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" translate="CLOSE" ng-click="$hide()"></button>
+            </div>
+        </div>
+    </div>
+</div>

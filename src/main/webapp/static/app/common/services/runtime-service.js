@@ -369,7 +369,7 @@ angular.module('ortolangMarketApp')
 
             $rootScope.$on('runtime.process.create', function (event, message) {
                 event.stopPropagation();
-                getProcesses(message.date, true);
+                getProcesses(message.date, false);
             });
 
             $rootScope.$on('runtime.process.log', function (event, message) {
