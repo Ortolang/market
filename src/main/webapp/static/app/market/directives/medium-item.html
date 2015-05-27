@@ -1,8 +1,11 @@
 <a ng-href="{{itemUrl}}">
 	<img ng-if="imgtitle !== undefined" class="logo" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
-	<img ng-if="image" class="logo" ng-src="{{image}}" alt="{{meta['http://purl.org/dc/elements/1.1/title']}}"/>
+	<img ng-if="image" class="logo" ng-src="{{image}}" alt="{{imgtitle}}"/>
 	<div class="caption" ng-class="showCaption">
-	    <h4 ng-bind="entry.title" class="title"></h4>
+	    <h4 class="title">
+	    	{{entry.title}}<br/>
+	    	<small ng-bind="entry.publicationDate"></small>
+	    </h4>
 	</div>
 </a>
 

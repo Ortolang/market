@@ -70,16 +70,11 @@ angular.module('ortolangMarketApp')
                   CORPORA_LANGUAGE_TYPE: 'Type de langue',
                   ALL_CORPORA_LANGUAGE_TYPE: 'Tout type de langue',
                   ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',
-                  ALL_TOOL_INPUTDATA: 'Tout type d\'entrée',
-                  ALL_TRANSCRIPTION_TYPE: 'Tout type de transcription',
-                  ALL_TRANSCRIPTION_FORMAT: 'Tout format de transcription',
-                  ALL_TYPE_OF_SPEECH: 'Tout type de parole',
-                  ALL_TRANSCRIPTION_ENCODING: 'Tout encodage de caractères',
-                  ALL_SIGNAL: 'Tout signal'
+                  ALL_TOOL_INPUTDATA: 'Tout type d\'entrée'
             },
             SORT: {
                   TITLE: 'Titre',
-                  CREATION_DATE: 'Date de création'   
+                  PUBLICATION_DATE: 'Date de publication'  
             },
             SHOW_IN: 'Présentation',
             VIEW_MODE: {
@@ -89,6 +84,7 @@ angular.module('ortolangMarketApp')
             FACETS: 'Options de recherche',
             MORE_FACETS: 'Plus de filtres',
             LESS_FACETS: 'Cacher les filtres supplémentaires',
-            NO_ITEM: 'Aucune ressource disponible'
+            NO_ITEM: 'Aucune ressource disponible',
+            PUBLISHED_ON: 'Publié le'
         }
     });

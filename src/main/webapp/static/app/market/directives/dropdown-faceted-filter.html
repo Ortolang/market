@@ -1,13 +1,13 @@
-<div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getSelectedLabel() | translate}} <span class="caret"></span></button>
+<div class="btn-group dropdown-faceted-filter">
+    <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{filter.getLabel() | translate}} <span class="caret"></span></button>
     <ul class="dropdown-menu" role="menu">
         <li role="menuitem"><a ng-click="removeFilter(filter)">{{filter.getResetLabel() | translate}}</a></li>
         <li class="divider" role="menuitem"></li>
         <!-- <li ng-repeat="option in filter.getOptions()" ng-class="filter.getSelected().getValue()===option.getValue()?'active':''" role="menuitem"><a ng-click="setFilter(filter, option)">{{option.getLabel() | translate}}</a></li> -->
-        <li ng-repeat="option in filter.getOptions()">
+        <li ng-repeat="option in filter.getOptions()" class="option" ng-click="switchFilter(filter, option)">
 	        <div class="checkbox checkbox-primary">
-			    <input type="checkbox" id="checkbox{{option.getLabel()}}" ng-model="checkbox[option.getLabel()]" ng-change="switchFilter(filter, option)" ng-checked="filter.hasSelectedOption(option)">
-			    <label for="checkbox{{option.getLabel()}}">
+			    <input type="checkbox" id="checkbox{{option.getLabel()}}" ng-model="checkbox[option.getLabel()]" ng-checked="filter.hasSelectedOption(option)">
+			    <label for="checkbox{{option.getLabel()}}" ng-click="switchFilter(filter, option)">
 			        {{option.getLabel() | translate}}
 			    </label>
 			</div>

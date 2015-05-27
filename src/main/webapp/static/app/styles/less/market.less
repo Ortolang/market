@@ -220,7 +220,7 @@
 
   .description {
     overflow: hidden;
-    max-height: 81px;
+    max-height: 76px;
     text-align: justify;
   }
 
@@ -244,6 +244,10 @@
       font-weight: inherit;
     }
   }
+
+  .close {
+    margin-left: @padding-small-horizontal;
+  }
 }
 
 .toolbar-options-facets {
@@ -251,17 +255,11 @@
 }
 
 .toolbar-section {
-  margin-left: -@container-main-padding + floor(@grid-gutter-width/2);
-  margin-right: -@container-main-padding + floor(@grid-gutter-width/2);
-  margin-bottom: 2 * @padding-large-vertical;
-  margin-top: -2 * @padding-large-vertical;
-  padding: @padding-large-vertical (@container-main-padding - floor(@grid-gutter-width/2));
-  min-height: @toolbar-min-height;
-  background-color: @default-bg;
 
-  .btn-toolbar {
+  .toolbar-options-line {
     border-bottom: @default-border;
-    padding-bottom: @padding-large-vertical;
+    padding-bottom: @padding-base-vertical;
+    padding-top: @padding-base-vertical;
     border-color: lighten(@navbar-default-border, 2%);
   }
 
@@ -293,30 +291,35 @@
 .toolbar-options-applied-filters {
   border-top: @default-border;
   margin-top: -32px;
+}
 
-  .btn-default {
+.btn-primary-inverse {
 
-    &:hover {
-      border-color: @btn-default-border;
-      background-color: @main-bg;
-    }
-  }
-
-  .btn-primary {
-
-    &:hover {
-      border-color: @btn-primary-border;
-      color: @btn-primary-bg;
-      background-color: @btn-default-bg;
-    }
-    background-color: @main-bg;
+  &:hover {
+    border-color: @btn-primary-border;
     color: @btn-primary-bg;
-    border-color: @btn-default-border;
+    background-color: @btn-default-bg;
   }
+  background-color: @main-bg;
+  color: @btn-primary-bg;
+  border-color: @btn-default-border;
+}
 
-  .close {
-    margin-left: 5px;
+
+.btn-default-inverse {
+
+  &:hover {
+    border-color: @btn-default-border;
+    background-color: @main-bg;
   }
+}
+
+.dropdown-faceted-filter {
+  width: 100%;
+
+  li.option {
+      padding-left: @padding-large-horizontal;    
+    }
 }
 
 .main-filter-option {

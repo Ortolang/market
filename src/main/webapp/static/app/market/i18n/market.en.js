@@ -55,27 +55,36 @@ angular.module('ortolangMarketApp')
             CORPORA: {
                   CORPORA_TYPE: 'Type of corpora',
                   ALL_CORPORA: 'All corpus',
-                  ANNOTATION_LEVEL: 'All annotation level',
-                  TEXT_FORMAT: 'All text format',
-                  TEXT_ENCODING: 'ALL text encodings',
-                  ALL_STATUSOFUSE: 'All status of use',
+                  ANNOTATION_LEVEL: 'Annotation levels',
+                  ALL_ANNOTATION_LEVEL: 'All annotation levels',
+                  TEXT_FORMAT: 'Formats',
+                  ALL_TEXT_FORMAT: 'All formats',
+                  TEXT_ENCODING: 'Text encodings',
+                  ALL_TEXT_ENCODING: 'All text encodings',
+                  STATUSOFUSE: 'Conditions of use',
+                  ALL_STATUSOFUSE: 'All conditions of use',
+                  CORPORA_LANG: 'Corpora languages',
                   ALL_LANG: 'All languages',
+                  CORPORA_DATATYPES: 'Data type',
+                  ALL_CORPORA_DATATYPES: 'All data type',
+                  CORPORA_LANGUAGE_TYPE: 'Languages',
+                  ALL_CORPORA_LANGUAGE_TYPE: 'All languages',
                   ALL_TOOL_FUNCTIONALITY: 'All functionalities',
-                  ALL_TOOL_INPUTDATA: 'All input data',
-                  ALL_TRANSCRIPTION_TYPE: 'All type of transcription',
-                  ALL_TRANSCRIPTION_FORMAT: 'All transcription format',
-                  ALL_TYPE_OF_SPEECH: 'All type of speech',
-                  ALL_TRANSCRIPTION_ENCODING: 'All character encoding',
-                  ALL_SIGNAL: 'All signal'
+                  ALL_TOOL_INPUTDATA: 'All input data'
             },
             SORT: {
                   TITLE: 'Title',
-                  CREATION_DATE: 'Creation date'    
+                  PUBLICATION_DATE: 'Publication date'    
             },
             SHOW_IN: 'Show by',
             VIEW_MODE: {
                   LINE: 'List',
                   GRID: 'Icons'
-            }
+            },
+            FACETS: 'Advanced filters',
+            MORE_FACETS: 'More filter',
+            LESS_FACETS: 'Hide filters',
+            NO_ITEM: 'No resource availabled',
+            PUBLISHED_ON: 'Published on the'
         }
     });
