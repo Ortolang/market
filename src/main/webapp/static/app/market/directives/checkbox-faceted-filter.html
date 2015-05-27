@@ -9,7 +9,7 @@
 	<div ng-repeat="option in filter.getOptions()" class="col-sm-2">
 	    <!-- <button type="button" class="btn btn-default" ng-click="setFilter(filter, option)" ng-model="button.checkbox[option.getLabel()]" bs-checkbox>{{option.getLabel() | translate}}</button> -->
 	    <div class="checkbox checkbox-primary">
-		    <input type="checkbox" id="checkbox{{option.getLabel()}}" ng-model="checkbox[option.getLabel()]" ng-change="switchFilter(filter, option)" ng-checked="filter.hasSelectedOption(option)">
+		    <input type="checkbox" id="checkbox{{option.getLabel()}}" ng-model="checkbox[option.getLabel()]" ng-change="switchFilter(filter, option, !lowFacets)" ng-checked="filter.hasSelectedOption(option)">
 		    <label for="checkbox{{option.getLabel()}}">
 		        {{option.getLabel() | translate}}
 		    </label>

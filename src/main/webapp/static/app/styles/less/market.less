@@ -70,6 +70,14 @@
 
 }
 
+
+.logo-item {
+  height: 160px;
+  width: 160px;
+  padding: 10px;
+}
+
+
 .medium-item {
   margin: 5px;
   border: 1px solid #dddddd;
@@ -96,17 +104,17 @@
     }
   }
 
-  .logo {
-    height: 160px;
-    width: 160px;
-    padding: 10px;
-  }
-
   .title {
     position: relative;
     color: inherit;
     font-size: 13px;
     margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
+    height: 50px;
+  }
+
+  .publication-date {
+    font-size: 12px;
+    margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical); 
   }
 }
 
@@ -216,6 +224,9 @@
   .line {
     border-bottom: @default-border;
     /* border-right: @default-border; */
+    &:first-child {
+      border-top: @default-border;
+    }
   }
 
   .description {
@@ -276,6 +287,9 @@
 
 .toolbar-options-sorted {
   background-color: @main-bg;
+  border-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   
   .btn {
 
@@ -324,12 +338,6 @@
 
 .main-filter-option {
   width: 220px;
-}
-
-.toolbar-options-sorted {
-  border-bottom: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
 }
 
 #market-search {

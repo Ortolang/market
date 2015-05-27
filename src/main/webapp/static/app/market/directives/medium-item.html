@@ -1,11 +1,7 @@
 <a ng-href="{{itemUrl}}">
-	<img ng-if="imgtitle !== undefined" class="logo" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
-	<img ng-if="image" class="logo" ng-src="{{image}}" alt="{{imgtitle}}"/>
-	<div class="caption" ng-class="showCaption">
-	    <h4 class="title">
-	    	{{entry.title}}<br/>
-	    	<small ng-bind="entry.publicationDate"></small>
-	    </h4>
-	</div>
+	<img ng-if="imgtitle !== undefined" class="logo-item" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
+	<img ng-if="image" class="logo-item" ng-src="{{image}}" alt="{{imgtitle}}"/>
+	<h4 class="title" ng-bind="entry.title"></h4>
+	<h4 class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-primary" >{{entry.publicationDate}}</span></h4>
 </a>
 

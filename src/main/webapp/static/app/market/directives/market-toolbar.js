@@ -44,7 +44,7 @@ angular.module('ortolangMarketApp')
                         scope.applyFilters();
                     };
 
-                    scope.switchFilter = function(filter, opt) {
+                    scope.switchFilter = function(filter, opt, apply) {
                         if(filter.hasSelectedOption(opt)) {
                             scope.filtersManager.removeOptionFilter(filter, opt);
                         } else {
@@ -52,7 +52,9 @@ angular.module('ortolangMarketApp')
                         }
                         
                         // scope.filtersManager.addFilter(filter, opt);
-                        scope.applyFilters();
+                        if(apply) {
+                            scope.applyFilters();
+                        }
                     };
 
                     scope.removeFilter = function (filter) {
