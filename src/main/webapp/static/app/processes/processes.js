@@ -71,12 +71,15 @@ angular.module('ortolangMarketApp')
             $scope.showResult = function (process) {
                 Runtime.selectRemoteProcess(process);
                 ToolManager.getTool(process.toolKey).getResult(process.jobId).$promise.then(function (data) {
+                    console.debug(data);
                     $scope.results = data;
                     $scope.jobId = process.jobId;
                     $scope.toolKey = process.toolKey;
                     $scope.jname = process.processTool.name;
                     $scope.process = process;
                     $scope.switchStatus = [];
+                    $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
+                    $scope.log = process.log;
                     //$modal({
                     //    title: process.processTool.name,
                     //    html: true,

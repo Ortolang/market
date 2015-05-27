@@ -217,6 +217,9 @@ angular.module('ortolangMarketApp')
             // ---
 
             var registry = {},
+                functionalitiesList = [],
+                inputDatasList = [],
+                outputDatasList = [],
                 loaded = false,
                 grantPopup,
                 grantTimeout,
@@ -283,15 +286,24 @@ angular.module('ortolangMarketApp')
                             item.inputData = data.inputData.filter(function(elem, pos) {
                                 return data.inputData.indexOf(elem) === pos;
                             });
+                            angular.forEach(item.inputData, function (input) {
+                                inputDatasList.push(input);
+                            });
                         }
                         if (data.outputData) {
                             item.outputData = data.outputData.filter(function(elem, pos) {
                                 return data.outputData.indexOf(elem) === pos;
                             });
+                            angular.forEach(item.outputData, function (output) {
+                                outputDatasList.push(output);
+                            });
                         }
                         if (data.functionalities) {
                             item.functionalities = data.functionalities.filter(function(elem, pos) {
                                 return data.functionalities.indexOf(elem) === pos;
+                            });
+                            angular.forEach(item.functionalities, function (fnc) {
+                                functionalitiesList.push(fnc);
                             });
                         }
                         item.meta = data;
@@ -389,6 +401,18 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function getFunctonalities () {
+                return functionalitiesList;
+            }
+
+            function getInputDatas () {
+                return inputDatasList;
+            }
+
+            function getOutputDatas () {
+                return outputDatasList;
+            }
+
 
             // *********************** //
             //           Init          //
@@ -412,6 +436,9 @@ angular.module('ortolangMarketApp')
                 disableTool: disableTool,
                 checkGrant: checkGrant,
                 getKeys: getKeys,
-                toArray: toArray
+                toArray: toArray,
+                getFunctionalities: getFunctonalities,
+                getInputData: getInputDatas,
+                getOutputData: getOutputDatas
             };
         }]);
