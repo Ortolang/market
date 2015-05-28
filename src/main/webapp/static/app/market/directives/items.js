@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', [ '$rootScope', '$routeParams', '$location', 'icons', 'JsonResultResource', 'OptionFacetedFilter',  function ($rootScope, $routeParams, $location, icons, JsonResultResource, OptionFacetedFilter) {
+    .directive('items', [ '$rootScope', '$location', 'icons', 'JsonResultResource', 'OptionFacetedFilter',  function ($rootScope, $location, icons, JsonResultResource, OptionFacetedFilter) {
         return {
             restrict: 'E',
             scope: {

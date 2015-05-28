@@ -49,7 +49,7 @@
             </header>
 
             <div class="flex-row">
-                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'rang':false" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
+                <item class="flex-column medium-item" ng-repeat="item in items | orderBy:'publicationDate':true" data-entry="item" data-template="market/directives/medium-item.html" ng-click="clickItem(item)"></item>
             </div>
         </div>
     </section>

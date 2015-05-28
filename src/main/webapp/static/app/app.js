@@ -74,8 +74,9 @@ angular
                 reloadOnSearch: false
             })
             .when('/search', {
-                templateUrl: 'market/market-search.html',
-                controller: 'MarketSearchCtrl'
+                templateUrl: 'market/search.html',
+                title: 'SEARCH',
+                reloadOnSearch: false
             })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspaces.html',

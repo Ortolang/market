@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, $filter, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -62,7 +62,7 @@ angular.module('ortolangMarketApp')
                         }
 
                         if($scope.item.datasize!==undefined && $scope.item.datasize!=='') {
-                            $scope.datasizeToPrint = {'value':$scope.item.datasize};
+                            $scope.datasizeToPrint = {'value':$filter('bytes')($scope.item.datasize)};
                         }
                     }, function (reason) {
                     console.error(reason);
