@@ -14,7 +14,7 @@ angular.element(document).ready(function () {
         angular.module('ortolangMarketApp')
             .factory('AuthService', ['$window', '$q', function ($window, $q) {
 
-                var logoutUrl = keycloakAuth.authServerUrl + '/realms/ortolang/tokens/logout?redirect_uri=' + logoutRedirectUrl,
+                var logoutUrl = keycloakAuth.authServerUrl + '/realms/ortolang/tokens/logout?redirect_uri=' + OrtolangConfig.logoutRedirectUrl,
                     deferred = $q.defer();
 
                 function isAuthenticated() {
