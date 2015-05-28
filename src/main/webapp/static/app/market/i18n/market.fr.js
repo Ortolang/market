@@ -69,8 +69,20 @@ angular.module('ortolangMarketApp')
                   ALL_CORPORA_DATATYPES: 'Tout type de source',
                   CORPORA_LANGUAGE_TYPE: 'Type de langue',
                   ALL_CORPORA_LANGUAGE_TYPE: 'Tout type de langue',
+                  TOOL_LANGUAGE: 'Langue traitée',
+                  TOOL_FUNCTIONALITY: 'Fonctionnalité',
                   ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',
-                  ALL_TOOL_INPUTDATA: 'Tout type d\'entrée'
+                  TOOL_INPUTDATA: 'Format en entrée',
+                  ALL_TOOL_INPUTDATA: 'Tout format en entrée',
+                  TOOL_OUTPUTDATA: 'Format en sortie',
+                  ALL_TOOL_OUTPUTDATA: 'Tout format en sortie',
+                  TOOL_FILE_ENCODINGS: 'Encodage de la donnée',
+                  ALL_TOOL_FILE_ENCODINGS: 'Tout encodage',
+                  LEXICON_INPUT_TYPE: 'Type d\'entrée',
+                  ALL_LEXICON_INPUT_TYPE: 'Tout type d\'entrée',
+                  LEXICON_DESCRIPTION_TYPE: 'Type de description',
+                  ALL_LEXICON_DESCRIPTION_TYPE: 'Tout type de description',
+                  LEXICON_INPUT_LANGUAGE: 'Langue des entrées'
             },
             SORT: {
                   TITLE: 'Titre',

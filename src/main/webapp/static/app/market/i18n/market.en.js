@@ -69,8 +69,20 @@ angular.module('ortolangMarketApp')
                   ALL_CORPORA_DATATYPES: 'All data type',
                   CORPORA_LANGUAGE_TYPE: 'Languages',
                   ALL_CORPORA_LANGUAGE_TYPE: 'All languages',
+                  TOOL_LANGUAGE: 'Tool language',
+                  TOOL_FUNCTIONALITY: 'Functionalities',
                   ALL_TOOL_FUNCTIONALITY: 'All functionalities',
-                  ALL_TOOL_INPUTDATA: 'All input data'
+                  TOOL_INPUTDATA: 'Input data',
+                  ALL_TOOL_INPUTDATA: 'All input data',
+                  TOOL_OUTPUTDATA: 'Output data type',
+                  ALL_TOOL_OUTPUTDATA: 'All output data type',
+                  TOOL_FILE_ENCODINGS: 'File encoding',
+                  ALL_TOOL_FILE_ENCODINGS: 'All file encodings',
+                  LEXICON_INPUT_TYPE: 'Input type',
+                  ALL_LEXICON_INPUT_TYPE: 'All input types',
+                  LEXICON_DESCRIPTION_TYPE: 'Description type',
+                  ALL_LEXICON_DESCRIPTION_TYPE: 'All description types',
+                  LEXICON_INPUT_LANGUAGE: 'Lexicon input language'
             },
             SORT: {
                   TITLE: 'Title',
@@ -85,6 +97,6 @@ angular.module('ortolangMarketApp')
             MORE_FACETS: 'More filter',
             LESS_FACETS: 'Hide filters',
             NO_ITEM: 'No resource availabled',
-            PUBLISHED_ON: 'Published on the'
+            PUBLISHED_ON: 'Published on'
         }
     });

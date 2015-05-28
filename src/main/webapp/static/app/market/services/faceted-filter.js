@@ -127,7 +127,7 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             getSelectedOptionsValues: function () {
                 var valueArr = [];
                 angular.forEach(this.selectedOptions, function(opt) {
-                    valueArr.push(opt.getLabel());
+                    valueArr.push(opt.getValue());
                 });
                 return valueArr;
             },

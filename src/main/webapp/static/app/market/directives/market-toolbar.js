@@ -146,7 +146,7 @@ angular.module('ortolangMarketApp')
                         initScopeVariables();
 
                         if(scope.preSelectedFilter) {
-                            scope.setFilter(scope.preSelectedFilter, scope.preSelectedFilter.getOption('Corpus'));
+                            scope.setFilter(scope.preSelectedFilter, scope.preSelectedFilter.getOption(scope.type));
                         }
                     }
                     init();

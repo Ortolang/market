@@ -12,7 +12,6 @@ angular.module('ortolangMarketApp')
         return {
             restrict: 'E',
             scope: {
-                type: '=',
                 query: '=',
                 items: '=',
                 viewMode: '=',
