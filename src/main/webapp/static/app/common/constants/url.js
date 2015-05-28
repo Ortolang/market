@@ -1,5 +1,7 @@
 'use strict';
 
+var baseUrl = baseUrl || 'https://localhost:8443/';
+
 /**
  * @ngdoc constant
  * @name ortolangMarketApp.url
