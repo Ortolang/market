@@ -1,7 +1,5 @@
 'use strict';
 
-var baseUrl = baseUrl || 'https://localhost:8443/';
-
 /**
  * @ngdoc constant
  * @name ortolangMarketApp.url
@@ -11,7 +9,7 @@ var baseUrl = baseUrl || 'https://localhost:8443/';
  */
 angular.module('ortolangMarketApp')
     .constant('url', {
-        base: baseUrl,
-        api: baseUrl + 'api',
-        content: baseUrl + 'content'
+        base: OrtolangConfig.serverUrl,
+        api: OrtolangConfig.serverUrl + 'api',
+        content: OrtolangConfig.serverUrl + 'content'
     });
