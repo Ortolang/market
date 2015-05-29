@@ -53,7 +53,9 @@ angular.module('ortolangMarketApp')
                     source: profileData.source,
                     visibility: profileData.visibility.value
                 };
-                ProfileResource.update({key: User.key}, formData);
+                ProfileResource.update({key: User.key}, formData, function () {
+                    User.profileDatas[profileData.name] = formData;
+                });
                 if (profileData.source === 'languages') {
                     $rootScope.$broadcast('askLanguageChange', profileData.value);
                 }
