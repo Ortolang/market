@@ -87,12 +87,16 @@ angular.module('ortolangMarketApp')
             },
             SORT: {
                   TITLE: 'Titre',
-                  PUBLICATION_DATE: 'Date de publication'  
+                  PUBLICATION_DATE: 'Date de publication'
+            },
+            SEARCH: {
+                CORPORA: 'Rechercher un corpus',
+                TOOLS: 'Rechercher un outil'
             },
             SHOW_IN: 'Présentation',
             VIEW_MODE: {
                   LINE: 'Par liste',
-                  GRID: 'Par icônes'      
+                  GRID: 'Par icônes'
             },
             FACETS: 'Options de recherche',
             MORE_FACETS: 'Plus de filtres',

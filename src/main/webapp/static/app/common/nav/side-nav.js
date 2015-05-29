@@ -86,7 +86,7 @@ angular.module('ortolangMarketApp')
             if (previous) {
                 switch (current.$$route.originalPath) {
                     case '/':
-                        $scope.select({class: 'market'}, false);
+                        $scope.select({class: 'home'}, false);
                         $rootScope.title = undefined;
                         break;
                     case '/tasks':
