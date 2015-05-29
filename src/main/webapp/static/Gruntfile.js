@@ -453,7 +453,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.app %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    'bower_components/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
                 }
@@ -468,7 +468,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    'bower_components/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
                 }
@@ -482,7 +482,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    'bower_components/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
                 }
