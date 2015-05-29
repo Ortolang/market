@@ -26,7 +26,6 @@ angular.module('ortolangMarketApp')
             var processes = [],
                 tasks = [],
                 remoteProcesses = [],
-                allProcesses = [],
                 processModal,
                 completeTaskModal,
                 states = {
@@ -312,6 +311,7 @@ angular.module('ortolangMarketApp')
                     RuntimeResource.remoteProcesses().$promise.then(function (data) {
                         angular.forEach( data.entries, function (process) {
                             var remoteProcess = process;
+                            remoteProcess.type = 'tool';
                             if(ToolManager.isRegistryLoaded()) {
                                 remoteProcess.processTool = ToolManager.getTool(process.toolKey);
                                 remoteProcess.job = ToolManager.getTool(process.toolKey).getJob(process.jobId);
@@ -340,12 +340,15 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function getAllProcesses() {
-                console.debug('processus actifs : ', getActiveProcesses(), getActiveRemoteProcesses());
                 return getActiveProcesses().concat(getActiveRemoteProcesses());
             }
 
             function getAllProcessesWithState(state, not) {
                 return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
+            }
+
+            function getAllActiveProcessesNumber() {
+                return getActiveProcessesNumber() + getActiveRemoteProcessesNumber();
             }
 
             // *********************** //
@@ -469,6 +472,7 @@ angular.module('ortolangMarketApp')
                 pushNewRemoteProcess: pushNewRemoteProcess,
                 // Misc
                 getAllProcesses: getAllProcesses,
-                getAllProcessesWithState: getAllProcessesWithState
+                getAllProcessesWithState: getAllProcessesWithState,
+                getAllActiveProcessesNumber: getAllActiveProcessesNumber
             };
         }]);

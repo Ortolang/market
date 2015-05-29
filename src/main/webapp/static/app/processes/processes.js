@@ -65,7 +65,6 @@ angular.module('ortolangMarketApp')
             $scope.showResult = function (process) {
                 Runtime.selectRemoteProcess(process);
                 ToolManager.getTool(process.toolKey).getResult(process.jobId).$promise.then(function (data) {
-                    console.debug(data);
                     $scope.results = data;
                     $scope.jobId = process.jobId;
                     $scope.toolKey = process.toolKey;
@@ -74,13 +73,6 @@ angular.module('ortolangMarketApp')
                     $scope.switchStatus = [];
                     $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
                     $scope.log = process.log;
-                    //$modal({
-                    //    title: process.processTool.name,
-                    //    html: true,
-                    //    scope: $scope,
-                    //    template: 'common/tools/tool-result-modal-template.html',
-                    //    show: true
-                    //});
                     $rootScope.$broadcast('tool-results-show');
                 });
             };
