@@ -75,9 +75,18 @@
       height: @side-nav-item-height;
       width: @side-nav-width;
 
+      &.disabled {
+        > a {
+          cursor: default;
+        }
+        .item-description, .icon-container {
+          color: lighten(@side-nav-item-icon-color, 15%);
+        }
+      }
+
       > a {
         .icon-container {
-          color: #b8b8b8;
+          color: @side-nav-item-icon-color;
           line-height: @side-nav-item-height;
         }
         &:hover {

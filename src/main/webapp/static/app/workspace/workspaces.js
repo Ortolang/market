@@ -56,7 +56,8 @@ angular.module('ortolangMarketApp')
                             $scope.browserCtrlInitialized = true;
                         }
                     } else {
-                        $scope.resizeBrowser();
+                        $scope.browserSettings.wskey = undefined;
+                        Settings.store();
                     }
                 });
             }
