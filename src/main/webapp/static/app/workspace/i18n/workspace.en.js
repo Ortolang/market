@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
             ADD_METADATA: 'Add a metadata',
             SNAPSHOT: 'Save workspace state',
             PUBLISH: 'Publish workspace',
+            NO_WORKSPACES: 'You do not have created a workspace yet',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
                 AUTO_GENERATED: 'Auto-generated ID',

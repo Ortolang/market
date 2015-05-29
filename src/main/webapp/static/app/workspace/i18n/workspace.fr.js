@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
             ADD_METADATA: 'Ajouter une métadonnée',
             SNAPSHOT: 'Sauvegarder l\'état de l\'espace',
             PUBLISH: 'Publier l\'espace de travail',
+            NO_WORKSPACES: 'Vous n\'avez pas encore créé d\'espace de travail',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Créer un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'identifiant',
