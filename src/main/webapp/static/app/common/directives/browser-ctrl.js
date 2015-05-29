@@ -1074,10 +1074,14 @@ angular.module('ortolangMarketApp')
 
             $scope.order = function (predicate, reverse) {
                 // If ask to toggle with a different predicate whe force reverse to false (ascending)
-                if (reverse === undefined || (reverse === 'toggle' && predicate !== $scope.orderProp)) {
+                if (reverse === undefined || (reverse === 'toggle' && !angular.equals(predicate, $scope.orderProp))) {
                     reverse = false;
                 }
                 $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
+                if ($scope.orderReverse && angular.equals(predicate, ['type','name'])) {
+                    // Conserve collection on top of data objects; i.e. reverse only name
+                    predicate = ['-type', 'name'];
+                }
                 $scope.orderProp = predicate;
                 lastShiftSelectedElement = undefined;
             };

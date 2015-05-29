@@ -8,10 +8,22 @@
         </colgroup>
         <thead class="small">
         <tr>
-            <th ng-click="order('name', 'toggle')" translate="NAME"></th>
-            <th ng-click="order('mimeType', 'toggle')" translate="TYPE"></th>
-            <th ng-hide="isScreenMd" ng-click="order('modification', 'toggle')" translate="BROWSER.LAST_MODIFICATION"></th>
-            <th ng-hide="isScreenMd" ng-click="order('size', 'toggle')" translate="SIZE"></th>
+            <th ng-click="order(['type','name'], 'toggle')">
+                <span translate="NAME"></span>
+                <span order-indicator data-name="name" data-array="1" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+            </th>
+            <th ng-click="order('mimeType', 'toggle')">
+                <span translate="TYPE"></span>
+                <span order-indicator data-name="mimeType" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+            </th>
+            <th ng-hide="isScreenMd" ng-click="order('modification', 'toggle')">
+                <span translate="BROWSER.LAST_MODIFICATION"></span>
+                <span order-indicator data-name="modification" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+            </th>
+            <th ng-hide="isScreenMd" ng-click="order('size', 'toggle')">
+                <span translate="SIZE"></span>
+                <span order-indicator data-name="size" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+            </th>
         </tr>
         </thead>
         <tbody>

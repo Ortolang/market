@@ -36,9 +36,8 @@ angular.module('ortolangMarketApp')
                 MIME_TYPE: 'Mime Type'
             },
             SORT: {
-                TYPE_NAME: 'ORTOLANG Type',
                 MIME_TYPE: 'Mime Type',
-                DATE: 'Date'
+                DATE: 'Modification date'
             },
             INFO: '{{hideInfo === "true" ? "Display" : "Hide"}} details',
             DASHBOARD: 'Go back to dashboard',
