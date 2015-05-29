@@ -78,7 +78,7 @@ angular.module('ortolangMarketApp')
         {
             class: 'workspaces',
             path: '/workspaces',
-            description: 'NAV.MY_WORKSPACES',
+            description: 'NAV.WORKSPACES',
             iconCss: 'fa fa-fw fa-cloud fa-2x',
             active: undefined,
             hiddenSideNav: false,

@@ -6,7 +6,7 @@
 	<div class="col-sm-9">
 		<h4><a ng-href="{{itemUrl}}">{{entry.title}}</a></h4>
 		<p ng-bind-html="entry.description" class="description"></p>
-		<small><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-primary" >{{entry.publicationDate}}</span></small>
+		<small><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{entry.publicationDate}}</span></small>
 		<p class="producers">
 		    <span ng-repeat="producer in entry.producer">
 		        <a ng-href='#/search?content="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>

@@ -156,6 +156,13 @@ angular.module('ortolangMarketApp')
                         $scope.allChildrenMimeTypes.push({value: value.mimeType, label: '<span class="' + $filter('mimeTypeIconCss')(value.mimeType) + '"></span>&nbsp; ' + value.mimeType});
                     }
                 });
+                if ($scope.isWorkspaceBrowserService()) {
+                    if ($scope.path === '/') {
+                        $rootScope.subtitle = ' - ' + $scope.browserService.workspace.alias;
+                    } else {
+                        $rootScope.subtitle = ' - ' + $scope.browserService.workspace.alias + ' - ' + $scope.path.slice($scope.path.lastIndexOf('/') + 1);
+                    }
+                }
             }
 
             function getParentData(refresh, forceNewSelection) {
@@ -858,6 +865,7 @@ angular.module('ortolangMarketApp')
             $scope.$on('$destroy', function () {
                 if ($scope.isWorkspaceBrowserService()) {
                     $rootScope.browsing = false;
+                    $rootScope.subtitle = undefined;
                 }
             });
 
@@ -899,7 +907,7 @@ angular.module('ortolangMarketApp')
                 }
             });
 
-            $scope.$on('$locationChangeSuccess', function () {
+            $scope.$on('$routeUpdate', function () {
                 if ($scope.isMarket()) {
                     if ($location.search().key && $location.search().key !== $scope.itemKey) {
                         if ($scope.keyHistory.back.length !== 0 && $scope.keyHistory.back[$scope.keyHistory.back.length - 1] === $location.search().key) {
@@ -911,6 +919,10 @@ angular.module('ortolangMarketApp')
                         }
                     }
                 } else if ($rootScope.browsing) {
+                    if (!$location.search().browse) {
+                        $rootScope.browsing = false;
+                        return;
+                    }
                     // TODO need fix: when changing workspace getParentData() called twice
                     if ($location.search().alias !== $scope.browserService.workspace.alias) {
                         var workspace = $filter('filter')($scope.workspaceList.entries, {alias: $location.search().alias}, true);
@@ -1062,10 +1074,14 @@ angular.module('ortolangMarketApp')
 
             $scope.order = function (predicate, reverse) {
                 // If ask to toggle with a different predicate whe force reverse to false (ascending)
-                if (reverse === undefined || (reverse === 'toggle' && predicate !== $scope.orderProp)) {
+                if (reverse === undefined || (reverse === 'toggle' && !angular.equals(predicate, $scope.orderProp))) {
                     reverse = false;
                 }
                 $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
+                if ($scope.orderReverse && angular.equals(predicate, ['type','name'])) {
+                    // Conserve collection on top of data objects; i.e. reverse only name
+                    predicate = ['-type', 'name'];
+                }
                 $scope.orderProp = predicate;
                 lastShiftSelectedElement = undefined;
             };

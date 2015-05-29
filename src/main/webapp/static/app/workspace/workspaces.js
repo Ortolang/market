@@ -101,6 +101,12 @@ angular.module('ortolangMarketApp')
             $rootScope.noFooter = false;
         });
 
+        $scope.$on('$routeUpdate', function () {
+            if ($location.search().browse) {
+                $rootScope.browsing = true;
+            }
+        });
+
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {
             $scope.workspaceList.$promise.then(function () {
                 var workspace = $filter('filter')($scope.workspaceList.entries, {key: eventMessage.fromObject});

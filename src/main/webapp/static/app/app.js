@@ -49,19 +49,24 @@ angular
             })
             .when('/market/home', {
                 templateUrl: 'market/home.html',
-                controller: 'HomeCtrl'
+                controller: 'HomeCtrl',
+                title: 'NAV.HOME'
             })
             .when('/market/corpora', {
-                templateUrl: 'market/corpora.html'
+                templateUrl: 'market/corpora.html',
+                title: 'CORPORA'
             })
             .when('/market/tools', {
-                templateUrl: 'market/tools.html'
+                templateUrl: 'market/tools.html',
+                title: 'TOOLS'
             })
             .when('/market/lexicons', {
-                templateUrl: 'market/lexicons.html'
+                templateUrl: 'market/lexicons.html',
+                title: 'LEXICONS'
             })
             .when('/market/applications', {
-                templateUrl: 'market/applications.html'
+                templateUrl: 'market/applications.html',
+                title: 'INTEGRATED_PROJECTS'
             })
             .when('/market/:section/:itemKey', {
                 templateUrl: 'market/market-item.html',
@@ -69,24 +74,28 @@ angular
                 reloadOnSearch: false
             })
             .when('/search', {
-                templateUrl: 'market/market-search.html',
-                controller: 'MarketSearchCtrl'
+                templateUrl: 'market/search.html',
+                title: 'SEARCH',
+                reloadOnSearch: false
             })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspaces.html',
                 requiresAuthentication: true,
                 reloadOnSearch: false,
-                controller: 'WorkspacesCtrl'
+                controller: 'WorkspacesCtrl',
+                title: 'NAV.WORKSPACES'
             })
             .when('/processes', {
                 templateUrl: 'processes/processes.html',
                 controller: 'ProcessesCtrl',
-                requiresAuthentication: true
+                requiresAuthentication: true,
+                title: 'NAV.PROCESSES'
             })
             .when('/tasks', {
                 templateUrl: 'tasks/tasks.html',
                 controller: 'TasksCtrl',
-                requiresAuthentication: true
+                requiresAuthentication: true,
+                title: 'NAV.TASKS'
             })
             .when('/information', {
                 redirectTo: '/information/presentation'
@@ -94,7 +103,8 @@ angular
             .when('/information/:section', {
                 templateUrl: 'information/information.html',
                 controller: 'InformationCtrl',
-                reloadOnSearch: false
+                reloadOnSearch: false,
+                title: 'NAV.INFORMATION'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
@@ -104,10 +114,12 @@ angular
                     func: ['AuthService', function (AuthService) {
                         return AuthService.sessionInitialized;
                     }]
-                }
+                },
+                title: 'NAV.PROFILE'
             })
             .when('/404', {
-                templateUrl: '404.html'
+                templateUrl: '404.html',
+                title: 'NAV.404'
             })
             .otherwise({
                 redirectTo: '/404'

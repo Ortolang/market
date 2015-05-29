@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
-    <title>ORTOLANG</title>
+    <title ng-bind="'ORTOLANG' + (title ? ' | ' + (title | translate) : '') + subtitle">ORTOLANG</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -25,17 +25,16 @@
     <meta name="msapplication-TileImage" content="mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="styles/custom-bootstrap.css" />
     <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/custom-bootstrap.css" />
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.min.css" />
     <link rel="stylesheet" href="bower_components/highlightjs/build/styles/solarized_light.min.css" />
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
     <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/textAngular/dist/textAngular.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
@@ -121,7 +120,9 @@
 <!--<script src="config.jsp"></script>-->
 <!-- build:remove -->
 <script type="text/javascript">
-    var logoutRedirectUrl = 'http://localhost:9000/';
+    var OrtolangConfig = {};
+    OrtolangConfig.logoutRedirectUrl = 'http://localhost:9000/';
+    OrtolangConfig.serverUrl = 'https://localhost:8443/';
 </script>
 <!-- endbuild -->
 
@@ -153,6 +154,7 @@
 <script src="common/directives/xeditable-address.js"></script>
 <script src="common/directives/profile-data-field.js"></script>
 <script src="common/directives/acl-select.js"></script>
+<script src="common/directives/order-indicator.js"></script>
 <script src="common/directives/i18n/browser.fr.js"></script>
 <script src="common/directives/i18n/browser.en.js"></script>
 <script src="common/formly/formly-file-select.js"></script>
@@ -194,7 +196,6 @@
 <script src="common/nav/side-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
 <script src="common/nav/footer.js"></script>
-<script src="common/nav/side-nav-animation.js"></script>
 <script src="common/nav/i18n/nav.fr.js"></script>
 <script src="common/nav/i18n/nav.en.js"></script>
 <script src="common/i18n/common.fr.js"></script>
@@ -236,6 +237,10 @@
 <script src="market/services/item-manager.js"></script>
 <script src="market/market-search.js"></script>
 <script src="market/corpora.js"></script>
+<script src="market/applications.js"></script>
+<script src="market/lexicons.js"></script>
+<script src="market/tools.js"></script>
+<script src="market/search.js"></script>
 <script src="market/i18n/market.fr.js"></script>
 <script src="market/i18n/market.en.js"></script>
 <script src="information/i18n/information.en.js"></script>

@@ -2,6 +2,6 @@
 	<img ng-if="imgtitle !== undefined" class="logo-item" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
 	<img ng-if="image" class="logo-item" ng-src="{{image}}" alt="{{imgtitle}}"/>
 	<h4 class="title" ng-bind="entry.title"></h4>
-	<h4 class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-primary" >{{entry.publicationDate}}</span></h4>
+	<h4 ng-if="entry.publicationDate" class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{entry.publicationDate}}</span></h4>
 </a>
 
