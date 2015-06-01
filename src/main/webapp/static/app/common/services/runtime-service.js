@@ -347,8 +347,16 @@ angular.module('ortolangMarketApp')
                 return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
             }
 
+            function hasAllProcessesWithState(state) {
+                return hasProcessesWithState(state) || hasRemoteProcessesWithState(state);
+            }
+
             function getAllActiveProcessesNumber() {
                 return getActiveProcessesNumber() + getActiveRemoteProcessesNumber();
+            }
+
+            function getAllProcessesNumberWithState(state, not) {
+                return getProcessesWithState(state, not).length + getRemoteProcessesWithState(state, not).length;
             }
 
             // *********************** //
@@ -473,6 +481,8 @@ angular.module('ortolangMarketApp')
                 // Misc
                 getAllProcesses: getAllProcesses,
                 getAllProcessesWithState: getAllProcessesWithState,
-                getAllActiveProcessesNumber: getAllActiveProcessesNumber
+                getAllActiveProcessesNumber: getAllActiveProcessesNumber,
+                hasAllProcessesWithState: hasAllProcessesWithState,
+                getAllProcessesNumberWithState: getAllProcessesNumberWithState
             };
         }]);

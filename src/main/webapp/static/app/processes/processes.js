@@ -8,12 +8,17 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope',
-        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope) {
+    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope', '$filter',
+        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope, $filter) {
 
             $scope.Runtime = Runtime;
 
             $scope.completedProcessessDisplayed = 3;
+            $scope.abortedProcessessDisplayed = 3;
+            // Filter set by default to start date in descending order
+            $scope.orderProp = ['start'];
+            $scope.orderReverse = true;
+
             var name;
 
             $scope.showLog = function (process, processKey) {
@@ -77,11 +82,22 @@ angular.module('ortolangMarketApp')
                 });
             };
 
+            $scope.filteredOrderedProcesses = function (processes) {
+                console.debug($scope.orderProp, $scope.orderReverse, processes.start);
+                return $filter('orderBy')(processes, $scope.orderProp, $scope.orderReverse);
+            };
+
+            $scope.order = function (predicate, reverse) {
+                $scope.orderReverse = (reverse === 'toggle' ? !$scope.orderReverse : $scope.orderReverse);
+                $scope.orderProp = predicate;
+            };
+
+
             $scope.activeTab = 0;
 
-            $scope.showAll = function ($event) {
-                $($event.target).addClass('hidden').prev('table').addClass('show-all');
-            };
+            //$scope.showAll = function ($event) {
+            //    $($event.target).addClass('hidden').prev('table').addClass('show-all');
+            //};
 
             $scope.getToolDownloadUrl = function (url, jobid, path) {
                 return url + '/jobs/' + jobid + '/download?path=' + path;
@@ -91,11 +107,12 @@ angular.module('ortolangMarketApp')
                 $scope.showLog(undefined, $routeParams.pKey);
             }
 
-            $scope.test = function () {
-                Runtime.createProcess({
-                    'process-type': 'test',
-                    'process-name': 'Test process',
-                    'name': 'John'
-                });
-            };
+
+            //$scope.test = function () {
+            //    Runtime.createProcess({
+            //        'process-type': 'test',
+            //        'process-name': 'Test process',
+            //        'name': 'John'
+            //    });
+            //};
         }]);
