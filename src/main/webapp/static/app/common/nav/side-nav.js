@@ -81,6 +81,13 @@ angular.module('ortolangMarketApp')
 
         init();
 
+        $rootScope.$on('$routeUpdate', function () {
+            var modal = angular.element('.modal.am-fade');
+            if (modal.length > 0) {
+                modal.scope().$hide();
+            }
+        });
+
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             $rootScope.title = current.$$route.title;
             if (previous) {

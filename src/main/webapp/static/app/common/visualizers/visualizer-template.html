@@ -1,6 +1,41 @@
-<div class="visualizer-modal modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+<div class="visualizer-modal modal container-main" ng-class="{'with-footer': visualizer.footer.display}">
+    <div class="row toolbar visualizer-toolbar visualizer-header">
+        <div class="col-sm-6">
+            <div class="visualizer-title-wrapper">
+                <div class="visualizer-title">
+                    <span ng-if="visualizer.header.fileType" class="type" ng-class="::visualizer.header.fileType | mimeTypeIconCss"></span>
+                    <strong ng-bind="visualizer.header.fileName"></strong>
+                    <div ng-bind-html="visualizer.header.html"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="btn-toolbar btn-toolbar-right" role="toolbar">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" ng-click="$hide()"><span class="fa fa-times fa-fw"></span></button>
+                </div>
+                <div ng-repeat="action in ::visualizer.header.actions.slice().reverse()" class="btn-group">
+                    <button type="button" class="btn btn-default" ng-click="doAction(action.name)"><span ng-class="action.icon"></span> {{action.text | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="visualizer-content close-on-click" ng-click="clickContent($event)" ng-class="visualizer.content.classes">
+
+    </div>
+
+    <div ng-if="visualizer.footer.display" class="row toolbar visualizer-toolbar visualizer-footer">
+        <div class="col-sm-6">
+            <div class="visualizer-title-wrapper">
+                <span class="visualizer-title" translate="{{visualizer.footer.text}}"></span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="btn-toolbar btn-toolbar-right" role="toolbar">
+                <div ng-repeat="action in ::visualizer.footer.actions.slice().reverse()" class="btn-group">
+                    <button type="button" class="btn btn-default" ng-click="doAction(action.name)" translate="{{action.text}}"></button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

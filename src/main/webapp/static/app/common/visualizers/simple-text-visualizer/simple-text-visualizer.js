@@ -46,8 +46,8 @@ angular.module('ortolangVisualizers')
 
         return {
             templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
-            restrict: 'E',
-            scope: true,
+            restrict: 'A',
+            //scope: true,
             link: {
                 pre: function (scope, element, attrs) {
                     var mimeType = scope.elements[0].mimeType,
@@ -66,6 +66,25 @@ angular.module('ortolangVisualizers')
                         scope.language = undefined;
                     }
                     scope.truncated = scope.elements[0].size >= limit;
+                    scope.visualizer.header = {
+                        fileName: scope.elements[0].name,
+                        fileType: scope.elements[0].mimeType
+                    };
+                    scope.visualizer.footer = {
+                        display: scope.truncated,
+                        text: 'SIMPLE_TEXT_VISUALISER.EXCERPT'
+                    };
+                    scope.visualizer.footer.actions = [
+                        {
+                            name: 'seeMore',
+                            text: 'SIMPLE_TEXT_VISUALISER.SEE_MORE'
+                        }
+                    ];
+                    scope.doAction = function (name) {
+                        if (name === 'seeMore') {
+                            scope.seeMore();
+                        }
+                    };
                     DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
                         if (scope.elements[0].size >= limit) {
                             scope.data = data.substr(0, limit);
@@ -75,6 +94,7 @@ angular.module('ortolangVisualizers')
                                 } else {
                                     scope.data = scope.fullData;
                                     scope.fullData = undefined;
+                                    scope.visualizer.footer.display = false;
                                 }
                             };
                             scope.fullData = data;
@@ -84,10 +104,6 @@ angular.module('ortolangVisualizers')
                     }).error(function (error) {
                         console.error(error);
                     });
-                },
-                post: function (scope) {
-                    var height = $window.innerHeight - (scope.truncated ? 6 : 4) * parseInt(angular.element('.modal-dialog.modal-lg').css('margin-top'), 10);
-                    angular.element('.highlight').css('height', height);
                 }
             }
         };

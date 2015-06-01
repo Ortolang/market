@@ -103,7 +103,7 @@ angular.module('ortolangVisualizers')
             }, this);
 
             var elementName = config.id.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-            this.element = '<' + elementName + '></' + elementName + '>';
+            this.element = '<div class="visualizer" ' + elementName + '></div>';
         }
 
         // Methods
