@@ -5,14 +5,14 @@
             <span class="item-description">{{selectedElement.description | translate}}</span>
         </a>
     </div>
-    <div class="side-nav-active-item copy side-nav-animation ng-hide">
+    <div class="side-nav-active-item copy ng-hide">
         <a ng-class="selectedElementCopy.class" ng-href="#{{selectedElementCopy.hiddenPath ? selectedElementCopy.hiddenPath : selectedElementCopy.path}}">
             <span class="icon-container" ng-class="selectedElementCopy.iconCss"></span>
             <span class="item-description">{{selectedElementCopy.description | translate}}</span>
         </a>
     </div>
     <ul class="side-nav-list">
-        <li ng-repeat="element in sideNavElements track by element.class" ng-if="!element.hiddenSideNav && !element.active && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-class="{divider: element.class === 'divider'}">
+        <li ng-repeat="element in sideNavElements track by element.class" ng-if="!element.hiddenSideNav && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', disabled: element.active}">
             <a ng-if="element.class !== 'divider'" ng-href="#{{element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="select(element)" ng-class="element.class">
                 <span class="icon-container" ng-class="element.iconCss"></span>
                 <span class="item-description">{{element.description | translate}}</span>

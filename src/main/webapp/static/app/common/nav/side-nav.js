@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', '$animate', 'sideNavElements', function ($rootScope, $scope, $route, $translate, $animate, sideNavElements) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$animateCss', '$translate', 'sideNavElements', function ($rootScope, $scope, $route, $animateCss, $translate, sideNavElements) {
 
         $scope.sideNavElements = sideNavElements;
         $scope.selectedElement = undefined;
@@ -30,17 +30,20 @@ angular.module('ortolangMarketApp')
                         $scope.selectedElement = value;
                     } else {
                         if (animate) {
-                            var clickedElement = $('.side-nav').find('.' + element.class).parent(),
+                            var clickedElement = angular.element('.side-nav').find('.' + element.class).parent(),
                                 copy = angular.element('.side-nav-active-item.copy'),
                                 real = angular.element('.side-nav-active-item.real');
-                            copy.attr('nav-position', clickedElement.position().top);
                             real.addClass('animated');
-                            $animate.removeClass(copy, 'ng-hide').then(function () {
-                                $scope.$apply(function () {
-                                    $scope.selectedElement = value;
-                                    real.removeClass('animated');
-                                    copy.addClass('ng-hide');
-                                });
+                            $animateCss(copy, {
+                                removeClass: 'ng-hide',
+                                easing: 'ease-in-out',
+                                from: { top: clickedElement.position().top + 'px' },
+                                to: { top: '0px' },
+                                duration: 0.6
+                            }).start().then(function () {
+                                $scope.selectedElement = value;
+                                real.removeClass('animated');
+                                copy.addClass('ng-hide');
                             });
                         } else {
                             $scope.selectedElement = value;
@@ -79,10 +82,12 @@ angular.module('ortolangMarketApp')
         init();
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $rootScope.title = current.$$route.title;
             if (previous) {
                 switch (current.$$route.originalPath) {
                     case '/':
-                        $scope.select({class: 'market'}, false);
+                        $scope.select({class: 'home'}, false);
+                        $rootScope.title = undefined;
                         break;
                     case '/tasks':
                         $scope.select({class: 'tasks'}, false);

@@ -48,7 +48,8 @@ angular.module('ortolangMarketApp')
             LICENCE_DETAIL: 'Détails sur la licence',
             DEROGATION: 'Code du patrimoine',
             RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
-            SITE: 'Accéder à l\'application web',
+            LINK: 'Lien',
+            SITE: 'Accéder au site',
             THUMBNAIL: 'Miniature',
             ALL_RESOURCE: 'Tout type de ressource',
             RESOURCE_TYPE: 'Type de ressource',
@@ -69,17 +70,33 @@ angular.module('ortolangMarketApp')
                   ALL_CORPORA_DATATYPES: 'Tout type de source',
                   CORPORA_LANGUAGE_TYPE: 'Type de langue',
                   ALL_CORPORA_LANGUAGE_TYPE: 'Tout type de langue',
+                  TOOL_LANGUAGE: 'Langue traitée',
+                  TOOL_FUNCTIONALITY: 'Fonctionnalité',
                   ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',
-                  ALL_TOOL_INPUTDATA: 'Tout type d\'entrée'
+                  TOOL_INPUTDATA: 'Format en entrée',
+                  ALL_TOOL_INPUTDATA: 'Tout format en entrée',
+                  TOOL_OUTPUTDATA: 'Format en sortie',
+                  ALL_TOOL_OUTPUTDATA: 'Tout format en sortie',
+                  TOOL_FILE_ENCODINGS: 'Encodage de la donnée',
+                  ALL_TOOL_FILE_ENCODINGS: 'Tout encodage',
+                  LEXICON_INPUT_TYPE: 'Type d\'entrée',
+                  ALL_LEXICON_INPUT_TYPE: 'Tout type d\'entrée',
+                  LEXICON_DESCRIPTION_TYPE: 'Type de description',
+                  ALL_LEXICON_DESCRIPTION_TYPE: 'Tout type de description',
+                  LEXICON_INPUT_LANGUAGE: 'Langue des entrées'
             },
             SORT: {
                   TITLE: 'Titre',
-                  PUBLICATION_DATE: 'Date de publication'  
+                  PUBLICATION_DATE: 'Date de publication'
+            },
+            SEARCH: {
+                CORPORA: 'Rechercher un corpus',
+                TOOLS: 'Rechercher un outil'
             },
             SHOW_IN: 'Présentation',
             VIEW_MODE: {
                   LINE: 'Par liste',
-                  GRID: 'Par icônes'      
+                  GRID: 'Par icônes'
             },
             FACETS: 'Options de recherche',
             MORE_FACETS: 'Plus de filtres',

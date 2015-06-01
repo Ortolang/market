@@ -18,7 +18,15 @@
                     </ul>
                 </section>
             </div>
-            <div class="col-sm-10 col-md-10 container-main workspace-dashboard">
+
+            <div ng-if="workspaceList.entries.length === 0" class="col-sm-10 col-md-10 container-main workspace-dashboard">
+                <br/>
+                <p>
+                    <i translate="WORKSPACE.NO_WORKSPACES"></i>
+                </p>
+            </div>
+
+            <div ng-if="workspaceList.entries.length > 0" class="col-sm-10 col-md-10 container-main workspace-dashboard">
                 <h1>{{WorkspaceBrowserService.workspace.name}}</h1>
                 <br/>
                 <div>

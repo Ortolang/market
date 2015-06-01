@@ -201,6 +201,16 @@
                 </div>
             </div>
 
+            <div class="panel panel-default" ng-show="item.type === 'Application'">
+                <div class="panel-heading"><span class="fa fa-link fa-fw"></span> {{'MARKET.LINK' | translate}}</div>
+                <div class="panel-body">
+
+                    <div class="btn-group btn-group-justified">
+                        <a ng-href="{{item.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
+                    </div>
+                </div>
+            </div>
+
             <div class="panel panel-default derogation-panel" ng-show="item.derogation">
                 <div class="panel-heading" translate="MARKET.DEROGATION"></div>
                 <div class="panel-body">

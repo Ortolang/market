@@ -1,9 +1,6 @@
 'use strict';
 
-var logoutRedirectUrl;
-
 beforeEach(function () {
-    logoutRedirectUrl = 'http://localhost:9000/';
     jasmine.addMatchers({
         toEqualData: function () {
             return {

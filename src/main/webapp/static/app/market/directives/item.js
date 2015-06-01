@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', [ 'ObjectResource', 'DownloadResource',  function (ObjectResource, DownloadResource) {
+    .directive('item', [ '$location', 'ObjectResource', 'DownloadResource',  function ($location, ObjectResource, DownloadResource) {
         return {
             restrict: 'EA',
             scope: {
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                     if (scope.entry.applicationUrl) {
                         scope.itemUrl = scope.entry.applicationUrl;
                     } else {
-                        scope.itemUrl = '#/market/item/' + scope.entry.key;
+                        scope.itemUrl = '#' + $location.path() + '/' + scope.entry.key;
                     }
 
                     if(scope.entry.image) {

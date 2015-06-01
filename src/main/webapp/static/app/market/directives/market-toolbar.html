@@ -2,7 +2,7 @@
 <div class="row toolbar">
     <div class="col-sm-5">
         <div class="input-group">
-            <input ng-model="content" ng-keyup="$event.keyCode == 13 && applyFilters()" class="form-control" type="text" placeholder="{{'SEARCH' | translate}}">
+            <input ng-model="content" ng-keyup="$event.keyCode == 13 && applyFilters()" class="form-control" type="text" placeholder="{{(searchPlaceHolder ? searchPlaceHolder : 'SEARCH') | translate}}">
             <span class="input-group-btn">
                 <button ng-click="applyFilters()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    <div class="row toolbar toolbar-options toolbar-options-applied-filters" ng-if="lowFacets">           
+    <div class="row toolbar toolbar-options toolbar-options-applied-filters" ng-if="lowFacets">
         <div class="col-sm-12">
             <div class="btn-group">
                 <button type="button" class="btn btn-primary btn-primary-inverse" ng-click="applyFilters()">Valider</button>

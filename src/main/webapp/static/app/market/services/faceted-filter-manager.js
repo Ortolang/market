@@ -128,14 +128,16 @@ angular.module('ortolangMarketApp')
                 queryBuilder.addProjection('meta_ortolang-item-json.corporaLanguageType', 'corporaLanguageType');
 
                 queryBuilder.addProjection('meta_ortolang-item-json.annotationLevels', 'annotationLevels');
-                queryBuilder.addProjection('meta_ortolang-item-json.transcriptionType', 'transcriptionType');
-                queryBuilder.addProjection('meta_ortolang-item-json.transcriptionFormat', 'transcriptionFormat');
-                queryBuilder.addProjection('meta_ortolang-item-json.typeOfSpeech', 'typeOfSpeech');
-                queryBuilder.addProjection('meta_ortolang-item-json.transcriptionEncoding', 'transcriptionEncoding');
-                queryBuilder.addProjection('meta_ortolang-item-json.signal', 'signal');
 
-                queryBuilder.addProjection('meta_ortolang-item-json.toolFunctionality', 'toolFunctionality');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolLanguages', 'toolLanguages');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolFunctionalities', 'toolFunctionalities');
                 queryBuilder.addProjection('meta_ortolang-item-json.toolInputData', 'toolInputData');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolOutputData', 'toolOutputData');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolFileEncodings', 'toolFileEncodings');
+
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputType', 'lexiconInputType');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionTypes', 'lexiconDescriptionTypes');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputLanguages', 'lexiconInputLanguages');
 
                 queryBuilder.equals('status', 'published');
 

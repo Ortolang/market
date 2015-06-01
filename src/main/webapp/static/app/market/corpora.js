@@ -13,8 +13,6 @@ angular.module('ortolangMarketApp')
         function initScopeVariables() {
     		$scope.query = '';
     		$scope.items = ItemManager.make();
-    		$scope.primaryFacets = [];
-    		$scope.secondaryFacets = [];
 
         	$scope.filtersManager = FacetedFilterManager.make();
 
@@ -148,11 +146,11 @@ angular.module('ortolangMarketApp')
             $scope.viewModes = [viewModeGrid, viewModeLine];
     		$scope.viewMode = viewModeGrid;
 
-            $scope.orderDirection = false;
+            $scope.orderDirection = true;
             var orderTitle = {id: 'title', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
-            var orderCreationDate = {id: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
-            $scope.orderProps = [orderTitle, orderCreationDate];
-            $scope.orderProp = orderTitle;
+            var orderPublicationDate = {id: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
+            $scope.orderProps = [orderTitle, orderPublicationDate];
+            $scope.orderProp = orderPublicationDate;
         }
 
         function init() {

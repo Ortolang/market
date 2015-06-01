@@ -56,7 +56,8 @@ angular.module('ortolangMarketApp')
                             $scope.browserCtrlInitialized = true;
                         }
                     } else {
-                        $scope.resizeBrowser();
+                        $scope.browserSettings.wskey = undefined;
+                        Settings.store();
                     }
                 });
             }
@@ -99,6 +100,12 @@ angular.module('ortolangMarketApp')
         $scope.$on('$destroy', function () {
             $rootScope.browsing = false;
             $rootScope.noFooter = false;
+        });
+
+        $scope.$on('$routeUpdate', function () {
+            if ($location.search().browse) {
+                $rootScope.browsing = true;
+            }
         });
 
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {
