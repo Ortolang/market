@@ -3,12 +3,12 @@
   padding-right: 0;
 }
 
-.toolbar.browser-toolbar.market-browser-toolbar {
+.toolbar.browser-toolbar.market-browser-toolbar, .toolbar.visualizer-toolbar {
   padding-left: @container-main-padding - floor(@grid-gutter-width/2);
   padding-right: @container-main-padding - floor(@grid-gutter-width/2);
 }
 
-.container-main .row.toolbar:not(.browser-toolbar) {
+.container-main .row.toolbar:not(.browser-toolbar):not(.visualizer-toolbar) {
   margin-left: -@container-main-padding;
   margin-right: -@container-main-padding;
 }

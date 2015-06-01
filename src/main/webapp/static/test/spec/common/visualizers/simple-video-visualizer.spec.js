@@ -11,7 +11,12 @@ describe('Visualizer: SimpleVideoVisualizer', function () {
     beforeEach(inject(function ($rootScope, $compile, _SimpleVideoVisualizer_) {
         SimpleVideoVisualizer = _SimpleVideoVisualizer_;
         scope = $rootScope.$new();
-        element = angular.element('<simple-video-visualizer></simple-video-visualizer>');
+        scope.visualizer = {
+            header: {},
+            content: {},
+            footer: {}
+        };
+        element = angular.element('<div simple-video-visualizer></div>');
         element = $compile(element)(scope);
         scope.$digest();
     }));

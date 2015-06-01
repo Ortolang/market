@@ -730,18 +730,34 @@ angular.module('ortolangMarketApp')
             }
 
             function finishPreview(visualizer) {
-                var isolatedScope = $rootScope.$new(),
-                    element,
+                var element,
                     visualizerModal;
+                createModalScope();
                 if ($scope.children && $scope.children.length !== 0) {
-                    isolatedScope.elements = $scope.children;
+                    modalScope.elements = $scope.children;
                 } else {
-                    isolatedScope.elements = $scope.selectedElements;
+                    modalScope.elements = $scope.selectedElements;
                 }
-                element = $compile(visualizer.getElement())(isolatedScope);
-                visualizerModal = $('.visualizer-modal');
-                visualizerModal.find('.modal-content').empty().append(element);
-                visualizerModal.modal('show');
+                element = $compile(visualizer.getElement())(modalScope);
+                element.addClass('close-on-click');
+                modalScope.visualizer = {
+                    header: {},
+                    content: {},
+                    footer: {}
+                };
+                visualizerModal = $modal({
+                    scope: modalScope,
+                    template: 'common/visualizers/visualizer-template.html',
+                    show: true
+                });
+                modalScope.$on('modal.show.before', function (event, modal) {
+                    modal.$element.find('.visualizer-content').append(element);
+                    modalScope.clickContent = function (event) {
+                        if (angular.element(event.target).hasClass('close-on-click')) {
+                            visualizerModal.hide();
+                        }
+                    };
+                });
                 $scope.contextMenu();
             }
 
