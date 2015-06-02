@@ -37,7 +37,6 @@ angular
         'diff-match-patch',
         'angular-md5',
         'xeditable',
-        'textAngular',
         'schemaForm',
         'ngTagsInput',
         'angularMoment'
