@@ -21,3 +21,57 @@
 .process-log pre {
   overflow: auto;
 }
+
+table.history {
+  .user-select-mixin;
+  table-layout: fixed;
+  col {
+    &.size {
+      width: 110px;
+    }
+    &.type {
+      width: 150px;
+    }
+  }
+  > tbody > tr > td {
+    padding-top: @padding-large-vertical;
+    padding-bottom: @padding-large-vertical;
+  }
+  tr.active {
+    td {
+      background-color: @gray-light;
+      color: @inverse-text-color;
+      span.glyphicon.type, span.fa.type {
+        color: inherit;
+      }
+    }
+    &:hover {
+      td {
+        background-color: @gray-light;
+      }
+    }
+  }
+  > thead > tr > th {
+    padding-top: @padding-large-vertical;
+    padding-bottom: @padding-large-vertical;
+    &:hover, &:focus {
+      background-color: @table-bg-accent;
+      cursor: pointer;
+    }
+  }
+  td {
+    cursor: default;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    a {
+      color: inherit;
+    }
+    span.glyphicon.type, span.fa.type {
+      padding-right: @padding-base-horizontal;
+      color: @gray-light;
+    }
+
+  }
+}
+

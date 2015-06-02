@@ -15,8 +15,9 @@ angular.module('ortolangMarketApp')
 
             $scope.completedProcessessDisplayed = 3;
             $scope.abortedProcessessDisplayed = 3;
+            $scope.processessDisplayed = 10;
             // Filter set by default to start date in descending order
-            $scope.orderProp = ['start'];
+            $scope.orderProp = ['stop'];
             $scope.orderReverse = true;
 
             var name;
@@ -83,21 +84,20 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.filteredOrderedProcesses = function (processes) {
-                console.debug($scope.orderProp, $scope.orderReverse, processes.start);
                 return $filter('orderBy')(processes, $scope.orderProp, $scope.orderReverse);
             };
 
             $scope.order = function (predicate, reverse) {
-                $scope.orderReverse = (reverse === 'toggle' ? !$scope.orderReverse : $scope.orderReverse);
+                $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
                 $scope.orderProp = predicate;
             };
 
 
             $scope.activeTab = 0;
 
-            //$scope.showAll = function ($event) {
-            //    $($event.target).addClass('hidden').prev('table').addClass('show-all');
-            //};
+            $scope.showAll = function ($event) {
+                $($event.target).addClass('hidden').prev('table').addClass('show-all');
+            };
 
             $scope.getToolDownloadUrl = function (url, jobid, path) {
                 return url + '/jobs/' + jobid + '/download?path=' + path;

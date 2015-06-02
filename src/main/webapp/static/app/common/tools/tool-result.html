@@ -30,7 +30,7 @@
                             <hr/>
                             <div onload="result = pane;" ng-include="'common/tools/tool-tpl-'+ pane.type +'.html'"></div>
                         </div>
-                        <div class="tab-pane fade" id="log">
+                        <div class="tab-pane fade {{results.length===0 ? 'active in' : ''}}" id="log">  <!--TODO : bug avec les panel actifs-->
                             <br>
                             <blockquote>
                                 <p>{{ 'TOOLS.DESCRIPTION.LOG'  | translate}}</p>

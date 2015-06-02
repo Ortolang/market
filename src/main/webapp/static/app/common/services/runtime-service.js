@@ -248,15 +248,15 @@ angular.module('ortolangMarketApp')
 
             function pushNewRemoteProcess(job) {
                 remoteProcesses.push(job);
-                if (job.state !== states.completed && job.state !== states.aborted) {
+                subscribeToRemoteProcess(job);
+                if (job.state !== states.completed && job.state !== states.aborted && job.state !== states.suspended) {
                     activeRemoteProcesses.push(job);
-                    subscribeToRemoteProcess(job);
                 }
             }
 
             function getActiveRemoteProcesses() {
                 return $filter('filter')(remoteProcesses, function (value) {
-                    return !(value.state === states.completed || value.state === states.aborted);
+                    return !(value.state === states.completed || value.state === states.aborted || value.state === states.suspended);
                 });
             }
 
@@ -321,7 +321,7 @@ angular.module('ortolangMarketApp')
                                 }
                             }
                         });
-                        //console.debug(remoteProcesses);
+                        console.debug(remoteProcesses);
                         activeRemoteProcesses = getActiveRemoteProcesses();
                         if (!refresh) {
                             subscribeToRemoteProcess(activeRemoteProcesses);
@@ -339,24 +339,59 @@ angular.module('ortolangMarketApp')
             //          Misc           //
             // *********************** //
 
-            function getAllProcesses() {
+            function getEveryProcesses() {
                 return getActiveProcesses().concat(getActiveRemoteProcesses());
             }
 
-            function getAllProcessesWithState(state, not) {
-                return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
+            function getEveryProcessesWithState(state, not) {
+                if(angular.isArray(state)){
+                    var processes = [];
+                    angular.forEach(state, function (status) {
+                        processes = processes.concat(getProcessesWithState(status, not));
+                        processes = processes.concat(getRemoteProcessesWithState(status, not));
+                    });
+                    return processes;
+                } else {
+                    return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
+                }
             }
 
-            function hasAllProcessesWithState(state) {
-                return hasProcessesWithState(state) || hasRemoteProcessesWithState(state);
+
+            function hasEveryProcessesWithState(state) {
+                if(angular.isArray(state)){
+                    var hasProcesses = false;
+                    angular.forEach(state, function (status) {
+                        hasProcesses = hasProcesses || hasProcessesWithState(status);
+                        hasProcesses = hasProcesses || hasRemoteProcessesWithState(status);
+                    });
+                    return hasProcesses;
+                } else {
+                    return hasProcessesWithState(state) || hasRemoteProcessesWithState(state);
+                }
             }
 
-            function getAllActiveProcessesNumber() {
+            function hasEveryActiveProcesses() {
+                return getActiveProcesses() || getActiveRemoteProcesses();
+            }
+
+            function getEveryActiveProcesses() {
+                return getActiveProcesses().concat(getActiveRemoteProcesses());
+            }
+
+            function getEveryActiveProcessesNumber() {
                 return getActiveProcessesNumber() + getActiveRemoteProcessesNumber();
             }
 
-            function getAllProcessesNumberWithState(state, not) {
-                return getProcessesWithState(state, not).length + getRemoteProcessesWithState(state, not).length;
+            function getEveryProcessesNumberWithState(state, not) {
+                if(angular.isArray(state)){
+                    var n = 0;
+                    angular.forEach(state, function (status) {
+                        n = n + getProcessesWithState(status, not).length + getRemoteProcessesWithState(status, not).length;
+                    });
+                    return processes;
+                } else {
+                    return getProcessesWithState(state, not).length + getRemoteProcessesWithState(state, not).length;
+                }
             }
 
             // *********************** //
@@ -412,10 +447,10 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('tool-list-registered', function () {
-                getRemoteProcesses();
+                getRemoteProcesses(Date.now(),true);
             });
 
-            $rootScope.$on('runtime.remote.created', function () {
+            $rootScope.$on('runtime.remote.created', function (event, process) {
                 pushNewRemoteProcess(process);
             });
 
@@ -479,10 +514,12 @@ angular.module('ortolangMarketApp')
                 getRemoteProcessesWithState: getRemoteProcessesWithState,
                 pushNewRemoteProcess: pushNewRemoteProcess,
                 // Misc
-                getAllProcesses: getAllProcesses,
-                getAllProcessesWithState: getAllProcessesWithState,
-                getAllActiveProcessesNumber: getAllActiveProcessesNumber,
-                hasAllProcessesWithState: hasAllProcessesWithState,
-                getAllProcessesNumberWithState: getAllProcessesNumberWithState
+                getEveryProcesses: getEveryProcesses,
+                getEveryProcessesWithState: getEveryProcessesWithState,
+                getEveryActiveProcessesNumber: getEveryActiveProcessesNumber,
+                hasEveryProcessesWithState: hasEveryProcessesWithState,
+                getEveryProcessesNumberWithState: getEveryProcessesNumberWithState,
+                getEveryActiveProcesses: getEveryActiveProcesses,
+                hasEveryActiveProcesses: hasEveryActiveProcesses
             };
         }]);
