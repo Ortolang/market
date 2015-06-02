@@ -84,7 +84,7 @@
         cursor: pointer;
       }
       &.active {
-        border-bottom: 4px solid @default-primary;
+        border-bottom: 4px solid @brand-primary;
         > a {
           background: none;
           color: inherit;
@@ -99,42 +99,32 @@
       }
     }
   }
-}
 
-.information-toolbar {
-  ul.nav-pills {
-    > li {
-      &.active {
-        border-bottom: 4px solid @information-primary;
+  &.information-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @information-primary;
+    }
+  }
+
+  &.profile-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @profile-primary;
+    }
+  }
+
+  &.processes-toolbar, &.tasks-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @processes-primary;
+      > a > .badge {
+        color: @inverse-text-color;
+        background-color: @processes-primary;
       }
     }
   }
-}
 
-.processes-toolbar {
-  ul.nav-pills {
-    > li {
-      &.active {
-        border-bottom: 4px solid @processes-primary;
-      }
-      &.active {
-        > a {
-          > .badge {
-            color: @inverse-text-color;
-            background-color: @processes-primary;
-          }
-        }
-      }
-    }
-  }
-}
-
-.market-toolbar {
-  ul.nav-pills {
-    > li {
-      &.active {
-        border-bottom: 4px solid @market-primary;
-      }
+  &.market-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @market-primary;
     }
   }
 }
