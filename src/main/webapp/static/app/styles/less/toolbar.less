@@ -20,6 +20,14 @@
   min-height: @toolbar-min-height;
   background-color: @default-bg;
 
+  .toolbar-title-wrapper {
+    margin-top: -@padding-large-vertical;
+    margin-bottom: -@padding-large-vertical;
+    .toolbar-title {
+      line-height: @toolbar-min-height;
+    }
+  }
+
   .btn-toolbar.btn-toolbar-right .btn-group {
     float: right;
     > .btn-group {

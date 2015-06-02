@@ -75,6 +75,15 @@
       height: @side-nav-item-height;
       width: @side-nav-width;
 
+      &:first-child {
+        height: @side-nav-item-active-height;
+        > a {
+          .icon-container {
+            line-height: @side-nav-item-active-height;
+          }
+        }
+      }
+
       > a {
         cursor: pointer;
         .icon-container {
@@ -92,7 +101,7 @@
         }
       }
 
-      &:not(.disabled) {
+      &:not(.active) {
         > a:hover {
           background-color: @side-nav-item-hover-bg;
           .icon-container {
@@ -101,6 +110,22 @@
           }
           .item-description {
             color: @inverse-text-color;
+          }
+        }
+      }
+
+      &.active {
+        > a {
+          cursor: default;
+          background-color: @ortolang-blue;
+          .item-description, .icon-container {
+            color: @inverse-text-color;
+          }
+          &.information {
+            background-color: @information-primary;
+          }
+          &.workspaces {
+            background-color: @processes-primary;
           }
         }
       }
