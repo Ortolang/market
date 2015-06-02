@@ -62,7 +62,7 @@ angular.module('ortolangMarketApp')
                 }
                 angular.forEach(jobsToSubscribeTo, function (job) {
                     //console.debug(job, job.processId);
-                    AtmosphereService.addFilter({typePattern: 'runtime\\.remote\\..*', fromPattern: job.processId, throwedByPattern: User.key});
+                    AtmosphereService.addFilter({typePattern: 'runtime\\.remote\\..*', fromPattern: job.processId});
                 });
             }
 
@@ -246,13 +246,14 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
 
-            function pushNewRemoteProcess(job) {
-                remoteProcesses.push(job);
-                subscribeToRemoteProcess(job);
-                if (job.state !== states.completed && job.state !== states.aborted && job.state !== states.suspended) {
-                    activeRemoteProcesses.push(job);
-                }
-            }
+            //function pushNewRemoteProcess(job) {
+            //    remoteProcesses.push(job);
+            //    subscribeToRemoteProcess(job);
+            //    console.debug('suscribed ! (1)');
+            //    if (job.state !== states.completed && job.state !== states.aborted && job.state !== states.suspended) {
+            //        activeRemoteProcesses.push(job);
+            //    }
+            //}
 
             function getActiveRemoteProcesses() {
                 return $filter('filter')(remoteProcesses, function (value) {
@@ -371,7 +372,7 @@ angular.module('ortolangMarketApp')
             }
 
             function hasEveryActiveProcesses() {
-                return getActiveProcesses() || getActiveRemoteProcesses();
+                return hasActiveProcesses() || hasActiveRemoteProcesses();
             }
 
             function getEveryActiveProcesses() {
@@ -450,8 +451,9 @@ angular.module('ortolangMarketApp')
                 getRemoteProcesses(Date.now(),true);
             });
 
-            $rootScope.$on('runtime.remote.created', function (event, process) {
-                pushNewRemoteProcess(process);
+            $rootScope.$on('remote-process-created', function (event, process) {
+                subscribeToRemoteProcess(process);
+                console.debug(process);
             });
 
             $rootScope.$on('runtime.remote.update-state', function (event, message) {
@@ -512,7 +514,7 @@ angular.module('ortolangMarketApp')
                 hasActiveRemoteProcesses: hasActiveRemoteProcesses,
                 hasRemoteProcessesWithState: hasRemoteProcessesWithState,
                 getRemoteProcessesWithState: getRemoteProcessesWithState,
-                pushNewRemoteProcess: pushNewRemoteProcess,
+                //pushNewRemoteProcess: pushNewRemoteProcess,
                 // Misc
                 getEveryProcesses: getEveryProcesses,
                 getEveryProcessesWithState: getEveryProcessesWithState,

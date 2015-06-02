@@ -108,8 +108,9 @@ angular.module('ortolangMarketApp')
             function onSubmit () {
                 $scope.config.model.toolKey = $scope.selectedTool.getKey();
                 ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.config.model).$promise.then(
-                    function () {
+                    function (job) {
                         $scope.hide();
+                        $rootScope.$broadcast('remote-process-created', job);
                     },
                     function (msg) {
                         console.error('An error happens while trying to run "%s".', $scope.selectedTool.getName(), msg);

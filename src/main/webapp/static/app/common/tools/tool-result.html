@@ -22,7 +22,7 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content col-md-9">
-                        <div ng-repeat="pane in results" class="tab-pane fade {{pane.active===true ? 'active in' : ''}}" id="{{pane.key}}">
+                        <div ng-repeat="pane in results" class="tab-pane fade {{results.length>0 && pane.active===true ? 'active in' : ''}}" id="{{pane.key}}">
                             <br>
                             <blockquote>
                                 <p>{{ 'TOOLS.DESCRIPTION.' + pane.type.toUpperCase().replace('-', '_')  | translate}}</p>
