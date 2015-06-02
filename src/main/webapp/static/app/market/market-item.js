@@ -34,7 +34,7 @@ angular.module('ortolangMarketApp')
                     var queryOrtolangMeta = 'select from '+$scope.ortolangObject['meta_ortolang-item-json'];
                     JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
                         $scope.item = angular.fromJson(jsonObject[0]);
-                        $rootScope.title = $scope.item.title;
+                        $rootScope.ortolangPageTitle = $scope.item.title;
 
                         $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
