@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
             ABORTED_TOOL_PROCESSES: 'Outils interrompus par des erreurs',
             NO_COMPLETED_TOOL_PROCESS: 'Pas d\'outil complété',
             PREVIEW_TITLE: 'Affichage du résultat',
-            LOG_TITLE: 'Affichage des log d\'execution',
+            LOG_TITLE: 'Journal d\'execution',
             LINK_LIST_TITLE: 'Fichier(s) généré(s)',
             RUN_TOOL: 'Executer',
             FAIL: 'a échoué',
@@ -39,7 +39,12 @@ angular.module('ortolangMarketApp')
                 ORAL: 'Traitement de l\'oral',
                 VIDEO: 'Traitement vidéo'
             },
-            FOUND_TOOLS: 'outil(s) trouvé(s)'
-
+            FOUND_TOOLS: 'outil(s) trouvé(s)',
+            DESCRIPTION: {
+                TEXT_PREVIEW: 'Affichage d\'un extrait du résultat de l\'exécution de l\'outil',
+                LINK_LIST: 'Liste des fichiers générés à la suite de l\'exécution de l\'outil. Ils peuvent être sauvegardés dans un espace de travail.',
+                LOG: 'Affichage du journal d\'exécution',
+                PARAMETERS: 'Paramètres d\'execution de l\'outil'
+            }
         }
     });

@@ -6,18 +6,28 @@
                 <h4 class="modal-title" ng-bind="title"></h4>
             </div>
             <div class="modal-body">
-                <!-- Nav tabs -->
-                <ul class="nav nav-pills">
-                    <li ng-repeat="tab in results">
-                        <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab">{{tab.label}}</a>
-                    </li>
-                </ul>
+                <div ng-if="results.length > 1">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills">
+                        <li ng-repeat="tab in results" class="{{tab.active===true ? 'active' : ''}}">
+                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='text-preview'"><i class="fa fa-eye"></i> {{'TOOLS.PREVIEW_TITLE' | translate}}</a>
+                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='link-list'"><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</a>
+                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
+                        </li>
+                    </ul>
 
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div ng-repeat="pane in results" class="tab-pane fade {{pane.active? 'active in' : ''}}" id="{{pane.key}}">
-                        <div onload="result = pane;" ng-include="'common/tools/tool-tpl-'+ pane.type +'.html'"></div>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div ng-repeat="pane in results" class="tab-pane fade {{pane.active===true ? 'active in' : ''}}" id="{{pane.key}}">
+                            <div onload="result = pane;" ng-include="'common/tools/tool-tpl-'+ pane.type +'.html'"></div>
+                        </div>
                     </div>
+                </div>
+                <div ng-if="results.length == 1">
+                    <h4 ng-if="results[0].type==='text-preview'"><i class="fa fa-eye"></i> {{'TOOLS.PREVIEW_TITLE' | translate}}</h4>
+                    <h4 ng-if="results[0].type==='link-list'"><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</h4>
+                    <h4 ng-if="results[0].type!='text-preview' && results[0].type!='link-list'">{{results[0].label}}</h4>
+                    <div onload="result = results[0]" ng-include="'common/tools/tool-tpl-'+ results[0].type +'.html'"></div>
                 </div>
             </div>
         </div>

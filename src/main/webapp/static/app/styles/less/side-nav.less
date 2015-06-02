@@ -2,7 +2,7 @@
   min-height: 100%;
   min-height: -webkit-calc(100% ~'-' @top-nav-plus-footer);
   min-height: -moz-calc(100% ~'-' @top-nav-plus-footer);
-  min-height: calc(100% ~'-' @top-nav-plus-footer);;
+  min-height: calc(100% ~'-' @top-nav-plus-footer);
 }
 .side-nav {
   position: relative;
@@ -12,6 +12,7 @@
   .side-nav-active-item {
     height: @side-nav-item-active-height;
     > a {
+      cursor: default;
       background-color: @ortolang-blue;
       .item-description, .icon-container {
         color: @inverse-text-color;
@@ -49,7 +50,6 @@
       display: block;
       text-decoration: none;
       color: @side-nav-item-color;
-      cursor: pointer;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -76,11 +76,24 @@
       width: @side-nav-width;
 
       > a {
+        cursor: pointer;
         .icon-container {
-          color: #b8b8b8;
+          color: @side-nav-item-icon-color;
           line-height: @side-nav-item-height;
         }
-        &:hover {
+      }
+
+      &.disabled {
+        > a {
+          cursor: default;
+        }
+        .item-description, .icon-container {
+          color: lighten(@side-nav-item-icon-color, 15%);
+        }
+      }
+
+      &:not(.disabled) {
+        > a:hover {
           background-color: @side-nav-item-hover-bg;
           .icon-container {
             background-color: @side-nav-item-hover-bg;

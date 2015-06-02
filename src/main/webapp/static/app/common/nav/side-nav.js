@@ -81,12 +81,19 @@ angular.module('ortolangMarketApp')
 
         init();
 
+        $rootScope.$on('$routeUpdate', function () {
+            var modal = angular.element('.modal.am-fade');
+            if (modal.length > 0) {
+                modal.scope().$hide();
+            }
+        });
+
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             $rootScope.title = current.$$route.title;
             if (previous) {
                 switch (current.$$route.originalPath) {
                     case '/':
-                        $scope.select({class: 'market'}, false);
+                        $scope.select({class: 'home'}, false);
                         $rootScope.title = undefined;
                         break;
                     case '/tasks':

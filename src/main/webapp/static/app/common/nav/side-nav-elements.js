@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .value('sideNavElements', [
         {
-            class: 'market',
+            class: 'home',
             path: '/market/home',
             description: 'NAV.HOME',
             iconCss: 'fa fa-fw fa-home fa-2x',

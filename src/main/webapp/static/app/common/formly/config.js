@@ -42,6 +42,21 @@ angular.module('ortolangMarketApp')
                         });
                     }, true);
                 }]
+            },
+            {
+                name: 'checkbox',
+                overwriteOk: true,
+                templateUrl: 'common/formly/ortolang-formly-checkbox.html'
+            },
+            {
+                name: 'multiCheckbox',
+                overwriteOk: true,
+                templateUrl: 'common/formly/ortolang-formly-multi-checkbox.html'
+            },
+            {
+                name: 'radio',
+                overwriteOk: true,
+                templateUrl: 'common/formly/ortolang-formly-radio.html'
             }
         ]);
     }]);

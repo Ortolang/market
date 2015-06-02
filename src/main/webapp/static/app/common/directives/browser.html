@@ -84,11 +84,30 @@
                             <span ng-class="icons.browser.sort"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                            <li><div ng-click="order('name', false)" translate="NAME"></div></li>
-                            <li><div ng-click="order(['type','name'], false)" translate="BROWSER.SORT.TYPE_NAME"></div></li>
-                            <li><div ng-click="order('mimeType', false)" translate="BROWSER.SORT.MIME_TYPE"></div></li>
-                            <li><div ng-click="order('modification', false)" translate="BROWSER.SORT.DATE"></div></li>
-                            <li><div ng-click="order('size', false)" translate="SIZE"></div></li>
+                            <li>
+                                <div ng-click="order(['type','name'], 'toggle')">
+                                    <span translate="NAME"></span>
+                                    <span order-indicator data-name="name" data-array="1" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div ng-click="order('mimeType', 'toggle')">
+                                    <span translate="BROWSER.SORT.MIME_TYPE"></span>
+                                    <span order-indicator data-name="mimeType" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div ng-click="order('modification', 'toggle')">
+                                    <span translate="BROWSER.SORT.DATE"></span>
+                                    <span order-indicator data-name="modification" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div ng-click="order('size', 'toggle')">
+                                    <span translate="SIZE"></span>
+                                    <span order-indicator data-name="size" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <div id="filter-query-wrapper" class="btn-group">
@@ -210,7 +229,7 @@
                     <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span>
                     <span>{{hasOnlyRootCollectionSelected() ? '/' : selectedElements[0].name}}</span>
                 </p>
-                <img class="preview" ng-if="selectedElements[0].largePreview" ng-src="{{getPreviewUrl(selectedElements[0], true)}}"/>
+                <!--<img class="preview" ng-if="selectedElements[0].largePreview" ng-src="{{getPreviewUrl(selectedElements[0], true)}}"/>-->
                 <dl class="dl-horizontal">
                     <dt translate="BROWSER.AUTHOR"></dt>
                     <dd>{{selectedElements[0].author}}</dd>
@@ -273,8 +292,6 @@
     <div ng-show="browserService.canExecuteTool" ng-include="'common/tools/tool-list.html'" ng-controller="ToolListCtrl"></div>
 
     <div ng-include="'workspace/metadata-preview.html'"></div>
-
-    <div ng-include="'common/visualizers/visualizer-template.html'"></div>
 
     <div ng-if="browserService.canAdd && isHead" class="upload-queue" ng-class="uploader.uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
 </div>
