@@ -448,7 +448,12 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('tool-list-registered', function () {
-                getRemoteProcesses(Date.now(),true);
+                //getRemoteProcesses(Date.now(),true);
+                AuthService.sessionInitialized().then(function () {
+                    if (AuthService.isAuthenticated()) {
+                        getRemoteProcesses();
+                    }
+                });
             });
 
             $rootScope.$on('remote-process-created', function (event, process) {
@@ -482,9 +487,13 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function init() {
-                getProcesses();
-                getTasks();
-                initialSubscriptions();
+                AuthService.sessionInitialized().then(function () {
+                    if (AuthService.isAuthenticated()) {
+                        getProcesses();
+                        getTasks();
+                        initialSubscriptions();
+                    }
+                });
             }
             init();
 
