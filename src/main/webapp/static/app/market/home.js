@@ -48,7 +48,6 @@ angular.module('ortolangMarketApp')
 
             $scope.items = [];
             $scope.section = $routeParams.section;
-            // loadObjects();
             searchType($scope.section);
         }
         init();

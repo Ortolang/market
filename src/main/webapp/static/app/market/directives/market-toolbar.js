@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
                         // }
                     };
 
-                    scope.setFilter = function(filter, opt) {
+                    scope.setFilter = function (filter, opt) {
                         // if(filter.getSelected() && filter.getSelected().getValue() !== opt.getValue()) {
                         //     angular.forEach(filter.getSelected().getSubFilters(), function(subFilter) {
                         //         scope.filtersManager.removeFilter(subFilter);
@@ -45,15 +45,15 @@ angular.module('ortolangMarketApp')
                         scope.applyFilters();
                     };
 
-                    scope.switchFilter = function(filter, opt, apply) {
-                        if(filter.hasSelectedOption(opt)) {
+                    scope.switchFilter = function (filter, opt, apply) {
+                        if (filter.hasSelectedOption(opt)) {
                             scope.filtersManager.removeOptionFilter(filter, opt);
                         } else {
                             scope.filtersManager.addFilter(filter, opt);
                         }
 
                         // scope.filtersManager.addFilter(filter, opt);
-                        if(apply) {
+                        if (apply) {
                             scope.applyFilters();
                         }
                     };
@@ -63,15 +63,15 @@ angular.module('ortolangMarketApp')
                         scope.applyFilters();
                     };
 
-                    scope.applyFilters = function() {
+                    scope.applyFilters = function () {
                         scope.hideLowFacets();
 
                         scope.query = scope.filtersManager.toQuery(scope.content);
                         // setVisibleFilters();
-                    }
+                    };
 
-                    scope.toggleOrderBy = function(orderProp){
-                        if(scope.orderProp.id !== orderProp.id) {
+                    scope.toggleOrderBy = function (orderProp) {
+                        if (scope.orderProp.id !== orderProp.id) {
                             scope.orderDirection = false;
                             scope.orderProp = orderProp;
                         } else {
@@ -83,7 +83,7 @@ angular.module('ortolangMarketApp')
                     //     scope.viewMode = (scope.viewMode.id === viewModeLine.id) ? viewModeTile : viewModeLine;
                     // };
 
-                    scope.setViewMode = function(view) {
+                    scope.setViewMode = function (view) {
                         scope.viewMode = view;
                     };
 
@@ -105,7 +105,7 @@ angular.module('ortolangMarketApp')
                     // });
                     // }
 
-                    scope.hasAppliedFacets = function() {
+                    scope.hasAppliedFacets = function () {
                         var i = 0;
                         for (i; i < scope.filtersManager.getFilters().length; i++) {
                             if (scope.filtersManager.getFilters()[i].hasSelectedOptions() && !scope.filtersManager.getFilters()[i].isLock()) {
@@ -115,19 +115,19 @@ angular.module('ortolangMarketApp')
                         return false;
                     };
 
-                    scope.showLowFacets = function() {
+                    scope.showLowFacets = function () {
                         scope.lowFacets = true;
                     };
 
-                    scope.hideLowFacets = function() {
+                    scope.hideLowFacets = function () {
                         scope.lowFacets = false;
                     };
 
-                    scope.showFacets = function() {
+                    scope.showFacets = function () {
                         scope.facets = true;
                     };
 
-                    scope.switchFacets = function() {
+                    scope.switchFacets = function () {
                         scope.facets = !scope.facets;
                     };
 
@@ -146,7 +146,7 @@ angular.module('ortolangMarketApp')
                         // initLocalVariables();
                         initScopeVariables();
 
-                        if(scope.preSelectedFilter) {
+                        if (scope.preSelectedFilter) {
                             scope.setFilter(scope.preSelectedFilter, scope.preSelectedFilter.getOption(scope.type));
                         }
                     }
