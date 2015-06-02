@@ -69,6 +69,7 @@
   "appPath": "app",
   "resolutions": {
     "angular": "1.4.0",
+    "angular-mocks": "1.4.0",
     "bootstrap": "3.3.4",
     "api-check": "^7.0.0",
     "highlightjs": "8.6"
