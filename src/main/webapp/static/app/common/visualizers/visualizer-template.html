@@ -1,8 +1,8 @@
 <div class="visualizer-modal modal container-main" ng-class="{'with-footer': visualizer.footer.display}">
     <div class="row toolbar visualizer-toolbar visualizer-header">
         <div class="col-sm-6">
-            <div class="visualizer-title-wrapper">
-                <div class="visualizer-title">
+            <div class="toolbar-title-wrapper">
+                <div class="toolbar-title">
                     <span ng-if="visualizer.header.fileType" class="type" ng-class="::visualizer.header.fileType | mimeTypeIconCss"></span>
                     <strong ng-bind="visualizer.header.fileName"></strong>
                     <div ng-bind-html="visualizer.header.html"></div>
