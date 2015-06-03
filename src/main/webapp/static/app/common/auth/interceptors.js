@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AuthInterceptor', ['$q', 'AuthService', function ($q, AuthService) {
+    .factory('AuthInterceptor', ['$q', '$rootScope', 'AuthService', function ($q, $rootScope, AuthService) {
         return {
             request: function (config) {
                 var deferred = $q.defer();
@@ -27,24 +27,27 @@ angular.module('ortolangMarketApp')
                 }
                 return config;
             },
-            responseError: function (response) {
-                if (response.status === 401) {
-                    console.error('session timeout?', response);
+            responseError: function (rejection) {
+                if (rejection.status === 401) {
+                    console.error('session timeout?', rejection);
                     if (!AuthService.isAuthenticated()) {
                         AuthService.login();
                     }
-                } else if (response.status === 403) {
-                    console.error('Forbidden', response);
-                } else if (response.status === 404) {
-                    console.error('Not found', response);
-                } else if (response.status) {
-                    if (response.data && response.data.errorMessage) {
-                        console.error(response.data.errorMessage);
+                } else if (rejection.status === 403) {
+                    console.error('Forbidden', rejection);
+                } else if (rejection.status === 404) {
+                    console.error('Not found', rejection);
+                } else if (rejection.status === 0) {
+                    $rootScope.$broadcast('server-down');
+                    console.error('An unexpected server error has occurred. Server might be currently unavailable.', rejection);
+                } else {
+                    if (rejection.data && rejection.data.errorMessage) {
+                        console.error(rejection.data.errorMessage);
                     } else {
-                        console.error('An unexpected server error has occurred', response);
+                        console.error('An unexpected server error has occurred', rejection);
                     }
                 }
-                return $q.reject(response);
+                return $q.reject(rejection);
             }
         };
     }]);
