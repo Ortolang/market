@@ -824,7 +824,7 @@ angular.module('ortolangMarketApp')
 
             function browseToParent() {
                 if ($scope.browserService.dataResource !== 'object' &&
-                    ($scope.browserService.isFileSelect) && $scope.path !== '/') {
+                    !$scope.browserService.isFileSelect && $scope.path !== '/') {
                     var pathPartsCopy = angular.copy($scope.parent.pathParts);
                     pathPartsCopy.pop();
                     $scope.browseToPath('/' + pathPartsCopy.join('/'));
@@ -1114,7 +1114,7 @@ angular.module('ortolangMarketApp')
             });
 
             function navigate(down, event) {
-                if (angular.element('.visualizer-modal.in').length === 0 && $scope.isViewModeLine()) {
+                if (angular.element('.visualizer-modal').length === 0 && $scope.isViewModeLine()) {
                     var i, deferred, promise;
                     if ($scope.hasOnlyOneElementSelected()) {
                         if ($scope.selectedElements[0].key === $scope.parent.key) {
@@ -1225,8 +1225,8 @@ angular.module('ortolangMarketApp')
 
             function previewWithShortcut(event) {
                 preventDefault(event);
-                if (angular.element('.visualizer-modal.in').length > 0) {
-                    angular.element('.visualizer-modal').modal('hide');
+                if (angular.element('.visualizer-modal').length > 0) {
+                    angular.element('.visualizer-modal').scope().$hide();
                 } else {
                     $scope.clickPreview();
                 }
