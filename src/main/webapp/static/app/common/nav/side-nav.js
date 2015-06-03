@@ -35,12 +35,12 @@ angular.module('ortolangMarketApp')
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            $rootScope.title = current.$$route.title;
+            $rootScope.ortolangPageTitle = current.$$route.title;
             if (previous) {
                 switch (current.$$route.originalPath) {
                     case '/':
                         $scope.select({class: 'home'});
-                        $rootScope.title = undefined;
+                        $rootScope.ortolangPageTitle = undefined;
                         break;
                     case '/tasks':
                         $scope.select({class: 'tasks'});

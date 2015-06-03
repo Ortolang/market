@@ -37,7 +37,6 @@ angular
         'diff-match-patch',
         'angular-md5',
         'xeditable',
-        'textAngular',
         'schemaForm',
         'ngTagsInput',
         'angularMoment'
@@ -133,10 +132,14 @@ angular
             'https://localhost:8443/**'
         ]);
     }])
-    .config(['$tooltipProvider', function ($tooltipProvider) {
+    .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body',
             trigger: 'hover click focus'
+        });
+        angular.extend($alertProvider.defaults, {
+            container: '.alerts-wrapper',
+            placement: 'top-right'
         });
     }])
     .config(['hotkeysProvider', function (hotkeysProvider) {

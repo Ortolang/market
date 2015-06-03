@@ -158,9 +158,9 @@ angular.module('ortolangMarketApp')
                 });
                 if ($scope.isWorkspaceBrowserService()) {
                     if ($scope.path === '/') {
-                        $rootScope.subtitle = ' - ' + $scope.browserService.workspace.alias;
+                        $rootScope.ortolangPageSubtitle = ' - ' + $scope.browserService.workspace.alias;
                     } else {
-                        $rootScope.subtitle = ' - ' + $scope.browserService.workspace.alias + ' - ' + $scope.path.slice($scope.path.lastIndexOf('/') + 1);
+                        $rootScope.ortolangPageSubtitle = ' - ' + $scope.browserService.workspace.alias + ' - ' + $scope.path.slice($scope.path.lastIndexOf('/') + 1);
                     }
                 }
             }
@@ -881,7 +881,7 @@ angular.module('ortolangMarketApp')
             $scope.$on('$destroy', function () {
                 if ($scope.isWorkspaceBrowserService()) {
                     $rootScope.browsing = false;
-                    $rootScope.subtitle = undefined;
+                    $rootScope.ortolangPageSubtitle = undefined;
                 }
             });
 

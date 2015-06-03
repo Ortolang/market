@@ -17,6 +17,6 @@ angular.module('ortolangMarketApp')
                 name: '@',
                 array: '@'
             },
-            template: '<span ng-show="array ? orderProp[array] === name : orderProp === name" class="order-indicator"><span ng-show="orderReverse" class="fa fa-long-arrow-down"></span><span ng-hide="orderReverse" class="fa fa-long-arrow-up"></span></span>'
+            template: '<span ng-show="array ? orderProp[array] === name : orderProp === name" class="order-indicator"><span ng-show="orderReverse" class="glyphicon glyphicon-arrow-down"></span><span ng-hide="orderReverse" class="glyphicon glyphicon-arrow-up"></span></span>'
         };
     }]);

@@ -408,7 +408,7 @@ angular.module('ortolangMarketApp')
                 if (message.arguments.state === states.completed) {
                     var process = $filter('filter')(activeProcesses, {key: message.fromObject});
                     if (process.length > 0) {
-                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), placement: 'top-right', type: 'success', show: true});
+                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), type: 'success'});
                     }
                 }
                 getProcesses(message.date, true);
@@ -436,7 +436,7 @@ angular.module('ortolangMarketApp')
                 }
                 history['runtime.task.created'] = message;
                 processTaskEvent(event, message);
-                $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), placement: 'top-right', type: 'danger', show: true});
+                $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), type: 'danger'});
             });
 
             $rootScope.$on('runtime.task.assigned', function (event, message) {
@@ -465,7 +465,7 @@ angular.module('ortolangMarketApp')
                 if (message.arguments.state === states.completed) {
                     var remoteProcess = $filter('filter')(activeRemoteProcesses, {key: message.fromObject});
                     if (remoteProcess.length > 0) {
-                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: remoteProcess[0].name}), placement: 'top-right', type: 'success', show: true});
+                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: remoteProcess[0].name}), type: 'success'});
                     }
                 }
                 getRemoteProcesses(message.date, true);

@@ -29,7 +29,7 @@ angular.module('schemaForm')
 
                     scope.hasSelectedItem = function() {
                         return scope.selectedItem !== undefined;
-                    }
+                    };
 
                     scope.isItemSelected = function (item) {
                         return ( item !== undefined && scope.selectedItem !== undefined && scope.selectedItem.title === item.title );
