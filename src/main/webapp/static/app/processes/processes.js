@@ -10,16 +10,6 @@
 angular.module('ortolangMarketApp')
     .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope', '$filter',
         function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope, $filter) {
-
-            $scope.Runtime = Runtime;
-
-            $scope.completedProcessessDisplayed = 3;
-            $scope.abortedProcessessDisplayed = 3;
-            $scope.processessDisplayed = 10;
-            // Filter set by default to start date in descending order
-            $scope.orderProp = 'stop';
-            $scope.orderReverse = true;
-
             var name;
 
             $scope.showLog = function (process, processKey) {
@@ -84,16 +74,34 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.filteredOrderedProcesses = function (processes) {
-                return $filter('orderBy')(processes, $scope.orderProp, $scope.orderReverse);
+                return $filter('orderBy')(processes, $scope.processus.orderProp, $scope.processus.orderReverse);
             };
 
             $scope.order = function (predicate, reverse) {
-                $scope.orderReverse = reverse === 'toggle' ? !$scope.orderReverse : reverse;
-                $scope.orderProp = predicate;
+                $scope.processus.orderReverse = reverse === 'toggle' ? !$scope.processus.orderReverse : reverse;
+                $scope.processus.orderProp = predicate;
             };
 
 
-            $scope.activeTab = 0;
+            $scope.search = function () {
+                var filtered = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
+                if ($scope.processus.search !== undefined && $scope.processus.search.length) {
+                    $scope.processus.search.forEach(function(term) {
+                        if (term.length) {
+                            term = $filter('removeAccents')(term);
+                            filtered = $filter('filter')(filtered, function (process) {
+                                var noAccent =  $filter('removeAccents')(JSON.stringify(process).toLowerCase());
+                                noAccent = noAccent.replace(new RegExp('\\s', 'g'), '-');
+                                if(noAccent.search(term.toLowerCase()) !== -1) {
+                                    return process;
+                                }
+                            });
+                        }
+                    });
+                }
+                $scope.processus.processesHistory = filtered;
+                //$scope.processus.search = '';
+            };
 
             $scope.showAll = function ($event) {
                 $($event.target).addClass('hidden').prev('table').addClass('show-all');
@@ -103,10 +111,6 @@ angular.module('ortolangMarketApp')
                 return url + '/jobs/' + jobid + '/download?path=' + path;
             };
 
-            if ($routeParams.pKey) {
-                $scope.showLog(undefined, $routeParams.pKey);
-            }
-
 
             //$scope.test = function () {
             //    Runtime.createProcess({
@@ -115,4 +119,30 @@ angular.module('ortolangMarketApp')
             //        'name': 'John'
             //    });
             //};
-        }]);
+
+            function init() {
+                $scope.Runtime = Runtime;
+
+                $scope.processus = {};
+                $scope.processus.processesHistory = [];
+                $scope.processus.search = '';
+
+                $scope.processus.completedProcessessDisplayed = 3;
+                $scope.processus.abortedProcessessDisplayed = 3;
+                $scope.processus.processessDisplayed = 10;
+
+                // Filter set by default to start date in descending order
+                $scope.processus.orderProp = 'stop';
+                $scope.processus.orderReverse = true;
+
+                $scope.activeTab = 0;
+
+                if ($routeParams.pKey) {
+                    $scope.showLog(undefined, $routeParams.pKey);
+                }
+            }
+
+            init();
+        }
+    ]
+);

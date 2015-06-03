@@ -19,18 +19,21 @@ angular.module('ortolangMarketApp')
             LAST_COMPLETED_PROCESSES: 'Derniers processus complétés',
             LAST_ABORTED_PROCESSES: 'Derniers processus avortés',
             NO_COMPLETED_PROCESS: 'Pas de processus complétés',
+            NO_HISTORY_PROCESS: 'Aucun processus trouvé',
             STATE: 'État',
             ABORTED: 'Echoué',
             COMPLETED: 'Completé',
             SUSPENDED: 'Suspendu',
             PENDING: 'En attente',
             RUNNING: 'En cours d\'execution',
+            SUBMITTED: 'Démarré',
             ACTIVITY: 'Activité',
             VIEW_LOG: 'Voir le log',
             VIEW_RESULT: 'Voir le résultat',
             START_PROCESS: 'Démarrer le processus',
             SHOW_ALL: 'Tout afficher',
             JUST_COMPLETED: '{{name}} vient de se terminer',
-            PROCESSES_HISTORY: 'Historique des processus'
+            PROCESSES_HISTORY: 'Historique des processus',
+            SEARCH: 'Rechercher un processus'
         }
     });

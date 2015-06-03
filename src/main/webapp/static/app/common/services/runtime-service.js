@@ -322,7 +322,7 @@ angular.module('ortolangMarketApp')
                                 }
                             }
                         });
-                        console.debug(remoteProcesses);
+                        //console.debug(remoteProcesses);
                         activeRemoteProcesses = getActiveRemoteProcesses();
                         if (!refresh) {
                             subscribeToRemoteProcess(activeRemoteProcesses);

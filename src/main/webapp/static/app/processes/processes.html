@@ -50,7 +50,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="process in Runtime.getEveryProcessesWithState([Runtime.getStates().aborted, Runtime.getStates().suspended]) | orderBy: 'start':true" ng-class="{hidden: $index >= abortedProcessessDisplayed}">
+                        <tr ng-repeat="process in Runtime.getEveryProcessesWithState([Runtime.getStates().aborted, Runtime.getStates().suspended]) | orderBy: 'start':true" ng-class="{hidden: $index >= processus.abortedProcessessDisplayed}">
                             <td>{{::process.name}}</td>
                             <td><span am-time-ago="process.start"></span></td>
                             <td><span am-time-ago="process.stop"></span></td>
@@ -82,7 +82,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="process in Runtime.getEveryProcessesWithState(Runtime.getStates().completed) | orderBy: 'start':true" ng-class="{hidden: $index >= completedProcessessDisplayed}">
+                        <tr ng-repeat="process in Runtime.getEveryProcessesWithState(Runtime.getStates().completed) | orderBy: 'start':true" ng-class="{hidden: $index >= processus.completedProcessessDisplayed}">
                             <td>{{::process.name}}</td>
                             <td><span am-time-ago="process.start"></span></td>
                             <td><span am-time-ago="process.stop"></span></td>
@@ -98,35 +98,48 @@
                 </div>
             </section>
         </div>
-        <div data-title="{{'PROCESSES.PROCESSES_HISTORY' | translate}}" bs-pane>
+        <div data-title="{{'PROCESSES.PROCESSES_HISTORY' | translate}}" bs-pane >
             <section id="history" class="col-md-12">
-                <div ng-if="!Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])" class="panel-body">
-                    <p translate="PROCESSES.NO_COMPLETED_PROCESS"></p>
+
+                <div class="row toolbar processes-searchbar">
+                    <div class="col-sm-12">
+                            <div class="input-group">
+                                <input ng-list ng-model="processus.search" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'PROCESSES.SEARCH' | translate}}">
+                                <span class="input-group-btn">
+                                    <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                    </div>
                 </div>
-                <table ng-if="Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])"
+
+                <div ng-if="!Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]) || processus.processesHistory.length===0" class="panel-body">
+                    <p translate="PROCESSES.NO_HISTORY_PROCESS"></p>
+                </div>
+                <table ng-init="processus.processesHistory = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])"
+                       ng-if="Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])"
                        class="table table-hover table-responsive table-condensed history">
                     <thead class="small">
                     <tr>
                         <th ng-click="order('name', 'toggle')">
                             <span translate="NAME"></span>
-                            <span order-indicator data-name="name" data-order-prop="orderProp" data-order-reverse="orderReverse" ></span>
+                            <span order-indicator data-name="name" data-order-prop="processus.orderProp" data-order-reverse="processus.orderReverse" ></span>
                         </th>
                         <th ng-click="order('start', 'toggle')">
                             <span translate="START"></span>
-                            <span order-indicator data-name="start" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                            <span order-indicator data-name="start" data-order-prop="processus.orderProp" data-order-reverse="processus.orderReverse"></span>
                         </th>
                         <th ng-click="order('stop', 'toggle')">
                             <span translate="STOP"></span>
-                            <span order-indicator data-name="stop" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                            <span order-indicator data-name="stop" data-order-prop="processus.orderProp" data-order-reverse="processus.orderReverse"></span>
                         </th>
                         <th translate="TYPE"></th>
-                        <th translate="STATUS"></th>
+                        <th translate="PROCESSES.STATE"></th>
                         <th translate="ACTIONS"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="process in filteredOrderedProcesses(Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])) track by process.key"
-                        ng-class="{hidden: $index >= processessDisplayed}">
+                    <tr ng-repeat="process in filteredOrderedProcesses(processus.processesHistory) track by process.key"
+                        ng-class="{hidden: $index >= processus.processessDisplayed}">
                         <td>{{::process.name}}</td>
                         <td>{{process.start | date:'medium'}}</td>
                         <td>{{process.stop | date:'medium'}}</td>
@@ -139,7 +152,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="btn-primary toggle-show-all" ng-if="Runtime.getEveryProcessesNumberWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]) > processessDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
+                <div class="btn-primary toggle-show-all" ng-if="Runtime.getEveryProcessesNumberWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]) > processus.processessDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>
             </section>
         </div>
     </div>

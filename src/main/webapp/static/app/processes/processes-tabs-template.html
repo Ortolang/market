@@ -8,24 +8,22 @@
     </div>
 
 
-    <div class="col-sm-6">
-        <div class="btn-toolbar">
-            <div class="input-group" ng-show="!hasToolSelected()">
-                <tags-input ng-model="toolList.searchContent" class="tool-tags" data-placeholder="{{'SEARCH'+' '+ 'PROCESS' | translate}}"
-                            ng-keyup="$event.keyCode == 13 && search(toolList.searchContent)" onTagAdded="search(toolList.searchContent)" on-tag-removed="search(toolList.searchContent)">
-                    <auto-complete source="loadToolTags($query)" min-length="0" load-on-focus="true"></auto-complete>
-                </tags-input>
-                <span class="input-group-btn">
-                    <button ng-click="search(toolList.searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-            </div>
-            <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
-                <a ng-click="resetSelectedTool()" class="btn"><i class="fa fa-chevron-left"></i> {{'TOOLS.BACK_TO_TOOL_LIST' | translate}}</a>
-            </div>
-        </div>
-    </div>
-    <div class="btn-toolbar btn-toolbar-right">
-    </div>
+    <!--<div class="col-sm-6">-->
+        <!--<div class="btn-toolbar">-->
+            <!--<div class="input-group">-->
+                <!--<tags-input ng-model="processes.searchContent" data-placeholder="{{'PROCESSES.SEARCH' | translate}}"-->
+                            <!--ng-keyup="$event.keyCode == 13 && search(processes.searchContent)" onTagAdded="search(processes.searchContent)" on-tag-removed="search(processes.searchContent)">-->
+                    <!--<auto-complete source="loadToolTags($query)" min-length="0" load-on-focus="true"></auto-complete>-->
+                <!--</tags-input>-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button ng-click="search(processes.searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="btn-toolbar btn-toolbar-right">-->
+    <!--</div>-->
+    <!-- -->
 </div>
 
 <div ng-transclude class="row tab-content">
