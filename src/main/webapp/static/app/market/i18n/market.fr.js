@@ -91,7 +91,9 @@ angular.module('ortolangMarketApp')
             },
             SEARCH: {
                 CORPORA: 'Rechercher un corpus',
-                TOOLS: 'Rechercher un outil'
+                TOOLS: 'Rechercher un outil',
+                LEXICONS: 'Rechercher un lexique',
+                ALL: 'Rechercher dans ORTOLANG'
             },
             SHOW_IN: 'Présentation',
             VIEW_MODE: {

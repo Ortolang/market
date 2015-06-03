@@ -8,13 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('FooterCtrl', [ '$scope', '$location', '$anchorScroll', function ($scope, $location, $anchorScroll) {
+    .controller('FooterCtrl', [ '$scope', '$window', '$anchorScroll', function ($scope, $window, $anchorScroll) {
         $scope.backToTop = function () {
-            // set the location.hash to the id of
-            // the element you wish to scroll to.
-            $location.hash('top');
+            $anchorScroll('top');
+        };
 
-            // call $anchorScroll()
-            $anchorScroll();
+        $scope.contactUs = function () {
+            $window.location = 'ma' + 'il' + 'to' + ':con' + 'tact' + '@' + 'ortolang.fr';
         };
     }]);

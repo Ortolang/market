@@ -104,36 +104,5 @@ angular.module('ortolangMarketApp')
             hiddenSideNav: true,
             hiddenTopNav: false,
             authenticated: true
-        },
-        {
-            class: 'profile',
-            path: '/profile',
-            hiddenPath: '/profile/personal-infos',
-            description: 'NAV.PROFILE',
-            iconCss: 'fa fa-fw fa-user fa-2x',
-            active: undefined,
-            hiddenSideNav: true,
-            hiddenTopNav: true,
-            authenticated: true
-        },
-        {
-            class: 'search',
-            path: '/search',
-            description: 'NAV.SEARCH',
-            iconCss: 'fa fa-fw fa-search fa-2x',
-            active: undefined,
-            hiddenSideNav: true,
-            hiddenTopNav: true,
-            authenticated: true
-        },
-        {
-            class: '404',
-            path: '/404',
-            description: 'NAV.404',
-            iconCss: 'fa fa-fw fa-exclamation fa-2x',
-            active: undefined,
-            hiddenSideNav: true,
-            hiddenTopNav: true,
-            authenticated: true
         }
     ]);

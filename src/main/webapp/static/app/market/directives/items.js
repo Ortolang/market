@@ -8,14 +8,17 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', [ '$rootScope', '$location', 'icons', 'JsonResultResource', 'OptionFacetedFilter',  function ($rootScope, $location, icons, JsonResultResource, OptionFacetedFilter) {
+    .directive('items', [ '$rootScope', '$routeParams', 'icons', 'JsonResultResource', 'OptionFacetedFilter',  function ($rootScope, $routeParams, icons, JsonResultResource, OptionFacetedFilter) {
         return {
             restrict: 'E',
             scope: {
+                title: '=',
                 query: '=',
                 items: '=',
                 viewMode: '=',
+                viewModes: '=',
                 orderProp: '=',
+                orderProps: '=',
                 orderDirection: '=',
                 filtersManager: '=',
                 loadAtStartup: '='
@@ -73,19 +76,7 @@ angular.module('ortolangMarketApp')
                     }
                 });
 
-                // Scope variables
-                function initScopeVariables() {
-                    // if(scope.items === undefined) {
-                    //     scope.items = [];
-                    // }
-
-                    // scope.orderProp = 'title';
-                    // scope.orderDirection = false;
-                    // scope.viewMode = viewModeTile;
-                }
-
                 function init() {
-                    initScopeVariables();
 
                     if(scope.query !== '' && scope.loadAtStartup) {
                         load(scope.query);

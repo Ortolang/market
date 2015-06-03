@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$rootScope', '$routeParams', '$location',  function ($rootScope, $routeParams, $location) {
+    .directive('marketToolbar', [ '$rootScope', '$routeParams', '$location', 'OptionFacetedFilter',  function ($rootScope, $routeParams, $location, OptionFacetedFilter) {
         return {
             restrict: 'E',
             scope: {
@@ -28,20 +28,10 @@ angular.module('ortolangMarketApp')
             link: {
                 post : function (scope) {
 
-                    scope.search = function (content) {
-                        // if (content && content !== '') {
-                        //     $rootScope.selectSearch();
-                        //     $location.url('/search?content='+content+'&filters='+angular.toJson({'meta_ortolang-item-json.type':scope.type})+'&viewMode='+scope.viewMode.id);
-                        // }
-                    };
+                    scope.setFilter = function(filter, opt) {
+                        addSelectedOptionFilter(filter, opt.getValue());
 
-                    scope.setFilter = function (filter, opt) {
-                        // if(filter.getSelected() && filter.getSelected().getValue() !== opt.getValue()) {
-                        //     angular.forEach(filter.getSelected().getSubFilters(), function(subFilter) {
-                        //         scope.filtersManager.removeFilter(subFilter);
-                        //     });
-                        // }
-                        scope.filtersManager.addFilter(filter, opt);
+                        scope.filtersManager.addFilter(filter);
                         scope.applyFilters();
                     };
 
@@ -49,11 +39,12 @@ angular.module('ortolangMarketApp')
                         if (filter.hasSelectedOption(opt)) {
                             scope.filtersManager.removeOptionFilter(filter, opt);
                         } else {
-                            scope.filtersManager.addFilter(filter, opt);
+                            addSelectedOptionFilter(filter, opt.getValue());
+
+                            scope.filtersManager.addFilter(filter);
                         }
 
-                        // scope.filtersManager.addFilter(filter, opt);
-                        if (apply) {
+                        if(apply) {
                             scope.applyFilters();
                         }
                     };
@@ -66,8 +57,8 @@ angular.module('ortolangMarketApp')
                     scope.applyFilters = function () {
                         scope.hideLowFacets();
 
+                        $location.search(scope.filtersManager.urlParam(scope.content, scope.viewMode, scope.orderProp, scope.orderDirection));
                         scope.query = scope.filtersManager.toQuery(scope.content);
-                        // setVisibleFilters();
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
@@ -79,33 +70,11 @@ angular.module('ortolangMarketApp')
                         }
                     };
 
-                    // scope.switchViewMode = function() {
-                    //     scope.viewMode = (scope.viewMode.id === viewModeLine.id) ? viewModeTile : viewModeLine;
-                    // };
-
-                    scope.setViewMode = function (view) {
+                    scope.setViewMode = function(view) {
                         scope.viewMode = view;
                     };
 
-                    // function setVisibleFilters() {
-                    //     scope.visibleFacets = [];
-
-                    // angular.forEach(scope.filtersManager.getFilters(), function(filter) {
-                    // $scope.visibleFacetedFilters.addFilter(filter);
-
-                    // if(model[filter.getId()]) {
-                    //     setSelectedOptionFilter(filter, model[filter.getId()]);
-                    // }
-
-                    // if(filter.getSelected()) {
-                    //     angular.forEach(filter.getSelected().getSubFilters(), function(subFilter) {
-                    //         scope.visibleFacets.push(subFilter);
-                    //     });
-                    // }
-                    // });
-                    // }
-
-                    scope.hasAppliedFacets = function () {
+                    scope.hasAppliedFacets = function() {
                         var i = 0;
                         for (i; i < scope.filtersManager.getFilters().length; i++) {
                             if (scope.filtersManager.getFilters()[i].hasSelectedOptions() && !scope.filtersManager.getFilters()[i].isLock()) {
@@ -131,24 +100,107 @@ angular.module('ortolangMarketApp')
                         scope.facets = !scope.facets;
                     };
 
+                    function addOptionFilter (filter, optionValue) {
+                        if(angular.isArray(optionValue)) {
+                            angular.forEach(optionValue, function(opt) {
+                                filter.putOption(OptionFacetedFilter.make({
+                                    label: opt,
+                                    value: opt,
+                                    length: 1
+                                }));
+                            });
+                        } else {
+                            filter.putOption(OptionFacetedFilter.make({
+                                label: optionValue,
+                                value: optionValue,
+                                length: 1
+                            }));
+                        }
+                    }
+
+                    function addSelectedOptionFilter (filter, optionValue) {
+                        if(angular.isArray(optionValue)) {
+                            angular.forEach(optionValue, function(opt) {
+                                filter.putSelectedOption(filter.getOption(opt));
+                            });
+                        } else {
+                            filter.putSelectedOption(filter.getOption(optionValue));
+                        }
+                    }
+
+                    function applyParams() {
+
+                        if($routeParams.viewMode) {
+                            angular.forEach(scope.viewModes, function(vm) {
+                                if(vm.id === $routeParams.viewMode) {
+                                    scope.viewMode = vm;
+                                }
+                            });
+                        }
+
+                        if($routeParams.orderProp) {
+                            angular.forEach(scope.orderProps, function(op) {
+                                if(op.id === $routeParams.orderProp) {
+                                    scope.orderProp = op;
+                                }
+                            });
+                        }
+
+                        if($routeParams.orderDirection) {
+                            scope.orderDirection = $routeParams.orderDirection;
+                        }
+
+
+                        var filters = $routeParams.filters;
+                        scope.filtersManager.resetFilter();
+
+                        if(scope.preSelectedFilter) {
+                            addSelectedOptionFilter(scope.preSelectedFilter, scope.type);
+                            scope.filtersManager.addFilter(scope.preSelectedFilter);
+                        }
+                        
+                        if(filters) {
+                            var filtersO = angular.fromJson($routeParams.filters);
+                            var facetedFilters = scope.filtersManager.getAvailabledFilters();
+
+                            for(var paramName in filtersO) {
+
+                                var i = 0;
+                                for (i; i < facetedFilters.length; i++) {
+                                    if (facetedFilters[i].getId() === paramName) {
+                                        addOptionFilter(facetedFilters[i], filtersO[paramName]);
+                                        addSelectedOptionFilter(facetedFilters[i], filtersO[paramName]);
+                                        scope.filtersManager.addFilter(facetedFilters[i]);
+                                    }
+                               }
+                            }
+                            scope.facets = true;                     
+                        } else {
+                            scope.facets = false;
+                        }
+
+                        // scope.applyFilters();
+                        var newQuery = scope.filtersManager.toQuery(scope.content);
+
+                        if(scope.query !== newQuery) {
+                            scope.query = newQuery;
+                        }
+                    }
+
+                    scope.$on('$routeUpdate', function () {
+                        applyParams();
+                    });
+
                     // Scope variables
                     function initScopeVariables() {
-
                         scope.facets = false;
                         scope.lowFacets = false;
-                        // scope.visibleFacets = [];
-                        // scope.orderProp = 'title';
-                        // scope.orderDirection = false;
-                        // scope.viewMode = viewModeTile;
                     }
 
                     function init() {
-                        // initLocalVariables();
                         initScopeVariables();
 
-                        if (scope.preSelectedFilter) {
-                            scope.setFilter(scope.preSelectedFilter, scope.preSelectedFilter.getOption(scope.type));
-                        }
+                        applyParams();
                     }
                     init();
                 }

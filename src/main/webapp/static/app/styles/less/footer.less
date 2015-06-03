@@ -5,10 +5,15 @@
   p {
     margin: 0;
     line-height: 50px;
-    &.pull-right a {
-      margin: 0 @padding-xs-horizontal;
+    &.pull-right {
+      > a, > span {
+        margin: 0 @padding-xs-horizontal;
+      }
     }
-    a {
+    > span {
+      cursor: pointer;
+    }
+    > a, > span {
       text-decoration: none;
       font-weight: bold;
       border-bottom: 1px dotted;
