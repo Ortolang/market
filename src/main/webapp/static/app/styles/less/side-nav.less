@@ -37,7 +37,8 @@
         }
 
         .item-description {
-          vertical-align: super;
+          position: relative;
+          bottom: 3px;
         }
       }
 
@@ -72,7 +73,6 @@
 
       &.active {
         > a {
-          cursor: default;
           background-color: @ortolang-blue;
           transition: all 0.3s ease-out;
           .item-description, .icon-container {
