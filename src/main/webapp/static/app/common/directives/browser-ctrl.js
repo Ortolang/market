@@ -38,7 +38,7 @@ angular.module('ortolangMarketApp')
 
             var isMacOs, isClickedOnce, pageWrapperMarginLeft, marketItemHeader, footerHeight, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight,
-                topNavWrapper, footerWrapper, lastSelectedElement, lastShiftSelectedElement, modalScope;
+                topNavWrapper, footerWrapper, lastSelectedElement, lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred;
 
             // *********************** //
             //        Breadcrumb       //
@@ -146,6 +146,7 @@ angular.module('ortolangMarketApp')
                 if (!refresh) {
                     buildBreadcrumb();
                     populateBreadcrumbDropdownMenu();
+                    angular.element('.table-wrapper.workspace-elements-wrapper').scrollTop(0);
                 }
                 if (!refresh || forceNewSelection) {
                     newSelectedElement($scope.parent);
@@ -439,7 +440,10 @@ angular.module('ortolangMarketApp')
                             lastShiftSelectedElement = filteredOrderedChildren[childIndex];
                         }
                     } else {
-                        selectChild(child, false, $event);
+                        clickedChildSelectionDeferred = $q.defer();
+                        selectChild(child, false, $event).then(function () {
+                            clickedChildSelectionDeferred.resolve();
+                        });
                     }
                 }
             };
@@ -867,9 +871,11 @@ angular.module('ortolangMarketApp')
                             $rootScope.$emit('browserSelectedElements-' + $scope.fileSelectId, elements);
                         }
                     } else {
-                        if ($scope.visualizers) {
-                            $scope.clickPreview();
-                        }
+                        clickedChildSelectionDeferred.promise.then(function () {
+                            if ($scope.visualizers) {
+                                $scope.clickPreview();
+                            }
+                        });
                     }
                 }
             };
@@ -1199,7 +1205,7 @@ angular.module('ortolangMarketApp')
                     if (promise) {
                         promise.then(function () {
                             var element = angular.element('tr[data-key="' + $scope.selectedElements[$scope.selectedElements.length - 1].key + '"]'),
-                                parent = angular.element('.table-wrapper'),
+                                parent = angular.element('.table-wrapper.workspace-elements-wrapper'),
                                 elementTop = element.position() ? element.position().top : undefined;
                             if ($scope.selectedElements[$scope.selectedElements.length - 1].key === $scope.filteredOrderedChildrenArray[0].key) {
                                 parent.scrollTop(0);
