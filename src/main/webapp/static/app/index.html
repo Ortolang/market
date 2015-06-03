@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
-    <title ng-bind="'ORTOLANG' + (title ? ' | ' + (title | translate) : '') + subtitle">ORTOLANG</title>
+    <title ng-bind="'ORTOLANG' + (ortolangPageTitle ? ' | ' + (ortolangPageTitle | translate) : '') + ortolangPageSubtitle">ORTOLANG</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -35,7 +35,6 @@
     <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
-    <link rel="stylesheet" href="bower_components/textAngular/dist/textAngular.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
     <!-- endbower -->
@@ -53,6 +52,7 @@
 <div id="side-nav-wrapper" ng-include="'common/nav/side-nav.html'"></div>
 <main id="main-wrapper" ng-view ng-class="{'no-footer': noFooter, 'browsing': browsing}" role="main" ng-cloak></main>
 <div id="footer-wrapper" ng-if="!noFooter" ng-include="'common/nav/footer.html'"></div>
+<div class="alerts-wrapper"></div>
 
 <!--[if lt IE 10]>
 <script type="text/javascript">
@@ -96,15 +96,6 @@
 <script src="bower_components/keycloak/dist/keycloak.js"></script>
 <script src="bower_components/angular-md5/angular-md5.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
-<script src="bower_components/rangy/rangy-core.js"></script>
-<script src="bower_components/rangy/rangy-classapplier.js"></script>
-<script src="bower_components/rangy/rangy-highlighter.js"></script>
-<script src="bower_components/rangy/rangy-selectionsaverestore.js"></script>
-<script src="bower_components/rangy/rangy-serializer.js"></script>
-<script src="bower_components/rangy/rangy-textrange.js"></script>
-<script src="bower_components/textAngular/dist/textAngular.js"></script>
-<script src="bower_components/textAngular/dist/textAngular-sanitize.js"></script>
-<script src="bower_components/textAngular/dist/textAngularSetup.js"></script>
 <script src="bower_components/tv4/tv4.js"></script>
 <script src="bower_components/objectpath/lib/ObjectPath.js"></script>
 <script src="bower_components/angular-schema-form/dist/schema-form.js"></script>
@@ -148,7 +139,6 @@
 <script src="common/directives/file-select-browser.js"></script>
 <script src="common/directives/holder.js"></script>
 <script src="common/directives/autoCompleteSparqL.js"></script>
-<script src="common/directives/editable-text-area.js"></script>
 <script src="common/directives/toggle-visibility.js"></script>
 <script src="common/directives/google-auto-complete.js"></script>
 <script src="common/directives/xeditable-address.js"></script>

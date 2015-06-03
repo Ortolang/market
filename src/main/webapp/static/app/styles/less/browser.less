@@ -18,7 +18,7 @@
 
 .order-indicator {
   color: @btn-secondary-border;
-  padding-left: @padding-xs-horizontal;
+  padding-left: 2px;
 }
 
 .toolbar.browser-toolbar {
@@ -463,7 +463,9 @@ table.workspace-elements {
       }
       &.active {
         font-weight: bold;
+        transition: font-weight 0.3s ease-out;
         span {
+          transition: all 0.3s ease-out;
           position: absolute;
           left: 0;
           height: 100%;

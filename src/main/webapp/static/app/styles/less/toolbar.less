@@ -20,6 +20,14 @@
   min-height: @toolbar-min-height;
   background-color: @default-bg;
 
+  .toolbar-title-wrapper {
+    margin-top: -@padding-large-vertical;
+    margin-bottom: -@padding-large-vertical;
+    .toolbar-title {
+      line-height: @toolbar-min-height;
+    }
+  }
+
   .btn-toolbar.btn-toolbar-right .btn-group {
     float: right;
     > .btn-group {
@@ -57,8 +65,11 @@
 }
 
 .nav-pills-toolbar {
+  padding-top: 0;
+  padding-bottom: 0;
+
   ul.nav-pills {
-    margin: -@padding-large-vertical -@nav-pills-toolbar-item-side-padding;
+    margin: 0 -@nav-pills-toolbar-item-side-padding;
     > li {
       &:first-child {
         margin-left: -@container-main-padding + @nav-pills-toolbar-item-side-padding;
@@ -76,7 +87,7 @@
         cursor: pointer;
       }
       &.active {
-        border-bottom: 4px solid @default-primary;
+        border-bottom: 4px solid @brand-primary;
         > a {
           background: none;
           color: inherit;
@@ -91,42 +102,32 @@
       }
     }
   }
-}
 
-.information-toolbar {
-  ul.nav-pills {
-    > li {
-      &.active {
-        border-bottom: 4px solid @information-primary;
+  &.information-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @information-primary;
+    }
+  }
+
+  &.profile-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @profile-primary;
+    }
+  }
+
+  &.processes-toolbar, &.tasks-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @processes-primary;
+      > a > .badge {
+        color: @inverse-text-color;
+        background-color: @processes-primary;
       }
     }
   }
-}
 
-.processes-toolbar {
-  ul.nav-pills {
-    > li {
-      &.active {
-        border-bottom: 4px solid @processes-primary;
-      }
-      &.active {
-        > a {
-          > .badge {
-            color: @inverse-text-color;
-            background-color: @processes-primary;
-          }
-        }
-      }
-    }
-  }
-}
-
-.market-toolbar {
-  ul.nav-pills {
-    > li {
-      &.active {
-        border-bottom: 4px solid @market-primary;
-      }
+  &.market-toolbar {
+    ul.nav-pills > li.active {
+      border-bottom-color: @market-primary;
     }
   }
 }

@@ -9,63 +9,6 @@
   background-color: @default-bg;
   z-index: 1;
 
-  .side-nav-active-item {
-    height: @side-nav-item-active-height;
-    > a {
-      cursor: default;
-      background-color: @ortolang-blue;
-      .item-description, .icon-container {
-        color: @inverse-text-color;
-      }
-      .icon-container {
-        line-height: @side-nav-item-active-height;
-      }
-      &.information {
-        background-color: @information-primary;
-      }
-      &.tasks {
-        background-color: @tasks-primary;
-      }
-      &.processes {
-        background-color: @processes-primary;
-      }
-    }
-    &.copy {
-      position: absolute;
-      z-index: 1000;
-      top: 0;
-    }
-    &.active.animated {
-      > a {
-        transition: all ease 0.5s;
-        opacity: 0;
-      }
-    }
-  }
-
-  .side-nav-list .side-nav-list-item, .side-nav-active-item {
-    width: @side-nav-width;
-    > a {
-      width: 100%;
-      display: block;
-      text-decoration: none;
-      color: @side-nav-item-color;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      .icon-container {
-        text-align: center;
-        z-index: 5;
-        width: @side-nav-item-height + 14px;
-      }
-
-      .item-description {
-        vertical-align: super;
-      }
-    }
-  }
-
   .side-nav-list {
     margin: 0;
     padding: 0;
@@ -76,10 +19,33 @@
       width: @side-nav-width;
 
       > a {
+        width: 100%;
+        display: block;
+        text-decoration: none;
+        color: @side-nav-item-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         cursor: pointer;
+
         .icon-container {
+          text-align: center;
+          z-index: 5;
+          width: @side-nav-item-height + 14px;
           color: @side-nav-item-icon-color;
           line-height: @side-nav-item-height;
+        }
+
+        .item-description {
+          position: relative;
+          bottom: 3px;
+        }
+      }
+
+      &:first-child {
+        height: @side-nav-item-first-height;
+        > a .icon-container {
+          line-height: @side-nav-item-first-height;
         }
       }
 
@@ -92,7 +58,7 @@
         }
       }
 
-      &:not(.disabled) {
+      &:not(.active) {
         > a:hover {
           background-color: @side-nav-item-hover-bg;
           .icon-container {
@@ -101,6 +67,22 @@
           }
           .item-description {
             color: @inverse-text-color;
+          }
+        }
+      }
+
+      &.active {
+        > a {
+          background-color: @ortolang-blue;
+          transition: all 0.3s ease-out;
+          .item-description, .icon-container {
+            color: @inverse-text-color;
+          }
+          &.information {
+            background-color: @information-primary;
+          }
+          &.workspaces {
+            background-color: @workspace-secondary;
           }
         }
       }

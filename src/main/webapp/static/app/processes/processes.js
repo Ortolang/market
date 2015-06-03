@@ -43,10 +43,10 @@ angular.module('ortolangMarketApp')
                 Runtime.selectRemoteProcess(process);
                 ToolManager.getTool(process.toolKey).abortJob(process.jobId).$promise.then(
                     function () {
-                        $alert({title: process.processTool.name, content: 'annulé', placement: 'top-right', type: 'success', show: true});
+                        $alert({title: process.processTool.name, content: 'annulé', type: 'success'});
                     },
                     function () {
-                        $alert({title: process.processTool.name, content: 'pas annulé', placement: 'top-right', type: 'danger', show: true});
+                        $alert({title: process.processTool.name, content: 'pas annulé', type: 'danger'});
                     }
                 );
             };

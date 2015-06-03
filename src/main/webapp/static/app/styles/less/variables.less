@@ -19,34 +19,42 @@
 @default-border: 1px solid @navbar-default-border;
 
 // ## Color ##
+@ortolang-blue: #008bd0;
+@yellow: #FFC107;
+@red: #DF5A49;
+@green: #45B29D;
+
+@brand-primary: @ortolang-blue;
+@brand-secondary: @yellow;
+@brand-tertiary: @red;
+
 @text-color: @gray-dark;
 @inverse-text-color: #ffffff;
 
-@default-primary: #45B29D;
-@ortolang-blue: #008bd0;
-@tool: #65b32e;
 
 @market-primary: @ortolang-blue;
-@integrated-projects-primary: #45B29D;
+@tool-primary: @green;
+@integrated-projects-primary: @green;
 @documentation-primary: #E27A3F;
-@workspace-primary: #FFC107;
+@workspace-primary: @yellow;
+@workspace-secondary: @red;
 
-@tasks-badge: #DF5A49;
-@processes-badge: #45B29D;
+@tasks-primary: @red;
+@tasks-badge: @red;
+@processes-primary: @red;
+@processes-badge: @green;
 
-@processes-primary: @tasks-badge;
-@tasks-primary: @tasks-badge;
-@profile-primary: @default-primary;
-@information-primary: @default-primary;
+@profile-primary: @green;
+@information-primary: @green;
 
 //== Buttons
 //
 @btn-secondary-color:              @inverse-text-color;
-@btn-secondary-bg:                 @workspace-primary;
+@btn-secondary-bg:                 @brand-secondary;
 @btn-secondary-border:             darken(@btn-secondary-bg, 5%);
 
 @btn-tertiary-color:              @inverse-text-color;
-@btn-tertiary-bg:                 @tasks-primary;
+@btn-tertiary-bg:                 @brand-tertiary;
 @btn-tertiary-border:             darken(@btn-tertiary-bg, 5%);
 
 @btn-inverse-color:              @inverse-text-color;
@@ -78,11 +86,10 @@
 //== Side Nav
 //
 @side-nav-width: 210px;
-@side-nav-item-height: 50px;
+@side-nav-item-first-height: 55px;
+@side-nav-item-height: @side-nav-item-first-height;
 @side-nav-item-color: @gray;
 @side-nav-item-icon-color: #b8b8b8;
-@side-nav-item-active-height: 55px;
-@side-nav-item-active-color: @gray;
 @side-nav-item-hover-bg: @workspace-primary;
 
 //== Toolbar
@@ -95,11 +102,11 @@
 //@border-radius-large: 0;
 //@border-radius-small: 0;
 
+//== Containers
 @page-wrapper-padding: 40px;
 @container-main-padding: 48px;
 
 //== Bootstrap override
 //
-@brand-primary: @ortolang-blue;
 @icon-font-path: "/bower_components/bootstrap/dist/fonts/";
 @navbar-height: @top-navbar-height;

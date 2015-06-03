@@ -35,8 +35,8 @@ angular.module('ortolangMarketApp')
                         scope.applyFilters();
                     };
 
-                    scope.switchFilter = function(filter, opt, apply) {
-                        if(filter.hasSelectedOption(opt)) {
+                    scope.switchFilter = function (filter, opt, apply) {
+                        if (filter.hasSelectedOption(opt)) {
                             scope.filtersManager.removeOptionFilter(filter, opt);
                         } else {
                             addSelectedOptionFilter(filter, opt.getValue());
@@ -54,15 +54,15 @@ angular.module('ortolangMarketApp')
                         scope.applyFilters();
                     };
 
-                    scope.applyFilters = function() {
+                    scope.applyFilters = function () {
                         scope.hideLowFacets();
 
                         $location.search(scope.filtersManager.urlParam(scope.content, scope.viewMode, scope.orderProp, scope.orderDirection));
                         scope.query = scope.filtersManager.toQuery(scope.content);
                     };
 
-                    scope.toggleOrderBy = function(orderProp){
-                        if(scope.orderProp.id !== orderProp.id) {
+                    scope.toggleOrderBy = function (orderProp) {
+                        if (scope.orderProp.id !== orderProp.id) {
                             scope.orderDirection = false;
                             scope.orderProp = orderProp;
                         } else {
@@ -84,19 +84,19 @@ angular.module('ortolangMarketApp')
                         return false;
                     };
 
-                    scope.showLowFacets = function() {
+                    scope.showLowFacets = function () {
                         scope.lowFacets = true;
                     };
 
-                    scope.hideLowFacets = function() {
+                    scope.hideLowFacets = function () {
                         scope.lowFacets = false;
                     };
 
-                    scope.showFacets = function() {
+                    scope.showFacets = function () {
                         scope.facets = true;
                     };
 
-                    scope.switchFacets = function() {
+                    scope.switchFacets = function () {
                         scope.facets = !scope.facets;
                     };
 

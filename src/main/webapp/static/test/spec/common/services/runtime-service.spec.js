@@ -15,6 +15,8 @@ describe('Factory: Runtime', function () {
         Runtime = _Runtime_;
         sample = _sample_;
         $rootScope = _$rootScope_;
+        // $apply for session initialisation to be completed
+        $rootScope.$apply();
     }));
 
     it('should have a list of possible states', function () {
