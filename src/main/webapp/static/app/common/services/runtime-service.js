@@ -448,7 +448,6 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('tool-list-registered', function () {
-                //getRemoteProcesses(Date.now(),true);
                 AuthService.sessionInitialized().then(function () {
                     if (AuthService.isAuthenticated()) {
                         getRemoteProcesses();

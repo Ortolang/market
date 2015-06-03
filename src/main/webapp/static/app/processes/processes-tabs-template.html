@@ -1,11 +1,32 @@
 <div class="row toolbar nav-pills-toolbar processes-toolbar">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <ul class="nav processes-tabs-nav" ng-class="$navClass" role="tablist">
             <li ng-repeat="$pane in $panes track by $index" ng-class="$index == $panes.$active ? $activeClass : ''" role="tab">
                 <a data-toggle="tab" ng-click="$setActive($index)" data-index="{{ $index }}" ng-bind-html="$pane.title"></a>
             </li>
         </ul>
     </div>
+
+
+    <div class="col-sm-6">
+        <div class="btn-toolbar">
+            <div class="input-group" ng-show="!hasToolSelected()">
+                <tags-input ng-model="toolList.searchContent" class="tool-tags" data-placeholder="{{'SEARCH'+' '+ 'PROCESS' | translate}}"
+                            ng-keyup="$event.keyCode == 13 && search(toolList.searchContent)" onTagAdded="search(toolList.searchContent)" on-tag-removed="search(toolList.searchContent)">
+                    <auto-complete source="loadToolTags($query)" min-length="0" load-on-focus="true"></auto-complete>
+                </tags-input>
+                <span class="input-group-btn">
+                    <button ng-click="search(toolList.searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+            <div class="btn-group am-fade-and-slide-right" ng-show="hasToolSelected()">
+                <a ng-click="resetSelectedTool()" class="btn"><i class="fa fa-chevron-left"></i> {{'TOOLS.BACK_TO_TOOL_LIST' | translate}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="btn-toolbar btn-toolbar-right">
+    </div>
 </div>
+
 <div ng-transclude class="row tab-content">
 </div>

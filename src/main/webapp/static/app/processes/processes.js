@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
             $scope.abortedProcessessDisplayed = 3;
             $scope.processessDisplayed = 10;
             // Filter set by default to start date in descending order
-            $scope.orderProp = ['stop'];
+            $scope.orderProp = 'stop';
             $scope.orderReverse = true;
 
             var name;
