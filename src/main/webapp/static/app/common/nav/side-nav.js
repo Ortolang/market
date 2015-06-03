@@ -11,13 +11,8 @@ angular.module('ortolangMarketApp')
     .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements', function ($rootScope, $scope, $route, sideNavElements) {
 
         $scope.sideNavElements = sideNavElements;
-        var lastSelectedElementClass;
 
         $scope.select = function (element) {
-            if (element.class === lastSelectedElementClass) {
-                return;
-            }
-            lastSelectedElementClass = element.class;
             angular.forEach(sideNavElements, function (value) {
                 value.active = value.class === element.class ? 'active' : undefined;
             });
