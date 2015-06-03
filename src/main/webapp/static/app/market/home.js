@@ -29,19 +29,22 @@ angular.module('ortolangMarketApp')
                 value: 'Corpus 14',
                 length: 1
             });
-            $scope.filtersManager.addFilter(titleFilter, optCorpus14);
+            titleFilter.putSelectedOption(optCorpus14);
+            $scope.filtersManager.addFilter(titleFilter);
             var optLA = OptionFacetedFilter.make({
                 label: 'Littéracie Avancée', 
                 value: 'Littéracie Avancée',
                 length: 1
             });
-            $scope.filtersManager.addFilter(titleFilter, optLA);
+            titleFilter.putSelectedOption(optLA);
+            $scope.filtersManager.addFilter(titleFilter);
             var optComere = OptionFacetedFilter.make({
                 label: 'CoMeRe (Communication médiée par les réseaux)', 
                 value: 'CoMeRe (Communication médiée par les réseaux)',
                 length: 1
             });
-            $scope.filtersManager.addFilter(titleFilter, optComere);
+            titleFilter.putSelectedOption(optComere);
+            $scope.filtersManager.addFilter(titleFilter);
 
 
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};

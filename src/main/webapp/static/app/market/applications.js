@@ -47,8 +47,8 @@ angular.module('ortolangMarketApp')
                 lock: true
             });
             $scope.filtersManager.addAvailabledFilter(typeFilter);
-
-            $scope.filtersManager.addFilter(typeFilter, typeFilter.getOption('Application'));
+            typeFilter.putSelectedOption(typeFilter.getOption('Application'));
+            $scope.filtersManager.addFilter(typeFilter);
 
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};

@@ -30,8 +30,7 @@ angular.module('ortolangMarketApp')
                 return this.enabledFilters.slice();
             },
 
-            addFilter : function (filter, opt) {
-                filter.putSelectedOption(opt);
+            addFilter : function (filter) {
 
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
@@ -63,6 +62,7 @@ angular.module('ortolangMarketApp')
                     this.enabledFilters[i].clearSelectedOptions();
                     delete this.enabledFilters[i];
                 }
+                this.enabledFilters = [];
             },
 
             getAvailabledFilters: function() {
@@ -87,7 +87,7 @@ angular.module('ortolangMarketApp')
                 }
             },
 
-            urlParam: function (content, viewMode) {
+            urlParam: function (content, viewMode, orderProp, orderDirection) {
 
                 var filters = {}, params = {};
                 angular.forEach(this.enabledFilters, function(filter) {
@@ -106,7 +106,10 @@ angular.module('ortolangMarketApp')
                 if (content && content !== '') {
                     params.content = content;
                 }
+                
                 params.viewMode = viewMode.id;
+                params.orderProp = orderProp.id;
+                params.orderDirection = orderDirection;
 
                 return params;
             },

@@ -54,15 +54,18 @@ angular
             })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
-                title: 'CORPORA'
+                title: 'CORPORA',
+                reloadOnSearch: false
             })
             .when('/market/tools', {
                 templateUrl: 'market/tools.html',
-                title: 'TOOLS'
+                title: 'TOOLS',
+                reloadOnSearch: false
             })
             .when('/market/lexicons', {
                 templateUrl: 'market/lexicons.html',
-                title: 'LEXICONS'
+                title: 'LEXICONS',
+                reloadOnSearch: false
             })
             .when('/market/applications', {
                 templateUrl: 'market/applications.html',
@@ -73,7 +76,7 @@ angular
                 controller: 'MarketItemCtrl',
                 reloadOnSearch: false
             })
-            .when('/search', {
+            .when('/market/search', {
                 templateUrl: 'market/search.html',
                 title: 'SEARCH',
                 reloadOnSearch: false

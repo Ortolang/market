@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
 
         	$scope.filtersManager = FacetedFilterManager.make();
 
-            var typeFilter = FacetedFilter.make({
+            $scope.typeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.type', 
                 alias: 'type',
                 label: 'MARKET.RESOURCE_TYPE',  
@@ -46,9 +46,7 @@ angular.module('ortolangMarketApp')
                 lockOptions: true,
                 lock: true
             });
-            $scope.filtersManager.addAvailabledFilter(typeFilter);
-
-            $scope.filtersManager.addFilter(typeFilter, typeFilter.getOption('Lexique'));
+            $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
 
             // var lexiconInputTypeFilter = FacetedFilter.make({
             //     id: 'meta_ortolang-item-json.lexiconInputType',
