@@ -908,12 +908,6 @@ angular.module('ortolangMarketApp')
                 $event.stopPropagation();
             });
 
-            $rootScope.$on('publishWorkspaceCompleted', function () {
-                console.log('%s caught event "publishWorkspaceCompleted"', $scope.browserService.id);
-                getParentData(true);
-                $scope.getSnapshotsHistory();
-            });
-
             $rootScope.$on('uploaderObjectUploadCompleted', function () {
                 //console.log('%s caught event "uploaderObjectUploadCompleted"', $scope.browserService.id);
                 getParentData(true, $scope.hasOnlyParentSelected());

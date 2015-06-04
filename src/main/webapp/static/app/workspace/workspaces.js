@@ -8,59 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$translate', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'DownloadResource', 'MetadataFormatResource', 'Settings', 'Runtime', 'icons', function ($scope, $rootScope, $filter, $location, $modal, $translate, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, DownloadResource, MetadataFormatResource, Settings, Runtime, icons) {
+    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'DownloadResource', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, DownloadResource, MetadataFormatResource, Settings, User, Runtime, icons) {
 
         var modalScope;
 
-        function getWorkspaceList(refresh) {
+        function getWorkspaceList() {
             $scope.workspaceList = WorkspaceResource.get();
-            if (!refresh) {
-                var workspace;
-                $scope.browserSettings = Settings[WorkspaceBrowserService.id];
-                $scope.workspaceList.$promise.then(function (data) {
-                    AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.create'});
-                    angular.forEach(data.entries, function (workspace) {
-                        AtmosphereService.addFilter({
-                            typePattern: 'core\\.workspace\\.update',
-                            fromPattern: workspace.key
-                        });
-                    });
-                    if ($scope.browserSettings.wskey) {
-                        var filteredWorkspace = [];
-                        if ($location.search().alias) {
-                            filteredWorkspace = $filter('filter')(data.entries, {alias: $location.search().alias}, true);
-                            if (filteredWorkspace.length !== 1) {
-                                displaySearchErrorModal('ALIAS', {alias: $location.search().alias});
-                            }
-                        }
-                        if (filteredWorkspace.length !== 1) {
-                            filteredWorkspace = $filter('filter')(data.entries, {key: $scope.browserSettings.wskey}, true);
-                        }
-                        if (filteredWorkspace.length !== 1) {
-                            console.error('No workspace with key "%s" available', $scope.browserSettings.wskey);
-                            workspace = data.entries[0];
-                        } else {
-                            workspace = filteredWorkspace[0];
-                        }
-                    } else {
-                        workspace = data.entries[0];
-                    }
-                    if (workspace) {
-                        $location.search('alias', workspace.alias);
-                        WorkspaceBrowserService.workspace = workspace;
-                        $scope.browserSettings.wskey = workspace.key;
-                        Settings.store();
-                        getWorkspaceMembers(workspace.members);
-                        //getPresentationMetadata(workspace);
-                        if ($rootScope.browsing) {
-                            $scope.browserCtrlInitialized = true;
-                        }
-                    } else {
-                        $scope.browserSettings.wskey = undefined;
-                        Settings.store();
-                    }
-                });
-            }
+            return $scope.workspaceList;
         }
 
         function getWorkspaceMembers(groupKey) {
@@ -93,6 +47,7 @@ angular.module('ortolangMarketApp')
                 $location.search('alias', workspace.alias);
                 WorkspaceBrowserService.workspace = workspace;
                 getWorkspaceMembers(workspace.members);
+                $scope.getSnapshotsHistory();
                 //getPresentationMetadata(workspace);
             }
         };
@@ -112,7 +67,18 @@ angular.module('ortolangMarketApp')
             $scope.workspaceList.$promise.then(function () {
                 var workspace = $filter('filter')($scope.workspaceList.entries, {key: eventMessage.fromObject});
                 if (!workspace || workspace.length !== 1) {
-                    getWorkspaceList(true);
+                    getWorkspaceList();
+                }
+            });
+            event.stopPropagation();
+        });
+
+        $rootScope.$on('core.workspace.snapshot', function (event, eventMessage) {
+            getWorkspaceList().$promise.then(function () {
+                var workspace = $filter('filter')($scope.workspaceList.entries, {key: WorkspaceBrowserService.workspace.key});
+                if (workspace && workspace.length === 1) {
+                    WorkspaceBrowserService.workspace = workspace[0];
+                    $scope.getSnapshotsHistory();
                 }
             });
             event.stopPropagation();
@@ -122,7 +88,7 @@ angular.module('ortolangMarketApp')
             $scope.workspaceList.$promise.then(function () {
                 var workspace = $filter('filter')($scope.workspaceList.entries, {members: eventMessage.fromObject});
                 if (!workspace || workspace.length !== 1) {
-                    getWorkspaceList(true);
+                    getWorkspaceList();
                 }
             });
             event.stopPropagation();
@@ -236,23 +202,36 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $scope.snapshot = function () {
-            var snapshotModal;
-            createModalScope();
-            modalScope.wsName = WorkspaceBrowserService.workspace.name;
-            modalScope.snapshotname = 'Version ' + WorkspaceBrowserService.workspace.clock;
-            modalScope.snapshot = function () {
-                WorkspaceResource.snapshots({wskey: WorkspaceBrowserService.workspace.key}, {snapshotname: modalScope.snapshotname}, function () {
-                    snapshotModal.hide();
-                    $scope.getSnapshotsHistory();
-                });
-            };
-            modalScope.$on('modal.show', function () {
-                angular.element('#snapshot-workspace-form').find('[autofocus]:first').focus();
-            });
-            snapshotModal = $modal({
-                scope: modalScope,
-                template: 'workspace/templates/snapshot-modal.html',
-                show: true
+            WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}).$promise.then(function (data) {
+                WorkspaceBrowserService.workspace = data;
+                if (data.changed) {
+                    var snapshotModal;
+                    createModalScope();
+                    modalScope.wsName = WorkspaceBrowserService.workspace.name;
+                    modalScope.snapshotname = 'Version ' + WorkspaceBrowserService.workspace.clock;
+                    modalScope.snapshot = function () {
+                        WorkspaceResource.snapshots({wskey: WorkspaceBrowserService.workspace.key}, {snapshotname: modalScope.snapshotname}, function () {
+                            snapshotModal.hide();
+                            $scope.getSnapshotsHistory();
+                        });
+                    };
+                    modalScope.$on('modal.show', function () {
+                        angular.element('#snapshot-workspace-form').find('[autofocus]:first').focus();
+                    });
+                    snapshotModal = $modal({
+                        scope: modalScope,
+                        template: 'workspace/templates/snapshot-modal.html',
+                        show: true
+                    });
+                } else {
+                    $alert({
+                        title: $translate.instant('WORKSPACE.SNAPSHOT_ALERT.TITLE'),
+                        content: $translate.instant('WORKSPACE.SNAPSHOT_ALERT.CONTENT'),
+                        type: 'warning',
+                        duration: 5,
+                        dismissable: false
+                    });
+                }
             });
         };
 
@@ -338,14 +317,63 @@ angular.module('ortolangMarketApp')
             });
         };
 
+        function initialSubscriptions(data) {
+            AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.create', throwedByPattern: User.key});
+            angular.forEach(User.groups, function (group) {
+                AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.snapshot', argumentsPatterns: {group: group}});
+            });
+            angular.forEach(data.entries, function (workspace) {
+                AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.update', fromPattern: workspace.key});
+            });
+        }
+
         function init() {
             $rootScope.browsing = !!$location.search().browse;
             $scope.browserCtrlInitialized = false;
-            getWorkspaceList(false);
             $scope.WorkspaceBrowserService = WorkspaceBrowserService;
             $scope.workspaceHistory = undefined;
             $rootScope.noFooter = true;
             $scope.icons = icons;
+            getWorkspaceList();
+            var workspace;
+            $scope.browserSettings = Settings[WorkspaceBrowserService.id];
+            $scope.workspaceList.$promise.then(function (data) {
+                initialSubscriptions(data);
+                if ($scope.browserSettings.wskey) {
+                    var filteredWorkspace = [];
+                    if ($location.search().alias) {
+                        filteredWorkspace = $filter('filter')(data.entries, {alias: $location.search().alias}, true);
+                        if (filteredWorkspace.length !== 1) {
+                            displaySearchErrorModal('ALIAS', {alias: $location.search().alias});
+                        }
+                    }
+                    if (filteredWorkspace.length !== 1) {
+                        filteredWorkspace = $filter('filter')(data.entries, {key: $scope.browserSettings.wskey}, true);
+                    }
+                    if (filteredWorkspace.length !== 1) {
+                        console.error('No workspace with key "%s" available', $scope.browserSettings.wskey);
+                        workspace = data.entries[0];
+                    } else {
+                        workspace = filteredWorkspace[0];
+                    }
+                } else {
+                    workspace = data.entries[0];
+                }
+                if (workspace) {
+                    $location.search('alias', workspace.alias);
+                    WorkspaceBrowserService.workspace = workspace;
+                    $scope.browserSettings.wskey = workspace.key;
+                    Settings.store();
+                    getWorkspaceMembers(workspace.members);
+                    //getPresentationMetadata(workspace);
+                    if ($rootScope.browsing) {
+                        $scope.browserCtrlInitialized = true;
+                    }
+                } else {
+                    $scope.browserSettings.wskey = undefined;
+                    Settings.store();
+                }
+            });
         }
         init();
     }]);

@@ -47,6 +47,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Save workspace state',
                 SUBMIT: 'Save'
             },
+            SNAPSHOT_ALERT: {
+                TITLE: 'Save',
+                CONTENT: 'no changes on the workspace since last save'
+            },
             ADD_COLLECTION_MODAL: {
                 TITLE: 'Add a new folder',
                 SUBMIT: 'Add'

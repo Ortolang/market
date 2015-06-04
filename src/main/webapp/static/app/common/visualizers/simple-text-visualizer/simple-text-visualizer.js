@@ -65,7 +65,7 @@ angular.module('ortolangVisualizers')
                     } else {
                         scope.language = undefined;
                     }
-                    scope.truncated = scope.elements[0].size >= limit;
+                    scope.truncated = scope.forceFullData ? false : scope.elements[0].size >= limit;
                     scope.visualizer.header = {
                         fileName: scope.elements[0].name,
                         fileType: scope.elements[0].mimeType
@@ -86,7 +86,7 @@ angular.module('ortolangVisualizers')
                         }
                     };
                     DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
-                        if (scope.elements[0].size >= limit) {
+                        if (!scope.forceFullData && scope.elements[0].size >= limit) {
                             scope.data = data.substr(0, limit);
                             scope.seeMore = function () {
                                 if (scope.data.length + limit < scope.fullData.length) {
