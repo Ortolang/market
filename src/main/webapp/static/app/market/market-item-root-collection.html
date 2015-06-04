@@ -65,7 +65,7 @@
                             <dl>
                                 <dt translate="MARKET.KEYWORDS"></dt>
                                 <dd ng-repeat="keyword in item.keywords">
-                                    <a ng-href="">{{keyword}}</a>
+                                    {{keyword}}
                                 </dd>
                             </dl>
                         </div>
@@ -74,7 +74,7 @@
                             <dl>
                                 <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
                                 <dd ng-repeat="pLang in item.corporaLanguages">
-                                    <a ng-href="">{{pLang}}</a>
+                                    {{pLang}}
                                 </dd>
                             </dl>
                         </div>
@@ -83,7 +83,7 @@
                             <dl>
                                 <dt translate="MARKET.FACET.ANNOTATION_LEVEL"></dt>
                                 <dd ng-repeat="annLevel in item.annotationLevels">
-                                    <a ng-href="">{{annLevel}}</a>
+                                    {{annLevel}}
                                 </dd>
                             </dl>
                         </div>
@@ -92,7 +92,7 @@
                             <dl>
                                 <dt translate="MARKET.FACET.TEXT_FORMAT"></dt>
                                 <dd ng-repeat="corpFormat in item.corporaFormats">
-                                    <a ng-href="">{{corpFormat}}</a>
+                                    {{corpFormat}}
                                 </dd>
                             </dl>
                         </div>
@@ -101,7 +101,7 @@
                             <dl>
                                 <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
                                 <dd ng-repeat="pl in item.programmingLanguages">
-                                    <a ng-href="">{{pl}}</a>
+                                    {{pl}}
                                 </dd>
                             </dl>
                         </div>
@@ -119,7 +119,7 @@
                             <dl>
                                 <dt translate="MARKET.LANGUAGE"></dt>
                                 <dd ng-repeat="lang in item.toolLanguages">
-                                    <a ng-href="">{{lang}}</a>
+                                    {{lang}}
                                 </dd>
                             </dl>
                         </div>

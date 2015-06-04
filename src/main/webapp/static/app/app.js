@@ -80,6 +80,11 @@ angular
                 title: 'SEARCH',
                 reloadOnSearch: false
             })
+            .when('/market/producers', {
+                templateUrl: 'market/producers.html',
+                title: 'PRODUCERS',
+                reloadOnSearch: false
+            })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspaces.html',
                 requiresAuthentication: true,

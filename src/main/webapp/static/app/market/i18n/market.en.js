@@ -104,6 +104,7 @@ angular.module('ortolangMarketApp')
             MORE_FACETS: 'More filter',
             LESS_FACETS: 'Hide filters',
             NO_ITEM: 'No resource availabled',
+            NO_PRODUCER: 'No producer availabled',
             PUBLISHED_ON: 'Published on'
         }
     });

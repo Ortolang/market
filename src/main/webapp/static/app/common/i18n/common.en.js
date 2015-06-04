@@ -32,6 +32,7 @@ angular.module('ortolangMarketApp')
         LEXICONS: 'Lexicons',
         TOOLS: 'Tools',
         INTEGRATED_PROJECTS: 'Integrated Projects',
+        PRODUCERS: 'Producers',
         SELECT_WORKSPACE_ELEMENT: 'Select workspace element',
         404: {
             TITLE: 'Page not found',
