@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             this.label = undefined;
             this.type = 'string';
             this.priority = 'low';
+            this.visibility = true;
             this.resetLabel = '';
             this.selectedOptions = [];
             this.options = [];
@@ -80,6 +81,14 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
 
             setPriority: function(priority) {
                 this.priority = priority;
+            },
+
+            isVisible: function () {
+                return this.visibility;
+            },
+
+            setVisibility: function(visibility) {
+                this.visibility = visibility;
             },
 
             getSelectedOptions: function () {

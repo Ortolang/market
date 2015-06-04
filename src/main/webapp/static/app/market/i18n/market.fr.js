@@ -83,7 +83,9 @@ angular.module('ortolangMarketApp')
                   ALL_LEXICON_INPUT_TYPE: 'Tout type d\'entrée',
                   LEXICON_DESCRIPTION_TYPE: 'Type de description',
                   ALL_LEXICON_DESCRIPTION_TYPE: 'Tout type de description',
-                  LEXICON_INPUT_LANGUAGE: 'Langue des entrées'
+                  LEXICON_INPUT_LANGUAGE: 'Langue des entrées',
+                  PRODUCERS: 'Laboratoire producteur',
+                  ALL_PRODUCERS: 'Tout laboratoire producteur'
             },
             SORT: {
                   TITLE: 'Titre',
@@ -93,6 +95,7 @@ angular.module('ortolangMarketApp')
                 CORPORA: 'Rechercher un corpus',
                 TOOLS: 'Rechercher un outil',
                 LEXICONS: 'Rechercher un lexique',
+                PRODUCERS: 'Rechercher un laboratoire producteur',
                 ALL: 'Rechercher dans ORTOLANG'
             },
             SHOW_IN: 'Présentation',
@@ -103,6 +106,7 @@ angular.module('ortolangMarketApp')
             FACETS: 'Options de recherche',
             MORE_FACETS: 'Plus de filtres',
             LESS_FACETS: 'Cacher les filtres supplémentaires',
+            ACTIVATED_FILTERS: 'Filtres actifs',
             NO_ITEM: 'Aucune ressource disponible',
             NO_PRODUCER: 'Aucune institution productrice trouvées',
             PUBLISHED_ON: 'Publié le'

@@ -83,7 +83,9 @@ angular.module('ortolangMarketApp')
                   ALL_LEXICON_INPUT_TYPE: 'All input types',
                   LEXICON_DESCRIPTION_TYPE: 'Description type',
                   ALL_LEXICON_DESCRIPTION_TYPE: 'All description types',
-                  LEXICON_INPUT_LANGUAGE: 'Lexicon input language'
+                  LEXICON_INPUT_LANGUAGE: 'Lexicon input language',
+                  PRODUCERS: 'Producter',
+                  ALL_PRODUCERS: 'All producers'
             },
             SORT: {
                   TITLE: 'Title',
@@ -93,6 +95,7 @@ angular.module('ortolangMarketApp')
                 CORPORA: 'Search for corpora',
                 TOOLS: 'Search for tools',
                 LEXICONS: 'Search for lexicons',
+                PRODUCERS: 'Search for a producer',
                 ALL: 'Search in ORTOLANG'
             },
             SHOW_IN: 'Show by',
@@ -103,6 +106,7 @@ angular.module('ortolangMarketApp')
             FACETS: 'Advanced filters',
             MORE_FACETS: 'More filter',
             LESS_FACETS: 'Hide filters',
+            ACTIVATED_FILTERS: 'Activated filters',
             NO_ITEM: 'No resource availabled',
             NO_PRODUCER: 'No producer availabled',
             PUBLISHED_ON: 'Published on'

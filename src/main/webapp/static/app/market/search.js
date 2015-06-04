@@ -49,6 +49,16 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
 
+            var producersFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.producers',
+                alias: 'producers',
+                type: 'array',
+                visibility: false,
+                label: 'MARKET.FACET.PRODUCERS',
+                resetLabel: 'MARKET.FACET.ALL_PRODUCERS'
+            });
+            $scope.filtersManager.addAvailabledFilter(producersFilter);
+
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
             $scope.viewModes = [viewModeGrid, viewModeLine];

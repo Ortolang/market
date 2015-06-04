@@ -3,10 +3,11 @@
 	<div class="row toolbar">
 	    <div class="col-sm-5">
 	        <div class="input-group">
-	            <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{(searchPlaceHolder ? searchPlaceHolder : 'SEARCH') | translate}}">
-	            <span class="input-group-btn">
+	        	<div class="input-group-addon"><span class="glyphicon glyphicon-search"></div>
+	            <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{('MARKET.SEARCH.PRODUCERS') | translate}}">
+	            <!-- <span class="input-group-btn">
 	                <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-	            </span>
+	            </span> -->
 	        </div>
 	    </div>
 	</div>
@@ -14,7 +15,7 @@
 	<section ng-if="producers.size()>0" class="items">
 
 	    <div class="row market-list-line">
-	        <div ng-repeat="producer in producers.getItems() | filter:content" class="col-md-8 line">
+	        <div ng-repeat="producer in producers.getItems() | filter:content" class="col-sd-8 line">
 	            <div ng-include="'market/directives/producer.html'" class="row market-item"></item>
 	        </div>
 	    </div>
