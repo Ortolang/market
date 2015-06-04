@@ -1,0 +1,26 @@
+<div ng-controller="ProducersCtrl" class="container-fluid container-main">
+
+	<div class="row toolbar">
+	    <div class="col-sm-5">
+	        <div class="input-group">
+	            <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{(searchPlaceHolder ? searchPlaceHolder : 'SEARCH') | translate}}">
+	            <span class="input-group-btn">
+	                <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+	            </span>
+	        </div>
+	    </div>
+	</div>
+
+	<section ng-if="producers.size()>0" class="items">
+
+	    <div class="row market-list-line">
+	        <div ng-repeat="producer in producers.getItems() | filter:content" class="col-md-8 line">
+	            <div ng-include="'market/directives/producer.html'" class="row market-item"></item>
+	        </div>
+	    </div>
+	</section>
+	<section ng-if="producers.size()===0" class="row items">
+	    <p class="text-center"><em>{{'MARKET.NO_PRODUCER' | translate}}</em></p>
+	</section>
+
+</div>

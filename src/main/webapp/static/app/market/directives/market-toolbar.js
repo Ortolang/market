@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
             restrict: 'E',
             scope: {
                 type: '=',
+                content: '=',
                 query: '=',
                 items: '=',
                 viewMode: '=',
@@ -150,6 +151,9 @@ angular.module('ortolangMarketApp')
                             scope.orderDirection = $routeParams.orderDirection;
                         }
 
+                        if($routeParams.content) {
+                            scope.content = $routeParams.content;
+                        }
 
                         var filters = $routeParams.filters;
                         scope.filtersManager.resetFilter();
