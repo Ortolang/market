@@ -30,28 +30,30 @@ angular.module('ortolangMarketApp')
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-            $rootScope.ortolangPageTitle = current.$$route.title;
-            if (previous) {
-                switch (current.$$route.originalPath) {
-                    case '/':
-                        $scope.select({class: 'home'});
-                        $rootScope.ortolangPageTitle = undefined;
-                        break;
-                    case '/tasks':
-                        $scope.select({class: 'tasks'});
-                        break;
-                    case '/processes':
-                        $scope.select({class: 'processes'});
-                        break;
-                    case '/profile':
-                        $scope.select({class: 'profile'});
-                        break;
-                    case '/search':
-                        $scope.select({class: 'search'});
-                        break;
-                    case '/information/:section':
-                        $scope.select({class: 'information'});
-                        break;
+            if (current.$$route) {
+                $rootScope.ortolangPageTitle = current.$$route.title;
+                if (previous) {
+                    switch (current.$$route.originalPath) {
+                        case '/':
+                            $scope.select({class: 'home'});
+                            $rootScope.ortolangPageTitle = undefined;
+                            break;
+                        case '/tasks':
+                            $scope.select({class: 'tasks'});
+                            break;
+                        case '/processes':
+                            $scope.select({class: 'processes'});
+                            break;
+                        case '/profile':
+                            $scope.select({class: 'profile'});
+                            break;
+                        case '/search':
+                            $scope.select({class: 'search'});
+                            break;
+                        case '/information/:section':
+                            $scope.select({class: 'information'});
+                            break;
+                    }
                 }
             }
         });
