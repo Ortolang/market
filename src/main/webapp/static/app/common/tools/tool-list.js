@@ -9,7 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'MetadataFormatResource', 'Runtime', 'RuntimeResource',
-        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, MetadataFormatResource, Runtime, RuntimeResource) {
+        function ($scope, ToolManager, $rootScope, $translate, $http, $filter) {
 
 
             // ***************** //

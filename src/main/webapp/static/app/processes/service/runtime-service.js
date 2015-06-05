@@ -106,7 +106,7 @@ angular.module('ortolangMarketApp')
                         title: form.name,
                         html: true,
                         scope: modalScope,
-                        template: template || 'common/services/runtime-form-modal-template.html',
+                        template: template || 'processes/services/runtime-form-modal-template.html',
                         show: true
                     });
                 });
@@ -115,6 +115,7 @@ angular.module('ortolangMarketApp')
             function getStates() {
                 return states;
             }
+
 
             function createProcess(data) {
                 RuntimeResource.createProcess(data).$promise.then(function (process) {
@@ -235,7 +236,7 @@ angular.module('ortolangMarketApp')
                         title: form.name,
                         html: true,
                         scope: modalScope,
-                        template: 'common/services/runtime-form-modal-template.html',
+                        template: 'processes/services/runtime-form-modal-template.html',
                         show: true
                     });
                 });
@@ -339,6 +340,19 @@ angular.module('ortolangMarketApp')
             // *********************** //
             //          Misc           //
             // *********************** //
+
+
+
+            function getTypes() {
+                var types = [];
+                var processes = getEveryProcessesWithState([states.completed, states.aborted, states.suspended]);
+                angular.forEach(processes, function (process) {
+                    if (types.indexOf(process.type) === -1) {
+                        types.push(process.type);
+                    }
+                });
+                return types;
+            }
 
             function getEveryProcesses() {
                 return getActiveProcesses().concat(getActiveRemoteProcesses());
@@ -530,6 +544,7 @@ angular.module('ortolangMarketApp')
                 hasEveryProcessesWithState: hasEveryProcessesWithState,
                 getEveryProcessesNumberWithState: getEveryProcessesNumberWithState,
                 getEveryActiveProcesses: getEveryActiveProcesses,
-                hasEveryActiveProcesses: hasEveryActiveProcesses
+                hasEveryActiveProcesses: hasEveryActiveProcesses,
+                getTypes: getTypes
             };
         }]);

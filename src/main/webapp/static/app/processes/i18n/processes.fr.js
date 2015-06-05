@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp')
             LAST_ABORTED_PROCESSES: 'Derniers processus avortés',
             NO_COMPLETED_PROCESS: 'Pas de processus complétés',
             NO_HISTORY_PROCESS: 'Aucun processus trouvé',
+            PROCESSES_FOUND: 'processus trouvé(s)',
             STATE: 'État',
             ABORTED: 'Echoué',
             COMPLETED: 'Completé',

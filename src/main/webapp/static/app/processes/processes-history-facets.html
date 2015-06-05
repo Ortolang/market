@@ -6,8 +6,8 @@
                 <div class="filter">
                     <b>{{'PROCESSES.STATE' | translate}}</b>
                     <div class="radio" >
-                        <input type="radio" name="optionsStatus" id="optionsStatusALl" value="all" ng-click="removeFilter('state')" checked >
-                        <label for="optionsStatusALl">
+                        <input type="radio" name="optionsStatus" id="optionsStatusAll" value="all" ng-click="removeFilter('state')" checked >
+                        <label for="optionsStatusAll">
                             {{'PROCESSES.SHOW_ALL' | translate}} <span>({{ filterCount('state', 'ALL') }})</span>
                         </label>
                     </div>
@@ -31,16 +31,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-2">
+                <div class="filter">
+                    <b>{{'TYPE' | translate}}</b>
+                    <div class="radio" >
+                        <input type="radio" name="optionsType" id="optionsTypeAll" value="all" ng-click="removeFilter('type')" checked >
+                        <label for="optionsTypeAll">
+                            {{'PROCESSES.SHOW_ALL' | translate}} <span>({{ filterCount('type', 'ALL') }})</span>
+                        </label>
+                    </div>
+                    <div class="radio" ng-repeat="type in Runtime.getTypes() | orderBy: type : true">
+                        <input type="radio" name="optionsType" id="optionsType{{type}}" value="{{type}}" ng-click="switchFilter('type', type)" >
+                        <label for="optionsType{{type}}">
+                            {{type}} <span>({{ filterCount('type', type) }})</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <br>
-    <!-- -->
-    <!--<div class="row toolbar toolbar-options processes-searchbar">-->
-        <!--<div class="col-sm-12">-->
-            <!--<div class="btn-group">-->
-                <!--<button type="button" class="btn btn-primary btn-primary-inverse" ng-click="filter()">Valider</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <hr class="col-sm-12">
 </div>
+

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope', '$filter',
-        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope, $filter) {
+    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope', '$filter', 'ProcessesFiltersManager',
+        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope, $filter, ProcessesFiltersManager) {
             var name;
 
             $scope.showLog = function (process, processKey) {
@@ -87,7 +87,6 @@ angular.module('ortolangMarketApp')
 
             $scope.filteredOrderedProcesses = function (processes) {
                 $scope.processus.processesHistory = processes;
-                console.debug('filtre',$scope.processus.filters);
                 $scope.filter();
                 $scope.search();
                 return $filter('orderBy')($scope.processus.processesHistory, $scope.processus.orderProp, $scope.processus.orderReverse);
@@ -132,36 +131,21 @@ angular.module('ortolangMarketApp')
 
             $scope.filter = function() {
                 var filtered = $scope.processus.processesHistory;
-                angular.forEach($scope.processus.filters, function(field, value) {
+                angular.forEach(ProcessesFiltersManager.getFilters(), function(filter) {
                     filtered = $filter('filter')(filtered, function (process) {
-                        if (process[field] !== undefined && process[field].toLowerCase() === value.toLowerCase()) {
-                            return process;
-                        }
+                        return process[filter.getId()] !== undefined && process[filter.getId()].toLowerCase() === filter.getValue().toLowerCase();
                     });
                 });
                 $scope.processus.processesHistory = filtered;
             };
 
             $scope.switchFilter = function (filter, value) {
-                angular.forEach($scope.processus.filters, function(field, value) {
-                    if (field === filter) {
-                        $scope.processus.filters[field] = value;
-                    }
-                });
-                $scope.processus.filters[filter]=value;
-                console.debug('add', $scope.processus.filters);
+                ProcessesFiltersManager.addFilter(filter, value);
             };
 
             $scope.removeFilter = function (filter) {
-                delete $scope.processus.filters[filter];
-                console.debug('delete', $scope.processus.filters);
+                ProcessesFiltersManager.removeFilter(filter);
             };
-
-            //
-            //$scope.switchFacets = function () {
-            //    $scope.facets = !$scope.facets;
-            //};
-
 
             //$scope.test = function () {
             //    Runtime.createProcess({
@@ -171,25 +155,16 @@ angular.module('ortolangMarketApp')
             //    });
             //};
 
-            //var uniqueItems = function (data, key) {
-            //    var result = [];
-            //
-            //    for (var i = 0; i < data.length; i++) {
-            //        var value = data[i][key];
-            //
-            //        if (result.indexOf(value) == -1) {
-            //            result.push(value);
-            //        }
-            //
-            //    }
-            //    return result;
-            //};
+            $scope.$watch('processus.processesHistory.length', function (newValue) {
+                $scope.processus.processesNumber = newValue;
+            });
 
             function init() {
                 $scope.Runtime = Runtime;
 
                 $scope.processus = {};
                 $scope.processus.processesHistory = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
+                $scope.processus.processesNumber = $scope.processus.processesHistory.length;
                 $scope.processus.search = '';
                 $scope.processus.filters = {};
 

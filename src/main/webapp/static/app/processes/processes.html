@@ -120,8 +120,12 @@
 
                 <div ng-show="facets" ng-include="'processes/processes-history-facets.html'"></div>
 
-                <div ng-if="!Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]) || processus.processesHistory.length===0" class="panel-body">
-                    <p translate="PROCESSES.NO_HISTORY_PROCESS"></p>
+                <!--<div ng-if="!Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]) || processus.processesHistory.length===0" class="panel-body">-->
+                    <!--<p translate="PROCESSES.NO_HISTORY_PROCESS"></p>-->
+                <!--</div>-->
+
+                <div class="panel-body">
+                    <p>{{processus.processesNumber}} {{'PROCESSES.PROCESSES_FOUND' | translate}}</p>
                 </div>
                 <table ng-init="processus.processesHistory = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])"
                        ng-if="Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])"
