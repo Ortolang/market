@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:Producers
+ * @name ortolangMarketApp.controller:ProducersCtrl
  * @description
- * # Producers
+ * # ProducersCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
@@ -17,15 +17,7 @@ angular.module('ortolangMarketApp')
                 $scope.producers.clear();
 
                 angular.forEach(jsonResults, function(jsonResult) {
-                    var jsEntry = angular.fromJson(jsonResult);
-
-                    if(jsEntry.producers) {
-                        angular.forEach(jsEntry.producers, function(producer) {
-                            if(!$scope.producers.exists(producer)) {
-                                $scope.producers.addItem(producer);
-                            }
-                        });
-                    }
+                    $scope.producers.addItem(angular.fromJson(jsonResult));
                 });
             }, function (reason) {
                 console.error(reason);
@@ -34,11 +26,9 @@ angular.module('ortolangMarketApp')
 
         function buildQuery() {
             var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*, meta_ortolang-item-json.producers as producers',
-                    source: 'collection'
+                    projection: '*',
+                    source: 'Organization'
                 });
-
-                queryBuilder.equals('status', 'published');
 
                 // var contentSplit = [];
                 // if (content && content !== '') {

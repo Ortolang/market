@@ -15,8 +15,8 @@
 	<section ng-if="producers.size()>0" class="items">
 
 	    <div class="row market-list-line">
-	        <div ng-repeat="producer in producers.getItems() | filter:content" class="col-sd-8 line">
-	            <div ng-include="'market/directives/producer.html'" class="row market-item"></item>
+	        <div ng-repeat="producer in producers.getItems() | filter:content" class="col-md-8 line">
+	            <div ng-include="'producer/directives/producer.html'" class="row"></item>
 	        </div>
 	    </div>
 	</section>

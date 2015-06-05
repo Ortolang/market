@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-3">
-		<img ng-if="imgtitle !== undefined" class="logo-item" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"/>
+		<img ng-if="imgtitle !== undefined" class="logo-item" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}"/>
 		<img ng-if="image" class="logo-item" ng-src="{{image}}" alt="{{imgtitle}}"/>
 	</div>
 	<div class="col-sm-9">
