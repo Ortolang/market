@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
             $scope.showLog = function (process, processKey) {
                 if (processKey) {
                     process = Runtime.selectProcessByKey(processKey);
-                } else if(process.hasOwnProperty('processTool')) {
+                } else if (process.hasOwnProperty('processTool')) {
                     Runtime.selectRemoteProcess(process);
                     name = process.processTool.name;
                 } else {
@@ -73,36 +73,6 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.filteredOrderedProcesses = function (processes) {
-                return $filter('orderBy')(processes, $scope.processus.orderProp, $scope.processus.orderReverse);
-            };
-
-            $scope.order = function (predicate, reverse) {
-                $scope.processus.orderReverse = reverse === 'toggle' ? !$scope.processus.orderReverse : reverse;
-                $scope.processus.orderProp = predicate;
-            };
-
-
-            $scope.search = function () {
-                var filtered = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
-                if ($scope.processus.search !== undefined && $scope.processus.search.length) {
-                    $scope.processus.search.forEach(function(term) {
-                        if (term.length) {
-                            term = $filter('removeAccents')(term);
-                            filtered = $filter('filter')(filtered, function (process) {
-                                var noAccent =  $filter('removeAccents')(JSON.stringify(process).toLowerCase());
-                                noAccent = noAccent.replace(new RegExp('\\s', 'g'), '-');
-                                if(noAccent.search(term.toLowerCase()) !== -1) {
-                                    return process;
-                                }
-                            });
-                        }
-                    });
-                }
-                $scope.processus.processesHistory = filtered;
-                //$scope.processus.search = '';
-            };
-
             $scope.showAll = function ($event) {
                 $($event.target).addClass('hidden').prev('table').addClass('show-all');
             };
@@ -110,6 +80,87 @@ angular.module('ortolangMarketApp')
             $scope.getToolDownloadUrl = function (url, jobid, path) {
                 return url + '/jobs/' + jobid + '/download?path=' + path;
             };
+
+            $scope.getProcessesHistory = function () {
+                return Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
+            };
+
+            $scope.filteredOrderedProcesses = function (processes) {
+                $scope.processus.processesHistory = processes;
+                console.debug('filtre',$scope.processus.filters);
+                $scope.filter();
+                $scope.search();
+                return $filter('orderBy')($scope.processus.processesHistory, $scope.processus.orderProp, $scope.processus.orderReverse);
+            };
+
+            $scope.order = function (predicate, reverse) {
+                $scope.processus.orderReverse = reverse === 'toggle' ? !$scope.processus.orderReverse : reverse;
+                $scope.processus.orderProp = predicate;
+            };
+
+            $scope.search = function () {
+                var filtered = $scope.processus.processesHistory;
+                if ($scope.processus.search !== undefined && $scope.processus.search.length) {
+                    $scope.processus.search.forEach(function (term) {
+                        if (term.length) {
+                            term = $filter('removeAccents')(term);
+                            filtered = $filter('filter')(filtered, function (process) {
+                                var noAccent = $filter('removeAccents')(JSON.stringify(process).toLowerCase());
+                                noAccent = noAccent.replace(new RegExp('\\s', 'g'), '-');
+                                if (noAccent.search(term.toLowerCase()) !== -1) {
+                                    return process;
+                                }
+                            });
+                        }
+                    });
+                }
+                $scope.processus.processesHistory = filtered;
+            };
+
+            $scope.filterCount = function (field, value) {
+                var filtered = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
+                if(value === 'ALL') {
+                    return filtered.length;
+                }
+                filtered = $filter('filter')(filtered, function (process) {
+                    if (process[field] !== undefined && process[field].toLowerCase() === value.toLowerCase()) {
+                        return process;
+                    }
+                });
+                return filtered.length;
+            };
+
+            $scope.filter = function() {
+                var filtered = $scope.processus.processesHistory;
+                angular.forEach($scope.processus.filters, function(field, value) {
+                    filtered = $filter('filter')(filtered, function (process) {
+                        if (process[field] !== undefined && process[field].toLowerCase() === value.toLowerCase()) {
+                            return process;
+                        }
+                    });
+                });
+                $scope.processus.processesHistory = filtered;
+            };
+
+            $scope.switchFilter = function (filter, value) {
+                angular.forEach($scope.processus.filters, function(field, value) {
+                    if (field === filter) {
+                        $scope.processus.filters[field] = value;
+                    }
+                });
+                $scope.processus.filters[filter]=value;
+                console.debug('add', $scope.processus.filters);
+            };
+
+            $scope.removeFilter = function (filter) {
+                delete $scope.processus.filters[filter];
+                console.debug('delete', $scope.processus.filters);
+            };
+
+            //
+            //$scope.switchFacets = function () {
+            //    $scope.facets = !$scope.facets;
+            //};
 
 
             //$scope.test = function () {
@@ -120,12 +171,27 @@ angular.module('ortolangMarketApp')
             //    });
             //};
 
+            //var uniqueItems = function (data, key) {
+            //    var result = [];
+            //
+            //    for (var i = 0; i < data.length; i++) {
+            //        var value = data[i][key];
+            //
+            //        if (result.indexOf(value) == -1) {
+            //            result.push(value);
+            //        }
+            //
+            //    }
+            //    return result;
+            //};
+
             function init() {
                 $scope.Runtime = Runtime;
 
                 $scope.processus = {};
-                $scope.processus.processesHistory = [];
+                $scope.processus.processesHistory = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
                 $scope.processus.search = '';
+                $scope.processus.filters = {};
 
                 $scope.processus.completedProcessessDisplayed = 3;
                 $scope.processus.abortedProcessessDisplayed = 3;
@@ -136,6 +202,11 @@ angular.module('ortolangMarketApp')
                 $scope.processus.orderReverse = true;
 
                 $scope.activeTab = 0;
+                $scope.facets = false;
+
+
+                $scope.statusList = Runtime.getStates();
+
 
                 if ($routeParams.pKey) {
                     $scope.showLog(undefined, $routeParams.pKey);

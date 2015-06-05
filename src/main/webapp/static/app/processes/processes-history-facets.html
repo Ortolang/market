@@ -1,0 +1,46 @@
+<div class="toolbar-options-facets processes-searchbar" ng-controller="ProcessesCtrl">
+
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="filter">
+                    <b>{{'PROCESSES.STATE' | translate}}</b>
+                    <div class="radio" >
+                        <input type="radio" name="optionsStatus" id="optionsStatusALl" value="all" ng-click="removeFilter('state')" checked >
+                        <label for="optionsStatusALl">
+                            {{'PROCESSES.SHOW_ALL' | translate}} <span>({{ filterCount('state', 'ALL') }})</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="optionsStatus" id="optionsStatusCompleted" value="{{Runtime.getStates().completed}}" ng-click="switchFilter('state', Runtime.getStates().completed)" >
+                        <label for="optionsStatusCompleted">
+                            {{'PROCESSES.COMPLETED' | translate}} <span>({{ filterCount('state', Runtime.getStates().completed) }})</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="optionsStatus" id="optionsStatusSuspended" value="{{Runtime.getStates().suspended}}" ng-click="switchFilter('state', Runtime.getStates().suspended)" >
+                        <label for="optionsStatusSuspended">
+                            {{'PROCESSES.SUSPENDED' | translate}} <span>({{ filterCount('state', Runtime.getStates().suspended) }})</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="optionsStatus" id="optionsStatusAborted" value="{{Runtime.getStates().aborted}}" ng-click="switchFilter('state', Runtime.getStates().aborted)" >
+                        <label for="optionsStatusAborted">
+                            {{'PROCESSES.ABORTED' | translate}} <span>({{ filterCount('state', Runtime.getStates().aborted) }})</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- -->
+    <!--<div class="row toolbar toolbar-options processes-searchbar">-->
+        <!--<div class="col-sm-12">-->
+            <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-primary btn-primary-inverse" ng-click="filter()">Valider</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>

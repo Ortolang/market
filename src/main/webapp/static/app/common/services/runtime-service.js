@@ -348,8 +348,8 @@ angular.module('ortolangMarketApp')
                 if(angular.isArray(state)){
                     var processes = [];
                     angular.forEach(state, function (status) {
-                        processes = processes.concat(getProcessesWithState(status, not));
-                        processes = processes.concat(getRemoteProcessesWithState(status, not));
+                        processes = processes.concat(getProcessesWithState(status));
+                        processes = processes.concat(getRemoteProcessesWithState(status));
                     });
                     return processes;
                 } else {

@@ -102,15 +102,23 @@
             <section id="history" class="col-md-12">
 
                 <div class="row toolbar processes-searchbar">
-                    <div class="col-sm-12">
-                            <div class="input-group">
-                                <input ng-list ng-model="processus.search" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'PROCESSES.SEARCH' | translate}}">
-                                <span class="input-group-btn">
-                                    <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                </span>
-                            </div>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input ng-list ng-model="processus.search" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'PROCESSES.SEARCH' | translate}}">
+                            <span class="input-group-btn">
+                                <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" ng-click="switchFacets()" ng-model="facets" bs-checkbox>{{'MARKET.FACETS' | translate}}</button>
+                        </div>
                     </div>
                 </div>
+
+                <div ng-show="facets" ng-include="'processes/processes-history-facets.html'"></div>
 
                 <div ng-if="!Runtime.hasEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]) || processus.processesHistory.length===0" class="panel-body">
                     <p translate="PROCESSES.NO_HISTORY_PROCESS"></p>
@@ -132,13 +140,19 @@
                             <span translate="STOP"></span>
                             <span order-indicator data-name="stop" data-order-prop="processus.orderProp" data-order-reverse="processus.orderReverse"></span>
                         </th>
-                        <th translate="TYPE"></th>
-                        <th translate="PROCESSES.STATE"></th>
+                        <th ng-click="order(['name','type'], 'toggle')">
+                            <span translate="TYPE"></span>
+                            <span order-indicator data-name="type" data-array="1" data-order-prop="processus.orderProp" data-order-reverse="processus.orderReverse"></span>
+                        </th>
+                        <th ng-click="order([ 'name', 'state'], 'toggle')">
+                            <span translate="PROCESSES.STATE"></span>
+                            <span order-indicator data-name="state" data-array="1" data-order-prop="processus.orderProp" data-order-reverse="processus.orderReverse"></span>
+                        </th>
                         <th translate="ACTIONS"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="process in filteredOrderedProcesses(processus.processesHistory) track by process.key"
+                    <tr ng-repeat="process in filteredOrderedProcesses(getProcessesHistory()) track by process.key"
                         ng-class="{hidden: $index >= processus.processessDisplayed}">
                         <td>{{::process.name}}</td>
                         <td>{{process.start | date:'medium'}}</td>
