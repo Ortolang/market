@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, $filter, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$modal', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, $filter, $modal, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -105,16 +105,34 @@ angular.module('ortolangMarketApp')
         };
 
         function finishPreview(visualizer, oobject) {
-
+            var element, modalScope, visualizerModal;
             oobject.object.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
-            var isolatedScope = $rootScope.$new();
-            isolatedScope.elements = [];
-            isolatedScope.elements.push(oobject.object);
+            modalScope = $rootScope.$new();
+            modalScope.elements = [];
+            modalScope.elements.push(oobject.object);
+            modalScope.forceFullData = true;
 
-            var element = $compile(visualizer.getElement())(isolatedScope),
-                visualizerModal = $('.visualizer-modal');
-            visualizerModal.find('.modal-content').empty().append(element);
-            visualizerModal.modal('show');
+            element = $compile(visualizer.getElement())(modalScope);
+            element.addClass('close-on-click');
+
+            modalScope.visualizer = {
+                header: {},
+                content: {},
+                footer: {}
+            };
+            visualizerModal = $modal({
+                scope: modalScope,
+                template: 'common/visualizers/visualizer-template.html',
+                show: true
+            });
+            modalScope.$on('modal.show.before', function (event, modal) {
+                modal.$element.find('.visualizer-content').append(element);
+                modalScope.clickContent = function (event) {
+                    if (angular.element(event.target).hasClass('close-on-click')) {
+                        visualizerModal.hide();
+                    }
+                };
+            });
         }
 
         function loadLicense(collection, licensePath) {

@@ -18,9 +18,9 @@
 <div class="toolbar-options-facets" ng-show="facets">
     <div class="row toolbar toolbar-options" ng-show="filtersManager.getAvailabledFilters().length > 0">
         <!-- <div class="col-sm-12"> -->
-            <div ng-repeat="filter in filtersManager.getAvailabledFilters()" ng-if="filter.getPriority() === 'high'" class="col-sm-2">
-                <div ng-if="filter.getView() === 'dropdown-faceted-filter'" ng-include="'market/directives/dropdown-faceted-filter.html'"></div>
-                <div ng-if="filter.getView() === 'checkbox-faceted-filter'" ng-include="'market/directives/checkbox-faceted-filter.html'"></div>
+        <div ng-repeat="filter in filtersManager.getAvailabledFilters()" ng-if="filter.getPriority() === 'high'" class="col-sm-2">
+            <div ng-if="filter.getView() === 'dropdown-faceted-filter'" ng-include="'market/directives/dropdown-faceted-filter.html'"></div>
+            <div ng-if="filter.getView() === 'checkbox-faceted-filter'" ng-include="'market/directives/checkbox-faceted-filter.html'"></div>
 
                 <!-- <div class="btn-toolbar">
                     <dl class="dl-horizontal">
@@ -31,10 +31,13 @@
                 </div> -->
             <!-- </div> -->
         </div>
+        <div class="col-sm-2" ng-show="!lowFacets" ng-if="hasLowFacets()">
+                <button type="button" class="btn btn-primary btn-primary-inverse" ng-click="showLowFacets()">{{'MARKET.MORE_FACETS' | translate}}</button>
+            </div>
     </div>
 
-    <div class="row toolbar toolbar-options" ng-if="filtersManager.getAvailabledFilters().length > 0" ng-show="lowFacets">
-        <div ng-repeat="filter in filtersManager.getAvailabledFilters()" ng-if="filter.getPriority() !== 'high' && !filter.isLock()" class="col-sm-12 toolbar-section">
+    <div class="row toolbar toolbar-options" ng-if="hasLowFacets()" ng-show="lowFacets">
+        <div ng-repeat="filter in filtersManager.getAvailabledFilters()" ng-if="filter.getPriority() !== 'high' && !filter.isLock() && filter.isVisible()" class="col-sm-12 toolbar-section">
             <div class="toolbar-options-line">
                 <dl class="dl-horizontal">
                     <dt>{{filter.getLabel() | translate}} :</dt>
@@ -45,16 +48,16 @@
         </div>
     </div>
 
-    <div class="row toolbar toolbar-options" ng-if="!lowFacets">
-        <div class="col-sm-12">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary btn-primary-inverse" ng-click="showLowFacets()">{{'MARKET.MORE_FACETS' | translate}}</button>
-            </div>
+    <div class="row toolbar toolbar-options" ng-if="!lowFacets && hasAppliedFacets()">
+        <!-- <div class="col-sm-12"> -->
 
-            <div ng-repeat="filter in filtersManager.getFilters()" class="btn-group" ng-if="filter.hasSelectedOptions() && !filter.isLock()">
-                <button type="button" ng-click="removeFilter(filter)" class="btn btn-default" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}} <span class="close" aria-label="Close" aria-hidden="true">&times;</span></button>
+            <div class="col-sm-10">
+                <label class="text-primary">{{'MARKET.ACTIVATED_FILTERS' | translate}} : </label>
+                
+                <button ng-repeat="filter in filtersManager.getFilters()" ng-if="filter.hasSelectedOptions() && !filter.isLock()" type="button" ng-click="removeFilter(filter)" class="btn btn-default" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}} <span class="close" aria-label="Close" aria-hidden="true">&times;</span></button>
+                
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 
     <div class="row toolbar toolbar-options toolbar-options-applied-filters" ng-if="lowFacets">
@@ -70,6 +73,19 @@
             </div> -->
         </div>
     </div>
+</div>
+
+<div class="row toolbar toolbar-options" ng-show="!facets" ng-if="!lowFacets && hasAppliedFacets()">
+    <!-- <div class="col-sm-12"> -->
+        
+
+        <div class="col-sm-10">
+            <label class="text-primary">{{'MARKET.ACTIVATED_FILTERS' | translate}} : </label>
+            
+            <button ng-repeat="filter in filtersManager.getFilters()" ng-if="filter.hasSelectedOptions() && !filter.isLock()" type="button" ng-click="removeFilter(filter)" class="btn btn-default" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}} <span class="close" aria-label="Close" aria-hidden="true">&times;</span></button>
+            
+        </div>
+    <!-- </div> -->
 </div>
 
 <div class="row toolbar toolbar-options toolbar-options-sorted">

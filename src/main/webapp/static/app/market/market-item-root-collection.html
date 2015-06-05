@@ -13,7 +13,7 @@
                     <div><span translate="MARKET.PRODUCER"></span> :
                         <ul>
                             <li ng-repeat="producer in item.producers">
-                                <a ng-href='' ng-bind="producer"></a>
+                                <a ng-href='#/market/search?filters={"meta_ortolang-item-json.producers":"{{producer}}"}' ng-bind="producer"></a>
                             </li>
                         </ul>
                     </div>

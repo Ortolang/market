@@ -12,7 +12,7 @@
                 </div>
                 <section class="my-workspaces">
                     <ul class="list-unstyled">
-                        <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries track by workspace.key"
+                        <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries | orderBy:'name' track by workspace.key"
                             ng-click="changeWorkspace(workspace)"
                             ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
                     </ul>
@@ -33,7 +33,7 @@
                     <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>
                     <div class="btn-group">
                         <button class="btn btn-default" ng-click="showMetadataItem()"><span class="octicon octicon-book"></span> {{'BROWSER.CREATE_PRESENTATION_METADATA' | translate}}</button>
-                        <button class="btn btn-default" data-ng-disabled="!WorkspaceBrowserService.workspace.changed" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>
+                        <button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>
                         <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
                     </div>
                 </div>
@@ -65,8 +65,8 @@
                         <button class="btn btn-default" ng-click="addMember()"><span ng-class="icons.browser.plus"></span> Add member</button>
                     </section>
                 </div>
-                <!--<hr/>-->
-                <!--<pre>{{WorkspaceBrowserService.workspace | json}}</pre>-->
+                <hr/>
+                <pre>{{WorkspaceBrowserService.workspace | json}}</pre>
                 <!--<br>-->
                 <!--<pre>{{presentationMetadata | json}}</pre>-->
             </div>

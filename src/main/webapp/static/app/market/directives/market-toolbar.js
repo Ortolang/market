@@ -58,7 +58,7 @@ angular.module('ortolangMarketApp')
                     scope.applyFilters = function () {
                         scope.hideLowFacets();
 
-                        $location.search(scope.filtersManager.urlParam(scope.content, scope.viewMode, scope.orderProp, scope.orderDirection));
+                        $location.search(scope.filtersManager.urlParam(scope.content, scope.viewMode, scope.orderProp, scope.orderDirection, scope.facets));
                         scope.query = scope.filtersManager.toQuery(scope.content);
                     };
 
@@ -79,6 +79,18 @@ angular.module('ortolangMarketApp')
                         var i = 0;
                         for (i; i < scope.filtersManager.getFilters().length; i++) {
                             if (scope.filtersManager.getFilters()[i].hasSelectedOptions() && !scope.filtersManager.getFilters()[i].isLock()) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    };
+
+                    scope.hasLowFacets = function() {
+                        var i = 0;
+                        for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
+                            if (scope.filtersManager.getAvailabledFilters()[i].getPriority() !== 'high' &&
+                                !scope.filtersManager.getAvailabledFilters()[i].isLock() &&
+                                scope.filtersManager.getAvailabledFilters()[i].isVisible()) {
                                 return true;
                             }
                         }
@@ -178,9 +190,13 @@ angular.module('ortolangMarketApp')
                                     }
                                }
                             }
-                            scope.facets = true;                     
+                            // scope.facets = true;                   
                         } else {
                             scope.facets = false;
+                        }
+
+                        if($routeParams.facets) {
+                            scope.facets = ($routeParams.facets === 'true');
                         }
 
                         // scope.applyFilters();

@@ -37,12 +37,15 @@ angular.module('ortolangMarketApp')
 
                         angular.forEach(jsonResults, function(jsonResult) {
                             var jsEntry = angular.fromJson(jsonResult);
-                            scope.items.addItem(jsEntry);
+                            if(jsEntry.title) {
+                                
+                                scope.items.addItem(jsEntry);
 
-                            var i = 0;
-                            for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
-                                if (jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
-                                    addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+                                var i = 0;
+                                for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
+                                    if (jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
+                                        addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+                                    }
                                 }
                             }
 

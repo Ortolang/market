@@ -87,7 +87,7 @@ angular.module('ortolangMarketApp')
                 }
             },
 
-            urlParam: function (content, viewMode, orderProp, orderDirection) {
+            urlParam: function (content, viewMode, orderProp, orderDirection, facets) {
 
                 var filters = {}, params = {};
                 angular.forEach(this.enabledFilters, function(filter) {
@@ -110,6 +110,7 @@ angular.module('ortolangMarketApp')
                 params.viewMode = viewMode.id;
                 params.orderProp = orderProp.id;
                 params.orderDirection = orderDirection;
+                params.facets = facets.toString();
 
                 return params;
             },

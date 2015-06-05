@@ -47,6 +47,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Sauvegarde de l\'état de l\'espace de travail',
                 SUBMIT: 'Sauvegarder'
             },
+            SNAPSHOT_ALERT: {
+                TITLE: 'Sauvegarde',
+                CONTENT: 'pas de changements effectués<br/>sur l\'espace de travail depuis la dernière sauvegarde'
+            },
             ADD_COLLECTION_MODAL: {
                 TITLE: 'Ajouter un nouveau dossier',
                 SUBMIT: 'Ajouter'
