@@ -152,9 +152,11 @@ angular.module('ortolangMarketApp')
                     newSelectedElement($scope.parent);
                 }
                 clearPreviousFilteringQueries();
+                var allChildrenMimeTypesValues = [];
                 angular.forEach($scope.parent.elements, function (value) {
-                    if ($scope.allChildrenMimeTypes.indexOf(value.mimeType) === -1) {
-                        $scope.allChildrenMimeTypes.push({value: value.mimeType, label: '<span class="' + $filter('mimeTypeIconCss')(value.mimeType) + '"></span>&nbsp; ' + value.mimeType});
+                    if (allChildrenMimeTypesValues.indexOf(value.mimeType) === -1) {
+                        allChildrenMimeTypesValues.push(value.mimeType);
+                        $scope.allChildrenMimeTypes.push({value: value.mimeType, label: '<span class="type ' + $filter('mimeTypeIconCss')(value.mimeType) + '"></span>' + value.mimeType});
                     }
                 });
                 if ($scope.isWorkspaceBrowserService()) {
@@ -1032,9 +1034,6 @@ angular.module('ortolangMarketApp')
                         matchMimeTypes = false,
                         matchName = !filterNameQuery || filterNameQuery.length < 2 || child.name.match(nameRegExp);
                     if (matchName) {
-                        if ($scope.isCollection(child)) {
-                            return true;
-                        }
                         if (!filterMimeTypeQuery || filterMimeTypeQuery.length < 2) {
                             matchMimeTypes = true;
                         } else {

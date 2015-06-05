@@ -2,7 +2,7 @@
     <header>
         <div class="media">
             <a class="pull-left">
-                <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
             </a>
             <div class="media-body">
@@ -179,8 +179,6 @@
         <div ng-if="browse" class="col-md-12">
             <div browser></div>
         </div>
-
-        <div ng-if="!browse" ng-include="'common/visualizers/visualizer-template.html'"></div>
 
         <aside ng-show="!browse" class="col-md-4">
 
