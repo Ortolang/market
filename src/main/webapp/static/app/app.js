@@ -80,10 +80,12 @@ angular
                 title: 'SEARCH',
                 reloadOnSearch: false
             })
-            .when('/market/producers', {
-                templateUrl: 'market/producers.html',
-                title: 'PRODUCERS',
-                reloadOnSearch: false
+            .when('/producers', {
+                templateUrl: 'producer/producers.html',
+                title: 'PRODUCERS'
+            })
+            .when('/producers/:producerId', {
+                templateUrl: 'producer/producer.html'
             })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspaces.html',
