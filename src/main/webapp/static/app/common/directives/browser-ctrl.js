@@ -649,11 +649,17 @@ angular.module('ortolangMarketApp')
                     var editDescriptionModal;
                     createModalScope();
                     modalScope.selectedElement = $scope.selectedElements[0];
+                    modalScope.editedDescription = $scope.selectedElements[0].description;
                     modalScope.editDescription = function () {
+                        if (modalScope.editedDescription === $scope.selectedElements[0].description) {
+                            modalScope.cancel();
+                            return;
+                        }
                         // Delete properties that are not part of the representation
                         if (!!modalScope.selectedElement.realSize) {
                             delete modalScope.selectedElement.realSize;
                         }
+                        modalScope.selectedElement.description = modalScope.editedDescription;
                         WorkspaceElementResource.put({wskey: $scope.browserService.workspace.key }, modalScope.selectedElement, function () {
                             getParentData(true).then(function () {
                                 editDescriptionModal.hide();
