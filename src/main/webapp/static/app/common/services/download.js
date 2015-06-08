@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .service('Download', ['$window', 'url', function ($window, url) {
 
         this.getDownloadUrl = function (element) {
-            return url.content + '/key/' + element.key;
+            return url.content + '/key/' + element.key + '?download';
         };
 
         this.getPreviewUrl = function (element, large) {

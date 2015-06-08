@@ -744,13 +744,20 @@ angular.module('ortolangMarketApp')
                 } else {
                     modalScope.elements = $scope.selectedElements;
                 }
-                element = $compile(visualizer.getElement())(modalScope);
-                element.addClass('close-on-click');
                 modalScope.visualizer = {
                     header: {},
                     content: {},
                     footer: {}
                 };
+                if (visualizer) {
+                    element = $compile(visualizer.getElement())(modalScope);
+                } else {
+                    modalScope.icons = icons;
+                    modalScope.download = function () {$scope.download($scope.selectedElements[0]);};
+                    modalScope.visualizer.content.classes = 'center';
+                    element = $compile('<div ng-include="\'common/visualizers/no-visualizer-template.html\'">')(modalScope);
+                }
+                element.addClass('close-on-click');
                 visualizerModal = $modal({
                     scope: modalScope,
                     template: 'common/visualizers/visualizer-template.html',
@@ -876,6 +883,8 @@ angular.module('ortolangMarketApp')
                         clickedChildSelectionDeferred.promise.then(function () {
                             if ($scope.visualizers) {
                                 $scope.clickPreview();
+                            } else {
+                                finishPreview();
                             }
                         });
                     }
