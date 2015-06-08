@@ -81,7 +81,7 @@ angular.module('ortolangMarketApp')
                 INFO: 'Afficher / Masquer les détails',
                 WORKSPACE_LIST: 'Afficher / Masquer la liste des espaces de travail'
             },
-            NO_PREVIEW: 'Aucun aperçu disponible',
+            NO_PREVIEW: 'Aucun aperçu n\'est disponible pour ce type de fichier',
             WORKSPACE_KEY: 'Copier la clé du workspace',
             BEARER_TOKEN: 'Copier le token'
         }
