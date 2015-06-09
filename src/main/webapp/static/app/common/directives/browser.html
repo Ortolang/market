@@ -263,7 +263,7 @@
                 </dl>
                 <hr/>
                 <p>
-                    <button ng-if="root === 'head'" class="btn btn-default pull-right" ng-click="editDescription()"><span class="fa fa-pencil"></span></button>
+                    <button ng-if="root === 'head' && (path !== '/' || selectedElements[0].name !== 'root')" class="btn btn-default pull-right" ng-click="editDescription()"><span class="fa fa-pencil"></span></button>
                     <span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>
                     <span ng-show="selectedElements[0].description">{{selectedElements[0].description}}</span>
                 </p>
