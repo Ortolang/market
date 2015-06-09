@@ -8,9 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope', '$filter', 'ProcessesFiltersManager',
-        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope, $filter, ProcessesFiltersManager) {
+    .controller('ProcessesCtrl', ['$scope', '$modal', '$routeParams', 'Runtime', 'ToolManager', '$alert', '$rootScope', '$filter', 'ProcessesFiltersManager', 'moment',
+        function ($scope, $modal, $routeParams, Runtime, ToolManager, $alert, $rootScope, $filter, ProcessesFiltersManager, moment) {
             var name;
+
+            /****************/
+            /* SHOW ACTIONS */
+            /****************/
 
             $scope.showLog = function (process, processKey) {
                 if (processKey) {
@@ -81,13 +85,27 @@ angular.module('ortolangMarketApp')
                 return url + '/jobs/' + jobid + '/download?path=' + path;
             };
 
+
+            //$scope.test = function () {
+            //    Runtime.createProcess({
+            //        'process-type': 'test',
+            //        'process-name': 'Test process',
+            //        'name': 'John'
+            //    });
+            //};
+
+
+
+            /************************************/
+            /* PROCESSES HISTORY FACETED SEARCH */
+            /************************************/
+
             $scope.getProcessesHistory = function () {
-                return Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
+                return Runtime.getEveryProcessesWithState(Runtime.getHistoryStates());
             };
 
             $scope.filteredOrderedProcesses = function (processes) {
-                $scope.processus.processesHistory = processes;
-                $scope.filter();
+                $scope.processus.processesHistory = ProcessesFiltersManager.filter(processes);
                 $scope.search();
                 return $filter('orderBy')($scope.processus.processesHistory, $scope.processus.orderProp, $scope.processus.orderReverse);
             };
@@ -116,57 +134,82 @@ angular.module('ortolangMarketApp')
                 $scope.processus.processesHistory = filtered;
             };
 
-            $scope.filterCount = function (field, value) {
-                var filtered = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
-                if(value === 'ALL') {
-                    return filtered.length;
-                }
-                filtered = $filter('filter')(filtered, function (process) {
-                    if (process[field] !== undefined && process[field].toLowerCase() === value.toLowerCase()) {
-                        return process;
-                    }
-                });
-                return filtered.length;
-            };
-
-            $scope.filter = function() {
-                var filtered = $scope.processus.processesHistory;
-                angular.forEach(ProcessesFiltersManager.getFilters(), function(filter) {
-                    filtered = $filter('filter')(filtered, function (process) {
-                        return process[filter.getId()] !== undefined && process[filter.getId()].toLowerCase() === filter.getValue().toLowerCase();
-                    });
-                });
-                $scope.processus.processesHistory = filtered;
-            };
-
             $scope.switchFilter = function (filter, value) {
-                ProcessesFiltersManager.addFilter(filter, value);
+                ProcessesFiltersManager.switchFilter(filter, value);
+            };
+
+
+            $scope.toggleFilter = function (filter, value) {
+                ProcessesFiltersManager.toggleFilter(filter, value);
             };
 
             $scope.removeFilter = function (filter) {
                 ProcessesFiltersManager.removeFilter(filter);
             };
 
-            //$scope.test = function () {
-            //    Runtime.createProcess({
-            //        'process-type': 'test',
-            //        'process-name': 'Test process',
-            //        'name': 'John'
-            //    });
-            //};
 
-            $scope.$watch('processus.processesHistory.length', function (newValue) {
-                $scope.processus.processesNumber = newValue;
-            });
+            /************/
+            /* WATCHERS */
+            /************/
+
+            $scope.$watch(function () {
+                return {
+                    processesHistory: $scope.processus.processesHistory
+                };
+            }, function (newValue) {
+                $scope.count = function (prop, value) {
+                    return function (el) {
+                        return el[prop] === value;
+                    };
+                };
+                $scope.countDate = function (prop, value) {
+                    return function (el) {
+                        return moment().diff(moment(el[prop]), value)<=1;
+                    };
+                };
+
+                $scope.processus.processesNumber = newValue.processesHistory.length;
+
+            }, true);
+
+
+            $scope.$watch(function () {
+                return {
+                    typesList: Runtime.getTypes()
+                };
+            }, function () {
+                initFilterType();
+
+            }, true);
+
+
+            /********/
+            /* INIT */
+            /********/
+
+            function initFilterState() {
+                $scope.optionsState = {};
+                angular.forEach(Runtime.getHistoryStates(), function (state){
+                    ProcessesFiltersManager.addFilter('state', state);
+                    $scope.optionsState[state] = true;
+                });
+            }
+
+            function initFilterType() {
+                $scope.optionsType = {};
+                angular.forEach(Runtime.getTypes(), function (type){
+                    ProcessesFiltersManager.addFilter('type', type);
+                    $scope.optionsType[type] = true;
+                });
+            }
 
             function init() {
                 $scope.Runtime = Runtime;
 
                 $scope.processus = {};
-                $scope.processus.processesHistory = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended]);
+                $scope.processus.processesHistory = Runtime.getEveryProcessesWithState(Runtime.getHistoryStates());
                 $scope.processus.processesNumber = $scope.processus.processesHistory.length;
                 $scope.processus.search = '';
-                $scope.processus.filters = {};
 
                 $scope.processus.completedProcessessDisplayed = 3;
                 $scope.processus.abortedProcessessDisplayed = 3;
@@ -179,13 +222,13 @@ angular.module('ortolangMarketApp')
                 $scope.activeTab = 0;
                 $scope.facets = false;
 
-
-                $scope.statusList = Runtime.getStates();
-
+                initFilterState();
+                initFilterType();
 
                 if ($routeParams.pKey) {
                     $scope.showLog(undefined, $routeParams.pKey);
                 }
+
             }
 
             init();

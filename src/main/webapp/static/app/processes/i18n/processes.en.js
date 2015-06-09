@@ -35,6 +35,14 @@ angular.module('ortolangMarketApp')
             SHOW_ALL: 'Show all',
             JUST_COMPLETED: '{{name}} has just completed',
             PROCESSES_HISTORY: 'Processes history',
-            SEARCH: 'Search a process'
+            SEARCH: 'Search a process',
+            STOPPED_DATE: 'Stopped date',
+            FACET_DATE: {
+                PAST_HOUR: 'Past hour',
+                PAST_DAY: 'Past 24 hours',
+                PAST_WEEK: 'Past week',
+                PAST_MONTH: 'Past month',
+                PAST_YEAR: 'Past year'
+            }
         }
     });

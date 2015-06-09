@@ -1,32 +1,31 @@
-<div class="toolbar-options-facets processes-searchbar" ng-controller="ProcessesCtrl">
+<div class="row toolbar toolbar-options toolbar-options-facets processes-searchbar" ng-controller="ProcessesCtrl">
 
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-2">
                 <div class="filter">
                     <b>{{'PROCESSES.STATE' | translate}}</b>
-                    <div class="radio" >
-                        <input type="radio" name="optionsStatus" id="optionsStatusAll" value="all" ng-click="removeFilter('state')" checked >
-                        <label for="optionsStatusAll">
-                            {{'PROCESSES.SHOW_ALL' | translate}} <span>({{ filterCount('state', 'ALL') }})</span>
+                    <div class="checkbox" ng-repeat="state in Runtime.getHistoryStates() | orderBy: state : true">
+                        <input type="checkbox" name="optionsState.{{state}}" id="optionsState.{{state}}" ng-model="optionsState[state]"
+                               ng-click="toggleFilter('state', state)">
+                        <label for="optionsState.{{state}}">
+                            {{'PROCESSES.'+state | translate}}
+                            <span ng-if="optionsState[state]">({{ (filteredOrderedProcesses(getProcessesHistory()) | filter:count('state',state)).length }})</span>
                         </label>
                     </div>
-                    <div class="radio">
-                        <input type="radio" name="optionsStatus" id="optionsStatusCompleted" value="{{Runtime.getStates().completed}}" ng-click="switchFilter('state', Runtime.getStates().completed)" >
-                        <label for="optionsStatusCompleted">
-                            {{'PROCESSES.COMPLETED' | translate}} <span>({{ filterCount('state', Runtime.getStates().completed) }})</span>
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <input type="radio" name="optionsStatus" id="optionsStatusSuspended" value="{{Runtime.getStates().suspended}}" ng-click="switchFilter('state', Runtime.getStates().suspended)" >
-                        <label for="optionsStatusSuspended">
-                            {{'PROCESSES.SUSPENDED' | translate}} <span>({{ filterCount('state', Runtime.getStates().suspended) }})</span>
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <input type="radio" name="optionsStatus" id="optionsStatusAborted" value="{{Runtime.getStates().aborted}}" ng-click="switchFilter('state', Runtime.getStates().aborted)" >
-                        <label for="optionsStatusAborted">
-                            {{'PROCESSES.ABORTED' | translate}} <span>({{ filterCount('state', Runtime.getStates().aborted) }})</span>
+
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="filter">
+                    <b>{{'TYPE' | translate}}</b>
+                    <div class="checkbox" ng-repeat="type in Runtime.getTypes() | orderBy: type : true">
+                        <input type="checkbox" name="optionsType.{{type}}" id="optionsType.{{type}}" ng-model="optionsType[type]"
+                               ng-click="toggleFilter('type', type)" >
+                        <label for="optionsType.{{type}}">
+                            {{type}}
+                            <span ng-if="optionsType[type]">({{ (filteredOrderedProcesses(getProcessesHistory()) | filter:count('type',type)).length }})</span>
                         </label>
                     </div>
                 </div>
@@ -34,17 +33,40 @@
 
             <div class="col-sm-2">
                 <div class="filter">
-                    <b>{{'TYPE' | translate}}</b>
+                    <b>{{'PROCESSES.STOPPED_DATE' | translate}}</b>
                     <div class="radio" >
-                        <input type="radio" name="optionsType" id="optionsTypeAll" value="all" ng-click="removeFilter('type')" checked >
-                        <label for="optionsTypeAll">
-                            {{'PROCESSES.SHOW_ALL' | translate}} <span>({{ filterCount('type', 'ALL') }})</span>
+                        <input type="radio" name="optionsStop" id="optionsStopAll" value="all" ng-click="removeFilter('date')" checked >
+                        <label for="optionsStopAll">
+                            {{'PROCESSES.SHOW_ALL' | translate}}
+                            <span>({{ (filteredOrderedProcesses(getProcessesHistory())).length }})</span>
                         </label>
                     </div>
-                    <div class="radio" ng-repeat="type in Runtime.getTypes() | orderBy: type : true">
-                        <input type="radio" name="optionsType" id="optionsType{{type}}" value="{{type}}" ng-click="switchFilter('type', type)" >
-                        <label for="optionsType{{type}}">
-                            {{type}} <span>({{ filterCount('type', type) }})</span>
+                    <div class="radio" >
+                        <input type="radio" name="optionsStop" id="optionsStopHour" value="hours" ng-click="switchFilter('date', 'hours')" >
+                        <label for="optionsStopHour">
+                            {{'PROCESSES.FACET_DATE.PAST_HOUR' | translate}}
+                            <span>({{ (filteredOrderedProcesses(getProcessesHistory()) | filter:countDate('stop', 'hours')).length }})</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="optionsStop" id="optionsStopDay" value="days" ng-click="switchFilter('date', 'days')" >
+                        <label for="optionsStopDay">
+                            {{'PROCESSES.FACET_DATE.PAST_DAY' | translate}}
+                            <span>({{ (filteredOrderedProcesses(getProcessesHistory()) | filter:countDate('stop', 'days')).length }})</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="optionsStop" id="optionsStopWeek" value="weeks" ng-click="switchFilter('date', 'weeks')" >
+                        <label for="optionsStopWeek">
+                            {{'PROCESSES.FACET_DATE.PAST_WEEK' | translate}}
+                            <span>({{ (filteredOrderedProcesses(getProcessesHistory()) | filter:countDate('stop', 'weeks')).length }})</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" name="optionsStop" id="optionsStopMonth" value="months" ng-click="switchFilter('date', 'months')" >
+                        <label for="optionsStopMonth">
+                            {{'PROCESSES.FACET_DATE.PAST_MONTH' | translate}}
+                            <span>({{ (filteredOrderedProcesses(getProcessesHistory()) | filter:countDate('stop', 'months')).length }})</span>
                         </label>
                     </div>
                 </div>
@@ -52,6 +74,5 @@
         </div>
     </div>
 
-    <hr class="col-sm-12">
 </div>
 

@@ -124,7 +124,7 @@
                     <!--<p translate="PROCESSES.NO_HISTORY_PROCESS"></p>-->
                 <!--</div>-->
 
-                <div class="panel-body">
+                <div>
                     <p>{{processus.processesNumber}} {{'PROCESSES.PROCESSES_FOUND' | translate}}</p>
                 </div>
                 <table ng-init="processus.processesHistory = Runtime.getEveryProcessesWithState([Runtime.getStates().completed, Runtime.getStates().aborted, Runtime.getStates().suspended])"

@@ -354,6 +354,10 @@ angular.module('ortolangMarketApp')
                 return types;
             }
 
+            function getHistoryStates() {
+                return [states.completed, states.suspended, states.aborted];
+            }
+
             function getEveryProcesses() {
                 return getActiveProcesses().concat(getActiveRemoteProcesses());
             }
@@ -545,6 +549,7 @@ angular.module('ortolangMarketApp')
                 getEveryProcessesNumberWithState: getEveryProcessesNumberWithState,
                 getEveryActiveProcesses: getEveryActiveProcesses,
                 hasEveryActiveProcesses: hasEveryActiveProcesses,
-                getTypes: getTypes
+                getTypes: getTypes,
+                getHistoryStates: getHistoryStates
             };
         }]);
