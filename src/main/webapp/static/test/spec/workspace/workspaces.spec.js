@@ -64,6 +64,10 @@ describe('Controller: WorkspacesCtrl', function () {
             expect(WorkspaceBrowserService.workspace).toEqualData(sample().workspaceList.entries[0]);
         });
 
+        it('should put the alias of the selected workspace in the search tags', function () {
+            expect($location.search().alias).toBe(sample().workspaceList.entries[0].alias);
+        });
+
         it('should reinitialize browsing and noFooter when controller is destroyed', function () {
             $scope.$emit('$destroy');
             $rootScope.browsing = false;
@@ -71,7 +75,6 @@ describe('Controller: WorkspacesCtrl', function () {
         });
 
         it('should have a list of members of the selected workspace', function () {
-            console.log($scope.workspaceMembers);
             expect($scope.workspaceMembers).toEqualData(sample().group);
         });
 
@@ -84,16 +87,30 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$apply();
         });
 
+        it('should be possible to change the workspace', function () {
+            $scope.changeWorkspace(WorkspaceBrowserService.workspace);
+            $scope.changeWorkspace($scope.workspaceList.entries[1]);
+            expect(WorkspaceBrowserService.workspace).toEqualData(sample().workspaceList.entries[1]);
+            expect($location.search().alias).toBe(sample().workspaceList.entries[1].alias);
+            expect(Settings.WorkspaceBrowserService.wskey).toBe(sample().workspaceList.entries[1].key);
+            $scope.changeWorkspace($scope.workspaceList.entries[0]);
+        });
+
         it('should check if workspace changed before snapshot', function () {
             $scope.snapshot();
             $httpBackend.expect('GET', url.api + '/rest/workspaces/' + WorkspaceBrowserService.workspace.key).respond(200, sample()[WorkspaceBrowserService.workspace.key + 'Ws']);
             $rootScope.$apply();
             $httpBackend.flush();
-            console.log(angular.element('.modal')[0]);
             expect(angular.element('.modal').length).toBe(1);
-            expect(angular.element('.modal')[0]).toBeDefined();
             angular.element('.modal').scope().$hide();
             $rootScope.$apply();
+            $scope.changeWorkspace($scope.workspaceList.entries[1]);
+            $scope.snapshot();
+            $httpBackend.expect('GET', url.api + '/rest/workspaces/' + WorkspaceBrowserService.workspace.key).respond(200, sample()[WorkspaceBrowserService.workspace.key + 'Ws']);
+            $httpBackend.expect('GET', 'alert/alert.tpl.html').respond(200, '<div class="alert"></div>');
+            $rootScope.$apply();
+            $httpBackend.flush();
+            expect(angular.element('.modal').length).toBe(0);
         });
     });
 
@@ -172,7 +189,7 @@ describe('Controller: WorkspacesCtrl', function () {
         }));
 
         it('should display an error modal when workspace defined in search doesn\'t exist in list', function () {
-            expect(angular.element('.foobar')[0]).toBeDefined();
+            expect(angular.element('.foobar').length).toBe(1);
         });
 
         it('should store in settings workspace defined in search', function () {
