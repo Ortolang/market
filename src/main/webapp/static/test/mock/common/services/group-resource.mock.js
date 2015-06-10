@@ -10,10 +10,8 @@
 angular.module('ortolangMarketAppMock')
     .factory('GroupResource', [ '$q', 'sample', function ($q, sample) {
 
-        function get() {
-            var defer = $q.defer();
-            defer.resolve(sample.group);
-            return {$promise: defer.promise};
+        function get(params) {
+            return sample[params.key];
         }
 
         return {
