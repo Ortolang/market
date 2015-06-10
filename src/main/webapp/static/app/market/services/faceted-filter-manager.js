@@ -142,6 +142,9 @@ angular.module('ortolangMarketApp')
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputType', 'lexiconInputType');
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionTypes', 'lexiconDescriptionTypes');
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputLanguages', 'lexiconInputLanguages');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionLanguages', 'lexiconDescriptionLanguages');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconFormats', 'lexiconFormats');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconLanguageType', 'lexiconLanguageType');
 
                 queryBuilder.equals('status', 'published');
 
