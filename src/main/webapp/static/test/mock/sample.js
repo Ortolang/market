@@ -21,10 +21,15 @@ angular.module('ortolangMarketApp')
             completedProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'COMPLETED', type: 'publish-workspace'},
             pendingProcess = {activity: '', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'PENDING', type: 'publish-workspace'},
             runningProcess = {activity: 'FOO', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'RUNNING', type: 'publish-workspace'},
-            sampleN3 = {'http://www.ortolang.fr/ontology/preview':'k1', image : 'assets/images/no-image.png'},
+            sampleN3 = {'http://www.ortolang.fr/ontology/preview': 'k1', image : 'assets/images/no-image.png'},
             workspaceElement = {format: 'market-ortolang-n3'},
+            workspaceList = {'entries': [{'key': 'system', 'author': 'root', 'owner': null, 'alias': 'system', 'name': 'System Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'b3b256f4-1b73-4750-a22d-dbf5451abaf0', 'head': '64d6d161-62fc-457d-83cb-79d37982e055', 'changed': true, 'snapshots': []}]},
+            profile = {givenName: 'John', familyName: 'Grant', email: 'john.grant@mock.com', emailHash: '389b1742a975233a2a248a01036fad5e', 'emailVisibility': 'EVERYBODY', 'emailVerified': false, 'status': 'ACTIVE', 'groups': ['moderators'], 'complete': true, 'friends': null, 'key': 'jgrant'},
+            group = {'name': 'Mock group', 'members': [], 'key': 'e1f765ef-3aca-446a-bac3-67512dcfdd07'},
             query1Result = '{"key":"k1","title":"Dede","description":"Description de Dede"}',
             ridItem = '#0:0';
+
+        group.members.push(profile);
 
         return {
             rootCollectionKey : rootCollectionKey,
@@ -37,6 +42,9 @@ angular.module('ortolangMarketApp')
             sampleCode : sampleCode,
             sampleN3 : sampleN3,
             workspaceElement: workspaceElement,
+            workspaceList: workspaceList,
+            profile: profile,
+            group: group,
 
             query1Result: query1Result,
             query1Results: [query1Result],

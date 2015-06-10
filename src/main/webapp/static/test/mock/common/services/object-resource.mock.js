@@ -38,9 +38,17 @@ angular.module('ortolangMarketAppMock')
             conditions = [];
         }
 
+        function history() {
+            var defer = $q.defer();
+            defer.resolve([]);
+
+            return {$promise: defer.promise};
+        }
+
         return {
             get: get,
             element: get,
+            history: history,
             when: when,
             clear: clear
         };

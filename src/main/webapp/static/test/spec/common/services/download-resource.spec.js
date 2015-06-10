@@ -21,7 +21,7 @@ describe('Service: DownloadResource', function () {
     it('should return the correct url', function () {
         expect(!!DownloadResource).toBe(true);
 
-        var params = {oKey: 'k1'};
+        var params = {key: 'k1'};
         expect(DownloadResource.getDownloadUrl(params)).toBe(url.api + '/rest/objects/k1/download');
 
         params = {wskey: '<wskey>', path: '<path>', root: '<root>', metadata: '<metadata>'};
@@ -35,7 +35,7 @@ describe('Service: DownloadResource', function () {
 
 
     it('should download data', function () {
-        var params = {oKey: 'k1'};
+        var params = {key: 'k1'};
 
         httpBackend.whenGET(url.api + '/rest/objects/k1/download').respond('sample code');
 

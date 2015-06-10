@@ -16,8 +16,8 @@ angular.module('ortolangMarketAppMock')
 
         function download (params, config) {
             var defer = $q.defer(), data = sample().sampleCode, success;
-                
-                if(params.oKey === sample().metadataObjectKey) {
+
+                if(params.key === sample().metadataObjectKey) {
                   defer.resolve(data);
                   success = true;
                 } else {
@@ -30,14 +30,14 @@ angular.module('ortolangMarketAppMock')
                   if (success) {
                     fct(data);
                   }
-                  
+
                   return this;
                 };
                 promise.error = function(fct) {
                   if (!success) {
                     fct('Enable to download cause key not found');
                   }
-                  
+
                   return this;
                 };
 
