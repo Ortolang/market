@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$window',
-        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $window) {
+    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager',
+        function ($scope, $rootScope, $modal, ObjectResource, ToolManager) {
 
             // ***************** //
             // Editor visibility //
@@ -64,7 +64,7 @@ angular.module('ortolangMarketApp')
             function saveResult() {
                 ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data).$promise.then(
                     function(){
-                        var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + $scope.data.path;
+                        //var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + $scope.data.path;
                         //$window.location.href = encodeURI(url);
                         //$scope.$hide();
                     },
@@ -74,23 +74,45 @@ angular.module('ortolangMarketApp')
                 );
             }
 
+            $scope.loadConfig = function (tool, model) {
+                $scope.config = {};
+                $scope.config.model = model;
+                $scope.config.options = {
+                    formState: {
+                        disabled: true
+                    }
+                };
+                $scope.config.formFields = {};
+                $scope.config.loadingData = tool.getForm().then(
+                    function (result) {
+                        $scope.config.formFields = result[1];
+                        //$scope.config.originalFields = angular.copy($scope.config.formFields);
+                        console.debug($scope.config);
+                    },
+                    function (msg) {
+                        console.error('The tool server for "%s" is not responding.', tool.getName(), msg);
+                        $scope.config.model = undefined;
+                    }
+                );
+            };
+
 
             // ********* //
             // Listeners //
             // ********* //
 
-            var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
-                if (!$scope.data) {
-                    $scope.data = {};
-                }
-                $scope.data.path = elements[0].path;
-                $scope.data.wskey = elements[0].workspace;
-                $scope.folder = elements[0];
-                ObjectResource.get({oKey: elements[0].workspace}, function (data) {
-                    $scope.folder.ws = data.object.alias;
-                });
-                $scope.folderSelectModal.hide();
-            });
+            //var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
+            //    if (!$scope.data) {
+            //        $scope.data = {};
+            //    }
+            //    $scope.data.path = elements[0].path;
+            //    $scope.data.wskey = elements[0].workspace;
+            //    $scope.folder = elements[0];
+            //    ObjectResource.get({oKey: elements[0].workspace}, function (data) {
+            //        $scope.folder.ws = data.object.alias;
+            //    });
+            //    $scope.folderSelectModal.hide();
+            //});
 
             $scope.$on('tool-results-show', function () {
                 $scope.show();
