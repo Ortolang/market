@@ -28,9 +28,9 @@ angular.module('ortolangMarketApp')
                     }
 
                     if(scope.entry.image) {
-                                                
-                        ObjectResource.element({oKey: key, path: scope.entry.image}).$promise.then(function(oobject) {
-                            scope.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+
+                        ObjectResource.element({key: key, path: scope.entry.image}).$promise.then(function (oobject) {
+                            scope.image = DownloadResource.getDownloadUrl({key: oobject.key});
                         }, function (reason) {
                             console.error(reason);
                         });
@@ -38,8 +38,8 @@ angular.module('ortolangMarketApp')
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';
                         if(scope.entry.title) {
-                            scope.imgtitle = scope.entry.title.substring(0,2);
-                            scope.imgtheme = scope.entry.title.substring(0,1).toLowerCase();
+                            scope.imgtitle = scope.entry.title.substring(0, 2);
+                            scope.imgtheme = scope.entry.title.substring(0, 1).toLowerCase();
                         }
                     }
                 }

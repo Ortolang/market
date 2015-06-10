@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp')
                 publish: 'glyphicon glyphicon-ok',
                 snapshot: 'glyphicon glyphicon-floppy-disk',
                 history: 'glyphicon glyphicon-time',
-                published: 'glyphicon glyphicon-globe',
+                published: 'glyphicon glyphicon-ok',
                 shortcuts: 'glyphicon glyphicon-question-sign',
                 tools: 'fa fa-fw fa-cube',
                 settings: 'glyphicon glyphicon-cog',

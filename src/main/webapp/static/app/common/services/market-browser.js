@@ -11,10 +11,10 @@ angular.module('ortolangMarketApp')
     .service('MarketBrowserService', ['ObjectResource', function (ObjectResource) {
 
         function getData(config) {
-            if (config.oKey) {
-                return ObjectResource.get({oKey: config.oKey});
+            if (config.key) {
+                return ObjectResource.get({key: config.key});
             }
-            console.error('oKey must be provided', config);
+            console.error('Key must be provided', config);
             return undefined;
         }
 

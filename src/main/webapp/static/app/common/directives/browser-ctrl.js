@@ -172,7 +172,7 @@ angular.module('ortolangMarketApp')
                 if (refresh === undefined) {
                     refresh = false;
                 }
-                var config = {oKey: $scope.itemKey, wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root},
+                var config = {key: $scope.itemKey, wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root},
                     promise;
                 //console.log('Getting parent data (alias: %s, root: %s, path: %s, refresh: %s, forceNewSelection: %s)', $scope.browserService.workspace.alias, $scope.root, $scope.path, refresh, forceNewSelection);
                 promise = $scope.browserService.getData(config).$promise;
@@ -239,7 +239,7 @@ angular.module('ortolangMarketApp')
 
             function getChildData(child) {
                 return $scope.browserService.getData({
-                    oKey: child.key,
+                    key: child.key,
                     wskey: $scope.browserService.workspace.key,
                     path: $scope.path + '/' + child.name,
                     root: $scope.root
@@ -261,7 +261,7 @@ angular.module('ortolangMarketApp')
                 }
                 angular.forEach(filteredElements, function (child) {
                     console.log('Requesting data of child %s', child.name);
-                    $scope.browserService.getData({oKey: child.key, wskey: $scope.browserService.workspace.key, path: $scope.path + child.name, root: $scope.root})
+                    $scope.browserService.getData({key: child.key, wskey: $scope.browserService.workspace.key, path: $scope.path + child.name, root: $scope.root})
                         .$promise.then(function (data) {
                             if ($scope.browserService.dataResource === 'object') {
                                 data = data.object;
@@ -513,15 +513,15 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.calculateCollectionSize = function () {
-                var oKey;
+                var key;
                 if ($scope.hasOnlyParentSelected()) {
-                    oKey = $scope.parent.key;
+                    key = $scope.parent.key;
                 } else if ($scope.selectedElements[0].type === 'collection') {
-                    oKey = $scope.selectedElements[0].key;
+                    key = $scope.selectedElements[0].key;
                 } else {
                     return;
                 }
-                ObjectResource.size({oKey: oKey}, function (data) {
+                ObjectResource.size({key: key}, function (data) {
                     $scope.selectedElements[0].realSize = data.size;
                 });
             };

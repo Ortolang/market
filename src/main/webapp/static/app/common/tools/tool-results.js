@@ -86,7 +86,7 @@ angular.module('ortolangMarketApp')
                 $scope.data.path = elements[0].path;
                 $scope.data.wskey = elements[0].workspace;
                 $scope.folder = elements[0];
-                ObjectResource.get({oKey: elements[0].workspace}, function (data) {
+                ObjectResource.get({key: elements[0].workspace}, function (data) {
                     $scope.folder.ws = data.object.alias;
                 });
                 $scope.folderSelectModal.hide();

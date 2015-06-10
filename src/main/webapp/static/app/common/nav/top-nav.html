@@ -55,7 +55,7 @@
             </li>
             <li class="dropdown" ng-if="authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <img ng-src="http://www.gravatar.com/avatar/{{User.emailHash}}?d=retro&s=30" class="img-circle profile-image"/>
+                    <span avatar data-email-hash="User.emailHash" data-size="30" data-img-classes="img-circle profile-image"></span>
                     {{User.name()}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
