@@ -45,6 +45,7 @@ angular.module('ortolangMarketApp')
                 LINK_LIST: 'List of generated files from tool\'s execution. You can save them in a workspace or download them directly.',
                 LOG: 'Display of the execution log',
                 PARAMETERS: 'Tool\'s execution parameters'
-            }
+            },
+            DATAOBJECT_KEY: 'File\'s key'
         }
     });

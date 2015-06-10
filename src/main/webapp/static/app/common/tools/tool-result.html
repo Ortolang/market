@@ -17,7 +17,7 @@
                             <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
                         </li>
                         <li><a aria-expanded="false" href="#log" target="_blank" data-toggle="tab"><i class="fa fa-file-text-o"></i> {{'TOOLS.LOG_TITLE' | translate}}</a></li>
-                        <li ng-click="loadConfig(process.processTool, process.job.parameters)"><a aria-expanded="false" href="#param" target="_blank" data-toggle="tab"><i class="fa fa-gear"></i> {{'TOOLS.PARAMETERS' | translate}}</a></li>
+                        <li ng-click="loadConfig(process.processTool)"><a aria-expanded="false" href="#param" target="_blank" data-toggle="tab"><i class="fa fa-gear"></i> {{'TOOLS.PARAMETERS' | translate}}</a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -44,23 +44,30 @@
                                 <p>{{ 'TOOLS.DESCRIPTION.PARAMETERS'  | translate}}</p>
                             </blockquote>
                             <hr/>
-                            <!--<div class="list-group">-->
-                                <!--&lt;!&ndash; Links to detail level &ndash;&gt;-->
-                                <!--<dl class="dl-horizontal list-group-item" ng-repeat="(param, value) in process.job.parameters" >-->
-                                    <!--<dt>{{param}} : </dt>-->
-                                    <!--<dd>{{value}}</dd>-->
-                                <!--</dl>-->
-                            <!--</div>-->
-
-                            <div ng-show="config.loadingData.$$status.state === 0" style="margin:20px 0;font-size:2em">
-                                <strong>Loading...</strong>
-                            </div>
-                            <div ng-show="config.loadingData.$$status.state !== 0">
-                                <form ng-submit="onSubmit()" novalidate>
-                                    <formly-form model="config.model" fields="config.formFields" options="config.options">
-                                        <button type="submit" class="btn btn-primary submit-button" ng-disabled="config.form.$invalid">Submit</button>
-                                    </formly-form>
-                                </form>
+                            <div>
+                                <div ng-repeat="(param, value) in process.job.parameters ">
+                                    <div ng-switch="getField(param).type">
+                                        <div class="media-body" ng-switch-when="input">
+                                            <strong>{{config[param].templateOptions.label}} :</strong> <span>{{value}}</span>
+                                        </div>
+                                        <div class="media-body" ng-switch-when="number">
+                                            <strong>{{config[param].templateOptions.label}} :</strong> <span>{{value}}</span>
+                                        </div>
+                                        <div class="media-body" ng-switch-when="dataobject">
+                                            <strong>{{config[param].templateOptions.label}} :</strong> <span>{{value}} <i>({{'TOOLS.DATAOBJECT_KEY' | translate}})</i></span>
+                                        </div>
+                                        <div class="media-body" ng-switch-when="checkbox" ng-if="value==='true'">
+                                            <i class="fa fa-check-square-o"></i> <strong>{{config[param].templateOptions.label}} </strong>
+                                        </div>
+                                        <div class="media-body" ng-switch-when="radio">
+                                            <strong>{{config[param].templateOptions.label}} : </strong> <span>{{(config[param].templateOptions.options | filter : {value: value})[0].name }}</span>
+                                        </div>
+                                        <div class="media-body" ng-switch-when="select">
+                                            <strong>{{config[param].templateOptions.label}} : </strong> <span>{{(config[param].templateOptions.options | filter : {value: value})[0].name }}</span>
+                                        </div>
+                                        <div ng-switch-default></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

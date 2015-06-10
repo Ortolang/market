@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager',
-        function ($scope, $rootScope, $modal, ObjectResource, ToolManager) {
+    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$filter', '$q',
+        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $filter, $q) {
 
             // ***************** //
             // Editor visibility //
@@ -74,28 +74,21 @@ angular.module('ortolangMarketApp')
                 );
             }
 
-            $scope.loadConfig = function (tool, model) {
-                $scope.config = {};
-                $scope.config.model = model;
-                $scope.config.options = {
-                    formState: {
-                        disabled: true
-                    }
-                };
-                $scope.config.formFields = {};
-                $scope.config.loadingData = tool.getForm().then(
+            $scope.loadConfig = function (tool) {
+                tool.getForm().then(
                     function (result) {
-                        $scope.config.formFields = result[1];
-                        //$scope.config.originalFields = angular.copy($scope.config.formFields);
-                        console.debug($scope.config);
+                        $scope.config = result[1];
                     },
                     function (msg) {
                         console.error('The tool server for "%s" is not responding.', tool.getName(), msg);
-                        $scope.config.model = undefined;
                     }
                 );
             };
 
+            $scope.getField = function(param) {
+                $scope.config[param] = ($filter('filter')($scope.config, {key: param}, true))[0];
+                return $scope.config[param];
+            };
 
             // ********* //
             // Listeners //
@@ -133,6 +126,7 @@ angular.module('ortolangMarketApp')
                 $scope.folder = {};
                 $scope.data = {};
 
+                $scope.config = [];
             }
 
             init();

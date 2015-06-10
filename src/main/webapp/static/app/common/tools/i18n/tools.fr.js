@@ -45,6 +45,7 @@ angular.module('ortolangMarketApp')
                 LINK_LIST: 'Liste des fichiers générés à la suite de l\'exécution de l\'outil. Ils peuvent être sauvegardés dans un espace de travail.',
                 LOG: 'Affichage du journal d\'exécution',
                 PARAMETERS: 'Paramètres d\'execution de l\'outil'
-            }
+            },
+            DATAOBJECT_KEY: 'Clé du fichier'
         }
     });
