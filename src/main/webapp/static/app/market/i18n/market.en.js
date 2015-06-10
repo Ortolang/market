@@ -83,7 +83,12 @@ angular.module('ortolangMarketApp')
                   ALL_LEXICON_INPUT_TYPE: 'All input types',
                   LEXICON_DESCRIPTION_TYPE: 'Description type',
                   ALL_LEXICON_DESCRIPTION_TYPE: 'All description types',
-                  LEXICON_INPUT_LANGUAGE: 'Lexicon input language',
+                  LEXICON_INPUT_LANGUAGE: 'Lexicon input languages',
+                  LEXICON_DESCRIPTION_LANGUAGE: 'Description languages',
+                  LEXICON_FORMAT: 'Format',
+                  ALL_LEXICON_FORMAT: 'All format',
+                  LEXICON_LANGUAGE_TYPE: 'Language type',
+                  ALL_LEXICON_LANGUAGE_TYPE: 'All language types',
                   PRODUCERS: 'Producter',
                   ALL_PRODUCERS: 'All producers'
             },
