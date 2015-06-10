@@ -12,9 +12,9 @@ angular.module('ortolangMarketApp')
         function ($scope, User, ObjectResource, DownloadResource) {
 
             angular.forEach(User.groups, function (key) {
-                ObjectResource.get({oKey: key}).$promise.then(function (oobject) {
+                ObjectResource.get({key: key}).$promise.then(function (oobject) {
                     $scope.oobject = oobject;
-                    $scope.downloadUrl = DownloadResource.getDownloadUrl({oKey: oobject.object.key});
+                    $scope.downloadUrl = DownloadResource.getDownloadUrl({key: oobject.object.key});
                     //if (oobject.type === 'collection') {
                     //    if (oobject.object.root === true) {
                     //
@@ -27,15 +27,15 @@ angular.module('ortolangMarketApp')
                     //
                     //            var metaKey = oobject.object.metadatas[0].key;
                     //
-                    //            DownloadResource.download({oKey: metaKey}).success(function (metaContent) {
+                    //            DownloadResource.download({key: metaKey}).success(function (metaContent) {
                     //                N3Serializer.fromN3(metaContent).then(function (data) {
                     //                    $scope.item = angular.copy(data);
                     //                    $scope.marketItemTemplate = 'market/market-item-root-collection.html';
                     //
                     //                    if (data['http://www.ortolang.fr/ontology/image']) {
                     //
-                    //                        ObjectResource.element({oKey: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function (oobject) {
-                    //                            $scope.item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+                    //                        ObjectResource.element({key: key, path: data['http://www.ortolang.fr/ontology/image']}).$promise.then(function (oobject) {
+                    //                            $scope.item.image = DownloadResource.getDownloadUrl({key: oobject.key});
                     //                        }, function (reason) {
                     //                            console.error(reason);
                     //                        });

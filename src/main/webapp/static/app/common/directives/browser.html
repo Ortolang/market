@@ -145,8 +145,7 @@
                         </li>
                         <li ng-if="browserService.workspace.snapshots.length !== 0" class="divider"></li>
                         <li ng-if="browserService.workspace.snapshots.length !== 0" class="dropdown-header">{{'BROWSER.PREVIOUS_VERSIONS' | translate}}</li>
-                        <li ng-repeat="workspaceSnapshot in workspaceHistory | orderBy:'date':true track by workspaceSnapshot.key"
-                            ng-if="workspaceSnapshot.name"
+                        <li ng-repeat="workspaceSnapshot in workspaceHistory | filter:{name:'!!'} | orderBy:'date':true track by workspaceSnapshot.key"
                             ng-class="{active: root === workspaceSnapshot.name}"
                             ng-click="changeRoot(workspaceSnapshot.name)">
                             <div>{{workspaceSnapshot.name}}</div>
@@ -164,7 +163,7 @@
                 <span ng-show="!hasOnlyParentSelected()" class="divider"></span>
 
                 <div ng-show="!hasOnlyParentSelected()" class="btn-group">
-                    <button ng-if="browserService.canDownload && selectedElements[0].stream" class="btn btn-default" ng-click="download(selectedElements[0])" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                    <button ng-if="browserService.canDownload && selectedElements.length ===1 && selectedElements[0].stream" class="btn btn-default" ng-click="download(selectedElements[0])" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="icons.browser.download"></span>
                     </button>
                     <button ng-if="browserService.canDelete && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>

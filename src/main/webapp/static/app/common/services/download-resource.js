@@ -23,8 +23,8 @@ angular.module('ortolangMarketApp')
                 if (params.metadata) {
                     downloadUrl += 'metadata=' + params.metadata;
                 }
-            } else if (params.oKey) {
-                downloadUrl = url.api + '/rest/objects/' + params.oKey + '/download';
+            } else if (params.key) {
+                downloadUrl = url.api + '/rest/objects/' + params.key + '/download';
             }
             return downloadUrl;
         }

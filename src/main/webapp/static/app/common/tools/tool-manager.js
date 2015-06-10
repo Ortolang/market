@@ -312,11 +312,11 @@ angular.module('ortolangMarketApp')
                         }
 
                         if(data.image !== undefined && data.image !== '') {
-                            ObjectResource.element({oKey: item.key, path: data.image}).$promise.then(function(oobject) {
-                                item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+                            ObjectResource.element({key: item.key, path: data.image}).$promise.then(function(oobject) {
+                                item.image = DownloadResource.getDownloadUrl({key: oobject.key});
 
                                 register(new OrtolangTool(item));
-                                console.log('register '+item.name);
+                                console.log('register ' + item.name);
                             }, function (reason) {
                                 console.error(reason);
                             });

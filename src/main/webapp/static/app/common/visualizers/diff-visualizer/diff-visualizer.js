@@ -61,10 +61,10 @@ angular.module('ortolangVisualizers')
                         scope.diff = name;
                     };
 
-                    DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
+                    DownloadResource.download({key: scope.elements[0].key}).success(function (data) {
                         scope.leftObj = data;
                     });
-                    DownloadResource.download({oKey: scope.elements[1].key}).success(function (data) {
+                    DownloadResource.download({key: scope.elements[1].key}).success(function (data) {
                         scope.rightObj = data;
                     });
 

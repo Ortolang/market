@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'DownloadResource', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, DownloadResource, MetadataFormatResource, Settings, User, Runtime, icons) {
+    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'DownloadResource', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', 'url', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, DownloadResource, MetadataFormatResource, Settings, User, Runtime, icons, url) {
 
         var modalScope;
 
@@ -21,9 +21,19 @@ angular.module('ortolangMarketApp')
             $scope.workspaceMembers = GroupResource.get({key: groupKey});
         }
 
+        function getHead() {
+            $scope.head = ObjectResource.get({key: WorkspaceBrowserService.workspace.head});
+        }
+
+        function refreshWorkspace() {
+            WorkspaceBrowserService.workspace = WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}, function () {
+                WorkspaceBrowserService.workspace.authorProfile = ProfileResource.read({key: WorkspaceBrowserService.workspace.author});
+            });
+        }
+
         function getPresentationMetadata(workspace) {
             WorkspaceElementResource.get({wskey: workspace.key, path: '/', metadata: 'ortolang-item-json'}, function (data) {
-                $scope.presentationMetadata = ObjectResource.download({oKey: data.key}, function (metadata) {
+                $scope.presentationMetadata = ObjectResource.download({key: data.key}, function (metadata) {
                     if (metadata.image) {
                         $scope.imageUrl = DownloadResource.getDownloadUrl({wskey: workspace.key, path: metadata.image});
                         $scope.imageTitle = undefined;
@@ -46,8 +56,14 @@ angular.module('ortolangMarketApp')
             if (!$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
                 WorkspaceBrowserService.workspace = workspace;
+                WorkspaceBrowserService.workspace.authorProfile = ProfileResource.read({key: WorkspaceBrowserService.workspace.author});
                 getWorkspaceMembers(workspace.members);
                 $scope.getSnapshotsHistory();
+                getHead();
+                $scope.browserSettings.wskey = workspace.key;
+                Settings.store();
+                $scope.contentLink = url.content + '/all/' + workspace.alias + '/head';
+                $scope.contentLink2 = url.content + '/latest/' + workspace.alias;
                 //getPresentationMetadata(workspace);
             }
         };
@@ -106,6 +122,7 @@ angular.module('ortolangMarketApp')
             $rootScope.browsing = !$rootScope.browsing;
             $location.search('browse', $rootScope.browsing || undefined);
             if (!$rootScope.browsing) {
+                refreshWorkspace();
                 $location.search('root', undefined);
                 $location.search('path', undefined);
             }
@@ -246,9 +263,11 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.getSnapshotsHistory = function () {
-            ObjectResource.history({oKey: WorkspaceBrowserService.workspace.head}, function (data) {
+            ObjectResource.history({key: WorkspaceBrowserService.workspace.head}, function (data) {
                 $scope.workspaceHistory = data.entries;
+                $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
                 angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
+                    workspaceSnapshot.authorProfile = ProfileResource.read({key: workspaceSnapshot.author});
                     workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
                 });
             });
@@ -293,7 +312,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.hasPresentationMetadata = function () {
-            return $scope.hasOnlyRootCollectionSelected && $scope.selectedElements && $filter('filter')($scope.selectedElements[0].metadatas, {'name': 'ortolang-item-json'}).length > 0;
+            return $scope.head && $scope.head.object && $filter('filter')($scope.head.object.metadatas, {'name': 'ortolang-item-json'}).length > 0;
         };
 
         // *********************** //
@@ -334,6 +353,7 @@ angular.module('ortolangMarketApp')
             $scope.workspaceHistory = undefined;
             $rootScope.noFooter = true;
             $scope.icons = icons;
+            $scope.locationOrigin = $window.location.origin;
             getWorkspaceList();
             var workspace;
             $scope.browserSettings = Settings[WorkspaceBrowserService.id];
@@ -360,11 +380,7 @@ angular.module('ortolangMarketApp')
                     workspace = data.entries[0];
                 }
                 if (workspace) {
-                    $location.search('alias', workspace.alias);
-                    WorkspaceBrowserService.workspace = workspace;
-                    $scope.browserSettings.wskey = workspace.key;
-                    Settings.store();
-                    getWorkspaceMembers(workspace.members);
+                    $scope.changeWorkspace(workspace);
                     //getPresentationMetadata(workspace);
                     if ($rootScope.browsing) {
                         $scope.browserCtrlInitialized = true;

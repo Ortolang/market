@@ -85,7 +85,7 @@ angular.module('ortolangVisualizers')
                             scope.seeMore();
                         }
                     };
-                    DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
+                    DownloadResource.download({key: scope.elements[0].key}).success(function (data) {
                         if (!scope.forceFullData && scope.elements[0].size >= limit) {
                             scope.data = data.substr(0, limit);
                             scope.seeMore = function () {
