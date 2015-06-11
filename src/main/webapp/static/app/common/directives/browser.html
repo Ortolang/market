@@ -143,8 +143,8 @@
                         <li ng-click="changeRoot('head')" ng-class="{active: root === 'head'}">
                             <div>{{'BROWSER.HEAD' | translate}}</div>
                         </li>
-                        <li ng-if="browserService.workspace.snapshots.length !== 0" class="divider"></li>
-                        <li ng-if="browserService.workspace.snapshots.length !== 0" class="dropdown-header">{{'BROWSER.PREVIOUS_VERSIONS' | translate}}</li>
+                        <li ng-if="workspaceHistory.length > 1" class="divider"></li>
+                        <li ng-if="workspaceHistory.length > 1" class="dropdown-header">{{'BROWSER.PREVIOUS_VERSIONS' | translate}}</li>
                         <li ng-repeat="workspaceSnapshot in workspaceHistory | filter:{name:'!!'} | orderBy:'date':true track by workspaceSnapshot.key"
                             ng-class="{active: root === workspaceSnapshot.name}"
                             ng-click="changeRoot(workspaceSnapshot.name)">

@@ -6,10 +6,12 @@ describe('Controller: WorkspacesCtrl', function () {
     beforeEach(module('ortolangMarketAppMock'));
     beforeEach(module('workspace/templates/publish-modal.html'));
     beforeEach(module('workspace/templates/snapshot-modal.html'));
+    beforeEach(module('workspace/templates/create-workspace-modal.html'));
 
     var WorkspacesCtrl,
         Settings,
         WorkspaceBrowserService,
+        WorkspaceResource,
         $httpBackend,
         $scope,
         sample,
@@ -17,9 +19,10 @@ describe('Controller: WorkspacesCtrl', function () {
         url,
         $location;
 
-    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Settings_, _WorkspaceBrowserService_, _$location_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Settings_, _WorkspaceBrowserService_, _WorkspaceResource_, _$location_) {
         $httpBackend = _$httpBackend_;
         WorkspaceBrowserService = _WorkspaceBrowserService_;
+        WorkspaceResource = _WorkspaceResource_;
         $scope = _$rootScope_.$new();
         $rootScope = _$rootScope_;
         sample = _sample_;
@@ -28,11 +31,17 @@ describe('Controller: WorkspacesCtrl', function () {
         $location = _$location_;
     }));
 
+    afterEach(function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
+
     describe('with no stored settings', function () {
         beforeEach(inject(function ($controller) {
             WorkspacesCtrl = $controller('WorkspacesCtrl', {
                 $scope: $scope,
-                Settings: Settings
+                Settings: Settings,
+                WorkspaceResource: WorkspaceResource
             });
             $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
             $httpBackend.flush();
@@ -111,6 +120,43 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$apply();
             $httpBackend.flush();
             expect(angular.element('.modal').length).toBe(0);
+        });
+
+        it('should refresh workspace list when a core.workspace.create event is intercepted', function () {
+            spyOn(WorkspaceResource, 'get').and.callThrough();
+            $rootScope.$emit('core.workspace.create', {fromObject: 'system'});
+            $rootScope.$digest();
+            expect(WorkspaceResource.get).not.toHaveBeenCalled();
+            $rootScope.$emit('core.workspace.create', {fromObject: 'foobar'});
+            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $rootScope.$digest();
+            expect(WorkspaceResource.get).toHaveBeenCalled();
+            $httpBackend.flush();
+        });
+
+        it('should refresh workspace list and snapshot history when a core.workspace.snapshot event is intercepted', function () {
+            $rootScope.$emit('core.workspace.snapshot');
+            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $rootScope.$digest();
+            $httpBackend.flush();
+        });
+
+        it('should refresh workspace list when added as member of a workspace membership.group.add-member', function () {
+            $rootScope.$emit('membership.group.add-member', {fromObject: 'group1'});
+            $rootScope.$digest();
+            $rootScope.$emit('membership.group.add-member', {fromObject: 'foobar'});
+            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $rootScope.$digest();
+            $httpBackend.flush();
+        });
+
+        it('should display a modal when asking to create a workspace', function () {
+            $scope.createWorkspace();
+            $rootScope.$apply();
+            expect(angular.element('.modal').length).toBe(1);
+            expect(angular.element('.modal')[0]).toBeDefined();
+            angular.element('.modal').scope().$hide();
+            $rootScope.$apply();
         });
     });
 
