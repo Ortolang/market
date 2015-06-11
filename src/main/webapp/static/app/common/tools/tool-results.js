@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$filter', '$q',
-        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $filter, $q) {
+    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$filter', '$translate', '$alert',
+        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $filter, $translate, $alert) {
 
             // ***************** //
             // Editor visibility //
@@ -37,6 +37,15 @@ angular.module('ortolangMarketApp')
                 return $scope.visibility;
             };
 
+            function showAlert(alertType, message) {
+                $scope.mainAlert.message = message;
+                $scope.mainAlert.isShown = true;
+                $scope.mainAlert.alertType = alertType;
+            }
+
+            $scope.closeAlert = function() {
+                $scope.mainAlert.isShown = false;
+            };
 
             /**************
              * Methods
@@ -55,7 +64,6 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.submit = function(){
-                console.debug($scope.data);
                 ToolManager.checkGrant($scope.toolKey).then(function () {
                     saveResult();
                 });
@@ -63,13 +71,17 @@ angular.module('ortolangMarketApp')
 
             function saveResult() {
                 ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data).$promise.then(
-                    function(){
-                        //var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + $scope.data.path;
-                        //$window.location.href = encodeURI(url);
-                        //$scope.$hide();
+                    function(status){
+                        var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + status.path + '&browse';
+                        var path = $scope.folder.ws + '/' + status.path.replace(/^\/*|\/*$/, '');
+                        console.debug(status.path.replace(/^\/*|\/*$/, ''));
+                        var message = $translate.instant('TOOLS.FILES_SAVED_OK', {url: url, path: path});
+                        showAlert('alert-success', message);
                     },
                     function(error) {
                         console.debug(error);
+                        var message = $translate.instant('TOOLS.FILES_SAVED_FAIL', {error: error});
+                        showAlert('alert-danger', message);
                     }
                 );
             }
@@ -127,6 +139,10 @@ angular.module('ortolangMarketApp')
                 $scope.data = {};
 
                 $scope.config = [];
+
+                $scope.mainAlert = {
+                    isShown: false
+                };
             }
 
             init();

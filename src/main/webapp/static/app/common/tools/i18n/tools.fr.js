@@ -46,6 +46,8 @@ angular.module('ortolangMarketApp')
                 LOG: 'Affichage du journal d\'exécution',
                 PARAMETERS: 'Paramètres d\'execution de l\'outil'
             },
-            DATAOBJECT_KEY: 'Clé du fichier'
+            DATAOBJECT_KEY: 'Clé du fichier',
+            FILES_SAVED_OK: '<p><strong>Les fichiers ont été sauvegardés avec succès dans le dossier <i>{{path}}</i>.</strong></p><p><a class="btn btn-sm btn-default" href="{{url}}"> Voir les fichiers sauvegardés </a></p>',
+            FILES_SAVED_FAIL: '<p><strong>La sauvegarde des fichiers a échoué.</strong></p><p><i>{{error}}</i></p>'
         }
     });

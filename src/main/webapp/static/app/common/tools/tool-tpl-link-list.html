@@ -1,7 +1,7 @@
-<div class="row">
-    <div class="col-md-12">
+<div class="row" ng-controller="ToolResultsCtrl">
+    <div class="col-md-12" >
         <br>
-        <form name="saveResultsForm" novalidate role="form" ng-controller="ToolResultsCtrl">
+        <form name="saveResultsForm" novalidate role="form">
             <h5>Voulez-vous sauvegarder ces fichiers dans un espace de travail ?</h5>
             <table class="table table-responsive">
                 <thead>
@@ -70,5 +70,11 @@
                 <!--</a>-->
             <!--</li>-->
         <!--</ul>-->
+    </div>
+
+    <br>
+    <div class="col-md-12 alert {{mainAlert.alertType}}" ng-show="mainAlert.isShown" style="margin-top: 15px;">
+        <button type="button" class="close" ng-click="closeAlert()" aria-hidden="true">&times;</button>
+        <span ng-bind-html="mainAlert.message"></span>
     </div>
 </div>
