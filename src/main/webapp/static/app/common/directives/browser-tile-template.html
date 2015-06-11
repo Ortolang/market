@@ -1,8 +1,8 @@
 <div ng-if="!isViewModeLine()" class="row browsed-element-children-wrapper">
     <div ng-init="resizeBrowser()" class="col-md-12">
         <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
-            <div ng-repeat="child in filteredChildren(type) | orderBy:orderProp:orderReverse track by child.key"
-                 ng-class="tileCssClasses()" class="browsed-element-child-wrapper">
+            <div ng-repeat="child in filteredChildren(type) | limitTo:(type === 'object' ? displayedItemLimit : undefined) | orderBy:orderProp:orderReverse track by child.key"
+                 ng-class="tileCssClasses()" class="browsed-element-child-wrapper" on-finish-render>
                 <div class="browsed-element-child"
                      ng-click="clickChild(child, $event)"
                      ng-right-click="clickChild(child, $event)"
@@ -17,6 +17,12 @@
                         <span class="name">{{child.name}}</span>
                     </p>
                 </div>
+            </div>
+            <div ng-if="type === 'object' && displayedItemLimit < parent.elements.length" class="clearfix col-md-12 see-all-wrapper">
+                <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
+                    <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
+                    <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
+                </button>
             </div>
         </div>
     </div>
