@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
             ACRONYM: 'Acronym',
             CITY: 'City',
             COUNTRY: 'Country',
-            HOMEPAGE: 'Homepage'
+            HOMEPAGE: 'Homepage',
+            LIST_OF_RESOURCES: 'Resources made by the producer'
         }
     });

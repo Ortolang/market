@@ -34,6 +34,7 @@ angular.module('ortolangMarketApp')
             PRODUCER: 'Produit par',
             RESEARCHER: 'Responsables scientifiques',
             MANAGER: 'Responsables informatiques',
+            DESIGNER: 'Concepteurs',
             DEVELOPER: 'Responsables techniques',
             AUTHOR: 'Auteurs',
             COMPILER: 'Compilateurs',

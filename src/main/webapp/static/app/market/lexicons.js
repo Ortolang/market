@@ -128,8 +128,6 @@ angular.module('ortolangMarketApp')
 
         function init() {
             initScopeVariables();
-
-            $scope.query = $scope.filtersManager.toQuery();
         }
         init();
 

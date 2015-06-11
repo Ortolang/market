@@ -24,7 +24,16 @@ angular.module('ortolangMarketApp')
                     if (scope.entry.applicationUrl) {
                         scope.itemUrl = scope.entry.applicationUrl;
                     } else {
-                        scope.itemUrl = '#' + $location.path() + '/' + scope.entry.key;
+                        var type;
+                        if(scope.entry.type === 'Corpus') {
+                            type = 'corpora';
+                        } else if(scope.entry.type === 'Lexique') {
+                            type = 'lexicons';
+                        } else if(scope.entry.type === 'Outil') {
+                            type = 'tools';
+                        }
+                        scope.itemUrl = '#/market/' + type + '/' + scope.entry.key;
+                        // scope.itemUrl = '#' + $location.path() + '/' + scope.entry.key;
                     }
 
                     if(scope.entry.image) {

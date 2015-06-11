@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', [ '$rootScope', '$routeParams', 'icons', 'JsonResultResource', 'OptionFacetedFilter',  function ($rootScope, $routeParams, icons, JsonResultResource, OptionFacetedFilter) {
+    .directive('items', [ '$rootScope', '$routeParams', 'icons', 'JsonResultResource', 'OptionFacetedFilter', 'ItemManager',  function ($rootScope, $routeParams, icons, JsonResultResource, OptionFacetedFilter, ItemManager) {
         return {
             restrict: 'E',
             scope: {
@@ -28,12 +28,15 @@ angular.module('ortolangMarketApp')
                 
                 function load (query) {
                     console.log('query : ' + query);
+                    scope.lock = true;
                     JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                        // scope.items = [];
+                        
                         scope.items.clear();
-                        angular.forEach(scope.filtersManager.getAvailabledFilters(), function(filter) {
-                            filter.clearOptions();
-                        });
+                        if(scope.filtersManager) {
+                            angular.forEach(scope.filtersManager.getAvailabledFilters(), function(filter) {
+                                filter.clearOptions();
+                            });
+                        }
 
                         angular.forEach(jsonResults, function(jsonResult) {
                             var jsEntry = angular.fromJson(jsonResult);
@@ -41,17 +44,23 @@ angular.module('ortolangMarketApp')
                                 
                                 scope.items.addItem(jsEntry);
 
-                                var i = 0;
-                                for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
-                                    if (jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
-                                        addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+
+                                if(scope.filtersManager) {
+                                    var i = 0;
+                                    for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
+                                        if (jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
+                                            addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+                                        }
                                     }
                                 }
                             }
 
                         });
+
+                        scope.lock = false;
                     }, function (reason) {
                         console.error(reason);
+                        scope.lock = false;
                     });
                 }
 
@@ -74,15 +83,18 @@ angular.module('ortolangMarketApp')
                 }
 
                 scope.$watch('query', function () {
-                    if(scope.query!==undefined) {
+                    if(scope.query!==undefined && scope.query !== '') {
                         load(scope.query);
                     }
                 });
 
                 function init() {
-
+                    scope.lock = false;
                     if(scope.query !== '' && scope.loadAtStartup) {
                         load(scope.query);
+                    }
+                    if(!scope.items) {
+                        scope.items = ItemManager.make();
                     }
                 }
                 init();

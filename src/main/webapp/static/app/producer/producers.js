@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
 
         function buildQuery() {
             var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
+                    projection: 'meta_ortolang-referentiel-json.fullname as fullname, meta_ortolang-referentiel-json.name as name, meta_ortolang-referentiel-json.id as id, meta_ortolang-referentiel-json.img as img, meta_ortolang-referentiel-json.homepage as homepage',
                     source: 'Organization'
                 });
 

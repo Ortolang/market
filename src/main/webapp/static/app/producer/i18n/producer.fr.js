@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
             ACRONYM: 'Sigle',
             CITY: 'Ville',
             COUNTRY: 'Pays',
-            HOMEPAGE: 'Site internet'
+            HOMEPAGE: 'Site internet',
+            LIST_OF_RESOURCES: 'Liste des productions du laboratoire'
         }
     });

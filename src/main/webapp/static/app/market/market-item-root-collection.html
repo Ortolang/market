@@ -135,7 +135,7 @@
                     <h4 translate="MARKET.RESEARCHER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="researcher in item.researchers">
-                            <a ng-href='' ng-bind="researcher"></a>
+                            {{researcher}}
                         </li>
                     </ul>
 
@@ -144,7 +144,15 @@
                     <h4 translate="MARKET.MANAGER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="manager in item.managers">
-                            <a ng-href='' ng-bind="manager"></a>
+                            {{manager}}
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item.designers">
+                    <h4 translate="MARKET.DESIGNER"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="designer in item.designers">
+                            {{designer}}
                         </li>
                     </ul>
                 </article>
@@ -152,7 +160,7 @@
                     <h4 translate="MARKET.DEVELOPER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="developer in item.developers">
-                            <a ng-href='' ng-bind="developer"></a>
+                            {{developer}}
                         </li>
                     </ul>
                 </article>
@@ -160,7 +168,7 @@
                     <h4 translate="MARKET.AUTHOR"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="author in item.authors">
-                            <a ng-href='' ng-bind="author"></a>
+                            {{author}}
                         </li>
                     </ul>
                 </article>
@@ -168,7 +176,7 @@
                     <h4 translate="MARKET.COMPILER"></h4>
                     <ul class="list-contributor">
                         <li ng-repeat="compiler in item.compilers">
-                            <a ng-href='' ng-bind="compiler"></a>
+                            {{compiler}}
                         </li>
                     </ul>
                 </article>
