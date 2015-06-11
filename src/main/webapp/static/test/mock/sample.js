@@ -24,12 +24,14 @@ angular.module('ortolangMarketApp')
             sampleN3 = {'http://www.ortolang.fr/ontology/preview': 'k1', image : 'assets/images/no-image.png'},
             workspaceElement = {format: 'market-ortolang-n3'},
             workspaceList = {'entries': []},
-            systemWs = {'key': 'system', 'author': 'root', 'owner': null, 'alias': 'system', 'name': 'System Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group1', 'head': '64d6d161-62fc-457d-83cb-79d37982e055', 'changed': true, 'snapshots': []},
-            fooWs = {'key': 'foo', 'author': 'root', 'owner': null, 'alias': 'foo', 'name': 'Foo Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group2', 'head': '64d6d161-62fc-457d-83cb-79d37982e055', 'changed': false, 'snapshots': []},
-            barWs = {'key': 'bar', 'author': 'root', 'owner': null, 'alias': 'bar', 'name': 'Bar Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group2', 'head': '64d6d161-62fc-457d-83cb-79d37982e055', 'changed': true, 'snapshots': []},
+            systemWs = {'key': 'system', 'author': 'root', 'owner': null, 'alias': 'system', 'name': 'System Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group1', 'head': 'head1', 'changed': true, 'snapshots': []},
+            fooWs = {'key': 'foo', 'author': 'root', 'owner': null, 'alias': 'foo', 'name': 'Foo Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group2', 'head': 'head1', 'changed': false, 'snapshots': []},
+            barWs = {'key': 'bar', 'author': 'root', 'owner': null, 'alias': 'bar', 'name': 'Bar Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group2', 'head': 'head2', 'changed': true, 'snapshots': []},
             profile = {givenName: 'John', familyName: 'Grant', email: 'john.grant@mock.com', emailHash: '389b1742a975233a2a248a01036fad5e', 'emailVisibility': 'EVERYBODY', 'emailVerified': false, 'status': 'ACTIVE', 'groups': ['moderators'], 'complete': true, 'friends': null, 'key': 'jgrant'},
             group1 = {'name': 'Mock group 1', 'members': [], 'key': 'e1f765ef-3aca-446a-bac3-67512dcfdd07'},
             group2 = {'name': 'Mock group 2', 'members': [], 'key': 'e1f765ef-3aca-446a-bac3-67512dcfdd07'},
+            head1 = {'key': 'head1', 'service': 'core', 'type': 'collection', 'object': {'metadatas': []}},
+            head2 = {'key': 'head2', 'service': 'core', 'type': 'collection', 'object': {'metadatas': [{'name': 'ortolang-item-json', 'key': 'a52a4881-fbd1-4b32-bf73-f782287978db'}]}},
             query1Result = '{"key":"k1","title":"Dede","description":"Description de Dede"}',
             ridItem = '#0:0';
 
@@ -57,6 +59,8 @@ angular.module('ortolangMarketApp')
             systemWs: systemWs,
             fooWs: fooWs,
             barWs: barWs,
+            head1: head1,
+            head2: head2,
 
             query1Result: query1Result,
             query1Results: [query1Result],

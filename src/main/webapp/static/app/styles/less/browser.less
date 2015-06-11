@@ -393,9 +393,14 @@ table.workspace-elements {
       width: 150px;
     }
   }
-  > tbody > tr > td {
-    padding-top: @padding-large-vertical;
-    padding-bottom: @padding-large-vertical;
+  > tbody > tr {
+    &.see-all-wrapper:hover {
+      background-color: inherit;
+    }
+    > td {
+      padding-top: @padding-large-vertical;
+      padding-bottom: @padding-large-vertical;
+    }
   }
   tr.active {
     td {

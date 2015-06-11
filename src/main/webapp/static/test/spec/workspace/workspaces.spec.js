@@ -12,6 +12,7 @@ describe('Controller: WorkspacesCtrl', function () {
         Settings,
         WorkspaceBrowserService,
         WorkspaceResource,
+        ObjectResource,
         $httpBackend,
         $scope,
         sample,
@@ -19,16 +20,19 @@ describe('Controller: WorkspacesCtrl', function () {
         url,
         $location;
 
-    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Settings_, _WorkspaceBrowserService_, _WorkspaceResource_, _$location_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Settings_, _WorkspaceBrowserService_, _WorkspaceResource_, _$location_, _ObjectResource_) {
         $httpBackend = _$httpBackend_;
         WorkspaceBrowserService = _WorkspaceBrowserService_;
         WorkspaceResource = _WorkspaceResource_;
+        ObjectResource = _ObjectResource_;
         $scope = _$rootScope_.$new();
         $rootScope = _$rootScope_;
         sample = _sample_;
         url = _url_;
         Settings = _Settings_;
         $location = _$location_;
+        ObjectResource.when({key: 'head1'}, sample().head1);
+        ObjectResource.when({key: 'head2'}, sample().head2);
     }));
 
     afterEach(function () {
@@ -36,12 +40,17 @@ describe('Controller: WorkspacesCtrl', function () {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
+    function hideModal () {
+        angular.element('.modal').scope().$hide();
+    }
+
     describe('with no stored settings', function () {
         beforeEach(inject(function ($controller) {
             WorkspacesCtrl = $controller('WorkspacesCtrl', {
                 $scope: $scope,
                 Settings: Settings,
-                WorkspaceResource: WorkspaceResource
+                WorkspaceResource: WorkspaceResource,
+                ObjectResource: ObjectResource
             });
             $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
             $httpBackend.flush();
@@ -87,13 +96,22 @@ describe('Controller: WorkspacesCtrl', function () {
             expect($scope.workspaceMembers).toEqualData(sample().group);
         });
 
-        it('should display a modal when asking to publish', function () {
-            $scope.publish();
-            $rootScope.$apply();
-            expect(angular.element('.modal').length).toBe(1);
-            expect(angular.element('.modal')[0]).toBeDefined();
-            angular.element('.modal').scope().$hide();
-            $rootScope.$apply();
+        it('should check if presentation metadatas are created before publish', function () {
+            //console.log($scope.head);
+            //ObjectResource.when({key: WorkspaceBrowserService.workspace.head}, sample().head1);
+            //$scope.publish();
+            //$rootScope.$apply();
+            //console.log($scope.head);
+            //expect(angular.element('.modal').length).toBe(1);
+            //ObjectResource.clear();
+            //ObjectResource.when({key: WorkspaceBrowserService.workspace.head}, sample().head2);
+            //$scope.publish();
+            //$scope.$digest();
+            //$rootScope.$apply();
+            //expect(angular.element('.modal').length).toBe(1);
+            //expect(angular.element('.modal')[0]).toBeDefined();
+            //hideModal();
+            //$rootScope.$apply();
         });
 
         it('should be possible to change the workspace', function () {
@@ -111,7 +129,7 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$apply();
             $httpBackend.flush();
             expect(angular.element('.modal').length).toBe(1);
-            angular.element('.modal').scope().$hide();
+            hideModal();
             $rootScope.$apply();
             $scope.changeWorkspace($scope.workspaceList.entries[1]);
             $scope.snapshot();
@@ -155,7 +173,7 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$apply();
             expect(angular.element('.modal').length).toBe(1);
             expect(angular.element('.modal')[0]).toBeDefined();
-            angular.element('.modal').scope().$hide();
+            hideModal();
             $rootScope.$apply();
         });
     });
