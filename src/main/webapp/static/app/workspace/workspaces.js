@@ -86,7 +86,7 @@ angular.module('ortolangMarketApp')
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {
             $scope.workspaceList.$promise.then(function () {
                 var workspace = $filter('filter')($scope.workspaceList.entries, {key: eventMessage.fromObject});
-                if (!workspace || workspace.length !== 1) {
+                if (workspace.length !== 1) {
                     getWorkspaceList();
                 }
             });
@@ -94,9 +94,10 @@ angular.module('ortolangMarketApp')
         });
 
         $rootScope.$on('core.workspace.snapshot', function (event, eventMessage) {
+            // refresh the whole workspace list as snapshots name are only found in the WorkspaceRepresentation
             getWorkspaceList().$promise.then(function () {
                 var workspace = $filter('filter')($scope.workspaceList.entries, {key: WorkspaceBrowserService.workspace.key});
-                if (workspace && workspace.length === 1) {
+                if (workspace.length === 1) {
                     WorkspaceBrowserService.workspace = workspace[0];
                     $scope.getSnapshotsHistory();
                 }
@@ -106,8 +107,8 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('membership.group.add-member', function (event, eventMessage) {
             $scope.workspaceList.$promise.then(function () {
-                var workspace = $filter('filter')($scope.workspaceList.entries, {members: eventMessage.fromObject});
-                if (!workspace || workspace.length !== 1) {
+                var member = $filter('filter')($scope.workspaceList.entries, {members: eventMessage.fromObject});
+                if (member.length !== 1) {
                     getWorkspaceList();
                 }
             });
@@ -149,50 +150,48 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $scope.createWorkspace = function () {
-            if (WorkspaceBrowserService.canAdd) {
-                var createWorkspaceModal,
-                    regExp = new RegExp(' +', 'g');
-                createModalScope();
-                modalScope.submit = function (createWorkspaceForm) {
-                    if (createWorkspaceForm.$valid) {
-                        WorkspaceResource.getAvailability({alias: modalScope.alias}, function (data) {
-                            if (data.available) {
-                                WorkspaceResource.createWorkspace({name: modalScope.name, alias: modalScope.alias, type: 'user'}, function (newWorkspace) {
-                                    $scope.$emit('core.workspace.create', {fromObject: newWorkspace.key});
-                                    $scope.changeWorkspace(newWorkspace);
-                                    createWorkspaceModal.hide();
-                                });
-                            } else {
-                                createWorkspaceForm.alias.$setValidity('availability', false);
-                                modalScope.checked = false;
-                            }
-                        });
-                    }
-                };
-                modalScope.checked = true;
-                modalScope.normalizeAlias = function (alias, createWorkspaceForm) {
-                    modalScope.alias = alias ? alias.replace(regExp, '-').toLowerCase() : alias;
-                    if (!modalScope.checked && createWorkspaceForm) {
-                        createWorkspaceForm.alias.$setValidity('availability', true);
-                    }
-                };
-                modalScope.generateAlias = function () {
-                    if (modalScope.checked) {
-                        modalScope.normalizeAlias(modalScope.name);
-                    }
-                };
-                modalScope.$watch('name', function () {
-                    modalScope.generateAlias();
-                });
-                modalScope.$on('modal.show', function () {
-                    angular.element('#create-workspace-modal').find('[autofocus]:first').focus();
-                });
-                createWorkspaceModal = $modal({
-                    scope: modalScope,
-                    template: 'workspace/templates/create-workspace-modal.html',
-                    show: true
-                });
-            }
+            var createWorkspaceModal,
+                regExp = new RegExp(' +', 'g');
+            createModalScope();
+            modalScope.submit = function (createWorkspaceForm) {
+                if (createWorkspaceForm.$valid) {
+                    WorkspaceResource.getAvailability({alias: modalScope.alias}, function (data) {
+                        if (data.available) {
+                            WorkspaceResource.createWorkspace({name: modalScope.name, alias: modalScope.alias, type: 'user'}, function (newWorkspace) {
+                                $scope.$emit('core.workspace.create', {fromObject: newWorkspace.key});
+                                $scope.changeWorkspace(newWorkspace);
+                                createWorkspaceModal.hide();
+                            });
+                        } else {
+                            createWorkspaceForm.alias.$setValidity('availability', false);
+                            modalScope.checked = false;
+                        }
+                    });
+                }
+            };
+            modalScope.checked = true;
+            modalScope.normalizeAlias = function (alias, createWorkspaceForm) {
+                modalScope.alias = alias ? alias.replace(regExp, '-').toLowerCase() : alias;
+                if (!modalScope.checked && createWorkspaceForm) {
+                    createWorkspaceForm.alias.$setValidity('availability', true);
+                }
+            };
+            modalScope.generateAlias = function () {
+                if (modalScope.checked) {
+                    modalScope.normalizeAlias(modalScope.name);
+                }
+            };
+            modalScope.$watch('name', function () {
+                modalScope.generateAlias();
+            });
+            modalScope.$on('modal.show', function () {
+                angular.element('#create-workspace-modal').find('[autofocus]:first').focus();
+            });
+            createWorkspaceModal = $modal({
+                scope: modalScope,
+                template: 'workspace/templates/create-workspace-modal.html',
+                show: true
+            });
         };
 
         // *********************** //
