@@ -17,8 +17,8 @@ angular.module('ortolangMarketApp')
             return $scope.workspaceList;
         }
 
-        function getWorkspaceMembers(groupKey) {
-            $scope.workspaceMembers = GroupResource.get({key: groupKey});
+        function getWorkspaceMembers() {
+            $scope.workspaceMembers = GroupResource.get({key: WorkspaceBrowserService.workspace.members});
         }
 
         function getHead() {
@@ -27,7 +27,9 @@ angular.module('ortolangMarketApp')
 
         function refreshWorkspace() {
             WorkspaceBrowserService.workspace = WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}, function () {
-                WorkspaceBrowserService.workspace.authorProfile = ProfileResource.read({key: WorkspaceBrowserService.workspace.author});
+                ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
+                    WorkspaceBrowserService.workspace.authorProfile = data;
+                });
             });
         }
 
@@ -56,7 +58,9 @@ angular.module('ortolangMarketApp')
             if (!$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
                 WorkspaceBrowserService.workspace = workspace;
-                WorkspaceBrowserService.workspace.authorProfile = ProfileResource.read({key: WorkspaceBrowserService.workspace.author});
+                ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
+                    WorkspaceBrowserService.workspace.authorProfile = data;
+                });
                 getWorkspaceMembers(workspace.members);
                 $scope.getSnapshotsHistory();
                 getHead();
@@ -267,7 +271,9 @@ angular.module('ortolangMarketApp')
                 $scope.workspaceHistory = data.entries;
                 $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
                 angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
-                    workspaceSnapshot.authorProfile = ProfileResource.read({key: workspaceSnapshot.author});
+                    ProfileResource.read({key: workspaceSnapshot.author}, function (data) {
+                        WorkspaceBrowserService.workspace.authorProfile = data;
+                    });
                     workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
                 });
             });
