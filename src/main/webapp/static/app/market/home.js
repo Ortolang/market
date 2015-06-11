@@ -12,7 +12,6 @@ angular.module('ortolangMarketApp')
 
         // Scope variables
         function initScopeVariables() {
-            $scope.query = '';
             $scope.items = ItemManager.make();
 
             $scope.filtersManager = FacetedFilterManager.make();
@@ -30,14 +29,12 @@ angular.module('ortolangMarketApp')
                 length: 1
             });
             titleFilter.putSelectedOption(optCorpus14);
-            $scope.filtersManager.addFilter(titleFilter);
             var optLA = OptionFacetedFilter.make({
                 label: 'Littéracie Avancée', 
                 value: 'Littéracie Avancée',
                 length: 1
             });
             titleFilter.putSelectedOption(optLA);
-            $scope.filtersManager.addFilter(titleFilter);
             var optComere = OptionFacetedFilter.make({
                 label: 'CoMeRe (Communication médiée par les réseaux)', 
                 value: 'CoMeRe (Communication médiée par les réseaux)',
@@ -46,16 +43,10 @@ angular.module('ortolangMarketApp')
             titleFilter.putSelectedOption(optComere);
             $scope.filtersManager.addFilter(titleFilter);
 
-
-            var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
-            var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
-            $scope.viewModes = [viewModeGrid, viewModeLine];
+            var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};            
             $scope.viewMode = viewModeGrid;
-
             $scope.orderDirection = true;
-            var orderTitle = {id: 'title', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
             var orderPublicationDate = {id: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
-            $scope.orderProps = [orderTitle, orderPublicationDate];
             $scope.orderProp = orderPublicationDate;
         }
 

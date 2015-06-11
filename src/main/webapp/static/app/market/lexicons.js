@@ -48,26 +48,26 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
 
-            // var lexiconInputTypeFilter = FacetedFilter.make({
-            //     id: 'meta_ortolang-item-json.lexiconInputType',
-            //     alias: 'lexiconInputType',
-            //     label: 'MARKET.FACET.LEXICON_INPUT_TYPE',
-            //     resetLabel: 'MARKET.FACET.ALL_LEXICON_INPUT_TYPE',
-            //     priority: 'high',
-            //     view: 'dropdown-faceted-filter'
-            // });
-            // $scope.filtersManager.addAvailabledFilter(lexiconInputTypeFilter);
+            var lexiconInputTypeFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.lexiconInputType',
+                alias: 'lexiconInputType',
+                label: 'MARKET.FACET.LEXICON_INPUT_TYPE',
+                resetLabel: 'MARKET.FACET.ALL_LEXICON_INPUT_TYPE',
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
+            });
+            $scope.filtersManager.addAvailabledFilter(lexiconInputTypeFilter);
 
-            // var lexiconDescriptionTypesFilter = FacetedFilter.make({
-            //     id: 'meta_ortolang-item-json.lexiconDescriptionTypes',
-            //     alias: 'lexiconDescriptionTypes',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.LEXICON_DESCRIPTION_TYPE',
-            //     resetLabel: 'MARKET.FACET.ALL_LEXICON_DESCRIPTION_TYPE',
-            //     priority: 'high',
-            //     view: 'dropdown-faceted-filter'
-            // });
-            // $scope.filtersManager.addAvailabledFilter(lexiconDescriptionTypesFilter);
+            var lexiconDescriptionTypesFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.lexiconDescriptionTypes',
+                alias: 'lexiconDescriptionTypes',
+                type: 'array',
+                label: 'MARKET.FACET.LEXICON_DESCRIPTION_TYPE',
+                resetLabel: 'MARKET.FACET.ALL_LEXICON_DESCRIPTION_TYPE',
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
+            });
+            $scope.filtersManager.addAvailabledFilter(lexiconDescriptionTypesFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.statusOfUse',
@@ -88,6 +88,32 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailabledFilter(lexiconInputLanguagesFilter);
 
+            var lexiconDescriptionLanguagesFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.lexiconDescriptionLanguages',
+                alias: 'lexiconDescriptionLanguages',
+                type: 'array',
+                label: 'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE',
+                resetLabel: 'MARKET.FACET.ALL_LANG'
+            });
+            $scope.filtersManager.addAvailabledFilter(lexiconDescriptionLanguagesFilter);
+
+            var lexiconFormatsFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.lexiconFormats',
+                alias: 'lexiconFormats',
+                type: 'array',
+                label: 'MARKET.FACET.LEXICON_FORMAT',
+                resetLabel: 'MARKET.FACET.ALL_LEXICON_FORMAT'
+            });
+            $scope.filtersManager.addAvailabledFilter(lexiconFormatsFilter);
+
+            var lexiconLanguageTypeFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.lexiconLanguageType',
+                alias: 'lexiconLanguageType',
+                label: 'MARKET.FACET.LEXICON_LANGUAGE_TYPE',
+                resetLabel: 'MARKET.FACET.ALL_LEXICON_LANGUAGE_TYPE'
+            });
+            $scope.filtersManager.addAvailabledFilter(lexiconLanguageTypeFilter);
+
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
             $scope.viewModes = [viewModeGrid, viewModeLine];
@@ -102,8 +128,6 @@ angular.module('ortolangMarketApp')
 
         function init() {
             initScopeVariables();
-
-            $scope.query = $scope.filtersManager.toQuery();
         }
         init();
 

@@ -126,7 +126,7 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             },
 
             clearSelectedOptions: function () {
-                return this.selectedOptions = [];
+                this.selectedOptions = [];
             },
 
             hasSelectedOptions: function() {
@@ -197,9 +197,13 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 }
             },
 
+            hasOptions: function() {
+                return this.options.length > 0;
+            },
+
             clearOptions: function () {
                 if(!this.lockOptions) {
-                    return this.options = [];
+                    this.options = [];
                 }
             },
 

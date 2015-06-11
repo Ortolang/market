@@ -5,9 +5,9 @@
         <li class="divider" role="menuitem"></li>
         <!-- <li ng-repeat="option in filter.getOptions()" ng-class="filter.getSelected().getValue()===option.getValue()?'active':''" role="menuitem"><a ng-click="setFilter(filter, option)">{{option.getLabel() | translate}}</a></li> -->
         <li ng-repeat="option in filter.getOptions()" class="option">
-	        <div class="checkbox checkbox-primary">
-			    <input type="checkbox" id="checkbox{{option.getLabel()}}" ng-click="switchFilter(filter, option, !lowFacets)" ng-model="checkbox[option.getLabel()]" ng-checked="filter.hasSelectedOption(option)">
-			    <label for="checkbox{{option.getLabel()}}">
+	        <div class="checkbox checkbox-primary" ng-click="switchFilter(filter, option, !lowFacets)">
+			    <input type="checkbox" id="checkbox{{option.getLabel()}}" ng-model="checkbox[option.getLabel()]" ng-checked="filter.hasSelectedOption(option)">
+			    <label>
 			        {{option.getLabel() | translate}}
 			    </label>
 			</div>
