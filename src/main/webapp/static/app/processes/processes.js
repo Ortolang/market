@@ -53,13 +53,20 @@ angular.module('ortolangMarketApp')
 
             $scope.showToolParam = function (process) {
                 Runtime.selectRemoteProcess(process);
-                $modal({
-                    title: process.processTool.name,
-                    html: true,
-                    scope: $scope,
-                    template: 'common/tools/tool-tpl-parameters.html',
-                    show: true
-                });
+                ToolManager.getTool(process.toolKey).getForm().then(function (result) {
+                        $scope.config = result[1];
+                        $modal({
+                            title: process.processTool.name,
+                            html: true,
+                            scope: $scope,
+                            template: 'common/tools/tool-tpl-parameters.html',
+                            show: true
+                        });
+                    },
+                    function (msg) {
+                        console.error('The tool server for "%s" is not responding.', tool.getName(), msg);
+                    }
+                );
             };
 
             $scope.showResult = function (process) {

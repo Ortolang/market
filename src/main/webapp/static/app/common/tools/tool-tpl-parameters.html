@@ -7,11 +7,35 @@
             </div>
             <div class="modal-body process-log">
                 <div class="list-group">
-                    <!-- Links to detail level -->
-                    <dl class="dl-horizontal list-group-item" ng-repeat="(param, value) in selectedProcess.job.parameters" >
-                        <dt>{{param}} : </dt>
-                        <dd>{{value}}</dd>
-                    </dl>
+                    <!--&lt;!&ndash; Links to detail level &ndash;&gt;-->
+                    <!--<dl class="dl-horizontal list-group-item" ng-repeat="(param, value) in selectedProcess.job.parameters" >-->
+                        <!--<dt>{{param}} : </dt>-->
+                        <!--<dd>{{value}}</dd>-->
+                    <!--</dl>-->
+
+                    <div ng-repeat="(param, value) in selectedProcess.job.parameters ">
+                        <div ng-switch="(config | filter: {key: param} )[0].type">
+                            <div class="media-body" ng-switch-when="input">
+                                <strong>{{(config | filter: {key: param} )[0].templateOptions.label}} :</strong> <span>{{value}}</span>
+                            </div>
+                            <div class="media-body" ng-switch-when="number">
+                                <strong>{{(config | filter: {key: param} )[0].templateOptions.label}} :</strong> <span>{{value}}</span>
+                            </div>
+                            <div class="media-body" ng-switch-when="dataobject">
+                                <strong>{{(config | filter: {key: param} )[0].templateOptions.label}} :</strong> <span>{{value}} <i>({{'TOOLS.DATAOBJECT_KEY' | translate}})</i></span>
+                            </div>
+                            <div class="media-body" ng-switch-when="checkbox" ng-if="value==='true'">
+                                <i class="fa fa-check-square-o"></i> <strong>{{(config | filter: {key: param} )[0].templateOptions.label}} </strong>
+                            </div>
+                            <div class="media-body" ng-switch-when="radio">
+                                <strong>{{(config | filter: {key: param} )[0].templateOptions.label}} : </strong> <span>{{((config | filter: {key: param} )[0].templateOptions.options | filter : {value: value})[0].name }}</span>
+                            </div>
+                            <div class="media-body" ng-switch-when="select">
+                                <strong>{{(config | filter: {key: param} )[0].templateOptions.label}} : </strong> <span>{{((config | filter: {key: param} )[0].templateOptions.options | filter : {value: value})[0].name }}</span>
+                            </div>
+                            <div ng-switch-default></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
