@@ -17,7 +17,9 @@ angular.module('ortolangVisualizers')
                 en: 'HTML Visualizer'
             },
             compatibleTypes: {
-                'text/html': true
+                'text/html': true,
+                'application/xhtml+xml': true,
+                'application/xml': true
             }
         });
 
@@ -46,7 +48,7 @@ angular.module('ortolangVisualizers')
                 pre: function (scope, element, attrs) {
                     scope.visualizer.header.fileName = scope.elements[0].name;
                     scope.visualizer.header.fileType = scope.elements[0].mimeType;
-                    scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0], scope.$parent.browserService.workspace);
+                    scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0], scope.$parent.browserService.workspace, scope.$parent.root, true);
                 }
             }
         };

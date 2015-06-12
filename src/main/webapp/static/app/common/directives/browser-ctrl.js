@@ -99,6 +99,7 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({divider: true});
                         }
                         if ($scope.browserService.canPreview && $scope.visualizers) {
+                            // TODO Display all compatible visualizers when multiple
                             $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                             $scope.contextMenuItems.push({divider: true});
                         }
