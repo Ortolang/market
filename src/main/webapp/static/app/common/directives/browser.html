@@ -279,7 +279,7 @@
         </div>
     </div>
 
-    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" id="context-menu" class="dropdown clearfix open">
+    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" class="browser-context-menu dropdown clearfix open">
         <ul class="dropdown-menu" role="menu">
             <li ng-repeat="item in contextMenuItems" class="{{item.divider ? 'divider' : ''}}">
                 <a ng-if="item.href" tabindex="-1" ng-href="{{item.href}}"><span ng-class="item.icon"></span> {{item.text | translate}}</a>

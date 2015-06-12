@@ -23,6 +23,7 @@ angular.module('ortolangMarketApp')
 
         function getHead() {
             $scope.head = ObjectResource.get({key: WorkspaceBrowserService.workspace.head});
+            return $scope.head;
         }
 
         function refreshWorkspace() {
@@ -54,8 +55,8 @@ angular.module('ortolangMarketApp')
             return WorkspaceBrowserService.workspace.key === workspace.key;
         };
 
-        $scope.changeWorkspace = function (workspace) {
-            if (!$scope.isActiveWorkspace(workspace)) {
+        $scope.changeWorkspace = function (workspace, init) {
+            if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
                 WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
@@ -199,21 +200,27 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $scope.publish = function () {
-            var publishModal;
-            createModalScope();
-            modalScope.wsName = WorkspaceBrowserService.workspace.name;
-            modalScope.publish = function () {
-                Runtime.createProcess({
-                    'process-type': 'publish-workspace',
-                    'process-name': 'Publication of workspace: ' + WorkspaceBrowserService.workspace.name + ' (version ' + (WorkspaceBrowserService.workspace.snapshots.length + 1) + ')',
-                    'wskey': WorkspaceBrowserService.workspace.key
-                });
-                publishModal.hide();
-            };
-            publishModal = $modal({
-                scope: modalScope,
-                template: 'workspace/templates/publish-modal.html',
-                show: true
+            getHead().$promise.then(function () {
+                if ($scope.hasPresentationMetadata()) {
+                    var publishModal;
+                    createModalScope();
+                    modalScope.wsName = WorkspaceBrowserService.workspace.name;
+                    modalScope.publish = function () {
+                        Runtime.createProcess({
+                            'process-type': 'publish-workspace',
+                            'process-name': 'Publication of workspace: ' + WorkspaceBrowserService.workspace.name + ' (version ' + (WorkspaceBrowserService.workspace.snapshots.length + 1) + ')',
+                            'wskey': WorkspaceBrowserService.workspace.key
+                        });
+                        publishModal.hide();
+                    };
+                    publishModal = $modal({
+                        scope: modalScope,
+                        template: 'workspace/templates/publish-modal.html',
+                        show: true
+                    });
+                } else {
+                    // TODO Add alert
+                }
             });
         };
 
@@ -385,7 +392,7 @@ angular.module('ortolangMarketApp')
                     workspace = data.entries[0];
                 }
                 if (workspace) {
-                    $scope.changeWorkspace(workspace);
+                    $scope.changeWorkspace(workspace, true);
                     //getPresentationMetadata(workspace);
                     if ($rootScope.browsing) {
                         $scope.browserCtrlInitialized = true;
