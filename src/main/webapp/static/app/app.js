@@ -180,5 +180,6 @@ angular
  * Ortolang Visualizers Module
  */
 angular.module('ortolangVisualizers', [
-    'ortolangMarketApp'
+    'ortolangMarketApp',
+    'pascalprecht.translate'
 ]);

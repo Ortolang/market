@@ -1131,7 +1131,7 @@ angular.module('ortolangMarketApp')
                 event.stopPropagation();
             };
 
-            $scope.$on('ngRepeatRenderingFinished', function(event) {
+            $scope.$on('ngRepeatRenderingFinished', function() {
                 $scope.loadingAll = false;
             });
 

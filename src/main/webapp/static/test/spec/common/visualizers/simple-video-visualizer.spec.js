@@ -24,7 +24,8 @@ describe('Visualizer: SimpleVideoVisualizer', function () {
     it('should have a correct config', function () {
         expect(!!SimpleVideoVisualizer).toBe(true);
         expect(SimpleVideoVisualizer.getId()).toEqual('SimpleVideoVisualizer');
-        expect(SimpleVideoVisualizer.getName()).toEqual('Simple Video Visualizer');
+        expect(SimpleVideoVisualizer.name.fr).toBeDefined();
+        expect(SimpleVideoVisualizer.name.en).toBeDefined();
         expect(SimpleVideoVisualizer.getCompatibleTypes()).toBeDefined();
     });
 
