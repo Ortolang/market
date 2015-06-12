@@ -27,16 +27,25 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="child in filteredOrderedChildren() track by child.key"
+        <tr ng-repeat="child in filteredOrderedChildren() | limitTo:displayedItemLimit track by child.key"
             ng-click="clickChild(child, $event)"
             ng-right-click="clickChild(child, $event)"
             ng-dblclick="doubleClickChild(child)"
             ng-class="{active : isSelected(child)}"
-            data-key="{{::child.key}}">
+            data-key="{{::child.key}}"
+            on-finish-render>
             <td><span class="type" ng-class="::child.mimeType | mimeTypeIconCss"></span>{{::child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
             <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>
             <td ng-hide="isScreenMd">{{::child.size | bytes}}</td>
+        </tr>
+        <tr ng-if="displayedItemLimit < parent.elements.length" class="see-all-wrapper">
+            <td colspan="{{isScreenMd ? 2 : 4}}">
+                <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
+                    <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
+                    <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>

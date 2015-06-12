@@ -18,6 +18,7 @@ angular.module('ortolangMarketAppMock')
             angular.forEach(conditions, function(condition) {
                 if(angular.equals(params, condition.condition)) {
                     data = condition.responseValue;
+                    console.log('Matching condition');
                 }
             });
 

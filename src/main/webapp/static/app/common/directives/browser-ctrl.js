@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
         function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, pageWrapperMarginLeft, marketItemHeader, footerHeight, previousFilterNameQuery,
-                previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight,
+                previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
                 topNavWrapper, footerWrapper, lastSelectedElement, lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred;
 
             // *********************** //
@@ -141,6 +141,7 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function finishGetParentData(element, refresh, forceNewSelection) {
+                resetDisplayedItemLimit();
                 $scope.parent = $scope.browserService.dataResource === 'object' ? element.object : element;
                 // If we just refreshed the data no need to build the breadcrumb again
                 if (!refresh) {
@@ -1116,9 +1117,23 @@ angular.module('ortolangMarketApp')
                 lastShiftSelectedElement = undefined;
             };
 
+            $scope.displayAll = function () {
+                $scope.loadingAll = true;
+                $timeout(function () {$scope.displayedItemLimit = undefined;});
+            };
+
+            function resetDisplayedItemLimit() {
+                $scope.displayedItemLimit = initialDisplayedItemLimit;
+                $scope.loadingAll = false;
+            };
+
             $scope.openFilter = function (event) {
                 event.stopPropagation();
             };
+
+            $scope.$on('ngRepeatRenderingFinished', function(event) {
+                $scope.loadingAll = false;
+            });
 
             angular.element('#filter-query-wrapper').on('hide.bs.dropdown', function () {
                 if (($scope.filterNameQuery !== undefined && $scope.filterNameQuery.length !== 0) ||
@@ -1512,6 +1527,7 @@ angular.module('ortolangMarketApp')
                 pageWrapperMarginLeft = parseInt(angular.element('#main-wrapper').css('margin-left'), 10);
                 topNavWrapper = angular.element('#top-nav-wrapper');
                 footerWrapper = angular.element('#footer-wrapper');
+                initialDisplayedItemLimit = 50;
             }
 
             function initScopeVariables() {
@@ -1562,6 +1578,7 @@ angular.module('ortolangMarketApp')
                 $scope.visualizers = undefined;
                 // Workspace
                 $scope.isScreenMd = false;
+                $scope.displayedItemLimit = initialDisplayedItemLimit;
             }
 
             function setPath(path) {

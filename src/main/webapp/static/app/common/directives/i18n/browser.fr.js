@@ -79,6 +79,7 @@ angular.module('ortolangMarketApp')
             },
             NO_PREVIEW: 'Aucun aperçu n\'est disponible pour ce type de fichier',
             WORKSPACE_KEY: 'Copier la clé du workspace',
-            BEARER_TOKEN: 'Copier le token'
+            BEARER_TOKEN: 'Copier le token',
+            SEE_ALL: 'Voir tous les fichiers'
         }
     });
