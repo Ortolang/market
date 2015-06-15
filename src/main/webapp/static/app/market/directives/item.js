@@ -37,7 +37,6 @@ angular.module('ortolangMarketApp')
                     }
 
                     if(scope.entry.image) {
-
                         ObjectResource.element({key: key, path: scope.entry.image}).$promise.then(function (oobject) {
                             scope.image = DownloadResource.getDownloadUrl({key: oobject.key});
                         }, function (reason) {
