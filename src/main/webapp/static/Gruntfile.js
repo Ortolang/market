@@ -332,7 +332,7 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.dist %>'
                 }, {
                     expand: true,
-                    cwd: 'bower_components/components-font-awesome',
+                    cwd: 'bower_components/font-awesome',
                     src: 'fonts/*',
                     dest: '<%= yeoman.dist %>'
                 }, {
@@ -378,7 +378,7 @@ module.exports = function (grunt) {
                         'bower_components/**/*.css',
                         'bower_components/**/*.map',
                         'bower_components/bootstrap/dist/fonts/*',
-                        'bower_components/components-font-awesome/fonts/*',
+                        'bower_components/font-awesome/fonts/*',
                         'bower_components/octicons/octicons/*',
                         'bower_components/zeroclipboard/dist/*.swf',
                         '!bower_components/*/{src,src/**,test,test/**}'
