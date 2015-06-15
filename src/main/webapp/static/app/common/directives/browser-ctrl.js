@@ -761,7 +761,9 @@ angular.module('ortolangMarketApp')
                     element = $compile(visualizer.getElement())(modalScope);
                 } else {
                     modalScope.icons = icons;
-                    modalScope.download = function () {$scope.download($scope.selectedElements[0]);};
+                    modalScope.download = function () {
+                        $scope.download($scope.selectedElements[0]);
+                    };
                     modalScope.visualizer.content.classes = 'center';
                     element = $compile('<div ng-include="\'common/visualizers/no-visualizer-template.html\'">')(modalScope);
                 }
@@ -1129,7 +1131,9 @@ angular.module('ortolangMarketApp')
 
             $scope.displayAll = function () {
                 $scope.loadingAll = true;
-                $timeout(function () {$scope.displayedItemLimit = undefined;});
+                $timeout(function () {
+                    $scope.displayedItemLimit = undefined;
+                });
             };
 
             function resetDisplayedItemLimit() {
@@ -1200,15 +1204,13 @@ angular.module('ortolangMarketApp')
                                     break;
                                 }
                             }
-                            if (lastShiftSelectedElementIndex !== undefined && k === 1) {
-                                if (lastShiftSelectedElementIndex < lastSelectedElementIndex) {
-                                    if (down) {
-                                        i++;
-                                    } else if (i !== 0){
-                                        i--;
-                                    }
-                                    break;
+                            if (lastShiftSelectedElementIndex !== undefined && k === 1 && lastShiftSelectedElementIndex < lastSelectedElementIndex) {
+                                if (down) {
+                                    i++;
+                                } else if (i !== 0) {
+                                    i--;
                                 }
+                                break;
                             }
                             if (k === $scope.selectedElements.length) {
                                 if (down) {

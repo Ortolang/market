@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
             this.familyName = profile.familyName;
         };
 
-        this.create = function create(profile) {
+        this.create = function (profile) {
             this.key = profile.key;
             this.givenName = profile.givenName;
             this.familyName = profile.familyName;

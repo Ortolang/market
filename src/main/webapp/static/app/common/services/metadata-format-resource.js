@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('MetadataFormatResource', ['$resource', 'url', function ($resource, url) {
         return $resource(url.api + '/rest/metadataformats', {}, {
-        	download: {
+            download: {
                 url: url.api + '/rest/metadataformats/download',
                 method: 'GET',
                 isArray: false

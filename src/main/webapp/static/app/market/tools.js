@@ -11,34 +11,34 @@ angular.module('ortolangMarketApp')
     .controller('ToolsCtrl', ['$scope', 'icons', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'ItemManager', function ($scope, icons, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, ItemManager) {
 
         function initScopeVariables() {
-    		$scope.query = '';
-    		$scope.items = ItemManager.make();
+            $scope.query = '';
+            $scope.items = ItemManager.make();
 
-        	$scope.filtersManager = FacetedFilterManager.make();
+            $scope.filtersManager = FacetedFilterManager.make();
 
             $scope.typeFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.type', 
+                id: 'meta_ortolang-item-json.type',
                 alias: 'type',
-                label: 'MARKET.RESOURCE_TYPE',  
+                label: 'MARKET.RESOURCE_TYPE',
                 resetLabel: 'MARKET.ALL_RESOURCE',
                 options: [
                     OptionFacetedFilter.make({
-                        label: 'Corpus', 
+                        label: 'Corpus',
                         value: 'Corpus',
                         length: 1
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Lexique', 
+                        label: 'Lexique',
                         value: 'Lexique',
                         length: 1
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Outil', 
+                        label: 'Outil',
                         value: 'Outil',
                         length: 1
                     }),
                     OptionFacetedFilter.make({
-                        label: 'Projet intégré', 
+                        label: 'Projet intégré',
                         value: 'Application',
                         length: 1
                     })
@@ -108,7 +108,7 @@ angular.module('ortolangMarketApp')
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
             $scope.viewModes = [viewModeGrid, viewModeLine];
-    		$scope.viewMode = viewModeGrid;
+            $scope.viewMode = viewModeGrid;
 
             $scope.orderDirection = true;
             var orderTitle = {id: 'title', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
@@ -118,8 +118,8 @@ angular.module('ortolangMarketApp')
         }
 
         function init() {
-        	initScopeVariables();
+            initScopeVariables();
         }
         init();
 
-	}]);
+    }]);

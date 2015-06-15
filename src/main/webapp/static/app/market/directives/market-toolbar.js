@@ -174,7 +174,7 @@ angular.module('ortolangMarketApp')
                             addSelectedOptionFilter(scope.preSelectedFilter, scope.type);
                             scope.filtersManager.addFilter(scope.preSelectedFilter);
                         }
-                        
+
                         if(filters) {
                             var filtersO = angular.fromJson($routeParams.filters);
                             var facetedFilters = scope.filtersManager.getAvailabledFilters();
@@ -188,9 +188,9 @@ angular.module('ortolangMarketApp')
                                         addSelectedOptionFilter(facetedFilters[i], filtersO[paramName]);
                                         scope.filtersManager.addFilter(facetedFilters[i]);
                                     }
-                               }
+                                }
                             }
-                            // scope.facets = true;                   
+                            // scope.facets = true;
                         } else {
                             scope.facets = false;
                         }
