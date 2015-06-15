@@ -278,7 +278,7 @@ angular.module('ortolangMarketApp')
                 $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
                 angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
                     ProfileResource.read({key: workspaceSnapshot.author}, function (data) {
-                        WorkspaceBrowserService.workspace.authorProfile = data;
+                        workspaceSnapshot.authorProfile = data;
                     });
                     workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
                 });
