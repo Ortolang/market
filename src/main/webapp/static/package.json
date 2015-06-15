@@ -1,6 +1,6 @@
 {
   "name": "ortolang-market",
-  "version": "2.2.1-SNAPSHOT",
+  "version": "2.2.1",
   "description": "Ortolang Market AngularJS App",
   "repository": {
     "type": "git",
