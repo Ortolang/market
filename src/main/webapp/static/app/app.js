@@ -138,8 +138,7 @@ angular
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
             'self',
-            'http://localhost:8080/**',
-            'https://localhost:8443/**'
+            OrtolangConfig.serverUrl + '**'
         ]);
     }])
     .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
