@@ -1,6 +1,6 @@
 {
   "name": "ortolang-market",
-  "version": "2.2.0",
+  "version": "2.2.1-SNAPSHOT",
   "dependencies": {
     "angular": "1.4.0",
     "angular-animate": "1.4.0",
