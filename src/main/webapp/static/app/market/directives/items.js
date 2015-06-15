@@ -8,14 +8,17 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', [ '$rootScope', '$location', 'icons', 'JsonResultResource', 'OptionFacetedFilter',  function ($rootScope, $location, icons, JsonResultResource, OptionFacetedFilter) {
+    .directive('items', [ '$rootScope', '$routeParams', 'icons', 'JsonResultResource', 'OptionFacetedFilter', 'ItemManager',  function ($rootScope, $routeParams, icons, JsonResultResource, OptionFacetedFilter, ItemManager) {
         return {
             restrict: 'E',
             scope: {
+                title: '=',
                 query: '=',
                 items: '=',
                 viewMode: '=',
+                viewModes: '=',
                 orderProp: '=',
+                orderProps: '=',
                 orderDirection: '=',
                 filtersManager: '=',
                 loadAtStartup: '='
@@ -25,27 +28,39 @@ angular.module('ortolangMarketApp')
                 
                 function load (query) {
                     console.log('query : ' + query);
+                    scope.lock = true;
                     JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                        // scope.items = [];
+                        
                         scope.items.clear();
-                        angular.forEach(scope.filtersManager.getAvailabledFilters(), function(filter) {
-                            filter.clearOptions();
-                        });
+                        if(scope.filtersManager) {
+                            angular.forEach(scope.filtersManager.getAvailabledFilters(), function(filter) {
+                                filter.clearOptions();
+                            });
+                        }
 
                         angular.forEach(jsonResults, function(jsonResult) {
                             var jsEntry = angular.fromJson(jsonResult);
-                            scope.items.addItem(jsEntry);
+                            if(jsEntry.title) {
+                                
+                                scope.items.addItem(jsEntry);
 
-                            var i = 0;
-                            for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
-                                if (jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
-                                    addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+
+                                if(scope.filtersManager) {
+                                    var i = 0;
+                                    for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
+                                        if (jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
+                                            addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+                                        }
+                                    }
                                 }
                             }
 
                         });
+
+                        scope.lock = false;
                     }, function (reason) {
                         console.error(reason);
+                        scope.lock = false;
                     });
                 }
 
@@ -68,27 +83,18 @@ angular.module('ortolangMarketApp')
                 }
 
                 scope.$watch('query', function () {
-                    if(scope.query!==undefined) {
+                    if(scope.query!==undefined && scope.query !== '') {
                         load(scope.query);
                     }
                 });
 
-                // Scope variables
-                function initScopeVariables() {
-                    // if(scope.items === undefined) {
-                    //     scope.items = [];
-                    // }
-
-                    // scope.orderProp = 'title';
-                    // scope.orderDirection = false;
-                    // scope.viewMode = viewModeTile;
-                }
-
                 function init() {
-                    initScopeVariables();
-
+                    scope.lock = false;
                     if(scope.query !== '' && scope.loadAtStartup) {
                         load(scope.query);
+                    }
+                    if(!scope.items) {
+                        scope.items = ItemManager.make();
                     }
                 }
                 init();

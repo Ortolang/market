@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
-    <title ng-bind="'ORTOLANG' + (title ? ' | ' + (title | translate) : '') + subtitle">ORTOLANG</title>
+    <title ng-bind="'ORTOLANG' + (ortolangPageTitle ? ' | ' + (ortolangPageTitle | translate) : '') + ortolangPageSubtitle">ORTOLANG</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -25,18 +25,16 @@
     <meta name="msapplication-TileImage" content="mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="styles/custom-bootstrap.css" />
     <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/custom-bootstrap.css" />
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.min.css" />
     <link rel="stylesheet" href="bower_components/highlightjs/build/styles/solarized_light.min.css" />
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
     <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/textAngular/dist/textAngular.css" />
     <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
     <link rel="stylesheet" href="bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
     <!-- endbower -->
@@ -54,6 +52,7 @@
 <div id="side-nav-wrapper" ng-include="'common/nav/side-nav.html'"></div>
 <main id="main-wrapper" ng-view ng-class="{'no-footer': noFooter, 'browsing': browsing}" role="main" ng-cloak></main>
 <div id="footer-wrapper" ng-if="!noFooter" ng-include="'common/nav/footer.html'"></div>
+<div class="alerts-wrapper"></div>
 
 <!--[if lt IE 10]>
 <script type="text/javascript">
@@ -97,15 +96,6 @@
 <script src="bower_components/keycloak/dist/keycloak.js"></script>
 <script src="bower_components/angular-md5/angular-md5.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
-<script src="bower_components/rangy/rangy-core.js"></script>
-<script src="bower_components/rangy/rangy-classapplier.js"></script>
-<script src="bower_components/rangy/rangy-highlighter.js"></script>
-<script src="bower_components/rangy/rangy-selectionsaverestore.js"></script>
-<script src="bower_components/rangy/rangy-serializer.js"></script>
-<script src="bower_components/rangy/rangy-textrange.js"></script>
-<script src="bower_components/textAngular/dist/textAngular.js"></script>
-<script src="bower_components/textAngular/dist/textAngular-sanitize.js"></script>
-<script src="bower_components/textAngular/dist/textAngularSetup.js"></script>
 <script src="bower_components/tv4/tv4.js"></script>
 <script src="bower_components/objectpath/lib/ObjectPath.js"></script>
 <script src="bower_components/angular-schema-form/dist/schema-form.js"></script>
@@ -149,12 +139,14 @@
 <script src="common/directives/file-select-browser.js"></script>
 <script src="common/directives/holder.js"></script>
 <script src="common/directives/autoCompleteSparqL.js"></script>
-<script src="common/directives/editable-text-area.js"></script>
 <script src="common/directives/toggle-visibility.js"></script>
 <script src="common/directives/google-auto-complete.js"></script>
 <script src="common/directives/xeditable-address.js"></script>
 <script src="common/directives/profile-data-field.js"></script>
 <script src="common/directives/acl-select.js"></script>
+<script src="common/directives/order-indicator.js"></script>
+<script src="common/directives/avatar.js"></script>
+<script src="common/directives/on-finish-render.js"></script>
 <script src="common/directives/i18n/browser.fr.js"></script>
 <script src="common/directives/i18n/browser.en.js"></script>
 <script src="common/formly/formly-file-select.js"></script>
@@ -167,6 +159,7 @@
 <script src="common/services/form-resource.js"></script>
 <script src="common/services/metadata-format-resource.js"></script>
 <script src="common/services/object-resource.js"></script>
+<script src="common/services/content.js"></script>
 <script src="common/services/download.js"></script>
 <script src="common/services/workspace-element-resource.js"></script>
 <script src="common/services/download-resource.js"></script>
@@ -183,7 +176,9 @@
 <script src="common/services/file-select-browser.js"></script>
 <script src="common/services/profile.js"></script>
 <script src="common/services/settings.js"></script>
+<script src="common/services/preview-resource.js"></script>
 <script src="common/tools/tool-manager.js"></script>
+<script src="common/tools/tool-results.js"></script>
 <script src="common/visualizers/simple-audio-visualizer/simple-audio-visualizer.js"></script>
 <script src="common/visualizers/simple-image-visualizer/simple-image-visualizer.js"></script>
 <script src="common/visualizers/simple-video-visualizer/simple-video-visualizer.js"></script>
@@ -191,6 +186,7 @@
 <script src="common/visualizers/simple-text-visualizer/i18n/simple-text-visualizer.en.js"></script>
 <script src="common/visualizers/simple-text-visualizer/simple-text-visualizer.js"></script>
 <script src="common/visualizers/diff-visualizer/diff-visualizer.js"></script>
+<script src="common/visualizers/html-visualizer/html-visualizer.js"></script>
 <script src="common/nav/side-nav-elements.js"></script>
 <script src="common/nav/side-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
@@ -234,7 +230,6 @@
 <script src="market/services/faceted-filter.js"></script>
 <script src="market/services/faceted-filter-manager.js"></script>
 <script src="market/services/item-manager.js"></script>
-<script src="market/market-search.js"></script>
 <script src="market/corpora.js"></script>
 <script src="market/applications.js"></script>
 <script src="market/lexicons.js"></script>
@@ -242,12 +237,16 @@
 <script src="market/search.js"></script>
 <script src="market/i18n/market.fr.js"></script>
 <script src="market/i18n/market.en.js"></script>
+<script src="producer/i18n/producer.fr.js"></script>
+<script src="producer/i18n/producer.en.js"></script>
+<script src="producer/producers.js"></script>
+<script src="producer/producer.js"></script>
 <script src="information/i18n/information.en.js"></script>
 <script src="information/i18n/information.fr.js"></script>
 <script src="information/information.js"></script>
 <script src="profile/i18n/profile.fr.js"></script>
 <script src="profile/i18n/profile.en.js"></script>
-<script src="profile/profile.js"></script>
+<script src="profile/profile-ctrl.js"></script>
 <script src="profile/events.js"></script>
 <script src="profile/publications.js"></script>
 <script src="profile/contributions.js"></script>

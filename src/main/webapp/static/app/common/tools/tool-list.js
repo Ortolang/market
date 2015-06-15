@@ -64,20 +64,36 @@ angular.module('ortolangMarketApp')
                 return size;
             };
 
+            function arrayUnique(array) {
+                var a = array.concat();
+                for(var i=0; i<a.length; ++i) {
+                    for(var j=i+1; j<a.length; ++j) {
+                        if(a[i] === a[j])
+                            a.splice(j--, 1);
+                    }
+                }
+
+                return a;
+            }
+
             function loadToolsList () {
                 $scope.tools = ToolManager.getRegistry();
                 $scope.filteredTools = $scope.tools;
 
-                MetadataFormatResource.download({name:'ortolang-item-json'}).$promise.then(
-                    function(data) {
-                        var schema = angular.fromJson(data);
-                        $scope.keywords = schema.properties.toolFunctionality.items.enum;
-                        $scope.keywords = $scope.keywords.concat(schema.properties.toolInputData.items.enum);
-                    },
-                    function(reason) {
-                        console.error('Cant get schema of metadata formats "ortolang-item-json" ; failed cause ' + reason + ' !');
-                    }
-                );
+                $scope.keywords = ToolManager.getFunctionalities();
+                $scope.keywords = arrayUnique($scope.keywords.concat(ToolManager.getInputData()));
+                $scope.keywords = arrayUnique($scope.keywords.concat(ToolManager.getOutputData()));
+                //MetadataFormatResource.download({name:'ortolang-item-json'}).$promise.then(
+                //    function(data) {
+                //        var schema = angular.fromJson(data);
+                //        $scope.keywords = schema.properties.toolFunctionalities.items.enum;
+                //        $scope.keywords = $scope.keywords.concat(schema.properties.toolInputData.items.enum);
+                //        $scope.keywords = $scope.keywords.concat(schema.properties.toolOutputData.items.enum);
+                //    },
+                //    function(reason) {
+                //        console.error('Cant get schema of metadata formats "ortolang-item-json" ; failed cause ' + reason + ' !');
+                //    }
+                //);
             }
 
             function loadConfig() {

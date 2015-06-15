@@ -33,6 +33,16 @@ angular.module('ortolangMarketApp')
                 return this.items.push(item);
             },
 
+            exists: function (item) {
+                var i = 0;
+                for (i; i < this.items.length; i++) {
+                    if (this.items[i] === item) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+
             size: function() {
                 return this.items.length;
             },

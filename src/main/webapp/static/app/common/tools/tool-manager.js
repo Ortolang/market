@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
                 this.model = undefined;
                 this.active = undefined;
                 this.inputData = undefined;
+                this.outputData = undefined;
                 this.functionalities = undefined;
                 this.image = undefined;
 
@@ -77,6 +78,13 @@ angular.module('ortolangMarketApp')
                         url: this.url + '/jobs/:jobId/result',
                         method: 'GET',
                         isArray: true
+                    },
+                    save: {
+                        url: this.url + '/jobs/:jobId/save',
+                        method: 'POST',
+                        transformRequest: function (data) { return $.param(data); },
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+
                     }
                 });
             }
@@ -114,6 +122,10 @@ angular.module('ortolangMarketApp')
 
                 getInputData: function () {
                     return this.inputData;
+                },
+
+                getOutputData: function () {
+                    return this.outputData;
                 },
 
                 getImage: function () {
@@ -194,6 +206,9 @@ angular.module('ortolangMarketApp')
 
                 getDownloadUrl: function (jobId, path) {
                     return this.url + '/jobs/' + jobId + '/download?path=' + path;
+                },
+                saveResult: function (jobId, formData) {
+                    return this.resource.save({jobId:jobId}, angular.fromJson(angular.toJson(formData)));
                 }
             };
 
@@ -202,6 +217,9 @@ angular.module('ortolangMarketApp')
             // ---
 
             var registry = {},
+                functionalitiesList = [],
+                inputDatasList = [],
+                outputDatasList = [],
                 loaded = false,
                 grantPopup,
                 grantTimeout,
@@ -243,7 +261,8 @@ angular.module('ortolangMarketApp')
                         'meta_ortolang-item-json.toolHelp as help, ' +
                         'meta_ortolang-item-json.toolUrl as url, ' +
                         'meta_ortolang-item-json.toolInputData as inputData, ' +
-                        'meta_ortolang-item-json.toolFunctionality as functionality ',
+                        'meta_ortolang-item-json.toolOutputData as outputData, ' +
+                        'meta_ortolang-item-json.toolFunctionalities as functionalities ',
                         source: 'collection'
                     });
                 queryBuilder.equals('status', 'published');
@@ -267,10 +286,24 @@ angular.module('ortolangMarketApp')
                             item.inputData = data.inputData.filter(function(elem, pos) {
                                 return data.inputData.indexOf(elem) === pos;
                             });
+                            angular.forEach(item.inputData, function (input) {
+                                inputDatasList.push(input);
+                            });
                         }
-                        if (data.functionality) {
-                            item.functionalities = data.functionality.filter(function(elem, pos) {
-                                return data.functionality.indexOf(elem) === pos;
+                        if (data.outputData) {
+                            item.outputData = data.outputData.filter(function(elem, pos) {
+                                return data.outputData.indexOf(elem) === pos;
+                            });
+                            angular.forEach(item.outputData, function (output) {
+                                outputDatasList.push(output);
+                            });
+                        }
+                        if (data.functionalities) {
+                            item.functionalities = data.functionalities.filter(function(elem, pos) {
+                                return data.functionalities.indexOf(elem) === pos;
+                            });
+                            angular.forEach(item.functionalities, function (fnc) {
+                                functionalitiesList.push(fnc);
                             });
                         }
                         item.meta = data;
@@ -279,11 +312,11 @@ angular.module('ortolangMarketApp')
                         }
 
                         if(data.image !== undefined && data.image !== '') {
-                            ObjectResource.element({oKey: item.key, path: data.image}).$promise.then(function(oobject) {
-                                item.image = DownloadResource.getDownloadUrl({oKey: oobject.key});
+                            ObjectResource.element({key: item.key, path: data.image}).$promise.then(function(oobject) {
+                                item.image = DownloadResource.getDownloadUrl({key: oobject.key});
 
                                 register(new OrtolangTool(item));
-                                console.log('register '+item.name);
+                                console.log('register ' + item.name);
                             }, function (reason) {
                                 console.error(reason);
                             });
@@ -368,6 +401,18 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function getFunctonalities () {
+                return functionalitiesList;
+            }
+
+            function getInputDatas () {
+                return inputDatasList;
+            }
+
+            function getOutputDatas () {
+                return outputDatasList;
+            }
+
 
             // *********************** //
             //           Init          //
@@ -391,6 +436,9 @@ angular.module('ortolangMarketApp')
                 disableTool: disableTool,
                 checkGrant: checkGrant,
                 getKeys: getKeys,
-                toArray: toArray
+                toArray: toArray,
+                getFunctionalities: getFunctonalities,
+                getInputData: getInputDatas,
+                getOutputData: getOutputDatas
             };
         }]);

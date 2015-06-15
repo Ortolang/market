@@ -17,14 +17,53 @@
         background-color: @main-bg;
       }
     }
-    .copy-key {
+  }
+
+  .copy-key {
+    margin-left: 4px;
+    cursor: pointer;
+  }
+
+  .workspace-actions-toolbar {
+    margin-top: 2 * @padding-large-vertical;
+  }
+
+  .history-item {
+    .publication-status {
       margin-left: 4px;
-      cursor: pointer;
     }
   }
 
   .workspace-dashboard {
     border-left: @default-border;
+
+    .workspace-dashboard-nav-pills {
+      margin-top: 2 * @padding-large-vertical;
+      margin-bottom: 3 * @padding-large-vertical;
+      a {
+        cursor: pointer;
+      }
+    }
+
+    section {
+      .row {
+        margin-bottom: 2 * @padding-large-vertical;
+      }
+      hr {
+        margin-top: @padding-large-vertical;
+      }
+      h4 {
+        font-weight: 300;
+        margin-top: 3 * @padding-large-vertical;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+      strong {
+        font-weight: 600;
+      }
+    }
+
   }
   .browser-aside.browser-aside-left {
     border-right: none;

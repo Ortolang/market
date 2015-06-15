@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             this.label = undefined;
             this.type = 'string';
             this.priority = 'low';
+            this.visibility = true;
             this.resetLabel = '';
             this.selectedOptions = [];
             this.options = [];
@@ -82,6 +83,14 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 this.priority = priority;
             },
 
+            isVisible: function () {
+                return this.visibility;
+            },
+
+            setVisibility: function(visibility) {
+                this.visibility = visibility;
+            },
+
             getSelectedOptions: function () {
                 return this.selectedOptions;
             },
@@ -117,7 +126,7 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
             },
 
             clearSelectedOptions: function () {
-                return this.selectedOptions = [];
+                this.selectedOptions = [];
             },
 
             hasSelectedOptions: function() {
@@ -188,9 +197,13 @@ angular.module('ortolangMarketApp').provider('FacetedFilter', function () {
                 }
             },
 
+            hasOptions: function() {
+                return this.options.length > 0;
+            },
+
             clearOptions: function () {
                 if(!this.lockOptions) {
-                    return this.options = [];
+                    this.options = [];
                 }
             },
 

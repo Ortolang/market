@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     scope.getSnapshotsHistory = function () {
-                        ObjectResource.history({oKey: FileSelectBrowserService.workspace.head}, function (data) {
+                        ObjectResource.history({key: FileSelectBrowserService.workspace.head}, function (data) {
                             scope.workspaceHistory = data.entries;
                             angular.forEach(scope.workspaceHistory, function (workspaceSnapshot) {
                                 workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);

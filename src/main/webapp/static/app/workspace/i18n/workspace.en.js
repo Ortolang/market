@@ -25,6 +25,20 @@ angular.module('ortolangMarketApp')
             ADD_METADATA: 'Add a metadata',
             SNAPSHOT: 'Save workspace state',
             PUBLISH: 'Publish workspace',
+            NO_WORKSPACES: 'You do not have created a workspace yet',
+            HISTORY: 'Recent activity',
+            MEMBERS_NUMBER: '<strong>{{number}} member{{number > 1 ? "s" : ""}}</strong> in the project',
+            PUBLISHED_VERSIONS: '<strong>{{number}} published version{{number > 1 ? "s" : ""}}</strong>',
+            CREATION_DATE: 'Created on {{creationDate | date}} by {{author}}',
+            LAST_MODIFICATION_DATE: 'Last modification',
+            EXTERNAL_LINKS: 'External links',
+            MARKET_LINKS: 'Link to the last published version',
+            CONTENT_LINKS: 'Content links',
+            STATISTICS: 'Statistics',
+            ADVANCED_INFORMATION: 'Advanced information',
+            CREATE_PRESENTATION_METADATA_FIRST: 'You must create presentation metadata first',
+            CREATE_PRESENTATION_METADATA: 'Create presentation metadata',
+            EDIT_PRESENTATION_METADATA: 'Edit presentation metadata',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
                 AUTO_GENERATED: 'Auto-generated ID',
@@ -45,6 +59,10 @@ angular.module('ortolangMarketApp')
             SNAPSHOT_MODAL: {
                 TITLE: 'Save workspace state',
                 SUBMIT: 'Save'
+            },
+            SNAPSHOT_ALERT: {
+                TITLE: 'Save',
+                CONTENT: 'no changes on the workspace since last save'
             },
             ADD_COLLECTION_MODAL: {
                 TITLE: 'Add a new folder',

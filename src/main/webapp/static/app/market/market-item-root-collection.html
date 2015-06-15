@@ -2,7 +2,7 @@
     <header>
         <div class="media">
             <a class="pull-left">
-                <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
             </a>
             <div class="media-body">
@@ -13,7 +13,7 @@
                     <div><span translate="MARKET.PRODUCER"></span> :
                         <ul>
                             <li ng-repeat="producer in item.producers">
-                                <a ng-href='' ng-bind="producer"></a>
+                                <a ng-href='#/market/search?filters={"meta_ortolang-item-json.producers":"{{producer}}"}' ng-bind="producer"></a>
                             </li>
                         </ul>
                     </div>
@@ -38,6 +38,166 @@
                 </article>
             </section>
 
+            <section id="contributor" ng-if="item.researchers || item.managers || item.developers || item.authors || item.compilers || item.transcribers || item.sponsors">
+                <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
+
+                <article class="row" ng-if="item.researchers">
+                    <h4 translate="MARKET.RESEARCHER" translate-values="{value:item.researchers.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="researcher in item.researchers">
+                            {{researcher}}
+                        </li>
+                    </ul>
+
+                </article>
+                <article class="row" ng-if="item.managers">
+                    <h4 translate="MARKET.MANAGER" translate-values="{value:item.managers.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="manager in item.managers">
+                            {{manager}}
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item.designers">
+                    <h4 translate="MARKET.DESIGNER" translate-values="{value:item.designers.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="designer in item.designers">
+                            {{designer}}
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item.developers">
+                    <h4 translate="MARKET.DEVELOPER" translate-values="{value:item.developers.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="developer in item.developers">
+                            {{developer}}
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item.authors">
+                    <h4 translate="MARKET.AUTHOR" translate-values="{value:item.authors.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="author in item.authors">
+                            {{author}}
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item.compilers">
+                    <h4 translate="MARKET.COMPILER" translate-values="{value:item.compilers.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="compiler in item.compilers">
+                            {{compiler}}
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item.transcribers">
+                    <h4 translate="MARKET.TRANSCRIBER" translate-values="{value:item.transcribers.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="transcriber in item.transcribers">
+                            {{transcriber}}
+                        </li>
+                    </ul>
+                </article>
+                <article class="row" ng-if="item.sponsors">
+                    <h4 translate="MARKET.SPONSOR" translate-values="{value:item.sponsors.length}"></h4>
+                    <ul class="list-contributor">
+                        <li ng-repeat="sponsor in item.sponsors">
+                            {{sponsor}}
+                        </li>
+                    </ul>
+                </article>
+            </section>
+
+            <section id="keywords" ng-if="item.keywords || item.corporaLanguages || item.annotationLevels || item.corporaFormats || item.corporaFileEncodings || item.programmingLanguages || item.opearatingSystems || item.toolLanguages">
+                <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
+                <article>
+                    <div class="row">
+
+                        <div ng-if="item.keywords" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.KEYWORDS"></dt>
+                                <dd ng-repeat="keyword in item.keywords">
+                                    {{keyword}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.corporaLanguages" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
+                                <dd ng-repeat="pLang in item.corporaLanguages">
+                                    {{pLang}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.annotationLevels" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.ANNOTATION_LEVEL"></dt>
+                                <dd ng-repeat="annLevel in item.annotationLevels">
+                                    {{annLevel}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.corporaFormats" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.TEXT_FORMAT"></dt>
+                                <dd ng-repeat="corpFormat in item.corporaFormats">
+                                    {{corpFormat}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.corporaFileEncodings" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.CORPORA_FILE_ENCODINGS"></dt>
+                                <dd ng-repeat="corpFileEnc in item.corporaFileEncodings">
+                                    {{corpFileEnc}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.programmingLanguages" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
+                                <dd ng-repeat="pl in item.programmingLanguages">
+                                    {{pl}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.opearatingSystems" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
+                                <dd ng-repeat="os in item.opearatingSystems">
+                                    <a ng-href="">{{os}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.toolLanguages" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.LANGUAGE"></dt>
+                                <dd ng-repeat="lang in item.toolLanguages">
+                                    {{lang}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </div>
+                </article>
+            </section>
+
+            <section id="publications" ng-if="item.publications">
+                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
+                <article>
+                    <ul>
+                        <li ng-repeat="pub in item.publications" ng-bind-html="pub">
+                    </ul>
+                </article>
+            </section>
+
             <section id="preview" ng-if="previewCollection">
                 <header><span class="glyphicon glyphicon-eye-open fa-fw" style="font-size: 20px;"></span> {{'MARKET.PREVIEW' | translate}}</header>
                 <article>
@@ -56,131 +216,11 @@
                 </article>
             </section>
 
-            <section id="keywords" ng-if="item.keywords || item.corporaLanguages || item.annotationLevels || item.corporaFormats || item.programmingLanguages || item.opearatingSystems || item.toolLanguages">
-                <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
-                <article>
-                    <div class="row">
-
-                        <div ng-if="item.keywords" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.KEYWORDS"></dt>
-                                <dd ng-repeat="keyword in item.keywords">
-                                    <a ng-href="">{{keyword}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item.corporaLanguages" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
-                                <dd ng-repeat="pLang in item.corporaLanguages">
-                                    <a ng-href="">{{pLang}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item.annotationLevels" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.FACET.ANNOTATION_LEVEL"></dt>
-                                <dd ng-repeat="annLevel in item.annotationLevels">
-                                    <a ng-href="">{{annLevel}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item.corporaFormats" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.FACET.TEXT_FORMAT"></dt>
-                                <dd ng-repeat="corpFormat in item.corporaFormats">
-                                    <a ng-href="">{{corpFormat}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item.programmingLanguages" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
-                                <dd ng-repeat="pl in item.programmingLanguages">
-                                    <a ng-href="">{{pl}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item.opearatingSystems" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
-                                <dd ng-repeat="os in item.opearatingSystems">
-                                    <a ng-href="">{{os}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="item.toolLanguages" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.LANGUAGE"></dt>
-                                <dd ng-repeat="lang in item.toolLanguages">
-                                    <a ng-href="">{{lang}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                    </div>
-                </article>
-            </section>
-
-            <section id="contributor" ng-if="item.researchers || item.managers || item.developers || item.authors || item.compilers">
-                <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
-
-                <article class="row" ng-if="item.researchers">
-                    <h4 translate="MARKET.RESEARCHER"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="researcher in item.researchers">
-                            <a ng-href='' ng-bind="researcher"></a>
-                        </li>
-                    </ul>
-
-                </article>
-                <article class="row" ng-if="item.managers">
-                    <h4 translate="MARKET.MANAGER"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="manager in item.managers">
-                            <a ng-href='' ng-bind="manager"></a>
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.developers">
-                    <h4 translate="MARKET.DEVELOPER"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="developer in item.developers">
-                            <a ng-href='' ng-bind="developer"></a>
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.authors">
-                    <h4 translate="MARKET.AUTHOR"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="author in item.authors">
-                            <a ng-href='' ng-bind="author"></a>
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.compilers">
-                    <h4 translate="MARKET.COMPILER"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="compiler in item.compilers">
-                            <a ng-href='' ng-bind="compiler"></a>
-                        </li>
-                    </ul>
-                </article>
-            </section>
-
         </div>
 
         <div ng-if="browse" class="col-md-12">
             <div browser></div>
         </div>
-
-        <div ng-if="!browse" ng-include="'common/visualizers/visualizer-template.html'"></div>
 
         <aside ng-show="!browse" class="col-md-4">
 
@@ -216,12 +256,22 @@
                 <div class="panel-body">
 
                     <p>
-                        {{item.derogation}}<span ng-if="item.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
+                        {{item.derogation}}
+                        <span ng-if="item.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
+                        <span ng-if="item.derogation==='AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>
+                        <span ng-if="item.derogation==='AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>
                     </p>
 
                 </div>
             </div>
 
+            <div class="panel panel-default" ng-show="item.bibliographicCitation">
+                <div class="panel-heading" translate="MARKET.BIBLIOGRAPHICCITATION"></div>
+                <div class="panel-body">
+
+                    <p ng-bind-html="item.bibliographicCitation"></p>
+                </div>
+            </div>
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">

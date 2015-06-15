@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
 
                             if(acl.length===1) {
 
-                                DownloadResource.download({oKey: acl[0].key}).success(function (aclContentJson) {
+                                DownloadResource.download({key: acl[0].key}).success(function (aclContentJson) {
                                     var aclContent = angular.fromJson(aclContentJson);
 
                                     if(aclContent!=="") {
@@ -65,15 +65,15 @@ angular.module('ortolangMarketApp')
                             transformRequest: angular.identity,
                             headers: {'Content-Type': undefined}
                         })
-                        .success(function () {
-                            console.log('Sets ACL for '+scope.element.key);
-                        })
-                        .error(function (reason) {
-                            console.log('Cannot sets ACL for '+scope.element.key+' cause ', reason);
-                        });
-                    }
+                            .success(function () {
+                                console.log('Sets ACL for '+scope.element.key);
+                            })
+                            .error(function (reason) {
+                                console.log('Cannot sets ACL for '+scope.element.key+' cause ', reason);
+                            });
+                    };
 
-                    scope.aclRules = [{key:'forall', name:'Pour tous'},{key:'authentified', name:'Personnes authentifiés'},{key:'esr', name:'Membres ESR'},{key:'restricted', name:'Réservé aux membres'}]
+                    scope.aclRules = [{key:'forall', name:'Pour tous'},{key:'authentified', name:'Personnes authentifiés'},{key:'esr', name:'Membres ESR'},{key:'restricted', name:'Réservé aux membres'}];
 
                     scope.$watch('element', function (val) {
                         if(scope.element!==undefined) {

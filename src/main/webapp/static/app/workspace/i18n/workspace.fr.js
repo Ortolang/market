@@ -24,7 +24,21 @@ angular.module('ortolangMarketApp')
             CANCEL_ALL: 'Tout annuler',
             ADD_METADATA: 'Ajouter une métadonnée',
             SNAPSHOT: 'Sauvegarder l\'état de l\'espace',
-            PUBLISH: 'Publier l\'espace de travail',
+            PUBLISH: 'Publier le projet',
+            NO_WORKSPACES: 'Vous n\'avez pas encore créé d\'espace de travail',
+            HISTORY: 'Activité récente',
+            MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans le projet',
+            PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}</strong>',
+            CREATION_DATE: 'Créé le {{creationDate | date}} par {{author}}',
+            LAST_MODIFICATION_DATE: 'Dernière modification',
+            EXTERNAL_LINKS: 'Liens externes',
+            MARKET_LINKS: 'Lien vers la dernière version publiée',
+            CONTENT_LINKS: 'Liens vers le contenu',
+            STATISTICS: 'Statistiques',
+            ADVANCED_INFORMATION: 'Informations avancées',
+            CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
+            CREATE_PRESENTATION_METADATA: 'Créer la fiche',
+            EDIT_PRESENTATION_METADATA: 'Éditer la fiche',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Créer un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'identifiant',
@@ -45,6 +59,10 @@ angular.module('ortolangMarketApp')
             SNAPSHOT_MODAL: {
                 TITLE: 'Sauvegarde de l\'état de l\'espace de travail',
                 SUBMIT: 'Sauvegarder'
+            },
+            SNAPSHOT_ALERT: {
+                TITLE: 'Sauvegarde',
+                CONTENT: 'pas de changements effectués<br/>sur l\'espace de travail depuis la dernière sauvegarde'
             },
             ADD_COLLECTION_MODAL: {
                 TITLE: 'Ajouter un nouveau dossier',

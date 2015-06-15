@@ -18,6 +18,7 @@ angular.module('ortolangMarketAppMock')
             angular.forEach(conditions, function(condition) {
                 if(angular.equals(params, condition.condition)) {
                     data = condition.responseValue;
+                    console.log('Matching condition');
                 }
             });
 
@@ -38,9 +39,17 @@ angular.module('ortolangMarketAppMock')
             conditions = [];
         }
 
+        function history() {
+            var defer = $q.defer();
+            defer.resolve([]);
+
+            return {$promise: defer.promise};
+        }
+
         return {
             get: get,
             element: get,
+            history: history,
             when: when,
             clear: clear
         };

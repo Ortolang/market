@@ -32,10 +32,16 @@ angular.module('ortolangMarketApp')
         LEXICONS: 'Lexicons',
         TOOLS: 'Tools',
         INTEGRATED_PROJECTS: 'Integrated Projects',
+        PRODUCERS: 'Producers',
         SELECT_WORKSPACE_ELEMENT: 'Select workspace element',
         404: {
             TITLE: 'Page not found',
             BODY: 'Sorry, but we can\'t find the page you are looking for. Maybe you should try heading home.',
             BUTTON: 'Home'
+        },
+        SERVER_DOWN_MODAL: {
+            TITLE: 'The server seems to be currently unavailable',
+            BODY: '<p>It seems that the server is currently unavailable; thus you won\'t be able to access ORTOLANG\'s resources.</p><p>You should try to refresh the page. If the problem persists, please contact us at <a href="mailto:contact@ortolang.fr">contact@ortolang.fr</a> .</p>',
+            BUTTON: 'Refresh the page'
         }
     });

@@ -12,7 +12,10 @@ angular.module('ortolangVisualizers')
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'DiffVisualizer',
-            name: 'Diff Visualizer',
+            name: {
+                fr: 'Visualiseur de différence',
+                en: 'Diff Visualizer'
+            },
             compatibleTypes: [
                 {
                     'text/plain': true
@@ -44,17 +47,27 @@ angular.module('ortolangVisualizers')
 
         return {
             templateUrl: 'common/visualizers/diff-visualizer/diff-visualizer.html',
-            restrict: 'E',
-            scope: true,
+            restrict: 'A',
             link: {
                 pre: function (scope, element, attrs) {
                     scope.leftObjName = scope.elements[0].name;
                     scope.rightObjName = scope.elements[1].name;
+                    scope.visualizer.header.html = scope.leftObjName + '&nbsp;&nbsp;<span class="octicon octicon-mirror"></span>&nbsp;&nbsp;' + scope.rightObjName;
+                    scope.visualizer.header.actions = [
+                        {name: 'default', text: 'default'},
+                        {name: 'processing-diff', text: 'processing-diff'},
+                        {name: 'semantic-diff', text: 'semantic-diff'},
+                        {name: 'line-diff', text: 'line-diff'}
+                    ];
 
-                    DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
+                    scope.doAction = function (name) {
+                        scope.diff = name;
+                    };
+
+                    DownloadResource.download({key: scope.elements[0].key}).success(function (data) {
                         scope.leftObj = data;
                     });
-                    DownloadResource.download({oKey: scope.elements[1].key}).success(function (data) {
+                    DownloadResource.download({key: scope.elements[1].key}).success(function (data) {
                         scope.rightObj = data;
                     });
 

@@ -12,7 +12,10 @@ angular.module('ortolangVisualizers')
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleImageVisualizer',
-            name: 'Simple Image Visualizer',
+            name: {
+                fr: 'Visualiseur d\'image',
+                en: 'Image Visualizer'
+            },
             compatibleTypes: {
                 'image/jpg': true,
                 'image/jpeg': true,
@@ -42,8 +45,7 @@ angular.module('ortolangVisualizers')
 
         return {
             templateUrl: 'common/visualizers/simple-image-visualizer/simple-image-visualizer.html',
-            restrict: 'E',
-            scope: true,
+            restrict: 'A',
             link: {
                 pre: function (scope, element, attrs) {
                     scope.elements[0].selected = true;
@@ -52,6 +54,9 @@ angular.module('ortolangVisualizers')
                         element.downloadUrl = Download.getDownloadUrl(element);
                         scope.imageElements.push(element);
                     });
+                    scope.visualizer.header.fileName = scope.imageElements[0].name;
+                    scope.visualizer.header.fileType = scope.imageElements[0].mimeType;
+                    scope.visualizer.content.classes = 'center';
                 }
             }
         };

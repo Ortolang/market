@@ -24,6 +24,7 @@ angular.module('ortolangMarketApp')
             ADDITIONAL_INFORMATION: 'Informations complémentaires',
             KEYWORDS: 'Mots clés',
             EXTENT: 'Contenu',
+            PUBLICATIONS: 'Liste des principales publications',
             PRIMARY_LANGUAGE: 'Langue principale',
             DISCOURSE_TYPE: 'Genre du discours',
             LINGUISTIC_SUBJECT: 'Domaines linguistiques',
@@ -32,11 +33,14 @@ angular.module('ortolangMarketApp')
             SUPPORT_TOOL: 'Type de support',
             LANGUAGE: 'Langues concernés par cet objet',
             PRODUCER: 'Produit par',
-            RESEARCHER: 'Responsables scientifiques',
-            MANAGER: 'Responsables informatiques',
-            DEVELOPER: 'Responsables techniques',
-            AUTHOR: 'Auteurs',
-            COMPILER: 'Compilateurs',
+            RESEARCHER: 'Responsable{{value > 1 ? "s" : ""}} scientifique{{value > 1 ? "s" : ""}}',
+            MANAGER: 'Responsable{{value > 1 ? "s" : ""}} informatique{{value > 1 ? "s" : ""}}',
+            DESIGNER: 'Concepteur{{value > 1 ? "s" : ""}}',
+            DEVELOPER: 'Responsable{{value > 1 ? "s" : ""}} technique{{value > 1 ? "s" : ""}}',
+            AUTHOR: 'Auteur{{value > 1 ? "s" : ""}}',
+            COMPILER: 'Compilateur{{value > 1 ? "s" : ""}}',
+            TRANSCRIBER: 'Transcripteur{{value > 1 ? "s" : ""}}',
+            SPONSOR: 'Sponseur{{value > 1 ? "s" : ""}}',
             SPACIAL: 'Lieux',
             TEMPORAL: 'Date de création',
             PREVIEW: 'Aperçu',
@@ -47,6 +51,7 @@ angular.module('ortolangMarketApp')
             DOWNLOAD_AGREEMENT: 'Le téléchargement de cette ressource vaut acceptation de la licence d\'utilisation.',
             LICENCE_DETAIL: 'Détails sur la licence',
             DEROGATION: 'Code du patrimoine',
+            BIBLIOGRAPHICCITATION: 'Citation bibliograhpique',
             RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
             LINK: 'Lien',
             SITE: 'Accéder au site',
@@ -68,6 +73,7 @@ angular.module('ortolangMarketApp')
                   ALL_LANG: 'Toutes les Langues',
                   CORPORA_DATATYPES: 'Type de source',
                   ALL_CORPORA_DATATYPES: 'Tout type de source',
+                  CORPORA_FILE_ENCODINGS: 'Encodage de caractères',
                   CORPORA_LANGUAGE_TYPE: 'Type de langue',
                   ALL_CORPORA_LANGUAGE_TYPE: 'Tout type de langue',
                   TOOL_LANGUAGE: 'Langue traitée',
@@ -83,21 +89,37 @@ angular.module('ortolangMarketApp')
                   ALL_LEXICON_INPUT_TYPE: 'Tout type d\'entrée',
                   LEXICON_DESCRIPTION_TYPE: 'Type de description',
                   ALL_LEXICON_DESCRIPTION_TYPE: 'Tout type de description',
-                  LEXICON_INPUT_LANGUAGE: 'Langue des entrées'
+                  LEXICON_INPUT_LANGUAGE: 'Langue des entrées',
+                  LEXICON_DESCRIPTION_LANGUAGE: 'Langue de description',
+                  LEXICON_FORMAT: 'Format',
+                  ALL_LEXICON_FORMAT: 'Tout format',
+                  LEXICON_LANGUAGE_TYPE: 'Type de langue',
+                  ALL_LEXICON_LANGUAGE_TYPE: 'Tout type de langue',
+                  PRODUCERS: 'Laboratoire producteur',
+                  ALL_PRODUCERS: 'Tout laboratoire producteur'
             },
             SORT: {
                   TITLE: 'Titre',
-                  PUBLICATION_DATE: 'Date de publication'  
+                  PUBLICATION_DATE: 'Date de publication'
+            },
+            SEARCH: {
+                CORPORA: 'Rechercher un corpus',
+                TOOLS: 'Rechercher un outil',
+                LEXICONS: 'Rechercher un lexique',
+                PRODUCERS: 'Rechercher un laboratoire producteur',
+                ALL: 'Rechercher dans ORTOLANG'
             },
             SHOW_IN: 'Présentation',
             VIEW_MODE: {
                   LINE: 'Par liste',
-                  GRID: 'Par icônes'      
+                  GRID: 'Par icônes'
             },
             FACETS: 'Options de recherche',
             MORE_FACETS: 'Plus de filtres',
             LESS_FACETS: 'Cacher les filtres supplémentaires',
+            ACTIVATED_FILTERS: 'Filtres actifs',
             NO_ITEM: 'Aucune ressource disponible',
+            NO_PRODUCER: 'Aucune institution productrice trouvées',
             PUBLISHED_ON: 'Publié le'
         }
     });

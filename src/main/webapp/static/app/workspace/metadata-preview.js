@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         function previewMetadata(metadata) {
             $scope.selectedMetadata = metadata;
 
-            return DownloadResource.download({oKey: metadata.key}).success(function (data) {
+            return DownloadResource.download({key: metadata.key}).success(function (data) {
 
                 $scope.code = data;
                 $('#metadata-modal').modal('show');

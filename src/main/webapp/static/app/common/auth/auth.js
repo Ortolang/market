@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$rootScope', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $rootScope, User, AuthService, ProfileResource, AtmosphereService) {
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$modal', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $rootScope, $modal, User, AuthService, ProfileResource, AtmosphereService) {
 
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
@@ -38,6 +38,19 @@ angular.module('ortolangMarketApp')
                 );
             });
         }
+
+        $scope.$on('server-down', function () {
+            if (angular.element('.server-down-modal').length === 0) {
+                var modalScope = $rootScope.$new(true);
+                modalScope.refresh = function () {
+                    AuthService.forceReload();
+                };
+                $modal({
+                    scope: modalScope,
+                    template: 'common/auth/templates/server-down-modal.html'
+                });
+            }
+        });
 
         $rootScope.noFooter = false;
 

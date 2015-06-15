@@ -25,16 +25,15 @@ describe('Controller: MetadataPreviewCtrl', function () {
         scope.$digest();
     }));
 
-  it('should have setted code and selectedMetadata variable', function() {
-        
+    it('should have set code and selectedMetadata variable', function () {
+
         var metadata = {key: sample().metadataObjectKey};
         rootScope.$broadcast('metadata-preview', metadata);
-
         expect(scope.code).toBe(sample().sampleCode);
         expect(scope.selectedMetadata).toBe(metadata);
     });
 
-  it('should not have setted code and selectedMetadata variable', function() {
+    it('should not have set code and selectedMetadata variable', function() {
         var metadata = {key: 'k2'};
         rootScope.$broadcast('metadata-preview', metadata);
 

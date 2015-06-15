@@ -12,15 +12,22 @@ describe('Visualizer: SimpleAudioVisualizer', function () {
         SimpleAudioVisualizer = _SimpleAudioVisualizer_;
         AuthService = _AuthService_;
         scope = $rootScope.$new();
-        element = angular.element('<simple-audio-visualizer></simple-audio-visualizer>');
+        element = angular.element('<div simple-audio-visualizer></div>');
         element = $compile(element)(scope);
+        scope.visualizer = {
+            header: {},
+            content: {},
+            footer: {}
+        };
         scope.$digest();
     }));
 
     it('should have a correct config', function () {
         expect(!!SimpleAudioVisualizer).toBe(true);
         expect(SimpleAudioVisualizer.getId()).toEqual('SimpleAudioVisualizer');
-        expect(SimpleAudioVisualizer.getName()).toEqual('Simple Audio Visualizer');
+        expect(SimpleAudioVisualizer.getName()).toBeDefined();
+        expect(SimpleAudioVisualizer.name.fr).toBeDefined();
+        expect(SimpleAudioVisualizer.name.en).toBeDefined();
         expect(SimpleAudioVisualizer.getCompatibleTypes()).toBeDefined();
     });
 

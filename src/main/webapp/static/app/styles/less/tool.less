@@ -2,6 +2,7 @@
   -webkit-transition:all ease-in-out 0.25s;
   transition:all ease-in-out 0.25s;
   z-index: 1000;
+  width: 720px;
 
   .aside-body {
     overflow: hidden;
@@ -55,6 +56,7 @@
         color: #fff;
       }
     }
+
   }
 
 }
@@ -63,7 +65,7 @@
   border-bottom: 1px solid #e5e5e5;
   min-height: @navbar-height;
   padding: 6px 15px;
-  background: @tool;
+  background: @tool-primary;
   color: @inverse-text-color;
 
   .close {
@@ -93,3 +95,38 @@
       }
     }
 }
+
+.tool-switch {
+    .active , .inactive {
+        font-size:40px;
+        cursor:pointer;
+    }
+    i.active {
+        color: #5cb85c;
+    }
+    i.inactive {
+        color: #d9534f;
+    }
+}
+
+.tool-results {
+  -webkit-transition: all ease-in-out 0.25s;
+  transition: all ease-in-out 0.25s;
+  z-index: 1000;
+
+  .aside-body {
+    overflow: hidden;
+  }
+}
+
+@media (max-device-width: 710px ) {
+
+  .tool-list {
+    width:100%;
+  }
+
+  #tool-list-body {
+    width: 98%;
+  }
+}
+

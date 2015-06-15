@@ -11,17 +11,24 @@ describe('Visualizer: SimpleTextVisualizer', function () {
     beforeEach(inject(function ($rootScope, _SimpleTextVisualizer_) {
         SimpleTextVisualizer = _SimpleTextVisualizer_;
         scope = $rootScope.$new();
+        scope.visualizer = {
+            header: {},
+            content: {},
+            footer: {}
+        };
+        scope.elements = [{}];
     }));
 
     it('should have a correct config', function () {
         expect(!!SimpleTextVisualizer).toBe(true);
         expect(SimpleTextVisualizer.getId()).toEqual('SimpleTextVisualizer');
-        expect(SimpleTextVisualizer.getName()).toEqual('Simple Text Visualizer');
+        expect(SimpleTextVisualizer.name.fr).toBeDefined();
+        expect(SimpleTextVisualizer.name.en).toBeDefined();
         expect(SimpleTextVisualizer.getCompatibleTypes()).toBeDefined();
     });
 
     //it('should declare a directive', inject(function ($compile) {
-    //    element = angular.element('<simple-text-visualizer></simple-text-visualizer>');
+    //    element = angular.element('<div simple-text-visualizer></div>');
     //    element = $compile(element)(scope);
     //    scope.$digest();
     //    expect(element.html()).toBeDefined();

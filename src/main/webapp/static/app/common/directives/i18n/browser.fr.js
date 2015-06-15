@@ -36,9 +36,8 @@ angular.module('ortolangMarketApp')
                 MIME_TYPE: 'Type Mime'
             },
             SORT: {
-                TYPE_NAME: 'Type ORTOLANG',
                 MIME_TYPE: 'Type Mime',
-                DATE: 'Date'
+                DATE: 'Date de modification'
             },
             INFO: '{{hideInfo === "true" ? "Afficher" : "Masquer"}} les détails',
             DASHBOARD: 'Retourner au tableau de bord',
@@ -59,12 +58,8 @@ angular.module('ortolangMarketApp')
             FORWARD: 'Avancer',
             TOGGLE_DROPDOWN: 'Menu déroulant',
             COPY_TO_CLIPBOARD: 'Copier',
-            HISTORY: 'Historique',
             NO_PREVIOUS_VERSIONS: 'Pas de version encore crée',
             TOOLS: 'Outils',
-            CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
-            CREATE_PRESENTATION_METADATA: 'Créer les métadonées de présentation',
-            EDIT_PRESENTATION_METADATA: 'Éditer les métadonées de présentation',
             DRAFT: 'Non publié',
             PUBLISHED: 'Publié',
             CREATED: '{{author}} a créé',
@@ -82,7 +77,9 @@ angular.module('ortolangMarketApp')
                 INFO: 'Afficher / Masquer les détails',
                 WORKSPACE_LIST: 'Afficher / Masquer la liste des espaces de travail'
             },
+            NO_PREVIEW: 'Aucun aperçu n\'est disponible pour ce type de fichier',
             WORKSPACE_KEY: 'Copier la clé du workspace',
-            BEARER_TOKEN: 'Copier le token'
+            BEARER_TOKEN: 'Copier le token',
+            SEE_ALL: 'Voir tous les fichiers'
         }
     });

@@ -37,7 +37,6 @@ angular
         'diff-match-patch',
         'angular-md5',
         'xeditable',
-        'textAngular',
         'schemaForm',
         'ngTagsInput',
         'angularMoment'
@@ -54,15 +53,18 @@ angular
             })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
-                title: 'CORPORA'
+                title: 'CORPORA',
+                reloadOnSearch: false
             })
             .when('/market/tools', {
                 templateUrl: 'market/tools.html',
-                title: 'TOOLS'
+                title: 'TOOLS',
+                reloadOnSearch: false
             })
             .when('/market/lexicons', {
                 templateUrl: 'market/lexicons.html',
-                title: 'LEXICONS'
+                title: 'LEXICONS',
+                reloadOnSearch: false
             })
             .when('/market/applications', {
                 templateUrl: 'market/applications.html',
@@ -73,10 +75,17 @@ angular
                 controller: 'MarketItemCtrl',
                 reloadOnSearch: false
             })
-            .when('/search', {
+            .when('/market/search', {
                 templateUrl: 'market/search.html',
                 title: 'SEARCH',
                 reloadOnSearch: false
+            })
+            .when('/producers', {
+                templateUrl: 'producer/producers.html',
+                title: 'PRODUCERS'
+            })
+            .when('/producers/:producerId', {
+                templateUrl: 'producer/producer.html'
             })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspaces.html',
@@ -133,10 +142,14 @@ angular
             'https://localhost:8443/**'
         ]);
     }])
-    .config(['$tooltipProvider', function ($tooltipProvider) {
+    .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body',
             trigger: 'hover click focus'
+        });
+        angular.extend($alertProvider.defaults, {
+            container: '.alerts-wrapper',
+            placement: 'top-right'
         });
     }])
     .config(['hotkeysProvider', function (hotkeysProvider) {
@@ -167,5 +180,6 @@ angular
  * Ortolang Visualizers Module
  */
 angular.module('ortolangVisualizers', [
-    'ortolangMarketApp'
+    'ortolangMarketApp',
+    'pascalprecht.translate'
 ]);

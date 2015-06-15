@@ -12,7 +12,10 @@ angular.module('ortolangVisualizers')
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleTextVisualizer',
-            name: 'Simple Text Visualizer',
+            name: {
+                fr: 'Visualiseur de texte',
+                en: 'Text Visualizer'
+            },
             compatibleTypes: {
                 'text/plain': true,
                 'text/html': true,
@@ -24,7 +27,8 @@ angular.module('ortolangVisualizers')
                 'application/rdf+xml': true,
                 'application/xslt+xml': true,
                 'text/javascript': true,
-                'application/javascript': true
+                'application/javascript': true,
+                'text/x-web-markdown': true
             }
         });
 
@@ -46,13 +50,12 @@ angular.module('ortolangVisualizers')
 
         return {
             templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
-            restrict: 'E',
-            scope: true,
+            restrict: 'A',
             link: {
                 pre: function (scope, element, attrs) {
                     var mimeType = scope.elements[0].mimeType,
                         limit = 20000;
-                    if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml') {
+                    if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml' || mimeType === 'application/xslt+xml') {
                         scope.language = 'xml';
                     } else if (mimeType === 'text/html' || mimeType === 'text/plain') {
                         scope.language = 'html';
@@ -62,12 +65,33 @@ angular.module('ortolangVisualizers')
                         scope.language = 'php';
                     } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
                         scope.language = 'javascript';
+                    } else if (mimeType === 'text/x-web-markdown') {
+                        scope.language = 'markdown';
                     } else {
                         scope.language = undefined;
                     }
-                    scope.truncated = scope.elements[0].size >= limit;
-                    DownloadResource.download({oKey: scope.elements[0].key}).success(function (data) {
-                        if (scope.elements[0].size >= limit) {
+                    scope.truncated = scope.forceFullData ? false : scope.elements[0].size >= limit;
+                    scope.visualizer.header = {
+                        fileName: scope.elements[0].name,
+                        fileType: scope.elements[0].mimeType
+                    };
+                    scope.visualizer.footer = {
+                        display: scope.truncated,
+                        text: 'SIMPLE_TEXT_VISUALISER.EXCERPT'
+                    };
+                    scope.visualizer.footer.actions = [
+                        {
+                            name: 'seeMore',
+                            text: 'SIMPLE_TEXT_VISUALISER.SEE_MORE'
+                        }
+                    ];
+                    scope.doAction = function (name) {
+                        if (name === 'seeMore') {
+                            scope.seeMore();
+                        }
+                    };
+                    DownloadResource.download({key: scope.elements[0].key}).success(function (data) {
+                        if (!scope.forceFullData && scope.elements[0].size >= limit) {
                             scope.data = data.substr(0, limit);
                             scope.seeMore = function () {
                                 if (scope.data.length + limit < scope.fullData.length) {
@@ -75,6 +99,7 @@ angular.module('ortolangVisualizers')
                                 } else {
                                     scope.data = scope.fullData;
                                     scope.fullData = undefined;
+                                    scope.visualizer.footer.display = false;
                                 }
                             };
                             scope.fullData = data;
@@ -84,10 +109,6 @@ angular.module('ortolangVisualizers')
                     }).error(function (error) {
                         console.error(error);
                     });
-                },
-                post: function (scope) {
-                    var height = $window.innerHeight - (scope.truncated ? 6 : 4) * parseInt(angular.element('.modal-dialog.modal-lg').css('margin-top'), 10);
-                    angular.element('.highlight').css('height', height);
                 }
             }
         };

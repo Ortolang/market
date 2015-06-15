@@ -24,6 +24,7 @@ angular.module('ortolangMarketApp')
             ADDITIONAL_INFORMATION: 'Additional information',
             KEYWORDS: 'Keywords',
             EXTENT: 'Extent',
+            PUBLICATIONS: 'Publications',
             PRIMARY_LANGUAGE: 'Primary language',
             DISCOURSE_TYPE: 'Discourse type',
             LINGUISTIC_SUBJECT: 'Linguistic subjects',
@@ -32,11 +33,14 @@ angular.module('ortolangMarketApp')
             SUPPORT_TOOL: 'Support tool',
             LANGUAGE: 'Languages',
             PRODUCER: 'Made by',
-            RESEARCHER: 'Researchers',
-            MANAGER: 'Managers',
-            DEVELOPER: 'Developers',
-            AUTHOR: 'Authors',
-            COMPILER: 'Compilers',
+            RESEARCHER: 'Researcher{{value > 1 ? "s" : ""}}',
+            MANAGER: 'Manager{{value > 1 ? "s" : ""}}',
+            DESIGNER: 'Desinger{{value > 1 ? "s" : ""}}',
+            DEVELOPER: 'Developer{{value > 1 ? "s" : ""}}',
+            AUTHOR: 'Author{{value > 1 ? "s" : ""}}',
+            COMPILER: 'Compiler{{value > 1 ? "s" : ""}}',
+            TRANSCRIBER: 'Transcriber{{value > 1 ? "s" : ""}}',
+            SPONSOR: 'Sponsor{{value > 1 ? "s" : ""}}',
             SPACIAL: 'Spacial',
             TEMPORAL: 'Temporal',
             PREVIEW: 'Preview',
@@ -47,13 +51,14 @@ angular.module('ortolangMarketApp')
             DOWNLOAD_AGREEMENT: 'Download implies the accpetance of the licence',
             LICENCE_DETAIL: 'License information',
             DEROGATION: 'Code du patrimoine',
+            BIBLIOGRAPHICCITATION: 'Bibliograhpic citation',
             RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}',
             SITE: 'Go to website',
             LINK: 'Link',
             THUMBNAIL: 'Thumbnail',
             ALL_RESOURCE: 'All type of resources',
             RESOURCE_TYPE: 'Type of resource',
-            CORPORA: {
+            FACET: {
                   CORPORA_TYPE: 'Type of corpora',
                   ALL_CORPORA: 'All corpus',
                   ANNOTATION_LEVEL: 'Annotation levels',
@@ -68,6 +73,7 @@ angular.module('ortolangMarketApp')
                   ALL_LANG: 'All languages',
                   CORPORA_DATATYPES: 'Data type',
                   ALL_CORPORA_DATATYPES: 'All data type',
+                  CORPORA_FILE_ENCODINGS: 'Corpora file encodings',
                   CORPORA_LANGUAGE_TYPE: 'Languages',
                   ALL_CORPORA_LANGUAGE_TYPE: 'All languages',
                   TOOL_LANGUAGE: 'Tool language',
@@ -83,11 +89,25 @@ angular.module('ortolangMarketApp')
                   ALL_LEXICON_INPUT_TYPE: 'All input types',
                   LEXICON_DESCRIPTION_TYPE: 'Description type',
                   ALL_LEXICON_DESCRIPTION_TYPE: 'All description types',
-                  LEXICON_INPUT_LANGUAGE: 'Lexicon input language'
+                  LEXICON_INPUT_LANGUAGE: 'Lexicon input languages',
+                  LEXICON_DESCRIPTION_LANGUAGE: 'Description languages',
+                  LEXICON_FORMAT: 'Format',
+                  ALL_LEXICON_FORMAT: 'All format',
+                  LEXICON_LANGUAGE_TYPE: 'Language type',
+                  ALL_LEXICON_LANGUAGE_TYPE: 'All language types',
+                  PRODUCERS: 'Producter',
+                  ALL_PRODUCERS: 'All producers'
             },
             SORT: {
                   TITLE: 'Title',
-                  PUBLICATION_DATE: 'Publication date'    
+                  PUBLICATION_DATE: 'Publication date'
+            },
+            SEARCH: {
+                CORPORA: 'Search for corpora',
+                TOOLS: 'Search for tools',
+                LEXICONS: 'Search for lexicons',
+                PRODUCERS: 'Search for a producer',
+                ALL: 'Search in ORTOLANG'
             },
             SHOW_IN: 'Show by',
             VIEW_MODE: {
@@ -97,7 +117,9 @@ angular.module('ortolangMarketApp')
             FACETS: 'Advanced filters',
             MORE_FACETS: 'More filter',
             LESS_FACETS: 'Hide filters',
+            ACTIVATED_FILTERS: 'Activated filters',
             NO_ITEM: 'No resource availabled',
+            NO_PRODUCER: 'No producer availabled',
             PUBLISHED_ON: 'Published on'
         }
     });

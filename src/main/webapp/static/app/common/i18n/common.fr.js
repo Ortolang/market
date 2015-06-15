@@ -32,10 +32,16 @@ angular.module('ortolangMarketApp')
         LEXICONS: 'Lexiques',
         TOOLS: 'Outils',
         INTEGRATED_PROJECTS: 'Projets Intégrés',
+        PRODUCERS: 'Institutions productrices',
         SELECT_WORKSPACE_ELEMENT: 'Selectionner un élément',
         404: {
             TITLE: 'Page non trouvée',
             BODY: 'Désolé, mais la page que vous recherchez est introuvable. Vous devriez peut être essayé de retourner sur la page d\'accueuil.',
             BUTTON: 'Page d\'accueil'
+        },
+        SERVER_DOWN_MODAL: {
+            TITLE: 'Le serveur semble momentanément indisponible',
+            BODY: '<p>Il semblerait que le serveur soit momentanément indisponible et vous ne pourrez donc pas accéder aux ressources.</p><p>Vous devriez tenter de rafraichir la page et si jamais l\'erreur persiste veuillez nous contacter <a href="mailto:contact@ortolang.fr">contact@ortolang.fr</a>.</p>',
+            BUTTON: 'Rafraichir la page'
         }
     });

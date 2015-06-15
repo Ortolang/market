@@ -20,7 +20,9 @@ describe('Service: VisualizerManager', function () {
 
     fakeVisualizerConfig = {
         id: 'FakeVisualizer',
-        name: 'Fake Visualizer',
+        name: {
+            fr: 'Fake Visualizer'
+        },
         compatibleTypes: {
             'foo/fake': true,
             'bar/fake': true,
@@ -31,6 +33,9 @@ describe('Service: VisualizerManager', function () {
 
     fakeVisualizerBisConfig = {
         id: 'FakeVisualizerBis',
+        name: {
+            fr: 'Fake Visualizer Bis'
+        },
         compatibleTypes: {
             'hello/world': true,
             'application/fake-stream': {hello: true, world: true}
@@ -39,6 +44,9 @@ describe('Service: VisualizerManager', function () {
 
     fakeVisualizerTerConfig = {
         id: 'FakeVisualizerTer',
+        name: {
+            fr: 'Fake Visualizer Ter'
+        },
         compatibleTypes: {
             'toto/toto': true,
             'application/fake-stream': true
@@ -47,6 +55,9 @@ describe('Service: VisualizerManager', function () {
 
     fakeVisualizerQuaterConfig = {
         id: 'FakeVisualizerQuater',
+        name: {
+            fr: 'Fake Visualizer Quater'
+        },
         acceptMultiple: true,
         compatibleTypes: [
             {
@@ -69,13 +80,16 @@ describe('Service: VisualizerManager', function () {
 
     it('should not be possible to make a new visualizer with a wrong config', function () {
         var wrongConfig = {};
-        expect(VisualizerFactory.make(wrongConfig)).not.toBeDefined();
+        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
         wrongConfig.id = 'wrong';
-        expect(VisualizerFactory.make(wrongConfig)).not.toBeDefined();
+        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
         wrongConfig.compatibleTypes = {'foo': true};
-        expect(VisualizerFactory.make(wrongConfig)).not.toBeDefined();
+        wrongConfig.name = {fr: 'Wrong'};
+        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
         wrongConfig.id = 'Wrong';
         expect(VisualizerFactory.make(wrongConfig)).toBeDefined();
+        wrongConfig.name = 'Wrong';
+        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
     });
 
     it('should be possible to make a new visualizer', function () {
@@ -85,11 +99,10 @@ describe('Service: VisualizerManager', function () {
 
     it('should be possible to get the visualizer properties', function () {
         expect(fakeVisualizer.getId()).toEqual(fakeVisualizerConfig.id);
-        expect(fakeVisualizer.getName()).toEqual(fakeVisualizerConfig.name);
-        expect(fakeVisualizerBis.getName()).toEqual(fakeVisualizerBisConfig.id);
+        expect(fakeVisualizer.getName()).toEqual(fakeVisualizerConfig.name.fr);
         expect(fakeVisualizer.getDescription()).toEqual(undefined);
         expect(fakeVisualizer.getCompatibleTypes()).toEqual(fakeVisualizerConfig.compatibleTypes);
-        expect(fakeVisualizer.getElement()).toEqual('<fake-visualizer></fake-visualizer>');
+        expect(fakeVisualizer.getElement()).toEqual('<div class="visualizer" fake-visualizer></div>');
     });
 
     it('should be possible to know if a visualizer is compatible with a mime type', function () {

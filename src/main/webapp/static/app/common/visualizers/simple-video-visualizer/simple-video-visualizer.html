@@ -1,7 +1,4 @@
-<div class="modal-body">
-    <p>
-        <strong>{{elements[0].name}}</strong>
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    </p>
-    <video id="simple-html5-video" controls ng-switch="elements[0].mimeType" ng-src="{{elements[0].downloadUrl}}"></video>
+<div class="visualizer-wrapper close-on-click">
+    <video id="simple-html5-video" controls ng-src="{{elements[0].downloadUrl}}"></video>
 </div>
+

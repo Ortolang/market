@@ -8,14 +8,10 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Download', ['$window', 'url', function ($window, url) {
+    .service('Download', ['$window', 'Content', function ($window, Content) {
 
         this.getDownloadUrl = function (element) {
-            return url.content + '/key/' + element.key;
-        };
-
-        this.getPreviewUrl = function (element, large) {
-            return this.getDownloadUrl(element) + '?preview=' + (large ? 'large' : 'small');
+            return Content.getContentUrlWithKey(element) + '?download';
         };
 
         this.download = function (element) {

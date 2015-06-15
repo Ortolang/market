@@ -21,6 +21,9 @@ angular.module('ortolangVisualizers')
         };
 
         this.register = function (visualizer) {
+            if (!visualizer.id) {
+                return;
+            }
             var i = 0;
             for (i; i < registry.length; i++) {
                 if (registry[i].id === visualizer.id) {
@@ -85,7 +88,9 @@ angular.module('ortolangVisualizers')
         };
 
     }])
-    .provider('VisualizerFactory', function () {
+    .provider('VisualizerFactory', ['$translateProvider', function ($translateProvider) {
+
+        var language = 'fr';
 
         // Constructor
         function OrtolangVisualizer(config) {
@@ -103,7 +108,7 @@ angular.module('ortolangVisualizers')
             }, this);
 
             var elementName = config.id.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-            this.element = '<' + elementName + '></' + elementName + '>';
+            this.element = '<div class="visualizer" ' + elementName + '></div>';
         }
 
         // Methods
@@ -114,7 +119,8 @@ angular.module('ortolangVisualizers')
             },
 
             getName: function () {
-                return this.name || this.id;
+                language = $translateProvider.use() || language;
+                return this.name[language] || this.name.fr || this.id;
             },
 
             getDescription: function () {
@@ -169,13 +175,13 @@ angular.module('ortolangVisualizers')
         };
 
         this.make = function (config) {
-            if (!config.id || !config.compatibleTypes) {
-                console.error('id and compatiblesTypes are mandatory', config);
-                return undefined;
+            if (!config.id || !config.compatibleTypes || !config.name  || !config.name.fr) {
+                console.error('id, name and compatiblesTypes are mandatory', config);
+                return {};
             }
             if (!config.id.match(/^[A-Z]/)) {
                 console.error('id must start with an upper-case letter', config.id);
-                return undefined;
+                return {};
             }
             return new OrtolangVisualizer(config);
         };
@@ -186,4 +192,4 @@ angular.module('ortolangVisualizers')
             };
         };
 
-    });
+    }]);

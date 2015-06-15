@@ -1,6 +1,9 @@
-<section ng-if="items.size()>0" class="items">
+<section class="items">
+    <header ng-if="title">
+        <h3 translate="{{title}}"></h3>
+    </header>
 
-    <div ng-if="viewMode.id === 'tile'" class="row">
+    <div ng-if="items.size()>0 && viewMode.id === 'tile'" class="row">
         <div class="col-md-12">
             <div class="flex-row">
                 <item class="flex-column medium-item" ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>
@@ -8,12 +11,11 @@
         </div>
     </div>
     
-    <div ng-if="viewMode.id === 'line'" class="row market-list-line">
+    <div ng-if="items.size()>0 && viewMode.id === 'line'" class="row market-list-line">
         <div ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" class="col-md-8 line">
             <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
         </div>
     </div>
-</section>
-<section ng-if="items.size()===0" class="row items">
-    <p class="text-center"><em>{{'MARKET.NO_ITEM' | translate}}</em></p>
+
+    <p ng-if="!lock && items.size()===0" class="text-center"><em>{{'MARKET.NO_ITEM' | translate}}</em></p>
 </section>

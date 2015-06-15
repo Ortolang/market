@@ -30,8 +30,7 @@ angular.module('ortolangMarketApp')
                 return this.enabledFilters.slice();
             },
 
-            addFilter : function (filter, opt) {
-                filter.putSelectedOption(opt);
+            addFilter : function (filter) {
 
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
@@ -63,6 +62,7 @@ angular.module('ortolangMarketApp')
                     this.enabledFilters[i].clearSelectedOptions();
                     delete this.enabledFilters[i];
                 }
+                this.enabledFilters = [];
             },
 
             getAvailabledFilters: function() {
@@ -87,7 +87,7 @@ angular.module('ortolangMarketApp')
                 }
             },
 
-            urlParam: function (content, viewMode) {
+            urlParam: function (content, viewMode, orderProp, orderDirection, facets) {
 
                 var filters = {}, params = {};
                 angular.forEach(this.enabledFilters, function(filter) {
@@ -106,7 +106,11 @@ angular.module('ortolangMarketApp')
                 if (content && content !== '') {
                     params.content = content;
                 }
+                
                 params.viewMode = viewMode.id;
+                params.orderProp = orderProp.id;
+                params.orderDirection = orderDirection;
+                params.facets = facets.toString();
 
                 return params;
             },
@@ -138,6 +142,9 @@ angular.module('ortolangMarketApp')
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputType', 'lexiconInputType');
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionTypes', 'lexiconDescriptionTypes');
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputLanguages', 'lexiconInputLanguages');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionLanguages', 'lexiconDescriptionLanguages');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconFormats', 'lexiconFormats');
+                queryBuilder.addProjection('meta_ortolang-item-json.lexiconLanguageType', 'lexiconLanguageType');
 
                 queryBuilder.equals('status', 'published');
 

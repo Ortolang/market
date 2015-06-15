@@ -102,7 +102,7 @@
                             <td>{{process.activity}}</td>
                             <td><button class="btn btn-sm btn-default" ng-click="showToolParam(process)" translate="TOOLS.VIEW_PARAM"></button></td>
                             <td>
-                                <button class="btn btn-sm btn-default" ng-click="showToolLog(process)" translate="PROCESSES.VIEW_LOG"></button>
+                                <button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button>
                                 <button ng-if="Runtime.hasRemoteProcessesWithState(Runtime.getStates().pending)" class="btn btn-sm btn-default" ng-click="abortToolJob(process.job)" translate="TOOLS.ABORT"></button>
                             </td>
                         </tr>
@@ -132,7 +132,7 @@
                             <td><span am-time-ago="process.job.start"></span></td>
                             <!--<td>{{process.job.stop | date:'medium'}}</td>-->
                             <td><button class="btn btn-sm btn-default" ng-click="showToolParam(process)" translate="TOOLS.VIEW_PARAM"></button></td>
-                            <td><button class="btn btn-sm btn-default" ng-click="showToolLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -165,7 +165,7 @@
                             <td><span am-time-ago="process.job.stop"></span></td>
                             <td><button class="btn btn-sm btn-default" ng-click="showResult(process)" translate="PROCESSES.VIEW_RESULT"></button></td>
                             <td><button class="btn btn-sm btn-default" ng-click="showToolParam(process)" translate="TOOLS.VIEW_PARAM"></button></td>
-                            <td><button class="btn btn-sm btn-default" ng-click="showToolLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
+                            <td><button class="btn btn-sm btn-default" ng-click="showLog(process)" translate="PROCESSES.VIEW_LOG"></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -175,5 +175,8 @@
             </section>
         </div>
     </div>
-    <button class="btn btn-default" ng-click="test()">Test</button>
+    <!--<button class="btn btn-default" ng-click="test()">Test</button>-->
+
+    <div ng-include="'common/tools/tool-result.html'" ng-controller="ToolResultsCtrl"></div>
+
 </div>

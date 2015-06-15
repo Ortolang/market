@@ -15,7 +15,8 @@ angular.module('ortolangMarketAppMock')
                 createLoginUrl: 'createLoginUrl',
                 createAccountUrl: 'createAccountUrl',
                 token: 'token',
-                authenticated: true
+                authenticated: true,
+                isTokenExpired: function () {return false; }
             },
             deferred = $q.defer(),
             logoutUrl = keycloakAuth.authServerUrl + '/realms/ortolang/tokens/logout?redirect_uri=https://localhost:9000/';

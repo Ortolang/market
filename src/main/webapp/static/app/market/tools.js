@@ -48,8 +48,6 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
 
-            $scope.filtersManager.addFilter($scope.typeFilter, $scope.typeFilter.getOption('Outil'));
-
             var languageFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.toolLanguages',
                 alias: 'toolLanguages',
@@ -121,8 +119,6 @@ angular.module('ortolangMarketApp')
 
         function init() {
         	initScopeVariables();
-            
-            $scope.query = $scope.filtersManager.toQuery();
         }
         init();
 

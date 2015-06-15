@@ -26,6 +26,7 @@ angular.module('ortolangMarketApp')
             var processes = [],
                 tasks = [],
                 remoteProcesses = [],
+                allProcesses = [],
                 processModal,
                 completeTaskModal,
                 states = {
@@ -335,6 +336,19 @@ angular.module('ortolangMarketApp')
             }
 
             // *********************** //
+            //          Misc           //
+            // *********************** //
+
+            function getAllProcesses() {
+                console.debug('processus actifs : ', getActiveProcesses(), getActiveRemoteProcesses());
+                return getActiveProcesses().concat(getActiveRemoteProcesses());
+            }
+
+            function getAllProcessesWithState(state, not) {
+                return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
+            }
+
+            // *********************** //
             //          Events         //
             // *********************** //
 
@@ -347,7 +361,7 @@ angular.module('ortolangMarketApp')
                 if (message.arguments.state === states.completed) {
                     var process = $filter('filter')(activeProcesses, {key: message.fromObject});
                     if (process.length > 0) {
-                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), placement: 'top-right', type: 'success', show: true});
+                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), type: 'success'});
                     }
                 }
                 getProcesses(message.date, true);
@@ -375,7 +389,7 @@ angular.module('ortolangMarketApp')
                 }
                 history['runtime.task.created'] = message;
                 processTaskEvent(event, message);
-                $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), placement: 'top-right', type: 'danger', show: true});
+                $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), type: 'danger'});
             });
 
             $rootScope.$on('runtime.task.assigned', function (event, message) {
@@ -387,7 +401,11 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('tool-list-registered', function () {
-                getRemoteProcesses();
+                AuthService.sessionInitialized().then(function () {
+                    if (AuthService.isAuthenticated()) {
+                        getRemoteProcesses();
+                    }
+                });
             });
 
             $rootScope.$on('runtime.remote.created', function () {
@@ -399,7 +417,7 @@ angular.module('ortolangMarketApp')
                 if (message.arguments.state === states.completed) {
                     var remoteProcess = $filter('filter')(activeRemoteProcesses, {key: message.fromObject});
                     if (remoteProcess.length > 0) {
-                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: remoteProcess[0].name}), placement: 'top-right', type: 'success', show: true});
+                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: remoteProcess[0].name}), type: 'success'});
                     }
                 }
                 getRemoteProcesses(message.date, true);
@@ -420,9 +438,13 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function init() {
-                getProcesses();
-                getTasks();
-                initialSubscriptions();
+                AuthService.sessionInitialized().then(function () {
+                    if (AuthService.isAuthenticated()) {
+                        getProcesses();
+                        getTasks();
+                        initialSubscriptions();
+                    }
+                });
             }
             init();
 
@@ -452,6 +474,9 @@ angular.module('ortolangMarketApp')
                 hasActiveRemoteProcesses: hasActiveRemoteProcesses,
                 hasRemoteProcessesWithState: hasRemoteProcessesWithState,
                 getRemoteProcessesWithState: getRemoteProcessesWithState,
-                pushNewRemoteProcess: pushNewRemoteProcess
+                pushNewRemoteProcess: pushNewRemoteProcess,
+                // Misc
+                getAllProcesses: getAllProcesses,
+                getAllProcessesWithState: getAllProcessesWithState
             };
         }]);
