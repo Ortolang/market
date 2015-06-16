@@ -799,14 +799,6 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            function hideTooltip() {
-                // Hide manually to prevent tooltip to stay visible
-                var tooltip = angular.element('.tooltip');
-                if (tooltip.length > 0) {
-                    tooltip.scope().$parent.$hide();
-                }
-            }
-
             $scope.browseToPath = function (path) {
                 setPath(path);
                 if ($scope.isFileSelect) {
@@ -826,13 +818,11 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.goBack = function () {
-                hideTooltip();
                 $scope.keyHistory.forward.push($scope.itemKey);
                 browseToKey($scope.keyHistory.back.pop(), true);
             };
 
             $scope.goForward = function () {
-                hideTooltip();
                 $scope.keyHistory.back.push($scope.itemKey);
                 browseToKey($scope.keyHistory.forward.pop(), true);
             };

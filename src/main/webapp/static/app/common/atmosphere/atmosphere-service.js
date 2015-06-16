@@ -62,7 +62,6 @@ angular.module('ortolangMarketApp')
 
         config.onError = function (response) {
             console.error(response);
-            $rootScope.$broadcast('server-down');
         };
 
         config.onReconnect = function (request, response) {
