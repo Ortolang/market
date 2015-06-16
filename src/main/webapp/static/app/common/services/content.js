@@ -10,12 +10,12 @@
 angular.module('ortolangMarketApp')
     .service('Content', ['url', function (url) {
 
-        this.getContentUrlWithKey = function (element) {
-            return url.content + '/key/' + element.key;
+        this.getContentUrlWithKey = function (element, woSSL) {
+            return (woSSL ? url.contentWoSSL : url.content) + '/key/' + element.key;
         };
 
-        this.getContentUrlWithPath = function (element, workspace, root) {
-            return url.content + '/all/' + workspace.alias + '/' + (root || 'head') + element.path;
+        this.getContentUrlWithPath = function (element, workspace, root, woSSL) {
+            return (woSSL ? url.contentWoSSL : url.content) + '/all/' + workspace.alias + '/' + (root || 'head') + element.path;
         };
 
         this.getPreviewUrlWithKey = function (element, large) {

@@ -4,3 +4,4 @@
     var OrtolangConfig = {};
     OrtolangConfig.logoutRedirectUrl='<% out.print(OrtolangMarketConfig.getInstance().getProperty("auth.logout.redirect")); %>';
     OrtolangConfig.serverUrl='<% out.print(OrtolangMarketConfig.getInstance().getProperty("server.url")); %>';
+    OrtolangConfig.serverUrlWoSSL='<% out.print(OrtolangMarketConfig.getInstance().getProperty("server.url.woSLL")); %>';
