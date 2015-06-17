@@ -103,11 +103,15 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                             $scope.contextMenuItems.push({divider: true});
                         }
-                        if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
-                            $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
+                        if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && !$scope.hasOnlyParentSelected()) {
+                            $scope.contextMenuItems.push({text: 'RENAME', icon: icons.browser.edit, action: 'rename'});
                         }
                         if ($scope.browserService.canDelete && $scope.isHead && !$scope.hasOnlyParentSelected()) {
                             $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
+                            $scope.contextMenuItems.push({divider: true});
+                        }
+                        if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
+                            $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
                             $scope.contextMenuItems.push({divider: true});
                         }
                         $scope.contextMenuItems.push({text: $scope.viewMode[$scope.browserSettings.viewMode].text, icon: $scope.viewMode[$scope.browserSettings.viewMode].icon, action: 'switchViewMode'});
@@ -646,6 +650,43 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.renameChild = function () {
+                if ($scope.browserService.canAdd && $scope.isHead) {
+                    var renameCollectionModal;
+                    createModalScope();
+                    modalScope.childNewName = $scope.selectedElements[0].name;
+                    modalScope.renameChild = function () {
+                        if (modalScope.childNewName !== $scope.selectedElements[0].name) {
+                            var data = $scope.selectedElements[0],
+                                destination = $scope.parent.path + '/' + modalScope.childNewName;
+
+                            WorkspaceElementResource.put({wskey: $scope.browserService.workspace.key, destination: destination}, data, function () {
+                                getParentData(true).then(function () {
+                                    $scope.selectedElements[0].name = modalScope.childNewName;
+                                    $scope.refreshSelectedElement();
+                                    renameCollectionModal.hide();
+                                    deactivateContextMenu();
+                                });
+                            });
+                        } else {
+                            renameCollectionModal.hide();
+                        }
+                    };
+                    modalScope.cancel = function () {
+                        renameCollectionModal.hide();
+                        deactivateContextMenu();
+                    };
+                    modalScope.$on('modal.show', function () {
+                        angular.element('#rename-collection-modal').find('[autofocus]:first').focus();
+                    });
+                    renameCollectionModal = $modal({
+                        scope: modalScope,
+                        template: 'workspace/templates/rename-modal.html',
+                        show: true
+                    });
+                }
+            };
+
             $scope.editDescription = function () {
                 if ($scope.browserService.canAdd && $scope.isHead && $scope.hasOnlyOneElementSelected()) {
                     var editDescriptionModal;
@@ -695,6 +736,9 @@ angular.module('ortolangMarketApp')
                         break;
                     case 'delete':
                         $scope.clickDelete();
+                        break;
+                    case 'rename':
+                        $scope.renameChild();
                         break;
                     case 'preview':
                         $scope.clickPreview();
@@ -927,9 +971,11 @@ angular.module('ortolangMarketApp')
             $rootScope.$on('core.workspace.update', function ($event, eventMessage) {
                 if ($scope.browserService.workspace.key === eventMessage.fromObject) {
                     var path = eventMessage.arguments.path;
-                    path = path.substring(0, path.lastIndexOf('/') + 1);
-                    if ($scope.path === path) {
-                        getParentData(true);
+                    if (path) {
+                        path = path.substring(0, path.lastIndexOf('/') + 1);
+                        if ($scope.path === path) {
+                            getParentData(true);
+                        }
                     }
                 }
             });

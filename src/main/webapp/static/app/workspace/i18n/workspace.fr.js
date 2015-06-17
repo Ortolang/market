@@ -68,9 +68,11 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Ajouter un nouveau dossier',
                 SUBMIT: 'Ajouter'
             },
+            RENAME_CHILD_MODAL: {
+                TITLE: 'Renommer'
+            },
             EDIT_DESCRIPTION_MODAL: {
-                TITLE: 'Éditer la description de {{name}}',
-                SUBMIT: 'Éditer'
+                TITLE: 'Éditer la description de {{name}}'
             },
             ADD_MEMBER_MODAL: {
                 TITLE: 'Ajouter un membre à {{wsName}}',

@@ -24,12 +24,15 @@ angular.module('ortolangMarketApp')
         }
 
         function getHead() {
-            $scope.head = ObjectResource.get({key: WorkspaceBrowserService.workspace.head});
-            return $scope.head;
+            return ObjectResource.get({key: WorkspaceBrowserService.workspace.head}, function (data) {
+                $scope.head = data;
+            });
         }
 
         function refreshWorkspace() {
-            WorkspaceBrowserService.workspace = WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}, function () {
+            WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}, function (workspace) {
+                workspace.authorProfile = WorkspaceBrowserService.workspace.authorProfile;
+                WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
                     WorkspaceBrowserService.workspace.authorProfile = data;
                 });
@@ -206,7 +209,7 @@ angular.module('ortolangMarketApp')
                 return false;
             }
             if ($data !== WorkspaceBrowserService.workspace.name) {
-                var data = WorkspaceBrowserService.workspace,
+                var data = angular.copy(WorkspaceBrowserService.workspace),
                     deferred = $q.defer(),
                     nameCopy = WorkspaceBrowserService.workspace.name;
                 delete data.authorProfile;

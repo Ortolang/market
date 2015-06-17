@@ -27,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="child in filteredOrderedChildren() | limitTo:displayedItemLimit track by child.key"
+        <tr ng-repeat="child in filteredOrderedChildren() | limitTo:displayedItemLimit track by child.key + child.name"
             ng-click="clickChild(child, $event)"
             ng-right-click="clickChild(child, $event)"
             ng-dblclick="doubleClickChild(child)"
