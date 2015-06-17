@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', [ '$location', 'ObjectResource', 'DownloadResource',  function ($location, ObjectResource, DownloadResource) {
+    .directive('item', ['ObjectResource', 'Content',  function (ObjectResource, Content) {
         return {
             restrict: 'EA',
             scope: {
@@ -25,27 +25,26 @@ angular.module('ortolangMarketApp')
                         scope.itemUrl = scope.entry.applicationUrl;
                     } else {
                         var type;
-                        if(scope.entry.type === 'Corpus') {
+                        if (scope.entry.type === 'Corpus') {
                             type = 'corpora';
-                        } else if(scope.entry.type === 'Lexique') {
+                        } else if (scope.entry.type === 'Lexique') {
                             type = 'lexicons';
-                        } else if(scope.entry.type === 'Outil') {
+                        } else if (scope.entry.type === 'Outil') {
                             type = 'tools';
                         }
                         scope.itemUrl = '#/market/' + type + '/' + scope.entry.key;
-                        // scope.itemUrl = '#' + $location.path() + '/' + scope.entry.key;
                     }
 
-                    if(scope.entry.image) {
+                    if (scope.entry.image) {
                         ObjectResource.element({key: key, path: scope.entry.image}).$promise.then(function (oobject) {
-                            scope.image = DownloadResource.getDownloadUrl({key: oobject.key});
+                            scope.image = Content.getContentUrlWithKey(oobject);
                         }, function (reason) {
                             console.error(reason);
                         });
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';
-                        if(scope.entry.title) {
+                        if (scope.entry.title) {
                             scope.imgtitle = scope.entry.title.substring(0, 2);
                             scope.imgtheme = scope.entry.title.substring(0, 1).toLowerCase();
                         }

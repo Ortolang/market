@@ -14,6 +14,9 @@ angular.module('ortolangMarketApp')
             createWorkspace: {
                 method: 'POST'
             },
+            updateWorkspace: {
+                method: 'PUT'
+            },
             query: {
                 method: 'GET',
                 isArray: false
