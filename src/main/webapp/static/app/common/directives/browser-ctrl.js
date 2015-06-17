@@ -21,6 +21,7 @@ angular.module('ortolangMarketApp')
         '$q',
         '$translate',
         '$modal',
+        '$alert',
         'hotkeys',
         'WorkspaceResource',
         'ObjectResource',
@@ -34,7 +35,7 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, pageWrapperMarginLeft, marketItemHeader, footerHeight, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
@@ -537,9 +538,17 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function deleteElements(toBeDeletedElements) {
-                if (toBeDeletedElements.length !== 0) {
+                if (toBeDeletedElements.length > 0) {
                     WorkspaceElementResource.delete({wskey: $scope.browserService.workspace.key, path: $scope.parent.path + '/' + toBeDeletedElements.pop().name}, function () {
                         deleteElements(toBeDeletedElements);
+                    }, function (error) {
+                        $alert({
+                            title: error.status === 403 ? $translate.instant('WORKSPACE.DELETE_NON_EMPTY_FOLDER_ALERT.TITLE') : $translate.instant('UNEXPECTED_ERROR_ALERT.TITLE'),
+                            content: error.status === 403 ? $translate.instant('WORKSPACE.DELETE_NON_EMPTY_FOLDER_ALERT.CONTENT') : $translate.instant('UNEXPECTED_ERROR_ALERT.CONTENT'),
+                            type: 'danger',
+                            duration: 5
+                        });
+                        deactivateContextMenu();
                     });
                 } else {
                     getParentData(true).then(function () {
@@ -549,7 +558,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.clickDelete = function () {
-                var toBeDeletedElements = $scope.selectedElements;
+                var toBeDeletedElements = angular.copy($scope.selectedElements);
                 deleteElements(toBeDeletedElements);
             };
 
@@ -1412,7 +1421,7 @@ angular.module('ortolangMarketApp')
                         callback: function (event) {
                             preventDefault(event);
                             if (!$scope.hasOnlyParentSelected()) {
-                                deleteElements($scope.selectedElements);
+                                $scope.clickDelete();
                             }
                         }
                     })

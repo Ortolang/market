@@ -45,5 +45,8 @@ angular.module('ortolangMarketApp')
             BODY: '<p>It seems that the server is currently unavailable; thus you won\'t be able to access ORTOLANG\'s resources.</p><p>You should try to refresh the page. If the problem persists, please contact us at <a href="mailto:contact@ortolang.fr">contact@ortolang.fr</a> .</p>',
             BUTTON: 'Refresh the page'
         },
-        UNEXPECTED_ERROR: 'An unexpected error has occurred'
+        UNEXPECTED_ERROR_ALERT: {
+            TITLE: 'Error',
+            CONTENT: 'An unexpected error has occurred'
+        }
     });

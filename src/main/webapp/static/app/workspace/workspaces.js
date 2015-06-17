@@ -220,7 +220,7 @@ angular.module('ortolangMarketApp')
                     refreshWorkspace();
                 }, function () {
                     WorkspaceBrowserService.workspace.name = nameCopy;
-                    deferred.reject($translate.instant('UNEXPECTED_ERROR'));
+                    deferred.reject($translate.instant('UNEXPECTED_ERROR_ALERT.CONTENT'));
                 });
                 return deferred.promise;
             }
