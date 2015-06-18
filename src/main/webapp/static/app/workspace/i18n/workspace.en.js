@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
             CANCEL_ALL: 'Cancel all',
             ADD_METADATA: 'Add a metadata',
             SNAPSHOT: 'Save workspace state',
-            PUBLISH: 'Publish workspace',
+            PUBLISH: 'Submit for publication',
             NO_WORKSPACES: 'You do not have created a workspace yet',
             HISTORY: 'Recent activity',
             MEMBERS_NUMBER: '<strong>{{number}} member{{number > 1 ? "s" : ""}}</strong> in the project',
