@@ -18,14 +18,14 @@
             </section>
         </div>
 
-        <div ng-if="workspaceList.entries.length === 0" class="col-sm-10 col-md-10 container-main workspace-dashboard">
+        <div ng-show="workspaceList.entries.length === 0" class="col-sm-10 col-md-10 container-main workspace-dashboard">
             <br/>
             <p>
                 <i translate="WORKSPACE.NO_WORKSPACES"></i>
             </p>
         </div>
 
-        <div ng-if="workspaceList.entries.length > 0" class="col-sm-10 col-md-10 container-main workspace-dashboard">
+        <div ng-show="workspaceList.entries.length > 0" class="col-sm-10 col-md-10 container-main workspace-dashboard">
             <div class="row">
                 <h1 ng-class="renameWorkspaceForm.$visible ? 'col-md-8' : 'col-md-12'"><span editable-text="WorkspaceBrowserService.workspace.name" e-ng-init="largeInput = true;" e-form="renameWorkspaceForm" onbeforesave="renameWorkspace($data)">{{WorkspaceBrowserService.workspace.name}}</span> <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="icons.browser.edit"></span></button></h1>
             </div>

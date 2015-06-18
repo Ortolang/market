@@ -379,6 +379,34 @@ angular.module('ortolangMarketApp')
             });
         };
 
+        // *********************** //
+        //          Resize         //
+        // *********************** //
+
+        $scope.resizeBrowser = function () {
+            if (!$rootScope.browsing) {
+                console.log('Resizing browser');
+                var topOffset = angular.element('#top-nav-wrapper').outerHeight(),
+                    height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+                    browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
+                height -= topOffset;
+                if (height < 1) {
+                    height = 1;
+                }
+                if (height > topOffset) {
+                    height -= 1;
+                    if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
+                        height -= angular.element('.upload-queue').innerHeight();
+                    }
+                    angular.element('.browser-aside-left').css('min-height', (height - browserToolbarHeight) + 'px');
+                }
+            }
+        };
+
+        angular.element($window).bind('resize', function () {
+            $scope.resizeBrowser();
+        });
+
         function initialSubscriptions(data) {
             AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.create', throwedByPattern: User.key});
             angular.forEach(User.groups, function (group) {
@@ -395,6 +423,7 @@ angular.module('ortolangMarketApp')
             $scope.WorkspaceBrowserService = WorkspaceBrowserService;
             $scope.workspaceHistory = undefined;
             $rootScope.noFooter = true;
+            $scope.resizeBrowser();
             $scope.icons = icons;
             $scope.locationOrigin = $window.location.origin;
             getWorkspaceList();
