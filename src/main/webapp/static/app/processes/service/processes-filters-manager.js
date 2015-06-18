@@ -116,6 +116,7 @@ angular.module('ortolangMarketApp')
                     }
                     filters[id].active = true;
                 }
+                //console.debug(filters);
             }
 
 

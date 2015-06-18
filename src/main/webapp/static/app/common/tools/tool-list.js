@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'MetadataFormatResource', 'Runtime', 'RuntimeResource',
-        function ($scope, ToolManager, $rootScope, $translate, $http, $filter) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert',
+        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, Runtime, $alert) {
 
 
             // ***************** //
@@ -24,6 +24,7 @@ angular.module('ortolangMarketApp')
 
             $scope.hide = function () {
                 $scope.visibility = false;
+                $scope.currentJob = undefined;
             };
 
             $scope.toggle = function () {
@@ -50,10 +51,20 @@ angular.module('ortolangMarketApp')
 
             $scope.resetSelectedTool = function () {
                 $scope.selectedTool = undefined;
+                $scope.config.model = undefined;
+                $scope.currentJob = undefined ;
             };
 
             $scope.hasToolSelected = function () {
                 return $scope.selectedTool !== undefined;
+            };
+
+            $scope.hasToolConfig = function () {
+                return $scope.config.model !== undefined;
+            };
+
+            $scope.isRunning = function () {
+                return $scope.currentJob !== undefined ;
             };
 
             $scope.getSize = function (obj) {
@@ -100,16 +111,18 @@ angular.module('ortolangMarketApp')
                 );
             }
 
-            $scope.hasToolConfig = function () {
-                return $scope.config.model !== undefined;
-            };
-
-
             function onSubmit () {
                 $scope.config.model.toolKey = $scope.selectedTool.getKey();
+                $scope.currentJob = {};
+                $scope.currentJob.state = $translate.instant('PROCESSES.'+ Runtime.getStates().submitted);
+                $scope.currentJob.completedStates = [];
                 ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.config.model).$promise.then(
                     function (job) {
-                        $scope.hide();
+                        console.debug(job);
+                        $scope.currentJob.job = job;
+                        $scope.currentJob.completedStates.push($scope.currentJob.state);
+                        $scope.currentJob.state = $translate.instant('PROCESSES.' + job.status);
+                        $scope.currentJob.completed = false;
                         $rootScope.$broadcast('remote-process-created', job);
                     },
                     function (msg) {
@@ -159,6 +172,33 @@ angular.module('ortolangMarketApp')
                 $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
             };
 
+            /** Tool execution **/
+
+            $scope.abortToolJob = function () {
+                ToolManager.getTool($scope.currentJob.job.toolKey).abortJob($scope.currentJob.job.id).$promise.then(
+                    function () {
+                        $alert({title: ToolManager.getTool($scope.currentJob.job.toolKey).name, content: 'annulé', type: 'success'});
+                    },
+                    function () {
+                        $alert({title: ToolManager.getTool($scope.currentJob.job.toolKey).name, content: 'pas annulé', type: 'danger'});
+                    }
+                );
+            };
+
+
+            $scope.showResult = function () {
+                console.debug($scope.currentJob.job.parameters);
+                ToolManager.getTool($scope.currentJob.job.toolKey).getResult($scope.currentJob.job.id).$promise.then(function (data) {
+                    $scope.results = data;
+                    $scope.job = $scope.currentJob.job;
+                    $scope.tool = ToolManager.getTool($scope.currentJob.job.toolKey);
+                    $scope.switchStatus = [];
+                    $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
+                    $scope.log = $scope.currentJob.log;
+                    $rootScope.$broadcast('tool-results-show');
+                });
+            };
+
 
             // ***************** //
             // Alert visibility //
@@ -190,6 +230,34 @@ angular.module('ortolangMarketApp')
                 $scope.show();
             });
 
+            $rootScope.$on('runtime.remote.log', function (event, message) {
+                event.stopPropagation();
+                if($scope.currentJob !== undefined && message.fromObject === $scope.currentJob.job.processId) {
+                    var myJSONString = JSON.stringify(message.arguments.message);
+                    $scope.currentJob.log = myJSONString.replace(/\\n/g, '\n')
+                        .replace(/\\"/g, '')
+                        .replace(/\"/g, '')
+                        .replace(/\\r/g, '\r')
+                        .replace(/\\t/g, '\t');
+                }
+            });
+
+            $rootScope.$on('runtime.remote.update-state', function (event, message) {
+                event.stopPropagation();
+                if($scope.currentJob !== undefined && message.fromObject === $scope.currentJob.job.processId) {
+                    $scope.currentJob.completedStates.push($scope.currentJob.state);
+                    $scope.currentJob.state = $translate.instant('PROCESSES.' + message.arguments.state);
+                    if(message.arguments.state === Runtime.getStates().completed) {
+                        $scope.currentJob.completed = true;
+                        $scope.currentJob.error = false;
+                    }
+                    if((message.arguments.state === Runtime.getStates().suspended) || (message.arguments.state === Runtime.getStates().aborted)) {
+                        $scope.currentJob.completed = true;
+                        $scope.currentJob.error = true;
+                    }
+                }
+            });
+
 
             // ************** //
             // Initialization //
@@ -202,6 +270,7 @@ angular.module('ortolangMarketApp')
                 $scope.config = {};
                 loadToolsList();
                 $scope.selectedTool = undefined;
+                $scope.currentJob = undefined;
             }
 
             $scope.onSubmit = onSubmit;

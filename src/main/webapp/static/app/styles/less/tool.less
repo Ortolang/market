@@ -119,6 +119,188 @@
   }
 }
 
+
+.progress-box {
+  background-color: #FEFEFE;
+  border-color: #FEFEFE;
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1), 0px 2px 5px rgba(0, 0, 0, 0.1);
+  color: #444;
+  font-weight: normal;
+  margin: 2em auto;
+  padding: 3em;
+  border: 1px solid rgba(20, 53, 80, 0.05);
+  text-align: center;
+
+  .step {
+    margin-bottom: 1em;
+    font-size: 12px;
+    line-height: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  ol.progtrckr {
+    display: table;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  ol.progtrckr li {
+    display: table-cell;
+    text-align: center;
+    line-height: 3em;
+  }
+  ol.progtrckr[data-progtrckr-steps="2"] li { width: 49%; }
+  ol.progtrckr[data-progtrckr-steps="3"] li { width: 33%; }
+  ol.progtrckr[data-progtrckr-steps="4"] li { width: 24%; }
+  ol.progtrckr[data-progtrckr-steps="5"] li { width: 19%; }
+  ol.progtrckr[data-progtrckr-steps="6"] li { width: 16%; }
+  ol.progtrckr[data-progtrckr-steps="7"] li { width: 14%; }
+  ol.progtrckr[data-progtrckr-steps="8"] li { width: 12%; }
+  ol.progtrckr[data-progtrckr-steps="9"] li { width: 11%; }
+
+  ol.progtrckr li.progtrckr-done {
+    color: silver;
+    border-bottom: 4px solid silver;
+  }
+  ol.progtrckr li.progtrckr-active {
+    color: black;
+    border-bottom: 4px solid yellowgreen;
+  }
+  ol.progtrckr li.progtrckr-last {
+    color: green;
+    border-bottom: 4px solid yellowgreen;
+  }
+  ol.progtrckr li.progtrckr-error {
+    color: red;
+    border-bottom: 4px solid orangered;
+  }
+
+  ol.progtrckr li:after {
+    content: "\00a0\00a0";
+  }
+  ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+  }
+  ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: silver;
+    height: 1.2em;
+    width: 1.2em;
+    line-height: 1.2em;
+    border: none;
+    border-radius: 1.2em;
+  }
+  ol.progtrckr li.progtrckr-active:before {
+    font-family: "FontAwesome";
+    content: "\f1ce";
+    color: yellowgreen;
+    background: white;
+    -moz-border-radius: 60px;
+    -webkit-border-radius: 60px;
+    border-radius: 60px;
+    font-size: 1.5em;
+    bottom: -1.6em;
+    -moz-animation: three-quarters-loader 2250ms infinite linear;
+    -webkit-animation: three-quarters-loader 2250ms infinite linear;
+    animation: three-quarters-loader 2250ms infinite linear;
+  }
+  ol.progtrckr li.progtrckr-last:before {
+    content: "\2713";
+    color: white;
+    background-color: yellowgreen;
+    height: 1.4em;
+    width: 1.4em;
+    line-height: 1.4em;
+    border: none;
+    border-radius: 1.4em;
+  }
+
+  ol.progtrckr li.progtrckr-error:before {
+    font-family: "FontAwesome";
+    content: "\f06a";
+    color: white;
+    background-color: orangered;
+    height: 1.4em;
+    width: 1.4em;
+    line-height: 1.4em;
+    border: none;
+    border-radius: 1.4em;
+  }
+}
+
+@-moz-keyframes three-quarters-loader {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes three-quarters-loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes three-quarters-loader {
+  0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.box {
+  margin: 2em;
+  padding: 1em;
+  background-color: rgba(20, 53, 80, 0.04);
+  border: 1px solid rgba(20, 53, 80, 0.05);
+
+  h4 {
+    margin-bottom: 1em;
+    font-size: 12px;
+    line-height: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .console {
+    color: #333;
+    font: 11px Consolas,Monaco,"Bitstream Vera Sans Mono","Courier New",Courier,monospace;
+    margin: 0px;
+    padding: 1em;
+    overflow-x: hidden;
+    text-align: left;
+    border: 1px solid rgba(20, 53, 80, 0.1);
+    background-color: #FFF;
+    white-space: pre-wrap;
+  }
+}
+
+
+
 @media (max-device-width: 710px ) {
 
   .tool-list {

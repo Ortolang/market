@@ -64,18 +64,21 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.submit = function(){
-                ToolManager.checkGrant($scope.toolKey).then(function () {
+                ToolManager.checkGrant($scope.tool.key).then(function () {
                     saveResult();
                 });
             };
 
             function saveResult() {
-                ToolManager.getTool($scope.toolKey).saveResult($scope.jobId, $scope.data).$promise.then(
+                ToolManager.getTool($scope.tool.key).saveResult($scope.job.id, $scope.data).$promise.then(
                     function(status){
                         var url = '#/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + status.path + '&browse';
                         var path = $scope.folder.ws + '/' + status.path.replace(/^\/*|\/*$/, '');
                         console.debug(status.path.replace(/^\/*|\/*$/, ''));
-                        var message = $translate.instant('TOOLS.FILES_SAVED_OK', {url: url, path: path});
+                        var message = $translate.instant('TOOLS.FILES_SAVED_OK', {path: path}) +
+                            '<p><a class="btn btn-sm btn-default" href="' + url + '" target="_blank"> ' +
+                            $translate.instant('TOOLS.FILES_SAVED_LINK') +
+                            '</a></p>';
                         showAlert('alert-success', message);
                     },
                     function(error) {

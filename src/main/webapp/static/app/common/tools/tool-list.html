@@ -65,14 +65,14 @@
                         </div>
 
                     </div>
-                    <div class="am-fade-and-slide-right col-xs-12" ng-show="hasToolSelected()">
-                        <div class="panel panel-default" ng-show="hasToolConfig()">
+                    <div class="am-fade-and-slide-right col-xs-12" ng-show="hasToolSelected() && !isRunning()">
+                        <div class="panel panel-default" ng-show="hasToolConfig() && !isRunning()">
                             <div class="panel-heading">
-                                <span class="fa fa-gears"></span> <span translate="TOOLS.CONFIGURATION">}</span>
+                                <span class="fa fa-gears"></span> <span translate="TOOLS.CONFIGURATION"></span>
                             </div>
                             <div class="panel-body">
                                 <div ng-if="config.loadingData.$$status.state === 0" style="margin:20px 0;font-size:2em">
-                                    <strong>Loading...</strong>
+                                    <i class="fa fa-circle-o-notch fa-spin"></i> <strong>Loading...</strong>
                                 </div>
                                 <div ng-if="config.loadingData.$$status.state !== 0">
                                     <form ng-submit="onSubmit()" novalidate>
@@ -83,12 +83,50 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="alert am-fade alert-danger" ng-show="isShowError()">
-                            <button type="button" class="close ng-scope" ng-click="hideError()">×</button>
-                            <strong>{{selectedTool.getName()}}</strong>&nbsp;
-                            <span>{{'TOOLS.FAIL' | translate }} : <i>{{failMsg.statusText}}</i></span>
+                        <!--<div class="alert am-fade alert-danger" ng-show="isShowError()">-->
+                            <!--<button type="button" class="close ng-scope" ng-click="hideError()">×</button>-->
+                            <!--<strong>{{selectedTool.getName()}}</strong>&nbsp;-->
+                            <!--<span>{{'TOOLS.FAIL' | translate }} : <i>{{failMsg.statusText}}</i></span>-->
+                        <!--</div>-->
+                    </div>
+
+                    <div class="am-fade-and-slide-right col-xs-12" ng-show="hasToolSelected() && isRunning()">
+                        <div class="panel panel-default" ng-show="hasToolSelected() && isRunning()">
+                            <div class="panel-heading">
+                                <span class="fa fa-circle-o-notch"></span> <span>{{'TOOLS.EXECUTION' | translate }} </span>
+                            </div>
+                            <div class="panel-body">
+                                <blockquote>
+                                    {{'TOOLS.EXECUTION_DESC' | translate }}
+                                </blockquote>
+                                <div class="progress-box">
+                                    <div>
+                                        <ol class="step progtrckr" data-progtrckr-steps="{{currentJob.completedStates.length + 1}}">
+                                            <li class="progtrckr-done" ng-repeat="state in currentJob.completedStates">{{state}}</li>
+                                            <li class="progtrckr-{{currentJob.completed ? (currentJob.error ? 'error' : 'last') : 'active' }}"> {{currentJob.state}}</li>
+                                        </ol>
+                                    </div>
+                                    <a ng-show="!currentJob.completed" class="btn btn-default" ng-click="abortToolJob()">
+                                        <span class="fa fa-fw fa-close"></span> {{ 'TOOLS.ABORT' | translate }}
+                                    </a>
+                                    <a ng-show="!currentJob.completed" class="btn btn-default" ng-click="hide()">
+                                        <span class="fa fa-fw fa-tasks"></span> {{'TOOLS.BACKGROUND' | translate }}
+                                    </a>
+                                    <a ng-show="currentJob.completed" class="btn btn-default" ng-click="showResult()">
+                                        <span class="fa fa-fw fa-check-square-o"></span> {{'PROCESSES.VIEW_RESULT' | translate }}
+                                    </a>
+                                </div>
+
+                                <div class="box" ng-if="currentJob.log">
+                                    <h4>{{ 'TOOLS.EXECUTION_CONSOLE' | translate }}</h4>
+                                    <div class="console">{{currentJob.log}}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div ng-include="'common/tools/tool-result.html'" ng-controller="ToolResultsCtrl"></div>
+
                 </div>
             </div>
         </div>

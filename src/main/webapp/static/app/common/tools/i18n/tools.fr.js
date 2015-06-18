@@ -31,6 +31,7 @@ angular.module('ortolangMarketApp')
             FAIL: 'a échoué',
             WAS_SUCCESS: 'est en cours d\'execution',
             VIEW_PARAM: 'Voir les paramètres',
+            BACKGROUND: 'Mettre en arrière-plan',
             PARAMETERS: 'Paramètres',
             ABORT: 'Annuler',
             ABORTED: 'est annulé',
@@ -47,7 +48,12 @@ angular.module('ortolangMarketApp')
                 PARAMETERS: 'Paramètres d\'execution de l\'outil'
             },
             DATAOBJECT_KEY: 'Clé du fichier',
-            FILES_SAVED_OK: '<p><strong>Les fichiers ont été sauvegardés avec succès dans le dossier <i>{{path}}</i>.</strong></p><p><a class="btn btn-sm btn-default" href="{{url}}"> Voir les fichiers sauvegardés </a></p>',
-            FILES_SAVED_FAIL: '<p><strong>La sauvegarde des fichiers a échoué.</strong></p><p><i>{{error}}</i></p>'
+            FILES_SAVED_OK: '<p><strong>Les fichiers ont été sauvegardés avec succès dans le dossier <i>{{path}}</i>.</strong></p>',
+            FILES_SAVED_LINK: 'Voir les fichiers sauvegardés',
+            FILES_SAVED_FAIL: '<p><strong>La sauvegarde des fichiers a échoué.</strong></p><p><i>{{error}}</i></p>',
+            EXECUTION: 'Execution',
+            EXECUTION_DESC: 'Vous pouvez quitter cette page en cliquant sur le bouton [Mettre en arrière-plan] sans interrompre l\'execution de l\'outil. ' +
+            'Pour voir la progression de l\'execution de l\'outil, cliquer sur le bouton [Processus] dans la barre de navigation.',
+            EXECUTION_CONSOLE: 'Journal d\'execution'
         }
     });

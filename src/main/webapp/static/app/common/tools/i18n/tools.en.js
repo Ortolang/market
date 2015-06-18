@@ -31,6 +31,7 @@ angular.module('ortolangMarketApp')
             FAIL: 'fails',
             WAS_SUCCESS: 'is now running',
             VIEW_PARAM: 'View parameters',
+            BACKGROUND: 'Put in background',
             PARAMETERS: 'Parameters',
             ABORT: 'Abort',
             ABORTED: 'is aborted',
@@ -47,7 +48,12 @@ angular.module('ortolangMarketApp')
                 PARAMETERS: 'Tool\'s execution parameters'
             },
             DATAOBJECT_KEY: 'File\'s key',
-            FILES_SAVED_OK: '<p><strong>The files were successfully saved in the folder <i>{{path}}</i>.</strong></p><p><a class="btn btn-sm btn-default" href="{{url}}"> See saved files </a></p>',
-            FILES_SAVED_FAIL: '<p><strong>File save has failed</strong></p> <p> <i>{{error}}</i></p>'
+            FILES_SAVED_OK: '<p><strong>The files were successfully saved in the folder <i>{{path}}</i>.</strong></p>',
+            FILES_SAVED_LINK: 'See saved files',
+            FILES_SAVED_FAIL: '<p><strong>File save has failed</strong></p> <p> <i>{{error}}</i></p>',
+            EXECUTION: 'Execution',
+            EXECUTION_DESC: 'You can leave this page without interrupting the tool\'s execution by clicking on the button [Put in background]. ' +
+            'To see the progress of the tool\'s execution, click on the button [Processes] in the navbar.',
+            EXECUTION_CONSOLE: 'Console log'
         }
     });
