@@ -260,18 +260,18 @@
                     <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
                 </dl>
                 <hr/>
-                <dl class="dl-horizontal">
-                    <dt>Permissions</dt>
-                    <dd>
-                        <acl-select data-element="selectedElements[0]" data-readonly="root !== 'head'"></acl-select>
-                    </dd>
-                </dl>
-                <hr/>
-                <p>
-                    <button ng-if="root === 'head' && (path !== '/' || selectedElements[0].name !== 'root')" class="btn btn-default pull-right" ng-click="editDescription()"><span ng-class="icons.browser.edit"></span></button>
-                    <span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>
-                    <span ng-show="selectedElements[0].description">{{selectedElements[0].description}}</span>
-                </p>
+                <!--<dl class="dl-horizontal">-->
+                    <!--<dt>Permissions</dt>-->
+                    <!--<dd>-->
+                        <!--<acl-select data-element="selectedElements[0]" data-readonly="root !== 'head'"></acl-select>-->
+                    <!--</dd>-->
+                <!--</dl>-->
+                <!--<hr/>-->
+                <!--<p>-->
+                    <!--<button ng-if="root === 'head' && (path !== '/' || selectedElements[0].name !== 'root')" class="btn btn-default pull-right" ng-click="editDescription()"><span ng-class="icons.browser.edit"></span></button>-->
+                    <!--<span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>-->
+                    <!--<span ng-show="selectedElements[0].description">{{selectedElements[0].description}}</span>-->
+                <!--</p>-->
             </div>
             <div ng-if="selectedElements && !hasOnlyOneElementSelected()">
                 <p class="lead">
