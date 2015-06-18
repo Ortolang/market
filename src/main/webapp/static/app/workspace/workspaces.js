@@ -8,13 +8,15 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'DownloadResource', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', 'url', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, DownloadResource, MetadataFormatResource, Settings, User, Runtime, icons, url) {
+    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'DownloadResource', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', 'url', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, DownloadResource, MetadataFormatResource, Settings, User, Runtime, icons, url) {
 
-        var modalScope;
+        var modalScope, workspaceListDeferred;
 
         function getWorkspaceList() {
-            $scope.workspaceList = WorkspaceResource.get();
-            return $scope.workspaceList;
+            workspaceListDeferred = WorkspaceResource.get(function (data) {
+                $scope.workspaceList = data;
+            });
+            return workspaceListDeferred;
         }
 
         function getWorkspaceMembers() {
@@ -22,11 +24,15 @@ angular.module('ortolangMarketApp')
         }
 
         function getHead() {
-            $scope.head = ObjectResource.get({key: WorkspaceBrowserService.workspace.head});
+            return ObjectResource.get({key: WorkspaceBrowserService.workspace.head}, function (data) {
+                $scope.head = data;
+            });
         }
 
         function refreshWorkspace() {
-            WorkspaceBrowserService.workspace = WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}, function () {
+            WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}, function (workspace) {
+                workspace.authorProfile = WorkspaceBrowserService.workspace.authorProfile;
+                WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
                     WorkspaceBrowserService.workspace.authorProfile = data;
                 });
@@ -54,8 +60,8 @@ angular.module('ortolangMarketApp')
             return WorkspaceBrowserService.workspace.key === workspace.key;
         };
 
-        $scope.changeWorkspace = function (workspace) {
-            if (!$scope.isActiveWorkspace(workspace)) {
+        $scope.changeWorkspace = function (workspace, init) {
+            if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
                 WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
@@ -84,7 +90,7 @@ angular.module('ortolangMarketApp')
         });
 
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {
-            $scope.workspaceList.$promise.then(function () {
+            workspaceListDeferred.$promise.then(function () {
                 var workspace = $filter('filter')($scope.workspaceList.entries, {key: eventMessage.fromObject});
                 if (workspace.length !== 1) {
                     getWorkspaceList();
@@ -106,7 +112,7 @@ angular.module('ortolangMarketApp')
         });
 
         $rootScope.$on('membership.group.add-member', function (event, eventMessage) {
-            $scope.workspaceList.$promise.then(function () {
+            workspaceListDeferred.$promise.then(function () {
                 var member = $filter('filter')($scope.workspaceList.entries, {members: eventMessage.fromObject});
                 if (member.length !== 1) {
                     getWorkspaceList();
@@ -195,25 +201,57 @@ angular.module('ortolangMarketApp')
         };
 
         // *********************** //
+        //          Edit           //
+        // *********************** //
+
+        $scope.renameWorkspace = function ($data) {
+            if ($data.trim().length === 0) {
+                return false;
+            }
+            if ($data !== WorkspaceBrowserService.workspace.name) {
+                var data = angular.copy(WorkspaceBrowserService.workspace),
+                    deferred = $q.defer(),
+                    nameCopy = WorkspaceBrowserService.workspace.name;
+                delete data.authorProfile;
+                data.name = $data;
+                WorkspaceResource.updateWorkspace({wskey: WorkspaceBrowserService.workspace.key}, data, function () {
+                    deferred.resolve();
+                    getWorkspaceList();
+                    refreshWorkspace();
+                }, function () {
+                    WorkspaceBrowserService.workspace.name = nameCopy;
+                    deferred.reject($translate.instant('UNEXPECTED_ERROR_ALERT.CONTENT'));
+                });
+                return deferred.promise;
+            }
+        };
+
+        // *********************** //
         //       Publication       //
         // *********************** //
 
         $scope.publish = function () {
-            var publishModal;
-            createModalScope();
-            modalScope.wsName = WorkspaceBrowserService.workspace.name;
-            modalScope.publish = function () {
-                Runtime.createProcess({
-                    'process-type': 'publish-workspace',
-                    'process-name': 'Publication of workspace: ' + WorkspaceBrowserService.workspace.name + ' (version ' + (WorkspaceBrowserService.workspace.snapshots.length + 1) + ')',
-                    'wskey': WorkspaceBrowserService.workspace.key
-                });
-                publishModal.hide();
-            };
-            publishModal = $modal({
-                scope: modalScope,
-                template: 'workspace/templates/publish-modal.html',
-                show: true
+            getHead().$promise.then(function () {
+                if ($scope.hasPresentationMetadata()) {
+                    var publishModal;
+                    createModalScope();
+                    modalScope.wsName = WorkspaceBrowserService.workspace.name;
+                    modalScope.publish = function () {
+                        Runtime.createProcess({
+                            'process-type': 'publish-workspace',
+                            'process-name': 'Publication of workspace: ' + WorkspaceBrowserService.workspace.name + ' (version ' + (WorkspaceBrowserService.workspace.snapshots.length + 1) + ')',
+                            'wskey': WorkspaceBrowserService.workspace.key
+                        });
+                        publishModal.hide();
+                    };
+                    publishModal = $modal({
+                        scope: modalScope,
+                        template: 'workspace/templates/publish-modal.html',
+                        show: true
+                    });
+                } else {
+                    // TODO Add alert
+                }
             });
         };
 
@@ -271,7 +309,7 @@ angular.module('ortolangMarketApp')
                 $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
                 angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
                     ProfileResource.read({key: workspaceSnapshot.author}, function (data) {
-                        WorkspaceBrowserService.workspace.authorProfile = data;
+                        workspaceSnapshot.authorProfile = data;
                     });
                     workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
                 });
@@ -362,7 +400,7 @@ angular.module('ortolangMarketApp')
             getWorkspaceList();
             var workspace;
             $scope.browserSettings = Settings[WorkspaceBrowserService.id];
-            $scope.workspaceList.$promise.then(function (data) {
+            workspaceListDeferred.$promise.then(function (data) {
                 initialSubscriptions(data);
                 if ($scope.browserSettings.wskey) {
                     var filteredWorkspace = [];
@@ -385,7 +423,7 @@ angular.module('ortolangMarketApp')
                     workspace = data.entries[0];
                 }
                 if (workspace) {
-                    $scope.changeWorkspace(workspace);
+                    $scope.changeWorkspace(workspace, true);
                     //getPresentationMetadata(workspace);
                     if ($rootScope.browsing) {
                         $scope.browserCtrlInitialized = true;

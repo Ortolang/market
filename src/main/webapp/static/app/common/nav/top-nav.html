@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#/" data-title="{{'NAV.BETA_VERSION_TOOLTIP' | translate}}" data-html="true" bs-tooltip data-placement="right" data-template="common/nav/beta-tooltip-template.html">
-                <img class="ortolang-logo" src="assets/images/logo-ortolang-white.png"/>
+                <img class="ortolang-logo" alt="Logo ORTOLANG" src="assets/images/logo-ortolang-white.png"/>
                 <span>ORTOLANG</span>
                 <span class="beta-version">&nbsp;({{'NAV.BETA_VERSION' | translate}})</span>
             </a>
@@ -59,8 +59,8 @@
                     {{User.name()}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-show="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                    <li ng-hide="navbarCollapsed"><a href="/#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-show="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-hide="navbarCollapsed"><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                     <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
                 </ul>
             </li>

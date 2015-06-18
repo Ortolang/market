@@ -22,4 +22,8 @@ describe('Constant: url', function () {
         expect(url.content).toBeDefined();
     });
 
+    it('should return content url without SSL', function () {
+        expect(url.contentWoSSL).toBeDefined();
+    });
+
 });

@@ -25,12 +25,12 @@ angular.module('ortolangMarketApp')
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
-                
+
                 function load (query) {
                     console.log('query : ' + query);
                     scope.lock = true;
                     JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                        
+
                         scope.items.clear();
                         if(scope.filtersManager) {
                             angular.forEach(scope.filtersManager.getAvailabledFilters(), function(filter) {
@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
                         angular.forEach(jsonResults, function(jsonResult) {
                             var jsEntry = angular.fromJson(jsonResult);
                             if(jsEntry.title) {
-                                
+
                                 scope.items.addItem(jsEntry);
 
 
@@ -68,14 +68,14 @@ angular.module('ortolangMarketApp')
                     if(angular.isArray(optionValue)) {
                         angular.forEach(optionValue, function(opt) {
                             filter.putOption(OptionFacetedFilter.make({
-                                label: opt, 
+                                label: opt,
                                 value: opt,
                                 length: 1
                             }));
                         });
                     } else {
                         filter.putOption(OptionFacetedFilter.make({
-                            label: optionValue, 
+                            label: optionValue,
                             value: optionValue,
                             length: 1
                         }));

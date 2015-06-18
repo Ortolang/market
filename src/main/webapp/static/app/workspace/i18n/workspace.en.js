@@ -68,9 +68,11 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Add a new folder',
                 SUBMIT: 'Add'
             },
+            RENAME_CHILD_MODAL: {
+                TITLE: 'Rename'
+            },
             EDIT_DESCRIPTION_MODAL: {
-                TITLE: 'Edit description of {{name}}',
-                SUBMIT: 'Edit'
+                TITLE: 'Edit description of {{name}}'
             },
             ADD_MEMBER_MODAL: {
                 TITLE: 'Add a member to {{wsName}}',
@@ -99,6 +101,10 @@ angular.module('ortolangMarketApp')
                 BODY_PATH: 'Wrong path \'{{path}}\'. You have been redirected to the root directory.',
                 BODY_ROOT: 'No snapshot with name \'{{root}}\' found. You have been redirected to the current version of the workspace.',
                 BODY_ALIAS: 'No workspace with ID \'{{alias}}\' found or you are not authorized to access this workspace.'
+            },
+            DELETE_NON_EMPTY_FOLDER_ALERT: {
+                TITLE: 'Error',
+                CONTENT: 'Cannot delete a non-empty folder'
             }
         }
     });

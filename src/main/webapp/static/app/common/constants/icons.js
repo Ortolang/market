@@ -47,6 +47,7 @@ angular.module('ortolangMarketApp')
                 uploadZip: 'glyphicon glyphicon-compressed',
                 delete: 'glyphicon glyphicon-trash',
                 remove: 'glyphicon glyphicon-remove',
+                edit: 'glyphicon glyphicon-pencil',
                 preview: 'glyphicon glyphicon-eye-open',
                 plus: 'glyphicon glyphicon-plus',
                 search: 'glyphicon glyphicon-search',

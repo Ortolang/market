@@ -69,7 +69,7 @@ angular.module('ortolangMarketApp')
 
             $scope.getSize = function (obj) {
                 var size = 0;
-                for(var k in obj){
+                for (var k in obj) {
                     size++;
                 }
                 return size;
@@ -79,8 +79,9 @@ angular.module('ortolangMarketApp')
                 var a = array.concat();
                 for(var i=0; i<a.length; ++i) {
                     for(var j=i+1; j<a.length; ++j) {
-                        if(a[i] === a[j])
+                        if (a[i] === a[j]) {
                             a.splice(j--, 1);
+                        }
                     }
                 }
 

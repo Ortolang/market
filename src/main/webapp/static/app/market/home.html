@@ -23,7 +23,7 @@
             <div class="news-well well">
                 <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'INFORMATION.NEWS' | translate}}</p>
                 <hr/>
-                <img src="assets/images/InnovativesSHS_©CNRS2015.jpeg"/>
+                <img src="assets/images/InnovativesSHS_©CNRS2015.jpeg" alt="Innovative SHS"/>
                 <p translate="INFORMATION.INNOVATIVE_SHS"></p>
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" href="http://innovatives.cnrs.fr/spip.php?article118" target="_blank"><span class="fa fa-fw fa-plus"></span> {{'INFORMATION.MORE' | translate}}</a>
@@ -31,10 +31,10 @@
                 </div>
                 <hr/>
                 <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="resources/Lettre_information_ORTOLANG.pdf" target="_blank">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
-                <p><a class="btn btn-sm btn-default" href="/#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
+                <p><a class="btn btn-sm btn-default" href="#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
             </div>
         </div>
     </section>
 
-    <items ng-if="items.size() > 0" data-title="'MARKET.NEW_RESOURCES'" data-filters-manager="filtersManager" data-items="items" data-view-mode="viewMode" data-order-prop="orderProp" data-order-direction="orderDirection" data-query="query"></items>
+    <items data-title="'MARKET.NEW_RESOURCES'" data-filters-manager="filtersManager" data-items="items" data-view-mode="viewMode" data-order-prop="orderProp" data-order-direction="orderDirection" data-query="query"></items>
 </div>

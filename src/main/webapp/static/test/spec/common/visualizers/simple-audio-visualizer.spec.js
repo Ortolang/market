@@ -25,7 +25,9 @@ describe('Visualizer: SimpleAudioVisualizer', function () {
     it('should have a correct config', function () {
         expect(!!SimpleAudioVisualizer).toBe(true);
         expect(SimpleAudioVisualizer.getId()).toEqual('SimpleAudioVisualizer');
-        expect(SimpleAudioVisualizer.getName()).toEqual('Simple Audio Visualizer');
+        expect(SimpleAudioVisualizer.getName()).toBeDefined();
+        expect(SimpleAudioVisualizer.name.fr).toBeDefined();
+        expect(SimpleAudioVisualizer.name.en).toBeDefined();
         expect(SimpleAudioVisualizer.getCompatibleTypes()).toBeDefined();
     });
 

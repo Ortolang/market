@@ -1,0 +1,24 @@
+<div class="modal" id="rename-collection-modal" tabindex="-1" role="dialog" aria-labelledby="rename-collection-modal-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" id="rename-collection-modal-label" translate="WORKSPACE.RENAME_CHILD_MODAL.TITLE"></h4>
+            </div>
+            <form class="form-horizontal" role="form" ng-submit="renameChild()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="child-new-name" class="col-sm-2 control-label" translate="NAME"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="$parent.childNewName" required autofocus type="text" class="form-control" id="child-new-name" placeholder="{{'NAME' | translate}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary rename-collection" translate="SUBMIT"></button>
+                    <button type="button" class="btn btn-default" ng-click="cancel()" translate="CANCEL"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

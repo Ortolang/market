@@ -12,7 +12,10 @@ angular.module('ortolangVisualizers')
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleVideoVisualizer',
-            name: 'Simple Video Visualizer',
+            name: {
+                fr: 'Lecteur video',
+                en: 'Video player'
+            },
             compatibleTypes: {
                 'video/mp4': true,
                 'video/ogg': true,

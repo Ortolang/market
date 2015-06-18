@@ -163,11 +163,17 @@
                 <span ng-show="!hasOnlyParentSelected()" class="divider"></span>
 
                 <div ng-show="!hasOnlyParentSelected()" class="btn-group">
-                    <button ng-if="browserService.canDownload && selectedElements.length ===1 && selectedElements[0].stream" class="btn btn-default" ng-click="download(selectedElements[0])" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.download"></span>
+                    <button ng-if="browserService.canAdd && isHead" class="btn btn-default" ng-click="renameChild()" data-title="{{'RENAME' | translate}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="icons.browser.edit"></span>
                     </button>
                     <button ng-if="browserService.canDelete && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="icons.browser.delete"></span>
+                    </button>
+                </div>
+
+                <div ng-show="!hasOnlyParentSelected()" class="btn-group">
+                    <button ng-if="browserService.canDownload && selectedElements.length ===1 && selectedElements[0].stream" class="btn btn-default" ng-click="download(selectedElements[0])" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarket() ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="icons.browser.download"></span>
                     </button>
                 </div>
 
@@ -262,7 +268,7 @@
                 </dl>
                 <hr/>
                 <p>
-                    <button ng-if="root === 'head' && (path !== '/' || selectedElements[0].name !== 'root')" class="btn btn-default pull-right" ng-click="editDescription()"><span class="fa fa-pencil"></span></button>
+                    <button ng-if="root === 'head' && (path !== '/' || selectedElements[0].name !== 'root')" class="btn btn-default pull-right" ng-click="editDescription()"><span ng-class="icons.browser.edit"></span></button>
                     <span ng-hide="selectedElements[0].description" translate="BROWSER.NO_DESCRIPTION_PROVIDED"></span>
                     <span ng-show="selectedElements[0].description">{{selectedElements[0].description}}</span>
                 </p>
@@ -279,7 +285,7 @@
         </div>
     </div>
 
-    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" id="context-menu" class="dropdown clearfix open">
+    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" class="browser-context-menu dropdown clearfix open">
         <ul class="dropdown-menu" role="menu">
             <li ng-repeat="item in contextMenuItems" class="{{item.divider ? 'divider' : ''}}">
                 <a ng-if="item.href" tabindex="-1" ng-href="{{item.href}}"><span ng-class="item.icon"></span> {{item.text | translate}}</a>

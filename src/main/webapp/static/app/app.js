@@ -138,8 +138,8 @@ angular
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
             'self',
-            'http://localhost:8080/**',
-            'https://localhost:8443/**'
+            OrtolangConfig.serverUrl + '**',
+            OrtolangConfig.serverUrlWoSSL + '**'
         ]);
     }])
     .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
@@ -163,7 +163,7 @@ angular
     .run(['editableOptions', 'editableThemes', function (editableOptions, editableThemes) {
         var copy = editableThemes.bs3;
         copy.formTpl = '<form class="" role="form"></form>';
-        copy.controlsTpl = '<div class="editable-controls input-group" ng-class="{\'has-error\': $error}"></div>';
+        copy.controlsTpl = '<div class="editable-controls input-group" ng-class="{\'has-error\': $error, \'input-group-lg\': largeInput}"></div>';
         copy.buttonsTpl = '<span class="input-group-btn"></span>';
         copy.submitTpl = '<button type="submit" class="btn btn-default"><span></span></button>';
         editableThemes.bs3 = copy;
@@ -180,5 +180,6 @@ angular
  * Ortolang Visualizers Module
  */
 angular.module('ortolangVisualizers', [
-    'ortolangMarketApp'
+    'ortolangMarketApp',
+    'pascalprecht.translate'
 ]);

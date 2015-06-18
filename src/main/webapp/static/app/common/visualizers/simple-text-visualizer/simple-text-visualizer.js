@@ -12,7 +12,10 @@ angular.module('ortolangVisualizers')
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'SimpleTextVisualizer',
-            name: 'Simple Text Visualizer',
+            name: {
+                fr: 'Visualiseur de texte',
+                en: 'Text Visualizer'
+            },
             compatibleTypes: {
                 'text/plain': true,
                 'text/html': true,
@@ -25,7 +28,8 @@ angular.module('ortolangVisualizers')
                 'application/rdf+xml': true,
                 'application/xslt+xml': true,
                 'text/javascript': true,
-                'application/javascript': true
+                'application/javascript': true,
+                'text/x-web-markdown': true
             }
         });
 
@@ -48,12 +52,11 @@ angular.module('ortolangVisualizers')
         return {
             templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
             restrict: 'A',
-            //scope: true,
             link: {
                 pre: function (scope, element, attrs) {
                     var mimeType = scope.elements[0].mimeType,
                         limit = 20000;
-                    if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml') {
+                    if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml' || mimeType === 'application/xslt+xml') {
                         scope.language = 'xml';
                     } else if (mimeType === 'text/html' || mimeType === 'text/plain') {
                         scope.language = 'html';
@@ -63,6 +66,8 @@ angular.module('ortolangVisualizers')
                         scope.language = 'php';
                     } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
                         scope.language = 'javascript';
+                    } else if (mimeType === 'text/x-web-markdown') {
+                        scope.language = 'markdown';
                     } else {
                         scope.language = undefined;
                     }

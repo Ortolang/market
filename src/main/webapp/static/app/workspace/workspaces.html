@@ -26,7 +26,9 @@
         </div>
 
         <div ng-if="workspaceList.entries.length > 0" class="col-sm-10 col-md-10 container-main workspace-dashboard">
-            <h1>{{WorkspaceBrowserService.workspace.name}}</h1>
+            <div class="row">
+                <h1 ng-class="renameWorkspaceForm.$visible ? 'col-md-8' : 'col-md-12'"><span editable-text="WorkspaceBrowserService.workspace.name" e-ng-init="largeInput = true;" e-form="renameWorkspaceForm" onbeforesave="renameWorkspace($data)">{{WorkspaceBrowserService.workspace.name}}</span> <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="icons.browser.edit"></span></button></h1>
+            </div>
             <i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: WorkspaceBrowserService.workspace.creationDate, author: WorkspaceBrowserService.workspace.authorProfile.givenName + ' ' + WorkspaceBrowserService.workspace.authorProfile.familyName}"></i>
             <div class="workspace-actions-toolbar">
                 <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>

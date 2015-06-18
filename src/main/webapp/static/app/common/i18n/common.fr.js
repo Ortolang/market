@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
         SUBMIT: 'Valider',
         ADD: 'Ajouter',
         NAME: 'Nom',
+        RENAME: 'Renommer',
         DESCRIPTION: 'Description',
         TYPE: 'Type',
         ACTIONS: 'Actions',
@@ -43,5 +44,9 @@ angular.module('ortolangMarketApp')
             TITLE: 'Le serveur semble momentanément indisponible',
             BODY: '<p>Il semblerait que le serveur soit momentanément indisponible et vous ne pourrez donc pas accéder aux ressources.</p><p>Vous devriez tenter de rafraichir la page et si jamais l\'erreur persiste veuillez nous contacter <a href="mailto:contact@ortolang.fr">contact@ortolang.fr</a>.</p>',
             BUTTON: 'Rafraichir la page'
+        },
+        UNEXPECTED_ERROR_ALERT: {
+            TITLE: 'Erreur',
+            CONTENT: 'Une erreur inattendue s\'est produite'
         }
     });

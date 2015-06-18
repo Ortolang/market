@@ -12,7 +12,10 @@ angular.module('ortolangVisualizers')
 
         var visualizer = VisualizerFactoryProvider.$get().make({
             id: 'DiffVisualizer',
-            name: 'Diff Visualizer',
+            name: {
+                fr: 'Visualiseur de différence',
+                en: 'Diff Visualizer'
+            },
             compatibleTypes: [
                 {
                     'text/plain': true

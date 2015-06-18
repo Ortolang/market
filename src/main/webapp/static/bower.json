@@ -1,14 +1,14 @@
 {
   "name": "ortolang-market",
-  "version": "2.2.0-SNAPSHOT",
+  "version": "2.3.0-SNAPSHOT",
   "dependencies": {
-    "angular": "1.4.0",
-    "angular-animate": "1.4.0",
-    "angular-route": "1.4.0",
-    "angular-resource": "1.4.0",
-    "angular-sanitize": "1.4.0",
-    "angular-messages": "1.4.0",
-    "angular-i18n": "1.4.0",
+    "angular": "1.4.1",
+    "angular-animate": "1.4.1",
+    "angular-route": "1.4.1",
+    "angular-resource": "1.4.1",
+    "angular-sanitize": "1.4.1",
+    "angular-messages": "1.4.1",
+    "angular-i18n": "1.4.1",
     "font-awesome": "4.3.0",
     "octicons": "2.4.1",
     "angular-file-upload": "1.1.5",
@@ -16,15 +16,15 @@
     "angular-hotkeys": "chieffancypants/angular-hotkeys#1.4.5",
     "angular-highlightjs": "0.4.1",
     "angular-motion": "0.4.2",
-    "angular-formly": "6.12.0",
-    "angular-formly-templates-bootstrap": "4.3.1",
+    "angular-formly": "6.14.1",
+    "angular-formly-templates-bootstrap": "4.3.2",
     "angular-bootstrap-show-errors": "2.3.0",
     "angular-translate": "2.7.2",
     "angular-zeroclipboard": "0.4.2",
     "angular-bootstrap-toggle-switch": "0.5.2",
     "angular-diff-match-patch": "0.1.10",
     "highlightjs": "highlightjs/cdn-release#8.6",
-    "bootstrap": "3.3.4",
+    "bootstrap": "3.3.5",
     "bootstrap-additions": "0.3.1",
     "zeroclipboard": "2.2.0",
     "holderjs": "2.8.0",
@@ -33,13 +33,13 @@
     "angular-xeditable": "prismsoundzero/angular-xeditable#0.1.9",
     "angular-schema-form": "0.8.2",
     "ng-tags-input": "2.3.0",
-    "atmosphere": "2.2.7",
+    "atmosphere": "Atmosphere/atmosphere-javascript#javascript-project-2.2.11",
     "awesome-bootstrap-checkbox": "0.3.4",
     "angular-moment": "0.10.1"
   },
   "devDependencies": {
-    "angular-mocks": "1.4.0",
-    "angular-scenario": "1.4.0"
+    "angular-mocks": "1.4.1",
+    "angular-scenario": "1.4.1"
   },
   "overrides": {
     "angular-i18n": {
@@ -63,14 +63,16 @@
         "build/highlight.min.js",
         "build/styles/solarized_light.min.css"
       ]
+    },
+    "atmosphere": {
+      "main": [
+          "modules/javascript/src/main/webapp/javascript/atmosphere.js"
+      ]
     }
   },
   "appPath": "app",
   "resolutions": {
-    "angular": "1.4.0",
-    "angular-mocks": "1.4.0",
-    "bootstrap": "3.3.4",
-    "api-check": "^7.0.0",
+    "angular": "1.4.1",
     "highlightjs": "8.6"
   }
 }

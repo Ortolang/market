@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
                 }
                 User.preInit(profile);
                 ProfileResource.getInfos({key: profile.key}).$promise.then(
-                    function success(data) {
+                    function (data) {
                         profile.profileDatas = {};
                         angular.forEach(data.entries, function (profileData) {
                             profile.profileDatas[profileData.name] = profileData;
@@ -30,7 +30,7 @@ angular.module('ortolangMarketApp')
                         AuthService.resolveSessionInitialized();
                         AtmosphereService.subscribe();
                     },
-                    function error() {
+                    function () {
                         User.create(profile);
                         AuthService.resolveSessionInitialized();
                         AtmosphereService.subscribe();
