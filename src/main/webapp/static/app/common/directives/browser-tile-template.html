@@ -1,24 +1,24 @@
 <div ng-if="!isViewModeLine()" class="row browsed-element-children-wrapper">
     <div ng-init="resizeBrowser()" class="col-md-12">
-        <div ng-repeat="type in ['collection', 'object']" class="row browsed-element-children">
-            <div ng-repeat="child in filteredChildren(type) | limitTo:(type === 'object' ? displayedItemLimit : undefined) | orderBy:orderProp:orderReverse track by child.key"
+        <div ng-repeat="type in [ortolangType.collection, ortolangType.object]" class="row browsed-element-children">
+            <div ng-repeat="child in filteredChildren(type) | limitTo:(type === ortolangType.object ? displayedItemLimit : undefined) | orderBy:orderProp:orderReverse track by child.key"
                  ng-class="tileCssClasses()" class="browsed-element-child-wrapper" on-finish-render>
                 <div class="browsed-element-child"
                      ng-click="clickChild(child, $event)"
                      ng-right-click="clickChild(child, $event)"
                      ng-dblclick="doubleClickChild(child)"
-                     ng-class="{active : isSelected(child), collection: type === 'collection'}">
-                    <div ng-if="type === 'object'" class="preview">
+                     ng-class="{active : isSelected(child), collection: type === ortolangType.collection}">
+                    <div ng-if="type === ortolangType.object" class="preview">
                         <span class="fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
                     </div>
                     <p class="name-wrapper">
-                        <span ng-if="type === 'collection'" ng-class="icons.folderPlain" class="type"></span>
-                        <span ng-if="type === 'object'" ng-class="child.mimeType | mimeTypeIconCss" class="type"></span>
+                        <span ng-if="type === ortolangType.collection" ng-class="icons.folderPlain" class="type"></span>
+                        <span ng-if="type === ortolangType.object" ng-class="child.mimeType | mimeTypeIconCss" class="type"></span>
                         <span class="name">{{child.name}}</span>
                     </p>
                 </div>
             </div>
-            <div ng-if="type === 'object' && displayedItemLimit < parent.elements.length" class="clearfix col-md-12 see-all-wrapper">
+            <div ng-if="type === ortolangType.object && displayedItemLimit < parent.elements.length" class="clearfix col-md-12 see-all-wrapper">
                 <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
                     <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
                     <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>

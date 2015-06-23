@@ -14,14 +14,15 @@ angular.module('ortolangMarketApp')
             scope: {
                 forceMimeTypes: '=?',
                 forceWorkspace: '=',
-                forcePath: '=?',
+                path: '=?forcePath',
                 forceHead: '=?',
                 fileSelectId: '=',
-                acceptMultiple: '@'
+                fileSelectAcceptMultiple: '=acceptMultiple'
             },
             templateUrl: 'common/directives/browser.html',
             link: {
                 pre : function (scope, element, attrs) {
+                    scope.isFileSelectBrowserService = true;
                     scope.workspaceList = WorkspaceResource.get();
                     var workspace;
                     scope.browserSettings = Settings[FileSelectBrowserService.id];
@@ -42,9 +43,6 @@ angular.module('ortolangMarketApp')
                         }
                         if (workspace) {
                             FileSelectBrowserService.workspace = workspace;
-                            if (scope.forcePath) {
-                                scope.path = scope.forcePath;
-                            }
                             scope.$broadcast('initWorkspaceVariables');
                         }
                     });
@@ -67,10 +65,6 @@ angular.module('ortolangMarketApp')
                             });
                         });
                     };
-
-                    scope.isFileSelect = true;
-                    scope.fileSelectAcceptMultiple = attrs.acceptMultiple &&
-                        (attrs.acceptMultiple === 'true' || attrs.acceptMultiple === 'multiple');
                 }
             }
         };

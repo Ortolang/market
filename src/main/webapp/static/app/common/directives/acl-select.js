@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('aclSelect', ['$http', '$filter', 'url', 'DownloadResource', 'WorkspaceElementResource', function ($http, $filter, url, DownloadResource, WorkspaceElementResource) {
+    .directive('aclSelect', ['$http', '$filter', 'url', 'ortolangType', 'DownloadResource', function ($http, $filter, url, ortolangType, DownloadResource) {
         return {
             restrict: 'E',
             scope: {
@@ -52,7 +52,7 @@ angular.module('ortolangMarketApp')
                             contentType = 'text/json';
 
                         fd.append('path', currentPath);
-                        fd.append('type', 'metadata');
+                        fd.append('type', ortolangType.metadata);
 
                         fd.append('format', 'ortolang-acl-json');
                         fd.append('name', 'ortolang-acl-json');
