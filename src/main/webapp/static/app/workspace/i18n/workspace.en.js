@@ -71,6 +71,9 @@ angular.module('ortolangMarketApp')
             RENAME_CHILD_MODAL: {
                 TITLE: 'Rename'
             },
+            MOVE_CHILD_MODAL: {
+                TITLE: 'Move \'{{name}}\' into...'
+            },
             EDIT_DESCRIPTION_MODAL: {
                 TITLE: 'Edit description of {{name}}'
             },

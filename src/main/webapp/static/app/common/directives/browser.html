@@ -72,7 +72,7 @@
                     </button>
                 </div>
 
-                <div ng-if="isWorkspaceBrowserService" class="btn-group">
+                <div ng-if="isWorkspaceBrowserService()" class="btn-group">
                     <button class="btn btn-default" ng-click="toggleBrowsing()" data-title="{{'BROWSER.DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip>
                         <span ng-class="icons.browser.dashboard"></span>
                     </button>
@@ -204,7 +204,7 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><div ng-click="createWorkspace()"><span ng-class="icons.browser.workspace"></span> {{'BROWSER.WORKSPACE' | translate}}</div></li>
                     <li class="divider"></li>
-                    <li><div ng-click="addCollection()"><span ng-class="icons.browser.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
+                    <li><div ng-click="addCollection()"><span ng-class="icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
                 </ul>
             </div>
             <section class="my-workspaces">

@@ -12,10 +12,12 @@ angular.module('ortolangMarketApp')
         return {
             restrict: 'A',
             scope: {
-                forceMimeTypes: '=',
+                forceMimeTypes: '=?',
                 forceWorkspace: '=',
-                forceHead: '=',
-                fileSelectId: '='
+                forcePath: '=?',
+                forceHead: '=?',
+                fileSelectId: '=',
+                acceptMultiple: '@'
             },
             templateUrl: 'common/directives/browser.html',
             link: {
@@ -40,6 +42,9 @@ angular.module('ortolangMarketApp')
                         }
                         if (workspace) {
                             FileSelectBrowserService.workspace = workspace;
+                            if (scope.forcePath) {
+                                scope.path = scope.forcePath;
+                            }
                             scope.$broadcast('initWorkspaceVariables');
                         }
                     });

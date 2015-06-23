@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
             REGISTER: 'Register',
             LANGUAGE: {
                 LANGUAGE: 'Language',
-                FRENCH: 'French',
+                FRENCH: 'Français',
                 ENGLISH: 'English'
             },
             INFORMATION: {

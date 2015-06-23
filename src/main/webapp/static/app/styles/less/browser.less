@@ -332,7 +332,7 @@
   padding-top: @grid-gutter-width / 2;
   .browsed-element-children {
     .browsed-element-child-wrapper {
-      .user-select-mixin;
+      .user-select-mixin();
       .browsed-element-child {
         &.collection {
           .name-wrapper {
@@ -389,7 +389,7 @@
 }
 
 table.workspace-elements {
-  .user-select-mixin;
+  .user-select-mixin();
   table-layout: fixed;
   col {
     &.size {
@@ -404,15 +404,15 @@ table.workspace-elements {
       background-color: inherit;
     }
     > td {
-      padding-top: @padding-large-vertical;
-      padding-bottom: @padding-large-vertical;
+      padding-top: @padding-large-vertical + 1px;
+      padding-bottom: @padding-large-vertical + 1px;
     }
   }
   tr.active {
     td {
       background-color: @gray-light;
       color: @inverse-text-color;
-      span.glyphicon.type, span.fa.type {
+      .type {
         color: inherit;
       }
     }
@@ -438,8 +438,8 @@ table.workspace-elements {
     a {
       color: inherit;
     }
-    span.glyphicon.type, span.fa.type {
-      padding-right: @padding-base-horizontal;
+    .type {
+      margin-right: @padding-small-horizontal - 2px;
       color: @gray-light;
     }
 

@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
             LANGUAGE: {
                 LANGUAGE: 'Langue',
                 FRENCH: 'Français',
-                ENGLISH: 'Anglais'
+                ENGLISH: 'English'
             },
             INFORMATION: {
                 INFORMATION: 'Information',
@@ -41,6 +41,6 @@ angular.module('ortolangMarketApp')
             TEAM: 'Équipe ORTOLANG',
             404: 'Erreur',
             BETA_VERSION: 'pré-version',
-            BETA_VERSION_TOOLTIP: 'ORTOLANG est en cours de développement.<br/>Ainsi certaines fonctionnalités ne sont pas encore accessibles.'
+            BETA_VERSION_TOOLTIP: 'ORTOLANG est en cours de développement.<br/>Certaines fonctionnalités ne sont ainsi pas encore accessibles.'
         }
     });
