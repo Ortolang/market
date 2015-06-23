@@ -33,14 +33,33 @@ angular.module('ortolangMarketApp')
                 return this.items.push(item);
             },
 
+            getItem: function (wskey) {
+                var i = 0;
+                for (i; i < this.items.length; i++) {
+                    if (this.items[i].wskey && this.items[i].wskey === wskey) {
+                        return this.items[i];
+                    }
+                }
+                return undefined;
+            },
+
             exists: function (item) {
                 var i = 0;
                 for (i; i < this.items.length; i++) {
-                    if (this.items[i] === item) {
+                    if (this.items[i].wskey && item.wskey && this.items[i].wskey === item.wskey) {
                         return true;
                     }
                 }
                 return false;
+            },
+
+            setItem: function(item, newItem) {
+                var i = 0;
+                for (i; i < this.items.length; i++) {
+                    if (this.items[i] === item) {
+                        this.items[i] = newItem;
+                    }
+                }
             },
 
             size: function() {

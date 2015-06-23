@@ -146,6 +146,9 @@ angular.module('ortolangMarketApp')
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconFormats', 'lexiconFormats');
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconLanguageType', 'lexiconLanguageType');
 
+                queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
+                queryBuilder.addProjection('lastModificationDate', 'lastModificationDate');
+
                 queryBuilder.equals('status', 'published');
 
                 var contentSplit = [];

@@ -198,6 +198,17 @@
                 </article>
             </section>
 
+            <section id="other_versions" ng-if="versions">
+                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.OTHER_VERSIONS' | translate}}</header>
+                <article>
+                    <ul>
+                        <li ng-repeat="version in versions">
+                            <a ng-href="#/market/corpora/{{version.key}}" ng-bind="version.versionName"></a>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+
             <section id="preview" ng-if="previewCollection">
                 <header><span class="glyphicon glyphicon-eye-open fa-fw" style="font-size: 20px;"></span> {{'MARKET.PREVIEW' | translate}}</header>
                 <article>

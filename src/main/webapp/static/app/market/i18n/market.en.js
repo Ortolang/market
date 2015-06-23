@@ -25,6 +25,7 @@ angular.module('ortolangMarketApp')
             KEYWORDS: 'Keywords',
             EXTENT: 'Extent',
             PUBLICATIONS: 'Publications',
+            OTHER_VERSIONS: 'Other versions',
             PRIMARY_LANGUAGE: 'Primary language',
             DISCOURSE_TYPE: 'Discourse type',
             LINGUISTIC_SUBJECT: 'Linguistic subjects',

@@ -65,8 +65,39 @@ angular.module('ortolangMarketApp')
                             $scope.datasizeToPrint = {'value':$filter('bytes')($scope.item.datasize)};
                         }
                     }, function (reason) {
-                    console.error(reason);
-                });
+                        console.error(reason);
+                    });
+
+                    var queryWorkspace = 'select from '+$scope.ortolangObject['meta_ortolang-workspace-json'];
+                    JsonResultResource.get({query: queryWorkspace}).$promise.then(function (jsonObject) {
+                        $scope.workspace = angular.fromJson(jsonObject[0]);
+
+                        if($scope.workspace.wskey) {
+                            var queryBuilder = QueryBuilderFactory.make({projection: 'key, meta_ortolang-workspace-json.versionName as versionName', source: 'collection'});
+                            queryBuilder.equals('status', 'published');
+                            queryBuilder.and();
+                            queryBuilder.equals('meta_ortolang-workspace-json.wskey', $scope.workspace.wskey);
+
+                            console.log(queryBuilder.toString());
+
+                            JsonResultResource.get({query: queryBuilder.toString()}).$promise.then(function (jsonResults) {
+                                $scope.versions = [];
+
+                                angular.forEach(jsonResults, function(result) {
+                                    var ortolangObject = angular.fromJson(result);
+
+                                    $scope.versions.push(ortolangObject);
+                                });
+                                     
+
+                            }, function (reason) {
+                                console.error(reason);
+                            });
+                        }
+                    }, function (reason) {
+                        console.error(reason);
+                    });
+
                 }
             }, function (reason) {
                 console.error(reason);

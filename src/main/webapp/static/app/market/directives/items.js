@@ -40,22 +40,35 @@ angular.module('ortolangMarketApp')
 
                         angular.forEach(jsonResults, function(jsonResult) {
                             var jsEntry = angular.fromJson(jsonResult);
-                            if(jsEntry.title) {
+                            
+                            if(jsEntry.wskey) {
 
-                                scope.items.addItem(jsEntry);
+                                var itemFromManager = scope.items.getItem(jsEntry.wskey);
+                                if(itemFromManager) {
+                                    var entryVersionDate = jsEntry.lastModificationDate;
+                                    var managerVersionDate = itemFromManager.lastModificationDate;
 
-
-                                if(scope.filtersManager) {
-                                    var i = 0;
-                                    for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
-                                        if (jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
-                                            addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], jsEntry[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
-                                        }
+                                    if(entryVersionDate > managerVersionDate) {
+                                        scope.items.setItem(itemFromManager, jsEntry);
                                     }
+                                } else {
+                                    scope.items.addItem(jsEntry);   
                                 }
+                                
                             }
 
                         });
+
+                        if(scope.filtersManager) {
+                            angular.forEach(scope.items.getItems(), function(item) {
+                                var i = 0;
+                                for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
+                                    if (item[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
+                                        addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], item[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+                                    }
+                                }
+                            });
+                        } 
 
                         scope.lock = false;
                     }, function (reason) {
