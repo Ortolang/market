@@ -52,7 +52,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 WorkspaceResource: WorkspaceResource,
                 ObjectResource: ObjectResource
             });
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
             $httpBackend.flush();
         }));
 
@@ -125,7 +125,7 @@ describe('Controller: WorkspacesCtrl', function () {
 
         it('should check if workspace changed before snapshot', function () {
             $scope.snapshot();
-            $httpBackend.expect('GET', url.api + '/rest/workspaces/' + WorkspaceBrowserService.workspace.key).respond(200, sample()[WorkspaceBrowserService.workspace.key + 'Ws']);
+            $httpBackend.expect('GET', url.api + '/workspaces/' + WorkspaceBrowserService.workspace.key).respond(200, sample()[WorkspaceBrowserService.workspace.key + 'Ws']);
             $rootScope.$apply();
             $httpBackend.flush();
             expect(angular.element('.modal').length).toBe(1);
@@ -133,7 +133,7 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$apply();
             $scope.changeWorkspace($scope.workspaceList.entries[1]);
             $scope.snapshot();
-            $httpBackend.expect('GET', url.api + '/rest/workspaces/' + WorkspaceBrowserService.workspace.key).respond(200, sample()[WorkspaceBrowserService.workspace.key + 'Ws']);
+            $httpBackend.expect('GET', url.api + '/workspaces/' + WorkspaceBrowserService.workspace.key).respond(200, sample()[WorkspaceBrowserService.workspace.key + 'Ws']);
             $httpBackend.expect('GET', 'alert/alert.tpl.html').respond(200, '<div class="alert"></div>');
             $rootScope.$apply();
             $httpBackend.flush();
@@ -146,7 +146,7 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$digest();
             expect(WorkspaceResource.get).not.toHaveBeenCalled();
             $rootScope.$emit('core.workspace.create', {fromObject: 'foobar'});
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
             $rootScope.$digest();
             expect(WorkspaceResource.get).toHaveBeenCalled();
             $httpBackend.flush();
@@ -154,7 +154,7 @@ describe('Controller: WorkspacesCtrl', function () {
 
         it('should refresh workspace list and snapshot history when a core.workspace.snapshot event is intercepted', function () {
             $rootScope.$emit('core.workspace.snapshot');
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
             $rootScope.$digest();
             $httpBackend.flush();
         });
@@ -163,7 +163,7 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$emit('membership.group.add-member', {fromObject: 'group1'});
             $rootScope.$digest();
             $rootScope.$emit('membership.group.add-member', {fromObject: 'foobar'});
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
             $rootScope.$digest();
             $httpBackend.flush();
         });
@@ -186,7 +186,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 $scope: $scope,
                 Settings: Settings
             });
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
             $httpBackend.flush();
         }));
 
@@ -203,7 +203,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 $scope: $scope,
                 Settings: Settings
             });
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
             $httpBackend.flush();
         }));
 
@@ -222,7 +222,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 $scope: $scope,
                 Settings: Settings
             });
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
             $httpBackend.flush();
         }));
 
@@ -247,7 +247,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 $scope: $scope,
                 Settings: Settings
             });
-            $httpBackend.expect('GET', url.api + '/rest/workspaces').respond(200, {entries: []});
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: []});
             $httpBackend.expect('GET', 'modal/modal.tpl.html').respond(200, '<div class="modal foobar"></div>');
             $httpBackend.flush();
         }));

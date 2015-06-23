@@ -22,12 +22,12 @@ describe('Service: DownloadResource', function () {
         expect(!!DownloadResource).toBe(true);
 
         var params = {key: 'k1'};
-        expect(DownloadResource.getDownloadUrl(params)).toBe(url.api + '/rest/objects/k1/download');
+        expect(DownloadResource.getDownloadUrl(params)).toBe(url.api + '/objects/k1/download');
 
         params = {wskey: '<wskey>', path: '<path>', root: '<root>', metadata: '<metadata>'};
-        expect(DownloadResource.getDownloadUrl(params)).toBe(url.api + '/rest/workspaces/<wskey>/download?path=<path>&root=<root>&metadata=<metadata>');
+        expect(DownloadResource.getDownloadUrl(params)).toBe(url.api + '/workspaces/<wskey>/download?path=<path>&root=<root>&metadata=<metadata>');
         params = {wskey: '<wskey>'};
-        expect(DownloadResource.getDownloadUrl(params)).toBe(url.api + '/rest/workspaces/<wskey>/download?');
+        expect(DownloadResource.getDownloadUrl(params)).toBe(url.api + '/workspaces/<wskey>/download?');
 
         params = {};
         expect(DownloadResource.getDownloadUrl(params)).toBe(undefined);
@@ -37,7 +37,7 @@ describe('Service: DownloadResource', function () {
     it('should download data', function () {
         var params = {key: 'k1'};
 
-        httpBackend.whenGET(url.api + '/rest/objects/k1/download').respond('sample code');
+        httpBackend.whenGET(url.api + '/objects/k1/download').respond('sample code');
 
         var promise = DownloadResource.download(params, {}), theData;
         promise.then(function (data) {

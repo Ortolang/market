@@ -9,9 +9,9 @@
  */
 angular.module('ortolangMarketApp')
     .factory('ToolsResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/rest/tools', {}, {
+        return $resource(url.api + '/tools', {}, {
             getToolsList: {
-                url: url.api + '/rest/tools/list',
+                url: url.api + '/tools/list',
                 method: 'GET',
                 isArray: false
             }

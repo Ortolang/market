@@ -79,7 +79,7 @@ angular.module('ortolangMarketApp')
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
                 fileItem.wskey = fileItem.wskey || angular.copy($scope.browserService.workspace.key);
-                fileItem.url = url.api + '/rest/workspaces/' + fileItem.wskey + '/elements';
+                fileItem.url = url.api + '/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
                     case 'object':
@@ -99,7 +99,7 @@ angular.module('ortolangMarketApp')
                         break;
 
                     case 'zip':
-                        fileItem.url = url.api + '/rest/runtime/processes/';
+                        fileItem.url = url.api + '/runtime/processes/';
                         fileItem.alias = 'zippath';
                         fileItem.formData = [];
                         fileItem.formData.push({'process-type': 'import-zip'});

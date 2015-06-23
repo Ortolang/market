@@ -9,7 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .factory('GroupResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/rest/groups/:key', {key: '@key'}, {
+        return $resource(url.api + '/groups/:key', {key: '@key'}, {
             addMember: {
                 method: 'PUT'
             }

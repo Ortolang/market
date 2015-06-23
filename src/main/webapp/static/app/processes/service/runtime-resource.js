@@ -9,14 +9,14 @@
  */
 angular.module('ortolangMarketApp')
     .factory('RuntimeResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/rest/runtime/', {}, {
+        return $resource(url.api + '/runtime/', {}, {
             processes: {
                 method: 'GET',
-                url: url.api + '/rest/runtime/processes/:pcKey'
+                url: url.api + '/runtime/processes/:pcKey'
             },
             tasks: {
                 method: 'GET',
-                url: url.api + '/rest/runtime/tasks/:tId'
+                url: url.api + '/runtime/tasks/:tId'
             },
             claimTask: {
                 method: 'POST',
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                     data.action = 'claim';
                     return angular.toJson(data);
                 },
-                url: url.api + '/rest/runtime/tasks/:tId'
+                url: url.api + '/runtime/tasks/:tId'
             },
             completeTask: {
                 method: 'POST',
@@ -32,21 +32,21 @@ angular.module('ortolangMarketApp')
                     data.action = 'complete';
                     return angular.toJson(data);
                 },
-                url: url.api + '/rest/runtime/tasks/:tId'
+                url: url.api + '/runtime/tasks/:tId'
             },
             createProcess: {
                 method: 'POST',
                 transformRequest: function (data) { return $.param(data); },
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                url: url.api + '/rest/runtime/processes/'
+                url: url.api + '/runtime/processes/'
             },
             types: {
                 method: 'GET',
-                url: url.api + '/rest/runtime/types/'
+                url: url.api + '/runtime/types/'
             },
             remoteProcesses: {
                 method: 'GET',
-                url: url.api + '/rest/runtime/remote-processes/:rpKey'
+                url: url.api + '/runtime/remote-processes/:rpKey'
             }
         });
     }]);

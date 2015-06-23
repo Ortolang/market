@@ -91,7 +91,7 @@ angular.module('ortolangMarketApp')
 
         function sendForm(content, contentType) {
 
-            var uploadUrl = url.api + '/rest/workspaces/' + ($scope.selectedElements ? $scope.selectedElements[0].workspace : WorkspaceBrowserService.workspace.key) + '/elements/',
+            var uploadUrl = url.api + '/workspaces/' + ($scope.selectedElements ? $scope.selectedElements[0].workspace : WorkspaceBrowserService.workspace.key) + '/elements/',
                 fd = new FormData(),
                 currentPath = $scope.selectedElements ? $scope.selectedElements[0].path : '/';
 

@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
 
                     scope.sendACL = function (model) {
                         console.log('Send ACL');
-                        var uploadUrl = url.api + '/rest/workspaces/' + scope.element.workspace + '/elements/',
+                        var uploadUrl = url.api + '/workspaces/' + scope.element.workspace + '/elements/',
                             fd = new FormData(),
                             currentPath = scope.element.path,
                             content = angular.toJson({template:model}),
