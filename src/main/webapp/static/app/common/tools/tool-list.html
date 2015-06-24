@@ -106,7 +106,7 @@
                                             <li class="progtrckr-{{currentJob.completed ? (currentJob.error ? 'error' : 'last') : 'active' }}"> {{currentJob.state}}</li>
                                         </ol>
                                     </div>
-                                    <a ng-show="!currentJob.completed" class="btn btn-default" ng-click="abortToolJob()">
+                                    <a ng-show="currentJob.pending" class="btn btn-default" ng-click="abortToolJob()">
                                         <span class="fa fa-fw fa-close"></span> {{ 'TOOLS.ABORT' | translate }}
                                     </a>
                                     <a ng-show="!currentJob.completed" class="btn btn-default" ng-click="hide()">

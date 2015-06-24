@@ -105,9 +105,11 @@ angular.module('ortolangMarketApp')
                 return $scope.config[param];
             };
 
+
             // ********* //
             // Listeners //
             // ********* //
+
             var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
                 if (!$scope.data) {
                     $scope.data = {};
@@ -122,6 +124,16 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.$on('tool-results-show', function () {
+                init();
+                $scope.results = $scope.$parent.results;
+                angular.forEach(angular.element.find('div#toolResults div.tab-content div.active'), function(tab) {
+                    angular.element(tab).removeClass('active');
+                });
+                angular.forEach(angular.element.find('div#toolResults ul.nav-pills li.active'), function(pane) {
+                    angular.element(pane).removeClass('active');
+                });
+                angular.element(document.querySelector('#logTab')).addClass('active');
+                angular.element(document.querySelector('#logPane')).addClass('in active');
                 $scope.show();
             });
 
@@ -142,6 +154,7 @@ angular.module('ortolangMarketApp')
                 $scope.data = {};
 
                 $scope.config = [];
+                $scope.results = [];
 
                 $scope.mainAlert = {
                     isShown: false
@@ -149,6 +162,7 @@ angular.module('ortolangMarketApp')
             }
 
             init();
+
         }
     ]);
 

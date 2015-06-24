@@ -188,7 +188,6 @@ angular.module('ortolangMarketApp')
 
 
             $scope.showResult = function () {
-                console.debug($scope.currentJob.job.parameters);
                 ToolManager.getTool($scope.currentJob.job.toolKey).getResult($scope.currentJob.job.id).$promise.then(function (data) {
                     $scope.results = data;
                     $scope.job = $scope.currentJob.job;
@@ -196,6 +195,7 @@ angular.module('ortolangMarketApp')
                     $scope.switchStatus = [];
                     $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
                     $scope.log = $scope.currentJob.log;
+                    $scope.failed = $scope.currentJob.error;
                     $rootScope.$broadcast('tool-results-show');
                 });
             };

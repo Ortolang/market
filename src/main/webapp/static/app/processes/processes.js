@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
                 }
                 if (process) {
                     $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
+                    $scope.failed = (process.state === Runtime.getStates().aborted) || (process.state === Runtime.getStates().suspended);
                     $modal({
                         title: name,
                         html: true,
@@ -77,13 +78,14 @@ angular.module('ortolangMarketApp')
                     $scope.tool = ToolManager.getTool(process.toolKey);
                     $scope.switchStatus = [];
                     $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
+                    $scope.failed = (process.state === Runtime.getStates().aborted) || (process.state === Runtime.getStates().suspended);
                     $scope.log = process.log;
                     $rootScope.$broadcast('tool-results-show');
                 });
             };
 
             $scope.showAll = function ($event) {
-                $($event.target).addClass('hidden').prev('table').addClass('show-all');
+                $scope.processus.processesDisplayed = $scope.processus.processesDisplayed + 10;
             };
 
             $scope.getToolDownloadUrl = function (url, jobid, path) {
@@ -100,6 +102,23 @@ angular.module('ortolangMarketApp')
             //};
 
 
+            /*********************/
+            /* TODAY'S PROCESSES */
+            /*********************/
+
+            $scope.getLastProcesses = function () {
+                var processes = $filter('filter')(Runtime.getEveryProcessesWithState(Runtime.getHistoryStates()), function (process) {
+                    if((moment().diff(moment(process.start), 'days') < 1) ) {
+                        return process;
+                    }
+                });
+                var activeProcesses = $scope.unique(Runtime.getEveryActiveProcesses());
+                return processes.concat(activeProcesses);
+            };
+
+            $scope.getOrderedLastProcesses = function () {
+                return $scope.orderedProcesses($scope.getLastProcesses(), $scope.processus.orderProp1, $scope.processus.orderReverse1);
+            };
 
             /************************************/
             /* PROCESSES HISTORY FACETED SEARCH */
@@ -110,14 +129,9 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.filteredOrderedProcesses = function (processes) {
-                $scope.processus.processesHistory = ProcessesFiltersManager.filter(processes);
+                $scope.processus.processesHistory = ProcessesFiltersManager.filter($scope.unique(processes));
                 $scope.search();
-                return $filter('orderBy')($scope.processus.processesHistory, $scope.processus.orderProp, $scope.processus.orderReverse);
-            };
-
-            $scope.order = function (predicate, reverse) {
-                $scope.processus.orderReverse = reverse === 'toggle' ? !$scope.processus.orderReverse : reverse;
-                $scope.processus.orderProp = predicate;
+                return $scope.orderedProcesses($scope.processus.processesHistory, $scope.processus.orderProp2, $scope.processus.orderReverse2);
             };
 
             $scope.search = function () {
@@ -152,6 +166,25 @@ angular.module('ortolangMarketApp')
                 ProcessesFiltersManager.removeFilter(filter);
             };
 
+            $scope.orderLatest = function (predicate, reverse) {
+                $scope.processus.orderReverse1 = reverse === 'toggle' ? !$scope.processus.orderReverse1 : reverse;
+                $scope.processus.orderProp1 = predicate;
+            };
+
+            $scope.orderHistory = function (predicate, reverse) {
+                $scope.processus.orderReverse2 = reverse === 'toggle' ? !$scope.processus.orderReverse2 : reverse;
+                $scope.processus.orderProp2 = predicate;
+            };
+
+            $scope.unique = function (processes) {
+                return $filter ('filter')(processes, function(item, pos, self) {
+                    return self.indexOf(item) === pos;
+                });
+            };
+
+            $scope.orderedProcesses = function(processes, orderProp, orderReverse) {
+                return $filter('orderBy')(processes, orderProp, orderReverse);
+            };
 
             /************/
             /* WATCHERS */
@@ -174,6 +207,15 @@ angular.module('ortolangMarketApp')
                 };
 
                 $scope.processus.processesNumber = newValue.processesHistory.length;
+
+            }, true);
+
+            $scope.$watch(function () {
+                return {
+                    lastProcesses: Runtime.getEveryActiveProcesses()
+                };
+            }, function () {
+                init();
 
             }, true);
 
@@ -212,17 +254,21 @@ angular.module('ortolangMarketApp')
                 $scope.Runtime = Runtime;
 
                 $scope.processus = {};
+                $scope.processus.lastProcesses = $scope.getLastProcesses();
                 $scope.processus.processesHistory = Runtime.getEveryProcessesWithState(Runtime.getHistoryStates());
                 $scope.processus.processesNumber = $scope.processus.processesHistory.length;
                 $scope.processus.search = '';
 
                 $scope.processus.completedProcessessDisplayed = 3;
                 $scope.processus.abortedProcessessDisplayed = 3;
-                $scope.processus.processessDisplayed = 10;
+                //$scope.processus.lastProcessesDisplayed = 10;
+                $scope.processus.processesDisplayed = 10;
 
                 // Filter set by default to start date in descending order
-                $scope.processus.orderProp = 'stop';
-                $scope.processus.orderReverse = true;
+                $scope.processus.orderProp1 = 'start';
+                $scope.processus.orderReverse1 = true;
+                $scope.processus.orderProp2 = 'stop';
+                $scope.processus.orderReverse2 = true;
 
                 $scope.activeTab = 0;
                 $scope.facets = false;
