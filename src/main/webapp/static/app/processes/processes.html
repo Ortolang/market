@@ -2,10 +2,13 @@
     <div bs-active-pane="activeTab" data-nav-class="nav-pills" data-template="processes/processes-tabs-template.html" bs-tabs>
         <div data-title="{{'PROCESSES' | translate}} <span class='badge'>{{Runtime.getEveryActiveProcessesNumber()}}</span>" bs-pane>
             <section id="processes" class="col-md-12">
-                <div>
+                <div ng-if="getOrderedLastProcesses().length <= 0" class="panel-body">
+                    <p translate="PROCESSES.NO_HISTORY_PROCESS"></p>
+                </div>
+                <div ng-if="getOrderedLastProcesses().length > 0" >
                     <p>{{unique(getLastProcesses()).length}} {{'PROCESSES.PROCESSES_TODAY' | translate}}</p>
                 </div>
-                <table class="table table-hover table-responsive table-condensed history">
+                <table class="table table-hover table-responsive table-condensed history" ng-if="getOrderedLastProcesses().length > 0" >
                     <thead class="small">
                     <tr>
                         <th ng-click="orderLatest('name', 'toggle')">
