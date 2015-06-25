@@ -9,6 +9,6 @@
  */
 angular.module('ortolangMarketApp')
     .factory('FormResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/rest/forms/:formKey', {}, {
+        return $resource(url.api + '/forms/:formKey', {}, {
         });
     }]);

@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('SemanticResultResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(url.api + '/rest/objects/semantic', {}, {
+        return $resource(url.api + '/objects/semantic', {}, {
             get: {
                 method: 'GET',
                 isArray: false

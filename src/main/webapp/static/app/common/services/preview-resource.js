@@ -9,7 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .factory('PreviewResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/rest/previews/:key', {key: '@key'}, {
+        return $resource(url.api + '/previews/:key', {key: '@key'}, {
             get: {
                 method: 'GET',
                 isArray: true

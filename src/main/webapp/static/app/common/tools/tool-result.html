@@ -7,22 +7,30 @@
                 <h4 class="aside-title" ng-bind="tool.name"></h4>
             </div>
 
-            <div class="aside-body" style="width:1000px">
+            <div class="aside-body" style="width:1000px" id="toolResults">
                 <div>
                     <!-- Nav tabs -->
-                    <ul class="nav nav-pills nav-stacked col-md-3">
-                        <li ng-repeat="tab in results" class="{{tab.active===true ? 'active' : ''}}">
-                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='text-preview'"><i class="fa fa-eye"></i> {{'TOOLS.PREVIEW_TITLE' | translate}}</a>
-                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='link-list'"><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</a>
-                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
+                    <ul class="nav nav-pills nav-stacked col-md-3" id="resultsTabs">
+                        <li ng-repeat="tab in results" id="{{tab.key}}Tab">
+                            <a aria-expanded="false" href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type==='text-preview'">
+                                <i class="fa fa-eye"></i> {{'TOOLS.PREVIEW_TITLE' | translate}}
+                            </a>
+                            <a aria-expanded="false" href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type==='link-list'">
+                                <i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}
+                            </a>
+                            <a aria-expanded="false" href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
                         </li>
-                        <li><a aria-expanded="false" href="#log" target="_blank" data-toggle="tab"><i class="fa fa-file-text-o"></i> {{'TOOLS.LOG_TITLE' | translate}}</a></li>
-                        <li ng-click="loadConfig(tool)"><a aria-expanded="false" href="#param" target="_blank" data-toggle="tab"><i class="fa fa-gear"></i> {{'TOOLS.PARAMETERS' | translate}}</a></li>
+                        <li id="logTab"><a aria-expanded="false" href="#logPane" target="_blank" data-toggle="tab">
+                            <i class="fa fa-file-text-o"></i> {{'TOOLS.LOG_TITLE' | translate}}
+                        </a></li>
+                        <li id="paramTab" ng-click="loadConfig(tool)"><a aria-expanded="false" href="#paramPane" target="_blank" data-toggle="tab">
+                            <i class="fa fa-gear"></i> {{'TOOLS.PARAMETERS' | translate}}
+                        </a></li>
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content col-md-9">
-                        <div ng-repeat="pane in results" class="tab-pane fade {{results.length>0 && pane.active===true ? 'active in' : ''}}" id="{{pane.key}}">
+                        <div ng-repeat="pane in results" class="tab-pane fade" id="{{pane.key}}Pane">
                             <br>
                             <blockquote>
                                 <p>{{ 'TOOLS.DESCRIPTION.' + pane.type.toUpperCase().replace('-', '_')  | translate}}</p>
@@ -30,15 +38,18 @@
                             <hr/>
                             <div onload="result = pane;" ng-include="'common/tools/tool-tpl-'+ pane.type +'.html'"></div>
                         </div>
-                        <div class="tab-pane fade {{results.length===0 ? 'active in' : ''}}" id="log">  <!--TODO : bug avec les panel actifs-->
+                        <div class="tab-pane fade" id="logPane">
                             <br>
                             <blockquote>
                                 <p>{{ 'TOOLS.DESCRIPTION.LOG'  | translate}}</p>
                             </blockquote>
-                            <hr/>
-                            <pre ng-style="{'max-height': maxProcessLogHeight}">{{log}}</pre>
+
+                            <div class="box">
+                                <h4>{{ 'TOOLS.EXECUTION_CONSOLE' | translate }}</h4>
+                                <div class="console {{failed ? 'fail' : '' }}" ng-style="{'max-height': maxProcessLogHeight}">{{log}}</div>
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="param">
+                        <div class="tab-pane fade" id="paramPane">
                             <br>
                             <blockquote>
                                 <p>{{ 'TOOLS.DESCRIPTION.PARAMETERS'  | translate}}</p>

@@ -3,10 +3,10 @@
         <div class="modal-content">
             <div class="modal-header" ng-show="title">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <h4 class="modal-title" ng-bind="title"></h4>
+                <h4 class="modal-title" ng-bind-html="title"></h4>
             </div>
             <div class="modal-body file-select-modal-body">
-                <div file-select-browser data-accept-multiple="{{acceptMultiple}}" data-force-workspace="forceWorkspace" data-force-mime-types="forceMimeTypes" data-force-head="forceHead" data-file-select-id="fileSelectId"></div>
+                <div file-select-browser data-accept-multiple="acceptMultiple" data-force-workspace="forceWorkspace" data-force-mime-types="forceMimeTypes" data-force-head="forceHead" data-file-select-id="fileSelectId" data-force-path="forcePath"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" ng-click="$emit('browserAskSelectedElements')" translate="SELECT"></button>

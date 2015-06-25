@@ -27,14 +27,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="child in filteredOrderedChildren() | limitTo:displayedItemLimit track by child.key + child.name"
+        <tr ng-repeat="child in filteredOrderedChildren() | limitTo:displayedItemLimit track by child.key"
             ng-click="clickChild(child, $event)"
             ng-right-click="clickChild(child, $event)"
             ng-dblclick="doubleClickChild(child)"
             ng-class="{active : isSelected(child)}"
             data-key="{{::child.key}}"
             on-finish-render>
-            <td><span class="type" ng-class="::child.mimeType | mimeTypeIconCss"></span>{{::child.name}}</td>
+            <td><span class="type" ng-class="::child.mimeType | mimeTypeIconCss"></span>{{child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
             <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>
             <td ng-hide="isScreenMd">{{::child.size | bytes}}</td>

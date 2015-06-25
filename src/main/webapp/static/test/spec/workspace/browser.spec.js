@@ -46,7 +46,7 @@ describe('Controller: BrowserCtrl', function () {
 
         //var queryPromise = $q.defer();
 
-        //var url = url.api() + '/rest/workspaces/' + $routeParams.wsName + '/elements';
+        //var url = url.api() + '/workspaces/' + $routeParams.wsName + '/elements';
         //url += '?path=%2F&root=head';
         //$httpBackend.whenGET(url).respond(queryPromise.promise.then(undefined, undefined));
         //console.log(url);

@@ -73,7 +73,7 @@ angular.module('ortolangMarketApp')
                 if (data.t) {
                     var result = {},
                         request = config;
-                    request.url = url.api + '/sub/' + User.key;
+                    request.url = url.sub + '/' + User.key;
                     request.headers = {t: data.t};
                     angular.extend(request, AtmosphereListener);
                     angular.forEach(request, function (value, property) {

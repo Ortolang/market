@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('JsonResultResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(url.api + '/rest/objects/json', {}, {
+        return $resource(url.api + '/objects/json', {}, {
             get: {
                 method: 'GET',
                 isArray: true

@@ -9,8 +9,8 @@
  */
 angular.module('ortolangMarketApp')
     .constant('url', {
-        base: OrtolangConfig.serverUrl,
-        api: OrtolangConfig.serverUrl + 'api',
-        content: OrtolangConfig.serverUrl + 'content',
-        contentWoSSL: OrtolangConfig.serverUrlWoSSL + 'content'
+        api: OrtolangConfig.apiServerUrlDefault,
+        sub: OrtolangConfig.apiServerUrlDefault + OrtolangConfig.apiSubPath,
+        content: OrtolangConfig.apiServerUrlDefault + OrtolangConfig.apiContentPath,
+        contentNoSSL: OrtolangConfig.apiServerUrlNoSSL + OrtolangConfig.apiContentPath
     });

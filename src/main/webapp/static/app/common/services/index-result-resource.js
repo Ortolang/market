@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('IndexResultResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(url.api + '/rest/objects/index', {}, {
+        return $resource(url.api + '/objects/index', {}, {
             get: {
                 method: 'GET',
                 isArray: true

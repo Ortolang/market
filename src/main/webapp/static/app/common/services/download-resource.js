@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         function buildDownloadUrl(params) {
             var downloadUrl;
             if (params.wskey) {
-                downloadUrl = url.api + '/rest/workspaces/' + params.wskey + '/download?';
+                downloadUrl = url.api + '/workspaces/' + params.wskey + '/download?';
                 if (params.path) {
                     downloadUrl += 'path=' + params.path + '&';
                 }
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                     downloadUrl += 'metadata=' + params.metadata;
                 }
             } else if (params.key) {
-                downloadUrl = url.api + '/rest/objects/' + params.key + '/download';
+                downloadUrl = url.api + '/objects/' + params.key + '/download';
             }
             return downloadUrl;
         }

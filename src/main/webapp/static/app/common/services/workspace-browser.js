@@ -33,7 +33,6 @@ angular.module('ortolangMarketApp')
         this.canExecuteTool = true;
         this.displayAsideInfo = true;
         this.displayAsideWorkspaceList = true;
-        this.isFileSelect = false;
         this.workspace = {};
 
         return this;

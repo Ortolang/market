@@ -113,8 +113,10 @@
 <script type="text/javascript">
     var OrtolangConfig = {};
     OrtolangConfig.logoutRedirectUrl = 'http://localhost:9000/';
-    OrtolangConfig.serverUrl = 'https://localhost:8443/';
-    OrtolangConfig.serverUrlWoSSL = 'http://localhost:8080/';
+    OrtolangConfig.apiServerUrlDefault = 'https://localhost:8443/api';
+    OrtolangConfig.apiServerUrlNoSSL = 'http://localhost:8080/api';
+    OrtolangConfig.apiSubPath = '/sub';
+    OrtolangConfig.apiContentPath = '/content';
 </script>
 <!-- endbuild -->
 
@@ -122,6 +124,7 @@
 <script src="app.js"></script>
 <script src="common/constants/url.js"></script>
 <script src="common/constants/icons.js"></script>
+<script src="common/constants/ortolang-type.js"></script>
 <script src="common/auth/auth-init.js"></script>
 <script src="common/auth/interceptors.js"></script>
 <script src="common/auth/auth.js"></script>

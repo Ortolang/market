@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('WorkspaceElementResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(url.api + '/rest/workspaces/:wskey/elements/', {}, {
+        return $resource(url.api + '/workspaces/:wskey/elements/', {}, {
             put: {
                 method: 'PUT'
             }

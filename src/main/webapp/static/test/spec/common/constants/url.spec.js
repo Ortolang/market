@@ -10,12 +10,12 @@ describe('Constant: url', function () {
         url = _url_;
     }));
 
-    it('should return base url', function () {
-        expect(url.base).toBeDefined();
+    it('should return api server url', function () {
+        expect(url.api).toBeDefined();
     });
 
-    it('should return api url', function () {
-        expect(url.api).toBeDefined();
+    it('should return sub server url', function () {
+        expect(url.sub).toBeDefined();
     });
 
     it('should return content url', function () {
@@ -23,7 +23,7 @@ describe('Constant: url', function () {
     });
 
     it('should return content url without SSL', function () {
-        expect(url.contentWoSSL).toBeDefined();
+        expect(url.contentNoSSL).toBeDefined();
     });
 
 });

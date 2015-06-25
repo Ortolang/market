@@ -31,11 +31,12 @@ angular.module('ortolangMarketApp')
         'WorkspaceElementResource',
         'VisualizerManager',
         'icons',
+        'ortolangType',
         'Settings',
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, pageWrapperMarginLeft, marketItemHeader, footerHeight, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
@@ -48,7 +49,7 @@ angular.module('ortolangMarketApp')
             function populateBreadcrumbDropdownMenu() {
                 $scope.breadcrumbDropdownItems = [];
                 if ($scope.browserService.canAdd && $scope.isHead) {
-                    $scope.breadcrumbDropdownItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
+                    $scope.breadcrumbDropdownItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.plus, action: 'addCollection'});
                     $scope.breadcrumbDropdownItems.push({divider: true});
                     $scope.breadcrumbDropdownItems.push({text: 'BROWSER.UPLOAD_FILES', icon: icons.browser.upload, action: 'uploadFiles'});
                     $scope.breadcrumbDropdownItems.push({text: 'BROWSER.UPLOAD_ZIP', icon: icons.browser.uploadZip, action: 'uploadZip'});
@@ -85,12 +86,12 @@ angular.module('ortolangMarketApp')
             $scope.contextMenu = function (clickEvent, sameChild) {
                 // TODO Context menu could be optimized when clicking on a same child but context menu deactivated
                 // If right click
-                if (clickEvent && clickEvent.button === 2) {
+                if (!$scope.isFileSelectBrowserService && clickEvent && clickEvent.button === 2) {
                     // If the context menu has already been build no need to do it again
                     if (!($scope.isContextMenuActive && sameChild)) {
                         clearContextMenuItems();
                         if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && $scope.isCollection($scope.selectedElements[0])) {
-                            $scope.contextMenuItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.browser.plus, action: 'addCollection'});
+                            $scope.contextMenuItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.plus, action: 'addCollection'});
                             // TODO Support importing files into selected directory
                             if ($scope.hasOnlyParentSelected()) {
                                 $scope.contextMenuItems.push({divider: true});
@@ -106,6 +107,7 @@ angular.module('ortolangMarketApp')
                         }
                         if ($scope.browserService.canAdd && $scope.isHead && $scope.selectedElements.length === 1 && !$scope.hasOnlyParentSelected()) {
                             $scope.contextMenuItems.push({text: 'RENAME', icon: icons.browser.edit, action: 'rename'});
+                            $scope.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
                         }
                         if ($scope.browserService.canDelete && $scope.isHead && !$scope.hasOnlyParentSelected()) {
                             $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
@@ -166,7 +168,7 @@ angular.module('ortolangMarketApp')
                         $scope.allChildrenMimeTypes.push({value: value.mimeType, label: '<span class="type ' + $filter('mimeTypeIconCss')(value.mimeType) + '"></span>' + value.mimeType});
                     }
                 });
-                if ($scope.isWorkspaceBrowserService()) {
+                if ($scope.isWorkspaceBrowserService) {
                     if ($scope.path === '/') {
                         $rootScope.ortolangPageSubtitle = ' - ' + $scope.browserService.workspace.alias;
                     } else {
@@ -305,6 +307,9 @@ angular.module('ortolangMarketApp')
                 modalScope.$on('modal.hide', function () {
                     modalScope.$destroy();
                 });
+                modalScope.$on('modal.show.before', function () {
+                    deactivateContextMenu();
+                });
             }
 
             // *********************** //
@@ -322,8 +327,8 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.isCollection = function (element) {
-                return element.type === 'collection' ||
-                    (element.objectIdentifier && element.objectIdentifier.type === 'collection');
+                return element.type === ortolangType.collection ||
+                    (element.objectIdentifier && element.objectIdentifier.type === ortolangType.collection);
             };
 
             $scope.hasOnlyParentSelected = function () {
@@ -396,7 +401,7 @@ angular.module('ortolangMarketApp')
                     }
                     $scope.contextMenu($event, true);
                 } else {
-                    if ((!$scope.browserService.isFileSelect || $scope.fileSelectAcceptMultiple) &&
+                    if ((!$scope.isFileSelectBrowserService || $scope.fileSelectAcceptMultiple) &&
                         (modKey || $event.shiftKey) && !$scope.hasOnlyParentSelected()) {
                         if (modKey) {
                             selectChild(child, 'mod', $event);
@@ -466,7 +471,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.checkSelection = function (clickEvent) {
-                if (($scope.browserService.workspace || $scope.isMarket()) &&
+                if (($scope.browserService.workspace || $scope.isMarketBrowserService) &&
                     !(angular.element(clickEvent.target).parent('tr').length ||
                     angular.element(clickEvent.target).parent('td').length ||
                     angular.element(clickEvent.target).parent('.browsed-element-child').length ||
@@ -495,10 +500,10 @@ angular.module('ortolangMarketApp')
                     };
                 if (collection) {
                     for (i = 0; i < collection.length; i++) {
-                        if (collection[i].type === 'object') {
+                        if (collection[i].type === ortolangType.object) {
                             size.value += collection[i].size;
                             size.elementNumber += 1;
-                        } else if (collection[i].type === 'collection') {
+                        } else if (collection[i].type === ortolangType.collection) {
                             size.elementNumber += 1;
                             size.collectionNumber += 1;
                             size.partial = true;
@@ -523,7 +528,7 @@ angular.module('ortolangMarketApp')
                 var key;
                 if ($scope.hasOnlyParentSelected()) {
                     key = $scope.parent.key;
-                } else if ($scope.selectedElements[0].type === 'collection') {
+                } else if ($scope.selectedElements[0].type === ortolangType.collection) {
                     key = $scope.selectedElements[0].key;
                 } else {
                     return;
@@ -582,11 +587,7 @@ angular.module('ortolangMarketApp')
                         'wskey': $scope.browserService.workspace.key,
                         'ortolangType': 'zip'
                     });
-                    modalScope.cancel();
-                };
-                modalScope.cancel = function () {
                     uploadZipModal.hide();
-                    deactivateContextMenu();
                 };
                 uploadZipModal = $modal({
                     scope: modalScope,
@@ -632,7 +633,7 @@ angular.module('ortolangMarketApp')
 
                         data = {
                             path: path,
-                            type: 'collection'
+                            type: ortolangType.collection
                         };
                         if (modalScope.newCollectionDescription) {
                             data.description = modalScope.newCollectionDescription;
@@ -640,13 +641,8 @@ angular.module('ortolangMarketApp')
                         WorkspaceElementResource.put({wskey: $scope.browserService.workspace.key }, data, function () {
                             getParentData(true).then(function () {
                                 addCollectionModal.hide();
-                                deactivateContextMenu();
                             });
                         });
-                    };
-                    modalScope.cancel = function () {
-                        addCollectionModal.hide();
-                        deactivateContextMenu();
                     };
                     modalScope.$on('modal.show', function () {
                         angular.element('#new-collection-modal').find('[autofocus]:first').focus();
@@ -661,7 +657,7 @@ angular.module('ortolangMarketApp')
 
             $scope.renameChild = function () {
                 if ($scope.browserService.canAdd && $scope.isHead) {
-                    var renameCollectionModal;
+                    var renameChildModal;
                     createModalScope();
                     modalScope.childNewName = $scope.selectedElements[0].name;
                     modalScope.renameChild = function () {
@@ -673,24 +669,59 @@ angular.module('ortolangMarketApp')
                                 getParentData(true).then(function () {
                                     $scope.selectedElements[0].name = modalScope.childNewName;
                                     $scope.refreshSelectedElement();
-                                    renameCollectionModal.hide();
-                                    deactivateContextMenu();
+                                    renameChildModal.hide();
                                 });
                             });
                         } else {
-                            renameCollectionModal.hide();
+                            renameChildModal.hide();
                         }
-                    };
-                    modalScope.cancel = function () {
-                        renameCollectionModal.hide();
-                        deactivateContextMenu();
                     };
                     modalScope.$on('modal.show', function () {
                         angular.element('#rename-collection-modal').find('[autofocus]:first').focus();
                     });
-                    renameCollectionModal = $modal({
+                    renameChildModal = $modal({
                         scope: modalScope,
                         template: 'workspace/templates/rename-modal.html',
+                        show: true
+                    });
+                }
+            };
+
+            $scope.moveChild = function () {
+                if ($scope.browserService.canAdd && $scope.isHead) {
+                    var moveModal;
+                    createModalScope();
+                    modalScope.title = $translate.instant('WORKSPACE.MOVE_CHILD_MODAL.TITLE', {name: $scope.selectedElements[0].name});
+                    modalScope.forceWorkspace = $scope.browserService.workspace.key;
+                    modalScope.forceHead = true;
+                    console.log($scope.selectedElements[0].type);
+                    //if ($scope.selectedElements[0].type)
+                    modalScope.forcePath = $scope.path;
+                    modalScope.forceMimeTypes = 'ortolang/collection';
+                    modalScope.acceptMultiple = false;
+                    modalScope.fileSelectId = 'moveChildModal';
+
+                    modalScope.$on('browserSelectedElements-moveChildModal', function ($event, elements) {
+                        modalScope.moveChild(elements[0]);
+                    });
+
+                    modalScope.moveChild = function (selectedCollection) {
+                        var data = $scope.selectedElements[0],
+                            destination = selectedCollection.path + (selectedCollection.path === '/' ?  '' : '/') + $scope.selectedElements[0].name;
+                        if (destination !== $scope.selectedElements[0].path) {
+                            WorkspaceElementResource.put({wskey: $scope.browserService.workspace.key, destination: destination}, data, function () {
+                                deselectChildren();
+                                getParentData(true).then(function () {
+                                    moveModal.hide();
+                                });
+                            });
+                        } else {
+                            moveModal.hide();
+                        }
+                    };
+                    moveModal = $modal({
+                        scope: modalScope,
+                        template: 'common/directives/file-select-modal-template.html',
                         show: true
                     });
                 }
@@ -704,7 +735,7 @@ angular.module('ortolangMarketApp')
                     modalScope.editedDescription = $scope.selectedElements[0].description;
                     modalScope.editDescription = function () {
                         if (modalScope.editedDescription === $scope.selectedElements[0].description) {
-                            modalScope.cancel();
+                            editDescriptionModal.hide();
                             return;
                         }
                         // Delete properties that are not part of the representation
@@ -715,13 +746,8 @@ angular.module('ortolangMarketApp')
                         WorkspaceElementResource.put({wskey: $scope.browserService.workspace.key }, modalScope.selectedElement, function () {
                             getParentData(true).then(function () {
                                 editDescriptionModal.hide();
-                                deactivateContextMenu();
                             });
                         });
-                    };
-                    modalScope.cancel = function () {
-                        editDescriptionModal.hide();
-                        deactivateContextMenu();
                     };
                     modalScope.$on('modal.show', function () {
                         angular.element('#new-collection-modal').find('[autofocus]:first').focus();
@@ -748,6 +774,9 @@ angular.module('ortolangMarketApp')
                         break;
                     case 'rename':
                         $scope.renameChild();
+                        break;
+                    case 'move':
+                        $scope.moveChild();
                         break;
                     case 'preview':
                         $scope.clickPreview();
@@ -854,7 +883,7 @@ angular.module('ortolangMarketApp')
 
             $scope.browseToPath = function (path) {
                 setPath(path);
-                if ($scope.isFileSelect) {
+                if ($scope.isFileSelectBrowserService) {
                     getParentData();
                 }
                 clearVisualizers();
@@ -890,7 +919,7 @@ angular.module('ortolangMarketApp')
 
             function browseToParent() {
                 if ($scope.browserService.dataResource !== 'object' &&
-                    !$scope.browserService.isFileSelect && $scope.path !== '/') {
+                    !$scope.isFileSelectBrowserService && $scope.path !== '/') {
                     var pathPartsCopy = angular.copy($scope.parent.pathParts);
                     pathPartsCopy.pop();
                     $scope.browseToPath('/' + pathPartsCopy.join('/'));
@@ -905,7 +934,6 @@ angular.module('ortolangMarketApp')
                     matchingSelectedElements = [];
                 }
                 angular.forEach(selectedElementsCopy, function (element) {
-                    element.path = $scope.parent.path + '/' + element.name;
                     if (isForceMimeTypesArray) {
                         var i, mimeTypeRegExp;
                         for (i = 0; i < $scope.forceMimeTypes.length; i++) {
@@ -927,7 +955,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.isCollection(child)) {
                     browseToChild(child);
                 } else {
-                    if ($scope.browserService.isFileSelect) {
+                    if ($scope.isFileSelectBrowserService) {
                         var elements = getSelectedElementsCopy();
                         if (elements && elements.length > 0) {
                             $rootScope.$emit('browserSelectedElements-' + $scope.fileSelectId, elements);
@@ -949,7 +977,7 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             $scope.$on('$destroy', function () {
-                if ($scope.isWorkspaceBrowserService()) {
+                if ($scope.isWorkspaceBrowserService) {
                     $rootScope.browsing = false;
                     $rootScope.ortolangPageSubtitle = undefined;
                 }
@@ -957,7 +985,7 @@ angular.module('ortolangMarketApp')
 
             $rootScope.$on('browserAskSelectedElements', function () {
                 console.log('%s caught event "browserAskSelectedElements"', $scope.browserService.id);
-                if ($scope.browserService.isFileSelect) {
+                if ($scope.isFileSelectBrowserService) {
                     var elements = getSelectedElementsCopy();
                     if (elements && elements.length > 0) {
                         console.log('%s emit "browserSelectedElements-%s" event', $scope.browserService.id, $scope.fileSelectId);
@@ -990,7 +1018,7 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.$on('$routeUpdate', function () {
-                if ($scope.isMarket()) {
+                if ($scope.isMarketBrowserService) {
                     if ($location.search().key && $location.search().key !== $scope.itemKey) {
                         if ($scope.keyHistory.back.length !== 0 && $scope.keyHistory.back[$scope.keyHistory.back.length - 1] === $location.search().key) {
                             $scope.goBack();
@@ -1031,7 +1059,7 @@ angular.module('ortolangMarketApp')
                     if (!$scope.isActiveWorkspace(workspace)) {
                         initWorkspaceVariables(workspace);
                     } else {
-                        if ($scope.isWorkspaceBrowserService()) {
+                        if ($scope.isWorkspaceBrowserService) {
                             $scope.toggleBrowsing();
                         } else {
                             if ($scope.path !== '/') {
@@ -1322,7 +1350,7 @@ angular.module('ortolangMarketApp')
                 hotkeys.bindTo($scope)
                     .add({
                         combo: ['up', 'shift+up'],
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.UP'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.UP'),
                         callback: function (event) {
                             preventDefault(event);
                             navigate(false, event);
@@ -1330,7 +1358,7 @@ angular.module('ortolangMarketApp')
                     })
                     .add({
                         combo: ['down', 'shift+down'],
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.DOWN'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.DOWN'),
                         callback: function (event) {
                             preventDefault(event);
                             navigate(true, event);
@@ -1338,10 +1366,10 @@ angular.module('ortolangMarketApp')
                     })
                     .add({
                         combo: 'backspace',
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.BACKSPACE'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.BACKSPACE'),
                         callback: function (event) {
                             preventDefault(event);
-                            if ($scope.isMarket()) {
+                            if ($scope.isMarketBrowserService) {
                                 $scope.goBack();
                             } else {
                                 browseToParent();
@@ -1350,7 +1378,7 @@ angular.module('ortolangMarketApp')
                     })
                     .add({
                         combo: 'v',
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
                         callback: function (event) {
                             preventDefault(event);
                             $scope.switchViewMode();
@@ -1366,7 +1394,7 @@ angular.module('ortolangMarketApp')
                         }
                     });
                 }
-                if ($scope.browserService.displayAsideWorkspaceList && !$scope.isFileSelect) {
+                if ($scope.browserService.displayAsideWorkspaceList && !$scope.isFileSelectBrowserService) {
                     hotkeys.bindTo($scope).add({
                         combo: 'w',
                         description: $translate.instant('BROWSER.SHORTCUTS.WORKSPACE_LIST'),
@@ -1379,14 +1407,14 @@ angular.module('ortolangMarketApp')
                 hotkeys.bindTo($scope)
                     .add({
                         combo: 'space',
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.PREVIEW'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.PREVIEW'),
                         callback: function (event) {
                             previewWithShortcut(event);
                         }
                     })
                     .add({
                         combo: 'enter',
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.ENTER'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.ENTER'),
                         callback: function (event) {
                             preventDefault(event);
                             if (hasOnlyOneElementSelectedNotParent() && $scope.isCollection($scope.selectedElements[0])) {
@@ -1398,7 +1426,7 @@ angular.module('ortolangMarketApp')
                     })
                     .add({
                         combo: 'mod+f',
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.FILTER'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.FILTER'),
                         callback: function (event) {
                             preventDefault(event);
                             var filterWrapper = angular.element('#filter-query-wrapper');
@@ -1408,7 +1436,7 @@ angular.module('ortolangMarketApp')
                     })
                     .add({
                         combo: 'mod+a',
-                        description: $scope.browserService.isFileSelect ? undefined : $translate.instant('BROWSER.SHORTCUTS.SELECT_ALL'),
+                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.SELECT_ALL'),
                         callback: function (event) {
                             preventDefault(event);
                             selectAll();
@@ -1449,13 +1477,13 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             $scope.resizeBrowser = function () {
-                if (!$scope.browserService.isFileSelect) {
+                if (!$scope.isFileSelectBrowserService) {
                     console.log('Resizing browser');
                     var topOffset = topNavWrapper.outerHeight(),
                         height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
                         bottomOffset = footerWrapper.outerHeight();
                     browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
-                    if ($scope.isMarket()) {
+                    if ($scope.isMarketBrowserService) {
                         topOffset += angular.element('.market-item').find('header').outerHeight();
                         height -= 1;
                     }
@@ -1557,14 +1585,6 @@ angular.module('ortolangMarketApp')
                 return !$scope.forceWorkspace && $scope.browserService.displayAsideWorkspaceList;
             };
 
-            $scope.isMarket = function () {
-                return $scope.browserService.id === MarketBrowserService.id;
-            };
-
-            $scope.isWorkspaceBrowserService = function () {
-                return $scope.browserService.id === WorkspaceBrowserService.id;
-            };
-
             $scope.isSuperUser = function () {
                 return AuthService.isSuperUser();
             };
@@ -1588,15 +1608,17 @@ angular.module('ortolangMarketApp')
             }
 
             function initScopeVariables() {
-                if ($scope.isFileSelect) {
+                if ($scope.isFileSelectBrowserService) {
                     $scope.browserService = FileSelectBrowserService;
                     if ($scope.forceMimeTypes) {
                         $scope.filterMimeTypeQuery = $scope.forceMimeTypes;
                     }
                 } else if ($route.current && $route.current.originalPath.match(/\/workspaces/)) {
                     $scope.browserService = WorkspaceBrowserService;
+                    $scope.isWorkspaceBrowserService = true;
                 } else {
                     $scope.browserService = MarketBrowserService;
+                    $scope.isMarketBrowserService = true;
                 }
                 console.log('Initializing browser using %s', $scope.browserService.id);
                 // Settings
@@ -1621,6 +1643,7 @@ angular.module('ortolangMarketApp')
                 $scope.allChildrenMimeTypes = [];
                 $scope.selectedElements = undefined;
                 $scope.icons = icons;
+                $scope.ortolangType = ortolangType;
                 // Breadcrumb
                 $scope.breadcrumbParts = undefined;
                 $scope.breadcrumbDropdownItems = [];
@@ -1640,7 +1663,7 @@ angular.module('ortolangMarketApp')
 
             function setPath(path) {
                 $scope.path = path;
-                if ($scope.isWorkspaceBrowserService()) {
+                if ($scope.isWorkspaceBrowserService) {
                     $location.search('path', path);
                 }
             }
@@ -1648,14 +1671,14 @@ angular.module('ortolangMarketApp')
             function setRoot(root) {
                 $scope.root = root;
                 $scope.isHead = $scope.root === 'head';
-                if ($scope.isWorkspaceBrowserService()) {
+                if ($scope.isWorkspaceBrowserService) {
                     $location.search('root', root);
                 }
             }
 
             function setItemKey(key) {
                 $scope.itemKey = key;
-                if ($scope.isMarket()) {
+                if ($scope.isMarketBrowserService) {
                     $location.search('key', key);
                     $location.search('history', btoa(angular.toJson($scope.keyHistory.back)));
                 }
@@ -1667,7 +1690,7 @@ angular.module('ortolangMarketApp')
                 }
                 $scope.browserSettings.wskey = $scope.browserService.workspace.key;
                 Settings.store();
-                if ($scope.isWorkspaceBrowserService()) {
+                if ($scope.isWorkspaceBrowserService) {
                     $location.search('alias', $scope.browserService.workspace.alias);
                 }
                 setRoot(root || 'head');
@@ -1691,7 +1714,7 @@ angular.module('ortolangMarketApp')
                     $scope.$on('initWorkspaceVariables', function () {
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                     });
-                    if (!$scope.isFileSelect) {
+                    if (!$scope.isFileSelectBrowserService) {
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                     }
                 }

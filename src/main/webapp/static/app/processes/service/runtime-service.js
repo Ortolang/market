@@ -407,7 +407,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(state, function (status) {
                         n = n + getProcessesWithState(status, not).length + getRemoteProcessesWithState(status, not).length;
                     });
-                    return processes;
+                    return n;
                 } else {
                     return getProcessesWithState(state, not).length + getRemoteProcessesWithState(state, not).length;
                 }
@@ -475,7 +475,7 @@ angular.module('ortolangMarketApp')
 
             $rootScope.$on('remote-process-created', function (event, process) {
                 subscribeToRemoteProcess(process);
-                console.debug(process);
+                //console.debug(process);
             });
 
             $rootScope.$on('runtime.remote.update-state', function (event, message) {
@@ -489,10 +489,6 @@ angular.module('ortolangMarketApp')
                 getRemoteProcesses(message.date, true);
             });
 
-            $rootScope.$on('runtime.remote.create', function (event, message) {
-                event.stopPropagation();
-                getRemoteProcesses(message.date, true);
-            });
 
             $rootScope.$on('runtime.remote.log', function (event, message) {
                 event.stopPropagation();

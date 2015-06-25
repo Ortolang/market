@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', 'FileUploader', 'url', 'AuthService',
-        function ($scope, $rootScope, $window, $timeout, FileUploader, url, AuthService) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', 'FileUploader', 'url', 'ortolangType', 'AuthService',
+        function ($scope, $rootScope, $window, $timeout, FileUploader, url, ortolangType, AuthService) {
 
             var uploader;
 
@@ -79,10 +79,10 @@ angular.module('ortolangMarketApp')
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
                 fileItem.wskey = fileItem.wskey || angular.copy($scope.browserService.workspace.key);
-                fileItem.url = url.api + '/rest/workspaces/' + fileItem.wskey + '/elements';
+                fileItem.url = url.api + '/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
-                    case 'object':
+                    case ortolangType.object:
                         fileItem.file.path = angular.copy($scope.parent.path) + '/';
                         if (fileItem._file.webkitRelativePath) {
                             fileItem.formData.push({path: fileItem.file.path + fileItem._file.webkitRelativePath});
@@ -92,14 +92,14 @@ angular.module('ortolangMarketApp')
                         }
                         break;
 
-                    case 'metadata':
+                    case ortolangType.metadata:
                         fileItem.file.path = angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
                         fileItem.formData.push({path: fileItem.file.path});
                         fileItem.formData.push({name: fileItem.file.name});
                         break;
 
                     case 'zip':
-                        fileItem.url = url.api + '/rest/runtime/processes/';
+                        fileItem.url = url.api + '/runtime/processes/';
                         fileItem.alias = 'zippath';
                         fileItem.formData = [];
                         fileItem.formData.push({'process-type': 'import-zip'});
@@ -122,14 +122,14 @@ angular.module('ortolangMarketApp')
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
                 switch (fileItem.ortolangType) {
-                    case 'object':
+                    case ortolangType.object:
                         $rootScope.$emit('uploaderObjectUploadCompleted');
                         break;
                     case 'zip':
                         $rootScope.$emit('uploaderZipUploadCompleted', fileItem, response);
                         $rootScope.$emit('process-created', response);
                         break;
-                    case 'metadata':
+                    case ortolangType.metadata:
                         $rootScope.$emit('metadataUploadCompleted');
                         break;
                 }

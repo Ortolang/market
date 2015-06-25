@@ -45,6 +45,7 @@ angular.module('ortolangMarketApp')
             SETTINGS: 'Paramètres',
             PREVIEW: 'Visualiser',
             DELETE: 'Supprimer',
+            MOVE: 'Déplacer vers...',
             UPLOAD: 'Importer',
             UPLOAD_FILES: 'Importer des fichiers',
             UPLOAD_ZIP: 'Importer un zip',

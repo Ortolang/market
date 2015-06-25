@@ -24,8 +24,9 @@ angular.module('ortolangMarketApp')
         }
 
         function getHead() {
-            return ObjectResource.get({key: WorkspaceBrowserService.workspace.head}, function (data) {
+            WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/'}, function (data) {
                 $scope.head = data;
+                //$scope.treeNodes2 = [angular.copy(data)];
             });
         }
 
@@ -355,7 +356,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.hasPresentationMetadata = function () {
-            return $scope.head && $scope.head.object && $filter('filter')($scope.head.object.metadatas, {'name': 'ortolang-item-json'}).length > 0;
+            return $scope.head && $filter('filter')($scope.head.metadatas, {'name': 'ortolang-item-json'}).length > 0;
         };
 
         // *********************** //
