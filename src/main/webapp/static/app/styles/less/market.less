@@ -202,28 +202,16 @@
     border-top: 1px solid @gray-lighter;
   }
 
-  #preview {
+  .preview-box {
+    overflow: scroll;
+    max-height: 100px;
 
-    .browsed-element-children-wrapper {
-      overflow: auto;
-      display: inline-block;
-      padding-top: 15px;
-      width: 100%;
+    .table {
+      tr {
+        cursor: pointer;
 
-      .browsed-element-children {
-        display: inline-block;
-        white-space: nowrap;
-        overflow-x: scroll;
-        overflow-y: hidden;
-
-        .browsed-element-child-wrapper {
-          display: inline-block;
-          width: 150px;
-          margin: 15px;
-
-          .browsed-element-child {
-            cursor: pointer;
-          }
+        &:first-child > td {
+          border-top: 0px;
         }
       }
     }

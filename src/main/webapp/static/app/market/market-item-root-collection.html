@@ -209,24 +209,6 @@
                 </article>
             </section>
 
-            <section id="preview" ng-if="previewCollection">
-                <header><span class="glyphicon glyphicon-eye-open fa-fw" style="font-size: 20px;"></span> {{'MARKET.PREVIEW' | translate}}</header>
-                <article>
-                    <div class="browsed-element-children-wrapper">
-                        <div class="row browsed-element-children">
-                            <div ng-repeat="element in previewCollection.object.elements"  class="browsed-element-child-wrapper">
-                                <div class="browsed-element-child"
-                                    ng-click="showPreview(element.key)">
-                                    <div class="preview">
-                                        <span class="fa-4x" ng-class="element.mimeType | mimeTypeIconCss"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </section>
-
         </div>
 
         <div ng-if="browse" class="col-md-12">
@@ -283,6 +265,25 @@
                     <p ng-bind-html="item.bibliographicCitation"></p>
                 </div>
             </div>
+
+            <div class="panel panel-default"  ng-if="previewCollection">
+                <div class="panel-heading"><span class="glyphicon glyphicon-eye-open fa-fw"></span> {{'MARKET.PREVIEW' | translate}}</div>
+                <div class="panel-body">
+
+                    <div class="preview-box">
+                        <table class="table table-hover table-condensed table-responsive">
+                        <tbody>
+                            <tr ng-repeat="element in previewCollection.object.elements" ng-click="showPreview(element.key)">
+                                <td>
+                                    <span class="type" ng-class="element.mimeType | mimeTypeIconCss"></span> {{element.name}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                   </div>
+                </div>
+            </div>
+
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">
