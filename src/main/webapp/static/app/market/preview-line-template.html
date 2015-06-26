@@ -1,0 +1,9 @@
+<table class="table table-hover table-condensed table-responsive">
+	<tbody>
+	    <tr ng-repeat="element in previewFiles" ng-click="showPreview(element.key)">
+	        <td>
+	            <span class="type" ng-class="element.object.mimeType | mimeTypeIconCss"></span> {{element.object.name}}
+	        </td>
+	    </tr>
+	</tbody>
+</table>

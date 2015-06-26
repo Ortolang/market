@@ -53,8 +53,8 @@ angular.module('ortolangMarketApp')
                             }
                         }
 
-                        if($scope.item.preview!==undefined && $scope.item.preview!=='') {
-                            loadPreview(key, $scope.item.preview);
+                        if($scope.item.preview!==undefined) {
+                            loadPreview(key, $scope.item.preview.paths);
                         }
 
                         if($scope.item.license!==undefined && $scope.item.license!=='') {
@@ -104,11 +104,14 @@ angular.module('ortolangMarketApp')
             });
         }
 
-        function loadPreview(collection, previewPath) {
-            ObjectResource.element({key: collection, path: previewPath}).$promise.then(function (oobject) {
-                $scope.previewCollection = oobject;
-            }, function (reason) {
-                console.error(reason);
+        function loadPreview(collection, paths) {
+            $scope.previewFiles = [];
+            angular.forEach(paths, function (path) {
+                ObjectResource.element({key: collection, path: path}).$promise.then(function (oobject) {
+                    $scope.previewFiles.push(oobject);
+                }, function (reason) {
+                    console.error(reason);
+                });
             });
         }
 
