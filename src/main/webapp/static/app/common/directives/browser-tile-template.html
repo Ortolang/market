@@ -1,29 +1,37 @@
-<div ng-if="!isViewModeLine()" class="row browsed-element-children-wrapper">
-    <div ng-init="resizeBrowser()" class="col-md-12">
-        <div ng-repeat="type in [ortolangType.collection, ortolangType.object]" class="row browsed-element-children">
-            <div ng-repeat="child in filteredChildren(type) | limitTo:(type === ortolangType.object ? displayedItemLimit : undefined) | orderBy:orderProp:orderReverse track by child.key"
-                 ng-class="tileCssClasses()" class="browsed-element-child-wrapper" on-finish-render>
-                <div class="browsed-element-child"
-                     ng-click="clickChild(child, $event)"
-                     ng-right-click="clickChild(child, $event)"
-                     ng-dblclick="doubleClickChild(child)"
-                     ng-class="{active : isSelected(child), collection: type === ortolangType.collection}">
-                    <div ng-if="type === ortolangType.object" class="preview">
-                        <span class="fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
-                    </div>
-                    <p class="name-wrapper">
-                        <span ng-if="type === ortolangType.collection" ng-class="icons.folderPlain" class="type"></span>
-                        <span ng-if="type === ortolangType.object" ng-class="child.mimeType | mimeTypeIconCss" class="type"></span>
-                        <span class="name">{{child.name}}</span>
-                    </p>
+<div ng-if="!isViewModeLine()" ng-init="resizeBrowser()" class="browsed-element-children-wrapper">
+    <div ng-if="!isHead || parent.elements.length > 0 || !browserService.canEdit" ng-repeat="type in [ortolangType.collection, ortolangType.object]" class="row browsed-element-children">
+        <div ng-repeat="child in filteredChildren(type) | limitTo:(type === ortolangType.object ? displayedItemLimit : undefined) | orderBy:orderProp:orderReverse track by child.key"
+             ng-class="tileCssClasses()" class="browsed-element-child-wrapper" on-finish-render>
+            <div class="browsed-element-child"
+                 ng-click="clickChild(child, $event)"
+                 ng-right-click="clickChild(child, $event)"
+                 ng-dblclick="doubleClickChild(child)"
+                 ng-class="{active : isSelected(child), collection: type === ortolangType.collection}">
+                <div ng-if="type === ortolangType.object" class="preview">
+                    <span class="fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
                 </div>
+                <p class="name-wrapper">
+                    <span ng-if="type === ortolangType.collection" ng-class="icons.folderPlain" class="type"></span>
+                    <span ng-if="type === ortolangType.object" ng-class="child.mimeType | mimeTypeIconCss" class="type"></span>
+                    <span class="name">{{child.name}}</span>
+                </p>
             </div>
-            <div ng-if="type === ortolangType.object && displayedItemLimit < parent.elements.length" class="clearfix col-md-12 see-all-wrapper">
-                <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
-                    <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
-                    <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
-                </button>
-            </div>
+        </div>
+        <div ng-if="type === ortolangType.object && displayedItemLimit < parent.elements.length" class="clearfix col-md-12 see-all-wrapper">
+            <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
+                <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
+                <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
+            </button>
+        </div>
+        <div ng-if="type === ortolangType.object && parent.elements.length === 0" class="clearfix text-center col-md-12 no-children-wrapper">
+            <span ng-if="!browserService.canEdit || !isHead" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
+        </div>
+    </div>
+    <div ng-if="isHead && parent.elements.length === 0 && browserService.canEdit" class="no-children-wrapper-head text-center" nv-file-over nv-file-drop uploader="uploader" options="{ortolangType: ortolangType.object}">
+        <div class="no-children">
+            <span class="icon glyphicon glyphicon-cloud-upload"></span>
+            <br/>
+            <span translate="BROWSER.NO_CHILDREN" class="file-not-hover"></span>
         </div>
     </div>
 </div>

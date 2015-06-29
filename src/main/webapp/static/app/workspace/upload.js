@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
                             name: 'noFolder',
                             fn: function (item) {
                                 return !(!item.type && ((!this.isMacOs && item.size % 4096 === 0) ||
-                                    (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 5 < item.name.length - 1))));
+                                (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 5 < item.name.length - 1))));
                             }
                         }
                     ]
@@ -84,12 +84,7 @@ angular.module('ortolangMarketApp')
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
                         fileItem.file.path = angular.copy($scope.parent.path) + '/';
-                        if (fileItem._file.webkitRelativePath) {
-                            fileItem.formData.push({path: fileItem.file.path + fileItem._file.webkitRelativePath});
-                            fileItem.file.path += fileItem._file.webkitRelativePath.replace(fileItem.file.name, '');
-                        } else {
-                            fileItem.formData.push({path: fileItem.file.path + fileItem.file.name});
-                        }
+                        fileItem.formData.push({path: fileItem.file.path + fileItem.file.name});
                         break;
 
                     case ortolangType.metadata:

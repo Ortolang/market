@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
                 path: '=?forcePath',
                 forceHead: '=?',
                 fileSelectId: '=',
+                hideElement: '=?',
                 fileSelectAcceptMultiple: '=acceptMultiple'
             },
             templateUrl: 'common/directives/browser.html',

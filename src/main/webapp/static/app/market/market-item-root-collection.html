@@ -203,7 +203,7 @@
                 <article>
                     <ul>
                         <li ng-repeat="version in versions">
-                            <a ng-href="#/market/corpora/{{version.key}}" ng-bind="version.versionName"></a>
+                            <a ng-href="#/market/corpora/{{version.key}}" translate="BROWSER.VERSION" data-translate-values="{number: version.versionName}"></a>
                         </li>
                     </ul>
                 </article>

@@ -16,8 +16,6 @@ angular.module('ortolangMarketApp')
             COLLECTION: 'Dossier',
             INFORMATION: 'Informations',
             METADATA: 'Métadonnées',
-            DESCRIPTION: 'Description',
-            NO_DESCRIPTION_PROVIDED: 'Ajouter une description',
             AUTHOR: 'Auteur',
             CREATION: 'Création',
             MODIFICATION: 'Modification',
@@ -43,6 +41,7 @@ angular.module('ortolangMarketApp')
             DASHBOARD: 'Retourner au tableau de bord',
             WORKSPACE_LIST: '{{hideWorkspaceList === "true" ? "Afficher" : "Masquer"}} la liste des espaces de travail',
             SETTINGS: 'Paramètres',
+            OTHERS: 'Autres actions',
             PREVIEW: 'Visualiser',
             DELETE: 'Supprimer',
             MOVE: 'Déplacer vers...',
@@ -52,7 +51,8 @@ angular.module('ortolangMarketApp')
             UPLOAD_FOLDER: 'Importer un dossier',
             NEW_COLLECTION: 'Nouveau dossier',
             PREVIEW_WORKSPACE: 'Aperçu avant publication',
-            VERSION: 'Versions de l\'espace de travail',
+            VERSION: 'Version {{number}}',
+            VERSIONS: 'Versions de l\'espace de travail',
             HEAD: 'Version actuelle',
             PREVIOUS_VERSIONS: 'Versions précédentes',
             BACK: 'Revenir',
@@ -81,6 +81,9 @@ angular.module('ortolangMarketApp')
             NO_PREVIEW: 'Aucun aperçu n\'est disponible pour ce type de fichier',
             WORKSPACE_KEY: 'Copier la clé du workspace',
             BEARER_TOKEN: 'Copier le token',
-            SEE_ALL: 'Voir tous les fichiers'
+            SEE_ALL: 'Voir tous les fichiers',
+            NO_CHILDREN: 'Ce dossier est vide<br/><small>Faites glisser et déposez des fichiers dans cette fenêtre ou cliquez sur le bouton Nouveau</small>',
+            NO_CHILDREN_NOT_HEAD: 'Ce dossier est vide',
+            NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants'
         }
     });
