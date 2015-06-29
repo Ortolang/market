@@ -2,12 +2,12 @@
     <div class="col-md-12" >
         <br>
         <form name="saveResultsForm" novalidate role="form">
-            <h5>Voulez-vous sauvegarder ces fichiers dans un espace de travail ?</h5>
+            <h5>{{ 'TOOLS.SAVE_IN_WS' | translate }}</h5>
             <table class="table table-responsive">
                 <thead>
                 <tr>
-                    <th>Sauvegarder</th>
-                    <th>Nom du fichier</th>
+                    <th>{{ 'TOOLS.SAVE' | translate }}</th>
+                    <th>{{ 'TOOLS.FILENAME' | translate }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,7 +35,7 @@
                     </span>
                 </span>
                 <span class="input-group-btn">
-                    <button class="btn btn-default" ng-click="folderSelectModal.show()" type="button">Sélectionner un dossier</button>
+                    <button class="btn btn-default" ng-click="folderSelectModal.show()" type="button">{{'TOOLS.SELECT_FOLDER' | translate }}</button>
                 </span>
             </div>
             <input type="hidden" name="wskey" ng-model="data.wskey" class="form-control">
@@ -46,10 +46,10 @@
             <div class="btn-toolbar pull-right">
                 <div class="btn-group">
                     <button class="btn btn-default" ng-click="$hide()">
-                        <span class="fa fa-remove"></span> Annuler
+                        <span class="fa fa-remove"></span> {{'TOOLS.ABORT' | translate }}
                     </button>
                     <button class="btn btn-primary" ng-click="submit()">
-                        <span class="fa fa-save"></span> Valider
+                        <span class="fa fa-save"></span> {{'TOOLS.SAVE' | translate }}
                     </button>
                 </div>
                 <!--<div ng-if="selectedMetadata!==undefined" class="btn-group ">-->

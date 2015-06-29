@@ -34,6 +34,9 @@ angular.module('ortolangMarketApp')
             BACKGROUND: 'Mettre en arrière-plan',
             PARAMETERS: 'Paramètres',
             ABORT: 'Annuler',
+            SAVE: 'Sauvegarder',
+            SAVE_IN_WS: 'Voulez-vous sauvegarder ces fichiers dans un espace de travail ?',
+            FILENAME: 'Nom du fichier',
             ABORTED: 'est annulé',
             TREATED_CONTENT: {
                 WRITTEN: 'Traitement de l\'écrit',
@@ -54,6 +57,7 @@ angular.module('ortolangMarketApp')
             EXECUTION: 'Execution',
             EXECUTION_DESC: 'Vous pouvez quitter cette page en cliquant sur le bouton [Mettre en arrière-plan] sans interrompre l\'execution de l\'outil. ' +
             'Pour voir la progression de l\'execution de l\'outil, cliquer sur le bouton [Processus] dans la barre de navigation.',
-            EXECUTION_CONSOLE: 'Journal d\'execution'
+            EXECUTION_CONSOLE: 'Journal d\'execution',
+            SELECT_FOLDER: 'Sélectionner un dossier'
         }
     });
