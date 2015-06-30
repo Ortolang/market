@@ -1070,10 +1070,6 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.showCheatsheet = function ($event) {
-                hotkeys.get('?').callback($event);
-            };
-
             function displaySearchErrorModal(cause, params) {
                 $modal({
                     title: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.TITLE'),
@@ -1170,7 +1166,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.order = function (predicate, reverse) {
-                // If ask to toggle with a different predicate whe force reverse to false (ascending)
+                // If ask to toggle with a different predicate force reverse to false (ascending)
                 if (reverse === undefined || (reverse === 'toggle' && !angular.equals(predicate, $scope.orderProp))) {
                     reverse = false;
                 }
@@ -1448,6 +1444,10 @@ angular.module('ortolangMarketApp')
                         });
                 }
             }
+
+            $scope.showCheatsheet = function ($event) {
+                hotkeys.get('?').callback($event);
+            };
 
             // *********************** //
             //          Resize         //
