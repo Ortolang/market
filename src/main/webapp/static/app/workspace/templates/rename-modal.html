@@ -5,20 +5,22 @@
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
                 <span class="modal-title" id="rename-collection-modal-label" translate="WORKSPACE.RENAME_CHILD_MODAL.TITLE"></span>
             </div>
-            <form class="form-horizontal" role="form" ng-submit="renameChild()">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" ng-submit="renameChild()">
                     <div class="form-group">
                         <label for="child-new-name" class="col-sm-2 control-label" translate="NAME"></label>
                         <div class="col-sm-10">
                             <input ng-model="$parent.childNewName" required autofocus type="text" class="form-control" id="child-new-name" placeholder="{{'NAME' | translate}}">
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary rename-collection" translate="SUBMIT"></button>
-                    <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary rename-collection" translate="SUBMIT"></button>
+                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
                     name = process.name;
                 }
                 if (process) {
-                    $scope.maxProcessLogHeight = (window.innerHeight - 170) + 'px';
+                    $scope.maxProcessLogHeight = (window.innerHeight - 220) + 'px';
                     $scope.failed = (process.state === Runtime.getStates().aborted) || (process.state === Runtime.getStates().suspended);
                     $modal({
                         title: name,

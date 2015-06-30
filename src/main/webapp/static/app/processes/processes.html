@@ -2,7 +2,7 @@
     <div bs-active-pane="activeTab" data-nav-class="nav-pills" data-template="processes/processes-tabs-template.html" bs-tabs>
         <div data-title="{{'PROCESSES' | translate}} <span class='badge'>{{Runtime.getEveryActiveProcessesNumber()}}</span>" bs-pane>
             <section id="processes" class="col-md-12">
-                <div ng-if="getOrderedLastProcesses().length <= 0" class="panel-body">
+                <div ng-if="getOrderedLastProcesses().length <= 0">
                     <p translate="PROCESSES.NO_HISTORY_PROCESS"></p>
                 </div>
                 <div ng-if="getOrderedLastProcesses().length > 0" >

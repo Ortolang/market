@@ -138,8 +138,8 @@ angular
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
             'self',
-            OrtolangConfig.serverUrl + '**',
-            OrtolangConfig.serverUrlWoSSL + '**'
+            OrtolangConfig.apiServerUrlDefault + '**',
+            OrtolangConfig.apiServerUrlNoSSL + '**'
         ]);
     }])
     .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {

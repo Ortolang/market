@@ -5,8 +5,8 @@
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
                 <span class="modal-title" id="create-workspace-modal-label" translate="WORKSPACE.CREATE_WORKSPACE_MODAL.TITLE"></span>
             </div>
-            <form role="form" id="create-workspace-form" name="createWorkspace" class="form-horizontal" ng-submit="submit(createWorkspace)" novalidate>
-                <div class="modal-body">
+            <div class="modal-body">
+                <form role="form" id="create-workspace-form" name="createWorkspace" class="form-horizontal" ng-submit="submit(createWorkspace)" novalidate>
                     <div class="form-group" ng-class="{'has-error': (createWorkspace.$submitted || createWorkspace.name.$dirty) && createWorkspace.name.$invalid}">
                         <label for="new-workspace-name" class="col-sm-2 control-label" translate="NAME"></label>
                         <div class="col-sm-10">
@@ -34,12 +34,14 @@
                         </div>
                         <div class="help-block help col-sm-offset-2 col-sm-10" translate="WORKSPACE.CREATE_WORKSPACE_MODAL.HELP.ALIAS"></div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" translate="WORKSPACE.CREATE_WORKSPACE_MODAL.SUBMIT"></button>
-                    <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" translate="WORKSPACE.CREATE_WORKSPACE_MODAL.SUBMIT"></button>
+                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
         </div>
     </div>

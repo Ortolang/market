@@ -4,15 +4,26 @@
     border-top-width: @border-radius-base;
     border-top-color: @modal-border-top-color;
 
-    .modal-header {
+    .modal-header:not(.modal-header-border) {
       border-bottom: none;
     }
     .modal-footer:not(.modal-footer-border) {
       padding-top: 0;
       border-top: none;
     }
+
+    .form-horizontal .form-group {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
   &.modal-primary {
     border-top-color: @brand-primary;
+  }
+}
+
+@media (min-width: 1280px) {
+  .modal-xl {
+    width: 1200px;
   }
 }
