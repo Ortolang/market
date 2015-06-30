@@ -198,12 +198,13 @@
                 </article>
             </section>
 
-            <section id="other_versions" ng-if="versions">
+            <section id="other_versions">
                 <header><span class="fa fa-book fa-fw"></span> {{'MARKET.OTHER_VERSIONS' | translate}}</header>
                 <article>
                     <ul>
                         <li ng-repeat="version in versions">
-                            <a ng-href="#/market/corpora/{{version.key}}" ng-bind="version.versionName"></a>
+                            <a ng-if="workspace.versionName !== version.versionName" ng-href="#/market/corpora/{{version.key}}" translate="BROWSER.VERSION" data-translate-values="{number: version.versionName}"></a>
+                            <span ng-if="workspace.versionName === version.versionName" translate="BROWSER.VERSION" data-translate-values="{number: version.versionName}"></span>
                         </li>
                     </ul>
                 </article>
