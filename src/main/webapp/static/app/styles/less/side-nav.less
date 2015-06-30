@@ -5,9 +5,7 @@
   min-height: calc(100% ~'-' @top-nav-plus-footer);
 }
 .side-nav {
-  position: relative;
   background-color: @default-bg;
-  z-index: 1;
 
   .side-nav-list {
     margin: 0;
@@ -31,7 +29,7 @@
         .icon-container {
           text-align: center;
           z-index: 5;
-          width: @side-nav-item-height + 14px;
+          width: @side-nav-item-icon-width;
           color: @side-nav-item-icon-color;
           line-height: @side-nav-item-height;
         }

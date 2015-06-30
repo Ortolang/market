@@ -21,8 +21,7 @@ angular.module('ortolangMarketApp')
         this.id = 'FileSelectBrowserService';
         this.getData = getData;
         this.dataResource = 'workspace';
-        this.canDelete = false;
-        this.canAdd = false;
+        this.canEdit = false;
         this.canDownload = false;
         this.canPreview = false;
         this.canChangeRoot = true;

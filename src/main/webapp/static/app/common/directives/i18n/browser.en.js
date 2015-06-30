@@ -16,8 +16,6 @@ angular.module('ortolangMarketApp')
             COLLECTION: 'Folder',
             INFORMATION: 'Information',
             METADATA: 'Metadata',
-            DESCRIPTION: 'Description',
-            NO_DESCRIPTION_PROVIDED: 'Add a description',
             AUTHOR: 'Author',
             CREATION: 'Creation',
             MODIFICATION: 'Modification',
@@ -43,6 +41,7 @@ angular.module('ortolangMarketApp')
             DASHBOARD: 'Go back to dashboard',
             WORKSPACE_LIST: '{{hideWorkspaceList === "true" ? "Display" : "Hide"}} workspace list',
             SETTINGS: 'Settings',
+            OTHERS: 'Other actions',
             PREVIEW: 'Preview',
             DELETE: 'Delete',
             MOVE: 'Move into...',
@@ -52,7 +51,8 @@ angular.module('ortolangMarketApp')
             UPLOAD_FOLDER: 'Import folder',
             NEW_COLLECTION: 'New Folder',
             PREVIEW_WORKSPACE: 'Preview before publication',
-            VERSION: 'Workspace versions',
+            VERSION: 'Version {{number}}',
+            VERSIONS: 'Workspace versions',
             HEAD: 'Current version',
             PREVIOUS_VERSIONS: 'Previous versions',
             BACK: 'Back',
@@ -81,6 +81,9 @@ angular.module('ortolangMarketApp')
             NO_PREVIEW: 'No preview available for this type of file',
             WORKSPACE_KEY: 'Copy workspace key',
             BEARER_TOKEN: 'Copy token',
-            SEE_ALL: 'See all'
+            SEE_ALL: 'See all',
+            NO_CHILDREN: 'This folder is empty<br/><small>Drag and drop files here or click on the button New</small>',
+            NO_CHILDREN_NOT_HEAD: 'This folder is empty',
+            NO_FILTERED_CHILDREN: 'No elements'
         }
     });

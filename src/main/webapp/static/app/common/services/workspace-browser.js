@@ -22,8 +22,7 @@ angular.module('ortolangMarketApp')
         this.id = 'WorkspaceBrowserService';
         this.getData = getData;
         this.dataResource = 'workspace';
-        this.canDelete = true;
-        this.canAdd = true;
+        this.canEdit = true;
         this.canDownload = true;
         this.canPreview = true;
         this.canChangeRoot = true;

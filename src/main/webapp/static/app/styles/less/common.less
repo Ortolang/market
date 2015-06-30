@@ -1,0 +1,32 @@
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: @body-bg;
+}
+
+.nav > li > a {
+  color: @text-color;
+}
+
+a:focus {
+  outline: none;
+}
+
+.btn-secondary {
+  .button-variant(@btn-secondary-color; @btn-secondary-bg; @btn-secondary-border);
+}
+
+.btn-tertiary {
+  .button-variant(@btn-tertiary-color; @btn-tertiary-bg; @btn-tertiary-border);
+}
+
+.btn-inverse {
+  .button-variant(@btn-inverse-color; @btn-inverse-bg; @btn-inverse-border);
+}
+
+.has-error .help-block.help {
+  color: lighten(@text-color, 25%);
+}

@@ -34,6 +34,9 @@ angular.module('ortolangMarketApp')
             BACKGROUND: 'Put in background',
             PARAMETERS: 'Parameters',
             ABORT: 'Abort',
+            SAVE: 'Save',
+            SAVE_IN_WS: 'Do you want to save your files in a workspace ?',
+            FILENAME: 'File name',
             ABORTED: 'is aborted',
             TREATED_CONTENT: {
                 WRITTEN: 'Processing of written content',
@@ -54,6 +57,7 @@ angular.module('ortolangMarketApp')
             EXECUTION: 'Execution',
             EXECUTION_DESC: 'You can leave this page without interrupting the tool\'s execution by clicking on the button [Put in background]. ' +
             'To see the progress of the tool\'s execution, click on the button [Processes] in the navbar.',
-            EXECUTION_CONSOLE: 'Console log'
+            EXECUTION_CONSOLE: 'Console log',
+            SELECT_FOLDER: 'Select a folder'
         }
     });

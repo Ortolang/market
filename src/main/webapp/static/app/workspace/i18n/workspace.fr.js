@@ -74,9 +74,6 @@ angular.module('ortolangMarketApp')
             MOVE_CHILD_MODAL: {
                 TITLE: 'Déplacer <strong>{{name}}</strong> vers...'
             },
-            EDIT_DESCRIPTION_MODAL: {
-                TITLE: 'Éditer la description de {{name}}'
-            },
             ADD_MEMBER_MODAL: {
                 TITLE: 'Ajouter un membre à {{wsName}}',
                 SUBMIT: 'Ajouter'

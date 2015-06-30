@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$filter', '$translate', '$alert',
-        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $filter, $translate, $alert) {
+    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$filter', '$translate', 'FileSelectBrowserService', 'Settings',  'WorkspaceResource',
+        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $filter, $translate, FileSelectBrowserService, Settings, WorkspaceResource) {
 
             // ***************** //
             // Editor visibility //
@@ -152,6 +152,27 @@ angular.module('ortolangMarketApp')
 
                 $scope.folder = {};
                 $scope.data = {};
+                WorkspaceResource.get().$promise.then(function (data) {
+                    if (Settings[FileSelectBrowserService.id].wskey) {
+                        var key = Settings[FileSelectBrowserService.id].wskey,
+                            filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
+                        if (filteredWorkspace.length !== 1) {
+                            console.error('No workspace with key "%s" available', key);
+                        } else {
+                            $scope.folder = filteredWorkspace[0];
+                            $scope.folder.ws = filteredWorkspace[0].alias;
+                            $scope.data.path = '/';
+                            $scope.data.wskey = filteredWorkspace[0].key;
+                            console.debug($scope.folder, $scope.data);
+                        }
+                    } else {
+                        $scope.folder =  data.entries[0];
+                        $scope.folder.ws  = data.entries[0].alias;
+                        $scope.data.path =  '/';
+                        $scope.data.wskey =  data.entries[0].key;
+                        console.debug($scope.folder, $scope.data);
+                    }
+                });
 
                 $scope.config = [];
                 $scope.results = [];

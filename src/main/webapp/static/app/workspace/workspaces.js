@@ -24,9 +24,8 @@ angular.module('ortolangMarketApp')
         }
 
         function getHead() {
-            WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/'}, function (data) {
+            return WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/'}, function (data) {
                 $scope.head = data;
-                //$scope.treeNodes2 = [angular.copy(data)];
             });
         }
 
@@ -294,7 +293,7 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        function getSnapshotNameFromHistory(workspaceSnapshot) {
+        function getSnapshotNumberFromHistory(workspaceSnapshot) {
             if (WorkspaceBrowserService.workspace.snapshots) {
                 var filteredSnapshot = $filter('filter')(WorkspaceBrowserService.workspace.snapshots, {key: workspaceSnapshot.key}, true);
                 if (filteredSnapshot.length === 1) {
@@ -312,7 +311,7 @@ angular.module('ortolangMarketApp')
                     ProfileResource.read({key: workspaceSnapshot.author}, function (data) {
                         workspaceSnapshot.authorProfile = data;
                     });
-                    workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
+                    workspaceSnapshot.number = getSnapshotNumberFromHistory(workspaceSnapshot);
                 });
             });
         };

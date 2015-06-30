@@ -87,13 +87,13 @@
                 </section>
                 <section data-title="{{'WORKSPACE.HISTORY' | translate}}" bs-pane>
                     <ul class="list-unstyled">
-                        <li ng-repeat="history in workspaceHistory | filter:{name:'!!'} track by history.key" class="media history-item">
+                        <li ng-repeat="history in workspaceHistory | filter:{number:'!!'} track by history.key" class="media history-item">
                             <div class="media-left" avatar data-email-hash="history.authorProfile.emailHash" data-size="50" data-img-classes="img-circle">
                             </div>
                             <div class="media-body">
                                 <p>
                                     <span translate="BROWSER.CREATED" data-translate-values="{author: history.authorProfile.givenName + ' ' + history.authorProfile.familyName}"></span>
-                                    <strong class="snapshot-name">{{history.name}}</strong>
+                                    <strong class="snapshot-name" translate="BROWSER.VERSION" data-translate-values="{number: history.number}"></strong>
                                     <span class="small publication-status" ng-class="[history.publicationStatus, icons.browser.published]" data-title="{{history.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="right" bs-tooltip></span>
                                     <br/>
                                     <span class="small">{{history.date | date:'medium'}}</span>

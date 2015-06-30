@@ -4,6 +4,7 @@
   min-height: -moz-calc(100% ~'-' @top-nav-plus-footer);
   min-height: calc(100% ~'-' @top-nav-plus-footer);
   background-color: @main-bg;
+  position: relative;
 }
 
 #main-wrapper.no-footer {
@@ -20,10 +21,23 @@
   height: calc(100% ~'-' @top-navbar-height);
 }
 
-@media(min-width:768px) {
+@media (min-width:768px) {
   #main-wrapper {
-    position: inherit;
+    position: relative;
     margin-left: @side-nav-width;
     border-left: 1px solid darken(@gray-lighter, 6.5%);
+    -webkit-transition: margin-left 0.8s;
+    -moz-transition: margin-left 0.8s;
+    -ms-transition: margin-left 0.8s;
+    -o-transition: margin-left 0.8s;
+    transition: margin-left 0.8s;
+  }
+}
+
+@media (min-width:768px) and (max-width:1280px) {
+  #main-wrapper {
+    &.no-footer.browsing {
+      margin-left: @side-nav-item-icon-width;
+    }
   }
 }

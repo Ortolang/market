@@ -51,6 +51,7 @@ angular.module('ortolangMarketApp')
                 download: 'glyphicon glyphicon-download',
                 upload: 'glyphicon glyphicon-upload',
                 uploadZip: 'glyphicon glyphicon-compressed',
+                uploadToWorkspace: 'glyphicon glyphicon-cloud-upload',
                 delete: 'glyphicon glyphicon-trash',
                 remove: 'glyphicon glyphicon-remove',
                 edit: 'glyphicon glyphicon-pencil',
@@ -71,6 +72,7 @@ angular.module('ortolangMarketApp')
                 members: 'fa fa-fw fa-users',
                 workspace: 'glyphicon glyphicon-book',
                 browse: 'glyphicon glyphicon-th',
-                dashboard: 'glyphicon glyphicon-dashboard'
+                dashboard: 'glyphicon glyphicon-dashboard',
+                others: 'fa fa-fw fa-ellipsis-v'
             }
         });

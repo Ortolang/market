@@ -21,8 +21,7 @@ angular.module('ortolangMarketApp')
         this.id = 'MarketBrowserService';
         this.getData = getData;
         this.dataResource = 'object';
-        this.canDelete = false;
-        this.canAdd = false;
+        this.canEdit = false;
         this.canDownload = true;
         this.canPreview = true;
         this.canChangeRoot = false;

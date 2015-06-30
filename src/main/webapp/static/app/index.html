@@ -50,7 +50,9 @@
 
 <div id="top-nav-wrapper" ng-include="'common/nav/top-nav.html'"></div>
 <div id="side-nav-wrapper" ng-include="'common/nav/side-nav.html'"></div>
-<main id="main-wrapper" ng-view ng-class="{'no-footer': noFooter, 'browsing': browsing}" role="main" ng-cloak></main>
+<main id="main-wrapper"  ng-class="{'no-footer': noFooter, 'browsing': browsing}" role="main">
+    <div class="view-wrapper" ng-view ng-cloak></div>
+</main>
 <div id="footer-wrapper" ng-if="!noFooter" ng-include="'common/nav/footer.html'"></div>
 <div class="alerts-wrapper"></div>
 
