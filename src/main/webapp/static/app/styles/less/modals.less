@@ -1,0 +1,18 @@
+.modal {
+  .modal-content {
+    border-radius: @border-radius-base;
+    border-top-width: @border-radius-base;
+    border-top-color: @modal-border-top-color;
+
+    .modal-header {
+      border-bottom: none;
+    }
+    .modal-footer:not(.modal-footer-border) {
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+  &.modal-primary {
+    border-top-color: @brand-primary;
+  }
+}

@@ -27,7 +27,7 @@
             <span ng-if="!browserService.canEdit || !isHead" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
         </div>
     </div>
-    <div ng-if="isHead && parent.elements.length === 0 && browserService.canEdit" class="no-children-wrapper-head text-center" nv-file-over nv-file-drop uploader="uploader" options="{ortolangType: ortolangType.object}">
+    <div ng-if="isHead && parent.elements.length === 0 && browserService.canEdit" class="no-children-wrapper-head text-center">
         <div class="no-children">
             <span class="icon glyphicon glyphicon-cloud-upload"></span>
             <br/>

@@ -3,12 +3,12 @@
         <div class="modal-content">
             <div class="modal-header" ng-show="title">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <h4 class="modal-title" ng-bind-html="title"></h4>
+                <span class="modal-title" ng-bind-html="title"></span>
             </div>
             <div class="modal-body file-select-modal-body">
                 <div file-select-browser data-accept-multiple="acceptMultiple" data-force-workspace="forceWorkspace" data-force-mime-types="forceMimeTypes" data-force-head="forceHead" data-file-select-id="fileSelectId" data-force-path="forcePath" data-hide-element="hideElement"></div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer modal-footer-border">
                 <button type="button" class="btn btn-primary" ng-click="$emit('browserAskSelectedElements')" translate="SELECT"></button>
                 <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
             </div>
