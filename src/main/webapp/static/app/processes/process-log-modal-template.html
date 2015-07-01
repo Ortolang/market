@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <div class="box">
                     <h4>{{ 'TOOLS.EXECUTION_CONSOLE' | translate }}</h4>
-                    <div class="console {{failed ? 'fail' : '' }}" ng-style="{'max-height': maxProcessLogHeight}">{{selectedProcess.log}}</div>
+                    <div class="console {{failed ? 'fail' : '' }}" ng-style="{'max-height': maxProcessLogHeight}">{{Runtime.getSelectedProcess().log}}</div>
                 </div>
             </div>
         </div>

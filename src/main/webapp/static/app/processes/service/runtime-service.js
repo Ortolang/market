@@ -40,6 +40,7 @@ angular.module('ortolangMarketApp')
                 lastProcessesRefresh,
                 activeProcesses = [],
                 activeRemoteProcesses = [],
+                selectedProcess,
                 history = {};
 
 
@@ -92,7 +93,7 @@ angular.module('ortolangMarketApp')
 
             function createProcessFromForm(formKey, template) {
                 FormResource.get({formKey: formKey}, {}, function (form) {
-                    var modalScope = $rootScope.$new();
+                    var modalScope = $scope.$new(true);
                     modalScope.formData = {};
                     modalScope.formFields = JSON.parse(form.definition);
                     modalScope.submitText = $translate.instant('PROCESSES.START_PROCESS');
@@ -124,7 +125,7 @@ angular.module('ortolangMarketApp')
             }
 
             function selectProcess(process) {
-                $rootScope.selectedProcess = process;
+                selectedProcess = process;
             }
 
             function selectProcessByKey(key) {
@@ -181,8 +182,8 @@ angular.module('ortolangMarketApp')
                         if (!refresh) {
                             subscribeToProcesses(activeProcesses);
                         }
-                        if ($rootScope.selectedProcess) {
-                            $rootScope.selectedProcess = $filter('filter')(processes, {key: $rootScope.selectedProcess.key})[0];
+                        if (selectedProcess) {
+                            selectedProcess = $filter('filter')(processes, {key: selectedProcess.key})[0];
                         }
                     }, function (error) {
                         console.error('An error occurred while trying to refresh the process list', error);
@@ -213,7 +214,7 @@ angular.module('ortolangMarketApp')
 
             function completeTask(task) {
                 FormResource.get({formKey: task.form}, {}, function (form) {
-                    var modalScope = $rootScope.$new();
+                    var modalScope = $scope.$new(true);
                     modalScope.formData = {};
                     modalScope.formFields = JSON.parse(form.definition);
                     modalScope.submitText = $translate.instant('TASKS.COMPLETE_TASK');
@@ -263,7 +264,7 @@ angular.module('ortolangMarketApp')
             }
 
             function selectRemoteProcess(remoteProcess) {
-                $rootScope.selectedProcess = remoteProcess;
+                selectedProcess = remoteProcess;
             }
 
             function selectRemoteProcessByKey(key) {
@@ -328,8 +329,8 @@ angular.module('ortolangMarketApp')
                         if (!refresh) {
                             subscribeToRemoteProcess(activeRemoteProcesses);
                         }
-                        if ($rootScope.selectedProcess) {
-                            $rootScope.selectedProcess = $filter('filter')(activeRemoteProcesses, {key: $rootScope.selectedProcess.key})[0];
+                        if (selectedProcess) {
+                            selectedProcess = $filter('filter')(activeRemoteProcesses, {key: selectedProcess.key})[0];
                         }
                     }, function (error) {
                         console.error('An error occurred while trying to refresh the remote process list', error);
@@ -512,7 +513,7 @@ angular.module('ortolangMarketApp')
 
             return {
                 // Processes
-                getProcesses: function () { return processes; },
+                getSelectedProcess: function () { return selectedProcess; },
                 createProcessFromForm: createProcessFromForm,
                 createProcess: createProcess,
                 selectProcess: selectProcess,

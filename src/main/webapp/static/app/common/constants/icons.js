@@ -72,7 +72,10 @@ angular.module('ortolangMarketApp')
                 members: 'fa fa-fw fa-users',
                 workspace: 'glyphicon glyphicon-book',
                 browse: 'glyphicon glyphicon-th',
-                dashboard: 'glyphicon glyphicon-dashboard',
-                others: 'fa fa-fw fa-ellipsis-v'
+                back: 'glyphicon glyphicon-arrow-left',
+                forward: 'glyphicon glyphicon-arrow-right',
+                backToDashboard: 'glyphicon glyphicon-triangle-left',
+                others: 'fa fa-fw fa-ellipsis-v',
+                keyboard: 'fa fa-fw fa-keyboard-o'
             }
         });

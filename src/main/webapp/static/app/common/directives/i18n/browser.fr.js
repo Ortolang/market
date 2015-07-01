@@ -38,7 +38,7 @@ angular.module('ortolangMarketApp')
                 DATE: 'Date de modification'
             },
             INFO: '{{hideInfo === "true" ? "Afficher" : "Masquer"}} les détails',
-            DASHBOARD: 'Retourner au tableau de bord',
+            BACK_TO_DASHBOARD: 'Retourner au tableau de bord',
             WORKSPACE_LIST: '{{hideWorkspaceList === "true" ? "Afficher" : "Masquer"}} la liste des espaces de travail',
             SETTINGS: 'Paramètres',
             OTHERS: 'Autres actions',

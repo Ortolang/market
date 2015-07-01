@@ -44,6 +44,9 @@
   }
 
   .browser-breadcrumb {
+    &.aside-left-collapsed {
+      padding-left: 20px;
+    }
     .btn.btn-default {
       padding: @padding-base-vertical;
     }
@@ -53,7 +56,7 @@
         content: '\f054';
         font-family: "fontawesome";
         float: left;
-        color: @btn-default-border;
+        color: @side-nav-item-icon-color;
         padding: (@padding-base-vertical + 2) 3px (@padding-base-vertical - 2) 3px;
       }
       &:last-child {
@@ -64,9 +67,6 @@
           font-weight: bold;
         }
       }
-    }
-    .aside-left-collapsed {
-      margin-left: 20px;
     }
     button, a {
       background-color: transparent;
@@ -118,6 +118,13 @@
     .active div {
       color: @workspace-primary;
       font-weight: bold;
+    }
+  }
+
+  .back-to-dashboard {
+    color: @side-nav-item-icon-color;
+    &:hover {
+      color: inherit;
     }
   }
 }

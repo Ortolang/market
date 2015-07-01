@@ -13,7 +13,7 @@
                         <!--<dd>{{value}}</dd>-->
                     <!--</dl>-->
 
-                    <div ng-repeat="(param, value) in selectedProcess.job.parameters ">
+                    <div ng-repeat="(param, value) in Runtime.getSelectedProcess().job.parameters ">
                         <div ng-switch="(config | filter: {key: param} )[0].type">
                             <div class="media-body" ng-switch-when="input">
                                 <strong>{{(config | filter: {key: param} )[0].templateOptions.label}} :</strong> <span>{{value}}</span>

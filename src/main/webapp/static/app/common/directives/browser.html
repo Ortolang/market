@@ -5,17 +5,18 @@
         </div>
 
         <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
-            <div ng-if="::browserService.hasBreadcrumb" class="browser-breadcrumb">
+            <div ng-if="::browserService.hasBreadcrumb" class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
+                <button ng-if="::isWorkspaceBrowserService" ng-click="toggleBrowsing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
                 <div class="breadcrumb-part">
-                    <button ng-if="breadcrumbParts.length > 0" class="btn btn-default" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}" ng-click="browseToPath('/')">
+                    <button ng-if="breadcrumbParts.length > 0" class="btn btn-default"  ng-click="browseToPath('/')">
                         {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                     </button>
-                    <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}" class="btn-group">
+                    <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default">
                             {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root" translate="BROWSER.VERSION" data-translate-values="{number: root}"></span>
                         </button>
                     </div>
-                    <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}" class="btn-group">
+                    <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                             <span class="caret"></span>
@@ -47,8 +48,8 @@
                 </div>
             </div>
             <div ng-if="::!browserService.hasBreadcrumb" class="browser-breadcrumb">
-                <button data-ng-disabled="keyHistory && keyHistory.back.length === 0" class="btn btn-default" ng-click="goBack()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-left"></span></button>
-                <button data-ng-disabled="keyHistory && keyHistory.forward.length === 0" class="btn btn-default" ng-click="goForward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span class="glyphicon glyphicon-arrow-right"></span></button>
+                <button data-ng-disabled="keyHistory && keyHistory.back.length === 0" class="btn btn-default" ng-click="goBack()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span ng-class="icons.browser.back"></span></button>
+                <button data-ng-disabled="keyHistory && keyHistory.forward.length === 0" class="btn btn-default" ng-click="goForward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span ng-class="icons.browser.forward"></span></button>
                 <button class="btn btn-default" disabled>{{parent.root ? '/' : parent.name}}</button>
             </div>
 
@@ -59,22 +60,16 @@
                         <span ng-class="icons.browser.settings"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><div ng-click="showCheatsheet($event)" translate="BROWSER.SHORTCUTS"></div></li>
-                        <li ng-if="::displayAsideWorkspaceList()"><div ng-click="toggleWorkspaceList()" data-translate-values="browserSettings" translate="BROWSER.WORKSPACE_LIST"></div></li>
-                        <li class="bg-success" ng-if="isSuperUser()"><div ui-zeroclip zeroclip-model="browserService.workspace.key">{{'BROWSER.WORKSPACE_KEY' | translate}}</div></li>
-                        <li class="bg-success" ng-if="isSuperUser()"><div ui-zeroclip zeroclip-model="getToken()">{{'BROWSER.BEARER_TOKEN' | translate}}</div></li>
+                        <li><div ng-click="showCheatsheet($event)"><span ng-class="icons.browser.keyboard"></span> {{'BROWSER.SHORTCUTS' | translate}}</div></li>
+                        <li ng-if="::displayAsideWorkspaceList()"><div ng-click="toggleWorkspaceList()"><span class="fa fa-fw"></span> {{'BROWSER.WORKSPACE_LIST' | translate:browserSettings}}</div></li>
+                        <li class="bg-success" ng-if="::isSuperUser()"><div ui-zeroclip zeroclip-model="browserService.workspace.key">{{'BROWSER.WORKSPACE_KEY' | translate}}</div></li>
+                        <li class="bg-success" ng-if="::isSuperUser()"><div ui-zeroclip zeroclip-model="getToken()">{{'BROWSER.BEARER_TOKEN' | translate}}</div></li>
                     </ul>
                 </div>
 
                 <div ng-if="::browserService.displayAsideInfo" class="btn-group">
                     <button ng-class="{'btn-inverse': !browserSettings.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:browserSettings}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="icons.browser.info"></span>
-                    </button>
-                </div>
-
-                <div ng-if="isWorkspaceBrowserService" class="btn-group">
-                    <button class="btn btn-default" ng-click="toggleBrowsing()" data-title="{{'BROWSER.DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip>
-                        <span ng-class="icons.browser.dashboard"></span>
                     </button>
                 </div>
 
