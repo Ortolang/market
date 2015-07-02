@@ -10,7 +10,8 @@
 angular.module('ortolangMarketApp')
     .service('Content', ['url', '$http', '$window', function (url, $http, $window) {
 
-        var forceDownloadQueryParam = '?fd=true';
+        var forceDownloadQueryParam = '?fd=true',
+            previewQueryParam = '?preview=';
 
         this.getContentUrlWithKey = function (key, noSSL) {
             return (noSSL ? url.contentNoSSL : url.content) + '/key/' + key;
@@ -21,11 +22,11 @@ angular.module('ortolangMarketApp')
         };
 
         this.getPreviewUrlWithKey = function (key, large) {
-            return this.getContentUrlWithKey(key) + '?preview=' + (large ? 'large' : 'small');
+            return this.getContentUrlWithKey(key) + previewQueryParam + (large ? 'large' : 'small');
         };
 
         this.getPreviewUrlWithPath = function (path, alias, root, large, noSSL) {
-            return this.getContentUrlWithPath(path, alias, root, noSSL) + '?preview=' + (large ? 'large' : 'small');
+            return this.getContentUrlWithPath(path, alias, root, noSSL) + previewQueryParam + (large ? 'large' : 'small');
         };
 
         this.getDownloadUrlWithKey = function (key, noSSL) {

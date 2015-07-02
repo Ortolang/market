@@ -50,7 +50,7 @@ angular.module('ortolangVisualizers')
             link: {
                 pre: function (scope, element, attrs) {
                     angular.forEach(scope.elements, function (element) {
-                        element.downloadUrl = Content.getDownloadUrlWithKey(element.key);
+                        element.downloadUrl = Content.getContentUrlWithKey(element.key);
                     });
                     if (scope.elements) {
                         scope.visualizer.header.fileName = scope.elements[0].name;
