@@ -42,7 +42,7 @@ angular.module('ortolangVisualizers')
  * # ortolangVisualizers
  */
 angular.module('ortolangVisualizers')
-    .directive('simpleVideoVisualizer', ['Download', function (Download) {
+    .directive('simpleVideoVisualizer', ['Content', function (Content) {
 
         return {
             templateUrl: 'common/visualizers/simple-video-visualizer/simple-video-visualizer.html',
@@ -50,7 +50,7 @@ angular.module('ortolangVisualizers')
             link: {
                 pre: function (scope, element, attrs) {
                     angular.forEach(scope.elements, function (element) {
-                        element.downloadUrl = Download.getDownloadUrl(element);
+                        element.downloadUrl = Content.getDownloadUrlWithKey(element.key);
                     });
                     if (scope.elements) {
                         scope.visualizer.header.fileName = scope.elements[0].name;

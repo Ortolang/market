@@ -48,7 +48,7 @@ angular.module('ortolangVisualizers')
                 pre: function (scope, element, attrs) {
                     scope.visualizer.header.fileName = scope.elements[0].name;
                     scope.visualizer.header.fileType = scope.elements[0].mimeType;
-                    scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0], scope.$parent.browserService.workspace, scope.$parent.root, true);
+                    scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.$parent.browserService.workspace.alias, scope.$parent.root, true);
                 }
             }
         };

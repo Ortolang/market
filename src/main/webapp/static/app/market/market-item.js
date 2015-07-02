@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$modal', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, $filter, $modal, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$modal', 'ObjectResource', 'Content', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, $filter, $modal, ObjectResource, Content, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
             JsonResultResource.get({query: queryBuilder.toString()}).$promise.then(function (jsonResults) {
                 if(jsonResults.length===1) {
 
-                    $scope.downloadUrl = DownloadResource.getDownloadUrl({key: key});
+                    $scope.downloadUrl = Content.getContentUrlWithKey(key);
                     $scope.ortolangObject = angular.fromJson(jsonResults[0]);
 
                     var queryOrtolangMeta = 'select from '+$scope.ortolangObject['meta_ortolang-item-json'];
@@ -40,7 +40,7 @@ angular.module('ortolangMarketApp')
 
                         if($scope.item.image) {
                             ObjectResource.element({key: key, path: $scope.item.image}).$promise.then(function(oobject) {
-                                $scope.item.image = DownloadResource.getDownloadUrl({key: oobject.key});
+                                $scope.item.image = Content.getContentUrlWithKey(oobject.key);
                             }, function (reason) {
                                 console.error(reason);
                             });
@@ -88,7 +88,7 @@ angular.module('ortolangMarketApp')
 
                                     $scope.versions.push(ortolangObject);
                                 });
-                                     
+
 
                             }, function (reason) {
                                 console.error(reason);
@@ -140,7 +140,7 @@ angular.module('ortolangMarketApp')
 
         function finishPreview(visualizer, oobject) {
             var element, modalScope, visualizerModal;
-            oobject.object.downloadUrl = DownloadResource.getDownloadUrl({key: oobject.object.key});
+            oobject.object.downloadUrl = Content.getContentUrlWithKey(oobject.object.key);
             modalScope = $rootScope.$new();
             modalScope.elements = [];
             modalScope.elements.push(oobject.object);

@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('aclSelect', ['$http', '$filter', 'url', 'ortolangType', 'DownloadResource', function ($http, $filter, url, ortolangType, DownloadResource) {
+    .directive('aclSelect', ['$http', '$filter', 'url', 'ortolangType', 'Content', function ($http, $filter, url, ortolangType, Content) {
         return {
             restrict: 'E',
             scope: {
@@ -22,21 +22,21 @@ angular.module('ortolangMarketApp')
 
                     function loadACL(element) {
 
-                        scope.model = "";
-                        if(element.metadatas.length>0) {
+                        scope.model = '';
+                        if (element.metadatas.length > 0) {
                             var acl = $filter('filter')(element.metadatas, {'name': 'ortolang-acl-json'});
 
-                            if(acl.length===1) {
+                            if (acl.length === 1) {
 
-                                DownloadResource.download({key: acl[0].key}).success(function (aclContentJson) {
+                                Content.downloadWithKey(acl[0].key).success(function (aclContentJson) {
                                     var aclContent = angular.fromJson(aclContentJson);
 
-                                    if(aclContent!=="") {
-                                        scope.model= aclContent.template;
+                                    if (aclContent !== '') {
+                                        scope.model = aclContent.template;
                                     }
 
                                 }).error(function (reason) {
-                                    console.log('Cannot load ACL for '+element);
+                                    console.log('Cannot load ACL for ' + element);
                                     console.log(reason);
                                 });
                             }
@@ -48,7 +48,7 @@ angular.module('ortolangMarketApp')
                         var uploadUrl = url.api + '/workspaces/' + scope.element.workspace + '/elements/',
                             fd = new FormData(),
                             currentPath = scope.element.path,
-                            content = angular.toJson({template:model}),
+                            content = angular.toJson({template: model}),
                             contentType = 'text/json';
 
                         fd.append('path', currentPath);
@@ -66,17 +66,17 @@ angular.module('ortolangMarketApp')
                             headers: {'Content-Type': undefined}
                         })
                             .success(function () {
-                                console.log('Sets ACL for '+scope.element.key);
+                                console.log('Sets ACL for ' + scope.element.key);
                             })
                             .error(function (reason) {
-                                console.log('Cannot sets ACL for '+scope.element.key+' cause ', reason);
+                                console.log('Cannot sets ACL for ' + scope.element.key + ' cause ', reason);
                             });
                     };
 
-                    scope.aclRules = [{key:'forall', name:'Pour tous'},{key:'authentified', name:'Personnes authentifiés'},{key:'esr', name:'Membres ESR'},{key:'restricted', name:'Réservé aux membres'}];
+                    scope.aclRules = [{key: 'forall', name: 'Pour tous'}, {key: 'authentified', name: 'Personnes authentifiés'}, {key: 'esr', name: 'Membres ESR'}, {key: 'restricted', name: 'Réservé aux membres'}];
 
-                    scope.$watch('element', function (val) {
-                        if(scope.element!==undefined) {
+                    scope.$watch('element', function () {
+                        if (scope.element !== undefined) {
                             loadACL(scope.element);
                         }
                     });
