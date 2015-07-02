@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'url', 'ortolangType', 'DownloadResource', 'WorkspaceElementResource', 'FormResource', 'WorkspaceBrowserService', function ($scope, $rootScope, $http, url, ortolangType, DownloadResource, WorkspaceElementResource, FormResource, WorkspaceBrowserService) {
+    .controller('MetadataEditorCtrl', ['$scope', '$rootScope', '$http', 'url', 'ortolangType', 'Content', 'WorkspaceElementResource', 'FormResource', 'WorkspaceBrowserService', function ($scope, $rootScope, $http, url, ortolangType, Content, WorkspaceElementResource, FormResource, WorkspaceBrowserService) {
 
         // ***************** //
         // Editor visibility //
@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
         function loadMetadataContent(view, metadata) {
             $scope.selectedMetadata = metadata;
 
-            DownloadResource.download({key: metadata.key}).success(function (metadataContent) {
+            Content.downloadWithKey(metadata.key).success(function (metadataContent) {
                 $scope.selectedMetadataContent = metadataContent;
 
                 $scope.metadataForm = $scope.userMetadataFormat.view;

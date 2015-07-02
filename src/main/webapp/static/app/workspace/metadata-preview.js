@@ -8,13 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MetadataPreviewCtrl', ['$scope', 'DownloadResource', function ($scope, DownloadResource) {
+    .controller('MetadataPreviewCtrl', ['$scope', 'Content', function ($scope, Content) {
 
         function previewMetadata(metadata) {
             $scope.selectedMetadata = metadata;
 
-            return DownloadResource.download({key: metadata.key}).success(function (data) {
-
+            return Content.downloadWithKey(metadata.key).success(function (data) {
                 $scope.code = data;
                 $('#metadata-modal').modal('show');
             }).error(function () {

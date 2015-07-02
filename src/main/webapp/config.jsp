@@ -5,5 +5,5 @@
     OrtolangConfig.logoutRedirectUrl='<% out.print(OrtolangMarketConfig.getInstance().getProperty("auth.logout.redirect")); %>';
     OrtolangConfig.apiServerUrlDefault='<% out.print(OrtolangMarketConfig.getInstance().getProperty("api.server.url.default")); %>';
     OrtolangConfig.apiServerUrlNoSSL='<% out.print(OrtolangMarketConfig.getInstance().getProperty("api.server.url.nossl")); %>';
-    OrtolangConfig.apiContentPath='<% out.print(OrtolangMarketConfig.getInstance().getProperty("api.sub.path")); %>';
+    OrtolangConfig.apiContentPath='<% out.print(OrtolangMarketConfig.getInstance().getProperty("api.content.path")); %>';
     OrtolangConfig.apiSubPath='<% out.print(OrtolangMarketConfig.getInstance().getProperty("api.sub.path")); %>';

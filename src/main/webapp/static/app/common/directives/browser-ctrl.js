@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
         'hotkeys',
         'WorkspaceResource',
         'ObjectResource',
-        'Download',
+        'Content',
         'Runtime',
         'AuthService',
         'WorkspaceElementResource',
@@ -36,7 +36,7 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, WorkspaceResource, ObjectResource, Download, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, WorkspaceResource, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, marketItemHeader, footerHeight, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
@@ -296,11 +296,11 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.download = function (element) {
-                Download.download(element);
+                Content.downloadWithKeyInWindow(element.key);
             };
 
             $scope.getPreviewUrl = function (element, large) {
-                return Download.getPreviewUrl(element, large);
+                return Content.getPreviewUrlWithKey(element.key, large);
             };
 
             function createModalScope() {

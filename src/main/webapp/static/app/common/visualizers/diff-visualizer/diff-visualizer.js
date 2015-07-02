@@ -43,7 +43,7 @@ angular.module('ortolangVisualizers')
 * # ortolangVisualizers
 */
 angular.module('ortolangVisualizers')
-    .directive('diffVisualizer', ['$window', 'DownloadResource', function ($window, DownloadResource) {
+    .directive('diffVisualizer', ['$window', 'Content', function ($window, Content) {
 
         return {
             templateUrl: 'common/visualizers/diff-visualizer/diff-visualizer.html',
@@ -64,10 +64,10 @@ angular.module('ortolangVisualizers')
                         scope.diff = name;
                     };
 
-                    DownloadResource.download({key: scope.elements[0].key}).success(function (data) {
+                    Content.downloadWithKey(scope.elements[0].key).success(function (data) {
                         scope.leftObj = data;
                     });
-                    DownloadResource.download({key: scope.elements[1].key}).success(function (data) {
+                    Content.downloadWithKey(scope.elements[1].key).success(function (data) {
                         scope.rightObj = data;
                     });
 

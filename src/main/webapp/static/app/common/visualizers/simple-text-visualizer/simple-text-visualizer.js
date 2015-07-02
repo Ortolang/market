@@ -47,7 +47,7 @@ angular.module('ortolangVisualizers')
  * # ortolangVisualizers
  */
 angular.module('ortolangVisualizers')
-    .directive('simpleTextVisualizer', ['DownloadResource', '$window', function (DownloadResource, $window) {
+    .directive('simpleTextVisualizer', ['Content', function (Content) {
 
         return {
             templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
@@ -91,7 +91,7 @@ angular.module('ortolangVisualizers')
                             scope.seeMore();
                         }
                     };
-                    DownloadResource.download({key: scope.elements[0].key}).success(function (data) {
+                    Content.downloadWithKey(scope.elements[0].key).success(function (data) {
                         if (!scope.forceFullData && scope.elements[0].size >= limit) {
                             scope.data = data.substr(0, limit);
                             scope.seeMore = function () {

@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'QueryBuilderFactory',
-        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, DownloadResource, JsonResultResource, QueryBuilderFactory) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'Content', 'JsonResultResource', 'QueryBuilderFactory',
+        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, Content, JsonResultResource, QueryBuilderFactory) {
 
             // ---
             // ORTOLANG TOOL DEFINITION
@@ -313,7 +313,7 @@ angular.module('ortolangMarketApp')
 
                         if(data.image !== undefined && data.image !== '') {
                             ObjectResource.element({key: item.key, path: data.image}).$promise.then(function(oobject) {
-                                item.image = DownloadResource.getDownloadUrl({key: oobject.key});
+                                item.image = Content.getContentUrlWithKey(oobject.key);
 
                                 register(new OrtolangTool(item));
                                 console.log('register ' + item.name);
