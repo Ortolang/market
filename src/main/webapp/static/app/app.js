@@ -110,7 +110,7 @@ angular
                 redirectTo: '/information/presentation'
             })
             .when('/information/:section', {
-                templateUrl: 'information/information.html',
+                templateUrl: 'common/staticSite/information.html',
                 controller: 'InformationCtrl',
                 reloadOnSearch: false,
                 title: 'NAV.INFORMATION'
@@ -183,3 +183,4 @@ angular.module('ortolangVisualizers', [
     'ortolangMarketApp',
     'pascalprecht.translate'
 ]);
+

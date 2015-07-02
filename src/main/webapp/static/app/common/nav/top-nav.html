@@ -31,15 +31,14 @@
                 </a>
             </li>
             <li class="dropdown" ng-hide="navbarCollapsed">
-                <a class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-if="StaticWebsite.getInformationMenu()">
+                    <span class="fa fa-fw {{ StaticWebsite.getInformationMenu().iconTop }}"></span> {{ StaticWebsite.getInformationMenu().title }} <span class="fa fa-caret-down"></span>
                 </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#/information/presentation"><span class="fa fa-info fa-fw"></span> {{'NAV.INFORMATION.PRESENTATION' | translate}}</a></li>
-                    <li><a href="#/information/policy"><span class="fa fa-pencil-square-o fa-fw"></span> {{'NAV.INFORMATION.POLICY' | translate}}</a></li>
-                    <li><a href="#/information/partners"><span class="fa fa-users fa-fw"></span> {{'NAV.INFORMATION.PARTNERS' | translate}}</a></li>
-                    <li><a href="#/information/roadmap"><span class="fa fa-calendar fa-fw"></span> {{'NAV.INFORMATION.ROADMAP' | translate}}</a></li>
-                    <li><a href="#/information/newsletter"><span class="fa fa-newspaper-o fa-fw"></span> {{'NAV.INFORMATION.NEWSLETTER' | translate}}</a></li>
+                <ul class="dropdown-menu" ng-if="StaticWebsite.getInformationMenu()">
+                    <li ng-repeat="section in StaticWebsite.getInformationMenu().content track by section" >
+                        <a ng-href="#/{{ StaticWebsite.getInformationMenu().id }}/{{ section }}"><span class="fa fa-fw {{ StaticWebsite.getInformationMenu()[section].iconTop }}"></span>
+                        {{ StaticWebsite.getInformationMenu()[section].title }}</a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown">

@@ -423,6 +423,7 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('runtime.process.update-state', function (event, message) {
+                console.debug(event, message);
                 event.stopPropagation();
                 if (message.arguments.state === states.completed) {
                     var process = $filter('filter')(activeProcesses, {key: message.fromObject});

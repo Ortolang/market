@@ -8,13 +8,16 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment) {
+    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', 'StaticWebsite',
+        function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment, StaticWebsite) {
 
         $scope.sideNavElements = sideNavElements;
         $scope.navbarCollapsed = false;
         $scope.User = User;
         $scope.Settings = Settings;
         $scope.Runtime = Runtime;
+        $scope.StaticWebsite = StaticWebsite;
+            console.debug($scope.StaticWebsite);
 
         $scope.toggleNavbar = function () {
             $scope.navbarCollapsed = !$scope.navbarCollapsed;
@@ -54,6 +57,10 @@ angular.module('ortolangMarketApp')
             amMoment.changeLocale(Settings.language);
         }
 
+        // *************** //
+        //  Site statique  //
+        // *************** //
+
         if (AuthService.isAuthenticated()) {
             AuthService.sessionInitialized().then(function () {
                 initLanguage();
@@ -64,6 +71,7 @@ angular.module('ortolangMarketApp')
 
         $scope.$on('askLanguageChange', function (event, langKey) {
             $scope.changeLanguage(langKey);
+            //$scope.staticMenu =
         });
 
         $scope.changeLanguage = function (langKey) {

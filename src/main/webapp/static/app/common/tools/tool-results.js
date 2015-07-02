@@ -156,21 +156,17 @@ angular.module('ortolangMarketApp')
                     if (Settings[FileSelectBrowserService.id].wskey) {
                         var key = Settings[FileSelectBrowserService.id].wskey,
                             filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
-                        if (filteredWorkspace.length !== 1) {
-                            console.error('No workspace with key "%s" available', key);
-                        } else {
+                        if (filteredWorkspace.length === 1) {
                             $scope.folder = filteredWorkspace[0];
                             $scope.folder.ws = filteredWorkspace[0].alias;
                             $scope.data.path = '/';
                             $scope.data.wskey = filteredWorkspace[0].key;
-                            console.debug($scope.folder, $scope.data);
                         }
                     } else {
                         $scope.folder =  data.entries[0];
                         $scope.folder.ws  = data.entries[0].alias;
                         $scope.data.path =  '/';
                         $scope.data.wskey =  data.entries[0].key;
-                        console.debug($scope.folder, $scope.data);
                     }
                 });
 
