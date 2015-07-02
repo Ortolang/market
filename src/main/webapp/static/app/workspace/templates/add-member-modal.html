@@ -6,10 +6,21 @@
                 <span class="modal-title" translate="WORKSPACE.ADD_MEMBER_MODAL.TITLE" translate-values="{wsName: wsName}"></span>
             </div>
             <div class="modal-body">
-                <ul>
-                    <li ng-repeat="profile in profiles.entries">{{profile.key}}</li>
+                <div class="form-group">
+                    <label for="find-member">Rechercher un membre</label>
+                    <input id="find-member" class="form-control" type="text" ng-model="searchQuery" ng-model-options="{ updateOn: 'blur' }" ng-change="change()" />
+                </div>
+                <ul class="list-unstyled">
+                    <li ng-repeat="profile in profiles" class="media">
+                        <div class="media-left" avatar data-email-hash="profile.emailHash" data-size="50" data-img-classes="img-circle">
+                        </div>
+                        <div class="media-body">
+                            <span>{{profile.givenName}} {{profile.familyName}}</span>
+                            <br/>
+                            <span class="small">{{profile.email}}</span>
+                        </div>
+                    </li>
                 </ul>
-                <pre>{{profiles.entries | json}}</pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" ng-click="publish()" translate="WORKSPACE.ADD_MEMBER_MODAL.SUBMIT"></button>

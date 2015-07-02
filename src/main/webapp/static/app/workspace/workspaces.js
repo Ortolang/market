@@ -24,17 +24,25 @@ angular.module('ortolangMarketApp')
         }
 
         function getHead() {
-            return WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/'}, function (data) {
-                $scope.head = data;
+            return ObjectResource.get({key: WorkspaceBrowserService.workspace.head}, function (data) {
+                $scope.head = data.object;
+                $scope.workspaceHistory = data.history;
+                $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
+                angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
+                    ProfileResource.getCard({key: workspaceSnapshot.author}, function (data) {
+                        workspaceSnapshot.authorCard = data;
+                    });
+                    workspaceSnapshot.number = getSnapshotNumberFromHistory(workspaceSnapshot);
+                });
             });
         }
 
         function refreshWorkspace() {
             WorkspaceResource.get({wskey: WorkspaceBrowserService.workspace.key}, function (workspace) {
-                workspace.authorProfile = WorkspaceBrowserService.workspace.authorProfile;
+                workspace.authorCard = WorkspaceBrowserService.workspace.authorCard;
                 WorkspaceBrowserService.workspace = workspace;
-                ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
-                    WorkspaceBrowserService.workspace.authorProfile = data;
+                ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
+                    WorkspaceBrowserService.workspace.authorCard = data;
                 });
             });
         }
@@ -64,11 +72,10 @@ angular.module('ortolangMarketApp')
             if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
                 WorkspaceBrowserService.workspace = workspace;
-                ProfileResource.read({key: WorkspaceBrowserService.workspace.author}, function (data) {
-                    WorkspaceBrowserService.workspace.authorProfile = data;
+                ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
+                    WorkspaceBrowserService.workspace.authorCard = data;
                 });
                 getWorkspaceMembers(workspace.members);
-                $scope.getSnapshotsHistory();
                 getHead();
                 $scope.browserSettings.wskey = workspace.key;
                 Settings.store();
@@ -212,7 +219,7 @@ angular.module('ortolangMarketApp')
                 var data = angular.copy(WorkspaceBrowserService.workspace),
                     deferred = $q.defer(),
                     nameCopy = WorkspaceBrowserService.workspace.name;
-                delete data.authorProfile;
+                delete data.authorCard;
                 data.name = $data;
                 WorkspaceResource.updateWorkspace({wskey: WorkspaceBrowserService.workspace.key}, data, function () {
                     deferred.resolve();
@@ -304,21 +311,17 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.getSnapshotsHistory = function () {
-            ObjectResource.history({key: WorkspaceBrowserService.workspace.head}, function (data) {
-                $scope.workspaceHistory = data.entries;
-                $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
-                angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
-                    ProfileResource.read({key: workspaceSnapshot.author}, function (data) {
-                        workspaceSnapshot.authorProfile = data;
-                    });
-                    workspaceSnapshot.number = getSnapshotNumberFromHistory(workspaceSnapshot);
-                });
-            });
+            getHead();
         };
 
         // *********************** //
         //        Metadata         //
         // *********************** //
+
+        $scope.editPresentationMetadata = function () {
+            $scope.editingPresentationMetadata = true;
+        };
+        //$scope.editingPresentationMetadata = true;
 
         $scope.showMetadataItem = function () {
             //TODO pre load metadataFormat
@@ -378,6 +381,7 @@ angular.module('ortolangMarketApp')
                 show: true
             });
         };
+        $scope.addMember();
 
         // *********************** //
         //          Resize         //

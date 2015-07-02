@@ -14,10 +14,13 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/profiles/connected',
                 method: 'GET'
             },
+            getCard: {
+                url: url.api + '/profiles/:key/card',
+                method: 'GET'
+            },
             search: {
                 url: url.api + '/profiles/search',
-                method: 'POST',
-                isArray: true
+                method: 'POST'
             },
             update: {
                 url: url.api + '/profiles/:key/infos',
