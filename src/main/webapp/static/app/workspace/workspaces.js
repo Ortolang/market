@@ -381,7 +381,7 @@ angular.module('ortolangMarketApp')
                 show: true
             });
         };
-        $scope.addMember();
+        //$scope.addMember();
 
         // *********************** //
         //          Resize         //

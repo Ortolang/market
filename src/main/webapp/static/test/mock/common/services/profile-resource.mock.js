@@ -16,7 +16,14 @@ angular.module('ortolangMarketAppMock')
             return {$promise: defer.promise};
         }
 
+        function getCard() {
+            var defer = $q.defer();
+            defer.resolve(sample.profileCard);
+            return {$promise: defer.promise};
+        }
+
         return {
-            read: read
+            read: read,
+            getCard: getCard
         };
     }]);
