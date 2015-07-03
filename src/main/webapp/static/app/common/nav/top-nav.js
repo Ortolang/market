@@ -17,7 +17,6 @@ angular.module('ortolangMarketApp')
         $scope.Settings = Settings;
         $scope.Runtime = Runtime;
         $scope.StaticWebsite = StaticWebsite;
-            console.debug($scope.StaticWebsite);
 
         $scope.toggleNavbar = function () {
             $scope.navbarCollapsed = !$scope.navbarCollapsed;

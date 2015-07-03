@@ -65,7 +65,6 @@ angular.module('ortolangMarketApp')
         $rootScope.$on('static-site-initialized', function () {
             // Add static site link to side-nav-elements if needed
             var infomenu = StaticWebsite.getInformationMenu();
-            console.debug(StaticWebsite);
             var classStaticMenu = infomenu.class,
                 pathStaticMenu = '/' + infomenu.id,
                 hiddenPathStaticMenu = '/'+ infomenu.id + '/' + infomenu.content[0],
