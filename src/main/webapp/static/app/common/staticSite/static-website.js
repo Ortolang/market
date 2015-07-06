@@ -123,6 +123,9 @@ angular.module('ortolangMarketApp')
                             });
                         });
                     });
+                },
+                function (echec) {
+                    console.debug('there is no static website to load.');
                 });
             }
 
@@ -155,9 +158,13 @@ angular.module('ortolangMarketApp')
                             });
                         });
                     });
+
+                    console.log('static homepage and news initialized');
+                },
+                function (echec) {
+                    console.debug('there is no static website to load.');
                 });
 
-                console.log('static homepage and news initialized');
             }
 
             function setStaticPage(that, id, path){
