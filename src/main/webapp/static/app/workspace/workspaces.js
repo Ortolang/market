@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'Content', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', 'url', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, Content, MetadataFormatResource, Settings, User, Runtime, icons, url) {
 
-        var modalScope, workspaceListDeferred;
+        var modalScope, workspaceListDeferred, workspaceMembersDeferred;
 
         function getWorkspaceList() {
             workspaceListDeferred = WorkspaceResource.get(function (data) {
@@ -20,7 +20,9 @@ angular.module('ortolangMarketApp')
         }
 
         function getWorkspaceMembers() {
-            $scope.workspaceMembers = GroupResource.get({key: WorkspaceBrowserService.workspace.members});
+            workspaceMembersDeferred = GroupResource.get({key: WorkspaceBrowserService.workspace.members}, function (data) {
+                $scope.workspaceMembers = data.members;
+            });
         }
 
         function getHead() {
@@ -75,7 +77,7 @@ angular.module('ortolangMarketApp')
                 ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
                     WorkspaceBrowserService.workspace.authorCard = data;
                 });
-                getWorkspaceMembers(workspace.members);
+                getWorkspaceMembers();
                 getHead();
                 $scope.browserSettings.wskey = workspace.key;
                 Settings.store();
@@ -366,19 +368,22 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $scope.addMember = function () {
-            var addMemberModal;
-            createModalScope();
-            modalScope.wsName = WorkspaceBrowserService.workspace.name;
-            modalScope.add = function (profile) {
-                GroupResource.addMember({key: WorkspaceBrowserService.workspace.members}, profile, function (data) {
-                    $scope.workspaceMembers = data;
+            workspaceMembersDeferred.$promise.then(function () {
+                var addMemberModal;
+                createModalScope();
+                modalScope.wsName = WorkspaceBrowserService.workspace.name;
+                modalScope.members = $scope.workspaceMembers;
+                modalScope.add = function (profile) {
+                    GroupResource.addMember({key: WorkspaceBrowserService.workspace.members}, profile, function (data) {
+                        $scope.workspaceMembers = data.members;
+                    });
+                    addMemberModal.hide();
+                };
+                addMemberModal = $modal({
+                    scope: modalScope,
+                    template: 'workspace/templates/add-member-modal.html',
+                    show: true
                 });
-                addMemberModal.hide();
-            };
-            addMemberModal = $modal({
-                scope: modalScope,
-                template: 'workspace/templates/add-member-modal.html',
-                show: true
             });
         };
         //$scope.addMember();

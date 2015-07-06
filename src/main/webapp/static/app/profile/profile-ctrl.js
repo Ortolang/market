@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$rootScope', 'AuthService', '$translate', '$http', 'User', 'Profile', 'icons',
-        function ($scope, $rootScope, AuthService, $translate, $http, User, Profile, icons) {
+    .controller('ProfileCtrl', ['$scope', '$rootScope', '$translate', '$http', 'User', 'Profile', 'icons',
+        function ($scope, $rootScope, $translate, $http, User, Profile, icons) {
 
             var fieldTemplates;
             $scope.User = User;
@@ -78,7 +78,7 @@ angular.module('ortolangMarketApp')
 
                 $http.get('profile/resources/fields.json').then(function (res) {
                     fieldTemplates = res.data;
-                    AuthService.sessionInitialized().then(function () {
+                    User.sessionInitialized().then(function () {
                         initFields();
                     });
                 });

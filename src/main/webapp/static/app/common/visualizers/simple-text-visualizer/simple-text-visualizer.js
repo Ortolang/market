@@ -29,6 +29,7 @@ angular.module('ortolangVisualizers')
                 'application/xslt+xml': true,
                 'text/javascript': true,
                 'application/javascript': true,
+                'application/json': true,
                 'text/x-web-markdown': true
             }
         });
@@ -64,7 +65,7 @@ angular.module('ortolangVisualizers')
                         scope.language = 'css';
                     } else if (mimeType === 'text/x-php') {
                         scope.language = 'php';
-                    } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
+                    } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript' || mimeType === 'application/json') {
                         scope.language = 'javascript';
                     } else if (mimeType === 'text/x-web-markdown') {
                         scope.language = 'markdown';

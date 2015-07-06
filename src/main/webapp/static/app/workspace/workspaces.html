@@ -65,7 +65,7 @@
                                     <h4 translate="WORKSPACE.STATISTICS"></h4>
                                     <hr/>
                                     <p>{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} <strong>{{WorkspaceBrowserService.workspace.lastModificationDate | amTimeAgo}}</strong></p>
-                                    <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: workspaceMembers.members.length}"></p>
+                                    <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: workspaceMembers.length}"></p>
                                     <p translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: (workspaceHistory | filter:{publicationStatus: 'published'}).length}"></p>
                                 </div>
                                 <div class="col-md-6">
@@ -78,17 +78,9 @@
                         </section>
                         <section data-title="{{'WORKSPACE.MEMBERS' | translate}}" bs-pane>
                             <ul class="list-unstyled row">
-                                <li ng-repeat="member in workspaceMembers.members track by member.key" class="col-md-4 col-sm-6 media">
-                                    <div class="media-left" avatar data-email-hash="member.emailHash" data-size="50" data-img-classes="img-circle">
-                                    </div>
-                                    <div class="media-body">
-                                        <span>{{member.givenName}} {{member.familyName}}</span>
-                                        <br/>
-                                        <span class="small">{{member.email}}</span>
-                                    </div>
-                                </li>
+                                <li ng-repeat="member in workspaceMembers track by member.key" class="col-lg-3 col-md-4 col-sm-6" profile-card data-profile="member" data-size="50" data-img-classes="img-circle"></li>
                             </ul>
-                            <button class="btn btn-default" ng-click="addMember()"><span ng-class="icons.plus"></span> Add member</button>
+                            <button class="btn btn-default" ng-click="addMember()"><span ng-class="icons.plus"></span> {{'WORKSPACE.ADD_MEMBER' | translate}}</button>
                         </section>
                         <section data-title="{{'WORKSPACE.HISTORY' | translate}}" bs-pane>
                             <ul class="list-unstyled">

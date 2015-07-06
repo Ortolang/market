@@ -11,14 +11,6 @@ angular.module('ortolangMarketApp')
     .factory('ObjectResource', ['$resource', 'url', function ($resource, url) {
 
         return $resource(url.api + '/objects/:key/', {}, {
-            keys: {
-                url: url.api + '/objects/:key/keys',
-                method: 'GET'
-            },
-            download: {
-                url: url.api + '/objects/:key/download',
-                method: 'GET'
-            },
             element: {
                 url: url.api + '/objects/:key/element',
                 method: 'GET'

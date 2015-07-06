@@ -17,10 +17,6 @@ angular.module('ortolangMarketApp')
             updateWorkspace: {
                 method: 'PUT'
             },
-            query: {
-                method: 'GET',
-                isArray: false
-            },
             snapshots: {
                 method: 'POST',
                 url: url.api + '/workspaces/:wskey/snapshots',
