@@ -296,7 +296,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.download = function (elements) {
-                if (elements.length > 1 || elements[0].type === ortolangType.collection) {
+                if ($scope.isWorkspaceBrowserService && elements.length > 1 || elements[0].type === ortolangType.collection) {
                     var paths = [];
                     angular.forEach(elements, function (element) {
                         paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : element.name));
