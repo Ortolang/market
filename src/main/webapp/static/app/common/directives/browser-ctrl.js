@@ -113,7 +113,7 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
                             $scope.contextMenuItems.push({divider: true});
                         }
-                        if ($scope.browserService.canDownload && $scope.selectedElements.length === 1 && $scope.selectedElements[0].stream) {
+                        if ($scope.browserService.canDownload && !$scope.hasOnlyParentSelected()) {
                             $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
                             $scope.contextMenuItems.push({divider: true});
                         }
@@ -295,8 +295,24 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.download = function (element) {
-                Content.downloadWithKeyInWindow(element.key);
+            $scope.download = function (elements) {
+                if (elements.length > 1 || elements[0].type === ortolangType.collection) {
+                    var paths = [];
+                    angular.forEach(elements, function (element) {
+                        paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : element.name));
+                    });
+                    if (elements.length === 1) {
+                        if ($scope.path === '/' && $scope.hasOnlyParentSelected()) {
+                            Content.export(paths, $scope.browserService.workspace.alias);
+                        } else {
+                            Content.export(paths, elements[0].name);
+                        }
+                    } else {
+                        Content.export(paths);
+                    }
+                } else {
+                    Content.downloadWithKeyInWindow(elements[0].key);
+                }
             };
 
             $scope.getPreviewUrl = function (element, large) {
@@ -742,7 +758,7 @@ angular.module('ortolangMarketApp')
             $scope.doAction = function (name) {
                 switch (name) {
                     case 'download':
-                        $scope.download($scope.selectedElements[0]);
+                        $scope.download($scope.selectedElements);
                         deactivateContextMenu();
                         break;
                     case 'addCollection':
@@ -820,7 +836,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     modalScope.icons = icons;
                     modalScope.download = function () {
-                        $scope.download($scope.selectedElements[0]);
+                        $scope.download($scope.selectedElements);
                     };
                     modalScope.visualizer.content.classes = 'center';
                     element = $compile('<div ng-include="\'common/visualizers/no-visualizer-template.html\'">')(modalScope);

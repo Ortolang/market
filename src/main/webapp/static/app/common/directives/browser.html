@@ -172,10 +172,8 @@
                         <li ng-show="!hasOnlyParentSelected()">
                             <div ng-click="moveChild()"><span ng-class="icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
                         </li>
-                        <li ng-if="selectedElements.length === 1 && selectedElements[0].stream" class="divider"></li>
-                        <li ng-if="selectedElements.length === 1 && selectedElements[0].stream">
-                            <div ng-click="download(selectedElements[0])"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div>
-                        </li>
+                        <li class="divider"></li>
+                        <li><div ng-click="download(selectedElements)"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
                     </ul>
                 </div>
 

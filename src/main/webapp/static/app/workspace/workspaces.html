@@ -79,8 +79,11 @@
                         <section data-title="{{'WORKSPACE.MEMBERS' | translate}}" bs-pane>
                             <ul class="list-unstyled row">
                                 <li ng-repeat="member in workspaceMembers track by member.key" class="col-lg-3 col-md-4 col-sm-6" profile-card data-profile="member" data-size="50" data-img-classes="img-circle"></li>
+                                <li class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
+                                    <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="icons.plus"></span></button></div>
+                                    <div class="media-body">{{'WORKSPACE.ADD_MEMBER' | translate}}</div>
+                                </li>
                             </ul>
-                            <button class="btn btn-default" ng-click="addMember()"><span ng-class="icons.plus"></span> {{'WORKSPACE.ADD_MEMBER' | translate}}</button>
                         </section>
                         <section data-title="{{'WORKSPACE.HISTORY' | translate}}" bs-pane>
                             <ul class="list-unstyled">

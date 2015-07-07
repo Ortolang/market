@@ -8,7 +8,8 @@ describe('Service: Content', function () {
     // instantiate service
     var Content, httpBackend, url,
         forceDownloadQueryParam = '?fd=true',
-        previewQueryParam = '?preview=';
+        previewQueryParamSmall = '?preview=small',
+        previewQueryParamLarge = '?preview=large';
 
     beforeEach(inject(function (_Content_, _$httpBackend_, _url_) {
         Content = _Content_;
@@ -24,14 +25,21 @@ describe('Service: Content', function () {
     it('should return the content url', function () {
         expect(!!Content).toBe(true);
         expect(Content.getContentUrlWithKey('k1')).toBe(url.content + '/key/k1');
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', undefined)).toBe(url.content + '/<alias>/head/<path>');
         expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>')).toBe(url.content + '/<alias>/<root>/<path>');
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true)).toBe(url.contentNoSSL + '/<alias>/<root>/<path>');
     });
 
     it('should return the preview url', function () {
-        var expectedUrl = url.content + '/key/k1' + previewQueryParam;
-        expect(Content.getPreviewUrlWithKey('k1')).toBe(expectedUrl + 'small');
-        expect(Content.getPreviewUrlWithKey('k1', false)).toBe(expectedUrl + 'small');
-        expect(Content.getPreviewUrlWithKey('k1', true)).toBe(expectedUrl + 'large');
+        var expectedUrl = Content.getContentUrlWithKey('k1');
+        expect(Content.getPreviewUrlWithKey('k1')).toBe(expectedUrl + previewQueryParamSmall);
+        expect(Content.getPreviewUrlWithKey('k1', false)).toBe(expectedUrl + previewQueryParamSmall);
+        expect(Content.getPreviewUrlWithKey('k1', true)).toBe(expectedUrl + previewQueryParamLarge);
+        expectedUrl = expectedUrl.replace(url.content, url.contentNoSSL);
+        expect(Content.getPreviewUrlWithKey('k1', true, true)).toBe(expectedUrl + previewQueryParamLarge);
+        expectedUrl = Content.getContentUrlWithPath('<path>', '<alias>', '<root>');
+        expect(Content.getPreviewUrlWithPath('<path>', '<alias>', '<root>')).toBe(expectedUrl + previewQueryParamSmall);
+        expect(Content.getPreviewUrlWithPath('<path>', '<alias>', '<root>', true)).toBe(expectedUrl + previewQueryParamLarge);
     });
 
     it('should return the download url', function () {
@@ -39,6 +47,21 @@ describe('Service: Content', function () {
         expect(Content.getDownloadUrlWithKey('k1')).toBe(expectedUrl);
         expectedUrl = Content.getContentUrlWithPath('<path>', '<alias>', '<root>') + forceDownloadQueryParam;
         expect(Content.getDownloadUrlWithPath('<path>', '<alias>', '<root>')).toBe(expectedUrl);
+        expectedUrl = expectedUrl.replace(url.content, url.contentNoSSL);
+        expect(Content.getDownloadUrlWithPath('<path>', '<alias>', '<root>', true)).toBe(expectedUrl);
+    });
+
+    it('should return the export url', function () {
+        var expectedUrl = url.content + '/export?&path=/<path>&path=/<path2>';
+        expect(Content.getExportUrl(['<path>', '<path2>'])).toBe(expectedUrl);
+        expectedUrl += '&filename=<filename>';
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>')).toBe(expectedUrl);
+        expectedUrl += '&format=<format>';
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>')).toBe(expectedUrl);
+        expectedUrl += '&followsymlink=<followsymlink>';
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>')).toBe(expectedUrl);
+        expectedUrl = expectedUrl.replace(url.content, url.contentNoSSL);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>', true)).toBe(expectedUrl);
     });
 
     it('should download data', function () {

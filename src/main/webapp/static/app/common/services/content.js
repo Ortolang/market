@@ -21,8 +21,8 @@ angular.module('ortolangMarketApp')
             return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + '/' + path;
         };
 
-        this.getPreviewUrlWithKey = function (key, large) {
-            return this.getContentUrlWithKey(key) + previewQueryParam + (large ? 'large' : 'small');
+        this.getPreviewUrlWithKey = function (key, large, noSSL) {
+            return this.getContentUrlWithKey(key, noSSL) + previewQueryParam + (large ? 'large' : 'small');
         };
 
         this.getPreviewUrlWithPath = function (path, alias, root, large, noSSL) {
@@ -37,8 +37,8 @@ angular.module('ortolangMarketApp')
             return this.getContentUrlWithPath(path, alias, root, noSSL) + forceDownloadQueryParam;
         };
 
-        this.downloadWithKeyInWindow = function (key, config, noSSL) {
-            $window.location = this.getDownloadUrlWithKey(key, config, noSSL);
+        this.downloadWithKeyInWindow = function (key, noSSL) {
+            $window.location = this.getDownloadUrlWithKey(key, noSSL);
         };
 
         this.downloadWithKey = function (key, config, noSSL) {
@@ -49,6 +49,27 @@ angular.module('ortolangMarketApp')
                 config.transformResponse = [];
             }
             return $http.get(this.getContentUrlWithKey(key, noSSL), config);
+        };
+
+        this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {
+            var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?';
+            angular.forEach(paths, function (path) {
+                exportUrl += '&path=/' + path;
+            });
+            if (filename) {
+                exportUrl += '&filename=' + filename;
+            }
+            if (format) {
+                exportUrl += '&format=' + format;
+            }
+            if (followsymlink) {
+                exportUrl += '&followsymlink=' + followsymlink;
+            }
+            return exportUrl;
+        };
+
+        this.export = function (paths, filename, format, followsymlink, noSSL) {
+            $window.location = this.getExportUrl(paths, filename, format, followsymlink, noSSL);
         };
 
         return this;
