@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
             if (input === 'ortolang/collection') {
                 return icons.folder;
             }
-            if (xmlRegExp.test(input) || input === 'text/html') {
+            if (xmlRegExp.test(input) || input === 'text/html' || input === 'application/javascript' || input === 'application/json') {
                 return icons.codeFile;
             }
             if (/^text/.test(input)) {

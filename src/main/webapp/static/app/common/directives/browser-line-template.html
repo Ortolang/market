@@ -33,7 +33,8 @@
             ng-dblclick="doubleClickChild(child)"
             ng-class="{active : isSelected(child)}"
             data-key="{{::child.key}}"
-            on-finish-render>
+            on-finish-render
+            class="workspace-element">
             <td><span class="type" ng-class="::child.mimeType | mimeTypeIconCss"></span>{{child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
             <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>

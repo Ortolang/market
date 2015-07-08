@@ -34,6 +34,8 @@ describe('Filter: mimeTypeIconCss', function () {
 
     it('should return code file icon for code files', function () {
         expect(mimeTypeIconCss('text/html')).toBe(icons.codeFile);
+        expect(mimeTypeIconCss('application/javascript')).toBe(icons.codeFile);
+        expect(mimeTypeIconCss('application/json')).toBe(icons.codeFile);
     });
 
     it('should return text file icon for files with mime types starting with "text/" that are not code files', function () {

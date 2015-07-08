@@ -8,8 +8,7 @@ describe('Service: Content', function () {
     // instantiate service
     var Content, httpBackend, url,
         forceDownloadQueryParam = '?fd=true',
-        previewQueryParamSmall = '?preview=small',
-        previewQueryParamLarge = '?preview=large';
+        thumbSizeQueryParam = '?size=';
 
     beforeEach(inject(function (_Content_, _$httpBackend_, _url_) {
         Content = _Content_;
@@ -31,15 +30,11 @@ describe('Service: Content', function () {
     });
 
     it('should return the preview url', function () {
-        var expectedUrl = Content.getContentUrlWithKey('k1');
-        expect(Content.getPreviewUrlWithKey('k1')).toBe(expectedUrl + previewQueryParamSmall);
-        expect(Content.getPreviewUrlWithKey('k1', false)).toBe(expectedUrl + previewQueryParamSmall);
-        expect(Content.getPreviewUrlWithKey('k1', true)).toBe(expectedUrl + previewQueryParamLarge);
+        var expectedUrl = url.content + '/thumb/k1';
+        expect(Content.getPreviewUrlWithKey('k1')).toBe(expectedUrl);
+        expect(Content.getPreviewUrlWithKey('k1', '<size>')).toBe(expectedUrl + thumbSizeQueryParam + '<size>');
         expectedUrl = expectedUrl.replace(url.content, url.contentNoSSL);
-        expect(Content.getPreviewUrlWithKey('k1', true, true)).toBe(expectedUrl + previewQueryParamLarge);
-        expectedUrl = Content.getContentUrlWithPath('<path>', '<alias>', '<root>');
-        expect(Content.getPreviewUrlWithPath('<path>', '<alias>', '<root>')).toBe(expectedUrl + previewQueryParamSmall);
-        expect(Content.getPreviewUrlWithPath('<path>', '<alias>', '<root>', true)).toBe(expectedUrl + previewQueryParamLarge);
+        expect(Content.getPreviewUrlWithKey('k1', '<size>', true)).toBe(expectedUrl + thumbSizeQueryParam + '<size>');
     });
 
     it('should return the download url', function () {

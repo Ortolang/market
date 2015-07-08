@@ -78,10 +78,12 @@ angular.module('ortolangMarketApp')
                 $scope.isContextMenuActive = true;
             }
 
-            function deactivateContextMenu() {
-                $scope.isContextMenuActive = false;
-                clearContextMenuItems();
-            }
+            $scope.deactivateContextMenu = function () {
+                if ($scope.isContextMenuActive) {
+                    $scope.isContextMenuActive = false;
+                    clearContextMenuItems();
+                }
+            };
 
             $scope.contextMenu = function (clickEvent, sameChild) {
                 // TODO Context menu could be optimized when clicking on a same child but context menu deactivated
@@ -141,7 +143,7 @@ angular.module('ortolangMarketApp')
                         };
                     }
                 } else {
-                    deactivateContextMenu();
+                    $scope.deactivateContextMenu();
                 }
             };
 
@@ -296,7 +298,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.download = function (elements) {
-                if ($scope.isWorkspaceBrowserService && elements.length > 1 || elements[0].type === ortolangType.collection) {
+                if (($scope.isWorkspaceBrowserService && elements.length > 1) || elements[0].type === ortolangType.collection) {
                     var paths = [];
                     angular.forEach(elements, function (element) {
                         paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : element.name));
@@ -325,7 +327,7 @@ angular.module('ortolangMarketApp')
                     modalScope.$destroy();
                 });
                 modalScope.$on('modal.show.before', function () {
-                    deactivateContextMenu();
+                    $scope.deactivateContextMenu();
                 });
             }
 
@@ -378,7 +380,7 @@ angular.module('ortolangMarketApp')
 
             function deselectChildren() {
                 $scope.selectedElements = [$scope.parent];
-                deactivateContextMenu();
+                $scope.deactivateContextMenu();
                 clearVisualizers();
             }
 
@@ -487,24 +489,18 @@ angular.module('ortolangMarketApp')
                 $scope.selectedElements = [element];
             }
 
+            $scope.checkDeselection = function ($event) {
+                if ($event.button === 2 || !angular.element($event.target).hasClass('btn')) {
+                    deselectChildren();
+                }
+            };
+
+            $scope.preventRightClick = function () {};
+
             $scope.checkSelection = function (clickEvent) {
                 if (($scope.browserService.workspace || $scope.isMarketBrowserService) &&
-                    !(angular.element(clickEvent.target).parent('tr').length ||
-                    angular.element(clickEvent.target).parent('td').length ||
-                    angular.element(clickEvent.target).parent('.browsed-element-child').length ||
-                    angular.element(clickEvent.target).parent().parent('.browsed-element-child').length ||
-                    angular.element(clickEvent.target).hasClass('my-workspaces-item') ||
-                    angular.element(clickEvent.target).parents('.browser-context-menu').length ||
-                    angular.element(clickEvent.target).parents('.btn-toolbar').length) ||
-                    angular.element(clickEvent.target).parents('.no-children').length) {
+                    !angular.element(clickEvent.target).parents('.workspace-element').length) {
                     deselectChildren();
-                    if (!angular.element(clickEvent.target).hasClass('my-workspaces')) {
-                        $scope.contextMenu(clickEvent, false);
-                    }
-                }
-                if ($scope.isScreenMd && !$scope.browserSettings.hideWorkspaceListMdScreen &&
-                    !angular.element(clickEvent.target).hasClass('my-workspaces')) {
-                    $scope.toggleWorkspaceList();
                 }
             };
 
@@ -571,7 +567,7 @@ angular.module('ortolangMarketApp')
                             type: 'danger',
                             duration: 5
                         });
-                        deactivateContextMenu();
+                        $scope.deactivateContextMenu();
                     });
                 } else {
                     getParentData(true).then(function () {
@@ -622,7 +618,7 @@ angular.module('ortolangMarketApp')
                 modalScope.process = response;
                 modalScope.showLog = function () {
                     uploadZipCompletedModal.hide();
-                    $location.url('/processes?pKey=' + modalScope.process.key);
+                    $location.url('#/processes?pKey=' + modalScope.process.key);
                 };
                 uploadZipCompletedModal = $modal({
                     scope: modalScope,
@@ -759,7 +755,7 @@ angular.module('ortolangMarketApp')
                 switch (name) {
                     case 'download':
                         $scope.download($scope.selectedElements);
-                        deactivateContextMenu();
+                        $scope.deactivateContextMenu();
                         break;
                     case 'addCollection':
                         $scope.addCollection();
@@ -1494,7 +1490,7 @@ angular.module('ortolangMarketApp')
                         browserAside.css('min-height', (height - browserToolbarHeight) + 'px');
                         browserAside.find('.my-workspaces').css('height', (height - browserToolbarHeight - 80) + 'px');
                         browserWrapper.find('.table-wrapper.table-workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
-                        browserWrapper.find('.browsed-element-children-wrapper').css('height', (height - browserToolbarHeight) + 'px');
+                        browserWrapper.find('.tile-workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
                         browserWrapper.find('.browser-aside-left-collapsed').css('height', (height - browserToolbarHeight) + 'px');
                     }
                     $scope.isScreenMd = window.innerWidth < 992;
@@ -1524,7 +1520,7 @@ angular.module('ortolangMarketApp')
 
             $scope.switchViewMode = function () {
                 clearPreviousFilteringQueries();
-                deactivateContextMenu();
+                $scope.deactivateContextMenu();
                 if ($scope.isViewModeLine()) {
                     setViewMode($scope.viewMode.tile.id);
                 } else {
@@ -1651,6 +1647,7 @@ angular.module('ortolangMarketApp')
                 // Workspace
                 $scope.isScreenMd = false;
                 $scope.displayedItemLimit = initialDisplayedItemLimit;
+                $scope.Content = Content;
             }
 
             function setPath(path) {
