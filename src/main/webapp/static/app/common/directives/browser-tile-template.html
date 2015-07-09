@@ -7,8 +7,11 @@
                  ng-right-click="clickChild(child, $event)"
                  ng-dblclick="doubleClickChild(child)"
                  ng-class="{active : isSelected(child), collection: type === ortolangType.collection}">
-                <div ng-if="type === ortolangType.object" class="preview">
-                    <span class="fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
+                <div ng-if="type === ortolangType.object" class="thumb-wrapper">
+                    <div>
+                        <span class="thumb-icon fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
+                        <div class="thumb" style="background-image: url({{::Content.getPreviewUrlWithKey(child.key)}})"></div>
+                    </div>
                 </div>
                 <p class="name-wrapper">
                     <span ng-if="type === ortolangType.collection" ng-class="icons.folderPlain" class="type"></span>

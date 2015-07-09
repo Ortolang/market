@@ -207,7 +207,7 @@
     </div>
 
     <div class="row">
-        <div class="browser-aside-left-collapsed" ng-hide="!(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen)" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
+        <div class="browser-aside-left-collapsed" ng-show="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
         <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkDeselection($event)" ng-right-click="checkDeselection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
             <span class="btn-collapse" ng-if="!isFileSelectBrowserService" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
             <div ng-if="::browserService.canEdit" class="btn-group dropdown-wrapper add-action">
@@ -239,7 +239,7 @@
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
         </div>
 
-        <div ng-if="::browserService.displayAsideInfo" ng-hide="browserSettings.hideInfo" ng-class="isScreenMd ? 'col-sm-5' : 'col-sm-3'" ng-click="checkContextMenu($event)" ng-right-click="checkContextMenu($event)" class="browser-aside browser-aside-right browser-aside-info">
+        <div ng-if="::browserService.displayAsideInfo" ng-hide="browserSettings.hideInfo" ng-class="isScreenMd ? 'col-sm-4' : 'col-sm-3'" ng-click="checkContextMenu($event)" ng-right-click="checkContextMenu($event)" class="browser-aside browser-aside-right browser-aside-info">
 
             <div ng-if="hasOnlyOneElementSelected()">
                 <p class="lead">
@@ -247,7 +247,10 @@
                     <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span>
                     <span>{{hasOnlyRootCollectionSelected() ? '/' : selectedElements[0].name}}</span>
                 </p>
-                <img ng-if="selectedElements[0].type === ortolangType.object" class="thumb" ng-src="{{Content.getPreviewUrlWithKey(selectedElements[0].key)}}"/>
+                <div ng-if="selectedElements[0].type === ortolangType.object" thumb class="ng-hide">
+                    <img class="thumb" ng-src="{{Content.getPreviewUrlWithKey(selectedElements[0].key)}}"/>
+                    <hr/>
+                </div>
                 <dl class="dl-horizontal">
                     <dt translate="BROWSER.AUTHOR"></dt>
                     <dd>{{selectedElements[0].author}}</dd>

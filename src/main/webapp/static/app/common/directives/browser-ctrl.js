@@ -499,7 +499,7 @@ angular.module('ortolangMarketApp')
 
             $scope.checkSelection = function (clickEvent) {
                 if (($scope.browserService.workspace || $scope.isMarketBrowserService) &&
-                    !angular.element(clickEvent.target).parents('.workspace-element').length) {
+                    !angular.element(clickEvent.target).closest('.workspace-element').length) {
                     deselectChildren();
                 }
             };
@@ -1533,10 +1533,10 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.tileCssClasses = function () {
-                if ($scope.browserService.displayAsideInfo && !$scope.browserSettings.hideInfo) {
-                    return 'col-lg-3 col-xlg-14 col-xxlg-15 col-md-4 col-sm-4 col-xs-6';
+                if ($scope.browserService.displayAsideInfo && $scope.browserSettings.hideInfo) {
+                    return 'col-sm-4 col-md-3 col-lg-3 col-xlg-15 col-xxlg-15';
                 }
-                return 'col-lg-3 col-xlg-15 col-xxlg-16 col-md-4 col-sm-4 col-xs-6';
+                return 'col-sm-6 col-md-4 col-lg-4 col-xlg-14 col-xxlg-15';
             };
 
             $scope.middleCssClass = function () {
@@ -1546,7 +1546,7 @@ angular.module('ortolangMarketApp')
                 }
                 if ($scope.isScreenMd) {
                     if ($scope.browserService.displayAsideInfo && !$scope.browserSettings.hideInfo) {
-                        columnNumber -= 2;
+                        columnNumber -= 1;
                     }
                 } else {
                     if ($scope.displayAsideWorkspaceList() && !$scope.browserSettings.hideWorkspaceList) {

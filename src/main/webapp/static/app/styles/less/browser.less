@@ -340,7 +340,8 @@
 }
 
 .tile-workspace-elements-wrapper {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding-top: @grid-gutter-width / 2;
   .workspace-element-wrapper {
     .user-select-mixin();
@@ -352,25 +353,39 @@
         }
       }
       &.active {
+        -moz-box-shadow: 0 2px 8px 0 rgba(0,0,0,.25);
+        -webkit-box-shadow: 0 2px 8px 0 rgba(0,0,0,.25);
+        box-shadow: 0 2px 8px 0 rgba(0,0,0,.25);
         .name-wrapper {
-          background-color: #727272;
+          background-color: @active-element-bg-color;
           color: @inverse-text-color;
         }
-        .preview span {
-          color: darken(@gray-lighter, 50%);
+        .thumb-icon {
+          color: @active-element-bg-color;
         }
       }
-      .preview {
+      .thumb-wrapper {
         cursor: default;
         height: 130px;
         width: 100%;
         display: table;
         background-color: @gray-lighter;
         text-align: center;
-        span {
+        position: relative;
+        > div {
           color: darken(@gray-lighter, 15%);
           display: table-cell;
           vertical-align: middle;
+          .thumb {
+            position: absolute;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top center;
+          }
         }
       }
       .name-wrapper {
@@ -431,7 +446,7 @@ table.table-workspace-elements {
   }
   tr.active {
     td {
-      background-color: @gray-light;
+      background-color: @active-element-bg-color;
       color: @inverse-text-color;
       .type {
         color: inherit;
@@ -439,7 +454,7 @@ table.table-workspace-elements {
     }
     &:hover {
       td {
-        background-color: @gray-light;
+        background-color: @active-element-bg-color;
       }
     }
   }

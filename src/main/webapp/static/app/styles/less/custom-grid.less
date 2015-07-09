@@ -7,12 +7,13 @@
 .col-lg-15,
 .col-xlg-15,
 .col-xlg-14,
+.col-xxlg-14,
 .col-xxlg-15,
 .col-xxlg-16 {
   position: relative;
   min-height: 1px;
-  padding-right: (@grid-gutter-width / 2);
-  padding-left: (@grid-gutter-width / 2);
+  padding-left:  ceil((@grid-gutter-width / 2));
+  padding-right: floor((@grid-gutter-width / 2));
 }
 .col-xs-15 {
   width: 20%;
@@ -44,6 +45,12 @@
 }
 @media (min-width: @screen-xlg-min) {
   .col-xlg-14 {
+    width: 25%;
+    float: left;
+  }
+}
+@media (min-width: @screen-xxlg-min) {
+  .col-xxlg-14 {
     width: 25%;
     float: left;
   }
