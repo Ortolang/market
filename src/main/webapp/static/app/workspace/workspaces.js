@@ -204,7 +204,7 @@ angular.module('ortolangMarketApp')
             });
             createWorkspaceModal = $modal({
                 scope: modalScope,
-                template: 'workspace/templates/create-workspace-modal.html',
+                templateUrl: 'workspace/templates/create-workspace-modal.html',
                 show: true
             });
         };
@@ -255,7 +255,7 @@ angular.module('ortolangMarketApp')
                     };
                     publishModal = $modal({
                         scope: modalScope,
-                        template: 'workspace/templates/publish-modal.html',
+                        templateUrl: 'workspace/templates/publish-modal.html',
                         show: true
                     });
                 } else {
@@ -287,7 +287,7 @@ angular.module('ortolangMarketApp')
                     });
                     snapshotModal = $modal({
                         scope: modalScope,
-                        template: 'workspace/templates/snapshot-modal.html',
+                        templateUrl: 'workspace/templates/snapshot-modal.html',
                         show: true
                     });
                 } else {
@@ -381,7 +381,7 @@ angular.module('ortolangMarketApp')
                 };
                 addMemberModal = $modal({
                     scope: modalScope,
-                    template: 'workspace/templates/add-member-modal.html',
+                    templateUrl: 'workspace/templates/add-member-modal.html',
                     show: true
                 });
             });

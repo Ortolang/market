@@ -52,7 +52,7 @@ angular.module('ortolangMarketApp')
                         };
                         $modal({
                             scope: modalScope,
-                            template: 'common/auth/templates/server-down-modal.html'
+                            templateUrl: 'common/auth/templates/server-down-modal.html'
                         });
                     }
                 });

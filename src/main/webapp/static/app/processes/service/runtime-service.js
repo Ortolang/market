@@ -235,7 +235,7 @@ angular.module('ortolangMarketApp')
                         title: form.name,
                         html: true,
                         scope: modalScope,
-                        template: 'processes/services/runtime-form-modal-template.html',
+                        templateUrl: 'processes/services/runtime-form-modal-template.html',
                         show: true
                     });
                 });
@@ -362,16 +362,15 @@ angular.module('ortolangMarketApp')
             }
 
             function getEveryProcessesWithState(state, not) {
-                if(angular.isArray(state)){
+                if (angular.isArray(state)) {
                     var processes = [];
                     angular.forEach(state, function (status) {
                         processes = processes.concat(getProcessesWithState(status));
                         processes = processes.concat(getRemoteProcessesWithState(status));
                     });
                     return processes;
-                } else {
-                    return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
                 }
+                return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
             }
 
 
