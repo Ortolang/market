@@ -18,15 +18,17 @@ describe('Controller: WorkspacesCtrl', function () {
         sample,
         $rootScope,
         url,
-        $location;
+        $location,
+        $filter;
 
-    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Settings_, _WorkspaceBrowserService_, _WorkspaceResource_, _$location_, _ObjectResource_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Settings_, _WorkspaceBrowserService_, _WorkspaceResource_, _$location_, _ObjectResource_, _$filter_) {
         $httpBackend = _$httpBackend_;
         WorkspaceBrowserService = _WorkspaceBrowserService_;
         WorkspaceResource = _WorkspaceResource_;
         ObjectResource = _ObjectResource_;
         $scope = _$rootScope_.$new();
         $rootScope = _$rootScope_;
+        $filter = _$filter_;
         sample = _sample_;
         url = _url_;
         Settings = _Settings_;
@@ -40,7 +42,7 @@ describe('Controller: WorkspacesCtrl', function () {
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    function hideModal () {
+    function hideModal() {
         angular.element('.modal').scope().$hide();
     }
 
@@ -52,7 +54,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 WorkspaceResource: WorkspaceResource,
                 ObjectResource: ObjectResource
             });
-            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: sample().workspaceList});
             $httpBackend.flush();
         }));
 
@@ -74,20 +76,16 @@ describe('Controller: WorkspacesCtrl', function () {
             expect($rootScope.browsing).toBe(true);
         });
 
-        it('should have a list of my workspaces', function () {
-            expect($scope.workspaceList).toEqualData(sample().workspaceList);
+        it('should have a list of my workspaces ordered by Names', function () {
+            expect($scope.workspaceList).toEqualData($filter('orderBy')(sample().workspaceList, '+name'));
         });
 
         it('should select the first workspace of the list by default', function () {
-            console.log($scope.workspaceList.entries[0]);
-            console.log(WorkspaceBrowserService.workspace);
-            expect(WorkspaceBrowserService.workspace).toEqualData(sample().workspaceList.entries[0]);
+            expect(WorkspaceBrowserService.workspace).toEqualData($filter('orderBy')(sample().workspaceList, '+name')[0]);
         });
 
         it('should put the alias of the selected workspace in the search tags', function () {
-            console.log($location.search().alias);
-            console.log(sample().workspaceList.entries[0].alias);
-            expect($location.search().alias).toBe(sample().workspaceList.entries[0].alias);
+            expect($location.search().alias).toBe(sample().barWs.alias);
         });
 
         it('should reinitialize browsing and noFooter when controller is destroyed', function () {
@@ -102,11 +100,11 @@ describe('Controller: WorkspacesCtrl', function () {
 
         it('should be possible to change the workspace', function () {
             $scope.changeWorkspace(WorkspaceBrowserService.workspace);
-            $scope.changeWorkspace($scope.workspaceList.entries[1]);
-            expect(WorkspaceBrowserService.workspace).toEqualData(sample().workspaceList.entries[1]);
-            expect($location.search().alias).toBe(sample().workspaceList.entries[1].alias);
-            expect(Settings.WorkspaceBrowserService.wskey).toBe(sample().workspaceList.entries[1].key);
-            $scope.changeWorkspace($scope.workspaceList.entries[0]);
+            $scope.changeWorkspace($scope.workspaceList[1]);
+            expect(WorkspaceBrowserService.workspace).toEqualData(sample().workspaceList[1]);
+            expect($location.search().alias).toBe(sample().workspaceList[1].alias);
+            expect(Settings.WorkspaceBrowserService.wskey).toBe(sample().workspaceList[1].key);
+            $scope.changeWorkspace($scope.workspaceList[0]);
         });
 
         it('should check if workspace changed before snapshot', function () {
@@ -117,7 +115,7 @@ describe('Controller: WorkspacesCtrl', function () {
             expect(angular.element('.modal').length).toBe(1);
             hideModal();
             $rootScope.$apply();
-            $scope.changeWorkspace($scope.workspaceList.entries[1]);
+            $scope.changeWorkspace($scope.workspaceList[1]);
             $scope.snapshot();
             $httpBackend.expect('GET', url.api + '/workspaces/' + WorkspaceBrowserService.workspace.key).respond(200, sample()[WorkspaceBrowserService.workspace.key + 'Ws']);
             $httpBackend.expect('GET', 'alert/alert.tpl.html').respond(200, '<div class="alert"></div>');
@@ -132,7 +130,7 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$digest();
             expect(WorkspaceResource.get).not.toHaveBeenCalled();
             $rootScope.$emit('core.workspace.create', {fromObject: 'foobar'});
-            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: sample().workspaceList});
             $rootScope.$digest();
             expect(WorkspaceResource.get).toHaveBeenCalled();
             $httpBackend.flush();
@@ -140,7 +138,7 @@ describe('Controller: WorkspacesCtrl', function () {
 
         it('should refresh workspace list and snapshot history when a core.workspace.snapshot event is intercepted', function () {
             $rootScope.$emit('core.workspace.snapshot');
-            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: sample().workspaceList});
             $rootScope.$digest();
             $httpBackend.flush();
         });
@@ -149,7 +147,7 @@ describe('Controller: WorkspacesCtrl', function () {
             $rootScope.$emit('membership.group.add-member', {fromObject: 'group1'});
             $rootScope.$digest();
             $rootScope.$emit('membership.group.add-member', {fromObject: 'foobar'});
-            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: sample().workspaceList});
             $rootScope.$digest();
             $httpBackend.flush();
         });
@@ -172,7 +170,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 $scope: $scope,
                 Settings: Settings
             });
-            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: sample().workspaceList});
             $httpBackend.flush();
         }));
 
@@ -189,13 +187,13 @@ describe('Controller: WorkspacesCtrl', function () {
                 $scope: $scope,
                 Settings: Settings
             });
-            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: sample().workspaceList});
             $httpBackend.flush();
         }));
 
         it('should select the first workspace of the list if the one stored in settings doesn\'t exist anymore', function () {
             expect(WorkspaceBrowserService.workspace.key).not.toBe('foobar');
-            expect(WorkspaceBrowserService.workspace.key).toBe(sample().workspaceList.entries[0].key);
+            expect(WorkspaceBrowserService.workspace.key).toBe($filter('orderBy')(sample().workspaceList, '+name')[0].key);
         });
     });
 
@@ -208,7 +206,7 @@ describe('Controller: WorkspacesCtrl', function () {
                 $scope: $scope,
                 Settings: Settings
             });
-            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, sample().workspaceList);
+            $httpBackend.expect('GET', url.api + '/workspaces').respond(200, {entries: sample().workspaceList});
             $httpBackend.flush();
         }));
 

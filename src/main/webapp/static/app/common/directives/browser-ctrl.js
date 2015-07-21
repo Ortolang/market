@@ -1026,7 +1026,7 @@ angular.module('ortolangMarketApp')
                     }
                     // TODO need fix: when changing workspace getParentData() called twice
                     if ($location.search().alias !== $scope.browserService.workspace.alias) {
-                        var workspace = $filter('filter')($scope.workspaceList.entries, {alias: $location.search().alias}, true);
+                        var workspace = $filter('filter')($scope.workspaceList, {alias: $location.search().alias}, true);
                         if (workspace && workspace.length === 1) {
                             initWorkspaceVariables(workspace[0]);
                             resetFilterModels();
