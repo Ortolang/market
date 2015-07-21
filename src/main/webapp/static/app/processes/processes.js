@@ -84,7 +84,7 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.showAll = function ($event) {
+            $scope.showAll = function () {
                 $scope.processus.processesDisplayed = $scope.processus.processesDisplayed + 10;
             };
 

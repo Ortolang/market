@@ -108,7 +108,7 @@ angular.module('ortolangMarketApp')
             event.stopPropagation();
         });
 
-        $rootScope.$on('core.workspace.snapshot', function (event, eventMessage) {
+        $rootScope.$on('core.workspace.snapshot', function (event) {
             // refresh the whole workspace list as snapshots name are only found in the WorkspaceRepresentation
             getWorkspaceList().$promise.then(function () {
                 var workspace = $filter('filter')($scope.workspaceList.entries, {key: WorkspaceBrowserService.workspace.key});
@@ -342,7 +342,7 @@ angular.module('ortolangMarketApp')
                                     function (data) {
                                         $rootScope.$broadcast('metadata-editor-edit', entry, data);
                                     },
-                                    function (reason) {
+                                    function () {
                                         $rootScope.$broadcast('metadata-editor-show', entry);
                                     }
                                 );

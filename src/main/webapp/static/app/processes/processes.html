@@ -146,7 +146,7 @@
                         <!--</tr>-->
                         <!--</tbody>-->
                     <!--</table>-->
-                    <!--&lt;!&ndash;<div class="panel-footer toggle-show-all" ng-if="(Runtime.getProcessesWithState(Runtime.getStates().completed).length + Runtime.getRemoteProcessesWithState(Runtime.getStates().completed).length) > completedProcessessDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_ALL"></div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="panel-footer toggle-show-all" ng-if="(Runtime.getProcessesWithState(Runtime.getStates().completed).length + Runtime.getRemoteProcessesWithState(Runtime.getStates().completed).length) > completedProcessessDisplayed" ng-click="showAll()" translate="PROCESSES.SHOW_ALL"></div>&ndash;&gt;-->
                 <!--</div>-->
             <!--</section>-->
         </div>
@@ -222,7 +222,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="btn btn-default btn-block" ng-if="Runtime.getEveryProcessesNumberWithState(Runtime.getHistoryStates()) > processus.processesDisplayed" ng-click="showAll($event)" translate="PROCESSES.SHOW_MORE"></div>
+                <div class="btn btn-default btn-block" ng-if="Runtime.getEveryProcessesNumberWithState(Runtime.getHistoryStates()) > processus.processesDisplayed" ng-click="showAll()" translate="PROCESSES.SHOW_MORE"></div>
             </section>
         </div>
     </div>

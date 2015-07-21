@@ -79,10 +79,14 @@ describe('Controller: WorkspacesCtrl', function () {
         });
 
         it('should select the first workspace of the list by default', function () {
+            console.log($scope.workspaceList.entries[0]);
+            console.log(WorkspaceBrowserService.workspace);
             expect(WorkspaceBrowserService.workspace).toEqualData(sample().workspaceList.entries[0]);
         });
 
         it('should put the alias of the selected workspace in the search tags', function () {
+            console.log($location.search().alias);
+            console.log(sample().workspaceList.entries[0].alias);
             expect($location.search().alias).toBe(sample().workspaceList.entries[0].alias);
         });
 
@@ -94,24 +98,6 @@ describe('Controller: WorkspacesCtrl', function () {
 
         it('should have a list of members of the selected workspace', function () {
             expect($scope.workspaceMembers).toEqualData(sample().group);
-        });
-
-        it('should check if presentation metadatas are created before publish', function () {
-            //console.log($scope.head);
-            //ObjectResource.when({key: WorkspaceBrowserService.workspace.head}, sample().head1);
-            //$scope.publish();
-            //$rootScope.$apply();
-            //console.log($scope.head);
-            //expect(angular.element('.modal').length).toBe(1);
-            //ObjectResource.clear();
-            //ObjectResource.when({key: WorkspaceBrowserService.workspace.head}, sample().head2);
-            //$scope.publish();
-            //$scope.$digest();
-            //$rootScope.$apply();
-            //expect(angular.element('.modal').length).toBe(1);
-            //expect(angular.element('.modal')[0]).toBeDefined();
-            //hideModal();
-            //$rootScope.$apply();
         });
 
         it('should be possible to change the workspace', function () {

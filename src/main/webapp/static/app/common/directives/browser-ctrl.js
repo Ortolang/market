@@ -1467,7 +1467,6 @@ angular.module('ortolangMarketApp')
 
             $scope.resizeBrowser = function () {
                 if (!$scope.isFileSelectBrowserService) {
-                    console.log('Resizing browser');
                     var topOffset = topNavWrapper.outerHeight(),
                         height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
                         bottomOffset = footerWrapper.outerHeight();
