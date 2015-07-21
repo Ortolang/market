@@ -8,7 +8,42 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$filter', '$modal', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', '$compile', function ($rootScope, $scope, $routeParams, $location, $filter, $modal, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, $compile) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', '$location', '$filter', '$modal', 'ObjectResource', 'DownloadResource', 'JsonResultResource', 'VisualizerManager', 'QueryBuilderFactory', 'Settings', '$compile', function ($rootScope, $scope, $routeParams, $translate, $location, $filter, $modal, ObjectResource, DownloadResource, JsonResultResource, VisualizerManager, QueryBuilderFactory, Settings, $compile) {
+
+        function getValues(arr, propertyName, propertyValue) {
+            var values = [];
+            var iObject;
+            for (iObject = 0; iObject < arr.length; iObject++) {
+                if (arr[iObject][propertyName] === propertyValue) {
+                    values.push(arr[iObject].value);
+                }
+            }
+            return values;
+        }
+
+        function getValue(arr, propertyName, propertyValue, defaultValue) {
+            var values = getValues(arr, propertyName, propertyValue);
+
+            if(values.length === 0) {
+                return arr.length>0 ? arr[0].value : defaultValue;
+            }
+
+            return values[0];
+        }
+
+        function refreshMultilingualValue(lang) {
+            $scope.title = getValue($scope.item.title, 'lang', lang, 'untitle');
+            $scope.description = getValue($scope.item.description, 'lang', lang);
+            $scope.keywords = getValues($scope.item.keywords, 'lang', lang);
+            if($scope.keywords.length === 0) {
+                $scope.keywords = getValues($scope.item.keywords, 'lang', 'fr');
+            }
+            $scope.bibliographicCitation = getValue($scope.item.bibliographicCitation, 'lang', lang);
+            // $scope.bibliographicCitation = getMultilingualValue($scope.item.bibliographicCitation, Settings.language);
+            $scope.primaryPublications = getValues($scope.item.publications, 'priority', 'primary');
+            $scope.secondaryPublications = getValues($scope.item.publications, 'priority', 'secondary');
+
+        }
 
         function loadItem(key) {
             $scope.itemKey = key;
@@ -34,7 +69,10 @@ angular.module('ortolangMarketApp')
                     var queryOrtolangMeta = 'select from '+$scope.ortolangObject['meta_ortolang-item-json'];
                     JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
                         $scope.item = angular.fromJson(jsonObject[0]);
-                        $rootScope.ortolangPageTitle = $scope.item.title;
+                        
+                        refreshMultilingualValue(Settings.language);
+
+                        $rootScope.ortolangPageTitle = $scope.title;
 
                         $scope.marketItemTemplate = 'market/market-item-root-collection.html';
 
@@ -47,9 +85,9 @@ angular.module('ortolangMarketApp')
                         } else {
                             $scope.imgtitle = '';
                             $scope.imgtheme = 'custom';
-                            if($scope.item.title) {
-                                $scope.imgtitle = $scope.item.title.substring(0,2);
-                                $scope.imgtheme = $scope.item.title.substring(0,1).toLowerCase();
+                            if($scope.title) {
+                                $scope.imgtitle = $scope.title.substring(0,2);
+                                $scope.imgtheme = $scope.title.substring(0,1).toLowerCase();
                             }
                         }
 
@@ -138,6 +176,16 @@ angular.module('ortolangMarketApp')
             }
         };
 
+        $scope.isProducer = function (contributor) {
+            var iRole;
+            for (iRole = 0; iRole < contributor.role.length; iRole++) {
+                if (contributor.role[iRole] === 'producer') {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         function finishPreview(visualizer, oobject) {
             var element, modalScope, visualizerModal;
             oobject.object.downloadUrl = DownloadResource.getDownloadUrl({key: oobject.object.key});
@@ -176,6 +224,10 @@ angular.module('ortolangMarketApp')
                 console.error(reason);
             });
         }
+
+        $rootScope.$on('$translateChangeSuccess', function () {
+            refreshMultilingualValue($translate.use());
+        });
 
         // Scope variables
         function initScopeVariables() {

@@ -6,14 +6,14 @@
                 <img ng-if="item.image" ng-src="{{item.image}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
             </a>
             <div class="media-body">
-                <h1>{{item.title}}</h1>
+                <h1>{{title}}</h1>
 
                 <div ng-hide="browse">
 
                     <div><span translate="MARKET.PRODUCER"></span> :
                         <ul>
-                            <li ng-repeat="producer in item.producers">
-                                <a ng-href='#/market/search?filters={"meta_ortolang-item-json.producers":"{{producer}}"}' ng-bind="producer"></a>
+                            <li ng-repeat="contributor in item.contributors" ng-if="isProducer(contributor)">
+                                <a ng-href='#/producers/{{contributor.entity.id}}' ng-bind="contributor.entity.fullname"></a>
                             </li>
                         </ul>
                     </div>
@@ -34,89 +34,35 @@
             <section id="description">
                 <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
                 <article>
-                    <p ng-bind-html="item.description"></p>
+                    <p ng-bind-html="description"></p>
                 </article>
             </section>
 
-            <section id="contributor" ng-if="item.researchers || item.managers || item.developers || item.authors || item.compilers || item.transcribers || item.sponsors">
+            <section id="contributor" ng-if="item.contributors">
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
-                <article class="row" ng-if="item.researchers">
-                    <h4 translate="MARKET.RESEARCHER" translate-values="{value:item.researchers.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="researcher in item.researchers">
-                            {{researcher}}
-                        </li>
-                    </ul>
+                <div class="contributor-entity" ng-repeat="contributor in item.contributors" ng-if="!isProducer(contributor)">
+                    <img ng-if="contributor.entity.img" class="logo-item" ng-src="{{contributor.entity.img}}"/>
+                    <img ng-if="!contributor.entity.img" class="logo-item" src="no image"/>
+                    <div class="contributor-entity-fullname">
+                        <strong ng-bind="contributor.entity.fullname"></strong>
+                    </div>
+                    <div class="contributor-roles">
+                        <span ng-repeat="role in contributor.role">{{role | translate}}, </span>
+                    </div>
+                </div>
 
-                </article>
-                <article class="row" ng-if="item.managers">
-                    <h4 translate="MARKET.MANAGER" translate-values="{value:item.managers.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="manager in item.managers">
-                            {{manager}}
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.designers">
-                    <h4 translate="MARKET.DESIGNER" translate-values="{value:item.designers.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="designer in item.designers">
-                            {{designer}}
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.developers">
-                    <h4 translate="MARKET.DEVELOPER" translate-values="{value:item.developers.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="developer in item.developers">
-                            {{developer}}
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.authors">
-                    <h4 translate="MARKET.AUTHOR" translate-values="{value:item.authors.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="author in item.authors">
-                            {{author}}
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.compilers">
-                    <h4 translate="MARKET.COMPILER" translate-values="{value:item.compilers.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="compiler in item.compilers">
-                            {{compiler}}
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.transcribers">
-                    <h4 translate="MARKET.TRANSCRIBER" translate-values="{value:item.transcribers.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="transcriber in item.transcribers">
-                            {{transcriber}}
-                        </li>
-                    </ul>
-                </article>
-                <article class="row" ng-if="item.sponsors">
-                    <h4 translate="MARKET.SPONSOR" translate-values="{value:item.sponsors.length}"></h4>
-                    <ul class="list-contributor">
-                        <li ng-repeat="sponsor in item.sponsors">
-                            {{sponsor}}
-                        </li>
-                    </ul>
-                </article>
             </section>
 
-            <section id="keywords" ng-if="item.keywords || item.corporaLanguages || item.annotationLevels || item.corporaFormats || item.corporaFileEncodings || item.programmingLanguages || item.opearatingSystems || item.toolLanguages">
+            <section id="keywords" ng-if="keywords || item.corporaLanguages || item.annotationLevels || item.corporaFormats || item.corporaFileEncodings || item.programmingLanguages || item.opearatingSystems || item.toolLanguages">
                 <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
                 <article>
                     <div class="row">
 
-                        <div ng-if="item.keywords" class="col-md-3">
+                        <div ng-if="keywords" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.KEYWORDS"></dt>
-                                <dd ng-repeat="keyword in item.keywords">
+                                <dd ng-repeat="keyword in keywords">
                                     {{keyword}}
                                 </dd>
                             </dl>
@@ -191,15 +137,26 @@
 
             <section id="publications" ng-if="item.publications">
                 <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
+                <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong>
                 <article>
-                    <ul>
-                        <li ng-repeat="pub in item.publications" ng-bind-html="pub">
-                    </ul>
+                    <p>
+                        <ul class="list-contributor">
+                            <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
+                        </ul>
+                    </li>
+                </article>
+                <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
+                <article>
+                    <p>
+                        <ul class="list-contributor">
+                            <li ng-repeat="pub in secondaryPublications" ng-bind-html="pub"></li>
+                        </ul>
+                    </p>
                 </article>
             </section>
 
             <section id="other_versions">
-                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.OTHER_VERSIONS' | translate}}</header>
+                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.ALL_VERSIONS' | translate}}</header>
                 <article>
                     <ul>
                         <li ng-repeat="version in versions">
@@ -259,11 +216,11 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" ng-show="item.bibliographicCitation">
+            <div class="panel panel-default" ng-show="bibliographicCitation">
                 <div class="panel-heading" translate="MARKET.BIBLIOGRAPHICCITATION"></div>
                 <div class="panel-body">
 
-                    <p ng-bind-html="item.bibliographicCitation"></p>
+                    <p ng-bind-html="bibliographicCitation"></p>
                 </div>
             </div>
 

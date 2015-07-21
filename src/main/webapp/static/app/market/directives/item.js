@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', ['ObjectResource', 'Content',  function (ObjectResource, Content) {
+    .directive('item', ['ObjectResource', 'Content', 'Settings',  function (ObjectResource, Content, Settings) {
         return {
             restrict: 'EA',
             scope: {
@@ -19,6 +19,16 @@ angular.module('ortolangMarketApp')
             },
             link: {
                 pre : function (scope) {
+
+                    function getTitle(titleMultiling, lang) {
+                        var iTitle;
+                        for (iTitle = 0; iTitle < titleMultiling.length; iTitle++) {
+                            if (titleMultiling[iTitle].lang === lang) {
+                                return titleMultiling[iTitle].value;
+                            }
+                        }
+                        return titleMultiling.length>0 ? titleMultiling[0].value : 'untitle';
+                    }
                     var key = (scope.entry.root !== undefined) ? scope.entry.root : scope.entry.key;
 
                     if (scope.entry.applicationUrl) {
@@ -35,6 +45,10 @@ angular.module('ortolangMarketApp')
                         scope.itemUrl = '#/market/' + type + '/' + scope.entry.key;
                     }
 
+                    if(scope.entry.title) {
+                        scope.title = getTitle(scope.entry.title, Settings.language);
+                    }
+
                     if (scope.entry.image) {
                         ObjectResource.element({key: key, path: scope.entry.image}).$promise.then(function (oobject) {
                             scope.image = Content.getContentUrlWithKey(oobject);
@@ -44,9 +58,9 @@ angular.module('ortolangMarketApp')
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';
-                        if (scope.entry.title) {
-                            scope.imgtitle = scope.entry.title.substring(0, 2);
-                            scope.imgtheme = scope.entry.title.substring(0, 1).toLowerCase();
+                        if (scope.title) {
+                            scope.imgtitle = scope.title.substring(0, 2);
+                            scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
                         }
                     }
                 }
