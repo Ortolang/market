@@ -15,16 +15,16 @@ angular.module('ortolangMarketAppMock')
         function get(params) {
             var defer = $q.defer(), data;
 
-            angular.forEach(conditions, function(condition) {
-                if(angular.equals(params, condition.condition)) {
+            angular.forEach(conditions, function (condition) {
+                if (angular.equals(params, condition.condition)) {
                     data = condition.responseValue;
                 }
             });
 
-            if(data) {
+            if (data) {
                 defer.resolve(data);
             } else {
-                defer.reject('when '+angular.toJson(params)+' is undefined for condition '+angular.toJson(conditions));
+                defer.reject('when ' + angular.toJson(params) + ' is undefined for condition ' + angular.toJson(conditions));
             }
 
             return {$promise: defer.promise};

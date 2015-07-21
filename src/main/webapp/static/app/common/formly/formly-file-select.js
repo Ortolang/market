@@ -22,7 +22,12 @@ angular.module('ortolangMarketApp')
                     var fileSelectModalScope = $rootScope.$new(true);
                     fileSelectModalScope.acceptMultiple = false;
                     fileSelectModalScope.fileSelectId = scope.id;
-                    scope.fileSelectModal = $modal({scope: fileSelectModalScope, title: scope.options.labelProp || $translate.instant('SELECT_WORKSPACE_ELEMENT'), template: 'common/directives/file-select-modal-template.html', show: false});
+                    scope.fileSelectModal = $modal({
+                        scope: fileSelectModalScope,
+                        title: scope.options.labelProp || $translate.instant('SELECT_WORKSPACE_ELEMENT'),
+                        templateUrl: 'common/directives/file-select-modal-template.html',
+                        show: false
+                    });
 
                     scope.showModal = function () {
                         scope.fileSelectModal.show();

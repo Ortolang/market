@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('User', function () {
+    .service('User', ['AuthService', function (AuthService) {
 
         this.profileDatas = {};
 
@@ -40,8 +40,13 @@ angular.module('ortolangMarketApp')
             this.desc = profile.desc;
             this.profileDatas = profile.profileDatas;
             this.isLocked = profile.isLocked;
+            this.friends = profile.friends;
             return this;
         };
 
+        this.sessionInitialized = AuthService.sessionInitialized;
+
+        this.isAuthenticated = AuthService.isAuthenticated;
+
         return this;
-    });
+    }]);

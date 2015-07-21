@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
             CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
             CREATE_PRESENTATION_METADATA: 'Créer la fiche de métadonnées de présentation',
             EDIT_PRESENTATION_METADATA: 'Éditer la fiche de métadonnées de présentation',
+            ADD_MEMBER: 'Ajouter un membre',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Créer un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'identifiant',
@@ -76,7 +77,13 @@ angular.module('ortolangMarketApp')
             },
             ADD_MEMBER_MODAL: {
                 TITLE: 'Ajouter un membre à {{wsName}}',
-                SUBMIT: 'Ajouter'
+                SEARCH: 'Rechercher un membre',
+                SEARCH_RESULT: 'Résultats',
+                NO_RESULT: 'Aucun membre trouvé',
+                MY_FRIENDS: 'Mes collaborateurs',
+                NO_FRIENDS: 'Pas de collaborateurs enregistrés',
+                ADD: 'Ajouter',
+                ADDED: 'Ajouté'
             },
             UPLOAD_ZIP_MODAL: {
                 TITLE: 'Importer un zip',

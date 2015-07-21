@@ -1,19 +1,48 @@
-<div class="modal" tabindex="-1" role="dialog" ng-controller="AddMemberCtrl">
+<div class="modal add-member-modal" tabindex="-1" role="dialog" ng-controller="AddMemberCtrl">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <span class="modal-title" translate="WORKSPACE.ADD_MEMBER_MODAL.TITLE" translate-values="{wsName: wsName}"></span>
+                <span class="modal-title" translate="{{(addFriend ?  'PROFILE' : 'WORKSPACE') + '.ADD_MEMBER_MODAL.TITLE'}}" translate-values="{wsName: wsName}"></span>
             </div>
             <div class="modal-body">
-                <ul>
-                    <li ng-repeat="profile in profiles.entries">{{profile.key}}</li>
-                </ul>
-                <pre>{{profiles.entries | json}}</pre>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="publish()" translate="WORKSPACE.ADD_MEMBER_MODAL.SUBMIT"></button>
-                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                <form ng-submit="search()" class="search-form">
+                    <div class="input-group">
+                        <input class="form-control" type="text" ng-model="searchQuery" placeholder="{{'WORKSPACE.ADD_MEMBER_MODAL.SEARCH' | translate}}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><span class="fa fa-fw fa-search"></span></button>
+                        </span>
+                    </div>
+                </form>
+                <div class="search-result" ng-show="profiles.length >= 0">
+                    <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.SEARCH_RESULT"></strong></p>
+                    <p ng-show="profiles.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_RESULT"></p>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="profile in profiles" profile-card data-profile="profile" data-img-classes="img-circle" data-size="50">
+                            <div class="btn-group" ng-hide="profile.alreadyMember">
+                                <button ng-click="add(profile)" class="btn btn-default"><span ng-class="icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
+                            </div>
+                            <div class="btn-group" ng-show="profile.alreadyMember">
+                                <button disabled class="btn btn-default"><span ng-class="icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <hr ng-if="!addFriend" ng-show="profiles.length >= 0" />
+                <div class="my-friends" ng-if="!addFriend">
+                    <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MY_FRIENDS"></strong></p>
+                    <p ng-show="friends.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_FRIENDS"></p>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="friend in friends" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
+                            <div class="btn-group" ng-hide="friend.alreadyMember">
+                                <button ng-click="add(friend)" class="btn btn-default"><span ng-class="icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
+                            </div>
+                            <div class="btn-group" ng-show="friend.alreadyMember">
+                                <button disabled class="btn btn-default"><span ng-class="icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

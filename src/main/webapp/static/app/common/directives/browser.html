@@ -1,8 +1,7 @@
 <div class="browser-wrapper container-fluid" ng-class="{'market-browser-wrapper': isMarketBrowserService, 'file-select-browser-wrapper': isFileSelectBrowserService}" ng-controller="BrowserCtrl">
 
-    <div class="row toolbar browser-toolbar" ng-class="{'market-browser-toolbar': isMarketBrowserService}" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)">
-        <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside">
-        </div>
+    <div class="row toolbar browser-toolbar" ng-class="{'market-browser-toolbar': isMarketBrowserService}" ng-click="deactivateContextMenu()" ng-right-click="deactivateContextMenu()">
+        <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside"></div>
 
         <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
             <div ng-if="::browserService.hasBreadcrumb" class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
@@ -172,15 +171,13 @@
                         <li ng-show="!hasOnlyParentSelected()">
                             <div ng-click="moveChild()"><span ng-class="icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
                         </li>
-                        <li ng-if="selectedElements.length === 1 && selectedElements[0].stream" class="divider"></li>
-                        <li ng-if="selectedElements.length === 1 && selectedElements[0].stream">
-                            <div ng-click="download(selectedElements[0])"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div>
-                        </li>
+                        <li class="divider"></li>
+                        <li><div ng-click="download(selectedElements)"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
                     </ul>
                 </div>
 
                 <div ng-show="isMarketBrowserService && !hasOnlyParentSelected()" class="btn-group">
-                    <button ng-if="browserService.canDownload && selectedElements.length ===1 && selectedElements[0].stream" class="btn btn-default" ng-click="download(selectedElements[0])" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
+                    <button ng-if="browserService.canDownload" class="btn btn-default" ng-click="download(selectedElements[0])" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="icons.browser.download"></span>
                     </button>
                 </div>
@@ -210,8 +207,8 @@
     </div>
 
     <div class="row">
-        <div class="browser-aside-left-collapsed" ng-hide="!(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen)" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
-        <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
+        <div class="browser-aside-left-collapsed" ng-show="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
+        <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkDeselection($event)" ng-right-click="checkDeselection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
             <span class="btn-collapse" ng-if="!isFileSelectBrowserService" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
             <div ng-if="::browserService.canEdit" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
@@ -226,7 +223,7 @@
             </div>
             <section class="my-workspaces">
                 <ul class="list-unstyled">
-                    <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries | orderBy:'name' track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
+                    <li class="my-workspaces-item" ng-repeat="workspace in workspaceList track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
                 </ul>
             </section>
         </div>
@@ -242,7 +239,7 @@
             <div ng-include="'common/directives/browser-tile-template.html'"></div>
         </div>
 
-        <div ng-if="::browserService.displayAsideInfo" ng-hide="browserSettings.hideInfo" ng-class="isScreenMd ? 'col-sm-5' : 'col-sm-3'" class="browser-aside browser-aside-right browser-aside-info">
+        <div ng-if="::browserService.displayAsideInfo" ng-hide="browserSettings.hideInfo" ng-class="isScreenMd ? 'col-sm-4' : 'col-sm-3'" ng-click="checkContextMenu($event)" ng-right-click="checkContextMenu($event)" class="browser-aside browser-aside-right browser-aside-info">
 
             <div ng-if="hasOnlyOneElementSelected()">
                 <p class="lead">
@@ -250,7 +247,10 @@
                     <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span>
                     <span>{{hasOnlyRootCollectionSelected() ? '/' : selectedElements[0].name}}</span>
                 </p>
-                <!--<img class="preview" ng-if="selectedElements[0].largePreview" ng-src="{{getPreviewUrl(selectedElements[0], true)}}"/>-->
+                <div ng-if="selectedElements[0].type === ortolangType.object" thumb class="ng-hide">
+                    <img class="thumb" ng-src="{{Content.getPreviewUrlWithKey(selectedElements[0].key)}}"/>
+                    <hr/>
+                </div>
                 <dl class="dl-horizontal">
                     <dt translate="BROWSER.AUTHOR"></dt>
                     <dd>{{selectedElements[0].author}}</dd>
@@ -295,7 +295,7 @@
         </div>
     </div>
 
-    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" class="browser-context-menu dropdown clearfix open">
+    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" ng-right-click="preventRightClick()" class="browser-context-menu dropdown clearfix open">
         <ul class="dropdown-menu" role="menu">
             <li ng-repeat="item in contextMenuItems" class="{{item.divider ? 'divider' : ''}}">
                 <div ng-click="doAction(item.action)"><span ng-class="item.icon"></span> {{item.text | translate}}</div>

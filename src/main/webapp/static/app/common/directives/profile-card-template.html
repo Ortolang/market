@@ -1,0 +1,10 @@
+<div class="media">
+    <div class="media-left" avatar data-email-hash="profile.emailHash" data-size="{{size}}" data-img-classes="{{imgClasses}}">
+    </div>
+    <div class="media-body">
+        <span>{{profile.givenName}} {{profile.familyName}}</span>
+        <br ng-show="profile.email"/>
+        <span ng-show="profile.email" class="small">{{profile.email}}</span>
+    </div>
+    <div ng-transclude class="media-right"></div>
+</div>

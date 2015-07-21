@@ -29,6 +29,7 @@ angular.module('ortolangVisualizers')
                 'application/xslt+xml': true,
                 'text/javascript': true,
                 'application/javascript': true,
+                'application/json': true,
                 'text/x-web-markdown': true
             }
         });
@@ -47,7 +48,7 @@ angular.module('ortolangVisualizers')
  * # ortolangVisualizers
  */
 angular.module('ortolangVisualizers')
-    .directive('simpleTextVisualizer', ['DownloadResource', '$window', function (DownloadResource, $window) {
+    .directive('simpleTextVisualizer', ['Content', function (Content) {
 
         return {
             templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
@@ -64,7 +65,7 @@ angular.module('ortolangVisualizers')
                         scope.language = 'css';
                     } else if (mimeType === 'text/x-php') {
                         scope.language = 'php';
-                    } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
+                    } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript' || mimeType === 'application/json') {
                         scope.language = 'javascript';
                     } else if (mimeType === 'text/x-web-markdown') {
                         scope.language = 'markdown';
@@ -91,7 +92,7 @@ angular.module('ortolangVisualizers')
                             scope.seeMore();
                         }
                     };
-                    DownloadResource.download({key: scope.elements[0].key}).success(function (data) {
+                    Content.downloadWithKey(scope.elements[0].key).success(function (data) {
                         if (!scope.forceFullData && scope.elements[0].size >= limit) {
                             scope.data = data.substr(0, limit);
                             scope.seeMore = function () {

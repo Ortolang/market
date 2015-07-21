@@ -22,12 +22,13 @@ angular.module('ortolangMarketApp')
             },
             templateUrl: 'common/directives/browser.html',
             link: {
-                pre : function (scope, element, attrs) {
+                pre : function (scope) {
                     scope.isFileSelectBrowserService = true;
-                    scope.workspaceList = WorkspaceResource.get();
-                    var workspace;
+                    var workspaceListDeferred = WorkspaceResource.get(),
+                        workspace;
                     scope.browserSettings = Settings[FileSelectBrowserService.id];
-                    scope.workspaceList.$promise.then(function (data) {
+                    workspaceListDeferred.$promise.then(function (data) {
+                        scope.workspaceList = data.entries;
                         if (scope.browserSettings.wskey || scope.forceWorkspace) {
                             var key = scope.forceWorkspace || scope.browserSettings.wskey,
                                 filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
@@ -59,8 +60,8 @@ angular.module('ortolangMarketApp')
                     }
 
                     scope.getSnapshotsHistory = function () {
-                        ObjectResource.history({key: FileSelectBrowserService.workspace.head}, function (data) {
-                            scope.workspaceHistory = data.entries;
+                        ObjectResource.get({key: FileSelectBrowserService.workspace.head}, function (data) {
+                            scope.workspaceHistory = data.history;
                             angular.forEach(scope.workspaceHistory, function (workspaceSnapshot) {
                                 workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
                             });

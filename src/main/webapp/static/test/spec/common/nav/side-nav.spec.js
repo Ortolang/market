@@ -3,7 +3,8 @@
 describe('Controller: SideNavCtrl', function () {
 
     // load the controller's module
-    beforeEach(module('ortolangMarketApp'));
+    //beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
 
     var SideNavCtrl,
         sideNavElements,

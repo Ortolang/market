@@ -1,36 +1,6 @@
-<div id="market-home" ng-controller="FriendsCtrl">
-    <section class="well">
-        <div class="col-sm-12">
-            <div class="input-group">
-                <input ng-model="search.user" ng-keyup="$event.keyCode == 13 &amp;&amp; search(search.user)" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Rechercher" type="text">
-                <span class="input-group-btn">
-                    <button ng-click="search(search.user)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-            </div>
-        </div>
-        <hr>
-        RESULTS :
-        <div class="row">
-            <div class="col-md-12">
-                <div class="flex-row">
-                    <div ng-repeat="user in search.result">
-                        {{user.givenName}} {{user.familyName}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <pre ng-model="result">
-            {{search.result}}
-        </pre>
-    </section>
-
-    <section ng-if="friends.length>0" class="row">
-        <div class="col-md-12">
-            <div class="flex-row">
-                <div ng-repeat="friend in friends">
-                    {{friend}}
-                </div>
-            </div>
-        </div>
-    </section>
+<div ng-controller="FriendsCtrl">
+    <ul class="list-unstyled row">
+        <li ng-repeat="friend in friends track by member.key" profile-card data-profile="friend" data-size="50" data-img-classes="img-circle" class="col-lg-3 col-md-4 col-sm-6"></li>
+    </ul>
+    <button class="btn btn-default" ng-click="addFriend()"><span ng-class="icons.plus"></span> {{'PROFILE.ADD_FRIEND' | translate}}</button>
 </div>

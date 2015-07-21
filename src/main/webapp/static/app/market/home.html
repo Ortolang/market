@@ -7,8 +7,8 @@
         <div class="col-md-8">
             <h3 class="ortolang-title" translate="ORTOLANG"></h3>
             <hr/>
-            <div class="ortolang-description text-justify" ng-include="'INFORMATION.PATH.NEWS' | translate"></div>
-            <hr/>
+            <div ng-show="StaticWebsite.getHomePage()" bind-html-unsafe="StaticWebsite.getHomePage()"></div>
+            <hr ng-show="StaticWebsite.getHomePage()" />
             <div class="media small marianne" >
                 <div class="media-left">
                     <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
@@ -19,19 +19,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" >
             <div class="news-well well">
-                <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'INFORMATION.NEWS' | translate}}</p>
-                <hr/>
-                <img src="assets/images/InnovativesSHS_©CNRS2015.jpeg" alt="Innovative SHS"/>
-                <p translate="INFORMATION.INNOVATIVE_SHS"></p>
-                <div class="btn-group">
-                    <a class="btn btn-sm btn-default" href="http://innovatives.cnrs.fr/spip.php?article118" target="_blank"><span class="fa fa-fw fa-plus"></span> {{'INFORMATION.MORE' | translate}}</a>
-                    <a class="btn btn-sm btn-default" href="https://twitter.com/hashtag/InnovativesCNRS" target="_blank"><span class="fa fa-fw fa-twitter"></span> #InnovativesCNRS</a>
+                <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATICSITE.NEWS' | translate}}</p>
+                <div ng-if="StaticWebsite.getNews().length === 0"> <hr/> {{ 'STATICSITE.NO_NEWS' | translate }} </div>
+                <div ng-if="StaticWebsite.getNews().length > 0" ng-repeat="news in StaticWebsite.getNews() track by news">
+                    <hr/>
+                    <div bind-html-unsafe="StaticWebsite.getPage(news)"></div>
                 </div>
-                <hr/>
-                <p>{{'INFORMATION.NEWSLETTER.FOLLOW_NEWSLETTER' | translate }} : <a href="resources/Lettre_information_ORTOLANG.pdf" target="_blank">{{'INFORMATION.NEWSLETTER.FIRST_NEWSLETTER' | translate}}</a>.</p>
-                <p><a class="btn btn-sm btn-default" href="#/information/newsletter"><span class="fa fa-fw fa-envelope"></span> {{'INFORMATION.NEWSLETTER.SUBSCRIBE' | translate}}</a></p>
             </div>
         </div>
     </section>

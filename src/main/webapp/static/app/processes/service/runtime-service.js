@@ -11,17 +11,15 @@ angular.module('ortolangMarketApp')
     .factory('Runtime', [
         '$rootScope',
         '$filter',
-        '$timeout',
         '$modal',
         '$alert',
         '$translate',
-        'AuthService',
         'FormResource',
         'RuntimeResource',
         'AtmosphereService',
         'ToolManager',
         'User',
-        function ($rootScope, $filter, $timeout, $modal, $alert, $translate, AuthService, FormResource, RuntimeResource, AtmosphereService, ToolManager, User) {
+        function ($rootScope, $filter, $modal, $alert, $translate, FormResource, RuntimeResource, AtmosphereService, ToolManager, User) {
 
             var processes = [],
                 tasks = [],
@@ -68,7 +66,7 @@ angular.module('ortolangMarketApp')
             }
 
             function initialSubscriptions() {
-                AuthService.sessionInitialized().then(function () {
+                User.sessionInitialized().then(function () {
                     AtmosphereService.addFilter({typePattern: 'runtime\\.process\\.create', throwedByPattern: User.key});
                     angular.forEach(User.groups, function (group) {
                         AtmosphereService.addFilter({typePattern: 'runtime\\.task\\..*', argumentsPatterns: {group: group}});
@@ -237,7 +235,7 @@ angular.module('ortolangMarketApp')
                         title: form.name,
                         html: true,
                         scope: modalScope,
-                        template: 'processes/services/runtime-form-modal-template.html',
+                        templateUrl: 'processes/services/runtime-form-modal-template.html',
                         show: true
                     });
                 });
@@ -364,16 +362,15 @@ angular.module('ortolangMarketApp')
             }
 
             function getEveryProcessesWithState(state, not) {
-                if(angular.isArray(state)){
+                if (angular.isArray(state)) {
                     var processes = [];
                     angular.forEach(state, function (status) {
                         processes = processes.concat(getProcessesWithState(status));
                         processes = processes.concat(getRemoteProcessesWithState(status));
                     });
                     return processes;
-                } else {
-                    return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
                 }
+                return getProcessesWithState(state, not).concat(getRemoteProcessesWithState(state, not));
             }
 
 
@@ -423,6 +420,7 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('runtime.process.update-state', function (event, message) {
+                console.debug(event, message);
                 event.stopPropagation();
                 if (message.arguments.state === states.completed) {
                     var process = $filter('filter')(activeProcesses, {key: message.fromObject});
@@ -467,8 +465,8 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('tool-list-registered', function () {
-                AuthService.sessionInitialized().then(function () {
-                    if (AuthService.isAuthenticated()) {
+                User.sessionInitialized().then(function () {
+                    if (User.isAuthenticated()) {
                         getRemoteProcesses();
                     }
                 });
@@ -501,8 +499,8 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function init() {
-                AuthService.sessionInitialized().then(function () {
-                    if (AuthService.isAuthenticated()) {
+                User.sessionInitialized().then(function () {
+                    if (User.isAuthenticated()) {
                         getProcesses();
                         getTasks();
                         initialSubscriptions();

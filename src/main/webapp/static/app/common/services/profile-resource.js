@@ -14,10 +14,9 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/profiles/connected',
                 method: 'GET'
             },
-            search: {
-                url: url.api + '/profiles/search',
-                method: 'POST',
-                isArray: true
+            getCard: {
+                url: url.api + '/profiles/:key/card',
+                method: 'GET'
             },
             update: {
                 url: url.api + '/profiles/:key/infos',
@@ -25,15 +24,6 @@ angular.module('ortolangMarketApp')
             },
             getInfos: {
                 url: url.api + '/profiles/:key/infos',
-                method: 'GET'
-            },
-            getFriends: {
-                url: url.api + '/profiles/:key/friends',
-                method: 'GET',
-                isArray: true
-            },
-            read: {
-                url: url.api + '/profiles/:key',
                 method: 'GET'
             },
             put: {

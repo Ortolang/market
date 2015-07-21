@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('PROFILE_EN', {
         PROFILE: {
             EMPTY: 'empty',
+            ADD_FRIEND: 'Add a co-worker',
             NAV: {
                 PERSONAL_INFOS: 'Personal informations',
                 SETTINGS: 'Settings',
@@ -21,19 +22,10 @@ angular.module('ortolangMarketApp')
                 CONTRIBUTIONS: 'Contributions',
                 FRIENDS: 'Co-workers'
             },
-            PATH: {
-                PERSONAL_INFOS: 'profile/personal-infos.html',
-                SETTINGS: 'profile/settings.html',
-                ABOUT_ME: 'profile/about-me.html',
-                EVENTS: 'profile/en/events.html',
-                PUBLICATIONS: 'profile/en/publications.html',
-                CONTRIBUTIONS: 'profile/en/contributions.html',
-                FRIENDS: 'profile/en/friends.html'
-            },
             VISIBILITY: {
                 LABEL: 'Field visibility: ',
                 EVERYBODY: 'Public',
-                FRIENDS: 'Friends only',
+                FRIENDS: 'Co-workers only',
                 NOBODY: 'Me only'
             },
             CIVILITY: {
@@ -78,6 +70,11 @@ angular.module('ortolangMarketApp')
                 BODY_END: '<i>Your email address on ORTOLANG is <code>{{email}}</code></i>',
                 NO_GRAVATAR: '<b>You don\'t have a Gravatar yet:</b> a unique random image is used. To use your own avatar or photo, simply <a href="https://fr.gravatar.com/" target="_blank">create a Gravatar account</a> and add an avatar for your email address',
                 GRAVATAR: '<b>You already have a Gravatar account:</b> just <a href="https://fr.gravatar.com/emails" target="_blank">add/change the avatar linked to your email address</a>'
+            },
+            ADD_MEMBER_MODAL: {
+                TITLE: 'Add a co-worker',
+                SEARCH: 'Search a member',
+                ADD: 'Add'
             }
         }
     });

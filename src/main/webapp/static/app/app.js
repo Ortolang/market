@@ -106,14 +106,14 @@ angular
                 requiresAuthentication: true,
                 title: 'NAV.TASKS'
             })
-            .when('/information', {
-                redirectTo: '/information/presentation'
-            })
             .when('/information/:section', {
-                templateUrl: 'information/information.html',
+                templateUrl: 'common/staticSite/information.html',
                 controller: 'InformationCtrl',
                 reloadOnSearch: false,
                 title: 'NAV.INFORMATION'
+            })
+            .when('/legal-notices', {
+                templateUrl: 'common/staticSite/legal-notices.html'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
@@ -183,3 +183,4 @@ angular.module('ortolangVisualizers', [
     'ortolangMarketApp',
     'pascalprecht.translate'
 ]);
+

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements', function ($rootScope, $scope, $route, sideNavElements) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements','StaticWebsite', function ($rootScope, $scope, $route, sideNavElements, StaticWebsite) {
 
         $scope.sideNavElements = sideNavElements;
 
@@ -50,12 +50,38 @@ angular.module('ortolangMarketApp')
                         case '/search':
                             $scope.select({class: 'search'});
                             break;
-                        case '/information/:section':
-                            $scope.select({class: 'information'});
-                            break;
+                    }
+
+                    // Add class for static website element
+                    if(StaticWebsite.getInformationMenu()){
+                        if (current.$$route.originalPath === '/' + StaticWebsite.getInformationMenu().id + '/:section') {
+                            $scope.select({class: StaticWebsite.getInformationMenu().class});
+                        }
                     }
                 }
             }
+        });
+
+        $rootScope.$on('static-site-initialized', function () {
+            // Add static site link to side-nav-elements if needed
+            var infomenu = StaticWebsite.getInformationMenu();
+            var classStaticMenu = infomenu.class,
+                pathStaticMenu = '/' + infomenu.id,
+                hiddenPathStaticMenu = '/'+ infomenu.id + '/' + infomenu.content[0],
+                titleStaticMenu = infomenu.title,
+                iconStaticMenu = 'fa fa-fw fa-2x ' + infomenu.iconSide;
+            var staticElement = {
+                class: classStaticMenu,
+                path: pathStaticMenu,
+                hiddenPath: hiddenPathStaticMenu,
+                description: titleStaticMenu,
+                iconCss: iconStaticMenu,
+                active: undefined,
+                hiddenSideNav: false,
+                hiddenTopNav: false,
+                authenticated: false
+            };
+            sideNavElements.push(staticElement);
         });
 
         // *********************** //
@@ -64,6 +90,7 @@ angular.module('ortolangMarketApp')
 
         function init() {
             var regExp, regExpBis, i, currentPath;
+
             for (i = 0; i < sideNavElements.length; i++) {
                 regExp = new RegExp('^' + sideNavElements[i].path);
                 if (sideNavElements[i].otherPath) {

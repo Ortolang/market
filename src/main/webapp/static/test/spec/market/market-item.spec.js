@@ -9,17 +9,15 @@ describe('Controller: MarketItemCtrl', function () {
   var controllerCreator,
     scope,
     ObjectResource,
-    DownloadResource, 
     JsonResultResource,
     VisualizerManager,
     sample;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, $compile, _ObjectResource_, _DownloadResource_, _JsonResultResource_, _sample_, _VisualizerManager_) {
+  beforeEach(inject(function ($controller, $rootScope, $compile, _ObjectResource_, _JsonResultResource_, _sample_, _VisualizerManager_) {
     scope = $rootScope.$new();
     sample = _sample_;
     ObjectResource = _ObjectResource_;
-    DownloadResource = _DownloadResource_;
     JsonResultResource = _JsonResultResource_;
     VisualizerManager = _VisualizerManager_;
 
@@ -30,7 +28,6 @@ describe('Controller: MarketItemCtrl', function () {
         $routeParams: params,
         $compile: $compile,
         ObjectResource: ObjectResource,
-        DownloadResource: DownloadResource,
         JsonResultResource: JsonResultResource
       });
     };
