@@ -69,7 +69,7 @@ angular.module('ortolangMarketApp')
                     var queryOrtolangMeta = 'select from '+$scope.ortolangObject['meta_ortolang-item-json'];
                     JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
                         $scope.item = angular.fromJson(jsonObject[0]);
-                        
+
                         refreshMultilingualValue(Settings.language);
 
                         $rootScope.ortolangPageTitle = $scope.title;
@@ -204,7 +204,7 @@ angular.module('ortolangMarketApp')
             };
             visualizerModal = $modal({
                 scope: modalScope,
-                templateUrl: 'common/visualizers/visualizer-template.html',
+                template: 'common/visualizers/visualizer-template.html',
                 show: true
             });
             modalScope.$on('modal.show.before', function (event, modal) {

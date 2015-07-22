@@ -131,7 +131,7 @@ angular.module('ortolangMarketApp')
             folderSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
             folderSelectModalScope.forceHead = true;
             folderSelectModalScope.fileSelectId = 'folderSelectModal';
-            $scope.folderSelectModal = $modal({scope: folderSelectModalScope, title: 'Folder select', templateUrl: 'common/directives/file-select-modal-template.html', show: false});
+            $scope.folderSelectModal = $modal({scope: folderSelectModalScope, title: 'Folder select', template: 'common/directives/file-select-modal-template.html', show: false});
 
             var fileImageSelectModalScope = $rootScope.$new(true);
             fileImageSelectModalScope.acceptMultiple = false;
@@ -139,7 +139,7 @@ angular.module('ortolangMarketApp')
             fileImageSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
             fileImageSelectModalScope.forceHead = true;
             fileImageSelectModalScope.fileSelectId = 'fileImageSelectModal';
-            $scope.fileImageSelectModal = $modal({scope: fileImageSelectModalScope, title: 'File select', templateUrl: 'common/directives/file-select-modal-template.html', show: false});
+            $scope.fileImageSelectModal = $modal({scope: fileImageSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
 
             var fileLicenceSelectModalScope = $rootScope.$new(true);
             fileLicenceSelectModalScope.acceptMultiple = false;
@@ -147,7 +147,7 @@ angular.module('ortolangMarketApp')
             fileLicenceSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
             fileLicenceSelectModalScope.forceHead = true;
             fileLicenceSelectModalScope.fileSelectId = 'fileLicenceSelectModal';
-            $scope.fileLicenceSelectModal = $modal({scope: fileLicenceSelectModalScope, title: 'File select', templateUrl: 'common/directives/file-select-modal-template.html', show: false});
+            $scope.fileLicenceSelectModal = $modal({scope: fileLicenceSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
 
             if ($scope.selectedMetadataContent !== undefined) {
                 $scope.md = angular.fromJson($scope.selectedMetadataContent);
