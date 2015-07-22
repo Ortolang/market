@@ -146,7 +146,7 @@ angular.module('ortolangMarketApp')
                 $scope.folderSelectModal = $modal({
                     scope: folderSelectModalScope,
                     title: 'Folder select',
-                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    template: 'common/directives/file-select-modal-template.html',
                     show: false
                 });
 

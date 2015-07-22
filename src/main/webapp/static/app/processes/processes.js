@@ -33,7 +33,7 @@ angular.module('ortolangMarketApp')
                         title: name,
                         html: true,
                         scope: $scope,
-                        templateUrl: 'processes/process-log-modal-template.html',
+                        template: 'processes/process-log-modal-template.html',
                         show: true
                     });
                 }
@@ -60,7 +60,7 @@ angular.module('ortolangMarketApp')
                             title: process.processTool.name,
                             html: true,
                             scope: $scope,
-                            templateUrl: 'common/tools/tool-tpl-parameters.html',
+                            template: 'common/tools/tool-tpl-parameters.html',
                             show: true
                         });
                     },

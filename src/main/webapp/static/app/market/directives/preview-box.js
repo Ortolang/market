@@ -61,7 +61,7 @@ angular.module('ortolangMarketApp')
                         };
                         visualizerModal = $modal({
                             scope: modalScope,
-                            templateUrl: 'common/visualizers/visualizer-template.html',
+                            template: 'common/visualizers/visualizer-template.html',
                             show: true
                         });
                         modalScope.$on('modal.show.before', function (event, modal) {

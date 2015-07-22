@@ -605,7 +605,7 @@ angular.module('ortolangMarketApp')
                 };
                 uploadZipModal = $modal({
                     scope: modalScope,
-                    templateUrl: 'workspace/templates/upload-zip-modal.html',
+                    template: 'workspace/templates/upload-zip-modal.html',
                     show: true
                 });
             }
@@ -622,7 +622,7 @@ angular.module('ortolangMarketApp')
                 };
                 uploadZipCompletedModal = $modal({
                     scope: modalScope,
-                    templateUrl: 'workspace/templates/upload-zip-completed-modal.html',
+                    template: 'workspace/templates/upload-zip-completed-modal.html',
                     show: true
                 });
             });
@@ -660,7 +660,7 @@ angular.module('ortolangMarketApp')
                     });
                     addCollectionModal = $modal({
                         scope: modalScope,
-                        templateUrl: 'workspace/templates/add-collection-modal.html',
+                        template: 'workspace/templates/add-collection-modal.html',
                         show: true
                     });
                 }
@@ -702,7 +702,7 @@ angular.module('ortolangMarketApp')
                     });
                     renameChildModal = $modal({
                         scope: modalScope,
-                        templateUrl: 'workspace/templates/rename-modal.html',
+                        template: 'workspace/templates/rename-modal.html',
                         show: true
                     });
                 }
@@ -745,7 +745,7 @@ angular.module('ortolangMarketApp')
                     };
                     moveModal = $modal({
                         scope: modalScope,
-                        templateUrl: 'common/directives/file-select-modal-template.html',
+                        template: 'common/directives/file-select-modal-template.html',
                         show: true
                     });
                 }
@@ -840,7 +840,7 @@ angular.module('ortolangMarketApp')
                 element.addClass('close-on-click');
                 visualizerModal = $modal({
                     scope: modalScope,
-                    templateUrl: 'common/visualizers/visualizer-template.html',
+                    template: 'common/visualizers/visualizer-template.html',
                     show: true
                 });
                 modalScope.$on('modal.show.before', function (event, modal) {
