@@ -121,10 +121,12 @@ angular.module('ortolangMarketApp')
         }
         function getValues(arr, propertyName, propertyValue) {
             var values = [];
-            var iObject;
-            for (iObject = 0; iObject < arr.length; iObject++) {
-                if (arr[iObject][propertyName] === propertyValue) {
-                    values.push(arr[iObject].value);
+            if(arr) { 
+                var iObject;
+                for (iObject = 0; iObject < arr.length; iObject++) {
+                    if (arr[iObject][propertyName] === propertyValue) {
+                        values.push(arr[iObject].value);
+                    }
                 }
             }
             return values;
@@ -133,7 +135,7 @@ angular.module('ortolangMarketApp')
         function getValue(arr, propertyName, propertyValue, defaultValue) {
             var values = getValues(arr, propertyName, propertyValue);
 
-            if(values.length === 0) {
+            if(arr && values.length === 0) {
                 return arr.length>0 ? arr[0].value : defaultValue;
             }
 
@@ -143,14 +145,21 @@ angular.module('ortolangMarketApp')
         function refreshMultilingualValue(item, lang) {
             $scope.title = getValue(item.title, 'lang', lang, 'untitle');
             $scope.description = getValue(item.description, 'lang', lang);
-            $scope.keywords = getValues(item.keywords, 'lang', lang);
-            if($scope.keywords.length === 0) {
-                $scope.keywords = getValues(item.keywords, 'lang', 'fr');
+            if(item.keywords) {
+                $scope.keywords = getValues(item.keywords, 'lang', lang);
+                if($scope.keywords.length === 0) {
+                    $scope.keywords = getValues(item.keywords, 'lang', 'fr');
+                }
             }
-            $scope.bibliographicCitation = getValue(item.bibliographicCitation, 'lang', lang);
-            // $scope.bibliographicCitation = getMultilingualValue(item.bibliographicCitation, Settings.language);
-            $scope.primaryPublications = getValues(item.publications, 'priority', 'primary');
-            $scope.secondaryPublications = getValues(item.publications, 'priority', 'secondary');
+            if(item.bibliographicCitation) {
+                $scope.bibliographicCitation = getValue(item.bibliographicCitation, 'lang', lang);
+            }
+            if(item.publications) {
+                $scope.primaryPublications = getValues(item.publications, 'priority', 'primary');
+            }
+            if(item.publications) {
+                $scope.secondaryPublications = getValues(item.publications, 'priority', 'secondary');
+            }
         }
 
         function loadLicense(collection, licensePath) {

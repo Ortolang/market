@@ -42,13 +42,15 @@
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
                 <div class="contributor-entity" ng-repeat="contributor in item.contributors" ng-if="!isProducer(contributor)">
-                    <img ng-if="contributor.entity.img" class="logo-item" ng-src="{{contributor.entity.img}}"/>
-                    <img ng-if="!contributor.entity.img" class="logo-item" src="no image"/>
+                    <div class="logo-contributor thumbnail">
+                        <img ng-if="contributor.entity.img" class="logo-contributor" ng-src="{{contributor.entity.img}}"/>
+                        <span ng-if="!contributor.entity.img" class="fa fa-user fa-5x"></span>
+                    </div>
                     <div class="contributor-entity-fullname">
                         <strong ng-bind="contributor.entity.fullname"></strong>
                     </div>
                     <div class="contributor-roles">
-                        <span ng-repeat="role in contributor.role">{{role | translate}}, </span>
+                        <span ng-repeat="role in contributor.role"><i>{{'ROLES.'+role | uppercase | translate}}</i><span ng-if="!$last">, </span></span>
                     </div>
                 </div>
 
