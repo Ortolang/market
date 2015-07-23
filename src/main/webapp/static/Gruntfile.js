@@ -502,8 +502,8 @@ module.exports = function (grunt) {
                             replacement: 'keycloak.jsp'
                         },
                         {
-                            match: /<!--<script src="config\.jsp"><\/script>-->/,
-                            replacement: '<script src="config.jsp"></script>'
+                            match: /<!--<script src="online-config-url"><\/script>-->/,
+                            replacement: '<script src="<% out.print(System.getenv().containsKey("ORTOLANG_API_URL")?System.getenv().get("ORTOLANG_API_URL"):"http://localhost:8080/api/config"); %>"></script>'
                         },
                         {
                             match: 'version',

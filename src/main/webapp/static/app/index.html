@@ -110,15 +110,16 @@
 <!-- endbower -->
 <!-- endbuild -->
 
-<!--<script src="config.jsp"></script>-->
+<!--<script src="online-config-url"></script>-->
 <!-- build:remove -->
 <script type="text/javascript">
     var OrtolangConfig = {};
     OrtolangConfig.logoutRedirectUrl = 'http://localhost:9000/';
-    OrtolangConfig.apiServerUrlDefault = 'https://localhost:8443/api';
+    OrtolangConfig.apiServerUrlDefault = 'http://localhost:8080/api';
     OrtolangConfig.apiServerUrlNoSSL = 'http://localhost:8080/api';
     OrtolangConfig.apiSubPath = '/sub';
     OrtolangConfig.apiContentPath = '/content';
+    OrtolangConfig.keycloakConfigLocation = "keycloak.json";
 </script>
 <!-- endbuild -->
 

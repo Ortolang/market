@@ -1,7 +1,7 @@
 'use strict';
 
 angular.element(document).ready(function () {
-    var keycloakAuth = new Keycloak('keycloak.json');
+    var keycloakAuth = new Keycloak(OrtolangConfig.keycloakConfigLocation);
 
     function keycloackInitCallback() {
         /**

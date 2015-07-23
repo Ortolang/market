@@ -40,7 +40,7 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.$on('server-down', function () {
-            $http.get(url.api + '/ping')
+            $http.get(url.api + '/config/ping')
                 .success(function () {
                     console.log('API server responded to ping');
                 })
