@@ -3,7 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-	<security-constraint>
+    <servlet-mapping>
+        <servlet-name>jsp</servlet-name>
+        <url-pattern>index.html</url-pattern>
+    </servlet-mapping>
+
+    <security-constraint>
 		<web-resource-collection>
 			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
@@ -11,4 +16,6 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
+
+
 </web-app>
