@@ -26,53 +26,12 @@ angular.module('ortolangMarketApp')
 
                 loadResources($scope.producer.id);
             });
-
-            // var queryBuilder = QueryBuilderFactory.make(
-            //     {
-            //         projection: '*',
-            //         source: 'Organization'
-            //     }
-            // );
-
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.name', 'name');
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.img', 'img');
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.homepage', 'homepage');
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.acronym', 'acronym');
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.city', 'city');
-            // queryBuilder.addProjection('meta_ortolang-referentiel-json.country', 'country');
-
-            // queryBuilder.equals('meta_ortolang-referentiel-json.id', id);
-
-            // console.log(queryBuilder.toString());
-            // JsonResultResource.get({query: queryBuilder.toString()}).$promise.then(function (jsonResults) {
-            //     if(jsonResults.length===1) {
-
-            //         $scope.producer = angular.fromJson(jsonResults[0]);
-
-            //         if(!$scope.producer.img) {
-            //             $scope.imgtitle = '';
-            //             $scope.imgtheme = 'custom';
-            //             if($scope.producer.title) {
-            //                 $scope.imgtitle = $scope.producer.title.substring(0,2);
-            //                 $scope.imgtheme = $scope.producer.title.substring(0,1).toLowerCase();
-            //             }
-            //         }
-
-            //         if($scope.producer.fullname) {
-            //             loadResources($scope.producer.fullname);
-            //         }
-            //     }
-            // }, function (reason) {
-            //     console.error(reason);
-            // });
         }
 
         function loadResources(producer) {
             if(producer) {
                 $scope.queryBuilder.and();
-                $scope.queryBuilder.equals('meta_ortolang-item-json.contributors[entity][id]', producer);
+                $scope.queryBuilder.in('meta_ortolang-item-json.contributors[entity][id]', [producer]);
                 $scope.query = $scope.queryBuilder.toString();
             }
         }
