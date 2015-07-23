@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
 
         function getWorkspaceList() {
             workspaceListDeferred = WorkspaceResource.get(function (data) {
-                $scope.workspaceList = data;
+                $scope.workspaceList = $filter('orderBy')(data.entries, '+name');
             });
             return workspaceListDeferred;
         }
@@ -100,7 +100,7 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {
             workspaceListDeferred.$promise.then(function () {
-                var workspace = $filter('filter')($scope.workspaceList.entries, {key: eventMessage.fromObject});
+                var workspace = $filter('filter')($scope.workspaceList, {key: eventMessage.fromObject});
                 if (workspace.length !== 1) {
                     getWorkspaceList();
                 }
@@ -108,10 +108,10 @@ angular.module('ortolangMarketApp')
             event.stopPropagation();
         });
 
-        $rootScope.$on('core.workspace.snapshot', function (event, eventMessage) {
+        $rootScope.$on('core.workspace.snapshot', function (event) {
             // refresh the whole workspace list as snapshots name are only found in the WorkspaceRepresentation
             getWorkspaceList().$promise.then(function () {
-                var workspace = $filter('filter')($scope.workspaceList.entries, {key: WorkspaceBrowserService.workspace.key});
+                var workspace = $filter('filter')($scope.workspaceList, {key: WorkspaceBrowserService.workspace.key});
                 if (workspace.length === 1) {
                     WorkspaceBrowserService.workspace = workspace[0];
                     $scope.getSnapshotsHistory();
@@ -122,7 +122,7 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('membership.group.add-member', function (event, eventMessage) {
             workspaceListDeferred.$promise.then(function () {
-                var member = $filter('filter')($scope.workspaceList.entries, {members: eventMessage.fromObject});
+                var member = $filter('filter')($scope.workspaceList, {members: eventMessage.fromObject});
                 if (member.length !== 1) {
                     getWorkspaceList();
                 }
@@ -342,7 +342,7 @@ angular.module('ortolangMarketApp')
                                     function (data) {
                                         $rootScope.$broadcast('metadata-editor-edit', entry, data);
                                     },
-                                    function (reason) {
+                                    function () {
                                         $rootScope.$broadcast('metadata-editor-show', entry);
                                     }
                                 );
@@ -394,7 +394,6 @@ angular.module('ortolangMarketApp')
 
         $scope.resizeBrowser = function () {
             if (!$rootScope.browsing) {
-                console.log('Resizing browser');
                 var topOffset = angular.element('#top-nav-wrapper').outerHeight(),
                     height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
                     browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
@@ -416,12 +415,12 @@ angular.module('ortolangMarketApp')
             $scope.resizeBrowser();
         });
 
-        function initialSubscriptions(data) {
+        function initialSubscriptions() {
             AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.create', throwedByPattern: User.key});
             angular.forEach(User.groups, function (group) {
                 AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.snapshot', argumentsPatterns: {group: group}});
             });
-            angular.forEach(data.entries, function (workspace) {
+            angular.forEach($scope.workspaceList, function (workspace) {
                 AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.update', fromPattern: workspace.key});
             });
         }
@@ -438,27 +437,27 @@ angular.module('ortolangMarketApp')
             getWorkspaceList();
             var workspace;
             $scope.browserSettings = Settings[WorkspaceBrowserService.id];
-            workspaceListDeferred.$promise.then(function (data) {
-                initialSubscriptions(data);
-                if ($scope.browserSettings.wskey) {
+            workspaceListDeferred.$promise.then(function () {
+                initialSubscriptions();
+                if ($location.search().alias || $scope.browserSettings.wskey) {
                     var filteredWorkspace = [];
                     if ($location.search().alias) {
-                        filteredWorkspace = $filter('filter')(data.entries, {alias: $location.search().alias}, true);
+                        filteredWorkspace = $filter('filter')($scope.workspaceList, {alias: $location.search().alias}, true);
                         if (filteredWorkspace.length !== 1) {
                             displaySearchErrorModal('ALIAS', {alias: $location.search().alias});
                         }
                     }
                     if (filteredWorkspace.length !== 1) {
-                        filteredWorkspace = $filter('filter')(data.entries, {key: $scope.browserSettings.wskey}, true);
+                        filteredWorkspace = $filter('filter')($scope.workspaceList, {key: $scope.browserSettings.wskey}, true);
                     }
                     if (filteredWorkspace.length !== 1) {
                         console.error('No workspace with key "%s" available', $scope.browserSettings.wskey);
-                        workspace = data.entries[0];
+                        workspace = $scope.workspaceList[0];
                     } else {
                         workspace = filteredWorkspace[0];
                     }
                 } else {
-                    workspace = data.entries[0];
+                    workspace = $scope.workspaceList[0];
                 }
                 if (workspace) {
                     $scope.changeWorkspace(workspace, true);

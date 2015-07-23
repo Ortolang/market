@@ -7,15 +7,18 @@
                  ng-right-click="clickChild(child, $event)"
                  ng-dblclick="doubleClickChild(child)"
                  ng-class="{active : isSelected(child), collection: type === ortolangType.collection}">
-                <div ng-if="type === ortolangType.object" class="thumb-wrapper">
+                <div ng-if="::type === ortolangType.object" class="thumb-wrapper">
                     <div>
-                        <span class="thumb-icon fa-4x" ng-class="child.mimeType | mimeTypeIconCss"></span>
+                        <span class="thumb-icon fa-4x" ng-class="::child.mimeType | mimeTypeIconCss"></span>
                         <div class="thumb" style="background-image: url({{::Content.getPreviewUrlWithKey(child.key)}})"></div>
+                        <div ng-if="(child.mimeType | mimeTypeIconCss) === icons.videoFile" class="thumb-overlay">
+                            <span class="fa-2x" ng-class="::icons.play"></span>
+                        </div>
                     </div>
                 </div>
                 <p class="name-wrapper">
-                    <span ng-if="type === ortolangType.collection" ng-class="icons.folderPlain" class="type"></span>
-                    <span ng-if="type === ortolangType.object" ng-class="child.mimeType | mimeTypeIconCss" class="type"></span>
+                    <span ng-if="::type === ortolangType.collection" ng-class="::icons.folderPlain" class="type"></span>
+                    <span ng-if="::type === ortolangType.object" ng-class="::child.mimeType | mimeTypeIconCss" class="type"></span>
                     <span class="name">{{child.name}}</span>
                 </p>
             </div>

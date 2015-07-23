@@ -360,6 +360,9 @@
           background-color: @active-element-bg-color;
           color: @inverse-text-color;
         }
+        .thumb-wrapper > div .thumb-overlay {
+            background-color: transparent;
+        }
         .thumb-icon {
           color: @active-element-bg-color;
         }
@@ -385,6 +388,20 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: top center;
+          }
+          .thumb-overlay {
+            position: absolute;
+            overflow: hidden;
+            display: table;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            color: @white;
+            background-color: fade(@gray-dark, 20%);
+            .fa {
+              display: table-cell;
+              vertical-align: middle;
+            }
           }
         }
       }

@@ -27,16 +27,16 @@ angular.module('ortolangMarketApp')
         function buildQuery() {
             var queryBuilder = QueryBuilderFactory.make({
                 projection: 'meta_ortolang-referentiel-json.fullname as fullname, meta_ortolang-referentiel-json.name as name, meta_ortolang-referentiel-json.id as id, meta_ortolang-referentiel-json.img as img, meta_ortolang-referentiel-json.homepage as homepage',
-                source: 'Organization'
+                source: 'ReferentielEntity'
             });
 
             // var contentSplit = [];
-            // if (content && content !== '') {
-            //     contentSplit = queryBuilder.tokenize(content);
+            // if ($scope.content && $scope.content !== '') {
+            //     contentSplit = queryBuilder.tokenize($scope.content);
             // }
             // if (contentSplit.length > 0) {
             //     angular.forEach(contentSplit, function (contentPart) {
-            //         queryBuilder.and();
+            //         // queryBuilder.and();
             //         queryBuilder.containsText('any()', contentPart);
             //     });
             // }

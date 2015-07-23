@@ -11,7 +11,7 @@
             </div>
             <section class="my-workspaces">
                 <ul class="list-unstyled">
-                    <li class="my-workspaces-item" ng-repeat="workspace in workspaceList.entries | orderBy:'name' track by workspace.key"
+                    <li class="my-workspaces-item" ng-repeat="workspace in workspaceList track by workspace.key"
                         ng-click="changeWorkspace(workspace)"
                         ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
                 </ul>
@@ -19,13 +19,13 @@
         </div>
 
         <div class="col-sm-10 col-md-10 container-main workspace-dashboard">
-            <div ng-show="workspaceList.entries.length === 0" class="row">
+            <div ng-show="workspaceList.length === 0" class="row">
                 <br/>
                 <p>
                     <i translate="WORKSPACE.NO_WORKSPACES"></i>
                 </p>
             </div>
-            <div ng-show="workspaceList.entries.length > 0">
+            <div ng-show="workspaceList.length > 0">
                 <div class="row">
                     <h1 ng-class="renameWorkspaceForm.$visible ? 'col-md-8' : 'col-md-12'">
                         <span editable-text="WorkspaceBrowserService.workspace.name" e-ng-init="largeInput = true;" e-form="renameWorkspaceForm" onbeforesave="renameWorkspace($data)">{{WorkspaceBrowserService.workspace.name}}</span>

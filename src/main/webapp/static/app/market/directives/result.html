@@ -4,7 +4,7 @@
 		<img ng-if="image" class="logo-item" ng-src="{{image}}" alt="{{imgtitle}}"/>
 	</div>
 	<div class="col-sm-9">
-		<h4><a ng-href="{{itemUrl}}">{{entry.title}}</a></h4>
+		<h4><a ng-href="{{itemUrl}}">{{title}}</a></h4>
 		<p ng-bind-html="entry.description" class="description"></p>
 		<small><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{entry.publicationDate}}</span></small>
 		<p class="producers">

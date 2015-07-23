@@ -8,56 +8,30 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducerCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'JsonResultResource', 'ItemManager', 'FacetedFilterManager', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, JsonResultResource, ItemManager, FacetedFilterManager) {
+    .controller('ProducerCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'JsonResultResource', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, JsonResultResource, ItemManager, FacetedFilterManager, ReferentielResource) {
 
         function loadItem(id) {
 
-            var queryBuilder = QueryBuilderFactory.make(
-                {
-                    projection: '*',
-                    source: 'Organization'
-                }
-            );
+            ReferentielResource.get({refKey: id}).$promise.then(function (referentielEntity) {
+                $scope.producer = angular.fromJson(referentielEntity.content);
 
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.name', 'name');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.img', 'img');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.homepage', 'homepage');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.acronym', 'acronym');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.city', 'city');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.country', 'country');
-
-            queryBuilder.equals('meta_ortolang-referentiel-json.id', id);
-
-            console.log(queryBuilder.toString());
-            JsonResultResource.get({query: queryBuilder.toString()}).$promise.then(function (jsonResults) {
-                if(jsonResults.length===1) {
-
-                    $scope.producer = angular.fromJson(jsonResults[0]);
-
-                    if(!$scope.producer.img) {
-                        $scope.imgtitle = '';
-                        $scope.imgtheme = 'custom';
-                        if($scope.producer.title) {
-                            $scope.imgtitle = $scope.producer.title.substring(0,2);
-                            $scope.imgtheme = $scope.producer.title.substring(0,1).toLowerCase();
-                        }
-                    }
-
-                    if($scope.producer.fullname) {
-                        loadResources($scope.producer.fullname);
+                if(!$scope.producer.img) {
+                    $scope.imgtitle = '';
+                    $scope.imgtheme = 'custom';
+                    if($scope.producer.title) {
+                        $scope.imgtitle = $scope.producer.title.substring(0,2);
+                        $scope.imgtheme = $scope.producer.title.substring(0,1).toLowerCase();
                     }
                 }
-            }, function (reason) {
-                console.error(reason);
+
+                loadResources($scope.producer.id);
             });
         }
 
         function loadResources(producer) {
             if(producer) {
                 $scope.queryBuilder.and();
-                $scope.queryBuilder.in('meta_ortolang-item-json.producers', [producer]);
+                $scope.queryBuilder.in('meta_ortolang-item-json.contributors[entity][id]', [producer]);
                 $scope.query = $scope.queryBuilder.toString();
             }
         }
@@ -72,7 +46,7 @@ angular.module('ortolangMarketApp')
                     source: 'collection'
                 });
 
-            // TODO made based on availabled filters
+            // TODO removes duplication with facted-filter-manager
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.statusOfUse', 'statusOfUse');
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.corporaLanguages', 'corporaLanguages');
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.corporaType', 'corporaType');
@@ -96,6 +70,9 @@ angular.module('ortolangMarketApp')
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionLanguages', 'lexiconDescriptionLanguages');
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.lexiconFormats', 'lexiconFormats');
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.lexiconLanguageType', 'lexiconLanguageType');
+
+            $scope.queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
+            $scope.queryBuilder.addProjection('lastModificationDate', 'lastModificationDate');
 
             $scope.queryBuilder.equals('status', 'published');
 

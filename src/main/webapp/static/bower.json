@@ -2,13 +2,13 @@
   "name": "ortolang-market",
   "version": "2.3.0-SNAPSHOT",
   "dependencies": {
-    "angular": "1.4.2",
-    "angular-animate": "1.4.2",
-    "angular-route": "1.4.2",
-    "angular-resource": "1.4.2",
-    "angular-sanitize": "1.4.2",
-    "angular-messages": "1.4.2",
-    "angular-i18n": "1.4.2",
+    "angular": "1.4.3",
+    "angular-animate": "1.4.3",
+    "angular-route": "1.4.3",
+    "angular-resource": "1.4.3",
+    "angular-sanitize": "1.4.3",
+    "angular-messages": "1.4.3",
+    "angular-i18n": "1.4.3",
     "font-awesome": "4.3.0",
     "octicons": "2.4.1",
     "angular-file-upload": "1.1.5",
@@ -16,30 +16,30 @@
     "angular-hotkeys": "chieffancypants/angular-hotkeys#1.4.5",
     "angular-highlightjs": "0.4.1",
     "angular-motion": "0.4.2",
-    "angular-formly": "6.16.1",
-    "angular-formly-templates-bootstrap": "4.4.0",
+    "angular-formly": "6.19.0",
+    "angular-formly-templates-bootstrap": "5.0.2",
     "angular-bootstrap-show-errors": "2.3.0",
     "angular-translate": "2.7.2",
     "angular-zeroclipboard": "0.4.3",
     "angular-bootstrap-toggle-switch": "0.5.4",
-    "angular-diff-match-patch": "0.1.10",
+    "angular-diff-match-patch": "0.1.11",
     "highlightjs": "highlightjs/cdn-release#8.6",
     "bootstrap": "3.3.5",
     "bootstrap-additions": "0.3.1",
     "zeroclipboard": "2.2.0",
-    "holderjs": "2.8.0",
+    "holderjs": "2.8.1",
     "keycloak": "1.1.0",
     "angular-md5": "0.1.7",
     "angular-xeditable": "prismsoundzero/angular-xeditable#0.1.9",
-    "angular-schema-form": "0.8.3",
-    "ng-tags-input": "2.3.0",
+    "angular-schema-form": "0.8.4",
+    "ng-tags-input": "3.0.0",
     "atmosphere": "Atmosphere/atmosphere-javascript#javascript-project-2.2.11",
     "awesome-bootstrap-checkbox": "0.3.4",
     "angular-moment": "0.10.1"
   },
   "devDependencies": {
-    "angular-mocks": "1.4.2",
-    "angular-scenario": "1.4.2"
+    "angular-mocks": "1.4.3",
+    "angular-scenario": "1.4.3"
   },
   "overrides": {
     "angular-i18n": {
@@ -72,7 +72,7 @@
   },
   "appPath": "app",
   "resolutions": {
-    "angular": "1.4.2",
+    "angular": "1.4.3",
     "highlightjs": "8.6"
   }
 }

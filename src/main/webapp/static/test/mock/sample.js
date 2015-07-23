@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
             runningProcess = {activity: 'FOO', initier: 'root', key: '828718e5-cb67-4a69-b822-8c7a5ef2d3b7', log: 'logloglog', name: 'Publication of workspace: System Workspace', state: 'RUNNING', type: 'publish-workspace'},
             sampleN3 = {'http://www.ortolang.fr/ontology/preview': 'k1', image : 'assets/images/no-image.png'},
             workspaceElement = {format: 'market-ortolang-n3'},
-            workspaceList = {'entries': []},
+            workspaceList = [],
             systemWs = {'key': 'system', 'author': 'root', 'owner': null, 'alias': 'system', 'name': 'System Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group1', 'head': 'head1', 'changed': true, 'snapshots': []},
             fooWs = {'key': 'foo', 'author': 'root', 'owner': null, 'alias': 'foo', 'name': 'Foo Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group2', 'head': 'head1', 'changed': false, 'snapshots': []},
             barWs = {'key': 'bar', 'author': 'root', 'owner': null, 'alias': 'bar', 'name': 'Bar Workspace', 'type': 'SYSTEM', 'clock': 1, 'creationDate': 1433754351268, 'lastModificationDate': 1433926541420, 'members': 'group2', 'head': 'head2', 'changed': true, 'snapshots': []},
@@ -38,9 +38,9 @@ angular.module('ortolangMarketApp')
 
         group1.members.push(profile);
         group2.members.push(profile);
-        workspaceList.entries.push(systemWs);
-        workspaceList.entries.push(fooWs);
-        workspaceList.entries.push(barWs);
+        workspaceList.push(systemWs);
+        workspaceList.push(fooWs);
+        workspaceList.push(barWs);
 
         return {
             rootCollectionKey : rootCollectionKey,

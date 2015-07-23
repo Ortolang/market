@@ -1,0 +1,245 @@
+<section class="market-item">
+    <header>
+        <div class="media">
+            <a class="pull-left">
+                <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                <img ng-if="image" ng-src="{{image}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+            </a>
+            <div class="media-body">
+                <h1>{{title}}</h1>
+
+                <div ng-hide="browse">
+
+                    <div><span translate="MARKET.PRODUCER"></span> :
+                        <ul>
+                            <li ng-repeat="contributor in item.contributors" ng-if="isProducer(contributor)">
+                                <a ng-href='#/producers/{{contributor.entity.id}}' ng-bind="contributor.entity.fullname"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
+                        <ul>
+                            <li><a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-default" ng-show="browse" ng-click="browseContent()">{{'MARKET.GOBACKINFO' | translate}}</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="row">
+
+        <div ng-show="!browse" class="col-md-8">
+            <section id="description">
+                <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
+                <article>
+                    <p ng-bind-html="description"></p>
+                </article>
+            </section>
+
+            <section id="contributor" ng-if="item.contributors">
+                <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
+
+                <div class="contributor-entity" ng-repeat="contributor in item.contributors" ng-if="!isProducer(contributor)">
+                    <div class="logo-contributor thumbnail">
+                        <img ng-if="contributor.entity.img" class="logo-contributor" ng-src="{{contributor.entity.img}}"/>
+                        <span ng-if="!contributor.entity.img" class="fa fa-user fa-5x"></span>
+                    </div>
+                    <div class="contributor-entity-fullname">
+                        <strong ng-bind="contributor.entity.fullname"></strong>
+                    </div>
+                    <div class="contributor-roles">
+                        <span ng-repeat="role in contributor.role"><i>{{'ROLES.'+role | uppercase | translate}}</i><span ng-if="!$last">, </span></span>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="keywords" ng-if="keywords || item.corporaLanguages || item.annotationLevels || item.corporaFormats || item.corporaFileEncodings || item.programmingLanguages || item.opearatingSystems || item.toolLanguages">
+                <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
+                <article>
+                    <div class="row">
+
+                        <div ng-if="keywords" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.KEYWORDS"></dt>
+                                <dd ng-repeat="keyword in keywords">
+                                    {{keyword}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.corporaLanguages" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
+                                <dd ng-repeat="pLang in item.corporaLanguages">
+                                    {{pLang}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.annotationLevels" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.ANNOTATION_LEVEL"></dt>
+                                <dd ng-repeat="annLevel in item.annotationLevels">
+                                    {{annLevel}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.corporaFormats" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.TEXT_FORMAT"></dt>
+                                <dd ng-repeat="corpFormat in item.corporaFormats">
+                                    {{corpFormat}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.corporaFileEncodings" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.FACET.CORPORA_FILE_ENCODINGS"></dt>
+                                <dd ng-repeat="corpFileEnc in item.corporaFileEncodings">
+                                    {{corpFileEnc}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.programmingLanguages" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
+                                <dd ng-repeat="pl in item.programmingLanguages">
+                                    {{pl}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.opearatingSystems" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
+                                <dd ng-repeat="os in item.opearatingSystems">
+                                    <a ng-href="">{{os}}</a>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div ng-if="item.toolLanguages" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.LANGUAGE"></dt>
+                                <dd ng-repeat="lang in item.toolLanguages">
+                                    {{lang}}
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </div>
+                </article>
+            </section>
+
+            <section id="publications" ng-if="item.publications">
+                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
+                <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong>
+                <article>
+                    <p>
+                        <ul class="list-contributor">
+                            <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
+                        </ul>
+                    </li>
+                </article>
+                <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
+                <article>
+                    <p>
+                        <ul class="list-contributor">
+                            <li ng-repeat="pub in secondaryPublications" ng-bind-html="pub"></li>
+                        </ul>
+                    </p>
+                </article>
+            </section>
+
+            <section id="other_versions">
+                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.ALL_VERSIONS' | translate}}</header>
+                <article>
+                    <ul>
+                        <li ng-repeat="version in versions">
+                            <a ng-if="workspace.versionName !== version.versionName" ng-href="#/market/corpora/{{version.key}}" translate="BROWSER.VERSION" data-translate-values="{number: version.versionName}"></a>
+                            <span ng-if="workspace.versionName === version.versionName" translate="BROWSER.VERSION" data-translate-values="{number: version.versionName}"></span>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+
+        </div>
+
+        <div ng-if="browse" class="col-md-12">
+            <div browser></div>
+        </div>
+
+        <aside ng-show="!browse" class="col-md-4">
+
+            <div class="panel panel-default license-panel" ng-show="item.type !== 'Application'">
+                <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
+                <div class="panel-body">
+
+                    <p ng-show="item.conditionsOfUse" ng-bind-html="item.conditionsOfUse"></p>
+                    <p ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
+                    <div class="btn-group btn-group-justified" ng-show="datasizeToPrint">
+
+                        <a ng-href="{{downloadUrl}}" class="btn btn-block btn-success" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></a>
+
+                        <div class="btn-group">
+                            <button class="btn btn-default btn-block" ng-click="browseContent()">{{'MARKET.BROWSE' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default" ng-show="item.type === 'Application'">
+                <div class="panel-heading"><span class="fa fa-link fa-fw"></span> {{'MARKET.LINK' | translate}}</div>
+                <div class="panel-body">
+
+                    <div class="btn-group btn-group-justified">
+                        <a ng-href="{{item.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default derogation-panel" ng-show="item.derogation">
+                <div class="panel-heading" translate="MARKET.DEROGATION"></div>
+                <div class="panel-body">
+
+                    <p>
+                        {{item.derogation}}
+                        <span ng-if="item.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
+                        <span ng-if="item.derogation==='AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>
+                        <span ng-if="item.derogation==='AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default" ng-show="bibliographicCitation">
+                <div class="panel-heading" translate="MARKET.BIBLIOGRAPHICCITATION"></div>
+                <div class="panel-body">
+
+                    <p ng-bind-html="bibliographicCitation"></p>
+                </div>
+            </div>
+
+            <div data-preview-box key="itemKey" preview="item.preview" ng-if="item.preview"></div>
+            <!-- <div class="btn-group btn-group-justified">
+                <div class="btn-group">
+                    <button class="btn btn-default">
+                        <span class="fa fa-heart"></span> {{'MARKET.ADD_TO_FAVOURITES' | translate}}
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-default">
+                        <span class="octicon octicon-repo-push"></span> {{'MARKET.USE_IN_MY_PROJECT' | translate}}
+                    </button>
+                </div>
+            </div>
+            <br/> -->
+        </aside>
+    </div>
+</section>
