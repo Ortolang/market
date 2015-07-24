@@ -523,6 +523,14 @@ module.exports = function (grunt) {
             }
         },
 
+        rename: {
+            dist: {
+                files: [
+                    {src: ['<%= yeoman.dist %>/index.html'], dest: '<%= yeoman.dist %>/index.jsp'}
+                ]
+            }
+        },
+
         htmlangular: {
             options: {
                 tmplext: 'html',
@@ -657,7 +665,8 @@ module.exports = function (grunt) {
         'filerev',
         'usemin',
         'htmlmin',
-        'replace:dist'
+        'replace:dist',
+        'rename:dist'
     ]);
 
     grunt.registerTask('dev-build', [
