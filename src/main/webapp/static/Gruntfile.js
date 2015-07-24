@@ -492,6 +492,7 @@ module.exports = function (grunt) {
         replace: {
             dist: {
                 options: {
+                    preserveOrder: true,
                     patterns: [
                         {
                             match: /\/vendor\/ZeroClipboard\.swf/,
