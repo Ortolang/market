@@ -503,6 +503,10 @@ module.exports = function (grunt) {
                             replacement: '<script src="<% out.print(System.getenv().containsKey("ORTOLANG_API_URL")?System.getenv().get("ORTOLANG_API_URL") + "/config/client":"http://localhost:8080/api/config/client"); JSP_ENDTAG"></script>'
                         },
                         {
+                            match: /<!--JSP_ENCODING_HEADER-->/,
+                            replacement: '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" JSP_ENDTAG'
+                        },
+                        {
                             match: /JSP_ENDTAG/,
                             replacement: '%>'
                         },
