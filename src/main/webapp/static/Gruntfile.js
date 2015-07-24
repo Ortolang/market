@@ -500,7 +500,7 @@ module.exports = function (grunt) {
                         },
                         {
                             match: /<!--<script src="online-config-url"><\/script>-->/,
-                            replacement: '<script src="<% out.print(System.getenv().containsKey("ORTOLANG_API_URL")?System.getenv().get("ORTOLANG_API_URL") + "/config":"http://localhost:8080/api/config"); JSP_ENDTAG"></script>'
+                            replacement: '<script src="<% out.print(System.getenv().containsKey("ORTOLANG_API_URL")?System.getenv().get("ORTOLANG_API_URL") + "/config/client":"http://localhost:8080/api/config/client"); JSP_ENDTAG"></script>'
                         },
                         {
                             match: /JSP_ENDTAG/,
