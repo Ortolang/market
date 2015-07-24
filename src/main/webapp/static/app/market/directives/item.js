@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
             link: {
                 pre : function (scope) {
 
-                    function getTitle(titleMultiling, lang) {
+                    function getValue(titleMultiling, lang) {
                         var iTitle;
                         for (iTitle = 0; iTitle < titleMultiling.length; iTitle++) {
                             if (titleMultiling[iTitle].lang === lang) {
@@ -46,7 +46,10 @@ angular.module('ortolangMarketApp')
                     }
 
                     if(scope.entry.title) {
-                        scope.title = getTitle(scope.entry.title, Settings.language);
+                        scope.title = getValue(scope.entry.title, Settings.language);
+                    }
+                    if(scope.entry.description) {
+                        scope.description = getValue(scope.entry.description, Settings.language);
                     }
 
                     if (scope.entry.image) {

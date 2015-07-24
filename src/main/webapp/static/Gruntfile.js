@@ -492,18 +492,19 @@ module.exports = function (grunt) {
         replace: {
             dist: {
                 options: {
+                    preserveOrder: true,
                     patterns: [
                         {
                             match: /\/vendor\/ZeroClipboard\.swf/,
                             replacement: '../vendor/ZeroClipboard.swf'
                         },
                         {
-                            match: /keycloak\.json/,
-                            replacement: 'keycloak.jsp'
+                            match: /<!--<script src="online-config-url"><\/script>-->/,
+                            replacement: '<script src="<% out.print(System.getenv().containsKey("ORTOLANG_API_URL")?System.getenv().get("ORTOLANG_API_URL"):"http://localhost:8080/api/config"); JSP_ENDTAG"></script>'
                         },
                         {
-                            match: /<!--<script src="online-config-url"><\/script>-->/,
-                            replacement: '<script src="<% out.print(System.getenv().containsKey("ORTOLANG_API_URL")?System.getenv().get("ORTOLANG_API_URL"):"http://localhost:8080/api/config"); %>"></script>'
+                            match: /JSP_ENDTAG/,
+                            replacement: '%>'
                         },
                         {
                             match: 'version',
@@ -653,10 +654,10 @@ module.exports = function (grunt) {
         'copy:dist',
         'cssmin',
         'uglify',
-        'replace:dist',
         'filerev',
         'usemin',
-        'htmlmin'
+        'htmlmin',
+        'replace:dist'
     ]);
 
     grunt.registerTask('dev-build', [
