@@ -8,24 +8,25 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('MarketBrowserService', ['ObjectResource', function (ObjectResource) {
+    .service('MarketBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
 
         function getData(config) {
-            if (config.key) {
-                return ObjectResource.get({key: config.key});
+            if (config.path) {
+                delete config.key;
+                return WorkspaceElementResource.get(config);
             }
-            console.error('Key must be provided', config);
+            console.error('path must be provided', config);
             return undefined;
         }
 
         this.id = 'MarketBrowserService';
         this.getData = getData;
-        this.dataResource = 'object';
+        this.dataResource = 'workspace';
         this.canEdit = false;
         this.canDownload = true;
         this.canPreview = true;
         this.canChangeRoot = false;
-        this.hasBreadcrumb = false;
+        this.hasBreadcrumb = true;
         this.defaultViewMode = 'tile';
         this.canSwitchViewMode = true;
         this.canExecuteTool = false;

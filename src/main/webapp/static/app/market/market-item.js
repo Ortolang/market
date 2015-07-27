@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
         function loadItem() {
 
-            var queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.versionName as versionName', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.versionName as versionName, meta_ortolang-workspace-json.wskey as wskey', source: 'collection'});
             queryBuilder.equals('status', 'published').and().equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
 
             console.log(queryBuilder.toString());
@@ -36,7 +36,8 @@ angular.module('ortolangMarketApp')
                     if (!$scope.ortolangObject) {
                         $scope.ortolangObject = $scope.versions[$scope.versions.length - 1];
                     }
-
+                    MarketBrowserService.workspace = {alias: $scope.itemAlias, key: $scope.ortolangObject.wskey};
+                    $scope.root = $scope.ortolangObject.versionName;
                     $scope.itemKey = $scope.ortolangObject.key;
 
                     var queryOrtolangMeta = 'select from ' + $scope.ortolangObject['meta_ortolang-item-json'];

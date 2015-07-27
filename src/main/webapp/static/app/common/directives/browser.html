@@ -46,11 +46,6 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="::!browserService.hasBreadcrumb" class="browser-breadcrumb">
-                <button data-ng-disabled="keyHistory && keyHistory.back.length === 0" class="btn btn-default" ng-click="goBack()" data-title="{{'BROWSER.BACK' | translate}}" bs-tooltip><span ng-class="icons.browser.back"></span></button>
-                <button data-ng-disabled="keyHistory && keyHistory.forward.length === 0" class="btn btn-default" ng-click="goForward()" data-title="{{'BROWSER.FORWARD' | translate}}" bs-tooltip><span ng-class="icons.browser.forward"></span></button>
-                <button class="btn btn-default" disabled>{{parent.root ? '/' : parent.name}}</button>
-            </div>
 
             <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
@@ -177,7 +172,7 @@
                 </div>
 
                 <div ng-show="isMarketBrowserService && !hasOnlyParentSelected()" class="btn-group">
-                    <button ng-if="browserService.canDownload" class="btn btn-default" ng-click="download(selectedElements[0])" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
+                    <button ng-if="browserService.canDownload" class="btn btn-default" ng-click="download(selectedElements)" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="icons.browser.download"></span>
                     </button>
                 </div>
