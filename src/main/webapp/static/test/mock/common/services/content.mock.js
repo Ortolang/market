@@ -14,6 +14,10 @@ angular.module('ortolangMarketAppMock')
             return 'url';
         }
 
+        function getContentUrlWithPath() {
+            return 'url';
+        }
+
         function downloadWithKey (key, noSSL, config) {
             var defer = $q.defer(), data = sample().sampleCode, success;
 
@@ -46,6 +50,7 @@ angular.module('ortolangMarketAppMock')
 
         return {
             getDownloadUrlWithKey: getDownloadUrlWithKey,
+            getContentUrlWithPath: getContentUrlWithPath,
             downloadWithKey: downloadWithKey
         };
     }]);
