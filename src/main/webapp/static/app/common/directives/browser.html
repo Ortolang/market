@@ -303,7 +303,7 @@
         </ul>
     </div>
 
-    <div ng-show="::browserService.canExecuteTool" ng-include="'common/tools/tool-list.html'" ng-controller="ToolListCtrl"></div>
+    <div ng-if="::browserService.canExecuteTool" ng-include="'common/tools/tool-list.html'" ng-controller="ToolListCtrl"></div>
 
     <div ng-include="'workspace/metadata-preview.html'"></div>
 

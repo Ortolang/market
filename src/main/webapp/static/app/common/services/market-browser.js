@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
         this.hasBreadcrumb = false;
         this.defaultViewMode = 'tile';
         this.canSwitchViewMode = true;
+        this.canExecuteTool = false;
         this.displayAsideInfo = false;
         this.displayAsideWorkspaceList = false;
         this.workspace = {};

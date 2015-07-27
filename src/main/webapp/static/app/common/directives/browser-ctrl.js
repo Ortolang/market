@@ -1624,7 +1624,7 @@ angular.module('ortolangMarketApp')
                         forward: []
                     };
                 }
-                setItemKey($routeParams.itemKey);
+                setItemKey($scope.itemKey);
                 $scope.parent = undefined;
                 $scope.children = undefined;
                 $scope.allChildrenMimeTypes = [];

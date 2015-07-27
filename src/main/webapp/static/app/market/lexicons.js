@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
                 lockOptions: true,
                 lock: true
             });
-            $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
+            $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var lexiconInputTypeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconInputType',
@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(lexiconInputTypeFilter);
+            $scope.filtersManager.addAvailableFilter(lexiconInputTypeFilter);
 
             var lexiconDescriptionTypesFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconDescriptionTypes',
@@ -67,7 +67,7 @@ angular.module('ortolangMarketApp')
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(lexiconDescriptionTypesFilter);
+            $scope.filtersManager.addAvailableFilter(lexiconDescriptionTypesFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.statusOfUse',
@@ -77,7 +77,7 @@ angular.module('ortolangMarketApp')
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(statusOfUseFilter);
+            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
             var lexiconInputLanguagesFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconInputLanguages',
@@ -86,7 +86,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.LEXICON_INPUT_LANGUAGE',
                 resetLabel: 'MARKET.FACET.ALL_LANG'
             });
-            $scope.filtersManager.addAvailabledFilter(lexiconInputLanguagesFilter);
+            $scope.filtersManager.addAvailableFilter(lexiconInputLanguagesFilter);
 
             var lexiconDescriptionLanguagesFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconDescriptionLanguages',
@@ -95,7 +95,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE',
                 resetLabel: 'MARKET.FACET.ALL_LANG'
             });
-            $scope.filtersManager.addAvailabledFilter(lexiconDescriptionLanguagesFilter);
+            $scope.filtersManager.addAvailableFilter(lexiconDescriptionLanguagesFilter);
 
             var lexiconFormatsFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconFormats',
@@ -104,7 +104,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.LEXICON_FORMAT',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_FORMAT'
             });
-            $scope.filtersManager.addAvailabledFilter(lexiconFormatsFilter);
+            $scope.filtersManager.addAvailableFilter(lexiconFormatsFilter);
 
             var lexiconLanguageTypeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconLanguageType',
@@ -112,7 +112,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.LEXICON_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_LANGUAGE_TYPE'
             });
-            $scope.filtersManager.addAvailabledFilter(lexiconLanguageTypeFilter);
+            $scope.filtersManager.addAvailableFilter(lexiconLanguageTypeFilter);
 
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};

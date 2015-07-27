@@ -26,10 +26,7 @@ angular.module('ortolangMarketApp')
             queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
             queryBuilder.addProjection('lastModificationDate', 'lastModificationDate');
 
-            queryBuilder.equals('status', 'published');
-
-            queryBuilder.and();
-            queryBuilder.equals('meta_ortolang-item-json.type', 'Application');
+            queryBuilder.equals('status', 'published').and().equals('meta_ortolang-item-json.type', 'Application');
 
             $scope.query = queryBuilder.toString();
         }

@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
                 lockOptions: true,
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
+            $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var producersFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.producers',
@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.PRODUCERS',
                 resetLabel: 'MARKET.FACET.ALL_PRODUCERS'
             });
-            $scope.filtersManager.addAvailabledFilter(producersFilter);
+            $scope.filtersManager.addAvailableFilter(producersFilter);
 
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};

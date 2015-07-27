@@ -67,5 +67,13 @@ angular.module('ortolangMarketApp')
             $window.location = this.getExportUrl(paths, filename, format, followsymlink, noSSL);
         };
 
+        this.getExportSingleUrl = function (alias, root, path, filename, format, followsymlink, noSSL) {
+            return this.getExportUrl([alias + '/' + (root || 'head') + (path || '/')], filename, format, followsymlink, noSSL);
+        };
+
+        this.exportSingle = function (alias, root, path, filename, format, followsymlink, noSSL) {
+            $window.location = this.getExportSingleUrl(alias, root, path, filename, format, followsymlink, noSSL);
+        };
+
         return this;
     }]);

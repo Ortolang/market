@@ -87,10 +87,10 @@ angular.module('ortolangMarketApp')
 
                     scope.hasLowFacets = function() {
                         var i = 0;
-                        for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
-                            if (scope.filtersManager.getAvailabledFilters()[i].getPriority() !== 'high' &&
-                                !scope.filtersManager.getAvailabledFilters()[i].isLock() &&
-                                scope.filtersManager.getAvailabledFilters()[i].isVisible()) {
+                        for (i; i < scope.filtersManager.getAvailableFilters().length; i++) {
+                            if (scope.filtersManager.getAvailableFilters()[i].getPriority() !== 'high' &&
+                                !scope.filtersManager.getAvailableFilters()[i].isLock() &&
+                                scope.filtersManager.getAvailableFilters()[i].isVisible()) {
                                 return true;
                             }
                         }
@@ -177,7 +177,7 @@ angular.module('ortolangMarketApp')
 
                         if(filters) {
                             var filtersO = angular.fromJson($routeParams.filters);
-                            var facetedFilters = scope.filtersManager.getAvailabledFilters();
+                            var facetedFilters = scope.filtersManager.getAvailableFilters();
 
                             for(var paramName in filtersO) {
 

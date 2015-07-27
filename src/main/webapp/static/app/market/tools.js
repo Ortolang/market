@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
                 lockOptions: true,
                 lock: true
             });
-            $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
+            $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var languageFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.toolLanguages',
@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp')
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(languageFilter);
+            $scope.filtersManager.addAvailableFilter(languageFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.statusOfUse',
@@ -67,7 +67,7 @@ angular.module('ortolangMarketApp')
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(statusOfUseFilter);
+            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
             var toolFunctionalitiesFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.toolFunctionalities',
@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.TOOL_FUNCTIONALITY',
                 resetLabel: 'MARKET.FACET.ALL_TOOL_FUNCTIONALITY'
             });
-            $scope.filtersManager.addAvailabledFilter(toolFunctionalitiesFilter);
+            $scope.filtersManager.addAvailableFilter(toolFunctionalitiesFilter);
 
             var toolInputDataFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.toolInputData',
@@ -85,7 +85,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.TOOL_INPUTDATA',
                 resetLabel: 'MARKET.FACET.ALL_TOOL_INPUTDATA'
             });
-            $scope.filtersManager.addAvailabledFilter(toolInputDataFilter);
+            $scope.filtersManager.addAvailableFilter(toolInputDataFilter);
 
             var toolOutputDataFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.toolOutputData',
@@ -94,7 +94,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.TOOL_OUTPUTDATA',
                 resetLabel: 'MARKET.FACET.ALL_TOOL_OUTPUTDATA'
             });
-            $scope.filtersManager.addAvailabledFilter(toolOutputDataFilter);
+            $scope.filtersManager.addAvailableFilter(toolOutputDataFilter);
 
             var toolFileEncodingsFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.toolFileEncodings',
@@ -103,7 +103,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.TOOL_FILE_ENCODINGS',
                 resetLabel: 'MARKET.FACET.ALL_TOOL_FILE_ENCODINGS'
             });
-            $scope.filtersManager.addAvailabledFilter(toolFileEncodingsFilter);
+            $scope.filtersManager.addAvailableFilter(toolFileEncodingsFilter);
 
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};

@@ -70,7 +70,7 @@ angular
                 templateUrl: 'market/applications.html',
                 title: 'INTEGRATED_PROJECTS'
             })
-            .when('/market/:section/:itemKey', {
+            .when('/market/:section/:alias/:version?', {
                 templateUrl: 'market/market-item.html',
                 controller: 'MarketItemCtrl',
                 reloadOnSearch: false

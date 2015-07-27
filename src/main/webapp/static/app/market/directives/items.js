@@ -33,14 +33,14 @@ angular.module('ortolangMarketApp')
 
                         scope.items.clear();
                         if(scope.filtersManager) {
-                            angular.forEach(scope.filtersManager.getAvailabledFilters(), function(filter) {
+                            angular.forEach(scope.filtersManager.getAvailableFilters(), function(filter) {
                                 filter.clearOptions();
                             });
                         }
 
                         angular.forEach(jsonResults, function(jsonResult) {
                             var jsEntry = angular.fromJson(jsonResult);
-                            
+
                             if(jsEntry.wskey) {
 
                                 var itemFromManager = scope.items.getItem(jsEntry.wskey);
@@ -52,9 +52,9 @@ angular.module('ortolangMarketApp')
                                         scope.items.setItem(itemFromManager, jsEntry);
                                     }
                                 } else {
-                                    scope.items.addItem(jsEntry);   
+                                    scope.items.addItem(jsEntry);
                                 }
-                                
+
                             }
 
                         });
@@ -62,13 +62,13 @@ angular.module('ortolangMarketApp')
                         if(scope.filtersManager) {
                             angular.forEach(scope.items.getItems(), function(item) {
                                 var i = 0;
-                                for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
-                                    if (item[scope.filtersManager.getAvailabledFilters()[i].getAlias()]) {
-                                        addOptionFilter(scope.filtersManager.getAvailabledFilters()[i], item[scope.filtersManager.getAvailabledFilters()[i].getAlias()]);
+                                for (i; i < scope.filtersManager.getAvailableFilters().length; i++) {
+                                    if (item[scope.filtersManager.getAvailableFilters()[i].getAlias()]) {
+                                        addOptionFilter(scope.filtersManager.getAvailableFilters()[i], item[scope.filtersManager.getAvailableFilters()[i].getAlias()]);
                                     }
                                 }
                             });
-                        } 
+                        }
 
                         scope.lock = false;
                     }, function (reason) {

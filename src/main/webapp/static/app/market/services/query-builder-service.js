@@ -32,34 +32,39 @@ angular.module('ortolangMarketApp')
                 this.projection = properties;
             },
 
-            addProjection : function(propertyName, propertyAlias) {
+            addProjection : function (propertyName, propertyAlias) {
                 this.projection += ', ' + propertyName + ' as ' + propertyAlias;
+                return this;
             },
 
             from : function (cls) {
                 this.source = cls;
+                return this;
             },
 
             equals : function (name, content) {
-                if(angular.isArray(content)) {
+                if (angular.isArray(content)) {
                     var optionalValues = '', sanitize = this.sanitize;
-                    angular.forEach(content, function(val) {
-                        optionalValues += (optionalValues===''?'':' OR ') + name + ' = \'' + sanitize(val) + '\'';
+                    angular.forEach(content, function (val) {
+                        optionalValues += (optionalValues === '' ? '' : ' OR ') + name + ' = \'' + sanitize(val) + '\'';
                     });
                     this.conditions += '(' + optionalValues + ')';
                 } else {
                     this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
                 }
+                return this;
             },
 
             contains : function (name, content) {
                 //TODO if content is an array
                 this.conditions += name + ' contains \'' + this.sanitize(content) + '\'';
+                return this;
             },
 
             containsText : function (name, content) {
                 this.conditions += 'any() traverse(0,3) (' + name + '.toLowerCase().indexOf(\'' + this.sanitize(content.toLowerCase()) + '\') > -1 )';
                 // this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
+                return this;
             },
 
             in : function (name, arrayOfContent) {
@@ -71,14 +76,17 @@ angular.module('ortolangMarketApp')
                 if (inValue !== '') {
                     this.conditions += name + ' IN [' + inValue + ']';
                 }
+                return this;
             },
 
             and : function () {
                 this.conditions += ' AND ';
+                return this;
             },
 
             or : function () {
                 this.conditions += ' OR ';
+                return this;
             },
 
             tokenize : function (content) {
