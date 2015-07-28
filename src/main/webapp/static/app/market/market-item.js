@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
             $scope.itemKey = key;
 
             if ($routeParams.view === 'browse') {
-                $scope.marketItemTemplate = 'market/market-item-collection.html';
+                $scope.marketItemTemplate = 'market/templates/market-item-12.html';
                 return;
             }
 

@@ -87,6 +87,9 @@ angular
             .when('/producers/:producerId', {
                 templateUrl: 'producer/producer.html'
             })
+            .when('/contributors/:contributorId', {
+                templateUrl: 'contributor/contributor.html'
+            })
             .when('/workspaces', {
                 templateUrl: 'workspace/workspaces.html',
                 requiresAuthentication: true,
