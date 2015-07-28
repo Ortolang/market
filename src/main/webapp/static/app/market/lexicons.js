@@ -72,8 +72,8 @@ angular.module('ortolangMarketApp')
             var statusOfUseFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
-                label: 'MARKET.FACET.STATUSOFUSE',
-                resetLabel: 'MARKET.FACET.ALL_STATUSOFUSE',
+                label: 'MARKET.FACET.STATUS_OF_USE',
+                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });

@@ -19,11 +19,11 @@
                     </div>
                     <div ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
                         <ul>
-                            <li><a href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
+                            <li><a ng-href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-default" ng-show="browse" ng-click="browseContent()">{{'MARKET.GOBACKINFO' | translate}}</button>
+                <button class="btn btn-default" ng-show="browse" ng-click="browseContent()" translate="MARKET.GO_BACK_INFO"></button>
             </div>
         </div>
     </header>
@@ -145,7 +145,7 @@
                         <ul class="list-contributor">
                             <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
                         </ul>
-                    </li>
+                    </p>
                 </article>
                 <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
                 <article>
@@ -219,7 +219,7 @@
             </div>
 
             <div class="panel panel-default" ng-show="bibliographicCitation">
-                <div class="panel-heading" translate="MARKET.BIBLIOGRAPHICCITATION"></div>
+                <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
                 <div class="panel-body">
 
                     <p ng-bind-html="bibliographicCitation"></p>

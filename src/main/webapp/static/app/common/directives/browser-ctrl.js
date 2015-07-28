@@ -186,7 +186,6 @@ angular.module('ortolangMarketApp')
                 }
                 var config = {key: $scope.itemKey, wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root},
                     promise;
-                //console.log('Getting parent data (alias: %s, root: %s, path: %s, refresh: %s, forceNewSelection: %s)', $scope.browserService.workspace.alias, $scope.root, $scope.path, refresh, forceNewSelection);
                 promise = $scope.browserService.getData(config).$promise;
                 promise.then(function (element) {
                     finishGetParentData(element, refresh, forceNewSelection);
@@ -991,7 +990,6 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('uploaderObjectUploadCompleted', function () {
-                //console.log('%s caught event "uploaderObjectUploadCompleted"', $scope.browserService.id);
                 getParentData(true, $scope.hasOnlyParentSelected());
             });
 

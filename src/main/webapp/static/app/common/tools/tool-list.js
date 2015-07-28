@@ -52,7 +52,7 @@ angular.module('ortolangMarketApp')
             $scope.resetSelectedTool = function () {
                 $scope.selectedTool = undefined;
                 $scope.config.model = undefined;
-                $scope.currentJob = undefined ;
+                $scope.currentJob = undefined;
             };
 
             $scope.hasToolSelected = function () {
@@ -64,21 +64,23 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.isRunning = function () {
-                return $scope.currentJob !== undefined ;
+                return $scope.currentJob !== undefined;
             };
 
             $scope.getSize = function (obj) {
                 var size = 0;
                 for (var k in obj) {
-                    size++;
+                    if (obj.hasOwnProperty(k)) {
+                        size++;
+                    }
                 }
                 return size;
             };
 
             function arrayUnique(array) {
                 var a = array.concat();
-                for(var i=0; i<a.length; ++i) {
-                    for(var j=i+1; j<a.length; ++j) {
+                for (var i = 0; i < a.length; ++i) {
+                    for (var j = i+1; j < a.length; ++j) {
                         if (a[i] === a[j]) {
                             a.splice(j--, 1);
                         }

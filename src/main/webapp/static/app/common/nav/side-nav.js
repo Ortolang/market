@@ -53,10 +53,9 @@ angular.module('ortolangMarketApp')
                     }
 
                     // Add class for static website element
-                    if(StaticWebsite.getInformationMenu()){
-                        if (current.$$route.originalPath === '/' + StaticWebsite.getInformationMenu().id + '/:section') {
-                            $scope.select({class: StaticWebsite.getInformationMenu().class});
-                        }
+                    if (StaticWebsite.getInformationMenu() &&
+                        current.$$route.originalPath === '/' + StaticWebsite.getInformationMenu().id + '/:section') {
+                        $scope.select({class: StaticWebsite.getInformationMenu().class});
                     }
                 }
             }
@@ -64,23 +63,23 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('static-site-initialized', function () {
             // Add static site link to side-nav-elements if needed
-            var infomenu = StaticWebsite.getInformationMenu();
-            var classStaticMenu = infomenu.class,
+            var infomenu = StaticWebsite.getInformationMenu(),
+                classStaticMenu = infomenu.class,
                 pathStaticMenu = '/' + infomenu.id,
-                hiddenPathStaticMenu = '/'+ infomenu.id + '/' + infomenu.content[0],
+                hiddenPathStaticMenu = '/' + infomenu.id + '/' + infomenu.content[0],
                 titleStaticMenu = infomenu.title,
-                iconStaticMenu = 'fa fa-fw fa-2x ' + infomenu.iconSide;
-            var staticElement = {
-                class: classStaticMenu,
-                path: pathStaticMenu,
-                hiddenPath: hiddenPathStaticMenu,
-                description: titleStaticMenu,
-                iconCss: iconStaticMenu,
-                active: undefined,
-                hiddenSideNav: false,
-                hiddenTopNav: false,
-                authenticated: false
-            };
+                iconStaticMenu = 'fa fa-fw fa-2x ' + infomenu.iconSide,
+                staticElement = {
+                    class: classStaticMenu,
+                    path: pathStaticMenu,
+                    hiddenPath: hiddenPathStaticMenu,
+                    description: titleStaticMenu,
+                    iconCss: iconStaticMenu,
+                    active: undefined,
+                    hiddenSideNav: false,
+                    hiddenTopNav: false,
+                    authenticated: false
+                };
             sideNavElements.push(staticElement);
         });
 
