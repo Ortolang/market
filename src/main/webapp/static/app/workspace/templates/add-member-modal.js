@@ -17,10 +17,8 @@ angular.module('ortolangMarketApp')
                 GroupResource.get({key: User.friends}, function (data) {
                     $scope.friends = [];
                     angular.forEach(data.members, function (friend) {
-                        if ($scope.members) {
-                            if ($filter('filter')($scope.members, {key: friend.key}, true).length === 1) {
-                                friend.alreadyMember = true;
-                            }
+                        if ($scope.members && $filter('filter')($scope.members, {key: friend.key}, true).length === 1) {
+                            friend.alreadyMember = true;
                         }
                         $scope.friends.push(friend);
                     });
@@ -34,10 +32,8 @@ angular.module('ortolangMarketApp')
                 angular.forEach(data, function (result) {
                     if (result.key !== User.key) {
                         ProfileResource.getCard(result, function (card) {
-                            if ($scope.members) {
-                                if ($filter('filter')($scope.members, {key: result.key}, true).length === 1) {
-                                    card.alreadyMember = true;
-                                }
+                            if ($scope.members && $filter('filter')($scope.members, {key: result.key}, true).length === 1) {
+                                card.alreadyMember = true;
                             }
                             $scope.profiles.push(card);
                         });

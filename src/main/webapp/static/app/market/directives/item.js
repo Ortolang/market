@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
                                 return titleMultiling[iTitle].value;
                             }
                         }
-                        return titleMultiling.length>0 ? titleMultiling[0].value : 'untitle';
+                        return titleMultiling.length > 0 ? titleMultiling[0].value : 'untitle';
                     }
                     var key = (scope.entry.root !== undefined) ? scope.entry.root : scope.entry.key;
 
@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
                         } else if (scope.entry.type === 'Outil') {
                             type = 'tools';
                         }
-                        scope.itemUrl = '#/market/' + type + '/' + scope.entry.key;
+                        scope.itemUrl = '#/market/' + type + '/' + scope.entry.alias;
                     }
 
                     if(scope.entry.title) {

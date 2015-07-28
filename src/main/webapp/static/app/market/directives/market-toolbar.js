@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
             link: {
                 post : function (scope) {
 
-                    scope.setFilter = function(filter, opt) {
+                    scope.setFilter = function (filter, opt) {
                         addSelectedOptionFilter(filter, opt.getValue());
 
                         scope.filtersManager.addFilter(filter);
@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
                             scope.filtersManager.addFilter(filter);
                         }
 
-                        if(apply) {
+                        if (apply) {
                             scope.applyFilters();
                         }
                     };
@@ -71,11 +71,11 @@ angular.module('ortolangMarketApp')
                         }
                     };
 
-                    scope.setViewMode = function(view) {
+                    scope.setViewMode = function (view) {
                         scope.viewMode = view;
                     };
 
-                    scope.hasAppliedFacets = function() {
+                    scope.hasAppliedFacets = function () {
                         var i = 0;
                         for (i; i < scope.filtersManager.getFilters().length; i++) {
                             if (scope.filtersManager.getFilters()[i].hasSelectedOptions() && !scope.filtersManager.getFilters()[i].isLock()) {
@@ -85,12 +85,12 @@ angular.module('ortolangMarketApp')
                         return false;
                     };
 
-                    scope.hasLowFacets = function() {
+                    scope.hasLowFacets = function () {
                         var i = 0;
-                        for (i; i < scope.filtersManager.getAvailabledFilters().length; i++) {
-                            if (scope.filtersManager.getAvailabledFilters()[i].getPriority() !== 'high' &&
-                                !scope.filtersManager.getAvailabledFilters()[i].isLock() &&
-                                scope.filtersManager.getAvailabledFilters()[i].isVisible()) {
+                        for (i; i < scope.filtersManager.getAvailableFilters().length; i++) {
+                            if (scope.filtersManager.getAvailableFilters()[i].getPriority() !== 'high' &&
+                                !scope.filtersManager.getAvailableFilters()[i].isLock() &&
+                                scope.filtersManager.getAvailableFilters()[i].isVisible()) {
                                 return true;
                             }
                         }
@@ -114,8 +114,8 @@ angular.module('ortolangMarketApp')
                     };
 
                     function addOptionFilter (filter, optionValue) {
-                        if(angular.isArray(optionValue)) {
-                            angular.forEach(optionValue, function(opt) {
+                        if (angular.isArray(optionValue)) {
+                            angular.forEach(optionValue, function (opt) {
                                 filter.putOption(OptionFacetedFilter.make({
                                     label: opt,
                                     value: opt,
@@ -131,9 +131,9 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
-                    function addSelectedOptionFilter (filter, optionValue) {
-                        if(angular.isArray(optionValue)) {
-                            angular.forEach(optionValue, function(opt) {
+                    function addSelectedOptionFilter(filter, optionValue) {
+                        if (angular.isArray(optionValue)) {
+                            angular.forEach(optionValue, function (opt) {
                                 filter.putSelectedOption(filter.getOption(opt));
                             });
                         } else {
@@ -143,50 +143,51 @@ angular.module('ortolangMarketApp')
 
                     function applyParams() {
 
-                        if($routeParams.viewMode) {
-                            angular.forEach(scope.viewModes, function(vm) {
-                                if(vm.id === $routeParams.viewMode) {
+                        if ($routeParams.viewMode) {
+                            angular.forEach(scope.viewModes, function (vm) {
+                                if (vm.id === $routeParams.viewMode) {
                                     scope.viewMode = vm;
                                 }
                             });
                         }
 
-                        if($routeParams.orderProp) {
-                            angular.forEach(scope.orderProps, function(op) {
-                                if(op.id === $routeParams.orderProp) {
+                        if ($routeParams.orderProp) {
+                            angular.forEach(scope.orderProps, function (op) {
+                                if (op.id === $routeParams.orderProp) {
                                     scope.orderProp = op;
                                 }
                             });
                         }
 
-                        if($routeParams.orderDirection) {
+                        if ($routeParams.orderDirection) {
                             scope.orderDirection = $routeParams.orderDirection;
                         }
 
-                        if($routeParams.content) {
+                        if ($routeParams.content) {
                             scope.content = $routeParams.content;
                         }
 
                         var filters = $routeParams.filters;
                         scope.filtersManager.resetFilter();
 
-                        if(scope.preSelectedFilter) {
+                        if (scope.preSelectedFilter) {
                             addSelectedOptionFilter(scope.preSelectedFilter, scope.type);
                             scope.filtersManager.addFilter(scope.preSelectedFilter);
                         }
 
-                        if(filters) {
-                            var filtersO = angular.fromJson($routeParams.filters);
-                            var facetedFilters = scope.filtersManager.getAvailabledFilters();
+                        if (filters) {
+                            var filtersO = angular.fromJson($routeParams.filters),
+                                facetedFilters = scope.filtersManager.getAvailableFilters();
 
-                            for(var paramName in filtersO) {
-
-                                var i = 0;
-                                for (i; i < facetedFilters.length; i++) {
-                                    if (facetedFilters[i].getId() === paramName) {
-                                        addOptionFilter(facetedFilters[i], filtersO[paramName]);
-                                        addSelectedOptionFilter(facetedFilters[i], filtersO[paramName]);
-                                        scope.filtersManager.addFilter(facetedFilters[i]);
+                            for (var paramName in filtersO) {
+                                if (filtersO.hasOwnProperty(paramName)) {
+                                    var i = 0;
+                                    for (i; i < facetedFilters.length; i++) {
+                                        if (facetedFilters[i].getId() === paramName) {
+                                            addOptionFilter(facetedFilters[i], filtersO[paramName]);
+                                            addSelectedOptionFilter(facetedFilters[i], filtersO[paramName]);
+                                            scope.filtersManager.addFilter(facetedFilters[i]);
+                                        }
                                     }
                                 }
                             }

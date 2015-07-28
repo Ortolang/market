@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:MetadataFormMarketOrtolangCtrl
+ * @name ortolangMarketApp.controller:ToolResultsCtrl
  * @description
- * # MetadataFormMarketOrtolangCtrl
+ * # ToolResultsCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')

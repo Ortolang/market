@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
                 lockOptions: true,
                 lock: true
             });
-            $scope.filtersManager.addAvailabledFilter($scope.typeFilter);
+            $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var annotationLevelsFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.annotationLevels',
@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.ANNOTATION_LEVEL',
                 resetLabel: 'MARKET.FACET.ALL_ANNOTATION_LEVEL'
             });
-            $scope.filtersManager.addAvailabledFilter(annotationLevelsFilter);
+            $scope.filtersManager.addAvailableFilter(annotationLevelsFilter);
 
             var corporaFormatsFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaFormats',
@@ -64,7 +64,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.TEXT_FORMAT',
                 resetLabel: 'MARKET.FACET.ALL_TEXT_FORMAT'
             });
-            $scope.filtersManager.addAvailabledFilter(corporaFormatsFilter);
+            $scope.filtersManager.addAvailableFilter(corporaFormatsFilter);
 
             var corporaDataTypesFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaDataTypes',
@@ -73,7 +73,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.CORPORA_DATATYPES',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA_DATATYPES'
             });
-            $scope.filtersManager.addAvailabledFilter(corporaDataTypesFilter);
+            $scope.filtersManager.addAvailableFilter(corporaDataTypesFilter);
 
             var corporaLanguageTypeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaLanguageType',
@@ -81,7 +81,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
             });
-            $scope.filtersManager.addAvailabledFilter(corporaLanguageTypeFilter);
+            $scope.filtersManager.addAvailableFilter(corporaLanguageTypeFilter);
 
             var corporaFileEncodingsFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaFileEncodings',
@@ -90,7 +90,7 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.TEXT_ENCODING',
                 resetLabel: 'MARKET.FACET.ALL_TEXT_ENCODING'
             });
-            $scope.filtersManager.addAvailabledFilter(corporaFileEncodingsFilter);
+            $scope.filtersManager.addAvailableFilter(corporaFileEncodingsFilter);
 
             var corpusTypeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaType',
@@ -118,7 +118,7 @@ angular.module('ortolangMarketApp')
                 lockOptions: true,
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(corpusTypeFilter);
+            $scope.filtersManager.addAvailableFilter(corpusTypeFilter);
 
             var languageFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaLanguages',
@@ -129,17 +129,17 @@ angular.module('ortolangMarketApp')
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(languageFilter);
+            $scope.filtersManager.addAvailableFilter(languageFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
-                label: 'MARKET.FACET.STATUSOFUSE',
-                resetLabel: 'MARKET.FACET.ALL_STATUSOFUSE',
+                label: 'MARKET.FACET.STATUS_OF_USE',
+                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            $scope.filtersManager.addAvailabledFilter(statusOfUseFilter);
+            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
             var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};

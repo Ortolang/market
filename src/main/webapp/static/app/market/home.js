@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                     alias: 'title',
                     type: 'array'
                 });
-                $scope.filtersManager.addAvailabledFilter(titleFilter);
+                $scope.filtersManager.addAvailableFilter(titleFilter);
 
                 var optCorpus14 = OptionFacetedFilter.make({
                     label: 'Corpus 14',

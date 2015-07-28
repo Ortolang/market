@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
         this.hasBreadcrumb = true;
         this.defaultViewMode = 'line';
         this.canSwitchViewMode = false;
+        this.canExecuteTool = false;
         this.displayAsideInfo = false;
         this.displayAsideWorkspaceList = true;
         this.workspace = {};

@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
         // Methods
         FacetedFilterManager.prototype = {
 
-            getFilters: function() {
+            getFilters: function () {
                 return this.enabledFilters.slice();
             },
 
@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
                 return this.enabledFilters.push(filter);
             },
 
-            removeFilter: function(filter) {
+            removeFilter: function (filter) {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
                     if (this.enabledFilters[i].getId() === filter.getId()) {
@@ -52,11 +52,11 @@ angular.module('ortolangMarketApp')
                 }
             },
 
-            clear: function() {
+            clear: function () {
                 this.enabledFilters = [];
             },
 
-            resetFilter: function() {
+            resetFilter: function () {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
                     this.enabledFilters[i].clearSelectedOptions();
@@ -65,11 +65,11 @@ angular.module('ortolangMarketApp')
                 this.enabledFilters = [];
             },
 
-            getAvailabledFilters: function() {
+            getAvailableFilters: function () {
                 return this.availabledFilters.slice();
             },
 
-            addAvailabledFilter : function (filter) {
+            addAvailableFilter : function (filter) {
                 var i = 0;
                 for (i; i < this.availabledFilters.length; i++) {
                     if (this.availabledFilters[i].id === filter.id) {
@@ -79,10 +79,10 @@ angular.module('ortolangMarketApp')
                 return this.availabledFilters.push(filter);
             },
 
-            removeOptionFilter: function(filter, opt) {
+            removeOptionFilter: function (filter, opt) {
                 filter.removeSelectedOption(opt);
 
-                if(!filter.hasSelectedOptions()) {
+                if (!filter.hasSelectedOptions()) {
                     this.removeFilter(filter);
                 }
             },
@@ -90,10 +90,10 @@ angular.module('ortolangMarketApp')
             urlParam: function (content, viewMode, orderProp, orderDirection, facets) {
 
                 var filters = {}, params = {};
-                angular.forEach(this.enabledFilters, function(filter) {
+                angular.forEach(this.enabledFilters, function (filter) {
 
                     var arrValue = [];
-                    angular.forEach(filter.getSelectedOptions(), function(opt) {
+                    angular.forEach(filter.getSelectedOptions(), function (opt) {
                         arrValue.push(opt.getValue());
                     });
 
@@ -106,7 +106,7 @@ angular.module('ortolangMarketApp')
                 if (content && content !== '') {
                     params.content = content;
                 }
-                
+
                 params.viewMode = viewMode.id;
                 params.orderProp = orderProp.id;
                 params.orderDirection = orderDirection;
@@ -115,13 +115,13 @@ angular.module('ortolangMarketApp')
                 return params;
             },
 
-            toQuery: function(content) {
+            toQuery: function (content) {
                 var queryBuilder = QueryBuilderFactory.make({
                     projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate',
                     source: 'collection'
                 });
 
-                // TODO made based on availabled filters
+                // TODO made based on available filters
                 queryBuilder.addProjection('meta_ortolang-item-json.statusOfUse', 'statusOfUse');
                 queryBuilder.addProjection('meta_ortolang-item-json.corporaLanguages', 'corporaLanguages');
                 queryBuilder.addProjection('meta_ortolang-item-json.corporaType', 'corporaType');
@@ -147,6 +147,8 @@ angular.module('ortolangMarketApp')
                 queryBuilder.addProjection('meta_ortolang-item-json.lexiconLanguageType', 'lexiconLanguageType');
 
                 queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
+                queryBuilder.addProjection('meta_ortolang-workspace-json.wsalias', 'alias');
+                queryBuilder.addProjection('meta_ortolang-workspace-json.versionName', 'version');
                 queryBuilder.addProjection('lastModificationDate', 'lastModificationDate');
 
                 queryBuilder.equals('status', 'published');
@@ -157,14 +159,13 @@ angular.module('ortolangMarketApp')
                 }
                 if (contentSplit.length > 0) {
                     angular.forEach(contentSplit, function (contentPart) {
-                        queryBuilder.and();
-                        queryBuilder.containsText('any()', contentPart);
+                        queryBuilder.and().containsText('any()', contentPart);
                     });
                 }
 
-                angular.forEach(this.enabledFilters, function(filter) {
+                angular.forEach(this.enabledFilters, function (filter) {
                     queryBuilder.and();
-                    if(filter.getType() ==='array') {
+                    if (filter.getType() === 'array') {
                         queryBuilder.in(filter.getId(), filter.getSelectedOptionsValues());
                     } else {
                         queryBuilder.equals(filter.getId(), filter.getSelectedOptionsValues());
