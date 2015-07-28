@@ -8,45 +8,39 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('StaticWebsite', ['WorkspaceResource', 'WorkspaceElementResource', '$resource', 'url', '$filter', 'Settings', '$rootScope', '$http', 'Content',
-        function (WorkspaceResource, WorkspaceElementResource,$resource, url, $filter, Settings, $rootScope, $http, Content) {
+    .service('StaticWebsite', ['$resource', 'url', 'Settings', '$rootScope', '$http', 'Content',
+        function ($resource, url, Settings, $rootScope, $http, Content) {
 
             var aliasSite = 'staticsite',
                 infoMenuId = 'information',
                 newsId = 'news',
-                homepageId = 'home';
-
-            this.informationMenu = undefined; // Menu Information
-            this.news = []; // List of news id to display
-            this.homepage = undefined; // presentation on homepage HTML content
-            this.pages = []; // static pages HTML content
-
-            // Methods
-            this.setInformationMenu = function (value) {
-                this.informationMenu = value;
-            };
+                homepageId = 'home',
+                homepage, // presentation on homepage HTML content
+                informationMenu, // Menu Information
+                news = [], // List of news id to display
+                pages = []; // static pages HTML content
 
             this.getInformationMenu = function () {
-                return this.informationMenu;
+                return informationMenu;
             };
 
             this.getPage = function (id) {
-                return this.pages[id];
+                return pages[id];
             };
 
             this.getNews = function () {
-                return this.news;
+                return news;
             };
 
             this.getHomePage = function () {
-                return this.homepage;
+                return homepage;
             };
 
-            this.getHTMLContent = function (url) {
-                return $resource(url , {}, {
+            function getHTMLContent(url) {
+                return $resource(url, {}, {
                     get: {
                         method: 'GET',
-                        transformRequest: [function(data, headersGetter){
+                        transformRequest: [function (data, headersGetter) {
                         }].concat($http.defaults.transformRequest),
                         transformResponse: [function (data, headersGetter) {
                             return {content: data};
@@ -60,11 +54,11 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
-            function populateStaticMenu (that) {
+            function populateStaticMenu() {
                 console.log('Initialize static website menu');
-                var staticMenu;
-                var urlInfo = Content.getContentUrlWithPath(infoMenuId, aliasSite, 'latest');
-                that.getHTMLContent(urlInfo).get({}, function (res) {
+                var staticMenu,
+                    urlInfo = Content.getContentUrlWithPath(infoMenuId, aliasSite, 'latest');
+                getHTMLContent(urlInfo).get({}, function (res) {
                     var filename;
                     if (res.content.indexOf(infoMenuId + '.' + Settings.language + '.json') !== -1) {
                         filename = infoMenuId + '.' + Settings.language + '.json';
@@ -78,7 +72,7 @@ angular.module('ortolangMarketApp')
 
                         angular.forEach(menuContent.content, function (subItem) {
                             var urlInfoContent = Content.getContentUrlWithPath(infoMenuId + '/' + subItem, aliasSite, 'latest');
-                            that.getHTMLContent(urlInfoContent).get({}, function (res) {
+                            getHTMLContent(urlInfoContent).get({}, function (res) {
                                 var subMenuFilename;
                                 if (res.content.indexOf(subItem.toLowerCase() + '.' + Settings.language + '.json') !== -1) {
                                     subMenuFilename = subItem.toLowerCase() + '.' + Settings.language + '.json';
@@ -93,23 +87,23 @@ angular.module('ortolangMarketApp')
 
                         });
 
-                        that.setInformationMenu(staticMenu);
+                        informationMenu = staticMenu;
                         $rootScope.$broadcast('static-site-initialized');
                         console.log('static website menu initialized');
 
                         // Retrieve Information pages content
                         angular.forEach(menuContent.content, function (id) {
-                            setStaticPage(that, id, infoMenuId + '/' + id);
+                            setStaticPage(id, infoMenuId + '/' + id);
                         });
                         console.log('static website pages initialized');
                     });
                 });
             }
 
-            function populateHomePage (that) {
+            function populateHomePage() {
                 console.log('Initialize homepage and news');
                 var urlNews = Content.getContentUrlWithPath(newsId, aliasSite, 'latest');
-                that.getHTMLContent(urlNews).get({}, function (res) {
+                getHTMLContent(urlNews).get({}, function (res) {
                     // retrieve homepage
                     var filename;
                     if (res.content.indexOf(homepageId + '.' + Settings.language + '.html') !== -1) {
@@ -118,8 +112,8 @@ angular.module('ortolangMarketApp')
                         filename = homepageId + '.html';
                     }
                     var urlHomePage = Content.getContentUrlWithPath(newsId + '/' + filename, aliasSite, 'latest');
-                    that.getHTMLContent(urlHomePage).get().$promise.then(function (result) {
-                        that.homepage = updateRelativeLink(result.content);
+                    getHTMLContent(urlHomePage).get().$promise.then(function (result) {
+                        homepage = updateRelativeLink(result.content);
                     });
                     // Retrieve news
                     var newsFileName;
@@ -128,17 +122,17 @@ angular.module('ortolangMarketApp')
                     }
                     var urlNews = Content.getContentUrlWithPath(newsId + '/' + newsFileName, aliasSite, 'latest');
                     $resource(urlNews).get({}, function (result) {
-                        that.news = result.news;
+                        news = result.news;
                         angular.forEach(result.news, function (idNews) {
-                            setStaticPage(that, idNews, newsId + '/' + idNews);
+                            setStaticPage(idNews, newsId + '/' + idNews);
                         });
                     });
                 });
             }
 
-            function setStaticPage(that, id, path){
+            function setStaticPage(id, path) {
                 var urlNews = Content.getContentUrlWithPath(path, aliasSite, 'latest');
-                that.getHTMLContent(urlNews).get().$promise.then(function (res) {
+                getHTMLContent(urlNews).get().$promise.then(function (res) {
                     var pageName;
                     if (res.content.indexOf(id + '.' + Settings.language + '.html') !== -1) {
                         pageName = id + '.' + Settings.language + '.html';
@@ -146,30 +140,26 @@ angular.module('ortolangMarketApp')
                         pageName = id + '.html';
                     }
                     var urlNewsPage = Content.getContentUrlWithPath(path + '/' + pageName, aliasSite, 'latest');
-                    that.getHTMLContent(urlNewsPage).get().$promise.then(function (result) {
-                        that.pages[id] =  updateRelativeLink(result.content);
+                    getHTMLContent(urlNewsPage).get().$promise.then(function (result) {
+                        pages[id] =  updateRelativeLink(result.content);
                     });
                 });
             }
 
             function updateRelativeLink(text) {
-                if(text !== '') {
-                    var pattern = /\{URL\}/g;
-                    var replacement = url.content + '/' + aliasSite + '/latest' ;
+                if (text !== '') {
+                    var pattern = /\{URL\}/g,
+                        replacement = url.content + '/' + aliasSite + '/latest';
 
                     return text.replace(pattern, replacement);
-
                 }
                 return text;
             }
 
-
-            this.init = function () {
-                populateStaticMenu(this);
-                populateHomePage(this);
-            };
-
-            this.init();
+            $rootScope.$on('$translateChangeSuccess', function () {
+                populateStaticMenu();
+                populateHomePage();
+            });
 
             return this;
 

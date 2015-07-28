@@ -63,12 +63,12 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('static-site-initialized', function () {
             // Add static site link to side-nav-elements if needed
-            var infomenu = StaticWebsite.getInformationMenu(),
-                classStaticMenu = infomenu.class,
-                pathStaticMenu = '/' + infomenu.id,
-                hiddenPathStaticMenu = '/' + infomenu.id + '/' + infomenu.content[0],
-                titleStaticMenu = infomenu.title,
-                iconStaticMenu = 'fa fa-fw fa-2x ' + infomenu.iconSide,
+            var informationMenu = StaticWebsite.getInformationMenu(),
+                classStaticMenu = informationMenu.class,
+                pathStaticMenu = '/' + informationMenu.id,
+                hiddenPathStaticMenu = '/' + informationMenu.id + '/' + informationMenu.content[0],
+                titleStaticMenu = informationMenu.title,
+                iconStaticMenu = 'fa fa-fw fa-2x ' + informationMenu.iconSide,
                 staticElement = {
                     class: classStaticMenu,
                     path: pathStaticMenu,
@@ -79,8 +79,17 @@ angular.module('ortolangMarketApp')
                     hiddenSideNav: false,
                     hiddenTopNav: false,
                     authenticated: false
-                };
-            sideNavElements.push(staticElement);
+                },
+                initialized = false;
+            angular.forEach(sideNavElements, function (sideNavElement, index) {
+                if (sideNavElement.class === classStaticMenu) {
+                    sideNavElements[index] = staticElement;
+                    initialized = true;
+                }
+            });
+            if (!initialized) {
+                sideNavElements.push(staticElement);
+            }
         });
 
         // *********************** //
