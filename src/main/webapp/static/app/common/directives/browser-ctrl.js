@@ -496,10 +496,11 @@ angular.module('ortolangMarketApp')
 
             $scope.preventRightClick = function () {};
 
-            $scope.checkSelection = function (clickEvent) {
+            $scope.checkSelection = function ($event) {
                 if (($scope.browserService.workspace || $scope.isMarketBrowserService) &&
-                    !angular.element(clickEvent.target).closest('.workspace-element').length) {
+                    !angular.element($event.target).closest('.workspace-element').length) {
                     deselectChildren();
+                    $scope.contextMenu($event, false);
                 }
             };
 
