@@ -35,7 +35,6 @@ angular
         'pascalprecht.translate',
         'zeroclipboard',
         'diff-match-patch',
-        'angular-md5',
         'xeditable',
         'schemaForm',
         'ngTagsInput',
