@@ -40,12 +40,12 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.$on('server-down', function () {
-            $http.get(url.api + '/config/ping')
-                .success(function () {
-                    console.log('API server responded to ping');
-                })
-                .error(function () {
-                    if (angular.element('.server-down-modal').length === 0) {
+            if (angular.element('.server-down-modal').length === 0) {
+                $http.get(url.api + '/config/ping')
+                    .success(function () {
+                        console.log('API server responded to ping');
+                    })
+                    .error(function () {
                         var modalScope = $rootScope.$new(true);
                         modalScope.refresh = function () {
                             AuthService.forceReload();
@@ -54,8 +54,8 @@ angular.module('ortolangMarketApp')
                             scope: modalScope,
                             template: 'common/auth/templates/server-down-modal.html'
                         });
-                    }
-                });
+                    });
+            }
         });
 
         $rootScope.noFooter = false;

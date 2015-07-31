@@ -1,9 +1,10 @@
 'use strict';
 
 angular.element(document).ready(function () {
+
     var keycloakAuth = new Keycloak(OrtolangConfig.keycloakConfigLocation);
 
-    function keycloackInitCallback() {
+    function keycloakInitCallback() {
         /**
          * @ngdoc service
          * @name ortolangMarketApp.AuthService
@@ -14,8 +15,7 @@ angular.element(document).ready(function () {
         angular.module('ortolangMarketApp')
             .factory('AuthService', ['$window', '$q', function ($window, $q) {
 
-                var logoutUrl = keycloakAuth.authServerUrl + '/realms/ortolang/tokens/logout?redirect_uri=' + OrtolangConfig.logoutRedirectUrl,
-                    deferred = $q.defer();
+                var deferred = $q.defer();
 
                 function isAuthenticated() {
                     return keycloakAuth.authenticated;
@@ -34,7 +34,7 @@ angular.element(document).ready(function () {
                 }
 
                 function logout() {
-                    $window.location = logoutUrl;
+                    $window.location = keycloakAuth.createLogoutUrl();
                 }
 
                 function forceReload() {
@@ -67,8 +67,8 @@ angular.element(document).ready(function () {
     }
 
     keycloakAuth.init({ onLoad: 'check-sso' }).success(function () {
-        keycloackInitCallback();
+        keycloakInitCallback();
     }).error(function () {
-        keycloackInitCallback();
+        keycloakInitCallback();
     });
 });

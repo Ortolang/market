@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('STATICSITE_FR', {
         STATICSITE: {
             PATH: {
-                LEGAL_NOTICES: 'common/staticSite/fr/legal-notices.html'
+                LEGAL_NOTICES: 'common/static-site/fr/legal-notices.html'
             },
             NO_NEWS: 'Aucune actualité',
             NEWS: 'Actualités',

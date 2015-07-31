@@ -112,6 +112,9 @@ angular.module('ortolangMarketApp')
             DELETE_NON_EMPTY_FOLDER_ALERT: {
                 TITLE: 'Erreur',
                 CONTENT: 'Impossible de supprimer un dossier non vide'
+            },
+            METADATA_EDITOR: {
+                BASIC_INFO: 'Informations basiques'
             }
         }
     });

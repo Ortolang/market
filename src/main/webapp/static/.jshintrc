@@ -21,6 +21,7 @@
   "globals": {
     "angular": false,
     "$": false,
-    "atmosphere": false
+    "atmosphere": false,
+    "Keycloak": false
   }
 }

@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
         function getHead() {
             return ObjectResource.get({key: WorkspaceBrowserService.workspace.head}, function (data) {
                 $scope.head = data.object;
+                $scope.newlyCreatedWorkspace = $scope.head.empty && $filter('filter')($scope.head.metadatas, {name: 'ortolang-workspace-json'}).length === 0;
                 $scope.workspaceHistory = data.history;
                 $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
                 angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
@@ -81,8 +82,7 @@ angular.module('ortolangMarketApp')
                 getHead();
                 $scope.browserSettings.wskey = workspace.key;
                 Settings.store();
-                $scope.contentLink = url.content + '/all/' + workspace.alias + '/head';
-                $scope.contentLink2 = url.content + '/latest/' + workspace.alias;
+                $scope.contentLink = Content.getContentUrlWithPath('', workspace.alias);
                 //getPresentationMetadata(workspace);
             }
         };
@@ -170,7 +170,7 @@ angular.module('ortolangMarketApp')
             createModalScope();
             modalScope.submit = function (createWorkspaceForm) {
                 if (createWorkspaceForm.$valid) {
-                    WorkspaceResource.getAvailability({alias: modalScope.alias}, function (data) {
+                    WorkspaceResource.checkAliasAvailability({alias: modalScope.alias}, function (data) {
                         if (data.available) {
                             WorkspaceResource.createWorkspace({name: modalScope.name, alias: modalScope.alias, type: 'user'}, function (newWorkspace) {
                                 $scope.$emit('core.workspace.create', {fromObject: newWorkspace.key});
@@ -275,9 +275,8 @@ angular.module('ortolangMarketApp')
                     var snapshotModal;
                     createModalScope();
                     modalScope.wsName = WorkspaceBrowserService.workspace.name;
-                    modalScope.snapshotname = 'Version ' + WorkspaceBrowserService.workspace.clock;
                     modalScope.snapshot = function () {
-                        WorkspaceResource.snapshots({wskey: WorkspaceBrowserService.workspace.key}, {snapshotname: modalScope.snapshotname}, function () {
+                        WorkspaceResource.snapshots({wskey: WorkspaceBrowserService.workspace.key}, function () {
                             snapshotModal.hide();
                             $scope.getSnapshotsHistory();
                         });
@@ -415,16 +414,6 @@ angular.module('ortolangMarketApp')
             $scope.resizeBrowser();
         });
 
-        function initialSubscriptions() {
-            AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.create', throwedByPattern: User.key});
-            angular.forEach(User.groups, function (group) {
-                AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.snapshot', argumentsPatterns: {group: group}});
-            });
-            angular.forEach($scope.workspaceList, function (workspace) {
-                AtmosphereService.addFilter({typePattern: 'core\\.workspace\\.update', fromPattern: workspace.key});
-            });
-        }
-
         function init() {
             $rootScope.browsing = !!$location.search().browse;
             $scope.browserCtrlInitialized = false;
@@ -438,7 +427,6 @@ angular.module('ortolangMarketApp')
             var workspace;
             $scope.browserSettings = Settings[WorkspaceBrowserService.id];
             workspaceListDeferred.$promise.then(function () {
-                initialSubscriptions();
                 if ($location.search().alias || $scope.browserSettings.wskey) {
                     var filteredWorkspace = [];
                     if ($location.search().alias) {

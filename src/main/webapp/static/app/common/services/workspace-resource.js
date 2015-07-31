@@ -19,15 +19,9 @@ angular.module('ortolangMarketApp')
             },
             snapshots: {
                 method: 'POST',
-                url: url.api + '/workspaces/:wskey/snapshots',
-                transformRequest: function (data) { return $.param(data); },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                url: url.api + '/workspaces/:wskey/snapshots'
             },
-            getKey: {
-                method: 'GET',
-                url: url.api + '/workspaces/:alias/key'
-            },
-            getAvailability: {
+            checkAliasAvailability: {
                 method: 'GET',
                 url: url.api + '/workspaces/:alias/available'
             }

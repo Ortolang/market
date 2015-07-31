@@ -112,6 +112,9 @@ angular.module('ortolangMarketApp')
             DELETE_NON_EMPTY_FOLDER_ALERT: {
                 TITLE: 'Error',
                 CONTENT: 'Cannot delete a non-empty folder'
+            },
+            METADATA_EDITOR: {
+                BASIC_INFO: 'Basic info'
             }
         }
     });

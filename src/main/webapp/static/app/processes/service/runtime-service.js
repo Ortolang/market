@@ -65,18 +65,6 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            function initialSubscriptions() {
-                User.sessionInitialized().then(function () {
-                    AtmosphereService.addFilter({typePattern: 'runtime\\.process\\.create', throwedByPattern: User.key});
-                    angular.forEach(User.groups, function (group) {
-                        AtmosphereService.addFilter({typePattern: 'runtime\\.task\\..*', argumentsPatterns: {group: group}});
-                    });
-                    AtmosphereService.addFilter({typePattern: 'runtime\\.task\\..*', argumentsPatterns: {user: User.key}});
-                    AtmosphereService.addFilter({typePattern: 'runtime\\.remote\\.create', throwedByPattern: User.key});
-                    AtmosphereService.addFilter({typePattern: 'membership\\.group\\.add-member', argumentsPatterns: {member: User.key}});
-                });
-            }
-
             // *********************** //
             //        Processes        //
             // *********************** //
@@ -503,7 +491,6 @@ angular.module('ortolangMarketApp')
                     if (User.isAuthenticated()) {
                         getProcesses();
                         getTasks();
-                        initialSubscriptions();
                     }
                 });
             }

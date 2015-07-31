@@ -28,7 +28,7 @@
     "bootstrap-additions": "0.3.1",
     "zeroclipboard": "2.2.0",
     "holderjs": "2.8.1",
-    "keycloak": "1.1.0",
+    "keycloak": "1.4.0.Final",
     "angular-xeditable": "prismsoundzero/angular-xeditable#0.1.9",
     "angular-schema-form": "0.8.4",
     "ng-tags-input": "3.0.0",

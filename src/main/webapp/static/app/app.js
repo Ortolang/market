@@ -109,13 +109,13 @@ angular
                 title: 'NAV.TASKS'
             })
             .when('/information/:section', {
-                templateUrl: 'common/staticSite/information.html',
+                templateUrl: 'common/static-site/information.html',
                 controller: 'InformationCtrl',
                 reloadOnSearch: false,
                 title: 'NAV.INFORMATION'
             })
             .when('/legal-notices', {
-                templateUrl: 'common/staticSite/legal-notices.html'
+                templateUrl: 'common/static-site/legal-notices.html'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
