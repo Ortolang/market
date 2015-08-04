@@ -33,6 +33,7 @@ angular.module('ortolangMarketApp')
             plus: 'glyphicon glyphicon-plus',
             minus: 'glyphicon glyphicon-minus',
             play: 'fa fa-fw fa-play',
+            tag: 'fa fa-fw fa-tag',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

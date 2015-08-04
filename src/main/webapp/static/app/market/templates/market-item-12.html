@@ -25,8 +25,8 @@
                     <div><span translate="MARKET.ALL_VERSIONS"></span> :
                         <ul class="list-inline all-versions" ng-if="tags.length > 1">
                             <li ng-repeat="t in tags">
-                                <div class="label" ng-class="tag.name === t.name ? 'label-primary' : 'label-default'">
-                                    <span class="fa fa-tag fa-fw"></span>
+                                <div class="label tag" ng-class="tag.name === t.name ? 'label-primary' : 'label-default'">
+                                    <span ng-class="icons.tag"></span>
                                     <a ng-if="tag.name !== t.name" ng-href="#/market/corpora/{{itemAlias}}/{{t.name}}" translate="BROWSER.VERSION" data-translate-values="{number: t.name}"></a>
                                     <span ng-if="tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{number: t.name}"></span>
                                 </div>

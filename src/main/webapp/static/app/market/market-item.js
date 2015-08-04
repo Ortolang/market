@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', '$location', '$filter', 'ObjectResource', 'JsonResultResource', 'QueryBuilderFactory', 'Settings', 'Content', 'MarketBrowserService', function ($rootScope, $scope, $routeParams, $translate, $location, $filter, ObjectResource, JsonResultResource, QueryBuilderFactory, Settings, Content, MarketBrowserService) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', '$location', '$filter', 'ObjectResource', 'JsonResultResource', 'QueryBuilderFactory', 'Settings', 'Content', 'MarketBrowserService', 'icons', function ($rootScope, $scope, $routeParams, $translate, $location, $filter, ObjectResource, JsonResultResource, QueryBuilderFactory, Settings, Content, MarketBrowserService, icons) {
 
         function loadItem() {
 
@@ -181,6 +181,8 @@ angular.module('ortolangMarketApp')
         $scope.exportItem = function () {
             Content.exportSingle($scope.itemAlias, $scope.ortolangObject.versionName, '/', $scope.itemAlias);
         };
+
+        $scope.icons = icons;
 
         $rootScope.$on('$translateChangeSuccess', function () {
             if ($scope.item) {

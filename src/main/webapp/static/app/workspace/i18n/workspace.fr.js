@@ -29,6 +29,7 @@ angular.module('ortolangMarketApp')
             HISTORY: 'Activité récente',
             MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans le projet',
             PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}</strong>',
+            TAGS: 'Versions',
             CREATION_DATE: 'Créé le {{creationDate | date}} par {{author}}',
             LAST_MODIFICATION_DATE: 'Dernière modification',
             EXTERNAL_LINKS: 'Liens externes',

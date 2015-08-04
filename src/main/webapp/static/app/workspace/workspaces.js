@@ -83,6 +83,8 @@ angular.module('ortolangMarketApp')
                 $scope.browserSettings.wskey = workspace.key;
                 Settings.store();
                 $scope.contentLink = Content.getContentUrlWithPath('', workspace.alias);
+                $scope.marketLink = '#/market/item/' + WorkspaceBrowserService.workspace.alias;
+                $scope.marketLinkFull = $window.location.origin + '/' + $scope.marketLink;
                 //getPresentationMetadata(workspace);
             }
         };
@@ -422,7 +424,6 @@ angular.module('ortolangMarketApp')
             $rootScope.noFooter = true;
             $scope.resizeBrowser();
             $scope.icons = icons;
-            $scope.locationOrigin = $window.location.origin;
             getWorkspaceList();
             var workspace;
             $scope.browserSettings = Settings[WorkspaceBrowserService.id];
