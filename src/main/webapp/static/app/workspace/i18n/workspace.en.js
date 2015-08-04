@@ -30,6 +30,7 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} member{{number > 1 ? "s" : ""}}</strong> in the project',
             PUBLISHED_VERSIONS: '<strong>{{number}} published version{{number > 1 ? "s" : ""}}</strong>',
             TAGS: 'Versions',
+            NO_TAGS: 'No published version',
             CREATION_DATE: 'Created on {{creationDate | date}} by {{author}}',
             LAST_MODIFICATION_DATE: 'Last modification',
             EXTERNAL_LINKS: 'External links',

@@ -8,11 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', '$location', '$filter', 'ObjectResource', 'JsonResultResource', 'QueryBuilderFactory', 'Settings', 'Content', 'MarketBrowserService', 'icons', function ($rootScope, $scope, $routeParams, $translate, $location, $filter, ObjectResource, JsonResultResource, QueryBuilderFactory, Settings, Content, MarketBrowserService, icons) {
+    .controller('MarketItemCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', '$location', '$route', '$filter', 'ObjectResource', 'JsonResultResource', 'QueryBuilderFactory', 'Settings', 'Content', 'MarketBrowserService', 'icons', function ($rootScope, $scope, $routeParams, $translate, $location, $route, $filter, ObjectResource, JsonResultResource, QueryBuilderFactory, Settings, Content, MarketBrowserService, icons) {
 
         function loadItem() {
 
-            var queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.snapshotName as snapshotName, meta_ortolang-workspace-json.wskey as wskey', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.snapshotName as snapshotName, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-item-json.type as type', source: 'collection'});
             queryBuilder.equals('status', 'published').and().equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
 
             console.log(queryBuilder.toString());
@@ -22,6 +22,22 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         results.push(angular.fromJson(result));
                     });
+                    if ($routeParams.section === 'item') {
+                        switch (results[results.length - 1].type) {
+                            case 'Corpus':
+                                $route.updateParams({section: 'corpora'});
+                                return;
+                            case 'Lexique':
+                                $route.updateParams({section: 'lexicons'});
+                                return;
+                            case 'Application':
+                                $route.updateParams({section: 'applications'});
+                                return;
+                            case 'Outil':
+                                $route.updateParams({section: 'tools'});
+                                return;
+                        }
+                    }
 
                     queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-workspace-json.wsalias as wsalias, meta_ortolang-workspace-json.tags as tags', source: 'workspace'});
                     queryBuilder.equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);

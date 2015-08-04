@@ -63,13 +63,14 @@
                                     <h4 translate="WORKSPACE.TAGS"></h4>
                                     <hr/>
                                     <ul class="list-inline">
-                                        <li ng-repeat="tag in WorkspaceBrowserService.workspace.tags">
+                                        <li ng-repeat="tag in WorkspaceBrowserService.workspace.tags" class="tag-wrapper">
                                             <div class="label tag label-default">
                                                 <span ng-class="icons.tag"></span>
                                                 <span translate="BROWSER.VERSION" data-translate-values="{number: tag.name}"></span>
                                             </div>
                                         </li>
                                     </ul>
+                                    <i ng-if="WorkspaceBrowserService.workspace.tags.length === 0" translate="WORKSPACE.NO_TAGS"></i>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-md-6 workspace-dashboard-section">

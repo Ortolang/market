@@ -50,6 +50,10 @@ angular.module('ortolangMarketApp')
                         case '/search':
                             $scope.select({class: 'search'});
                             break;
+                        default:
+                            if (current.params.section && previous.params.section === 'item') {
+                                $scope.select({class: current.params.section});
+                            }
                     }
 
                     // Add class for static website element
