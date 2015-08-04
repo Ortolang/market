@@ -1,7 +1,7 @@
 <section class="market-item">
     <header>
         <div class="media">
-            <a class="pull-left">
+            <a class="pull-left item-logo">
                 <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 <img ng-if="image" ng-src="{{image}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
             </a>
@@ -11,7 +11,7 @@
                 <div ng-hide="browse">
 
                     <div><span translate="MARKET.PRODUCER"></span> :
-                        <ul>
+                        <ul class="list-unstyled">
                             <li ng-repeat="contributor in item.contributors" ng-if="isProducer(contributor)">
                                 <a ng-href='#/producers/{{contributor.entity.id}}' ng-bind="contributor.entity.fullname"></a>
                             </li>
@@ -20,6 +20,17 @@
                     <div ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
                         <ul>
                             <li><a ng-href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
+                        </ul>
+                    </div>
+                    <div><span translate="MARKET.ALL_VERSIONS"></span> :
+                        <ul class="list-inline all-versions" ng-if="tags.length > 1">
+                            <li ng-repeat="t in tags">
+                                <div class="label" ng-class="tag.name === t.name ? 'label-primary' : 'label-default'">
+                                    <span class="fa fa-tag fa-fw"></span>
+                                    <a ng-if="tag.name !== t.name" ng-href="#/market/corpora/{{itemAlias}}/{{t.name}}" translate="BROWSER.VERSION" data-translate-values="{number: t.name}"></a>
+                                    <span ng-if="tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{number: t.name}"></span>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -45,7 +56,7 @@
                     <div ng-if="contributor.entity.emailhash" class="logo-contributor">
                         <span avatar data-email-hash="contributor.entity.emailhash" data-size="90" data-img-classes="user-avatar img-responsive"></span>
                     </div>
-                    <div ng-if="!contributor.entity.emailhash" class="logo-contributor thumbnail">  
+                    <div ng-if="!contributor.entity.emailhash" class="logo-contributor thumbnail">
                         <img ng-if="contributor.entity.img" class="logo-contributor" ng-src="{{contributor.entity.img}}"/>
                         <span ng-if="!contributor.entity.img" class="fa fa-user fa-5x"></span>
                     </div>
@@ -144,36 +155,17 @@
 
             <section id="publications" ng-if="item.publications">
                 <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
-                <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong>
-                <article>
-                    <p>
-                        <ul class="list-contributor">
-                            <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
-                        </ul>
-                    </p>
-                </article>
-                <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
-                <article>
-                    <p>
-                        <ul class="list-contributor">
-                            <li ng-repeat="pub in secondaryPublications" ng-bind-html="pub"></li>
-                        </ul>
-                    </p>
-                </article>
-            </section>
-
-            <section id="other_versions" ng-if="versions.length > 1">
-                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.ALL_VERSIONS' | translate}}</header>
-                <article>
-                    <ul>
-                        <li ng-repeat="version in versions">
-                            <a ng-if="ortolangObject.versionName !== version.versionName" ng-href="#/market/corpora/{{itemAlias}}/{{version.versionName}}" translate="BROWSER.VERSION" data-translate-values="{number: version.versionName}"></a>
-                            <span ng-if="ortolangObject.versionName === version.versionName" translate="BROWSER.VERSION" data-translate-values="{number: version.versionName}"></span>
-                        </li>
+                <div class="section-body-wrapper">
+                    <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
                     </ul>
-                </article>
+                    <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="pub in secondaryPublications" ng-bind-html="pub"></li>
+                    </ul>
+                </div>
             </section>
-
         </div>
 
         <div ng-if="browse" class="col-md-12">

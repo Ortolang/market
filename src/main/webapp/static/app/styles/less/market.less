@@ -113,7 +113,7 @@
 
   .publication-date {
     font-size: 12px;
-    margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical); 
+    margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
   }
 }
 
@@ -140,7 +140,7 @@
       padding-right: 2 * @padding-large-horizontal;
     }
 
-    button, a {
+    button, .item-logo {
       margin-top: @padding-large-vertical;
     }
     .image {
@@ -150,9 +150,23 @@
     }
 
     ul {
-      padding-left: @padding-base-horizontal;
-      margin-left: @padding-base-horizontal/2;
-      list-style: none;
+      padding-left: @padding-large-horizontal;
+      margin-top: @padding-base-vertical;
+    }
+
+    .all-versions {
+      padding-top: @padding-small-vertical;
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .label {
+        font-size: 13px;
+        font-weight: 300;
+      }
+      .label-default {
+        background-color: @btn-inverse-bg;
+      }
     }
   }
 
@@ -172,25 +186,17 @@
       font-weight: 200;
       margin-bottom: @padding-large-vertical;
     }
-    article {
+    ul {
+      padding-left: @padding-large-horizontal;
+      margin-top: @padding-base-vertical;
+    }
+    .section-body-wrapper, article {
       margin-left: @padding-large-horizontal;
-
-      ul {
-        list-style: inherit;
-        padding-left: @padding-base-horizontal;
-        margin-left: @padding-base-horizontal/2;
-      }
-
       dt {
         padding-bottom: @padding-base-vertical;
       }
-
       dd {
         padding-left: @padding-base-horizontal;
-      }
-
-      ul.list-contributor {
-        list-style: none;
       }
     }
     p {
@@ -267,7 +273,7 @@
 }
 
 .toolbar-options {
-  
+
   margin-top: -2 * @padding-large-vertical;
 
   dl {
@@ -314,7 +320,7 @@
   border-bottom: 0px;
   margin-top: 0px;
   margin-bottom: 0px;
-  
+
   .btn {
 
     &:hover {
@@ -322,7 +328,7 @@
       background-color: @main-bg;
     }
     border-color: @main-bg;
-    
+
   }
 }
 

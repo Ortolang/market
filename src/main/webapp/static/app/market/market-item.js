@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
         function loadItem() {
 
-            var queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.versionName as versionName, meta_ortolang-workspace-json.wskey as wskey', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.snapshotName as snapshotName, meta_ortolang-workspace-json.wskey as wskey', source: 'collection'});
             queryBuilder.equals('status', 'published').and().equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
 
             console.log(queryBuilder.toString());
@@ -23,70 +23,84 @@ angular.module('ortolangMarketApp')
                         results.push(angular.fromJson(result));
                     });
 
-                    $scope.versions = $filter('orderBy')(results, function (result) {
-                        return parseInt(result.versionName, 10);
-                    });
+                    queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-workspace-json.wsalias as wsalias, meta_ortolang-workspace-json.tags as tags', source: 'workspace'});
+                    queryBuilder.equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
+                    JsonResultResource.get({query: queryBuilder.toString()}).$promise.then(function (jsonResults) {
 
-                    if ($routeParams.version) {
-                        var filteredResult = $filter('filter')(results, {versionName: $routeParams.version});
-                        if (filteredResult.length === 1) {
-                            $scope.ortolangObject = filteredResult[0];
-                        }
-                    }
-                    if (!$scope.ortolangObject) {
-                        $scope.ortolangObject = $scope.versions[$scope.versions.length - 1];
-                    }
-                    MarketBrowserService.workspace = {alias: $scope.itemAlias, key: $scope.ortolangObject.wskey};
-                    $scope.root = $scope.ortolangObject.versionName;
-                    $scope.itemKey = $scope.ortolangObject.key;
+                        if (jsonResults.length === 1) {
+                            var workspace = angular.fromJson(jsonResults[0]),
+                                filteredResult;
 
-                    var queryOrtolangMeta = 'select from ' + $scope.ortolangObject['meta_ortolang-item-json'];
-                    JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
-                        $scope.item = angular.fromJson(jsonObject[0]);
+                            $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
+                                return tag.name;
+                            });
 
-                        $rootScope.ortolangPageTitle = getValue($scope.item.title, 'lang', Settings.language, 'untitle');
-
-                        if ($scope.item.schema) {
-
-                            if ($scope.item.schema === 'http://www.ortolang.fr/schema/012#') {
-                                $scope.marketItemTemplate = 'market/templates/market-item-12.html';
-
-                                $scope.browse = $location.search().browse;
-
-                                refreshMultilingualValue($scope.item, Settings.language);
-
-                                if ($scope.item.image) {
-                                    ObjectResource.element({key: $scope.itemKey, path: $scope.item.image}).$promise.then(function (oobject) {
-                                        $scope.image = Content.getContentUrlWithKey(oobject.key);
-                                    }, function (reason) {
-                                        console.error(reason);
-                                    });
-                                } else {
-                                    $scope.imgtitle = '';
-                                    $scope.imgtheme = 'custom';
-                                    if ($scope.title) {
-                                        $scope.imgtitle = $scope.title.substring(0, 2);
-                                        $scope.imgtheme = $scope.title.substring(0, 1).toLowerCase();
-                                    }
+                            if ($routeParams.version) {
+                                var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version});
+                                if (filteredTag.length === 1) {
+                                    $scope.tag = filteredTag[0];
                                 }
-
-                                // if($scope.item.preview!==undefined) {
-                                //     loadPreview(key, $scope.item.preview.paths);
-                                // }
-
-                                if ($scope.item.license !== undefined && $scope.item.license !== '') {
-                                    loadLicense($scope.itemKey, $scope.item.license);
-                                }
-
-                                if ($scope.item.datasize !== undefined && $scope.item.datasize !== '') {
-                                    $scope.datasizeToPrint = {'value': $filter('bytes')($scope.item.datasize)};
-                                }
-                            } else {
-                                //TODO show message like format metadata unknown
                             }
+                            if (!$scope.tag) {
+                                $scope.tag = $scope.tags[$scope.tags.length - 1];
+                            }
+                            filteredResult = $filter('filter')(results, {snapshotName:  $scope.tag.snapshot});
+                            $scope.ortolangObject = filteredResult[0];
 
-                        } else {
-                            //TODO show message like format metadata unknown
+                            MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey};
+                            $scope.root = $scope.ortolangObject.snapshotName;
+                            $scope.itemKey = $scope.ortolangObject.key;
+
+                            var queryOrtolangMeta = 'select from ' + $scope.ortolangObject['meta_ortolang-item-json'];
+                            JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
+                                $scope.item = angular.fromJson(jsonObject[0]);
+
+                                $rootScope.ortolangPageTitle = getValue($scope.item.title, 'lang', Settings.language, 'untitle');
+
+                                if ($scope.item.schema) {
+
+                                    if ($scope.item.schema === 'http://www.ortolang.fr/schema/012#') {
+                                        $scope.marketItemTemplate = 'market/templates/market-item-12.html';
+
+                                        $scope.browse = $location.search().browse;
+
+                                        refreshMultilingualValue($scope.item, Settings.language);
+
+                                        if ($scope.item.image) {
+                                            ObjectResource.element({key: $scope.itemKey, path: $scope.item.image}).$promise.then(function (oobject) {
+                                                $scope.image = Content.getContentUrlWithKey(oobject.key);
+                                            }, function (reason) {
+                                                console.error(reason);
+                                            });
+                                        } else {
+                                            $scope.imgtitle = '';
+                                            $scope.imgtheme = 'custom';
+                                            if ($scope.title) {
+                                                $scope.imgtitle = $scope.title.substring(0, 2);
+                                                $scope.imgtheme = $scope.title.substring(0, 1).toLowerCase();
+                                            }
+                                        }
+
+                                        // if($scope.item.preview!==undefined) {
+                                        //     loadPreview(key, $scope.item.preview.paths);
+                                        // }
+
+                                        if ($scope.item.license !== undefined && $scope.item.license !== '') {
+                                            loadLicense($scope.itemKey, $scope.item.license);
+                                        }
+
+                                        if ($scope.item.datasize !== undefined && $scope.item.datasize !== '') {
+                                            $scope.datasizeToPrint = {'value': $filter('bytes')($scope.item.datasize)};
+                                        }
+                                    } else {
+                                        //TODO show message like format metadata unknown
+                                    }
+
+                                } else {
+                                    //TODO show message like format metadata unknown
+                                }
+                            });
+
                         }
 
                     });

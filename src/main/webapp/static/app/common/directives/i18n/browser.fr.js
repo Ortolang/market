@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
             UPLOAD_FOLDER: 'Importer un dossier',
             NEW_COLLECTION: 'Nouveau dossier',
             PREVIEW_WORKSPACE: 'Aperçu avant publication',
-            VERSION: 'Version {{number}}',
+            VERSION: 'Version {{number.replace("v", "")}}',
             VERSIONS: 'Versions de l\'espace de travail',
             HEAD: 'Version actuelle',
             PREVIOUS_VERSIONS: 'Versions précédentes',
