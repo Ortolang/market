@@ -53,7 +53,29 @@ angular.module('ortolangMarketApp')
             DEVELOPER: 'Responsable technique',
             MANAGER: 'Responsable informatique',
             DESIGNER: 'Concepteur',
-            RESEARCHER: 'Responsable scientifique'
+            RESEARCHER: 'Responsable scientifique',
+            AUTHOR: 'Auteur',
+            ANNOTATOR: 'Annotateur',
+            COMPILER: 'Compilateur',
+            CONSULTANT: 'Consultant',
+            DATA_INPUTTER: 'Gestionnaire de données',
+            DEPOSITOR: 'Déposant',
+            EDITOR: 'Relecteur',
+            ILLUSTRATOR: 'Illustrateur',
+            INTERPRETER: 'Interprète',
+            INTERVIEWER: 'Interviewer',
+            PARTICIPANT: 'Participant',
+            PERFORMER: 'Intervenant',
+            PHOTOGRAPHER: 'Preneur de vues',
+            RECORDER: 'Opérateur',
+            RESEARCH_PARTICIPANT: 'Sujet',
+            RESPONDER: 'Répondant',
+            SIGNER: 'Signeur',
+            SINGER: 'Chanteur',
+            SPEAKER: 'Locuteur',
+            SPONSOR: 'Soutien financier',
+            TRANSCRIBER: 'Transcripteur',
+            TRANSLATOR: 'Traducteur'
         }
         
     });

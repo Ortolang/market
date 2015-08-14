@@ -61,9 +61,9 @@
                         <span ng-if="!contributor.entity.img" class="fa fa-user fa-5x"></span>
                     </div>
                     <div class="contributor-entity-fullname">
-                        <!-- <strong ng-if="!contributor.entity.username" ng-bind="contributor.entity.fullname"></strong> -->
+                        <strong ng-if="!contributor.entity.id" ng-bind="contributor.entity.fullname"></strong>
                         <!-- <a ng-if="contributor.entity.username" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a> -->
-                        <a ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a>
+                        <a ng-if="contributor.entity.id" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a>
                     </div>
                     <div class="contributor-roles">
                         <span ng-repeat="role in contributor.role"><i>{{'ROLES.'+role | uppercase | translate}}</i><span ng-if="!$last">, </span></span>
@@ -179,7 +179,7 @@
                 <div class="panel-body">
 
                     <p ng-show="item.conditionsOfUse" ng-bind-html="item.conditionsOfUse"></p>
-                    <p ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
+                    <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
                         <div class="btn-group" role="group">
                             <button class="btn btn-success" ng-click="exportItem()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>

@@ -48,5 +48,33 @@ angular.module('ortolangMarketApp')
         UNEXPECTED_ERROR_ALERT: {
             TITLE: 'Error',
             CONTENT: 'An unexpected error has occurred'
+        },
+        ROLES: {
+            DEVELOPER: 'Developer',
+            MANAGER: 'Manager',
+            DESIGNER: 'Designer',
+            RESEARCHER: 'Researcher',
+            AUTHOR: 'Author',
+            ANNOTATOR: 'Annotator',
+            COMPILER: 'Compiler',
+            CONSULTANT: 'Consultant',
+            DATA_INPUTTER: 'Data inputter',
+            DEPOSITOR: 'Depositor',
+            EDITOR: 'Editor',
+            ILLUSTRATOR: 'Illustrator',
+            INTERPRETER: 'interpreter',
+            INTERVIEWER: 'Interviewer',
+            PARTICIPANT: 'Participant',
+            PERFORMER: 'Performer',
+            PHOTOGRAPHER: 'Photographer',
+            RECORDER: 'Recorder',
+            RESEARCH_PARTICIPANT: 'Research participant',
+            RESPONDER: 'Responder',
+            SIGNER: 'Signer',
+            SINGER: 'Singer',
+            SPEAKER: 'Speaker',
+            SPONSOR: 'Sponsor',
+            TRANSCRIBER: 'Transcriber',
+            TRANSLATOR: 'Translator'
         }
     });
