@@ -26,7 +26,7 @@ module.exports = function (config) {
             'bower_components/angular-route/angular-route.js',
             'bower_components/angular-resource/angular-resource.js',
             'bower_components/angular-messages/angular-messages.js',
-            'bower_components/angular-file-upload/dist/angular-file-upload.min.js',
+            'bower_components/angular-file-upload/angular-file-upload.min.js',
             'bower_components/angular-strap/dist/angular-strap.js',
             'bower_components/angular-highlightjs/build/angular-highlightjs.js',
             'bower_components/angular-hotkeys/build/hotkeys.js',
