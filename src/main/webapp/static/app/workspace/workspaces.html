@@ -1,6 +1,14 @@
 <div ng-if="browserCtrlInitialized" ng-show="browsing" browser></div>
 <div ng-hide="browsing" class="workspaces container-fluid">
-    <div class="row toolbar browser-toolbar"></div>
+    <div class="row toolbar browser-toolbar">
+
+        <div ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside"></div>
+        <div ng-class="!(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
+            <div class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
+                <button ng-if="previewing" ng-click="togglePreviewing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-2 col-md-2 browser-aside browser-aside-left">
             <div class="btn-group dropdown-wrapper add-action">
@@ -18,7 +26,7 @@
             </section>
         </div>
 
-        <div class="col-sm-10 col-md-10 container-main workspace-dashboard">
+        <div ng-hide="previewing" class="col-sm-10 col-md-10 container-main workspace-dashboard">
             <div ng-show="workspaceList.length === 0" class="row">
                 <br/>
                 <p>
@@ -43,6 +51,7 @@
                             <span ng-if="!hasPresentationMetadata()" translate="WORKSPACE.CREATE_PRESENTATION_METADATA"></span>
                             <span ng-if="hasPresentationMetadata()" translate="WORKSPACE.EDIT_PRESENTATION_METADATA"></span>
                         </button>
+                        <button class="btn btn-default" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> Aperçu</button>
                         <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
                         <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
                     </div>
@@ -132,9 +141,17 @@
 
                 </div>
                 <!--<div ng-if="newlyCreatedWorkspace" ng-include="'workspace/ortolang-workspace-metadata-editor.html'"></div>-->
+                <div ng-if="previewMetadataItem" ng-include="'workspace/metadata-preview.html'"></div>
                 <div ng-if="editingPresentationMetadata" ng-include="'workspace/presentation-metadata-editor.html'"></div>
             </div>
         </div>
+
+        <div ng-show="previewing" class="col-sm-10 col-md-10 container-main workspace-metadata-item">
+            <div class="workspace-metadata-item-preview">
+                <market-item-preview ng-if="metadataItemLoaded" content="metadataItem" item-alias="itemAlias" item-key="itemKey"></market-item-preview>
+            </div>
+        </div>
+        
     </div>
 </div>
 

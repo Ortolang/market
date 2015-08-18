@@ -12,14 +12,14 @@
 
                     <div><span translate="MARKET.PRODUCER"></span> :
                         <ul class="list-unstyled">
-                            <li ng-repeat="contributor in item.contributors" ng-if="isProducer(contributor)">
+                            <li ng-repeat="contributor in content.contributors" ng-if="isProducer(contributor)">
                                 <a ng-href='#/producers/{{contributor.entity.id}}' ng-bind="contributor.entity.fullname"></a>
                             </li>
                         </ul>
                     </div>
-                    <div ng-if="item.website"><span translate="MARKET.WEBSITE"></span> :
+                    <div ng-if="content.website"><span translate="MARKET.WEBSITE"></span> :
                         <ul>
-                            <li><a ng-href="{{item.website}}" ng-bind="item.website" target="_BLANK"></a></li>
+                            <li><a ng-href="{{content.website}}" ng-bind="content.website" target="_BLANK"></a></li>
                         </ul>
                     </div>
                     <div><span translate="MARKET.ALL_VERSIONS"></span> :
@@ -49,10 +49,10 @@
                 </article>
             </section>
 
-            <section id="contributor" ng-if="item.contributors">
+            <section id="contributor" ng-if="content.contributors">
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
-                <div class="contributor-entity" ng-repeat="contributor in item.contributors" ng-if="!isProducer(contributor)">
+                <div class="contributor-entity" ng-repeat="contributor in content.contributors" ng-if="!isProducer(contributor)">
                     <div ng-if="contributor.entity.emailhash" class="logo-contributor">
                         <span avatar data-email-hash="contributor.entity.emailhash" data-size="90" data-img-classes="user-avatar img-responsive"></span>
                     </div>
@@ -72,7 +72,7 @@
 
             </section>
 
-            <section id="keywords" ng-if="keywords || item.corporaLanguages || item.annotationLevels || item.corporaFormats || item.corporaFileEncodings || item.programmingLanguages || item.opearatingSystems || item.toolLanguages">
+            <section id="keywords" ng-if="keywords || content.corporaLanguages || content.annotationLevels || content.corporaFormats || content.corporaFileEncodings || content.programmingLanguages || content.opearatingSystems || content.toolLanguages">
                 <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
                 <article>
                     <div class="row">
@@ -86,64 +86,64 @@
                             </dl>
                         </div>
 
-                        <div ng-if="item.corporaLanguages" class="col-md-3">
+                        <div ng-if="content.corporaLanguages" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
-                                <dd ng-repeat="pLang in item.corporaLanguages">
+                                <dd ng-repeat="pLang in content.corporaLanguages">
                                     {{pLang}}
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.annotationLevels" class="col-md-3">
+                        <div ng-if="content.annotationLevels" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.FACET.ANNOTATION_LEVEL"></dt>
-                                <dd ng-repeat="annLevel in item.annotationLevels">
+                                <dd ng-repeat="annLevel in content.annotationLevels">
                                     {{annLevel}}
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.corporaFormats" class="col-md-3">
+                        <div ng-if="content.corporaFormats" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.FACET.TEXT_FORMAT"></dt>
-                                <dd ng-repeat="corpFormat in item.corporaFormats">
+                                <dd ng-repeat="corpFormat in content.corporaFormats">
                                     {{corpFormat}}
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.corporaFileEncodings" class="col-md-3">
+                        <div ng-if="content.corporaFileEncodings" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.FACET.CORPORA_FILE_ENCODINGS"></dt>
-                                <dd ng-repeat="corpFileEnc in item.corporaFileEncodings">
+                                <dd ng-repeat="corpFileEnc in content.corporaFileEncodings">
                                     {{corpFileEnc}}
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.programmingLanguages" class="col-md-3">
+                        <div ng-if="content.programmingLanguages" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
-                                <dd ng-repeat="pl in item.programmingLanguages">
+                                <dd ng-repeat="pl in content.programmingLanguages">
                                     {{pl}}
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.opearatingSystems" class="col-md-3">
+                        <div ng-if="content.opearatingSystems" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.OPERATING_SYSTEM"></dt>
-                                <dd ng-repeat="os in item.opearatingSystems">
+                                <dd ng-repeat="os in content.opearatingSystems">
                                     <a ng-href="">{{os}}</a>
                                 </dd>
                             </dl>
                         </div>
 
-                        <div ng-if="item.toolLanguages" class="col-md-3">
+                        <div ng-if="content.toolLanguages" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.LANGUAGE"></dt>
-                                <dd ng-repeat="lang in item.toolLanguages">
+                                <dd ng-repeat="lang in content.toolLanguages">
                                     {{lang}}
                                 </dd>
                             </dl>
@@ -153,7 +153,7 @@
                 </article>
             </section>
 
-            <section id="publications" ng-if="item.publications">
+            <section id="publications" ng-if="content.publications">
                 <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
                 <div class="section-body-wrapper">
                     <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong>
@@ -174,11 +174,11 @@
 
         <aside ng-show="!browse" class="col-md-4">
 
-            <div class="panel panel-default license-panel" ng-show="item.type !== 'Application'">
+            <div class="panel panel-default license-panel" ng-show="content.type !== 'Application'">
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
 
-                    <p ng-show="item.conditionsOfUse" ng-bind-html="item.conditionsOfUse"></p>
+                    <p ng-show="content.conditionsOfUse" ng-bind-html="content.conditionsOfUse"></p>
                     <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
                         <div class="btn-group" role="group">
@@ -191,25 +191,25 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" ng-show="item.type === 'Application'">
+            <div class="panel panel-default" ng-show="content.type === 'Application'">
                 <div class="panel-heading"><span class="fa fa-link fa-fw"></span> {{'MARKET.LINK' | translate}}</div>
                 <div class="panel-body">
 
                     <div class="btn-group btn-group-justified">
-                        <a ng-href="{{item.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
+                        <a ng-href="{{content.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
                     </div>
                 </div>
             </div>
 
-            <div class="panel panel-default derogation-panel" ng-show="item.derogation">
+            <div class="panel panel-default derogation-panel" ng-show="content.derogation">
                 <div class="panel-heading" translate="MARKET.DEROGATION"></div>
                 <div class="panel-body">
 
                     <p>
                         {{item.derogation}}
-                        <span ng-if="item.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
-                        <span ng-if="item.derogation==='AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>
-                        <span ng-if="item.derogation==='AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>
+                        <span ng-if="content.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
+                        <span ng-if="content.derogation==='AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>
+                        <span ng-if="content.derogation==='AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>
                     </p>
 
                 </div>
@@ -223,7 +223,7 @@
                 </div>
             </div>
 
-            <div data-preview-box key="itemKey" preview="item.preview" ng-if="item.preview"></div>
+            <div data-preview-box key="itemKey" preview="content.preview" ng-if="content.preview"></div>
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">

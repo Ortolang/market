@@ -74,6 +74,7 @@ angular.module('ortolangMarketApp')
         $scope.changeWorkspace = function (workspace, init) {
             if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
+                $location.search('preview', $rootScope.previewing || undefined);
                 WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
                     WorkspaceBrowserService.workspace.authorCard = data;
@@ -86,12 +87,17 @@ angular.module('ortolangMarketApp')
                 $scope.marketLink = '#/market/item/' + WorkspaceBrowserService.workspace.alias;
                 $scope.marketLinkFull = $window.location.origin + '/' + $scope.marketLink;
                 //getPresentationMetadata(workspace);
+
+                if($rootScope.previewing) {
+                    loadMetadataItem();
+                }
             }
         };
 
         $scope.$on('$destroy', function () {
             $rootScope.browsing = false;
             $rootScope.noFooter = false;
+            $rootScope.previewing = false;
         });
 
         $scope.$on('$routeUpdate', function () {
@@ -360,6 +366,43 @@ angular.module('ortolangMarketApp')
             );
         };
 
+        $scope.previewMetadataItem = function() {
+            WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(
+                function (data) {
+                    $scope.previewMetadataItem = true;
+                    $rootScope.$broadcast('metadata-preview', data);
+                },
+                function (reason) {
+                    console.error('Cant load metadata item cause ' + reason);
+                }
+            );
+        };
+
+        $scope.togglePreviewing = function () {
+            $rootScope.previewing = !$rootScope.previewing;
+            $location.search('preview', $rootScope.previewing || undefined);
+        };
+
+        function loadMetadataItem() {
+            WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(
+                function (data) {
+                     return Content.downloadWithKey(data.key).success(function (data) {
+                        $scope.code = data;
+                        $scope.metadataItem = angular.fromJson(data);
+                        $scope.itemKey = WorkspaceBrowserService.workspace.root;
+
+                        $scope.metadataItemLoaded = true;
+                    }).error(function (reason) {
+                        $scope.code = undefined;
+                        console.error('Cant load metadata content cause ' + reason);
+                    });
+                },
+                function (reason) {
+                    console.error('Cant load metadata item cause ' + reason);
+                }
+            );   
+        }
+
         $scope.hasPresentationMetadata = function () {
             return $scope.head && $filter('filter')($scope.head.metadatas, {'name': 'ortolang-item-json'}).length > 0;
         };
@@ -424,6 +467,10 @@ angular.module('ortolangMarketApp')
             $rootScope.noFooter = true;
             $scope.resizeBrowser();
             $scope.icons = icons;
+
+            $rootScope.previewing = !!$location.search().preview;
+            $scope.metadataItemLoaded = false;
+
             getWorkspaceList();
             var workspace;
             $scope.browserSettings = Settings[WorkspaceBrowserService.id];
@@ -454,6 +501,8 @@ angular.module('ortolangMarketApp')
                     if ($rootScope.browsing) {
                         $scope.browserCtrlInitialized = true;
                     }
+                    loadMetadataItem();
+                    
                 } else {
                     $scope.browserSettings.wskey = undefined;
                     Settings.store();
