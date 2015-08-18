@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
 
             return Content.downloadWithKey(metadata.key).success(function (data) {
                 $scope.code = data;
+                $scope.object = angular.fromJson(data);
                 $('#metadata-modal').modal('show');
             }).error(function () {
                 $scope.code = undefined;

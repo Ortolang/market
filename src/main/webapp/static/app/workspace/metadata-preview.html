@@ -6,7 +6,8 @@
                 <span class="modal-title" id="metadata-modal-label">{{selectedMetadata.name}}</span>
             </div>
             <div class="modal-body">
-                <div ng-if="code" hljs source="code"></div>
+                <!-- <div ng-if="code" hljs source="code"></div> -->
+                <market-item-preview ng-if="object" data-content="object" data-item-key="selectedMetadata.key"></market-item-preview>
             </div>
         </div>
     </div>
