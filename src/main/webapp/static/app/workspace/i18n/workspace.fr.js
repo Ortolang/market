@@ -22,6 +22,7 @@ angular.module('ortolangMarketApp')
             UPLOAD_ALL: 'Tout importer',
             CLEAR_ALL: 'Tout supprimer',
             CANCEL_ALL: 'Tout annuler',
+            PREVIEW_METADATA: 'Voir les métadonnées',
             ADD_METADATA: 'Ajouter une métadonnée',
             SNAPSHOT: 'Sauvegarder l\'état de l\'espace',
             PUBLISH: 'Soumettre à publication',

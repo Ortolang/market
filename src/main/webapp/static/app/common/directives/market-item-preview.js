@@ -14,7 +14,8 @@ angular.module('ortolangMarketApp')
             scope: {
                 content: '=',
                 alias: '=',
-                root: '='
+                root: '=',
+                version: '='
             },
             templateUrl: 'common/directives/market-item.html',
             link: {
@@ -146,7 +147,7 @@ angular.module('ortolangMarketApp')
                     };
 
                     scope.exportItem = function () {
-                        Content.exportSingle(scope.contentAlias, scope.ortolangObject.versionName, '/', scope.contentAlias);
+                        Content.exportSingle(scope.alias, scope.version, '/', scope.alias);
                     };
 
                     $rootScope.$on('$translateChangeSuccess', function () {
