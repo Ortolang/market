@@ -300,7 +300,5 @@
 
     <div ng-if="::browserService.canExecuteTool" ng-include="'common/tools/tool-list.html'" ng-controller="ToolListCtrl"></div>
 
-    <div ng-include="'workspace/metadata-preview.html'"></div>
-
     <div ng-if="browserService.canEdit && isHead" class="upload-queue" ng-class="uploader.uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
 </div>

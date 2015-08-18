@@ -27,7 +27,7 @@
                             <li ng-repeat="t in tags">
                                 <div class="label tag" ng-class="tag.name === t.name ? 'label-primary' : 'label-default'">
                                     <span ng-class="icons.tag"></span>
-                                    <a ng-if="tag.name !== t.name" ng-href="#/market/corpora/{{itemAlias}}/{{t.name}}" translate="BROWSER.VERSION" data-translate-values="{number: t.name}"></a>
+                                    <a ng-if="tag.name !== t.name" ng-href="#/market/corpora/{{alias}}/{{t.name}}" translate="BROWSER.VERSION" data-translate-values="{number: t.name}"></a>
                                     <span ng-if="tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{number: t.name}"></span>
                                 </div>
                             </li>
@@ -223,7 +223,7 @@
                 </div>
             </div>
 
-            <div data-preview-box key="itemKey" preview="content.preview" ng-if="content.preview"></div>
+            <div data-preview-box key="root" preview="content.preview" ng-if="content.preview"></div>
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">

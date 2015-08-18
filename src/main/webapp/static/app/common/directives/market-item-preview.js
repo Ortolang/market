@@ -13,8 +13,8 @@ angular.module('ortolangMarketApp')
             restrict: 'EA',
             scope: {
                 content: '=',
-                itemAlias: '=',
-                itemKey: '='
+                alias: '=',
+                root: '='
             },
             templateUrl: 'common/directives/market-item.html',
             link: {
@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
                                 refreshMultilingualValue(scope.content, Settings.language);
 
                                 if (scope.content.image) {
-                                    ObjectResource.element({key: scope.contentKey, path: scope.content.image}).$promise.then(function (oobject) {
+                                    ObjectResource.element({key: scope.root, path: scope.content.image}).$promise.then(function (oobject) {
                                         scope.image = Content.getContentUrlWithKey(oobject.key);
                                     }, function (reason) {
                                         console.error(reason);
@@ -50,7 +50,7 @@ angular.module('ortolangMarketApp')
                                 }
 
                                 if (scope.content.license !== undefined && scope.content.license !== '') {
-                                    loadLicense(scope.contentKey, scope.content.license);
+                                    loadLicense(scope.root, scope.content.license);
                                 }
 
                                 if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
@@ -168,6 +168,7 @@ angular.module('ortolangMarketApp')
                         scope.image = undefined;
                         scope.icons = icons;
                         scope.currentContent = scope.content;
+                        scope.currentRoot = scope.root;
                     }
 
                     function init() {
@@ -177,7 +178,7 @@ angular.module('ortolangMarketApp')
                         scope.initilizing = false;
                     }
 
-                    init();
+                    // init();
                 }
             }
         };

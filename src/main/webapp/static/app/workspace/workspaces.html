@@ -46,11 +46,11 @@
                     <i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: WorkspaceBrowserService.workspace.creationDate, author: WorkspaceBrowserService.workspace.authorCard.givenName + ' ' + WorkspaceBrowserService.workspace.authorCard.familyName}"></i>
                     <div class="workspace-actions-toolbar">
                         <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>
-                        <button class="btn btn-default" ng-click="showMetadataItem()">
+                        <!-- <button class="btn btn-default" ng-click="showMetadataItem()">
                             <span class="octicon octicon-book"></span>
                             <span ng-if="!hasPresentationMetadata()" translate="WORKSPACE.CREATE_PRESENTATION_METADATA"></span>
                             <span ng-if="hasPresentationMetadata()" translate="WORKSPACE.EDIT_PRESENTATION_METADATA"></span>
-                        </button>
+                        </button> -->
                         <button class="btn btn-default" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> Aperçu</button>
                         <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
                         <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
@@ -141,14 +141,13 @@
 
                 </div>
                 <!--<div ng-if="newlyCreatedWorkspace" ng-include="'workspace/ortolang-workspace-metadata-editor.html'"></div>-->
-                <div ng-if="previewMetadataItem" ng-include="'workspace/metadata-preview.html'"></div>
                 <div ng-if="editingPresentationMetadata" ng-include="'workspace/presentation-metadata-editor.html'"></div>
             </div>
         </div>
 
         <div ng-show="previewing" class="col-sm-10 col-md-10 container-main workspace-metadata-item">
             <div class="workspace-metadata-item-preview">
-                <market-item-preview ng-if="metadataItemLoaded" content="metadataItem" item-alias="itemAlias" item-key="itemKey"></market-item-preview>
+                <market-item-preview ng-if="metadataItemLoaded" content="metadataItem" alias="WorkspaceBrowserService.workspace.alias" root="itemKey"></market-item-preview>
             </div>
         </div>
         

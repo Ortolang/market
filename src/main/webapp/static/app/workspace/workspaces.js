@@ -74,7 +74,9 @@ angular.module('ortolangMarketApp')
         $scope.changeWorkspace = function (workspace, init) {
             if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
-                $location.search('preview', $rootScope.previewing || undefined);
+                $location.search('preview', undefined);
+                $rootScope.previewing = false;
+
                 WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
                     WorkspaceBrowserService.workspace.authorCard = data;
@@ -88,9 +90,7 @@ angular.module('ortolangMarketApp')
                 $scope.marketLinkFull = $window.location.origin + '/' + $scope.marketLink;
                 //getPresentationMetadata(workspace);
 
-                if($rootScope.previewing) {
-                    loadMetadataItem();
-                }
+                loadMetadataItem();
             }
         };
 
@@ -366,30 +366,19 @@ angular.module('ortolangMarketApp')
             );
         };
 
-        $scope.previewMetadataItem = function() {
-            WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(
-                function (data) {
-                    $scope.previewMetadataItem = true;
-                    $rootScope.$broadcast('metadata-preview', data);
-                },
-                function (reason) {
-                    console.error('Cant load metadata item cause ' + reason);
-                }
-            );
-        };
-
         $scope.togglePreviewing = function () {
             $rootScope.previewing = !$rootScope.previewing;
             $location.search('preview', $rootScope.previewing || undefined);
         };
 
         function loadMetadataItem() {
+            //TODO Get the list of metadata before load ortolang item metadata if it exists
             WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(
                 function (data) {
                      return Content.downloadWithKey(data.key).success(function (data) {
                         $scope.code = data;
                         $scope.metadataItem = angular.fromJson(data);
-                        $scope.itemKey = WorkspaceBrowserService.workspace.root;
+                        $scope.itemKey = WorkspaceBrowserService.workspace.head;
 
                         $scope.metadataItemLoaded = true;
                     }).error(function (reason) {
@@ -397,8 +386,8 @@ angular.module('ortolangMarketApp')
                         console.error('Cant load metadata content cause ' + reason);
                     });
                 },
-                function (reason) {
-                    console.error('Cant load metadata item cause ' + reason);
+                function () {
+                    console.log('There is no metadata item for this workspace');
                 }
             );   
         }
@@ -501,7 +490,7 @@ angular.module('ortolangMarketApp')
                     if ($rootScope.browsing) {
                         $scope.browserCtrlInitialized = true;
                     }
-                    loadMetadataItem();
+                    // loadMetadataItem();
                     
                 } else {
                     $scope.browserSettings.wskey = undefined;
