@@ -75,7 +75,9 @@ angular.module('ortolangMarketApp')
             if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
                 $location.search('preview', undefined);
+                $location.search('edit', undefined);
                 $rootScope.previewing = false;
+                $rootScope.editing = false;
 
                 WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
@@ -366,9 +368,23 @@ angular.module('ortolangMarketApp')
             );
         };
 
+        $scope.editMetadataItem = function() {
+            var entry = {view: 'workspace/templates/metadata-item-form.html', name: 'ortolang-item-json'};
+            if($scope.hasPresentationMetadata()) {
+                $rootScope.$broadcast('metadata-editor-edit', entry, $scope.metadataItem);
+            } else {
+                $rootScope.$broadcast('metadata-editor-show', entry);
+            }
+        };
+
         $scope.togglePreviewing = function () {
             $rootScope.previewing = !$rootScope.previewing;
             $location.search('preview', $rootScope.previewing || undefined);
+        };
+
+        $scope.toggleEditing = function () {
+            $rootScope.editing = !$rootScope.editing;
+            $location.search('edit', $rootScope.editing || undefined);
         };
 
         function loadMetadataItem() {
@@ -458,6 +474,7 @@ angular.module('ortolangMarketApp')
             $scope.icons = icons;
 
             $rootScope.previewing = !!$location.search().preview;
+            $rootScope.editing = !!$location.search().edit;
             $scope.metadataItemLoaded = false;
 
             getWorkspaceList();

@@ -45,26 +45,27 @@ angular.module('ortolangMarketApp')
         $scope.selectedMetadataContent = undefined; //TODO remove this property
 
         function loadMetadataContent(view, metadata) {
-            $scope.selectedMetadata = metadata;
+            // $scope.selectedMetadata = metadata;
 
-            Content.downloadWithKey(metadata.key).success(function (metadataContent) {
-                $scope.selectedMetadataContent = metadataContent;
+            // Content.downloadWithKey(metadata.key).success(function (metadataContent) {
+                // $scope.selectedMetadataContent = metadataContent;
+                $scope.selectedMetadataContent = metadata;
 
-                $scope.metadataForm = $scope.userMetadataFormat.view;
+                $scope.metadataForm = view;
 
-                FormResource.get({formKey: $scope.userMetadataFormat.form}).$promise.then(function (userForm) {
-                    $scope.form = angular.fromJson(userForm.definition);
-                    $scope.schema = $scope.userMetadataFormat.schemaContent;
-                    $scope.model = angular.fromJson(metadataContent);
+                // FormResource.get({formKey: $scope.userMetadataFormat.form}).$promise.then(function (userForm) {
+                //     $scope.form = angular.fromJson(userForm.definition);
+                //     $scope.schema = $scope.userMetadataFormat.schemaContent;
+                //     $scope.model = angular.fromJson(metadataContent);
 
                     $scope.showEditor();
-                }, function (reason) {
-                    console.log('unable to load form '+$scope.userMetadataFormat.form+' cause of '+reason);
-                });
+                // }, function (reason) {
+                //     console.log('unable to load form '+$scope.userMetadataFormat.form+' cause of '+reason);
+                // });
 
-            }).error(function () {
-                resetMetadata();
-            });
+            // }).error(function () {
+            //     resetMetadata();
+            // });
         }
 
         $scope.submitMetadataForm = function() {
@@ -98,7 +99,7 @@ angular.module('ortolangMarketApp')
             fd.append('path', currentPath);
             fd.append('type', ortolangType.metadata);
 
-            fd.append('format', $scope.userMetadataFormat.key);
+            // fd.append('format', $scope.userMetadataFormat.key);
             fd.append('name', $scope.userMetadataFormat.name);
 
             var blob = new Blob([content], { type: contentType});
