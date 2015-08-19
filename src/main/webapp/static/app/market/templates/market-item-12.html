@@ -41,6 +41,10 @@
 
     <div class="row">
 
+        <div ng-if="browse" class="col-md-12">
+            <div browser></div>
+        </div>
+
         <div ng-show="!browse" class="col-md-8">
             <section id="description">
                 <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
@@ -178,10 +182,10 @@
                     <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
                         <div class="btn-group" role="group">
-                            <button class="btn btn-success" data-ng-disabled="!version" ng-click="exportItem()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
+                            <button class="btn btn-success" data-ng-disabled="root === 'head'" ng-click="exportItem()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
                         </div>
                         <div class="btn-group" role="group">
-                            <button class="btn btn-default" data-ng-disabled="!version" ng-click="browseContent()" translate="MARKET.BROWSE"></button>
+                            <button class="btn btn-default" data-ng-disabled="root === 'head'" ng-click="browseContent()" translate="MARKET.BROWSE"></button>
                         </div>
                     </div>
                 </div>
@@ -219,7 +223,7 @@
                 </div>
             </div>
 
-            <div data-preview-box key="root" preview="content.preview" ng-if="content.preview"></div>
+            <div data-preview-box key="itemKey" preview="content.preview" ng-if="content.preview"></div>
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">
@@ -234,11 +238,6 @@
             </div>
             <br/> -->
         </aside>
-
-        
-        <div ng-if="browse" class="col-md-12">
-            <div browser></div>
-        </div>
 
     </div>
 </section>

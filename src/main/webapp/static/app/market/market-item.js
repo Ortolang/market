@@ -83,6 +83,7 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.itemAlias = $routeParams.alias;
+            $scope.browse = $location.search().browse;
             $scope.ready = false;
             $scope.item = {};
             loadItem();

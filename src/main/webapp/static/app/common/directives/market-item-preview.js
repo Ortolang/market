@@ -14,8 +14,8 @@ angular.module('ortolangMarketApp')
             scope: {
                 content: '=',
                 alias: '=',
-                root: '=',
-                version: '='
+                itemKey: '=',
+                root: '='
             },
             templateUrl: 'common/directives/market-item.html',
             link: {
@@ -36,7 +36,7 @@ angular.module('ortolangMarketApp')
                                 refreshMultilingualValue(scope.content, Settings.language);
 
                                 if (scope.content.image) {
-                                    ObjectResource.element({key: scope.root, path: scope.content.image}).$promise.then(function (oobject) {
+                                    ObjectResource.element({key: scope.itemKey, path: scope.content.image}).$promise.then(function (oobject) {
                                         scope.image = Content.getContentUrlWithKey(oobject.key);
                                     }, function (reason) {
                                         console.error(reason);
@@ -147,7 +147,7 @@ angular.module('ortolangMarketApp')
                     };
 
                     scope.exportItem = function () {
-                        Content.exportSingle(scope.alias, scope.version, '/', scope.alias);
+                        Content.exportSingle(scope.alias, scope.root, '/', scope.alias);
                     };
 
                     $rootScope.$on('$translateChangeSuccess', function () {
@@ -169,7 +169,6 @@ angular.module('ortolangMarketApp')
                         scope.image = undefined;
                         scope.icons = icons;
                         scope.currentContent = scope.content;
-                        scope.currentRoot = scope.root;
                     }
 
                     function init() {
