@@ -15,7 +15,8 @@ angular.module('ortolangMarketApp')
                 content: '=',
                 alias: '=',
                 itemKey: '=',
-                root: '='
+                root: '=',
+                tags: '='
             },
             templateUrl: 'common/directives/market-item.html',
             link: {
@@ -51,7 +52,7 @@ angular.module('ortolangMarketApp')
                                 }
 
                                 if (scope.content.license !== undefined && scope.content.license !== '') {
-                                    loadLicense(scope.root, scope.content.license);
+                                    loadLicense(scope.itemKey, scope.content.license);
                                 }
 
                                 if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
