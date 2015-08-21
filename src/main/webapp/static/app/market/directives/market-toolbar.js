@@ -163,9 +163,7 @@ angular.module('ortolangMarketApp')
                             scope.orderDirection = $routeParams.orderDirection;
                         }
 
-                        if ($routeParams.content) {
-                            scope.content = $routeParams.content;
-                        }
+                        scope.content = $routeParams.content || undefined;
 
                         var filters = $routeParams.filters;
                         scope.filtersManager.resetFilter();
