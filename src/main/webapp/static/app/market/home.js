@@ -19,32 +19,44 @@ angular.module('ortolangMarketApp')
 
                 $scope.filtersManager = FacetedFilterManager.make();
 
-                var titleFilter = FacetedFilter.make({
-                    id: 'meta_ortolang-item-json.title',
-                    alias: 'title',
+                var wsAliasFilter = FacetedFilter.make({
+                    id: 'meta_ortolang-workspace-json.wsalias',
+                    alias: 'wsalias',
                     type: 'array'
                 });
-                $scope.filtersManager.addAvailableFilter(titleFilter);
+                $scope.filtersManager.addAvailableFilter(wsAliasFilter);
 
-                var optCorpus14 = OptionFacetedFilter.make({
-                    label: 'Corpus 14',
-                    value: 'Corpus 14',
+                var optMC4 = OptionFacetedFilter.make({
+                    label: 'mc4',
+                    value: 'mc4',
                     length: 1
                 });
-                titleFilter.putSelectedOption(optCorpus14);
+                wsAliasFilter.putSelectedOption(optMC4);
+                var optDemonette = OptionFacetedFilter.make({
+                    label: 'demonette',
+                    value: 'demonette',
+                    length: 1
+                });
+                wsAliasFilter.putSelectedOption(optDemonette);
                 var optLA = OptionFacetedFilter.make({
-                    label: 'Littéracie Avancée',
-                    value: 'Littéracie Avancée',
+                    label: 'litteracieavancee',
+                    value: 'litteracieavancee',
                     length: 1
                 });
-                titleFilter.putSelectedOption(optLA);
+                wsAliasFilter.putSelectedOption(optLA);
+                var optCorpus14 = OptionFacetedFilter.make({
+                    label: 'corpus14',
+                    value: 'corpus14',
+                    length: 1
+                });
+                wsAliasFilter.putSelectedOption(optCorpus14);
                 var optComere = OptionFacetedFilter.make({
-                    label: 'CoMeRe (Communication médiée par les réseaux)',
-                    value: 'CoMeRe (Communication médiée par les réseaux)',
+                    label: 'comere',
+                    value: 'comere',
                     length: 1
                 });
-                titleFilter.putSelectedOption(optComere);
-                $scope.filtersManager.addFilter(titleFilter);
+                wsAliasFilter.putSelectedOption(optComere);
+                $scope.filtersManager.addFilter(wsAliasFilter);
 
                 var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
                 $scope.viewMode = viewModeGrid;
