@@ -22,23 +22,27 @@ angular.module('ortolangMarketApp')
                 defaultOptions: {
                     noFormControl: true
                 },
-                apiCheck: {
-                    templateOptions: apiCheck.shape({
-                        fields: apiCheck.arrayOf(formlyApiCheck.formlyFieldOptions)
-                    })
+                apiCheck: function (check) {
+                    return {
+                        templateOptions: {
+                            fields: check.arrayOf(formlyApiCheck.formlyFieldOptions)
+                        }
+                    };
                 },
-                controller: ['$scope', function($scope) {
+                controller: ['$scope', function ($scope) {
                     var averageWidth = Math.floor(12 / $scope.to.fields.length);
                     $scope.colClass = [];
-                    angular.forEach($scope.to.fields, function(field, index) {
+                    angular.forEach($scope.to.fields, function (field, index) {
                         var width = field.templateOptions.width || averageWidth;
                         $scope.colClass[index] = 'col-md-' + width + ' col-sm-' + width + ' col-xs-' + width;
                     });
 
                     // this is what formly-form does, but because we're not using formly-form, we have to do this ourselves.
-                    $scope.$watch('model', function() {
-                        angular.forEach($scope.to.fields, function(field) {
-                            field.runExpressions && field.runExpressions() ;
+                    $scope.$watch('model', function () {
+                        angular.forEach($scope.to.fields, function (field) {
+                            if (field.runExpressions) {
+                                field.runExpressions();
+                            }
                         });
                     }, true);
                 }]
