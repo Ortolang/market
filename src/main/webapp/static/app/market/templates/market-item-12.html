@@ -18,7 +18,7 @@
                         </ul>
                     </div>
                     <div ng-if="content.website"><span translate="MARKET.WEBSITE"></span> :
-                        <ul>
+                        <ul class="list-unstyled">
                             <li><a ng-href="{{content.website}}" ng-bind="content.website" target="_BLANK"></a></li>
                         </ul>
                     </div>
@@ -48,7 +48,7 @@
         <div ng-show="!browse" class="col-md-8">
             <section id="description">
                 <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
-                <article>
+                <article data-target-blank data-content="description">
                     <p ng-bind-html="description"></p>
                 </article>
             </section>
