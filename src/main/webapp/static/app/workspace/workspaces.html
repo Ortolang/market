@@ -146,12 +146,12 @@
     </div>
 </div>
 
-<div ng-if="metadataItemLoaded" ng-show="previewing" class="workspaces container-fluid">
+<div ng-if="metadataItemLoaded" ng-show="previewing" class="container-fluid am-fade-and-slide-right">
     <div class="row toolbar browser-toolbar">
         <div class="btn-toolbar col-md-12" role="toolbar">
             <div class="browser-breadcrumb">
-                <button ng-click="togglePreviewing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
-                
+                <button ng-if="!editing" ng-click="togglePreviewing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
+                <button ng-if="editing" ng-click="toggleEditing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
             </div>
             <div class="btn-toolbar btn-toolbar-right" role="toolbar">
                 <div class="btn-group">
@@ -162,11 +162,12 @@
     </div>
     <div ng-hide="editing" class="row">
         <div class="col-sm-12 col-md-12 container-main workspace-metadata-item">
-            <market-item-preview content="metadataItem" alias="WorkspaceBrowserService.workspace.alias" root="itemKey"></market-item-preview>
+            <market-item-preview content="metadataItem" alias="WorkspaceBrowserService.workspace.alias" root="'head'" item-key="itemKey"></market-item-preview>
         </div>
     </div>
-    <div ng-show="editing">
-        <div ng-include="'workspace/templates/metadata-item-form.html'"></div>
+    <div ng-show="editing" class="am-fade-and-slide-bottom">
+        <!-- <div ng-include="'workspace/templates/metadata-item-form.html'"></div> -->
+        <market-item-editor></market-item-editor>
     </div>
 
 </div>

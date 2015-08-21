@@ -74,10 +74,10 @@ angular.module('ortolangMarketApp')
         $scope.changeWorkspace = function (workspace, init) {
             if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
-                $location.search('preview', undefined);
-                $location.search('edit', undefined);
-                $rootScope.previewing = false;
-                $rootScope.editing = false;
+                $location.search('preview', $rootScope.previewing || undefined);
+                $location.search('edit', $rootScope.editing || undefined);
+                // $rootScope.previewing = false;
+                // $rootScope.editing = false;
 
                 WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
