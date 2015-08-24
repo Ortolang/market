@@ -8,10 +8,37 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', 'FileUploader', 'url', 'ortolangType', 'AuthService',
-        function ($scope, $rootScope, $window, $timeout, FileUploader, url, ortolangType, AuthService) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', 'FileUploader', 'url', 'ortolangType', 'AuthService',
+        function ($scope, $rootScope, $window, $timeout, $modal, FileUploader, url, ortolangType, AuthService) {
 
-            var uploader;
+            var uploader, queueLimitReached, queueLimitModal;
+
+            if ($rootScope.uploader) {
+                uploader = $rootScope.uploader;
+            } else {
+                uploader = $rootScope.uploader = new FileUploader({
+                    alias: 'stream',
+                    autoUpload: true,
+                    removeAfterUpload: false,
+                    queueLimit: 50,
+                    filters: [
+                        {
+                            name: 'noFolder',
+                            fn: function (item) {
+                                return !(!item.type && ((!this.isMacOs && item.size % 4096 === 0) ||
+                                (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 5 < item.name.length - 1))));
+                            }
+                        }
+                    ]
+                });
+                uploader.uploadQueueStatus = undefined;
+                uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                uploader.tokenJustRefreshed = false;
+            }
+
+            function deactivateUploadQueue() {
+                uploader.uploadQueueStatus = undefined;
+            }
 
             function clearItem(fileItem) {
                 $timeout(function () {
@@ -26,33 +53,6 @@ angular.module('ortolangMarketApp')
                 uploader.uploadQueueStatus = 'active';
                 var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
                 $('.upload-queue').find('.upload-elements-wrapper').css('max-height', height / 3);
-            }
-
-            function deactivateUploadQueue() {
-                uploader.uploadQueueStatus = undefined;
-            }
-
-            if ($rootScope.uploader) {
-                uploader = $rootScope.uploader;
-            } else {
-                uploader = $rootScope.uploader = new FileUploader({
-                    alias: 'stream',
-                    autoUpload: true,
-                    removeAfterUpload: false,
-                    queueLimit: 100,
-                    filters: [
-                        {
-                            name: 'noFolder',
-                            fn: function (item) {
-                                return !(!item.type && ((!this.isMacOs && item.size % 4096 === 0) ||
-                                (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 5 < item.name.length - 1))));
-                            }
-                        }
-                    ]
-                });
-                uploader.uploadQueueStatus = undefined;
-                uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
-                uploader.tokenJustRefreshed = false;
             }
 
             $scope.toggleUploadQueueStatus = function () {
@@ -111,8 +111,32 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            uploader.onAfterAddingAll = function () {
-                activateUploadQueue();
+            uploader.onAfterAddingAll = function (addedItems) {
+                if (queueLimitReached) {
+                    angular.forEach(addedItems, function (addedItem) {
+                        uploader.removeFromQueue(addedItem);
+                    });
+                    queueLimitReached = false;
+                } else {
+                    activateUploadQueue();
+                }
+            };
+
+            uploader.onWhenAddingFileFailed = function (item, filter, options) {
+                if (filter.name === 'queueLimit') {
+                    queueLimitReached = true;
+                    if (!queueLimitModal) {
+                        queueLimitModal = $modal({
+                            template: 'workspace/templates/queue-limit-modal.html',
+                            show: true
+                        });
+                        queueLimitModal.$promise.then(function () {
+                            queueLimitModal.$scope.$on('modal.hide', function () {
+                                queueLimitModal = undefined;
+                            });
+                        });
+                    }
+                }
             };
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {

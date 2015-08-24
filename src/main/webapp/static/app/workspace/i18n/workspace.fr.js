@@ -112,6 +112,10 @@ angular.module('ortolangMarketApp')
                 BODY_ROOT: 'Il n\'existe pas de version avec le nom \'{{root}}\'. Vous avez été redirigé vers la version actuelle de l\'espace de travail.',
                 BODY_ALIAS: 'Il n\'existe pas d\'espace de travail avec l\'identifiant \'{{alias}}\' ou vous n\'êtes pas autorisé à acceder à ce workspace.'
             },
+            QUEUE_LIMIT_MODAL: {
+                TITLE: 'Limite d\'importation',
+                BODY: 'Il n\'est pas possible d\'importer plus de <strong>50 fichiers à la fois</strong> par cette méthode : <ul><li>pour importer simultanément plus de 50 fichiers vous avez la possibilité <strong>d\'importer un zip</strong></li><li>pour importer de grande quantité de données vous avez également la faculté de vous connecter à votre workspace <strong>par FTP</strong></li></ul>'
+            },
             DELETE_NON_EMPTY_FOLDER_ALERT: {
                 TITLE: 'Erreur',
                 CONTENT: 'Impossible de supprimer un dossier non vide'
