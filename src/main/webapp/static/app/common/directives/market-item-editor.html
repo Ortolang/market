@@ -1,9 +1,87 @@
 <form name="metadataItemform" novalidate role="form">
 
-<h3 class="bs-callout-label">Titre de la ressource <span class="text-danger">*</span></h3 class="bs-callout-label">
-<div class="form-group bs-callout" show-errors>
-	<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
-    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+<div class="row metadata-item-editor">
+	<div class="col-md-2 editor-aside">
+		<div class="bs-sidebar hidden-print" role="complementary" data-offset-top="-50" bs-affix>
+			<ul class="nav bs-sidenav" bs-scrollspy-list>
+			  <li>
+			    <a href="#basic_info">Informations générales</a>
+			    <ul class="nav">
+			      <li><a href="#whos_involved">Personnes impliquées</a></li>
+			      <li><a href="#describe">Descriptif</a></li>
+			      <li><a href="#modals-usage">Licence</a></li>
+			      <li><a href="#modals-usage">Publications</a></li>
+			    </ul>
+			  </li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-md-10">
+		<section id="basic_info">
+			<h2>Informations générales</h2>
+			<h4 class="bs-callout-label">Catégorie de la ressource <span class="text-danger">*</span></h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+			</div>
+
+			<h4 class="bs-callout-label">Titre de la ressource <span class="text-danger">*</span></h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+			</div>
+		</section>
+
+		<section id="whos_involved">
+			<h2>Personnes impliquées</h2>
+			<h4 class="bs-callout-label">Producteur(s) <span class="text-danger">*</span></h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="producer" ng-model="md.producer" class="form-control" required>
+			</div>
+
+			<h4 class="bs-callout-label">Responsable de la ressource <span class="text-danger">*</span></h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+			</div>
+
+			<h4 class="bs-callout-label">Autres contributeurs</h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+			</div>
+		</section>
+
+		<section id="describe">
+			<h2>Descriptif</h2>
+			<h4 class="bs-callout-label">Description <span class="text-danger">*</span></h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="producer" ng-model="md.producer" class="form-control" required>
+			    <p>Veuillez décrire la ressource de manière à ....</p>
+			</div>
+
+			<h4 class="bs-callout-label">Langues principale du corpus</h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+			</div>
+
+			<h4 class="bs-callout-label">Mots-clès</h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+			</div>
+
+			<h4 class="bs-callout-label">Taille</h4 class="bs-callout-label">
+			<div class="form-group bs-callout" show-errors>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <input type="text" name="title" ng-model="md.title" class="form-control" required>
+			</div>
+		</section>
+	</div>
 </div>
+
 
 </form>

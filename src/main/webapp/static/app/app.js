@@ -26,6 +26,8 @@ angular
         'mgcrea.ngStrap.typeahead',
         'mgcrea.ngStrap.alert',
         'mgcrea.ngStrap.button',
+        'mgcrea.ngStrap.scrollspy',
+        'mgcrea.ngStrap.affix',
         'toggle-switch',
         'hljs',
         'cfp.hotkeys',
