@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
             DOWNLOAD_AGREEMENT: 'Download implies the acceptance of the licence',
             LICENCE_DETAIL: 'License information',
             DEROGATION: 'Code du patrimoine',
-            BIBLIOGRAPHIC_CITATION: 'Bibliographic citation',
+            BIBLIOGRAPHIC_CITATION: 'Bibliographic reference',
             RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}',
             SITE: 'Go to website',
             LINK: 'Link',
