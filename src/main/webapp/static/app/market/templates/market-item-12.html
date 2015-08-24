@@ -160,14 +160,25 @@
             <section id="publications" ng-if="content.publications">
                 <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
                 <div class="section-body-wrapper">
-                    <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong>
-                    <ul class="list-unstyled">
+                    <!-- <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong> -->
+                    <!-- <ul class="list-unstyled">
                         <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
-                    </ul>
-                    <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
+                    </ul> -->
+                    <!-- <p ng-repeat="pub in primaryPublications" ng-bind-html="pub"></p> -->
+                    <dl>
+                        <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>
+                        <dd ng-repeat="pub in primaryPublications" ng-bind-html="pub">
+                        </dd>
+                    </dl>
+                    <!-- <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
                     <ul class="list-unstyled">
                         <li ng-repeat="pub in secondaryPublications" ng-bind-html="pub"></li>
-                    </ul>
+                    </ul> -->
+                    <dl>
+                        <dt translate="MARKET.SECONDARY_PUBLICATIONS"></dt>
+                        <dd ng-repeat="pub in secondaryPublications" ng-bind-html="pub">
+                        </dd>
+                    </dl>
                 </div>
             </section>
         </div>
@@ -206,7 +217,7 @@
                 <div class="panel-body">
 
                     <p>
-                        {{content.derogation}}
+                        <a href="http://www.archivesdefrance.culture.gouv.fr/seda/api/seda_v1-0_accessrestriction_code_xsd_Simple_Type_AccessRestrictionCodeType.htm#AccessRestrictionCodeType" target="_BLANK">{{content.derogation}}</a>
                         <span ng-if="content.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
                         <span ng-if="content.derogation==='AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>
                         <span ng-if="content.derogation==='AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>
