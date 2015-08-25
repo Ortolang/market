@@ -165,7 +165,7 @@
                         <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
                     </ul> -->
                     <!-- <p ng-repeat="pub in primaryPublications" ng-bind-html="pub"></p> -->
-                    <dl>
+                    <dl ng-if="primaryPublications.length>0">
                         <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>
                         <dd ng-repeat="pub in primaryPublications" ng-bind-html="pub">
                         </dd>
@@ -174,7 +174,7 @@
                     <ul class="list-unstyled">
                         <li ng-repeat="pub in secondaryPublications" ng-bind-html="pub"></li>
                     </ul> -->
-                    <dl>
+                    <dl ng-if="secondaryPublications.length>0">
                         <dt translate="MARKET.SECONDARY_PUBLICATIONS"></dt>
                         <dd ng-repeat="pub in secondaryPublications" ng-bind-html="pub">
                         </dd>
