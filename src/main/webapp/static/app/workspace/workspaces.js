@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'Content', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', 'url', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, Content, MetadataFormatResource, Settings, User, Runtime, icons, url) {
+    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'Content', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, Content, MetadataFormatResource, Settings, User, Runtime, icons) {
 
         var modalScope, workspaceListDeferred, workspaceMembersDeferred;
 
@@ -405,7 +405,7 @@ angular.module('ortolangMarketApp')
                 function () {
                     console.log('There is no metadata item for this workspace');
                 }
-            );   
+            );
         }
 
         $scope.hasPresentationMetadata = function () {
@@ -508,7 +508,7 @@ angular.module('ortolangMarketApp')
                         $scope.browserCtrlInitialized = true;
                     }
                     // loadMetadataItem();
-                    
+
                 } else {
                     $scope.browserSettings.wskey = undefined;
                     Settings.store();

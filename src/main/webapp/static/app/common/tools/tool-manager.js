@@ -173,7 +173,7 @@ angular.module('ortolangMarketApp')
                 },
 
                 getJob: function (jobid) {
-                    return this.resource.getJob({jobid:jobid});
+                    return this.resource.getJob({jobid: jobid});
                 },
 
                 createJob: function (formData) {
@@ -181,7 +181,7 @@ angular.module('ortolangMarketApp')
                 },
 
                 abortJob: function (jobId) {
-                    return this.resource.abort({jobId:jobId});
+                    return this.resource.abort({jobId: jobId});
                 },
 
                 getAuthStatus: function () {
@@ -197,18 +197,18 @@ angular.module('ortolangMarketApp')
                 },
 
                 getLog: function (jobId) {
-                    return this.resource.getLog({jobId:jobId});
+                    return this.resource.getLog({jobId: jobId});
                 },
 
                 getResult: function (jobId) {
-                    return this.resource.getResult({jobId:jobId});
+                    return this.resource.getResult({jobId: jobId});
                 },
 
                 getDownloadUrl: function (jobId, path) {
                     return this.url + '/jobs/' + jobId + '/download?path=' + path;
                 },
                 saveResult: function (jobId, formData) {
-                    return this.resource.save({jobId:jobId}, angular.fromJson(angular.toJson(formData)));
+                    return this.resource.save({jobId: jobId}, angular.fromJson(angular.toJson(formData)));
                 }
             };
 
@@ -232,7 +232,7 @@ angular.module('ortolangMarketApp')
             function getActiveTools() {
                 var activeTools = [];
                 angular.forEach(registry, function (tool) {
-                    if(tool.active) {
+                    if (tool.active) {
                         activeTools.push(tool);
                     }
                 });
@@ -250,32 +250,29 @@ angular.module('ortolangMarketApp')
 
             function populateToolList() {
 
-                var queryBuilder = QueryBuilderFactory.make(
-                    {
-                        projection:
-                        'key, ' +
-                        'meta_ortolang-item-json.title as title, ' +
-                        'meta_ortolang-item-json.description as description, ' +
-                        'meta_ortolang-item-json.image as image, ' +
-                        'meta_ortolang-item-json.toolId as id, ' +
-                        'meta_ortolang-item-json.toolHelp as help, ' +
-                        'meta_ortolang-item-json.toolUrl as url, ' +
-                        'meta_ortolang-item-json.toolInputData as inputData, ' +
-                        'meta_ortolang-item-json.toolOutputData as outputData, ' +
-                        'meta_ortolang-item-json.toolFunctionalities as functionalities ',
-                        source: 'collection'
-                    });
+                var queryBuilder = QueryBuilderFactory.make({
+                    projection:
+                    'key, ' +
+                    'meta_ortolang-item-json.title as title, ' +
+                    'meta_ortolang-item-json.description as description, ' +
+                    'meta_ortolang-item-json.image as image, ' +
+                    'meta_ortolang-item-json.toolId as id, ' +
+                    'meta_ortolang-item-json.toolHelp as help, ' +
+                    'meta_ortolang-item-json.toolUrl as url, ' +
+                    'meta_ortolang-item-json.toolInputData as inputData, ' +
+                    'meta_ortolang-item-json.toolOutputData as outputData, ' +
+                    'meta_ortolang-item-json.toolFunctionalities as functionalities ',
+                    source: 'collection'
+                });
                 queryBuilder.equals('status', 'published');
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
 
-
                 var query = queryBuilder.toString();
                 JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
-                    angular.forEach(jsonResults, function(itemMeta) {
-                        var item = {};
-
-                        var data = angular.fromJson(itemMeta);
+                    angular.forEach(jsonResults, function (itemMeta) {
+                        var item = {},
+                            data = angular.fromJson(itemMeta);
                         item.key = data.key;
                         item.id = data.id;
                         item.name = data.title;
@@ -283,7 +280,7 @@ angular.module('ortolangMarketApp')
                         item.documentation = data.help;
                         item.url = data.url;
                         if (data.inputData) {
-                            item.inputData = data.inputData.filter(function(elem, pos) {
+                            item.inputData = data.inputData.filter(function (elem, pos) {
                                 return data.inputData.indexOf(elem) === pos;
                             });
                             angular.forEach(item.inputData, function (input) {
@@ -291,7 +288,7 @@ angular.module('ortolangMarketApp')
                             });
                         }
                         if (data.outputData) {
-                            item.outputData = data.outputData.filter(function(elem, pos) {
+                            item.outputData = data.outputData.filter(function (elem, pos) {
                                 return data.outputData.indexOf(elem) === pos;
                             });
                             angular.forEach(item.outputData, function (output) {
@@ -299,7 +296,7 @@ angular.module('ortolangMarketApp')
                             });
                         }
                         if (data.functionalities) {
-                            item.functionalities = data.functionalities.filter(function(elem, pos) {
+                            item.functionalities = data.functionalities.filter(function (elem, pos) {
                                 return data.functionalities.indexOf(elem) === pos;
                             });
                             angular.forEach(item.functionalities, function (fnc) {
@@ -307,12 +304,12 @@ angular.module('ortolangMarketApp')
                             });
                         }
                         item.meta = data;
-                        if(item.url !== undefined && item.url !== '') {
+                        if (item.url !== undefined && item.url !== '') {
                             item.active = true;
                         }
 
-                        if(data.image !== undefined && data.image !== '') {
-                            ObjectResource.element({key: item.key, path: data.image}).$promise.then(function(oobject) {
+                        if (data.image !== undefined && data.image !== '') {
+                            ObjectResource.element({key: item.key, path: data.image}).$promise.then(function (oobject) {
                                 item.image = Content.getContentUrlWithKey(oobject.key);
 
                                 register(new OrtolangTool(item));
@@ -322,10 +319,9 @@ angular.module('ortolangMarketApp')
                             });
                         } else {
                             register(new OrtolangTool(item));
-                            console.log('register '+item.name);
+                            console.log('register ' + item.name);
                         }
                     });
-                    //console.log('fin populate tool list');
                     loaded = true;
                     $rootScope.$broadcast('tool-list-registered');
 
@@ -401,15 +397,15 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function getFunctonalities () {
+            function getFunctionalities() {
                 return functionalitiesList;
             }
 
-            function getInputDatas () {
+            function getInputDatas() {
                 return inputDatasList;
             }
 
-            function getOutputDatas () {
+            function getOutputDatas() {
                 return outputDatasList;
             }
 
@@ -437,7 +433,7 @@ angular.module('ortolangMarketApp')
                 checkGrant: checkGrant,
                 getKeys: getKeys,
                 toArray: toArray,
-                getFunctionalities: getFunctonalities,
+                getFunctionalities: getFunctionalities,
                 getInputData: getInputDatas,
                 getOutputData: getOutputDatas
             };

@@ -19,9 +19,8 @@ angular.module('ortolangMarketApp')
             PATH: 'Path',
             STATUS: 'Status',
             CLEAR: 'Clear',
-            UPLOAD_ALL: 'Upload all',
-            CLEAR_ALL: 'Clear all',
-            CANCEL_ALL: 'Cancel all',
+            CLEAR_ALL: 'Close',
+            CANCEL_ALL: 'Cancel',
             PREVIEW_METADATA: 'Show metadata',
             ADD_METADATA: 'Add a metadata',
             SNAPSHOT: 'Save workspace state',
@@ -111,6 +110,10 @@ angular.module('ortolangMarketApp')
                 BODY_PATH: 'Wrong path \'{{path}}\'. You have been redirected to the root directory.',
                 BODY_ROOT: 'No snapshot with name \'{{root}}\' found. You have been redirected to the current version of the workspace.',
                 BODY_ALIAS: 'No workspace with ID \'{{alias}}\' found or you are not authorized to access this workspace.'
+            },
+            QUEUE_LIMIT_MODAL: {
+                TITLE: 'Import limit',
+                BODY: 'You cannot import more than <strong>50 files</strong> at the same time using this method:<ul><li>to import more thant 50 files simultaneously you can <strong>import a zip</strong></li><li>for larger amount of data you are also able to <strong>access your workspace by FTP</strong></li></ul>'
             },
             DELETE_NON_EMPTY_FOLDER_ALERT: {
                 TITLE: 'Error',
