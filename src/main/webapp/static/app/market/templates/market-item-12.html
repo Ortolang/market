@@ -76,12 +76,12 @@
 
             </section>
 
-            <section id="keywords" ng-if="keywords || content.corporaLanguages || content.annotationLevels || content.corporaFormats || content.corporaFileEncodings || content.programmingLanguages || content.opearatingSystems || content.toolLanguages">
+            <section id="keywords" ng-if="(keywords && keywords.length>0) || (content.corporaLanguages && content.corporaLanguages.length>0) || content.annotationLevels || content.corporaFormats || content.corporaFileEncodings || content.programmingLanguages || content.opearatingSystems || content.toolLanguages">
                 <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
                 <article>
                     <div class="row">
 
-                        <div ng-if="keywords" class="col-md-3">
+                        <div ng-if="keywords && keywords.length>0" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.KEYWORDS"></dt>
                                 <dd ng-repeat="keyword in keywords">
@@ -90,7 +90,7 @@
                             </dl>
                         </div>
 
-                        <div ng-if="content.corporaLanguages" class="col-md-3">
+                        <div ng-if="content.corporaLanguages && content.corporaLanguages.length>0" class="col-md-3">
                             <dl>
                                 <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
                                 <dd ng-repeat="pLang in content.corporaLanguages">
