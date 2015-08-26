@@ -48,32 +48,34 @@
         <div ng-show="!browse" class="col-md-8">
             <section id="description">
                 <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
-                <article data-target-blank data-content="description">
-                    <p ng-bind-html="description"></p>
+                <article data-content="description">
+                    <p class="text-pane" ng-class="showingDescription ? '' : 'text-pane-small'" data-target-blank ng-bind-html="description"></p>
+                    <button ng-if="!showingDescription" class="btn btn-default" ng-click="toggleDescription()">Lire la suite</button>
                 </article>
             </section>
 
             <section id="contributor" ng-if="content.contributors">
                 <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
 
-                <div class="contributor-entity" ng-repeat="contributor in content.contributors" ng-if="!isProducer(contributor)">
-                    <div ng-if="contributor.entity.emailhash" class="logo-contributor">
-                        <span avatar data-email-hash="contributor.entity.emailhash" data-size="90" data-img-classes="user-avatar img-responsive"></span>
+                <article>
+                    <div class="contributor-entity" ng-repeat="contributor in content.contributors" ng-if="!isProducer(contributor)">
+                        <div ng-if="contributor.entity.emailhash" class="logo-contributor">
+                            <span avatar data-email-hash="contributor.entity.emailhash" data-size="90" data-img-classes="user-avatar img-responsive"></span>
+                        </div>
+                        <div ng-if="!contributor.entity.emailhash" class="logo-contributor thumbnail">
+                            <img ng-if="contributor.entity.img" class="logo-contributor" ng-src="{{contributor.entity.img}}"/>
+                            <span ng-if="!contributor.entity.img" class="fa fa-user fa-5x"></span>
+                        </div>
+                        <div class="contributor-entity-fullname">
+                            <strong ng-if="!contributor.entity.id" ng-bind="contributor.entity.fullname"></strong>
+                            <!-- <a ng-if="contributor.entity.username" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a> -->
+                            <a ng-if="contributor.entity.id" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a>
+                        </div>
+                        <div class="contributor-roles">
+                            <span ng-repeat="role in contributor.role"><i>{{'ROLES.'+role | uppercase | translate}}</i><span ng-if="!$last">, </span></span>
+                        </div>
                     </div>
-                    <div ng-if="!contributor.entity.emailhash" class="logo-contributor thumbnail">
-                        <img ng-if="contributor.entity.img" class="logo-contributor" ng-src="{{contributor.entity.img}}"/>
-                        <span ng-if="!contributor.entity.img" class="fa fa-user fa-5x"></span>
-                    </div>
-                    <div class="contributor-entity-fullname">
-                        <strong ng-if="!contributor.entity.id" ng-bind="contributor.entity.fullname"></strong>
-                        <!-- <a ng-if="contributor.entity.username" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a> -->
-                        <a ng-if="contributor.entity.id" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a>
-                    </div>
-                    <div class="contributor-roles">
-                        <span ng-repeat="role in contributor.role"><i>{{'ROLES.'+role | uppercase | translate}}</i><span ng-if="!$last">, </span></span>
-                    </div>
-                </div>
-
+                </article>
             </section>
 
             <section id="keywords" ng-if="(keywords && keywords.length>0) || (content.corporaLanguages && content.corporaLanguages.length>0) || content.annotationLevels || content.corporaFormats || content.corporaFileEncodings || content.programmingLanguages || content.opearatingSystems || content.toolLanguages">
@@ -160,20 +162,11 @@
             <section id="publications" ng-if="content.publications">
                 <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
                 <div class="section-body-wrapper">
-                    <!-- <strong translate="MARKET.PRIMARY_PUBLICATIONS" ng-if="primaryPublications.length>0"></strong> -->
-                    <!-- <ul class="list-unstyled">
-                        <li ng-repeat="pub in primaryPublications" ng-bind-html="pub"></li>
-                    </ul> -->
-                    <!-- <p ng-repeat="pub in primaryPublications" ng-bind-html="pub"></p> -->
                     <dl ng-if="primaryPublications.length>0">
                         <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>
                         <dd ng-repeat="pub in primaryPublications" ng-bind-html="pub">
                         </dd>
                     </dl>
-                    <!-- <strong translate="MARKET.SECONDARY_PUBLICATIONS" ng-if="secondaryPublications.length>0"></strong>
-                    <ul class="list-unstyled">
-                        <li ng-repeat="pub in secondaryPublications" ng-bind-html="pub"></li>
-                    </ul> -->
                     <dl ng-if="secondaryPublications.length>0">
                         <dt translate="MARKET.SECONDARY_PUBLICATIONS"></dt>
                         <dd ng-repeat="pub in secondaryPublications" ng-bind-html="pub">
