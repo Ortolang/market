@@ -187,7 +187,17 @@
       padding-left: @padding-large-horizontal;
       margin-top: @padding-base-vertical;
     }
-    .section-body-wrapper, article {
+    article {
+      margin-left: @padding-large-horizontal;
+      dt {
+        padding-bottom: 2*@padding-base-vertical;
+      }
+      dd {
+        padding-left: @padding-base-horizontal;
+        padding-bottom: @padding-base-vertical;
+      }
+    }
+    .section-body-wrapper {
       margin-left: @padding-large-horizontal;
       dt {
         padding-bottom: 2*@padding-base-vertical;
