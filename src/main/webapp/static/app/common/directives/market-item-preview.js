@@ -28,11 +28,11 @@ angular.module('ortolangMarketApp')
 
                         if (scope.content.schema) {
 
+                            scope.browse = $location.search().browse;
+                            scope.preview = $location.search().preview;
+
                             if (scope.content.schema === 'http://www.ortolang.fr/schema/012#') {
                                 scope.marketItemTemplate = 'market/templates/market-item-12.html';
-
-                                scope.browse = $location.search().browse;
-                                scope.preview = $location.search().preview;
 
                                 refreshMultilingualValue(scope.content, Settings.language);
 
@@ -137,6 +137,10 @@ angular.module('ortolangMarketApp')
                         }
                     };
 
+                    scope.toggleDescription = function () {
+                        scope.showingDescription = !scope.showingDescription;
+                    };
+
                     scope.isProducer = function (contributor) {
                         var iRole;
                         for (iRole = 0; iRole < contributor.role.length; iRole++) {
@@ -170,6 +174,7 @@ angular.module('ortolangMarketApp')
                         scope.image = undefined;
                         scope.icons = icons;
                         scope.currentContent = scope.content;
+                        scope.showingDescription = false;
                     }
 
                     function init() {
@@ -177,6 +182,7 @@ angular.module('ortolangMarketApp')
                         initScopeVariables();
                         loadItem();
                         scope.initilizing = false;
+
                     }
 
                     // init();
