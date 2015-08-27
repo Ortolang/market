@@ -155,6 +155,12 @@ angular.module('ortolangMarketApp')
                         Content.exportSingle(scope.alias, scope.root, '/', scope.alias);
                     };
 
+                    scope.$on('$routeUpdate', function () {
+                        if ($location.search().browse !== scope.browse) {
+                            scope.browse = $location.search().browse;
+                        }
+                    });
+
                     $rootScope.$on('$translateChangeSuccess', function () {
                         if (scope.content) {
                             refreshMultilingualValue(scope.content, $translate.use());
@@ -183,7 +189,6 @@ angular.module('ortolangMarketApp')
                         initScopeVariables();
                         loadItem();
                         scope.initilizing = false;
-
                     }
 
                     // init();
