@@ -318,7 +318,8 @@ module.exports = function (grunt) {
                         'assets/**/*',
                         'fonts/**/*',
                         'resources/**/*',
-                        '**/*.json'
+                        '**/*.json',
+                        'vendor/player_flv_maxi.swf'
                     ]
                 }, {
                     expand: true,
@@ -381,6 +382,7 @@ module.exports = function (grunt) {
                         'bower_components/font-awesome/fonts/*',
                         'bower_components/octicons/octicons/*',
                         'bower_components/zeroclipboard/dist/*.swf',
+                        'vendor/player_flv_maxi.swf',
                         '!bower_components/*/{src,src/**,test,test/**}'
                     ],
                     dest: '<%= yeoman.dist %>'

@@ -1,4 +1,8 @@
 <div class="visualizer-wrapper close-on-click">
-    <video id="simple-html5-video" controls ng-src="{{elements[0].downloadUrl}}"></video>
+    <video ng-if="type !== 'video/x-flv'" id="simple-html5-video" controls ng-src="{{elements[0].downloadUrl}}"></video>
+    <object ng-if="type === 'video/x-flv'" type="application/x-shockwave-flash" data="vendor/player_flv_maxi.swf" width="320" height="240">
+        <param name="movie" value="player_flv_maxi.swf" />
+        <param name="FlashVars" value="flv={{elements[0].downloadUrl}}&amp;margin=0&amp;showstop=1&amp;showvolume=1&amp;showtime=1&amp;showfullscreen=1" />
+    </object>
 </div>
 

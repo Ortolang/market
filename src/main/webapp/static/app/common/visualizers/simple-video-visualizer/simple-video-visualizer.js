@@ -22,6 +22,7 @@ angular.module('ortolangVisualizers')
                 'video/webm': true,
                 'video/quicktime': true,
                 'video/theora': true,
+                'video/x-flv': true,
                 'application/octet-stream': {webm: true}
             }
         });
@@ -55,6 +56,7 @@ angular.module('ortolangVisualizers')
                     if (scope.elements) {
                         scope.visualizer.header.fileName = scope.elements[0].name;
                         scope.visualizer.header.fileType = scope.elements[0].mimeType;
+                        scope.type = scope.elements[0].mimeType;
                     }
                     scope.visualizer.content.classes = 'center middle';
                 }
