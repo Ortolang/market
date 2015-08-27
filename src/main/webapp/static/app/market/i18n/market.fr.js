@@ -63,7 +63,7 @@ angular.module('ortolangMarketApp')
             RESOURCE_TYPE: 'Type de ressource',
             FACET: {
                 CORPORA_TYPE: 'Type de corpus',
-                ALL_CORPORA: 'Tout les corpus',
+                ALL_CORPORA: 'Tous les corpus',
                 ANNOTATION_LEVEL: 'Niveaux d\'annotations',
                 ALL_ANNOTATION_LEVEL: 'Tout niveaux d\'annotations',
                 TEXT_FORMAT: 'Format',
@@ -71,7 +71,7 @@ angular.module('ortolangMarketApp')
                 TEXT_ENCODING: 'Type Encodage',
                 ALL_TEXT_ENCODING: 'Tout encodages de caractères',
                 STATUS_OF_USE: 'Droits d\'utilisations',
-                ALL_STATUS_OF_USE: 'Tout les droits d\'utilisations',
+                ALL_STATUS_OF_USE: 'Tous les droits d\'utilisations',
                 CORPORA_LANG: 'Langue du corpus',
                 ALL_LANG: 'Toutes les Langues',
                 CORPORA_DATATYPES: 'Type de source',
