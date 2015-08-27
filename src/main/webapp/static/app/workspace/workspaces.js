@@ -74,10 +74,10 @@ angular.module('ortolangMarketApp')
         $scope.changeWorkspace = function (workspace, init) {
             if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
-                $location.search('preview', $rootScope.previewing || undefined);
-                $location.search('edit', $rootScope.editing || undefined);
-                // $rootScope.previewing = false;
-                // $rootScope.editing = false;
+                $location.search('preview', $scope.previewing);
+                $location.search('edit', $scope.editing);
+                // $scope.previewing = false;
+                // $scope.editing = false;
 
                 WorkspaceBrowserService.workspace = workspace;
                 ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
@@ -99,7 +99,6 @@ angular.module('ortolangMarketApp')
         $scope.$on('$destroy', function () {
             $rootScope.browsing = false;
             $rootScope.noFooter = false;
-            $rootScope.previewing = false;
         });
 
         $scope.$on('$routeUpdate', function () {
@@ -378,13 +377,13 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.togglePreviewing = function () {
-            $rootScope.previewing = !$rootScope.previewing;
-            $location.search('preview', $rootScope.previewing || undefined);
+            $scope.previewing = !$scope.previewing;
+            $location.search('preview', $scope.previewing || undefined);
         };
 
         $scope.toggleEditing = function () {
-            $rootScope.editing = !$rootScope.editing;
-            $location.search('edit', $rootScope.editing || undefined);
+            $scope.editing = !$scope.editing;
+            $location.search('edit', $scope.editing || undefined);
         };
 
         function loadMetadataItem() {
@@ -473,8 +472,8 @@ angular.module('ortolangMarketApp')
             $scope.resizeBrowser();
             $scope.icons = icons;
 
-            $rootScope.previewing = !!$location.search().preview;
-            $rootScope.editing = !!$location.search().edit;
+            $scope.previewing = !!$location.search().preview;
+            $scope.editing = !!$location.search().edit;
             $scope.metadataItemLoaded = false;
 
             getWorkspaceList();

@@ -3,7 +3,7 @@
 <div ng-hide="browsing || previewing" class="workspaces container-fluid">
     <div class="row toolbar browser-toolbar">
         <div ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside"></div>
-        
+
     </div>
 
     <div class="row">
@@ -142,11 +142,10 @@
             </div>
         </div>
 
-        
     </div>
 </div>
 
-<div ng-if="metadataItemLoaded" ng-show="previewing" class="container-fluid am-fade-and-slide-right">
+<div ng-if="metadataItemLoaded && previewing" class="container-fluid am-fade-and-slide-right">
     <div class="row toolbar browser-toolbar">
         <div class="btn-toolbar col-md-12" role="toolbar">
             <div class="browser-breadcrumb">
