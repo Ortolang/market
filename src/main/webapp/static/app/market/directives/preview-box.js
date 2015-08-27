@@ -8,29 +8,31 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('previewBox', ['ObjectResource',  function (ObjectResource) {
+    .directive('previewBox', ['ObjectResource', 'VisualizerManager',  function (ObjectResource, VisualizerManager) {
         return {
             restrict: 'EA',
             scope: {
                 preview: '=',
-                key: '='
+                key: '=',
+                alias: '=',
+                root: '='
             },
             templateUrl: 'market/directives/preview-box.html',
             link: {
                 pre : function (scope) {
 
-                    function loadPreview(collection, paths) {
-                        scope.previewFiles = [];
+                    function loadPreview(paths) {
                         angular.forEach(paths, function (path) {
-                            ObjectResource.element({key: collection, path: path}).$promise.then(function (oobject) {
-                                scope.previewFiles.push(oobject);
-                            }, function (reason) {
-                                console.error(reason);
-                            });
+                            
+                            if(path.substr(path.lastIndexOf('/')+1).toLowerCase() === 'index.html') {
+                                scope.path = path;
+                                scope.preview.type = 'url';
+                            }
+                            
                         });
                     }
 
-                    loadPreview(scope.key, scope.preview.paths);
+                    loadPreview(scope.preview.paths);
                 }
             }
         };

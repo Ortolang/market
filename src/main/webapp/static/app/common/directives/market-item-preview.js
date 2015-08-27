@@ -172,6 +172,7 @@ angular.module('ortolangMarketApp')
                         // Show info, browse, ...
                         scope.marketItemTemplate = undefined;
                         scope.image = undefined;
+                        scope.imgtitle = undefined;
                         scope.icons = icons;
                         scope.currentContent = scope.content;
                         scope.showingDescription = false;
