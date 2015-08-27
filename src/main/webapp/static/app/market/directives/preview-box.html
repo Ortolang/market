@@ -1,9 +1,10 @@
-<div visualizer class="panel panel-default"  ng-if="previewFiles">
+<div class="panel panel-default">
     <div class="panel-heading"><span class="glyphicon glyphicon-eye-open fa-fw"></span> {{'MARKET.PREVIEW' | translate}}</div>
     <div class="panel-body">
 
         <div class="preview-box">
-            <div ng-if="preview.type === 'line'" ng-include="'market/preview-line-template.html'"></div>
+            <div ng-if="preview.type === 'line'" preview-line collection="key" paths="preview.paths"></div>
+            <div ng-if="preview.type === 'url'" preview-url path="path" alias="alias" root="root"></div>
        </div>
     </div>
 </div>
