@@ -16,6 +16,6 @@ angular.module('ortolangMarketApp')
                 size: '@',
                 imgClasses: '@'
             },
-            template: '<img width="{{size}}px" ng-src="https://www.gravatar.com/avatar/{{emailHash}}?d=retro&s={{size}}" ng-class="imgClasses"/>'
+            template: '<img width="{{size}}px" ng-src="https://www.gravatar.com/avatar/{{emailHash ? emailHash + \'?d=retro\' : \'00000000000000000000000000000000?d=mm\'}}&s={{size}}" ng-class="imgClasses"/>'
         };
     });

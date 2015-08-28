@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.getContentUrlWithPath = function (path, alias, root, noSSL) {
-            return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + '/' + path;
+            return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + (path.charAt(0) === '/' ? '' : '/') + path;
         };
 
         this.getPreviewUrlWithKey = function (key, size, noSSL) {

@@ -155,6 +155,12 @@ angular.module('ortolangMarketApp')
                         Content.exportSingle(scope.alias, scope.root, '/', scope.alias);
                     };
 
+                    scope.seeContributorPage = function (contributor) {
+                        if (contributor.entity.id) {
+                            $location.url('/contributors/' + contributor.entity.id);
+                        }
+                    };
+
                     scope.$on('$routeUpdate', function () {
                         if ($location.search().browse !== scope.browse) {
                             scope.browse = $location.search().browse;

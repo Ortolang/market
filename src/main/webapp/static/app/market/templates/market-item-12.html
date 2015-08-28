@@ -3,21 +3,21 @@
         <div class="media">
             <a class="pull-left item-logo">
                 <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
-                <img ng-if="image" ng-src="{{image}}" class="thumbnail image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                <img ng-if="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
             </a>
             <div class="media-body">
-                <h1>{{title}}</h1>
+                <h1 class="market-item-title">{{title}}</h1>
 
                 <div ng-hide="browse">
 
-                    <div><span translate="MARKET.PRODUCER"></span> :
+                    <div class="market-item-producers"><span translate="MARKET.PRODUCER"></span> :
                         <ul class="list-unstyled">
                             <li ng-repeat="contributor in content.contributors" ng-if="isProducer(contributor)">
                                 <a ng-href='#/producers/{{contributor.entity.id}}' ng-bind="contributor.entity.fullname"></a>
                             </li>
                         </ul>
                     </div>
-                    <div ng-if="content.website"><span translate="MARKET.WEBSITE"></span> :
+                    <div ng-if="content.website" class="market-item-website"><span translate="MARKET.WEBSITE"></span> :
                         <ul class="list-unstyled">
                             <li><a ng-href="{{content.website}}" ng-bind="content.website" target="_BLANK"></a></li>
                         </ul>
@@ -45,41 +45,40 @@
             <div browser></div>
         </div>
 
-        <div ng-show="!browse" class="col-md-8">
+        <div ng-show="!browse" class="col-md-8 market-item-presentation-metadata">
             <section id="description">
-                <header><span class="octicon octicon-book fa-fw" style="font-size: 26px"></span> {{'DESCRIPTION' | translate}}</header>
+                <h4>{{'DESCRIPTION' | translate}}</h4>
                 <article data-content="description">
-                    <p class="text-pane" ng-class="showingDescription ? '' : 'text-pane-small'" data-target-blank ng-bind-html="description"></p>
+                    <div class="description-wrapper">
+                        <div class="text-pane" ng-class="showingDescription ? '' : 'text-pane-small'" data-target-blank ng-bind-html="description"></div>
+                        <div ng-if="!showingDescription" class="show-more-end" ng-click="toggleDescription()"></div>
+                    </div>
                     <button ng-if="!showingDescription" class="btn btn-default" ng-click="toggleDescription()">Lire la suite</button>
                 </article>
             </section>
 
-            <section id="contributor" ng-if="content.contributors">
-                <header><span class="fa fa-user fa-fw"></span> {{'MARKET.CONTRIBUTOR' | translate}}</header>
+            <section class="contributors" ng-if="content.contributors">
+                <h4>{{'MARKET.CONTRIBUTOR' | translate}}</h4>
 
                 <article>
-                    <div class="contributor-entity" ng-repeat="contributor in content.contributors" ng-if="!isProducer(contributor)">
-                        <div ng-if="contributor.entity.emailhash" class="logo-contributor">
-                            <span avatar data-email-hash="contributor.entity.emailhash" data-size="90" data-img-classes="user-avatar img-responsive"></span>
-                        </div>
-                        <div ng-if="!contributor.entity.emailhash" class="logo-contributor thumbnail">
-                            <img ng-if="contributor.entity.img" class="logo-contributor" ng-src="{{contributor.entity.img}}"/>
-                            <span ng-if="!contributor.entity.img" class="fa fa-user fa-5x"></span>
-                        </div>
-                        <div class="contributor-entity-fullname">
-                            <strong ng-if="!contributor.entity.id" ng-bind="contributor.entity.fullname"></strong>
-                            <!-- <a ng-if="contributor.entity.username" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a> -->
-                            <a ng-if="contributor.entity.id" ng-bind="contributor.entity.fullname" ng-href='#/contributors/{{contributor.entity.id}}'></a>
-                        </div>
-                        <div class="contributor-roles">
-                            <span ng-repeat="role in contributor.role"><i>{{'ROLES.'+role | uppercase | translate}}</i><span ng-if="!$last">, </span></span>
+                    <div class="row">
+                        <div ng-repeat="contributor in content.contributors" ng-if="!isProducer(contributor)" ng-click="seeContributorPage(contributor)"
+                             class="media profile-card contributor-card col-md-6 col-lg-4" ng-class="{'contributor-link': contributor.entity.id}">
+                            <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
+                            </div>
+                            <div class="media-body">
+                                <span class="name">{{contributor.entity.fullname}}</span>
+                                <div class="small roles">
+                                    <span ng-repeat="role in contributor.role">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </article>
             </section>
 
-            <section id="keywords" ng-if="(keywords && keywords.length>0) || (content.corporaLanguages && content.corporaLanguages.length>0) || content.annotationLevels || content.corporaFormats || content.corporaFileEncodings || content.programmingLanguages || content.opearatingSystems || content.toolLanguages">
-                <header><span class="fa fa-info fa-fw"></span> {{'MARKET.ADDITIONAL_INFORMATION' | translate}}</header>
+            <section class="keywords" ng-if="(keywords && keywords.length>0) || (content.corporaLanguages && content.corporaLanguages.length>0) || content.annotationLevels || content.corporaFormats || content.corporaFileEncodings || content.programmingLanguages || content.opearatingSystems || content.toolLanguages">
+                <h4>{{'MARKET.ADDITIONAL_INFORMATION' | translate}}</h4>
                 <article>
                     <div class="row">
 
@@ -160,7 +159,7 @@
             </section>
 
             <section id="publications" ng-if="content.publications">
-                <header><span class="fa fa-book fa-fw"></span> {{'MARKET.PUBLICATIONS' | translate}}</header>
+                <h4>{{'MARKET.PUBLICATIONS' | translate}}</h4>
                 <div class="section-body-wrapper">
                     <dl ng-if="primaryPublications.length>0">
                         <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>

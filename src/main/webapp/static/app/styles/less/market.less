@@ -2,7 +2,7 @@
   background-color: @main-bg;
   .panel-heading {
     font-size: @font-size-h4;
-    font-weight: 200;
+    font-weight: 300;
   }
 }
 
@@ -134,7 +134,8 @@
 }
 
 .text-pane-small {
-  height: 50px;
+  max-height: 144px;
+  margin-bottom: @line-height-computed;
 }
 
 .market-item {
@@ -152,9 +153,10 @@
       margin-top: @padding-large-vertical;
     }
     .image {
-      max-width: 200px;
-      max-height: 200px;
+      max-width: 180px;
+      max-height: 180px;
       background-color: @main-bg;
+      margin-bottom: 2 * @padding-large-vertical;
     }
 
     ul {
@@ -165,80 +167,114 @@
     .all-versions {
       padding-top: @padding-small-vertical;
     }
+    .market-item-title {
+      font-size: @font-size-h2;
+    }
+    .market-item-producers, .market-item-website {
+      a {
+        font-style: italic;
+      }
+    }
   }
 
   aside {
-    padding-top: 3*@padding-large-vertical;
     #preview-license {
       cursor: pointer;
     }
-
   }
-  section {
-    padding-top: 3*@padding-large-vertical;
-    padding-bottom: 3*@padding-large-vertical;
-
-    header {
-      font-size: @font-size-h3;
-      font-weight: 200;
-      margin-bottom: @padding-large-vertical;
-    }
-    ul {
-      padding-left: @padding-large-horizontal;
-      margin-top: @padding-base-vertical;
-    }
-    article {
-      margin-left: @padding-large-horizontal;
-      dt {
-        padding-bottom: 2*@padding-base-vertical;
-      }
-      dd {
-        padding-left: @padding-base-horizontal;
-        padding-bottom: @padding-base-vertical;
-      }
-    }
-    .section-body-wrapper {
-      margin-left: @padding-large-horizontal;
-      dt {
-        padding-bottom: 2*@padding-base-vertical;
-      }
-      dd {
-        padding-left: @padding-base-horizontal;
-        padding-bottom: 3*@padding-base-vertical;
-      }
-    }
-    p {
-      text-align: justify;
-    }
-
-    .contributor-entity {
-      display: inline-block;
-      vertical-align: top;
-      padding: 10px;
-    }
-    .logo-contributor {
-      height: 100px;
-      width: 160px;
-      text-align: center;
-      color: lightgray;
-      padding: @padding-base-horizontal;
-
-      img {
-        margin-left: auto;
-        margin-right: auto;
-      }
-    }
-    .contributor-entity-fullname {
-      width: 160px;
-      margin-top: 10px;
-    }
-    .contributor-roles {
-      width: 160px;
-    }
+  .market-item-presentation-metadata, aside {
+    margin-top: 3 * @padding-large-vertical;
   }
+  .market-item-presentation-metadata {
 
-  section:not(:first-child) {
-    border-top: 1px solid @gray-lighter;
+    section {
+      margin-top: 2 * @padding-base-vertical;
+      padding-bottom: 3 * @padding-large-vertical;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid @gray-lighter;
+      }
+
+      &.keywords, &.contributors {
+        padding-bottom: 3 * @padding-large-vertical - @line-height-computed;
+      }
+
+      h4 {
+        font-weight: 300;
+        margin-bottom: 2 * @padding-large-vertical;
+      }
+      ul {
+        padding-left: @padding-large-horizontal;
+        margin-top: @padding-base-vertical;
+      }
+      article {
+        margin-left: 2 * @padding-small-horizontal;
+        margin-right: 2 * @padding-small-horizontal;
+        dt {
+          padding-bottom: 2*@padding-base-vertical;
+        }
+        dd {
+          padding-left: @padding-base-horizontal;
+          padding-bottom: @padding-base-vertical;
+        }
+      }
+      .section-body-wrapper {
+        margin-left: @padding-large-horizontal;
+        dt {
+          padding-bottom: 2*@padding-base-vertical;
+        }
+        dd {
+          padding-left: @padding-base-horizontal;
+          padding-bottom: 3*@padding-base-vertical;
+        }
+      }
+      p {
+        text-align: justify;
+      }
+      .contributor-card {
+        margin-top: 0;
+        .roles {
+          font-style: italic;
+        }
+        &.contributor-link {
+          cursor: pointer;
+          .name {
+            -webkit-transition: color 500ms;
+            -moz-transition: color 500ms;
+            -ms-transition: color 500ms;
+            -o-transition: color 500ms;
+            transition: color 500ms;
+          }
+          &:hover {
+            .name {
+              color: @ortolang-blue;
+            }
+          }
+        }
+      }
+      .description-wrapper {
+        position: relative;
+        .show-more-end {
+          background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
+          background-image: -webkit-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+          background-image: -moz-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+          background-image: -ms-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+          background-image: -o-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+          background: linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
+          filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#00ffffff',EndColorStr='#ffffff');
+          bottom: 0;
+          cursor: pointer;
+          height: 30px;
+          left: 0;
+          position: absolute;
+          width: 100%;
+        }
+      }
+    }
   }
 
   .preview-box {
@@ -275,7 +311,7 @@
 
   .producers {
     a {
-      font-weight: 200;
+      font-weight: 300;
     }
   }
 }

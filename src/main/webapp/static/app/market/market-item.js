@@ -70,7 +70,7 @@ angular.module('ortolangMarketApp')
                             var queryOrtolangMeta = 'select from ' + $scope.ortolangObject['meta_ortolang-item-json'];
                             JsonResultResource.get({query: queryOrtolangMeta}).$promise.then(function (jsonObject) {
                                 $scope.item = angular.fromJson(jsonObject[0]);
-                                $scope.ready = true;       
+                                $scope.ready = true;
                             });
 
                         }
