@@ -2,17 +2,17 @@
 
 <div class="row metadata-item-editor">
 	<div class="col-md-2 editor-aside">
-		<div class="bs-sidebar hidden-print" role="complementary" data-offset-top="-50" bs-affix>
-			<ul class="nav bs-sidenav">
-			  <li bs-scrollspy>
+		<div class="bs-sidebar hidden-print" role="complementary" data-offset-top="-45" bs-affix>
+			<ul class="nav bs-sidenav" bs-scrollspy>
+			  <li>
 			    <ul class="nav">
-			    	<li data-target="#basic_info" bs-scrollspy><a href="#basic_info">Informations générales</a></li>
-			      <li data-target="#whos_involved" bs-scrollspy><a href="">Personnes impliquées</a></li>
-			      <li><a href="#describe">Descriptif</a></li>
-			      <li><a href="#modals-usage">Licence</a></li>
-			      <li><a href="#modals-usage">Publications</a></li>
-			      <li><hr/></li>
-			      <li><button class="btn btn-primary" ng-click="submitForm()">Appliquer</button></li>
+			    	<li data-target="#basic_info" bs-scrollspy><a href="" ng-click="scrolltoHref('basic_info')">Informations générales</a></li>
+					<li data-target="#whos_involved" bs-scrollspy><a href="" ng-click="scrolltoHref('whos_involved')">Personnes impliquées</a></li>
+					<li data-target="#describe" bs-scrollspy><a href="" ng-click="scrolltoHref('describe')">Descriptif</a></li>
+					<!-- <li><a href="" ng-click="scrolltoHref('licence')">Licence</a></li>
+					<li><a href="" ng-click="scrolltoHref('publications')">Publications</a></li> -->
+					<!-- <li><hr/></li>
+					<li><button class="btn btn-primary" ng-click="submitForm()">Appliquer</button></li> -->
 			    </ul>
 			  </li>
 			</ul>

@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$translate', '$http', 'ortolangType', 'url', 'WorkspaceBrowserService', function ($translate, $http, ortolangType, url, WorkspaceBrowserService) {
+    .directive('marketItemEditor', ['$translate', '$http', '$location', '$anchorScroll', 'ortolangType', 'url', 'WorkspaceBrowserService', function ($translate, $http, $location, $anchorScroll, ortolangType, url, WorkspaceBrowserService) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',
@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
             link: {
                 pre: function (scope) {
 
-                    scope.submitForm = function() {
+                    scope.submitForm = function () {
                         console.log('submit form');
 
                         for(var propertyName in scope.metadata) {
@@ -86,6 +86,16 @@ angular.module('ortolangMarketApp')
                         }
                         return false;
                     }
+
+                    // ScrollSpy //
+
+                    scope.scrolltoHref = function (id) {
+                        // set the location.hash to the id of
+                        // the element you wish to scroll to.
+                        $location.hash(id);
+                        // call $anchorScroll()
+                        $anchorScroll();
+                    };
 
                     function init() {
                         scope.itemTypes = [ 
