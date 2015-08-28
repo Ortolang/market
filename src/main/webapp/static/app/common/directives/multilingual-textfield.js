@@ -22,7 +22,12 @@ angular.module('ortolangMarketApp')
                 pre : function (scope, elem, attrs) {
                     // scope.values = [];
                     scope.type = scope.type || 'default';
-                    scope.languages = [{key:'fr',value: $translate.instant('LANGUAGES.FR')}, {key:'en', value: $translate.instant('LANGUAGES.EN')}];
+                    scope.languages = [
+                        {key:'fr',value: $translate.instant('LANGUAGES.FR')}, 
+                        {key:'en', value: $translate.instant('LANGUAGES.EN')}, 
+                        {key:'es', value: $translate.instant('LANGUAGES.ES')},
+                        {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
+                    ];
 
                     scope.addTextfield = function() {
                         scope.model.push({lang:'', value: ''});

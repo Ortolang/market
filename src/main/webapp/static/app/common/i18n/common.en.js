@@ -79,6 +79,8 @@ angular.module('ortolangMarketApp')
         },
         LANGUAGES: {
             FR: 'Français',
-            EN: 'Anglais'
+            EN: 'Anglais',
+            ES: 'Spanish',
+            ZH: 'Chinese'
         }
     });
