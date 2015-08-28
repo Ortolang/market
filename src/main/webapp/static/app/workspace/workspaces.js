@@ -398,11 +398,21 @@ angular.module('ortolangMarketApp')
                         $scope.metadataItemLoaded = true;
                     }).error(function (reason) {
                         $scope.code = undefined;
+                        $scope.code = undefined;
+                        $scope.metadataItem = undefined;
+                        $scope.itemKey = undefined;
+
+                        $scope.metadataItemLoaded = true;
                         console.error('Cant load metadata content cause ' + reason);
                     });
                 },
                 function () {
                     console.log('There is no metadata item for this workspace');
+                    $scope.code = undefined;
+                    $scope.metadataItem = undefined;
+                    $scope.itemKey = undefined;
+
+                    $scope.metadataItemLoaded = true;
                 }
             );
         }

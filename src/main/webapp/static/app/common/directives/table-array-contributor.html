@@ -1,0 +1,29 @@
+<div>
+	
+	<table class="table table-striped table-bordered">
+	    <thead>
+	        <tr>
+	            <th colspan="5">
+	                <div class="btn-group">
+	                    <button type="button" class="btn btn-default">
+	                        Nouveau ...
+	                    </button>
+	                </div>
+	            </th>
+	        </tr>
+	        <tr>
+	            <th>Type</th>
+	            <th>Action</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="category in model" ng-if="category.setted === true">
+	            <td ng-bind="category.label"></td>
+	            <td>   
+	                <button type="button" class="btn btn-default" ng-click="selectedCategory.cat = category.label">Editer</button>
+	                <!-- <button type="button" class="btn btn-default" ng-click="category.setted = false">Supprimer</button> -->
+	            </td>
+	        </tr>
+	    </tbody>
+	</table>
+</div>

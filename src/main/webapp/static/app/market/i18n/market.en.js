@@ -123,6 +123,12 @@ angular.module('ortolangMarketApp')
             ACTIVATED_FILTERS: 'Activated filters',
             NO_ITEM: 'No resource available',
             NO_PRODUCER: 'No producer available',
-            PUBLISHED_ON: 'Published on'
+            PUBLISHED_ON: 'Published on',
+            ITEM_TYPE: {
+                CORPORA: 'Corpora',
+                LEXICON: 'Lexicon',
+                TOOL: 'Tool',
+                INTEGRATED_PROJECT: 'Integrated Project',
+            }
         }
     });

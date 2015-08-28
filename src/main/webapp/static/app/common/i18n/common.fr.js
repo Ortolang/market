@@ -76,6 +76,10 @@ angular.module('ortolangMarketApp')
             SPONSOR: 'Soutien financier',
             TRANSCRIBER: 'Transcripteur',
             TRANSLATOR: 'Traducteur'
+        },
+        LANGUAGES: {
+            FR: 'Français',
+            EN: 'Anglais'
         }
         
     });

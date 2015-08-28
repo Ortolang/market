@@ -1,0 +1,11 @@
+<div class="form-horizontal">
+	<h4 class="bs-callout-label">{{label}} <span ng-if="required" class="text-danger">*</span></h4 class="bs-callout-label">
+	<div ng-repeat="value in model">
+		<hr ng-if="$index>0"/>
+		<div class="form-group bs-callout">
+				<input type="text" ng-model="value[track]" class="form-control"></input>
+				<p ng-bind="description"></p>
+			</div>
+	</div>
+	<div class="bs-callout-toolbar"><button class="btn btn-success" ng-click="addTextfield()"><span ng-class="::icons.plus"></span> Ajouter</button></div>
+</div>
