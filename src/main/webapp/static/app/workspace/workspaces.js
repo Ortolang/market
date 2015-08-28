@@ -74,8 +74,8 @@ angular.module('ortolangMarketApp')
         $scope.changeWorkspace = function (workspace, init) {
             if (init || !$scope.isActiveWorkspace(workspace)) {
                 $location.search('alias', workspace.alias);
-                $location.search('preview', $scope.previewing);
-                $location.search('edit', $scope.editing);
+                $location.search('preview', $scope.previewing || undefined);
+                $location.search('edit', $scope.editing || undefined);
                 // $scope.previewing = false;
                 // $scope.editing = false;
 
@@ -104,6 +104,16 @@ angular.module('ortolangMarketApp')
         $scope.$on('$routeUpdate', function () {
             if ($location.search().browse) {
                 $rootScope.browsing = true;
+            }
+            if ($location.search().preview) {
+                $scope.previewing = true;
+            } else {
+                $scope.previewing = false;
+            }
+            if ($location.search().edit) {
+                $scope.editing = true;
+            } else {
+                $scope.editing = false;
             }
         });
 
