@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc service
- * @name ortolangVisualizers.SimpleTextVisualizer
+ * @name ortolangVisualizers.TextVisualizer
  * @description
- * # SimpleTextVisualizer
+ * # TextVisualizer
  * Provider in the ortolangVisualizers.
  */
 angular.module('ortolangVisualizers')
-    .provider('SimpleTextVisualizer', ['VisualizerFactoryProvider', 'VisualizerManagerProvider', function (VisualizerFactoryProvider, VisualizerManagerProvider) {
+    .provider('TextVisualizer', ['VisualizerFactoryProvider', 'VisualizerManagerProvider', function (VisualizerFactoryProvider, VisualizerManagerProvider) {
 
         var visualizer = VisualizerFactoryProvider.$get().make({
-            id: 'SimpleTextVisualizer',
+            id: 'TextVisualizer',
             name: {
                 fr: 'Visualiseur de texte',
                 en: 'Text Visualizer'
@@ -43,20 +43,21 @@ angular.module('ortolangVisualizers')
 
 /**
  * @ngdoc directive
- * @name ortolangVisualizers.directive:simpleTextVisualizer
+ * @name ortolangVisualizers.directive:textVisualizer
  * @description
  * # ortolangVisualizers
  */
 angular.module('ortolangVisualizers')
-    .directive('simpleTextVisualizer', ['Content', function (Content) {
+    .directive('textVisualizer', ['Content', function (Content) {
 
         return {
-            templateUrl: 'common/visualizers/simple-text-visualizer/simple-text-visualizer.html',
+            templateUrl: 'common/visualizers/text-visualizer/text-visualizer.html',
             restrict: 'A',
             link: {
                 pre: function (scope, element, attrs) {
                     var mimeType = scope.elements[0].mimeType,
                         limit = 20000;
+                    scope.hasPreview = false;
                     if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml' || mimeType === 'application/xslt+xml') {
                         scope.language = 'xml';
                     } else if (mimeType === 'text/html' || mimeType === 'text/plain') {
@@ -72,6 +73,7 @@ angular.module('ortolangVisualizers')
                     } else {
                         scope.language = undefined;
                     }
+
                     scope.truncated = scope.forceFullData ? false : scope.elements[0].size >= limit;
                     scope.visualizer.header = {
                         fileName: scope.elements[0].name,
@@ -79,12 +81,12 @@ angular.module('ortolangVisualizers')
                     };
                     scope.visualizer.footer = {
                         display: scope.truncated,
-                        text: 'SIMPLE_TEXT_VISUALISER.EXCERPT'
+                        text: 'TEXT_VISUALIZER.EXCERPT'
                     };
                     scope.visualizer.footer.actions = [
                         {
                             name: 'seeMore',
-                            text: 'SIMPLE_TEXT_VISUALISER.SEE_MORE'
+                            text: 'TEXT_VISUALIZER.SEE_MORE'
                         }
                     ];
                     scope.doAction = function (name) {
@@ -108,6 +110,37 @@ angular.module('ortolangVisualizers')
                         } else {
                             scope.data = data;
                         }
+                        if (mimeType === 'text/html' || mimeType === 'application/xhtml+xml' ||
+                            (mimeType === 'application/xml' && data.indexOf('tei-boilerplate') !== -1)) {
+                            scope.hasPreview = true;
+                            scope.tabs = {};
+                            scope.tabs.activeTab = 'preview';
+                            scope.visualizer.header.actions = [
+                                {
+                                    name: 'showSource',
+                                    hide: function () {
+                                        return scope.tabs.activeTab === 'source';
+                                    },
+                                    text: 'TEXT_VISUALIZER.SHOW_SOURCE'
+                                },
+                                {
+                                    name: 'showPreview',
+                                    hide: function () {
+                                        return scope.tabs.activeTab === 'preview';
+                                    },
+                                    text: 'TEXT_VISUALIZER.SHOW_PREVIEW'
+                                }
+                            ];
+                            scope.doAction = function (name) {
+                                if (name === 'showSource') {
+                                    scope.tabs.activeTab = 'source';
+                                } else if (name === 'showPreview') {
+                                    scope.tabs.activeTab = 'preview';
+                                }
+                            };
+                            scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.$parent.browserService.workspace.alias, scope.$parent.root);
+                        }
+                        scope.dataReceived = true;
                     }).error(function (error) {
                         console.error(error);
                     });

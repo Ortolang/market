@@ -15,7 +15,7 @@
                     <button type="button" class="btn btn-default" ng-click="$hide()"><span class="fa fa-times fa-fw"></span></button>
                 </div>
                 <div ng-repeat="action in ::visualizer.header.actions.slice().reverse()" class="btn-group">
-                    <button type="button" class="btn btn-default" ng-click="doAction(action.name)"><span ng-class="action.icon"></span> {{action.text | translate}}</button>
+                    <button ng-hide="action.hide && action.hide()" type="button" class="btn btn-default" ng-click="doAction(action.name)"><span ng-class="action.icon"></span> {{action.text | translate}}</button>
                 </div>
             </div>
         </div>
