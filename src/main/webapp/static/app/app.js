@@ -28,6 +28,7 @@ angular
         'mgcrea.ngStrap.button',
         'mgcrea.ngStrap.scrollspy',
         'mgcrea.ngStrap.affix',
+        'mgcrea.ngStrap.popover',
         'toggle-switch',
         'hljs',
         'cfp.hotkeys',

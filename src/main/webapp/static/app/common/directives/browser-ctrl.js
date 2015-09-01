@@ -33,10 +33,11 @@ angular.module('ortolangMarketApp')
         'icons',
         'ortolangType',
         'Settings',
+        'Cart',
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, WorkspaceResource, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, WorkspaceResource, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, marketItemHeader, footerHeight, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
@@ -117,6 +118,7 @@ angular.module('ortolangMarketApp')
                         }
                         if ($scope.browserService.canDownload && !$scope.hasOnlyParentSelected()) {
                             $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
+                            $scope.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
                             $scope.contextMenuItems.push({divider: true});
                         }
                         $scope.contextMenuItems.push({text: $scope.viewMode[$scope.browserSettings.viewMode].text, icon: $scope.viewMode[$scope.browserSettings.viewMode].icon, action: 'switchViewMode'});
@@ -323,7 +325,7 @@ angular.module('ortolangMarketApp')
             function createModalScope() {
                 modalScope = $scope.$new(true);
                 modalScope.$on('modal.hide', function () {
-                    modalScope.$destroy();
+                    //modalScope.$destroy();
                 });
                 modalScope.$on('modal.show.before', function () {
                     $scope.deactivateContextMenu();
@@ -618,7 +620,7 @@ angular.module('ortolangMarketApp')
                 modalScope.process = response;
                 modalScope.showLog = function () {
                     uploadZipCompletedModal.hide();
-                    $location.url('#/processes?pKey=' + modalScope.process.key);
+                    $location.url('/processes?pKey=' + modalScope.process.key);
                 };
                 uploadZipCompletedModal = $modal({
                     scope: modalScope,
@@ -772,6 +774,10 @@ angular.module('ortolangMarketApp')
                     case 'preview':
                         $scope.clickPreview();
                         break;
+                    case 'addToCart':
+                        $scope.addToCart();
+                        $scope.deactivateContextMenu();
+                        break;
                     case 'uploadFiles':
                         // Using $timeout to prevent '$apply already in progress' error
                         $timeout(function () {
@@ -827,9 +833,27 @@ angular.module('ortolangMarketApp')
                     content: {},
                     footer: {}
                 };
+                modalScope.actions = {};
+                modalScope.doAction = function (name) {
+                    if (modalScope.actions && modalScope.actions[name]) {
+                        modalScope.actions[name]();
+                    }
+                };
+                modalScope.pendingRequests = [];
+                modalScope.$on('modal.hide.before', function () {
+                    angular.forEach(modalScope.pendingRequests, function (request) {
+                        if (request.promise.$$state && request.promise.$$state.pending) {
+                            request.timeout.resolve();
+                        }
+                    });
+                });
                 if (visualizer) {
                     element = $compile(visualizer.getElement())(modalScope);
                 } else {
+                    modalScope.visualizer.header = {
+                        fileName: modalScope.elements[0].name,
+                        fileType: modalScope.elements[0].mimeType
+                    };
                     modalScope.icons = icons;
                     modalScope.download = function () {
                         $scope.download($scope.selectedElements);
@@ -1021,11 +1045,13 @@ angular.module('ortolangMarketApp')
                 }
                 else {
                     if ($scope.isMarketBrowserService) {
-                        if ($location.search().path !== $scope.path) {
-                            setPath($location.search().path);
+                        if ($location.search().browse) {
+                            if ($location.search().path !== $scope.path) {
+                                setPath($location.search().path);
+                            }
+                            resetFilterModels();
+                            getParentData();
                         }
-                        resetFilterModels();
-                        getParentData();
                     } else if ($rootScope.browsing) {
                         if (!$location.search().browse) {
                             $rootScope.browsing = false;
@@ -1587,6 +1613,26 @@ angular.module('ortolangMarketApp')
 
             $scope.getToken = function () {
                 return 'Bearer: ' + AuthService.getToken();
+            };
+
+            // *********************** //
+            //           Cart          //
+            // *********************** //
+
+            $scope.addToCart = function () {
+                var path, items = [];
+                angular.forEach($scope.selectedElements, function (element) {
+                    path = $scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : element.name);
+                    items.push({
+                        wsalias: $scope.browserService.workspace.alias,
+                        root: $scope.root,
+                        name: $scope.hasOnlyParentSelected() ? $scope.parent.name : element.name,
+                        type: element.type,
+                        mimeType: element.mimeType,
+                        path: path
+                    });
+                });
+                Cart.add(items);
             };
 
             // *********************** //

@@ -17,6 +17,12 @@
             <li ng-show="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hiddenTopNav : false}:true">
                 <a ng-href="#{{element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="element.iconCss"></span> {{element.description | translate}}</a>
             </li>
+            <li ng-if="Cart.size() > 0" ng-hide="navbarCollapsed">
+                <a data-title="{{'CART' | translate}}" data-auto-close="true" data-template="common/directives/cart-popover-template.html" data-placement="bottom" bs-popover>
+                    <span class="fa fa-fw fa-shopping-cart"></span><span class="badge cart">{{Cart.size() === 0 ? '' : Cart.size()}}</span>
+                    <span class="hidden-description" translate="CART"></span>
+                </a>
+            </li>
             <li ng-if="authenticated" ng-hide="navbarCollapsed">
                 <a href="#/processes" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-fw fa-tasks"></span><span class="badge processes">{{Runtime.getEveryActiveProcessesNumber() === 0 ? '' : Runtime.getEveryActiveProcessesNumber()}}</span>

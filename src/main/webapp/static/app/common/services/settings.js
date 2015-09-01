@@ -8,7 +8,9 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Settings', [function () {
+    .service('Settings', ['$q', function ($q) {
+
+        var deferred = $q.defer();
 
         this.WorkspaceBrowserService = {
             hideInfo: false,
@@ -24,10 +26,16 @@ angular.module('ortolangMarketApp')
 
         this.language = undefined;
 
+        this.cart = {};
+
         this.store = function () {
             if (localStorage !== undefined) {
                 localStorage.setItem('ortolang.settings', JSON.stringify(this));
             }
+        };
+
+        this.initialized = function () {
+            return deferred.promise;
         };
 
         this.init = function () {
@@ -44,6 +52,7 @@ angular.module('ortolangMarketApp')
                         }
                     });
                 }
+                deferred.resolve();
             }
             //console.log('Settings initialized %o', this);
         };

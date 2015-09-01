@@ -1,0 +1,37 @@
+.cart-popover {
+  min-width: 350px;
+  .popover-title {
+    background: none;
+    border-bottom: none;
+    font-weight: 600;
+  }
+  .popover-content.popover-footer {
+    padding-top: @modal-inner-padding;
+    padding-bottom: @modal-inner-padding;
+  }
+  .remove-selection-item {
+    display: none;
+  }
+  .selection-item-wrapper {
+    padding-left: @padding-small-horizontal;
+    .selection-item {
+      padding-right: @padding-large-horizontal;
+    }
+    &:hover {
+      .remove-selection-item {
+        display: inline;
+      }
+    }
+  }
+  .workspace-alias {
+    font-style: italic;
+    margin-bottom: @padding-small-vertical;
+    display: block;
+  }
+  .selection-workspace {
+    margin-bottom: @padding-base-vertical;
+  }
+  .version-name {
+    color: @dark-yellow;
+  }
+}

@@ -8,13 +8,14 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', 'StaticWebsite',
-        function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment, StaticWebsite) {
+    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', 'StaticWebsite', 'Cart',
+        function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment, StaticWebsite, Cart) {
 
             $scope.sideNavElements = sideNavElements;
             $scope.navbarCollapsed = false;
             $scope.User = User;
             $scope.Settings = Settings;
+            $scope.Cart = Cart;
             $scope.Runtime = Runtime;
             $scope.StaticWebsite = StaticWebsite;
 

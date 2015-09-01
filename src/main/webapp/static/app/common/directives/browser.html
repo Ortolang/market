@@ -151,24 +151,31 @@
 
                 <span class="divider"></span>
 
-                <div ng-if="isHead && isWorkspaceBrowserService" class="btn-group">
+                <div ng-if="isWorkspaceBrowserService" class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.OTHERS' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="icons.browser.others"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-show="hasOnlyParentSelected()">
+                        <li ng-show="isHead && hasOnlyParentSelected()">
                             <div ng-click="addCollection()"><span ng-class="icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div>
                         </li>
-                        <li ng-show="hasOnlyParentSelected() && !hasOnlyRootCollectionSelected()" class="divider"></li>
-                        <li ng-show="!hasOnlyRootCollectionSelected()">
+                        <li ng-show="isHead && hasOnlyParentSelected() && !hasOnlyRootCollectionSelected()" class="divider"></li>
+                        <li ng-show="isHead && !hasOnlyRootCollectionSelected()">
                             <div ng-click="renameChild()"><span ng-class="icons.browser.edit"></span> {{'RENAME' | translate}}</div>
                         </li>
-                        <li ng-show="!hasOnlyParentSelected()">
+                        <li ng-show="isHead && !hasOnlyParentSelected()">
                             <div ng-click="moveChild()"><span ng-class="icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
                         </li>
-                        <li class="divider"></li>
+                        <li ng-show="isHead" class="divider"></li>
                         <li><div ng-click="download(selectedElements)"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
+                        <li><div ng-click="addToCart()"><span ng-class="icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>
                     </ul>
+                </div>
+
+                <div ng-show="isMarketBrowserService" class="btn-group">
+                    <button ng-if="browserService.canDownload" class="btn btn-default" ng-click="addToCart()" data-title="{{'BROWSER.ADD_TO_CART' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="icons.cartPlus"></span>
+                    </button>
                 </div>
 
                 <div ng-show="isMarketBrowserService && !hasOnlyParentSelected()" class="btn-group">

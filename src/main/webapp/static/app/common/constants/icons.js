@@ -34,6 +34,8 @@ angular.module('ortolangMarketApp')
             minus: 'glyphicon glyphicon-minus',
             play: 'fa fa-fw fa-play',
             tag: 'fa fa-fw fa-tag',
+            cart: 'fa fa-fw fa-shopping-cart',
+            cartPlus: 'fa fa-shopping-cart',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',
