@@ -400,7 +400,7 @@ angular.module('ortolangMarketApp')
             //TODO Get the list of metadata before load ortolang item metadata if it exists
             WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(
                 function (data) {
-                     return Content.downloadWithKey(data.key).success(function (data) {
+                     return Content.downloadWithKey(data.key).promise.success(function (data) {
                         $scope.code = data;
                         $scope.metadataItem = angular.fromJson(data);
                         $scope.itemKey = WorkspaceBrowserService.workspace.head;

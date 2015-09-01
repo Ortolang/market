@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
 
                             if (acl.length === 1) {
 
-                                Content.downloadWithKey(acl[0].key).success(function (aclContentJson) {
+                                Content.downloadWithKey(acl[0].key).promise.success(function (aclContentJson) {
                                     var aclContent = angular.fromJson(aclContentJson);
 
                                     if (aclContent !== '') {

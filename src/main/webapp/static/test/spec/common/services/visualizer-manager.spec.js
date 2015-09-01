@@ -102,7 +102,7 @@ describe('Service: VisualizerManager', function () {
         expect(fakeVisualizer.getName()).toEqual(fakeVisualizerConfig.name.fr);
         expect(fakeVisualizer.getDescription()).toEqual(undefined);
         expect(fakeVisualizer.getCompatibleTypes()).toEqual(fakeVisualizerConfig.compatibleTypes);
-        expect(fakeVisualizer.getElement()).toEqual('<div class="visualizer" fake-visualizer></div>');
+        expect(fakeVisualizer.getElement()).toEqual('<div ng-hide="pendingData" class="visualizer" fake-visualizer></div>');
     });
 
     it('should be possible to know if a visualizer is compatible with a mime type', function () {

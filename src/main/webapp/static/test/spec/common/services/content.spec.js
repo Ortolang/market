@@ -62,8 +62,8 @@ describe('Service: Content', function () {
     it('should download data', function () {
         httpBackend.whenGET(url.content + '/key/k1').respond('sample code');
 
-        var promise = Content.downloadWithKey('k1'), theData;
-        promise.then(function (data) {
+        var contentDownload = Content.downloadWithKey('k1'), theData;
+        contentDownload.promise.then(function (data) {
             theData = data;
         });
         httpBackend.flush();

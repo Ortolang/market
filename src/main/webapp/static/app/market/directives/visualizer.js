@@ -30,6 +30,12 @@ angular.module('ortolangMarketApp')
                             content: {},
                             footer: {}
                         };
+                        modalScope.actions = {};
+                        modalScope.doAction = function (name) {
+                            if (modalScope.actions && modalScope.actions[name]) {
+                                modalScope.actions[name]();
+                            }
+                        };
                         visualizerModal = $modal({
                             scope: modalScope,
                             template: 'common/visualizers/visualizer-template.html',

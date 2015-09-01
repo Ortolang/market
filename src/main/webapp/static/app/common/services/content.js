@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Content', ['url', '$http', '$window', function (url, $http, $window) {
+    .service('Content', ['url', '$http', '$window', '$q', function (url, $http, $window, $q) {
 
         var forceDownloadQueryParam = '?fd=true';
 
@@ -37,13 +37,17 @@ angular.module('ortolangMarketApp')
         };
 
         this.downloadWithKey = function (key, config, noSSL) {
+            var timeout = $q.defer(),
+                defaultConfig = {timeout: timeout.promise};
             if (!config) {
-                config = {};
+                config = defaultConfig;
+            } else {
+                angular.extend(config, defaultConfig);
             }
             if (!config.transformResponse) {
                 config.transformResponse = [];
             }
-            return $http.get(this.getContentUrlWithKey(key, noSSL), config);
+            return {promise: $http.get(this.getContentUrlWithKey(key, noSSL), config), timeout: timeout};
         };
 
         this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {

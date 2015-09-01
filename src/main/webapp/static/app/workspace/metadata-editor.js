@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
         function loadMetadataContent(view, metadata) {
             // $scope.selectedMetadata = metadata;
 
-            // Content.downloadWithKey(metadata.key).success(function (metadataContent) {
+            // Content.downloadWithKey(metadata.key).promise.success(function (metadataContent) {
                 // $scope.selectedMetadataContent = metadataContent;
                 $scope.selectedMetadataContent = metadata;
 

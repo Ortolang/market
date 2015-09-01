@@ -64,10 +64,10 @@ angular.module('ortolangVisualizers')
                         scope.diff = name;
                     };
 
-                    Content.downloadWithKey(scope.elements[0].key).success(function (data) {
+                    Content.downloadWithKey(scope.elements[0].key).promise.success(function (data) {
                         scope.leftObj = data;
                     });
-                    Content.downloadWithKey(scope.elements[1].key).success(function (data) {
+                    Content.downloadWithKey(scope.elements[1].key).promise.success(function (data) {
                         scope.rightObj = data;
                     });
 

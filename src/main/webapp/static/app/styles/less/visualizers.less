@@ -49,6 +49,21 @@
       }
     }
 
+    .pending-wrapper {
+      display: table;
+      text-align: center;
+      width: 100%;
+      color: @inverse-text-color;
+      > div {
+        display: table-cell;
+        vertical-align: middle;
+        p {
+          font-style: italic;
+          margin-top: @padding-large-vertical;
+        }
+      }
+    }
+
     .visualizer {
       padding: (@toolbar-min-height + 3 * @padding-large-vertical) 0 (3 * @padding-large-vertical);
       height: 100%;
