@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $rootScope, $http, $modal, url, User, AuthService, ProfileResource, AtmosphereService) {
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', '$analytics', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $rootScope, $http, $modal, $analytics, url, User, AuthService, ProfileResource, AtmosphereService) {
 
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp')
                     ProfileResource.put({}, profile);
                 }
                 User.preInit(profile);
+                $analytics.setUsername(profile.key);
                 ProfileResource.getInfos({key: profile.key}).$promise.then(
                     function (data) {
                         profile.profileDatas = {};

@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
                                 modalScope.actions[name]();
                             }
                         };
+                        modalScope.pendingRequests = [];
                         visualizerModal = $modal({
                             scope: modalScope,
                             template: 'common/visualizers/visualizer-template.html',
