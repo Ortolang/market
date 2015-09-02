@@ -41,7 +41,8 @@ angular
         'xeditable',
         'schemaForm',
         'ngTagsInput',
-        'angularMoment'
+        'angularMoment',
+        'MassAutoComplete'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider

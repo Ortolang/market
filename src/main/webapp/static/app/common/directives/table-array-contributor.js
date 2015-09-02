@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('schemaForm')
-    .directive('tableArrayContributor', ['$rootScope', '$modal', '$filter', '$translate', function ($rootScope, $modal, $filter, $translate) {
+    .directive('tableArrayContributor', ['$rootScope', '$modal', '$filter', '$translate', '$sce', function ($rootScope, $modal, $filter, $translate, $sce) {
         return {
             restrict: 'AE',
             scope: {
@@ -68,6 +68,50 @@ angular.module('schemaForm')
                         modalScope.suggestRole = function (query) {
                             return $filter('filter')(roles, query);
                         };
+                        modalScope.searchPerson = "";
+                        var persons = [{firstname:'cyril', lastname:'pestel'}];
+                        // modalScope.suggestPerson = function (term) {
+                        //     return $filter('filter')(persons, {firstname: term});
+                        // };
+                        modalScope.suggestPerson = function (term) {
+                           var q = term.toLowerCase().trim(),
+                               results = [];
+
+                           for (var i = 0; i < persons.length; i++) {
+                             var person = persons[i];
+                             if (person.firstname.toLowerCase().indexOf(q) !== -1 ||
+                                 person.name.toLowerCase().indexOf(q) !== -1)
+                               results.push({
+                                 value: person.firstname,
+                                 // Pass the object as well. Can be any property firstname.
+                                 obj: person,
+                                 label: $sce.trustAsHtml(
+                                   '<div class="row">' +
+                                   ' <div class="col-xs-5">' +
+                                   '  <i class="fa fa-user"></i>' +
+                                   '  <strong>' + person.firstname + '</strong>'+
+                                   ' </div>' +
+                                   ' <div class="col-xs-7 text-right text-muted">' +
+                                   '  <small>' + person.lastname + '</small>' +
+                                   ' </div>' +
+                                   ' <div class="col-xs-12">' +
+                                   '  <span class="text-muted">Joined</span>' +
+                                      person.joined +
+                                   ' </div>' +
+                                   '</div>'
+                                 )
+                               });
+                           }
+                           return results;
+                        };
+                        modalScope.autocomplete_options = {
+                            suggest: modalScope.suggestPerson,
+                            on_select: function (selected) {
+                                // modalScope.selected_person = selected.obj;
+                                modalScope.firstname = selected.firstname;
+                            }
+                        };
+
                         addContributorModal = $modal({
                             scope: modalScope,
                             template: 'common/directives/add-contributor-template.html'
