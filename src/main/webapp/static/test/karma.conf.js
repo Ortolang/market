@@ -52,6 +52,7 @@ module.exports = function (config) {
             'bower_components/angular-moment/angular-moment.js',
             'bower_components/moment/moment.js',
             'bower_components/moment/locale/fr.js',
+            'bower_components/angular-mass-autocomplete/massautocomplete.js',
             'test/mock/global.js',
             'app/**/*.js',
             'test/mock/**/*.js',
