@@ -1,0 +1,56 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="add-contributor-form" name="addContributor" class="form-horizontal" ng-submit="submit(addContributor)" novalidate>
+                    <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.firstname.$dirty) && addContributor.firstname.$invalid}">
+                        <label for="add-contributor-firstname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="$parent.firstname" type="text" class="form-control" id="add-contributor-firstname" name="firstname" required autofocus placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.midname.$dirty) && addContributor.midname.$invalid}">
+                        <label for="add-contributor-midname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MIDNAME"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="$parent.midname" type="text" class="form-control" id="add-contributor-midname" name="midname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MIDNAME' | translate}}">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.lastname.$dirty) && addContributor.lastname.$invalid}">
+                        <label for="add-contributor-lastname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.LASTNAME"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="$parent.lastname" type="text" class="form-control" id="add-contributor-lastname" name="lastname" required placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.LASTNAME' | translate}}">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.organization.$dirty) && addContributor.organization.$invalid}">
+                        <label for="add-contributor-organization" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="$parent.organization" type="text" class="form-control" id="add-contributor-organization" name="organization" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION' | translate}}">
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.role.$dirty) && addContributor.role.$invalid}">
+                        <label for="add-contributor-role" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE"></label>
+                        <div class="col-sm-10">
+                            <input ng-repeat="roleEntry in $parent.role" ng-model="roleEntry" type="text" class="form-control" name="role" required placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}}">
+
+                            <tags-input ng-model="$parent.roleTag" class="tool-tags" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}}">
+                                <auto-complete source="suggestRole($query)" min-length="0" load-on-focus="true"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary"data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
+                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

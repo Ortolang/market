@@ -120,7 +120,17 @@ angular.module('ortolangMarketApp')
                 CONTENT: 'Cannot delete a non-empty folder'
             },
             METADATA_EDITOR: {
-                BASIC_INFO: 'Basic info'
+                BACK_TO_PREVIEW: 'Back to the preview',
+                BASIC_INFO: 'Basic info',
+                ADD_CONTRIBUTOR_MODAL: {
+                    TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
+                    SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    FIRSTNAME: 'Firstname',
+                    MIDNAME: 'Midname',
+                    LASTNAME: 'Lastname',
+                    ORGANIZATION: 'Organization',
+                    ROLE: 'Role'
+                }
             }
         }
     });

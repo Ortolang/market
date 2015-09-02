@@ -120,7 +120,18 @@ angular.module('ortolangMarketApp')
                 CONTENT: 'Impossible de supprimer un dossier non vide'
             },
             METADATA_EDITOR: {
-                BASIC_INFO: 'Informations basiques'
+                BACK_TO_PREVIEW: 'Retourner à l\'aperçu',
+                BASIC_INFO: 'Informations basiques',
+                ADD_CONTRIBUTOR_MODAL: {
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un nouveau contributeur',
+                    SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    FIRSTNAME: 'Prénom',
+                    MIDNAME: 'Midname',
+                    LASTNAME: 'Nom',
+                    ORGANIZATION: 'Organisme',
+                    ROLE: 'Role'
+                }
+            
             }
         }
     });

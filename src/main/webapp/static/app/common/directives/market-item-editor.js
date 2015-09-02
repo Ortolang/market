@@ -117,12 +117,12 @@ angular.module('ortolangMarketApp')
                             }
                         ];
 
-                        scope.producers = [];
-                        angular.forEach(scope.metadata.contributors, function(contributor) {
-                            if (isProducer(contributor)) {
-                                scope.producers.push(contributor.entity);
-                            }
-                        });
+                        // scope.producers = [];
+                        // angular.forEach(scope.metadata.contributors, function(contributor) {
+                        //     if (isProducer(contributor)) {
+                        //         scope.producers.push(contributor.entity);
+                        //     }
+                        // });
                     }
                     init();
                 }
