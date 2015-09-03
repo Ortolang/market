@@ -41,7 +41,9 @@ angular
         'xeditable',
         'schemaForm',
         'ngTagsInput',
-        'angularMoment'
+        'angularMoment',
+        'angulartics',
+        'angulartics.piwik'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
@@ -164,6 +166,13 @@ angular
         uiZeroclipConfigProvider.setZcConf({
             swfPath: '/vendor/ZeroClipboard.swf'
         });
+    }])
+    .config(['$analyticsProvider', function ($analyticsProvider) {
+        if (!(OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId)) {
+            $analyticsProvider.developerMode(true);
+            $analyticsProvider.virtualPageviews(false);
+            $analyticsProvider.firstPageview(false);
+        }
     }])
     .run(['editableOptions', 'editableThemes', function (editableOptions, editableThemes) {
         var copy = editableThemes.bs3;

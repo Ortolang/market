@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FacetedFilterManager', ['QueryBuilderFactory', function (QueryBuilderFactory) {
+    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', function (QueryBuilderFactory, $filter) {
 
         // Constructor
         function FacetedFilterManager(config) {
@@ -113,6 +113,16 @@ angular.module('ortolangMarketApp')
                 params.facets = facets.toString();
 
                 return params;
+            },
+
+            toAnalytics: function (content) {
+                var result = content || '';
+                angular.forEach($filter('orderBy')(this.getFilters(), '+alias'), function (filter) {
+                    if (filter.getPriority() === 'high' && filter.alias !== 'type') {
+                        result += (result === '' ? '' : ' | ') + filter.toString();
+                    }
+                });
+                return result;
             },
 
             toQuery: function (content) {

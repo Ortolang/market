@@ -107,6 +107,10 @@
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/moment/locale/fr.js"></script>
 <script src="bower_components/angular-moment/angular-moment.js"></script>
+<script src="bower_components/waypoints/lib/noframework.waypoints.min.js"></script>
+<script src="bower_components/SHA-1/sha1.js"></script>
+<script src="bower_components/angulartics/src/angulartics.js"></script>
+<script src="bower_components/angulartics/src/angulartics-piwik.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -119,7 +123,9 @@
     OrtolangConfig.apiServerUrlNoSSL = 'http://localhost:8080/api';
     OrtolangConfig.apiSubPath = '/sub';
     OrtolangConfig.apiContentPath = '/content';
-    OrtolangConfig.keycloakConfigLocation = "keycloak.json";
+    OrtolangConfig.keycloakConfigLocation = 'keycloak.json';
+    OrtolangConfig.piwikHost = '';
+    OrtolangConfig.piwikSiteId = '';
 </script>
 <!-- endbuild -->
 
@@ -276,5 +282,21 @@
 <script src="common/schema-form/bootstrap-tablearray.js"></script>
 <script src="common/schema-form/vertical-tab/bootstrap-vertical-tab.js"></script>
 <!-- endbuild -->
+
+<!-- Piwik -->
+<script type="text/javascript">
+    if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
+        var _paq = _paq || [];
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//" + OrtolangConfig.piwikHost;
+            _paq.push(['setTrackerUrl', u+'piwik.php']);
+            _paq.push(['setSiteId', OrtolangConfig.piwikSiteId]);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+        })();
+    }
+</script>
+<!-- End Piwik Code -->
 </body>
 </html>
