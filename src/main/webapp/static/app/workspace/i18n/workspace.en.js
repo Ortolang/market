@@ -125,6 +125,8 @@ angular.module('ortolangMarketApp')
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    SEARCH: 'Looking for someone ?',
+                    SEARCH_LABEL: 'Search',
                     FIRSTNAME: 'Firstname',
                     MIDNAME: 'Midname',
                     LASTNAME: 'Lastname',

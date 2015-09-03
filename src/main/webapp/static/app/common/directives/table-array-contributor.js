@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('schemaForm')
-    .directive('tableArrayContributor', ['$rootScope', '$modal', '$filter', '$translate', '$sce', function ($rootScope, $modal, $filter, $translate, $sce) {
+    .directive('tableArrayContributor', ['$rootScope', '$modal', '$filter', '$translate', '$sce', 'QueryBuilderFactory', 'JsonResultResource', function ($rootScope, $modal, $filter, $translate, $sce, QueryBuilderFactory, JsonResultResource) {
         return {
             restrict: 'AE',
             scope: {
@@ -40,78 +40,95 @@ angular.module('schemaForm')
                         scope.resetSelectedItem();
                     };
 
+                    function prepareModalScope() {
+                        var modalScope = $rootScope.$new(true);
+                        modalScope.roleTag = [];
+
+                        // Role
+                        var roles = ['developer', 'manager'];
+                        modalScope.suggestRole = function (query) {
+                            return $filter('filter')(roles, query);
+                        };
+
+                        // modalScope.persons = '["cyril","jerome"]';
+                        // modalScope.persons = '[{"firstname":"cyril", "lastname":"pestel"}]';
+                        // modalScope.searchFirstname = '';
+                        // modalScope.searchLastname = '';
+                        // modalScope.firtnames = [];
+                        // modalScope.firtnames.push({value:'cyril', lastname: 'pestel', label:'<span>cyril</span>'});
+
+                        // modalScope.$on('tafirstname.select', function(v,i){
+                            // modalScope.lastname = i.value;
+                            // modalScope.lastname = i.lastname;
+                            // modalScope.searchLastname = i.lastname;
+
+                            // modalScope.$apply();
+                        // });
+
+                        modalScope.searchPerson = '';
+                        modalScope.persons = scope.allPersons;
+                        // modalScope.lastnames = [];
+                        // modalScope.lastnames.push({value:'pestel', firstname: 'cyril', label:'<span>pestel</span>'});
+
+                        modalScope.$on('talastname.select', function(v,i){
+                            modalScope.lastname = i.lastname;
+                            modalScope.firstname = i.firstname;
+                            modalScope.midname = i.midname;
+                            // modalScope.searchFirstname = i.firstname;
+
+                            modalScope.$apply();
+                        });
+
+                        return modalScope;
+                    }
+
+                    function setContributor(contributor, myScope) {
+                        // if(angular.isDefined(myScope.searchFirstname.value)) {
+                        //     contributor.entity.firstname = myScope.searchFirstname.value;
+                        // } else {
+                        //     contributor.entity.firstname = myScope.searchFirstname;
+                        // }
+                        contributor.entity.lastname = myScope.lastname;
+                        contributor.entity.firstname = myScope.firstname;
+                        contributor.entity.midname = myScope.midname;
+                        // contributor.entity.lastname = myScope.lastname;
+                        // if(angular.isDefined(myScope.searchLastname.value)) {
+                        //     contributor.entity.lastname = myScope.searchLastname.value;
+                        // } else {
+                        //     contributor.entity.lastname = myScope.searchLastname;
+                        // }
+                        
+                        contributor.role = [];
+                        angular.forEach(myScope.roleTag, function(tag) {
+                            contributor.role.push(tag.text);
+                        });
+                        contributor.entity.fullname = getFullname(contributor.entity);
+                    }
+
+                    function getFullname(person) {
+                        var fullname = person.firstname;
+                        fullname += angular.isDefined(person.midname) ? ' '+person.midname : '';
+                        fullname += ' '+person.lastname;
+                        return fullname;
+                    }
+
                     scope.addContributor = function () {
                         
-                        var modalScope = $rootScope.$new(true),
+                        var modalScope = prepareModalScope(),
                             addContributorModal;
-                        // modalScope.refresh = function () {
-                        //     AuthService.forceReload();
-                        // };
+
                         modalScope.submit = function (addContributorForm) {
                             if (addContributorForm.$valid) {
                                 var contributor = {entity:{},role:[]};
-                                contributor.entity.name = modalScope.name;
-                                contributor.entity.firstname = modalScope.firstname;
-                                contributor.entity.midname = modalScope.midname;
-                                contributor.entity.lastname = modalScope.lastname;
-                                
-                                angular.forEach(modalScope.roleTag, function(tag) {
-                                    contributor.role.push(tag.text);
-                                });
-                                contributor.entity.fullname = modalScope.firstname+' '+modalScope.lastname;
+                                // contributor.entity.firstname = modalScope.firstname;
+                                setContributor(contributor, modalScope);
 
                                 scope.model.push(contributor);
                                 addContributorModal.hide();
                             }
                         };
-                        var roles = ['developer', 'manager'];
-                        modalScope.suggestRole = function (query) {
-                            return $filter('filter')(roles, query);
-                        };
-                        modalScope.searchPerson = "";
-                        var persons = [{firstname:'cyril', lastname:'pestel'}];
-                        // modalScope.suggestPerson = function (term) {
-                        //     return $filter('filter')(persons, {firstname: term});
-                        // };
-                        modalScope.suggestPerson = function (term) {
-                           var q = term.toLowerCase().trim(),
-                               results = [];
 
-                           for (var i = 0; i < persons.length; i++) {
-                             var person = persons[i];
-                             if (person.firstname.toLowerCase().indexOf(q) !== -1 ||
-                                 person.name.toLowerCase().indexOf(q) !== -1)
-                               results.push({
-                                 value: person.firstname,
-                                 // Pass the object as well. Can be any property firstname.
-                                 obj: person,
-                                 label: $sce.trustAsHtml(
-                                   '<div class="row">' +
-                                   ' <div class="col-xs-5">' +
-                                   '  <i class="fa fa-user"></i>' +
-                                   '  <strong>' + person.firstname + '</strong>'+
-                                   ' </div>' +
-                                   ' <div class="col-xs-7 text-right text-muted">' +
-                                   '  <small>' + person.lastname + '</small>' +
-                                   ' </div>' +
-                                   ' <div class="col-xs-12">' +
-                                   '  <span class="text-muted">Joined</span>' +
-                                      person.joined +
-                                   ' </div>' +
-                                   '</div>'
-                                 )
-                               });
-                           }
-                           return results;
-                        };
-                        modalScope.autocomplete_options = {
-                            suggest: modalScope.suggestPerson,
-                            on_select: function (selected) {
-                                // modalScope.selected_person = selected.obj;
-                                modalScope.firstname = selected.firstname;
-                            }
-                        };
-
+                        
                         addContributorModal = $modal({
                             scope: modalScope,
                             template: 'common/directives/add-contributor-template.html'
@@ -119,40 +136,29 @@ angular.module('schemaForm')
                     };
 
                     scope.editContributor = function(contributor) {
-                        var modalScope = $rootScope.$new(true),
+                        var modalScope = prepareModalScope(),
                             addContributorModal;
 
                         modalScope.name = contributor.entity.name;
                         modalScope.firstname = contributor.entity.firstname;
+                        // modalScope.searchFirstname = contributor.entity.firstname;
                         modalScope.midname = contributor.entity.midname;
                         modalScope.lastname = contributor.entity.lastname;
+                        // modalScope.searchLastname = contributor.entity.lastname;
                         modalScope.fullname = contributor.entity.fullname;
-                        modalScope.roleTag = [];
+                        
                         angular.forEach(contributor.role, function(tag) {
                             modalScope.roleTag.push(tag);
                         });
 
                         modalScope.submit = function (addContributorForm) {
                             if (addContributorForm.$valid) {
-                                contributor.entity.name = modalScope.name;
-                                contributor.entity.firstname = modalScope.firstname;
-                                contributor.entity.midname = modalScope.midname;
-                                contributor.entity.lastname = modalScope.lastname;
-
-                                contributor.role = [];
-                                angular.forEach(modalScope.roleTag, function(tag) {
-                                    contributor.role.push(tag.text);
-                                });
-                                contributor.entity.fullname = modalScope.firstname+' '+modalScope.lastname;
+                               setContributor(contributor, modalScope);
 
                                 addContributorModal.hide();
                             }
                         };
 
-                        var roles = ['developer', 'manager'];
-                        modalScope.suggestRole = function (query) {
-                            return $filter('filter')(roles, query);
-                        };
                         modalScope.editing = true;
                         addContributorModal = $modal({
                             scope: modalScope,
@@ -168,6 +174,35 @@ angular.module('schemaForm')
                         if(scope.model===undefined) {
                             scope.model = [];
                         }
+
+
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key',
+                            source: 'ReferentielEntity'
+                        });
+
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.lastname', 'lastname');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.firstname', 'firstname');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.midname', 'midname');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'person');
+
+                        var query = queryBuilder.toString();
+                        scope.allPersons = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var person = angular.fromJson(result);
+
+                                scope.allPersons.push({
+                                    value: person.fullname,
+                                    lastname: person.lastname, 
+                                    firstname: person.firstname, 
+                                    midname: person.midname, 
+                                    label: '<span>'+person.fullname+'</span>'
+                                });
+                            });
+                        });
                     }
                     init();
                 }

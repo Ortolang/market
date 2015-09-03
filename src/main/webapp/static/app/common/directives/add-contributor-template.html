@@ -6,18 +6,39 @@
                 <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.TITLE"></span>
             </div>
             <div class="modal-body">
-                <div mass-autocomplete>
                     <form role="form" id="add-contributor-form" name="addContributor" class="form-horizontal" ng-submit="submit(addContributor)" novalidate>
-                        <div class="form-group">
+
+                        <!-- <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.searchLastname.$dirty) && addContributor.searchLastname.$invalid}">
+                            <label for="add-contributor-lastname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.LASTNAME"></label>
+                            <div class="col-sm-10">
+                                <input ng-model="$parent.searchLastname" data-prefix-event="talastname" type="text" class="form-control" id="add-contributor-searchLastname" name="searchLastname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.LASTNAME' | translate}}" bs-options="lastname as lastname.label for lastname in $parent.lastnames" data-html="true" required bs-typeahead>
+                                <input ng-model="$parent.lastname" type="hidden" id="add-contributor-lastname" name="lastname">
+                                <p>searchlastname : {{$parent.searchLastname}}</p>
+                                <p>lastname : {{$parent.lastname}}</p>
+                            </div>
+                        </div> -->
+                        <!-- <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.searchFirstname.$dirty) && addContributor.searchFirstname.$invalid}">
                             <label for="add-contributor-suggest" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME"></label>
                             <div class="col-sm-10">
-                                <input ng-model="$parent.searchPerson" type="text" class="form-control" id="add-contributor-searchPerson" name="searchPerson" autofocus placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}" mass-autocomplete-item="autocomplete_options" autocomplete="off">
+                                <input ng-model="searchPerson" type="text" class="form-control" id="add-contributor-searchPerson" name="searchPerson" autofocus placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}" bs-options="person for person in $parent.persons" bs-typeahead>
+                                <p>{{$parent.persons}}</p>
+                                <input ng-model="$parent.searchFirstname" data-prefix-event="tafirstname" type="text" class="form-control" id="add-contributor-searchFirstname" name="searchFirstname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}" bs-options="firstname as firstname.label for firstname in $parent.firtnames" required data-html="true" bs-typeahead>
+                                <input ng-model="$parent.firstname" type="hidden" id="add-contributor-firstname" name="firstname">
+                                <p>{{$parent.searchFirstname}}</p>
+                                <p>{{$parent.firstname}}</p>
+                            </div>
+                        </div> -->
+                        <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.searchPerson.$dirty) && addContributor.searchPerson.$invalid}">
+                            <label for="add-contributor-lastname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH_LABEL"></label>
+                            <div class="col-sm-10">
+                                <input ng-model="$parent.searchPerson" data-prefix-event="talastname" type="text" class="form-control" id="add-contributor-searchPerson" name="searchPerson" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}" bs-options="person as person.label for person in $parent.persons" data-html="true" bs-typeahead>
                             </div>
                         </div>
+                        <hr/>
                         <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.firstname.$dirty) && addContributor.firstname.$invalid}">
                             <label for="add-contributor-firstname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME"></label>
                             <div class="col-sm-10">
-                                <input ng-model="$parent.firstname" type="text" class="form-control" id="add-contributor-firstname" name="firstname" required autofocus placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}">
+                                <input ng-model="$parent.firstname" type="text" class="form-control" id="add-contributor-firstname" name="firstname" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}">
                             </div>
                         </div>
                         <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.midname.$dirty) && addContributor.midname.$invalid}">
@@ -39,13 +60,13 @@
                             </div>
                         </div>
                         <hr/>
-                        <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.role.$dirty) && addContributor.role.$invalid}">
+                        <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.roleTag.$dirty) && addContributor.roleTag.$invalid}">
                             <label for="add-contributor-role" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE"></label>
                             <div class="col-sm-10">
-                                <input ng-repeat="roleEntry in $parent.role" ng-model="roleEntry" type="text" class="form-control" name="role" required placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}}">
+                                <!-- <input ng-repeat="roleEntry in role" ng-model="roleEntry" type="text" class="form-control" name="role" required placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}}"> -->
 
-                                <tags-input ng-model="$parent.roleTag" class="tool-tags" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}}">
-                                    <auto-complete source="suggestRole($query)" min-length="0" load-on-focus="true"></auto-complete>
+                                <tags-input ng-model="$parent.roleTag" class="tool-tags" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}}" required>
+                                    <auto-complete source="suggestRole($query)" min-length="0" load-on-focus="false"></auto-complete>
                                 </tags-input>
                             </div>
                         </div>
@@ -57,7 +78,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                
             </div>
         </div>
     </div>
