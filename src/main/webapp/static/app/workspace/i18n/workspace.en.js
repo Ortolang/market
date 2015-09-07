@@ -123,6 +123,7 @@ angular.module('ortolangMarketApp')
                 BACK_TO_PREVIEW: 'Back to the preview',
                 BASIC_INFO: 'Basic info',
                 LIST_OF_CONTRIBUTORS: 'List of contributors',
+                LIST_OF_PRODUCERS: 'List of producers',
                 ADD_CONTRIBUTOR: 'New ...',
                 EDIT_CONTRIBUTOR: 'Edit',
                 DELETE_CONTRIBUTOR: 'Delete',

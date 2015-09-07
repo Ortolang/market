@@ -2,7 +2,7 @@
 <div ng-show="selectedItem === undefined">
 	<table class="table table-striped table-bordered">
 	    <thead>
-	        <tr>
+	        <!-- <tr>
 	            <th colspan="5">
 	                <div class="pull-left">
 	                	<span translate="WORKSPACE.METADATA_EDITOR.LIST_OF_CONTRIBUTORS"></span>
@@ -11,14 +11,36 @@
 	                    <button type="button" class="btn btn-success" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR" ng-click="addContributor()"></button>
 	                </div>
 	            </th>
-	        </tr>
+	        </tr> -->
 	        <!-- <tr>
 	            <th>Type</th>
 	            <th>Action</th>
 	        </tr> -->
 	    </thead>
 	    <tbody>
-	        <tr ng-repeat="item in model track by item.entity.fullname">
+            <th colspan="5">
+                <div class="pull-left">
+                	<span translate="WORKSPACE.METADATA_EDITOR.LIST_OF_PRODUCERS"></span>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR" ng-click="addProducer()"></button>
+                </div>
+            </th>
+	        <tr ng-repeat="item in model | contributorProducer">
+	            <td><a href="" ng-bind="item.entity.fullname" ng-click="editContributor(item)"></a></td>
+	            <td>  
+	                <button type="button" class="btn btn-default" ng-click="deleteContributor(item)">{{'WORKSPACE.METADATA_EDITOR.DELETE_CONTRIBUTOR' | translate}}</button>
+	            </td>
+	        </tr>
+            <th colspan="5">
+                <div class="pull-left">
+                	<span translate="WORKSPACE.METADATA_EDITOR.LIST_OF_CONTRIBUTORS"></span>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR" ng-click="addContributor()"></button>
+                </div>
+            </th>
+	        <tr ng-repeat="item in model | contributorPerson">
 	            <td><a href="" ng-bind="item.entity.fullname" ng-click="editContributor(item)"></a></td>
 	            <td>  
 	                <button type="button" class="btn btn-default" ng-click="deleteContributor(item)">{{'WORKSPACE.METADATA_EDITOR.DELETE_CONTRIBUTOR' | translate}}</button>
