@@ -132,6 +132,18 @@ angular.module('ortolangMarketApp')
                     LASTNAME: 'Lastname',
                     ORGANIZATION: 'Organization',
                     ROLE: 'Role'
+                },
+                ADD_ORGANIZATION_MODAL: {
+                    TITLE: '{{editing ? "Editing" : "Adding"}} new organization which contributes',
+                    SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    SEARCH: 'Looking for an organization ?',
+                    SEARCH_LABEL: 'Search',
+                    NAME: 'Name',
+                    CITY: 'City',
+                    COUNTRY: 'Country',
+                    ACRONYM: 'Acronym',
+                    HOMEPAGE: 'Homepage',
+                    IMG: 'Image'
                 }
             }
         }

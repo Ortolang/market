@@ -20,7 +20,8 @@
 	        <tr ng-repeat="item in model track by item.entity.fullname">
 	            <td ng-bind="item.entity.fullname"></td>
 	            <td>   
-	                <button type="button" class="btn btn-default" ng-click="editContributor(item)">Editer</button>
+	                <button type="button" class="btn btn-default" ng-if="item.entity.type==='person'" ng-click="editContributor(item)">Editer</button>
+	                <button type="button" class="btn btn-default" ng-if="item.entity.type==='organization'" ng-click="editOrganization(item)">Editer</button>
 	            </td>
 	        </tr>
 	    </tbody>

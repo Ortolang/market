@@ -123,7 +123,7 @@ angular.module('ortolangMarketApp')
                 BACK_TO_PREVIEW: 'Retourner à l\'aperçu',
                 BASIC_INFO: 'Informations basiques',
                 ADD_CONTRIBUTOR_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un nouveau contributeur',
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     SEARCH: 'Rechercher une personne ?',
                     SEARCH_LABEL: 'Rechercher',
@@ -132,6 +132,18 @@ angular.module('ortolangMarketApp')
                     LASTNAME: 'Nom',
                     ORGANIZATION: 'Organisme',
                     ROLE: 'Role'
+                },
+                ADD_ORGANIZATION_MODAL: {
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire contributeur',
+                    SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    SEARCH: 'Rechercher un organisme ?',
+                    SEARCH_LABEL: 'Rechercher',
+                    NAME: 'Nom',
+                    CITY: 'Ville',
+                    COUNTRY: 'Pays',
+                    ACRONYM: 'Sigle',
+                    HOMEPAGE: 'Site',
+                    IMG: 'Logo'
                 }
             
             }
