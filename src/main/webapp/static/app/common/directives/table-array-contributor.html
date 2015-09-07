@@ -4,24 +4,24 @@
 	    <thead>
 	        <tr>
 	            <th colspan="5">
+	                <div class="pull-left">
+	                	<span translate="WORKSPACE.METADATA_EDITOR.LIST_OF_CONTRIBUTORS"></span>
+	                </div>
 	                <div class="pull-right">
-	                    <button type="button" class="btn btn-success" ng-click="addContributor()">
-	                        Nouveau ...
-	                    </button>
+	                    <button type="button" class="btn btn-success" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR" ng-click="addContributor()"></button>
 	                </div>
 	            </th>
 	        </tr>
-	        <tr>
+	        <!-- <tr>
 	            <th>Type</th>
 	            <th>Action</th>
-	        </tr>
+	        </tr> -->
 	    </thead>
 	    <tbody>
 	        <tr ng-repeat="item in model track by item.entity.fullname">
-	            <td ng-bind="item.entity.fullname"></td>
-	            <td>   
-	                <button type="button" class="btn btn-default" ng-if="item.entity.type==='person'" ng-click="editContributor(item)">Editer</button>
-	                <button type="button" class="btn btn-default" ng-if="item.entity.type==='organization'" ng-click="editOrganization(item)">Editer</button>
+	            <td><a href="" ng-bind="item.entity.fullname" ng-click="editContributor(item)"></a></td>
+	            <td>  
+	                <button type="button" class="btn btn-default" ng-click="deleteContributor(item)">{{'WORKSPACE.METADATA_EDITOR.DELETE_CONTRIBUTOR' | translate}}</button>
 	            </td>
 	        </tr>
 	    </tbody>

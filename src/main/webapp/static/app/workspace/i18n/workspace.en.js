@@ -122,6 +122,10 @@ angular.module('ortolangMarketApp')
             METADATA_EDITOR: {
                 BACK_TO_PREVIEW: 'Back to the preview',
                 BASIC_INFO: 'Basic info',
+                LIST_OF_CONTRIBUTORS: 'List of contributors',
+                ADD_CONTRIBUTOR: 'New ...',
+                EDIT_CONTRIBUTOR: 'Edit',
+                DELETE_CONTRIBUTOR: 'Delete',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',

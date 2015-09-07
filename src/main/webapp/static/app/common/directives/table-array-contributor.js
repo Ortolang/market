@@ -40,6 +40,15 @@ angular.module('schemaForm')
                         scope.resetSelectedItem();
                     };
 
+
+                    scope.editContributor = function (contributor) {
+                        if(contributor.entity.type==='person') {
+                            scope.editPerson(contributor);
+                        } else if(contributor.entity.type==='organization') {
+                            scope.editOrganization(contributor);
+                        }
+                    };
+
                     function prepareModalScopeForPerson() {
                         var modalScope = $rootScope.$new(true);
                         modalScope.type = 'person';
@@ -138,7 +147,7 @@ angular.module('schemaForm')
                         });
                     };
 
-                    scope.editContributor = function (contributor) {
+                    scope.editPerson = function (contributor) {
                         var modalScope = prepareModalScopeForPerson(),
                             addContributorModal;
 
@@ -220,6 +229,13 @@ angular.module('schemaForm')
                             scope: modalScope,
                             template: 'common/directives/add-organization-template.html'
                         });
+                    };
+
+                    scope.deleteContributor = function (contributor) {
+                        var index = scope.model.indexOf(contributor);
+                        if (index > -1) {
+                            scope.model.splice(index, 1);
+                        }
                     };
 
                     function loadAllPersons() {
