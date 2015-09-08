@@ -28,8 +28,10 @@
             </th>
 	        <tr ng-repeat="item in model | contributorProducer">
 	            <td><a href="" ng-bind="item.entity.fullname" ng-click="editContributor(item)"></a></td>
-	            <td>  
-	                <button type="button" class="btn btn-default" ng-click="deleteContributor(item)">{{'WORKSPACE.METADATA_EDITOR.DELETE_CONTRIBUTOR' | translate}}</button>
+	            <td> 
+                	<div class="pull-right"> 
+	                	<button type="button" class="btn btn-default" ng-click="deleteContributor(item)">{{'WORKSPACE.METADATA_EDITOR.DELETE_CONTRIBUTOR' | translate}}</button>
+	                </div>
 	            </td>
 	        </tr>
             <th colspan="5">
@@ -42,8 +44,10 @@
             </th>
 	        <tr ng-repeat="item in model | contributorPerson">
 	            <td><a href="" ng-bind="item.entity.fullname" ng-click="editContributor(item)"></a></td>
-	            <td>  
-	                <button type="button" class="btn btn-default" ng-click="deleteContributor(item)">{{'WORKSPACE.METADATA_EDITOR.DELETE_CONTRIBUTOR' | translate}}</button>
+	            <td>
+                	<div class="pull-right">
+	                	<button type="button" class="btn btn-default" ng-click="deleteContributor(item)">{{'WORKSPACE.METADATA_EDITOR.DELETE_CONTRIBUTOR' | translate}}</button>
+	                </div>
 	            </td>
 	        </tr>
 	    </tbody>

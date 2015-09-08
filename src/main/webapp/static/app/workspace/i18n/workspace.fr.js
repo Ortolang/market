@@ -148,7 +148,10 @@ angular.module('ortolangMarketApp')
                     COUNTRY: 'Pays',
                     ACRONYM: 'Sigle',
                     HOMEPAGE: 'Site',
-                    IMG: 'Logo'
+                    IMG: 'Logo',
+                    MESSAGES: {
+                        EXISTS: 'Cette organisme est déjà dans la liste.'
+                    }
                 }
             
             }

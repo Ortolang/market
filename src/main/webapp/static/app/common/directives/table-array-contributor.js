@@ -88,6 +88,18 @@ angular.module('schemaForm')
                         return modalScope;
                     }
 
+                    function prepareModalScopeWithRole(contributor, modalScope) {
+                        modalScope.roleTag = [];
+                        angular.forEach(contributor.role, function(tag) {
+                            var tagFound = $filter('filter')(scope.allRoles, {id:tag});
+                            if(tagFound.length>0) {
+                                modalScope.roleTag.push(tagFound[0]);
+                            } else {
+                                modalScope.roleTag.push({id:tag,label:tag});
+                            }
+                        });
+                    }
+
                     function setPerson(contributor, myScope) {
                         contributor.entity.type = myScope.type;
                         contributor.entity.lastname = myScope.lastname;
@@ -104,11 +116,14 @@ angular.module('schemaForm')
                             contributor.entity.organization = myScope.organization;
                         }
 
+                        contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
+                    }
+
+                    function setRole(contributor, myScope) {
                         contributor.role = [];
                         angular.forEach(myScope.roleTag, function(tag) {
                             contributor.role.push(tag.id);
                         });
-                        contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
                     }
 
                     function getFullnameOfPerson(person) {
@@ -129,8 +144,14 @@ angular.module('schemaForm')
 
                                 setPerson(contributor, modalScope);
 
-                                scope.model.push(contributor);
-                                addContributorModal.hide();
+                                setRole(contributor, modalScope);
+
+                                if(!contributorExists(contributor)) {
+                                    scope.model.push(contributor);
+                                    addContributorModal.hide();
+                                } else {
+
+                                }
                             }
                         };
 
@@ -153,18 +174,13 @@ angular.module('schemaForm')
                             modalScope.organizationFullname = contributor.entity.organization.fullname;
                         }
 
-                        angular.forEach(contributor.role, function(tag) {
-                            var tagFound = $filter('filter')(scope.allRoles, {id:tag});
-                            if(tagFound.length>0) {
-                                modalScope.roleTag.push(tagFound[0]);
-                            } else {
-                                modalScope.roleTag.push({id:tag,label:tag});
-                            }
-                        });
+                        prepareModalScopeWithRole(contributor, modalScope);
 
                         modalScope.submit = function (addContributorForm) {
                             if (addContributorForm.$valid) {
                                 setPerson(contributor, modalScope);
+
+                                setRole(contributor, modalScope);
 
                                 addContributorModal.hide();
                             }
@@ -185,13 +201,36 @@ angular.module('schemaForm')
                         var modalScope = $rootScope.$new(true);
                         modalScope.type = 'organization';
 
+                        modalScope.searchOrganization = '';
+                        modalScope.organizations = scope.allOrganizations;
+
+                        modalScope.$on('taorg.select', function(v,i){
+                            modalScope.id = i.org.id;
+                            modalScope.name = i.org.name;
+                            modalScope.acronym = i.org.acronym;
+                            modalScope.city = i.org.city;
+                            modalScope.country = i.org.country;
+                            modalScope.homepage = i.org.homepage;
+                            modalScope.img = i.org.img;
+                            modalScope.fullname = i.org.fullname;
+
+                            modalScope.$apply();
+                        });
+
+                        modalScope.clearSearch = function() {
+                            angular.element('#add-organization-searchOrganization').val('');
+
+                            clearModalScopeForOrganization(modalScope);
+                        };
+
                         return modalScope;
                     }
 
                     function getFullnameOfOrganization(org) {
                         var fullname = org.name;
                         var details = '';
-                        details += angular.isDefined(org.acronym) ? org.acronym+',' : '';
+                        details += angular.isDefined(org.acronym) ? org.acronym : '';
+                        details += (angular.isDefined(org.city) || angular.isDefined(org.country)) ? ',' : '';
                         details += angular.isDefined(org.city) ? ' '+org.city : '';
                         details += angular.isDefined(org.country) ? ' '+org.country : '';
                         if(details!=='') {
@@ -202,6 +241,7 @@ angular.module('schemaForm')
 
                     function setOrganization(organization, myScope) {
                         organization.entity.type = myScope.type;
+                        organization.entity.id = myScope.id;
                         organization.entity.name = myScope.name;
                         organization.entity.fullname = getFullnameOfOrganization(myScope);
                         organization.entity.acronym = myScope.acronym;
@@ -211,14 +251,60 @@ angular.module('schemaForm')
                         organization.entity.img = myScope.img;
                     }
 
+                    function clearModalScopeForOrganization(modalScope) {
+                        delete modalScope.id;
+                        delete modalScope.name;
+                        delete modalScope.acronym;
+                        delete modalScope.city;
+                        delete modalScope.country;
+                        delete modalScope.homepage;
+                        delete modalScope.img;
+                        delete modalScope.fullname;
+                    }
+
                     scope.addProducer = function () {
 
+                        var modalScope = prepareModalScopeForOrganization(),
+                            addOrganizationModal;
+
+                        modalScope.roleTag = [{id:'producer',label:'producer'}];
+
+                        modalScope.newOrganization = false;
+                        modalScope.createOrganization = function() {
+                            modalScope.newOrganization = !modalScope.newOrganization;
+                        };
+
+                        modalScope.submit = function (addOrganizationForm) {
+
+                            if(!contributorExists(modalScope)) {
+                                addOrganizationForm.fullname.$setValidity('exists', true);
+                            } else {
+                                addOrganizationForm.fullname.$setValidity('exists', false);
+                            }
+
+                            if (addOrganizationForm.$valid) {
+                                var organization = {entity:{},role:[]};
+
+                                setOrganization(organization, modalScope);
+
+                                setRole(organization, modalScope);
+
+                                scope.model.push(organization);
+                                addOrganizationModal.hide();
+                            }
+                        };
+
+                        addOrganizationModal = $modal({
+                            scope: modalScope,
+                            template: 'common/directives/add-organization-template.html'
+                        });
                     };
 
                     scope.editOrganization = function (organization) {
                         var modalScope = prepareModalScopeForOrganization(),
                             addOrganizationModal;
 
+                        modalScope.id = organization.entity.id;
                         modalScope.name = organization.entity.name;
                         modalScope.fullname = organization.entity.fullname;
                         modalScope.acronym = organization.entity.acronym;
@@ -227,9 +313,13 @@ angular.module('schemaForm')
                         modalScope.homepage = organization.entity.homepage;
                         modalScope.img = organization.entity.img;
 
+                        prepareModalScopeWithRole(organization, modalScope);
+
                         modalScope.submit = function (addOrganizationForm) {
                             if (addOrganizationForm.$valid) {
                                 setOrganization(organization, modalScope);
+
+                                setRole(organization, modalScope);
 
                                 addOrganizationModal.hide();
                             }
@@ -245,6 +335,18 @@ angular.module('schemaForm')
                     /**
                      * Utils
                      **/
+
+                    function contributorExists(contributor) {
+                        if(angular.isDefined(contributor.fullname)) {
+                            var iContributor;
+                            for (iContributor = 0; iContributor < scope.model.length; iContributor++) {
+                                if (scope.model[iContributor].entity.fullname === contributor.fullname) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    }
 
                     function loadAllPersons() {
 
