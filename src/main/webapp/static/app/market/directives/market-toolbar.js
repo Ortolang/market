@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$rootScope', '$routeParams', '$location', 'OptionFacetedFilter',  function ($rootScope, $routeParams, $location, OptionFacetedFilter) {
+    .directive('marketToolbar', [ '$rootScope', '$routeParams', '$location', '$analytics', 'OptionFacetedFilter',  function ($rootScope, $routeParams, $location, $analytics, OptionFacetedFilter) {
         return {
             restrict: 'E',
             scope: {
@@ -51,12 +51,18 @@ angular.module('ortolangMarketApp')
                     };
 
                     scope.removeFilter = function (filter) {
-                        scope.filtersManager.removeFilter(filter);
-                        scope.applyFilters();
+                        if (filter.hasSelectedOptions()) {
+                            scope.filtersManager.removeFilter(filter);
+                            scope.applyFilters();
+                        }
                     };
 
                     scope.applyFilters = function () {
                         scope.hideLowFacets();
+                        //if (scope.content !== $location.search().content) {
+                        //    var content = scope.filtersManager.toAnalytics(scope.content);
+                        //    $analytics.trackSiteSearch(content, scope.type);
+                        //}
 
                         $location.search(scope.filtersManager.urlParam(scope.content, scope.viewMode, scope.orderProp, scope.orderDirection, scope.facets));
                         scope.query = scope.filtersManager.toQuery(scope.content);

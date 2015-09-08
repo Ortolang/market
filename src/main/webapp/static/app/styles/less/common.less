@@ -31,6 +31,10 @@ a:focus {
   .button-variant(@btn-workspace-color; @btn-workspace-bg; @btn-workspace-border);
 }
 
+.btn-alternate {
+  .button-variant(@text-color; @alternate-bg; darken(@alternate-bg, 6.5%));
+}
+
 .has-error .help-block.help {
   color: lighten(@text-color, 25%);
 }

@@ -1,86 +1,72 @@
-
-<div class="row toolbar">
-    <div class="col-sm-5">
-        <div class="input-group">
-            <input ng-model="content" ng-keyup="$event.keyCode == 13 && applyFilters()" class="form-control" type="text" placeholder="{{(searchPlaceHolder ? searchPlaceHolder : 'SEARCH') | translate}}">
-            <span class="input-group-btn">
-                <button ng-click="applyFilters()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
+<div class="market-toolbar-wrapper">
+    <div class="row toolbar main-market-toolbar">
+        <div class="col-sm-8 col-lg-7">
+            <div class="input-group">
+                <input ng-model="content" ng-keyup="$event.keyCode == 13 && applyFilters()" class="form-control" type="text" placeholder="{{(searchPlaceHolder ? searchPlaceHolder : 'SEARCH') | translate}}">
+                <span class="input-group-btn">
+                    <button ng-click="applyFilters()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
         </div>
-    </div>
-    <div class="col-sm-2">
-        <div class="btn-group">
-            <button type="button" class="btn btn-default" ng-click="switchFacets()" ng-model="facets" bs-checkbox>{{'MARKET.FACETS' | translate}}</button>
-        </div>
-    </div>
-</div>
-
-<div class="toolbar-options-facets" ng-show="facets">
-    <div class="row toolbar toolbar-options" ng-show="filtersManager.getAvailableFilters().length > 0">
-
-        <div ng-repeat="filter in filtersManager.getAvailableFilters()" ng-if="filter.getPriority() === 'high'" class="col-sm-2">
-            <div ng-if="filter.getView() === 'dropdown-faceted-filter'" ng-include="'market/directives/dropdown-faceted-filter.html'"></div>
-            <div ng-if="filter.getView() === 'checkbox-faceted-filter'" ng-include="'market/directives/checkbox-faceted-filter.html'"></div>
-        </div>
-        <div class="col-sm-2" ng-show="!lowFacets" ng-if="hasLowFacets()">
-            <button type="button" class="btn btn-primary btn-primary-inverse" ng-click="showLowFacets()">{{'MARKET.MORE_FACETS' | translate}}</button>
+        <div class="col-sm-4">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-click="switchFacets()" ng-model="facets" bs-checkbox>{{'MARKET.FACETS' | translate}}</button>
+            </div>
         </div>
     </div>
 
-    <div class="row toolbar toolbar-options" ng-if="hasLowFacets()" ng-show="lowFacets">
-        <div ng-repeat="filter in filtersManager.getAvailableFilters()" ng-if="filter.getPriority() !== 'high' && !filter.isLock() && filter.isVisible() && filter.hasOptions()" class="col-sm-12 toolbar-section">
-            <div class="toolbar-options-line">
+    <div class="toolbar-options-facets" ng-show="facets">
+        <div class="row toolbar toolbar-options high-available-filters-wrapper" ng-show="filtersManager.getAvailableFilters().length > 0">
+            <div class="col-sm-12">
+                <div ng-repeat="filter in filtersManager.getAvailableFilters() | filter:{priority: 'high'}" class="high-available-filter">
+                    <div ng-include="'market/directives/' + filter.getView() + '.html'"></div>
+                </div>
+                <span ng-show="!lowFacets" ng-if="hasLowFacets()" class="show-more">
+                    <button type="button" class="btn btn-primary" ng-click="showLowFacets()">{{'MARKET.MORE_FACETS' | translate}}</button>
+                </span>
+            </div>
+        </div>
+
+        <div class="row toolbar toolbar-options low-available-filters-wrapper" ng-if="hasLowFacets()" ng-show="lowFacets">
+            <div ng-repeat="filter in filtersManager.getAvailableFilters()" ng-if="filter.getPriority() !== 'high' && !filter.isLock() && filter.isVisible() && filter.hasOptions()"
+                 class="col-sm-12 low-available-filters" ng-class="filter.getView() === 'checkbox-faceted-filter' ? 'low-available-checkbox-filters' : ''">
                 <dl class="dl-horizontal">
                     <dt>{{filter.getLabel() | translate}} :</dt>
-                    <dd ng-if="filter.getView() === 'dropdown-faceted-filter'" ng-include="'market/directives/dropdown-faceted-filter.html'"></dd>
-                    <dd ng-if="filter.getView() === 'checkbox-faceted-filter'" ng-include="'market/directives/checkbox-faceted-filter.html'"></dd>
+                    <dd class="dd-faceted-filter" ng-include="'market/directives/'+ filter.getView() + '.html'"></dd>
                 </dl>
             </div>
+            <dl class="dl-horizontal col-sm-12">
+                <dd><button type="button" class="btn btn-primary" ng-click="applyFilters()" translate="SUBMIT"></button></dd>
+            </dl>
         </div>
     </div>
 
-    <div class="row toolbar toolbar-options" ng-if="!lowFacets && hasAppliedFacets()">
-        <div class="col-sm-10">
-            <label class="text-primary">{{'MARKET.ACTIVATED_FILTERS' | translate}} : </label>
+    <div class="row applied-filters" ng-if="!lowFacets && hasAppliedFacets()">
 
-            <button ng-repeat="filter in filtersManager.getFilters()" ng-if="filter.hasSelectedOptions() && !filter.isLock()" type="button" ng-click="removeFilter(filter)" class="btn btn-default" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}} <span class="close" aria-label="Close" aria-hidden="true">&times;</span></button>
+        <div class="col-sm-12">
+            <div>
+                <strong class="text-primary" translate="MARKET.ACTIVATED_FILTERS"></strong>
+            </div>
+
+            <button ng-repeat="filter in filtersManager.getFilters()" ng-if="filter.hasSelectedOptions() && !filter.isLock()" type="button" ng-click="removeFilter(filter)" class="btn btn-sm btn-alternate" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}}&nbsp;<span class="fa fa-times"></span></button>
 
         </div>
     </div>
 
-    <div class="row toolbar toolbar-options toolbar-options-applied-filters" ng-if="lowFacets">
+    <div class="row toolbar toolbar-options toolbar-options-sorted">
         <div class="col-sm-12">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary btn-primary-inverse" ng-click="applyFilters()">Valider</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'MARKET.SHOW_IN' | translate}} : {{viewMode.text | translate}} <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="menuitem" ng-repeat="vm in viewModes"><a ng-click="setViewMode(vm)">{{vm.text | translate}}</a></li>
+                </ul>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="row toolbar toolbar-options" ng-show="!facets" ng-if="!lowFacets && hasAppliedFacets()">
-
-    <div class="col-sm-10">
-        <label class="text-primary">{{'MARKET.ACTIVATED_FILTERS' | translate}} : </label>
-
-        <button ng-repeat="filter in filtersManager.getFilters()" ng-if="filter.hasSelectedOptions() && !filter.isLock()" type="button" ng-click="removeFilter(filter)" class="btn btn-default" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}} <span class="close" aria-label="Close" aria-hidden="true">&times;</span></button>
-
-    </div>
-</div>
-
-<div class="row toolbar toolbar-options toolbar-options-sorted">
-    <div class="col-sm-12">
-
-        <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'MARKET.SHOW_IN' | translate}} : {{viewMode.text | translate}} <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu">
-                <li role="menuitem" ng-repeat="vm in viewModes"><a ng-click="setViewMode(vm)">{{vm.text | translate}}</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'BROWSER.SORT_BY' | translate}} : {{orderProp.label | translate}} <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="order in orderProps"><div ng-click="toggleOrderBy(order)">{{order.text | translate}}</div></li>
-            </ul>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'BROWSER.SORT_BY' | translate}} : {{orderProp.label | translate}} <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="order in orderProps"><div ng-click="toggleOrderBy(order)">{{order.text | translate}}</div></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

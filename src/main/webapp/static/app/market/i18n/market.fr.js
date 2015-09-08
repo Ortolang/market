@@ -117,7 +117,7 @@ angular.module('ortolangMarketApp')
                 LINE: 'Par liste',
                 GRID: 'Par icônes'
             },
-            FACETS: 'Options de recherche',
+            FACETS: 'Recherche avancée',
             MORE_FACETS: 'Plus de filtres',
             LESS_FACETS: 'Cacher les filtres supplémentaires',
             ACTIVATED_FILTERS: 'Filtres actifs',
