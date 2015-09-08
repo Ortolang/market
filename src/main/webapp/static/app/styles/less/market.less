@@ -104,13 +104,18 @@
     background-color: @alternate-bg;
     -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
   }
 
   .title {
     position: relative;
     color: inherit;
     font-size: @font-size-small;
-    margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
+    margin: @padding-large-vertical 8px (@padding-large-vertical + @padding-base-vertical);
     height: 60px;
     font-weight: 600;
   }
@@ -118,7 +123,13 @@
   .publication-date {
     font-size: @font-size-small;
     font-style: italic;
-    margin: @padding-base-vertical @padding-large-vertical (@padding-large-vertical + @padding-base-vertical);
+    margin: @padding-base-vertical 8px (@padding-large-vertical + @padding-base-vertical);
+  }
+
+  .logo-item {
+    background-color: @white;
+    padding: 14px;
+    border-bottom: @alternate-border;
   }
 }
 
