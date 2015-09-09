@@ -8,12 +8,14 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$translate', '$http', '$location', '$anchorScroll', 'ortolangType', 'url', 'WorkspaceBrowserService', function ($translate, $http, $location, $anchorScroll, ortolangType, url, WorkspaceBrowserService) {
+    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'url', 'WorkspaceElementResource', function ($rootScope, $translate, $http, $location, $modal, $anchorScroll, $filter, ortolangType, url, WorkspaceElementResource) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',
             scope: {
                 metadata: '=',
+                workspace: '=',
+                root: '=',
                 back: '&'
             },
             link: {
@@ -42,7 +44,7 @@ angular.module('ortolangMarketApp')
 
                     function sendForm(content, contentType) {
 
-                        var uploadUrl = url.api + '/workspaces/' + (scope.selectedElements ? scope.selectedElements[0].workspace : WorkspaceBrowserService.workspace.key) + '/elements/',
+                        var uploadUrl = url.api + '/workspaces/' + (scope.selectedElements ? scope.selectedElements[0].workspace : scope.workspace.key) + '/elements/',
                             fd = new FormData(),
                             currentPath = scope.selectedElements ? scope.selectedElements[0].path : '/';
 
@@ -76,16 +78,26 @@ angular.module('ortolangMarketApp')
                         });
                     }
 
+                    scope.selectType = function () {
+                        scope.metadata.type = scope.selectedType.key;
+                    };
 
-                    function isProducer (contributor) {
-                        var iRole;
-                        for (iRole = 0; iRole < contributor.role.length; iRole++) {
-                            if (contributor.role[iRole] === 'producer') {
-                                return true;
-                            }
-                        }
-                        return false;
-                    }
+                    scope.selectStatusOfUse = function () {
+                        scope.metadata.statusOfUse = scope.selectedStatusOfUse.key;
+                    };
+
+                    var deregisterFileLicenceSelectModal = $rootScope.$on('browserSelectedElements-fileLicenceSelectModal', function ($event, elements) {
+                        console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileLicenceSelectModal" (selected elements: %o)', elements);
+                        
+                        scope.metadata.license = elements[0].path;
+                        scope.license = elements[0];
+                        scope.fileLicenceSelectModal.hide();
+                    });
+
+                    scope.$on('$destroy', function () {
+                        deregisterFileLicenceSelectModal();
+                    });
+
 
                     // ScrollSpy //
 
@@ -116,13 +128,48 @@ angular.module('ortolangMarketApp')
                                 value: $translate.instant('MARKET.ITEM_TYPE.INTEGRATED_PROJECT') 
                             }
                         ];
+                        var typeFound = $filter('filter')(scope.itemTypes, {key:scope.metadata.type});
+                        if(typeFound.length>0) {
+                            scope.selectedType = typeFound[0];
+                        }
 
-                        // scope.producers = [];
-                        // angular.forEach(scope.metadata.contributors, function(contributor) {
-                        //     if (isProducer(contributor)) {
-                        //         scope.producers.push(contributor.entity);
-                        //     }
-                        // });
+                        scope.allStatusOfUse = [ 
+                            { 
+                                key:'Libre', 
+                                value: 'Libre'
+                            },
+                            { 
+                                key:'Libre sans utilisation commerciale', 
+                                value: 'Libre sans utilisation commerciale' 
+                            },
+                            { 
+                                key:'Libre pour l’enseignement supérieur et la recherche', 
+                                value: 'Libre pour l’enseignement supérieur et la recherche'
+                            },
+                            { 
+                                key:'Négociation nécessaire', 
+                                value: 'Négociation nécessaire' 
+                            }
+                        ];
+                        var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
+                        if(statusOfUseFound.length>0) {
+                            scope.selectedStatusOfUse = statusOfUseFound[0];
+                        }
+
+                        var fileLicenceSelectModalScope = $rootScope.$new(true);
+                        fileLicenceSelectModalScope.acceptMultiple = false;
+                        fileLicenceSelectModalScope.forceMimeTypes = ['ortolang/collection', 'text'];
+                        fileLicenceSelectModalScope.forceWorkspace = scope.workspace.key;
+                        fileLicenceSelectModalScope.forceHead = true;
+                        fileLicenceSelectModalScope.fileSelectId = 'fileLicenceSelectModal';
+                        scope.fileLicenceSelectModal = $modal({scope: fileLicenceSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
+
+                        if(angular.isDefined(scope.metadata.license)) {
+
+                            WorkspaceElementResource.get({path: scope.metadata.license, wskey: scope.workspace.key, root: scope.root}).$promise.then(function (data) {
+                                scope.license = data;
+                            });
+                        }
                     }
                     init();
                 }

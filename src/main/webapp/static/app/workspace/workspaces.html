@@ -166,7 +166,7 @@
     </div>
     <div ng-show="editing" class="am-fade-and-slide-bottom">
         <!-- <div ng-include="'workspace/templates/metadata-item-form.html'"></div> -->
-         <market-item-editor ng-if="metadataItem" metadata="metadataItem" back="toggleEditing"></market-item-editor>
+         <market-item-editor ng-if="metadataItem" metadata="metadataItem" workspace="WorkspaceBrowserService.workspace" root="'head'" back="toggleEditing"></market-item-editor>
     </div>
 
 </div>

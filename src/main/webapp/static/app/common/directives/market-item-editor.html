@@ -21,17 +21,18 @@
 	<div class="col-md-10">
 		<section id="basic_info">
 			<h2>Informations générales</h2>
-				<!-- <h4 class="bs-callout-label">Catégorie de la ressource <span class="text-danger">*</span></h4 class="bs-callout-label">
-				<div class="form-group bs-callout" show-errors> -->
-					<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
-				    <!-- <input type="text" name="type" ng-model="metadata.type" class="form-control" > -->
-				    <!-- <select 
-					name="type"
-					class="form-control"
-					ng-model="metadata.type" 
-					ng-options="type.key as type.value for type in itemTypesSimple track by type.key">
-					</select> -->
-				<!-- </div> -->
+			<div class="form-group bs-callout">
+				<h4 class="bs-callout-label">Catégorie de la ressource <span class="text-danger">*</span></h4>
+				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
+			    <!-- <input type="text" name="type" ng-model="metadata.type" class="form-control" > -->
+			    <select 
+				name="type"
+				class="form-control"
+				ng-model="selectedType" 
+				ng-options="type as type.value for type in itemTypes track by type.key"
+				ng-change="selectType()">
+				</select>
+			</div>
 
 			<multilingual-textfield name="'title'" label="'Titre de la ressource'" model="metadata.title" required="true"></multilingual-textfield>
 		</section>
@@ -67,7 +68,7 @@
 			<div class=" bs-callout">
 				<h4 class="bs-callout-label">Site internet</h4 class="bs-callout-label">
 				<div class="form-group">
-				    <input type="text" name="website" ng-model="metadata.website" class="form-control" placeholder="http://">
+				    <input type="url" name="website" ng-model="metadata.website" class="form-control" placeholder="http://">
 				    <p>Adresse du site web contenant des informations sur la ressource.</p>
 				</div>
 			</div>
@@ -84,6 +85,38 @@
 
 		<section id="licence">
 			<h2>Licence</h2>
+
+			<div class=" bs-callout">
+				<h4 class="bs-callout-label">Licence à accepter</h4 class="bs-callout-label">
+				<div class="form-group">
+				    <div class="input-group">
+                        <span class="form-control" ng-click="fileLicenceSelectModal.show()"><span ng-class="icons.textFile"></span> {{license.path}}</span>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="fileLicenceSelectModal.show()" type="button">Selectionner</button>
+                    </span>
+                    </div>
+                    <input type="hidden" name="license" ng-model="md.license" class="form-control">
+				</div>
+			</div>
+
+			<div class=" bs-callout">
+				<h4 class="bs-callout-label">Site web de la licence</h4 class="bs-callout-label">
+				<div class="form-group">
+				    <input type="url" name="licenseWebsite" ng-model="metadata.licenseWebsite" class="form-control" placeholder="http://">
+				    <p>Adresse du site web contenant des informations sur la licence.</p>
+				</div>
+			</div>
+
+			<div class="form-group bs-callout">
+				<h4 class="bs-callout-label">Droit d'utilisation <span class="text-danger">*</span></h4>
+			    <select 
+				name="type"
+				class="form-control"
+				ng-model="selectedStatusOfUse" 
+				ng-options="sou as sou.value for sou in allStatusOfUse track by sou.key"
+				ng-change="selectStatusOfUse()">
+				</select>
+			</div>
 
 			<div class="form-group bs-callout">
 				<h4 class="bs-callout-label">Description des conditions d'utilisation</h4 class="bs-callout-label">
