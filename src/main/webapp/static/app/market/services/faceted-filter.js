@@ -144,7 +144,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             this.resetLabel = resetLabel;
         },
 
-        isLock: function () {
+        isLocked: function () {
             return this.lock;
         },
 

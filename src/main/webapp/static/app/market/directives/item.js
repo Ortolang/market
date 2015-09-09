@@ -45,18 +45,16 @@ angular.module('ortolangMarketApp')
                         scope.itemUrl = '#/market/' + type + '/' + scope.entry.alias;
                     }
 
-                    if(scope.entry.title) {
+                    if (scope.entry.title) {
                         scope.title = getValue(scope.entry.title, Settings.language);
                     }
-                    if(scope.entry.description) {
+                    if (scope.entry.description) {
                         scope.description = getValue(scope.entry.description, Settings.language);
                     }
 
                     if (scope.entry.image) {
                         ObjectResource.element({key: key, path: scope.entry.image}).$promise.then(function (oobject) {
                             scope.image = Content.getContentUrlWithKey(oobject.key);
-                        }, function (reason) {
-                            console.error(reason);
                         });
                     } else {
                         scope.imgtitle = '';

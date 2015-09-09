@@ -28,7 +28,7 @@
         </div>
 
         <div class="row toolbar toolbar-options low-available-filters-wrapper" ng-if="hasLowFacets()" ng-show="lowFacets">
-            <div ng-repeat="filter in filtersManager.getAvailableFilters()" ng-if="filter.getPriority() !== 'high' && !filter.isLock() && filter.isVisible() && filter.hasOptions()"
+            <div ng-repeat="filter in filtersManager.getAvailableFilters()" ng-if="filter.getPriority() !== 'high' && !filter.isLocked() && filter.isVisible() && filter.hasOptions()"
                  class="col-sm-12 low-available-filters" ng-class="filter.getView() === 'checkbox-faceted-filter' ? 'low-available-checkbox-filters' : ''">
                 <dl class="dl-horizontal">
                     <dt>{{filter.getLabel() | translate}} :</dt>
@@ -42,14 +42,12 @@
     </div>
 
     <div class="row applied-filters" ng-if="!lowFacets && hasAppliedFacets()">
-
         <div class="col-sm-12">
             <div>
                 <strong class="text-primary" translate="MARKET.ACTIVATED_FILTERS"></strong>
             </div>
-
-            <button ng-repeat="filter in filtersManager.getFilters()" ng-if="filter.hasSelectedOptions() && !filter.isLock()" type="button" ng-click="removeFilter(filter)" class="btn btn-sm btn-alternate" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}}&nbsp;<span class="fa fa-times"></span></button>
-
+            <button ng-repeat="filter in filtersManager.getFilters()" ng-if="filter.hasSelectedOptions() && !filter.isLocked()" type="button" ng-click="removeFilter(filter)" class="btn btn-sm btn-alternate" role="button">{{filter.getLabel() | translate}} : {{filter.getSelectedLabel() | translate}} <span class="fa fa-times"></span></button>
+            <!--<button type="button" ng-click="resetFilters()" class="btn btn-sm btn-alternate" role="button">{{'MARKET.RESET_FILTERS' | translate}} <span class="fa fa-times"></span></button>-->
         </div>
     </div>
 
