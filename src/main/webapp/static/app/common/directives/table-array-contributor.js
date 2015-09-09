@@ -65,6 +65,7 @@ angular.module('schemaForm')
                                 modalScope.organizationFullname = i.org.fullname;
                                 modalScope.organization = i.org;
                             }
+                            modalScope.fullname = i.fullname;
 
                             modalScope.$apply();
                         });
@@ -73,17 +74,13 @@ angular.module('schemaForm')
                         modalScope.allOrganizations = scope.allOrganizations;
 
                         modalScope.$on('taorg.select', function(v,i){
-                            modalScope.organization = i.lastname;
+                            modalScope.organization = i.org;
 
                             modalScope.$apply();
                         });
 
 
-                        // modalScope.onRoleAdded = function(role) {
-                            // modalScope.organization = role.id;
-
-                        //     modalScope.$apply();
-                        // };
+                        modalScope.clearSearch = clearSearchPerson;
 
                         return modalScope;
                     }
@@ -119,6 +116,22 @@ angular.module('schemaForm')
                         contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
                     }
 
+                    function clearModalScopeForPerson(modalScope) {
+                        delete modalScope.id;
+                        delete modalScope.lastname;
+                        delete modalScope.firstname;
+                        delete modalScope.midname;
+                        delete modalScope.organization;
+                        delete modalScope.organizationFullname;
+                        delete modalScope.fullname;
+                    }
+
+                    function clearSearchPerson(modalScope) {
+                        angular.element('#add-contributor-searchPerson').val('');
+
+                        clearModalScopeForPerson(modalScope);
+                    }
+
                     function setRole(contributor, myScope) {
                         contributor.role = [];
                         angular.forEach(myScope.roleTag, function(tag) {
@@ -138,7 +151,26 @@ angular.module('schemaForm')
                         var modalScope = prepareModalScopeForPerson(),
                             addContributorModal;
 
+                        modalScope.newPerson = false;
+                        modalScope.createPerson = function() {
+                            modalScope.newPerson = !modalScope.newPerson;
+                            clearSearchPerson(modalScope);
+                        };
+
                         modalScope.submit = function (addContributorForm) {
+
+                            if(!contributorExists(modalScope)) {
+                                addContributorForm.fullname.$setValidity('exists', true);
+                            } else {
+                                addContributorForm.fullname.$setValidity('exists', false);
+                            }
+
+                            if(modalScope.roleTag.length>0) {
+                                addContributorForm.roleTag.$setValidity('role', true);
+                            } else {
+                                addContributorForm.roleTag.$setValidity('role', false);
+                            }
+
                             if (addContributorForm.$valid) {
                                 var contributor = {entity:{},role:[]};
 
@@ -146,12 +178,8 @@ angular.module('schemaForm')
 
                                 setRole(contributor, modalScope);
 
-                                if(!contributorExists(contributor)) {
-                                    scope.model.push(contributor);
-                                    addContributorModal.hide();
-                                } else {
-
-                                }
+                                scope.model.push(contributor);
+                                addContributorModal.hide();
                             }
                         };
 
@@ -217,13 +245,15 @@ angular.module('schemaForm')
                             modalScope.$apply();
                         });
 
-                        modalScope.clearSearch = function() {
-                            angular.element('#add-organization-searchOrganization').val('');
-
-                            clearModalScopeForOrganization(modalScope);
-                        };
+                        modalScope.clearSearch = clearSearchOrganization;
 
                         return modalScope;
+                    }
+
+                    function clearSearchOrganization(modalScope) {
+                        angular.element('#add-organization-searchOrganization').val('');
+
+                        clearModalScopeForOrganization(modalScope);
                     }
 
                     function getFullnameOfOrganization(org) {
@@ -272,6 +302,8 @@ angular.module('schemaForm')
                         modalScope.newOrganization = false;
                         modalScope.createOrganization = function() {
                             modalScope.newOrganization = !modalScope.newOrganization;
+
+                            clearSearchOrganization(modalScope);
                         };
 
                         modalScope.submit = function (addOrganizationForm) {
@@ -355,6 +387,7 @@ angular.module('schemaForm')
                             source: 'ReferentielEntity'
                         });
 
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.lastname', 'lastname');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.firstname', 'firstname');
@@ -371,6 +404,8 @@ angular.module('schemaForm')
 
                                     scope.allPersons.push({
                                         value: person.fullname,
+                                        id: person.id,
+                                        fullname: person.fullname,
                                         lastname: person.lastname, 
                                         firstname: person.firstname, 
                                         midname: person.midname,

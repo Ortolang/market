@@ -136,7 +136,11 @@ angular.module('ortolangMarketApp')
                     MIDNAME: 'Midname',
                     LASTNAME: 'Nom',
                     ORGANIZATION: 'Organisme',
-                    ROLE: 'Role'
+                    ROLE: 'Role',
+                    MESSAGES: {
+                        EXISTS: 'Cette personne est déjà dans la liste.',
+                        ROLE: 'Veuillez spécifier le role de cette peronne.'
+                    }
                 },
                 ADD_ORGANIZATION_MODAL: {
                     TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire contributeur',
