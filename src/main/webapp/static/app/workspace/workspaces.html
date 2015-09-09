@@ -48,7 +48,8 @@
                             <span ng-if="!hasPresentationMetadata()" translate="WORKSPACE.CREATE_PRESENTATION_METADATA"></span>
                             <span ng-if="hasPresentationMetadata()" translate="WORKSPACE.EDIT_PRESENTATION_METADATA"></span>
                         </button> -->
-                        <button class="btn btn-default" ng-disabled="metadataItem===undefined" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> {{'WORKSPACE.PREVIEW_METADATA' | translate}}</button>
+                        <button class="btn btn-default" ng-if="metadataItem!==undefined" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> {{'WORKSPACE.PREVIEW_METADATA' | translate}}</button>
+                        <button class="btn btn-default" ng-if="metadataItem===undefined" ng-click="createMetadataItem()"><span class="octicon octicon-book"></span> {{'WORKSPACE.CREATE_PRESENTATION_METADATA' | translate}}</button>
                         <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
                         <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
                     </div>

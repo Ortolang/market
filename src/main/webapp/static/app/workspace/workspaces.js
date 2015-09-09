@@ -396,6 +396,16 @@ angular.module('ortolangMarketApp')
             $location.search('edit', $scope.editing || undefined);
         };
 
+        $scope.createMetadataItem = function () {
+            var modalScope = $rootScope.$new(true), createMetadataItemModal;
+
+
+            createMetadataItemModal = $modal({
+                scope: modalScope,
+                template: 'workspace/templates/create-metadata-item-modal.html'
+            });
+        };
+
         function loadMetadataItem() {
             //TODO Get the list of metadata before load ortolang item metadata if it exists
             WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(

@@ -157,7 +157,9 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'Cette organisme est déjà dans la liste.'
                     }
                 }
-            
+            },
+            CREATE_METADATA_ITEM_MODAL: {
+                TITLE: 'Remplir la fiche des métadonnées'
             }
         }
     });

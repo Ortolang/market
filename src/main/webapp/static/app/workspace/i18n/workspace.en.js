@@ -157,6 +157,9 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'This organization is already in the list.'
                     }
                 }
+            },
+            CREATE_METADATA_ITEM_MODAL: {
+                TITLE: 'Create metadata item'
             }
         }
     });
