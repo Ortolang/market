@@ -1,20 +1,12 @@
 <section class="items">
-    <header ng-if="title">
-        <h3 translate="{{title}}"></h3>
-    </header>
+    <h3 ng-if="title" translate="{{title}}"></h3>
 
-    <div ng-if="items.size()>0 && viewMode.id === 'tile'" class="row">
-        <div class="col-md-12">
-            <div class="flex-row medium-item-wrapper">
-                <item class="flex-column medium-item" ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" data-template="market/directives/medium-item.html"></item>
-            </div>
-        </div>
+    <div ng-if="items.size() > 0 && viewMode.id === 'tile'" class="flex-row medium-item-wrapper">
+        <item class="flex-column" ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" data-template="market/templates/medium-item.html"></item>
     </div>
 
-    <div ng-if="items.size()>0 && viewMode.id === 'line'" class="row market-list-line">
-        <div ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" class="col-md-8 line">
-            <item data-entry="item" template="market/directives/result.html" class="row market-item"></item>
-        </div>
+    <div ng-if="items.size() > 0 && viewMode.id === 'line'" class="full-item-wrapper">
+        <item ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" template="market/templates/full-item.html"></item>
     </div>
 
     <p ng-if="!lock && items.size()===0" class="text-center"><em>{{'MARKET.NO_ITEM' | translate}}</em></p>
