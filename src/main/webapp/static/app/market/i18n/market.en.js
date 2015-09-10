@@ -121,6 +121,7 @@ angular.module('ortolangMarketApp')
             MORE_FACETS: 'More filter',
             LESS_FACETS: 'Hide filters',
             ACTIVATED_FILTERS: 'Activated filters',
+            RESET_FILTERS: 'Clear filters',
             NO_ITEM: 'No resource available',
             NO_PRODUCER: 'No producer available',
             PUBLISHED_ON: 'Published on',

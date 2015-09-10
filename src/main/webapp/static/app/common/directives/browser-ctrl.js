@@ -325,7 +325,7 @@ angular.module('ortolangMarketApp')
             function createModalScope() {
                 modalScope = $scope.$new(true);
                 modalScope.$on('modal.hide', function () {
-                    //modalScope.$destroy();
+                    modalScope.$destroy();
                 });
                 modalScope.$on('modal.show.before', function () {
                     $scope.deactivateContextMenu();
