@@ -10,6 +10,8 @@
 angular.module('ortolangMarketApp')
     .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', '$analytics', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $rootScope, $http, $modal, $analytics, url, User, AuthService, ProfileResource, AtmosphereService) {
 
+        var serverDownModal;
+
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
                 if (!profile.complete) {
@@ -42,19 +44,25 @@ angular.module('ortolangMarketApp')
 
         $scope.$on('server-down', function () {
             if (angular.element('.server-down-modal').length === 0) {
-                $http.get(url.api + '/config/ping', {transformResponse: []})
+                $http.get(url.api + '/config/ping')
                     .success(function () {
                         console.log('API server responded to ping');
                     })
                     .error(function () {
-                        var modalScope = $rootScope.$new(true);
-                        modalScope.refresh = function () {
-                            AuthService.forceReload();
-                        };
-                        $modal({
-                            scope: modalScope,
-                            template: 'common/auth/templates/server-down-modal.html'
-                        });
+                        if (!serverDownModal) {
+                            var modalScope = $rootScope.$new(true);
+                            modalScope.refresh = function () {
+                                AuthService.forceReload();
+                            };
+                            modalScope.$on('modal.hide', function () {
+                                modalScope.$destroy();
+                                serverDownModal = undefined;
+                            });
+                            serverDownModal = $modal({
+                                scope: modalScope,
+                                template: 'common/auth/templates/server-down-modal.html'
+                            });
+                        }
                     });
             }
         });

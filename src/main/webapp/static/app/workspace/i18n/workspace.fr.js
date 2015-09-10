@@ -120,18 +120,50 @@ angular.module('ortolangMarketApp')
                 CONTENT: 'Impossible de supprimer un dossier non vide'
             },
             METADATA_EDITOR: {
+                MESSAGES: {
+                    NOT_SET: 'Veuillez renseigner ce champs.',
+                    NEED_ONE_VALUE: 'Veuillez spécifier au moins une valeur pour ce champs.'
+                },
                 BACK_TO_PREVIEW: 'Retourner à l\'aperçu',
-                BASIC_INFO: 'Informations basiques',
+                BASIC_INFO: 'Informations générales',
+                LIST_OF_CONTRIBUTORS: 'Liste des contributeurs',
+                LIST_OF_PRODUCERS: 'Liste des producteurs',
+                ADD_CONTRIBUTOR: 'Nouveau ...',
+                EDIT_CONTRIBUTOR: 'Modifier',
+                DELETE_CONTRIBUTOR: 'Supprimer',
                 ADD_CONTRIBUTOR_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un nouveau contributeur',
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    SEARCH: 'Rechercher une personne ?',
+                    SEARCH_LABEL: 'Rechercher',
                     FIRSTNAME: 'Prénom',
                     MIDNAME: 'Midname',
                     LASTNAME: 'Nom',
                     ORGANIZATION: 'Organisme',
-                    ROLE: 'Role'
+                    ROLE: 'Role',
+                    MESSAGES: {
+                        EXISTS: 'Cette personne est déjà dans la liste.',
+                        ROLE: 'Veuillez spécifier le role de cette peronne.'
+                    }
+                },
+                ADD_ORGANIZATION_MODAL: {
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire contributeur',
+                    SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    SEARCH: 'Rechercher un organisme ?',
+                    SEARCH_LABEL: 'Rechercher',
+                    NAME: 'Nom',
+                    CITY: 'Ville',
+                    COUNTRY: 'Pays',
+                    ACRONYM: 'Sigle',
+                    HOMEPAGE: 'Site',
+                    IMG: 'Logo',
+                    MESSAGES: {
+                        EXISTS: 'Cette organisme est déjà dans la liste.'
+                    }
                 }
-            
+            },
+            CREATE_METADATA_ITEM_MODAL: {
+                TITLE: 'Remplir la fiche des métadonnées'
             }
         }
     });

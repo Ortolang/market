@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['JsonResultResource', 'OptionFacetedFilter', 'ItemManager',  function (JsonResultResource, OptionFacetedFilter, ItemManager) {
+    .directive('items', ['JsonResultResource', 'OptionFacetedFilter', 'ItemManager', function (JsonResultResource, OptionFacetedFilter, ItemManager) {
         return {
             restrict: 'E',
             scope: {

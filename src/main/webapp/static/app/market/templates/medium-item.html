@@ -1,0 +1,8 @@
+<div class="medium-item">
+    <a ng-href="{{itemUrl}}">
+        <img ng-if="imgtitle !== undefined" class="item-logo" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}" alt="{{imgtitle}}"/>
+        <img ng-if="image" class="item-logo" ng-src="{{image}}" alt="{{imgtitle}}"/>
+        <h4 class="title" ng-bind="title"></h4>
+        <div ng-if="entry.publicationDate" class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{entry.publicationDate}}</span></div>
+    </a>
+</div>

@@ -103,7 +103,6 @@
 <script src="bower_components/angular-schema-form/dist/schema-form.js"></script>
 <script src="bower_components/angular-schema-form/dist/bootstrap-decorator.js"></script>
 <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
-<script src="bower_components/angular-mass-autocomplete/massautocomplete.min.js"></script>
 <script src="bower_components/atmosphere/modules/javascript/src/main/webapp/javascript/atmosphere.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/moment/locale/fr.js"></script>
@@ -117,17 +116,7 @@
 
 <!--<script src="online-config-url"></script>-->
 <!-- build:remove -->
-<script type="text/javascript">
-    var OrtolangConfig = {};
-    OrtolangConfig.logoutRedirectUrl = 'http://localhost:9000/';
-    OrtolangConfig.apiServerUrlDefault = 'https://localhost:8443/api';
-    OrtolangConfig.apiServerUrlNoSSL = 'http://localhost:8080/api';
-    OrtolangConfig.apiSubPath = '/sub';
-    OrtolangConfig.apiContentPath = '/content';
-    OrtolangConfig.keycloakConfigLocation = 'keycloak.json';
-    OrtolangConfig.piwikHost = '';
-    OrtolangConfig.piwikSiteId = '';
-</script>
+<script src="ortolang-config.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -148,6 +137,8 @@
 <script src="common/filters/break-line-filter.js"></script>
 <script src="common/filters/split.js"></script>
 <script src="common/filters/remove-accents.js"></script>
+<script src="common/filters/contributor-person.js"></script>
+<script src="common/filters/contributor-producer.js"></script>
 <script src="common/directives/ng-right-click.js"></script>
 <script src="common/directives/browser.js"></script>
 <script src="common/directives/table-array-contributor.js"></script>
@@ -195,6 +186,7 @@
 <script src="common/services/settings.js"></script>
 <script src="common/services/referentiel-resource.js"></script>
 <script src="common/services/subscription-resource.js"></script>
+<script src="common/services/statistics-resource.js"></script>
 <script src="common/services/cart.js"></script>
 <script src="common/static-site/static-website.js"></script>
 <script src="common/static-site/i18n/staticsite.fr.js"></script>

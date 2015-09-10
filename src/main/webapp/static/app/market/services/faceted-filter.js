@@ -13,7 +13,6 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
     function FacetedFilter(config) {
         this.id = undefined;
         this.alias = undefined;
-        // this.value = [];
         this.label = undefined;
         this.type = 'string';
         this.priority = 'low';
@@ -43,27 +42,15 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.alias;
         },
 
-        setAlias: function(alias) {
+        setAlias: function (alias) {
             this.alias = alias;
         },
-
-        // getValues: function () {
-        //     return this.values;
-        // },
-
-        // setValues: function(values) {
-        //     this.values = values;
-        // },
-
-        // isEmpty: function() {
-        //     return this.values.length <= 0;
-        // }
 
         getLabel: function () {
             return this.label;
         },
 
-        setLabel: function(label) {
+        setLabel: function (label) {
             this.label = label;
         },
 
@@ -71,7 +58,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.type;
         },
 
-        setType: function(type) {
+        setType: function (type) {
             this.type = type;
         },
 
@@ -79,7 +66,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.priority;
         },
 
-        setPriority: function(priority) {
+        setPriority: function (priority) {
             this.priority = priority;
         },
 
@@ -87,7 +74,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.visibility;
         },
 
-        setVisibility: function(visibility) {
+        setVisibility: function (visibility) {
             this.visibility = visibility;
         },
 
@@ -95,11 +82,11 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.selectedOptions;
         },
 
-        setSelectedOptions: function(selectedOptions) {
+        setSelectedOptions: function (selectedOptions) {
             this.selectedOptions = selectedOptions;
         },
 
-        hasSelectedOption: function(option) {
+        hasSelectedOption: function (option) {
             var i = 0;
             for (i; i < this.selectedOptions.length; i++) {
                 if (this.selectedOptions[i].getValue() === option.getValue()) {
@@ -109,13 +96,13 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return false;
         },
 
-        putSelectedOption: function(option) {
-            if(!this.hasSelectedOption(option)) {
+        putSelectedOption: function (option) {
+            if (!this.hasSelectedOption(option)) {
                 this.selectedOptions.push(option);
             }
         },
 
-        removeSelectedOption: function(option) {
+        removeSelectedOption: function (option) {
             var i = 0;
             for (i; i < this.selectedOptions.length; i++) {
                 if (this.selectedOptions[i].getValue() === option.getValue()) {
@@ -129,35 +116,35 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             this.selectedOptions = [];
         },
 
-        hasSelectedOptions: function() {
+        hasSelectedOptions: function () {
             return this.selectedOptions.length > 0;
         },
 
         getSelectedOptionsValues: function () {
             var valueArr = [];
-            angular.forEach(this.selectedOptions, function(opt) {
+            angular.forEach(this.selectedOptions, function (opt) {
                 valueArr.push(opt.getValue());
             });
             return valueArr;
         },
 
-        getSelectedLabel: function() {
+        getSelectedLabel: function () {
             var label = '';
-            angular.forEach(this.selectedOptions, function(opt) {
-                label += (label===''?'':',') + opt.getLabel();
+            angular.forEach(this.selectedOptions, function (opt) {
+                label += (label === '' ? '' : ',') + opt.getLabel();
             });
-            return label===''?this.resetLabel:label;
+            return label === '' ? this.resetLabel : label;
         },
 
         getResetLabel: function () {
             return this.resetLabel;
         },
 
-        setResetLabel: function(resetLabel) {
+        setResetLabel: function (resetLabel) {
             this.resetLabel = resetLabel;
         },
 
-        isLock: function() {
+        isLocked: function () {
             return this.lock;
         },
 
@@ -169,7 +156,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.options;
         },
 
-        getOption: function(value) {
+        getOption: function (value) {
             var i = 0;
             for (i; i < this.options.length; i++) {
                 if (this.options[i].getValue() === value) {
@@ -179,14 +166,14 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return undefined;
         },
 
-        setOptions: function(options) {
-            if(!this.lockOptions) {
+        setOptions: function (options) {
+            if (!this.lockOptions) {
                 this.options = options;
             }
         },
 
-        putOption: function(option) {
-            if(!this.lockOptions) {
+        putOption: function (option) {
+            if (!this.lockOptions) {
                 var i = 0;
                 for (i; i < this.options.length; i++) {
                     if (this.options[i].getValue() === option.getValue()) {
@@ -197,18 +184,17 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             }
         },
 
-        hasOptions: function() {
+        hasOptions: function () {
             return this.options.length > 0;
         },
 
         clearOptions: function () {
-            if(!this.lockOptions) {
+            if (!this.lockOptions) {
                 this.options = [];
             }
         },
 
-        reset: function() {
-            // this.value = undefined;
+        reset: function () {
             this.selectedOptions = [];
         },
 

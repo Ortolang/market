@@ -120,17 +120,50 @@ angular.module('ortolangMarketApp')
                 CONTENT: 'Cannot delete a non-empty folder'
             },
             METADATA_EDITOR: {
+                MESSAGES: {
+                    NOT_SET: 'Please fills this field.',
+                    NEED_ONE_VALUE: 'Please specify at least one value for this field.'
+                },
                 BACK_TO_PREVIEW: 'Back to the preview',
                 BASIC_INFO: 'Basic info',
+                LIST_OF_CONTRIBUTORS: 'List of contributors',
+                LIST_OF_PRODUCERS: 'List of producers',
+                ADD_CONTRIBUTOR: 'New ...',
+                EDIT_CONTRIBUTOR: 'Edit',
+                DELETE_CONTRIBUTOR: 'Delete',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    SEARCH: 'Looking for someone ?',
+                    SEARCH_LABEL: 'Search',
                     FIRSTNAME: 'Firstname',
                     MIDNAME: 'Midname',
                     LASTNAME: 'Lastname',
                     ORGANIZATION: 'Organization',
-                    ROLE: 'Role'
+                    ROLE: 'Role',
+                    MESSAGES: {
+                        EXISTS: 'This person is already in the list.',
+                        ROLE: 'You need to specify the role of this person.'
+                    }
+                },
+                ADD_ORGANIZATION_MODAL: {
+                    TITLE: '{{editing ? "Editing" : "Adding"}} new organization which contributes',
+                    SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    SEARCH: 'Looking for an organization ?',
+                    SEARCH_LABEL: 'Search',
+                    NAME: 'Name',
+                    CITY: 'City',
+                    COUNTRY: 'Country',
+                    ACRONYM: 'Acronym',
+                    HOMEPAGE: 'Homepage',
+                    IMG: 'Image',
+                    MESSAGES: {
+                        EXISTS: 'This organization is already in the list.'
+                    }
                 }
+            },
+            CREATE_METADATA_ITEM_MODAL: {
+                TITLE: 'Create metadata item'
             }
         }
     });

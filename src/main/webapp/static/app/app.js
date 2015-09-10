@@ -42,7 +42,6 @@ angular
         'schemaForm',
         'ngTagsInput',
         'angularMoment',
-        'MassAutoComplete',
         'angulartics',
         'angulartics.piwik'
     ])

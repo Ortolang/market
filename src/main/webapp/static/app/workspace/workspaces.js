@@ -115,6 +115,11 @@ angular.module('ortolangMarketApp')
             } else {
                 $scope.editing = false;
             }
+            if ($location.search().create) {
+                $scope.creating = true;
+            } else {
+                $scope.creating = false;
+            }
         });
 
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {
@@ -396,6 +401,28 @@ angular.module('ortolangMarketApp')
             $location.search('edit', $scope.editing || undefined);
         };
 
+        $scope.toggleCreating = function () {
+            $scope.creating = !$scope.creating;
+            $location.search('create', $scope.creating || undefined);
+        };
+
+        $scope.createMetadataItem = function () {
+            // var modalScope = $rootScope.$new(true), createMetadataItemModal;
+
+
+            // createMetadataItemModal = $modal({
+            //     scope: modalScope,
+            //     template: 'workspace/templates/create-metadata-item-modal.html'
+            // });
+            // $scope.code = '{"schema":"http://www.ortolang.fr/schema/012#"}';
+            // $scope.metadataItem = angular.fromJson($scope.code);
+            $scope.itemKey = WorkspaceBrowserService.workspace.head;
+
+            // $scope.togglePreviewing();
+
+            $scope.toggleCreating();
+        };
+
         function loadMetadataItem() {
             //TODO Get the list of metadata before load ortolang item metadata if it exists
             WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(
@@ -407,7 +434,6 @@ angular.module('ortolangMarketApp')
 
                         $scope.metadataItemLoaded = true;
                     }).error(function (reason) {
-                        $scope.code = undefined;
                         $scope.code = undefined;
                         $scope.metadataItem = undefined;
                         $scope.itemKey = undefined;
@@ -494,6 +520,7 @@ angular.module('ortolangMarketApp')
 
             $scope.previewing = !!$location.search().preview;
             $scope.editing = !!$location.search().edit;
+            $scope.creating = !!$location.search().create;
             $scope.metadataItemLoaded = false;
 
             getWorkspaceList();

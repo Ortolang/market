@@ -14,9 +14,11 @@ angular.module('ortolangMarketApp')
             templateUrl: 'common/directives/multilingual-textfield.html',
             scope: {
                 label: '=',
+                name: '=',
                 model: '=',
                 type: '=',
-                required: '='
+                required: '=',
+                error: '='
             },
             link: {
                 pre : function (scope, elem, attrs) {
