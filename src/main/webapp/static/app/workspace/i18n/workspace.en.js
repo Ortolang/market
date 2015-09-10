@@ -120,6 +120,10 @@ angular.module('ortolangMarketApp')
                 CONTENT: 'Cannot delete a non-empty folder'
             },
             METADATA_EDITOR: {
+                MESSAGES: {
+                    NOT_SET: 'Please fills this field.',
+                    NEED_ONE_VALUE: 'Please specify at least one value for this field.'
+                },
                 BACK_TO_PREVIEW: 'Back to the preview',
                 BASIC_INFO: 'Basic info',
                 LIST_OF_CONTRIBUTORS: 'List of contributors',

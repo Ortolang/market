@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
             link: {
                 pre: function (scope) {
 
-                    scope.submitForm = function () {
+                    scope.submitForm = function (metadataItemform) {
                         console.log('submit form');
 
                         for(var propertyName in scope.metadata) {
@@ -110,6 +110,10 @@ angular.module('ortolangMarketApp')
                     };
 
                     function init() {
+                        if(!angular.isDefined(scope.metadata)) {
+                            scope.metadata = {schema: 'http://www.ortolang.fr/schema/012#'};
+                        }
+
                         scope.itemTypes = [ 
                             { 
                                 key:'Corpus', 
@@ -128,9 +132,12 @@ angular.module('ortolangMarketApp')
                                 value: $translate.instant('MARKET.ITEM_TYPE.INTEGRATED_PROJECT') 
                             }
                         ];
-                        var typeFound = $filter('filter')(scope.itemTypes, {key:scope.metadata.type});
-                        if(typeFound.length>0) {
-                            scope.selectedType = typeFound[0];
+                        if(angular.isDefined(scope.metadata.type)) {
+
+                            var typeFound = $filter('filter')(scope.itemTypes, {key:scope.metadata.type});
+                            if(typeFound.length>0) {
+                                scope.selectedType = typeFound[0];
+                            }
                         }
 
                         scope.allStatusOfUse = [ 
@@ -151,9 +158,12 @@ angular.module('ortolangMarketApp')
                                 value: 'Négociation nécessaire' 
                             }
                         ];
-                        var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
-                        if(statusOfUseFound.length>0) {
-                            scope.selectedStatusOfUse = statusOfUseFound[0];
+                        if(angular.isDefined(scope.metadata.statusOfUse)) {
+
+                            var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
+                            if(statusOfUseFound.length>0) {
+                                scope.selectedStatusOfUse = statusOfUseFound[0];
+                            }
                         }
 
                         var fileLicenceSelectModalScope = $rootScope.$new(true);

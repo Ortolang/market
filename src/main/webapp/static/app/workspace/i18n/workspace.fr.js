@@ -120,6 +120,10 @@ angular.module('ortolangMarketApp')
                 CONTENT: 'Impossible de supprimer un dossier non vide'
             },
             METADATA_EDITOR: {
+                MESSAGES: {
+                    NOT_SET: 'Veuillez renseigner ce champs.',
+                    NEED_ONE_VALUE: 'Veuillez spécifier au moins une valeur pour ce champs.'
+                },
                 BACK_TO_PREVIEW: 'Retourner à l\'aperçu',
                 BASIC_INFO: 'Informations basiques',
                 LIST_OF_CONTRIBUTORS: 'Liste des contributeurs',

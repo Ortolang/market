@@ -58,6 +58,7 @@ angular.module('schemaForm')
                         modalScope.persons = scope.allPersons;
 
                         modalScope.$on('talastname.select', function(v,i){
+                            modalScope.id = i.id;
                             modalScope.lastname = i.lastname;
                             modalScope.firstname = i.firstname;
                             modalScope.midname = i.midname;
@@ -99,6 +100,7 @@ angular.module('schemaForm')
 
                     function setPerson(contributor, myScope) {
                         contributor.entity.type = myScope.type;
+                        contributor.entity.id = myScope.id;
                         contributor.entity.lastname = myScope.lastname;
                         contributor.entity.firstname = myScope.firstname;
                         contributor.entity.midname = myScope.midname;
@@ -193,6 +195,7 @@ angular.module('schemaForm')
                         var modalScope = prepareModalScopeForPerson(),
                             addContributorModal;
 
+                        modalScope.id = contributor.entity.id;
                         modalScope.firstname = contributor.entity.firstname;
                         modalScope.midname = contributor.entity.midname;
                         modalScope.lastname = contributor.entity.lastname;
@@ -260,8 +263,8 @@ angular.module('schemaForm')
                         var fullname = org.name;
                         var details = '';
                         details += angular.isDefined(org.acronym) ? org.acronym : '';
-                        details += (angular.isDefined(org.city) || angular.isDefined(org.country)) ? ',' : '';
-                        details += angular.isDefined(org.city) ? ' '+org.city : '';
+                        details += (angular.isDefined(org.acronym) && (angular.isDefined(org.city) || angular.isDefined(org.country))) ? ', ' : '';
+                        details += angular.isDefined(org.city) ? org.city : '';
                         details += angular.isDefined(org.country) ? ' '+org.country : '';
                         if(details!=='') {
                             fullname += ' ('+details+')';

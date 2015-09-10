@@ -1,4 +1,4 @@
-<form name="metadataItemform" novalidate role="form">
+<form name="metadataItemform" ng-submit="submitForm(metadataItemform)" novalidate role="form">
 
 <div class="row metadata-item-editor">
 	<div class="col-md-2 editor-aside">
@@ -12,7 +12,7 @@
 					<li><a href="" ng-click="scrolltoHref('licence')">Licence</a></li>
 					<!-- <li><a href="" ng-click="scrolltoHref('publications')">Publications</a></li> -->
 					<li><hr/></li>
-					<li><button class="btn btn-primary" ng-click="submitForm()">Appliquer</button></li>
+					<li><button class="btn btn-primary" type="submit">Appliquer</button></li>
 			    </ul>
 			  </li>
 			</ul>
@@ -21,20 +21,29 @@
 	<div class="col-md-10">
 		<section id="basic_info">
 			<h2>Informations générales</h2>
-			<div class="form-group bs-callout">
+
+            <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid' ng-messages="metadataItemform.type.$error">
+                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
+            </div>
+			<div class="form-group bs-callout" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid}">
 				<h4 class="bs-callout-label">Catégorie de la ressource <span class="text-danger">*</span></h4>
 				<!-- <label>Nom de la ressource <span class="text-danger">*</span></label> -->
-			    <!-- <input type="text" name="type" ng-model="metadata.type" class="form-control" > -->
 			    <select 
 				name="type"
 				class="form-control"
+				required
 				ng-model="selectedType" 
 				ng-options="type as type.value for type in itemTypes track by type.key"
 				ng-change="selectType()">
 				</select>
 			</div>
 
-			<multilingual-textfield name="'title'" label="'Titre de la ressource'" model="metadata.title" required="true"></multilingual-textfield>
+
+            <div class="bg-danger error-block col-sm-12 am-fade" ng-if="((metadataItemform.$submitted || metadataItemform.title.$dirty) && metadataItemform.title.$invalid) || ((metadataItemform.$submitted || metadataItemform.langtitle.$dirty) && metadataItemform.langtitle.$invalid)">
+                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NEED_ONE_VALUE' | translate}}</div>
+            </div>
+			<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.title.$dirty) && metadataItemform.title.$invalid) || ((metadataItemform.$submitted || metadataItemform.langtitle.$dirty) && metadataItemform.langtitle.$invalid)" name="'title'" label="'Titre de la ressource'" model="metadata.title" required="true"></multilingual-textfield>
+			
 		</section>
 
 		<section id="whos_involved">
@@ -53,15 +62,19 @@
 
 		<section id="describe">
 			<h2>Descriptif</h2>
-			<multilingual-textfield name="'description'" label="'Description'" model="metadata.description" type="'large'" required="true"></multilingual-textfield>
 
-			<div class=" bs-callout">
+            <div class="bg-danger error-block col-sm-12 am-fade" ng-if="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)">
+                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NEED_ONE_VALUE' | translate}}</div>
+            </div>
+			<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)" name="'description'" label="'Description'" model="metadata.description" type="'large'" required="true"></multilingual-textfield>
+
+			<!-- <div class=" bs-callout">
 				<h4 class="bs-callout-label">Langues principale du corpus</h4 class="bs-callout-label">
 				<div class="form-group">
 				    <input type="text" name="language" ng-model="metadata.language" class="form-control">
 				    <p>Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
 				</div>
-			</div>
+			</div> -->
 
 			<multilingual-textfield name="'keyword'" label="'Mots-clès'" model="metadata.keywords"></multilingual-textfield>
 
@@ -107,14 +120,19 @@
 				</div>
 			</div>
 
-			<div class="form-group bs-callout">
+
+            <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(metadataItemform.$submitted || metadataItemform.statusOfUse.$dirty) && metadataItemform.statusOfUse.$invalid'>
+                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
+            </div>
+			<div class="form-group bs-callout" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.statusOfUse.$dirty) && metadataItemform.statusOfUse.$invalid}">
 				<h4 class="bs-callout-label">Droit d'utilisation <span class="text-danger">*</span></h4>
 			    <select 
-				name="type"
-				class="form-control"
-				ng-model="selectedStatusOfUse" 
-				ng-options="sou as sou.value for sou in allStatusOfUse track by sou.key"
-				ng-change="selectStatusOfUse()">
+					name="statusOfUse"
+					class="form-control"
+					required
+					ng-model="selectedStatusOfUse" 
+					ng-options="sou as sou.value for sou in allStatusOfUse track by sou.key"
+					ng-change="selectStatusOfUse()">
 				</select>
 			</div>
 

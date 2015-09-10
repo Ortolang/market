@@ -17,7 +17,8 @@ angular.module('ortolangMarketApp')
                 name: '=',
                 model: '=',
                 type: '=',
-                required: '='
+                required: '=',
+                error: '='
             },
             link: {
                 pre : function (scope, elem, attrs) {
