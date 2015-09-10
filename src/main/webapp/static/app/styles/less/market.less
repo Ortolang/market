@@ -77,11 +77,13 @@
 
 .medium-item {
   margin: 5px;
-  border: @alternate-border;
+  border-top: @alternate-border;
+  border-left: @alternate-border;
+  border-right: @alternate-border;
+  border-bottom: 3px solid @alternate-border-color;
+  border-radius: @border-radius-base;
   line-height: 1.42857143;
   background-color: @default-bg;
-  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   width: 162px;
   overflow: hidden;
   cursor: pointer;
@@ -96,13 +98,20 @@
 
   &:hover {
     background-color: @alternate-bg;
-    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-bottom-color: darken(@alternate-border-color, 5%);
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
+    .item-logo {
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -ms-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s;
+      border-bottom: @alternate-border;
+    }
   }
 
   .title {

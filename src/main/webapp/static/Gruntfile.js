@@ -306,6 +306,7 @@ module.exports = function (grunt) {
                         'fonts/**/*',
                         'resources/**/*',
                         '**/*.json',
+                        '!keycloak.json',
                         'vendor/player_flv_maxi.swf'
                     ]
                 }, {
@@ -331,13 +332,6 @@ module.exports = function (grunt) {
                         '!*.{css,scss,md}'
                     ],
                     dest: '<%= yeoman.dist %>/fonts'
-                }, {
-                    expand: true,
-                    cwd: '<%= yeoman.app %>',
-                    dest: '<%= yeoman.dist %>',
-                    src: [
-                        'keycloak.json'
-                    ]
                 }, {
                     expand: true,
                     cwd: 'bower_components/zeroclipboard/dist',

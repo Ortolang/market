@@ -17,8 +17,10 @@
 @alternate-bg: darken(@default-bg, 6%);
 @highlight-bg-color: #fdf6e3;
 
-@default-border: 1px solid @navbar-default-border;
-@alternate-border: 1px solid darken(@alternate-bg, 6,5%);
+@default-border-color: @navbar-default-border;
+@default-border: 1px solid @default-border-color;
+@alternate-border-color: darken(@alternate-bg, 6,5%);
+@alternate-border: 1px solid @alternate-border-color;
 @modal-border-top-color: darken(@navbar-default-border, 10%);
 
 // ## Color ##
