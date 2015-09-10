@@ -592,14 +592,14 @@ angular.module('ortolangMarketApp')
                 createModalScope();
                 modalScope.parent = $scope.parent;
                 modalScope.wsName = $scope.browserService.workspace.name;
-                modalScope.overwrite = false;
+                modalScope.zipoverwrites = false;
                 modalScope.root = '';
                 modalScope.uploadZip = function () {
                     var files = angular.element('#upload-zip-file').prop('files');
                     $rootScope.uploader.addToQueue(files, {
                         'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.browserService.workspace.name}),
                         'ziproot': $scope.parent.path + '/' + modalScope.root,
-                        'overwrite': modalScope.overwrite,
+                        'zipoverwrites': modalScope.zipoverwrites,
                         'wskey': $scope.browserService.workspace.key,
                         'ortolangType': 'zip'
                     });
