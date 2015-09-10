@@ -375,8 +375,14 @@ angular.module('schemaForm')
                         if(angular.isDefined(contributor.fullname)) {
                             var iContributor;
                             for (iContributor = 0; iContributor < scope.model.length; iContributor++) {
-                                if (scope.model[iContributor].entity.fullname === contributor.fullname) {
-                                    return true;
+                                if(angular.isDefined(scope.model[iContributor].entity.id) && angular.isDefined(contributor.id)) {
+                                    if (scope.model[iContributor].entity.id === contributor.id) {
+                                        return true;
+                                    }
+                                } else {
+                                    if (scope.model[iContributor].entity.fullname === contributor.fullname) {
+                                        return true;
+                                    }
                                 }
                             }
                         }

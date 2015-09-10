@@ -115,6 +115,11 @@ angular.module('ortolangMarketApp')
             } else {
                 $scope.editing = false;
             }
+            if ($location.search().create) {
+                $scope.creating = true;
+            } else {
+                $scope.creating = false;
+            }
         });
 
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {

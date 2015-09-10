@@ -1,0 +1,149 @@
+/* Copyright 2013-2015 etc Chris Tabor. Licensed under MIT. */
+/* Converted from SASS to LESS*/
+
+.bubble-style(@progress-wizard-color) {
+    background-color: @progress-wizard-color;
+    color: @progress-wizard-color;
+    border-color: darken(@progress-wizard-color, @progress-wizard-darken-amount);
+    &:before,
+    &:after {
+        background-color: @progress-wizard-color;
+        border-color: darken(@progress-wizard-color, @progress-wizard-darken-amount);
+    }
+}
+.flexer {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.no-flexer {
+    display: block;
+}
+.no-flexer-element {
+    -ms-flex: 0;
+    -webkit-flex: 0;
+    -moz-flex: 0;
+    flex: 0;
+}
+.flexer-element {
+    -ms-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    flex: 1;
+}
+.progress-indicator:extend(.flexer) {
+    
+    margin: 0;
+    padding: 0;
+    font-size: 80%;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+    > li:extend(.flexer-element) {
+        list-style: none;
+        text-align: center;
+        width: auto;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        text-overflow: ellipsis;
+        color: @progress-wizard-inactive;
+        display: block;
+        &:hover {
+            color: darken(@progress-wizard-inactive, @progress-wizard-darken-amount);
+        }
+    }
+    > li .bubble {
+        border-radius: 1000px;
+        width: @progress-wizard-bubble-size;
+        height: @progress-wizard-bubble-size;
+        background-color: @progress-wizard-inactive;
+        display: block;
+        margin: 0 auto 0.5em auto;
+        border-bottom: @progress-wizard-border-thickness solid darken(@progress-wizard-inactive, 20%);
+    }
+
+    // line connectors
+
+    > li .bubble:before,
+    > li .bubble:after {
+        display: block;
+        position: absolute;
+        top: @progress-wizard-bubble-size / 2 - @progress-wizard-border-thickness;
+        width: 100%;
+        height: @progress-wizard-bubble-line-thickness;
+        content: '';
+        background-color: @progress-wizard-inactive;
+    }
+    > li .bubble:before {
+        left: 0;
+    }
+    > li .bubble:after {
+        right: 0;
+    }
+
+    // completed state
+
+    > li.completed {
+        color: green;
+        .bubble {
+            .bubble-style(@progress-wizard-active);
+        }
+    }
+
+    // button states
+
+    > li a:hover .bubble {
+        .bubble-style(@progress-wizard-hover);
+    }
+
+    // override states
+
+    > li.danger .bubble {
+        .bubble-style(@progress-wizard-step-danger);
+    }
+    > li.warning .bubble {
+        .bubble-style(@progress-wizard-step-warning);
+    }
+    > li.info .bubble {
+        .bubble-style(@progress-wizard-step-info);
+    }
+
+    // stacked version
+
+    &.stacked:extend(.no-flexer) {
+        ;
+        > li {
+            text-indent: -10px;
+            text-align: center;
+            display: block;
+        }
+        > li .bubble:before,
+        > li .bubble:after {
+            left: 50%;
+            margin-left: -@progress-wizard-bubble-line-thickness / 2;
+            width: @progress-wizard-bubble-line-thickness;
+            height: 100%;
+        }
+        .stacked-text {
+            position: relative;
+            z-index: 10;
+            top: 0;
+            margin-left: 60% !important;
+            width: 45% !important;
+            display: inline-block;
+            text-align: left;
+            line-height: 1.2em;
+        }
+        > li a {
+            border: none;
+        }
+    }
+}
+
+@media handheld, screen and (max-width: @progress-wizard-mobile-size) {
+    .progress-indicator {
+        font-size: 60%;
+    }
+}

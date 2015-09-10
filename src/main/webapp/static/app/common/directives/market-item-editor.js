@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'url', 'WorkspaceElementResource', function ($rootScope, $translate, $http, $location, $modal, $anchorScroll, $filter, ortolangType, url, WorkspaceElementResource) {
+    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'url', 'WorkspaceElementResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, url, WorkspaceElementResource) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',
@@ -16,12 +16,13 @@ angular.module('ortolangMarketApp')
                 metadata: '=',
                 workspace: '=',
                 root: '=',
-                back: '&'
+                back: '&',
+                step: '='
             },
             link: {
                 pre: function (scope) {
 
-                    scope.submitForm = function (metadataItemform) {
+                    scope.submitForm = function () {
                         console.log('submit form');
 
                         for(var propertyName in scope.metadata) {
@@ -86,6 +87,38 @@ angular.module('ortolangMarketApp')
                         scope.metadata.statusOfUse = scope.selectedStatusOfUse.key;
                     };
 
+                    scope.nextStep = function() {
+                        if(scope.stepCurrent==='basic_info') {
+                            //TODO show error if there is
+                            scope.submitForm();
+                            var success = stepBasicInfoSuccess();
+                            scope.stepBasicInfoSuccess = success;
+                            if(success) {
+                                scope.stepCurrent = 'whos_involved';
+                            }
+                        } else if(scope.stepCurrent==='whos_involved') {
+                            var success = stepWhosInvolvedSuccess();
+                            scope.stepWhosInvolvedSuccess = success;
+                            if(success) {
+                                scope.stepCurrent = 'describe';
+                            }
+                        }
+                    };
+
+                    function stepBasicInfoSuccess() {
+                        if(scope.metadataItemform.type.$valid && scope.metadataItemform.title.$valid && scope.metadataItemform.langtitle.$valid) {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    function stepWhosInvolvedSuccess() {
+                        if(scope.metadata.contributors.length>0) {
+                            return true;
+                        }
+                        return false;
+                    }
+
                     var deregisterFileLicenceSelectModal = $rootScope.$on('browserSelectedElements-fileLicenceSelectModal', function ($event, elements) {
                         console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileLicenceSelectModal" (selected elements: %o)', elements);
                         
@@ -109,9 +142,54 @@ angular.module('ortolangMarketApp')
                         $anchorScroll();
                     };
 
+                    // *********************** //
+                    //          Resize         //
+                    // *********************** //
+
+                    scope.resizeMetadataItemEditor = function () {
+                        // if (!$scope.isFileSelectBrowserService) {
+                
+                            var topNavWrapper = angular.element('#top-nav-wrapper'),
+                                footerWrapper = angular.element('#footer-wrapper'),
+                                topOffset = topNavWrapper.outerHeight(),
+                                height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+                                bottomOffset = footerWrapper.outerHeight();
+                            var browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
+                        //     if ($scope.isMarketBrowserService) {
+                        //         topOffset += angular.element('.market-item').find('header').outerHeight();
+                        //         height -= 1;
+                        //     }
+                            height = height - topOffset - bottomOffset;
+                            if (height < 1) {
+                                height = 1;
+                            }
+                            if (height > topOffset) {
+                                height -= 1;
+                        //         if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
+                        //             height -= angular.element('.upload-queue').innerHeight();
+                        //         }
+                                var editorWrapper = angular.element('.metadata-item-editor'),
+                                    editorAside = angular.element('.editor-aside'),
+                                    editorStepHeight = angular.element('.metadata-editor-progress-bar').innerHeight();
+                                editorAside.css('min-height', (height - browserToolbarHeight) + 'px');
+                                // editorAside.find('.my-workspaces').css('height', (height - browserToolbarHeight - 80) + 'px');
+                                editorWrapper.find('.editor-pane').css('height', (height - browserToolbarHeight - editorStepHeight) + 'px');
+                                // editorWrapper.find('.tile-workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
+                                // editorWrapper.find('.browser-aside-left-collapsed').css('height', (height - browserToolbarHeight) + 'px');
+                            }
+                        //     $scope.isScreenMd = window.innerWidth < 992;
+                        //     $scope.browserSettings.hideWorkspaceListMdScreen = $scope.isScreenMd;
+                        //     $scope.$applyAsync();
+                        // }
+                    };
+
+                    angular.element($window).bind('resize', function () {
+                        scope.resizeMetadataItemEditor();
+                    });
+
                     function init() {
                         if(!angular.isDefined(scope.metadata)) {
-                            scope.metadata = {schema: 'http://www.ortolang.fr/schema/012#'};
+                            scope.metadata = {schema: 'http://www.ortolang.fr/schema/012#', contributors:[]};
                         }
 
                         scope.itemTypes = [ 
@@ -180,6 +258,12 @@ angular.module('ortolangMarketApp')
                                 scope.license = data;
                             });
                         }
+
+                        scope.stepCurrent = 'basic_info';
+                        scope.stepBasicInfoSuccess = false;
+                        scope.stepWhosInvolvedSuccess = false;
+                        scope.stepDescribeSuccess = false;
+                        scope.stepLicenceSuccess = false;
                     }
                     init();
                 }

@@ -125,7 +125,7 @@ angular.module('ortolangMarketApp')
                     NEED_ONE_VALUE: 'Veuillez spécifier au moins une valeur pour ce champs.'
                 },
                 BACK_TO_PREVIEW: 'Retourner à l\'aperçu',
-                BASIC_INFO: 'Informations basiques',
+                BASIC_INFO: 'Informations générales',
                 LIST_OF_CONTRIBUTORS: 'Liste des contributeurs',
                 LIST_OF_PRODUCERS: 'Liste des producteurs',
                 ADD_CONTRIBUTOR: 'Nouveau ...',

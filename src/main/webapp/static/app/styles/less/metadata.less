@@ -41,9 +41,22 @@
     margin-bottom: @padding-large-vertical;
 }
 
+.progress-indicator.stacked > li {
+    height: 150px;
+}
+
 .metadata-item-editor {
+
+    .metadata-editor-progress-bar {
+        padding: @padding-large-horizontal
+    }
+
     .editor-aside {
         border-right: 1px solid #efefef;
+        overflow: auto;
+    }
+    .editor-pane {
+        overflow: auto;
     }
     section {
         h2 {
