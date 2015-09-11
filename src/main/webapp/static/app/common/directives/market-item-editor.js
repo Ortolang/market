@@ -25,15 +25,15 @@ angular.module('ortolangMarketApp')
                     scope.submitForm = function () {
                         console.log('submit form');
 
+                        if (scope.metadataItemform.$invalid) {
+                            console.log('not ready');
+                            return;
+                        }
+
                         for(var propertyName in scope.metadata) {
                             if(scope.metadata[propertyName].length===0) {
                                 delete scope.metadata[propertyName];
                             }
-                        }
-
-                        if (scope.metadataItemform.$invalid) {
-                            console.log('not ready');
-                            return;
                         }
 
                         var content = angular.toJson(scope.metadata),

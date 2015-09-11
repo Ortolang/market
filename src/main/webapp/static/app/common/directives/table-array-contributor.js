@@ -12,8 +12,7 @@ angular.module('schemaForm')
         return {
             restrict: 'AE',
             scope: {
-                add: '=addLabel',
-                model: '='
+                contributors: '='
             },
             templateUrl: 'common/directives/table-array-contributor.html',
             link: {
@@ -32,9 +31,9 @@ angular.module('schemaForm')
                     };
 
                     scope.deleteContributor = function (contributor) {
-                        var index = scope.model.indexOf(contributor);
+                        var index = scope.contributors.indexOf(contributor);
                         if (index > -1) {
-                            scope.model.splice(index, 1);
+                            scope.contributors.splice(index, 1);
                         }
                     };
 
@@ -159,9 +158,13 @@ angular.module('schemaForm')
                             clearSearchPerson(modalScope);
                         };
 
+                        modalScope.$on('modal.hide', function () {
+                            modalScope.$destroy();
+                        });
+
                         modalScope.submit = function (addContributorForm) {
 
-                            if(!contributorExists(modalScope)) {
+                            if(!contributorExists(modalScope, scope.contributors)) {
                                 addContributorForm.fullname.$setValidity('exists', true);
                             } else {
                                 addContributorForm.fullname.$setValidity('exists', false);
@@ -180,7 +183,7 @@ angular.module('schemaForm')
 
                                 setRole(contributor, modalScope);
 
-                                scope.model.push(contributor);
+                                scope.contributors.push(contributor);
                                 addContributorModal.hide();
                             }
                         };
@@ -206,6 +209,10 @@ angular.module('schemaForm')
                         }
 
                         prepareModalScopeWithRole(contributor, modalScope);
+
+                        modalScope.$on('modal.hide', function () {
+                            modalScope.$destroy();
+                        });
 
                         modalScope.submit = function (addContributorForm) {
                             if (addContributorForm.$valid) {
@@ -248,7 +255,11 @@ angular.module('schemaForm')
                             modalScope.$apply();
                         });
 
-                        modalScope.clearSearch = clearSearchOrganization;
+                        modalScope.clearSearch = function clearSearchOrganization() {
+                            angular.element('#add-organization-searchOrganization').val('');
+
+                            clearModalScopeForOrganization(modalScope);
+                        };
 
                         return modalScope;
                     }
@@ -296,7 +307,6 @@ angular.module('schemaForm')
                     }
 
                     scope.addProducer = function () {
-
                         var modalScope = prepareModalScopeForOrganization(),
                             addOrganizationModal;
 
@@ -309,9 +319,13 @@ angular.module('schemaForm')
                             clearSearchOrganization(modalScope);
                         };
 
+                        modalScope.$on('modal.hide', function () {
+                            modalScope.$destroy();
+                        });
+
                         modalScope.submit = function (addOrganizationForm) {
 
-                            if(!contributorExists(modalScope)) {
+                            if(!contributorExists(modalScope, scope.contributors)) {
                                 addOrganizationForm.fullname.$setValidity('exists', true);
                             } else {
                                 addOrganizationForm.fullname.$setValidity('exists', false);
@@ -324,7 +338,7 @@ angular.module('schemaForm')
 
                                 setRole(organization, modalScope);
 
-                                scope.model.push(organization);
+                                scope.contributors.push(organization);
                                 addOrganizationModal.hide();
                             }
                         };
@@ -337,7 +351,21 @@ angular.module('schemaForm')
 
                     scope.editOrganization = function (organization) {
                         var modalScope = prepareModalScopeForOrganization(),
-                            addOrganizationModal;
+                            editOrganizationModal;
+
+                        modalScope.$on('modal.hide', function () {
+                            modalScope.$destroy();
+                        });
+
+                        modalScope.submit = function (addOrganizationForm) {
+                            if (addOrganizationForm.$valid) {
+                                setOrganization(organization, modalScope);
+
+                                setRole(organization, modalScope);
+
+                                editOrganizationModal.hide();
+                            }
+                        };
 
                         modalScope.id = organization.entity.id;
                         modalScope.name = organization.entity.name;
@@ -350,18 +378,8 @@ angular.module('schemaForm')
 
                         prepareModalScopeWithRole(organization, modalScope);
 
-                        modalScope.submit = function (addOrganizationForm) {
-                            if (addOrganizationForm.$valid) {
-                                setOrganization(organization, modalScope);
-
-                                setRole(organization, modalScope);
-
-                                addOrganizationModal.hide();
-                            }
-                        };
-
                         modalScope.editing = true;
-                        addOrganizationModal = $modal({
+                        editOrganizationModal = $modal({
                             scope: modalScope,
                             template: 'common/directives/add-organization-template.html'
                         });
@@ -371,16 +389,16 @@ angular.module('schemaForm')
                      * Utils
                      **/
 
-                    function contributorExists(contributor) {
-                        if(angular.isDefined(contributor.fullname)) {
+                    function contributorExists(contributor, contributors) {
+                        if(angular.isDefined(contributor.fullname) && angular.isDefined(contributors)) {
                             var iContributor;
-                            for (iContributor = 0; iContributor < scope.model.length; iContributor++) {
-                                if(angular.isDefined(scope.model[iContributor].entity.id) && angular.isDefined(contributor.id)) {
-                                    if (scope.model[iContributor].entity.id === contributor.id) {
+                            for (iContributor = 0; iContributor < contributors.length; iContributor++) {
+                                if(angular.isDefined(contributors[iContributor].entity.id) && angular.isDefined(contributor.id)) {
+                                    if (contributors[iContributor].entity.id === contributor.id) {
                                         return true;
                                     }
                                 } else {
-                                    if (scope.model[iContributor].entity.fullname === contributor.fullname) {
+                                    if (contributors[iContributor].entity.fullname === contributor.fullname) {
                                         return true;
                                     }
                                 }
@@ -504,13 +522,14 @@ angular.module('schemaForm')
                         scope.selectedItem = undefined;
                         scope.addLabel = 'Ajouter ...';
 
-                        if(scope.model===undefined) {
-                            scope.model = [];
+                        if(scope.contributors===undefined) {
+                            scope.contributors = [];
                         }
 
                         loadAllPersons();
                         loadAllOrganizations();
                         loadAllRoles();
+
                     }
                     init();
                 }

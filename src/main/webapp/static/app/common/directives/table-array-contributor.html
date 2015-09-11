@@ -26,7 +26,7 @@
                     <button type="button" class="btn btn-success" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR" ng-click="addProducer()"></button>
                 </div>
             </th>
-	        <tr ng-repeat="item in model | contributorProducer">
+	        <tr ng-repeat="item in contributors | contributorProducer">
 	            <td><a href="" ng-bind="item.entity.fullname" ng-click="editContributor(item)"></a></td>
 	            <td> 
                 	<div class="pull-right"> 
@@ -42,7 +42,7 @@
                     <button type="button" class="btn btn-success" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR" ng-click="addContributor()"></button>
                 </div>
             </th>
-	        <tr ng-repeat="item in model | contributorPerson">
+	        <tr ng-repeat="item in contributors | contributorPerson">
 	            <td><a href="" ng-bind="item.entity.fullname" ng-click="editContributor(item)"></a></td>
 	            <td>
                 	<div class="pull-right">

@@ -100,7 +100,7 @@
 				
 			</section>
 
-			<section ng-show="!step || (step && stepCurrent === 'whos_involved')" id="whos_involved">
+			<section ng-if="!step || (step && stepCurrent === 'whos_involved')" id="whos_involved">
 				<h2>Personnes impliquées</h2>
 				<!--
 				<h4 class="bs-callout-label">Responsable de la ressource <span class="text-danger">*</span></h4 class="bs-callout-label">
@@ -110,7 +110,7 @@
 				</div> -->
 
 				<div class="bs-callout">
-				    <table-array-contributor model="metadata.contributors" ></table-array-contributor>
+				    <table-array-contributor contributors="metadata.contributors" ></table-array-contributor>
 				</div>
 			</section>
 
