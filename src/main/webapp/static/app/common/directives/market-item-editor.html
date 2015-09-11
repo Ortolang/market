@@ -2,7 +2,7 @@
 
 <div class="metadata-item-editor" ng-init="resizeMetadataItemEditor()">
 
-	<div ng-if="step" class="row metadata-editor-progress-bar">
+	<div ng-show="step" class="row metadata-editor-progress-bar">
 		<ul class="progress-indicator">
             <li ng-class="(stepCurrent==='basic_info' || stepBasicInfoSuccess)?'completed':''">
                 <span class="bubble"></span>
@@ -12,17 +12,17 @@
             <li ng-class="(stepCurrent==='whos_involved' || stepWhosInvolvedSuccess)?'completed':''">
                 <span class="bubble"></span>
                 <i ng-if="stepWhosInvolvedSuccess" class="fa fa-check-circle"></i>
-                Personnes impliquées
+                {{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}
             </li>
             <li ng-class="(stepCurrent==='describe' || stepDescribeSuccess)?'completed':''">
                 <span class="bubble"></span>
                 <i ng-if="stepDescribeSuccess" class="fa fa-check-circle"></i>
-                Descriptif
+                {{'WORKSPACE.METADATA_EDITOR.DESCRIBE' | translate}}
             </li>
             <li ng-class="(stepCurrent==='licence' || stepLicenceSuccess)?'completed':''">
                 <span class="bubble"></span>
                 <i ng-if="stepLicenceSuccess" class="fa fa-check-circle"></i>
-                Licence
+                {{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}
             </li>
         </ul>
 	</div>
@@ -33,10 +33,10 @@
 				<ul class="nav bs-sidenav" bs-scrollspy>
 				  <li>
 				    <ul class="nav">
-				    	<li data-target="#basic_info" bs-scrollspy><a href="" ng-click="scrolltoHref('basic_info')">Informations générales</a></li>
-						<li data-target="#whos_involved" bs-scrollspy><a href="" ng-click="scrolltoHref('whos_involved')">Personnes impliquées</a></li>
-						<li data-target="#describe" bs-scrollspy><a href="" ng-click="scrolltoHref('describe')">Descriptif</a></li>
-						<li><a href="" ng-click="scrolltoHref('licence')">Licence</a></li>
+				    	<li data-target="#basic_info" bs-scrollspy><a href="" ng-click="scrolltoHref('basic_info')">{{'WORKSPACE.METADATA_EDITOR.BASIC_INFO' | translate}}</a></li>
+						<li data-target="#whos_involved" bs-scrollspy><a href="" ng-click="scrolltoHref('whos_involved')">{{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}</a></li>
+						<li data-target="#describe" bs-scrollspy><a href="" ng-click="scrolltoHref('describe')">{{'WORKSPACE.METADATA_EDITOR.DESCRIBE' | translate}}</a></li>
+						<li><a href="" ng-click="scrolltoHref('licence')">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</a></li>
 						<li><hr/></li>
 						<li><button class="btn btn-primary" type="submit">Appliquer</button></li>
 				    </ul>
@@ -100,7 +100,7 @@
 				
 			</section>
 
-			<section ng-if="!step || (step && stepCurrent === 'whos_involved')" id="whos_involved">
+			<section ng-show="!step || (step && stepCurrent === 'whos_involved')" id="whos_involved">
 				<h2>Personnes impliquées</h2>
 				<!--
 				<h4 class="bs-callout-label">Responsable de la ressource <span class="text-danger">*</span></h4 class="bs-callout-label">
@@ -201,7 +201,7 @@
 			</section>
 
 			<div ng-if="step">
-				<button class="btn btn-primary" ng-click="nextStep()">Next step</button>
+				<button class="btn btn-primary" type="button" ng-click="nextStep()" translate="WORKSPACE.METADATA_EDITOR.NEXT_STEP"></button>
 			</div>
 		</div>
 	</div>

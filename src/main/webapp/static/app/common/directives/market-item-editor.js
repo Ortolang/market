@@ -16,7 +16,9 @@ angular.module('ortolangMarketApp')
                 metadata: '=',
                 workspace: '=',
                 root: '=',
-                back: '&',
+                togglePreviewing: '&',
+                toggleEditing: '&',
+                toggleCreating: '&',
                 step: '='
             },
             link: {
@@ -69,7 +71,12 @@ angular.module('ortolangMarketApp')
                             // scope.hideEditor();
                             // resetMetadataFormat();
                             // scope.refreshSelectedElement();
-                            scope.back();
+                            if(scope.step) {
+                                scope.toggleCreating();
+                                scope.togglePreviewing();
+                            } else {
+                                scope.toggleEditing();
+                            }
 
                         })
                         .error(function (error) {
@@ -89,18 +96,26 @@ angular.module('ortolangMarketApp')
 
                     scope.nextStep = function() {
                         if(scope.stepCurrent==='basic_info') {
-                            //TODO show error if there is
-                            scope.submitForm();
-                            var success = stepBasicInfoSuccess();
-                            scope.stepBasicInfoSuccess = success;
-                            if(success) {
+                            scope.stepBasicInfoSuccess = stepBasicInfoSuccess();
+                            if(scope.stepBasicInfoSuccess) {
                                 scope.stepCurrent = 'whos_involved';
                             }
                         } else if(scope.stepCurrent==='whos_involved') {
-                            var success = stepWhosInvolvedSuccess();
-                            scope.stepWhosInvolvedSuccess = success;
-                            if(success) {
+                            scope.stepWhosInvolvedSuccess = stepWhosInvolvedSuccess();
+                            if(scope.stepWhosInvolvedSuccess) {
                                 scope.stepCurrent = 'describe';
+                            }
+                        } else if(scope.stepCurrent==='describe') {
+                            scope.stepDescribeSuccess = stepDescribeSuccess();
+                            if(scope.stepDescribeSuccess) {
+                                scope.stepCurrent = 'licence';
+                                scope.scrolltoHref('licence');
+                            }
+                        } else if(scope.stepCurrent==='licence') {
+                            scope.stepLicenceSuccess = stepLicenceSuccess();
+                            if(scope.stepLicenceSuccess) {
+                                // scope.stepCurrent = 'licence';
+                                scope.submitForm();
                             }
                         }
                     };
@@ -108,8 +123,11 @@ angular.module('ortolangMarketApp')
                     function stepBasicInfoSuccess() {
                         if(scope.metadataItemform.type.$valid && scope.metadataItemform.title.$valid && scope.metadataItemform.langtitle.$valid) {
                             return true;
+                        } else {
+                            scope.metadataItemform.type.$dirty = true;
+                            scope.metadataItemform.title.$dirty = true;
+                            return false;
                         }
-                        return false;
                     }
 
                     function stepWhosInvolvedSuccess() {
@@ -117,6 +135,24 @@ angular.module('ortolangMarketApp')
                             return true;
                         }
                         return false;
+                    }
+
+                    function stepDescribeSuccess() {
+                        if(scope.metadataItemform.description.$valid && scope.metadataItemform.langdescription.$valid) {
+                            return true;
+                        } else {
+                            scope.metadataItemform.description.$dirty = true;
+                            return false;
+                        }
+                    }
+
+                    function stepLicenceSuccess() {
+                        if(scope.metadataItemform.statusOfUse.$valid) {
+                            return true;
+                        } else {
+                            scope.metadataItemform.statusOfUse.$dirty = true;
+                            return false;
+                        }
                     }
 
                     var deregisterFileLicenceSelectModal = $rootScope.$on('browserSelectedElements-fileLicenceSelectModal', function ($event, elements) {
@@ -147,40 +183,27 @@ angular.module('ortolangMarketApp')
                     // *********************** //
 
                     scope.resizeMetadataItemEditor = function () {
-                        // if (!$scope.isFileSelectBrowserService) {
-                
-                            var topNavWrapper = angular.element('#top-nav-wrapper'),
-                                footerWrapper = angular.element('#footer-wrapper'),
-                                topOffset = topNavWrapper.outerHeight(),
-                                height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-                                bottomOffset = footerWrapper.outerHeight();
-                            var browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
-                        //     if ($scope.isMarketBrowserService) {
-                        //         topOffset += angular.element('.market-item').find('header').outerHeight();
-                        //         height -= 1;
-                        //     }
-                            height = height - topOffset - bottomOffset;
-                            if (height < 1) {
-                                height = 1;
-                            }
-                            if (height > topOffset) {
-                                height -= 1;
-                        //         if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
-                        //             height -= angular.element('.upload-queue').innerHeight();
-                        //         }
-                                var editorWrapper = angular.element('.metadata-item-editor'),
-                                    editorAside = angular.element('.editor-aside'),
-                                    editorStepHeight = angular.element('.metadata-editor-progress-bar').innerHeight();
-                                editorAside.css('min-height', (height - browserToolbarHeight) + 'px');
-                                // editorAside.find('.my-workspaces').css('height', (height - browserToolbarHeight - 80) + 'px');
-                                editorWrapper.find('.editor-pane').css('height', (height - browserToolbarHeight - editorStepHeight) + 'px');
-                                // editorWrapper.find('.tile-workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
-                                // editorWrapper.find('.browser-aside-left-collapsed').css('height', (height - browserToolbarHeight) + 'px');
-                            }
-                        //     $scope.isScreenMd = window.innerWidth < 992;
-                        //     $scope.browserSettings.hideWorkspaceListMdScreen = $scope.isScreenMd;
-                        //     $scope.$applyAsync();
-                        // }
+                        var topNavWrapper = angular.element('#top-nav-wrapper'),
+                            footerWrapper = angular.element('#footer-wrapper'),
+                            topOffset = topNavWrapper.outerHeight(),
+                            height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+                            bottomOffset = footerWrapper.outerHeight(),
+                            browserToolbarHeight = angular.element('#metadata-item-editor-toolbar').innerHeight();
+
+                        height = height - topOffset - bottomOffset;
+                        if (height < 1) {
+                            height = 1;
+                        }
+                        if (height > topOffset) {
+                            height -= 1;
+
+                        var editorWrapper = angular.element('.metadata-item-editor'),
+                            editorAside = angular.element('.editor-aside'),
+                            editorStepHeight = angular.element('.metadata-editor-progress-bar').innerHeight();
+
+                        editorAside.css('min-height', (height - browserToolbarHeight) + 'px');
+                        editorWrapper.find('.editor-pane').css('height', (height - browserToolbarHeight - editorStepHeight) + 'px');
+                        }
                     };
 
                     angular.element($window).bind('resize', function () {
