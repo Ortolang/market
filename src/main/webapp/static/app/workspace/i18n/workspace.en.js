@@ -132,7 +132,8 @@ angular.module('ortolangMarketApp')
                 NEXT_STEP: 'Next step',
                 LIST_OF_CONTRIBUTORS: 'List of contributors',
                 LIST_OF_PRODUCERS: 'List of producers',
-                ADD_CONTRIBUTOR: 'New ...',
+                ADD_CONTRIBUTOR: 'Add ...',
+                NEW_CONTRIBUTOR: 'New',
                 EDIT_CONTRIBUTOR: 'Edit',
                 DELETE_CONTRIBUTOR: 'Delete',
                 ADD_CONTRIBUTOR_MODAL: {

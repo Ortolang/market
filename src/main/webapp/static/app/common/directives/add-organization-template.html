@@ -64,7 +64,7 @@
                                 <button ng-hide="$parent.id && editing" type="submit" class="btn btn-primary" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
                                 <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
                                 <div class="pull-right" ng-if="!editing">
-                                    <button type="button" class="btn btn-success" ng-disabled="newOrganization" ng-click="createOrganization()">Nouveau <span class="caret"></span></button>
+                                    <button type="button" class="btn btn-success" ng-disabled="newOrganization" ng-click="createOrganization()">{{'WORKSPACE.METADATA_EDITOR.NEW_CONTRIBUTOR' | translate}}</button>
                                 </div>
                             </div>
 
