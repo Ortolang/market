@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'url', 'WorkspaceElementResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, url, WorkspaceElementResource) {
+    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'icons', 'url', 'WorkspaceElementResource', 'ObjectResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, icons, url, WorkspaceElementResource, ObjectResource) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',
@@ -163,8 +163,26 @@ angular.module('ortolangMarketApp')
                         scope.fileLicenceSelectModal.hide();
                     });
 
+                    var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
+                        console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileImageSelectModal" (selected elements: %o)', elements);
+                        
+                        scope.metadata.image = elements[0].path;
+                        scope.image = elements[0];
+                        scope.fileImageSelectModal.hide();
+                    });
+
+                    var deregisterFilePreviewSelectModal = $rootScope.$on('browserSelectedElements-filePreviewSelectModal', function ($event, elements) {
+                        console.log('metadata-form-market-ortolang caught event "browserSelectedElements-filePreviewSelectModal" (selected elements: %o)', elements);
+                        
+                        scope.metadata.preview = elements[0].path;
+                        scope.preview = elements[0];
+                        scope.filePreviewSelectModal.hide();
+                    });
+
                     scope.$on('$destroy', function () {
                         deregisterFileLicenceSelectModal();
+                        deregisterFileImageSelectModal();
+                        deregisterFilePreviewSelectModal();
                     });
 
 
@@ -214,6 +232,10 @@ angular.module('ortolangMarketApp')
                         if(!angular.isDefined(scope.metadata)) {
                             scope.metadata = {schema: 'http://www.ortolang.fr/schema/012#', contributors:[]};
                         }
+
+                        ObjectResource.size({key: scope.workspace.head}, function (data) {
+                            scope.metadata.datasize = data.size;
+                        });
 
                         scope.itemTypes = [ 
                             { 
@@ -279,6 +301,38 @@ angular.module('ortolangMarketApp')
 
                             WorkspaceElementResource.get({path: scope.metadata.license, wskey: scope.workspace.key, root: scope.root}).$promise.then(function (data) {
                                 scope.license = data;
+                            });
+                        }
+
+                        var fileImageSelectModalScope = $rootScope.$new(true);
+                        fileImageSelectModalScope.acceptMultiple = false;
+                        fileImageSelectModalScope.forceMimeTypes = ['ortolang/collection', 'image'];
+                        fileImageSelectModalScope.forceWorkspace = scope.workspace.key;
+                        fileImageSelectModalScope.forceHead = true;
+                        fileImageSelectModalScope.fileSelectId = 'fileImageSelectModal';
+                        scope.fileImageSelectModal = $modal({scope: fileImageSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
+
+                        if(angular.isDefined(scope.metadata.image)) {
+
+                            WorkspaceElementResource.get({path: scope.metadata.image, wskey: scope.workspace.key, root: scope.root}).$promise.then(function (data) {
+                                scope.image = data;
+                            });
+                        }
+
+                        scope.previews = [];
+                        var filePreviewSelectModalScope = $rootScope.$new(true);
+                        filePreviewSelectModalScope.acceptMultiple = false;
+                        filePreviewSelectModalScope.forceMimeTypes = ['ortolang/collection'];
+                        filePreviewSelectModalScope.forceWorkspace = scope.workspace.key;
+                        filePreviewSelectModalScope.forceHead = true;
+                        filePreviewSelectModalScope.fileSelectId = 'filePreviewSelectModal';
+                        scope.filePreviewSelectModal = $modal({scope: filePreviewSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
+
+                        if(angular.isDefined(scope.metadata.preview)) {
+                            angular.forEach(scope.metadata.preview, function(path) {
+                                WorkspaceElementResource.get({path: path, wskey: scope.workspace.key, root: scope.root}).$promise.then(function (data) {
+                                    scope.previews.push(data);
+                                });
                             });
                         }
 
