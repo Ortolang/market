@@ -58,34 +58,25 @@ angular.module('ortolangMarketApp')
                                 $scope.select({class: current.params.section});
                             }
                     }
+                } else {
+                    var regExp, regExpBis, i, currentPath;
+
+                    for (i = 0; i < sideNavElements.length; i++) {
+                        regExp = new RegExp('^' + sideNavElements[i].path);
+                        if (sideNavElements[i].otherPath) {
+                            regExpBis = new RegExp('^' + sideNavElements[i].otherPath);
+                        }
+                        currentPath = $route.current.originalPath;
+                        if (currentPath.indexOf(':section') !== -1) {
+                            currentPath = currentPath.replace(':section', $route.current.params.section);
+                        }
+                        if (currentPath.match(regExp) ||
+                            (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
+                            sideNavElements[i].active = 'active';
+                            break;
+                        }
+                    }
                 }
             }
         });
-
-        // *********************** //
-        //           Init          //
-        // *********************** //
-
-        function init() {
-            var regExp, regExpBis, i, currentPath;
-
-            for (i = 0; i < sideNavElements.length; i++) {
-                regExp = new RegExp('^' + sideNavElements[i].path);
-                if (sideNavElements[i].otherPath) {
-                    regExpBis = new RegExp('^' + sideNavElements[i].otherPath);
-                }
-                currentPath = $route.current.originalPath;
-                if (currentPath.indexOf(':section') !== -1) {
-                    currentPath = currentPath.replace(':section', $route.current.params.section);
-                }
-                if (currentPath.match(regExp) ||
-                    (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
-                    sideNavElements[i].active = 'active';
-                    break;
-                }
-            }
-        }
-
-        init();
-
     }]);

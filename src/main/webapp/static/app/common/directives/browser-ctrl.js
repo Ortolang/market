@@ -139,7 +139,7 @@ angular.module('ortolangMarketApp')
                             position: 'absolute',
                             display: 'block',
                             // Fix dropdown offset because of margin-left on page wrapper
-                            left: clickEvent.pageX - pageWrapperMarginLeft - 18 + 'px',
+                            left: clickEvent.pageX - pageWrapperMarginLeft - 3 + 'px',
                             // Fix dropdown offset because of navbar and toolbar
                             top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 3 + 'px'
                         };
@@ -601,6 +601,7 @@ angular.module('ortolangMarketApp')
                         'ziproot': $scope.parent.path + '/' + modalScope.root,
                         'zipoverwrites': modalScope.zipoverwrites,
                         'wskey': $scope.browserService.workspace.key,
+                        'wsName': $scope.browserService.workspace.name,
                         'ortolangType': 'zip'
                     });
                     uploadZipModal.hide();
@@ -994,6 +995,9 @@ angular.module('ortolangMarketApp')
                 if ($scope.isWorkspaceBrowserService) {
                     $rootScope.browsing = false;
                     $rootScope.ortolangPageSubtitle = undefined;
+                }
+                if (!$scope.isFileSelectBrowserService) {
+                    $rootScope.noFooter = false;
                 }
             });
 
@@ -1660,6 +1664,9 @@ angular.module('ortolangMarketApp')
                 } else {
                     $scope.browserService = MarketBrowserService;
                     $scope.isMarketBrowserService = true;
+                }
+                if (!$scope.isFileSelectBrowserService) {
+                    $rootScope.noFooter = true;
                 }
                 console.log('Initializing browser using %s', $scope.browserService.id);
                 // Settings
