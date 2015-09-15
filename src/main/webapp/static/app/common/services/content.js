@@ -36,18 +36,27 @@ angular.module('ortolangMarketApp')
             $window.location = this.getDownloadUrlWithKey(key, noSSL);
         };
 
-        this.downloadWithKey = function (key, config, noSSL) {
+        function downloadWith(url, config) {
             var timeout = $q.defer(),
-                defaultConfig = {timeout: timeout.promise};
-            if (!config) {
+                defaultConfig = {timeout: timeout.promise},
+                forceDefault = config === 'default';
+            if (!config || forceDefault) {
                 config = defaultConfig;
             } else {
                 angular.extend(config, defaultConfig);
             }
-            if (!config.transformResponse) {
+            if (!forceDefault && !config.transformResponse) {
                 config.transformResponse = [];
             }
-            return {promise: $http.get(this.getContentUrlWithKey(key, noSSL), config), timeout: timeout};
+            return {promise: $http.get(url, config), timeout: timeout};
+        }
+
+        this.downloadWithPath = function (path, alias, root, config, noSSL) {
+            return downloadWith(this.getContentUrlWithPath(path, alias, root, noSSL), config);
+        };
+
+        this.downloadWithKey = function (key, config, noSSL) {
+            return downloadWith(this.getContentUrlWithKey(key, noSSL), config);
         };
 
         this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {

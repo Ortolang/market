@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements','StaticWebsite', function ($rootScope, $scope, $route, sideNavElements, StaticWebsite) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements', function ($rootScope, $scope, $route, sideNavElements) {
 
         $scope.sideNavElements = sideNavElements;
 
@@ -50,49 +50,15 @@ angular.module('ortolangMarketApp')
                         case '/search':
                             $scope.select({class: 'search'});
                             break;
+                        case '/information/:section?':
+                            $scope.select({class: 'information'});
+                            break;
                         default:
                             if (current.params.section && previous.params.section === 'item') {
                                 $scope.select({class: current.params.section});
                             }
                     }
-
-                    // Add class for static website element
-                    if (StaticWebsite.getInformationMenu() &&
-                        current.$$route.originalPath === '/' + StaticWebsite.getInformationMenu().id + '/:section') {
-                        $scope.select({class: StaticWebsite.getInformationMenu().class});
-                    }
                 }
-            }
-        });
-
-        $rootScope.$on('static-site-initialized', function () {
-            // Add static site link to side-nav-elements if needed
-            var informationMenu = StaticWebsite.getInformationMenu(),
-                classStaticMenu = informationMenu.class,
-                pathStaticMenu = '/' + informationMenu.id,
-                hiddenPathStaticMenu = '/' + informationMenu.id + '/' + informationMenu.content[0],
-                titleStaticMenu = informationMenu.title,
-                iconStaticMenu = 'fa fa-fw fa-2x ' + informationMenu.iconSide,
-                staticElement = {
-                    class: classStaticMenu,
-                    path: pathStaticMenu,
-                    hiddenPath: hiddenPathStaticMenu,
-                    description: titleStaticMenu,
-                    iconCss: iconStaticMenu,
-                    active: undefined,
-                    hiddenSideNav: false,
-                    hiddenTopNav: false,
-                    authenticated: false
-                },
-                initialized = false;
-            angular.forEach(sideNavElements, function (sideNavElement, index) {
-                if (sideNavElement.class === classStaticMenu) {
-                    sideNavElements[index] = staticElement;
-                    initialized = true;
-                }
-            });
-            if (!initialized) {
-                sideNavElements.push(staticElement);
             }
         });
 

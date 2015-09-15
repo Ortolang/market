@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.INFORMATION_FR
+ * @name ortolangMarketApp.STATIC_WEBSITE_FR
  * @description
- * # INFORMATION_FR
+ * # STATIC_WEBSITE_FR
  * Constant in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .constant('STATICSITE_FR', {
-        STATICSITE: {
+    .constant('STATIC_WEBSITE_FR', {
+        STATIC_WEBSITE: {
             PATH: {
-                LEGAL_NOTICES: 'common/static-site/fr/legal-notices.html'
+                LEGAL_NOTICES: 'common/static-website/fr/legal-notices.html'
             },
             NO_NEWS: 'Aucune actualité',
             NEWS: 'Actualités',

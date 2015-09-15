@@ -65,6 +65,16 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            class: 'information',
+            path: '/information',
+            description: 'NAV.INFORMATION',
+            iconCss: 'fa fa-fw fa-info fa-2x',
+            active: undefined,
+            hiddenSideNav: false,
+            hiddenTopNav: false,
+            authenticated: false
+        },
+        {
             class: 'workspaces',
             path: '/workspaces',
             description: 'NAV.WORKSPACES',

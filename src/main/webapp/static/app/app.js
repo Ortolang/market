@@ -113,14 +113,14 @@ angular
                 requiresAuthentication: true,
                 title: 'NAV.TASKS'
             })
-            .when('/information/:section', {
-                templateUrl: 'common/static-site/information.html',
+            .when('/information/:section?', {
+                templateUrl: 'common/static-website/information.html',
                 controller: 'InformationCtrl',
                 reloadOnSearch: false,
                 title: 'NAV.INFORMATION'
             })
             .when('/legal-notices', {
-                templateUrl: 'common/static-site/legal-notices.html'
+                templateUrl: 'common/static-website/legal-notices.html'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
