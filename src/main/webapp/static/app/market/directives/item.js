@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', ['ObjectResource', 'Content', 'Settings',  function (ObjectResource, Content, Settings) {
+    .directive('item', ['Content', 'Settings',  function (Content, Settings) {
         return {
             restrict: 'EA',
             scope: {
@@ -53,9 +53,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     if (scope.entry.image) {
-                        ObjectResource.element({key: key, path: scope.entry.image}).$promise.then(function (oobject) {
-                            scope.image = Content.getContentUrlWithKey(oobject.key);
-                        });
+                        scope.image = Content.getContentUrlWithPath(scope.entry.image, scope.entry.alias, 'latest');
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';

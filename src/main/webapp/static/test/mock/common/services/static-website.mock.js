@@ -11,6 +11,9 @@ angular.module('ortolangMarketAppMock')
     .factory('StaticWebsite', [function () {
 
         return {
-            getInformationMenu: function () { return undefined; }
+            getInformationContent: function () { return undefined; },
+            getInformationPageTitle: function () { return undefined; },
+            getNews: function () { return undefined; },
+            getHomePage: function () { return undefined; }
         };
     }]);
