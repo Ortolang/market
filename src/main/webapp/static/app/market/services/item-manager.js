@@ -5,10 +5,10 @@
  * @name ortolangMarketApp.ItemManager
  * @description
  * # ItemManager
- * Factory in the ortolangMarketApp.
+ * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .provider('ItemManager', function () {
+    .service('ItemManager', function () {
 
         // Constructor
         function ItemManager(config) {
@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
         // Methods
         ItemManager.prototype = {
 
-            getItems: function() {
+            getItems: function () {
                 return this.items.slice();
             },
 
@@ -62,15 +62,15 @@ angular.module('ortolangMarketApp')
                 }
             },
 
-            size: function() {
+            size: function () {
                 return this.items.length;
             },
 
-            isEmpty: function() {
+            isEmpty: function () {
                 return this.items.length === 0;
             },
 
-            clear: function() {
+            clear: function () {
                 this.items = [];
             }
         };
@@ -79,9 +79,5 @@ angular.module('ortolangMarketApp')
             return new ItemManager(config);
         };
 
-        this.$get = function () {
-            return {
-                make: this.make
-            };
-        };
+        return this;
     });

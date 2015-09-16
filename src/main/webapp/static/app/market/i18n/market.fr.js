@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('MARKET_FR', {
         MARKET: {
             ALL_TYPE: 'Tous',
-            NEW_RESOURCES: 'Nouveautés',
+            NEW_RESOURCES: 'Publications récentes',
             WEBSITES: 'Sites web',
             WEBSITE: 'Site web',
             SEARCH_PAGE: 'Rechercher dans le contenu',
