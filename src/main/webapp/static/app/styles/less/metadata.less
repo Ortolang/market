@@ -1,6 +1,15 @@
 .bs-callout {
     padding: 20px;
     margin: 20px 0px;
+
+    .bs-callout-toolbar {
+        float: right;
+    }
+}
+
+.bs-callout-input {
+    padding: 20px;
+    margin: 20px 0px;
     border-left: solid rgb(238, 238, 238);
     border-image-source: initial;
     border-image-slice: initial;
@@ -31,6 +40,15 @@
     font-weight: 100;
 }
 
+.bs-callout-select {
+    h4 {
+        width: 66%;
+    }
+    select {
+        width: 33%;
+    }
+}
+
 .form-control-feedback-button {
     pointer-events: auto;
     cursor: pointer;
@@ -56,6 +74,7 @@
         overflow: auto;
     }
     .editor-pane {
+        padding: @padding-large-horizontal*2;
         overflow: auto;
     }
     section {

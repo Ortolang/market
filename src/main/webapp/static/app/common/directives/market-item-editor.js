@@ -37,9 +37,20 @@ angular.module('ortolangMarketApp')
                                 delete scope.metadata[propertyName];
                             }
                         }
+
                         scope.metadata.corporaStyles = [];
                         angular.forEach(scope.corporaStyleTag, function(tag) {
                             scope.metadata.corporaStyles.push(tag.id);
+                        });
+
+                        scope.metadata.annotationLevels = [];
+                        angular.forEach(scope.selectedAnnotationLevels, function(tag) {
+                            scope.metadata.annotationLevels.push(tag.id);
+                        });
+
+                        scope.metadata.corporaFormats = [];
+                        angular.forEach(scope.selectedCorporaFormats, function(tag) {
+                            scope.metadata.corporaFormats.push(tag.id);
                         });
 
                         var content = angular.toJson(scope.metadata),
@@ -126,9 +137,11 @@ angular.module('ortolangMarketApp')
                         } else if(scope.stepCurrent==='licence') {
                             scope.stepLicenceSuccess = stepLicenceSuccess();
                             if(scope.stepLicenceSuccess) {
-                                // scope.stepCurrent = 'licence';
-                                scope.submitForm();
+                                scope.stepCurrent = 'specific_fields';
+                                scope.scrolltoHref('specific_fields');
                             }
+                        } else if(scope.stepCurrent==='specific_fields') {
+                            scope.submitForm();
                         }
                     };
 
@@ -326,7 +339,6 @@ angular.module('ortolangMarketApp')
 
                             if(angular.isDefined(scope.metadata.corporaStyles)) {
 
-                                scope.corporaStyleTag = [];
                                 angular.forEach(scope.metadata.corporaStyles, function(tag) {
                                     var tagFound = $filter('filter')(scope.allCorporaStyles, {id:tag});
                                     if(tagFound.length>0) {
@@ -340,10 +352,79 @@ angular.module('ortolangMarketApp')
                         });
                     }
 
-                    scope.suggestCorporaStyle = function(query) {
-                        var result = $filter('filter')(scope.allCorporaStyles, {label:query});
-                        return result;
-                    };
+                    function loadAllAnnotationLevels() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'annotationLevel');
+
+                        var query = queryBuilder.toString();
+                        scope.allAnnotationLevels = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allAnnotationLevels.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.annotationLevels)) {
+
+                                angular.forEach(scope.metadata.annotationLevels, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allAnnotationLevels, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedAnnotationLevels.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedAnnotationLevels.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllCorporaFormats() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaFormat');
+
+                        var query = queryBuilder.toString();
+                        scope.allCorporaFormats = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allCorporaFormats.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.corporaFormats)) {
+
+                                angular.forEach(scope.metadata.corporaFormats, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allCorporaFormats, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedCorporaFormats.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedCorporaFormats.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
 
                     function init() {
                         if(!angular.isDefined(scope.metadata)) {
@@ -436,10 +517,17 @@ angular.module('ortolangMarketApp')
                             });
                         }
 
+
+                        scope.corporaStyleTag = [];
+                        scope.selectedAnnotationLevels = [];
+                        scope.selectedCorporaFormats = [];
+
                         loadAllCorporaTypes();
                         loadAllCorporaStyles();
                         loadAllCorporaLanguageType();
-                        
+                        loadAllAnnotationLevels();
+                        loadAllCorporaFormats();
+
                         scope.stepCurrent = 'basic_info';
                         scope.stepBasicInfoSuccess = false;
                         scope.stepWhosInvolvedSuccess = false;

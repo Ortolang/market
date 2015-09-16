@@ -166,7 +166,13 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Cette organisme est déjà dans la liste.'
                     }
-                }
+                },
+                SELECT_TYPE: 'Sélectionner le type de ressource ...',
+                SELECT_CORPORA_TYPE: 'Sélectionner le type de corpus ...',
+                SELECT_CORPORA_STYLES: 'Sélectionner un ou plusieurs genres ...',
+                SELECT_CORPORA_LANGUAGE_TYPE: 'Sélectionner le type de langue ...',
+                SELECT_ANNOTATION_LEVELS: 'Sélectionner un ou plusieurs niveaux d\'annotation ...',
+                SELECT_CORPORA_FORMATS: 'Sélectionner un ou plusieurs formats ...'
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Remplir la fiche des métadonnées'

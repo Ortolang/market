@@ -24,11 +24,15 @@
                 <i ng-if="stepLicenceSuccess" class="fa fa-check-circle"></i>
                 {{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}
             </li>
+            <li>
+                <span class="bubble"></span>
+                {{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}
+            </li>
         </ul>
 	</div>
 
 	<div class="row">
-		<div ng-if="!step" class="col-md-2 editor-aside">
+		<div ng-if="!step" class="col-md-3 editor-aside">
 			<!-- <div class="bs-sidebar hidden-print"> -->
 				<ul class="nav bs-sidenav" bs-scrollspy>
 				  <li>
@@ -73,31 +77,36 @@
 		        </ul> -->
 			<!-- </div> -->
 		</div>
-		<div ng-class="step ? 'col-md-12' : 'col-md-10'" class="editor-pane">
+		<div ng-class="step ? 'col-md-12' : 'col-md-9'" class="editor-pane">
 			<section ng-show="!step || (step && stepCurrent === 'basic_info')" id="basic_info">
 				<h2 translate="WORKSPACE.METADATA_EDITOR.BASIC_INFO"></h2>
 
-	            <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid' ng-messages="metadataItemform.type.$error">
-	                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
-	            </div>
-				<div class="form-group bs-callout" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid}">
+				<div class="bs-callout">
 					<h4 class="bs-callout-label">Catégorie de la ressource <span class="text-danger">*</span></h4>
-				    <select 
-					name="type"
-					class="form-control"
-					required
-					ng-model="selectedType" 
-					ng-options="type as type.value for type in itemTypes track by type.key"
-					ng-change="selectType()">
-					</select>
+		            <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid' ng-messages="metadataItemform.type.$error">
+		                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
+		            </div>
+					<div class="form-group bs-callout-input" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid}">
+						
+					    <select 
+						name="type"
+						class="form-control"
+						required
+						ng-model="selectedType" 
+						ng-options="type as type.value for type in itemTypes track by type.key"
+						ng-change="selectType()">
+						</select>
+					</div>
 				</div>
-
 
 	            <div class="bg-danger error-block col-sm-12 am-fade" ng-if="((metadataItemform.$submitted || metadataItemform.title.$dirty) && metadataItemform.title.$invalid) || ((metadataItemform.$submitted || metadataItemform.langtitle.$dirty) && metadataItemform.langtitle.$invalid)">
 	                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NEED_ONE_VALUE' | translate}}</div>
 	            </div>
-				<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.title.$dirty) && metadataItemform.title.$invalid) || ((metadataItemform.$submitted || metadataItemform.langtitle.$dirty) && metadataItemform.langtitle.$invalid)" name="'title'" label="'Titre de la ressource'" model="metadata.title" required="true"></multilingual-textfield>
-				
+				<div class="bs-callout">
+					<h4 class="bs-callout-label">Titre de la ressource <span class="text-danger">*</span></h4>
+		            
+						<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.title.$dirty) && metadataItemform.title.$invalid) || ((metadataItemform.$submitted || metadataItemform.langtitle.$dirty) && metadataItemform.langtitle.$invalid)" name="'title'" label="'Titre de la ressource'" model="metadata.title" required="true"></multilingual-textfield>
+				</div>
 			</section>
 
 			<section ng-show="!step || (step && stepCurrent === 'whos_involved')" id="whos_involved">
@@ -113,11 +122,16 @@
 	            <div class="bg-danger error-block col-sm-12 am-fade" ng-if="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)">
 	                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NEED_ONE_VALUE' | translate}}</div>
 	            </div>
-				<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)" name="'description'" label="'Description'" model="metadata.description" type="'large'" required="true"></multilingual-textfield>
+				<div class="bs-callout">
+					<h4 class="bs-callout-label">Description</h4>
+		            
+					<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)" name="'description'" label="'Description'" model="metadata.description" type="'large'" required="true"></multilingual-textfield>
+				
+				</div>
 
 				<div class=" bs-callout">
 					<h4 class="bs-callout-label">Langues principale du corpus</h4 class="bs-callout-label">
-					<div class="form-group">
+					<div class="form-group bs-callout-input">
 					    <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input>
 					</div>
 					<div class="alert alert-info" role="alert">
@@ -125,22 +139,25 @@
 				    </div>
 				</div>
 
-				<multilingual-textfield name="'keyword'" label="'Mots-clès'" model="metadata.keywords"></multilingual-textfield>
 
+				<div class="bs-callout">
+					<h4 class="bs-callout-label">Mots-clès</h4>
+		            
+					<multilingual-textfield name="'keyword'" label="'Mots-clès'" model="metadata.keywords"></multilingual-textfield>
+				</div>
 				<div class=" bs-callout">
 					<h4 class="bs-callout-label">Site internet</h4 class="bs-callout-label">
-					<div class="form-group">
+					<div class="form-group  bs-callout-input">
 					    <input type="url" name="website" ng-model="metadata.website" class="form-control" placeholder="http://">
-
 					</div>
 					<div class="alert alert-info" role="alert">
 			    		<p><span class="glyphicon glyphicon-info-sign"></span> Adresse du site web contenant des informations sur la ressource.</p>
 			    	</div>
 				</div>
 
-				<div class=" bs-callout">
+				<div class="bs-callout">
 					<h4 class="bs-callout-label">Illustration</h4 class="bs-callout-label">
-					<div class="form-group">
+					<div class="form-group  bs-callout-input">
 					    <div class="input-group">
 	                        <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="icons.imageFile"></span> {{image.path}}</span>
 	                    <span class="input-group-btn">
@@ -156,10 +173,9 @@
 					    </div>
 				</div>
 
-				<div class=" bs-callout">
+				<div class="bs-callout">
 					<h4 class="bs-callout-label">Aperçu</h4 class="bs-callout-label">
-					<div class="form-group">
-
+					<div class="form-group bs-callout-input">
 						<div>
 							<div multifile-selector collection="workspace.head" model="metadata.preview.paths" workspace="workspace"></div>
 						<!-- <div class="preview-box col-md-5">
@@ -238,34 +254,66 @@
 				
 				<div ng-if="metadata.type==='Corpus'"> 
 
-					<div class="form-group bs-callout">
+					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_TYPE"></h4>
-					    <select 
-							name="corporaType"
-							class="form-control"
-							ng-model="selectedCorporaType" 
-							ng-options="ct as ct.value for ct in allCorporaType track by ct.key"
-							ng-change="selectCorporaType()">
-						</select>
+						<div class="form-group bs-callout-input">
+						    <!-- <select 
+								name="corporaType"
+								class="form-control"
+								ng-model="selectedCorporaType" 
+								ng-options="ct as ct.value for ct in allCorporaType track by ct.key"
+								ng-change="selectCorporaType()">
+							</select> -->
+							<button type="button" class="btn btn-default" ng-model="metadata.corporaType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaType.key as corporaType.value for corporaType in allCorporaType" bs-select>
+  								{{'MARKET.FACET.CORPORA_TYPE' | translate}} <span class="caret"></span>
+							</button>
+						</div>
 					</div>
 
-					<div class="form-group bs-callout">
+					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_STYLES"></h4>
-					    
-					    <tags-input ng-model="$parent.corporaStyleTag" data-display-property="label" name="corporaStyleTag" class="tool-tags" data-placeholder="{{'MARKET.FACET.CORPORA_STYLES' | translate}}">
-                            <auto-complete source="suggestCorporaStyle($query)" min-length="0" load-on-focus="false"></auto-complete>
-                        </tags-input>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.corporaStyleTag" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_STYLES' | translate}}" bs-options="corporaStyle as corporaStyle.label for corporaStyle in allCorporaStyles" bs-select>
+  								{{'MARKET.FACET.CORPORA_STYLES' | translate}} <span class="caret"></span>
+							</button>
+						</div>
 					</div>
 
-					<div class="form-group bs-callout">
+					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_LANGUAGE_TYPE"></h4>
-					    <select 
-							name="corporaLanguageType"
-							class="form-control"
-							ng-model="selectedCorporaLanguageType" 
-							ng-options="ct as ct.value for ct in allCorporaLanguageType track by ct.key"
-							ng-change="selectCorporaLanguageType()">
-						</select>
+						<div class="form-group bs-callout-input">
+						    <!-- <select 
+								name="corporaLanguageType"
+								class="form-control"
+								ng-model="selectedCorporaLanguageType" 
+								ng-options="ct as ct.value for ct in allCorporaLanguageType track by ct.key"
+								ng-change="selectCorporaLanguageType()">
+							</select> -->
+							<button type="button" class="btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_LANGUAGE_TYPE' | translate}}" bs-options="corporaLanguageType.key as corporaLanguageType.value for corporaLanguageType in allCorporaLanguageType" bs-select>
+  								{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.ANNOTATION_LEVEL"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedAnnotationLevels" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ANNOTATION_LEVELS' | translate}}" bs-options="annotationLevel as annotationLevel.label for annotationLevel in allAnnotationLevels" bs-select>
+  								{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.TEXT_FORMAT"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedCorporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="term as term.label for term in allCorporaFormats" bs-select>
+  								{{'MARKET.FACET.TEXT_FORMAT' | translate}} <span class="caret"></span>
+							</button>
+						</div>
 					</div>
 
 				</div>
