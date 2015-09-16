@@ -10,3 +10,10 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+.card-border(@border-color: @alternate-border-color, @bottom-border-color: @border-color) {
+  border-top: 1px solid @border-color;
+  border-left: 1px solid @border-color;
+  border-right: 1px solid @border-color;
+  border-bottom: 3px solid @bottom-border-color;
+}

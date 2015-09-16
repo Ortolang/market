@@ -16,7 +16,8 @@ angular.module('ortolangMarketApp')
                 alias: '=',
                 itemKey: '=',
                 root: '=',
-                tags: '='
+                tags: '=',
+                browse: '='
             },
             templateUrl: 'common/directives/market-item.html',
             link: {

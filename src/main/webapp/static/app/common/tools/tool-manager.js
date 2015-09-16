@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'ObjectResource', 'Content', 'JsonResultResource', 'QueryBuilderFactory',
-        function ($resource, $q, $translate, $rootScope, $window, $timeout, ObjectResource, Content, JsonResultResource, QueryBuilderFactory) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'Content', 'JsonResultResource', 'QueryBuilderFactory',
+        function ($resource, $q, $translate, $rootScope, $window, $timeout, Content, JsonResultResource, QueryBuilderFactory) {
 
             // ---
             // ORTOLANG TOOL DEFINITION
@@ -261,6 +261,7 @@ angular.module('ortolangMarketApp')
                     'meta_ortolang-item-json.toolUrl as url, ' +
                     'meta_ortolang-item-json.toolInputData as inputData, ' +
                     'meta_ortolang-item-json.toolOutputData as outputData, ' +
+                    'meta_ortolang-workspace-json.wsalias as alias,' +
                     'meta_ortolang-item-json.toolFunctionalities as functionalities ',
                     source: 'collection'
                 });
@@ -309,18 +310,12 @@ angular.module('ortolangMarketApp')
                         }
 
                         if (data.image !== undefined && data.image !== '') {
-                            ObjectResource.element({key: item.key, path: data.image}).$promise.then(function (oobject) {
-                                item.image = Content.getContentUrlWithKey(oobject.key);
-
-                                register(new OrtolangTool(item));
-                                console.log('register ' + item.name);
-                            }, function (reason) {
-                                console.error(reason);
-                            });
+                            item.image = Content.getContentUrlWithPath(data.image, data.alias, 'latest');
+                            register(new OrtolangTool(item));
                         } else {
                             register(new OrtolangTool(item));
-                            console.log('register ' + item.name);
                         }
+                        console.log('register ' + item.name);
                     });
                     loaded = true;
                     $rootScope.$broadcast('tool-list-registered');

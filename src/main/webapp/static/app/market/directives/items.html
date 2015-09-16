@@ -6,7 +6,7 @@
     </div>
 
     <div ng-if="items.size() > 0 && viewMode.id === 'line'" class="full-item-wrapper">
-        <item ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" template="market/templates/full-item.html"></item>
+        <item ng-repeat="item in items.getItems() | orderBy:orderProp.id:orderDirection" data-entry="item" data-template="market/templates/full-item.html"></item>
     </div>
 
     <p ng-if="!lock && items.size()===0" class="text-center"><em>{{'MARKET.NO_ITEM' | translate}}</em></p>

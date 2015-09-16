@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .provider('i18n.en', ['COMMON_EN', 'NAV_EN', 'BROWSER_EN', 'WORKSPACE_EN', 'MARKET_EN', 'PRODUCER_EN', 'PROCESSES_EN', 'TASKS_EN', 'TOOLS_EN', 'VISUALIZERS_EN', 'STATICSITE_EN', 'PROFILE_EN', 'FORMS_EN',
-        function (COMMON_EN, NAV_EN, BROWSER_EN, WORKSPACE_EN, MARKET_EN, PRODUCER_EN, PROCESSES_EN, TASKS_EN, TOOLS_EN, VISUALIZERS_EN, STATICSITE_EN, PROFILE_EN, FORMS_EN) {
+    .provider('i18n.en', ['COMMON_EN', 'NAV_EN', 'BROWSER_EN', 'WORKSPACE_EN', 'MARKET_EN', 'PRODUCER_EN', 'PROCESSES_EN', 'TASKS_EN', 'TOOLS_EN', 'VISUALIZERS_EN', 'STATIC_WEBSITE_EN', 'PROFILE_EN', 'FORMS_EN',
+        function (COMMON_EN, NAV_EN, BROWSER_EN, WORKSPACE_EN, MARKET_EN, PRODUCER_EN, PROCESSES_EN, TASKS_EN, TOOLS_EN, VISUALIZERS_EN, STATIC_WEBSITE_EN, PROFILE_EN, FORMS_EN) {
 
             var translations;
 
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                 angular.extend(translations, PROCESSES_EN);
                 angular.extend(translations, TASKS_EN);
                 angular.extend(translations, TOOLS_EN);
-                angular.extend(translations, STATICSITE_EN);
+                angular.extend(translations, STATIC_WEBSITE_EN);
                 angular.extend(translations, VISUALIZERS_EN);
                 angular.extend(translations, PROFILE_EN);
                 angular.extend(translations, FORMS_EN);

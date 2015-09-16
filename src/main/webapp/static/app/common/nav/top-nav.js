@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', [ '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', 'StaticWebsite', 'Cart',
-        function ($scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment, StaticWebsite, Cart) {
+    .controller('TopNavCtrl', ['$rootScope', '$scope', '$translate', 'AuthService', 'User', 'Runtime', 'sideNavElements', 'Settings', 'amMoment', 'StaticWebsite', 'Cart',
+        function ($rootScope, $scope, $translate, AuthService, User, Runtime, sideNavElements, Settings, amMoment, StaticWebsite, Cart) {
 
             $scope.sideNavElements = sideNavElements;
             $scope.navbarCollapsed = false;
@@ -40,7 +40,8 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function initLanguage() {
-                var favoriteLanguage;
+                var favoriteLanguage,
+                    currentLanguage = $translate.use();
                 if (AuthService.isAuthenticated()) {
                     favoriteLanguage = User.getProfileData('language');
                 }
@@ -48,13 +49,17 @@ angular.module('ortolangMarketApp')
                     Settings.language = undefined;
                 }
                 if (favoriteLanguage || Settings.language) {
-                    $translate.use(favoriteLanguage ? favoriteLanguage.value : Settings.language).then(function (language) {
-                        Settings.language = language;
-                    });
+                    favoriteLanguage = favoriteLanguage ? favoriteLanguage.value : Settings.language;
+                    if (favoriteLanguage !== currentLanguage) {
+                        $translate.use(favoriteLanguage).then(function (language) {
+                            Settings.language = language;
+                        });
+                    }
                 } else {
                     Settings.language = $translate.use();
                 }
                 amMoment.changeLocale(Settings.language);
+                $rootScope.$emit('languageInitialized');
             }
 
             if (AuthService.isAuthenticated()) {

@@ -77,10 +77,7 @@
 
 .medium-item {
   margin: 5px;
-  border-top: @alternate-border;
-  border-left: @alternate-border;
-  border-right: @alternate-border;
-  border-bottom: 3px solid @alternate-border-color;
+  .card-border();
   border-radius: @border-radius-base;
   line-height: 1.42857143;
   background-color: @default-bg;
@@ -508,8 +505,11 @@
   box-shadow: none;
   background-color: @default-bg;
   padding-top: 17px;
+  .card-border();
   hr {
     border-color: @well-border;
+    margin-left: -19px;
+    margin-right: -19px;
   }
   img {
     max-width: 100%;

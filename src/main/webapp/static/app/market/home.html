@@ -7,8 +7,8 @@
         <div class="col-md-8">
             <h3 class="ortolang-title" translate="ORTOLANG"></h3>
             <hr/>
-            <div ng-show="StaticWebsite.getHomePage()" bind-html-unsafe="StaticWebsite.getHomePage()"></div>
-            <hr ng-show="StaticWebsite.getHomePage()" />
+            <div ng-include="StaticWebsite.getHomePage()"></div>
+            <hr />
             <div class="media small marianne" >
                 <div class="media-left">
                     <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
@@ -21,11 +21,11 @@
         </div>
         <div class="col-md-4" >
             <div class="news-well well">
-                <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATICSITE.NEWS' | translate}}</p>
-                <div ng-if="StaticWebsite.getNews().length === 0"> <hr/> {{ 'STATICSITE.NO_NEWS' | translate }} </div>
+                <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATIC_WEBSITE.NEWS' | translate}}</p>
+                <div ng-if="StaticWebsite.getNews().length === 0"> <hr/> {{ 'STATIC_WEBSITE.NO_NEWS' | translate }} </div>
                 <div ng-if="StaticWebsite.getNews().length > 0" ng-repeat="news in StaticWebsite.getNews() track by news">
                     <hr/>
-                    <div bind-html-unsafe="StaticWebsite.getPage(news)"></div>
+                    <div ng-include="news"></div>
                 </div>
             </div>
         </div>

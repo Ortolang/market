@@ -407,13 +407,16 @@ angular.module('ortolangMarketApp')
                 pushNewProcess(process);
             });
 
-            $rootScope.$on('runtime.process.update-state', function (event, message) {
-                console.debug(event, message);
+            $rootScope.$on('runtime.process.change-state', function (event, message) {
                 event.stopPropagation();
                 if (message.arguments.state === states.completed) {
                     var process = $filter('filter')(activeProcesses, {key: message.fromObject});
                     if (process.length > 0) {
-                        $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), type: 'success'});
+                        if (process[0].type === 'import-zip') {
+                            $rootScope.$emit('import-zip.completed', process[0]);
+                        } else {
+                            $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), type: 'success'});
+                        }
                     }
                 }
                 getProcesses(message.date, true);
