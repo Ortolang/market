@@ -129,6 +129,7 @@ angular.module('ortolangMarketApp')
                 WHOS_INVOLVED: 'Personnes impliquées',
                 DESCRIBE: 'Descriptif',
                 LICENCE: 'Licence',
+                SPECIFIC_FIELD: 'Champs spécifiques',
                 NEXT_STEP: 'Continuer',
                 LIST_OF_CONTRIBUTORS: 'Liste des contributeurs',
                 LIST_OF_PRODUCERS: 'Liste des producteurs',

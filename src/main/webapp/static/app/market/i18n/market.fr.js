@@ -79,6 +79,7 @@ angular.module('ortolangMarketApp')
                 CORPORA_FILE_ENCODINGS: 'Encodage de caractères',
                 CORPORA_LANGUAGE_TYPE: 'Type de langue',
                 ALL_CORPORA_LANGUAGE_TYPE: 'Tout type de langue',
+                CORPORA_STYLES: 'Genre du corpus',
                 TOOL_LANGUAGE: 'Langue traitée',
                 TOOL_FUNCTIONALITY: 'Fonctionnalité',
                 ALL_TOOL_FUNCTIONALITY: 'Toutes les fonctionnalités',

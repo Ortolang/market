@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'icons', 'url', 'WorkspaceElementResource', 'ObjectResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, icons, url, WorkspaceElementResource, ObjectResource) {
+    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'icons', 'url', 'WorkspaceElementResource', 'ObjectResource', 'QueryBuilderFactory', 'Settings', 'JsonResultResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, icons, url, WorkspaceElementResource, ObjectResource, QueryBuilderFactory, Settings, JsonResultResource) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',
@@ -37,6 +37,10 @@ angular.module('ortolangMarketApp')
                                 delete scope.metadata[propertyName];
                             }
                         }
+                        scope.metadata.corporaStyles = [];
+                        angular.forEach(scope.corporaStyleTag, function(tag) {
+                            scope.metadata.corporaStyles.push(tag.id);
+                        });
 
                         var content = angular.toJson(scope.metadata),
                             contentType = 'text/json';
@@ -92,6 +96,14 @@ angular.module('ortolangMarketApp')
 
                     scope.selectStatusOfUse = function () {
                         scope.metadata.statusOfUse = scope.selectedStatusOfUse.key;
+                    };
+
+                    scope.selectCorporaType = function () {
+                        scope.metadata.corporaType = scope.metadataItemform.corporaLanguageType.$modelValue.key;
+                    };
+
+                    scope.selectCorporaLanguageType = function () {
+                        scope.metadata.corporaLanguageType = scope.metadataItemform.corporaLanguageType.$modelValue.key;
                     };
 
                     scope.nextStep = function() {
@@ -171,18 +183,9 @@ angular.module('ortolangMarketApp')
                         scope.fileImageSelectModal.hide();
                     });
 
-                    var deregisterFilePreviewSelectModal = $rootScope.$on('browserSelectedElements-filePreviewSelectModal', function ($event, elements) {
-                        console.log('metadata-form-market-ortolang caught event "browserSelectedElements-filePreviewSelectModal" (selected elements: %o)', elements);
-                        
-                        scope.metadata.preview = elements[0].path;
-                        scope.preview = elements[0];
-                        scope.filePreviewSelectModal.hide();
-                    });
-
                     scope.$on('$destroy', function () {
                         deregisterFileLicenceSelectModal();
                         deregisterFileImageSelectModal();
-                        deregisterFilePreviewSelectModal();
                     });
 
 
@@ -228,13 +231,127 @@ angular.module('ortolangMarketApp')
                         scope.resizeMetadataItemEditor();
                     });
 
+
+                    /**
+                     * Utils
+                     **/
+
+                    function loadAllCorporaTypes() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaType');
+
+                        var query = queryBuilder.toString();
+                        scope.allCorporaType = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var role = angular.fromJson(result);
+                                
+                                scope.allCorporaType.push({key: role.id, value: role.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.corporaType)) {
+
+                                var corporaTypeFound = $filter('filter')(scope.allCorporaType, {key:scope.metadata.corporaType});
+                                if(corporaTypeFound.length>0) {
+                                    scope.selectedCorporaType = corporaTypeFound[0];
+                                }
+                            }
+
+                        });
+                    }
+
+                    function loadAllCorporaLanguageType() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaLanguageType');
+
+                        var query = queryBuilder.toString();
+                        scope.allCorporaLanguageType = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allCorporaLanguageType.push({key: term.id, value: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.corporaLanguageType)) {
+
+                                var corporaLanguageTypeFound = $filter('filter')(scope.allCorporaLanguageType, {key:scope.metadata.corporaLanguageType});
+                                if(corporaLanguageTypeFound.length>0) {
+                                    scope.selectedCorporaLanguageType = corporaLanguageTypeFound[0];
+                                }
+                            }
+
+                        });
+                    }
+
+                    function loadAllCorporaStyles() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaStyle');
+
+                        var query = queryBuilder.toString();
+                        scope.allCorporaStyles = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allCorporaStyles.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.corporaStyles)) {
+
+                                scope.corporaStyleTag = [];
+                                angular.forEach(scope.metadata.corporaStyles, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allCorporaStyles, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.corporaStyleTag.push(tagFound[0]);
+                                    } else {
+                                        scope.corporaStyleTag.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    scope.suggestCorporaStyle = function(query) {
+                        var result = $filter('filter')(scope.allCorporaStyles, {label:query});
+                        return result;
+                    };
+
                     function init() {
                         if(!angular.isDefined(scope.metadata)) {
                             scope.metadata = {schema: 'http://www.ortolang.fr/schema/012#', contributors:[]};
                         }
 
                         ObjectResource.size({key: scope.workspace.head}, function (data) {
-                            scope.metadata.datasize = data.size;
+                            scope.metadata.datasize = data.size.toString();
                         });
 
                         scope.itemTypes = [ 
@@ -319,23 +436,10 @@ angular.module('ortolangMarketApp')
                             });
                         }
 
-                        scope.previews = [];
-                        var filePreviewSelectModalScope = $rootScope.$new(true);
-                        filePreviewSelectModalScope.acceptMultiple = false;
-                        filePreviewSelectModalScope.forceMimeTypes = ['ortolang/collection'];
-                        filePreviewSelectModalScope.forceWorkspace = scope.workspace.key;
-                        filePreviewSelectModalScope.forceHead = true;
-                        filePreviewSelectModalScope.fileSelectId = 'filePreviewSelectModal';
-                        scope.filePreviewSelectModal = $modal({scope: filePreviewSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
-
-                        if(angular.isDefined(scope.metadata.preview)) {
-                            angular.forEach(scope.metadata.preview, function(path) {
-                                WorkspaceElementResource.get({path: path, wskey: scope.workspace.key, root: scope.root}).$promise.then(function (data) {
-                                    scope.previews.push(data);
-                                });
-                            });
-                        }
-
+                        loadAllCorporaTypes();
+                        loadAllCorporaStyles();
+                        loadAllCorporaLanguageType();
+                        
                         scope.stepCurrent = 'basic_info';
                         scope.stepBasicInfoSuccess = false;
                         scope.stepWhosInvolvedSuccess = false;

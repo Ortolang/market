@@ -37,6 +37,7 @@
 						<li data-target="#whos_involved" bs-scrollspy><a href="" ng-click="scrolltoHref('whos_involved')">{{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}</a></li>
 						<li data-target="#describe" bs-scrollspy><a href="" ng-click="scrolltoHref('describe')">{{'WORKSPACE.METADATA_EDITOR.DESCRIBE' | translate}}</a></li>
 						<li><a href="" ng-click="scrolltoHref('licence')">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</a></li>
+						<li><a href="" ng-click="scrolltoHref('specific_fields')">{{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}</a></li>
 						<li><hr/></li>
 						<li><button class="btn btn-primary" type="submit">Appliquer</button></li>
 				    </ul>
@@ -117,9 +118,11 @@
 				<div class=" bs-callout">
 					<h4 class="bs-callout-label">Langues principale du corpus</h4 class="bs-callout-label">
 					<div class="form-group">
-					    <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control">
-					    <p>Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
+					    <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input>
 					</div>
+					<div class="alert alert-info" role="alert">
+				    	<p><span class="glyphicon glyphicon-info-sign"></span> Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
+				    </div>
 				</div>
 
 				<multilingual-textfield name="'keyword'" label="'Mots-clès'" model="metadata.keywords"></multilingual-textfield>
@@ -128,8 +131,11 @@
 					<h4 class="bs-callout-label">Site internet</h4 class="bs-callout-label">
 					<div class="form-group">
 					    <input type="url" name="website" ng-model="metadata.website" class="form-control" placeholder="http://">
-					    <p>Adresse du site web contenant des informations sur la ressource.</p>
+
 					</div>
+					<div class="alert alert-info" role="alert">
+			    		<p><span class="glyphicon glyphicon-info-sign"></span> Adresse du site web contenant des informations sur la ressource.</p>
+			    	</div>
 				</div>
 
 				<div class=" bs-callout">
@@ -142,23 +148,35 @@
 	                    </span>
 	                    </div>
 	                    <input type="hidden" name="image" ng-model="metadata.image" class="form-control">
-					    <p>Afin d'avoir une meilleure visibilité sur le site de consultation, vous pouvez joindre à la fiche une image représentatif de la ressource.</p>
+
 					</div>
+
+					<div class="alert alert-info" role="alert">
+					    <p><span class="glyphicon glyphicon-info-sign"></span> Afin d'avoir une meilleure visibilité sur le site de consultation, vous pouvez joindre à la fiche une image représentatif de la ressource.</p>
+					    </div>
 				</div>
 
-				<!-- <div class=" bs-callout">
+				<div class=" bs-callout">
 					<h4 class="bs-callout-label">Aperçu</h4 class="bs-callout-label">
 					<div class="form-group">
+
+						<div>
+							<div multifile-selector collection="workspace.head" model="metadata.preview.paths" workspace="workspace"></div>
+						<!-- <div class="preview-box col-md-5">
+				            <div preview-line collection="workspace.head" paths="metadata.preview.paths"></div>
+				       </div>
+
 					    <div class="input-group">
-	                        <span class="form-control" ng-click="filePreviewSelectModal.show()"><span ng-class="icons.folder"></span> {{preview.path}}</span>
-	                    <span class="input-group-btn">
-	                        <button class="btn btn-default" ng-click="filePreviewSelectModal.show()" type="button">Selectionner</button>
-	                    </span>
+	                        <button class="btn btn-primary" ng-click="filePreviewSelectModal.show()" type="button">Ajouter</button>
+	                    </div> -->
 	                    </div>
-	                    <input type="hidden" name="preview" ng-model="metadata.preview" class="form-control">
-					    <p>Selectionnez un répertoire dans votre espace de travail ORTOLANG contenant des exemples illustant votre ressource (extrait vidéo ou son, partie d'un fichier XML, ...).</p>
+	                    <input type="hidden" name="preview" ng-model="metadata.preview">
 					</div>
-				</div> -->
+
+					<div class="alert alert-info" role="alert">
+					    <p><span class="glyphicon glyphicon-info-sign"></span> Selectionnez un répertoire dans votre espace de travail ORTOLANG contenant des exemples illustant votre ressource (extrait vidéo ou son, partie d'un fichier XML, ...).</p>
+					    </div>
+				</div>
 			</section>
 
 
@@ -182,8 +200,11 @@
 					<h4 class="bs-callout-label">Site web de la licence</h4 class="bs-callout-label">
 					<div class="form-group">
 					    <input type="url" name="licenseWebsite" ng-model="metadata.licenseWebsite" class="form-control" placeholder="http://">
-					    <p>Adresse du site web contenant des informations sur la licence.</p>
 					</div>
+
+					<div class="alert alert-info" role="alert">
+					    <p><span class="glyphicon glyphicon-info-sign"></span> Adresse du site web contenant des informations sur la licence.</p>
+					    </div>
 				</div>
 
 
@@ -210,6 +231,45 @@
 					</div>
 				</div>
 				
+			</section>
+
+			<section ng-show="!step || (step && stepCurrent === 'specific_fields')" id="specific_fields">
+				<h2 translate="WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD"></h2>
+				
+				<div ng-if="metadata.type==='Corpus'"> 
+
+					<div class="form-group bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_TYPE"></h4>
+					    <select 
+							name="corporaType"
+							class="form-control"
+							ng-model="selectedCorporaType" 
+							ng-options="ct as ct.value for ct in allCorporaType track by ct.key"
+							ng-change="selectCorporaType()">
+						</select>
+					</div>
+
+					<div class="form-group bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_STYLES"></h4>
+					    
+					    <tags-input ng-model="$parent.corporaStyleTag" data-display-property="label" name="corporaStyleTag" class="tool-tags" data-placeholder="{{'MARKET.FACET.CORPORA_STYLES' | translate}}">
+                            <auto-complete source="suggestCorporaStyle($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+					</div>
+
+					<div class="form-group bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_LANGUAGE_TYPE"></h4>
+					    <select 
+							name="corporaLanguageType"
+							class="form-control"
+							ng-model="selectedCorporaLanguageType" 
+							ng-options="ct as ct.value for ct in allCorporaLanguageType track by ct.key"
+							ng-change="selectCorporaLanguageType()">
+						</select>
+					</div>
+
+				</div>
+
 			</section>
 
 			<div ng-if="step">
