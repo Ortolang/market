@@ -172,7 +172,12 @@ angular.module('ortolangMarketApp')
                 SELECT_CORPORA_STYLES: 'Sélectionner un ou plusieurs genres ...',
                 SELECT_CORPORA_LANGUAGE_TYPE: 'Sélectionner le type de langue ...',
                 SELECT_ANNOTATION_LEVELS: 'Sélectionner un ou plusieurs niveaux d\'annotation ...',
-                SELECT_CORPORA_FORMATS: 'Sélectionner un ou plusieurs formats ...'
+                SELECT_CORPORA_FORMATS: 'Sélectionner un ou plusieurs formats ...',
+                SELECT_CORPORA_FILE_ENCODINGS: 'Sélectionner un ou plusieurs encodages de caractères ...',
+                SELECT_CORPORA_DATATYPES: 'Sélectionner un ou plusieurs types de source ...',
+                SELECT_LEXICON_INPUT_TYPE: 'Sélectionner le type d\'entrée du lexique ...',
+                SELECT_LEXICON_DESCRIPTION_TYPES: 'Sélectionner un ou plusieurs type de description du lexique ...',
+                SELECT_LEXICON_LANGUAGE_TYPE: 'Sélectionner le type de langue ...',
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Remplir la fiche des métadonnées'

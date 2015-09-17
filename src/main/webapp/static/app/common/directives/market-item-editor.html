@@ -281,22 +281,6 @@
 					</div>
 
 					<div class="bs-callout">
-						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_LANGUAGE_TYPE"></h4>
-						<div class="form-group bs-callout-input">
-						    <!-- <select 
-								name="corporaLanguageType"
-								class="form-control"
-								ng-model="selectedCorporaLanguageType" 
-								ng-options="ct as ct.value for ct in allCorporaLanguageType track by ct.key"
-								ng-change="selectCorporaLanguageType()">
-							</select> -->
-							<button type="button" class="btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_LANGUAGE_TYPE' | translate}}" bs-options="corporaLanguageType.key as corporaLanguageType.value for corporaLanguageType in allCorporaLanguageType" bs-select>
-  								{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
-							</button>
-						</div>
-					</div>
-
-					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.ANNOTATION_LEVEL"></h4>
 						<div class="form-group bs-callout-input">
 						    
@@ -312,6 +296,74 @@
 						    
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedCorporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="term as term.label for term in allCorporaFormats" bs-select>
   								{{'MARKET.FACET.TEXT_FORMAT' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_FILE_ENCODINGS"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedCorporaFileEncodings" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FILE_ENCODINGS' | translate}}" bs-options="term as term.label for term in allCorporaFileEncodings" bs-select>
+  								{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_DATATYPES"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedCorporaDataTypes" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_DATATYPES' | translate}}" bs-options="term as term.label for term in allCorporaDataTypes" bs-select>
+  								{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_LANGUAGE_TYPE"></h4>
+						<div class="form-group bs-callout-input">
+						    <!-- <select 
+								name="corporaLanguageType"
+								class="form-control"
+								ng-model="selectedCorporaLanguageType" 
+								ng-options="ct as ct.value for ct in allCorporaLanguageType track by ct.key"
+								ng-change="selectCorporaLanguageType()">
+							</select> -->
+							<button type="button" class="btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_LANGUAGE_TYPE' | translate}}" bs-options="corporaLanguageType.key as corporaLanguageType.value for corporaLanguageType in allCorporaLanguageType" bs-select>
+  								{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+				</div>
+
+				<div ng-if="metadata.type==='Lexique'">
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.LEXICON_INPUT_TYPE"></h4>
+						<div class="form-group bs-callout-input">
+							<button type="button" class="btn btn-default" ng-model="metadata.lexiconInputType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_INPUT_TYPE' | translate}}" bs-options="lexiconInputType.key as lexiconInputType.value for lexiconInputType in allLexiconInputType" bs-select>
+  								{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.LEXICON_DESCRIPTION_TYPE"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedLexiconDescriptionTypes" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_DESCRIPTION_TYPES' | translate}}" bs-options="term as term.label for term in allLexiconDescriptionTypes" bs-select>
+  								{{'MARKET.FACET.LEXICON_DESCRIPTION_TYPE' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.LEXICON_LANGUAGE_TYPE"></h4>
+						<div class="form-group bs-callout-input">
+							<button type="button" class="btn btn-default" ng-model="metadata.lexiconLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_LANGUAGE_TYPE' | translate}}" bs-options="lexiconLanguageType.key as lexiconLanguageType.value for lexiconLanguageType in allLexiconLanguageTypes" bs-select>
+  								{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
 							</button>
 						</div>
 					</div>
