@@ -61,7 +61,7 @@ angular.module('ortolangMarketApp')
                 var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
                 $scope.viewMode = viewModeGrid;
                 $scope.orderDirection = true;
-                var orderPublicationDate = {id: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
+                var orderPublicationDate = {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
                 $scope.orderProp = orderPublicationDate;
             }
 
