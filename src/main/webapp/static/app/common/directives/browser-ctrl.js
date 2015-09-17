@@ -118,7 +118,7 @@ angular.module('ortolangMarketApp')
                         }
                         if ($scope.browserService.canDownload && !$scope.hasOnlyParentSelected()) {
                             $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
-                            $scope.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
+                            //$scope.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
                             $scope.contextMenuItems.push({divider: true});
                         }
                         $scope.contextMenuItems.push({text: $scope.viewMode[$scope.browserSettings.viewMode].text, icon: $scope.viewMode[$scope.browserSettings.viewMode].icon, action: 'switchViewMode'});

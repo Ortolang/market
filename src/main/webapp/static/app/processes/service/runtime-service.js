@@ -412,11 +412,12 @@ angular.module('ortolangMarketApp')
                 if (message.arguments.state === states.completed) {
                     var process = $filter('filter')(activeProcesses, {key: message.fromObject});
                     if (process.length > 0) {
-                        if (process[0].type === 'import-zip') {
-                            $rootScope.$emit('import-zip.completed', process[0]);
-                        } else {
+                        //if (process[0].type === 'import-zip') {
+                        //    console.log('runtime.process.change-state', 'IMPORT-ZIP.COMPLETED');
+                        //    $rootScope.$emit('import-zip.completed', process[0]);
+                        //} else {
                             $alert({title: $translate.instant('PROCESSES.PROCESS'), content: $translate.instant('PROCESSES.JUST_COMPLETED', {name: process[0].name}), type: 'success'});
-                        }
+                        //}
                     }
                 }
                 getProcesses(message.date, true);

@@ -168,15 +168,15 @@
                         </li>
                         <li ng-show="isHead" class="divider"></li>
                         <li><div ng-click="download(selectedElements)"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
-                        <li><div ng-click="addToCart()"><span ng-class="icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>
+                        <!--<li><div ng-click="addToCart()"><span ng-class="icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
                     </ul>
                 </div>
 
-                <div ng-show="isMarketBrowserService" class="btn-group">
-                    <button ng-if="browserService.canDownload" class="btn btn-default" ng-click="addToCart()" data-title="{{'BROWSER.ADD_TO_CART' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.cartPlus"></span>
-                    </button>
-                </div>
+                <!--<div ng-show="isMarketBrowserService" class="btn-group">-->
+                    <!--<button ng-if="browserService.canDownload" class="btn btn-default" ng-click="addToCart()" data-title="{{'BROWSER.ADD_TO_CART' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>-->
+                        <!--<span ng-class="icons.cartPlus"></span>-->
+                    <!--</button>-->
+                <!--</div>-->
 
                 <div ng-show="isMarketBrowserService && !hasOnlyParentSelected()" class="btn-group">
                     <button ng-if="browserService.canDownload" class="btn btn-default" ng-click="download(selectedElements)" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
