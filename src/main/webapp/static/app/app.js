@@ -26,6 +26,7 @@ angular
         'mgcrea.ngStrap.typeahead',
         'mgcrea.ngStrap.alert',
         'mgcrea.ngStrap.button',
+        'mgcrea.ngStrap.select',
         'mgcrea.ngStrap.scrollspy',
         'mgcrea.ngStrap.affix',
         'mgcrea.ngStrap.popover',

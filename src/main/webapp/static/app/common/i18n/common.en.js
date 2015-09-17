@@ -84,5 +84,9 @@ angular.module('ortolangMarketApp')
             EN: 'Anglais',
             ES: 'Spanish',
             ZH: 'Chinese'
+        },
+        MULTILINGUAL_TEXTFIELD: {
+            LANGUAGE: 'Language',
+            SELECT_LANGUAGE: 'Choose a language ...'
         }
     });
