@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['JsonResultResource', 'OptionFacetedFilter', 'ItemManager', function (JsonResultResource, OptionFacetedFilter, ItemManager) {
+    .directive('items', ['JsonResultResource', 'OptionFacetedFilter', 'ItemManager', 'Settings', function (JsonResultResource, OptionFacetedFilter, ItemManager, Settings) {
         return {
             restrict: 'E',
             scope: {
@@ -42,6 +42,8 @@ angular.module('ortolangMarketApp')
                             var jsEntry = angular.fromJson(jsonResult);
 
                             if (jsEntry.wskey) {
+                                jsEntry.titleToSort = getTitleValue(jsEntry.title);
+
                                 var itemFromManager = scope.items.getItem(jsEntry.wskey);
                                 if (itemFromManager) {
                                     var entryVersionDate = jsEntry.lastModificationDate,
@@ -93,7 +95,17 @@ angular.module('ortolangMarketApp')
                         }));
                     }
                 }
-
+  
+                function getTitleValue (titleMultiling) {
+                    var iTitle;
+                    for (iTitle = 0; iTitle < titleMultiling.length; iTitle++) {
+                        if (titleMultiling[iTitle].lang === Settings.language) {
+                            return titleMultiling[iTitle].value;
+                        }
+                    }
+                    return titleMultiling.length > 0 ? titleMultiling[0].value : 'untitle';
+                }
+           
                 scope.$watch('query', function () {
                     if (scope.query !== undefined && scope.query !== '') {
                         load(scope.query);

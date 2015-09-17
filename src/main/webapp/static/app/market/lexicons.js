@@ -120,8 +120,8 @@ angular.module('ortolangMarketApp')
             $scope.viewMode = viewModeGrid;
 
             $scope.orderDirection = true;
-            var orderTitle = {id: 'title', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
-            var orderPublicationDate = {id: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
+            var orderTitle = {id: 'title', sort: 'titleToSort', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
+            var orderPublicationDate = {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
             $scope.orderProps = [orderTitle, orderPublicationDate];
             $scope.orderProp = orderPublicationDate;
         }
