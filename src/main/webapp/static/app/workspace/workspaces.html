@@ -3,7 +3,6 @@
 <div ng-hide="browsing || previewing || creating" class="workspaces container-fluid">
     <div class="row toolbar browser-toolbar">
         <div ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside"></div>
-
     </div>
 
     <div class="row">
@@ -34,112 +33,101 @@
                 <div class="row">
                     <h1 ng-class="renameWorkspaceForm.$visible ? 'col-md-8' : 'col-md-12'">
                         <span editable-text="WorkspaceBrowserService.workspace.name" e-ng-init="largeInput = true;" e-form="renameWorkspaceForm" onbeforesave="renameWorkspace($data)">{{WorkspaceBrowserService.workspace.name}}</span>
-                        <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible || editingPresentationMetadata" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="icons.browser.edit"></span></button>
-                        <!--<button class="btn btn-default btn-sm" ng-show="editingPresentationMetadata" ng-click="editingPresentationMetadata = false;">{{'MARKET.GOBACKINFO' | translate}}</button>-->
+                        <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="icons.browser.edit"></span></button>
                     </h1>
                 </div>
-                <div ng-hide="editingPresentationMetadata">
-                <!--<div ng-hide="editingPresentationMetadata || newlyCreatedWorkspace == undefined || newlyCreatedWorkspace">-->
-                    <i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: WorkspaceBrowserService.workspace.creationDate, author: WorkspaceBrowserService.workspace.authorCard.givenName + ' ' + WorkspaceBrowserService.workspace.authorCard.familyName}"></i>
-                    <div class="workspace-actions-toolbar">
-                        <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>
-                        <!-- <button class="btn btn-default" ng-click="showMetadataItem()">
-                            <span class="octicon octicon-book"></span>
-                            <span ng-if="!hasPresentationMetadata()" translate="WORKSPACE.CREATE_PRESENTATION_METADATA"></span>
-                            <span ng-if="hasPresentationMetadata()" translate="WORKSPACE.EDIT_PRESENTATION_METADATA"></span>
-                        </button> -->
-                        <button class="btn btn-default" ng-if="metadataItem!==undefined" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> {{'WORKSPACE.PREVIEW_METADATA' | translate}}</button>
-                        <button class="btn btn-default" ng-if="metadataItem===undefined" ng-click="createMetadataItem()"><span class="octicon octicon-book"></span> {{'WORKSPACE.CREATE_PRESENTATION_METADATA' | translate}}</button>
-                        <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
-                        <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
-                    </div>
-                    <div bs-tabs data-nav-class="nav-pills workspace-dashboard-nav-pills">
-                        <section data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
-                            <div class="row">
-                                <div class="col-md-6 workspace-dashboard-section">
-                                    <h4 translate="WORKSPACE.EXTERNAL_LINKS"></h4>
-                                    <hr/>
-                                    <div ng-if="lastPublishedSnapshot">
-                                        <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
-                                        <a ng-href="{{marketLink}}">{{marketLinkFull}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="marketLinkFull"></span></span>
-                                    </div>
-                                    <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
-                                    <a ng-href="{{contentLink}}">{{contentLink}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="contentLink"></span></span><br/>
-                                </div>
-                                <div class="col-md-6 workspace-dashboard-section">
-                                    <h4 translate="WORKSPACE.TAGS"></h4>
-                                    <hr/>
-                                    <ul class="list-inline">
-                                        <li ng-repeat="tag in WorkspaceBrowserService.workspace.tags" class="tag-wrapper">
-                                            <div class="label tag label-default">
-                                                <span ng-class="icons.tag"></span>
-                                                <span translate="BROWSER.VERSION" data-translate-values="{number: tag.name}"></span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <i ng-if="WorkspaceBrowserService.workspace.tags.length === 0" translate="WORKSPACE.NO_TAGS"></i>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="col-md-6 workspace-dashboard-section">
-                                    <h4 translate="WORKSPACE.STATISTICS"></h4>
-                                    <hr/>
-                                    <p>{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} <strong>{{WorkspaceBrowserService.workspace.lastModificationDate | amTimeAgo}}</strong></p>
-                                    <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: workspaceMembers.length}"></p>
-                                    <p translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: WorkspaceBrowserService.workspace.tags.length}"></p>
-                                </div>
-                                <div class="col-md-6 workspace-dashboard-section">
-                                    <h4 translate="WORKSPACE.ADVANCED_INFORMATION"></h4>
-                                    <hr/>
-                                    <p><strong translate="WORKSPACE.ALIAS"></strong> {{WorkspaceBrowserService.workspace.alias}}</p>
-                                    <p><strong translate="BROWSER.KEY"></strong> {{WorkspaceBrowserService.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="WorkspaceBrowserService.workspace.key"></span></span></p>
-                                </div>
-                            </div>
-                        </section>
-                        <section data-title="{{'WORKSPACE.MEMBERS' | translate}}" bs-pane>
-                            <ul class="list-unstyled row">
-                                <li ng-repeat="member in workspaceMembers track by member.key" class="col-lg-3 col-md-4 col-sm-6" profile-card data-profile="member" data-size="50" data-img-classes="img-circle"></li>
-                                <li class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
-                                    <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="icons.plus"></span></button></div>
-                                    <div class="media-body">{{'WORKSPACE.ADD_MEMBER' | translate}}</div>
-                                </li>
-                            </ul>
-                        </section>
-                        <section data-title="{{'WORKSPACE.HISTORY' | translate}}" bs-pane>
-                            <ul class="list-unstyled">
-                                <li ng-repeat="history in workspaceHistory | filter:{number:'!!'} track by history.key" class="media history-item">
-                                    <div class="media-left" avatar data-email-hash="history.authorCard.emailHash" data-size="50" data-img-classes="img-circle">
-                                    </div>
-                                    <div class="media-body">
-                                        <p>
-                                            <span translate="BROWSER.CREATED" data-translate-values="{author: history.authorCard.givenName + ' ' + history.authorCard.familyName}"></span>
-                                            <strong class="snapshot-name" translate="BROWSER.VERSION" data-translate-values="{number: history.number}"></strong>
-                                            <span class="small publication-status" ng-class="[history.publicationStatus, icons.browser.published]" data-title="{{history.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="right" bs-tooltip></span>
-                                            <br/>
-                                            <span class="small">{{history.date | date:'medium'}}</span>
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
-                    </div>
-
-                    <!--<div class="row">-->
-                        <!--<div class="col-md-10">-->
-                            <!--<div tree data-nodes="treeNodes2" data-node-children="elements" data-collection-only="false"></div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                    <!--<hr/>-->
-                    <!--<pre>{{WorkspaceBrowserService.workspace | json}}</pre>-->
-                    <!--<pre>{{head | json}}</pre>-->
-                    <!--<pre>{{workspaceHistory | json}}</pre>-->
-                    <!--<pre>{{workspaceList | json}}</pre>-->
-                    <!--<br>-->
-                    <!--<pre>{{presentationMetadata | json}}</pre>-->
-
+                <i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: WorkspaceBrowserService.workspace.creationDate, author: WorkspaceBrowserService.workspace.authorCard.givenName + ' ' + WorkspaceBrowserService.workspace.authorCard.familyName}"></i>
+                <div class="workspace-actions-toolbar">
+                    <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>
+                    <button class="btn btn-default" ng-if="metadataItem !== undefined" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> {{'WORKSPACE.PREVIEW_METADATA' | translate}}</button>
+                    <button class="btn btn-default" ng-if="metadataItem === undefined" ng-click="createMetadataItem()"><span class="octicon octicon-book"></span> {{'WORKSPACE.CREATE_PRESENTATION_METADATA' | translate}}</button>
+                    <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
+                    <button ng-if="!lastPublishedSnapshot" class="btn btn-default btn-danger" ng-click="delete()"><span ng-class="icons.trash"></span> {{'DELETE' | translate}}</button>
+                    <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
                 </div>
-                <!--<div ng-if="newlyCreatedWorkspace" ng-include="'workspace/ortolang-workspace-metadata-editor.html'"></div>-->
-                <div ng-if="editingPresentationMetadata" ng-include="'workspace/presentation-metadata-editor.html'"></div>
+                <div bs-tabs data-nav-class="nav-pills workspace-dashboard-nav-pills">
+                    <section data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
+                        <div class="row">
+                            <div class="col-md-6 workspace-dashboard-section">
+                                <h4 translate="WORKSPACE.EXTERNAL_LINKS"></h4>
+                                <hr/>
+                                <div ng-if="lastPublishedSnapshot">
+                                    <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
+                                    <a ng-href="{{marketLink}}">{{marketLinkFull}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="marketLinkFull"></span></span>
+                                </div>
+                                <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
+                                <a ng-href="{{contentLink}}">{{contentLink}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="contentLink"></span></span><br/>
+                            </div>
+                            <div class="col-md-6 workspace-dashboard-section">
+                                <h4 translate="WORKSPACE.TAGS"></h4>
+                                <hr/>
+                                <ul class="list-inline">
+                                    <li ng-repeat="tag in WorkspaceBrowserService.workspace.tags" class="tag-wrapper">
+                                        <div class="label tag label-default">
+                                            <span ng-class="icons.tag"></span>
+                                            <span translate="BROWSER.VERSION" data-translate-values="{number: tag.name}"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <i ng-if="WorkspaceBrowserService.workspace.tags.length === 0" translate="WORKSPACE.NO_TAGS"></i>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-6 workspace-dashboard-section">
+                                <h4 translate="WORKSPACE.STATISTICS"></h4>
+                                <hr/>
+                                <p>{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} <strong>{{WorkspaceBrowserService.workspace.lastModificationDate | amTimeAgo}}</strong></p>
+                                <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: workspaceMembers.length}"></p>
+                                <p translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: WorkspaceBrowserService.workspace.tags.length}"></p>
+                            </div>
+                            <div class="col-md-6 workspace-dashboard-section">
+                                <h4 translate="WORKSPACE.ADVANCED_INFORMATION"></h4>
+                                <hr/>
+                                <p><strong translate="WORKSPACE.ALIAS"></strong> {{WorkspaceBrowserService.workspace.alias}}</p>
+                                <p><strong translate="BROWSER.KEY"></strong> {{WorkspaceBrowserService.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="WorkspaceBrowserService.workspace.key"></span></span></p>
+                            </div>
+                        </div>
+                    </section>
+                    <section data-title="{{'WORKSPACE.MEMBERS' | translate}}" bs-pane>
+                        <ul class="list-unstyled row">
+                            <li ng-repeat="member in workspaceMembers track by member.key" class="col-lg-3 col-md-4 col-sm-6" profile-card data-profile="member" data-size="50" data-img-classes="img-circle"></li>
+                            <li class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
+                                <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="icons.plus"></span></button></div>
+                                <div class="media-body">{{'WORKSPACE.ADD_MEMBER' | translate}}</div>
+                            </li>
+                        </ul>
+                    </section>
+                    <section data-title="{{'WORKSPACE.HISTORY' | translate}}" bs-pane>
+                        <ul class="list-unstyled">
+                            <li ng-repeat="history in workspaceHistory | filter:{number:'!!'} track by history.key" class="media history-item">
+                                <div class="media-left" avatar data-email-hash="history.authorCard.emailHash" data-size="50" data-img-classes="img-circle">
+                                </div>
+                                <div class="media-body">
+                                    <p>
+                                        <span translate="BROWSER.CREATED" data-translate-values="{author: history.authorCard.givenName + ' ' + history.authorCard.familyName}"></span>
+                                        <strong class="snapshot-name" translate="BROWSER.VERSION" data-translate-values="{number: history.number}"></strong>
+                                        <span class="small publication-status" ng-class="[history.publicationStatus, icons.browser.published]" data-title="{{history.publicationStatus === 'draft' ? 'BROWSER.DRAFT' : 'BROWSER.PUBLISHED' | translate}}" data-placement="right" bs-tooltip></span>
+                                        <br/>
+                                        <span class="small">{{history.date | date:'medium'}}</span>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+
+                <!--<div class="row">-->
+                <!--<div class="col-md-10">-->
+                <!--<div tree data-nodes="treeNodes2" data-node-children="elements" data-collection-only="false"></div>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <!--<hr/>-->
+                <!--<pre>{{WorkspaceBrowserService.workspace | json}}</pre>-->
+                <!--<pre>{{head | json}}</pre>-->
+                <!--<pre>{{workspaceHistory | json}}</pre>-->
+                <!--<pre>{{workspaceList | json}}</pre>-->
+                <!--<br>-->
+                <!--<pre>{{presentationMetadata | json}}</pre>-->
             </div>
         </div>
 
@@ -156,7 +144,7 @@
             <div class="btn-toolbar" role="toolbar" ng-if="creating">
                 <button ng-click="toggleCreating()" class="btn btn-default" data-title="{{'WORKSPACE.CANCEL_ALL' | translate}}" data-placement="bottom" bs-tooltip>{{'WORKSPACE.CANCEL_ALL' | translate}}</button>
             </div>
-            
+
             <div class="btn-toolbar btn-toolbar-right" role="toolbar" ng-if="!(editing || creating)">
                 <div class="btn-group">
                     <button ng-click="toggleEditing()" class="btn btn-default" data-title="{{'WORKSPACE.EDIT_PRESENTATION_METADATA' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.edit"></span></button>
@@ -171,7 +159,7 @@
     </div>
     <div ng-show="editing || creating" class="am-fade-and-slide-bottom">
         <!-- <div ng-include="'workspace/templates/metadata-item-form.html'"></div> -->
-         <market-item-editor metadata="metadataItem" workspace="WorkspaceBrowserService.workspace" root="'head'" toggle-previewing="togglePreviewing()" toggle-editing="toggleEditing()" toggle-creating="toggleCreating()" step="creating"></market-item-editor>
+        <market-item-editor metadata="metadataItem" workspace="WorkspaceBrowserService.workspace" root="'head'" toggle-previewing="togglePreviewing()" toggle-editing="toggleEditing()" toggle-creating="toggleCreating()" step="creating"></market-item-editor>
     </div>
 
 </div>
