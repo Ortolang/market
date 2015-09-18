@@ -294,19 +294,8 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.delete = function () {
-            var deleteWorkspaceModal;
-            createModalScope();
-            modalScope.wsName = WorkspaceBrowserService.workspace.name;
-            modalScope.delete = function () {
-                WorkspaceResource.delete({wskey: WorkspaceBrowserService.workspace.key}).$promise.then(function (data) {
-                    $rootScope.$emit('process-created', data);
-                });
-                deleteWorkspaceModal.hide();
-            };
-            deleteWorkspaceModal = $modal({
-                scope: modalScope,
-                template: 'workspace/templates/delete-workspace-modal.html',
-                show: true
+            WorkspaceResource.delete({wskey: WorkspaceBrowserService.workspace.key}).$promise.then(function (data) {
+                $rootScope.$emit('process-created', data);
             });
         };
 

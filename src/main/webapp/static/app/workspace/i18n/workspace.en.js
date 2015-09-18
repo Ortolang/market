@@ -15,13 +15,11 @@ angular.module('ortolangMarketApp')
             MEMBERS: 'Members',
             UPLOAD: 'Upload',
             UPLOAD_QUEUE: 'Upload Queue',
-            EXTRACTION_QUEUE: 'Extraction',
             PROGRESS: 'Progress',
             PATH: 'Path',
             STATUS: 'Status',
             CLEAR: 'Clear',
             CLEAR_ALL: 'Close',
-            HIDE_QUEUE: 'Hide',
             CANCEL_ALL: 'Cancel',
             PREVIEW_METADATA: 'Show metadata',
             ADD_METADATA: 'Add a metadata',
@@ -58,12 +56,8 @@ angular.module('ortolangMarketApp')
             },
             PUBLISH_MODAL: {
                 TITLE: 'Workspace Publication',
-                BODY: 'Are you sure you want to publish "{{wsName}}"?',
+                BODY: 'Are you sure you want to publish "{{wsName}}" ?',
                 SUBMIT: 'Publish'
-            },
-            DELETE_WORKSPACE_MODAL: {
-                TITLE: 'Workspace deletion',
-                BODY: '<strong class="text-danger">The deletion of a workspace cannot be undone</strong>. Are you sure you want to delete the workspace <strong>"{{wsName}}"</strong>?'
             },
             SNAPSHOT_MODAL: {
                 TITLE: 'Save workspace state',
