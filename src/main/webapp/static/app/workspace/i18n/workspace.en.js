@@ -178,6 +178,11 @@ angular.module('ortolangMarketApp')
                 SELECT_LEXICON_INPUT_TYPE: 'Choose the input type of the lexicon ...',
                 SELECT_LEXICON_DESCRIPTION_TYPE: 'Choose one or more description type of the lexicon ...',
                 SELECT_LEXICON_LANGUAGE_TYPE: 'Choose the kind of language ...',
+                SELECT_LEXICON_FORMATS: 'Choose one or more formats ...',
+                SELECT_PROGRAMMING_LANGUAGES: 'Choose one or more programming languages ...',
+                SELECT_TOOL_FUNCTIONALITIES: 'Choose one or more functionalities ...',
+                LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
+                PROGRAMMING_LANGUAGES: 'Programming language'
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Create metadata item'

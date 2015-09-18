@@ -167,17 +167,22 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'Cette organisme est déjà dans la liste.'
                     }
                 },
-                SELECT_TYPE: 'Sélectionner le type de ressource ...',
-                SELECT_CORPORA_TYPE: 'Sélectionner le type de corpus ...',
-                SELECT_CORPORA_STYLES: 'Sélectionner un ou plusieurs genres ...',
-                SELECT_CORPORA_LANGUAGE_TYPE: 'Sélectionner le type de langue ...',
-                SELECT_ANNOTATION_LEVELS: 'Sélectionner un ou plusieurs niveaux d\'annotation ...',
-                SELECT_CORPORA_FORMATS: 'Sélectionner un ou plusieurs formats ...',
-                SELECT_CORPORA_FILE_ENCODINGS: 'Sélectionner un ou plusieurs encodages de caractères ...',
-                SELECT_CORPORA_DATATYPES: 'Sélectionner un ou plusieurs types de source ...',
-                SELECT_LEXICON_INPUT_TYPE: 'Sélectionner le type d\'entrée du lexique ...',
-                SELECT_LEXICON_DESCRIPTION_TYPES: 'Sélectionner un ou plusieurs type de description du lexique ...',
-                SELECT_LEXICON_LANGUAGE_TYPE: 'Sélectionner le type de langue ...',
+                SELECT_TYPE: 'Sélectionnez le type de ressource ...',
+                SELECT_CORPORA_TYPE: 'Sélectionnez le type de corpus ...',
+                SELECT_CORPORA_STYLES: 'Sélectionnez un ou plusieurs genres ...',
+                SELECT_CORPORA_LANGUAGE_TYPE: 'Sélectionnez le type de langue ...',
+                SELECT_ANNOTATION_LEVELS: 'Sélectionnez un ou plusieurs niveaux d\'annotation ...',
+                SELECT_CORPORA_FORMATS: 'Sélectionnez un ou plusieurs formats ...',
+                SELECT_CORPORA_FILE_ENCODINGS: 'Sélectionnez un ou plusieurs encodages de caractères ...',
+                SELECT_CORPORA_DATATYPES: 'Sélectionnez un ou plusieurs types de source ...',
+                SELECT_LEXICON_INPUT_TYPE: 'Sélectionnez le type d\'entrée du lexique ...',
+                SELECT_LEXICON_DESCRIPTION_TYPES: 'Sélectionnez un ou plusieurs type de description du lexique ...',
+                SELECT_LEXICON_LANGUAGE_TYPE: 'Sélectionnez le type de langue ...',
+                SELECT_LEXICON_FORMATS: 'Sélectionnez un ou plusieurs formats ...',
+                SELECT_PROGRAMMING_LANGUAGES: 'Sélectionnez un ou plusieurs formats ...',
+                SELECT_TOOL_FUNCTIONALITIES: 'Sélectionnez une ou plusieurs fonctionnalités ...',
+                LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
+                PROGRAMMING_LANGUAGES: 'Language de programmation'
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Remplir la fiche des métadonnées'

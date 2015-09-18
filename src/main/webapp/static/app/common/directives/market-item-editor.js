@@ -68,6 +68,21 @@ angular.module('ortolangMarketApp')
                             scope.metadata.lexiconDescriptionTypes.push(tag.id);
                         });
 
+                        scope.metadata.lexiconFormats = [];
+                        angular.forEach(scope.selectedLexiconFormats, function(tag) {
+                            scope.metadata.lexiconFormats.push(tag.id);
+                        });
+
+                        scope.metadata.programmingLanguages = [];
+                        angular.forEach(scope.selectedProgrammingLanguages, function(tag) {
+                            scope.metadata.programmingLanguages.push(tag.id);
+                        });
+
+                        scope.metadata.toolFunctionalities = [];
+                        angular.forEach(scope.selectedToolFunctionalities, function(tag) {
+                            scope.metadata.toolFunctionalities.push(tag.id);
+                        });
+
                         var content = angular.toJson(scope.metadata),
                             contentType = 'text/json';
 
@@ -618,6 +633,117 @@ angular.module('ortolangMarketApp')
                         });
                     }
 
+                    function loadAllLexiconFormats() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'lexiconFormat');
+
+                        var query = queryBuilder.toString();
+                        scope.allLexiconFormats = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allLexiconFormats.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.lexiconFormats)) {
+
+                                angular.forEach(scope.metadata.lexiconFormats, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allLexiconFormats, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedLexiconFormats.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedLexiconFormats.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllProgrammingLanguages() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'programmingLanguage');
+
+                        var query = queryBuilder.toString();
+                        scope.allProgrammingLanguages = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allProgrammingLanguages.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.programmingLanguages)) {
+
+                                angular.forEach(scope.metadata.programmingLanguages, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allProgrammingLanguages, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedProgrammingLanguages.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedProgrammingLanguages.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllToolFunctionalities() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolFunctionality');
+
+                        var query = queryBuilder.toString();
+                        scope.loadAllToolFunctionalities = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.loadAllToolFunctionalities.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.toolFunctionalities)) {
+
+                                angular.forEach(scope.metadata.toolFunctionalities, function(tag) {
+                                    var tagFound = $filter('filter')(scope.loadAllToolFunctionalities, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedToolFunctionalities.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedToolFunctionalities.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
                     function init() {
                         if(!angular.isDefined(scope.metadata)) {
                             scope.metadata = {schema: 'http://www.ortolang.fr/schema/012#', contributors:[]};
@@ -716,6 +842,9 @@ angular.module('ortolangMarketApp')
                         scope.selectedCorporaFileEncodings = [];
                         scope.selectedCorporaDataTypes = [];
                         scope.selectedLexiconDescriptionTypes = [];
+                        scope.selectedLexiconFormats = [];
+                        scope.selectedProgrammingLanguages = [];
+                        scope.selectedToolFunctionalities = [];
 
                         loadAllCorporaTypes();
                         loadAllCorporaStyles();
@@ -727,6 +856,9 @@ angular.module('ortolangMarketApp')
                         loadAllLexiconInputTypes();
                         loadAllLexiconDescriptionTypes();
                         loadAllLexiconLanguageTypes();
+                        loadAllLexiconFormats();
+                        loadAllProgrammingLanguages();
+                        loadAllToolFunctionalities();
 
                         scope.stepCurrent = 'basic_info';
                         scope.stepBasicInfoSuccess = false;

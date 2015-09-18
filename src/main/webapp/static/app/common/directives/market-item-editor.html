@@ -349,6 +349,13 @@
 						</div>
 					</div>
 
+					<div class=" bs-callout">
+						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.LEXICON_INPUT_COUNT"></h4>
+						<div class="form-group bs-callout-input">
+						    <input type="text" name="lexiconInputCount" ng-model="metadata.lexiconInputCount" class="form-control"></input>
+						</div>
+					</div>
+
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.LEXICON_DESCRIPTION_TYPE"></h4>
 						<div class="form-group bs-callout-input">
@@ -367,6 +374,46 @@
 							</button>
 						</div>
 					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.LEXICON_FORMAT"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedLexiconFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_FORMATS' | translate}}" bs-options="term as term.label for term in allLexiconFormats" bs-select>
+  								{{'MARKET.FACET.LEXICON_FORMAT' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div ng-if="metadata.type==='Outil'">
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.PROGRAMMING_LANGUAGES"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedProgrammingLanguages" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_PROGRAMMING_LANGUAGES' | translate}}" bs-options="term as term.label for term in allProgrammingLanguages" bs-select>
+  								{{'WORKSPACE.METADATA_EDITOR.PROGRAMMING_LANGUAGES' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<!-- TODO operating system -->
+					<!-- TODO tool support -->
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_FUNCTIONALITY"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolFunctionalities" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FUNCTIONALITIES' | translate}}" bs-options="term as term.label for term in allToolFunctionalities" bs-select>
+  								{{'MARKET.FACET.TOOL_FUNCTIONALITY' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+
 
 				</div>
 
