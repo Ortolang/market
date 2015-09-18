@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
         CREATE: 'Create',
         SUBMIT: 'OK',
         ADD: 'Add',
-        DELETE: 'Delete',
         NAME: 'Name',
         RENAME: 'Rename',
         DESCRIPTION: 'Description',

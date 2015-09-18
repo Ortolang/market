@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'Content', 'MetadataFormatResource', 'Settings', 'Runtime', 'icons', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, Content, MetadataFormatResource, Settings, Runtime, icons) {
+    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'AtmosphereService', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'Content', 'MetadataFormatResource', 'Settings', 'User', 'Runtime', 'icons', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, AtmosphereService, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, Content, MetadataFormatResource, Settings, User, Runtime, icons) {
 
         var modalScope, workspaceListDeferred, workspaceMembersDeferred;
 
@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
         function getHead() {
             return ObjectResource.get({key: WorkspaceBrowserService.workspace.head}, function (data) {
                 $scope.head = data.object;
+                $scope.newlyCreatedWorkspace = $scope.head.empty && $filter('filter')($scope.head.metadatas, {name: 'ortolang-workspace-json'}).length === 0;
                 $scope.workspaceHistory = data.history;
                 $scope.lastPublishedSnapshot = $scope.workspaceHistory.length > 1 ? $scope.workspaceHistory[1] : undefined;
                 angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
@@ -98,16 +99,27 @@ angular.module('ortolangMarketApp')
         $scope.$on('$destroy', function () {
             $rootScope.browsing = false;
             $rootScope.noFooter = false;
-            $rootScope.myWorkspaces = undefined;
         });
 
         $scope.$on('$routeUpdate', function () {
             if ($location.search().browse) {
                 $rootScope.browsing = true;
             }
-            $scope.previewing = !!$location.search().preview;
-            $scope.editing = !!$location.search().edit;
-            $scope.creating = !!$location.search().create;
+            if ($location.search().preview) {
+                $scope.previewing = true;
+            } else {
+                $scope.previewing = false;
+            }
+            if ($location.search().edit) {
+                $scope.editing = true;
+            } else {
+                $scope.editing = false;
+            }
+            if ($location.search().create) {
+                $scope.creating = true;
+            } else {
+                $scope.creating = false;
+            }
         });
 
         $rootScope.$on('core.workspace.create', function (event, eventMessage) {
@@ -115,23 +127,6 @@ angular.module('ortolangMarketApp')
                 var workspace = $filter('filter')($scope.workspaceList, {key: eventMessage.fromObject});
                 if (workspace.length !== 1) {
                     getWorkspaceList();
-                }
-            });
-            event.stopPropagation();
-        });
-
-        $rootScope.$on('core.workspace.delete', function (event, eventMessage) {
-            workspaceListDeferred.$promise.then(function () {
-                var workspace = $filter('filter')($scope.workspaceList, {key: eventMessage.fromObject});
-                if (workspace.length === 1) {
-                    getWorkspaceList();
-                    workspaceListDeferred.$promise.then(function () {
-                        if ($scope.workspaceList.length > 0) {
-                            $scope.changeWorkspace($scope.workspaceList[0]);
-                        } else {
-                            WorkspaceBrowserService.workspace = undefined;
-                        }
-                    });
                 }
             });
             event.stopPropagation();
@@ -293,12 +288,6 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        $scope.delete = function () {
-            WorkspaceResource.delete({wskey: WorkspaceBrowserService.workspace.key}).$promise.then(function (data) {
-                $rootScope.$emit('process-created', data);
-            });
-        };
-
         // *********************** //
         //        Snapshot         //
         // *********************** //
@@ -353,6 +342,11 @@ angular.module('ortolangMarketApp')
         // *********************** //
         //        Metadata         //
         // *********************** //
+
+        $scope.editPresentationMetadata = function () {
+            $scope.editingPresentationMetadata = true;
+        };
+        //$scope.editingPresentationMetadata = true;
 
         $scope.showMetadataItem = function () {
             //TODO pre load metadataFormat
@@ -517,12 +511,10 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $rootScope.browsing = !!$location.search().browse;
-            $rootScope.noFooter = true;
-            $rootScope.myWorkspaces = true;
-
             $scope.browserCtrlInitialized = false;
             $scope.WorkspaceBrowserService = WorkspaceBrowserService;
             $scope.workspaceHistory = undefined;
+            $rootScope.noFooter = true;
             $scope.resizeBrowser();
             $scope.icons = icons;
 
