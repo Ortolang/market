@@ -84,7 +84,7 @@ angular.module('ortolangVisualizers')
                     };
                     scope.visualizer.footer = {
                         show: function () {
-                            return scope.truncated || (scope.hasPreview && scope.tabs.activeTab === 'source');
+                            return (!scope.hasPreview && scope.truncated) || (scope.hasPreview && scope.tabs.activeTab === 'source' && scope.truncated);
                         },
                         text: 'TEXT_VISUALIZER.EXCERPT'
                     };
