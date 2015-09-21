@@ -3,7 +3,19 @@
   min-height: -webkit-calc(100% ~'-' @top-nav-plus-footer);
   min-height: -moz-calc(100% ~'-' @top-nav-plus-footer);
   min-height: calc(100% ~'-' @top-nav-plus-footer);
+  .tooltip {
+    display: none !important;
+  }
 }
+
+@media (min-width:768px) and (max-width:1280px) {
+  #side-nav-wrapper.my-workspaces {
+    .tooltip {
+      display: block !important;
+    }
+  }
+}
+
 .side-nav {
   background-color: @default-bg;
 

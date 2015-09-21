@@ -15,11 +15,13 @@ angular.module('ortolangMarketApp')
             MEMBERS: 'Membres',
             UPLOAD: 'Importer',
             UPLOAD_QUEUE: 'Importation',
+            EXTRACTION_QUEUE: 'Extraction',
             PROGRESS: 'Avancement',
             PATH: 'Chemin',
             STATUS: 'Status',
             CLEAR: 'Supprimer',
             CLEAR_ALL: 'Fermer',
+            HIDE_QUEUE: 'Masquer',
             CANCEL_ALL: 'Annuler',
             PREVIEW_METADATA: 'Voir les métadonnées',
             ADD_METADATA: 'Ajouter une métadonnée',
@@ -58,6 +60,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Publication d\'un espace de travail',
                 BODY: 'Êtes-vous sûr de vouloir publier l\'espace de travail "{{wsName}}" ?',
                 SUBMIT: 'Publier'
+            },
+            DELETE_WORKSPACE_MODAL: {
+                TITLE: 'Suppression d\'un espace de travail',
+                BODY: '<strong class="text-danger">La suppression d\'un espace de travail est définitive</strong>. Êtes-vous sûr de vouloir supprimer l\'espace de travail <strong>"{{wsName}}"</strong> ?'
             },
             SNAPSHOT_MODAL: {
                 TITLE: 'Sauvegarde de l\'état de l\'espace de travail',
