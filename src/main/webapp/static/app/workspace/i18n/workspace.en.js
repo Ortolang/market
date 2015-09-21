@@ -187,6 +187,9 @@ angular.module('ortolangMarketApp')
                 SELECT_LEXICON_FORMATS: 'Choose one or more formats ...',
                 SELECT_PROGRAMMING_LANGUAGES: 'Choose one or more programming languages ...',
                 SELECT_TOOL_FUNCTIONALITIES: 'Choose one or more functionalities ...',
+                SELECT_TOOL_INPUTDATA: 'Choose one or more input data ...',
+                SELECT_TOOL_OUTPUTDATA: 'Choose one or more input data ...',
+                SELECT_TOOL_FILE_ENCODINGS: 'Choose one or more file encodings ...',
                 LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
                 PROGRAMMING_LANGUAGES: 'Programming language'
             },

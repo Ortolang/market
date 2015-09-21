@@ -413,6 +413,36 @@
 						</div>
 					</div>
 
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_INPUTDATA"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolInputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_INPUTDATA' | translate}}" bs-options="term as term.label for term in allToolInputData" bs-select>
+  								{{'MARKET.FACET.TOOL_INPUTDATA' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_OUTPUTDATA"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolOutputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_OUTPUTDATA' | translate}}" bs-options="term as term.label for term in allToolOutputData" bs-select>
+  								{{'MARKET.FACET.TOOL_OUTPUTDATA' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_FILE_ENCODINGS"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolFileEncodings" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FILE_ENCODINGS' | translate}}" bs-options="term as term.label for term in allToolFileEncodings" bs-select>
+  								{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
 
 
 				</div>

@@ -83,6 +83,21 @@ angular.module('ortolangMarketApp')
                             scope.metadata.toolFunctionalities.push(tag.id);
                         });
 
+                        scope.metadata.toolInputData = [];
+                        angular.forEach(scope.selectedToolInputData, function(tag) {
+                            scope.metadata.toolInputData.push(tag.id);
+                        });
+
+                        scope.metadata.toolOutputData = [];
+                        angular.forEach(scope.selectedToolOutputData, function(tag) {
+                            scope.metadata.toolOutputData.push(tag.id);
+                        });
+
+                        scope.metadata.toolFileEncodings = [];
+                        angular.forEach(scope.selectedToolFileEncodings, function(tag) {
+                            scope.metadata.toolFileEncodings.push(tag.id);
+                        });
+
                         var content = angular.toJson(scope.metadata),
                             contentType = 'text/json';
 
@@ -721,22 +736,133 @@ angular.module('ortolangMarketApp')
                         queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolFunctionality');
 
                         var query = queryBuilder.toString();
-                        scope.loadAllToolFunctionalities = [];
+                        scope.allToolFunctionalities = [];
                         JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
                                 
-                                scope.loadAllToolFunctionalities.push({id: term.id, label: term.label});
+                                scope.allToolFunctionalities.push({id: term.id, label: term.label});
                             });
 
                             if(angular.isDefined(scope.metadata.toolFunctionalities)) {
 
                                 angular.forEach(scope.metadata.toolFunctionalities, function(tag) {
-                                    var tagFound = $filter('filter')(scope.loadAllToolFunctionalities, {id:tag});
+                                    var tagFound = $filter('filter')(scope.allToolFunctionalities, {id:tag});
                                     if(tagFound.length>0) {
                                         scope.selectedToolFunctionalities.push(tagFound[0]);
                                     } else {
                                         scope.selectedToolFunctionalities.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllToolInputData() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolInputData');
+
+                        var query = queryBuilder.toString();
+                        scope.allToolInputData = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allToolInputData.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.toolInputData)) {
+
+                                angular.forEach(scope.metadata.toolInputData, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allToolInputData, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedToolInputData.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedToolInputData.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllToolOutputData() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolOutputData');
+
+                        var query = queryBuilder.toString();
+                        scope.allToolOutputData = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allToolOutputData.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.toolOutputData)) {
+
+                                angular.forEach(scope.metadata.toolOutputData, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allToolOutputData, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedToolOutputData.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedToolOutputData.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllToolFileEncodings() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolFileEncoding');
+
+                        var query = queryBuilder.toString();
+                        scope.loadAllToolFileEncodings = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.loadAllToolFileEncodings.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.toolFileEncodings)) {
+
+                                angular.forEach(scope.metadata.toolFileEncodings, function(tag) {
+                                    var tagFound = $filter('filter')(scope.loadAllToolFileEncodings, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedToolFileEncodings.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedToolFileEncodings.push({id:tag,label:tag});
                                     }
                                 });
                             }
@@ -845,6 +971,9 @@ angular.module('ortolangMarketApp')
                         scope.selectedLexiconFormats = [];
                         scope.selectedProgrammingLanguages = [];
                         scope.selectedToolFunctionalities = [];
+                        scope.selectedToolInputData = [];
+                        scope.selectedToolOutputData = [];
+                        scope.selectedToolFileEncodings = [];
 
                         loadAllCorporaTypes();
                         loadAllCorporaStyles();
@@ -859,6 +988,9 @@ angular.module('ortolangMarketApp')
                         loadAllLexiconFormats();
                         loadAllProgrammingLanguages();
                         loadAllToolFunctionalities();
+                        loadAllToolInputData();
+                        loadAllToolOutputData();
+                        loadAllToolFileEncodings();
 
                         scope.stepCurrent = 'basic_info';
                         scope.stepBasicInfoSuccess = false;
