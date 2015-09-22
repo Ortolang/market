@@ -131,6 +131,7 @@ angular.module('ortolangMarketApp')
                     NEED_ONE_VALUE: 'Please specify at least one value for this field.'
                 },
                 BACK_TO_PREVIEW: 'Back to the preview',
+                APPLY: 'Apply',
                 BASIC_INFO: 'Basic info',
                 WHOS_INVOLVED: 'Who\'s involved',
                 DESCRIBE: 'Describe',
@@ -143,6 +144,10 @@ angular.module('ortolangMarketApp')
                 NEW_CONTRIBUTOR: 'New',
                 EDIT_CONTRIBUTOR: 'Edit',
                 DELETE_CONTRIBUTOR: 'Delete',
+                RESOURCE_TYPE: 'Resource type',
+                RESOURCE_TITLE: 'Resource title',
+                RESOURCE_DESCRIPTION: 'Description',
+                RESOURCE_IMAGE: 'Image',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',

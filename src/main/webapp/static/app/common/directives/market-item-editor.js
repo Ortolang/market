@@ -48,6 +48,11 @@ angular.module('ortolangMarketApp')
                             scope.metadata.annotationLevels.push(tag.id);
                         });
 
+                        scope.metadata.corporaLanguages = [];
+                        angular.forEach(scope.selectedCorporaLanguages, function(tag) {
+                            scope.metadata.corporaLanguages.push(tag.id);
+                        });
+
                         scope.metadata.corporaFormats = [];
                         angular.forEach(scope.selectedCorporaFormats, function(tag) {
                             scope.metadata.corporaFormats.push(tag.id);
@@ -293,6 +298,10 @@ angular.module('ortolangMarketApp')
                     /**
                      * Utils
                      **/
+                    scope.suggestLanguages = function (query) {
+                        var result = $filter('filter')(scope.allCorporaLanguages, {label:query});
+                        return result;
+                    };
 
                     function loadAllCorporaTypes() {
                         
@@ -538,6 +547,43 @@ angular.module('ortolangMarketApp')
                                         scope.selectedCorporaDataTypes.push(tagFound[0]);
                                     } else {
                                         scope.selectedCorporaDataTypes.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllCorporaLanguages() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.label[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.label[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'language');
+
+                        var query = queryBuilder.toString();
+                        scope.allCorporaLanguages = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allCorporaLanguages.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.corporaLanguages)) {
+
+                                angular.forEach(scope.metadata.corporaLanguages, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allCorporaLanguages, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedCorporaLanguages.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedCorporaLanguages.push({id:tag,label:tag});
                                     }
                                 });
                             }
@@ -967,6 +1013,7 @@ angular.module('ortolangMarketApp')
                         scope.selectedCorporaFormats = [];
                         scope.selectedCorporaFileEncodings = [];
                         scope.selectedCorporaDataTypes = [];
+                        scope.selectedCorporaLanguages = [];
                         scope.selectedLexiconDescriptionTypes = [];
                         scope.selectedLexiconFormats = [];
                         scope.selectedProgrammingLanguages = [];
@@ -977,6 +1024,7 @@ angular.module('ortolangMarketApp')
 
                         loadAllCorporaTypes();
                         loadAllCorporaStyles();
+                        loadAllCorporaLanguages();
                         loadAllCorporaLanguageType();
                         loadAllAnnotationLevels();
                         loadAllCorporaFormats();

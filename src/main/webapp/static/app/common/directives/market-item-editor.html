@@ -43,7 +43,7 @@
 						<li><a href="" ng-click="scrolltoHref('licence')">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</a></li>
 						<li><a href="" ng-click="scrolltoHref('specific_fields')">{{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}</a></li>
 						<li><hr/></li>
-						<li><button class="btn btn-primary" type="submit">Appliquer</button></li>
+						<li><button class="btn btn-primary" type="submit">{{'WORKSPACE.METADATA_EDITOR.APPLY' | translate}}</button></li>
 				    </ul>
 				  </li>
 				</ul>
@@ -82,7 +82,7 @@
 				<h2 translate="WORKSPACE.METADATA_EDITOR.BASIC_INFO"></h2>
 
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">Catégorie de la ressource <span class="text-danger">*</span></h4>
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_TYPE' | translate}} <span class="text-danger">*</span></h4>
 		            <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid' ng-messages="metadataItemform.type.$error">
 		                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
 		            </div>
@@ -103,50 +103,50 @@
 	                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NEED_ONE_VALUE' | translate}}</div>
 	            </div>
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">Titre de la ressource <span class="text-danger">*</span></h4>
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_TITLE' | translate}} <span class="text-danger">*</span></h4>
 		            
 						<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.title.$dirty) && metadataItemform.title.$invalid) || ((metadataItemform.$submitted || metadataItemform.langtitle.$dirty) && metadataItemform.langtitle.$invalid)" name="'title'" label="'Titre de la ressource'" model="metadata.title" required="true"></multilingual-textfield>
 				</div>
 			</section>
 
 			<section ng-show="!step || (step && stepCurrent === 'whos_involved')" id="whos_involved">
-				<h2>Personnes impliquées</h2>
+				<h2>{{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}</h2>
 				<div class="bs-callout">
 				    <table-array-contributor contributors="metadata.contributors" ></table-array-contributor>
 				</div>
 			</section>
 
 			<section ng-show="!step || (step && stepCurrent === 'describe')" id="describe">
-				<h2>Descriptif</h2>
+				<h2>{{'WORKSPACE.METADATA_EDITOR.DESCRIBE' | translate}}</h2>
 
 	            <div class="bg-danger error-block col-sm-12 am-fade" ng-if="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)">
 	                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NEED_ONE_VALUE' | translate}}</div>
 	            </div>
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">Description</h4>
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.DESCRIPTION' | translate}}</h4>
 		            
 					<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)" name="'description'" label="'Description'" model="metadata.description" type="'large'" required="true"></multilingual-textfield>
 				
 				</div>
 
 				<div class=" bs-callout">
-					<h4 class="bs-callout-label">Langues principale du corpus</h4 class="bs-callout-label">
-					<div class="form-group bs-callout-input">
-					    <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input>
+					<h4 class="bs-callout-label">{{'MARKET.FACET.TEMPORAL' | translate}}</h4 class="bs-callout-label">
+					<div class="form-group  bs-callout-input">
+					    <input type="text" name="creationDate" ng-model="metadata.creationDate" class="form-control">
 					</div>
 					<div class="alert alert-info" role="alert">
-				    	<p><span class="glyphicon glyphicon-info-sign"></span> Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
-				    </div>
+			    		<p><span class="glyphicon glyphicon-info-sign"></span> Date ou période de création de la ressource.</p>
+			    	</div>
 				</div>
-
 
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">Mots-clès</h4>
+					<h4 class="bs-callout-label">{{'MARKET.FACET.KEYWORDS' | translate}}</h4>
 		            
-					<multilingual-textfield name="'keyword'" label="'Mots-clès'" model="metadata.keywords"></multilingual-textfield>
+					<multilingual-textfield name="'keyword'" model="metadata.keywords"></multilingual-textfield>
 				</div>
+
 				<div class=" bs-callout">
-					<h4 class="bs-callout-label">Site internet</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'MARKET.FACET.WEBSITE' | translate}}</h4 class="bs-callout-label">
 					<div class="form-group  bs-callout-input">
 					    <input type="url" name="website" ng-model="metadata.website" class="form-control" placeholder="http://">
 					</div>
@@ -156,12 +156,12 @@
 				</div>
 
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">Illustration</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_IMAGE' | translate}}</h4 class="bs-callout-label">
 					<div class="form-group  bs-callout-input">
 					    <div class="input-group">
 	                        <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="icons.imageFile"></span> {{image.path}}</span>
 	                    <span class="input-group-btn">
-	                        <button class="btn btn-default" ng-click="fileImageSelectModal.show()" type="button">Selectionner</button>
+	                        <button class="btn btn-default" ng-click="fileImageSelectModal.show()" type="button">{{'SELECT' | translate}}</button>
 	                    </span>
 	                    </div>
 	                    <input type="hidden" name="image" ng-model="metadata.image" class="form-control">
@@ -174,7 +174,7 @@
 				</div>
 
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">Aperçu</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'MARKET.PREVIEW' | translate}}</h4 class="bs-callout-label">
 					<div class="form-group bs-callout-input">
 						<div>
 							<div multifile-selector collection="workspace.head" model="metadata.preview.paths" workspace="workspace"></div>
@@ -197,7 +197,7 @@
 
 
 			<section ng-show="!step || (step && stepCurrent === 'licence')" id="licence">
-				<h2>Licence</h2>
+				<h2>{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</h2>
 
 				<div class=" bs-callout">
 					<h4 class="bs-callout-label">Licence à accepter</h4 class="bs-callout-label">
@@ -205,7 +205,7 @@
 					    <div class="input-group">
 	                        <span class="form-control" ng-click="fileLicenceSelectModal.show()"><span ng-class="icons.textFile"></span> {{license.path}}</span>
 	                    <span class="input-group-btn">
-	                        <button class="btn btn-default" ng-click="fileLicenceSelectModal.show()" type="button">Selectionner</button>
+	                        <button class="btn btn-default" ng-click="fileLicenceSelectModal.show()" type="button">{{'SELECT' | translate}}</button>
 	                    </span>
 	                    </div>
 	                    <input type="hidden" name="license" ng-model="md.license" class="form-control">
@@ -268,6 +268,20 @@
   								{{'MARKET.FACET.CORPORA_TYPE' | translate}} <span class="caret"></span>
 							</button>
 						</div>
+					</div>
+
+					<div class=" bs-callout">
+						<h4 class="bs-callout-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</h4 class="bs-callout-label">
+						<div class="form-group bs-callout-input">
+						    <!-- <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input> -->
+
+	                        <tags-input ng-model="selectedCorporaLanguages" data-display-property="label" name="corporaLanguages" class="tool-tags" data-placeholder="{{'MARKET.FACET.CORPORA_LANG' | translate}}">
+	                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+	                        </tags-input>
+						</div>
+						<div class="alert alert-info" role="alert">
+					    	<p><span class="glyphicon glyphicon-info-sign"></span> Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
+					    </div>
 					</div>
 
 					<div class="bs-callout">
