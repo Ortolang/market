@@ -562,8 +562,8 @@ angular.module('ortolangMarketApp')
                         });
 
                         // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                        queryBuilder.addProjection('meta_ortolang-referentiel-json.label[lang=fr].value', 'id');
-                        queryBuilder.addProjection('meta_ortolang-referentiel-json.label[lang='+Settings.language+'].value', 'label');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
                         queryBuilder.equals('meta_ortolang-referentiel-json.type', 'language');
 
