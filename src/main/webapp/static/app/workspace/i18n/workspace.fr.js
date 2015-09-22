@@ -149,6 +149,10 @@ angular.module('ortolangMarketApp')
                 RESOURCE_DESCRIPTION: 'Description',
                 RESOURCE_IMAGE: 'Illustration',
                 NAVIGATION_LANGUAGES: 'Langues de navigation',
+                PROGRAMMING_LANGUAGES: 'Language de programmation',
+                OPERATING_SYSTEMS: 'Systèmes d\'exploitation',
+                TOOL_SUPPORT: 'Type de support',
+                LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
@@ -191,13 +195,13 @@ angular.module('ortolangMarketApp')
                 SELECT_LEXICON_DESCRIPTION_TYPES: 'Sélectionnez un ou plusieurs type de description du lexique ...',
                 SELECT_LEXICON_LANGUAGE_TYPE: 'Sélectionnez le type de langue ...',
                 SELECT_LEXICON_FORMATS: 'Sélectionnez un ou plusieurs formats ...',
-                SELECT_PROGRAMMING_LANGUAGES: 'Sélectionnez un ou plusieurs formats ...',
+                SELECT_PROGRAMMING_LANGUAGES: 'Sélectionnez un ou plusieurs languages de programmation ...',
+                SELECT_OPERATING_SYSTEMS: 'Sélectionnez un ou plusieurs systèmes d\'exploitation ...',
+                SELECT_TOOL_SUPPORT: 'Sélectionnez un type de support ...',
                 SELECT_TOOL_FUNCTIONALITIES: 'Sélectionnez une ou plusieurs fonctionnalités ...',
                 SELECT_TOOL_INPUTDATA: 'Sélectionnez un ou plusieurs types d\'entrée ...',
                 SELECT_TOOL_OUTPUTDATA: 'Sélectionnez un ou plusieurs types de sorties ...',
-                SELECT_TOOL_FILE_ENCODINGS: 'Sélectionnez un ou plusieurs encodage de caractères ...',
-                LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
-                PROGRAMMING_LANGUAGES: 'Language de programmation'
+                SELECT_TOOL_FILE_ENCODINGS: 'Sélectionnez un ou plusieurs encodage de caractères ...'
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Remplir la fiche des métadonnées'

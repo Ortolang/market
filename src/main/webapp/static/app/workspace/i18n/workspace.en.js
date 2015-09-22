@@ -149,6 +149,10 @@ angular.module('ortolangMarketApp')
                 RESOURCE_DESCRIPTION: 'Description',
                 RESOURCE_IMAGE: 'Image',
                 NAVIGATION_LANGUAGES: 'Navigation languages',
+                PROGRAMMING_LANGUAGES: 'Programming language',
+                OPERATING_SYSTEMS: 'Operating systems',
+                TOOL_SUPPORT: 'Tool support',
+                LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
@@ -192,12 +196,12 @@ angular.module('ortolangMarketApp')
                 SELECT_LEXICON_LANGUAGE_TYPE: 'Choose the kind of language ...',
                 SELECT_LEXICON_FORMATS: 'Choose one or more formats ...',
                 SELECT_PROGRAMMING_LANGUAGES: 'Choose one or more programming languages ...',
+                SELECT_OPERATING_SYSTEMS: 'Choose one or more operating systems ...',
+                SELECT_TOOL_SUPPORT: 'Choose one tool support ...',
                 SELECT_TOOL_FUNCTIONALITIES: 'Choose one or more functionalities ...',
                 SELECT_TOOL_INPUTDATA: 'Choose one or more input data ...',
                 SELECT_TOOL_OUTPUTDATA: 'Choose one or more input data ...',
-                SELECT_TOOL_FILE_ENCODINGS: 'Choose one or more file encodings ...',
-                LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
-                PROGRAMMING_LANGUAGES: 'Programming language'
+                SELECT_TOOL_FILE_ENCODINGS: 'Choose one or more file encodings ...'
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Create metadata item'

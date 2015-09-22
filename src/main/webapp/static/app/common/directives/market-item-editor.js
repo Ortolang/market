@@ -93,6 +93,11 @@ angular.module('ortolangMarketApp')
                             scope.metadata.programmingLanguages.push(tag.id);
                         });
 
+                        scope.metadata.operatingSystems = [];
+                        angular.forEach(scope.selectedOperatingSystems, function(tag) {
+                            scope.metadata.operatingSystems.push(tag.id);
+                        });
+
                         scope.metadata.toolFunctionalities = [];
                         angular.forEach(scope.selectedToolFunctionalities, function(tag) {
                             scope.metadata.toolFunctionalities.push(tag.id);
@@ -836,6 +841,67 @@ angular.module('ortolangMarketApp')
                         });
                     }
 
+                    function loadAllOperatingSystems() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'operatingSystem');
+
+                        var query = queryBuilder.toString();
+                        scope.allOperatingSystems = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allOperatingSystems.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.operatingSystems)) {
+
+                                angular.forEach(scope.metadata.operatingSystems, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allOperatingSystems, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedOperatingSystems.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedOperatingSystems.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
+
+                    function loadAllToolSupports() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolSupport');
+
+                        var query = queryBuilder.toString();
+                        scope.allToolSupports = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allToolSupports.push({id: term.id, label: term.label});
+                            });
+
+                        });
+                    }
                     function loadAllToolFunctionalities() {
                         
                         var queryBuilder = QueryBuilderFactory.make({
@@ -1087,6 +1153,7 @@ angular.module('ortolangMarketApp')
                         scope.selectedLexiconDescriptionLanguages = [];
                         scope.selectedLexiconFormats = [];
                         scope.selectedProgrammingLanguages = [];
+                        scope.selectedOperatingSystems = [];
                         scope.selectedToolFunctionalities = [];
                         scope.selectedToolInputData = [];
                         scope.selectedToolOutputData = [];
@@ -1107,6 +1174,8 @@ angular.module('ortolangMarketApp')
                         loadAllLexiconLanguageTypes();
                         loadAllLexiconFormats();
                         loadAllProgrammingLanguages();
+                        loadAllOperatingSystems();
+                        loadAllToolSupports();
                         loadAllToolFunctionalities();
                         loadAllToolInputData();
                         loadAllToolOutputData();

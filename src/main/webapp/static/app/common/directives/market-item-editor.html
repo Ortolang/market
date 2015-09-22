@@ -436,9 +436,27 @@
 						</div>
 					</div>
 
-					<!-- TODO operating system -->
-					<!-- TODO programming languages -->
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedOperatingSystems" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_OPERATING_SYSTEMS' | translate}}" bs-options="term as term.label for term in allOperatingSystems" bs-select>
+  								{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
+
 					<!-- TODO tool support -->
+
+					<div class="bs-callout">
+						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT"></h4>
+						<div class="form-group bs-callout-input">
+						    
+	                        <button type="button" class="btn btn-default" ng-model="metadata.toolSupport" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_SUPPORT' | translate}}" bs-options="term.id as term.label for term in allToolSupports" bs-select>
+  								{{'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT' | translate}} <span class="caret"></span>
+							</button>
+						</div>
+					</div>
 
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_FUNCTIONALITY"></h4>
