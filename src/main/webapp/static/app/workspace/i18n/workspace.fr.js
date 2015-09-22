@@ -148,6 +148,7 @@ angular.module('ortolangMarketApp')
                 RESOURCE_TITLE: 'Titre de la ressource',
                 RESOURCE_DESCRIPTION: 'Description',
                 RESOURCE_IMAGE: 'Illustration',
+                WORD_COUNT: 'Nombre de mots',
                 NAVIGATION_LANGUAGES: 'Langues de navigation',
                 PROGRAMMING_LANGUAGES: 'Language de programmation',
                 OPERATING_SYSTEMS: 'Systèmes d\'exploitation',

@@ -93,7 +93,7 @@
 						class="form-control"
 						required
 						ng-model="selectedType" 
-						ng-options="type as type.value for type in itemTypes track by type.key"
+						ng-options="type as type.value for type in allResourceType track by type.key"
 						ng-change="selectType()">
 						</select>
 					</div>
@@ -128,6 +128,16 @@
 					<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)" name="'description'" label="'Description'" model="metadata.description" type="'large'" required="true"></multilingual-textfield>
 				
 				</div>
+
+				<!-- <div class="bs-callout">
+					<h4 class="bs-callout-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}}</h4>
+		            
+					<multivalue-textfield name="'publications'" model="metadata.publications" type="'large'"></multivalue-textfield>
+				
+					<div class="alert alert-info" role="alert">
+					    <p><span class="glyphicon glyphicon-info-sign"></span> Les publications de référence doivent comment la ressource a été créée. Elles sont utilisées pour citer la ressource.</p>
+					    </div>
+				</div> -->
 
 				<div class=" bs-callout">
 					<h4 class="bs-callout-label">{{'MARKET.TEMPORAL' | translate}}</h4 class="bs-callout-label">
@@ -348,6 +358,16 @@
   								{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
 							</button>
 						</div>
+					</div>
+
+					<div class=" bs-callout">
+						<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}}</h4 class="bs-callout-label">
+						<div class="form-group  bs-callout-input">
+						    <input type="text" name="wordCount" ng-model="metadata.wordCount" class="form-control">
+						</div>
+						<div class="alert alert-info" role="alert">
+				    		<p><span class="glyphicon glyphicon-info-sign"></span> Nomre de mots dans l'ensemble des fichiers de la ressource (Hors documentation, etc).</p>
+				    	</div>
 					</div>
 
 				</div>

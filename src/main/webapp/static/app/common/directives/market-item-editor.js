@@ -1027,18 +1027,18 @@ angular.module('ortolangMarketApp')
                         queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolFileEncoding');
 
                         var query = queryBuilder.toString();
-                        scope.loadAllToolFileEncodings = [];
+                        scope.allToolFileEncodings = [];
                         JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
                                 
-                                scope.loadAllToolFileEncodings.push({id: term.id, label: term.label});
+                                scope.allToolFileEncodings.push({id: term.id, label: term.label});
                             });
 
                             if(angular.isDefined(scope.metadata.toolFileEncodings)) {
 
                                 angular.forEach(scope.metadata.toolFileEncodings, function(tag) {
-                                    var tagFound = $filter('filter')(scope.loadAllToolFileEncodings, {id:tag});
+                                    var tagFound = $filter('filter')(scope.allToolFileEncodings, {id:tag});
                                     if(tagFound.length>0) {
                                         scope.selectedToolFileEncodings.push(tagFound[0]);
                                     } else {
@@ -1046,6 +1046,72 @@ angular.module('ortolangMarketApp')
                                     }
                                 });
                             }
+
+                        });
+                    }
+
+                    function loadAllResourceType() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'type');
+
+                        var query = queryBuilder.toString();
+                        scope.allResourceType = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allResourceType.push({key: term.id, value: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.type)) {
+
+                                var typeFound = $filter('filter')(scope.allResourceType, {key:scope.metadata.type});
+                                if(typeFound.length>0) {
+                                    scope.selectedType = typeFound[0];
+                                }
+                            }
+
+                        });
+                    }
+
+                    function loadAllStatusOfUse() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'statusOfUse');
+
+                        var query = queryBuilder.toString();
+                        scope.allStatusOfUse = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allStatusOfUse.push({key: term.id, value: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.statusOfUse)) {
+
+                            var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
+                            if(statusOfUseFound.length>0) {
+                                scope.selectedStatusOfUse = statusOfUseFound[0];
+                            }
+                        }
 
                         });
                     }
@@ -1059,57 +1125,57 @@ angular.module('ortolangMarketApp')
                             scope.metadata.datasize = data.size.toString();
                         });
 
-                        scope.itemTypes = [ 
-                            { 
-                                key:'Corpus', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.CORPORA') 
-                            },
-                            { 
-                                key:'Lexique', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.LEXICON') 
-                            },
-                            { 
-                                key:'Outil', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.TOOL') 
-                            },
-                            { 
-                                key:'Application', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.INTEGRATED_PROJECT') 
-                            }
-                        ];
-                        if(angular.isDefined(scope.metadata.type)) {
+                        // scope.itemTypes = [ 
+                        //     { 
+                        //         key:'Corpus', 
+                        //         value: $translate.instant('MARKET.ITEM_TYPE.CORPORA') 
+                        //     },
+                        //     { 
+                        //         key:'Lexique', 
+                        //         value: $translate.instant('MARKET.ITEM_TYPE.LEXICON') 
+                        //     },
+                        //     { 
+                        //         key:'Outil', 
+                        //         value: $translate.instant('MARKET.ITEM_TYPE.TOOL') 
+                        //     },
+                        //     { 
+                        //         key:'Application', 
+                        //         value: $translate.instant('MARKET.ITEM_TYPE.INTEGRATED_PROJECT') 
+                        //     }
+                        // ];
+                        // if(angular.isDefined(scope.metadata.type)) {
 
-                            var typeFound = $filter('filter')(scope.itemTypes, {key:scope.metadata.type});
-                            if(typeFound.length>0) {
-                                scope.selectedType = typeFound[0];
-                            }
-                        }
+                        //     var typeFound = $filter('filter')(scope.itemTypes, {key:scope.metadata.type});
+                        //     if(typeFound.length>0) {
+                        //         scope.selectedType = typeFound[0];
+                        //     }
+                        // }
 
-                        scope.allStatusOfUse = [ 
-                            { 
-                                key:'Libre', 
-                                value: 'Libre'
-                            },
-                            { 
-                                key:'Libre sans utilisation commerciale', 
-                                value: 'Libre sans utilisation commerciale' 
-                            },
-                            { 
-                                key:'Libre pour l’enseignement supérieur et la recherche', 
-                                value: 'Libre pour l’enseignement supérieur et la recherche'
-                            },
-                            { 
-                                key:'Négociation nécessaire', 
-                                value: 'Négociation nécessaire' 
-                            }
-                        ];
-                        if(angular.isDefined(scope.metadata.statusOfUse)) {
+                        // scope.allStatusOfUse = [ 
+                        //     { 
+                        //         key:'Libre', 
+                        //         value: 'Libre'
+                        //     },
+                        //     { 
+                        //         key:'Libre sans utilisation commerciale', 
+                        //         value: 'Libre sans utilisation commerciale' 
+                        //     },
+                        //     { 
+                        //         key:'Libre pour l’enseignement supérieur et la recherche', 
+                        //         value: 'Libre pour l’enseignement supérieur et la recherche'
+                        //     },
+                        //     { 
+                        //         key:'Négociation nécessaire', 
+                        //         value: 'Négociation nécessaire' 
+                        //     }
+                        // ];
+                        // if(angular.isDefined(scope.metadata.statusOfUse)) {
 
-                            var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
-                            if(statusOfUseFound.length>0) {
-                                scope.selectedStatusOfUse = statusOfUseFound[0];
-                            }
-                        }
+                        //     var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
+                        //     if(statusOfUseFound.length>0) {
+                        //         scope.selectedStatusOfUse = statusOfUseFound[0];
+                        //     }
+                        // }
 
                         var fileLicenceSelectModalScope = $rootScope.$new(true);
                         fileLicenceSelectModalScope.acceptMultiple = false;
@@ -1161,6 +1227,8 @@ angular.module('ortolangMarketApp')
                         scope.selectedToolLanguages = [];
                         scope.selectedNavigationLanguages = [];
 
+                        loadAllResourceType();
+                        loadAllStatusOfUse();
                         loadAllCorporaTypes();
                         loadAllCorporaStyles();
                         loadAllLanguages();

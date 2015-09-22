@@ -16,15 +16,15 @@ angular.module('ortolangMarketApp')
                 label: '=',
                 model: '=',
                 description: '=',
-                track: '=',
-                required: '='
+                required: '=',
+                type: '='
             },
             link: {
                 pre : function (scope, elem, attrs) {
                     // scope.values = [];
 
                     scope.addTextfield = function() {
-                        scope.model.push({});
+                        scope.model.push('');
                     };
 
                     function init() {
