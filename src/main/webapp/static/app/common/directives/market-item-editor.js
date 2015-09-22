@@ -68,9 +68,19 @@ angular.module('ortolangMarketApp')
                             scope.metadata.corporaDataTypes.push(tag.id);
                         });
 
+                        scope.metadata.lexiconInputLanguages = [];
+                        angular.forEach(scope.selectedLexiconInputLanguages, function(tag) {
+                            scope.metadata.lexiconInputLanguages.push(tag.id);
+                        });
+
                         scope.metadata.lexiconDescriptionTypes = [];
                         angular.forEach(scope.selectedLexiconDescriptionTypes, function(tag) {
                             scope.metadata.lexiconDescriptionTypes.push(tag.id);
+                        });
+
+                        scope.metadata.lexiconDescriptionLanguages = [];
+                        angular.forEach(scope.selectedLexiconDescriptionLanguages, function(tag) {
+                            scope.metadata.lexiconDescriptionLanguages.push(tag.id);
                         });
 
                         scope.metadata.lexiconFormats = [];
@@ -96,6 +106,16 @@ angular.module('ortolangMarketApp')
                         scope.metadata.toolOutputData = [];
                         angular.forEach(scope.selectedToolOutputData, function(tag) {
                             scope.metadata.toolOutputData.push(tag.id);
+                        });
+
+                        scope.metadata.toolLanguages = [];
+                        angular.forEach(scope.selectedToolLanguages, function(tag) {
+                            scope.metadata.toolLanguages.push(tag.id);
+                        });
+
+                        scope.metadata.navigationLanguages = [];
+                        angular.forEach(scope.selectedNavigationLanguages, function(tag) {
+                            scope.metadata.navigationLanguages.push(tag.id);
                         });
 
                         scope.metadata.toolFileEncodings = [];
@@ -299,7 +319,7 @@ angular.module('ortolangMarketApp')
                      * Utils
                      **/
                     scope.suggestLanguages = function (query) {
-                        var result = $filter('filter')(scope.allCorporaLanguages, {label:query});
+                        var result = $filter('filter')(scope.allLanguages, {label:query});
                         return result;
                     };
 
@@ -554,7 +574,7 @@ angular.module('ortolangMarketApp')
                         });
                     }
 
-                    function loadAllCorporaLanguages() {
+                    function loadAllLanguages() {
                         
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
@@ -568,22 +588,70 @@ angular.module('ortolangMarketApp')
                         queryBuilder.equals('meta_ortolang-referentiel-json.type', 'language');
 
                         var query = queryBuilder.toString();
-                        scope.allCorporaLanguages = [];
+                        scope.allLanguages = [];
                         JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
                                 
-                                scope.allCorporaLanguages.push({id: term.id, label: term.label});
+                                scope.allLanguages.push({id: term.id, label: term.label});
                             });
 
                             if(angular.isDefined(scope.metadata.corporaLanguages)) {
 
                                 angular.forEach(scope.metadata.corporaLanguages, function(tag) {
-                                    var tagFound = $filter('filter')(scope.allCorporaLanguages, {id:tag});
+                                    var tagFound = $filter('filter')(scope.allLanguages, {id:tag});
                                     if(tagFound.length>0) {
                                         scope.selectedCorporaLanguages.push(tagFound[0]);
                                     } else {
                                         scope.selectedCorporaLanguages.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                            if(angular.isDefined(scope.metadata.toolLanguages)) {
+
+                                angular.forEach(scope.metadata.toolLanguages, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allLanguages, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedToolLanguages.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedToolLanguages.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                            if(angular.isDefined(scope.metadata.navigationLanguages)) {
+
+                                angular.forEach(scope.metadata.navigationLanguages, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allLanguages, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedNavigationLanguages.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedNavigationLanguages.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                            if(angular.isDefined(scope.metadata.lexiconInputLanguages)) {
+
+                                angular.forEach(scope.metadata.lexiconInputLanguages, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allLanguages, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedLexiconInputLanguages.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedLexiconInputLanguages.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                            if(angular.isDefined(scope.metadata.lexiconDescriptionLanguages)) {
+
+                                angular.forEach(scope.metadata.lexiconDescriptionLanguages, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allLanguages, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedLexiconDescriptionLanguages.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedLexiconDescriptionLanguages.push({id:tag,label:tag});
                                     }
                                 });
                             }
@@ -1014,17 +1082,21 @@ angular.module('ortolangMarketApp')
                         scope.selectedCorporaFileEncodings = [];
                         scope.selectedCorporaDataTypes = [];
                         scope.selectedCorporaLanguages = [];
+                        scope.selectedLexiconInputLanguages = [];
                         scope.selectedLexiconDescriptionTypes = [];
+                        scope.selectedLexiconDescriptionLanguages = [];
                         scope.selectedLexiconFormats = [];
                         scope.selectedProgrammingLanguages = [];
                         scope.selectedToolFunctionalities = [];
                         scope.selectedToolInputData = [];
                         scope.selectedToolOutputData = [];
                         scope.selectedToolFileEncodings = [];
+                        scope.selectedToolLanguages = [];
+                        scope.selectedNavigationLanguages = [];
 
                         loadAllCorporaTypes();
                         loadAllCorporaStyles();
-                        loadAllCorporaLanguages();
+                        loadAllLanguages();
                         loadAllCorporaLanguageType();
                         loadAllAnnotationLevels();
                         loadAllCorporaFormats();

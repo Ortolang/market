@@ -148,6 +148,7 @@ angular.module('ortolangMarketApp')
                 RESOURCE_TITLE: 'Titre de la ressource',
                 RESOURCE_DESCRIPTION: 'Description',
                 RESOURCE_IMAGE: 'Illustration',
+                NAVIGATION_LANGUAGES: 'Langues de navigation',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
