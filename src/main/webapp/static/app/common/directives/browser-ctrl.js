@@ -1451,10 +1451,12 @@ angular.module('ortolangMarketApp')
                         combo: 'mod+f',
                         description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.FILTER'),
                         callback: function (event) {
-                            preventDefault(event);
-                            var filterWrapper = angular.element('#filter-query-wrapper');
-                            filterWrapper.find('button').dropdown('toggle');
-                            filterWrapper.find('#filter-input').focus();
+                            if (angular.element('.visualizer-modal').length === 0) {
+                                preventDefault(event);
+                                var filterWrapper = angular.element('#filter-query-wrapper');
+                                filterWrapper.find('button').dropdown('toggle');
+                                filterWrapper.find('#filter-input').focus();
+                            }
                         }
                     })
                     .add({
