@@ -186,6 +186,7 @@ angular.module('ortolangMarketApp')
 
         function createModalScope() {
             modalScope = $scope.$new(true);
+            modalScope.models = {};
             modalScope.$on('modal.hide', function () {
                 modalScope.$destroy();
             });
@@ -201,33 +202,33 @@ angular.module('ortolangMarketApp')
             createModalScope();
             modalScope.submit = function (createWorkspaceForm) {
                 if (createWorkspaceForm.$valid) {
-                    WorkspaceResource.checkAliasAvailability({alias: modalScope.alias}, function (data) {
+                    WorkspaceResource.checkAliasAvailability({alias: modalScope.models.alias}, function (data) {
                         if (data.available) {
-                            WorkspaceResource.createWorkspace({name: modalScope.name, alias: modalScope.alias, type: 'user'}, function (newWorkspace) {
+                            WorkspaceResource.createWorkspace({name: modalScope.models.name, alias: modalScope.models.alias, type: 'user'}, function (newWorkspace) {
                                 $scope.$emit('core.workspace.create', {fromObject: newWorkspace.key});
                                 $scope.changeWorkspace(newWorkspace);
                                 createWorkspaceModal.hide();
                             });
                         } else {
                             createWorkspaceForm.alias.$setValidity('availability', false);
-                            modalScope.checked = false;
+                            modalScope.models.checked = false;
                         }
                     });
                 }
             };
-            modalScope.checked = true;
+            modalScope.models.checked = true;
             modalScope.normalizeAlias = function (alias, createWorkspaceForm) {
-                modalScope.alias = alias ? alias.replace(regExp, '-').toLowerCase() : alias;
-                if (!modalScope.checked && createWorkspaceForm) {
+                modalScope.models.alias = alias ? alias.replace(regExp, '-').toLowerCase() : alias;
+                if (!modalScope.models.checked && createWorkspaceForm) {
                     createWorkspaceForm.alias.$setValidity('availability', true);
                 }
             };
             modalScope.generateAlias = function () {
-                if (modalScope.checked) {
-                    modalScope.normalizeAlias(modalScope.name);
+                if (modalScope.models.checked) {
+                    modalScope.normalizeAlias(modalScope.models.name);
                 }
             };
-            modalScope.$watch('name', function () {
+            modalScope.$watch('models.name', function () {
                 modalScope.generateAlias();
             });
             modalScope.$on('modal.show', function () {

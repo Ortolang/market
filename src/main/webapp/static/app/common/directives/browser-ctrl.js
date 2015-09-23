@@ -327,6 +327,7 @@ angular.module('ortolangMarketApp')
                 modalScope.$on('modal.hide', function () {
                     modalScope.$destroy();
                 });
+                modalScope.models = {};
                 modalScope.$on('modal.show.before', function () {
                     $scope.deactivateContextMenu();
                 });
@@ -592,14 +593,14 @@ angular.module('ortolangMarketApp')
                 createModalScope();
                 modalScope.parent = $scope.parent;
                 modalScope.wsName = $scope.browserService.workspace.name;
-                modalScope.zipoverwrites = false;
-                modalScope.root = '';
+                modalScope.models.zipoverwrites = false;
+                modalScope.models.root = '';
                 modalScope.uploadZip = function () {
                     var files = angular.element('#upload-zip-file').prop('files');
                     $rootScope.uploader.addToQueue(files, {
                         'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.browserService.workspace.name}),
-                        'ziproot': $scope.parent.path + '/' + modalScope.root,
-                        'zipoverwrites': modalScope.zipoverwrites,
+                        'ziproot': $scope.parent.path + '/' + modalScope.models.root,
+                        'zipoverwrites': modalScope.models.zipoverwrites,
                         'wskey': $scope.browserService.workspace.key,
                         'wsName': $scope.browserService.workspace.name,
                         'ortolangType': 'zip'
@@ -646,7 +647,7 @@ angular.module('ortolangMarketApp')
                             $scope.isCollection($scope.selectedElements[0])) {
                             path += $scope.selectedElements[0].name + '/';
                         }
-                        path += modalScope.newCollectionName;
+                        path += modalScope.models.newCollectionName;
 
                         data = {
                             path: path,
@@ -673,7 +674,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.browserService.canEdit && $scope.isHead) {
                     var renameChildModal;
                     createModalScope();
-                    modalScope.childNewName = $scope.selectedElements[0].name;
+                    modalScope.models.childNewName = $scope.selectedElements[0].name;
                     modalScope.renameChild = function () {
                         if (modalScope.childNewName !== $scope.selectedElements[0].name) {
                             var data = $scope.selectedElements[0], destination;
@@ -682,7 +683,7 @@ angular.module('ortolangMarketApp')
                             } else {
                                 destination = $scope.parent.path;
                             }
-                            destination += '/' + modalScope.childNewName;
+                            destination += '/' + modalScope.models.childNewName;
 
                             WorkspaceElementResource.put({wskey: $scope.browserService.workspace.key, destination: destination}, data, function () {
                                 if ($scope.hasOnlyParentSelected()) {
@@ -690,7 +691,7 @@ angular.module('ortolangMarketApp')
                                     renameChildModal.hide();
                                 } else {
                                     getParentData(true).then(function () {
-                                        $scope.selectedElements[0].name = modalScope.childNewName;
+                                        $scope.selectedElements[0].name = modalScope.models.childNewName;
                                         $scope.refreshSelectedElement();
                                         renameChildModal.hide();
                                     });
