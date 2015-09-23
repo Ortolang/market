@@ -106,13 +106,13 @@
                         <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
                             <div class="form-group has-feedback">
                                 <label class="control-label" for="filter-input" translate="NAME"></label>
-                                <input id="filter-input" ng-model="filterNameQuery" class="form-control" placeholder="{{'NAME' | translate}}" type="text">
-                                <span ng-show="filterNameQuery" ng-click="filterNameQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
+                                <input id="filter-input" ng-model="filterModels.nameQuery" class="form-control" placeholder="{{'NAME' | translate}}" type="text">
+                                <span ng-show="filterModels.nameQuery" ng-click="filterModels.nameQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                             </div>
                             <div ng-if="!forceMimeTypes" class="has-feedback">
                                 <label class="control-label" for="filter-mime-type-input" translate="BROWSER.FILTER.MIME_TYPE"></label>
-                                <input id="filter-mime-type-input" ng-model="$parent.filterMimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" bs-options="childrenMimeType.value as childrenMimeType.label for childrenMimeType in $parent.allChildrenMimeTypes" data-html="true" bs-typeahead>
-                                <span ng-show="$parent.filterMimeTypeQuery" ng-click="$parent.filterMimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
+                                <input id="filter-mime-type-input" ng-model="filterModels.mimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" bs-options="childrenMimeType.value as childrenMimeType.label for childrenMimeType in filterModels.allChildrenMimeTypes" data-html="true" bs-typeahead>
+                                <span ng-show="filterModels.mimeTypeQuery" ng-click="filterModels.mimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
                             </div>
                         </div>
                     </div>
