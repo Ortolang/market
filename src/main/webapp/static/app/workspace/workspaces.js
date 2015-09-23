@@ -127,7 +127,9 @@ angular.module('ortolangMarketApp')
                     getWorkspaceList();
                     workspaceListDeferred.$promise.then(function () {
                         if ($scope.workspaceList.length > 0) {
-                            $scope.changeWorkspace($scope.workspaceList[0]);
+                            if (WorkspaceBrowserService.workspace.key === eventMessage.fromObject) {
+                                $scope.changeWorkspace($scope.workspaceList[0]);
+                            }
                         } else {
                             WorkspaceBrowserService.workspace = undefined;
                         }
