@@ -419,8 +419,17 @@ module.exports = function (grunt) {
 
         // Test settings
         karma: {
-            unit: {
+            options: {
                 configFile: 'test/karma.conf.js'
+            },
+            continuous: {
+                singleRun: true,
+                browsers: ['PhantomJS']
+            },
+            dev: {
+                browsers: ['Chrome', 'Firefox'],
+                singleRun: false,
+                reporters: 'dots'
             }
         },
 
@@ -634,7 +643,7 @@ module.exports = function (grunt) {
         'concurrent:test',
         'autoprefixer',
         'connect:test',
-        'karma'
+        'karma:continuous'
     ]);
 
     grunt.registerTask('build', [
