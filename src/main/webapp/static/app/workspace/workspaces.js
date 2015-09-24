@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
                     });
                     workspaceSnapshot.number = getSnapshotNumberFromHistory(workspaceSnapshot);
                 });
+                loadMetadataItem();
             });
         }
 
@@ -69,11 +70,12 @@ angular.module('ortolangMarketApp')
                 $scope.contentLink = Content.getContentUrlWithPath('', workspace.alias);
                 $scope.marketLink = '#/market/item/' + WorkspaceBrowserService.workspace.alias;
                 $scope.marketLinkFull = $window.location.origin + '/' + $scope.marketLink;
-                getHead().$promise.then(function () {
-                    loadMetadataItem();
-                });
             }
         };
+
+        // *********************** //
+        //         Events          //
+        // *********************** //
 
         $scope.$on('$destroy', function () {
             $rootScope.browsing = false;
@@ -222,7 +224,7 @@ angular.module('ortolangMarketApp')
         };
 
         // *********************** //
-        //          Edit           //
+        //     Rename Workspace    //
         // *********************** //
 
         $scope.renameWorkspace = function ($data) {
@@ -276,7 +278,11 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        $scope.delete = function () {
+        // *********************** //
+        //        Deletion         //
+        // *********************** //
+
+        $scope.deleteWorkspace = function () {
             var deleteWorkspaceModal;
             createModalScope();
             modalScope.wsName = WorkspaceBrowserService.workspace.name;
@@ -356,13 +362,11 @@ angular.module('ortolangMarketApp')
             var itemMetadata = $filter('filter')($scope.head.metadatas, {name: 'ortolang-item-json'});
             if (itemMetadata.length === 1) {
                 Content.downloadWithKey(itemMetadata[0].key).promise.success(function (data) {
-                    $scope.code = data;
                     $scope.metadataItem = angular.fromJson(data);
                     $scope.itemKey = WorkspaceBrowserService.workspace.head;
                     $scope.metadataItemLoaded = true;
                 });
             } else {
-                $scope.code = undefined;
                 $scope.metadataItem = undefined;
                 $scope.itemKey = undefined;
                 $scope.metadataItemLoaded = true;
@@ -455,7 +459,6 @@ angular.module('ortolangMarketApp')
                 });
             });
         };
-        //$scope.addMember();
 
         // *********************** //
         //          Resize         //
