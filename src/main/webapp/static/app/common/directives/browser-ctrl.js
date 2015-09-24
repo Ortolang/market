@@ -53,7 +53,7 @@ angular.module('ortolangMarketApp')
                     $scope.breadcrumbDropdownItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.plus, action: 'addCollection'});
                     if (!$scope.hasOnlyRootCollectionSelected()) {
                         $scope.breadcrumbDropdownItems.push({divider: true});
-                        $scope.breadcrumbDropdownItems.push({text: 'RENAME', icon: icons.browser.edit, action: 'rename'});
+                        $scope.breadcrumbDropdownItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
                     }
                 }
             }
@@ -109,7 +109,7 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({divider: true});
                         }
                         if ($scope.browserService.canEdit && $scope.isHead && $scope.selectedElements.length === 1 && !$scope.hasOnlyParentSelected()) {
-                            $scope.contextMenuItems.push({text: 'RENAME', icon: icons.browser.edit, action: 'rename'});
+                            $scope.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
                             $scope.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
                         }
                         if ($scope.browserService.canEdit && $scope.isHead && !$scope.hasOnlyParentSelected()) {
