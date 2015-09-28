@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'SearchResource', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, SearchResource, ItemManager, FacetedFilterManager, ReferentielResource) {
+    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, ItemManager, FacetedFilterManager, ReferentielResource) {
 
         function loadItem(id) {
 

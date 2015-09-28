@@ -8,27 +8,24 @@ describe('Controller: MarketItemCtrl', function () {
 
     var controllerCreator,
         scope,
-        ObjectResource,
-        JsonResultResource,
+        SearchResource,
         VisualizerManager,
         sample;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $compile, _ObjectResource_, _JsonResultResource_, _sample_, _VisualizerManager_) {
+    beforeEach(inject(function ($controller, $rootScope, $compile, _SearchResource_, _sample_, _VisualizerManager_) {
         scope = $rootScope.$new();
         sample = _sample_;
-        ObjectResource = _ObjectResource_;
-        JsonResultResource = _JsonResultResource_;
+        SearchResource = _SearchResource_;
         VisualizerManager = _VisualizerManager_;
 
-        controllerCreator = function(params) {
+        controllerCreator = function (params) {
             return $controller('MarketItemCtrl', {
                 $rootScope: $rootScope,
                 $scope: scope,
                 $routeParams: params,
                 $compile: $compile,
-                ObjectResource: ObjectResource,
-                JsonResultResource: JsonResultResource
+                SearchResource: SearchResource
             });
         };
 
@@ -37,9 +34,9 @@ describe('Controller: MarketItemCtrl', function () {
     // it('should load an object', function() {
     //   var key = sample().rootCollectionKey;
     //   var queryItem = 'select * from OrtolangObject where ortolang_status = \'published\' and ortolang_key = \''+key+'\' ';
-    //   JsonResultResource.when({query: queryItem}, sample().queryItem);
+    //   SearchResource.when({query: queryItem}, sample().queryItem);
     //   var queryOrtolangMeta = 'select from '+sample().ridItem;
-    //   JsonResultResource.when({query: queryOrtolangMeta}, sample().query1Results);
+    //   SearchResource.when({query: queryOrtolangMeta}, sample().query1Results);
 
     //   var MarketItemCtrl = controllerCreator({itemKey: key});
     //   scope.$digest();
@@ -82,9 +79,9 @@ describe('Controller: MarketItemCtrl', function () {
     //it('should load browse view', function() {
     //    var key = sample().rootCollectionKey;
     //    var queryItem = 'select * from OrtolangObject where ortolang_status = \'published\' and ortolang_key = \''+key+'\' ';
-    //    JsonResultResource.when({query: queryItem}, sample().queryItem);
+    //    SearchResource.when({query: queryItem}, sample().queryItem);
     //    var queryOrtolangMeta = 'select from '+sample().ridItem;
-    //    JsonResultResource.when({query: queryOrtolangMeta}, sample().query1Results);
+    //    SearchResource.when({query: queryOrtolangMeta}, sample().query1Results);
     //
     //    var MarketItemCtrl = controllerCreator({itemKey: sample().rootCollectionKey, view: 'browse'});
     //    scope.$digest();

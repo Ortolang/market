@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducersCtrl', ['$scope', 'icons', 'QueryBuilderFactory', 'ItemManager', 'SearchResource', function ($scope, icons, QueryBuilderFactory, ItemManager, SearchResource) {
+    .controller('ProducersCtrl', ['$scope', 'QueryBuilderFactory', 'ItemManager', 'SearchResource', function ($scope, QueryBuilderFactory, ItemManager, SearchResource) {
 
         $scope.search = function () {
             var query = buildQuery();

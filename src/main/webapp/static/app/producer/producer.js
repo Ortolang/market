@@ -8,19 +8,19 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducerCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'SearchResource', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, SearchResource, ItemManager, FacetedFilterManager, ReferentielResource) {
+    .controller('ProducerCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($scope, $routeParams, icons, QueryBuilderFactory, ItemManager, FacetedFilterManager, ReferentielResource) {
 
         function loadItem(id) {
 
             ReferentielResource.get({refKey: id}).$promise.then(function (referentielEntity) {
                 $scope.producer = angular.fromJson(referentielEntity.content);
 
-                if(!$scope.producer.img) {
+                if (!$scope.producer.img) {
                     $scope.imgtitle = '';
                     $scope.imgtheme = 'custom';
-                    if($scope.producer.title) {
-                        $scope.imgtitle = $scope.producer.title.substring(0,2);
-                        $scope.imgtheme = $scope.producer.title.substring(0,1).toLowerCase();
+                    if ($scope.producer.title) {
+                        $scope.imgtitle = $scope.producer.title.substring(0, 2);
+                        $scope.imgtheme = $scope.producer.title.substring(0, 1).toLowerCase();
                     }
                 }
 
@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
         }
 
         function loadResources(producer) {
-            if(producer) {
+            if (producer) {
                 $scope.queryBuilder.and();
                 $scope.queryBuilder.in('meta_ortolang-item-json.contributors[entity][id]', [producer]);
                 $scope.query = $scope.queryBuilder.toString();
@@ -42,9 +42,9 @@ angular.module('ortolangMarketApp')
 
             $scope.query = '';
             $scope.queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate',
-                    source: 'collection'
-                });
+                projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate',
+                source: 'collection'
+            });
 
             // TODO removes duplication with facted-filter-manager
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.statusOfUse', 'statusOfUse');

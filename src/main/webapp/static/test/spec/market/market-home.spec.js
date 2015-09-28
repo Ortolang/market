@@ -2,40 +2,39 @@
 
 describe('Controller: MarketHomeCtrl', function () {
 
-  // load the controller's module
-  beforeEach(module('ortolangMarketApp'));
-  beforeEach(module('ortolangMarketAppMock'));
+    // load the controller's module
+    beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
 
-  var controllerCreator,
-    scope,
-    JsonResultResource,
-    sample;
+    var controllerCreator,
+        scope,
+        SearchResource,
+        sample;
 
-  // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, _JsonResultResource_, _sample_) {
+    // Initialize the controller and a mock scope
+    beforeEach(inject(function ($controller, $rootScope, _SearchResource_, _sample_) {
         scope = $rootScope.$new();
         sample = _sample_;
-        JsonResultResource = _JsonResultResource_;
+        SearchResource = _SearchResource_;
 
-      controllerCreator = function(routeParams) {
-        return $controller('MarketHomeCtrl', {
-            $scope: scope,
-            $routeParams: routeParams,
-            JsonResultResource: JsonResultResource
-        }
-        );
-      };
+        controllerCreator = function (routeParams) {
+            return $controller('MarketHomeCtrl', {
+                $scope: scope,
+                $routeParams: routeParams,
+                SearchResource: SearchResource
+            });
+        };
 
     }));
 
     afterEach(function() {
-      JsonResultResource.clear();
+        SearchResource.clear();
     });
 
     // it('should load objects', function() {
     //   var ortolangType = 'Corpus';
     //   var query = 'select ortolang_key as key, ortolang_meta.title as title, ortolang_meta.description, ortolang_meta.image as image from OrtolangObject where ortolang_status = \'published\' and ortolang_meta.type = \''+ortolangType+'\'';
-    //   JsonResultResource.when({query:query}, sample().query1Results);
+    //   SearchResource.when({query:query}, sample().query1Results);
 
     //   controllerCreator({section: 'corpora'});
 
