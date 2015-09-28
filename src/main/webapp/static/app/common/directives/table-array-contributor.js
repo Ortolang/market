@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('schemaForm')
-    .directive('tableArrayContributor', ['$rootScope', '$modal', '$filter', '$translate', '$sce', 'QueryBuilderFactory', 'JsonResultResource', 'Settings', function ($rootScope, $modal, $filter, $translate, $sce, QueryBuilderFactory, JsonResultResource, Settings) {
+    .directive('tableArrayContributor', ['$rootScope', '$modal', '$filter', '$translate', '$sce', 'QueryBuilderFactory', 'SearchResource', 'Settings', function ($rootScope, $modal, $filter, $translate, $sce, QueryBuilderFactory, SearchResource, Settings) {
         return {
             restrict: 'AE',
             scope: {
@@ -109,7 +109,7 @@ angular.module('schemaForm')
                         // } else {
                         //     contributor.entity.lastname = myScope.searchLastname;
                         // }
-                        
+
                         if(angular.isDefined(myScope.organization)) {
                             contributor.entity.organization = myScope.organization;
                         }
@@ -148,7 +148,7 @@ angular.module('schemaForm')
                     }
 
                     scope.addContributor = function () {
-                        
+
                         var modalScope = prepareModalScopeForPerson(),
                             addContributorModal;
 
@@ -425,7 +425,7 @@ angular.module('schemaForm')
 
                         var query = queryBuilder.toString();
                         scope.allPersons = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var person = angular.fromJson(result);
 
@@ -433,10 +433,10 @@ angular.module('schemaForm')
                                         value: person.fullname,
                                         id: person.id,
                                         fullname: person.fullname,
-                                        lastname: person.lastname, 
-                                        firstname: person.firstname, 
+                                        lastname: person.lastname,
+                                        firstname: person.firstname,
                                         midname: person.midname,
-                                        org: person.organization, 
+                                        org: person.organization,
                                         label: '<span>'+person.fullname+'</span>'
                                     });
 
@@ -445,7 +445,7 @@ angular.module('schemaForm')
                     }
 
                     function loadAllOrganizations() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -458,32 +458,32 @@ angular.module('schemaForm')
 
                         var query = queryBuilder.toString();
                         scope.allOrganizations = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var organization = angular.fromJson(result);
 
                                 // Load organization document
                                 var queryOrganizationgMeta = 'select from ' + organization['meta_ortolang-referentiel-json'];
-                                JsonResultResource.get({query: queryOrganizationgMeta}).$promise.then(function (jsonObject) {
+                                SearchResource.json({query: queryOrganizationgMeta}, function (jsonObject) {
                                     var org = angular.fromJson(jsonObject[0]);
 
                                     cleanJsonDocument(org);
 
                                     scope.allOrganizations.push({
                                         value: organization.fullname,
-                                        fullname: organization.fullname, 
+                                        fullname: organization.fullname,
                                         org: org,
                                         label: '<span>'+organization.fullname+'</span>'
                                     });
                                 });
 
-                                
+
                             });
                         });
                     }
 
                     function loadAllRoles() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -496,10 +496,10 @@ angular.module('schemaForm')
 
                         var query = queryBuilder.toString();
                         scope.allRoles = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var role = angular.fromJson(result);
-                                
+
                                 scope.allRoles.push({id: role.id, label: role.label});
                             });
                         });

@@ -535,6 +535,7 @@ angular.module('ortolangMarketApp')
 
                 } else {
                     $scope.browserSettings.wskey = undefined;
+                    $location.search('alias', undefined);
                     Settings.store();
                 }
             });

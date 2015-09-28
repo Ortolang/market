@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'Content', 'JsonResultResource', 'QueryBuilderFactory',
-        function ($resource, $q, $translate, $rootScope, $window, $timeout, Content, JsonResultResource, QueryBuilderFactory) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'Content', 'SearchResource', 'QueryBuilderFactory',
+        function ($resource, $q, $translate, $rootScope, $window, $timeout, Content, SearchResource, QueryBuilderFactory) {
 
             // ---
             // ORTOLANG TOOL DEFINITION
@@ -270,7 +270,7 @@ angular.module('ortolangMarketApp')
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
 
                 var query = queryBuilder.toString();
-                JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                SearchResource.json({query: query}, function (jsonResults) {
                     angular.forEach(jsonResults, function (itemMeta) {
                         var item = {},
                             data = angular.fromJson(itemMeta);

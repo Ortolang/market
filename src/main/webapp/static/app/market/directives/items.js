@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['JsonResultResource', 'OptionFacetedFilter', 'ItemManager', 'Settings', function (JsonResultResource, OptionFacetedFilter, ItemManager, Settings) {
+    .directive('items', ['SearchResource', 'OptionFacetedFilter', 'ItemManager', 'Settings', function (SearchResource, OptionFacetedFilter, ItemManager, Settings) {
         return {
             restrict: 'E',
             scope: {
@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
                 function load(query) {
                     console.log('query : ' + query);
                     scope.lock = true;
-                    JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                    SearchResource.json({query: query}, function (jsonResults) {
 
                         scope.items.clear();
                         if (scope.filtersManager) {
@@ -95,7 +95,7 @@ angular.module('ortolangMarketApp')
                         }));
                     }
                 }
-  
+
                 function getTitleValue (titleMultiling) {
                     var iTitle;
                     for (iTitle = 0; iTitle < titleMultiling.length; iTitle++) {
@@ -105,7 +105,7 @@ angular.module('ortolangMarketApp')
                     }
                     return titleMultiling.length > 0 ? titleMultiling[0].value : 'untitle';
                 }
-           
+
                 scope.$watch('query', function () {
                     if (scope.query !== undefined && scope.query !== '') {
                         load(scope.query);

@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'icons', 'url', 'WorkspaceElementResource', 'ObjectResource', 'QueryBuilderFactory', 'Settings', 'JsonResultResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, icons, url, WorkspaceElementResource, ObjectResource, QueryBuilderFactory, Settings, JsonResultResource) {
+    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'icons', 'url', 'WorkspaceElementResource', 'ObjectResource', 'QueryBuilderFactory', 'Settings', 'SearchResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, icons, url, WorkspaceElementResource, ObjectResource, QueryBuilderFactory, Settings, SearchResource) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',
@@ -257,7 +257,7 @@ angular.module('ortolangMarketApp')
 
                     var deregisterFileLicenceSelectModal = $rootScope.$on('browserSelectedElements-fileLicenceSelectModal', function ($event, elements) {
                         console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileLicenceSelectModal" (selected elements: %o)', elements);
-                        
+
                         scope.metadata.license = elements[0].path;
                         scope.license = elements[0];
                         scope.fileLicenceSelectModal.hide();
@@ -265,7 +265,7 @@ angular.module('ortolangMarketApp')
 
                     var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
                         console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileImageSelectModal" (selected elements: %o)', elements);
-                        
+
                         scope.metadata.image = elements[0].path;
                         scope.image = elements[0];
                         scope.fileImageSelectModal.hide();
@@ -329,7 +329,7 @@ angular.module('ortolangMarketApp')
                     };
 
                     function loadAllCorporaTypes() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -343,10 +343,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allCorporaType = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var role = angular.fromJson(result);
-                                
+
                                 scope.allCorporaType.push({key: role.id, value: role.label});
                             });
 
@@ -362,7 +362,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllCorporaLanguageType() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -376,10 +376,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allCorporaLanguageType = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allCorporaLanguageType.push({key: term.id, value: term.label});
                             });
 
@@ -395,7 +395,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllCorporaStyles() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -409,10 +409,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allCorporaStyles = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allCorporaStyles.push({id: term.id, label: term.label});
                             });
 
@@ -432,7 +432,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllAnnotationLevels() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -446,10 +446,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allAnnotationLevels = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allAnnotationLevels.push({id: term.id, label: term.label});
                             });
 
@@ -469,7 +469,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllCorporaFormats() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -483,10 +483,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allCorporaFormats = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allCorporaFormats.push({id: term.id, label: term.label});
                             });
 
@@ -506,7 +506,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllCorporaFileEncodings() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -520,10 +520,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allCorporaFileEncodings = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allCorporaFileEncodings.push({id: term.id, label: term.label});
                             });
 
@@ -543,7 +543,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllCorporaDataTypes() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -557,10 +557,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allCorporaDataTypes = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allCorporaDataTypes.push({id: term.id, label: term.label});
                             });
 
@@ -580,7 +580,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllLanguages() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -594,10 +594,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allLanguages = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allLanguages.push({id: term.id, label: term.label});
                             });
 
@@ -665,7 +665,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllLexiconInputTypes() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -679,10 +679,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allLexiconInputTypes = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allLexiconInputTypes.push({key: term.id, value: term.label});
                             });
 
@@ -698,7 +698,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllLexiconDescriptionTypes() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -712,10 +712,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allLexiconDescriptionTypes = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allLexiconDescriptionTypes.push({id: term.id, label: term.label});
                             });
 
@@ -735,7 +735,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllLexiconLanguageTypes() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -749,10 +749,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allLexiconLanguageTypes = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allLexiconLanguageTypes.push({key: term.id, value: term.label});
                             });
 
@@ -768,7 +768,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllLexiconFormats() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -782,10 +782,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allLexiconFormats = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allLexiconFormats.push({id: term.id, label: term.label});
                             });
 
@@ -805,7 +805,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllProgrammingLanguages() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -819,10 +819,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allProgrammingLanguages = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allProgrammingLanguages.push({id: term.id, label: term.label});
                             });
 
@@ -842,7 +842,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllOperatingSystems() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -856,10 +856,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allOperatingSystems = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allOperatingSystems.push({id: term.id, label: term.label});
                             });
 
@@ -879,7 +879,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllToolSupports() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -893,17 +893,17 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allToolSupports = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allToolSupports.push({id: term.id, label: term.label});
                             });
 
                         });
                     }
                     function loadAllToolFunctionalities() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -917,10 +917,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allToolFunctionalities = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allToolFunctionalities.push({id: term.id, label: term.label});
                             });
 
@@ -940,7 +940,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllToolInputData() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -954,10 +954,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allToolInputData = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allToolInputData.push({id: term.id, label: term.label});
                             });
 
@@ -977,7 +977,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllToolOutputData() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -991,10 +991,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allToolOutputData = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allToolOutputData.push({id: term.id, label: term.label});
                             });
 
@@ -1014,7 +1014,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllToolFileEncodings() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -1028,10 +1028,10 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.loadAllToolFileEncodings = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}, function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.loadAllToolFileEncodings.push({id: term.id, label: term.label});
                             });
 
@@ -1059,22 +1059,22 @@ angular.module('ortolangMarketApp')
                             scope.metadata.datasize = data.size.toString();
                         });
 
-                        scope.itemTypes = [ 
-                            { 
-                                key:'Corpus', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.CORPORA') 
+                        scope.itemTypes = [
+                            {
+                                key:'Corpus',
+                                value: $translate.instant('MARKET.ITEM_TYPE.CORPORA')
                             },
-                            { 
-                                key:'Lexique', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.LEXICON') 
+                            {
+                                key:'Lexique',
+                                value: $translate.instant('MARKET.ITEM_TYPE.LEXICON')
                             },
-                            { 
-                                key:'Outil', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.TOOL') 
+                            {
+                                key:'Outil',
+                                value: $translate.instant('MARKET.ITEM_TYPE.TOOL')
                             },
-                            { 
-                                key:'Application', 
-                                value: $translate.instant('MARKET.ITEM_TYPE.INTEGRATED_PROJECT') 
+                            {
+                                key:'Application',
+                                value: $translate.instant('MARKET.ITEM_TYPE.INTEGRATED_PROJECT')
                             }
                         ];
                         if(angular.isDefined(scope.metadata.type)) {
@@ -1085,22 +1085,22 @@ angular.module('ortolangMarketApp')
                             }
                         }
 
-                        scope.allStatusOfUse = [ 
-                            { 
-                                key:'Libre', 
+                        scope.allStatusOfUse = [
+                            {
+                                key:'Libre',
                                 value: 'Libre'
                             },
-                            { 
-                                key:'Libre sans utilisation commerciale', 
-                                value: 'Libre sans utilisation commerciale' 
+                            {
+                                key:'Libre sans utilisation commerciale',
+                                value: 'Libre sans utilisation commerciale'
                             },
-                            { 
-                                key:'Libre pour l’enseignement supérieur et la recherche', 
+                            {
+                                key:'Libre pour l’enseignement supérieur et la recherche',
                                 value: 'Libre pour l’enseignement supérieur et la recherche'
                             },
-                            { 
-                                key:'Négociation nécessaire', 
-                                value: 'Négociation nécessaire' 
+                            {
+                                key:'Négociation nécessaire',
+                                value: 'Négociation nécessaire'
                             }
                         ];
                         if(angular.isDefined(scope.metadata.statusOfUse)) {
