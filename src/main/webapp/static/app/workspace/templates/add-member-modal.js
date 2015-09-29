@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.search = function () {
-            var queryBuilder = QueryBuilderFactory.make({projection: '*', source: 'profile'})
+            var queryBuilder = QueryBuilderFactory.make({projection: 'key', source: 'profile'})
                 .containsText('key', $scope.searchQuery).or().containsText('fullname', $scope.searchQuery).or().containsText('email', $scope.searchQuery);
             SearchResource.json({query: queryBuilder.toString()}, function (data) {
                 $scope.profiles = [];
