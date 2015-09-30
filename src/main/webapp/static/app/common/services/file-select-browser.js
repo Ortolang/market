@@ -8,24 +8,13 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('FileSelectBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
-
-        function getData(config) {
-            if (config.path) {
-                return WorkspaceElementResource.get(config);
-            }
-            console.error('path must be provided', config);
-            return undefined;
-        }
+    .service('FileSelectBrowserService', function () {
 
         this.id = 'FileSelectBrowserService';
-        this.getData = getData;
-        this.dataResource = 'workspace';
         this.canEdit = false;
         this.canDownload = false;
         this.canPreview = false;
         this.canChangeRoot = true;
-        this.hasBreadcrumb = true;
         this.defaultViewMode = 'line';
         this.canSwitchViewMode = false;
         this.canExecuteTool = false;
@@ -34,4 +23,4 @@ angular.module('ortolangMarketApp')
         this.workspace = {};
 
         return this;
-    }]);
+    });

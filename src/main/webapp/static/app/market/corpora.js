@@ -152,7 +152,7 @@ angular.module('ortolangMarketApp')
             $scope.orderProps = [orderTitle, orderPublicationDate];
             $scope.orderProp = orderPublicationDate;
         }
-        
+
         function init() {
             initScopeVariables();
         }

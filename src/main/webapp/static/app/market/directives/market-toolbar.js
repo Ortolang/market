@@ -70,7 +70,7 @@ angular.module('ortolangMarketApp')
                         //}
 
                         $location.search(scope.filtersManager.urlParam(scope.content, scope.viewMode, scope.orderProp, scope.orderDirection, scope.facets));
-                        scope.query = scope.filtersManager.toQuery(scope.content);
+                        scope.query = scope.filtersManager.toQuery(scope.content, scope.type);
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
@@ -209,8 +209,7 @@ angular.module('ortolangMarketApp')
                             scope.facets = ($routeParams.facets === 'true');
                         }
 
-                        // scope.applyFilters();
-                        var newQuery = scope.filtersManager.toQuery(scope.content);
+                        var newQuery = scope.filtersManager.toQuery(scope.content, scope.type);
 
                         if(scope.query !== newQuery) {
                             scope.query = newQuery;

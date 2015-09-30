@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
             createProcess: {
                 method: 'POST',
                 transformRequest: function (data) { return $.param(data); },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 url: url.api + '/runtime/processes/'
             },
             types: {

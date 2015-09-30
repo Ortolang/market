@@ -38,7 +38,7 @@ angular.module('ortolangMarketApp')
                             });
                         }
 
-                        angular.forEach(jsonResults, function(jsonResult) {
+                        angular.forEach(jsonResults, function (jsonResult) {
                             var jsEntry = angular.fromJson(jsonResult);
 
                             if (jsEntry.wskey) {
@@ -55,13 +55,12 @@ angular.module('ortolangMarketApp')
                                 } else {
                                     scope.items.addItem(jsEntry);
                                 }
-
                             }
 
                         });
 
                         if (scope.filtersManager) {
-                            angular.forEach(scope.items.getItems(), function(item) {
+                            angular.forEach(scope.items.getItems(), function (item) {
                                 var i = 0;
                                 for (i; i < scope.filtersManager.getAvailableFilters().length; i++) {
                                     if (item[scope.filtersManager.getAvailableFilters()[i].getAlias()]) {
@@ -72,8 +71,7 @@ angular.module('ortolangMarketApp')
                         }
 
                         scope.lock = false;
-                    }, function (reason) {
-                        console.error(reason);
+                    }, function () {
                         scope.lock = false;
                     });
                 }
@@ -96,14 +94,14 @@ angular.module('ortolangMarketApp')
                     }
                 }
 
-                function getTitleValue (titleMultiling) {
-                    var iTitle;
-                    for (iTitle = 0; iTitle < titleMultiling.length; iTitle++) {
-                        if (titleMultiling[iTitle].lang === Settings.language) {
-                            return titleMultiling[iTitle].value;
+                function getTitleValue(multilingualTitle) {
+                    var i;
+                    for (i = 0; i < multilingualTitle.length; i++) {
+                        if (multilingualTitle[i].lang === Settings.language) {
+                            return multilingualTitle[i].value;
                         }
                     }
-                    return titleMultiling.length > 0 ? titleMultiling[0].value : 'untitle';
+                    return multilingualTitle.length > 0 ? multilingualTitle[0].value : undefined;
                 }
 
                 scope.$watch('query', function () {
