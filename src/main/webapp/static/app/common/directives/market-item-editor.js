@@ -38,6 +38,23 @@ angular.module('ortolangMarketApp')
                             }
                         }
 
+                        if(scope.publicationsModel.length>0) {
+                            scope.metadata.publications = [];
+                            angular.forEach(scope.publicationsModel, function(value) {
+                                if(value.value!=='') {
+                                    scope.metadata.publications.push({priority:'primary', value: value.value});
+                                }
+                            });
+                            if(scope.metadata.publications.length===0) {
+                                delete scope.metadata.publications;
+                            }
+                        }
+
+                        scope.metadata.creationLocations = [];
+                        angular.forEach(scope.selectedCreationLocations, function(tag) {
+                            scope.metadata.creationLocations.push(tag.label);
+                        });
+
                         scope.metadata.corporaStyles = [];
                         angular.forEach(scope.corporaStyleTag, function(tag) {
                             scope.metadata.corporaStyles.push(tag.id);
@@ -327,6 +344,48 @@ angular.module('ortolangMarketApp')
                         var result = $filter('filter')(scope.allLanguages, {label:query});
                         return result;
                     };
+
+                    scope.suggestCountries = function (query) {
+                        var result = $filter('filter')(scope.allCountries, {label:query});
+                        return result;
+                    };
+
+                    function loadAllCountries() {
+                        
+                        var queryBuilder = QueryBuilderFactory.make({
+                            projection: 'key, meta_ortolang-referentiel-json',
+                            source: 'ReferentielEntity'
+                        });
+
+                        // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'country');
+
+                        var query = queryBuilder.toString();
+                        scope.allCountries = [];
+                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                            angular.forEach(jsonResults, function (result) {
+                                var term = angular.fromJson(result);
+                                
+                                scope.allCountries.push({id: term.id, label: term.label});
+                            });
+
+                            if(angular.isDefined(scope.metadata.creationLocations)) {
+
+                                angular.forEach(scope.metadata.creationLocations, function(tag) {
+                                    var tagFound = $filter('filter')(scope.allCountries, {id:tag});
+                                    if(tagFound.length>0) {
+                                        scope.selectedCreationLocations.push(tagFound[0]);
+                                    } else {
+                                        scope.selectedCreationLocations.push({id:tag,label:tag});
+                                    }
+                                });
+                            }
+
+                        });
+                    }
 
                     function loadAllCorporaTypes() {
                         
@@ -1125,58 +1184,6 @@ angular.module('ortolangMarketApp')
                             scope.metadata.datasize = data.size.toString();
                         });
 
-                        // scope.itemTypes = [ 
-                        //     { 
-                        //         key:'Corpus', 
-                        //         value: $translate.instant('MARKET.ITEM_TYPE.CORPORA') 
-                        //     },
-                        //     { 
-                        //         key:'Lexique', 
-                        //         value: $translate.instant('MARKET.ITEM_TYPE.LEXICON') 
-                        //     },
-                        //     { 
-                        //         key:'Outil', 
-                        //         value: $translate.instant('MARKET.ITEM_TYPE.TOOL') 
-                        //     },
-                        //     { 
-                        //         key:'Application', 
-                        //         value: $translate.instant('MARKET.ITEM_TYPE.INTEGRATED_PROJECT') 
-                        //     }
-                        // ];
-                        // if(angular.isDefined(scope.metadata.type)) {
-
-                        //     var typeFound = $filter('filter')(scope.itemTypes, {key:scope.metadata.type});
-                        //     if(typeFound.length>0) {
-                        //         scope.selectedType = typeFound[0];
-                        //     }
-                        // }
-
-                        // scope.allStatusOfUse = [ 
-                        //     { 
-                        //         key:'Libre', 
-                        //         value: 'Libre'
-                        //     },
-                        //     { 
-                        //         key:'Libre sans utilisation commerciale', 
-                        //         value: 'Libre sans utilisation commerciale' 
-                        //     },
-                        //     { 
-                        //         key:'Libre pour l’enseignement supérieur et la recherche', 
-                        //         value: 'Libre pour l’enseignement supérieur et la recherche'
-                        //     },
-                        //     { 
-                        //         key:'Négociation nécessaire', 
-                        //         value: 'Négociation nécessaire' 
-                        //     }
-                        // ];
-                        // if(angular.isDefined(scope.metadata.statusOfUse)) {
-
-                        //     var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
-                        //     if(statusOfUseFound.length>0) {
-                        //         scope.selectedStatusOfUse = statusOfUseFound[0];
-                        //     }
-                        // }
-
                         var fileLicenceSelectModalScope = $rootScope.$new(true);
                         fileLicenceSelectModalScope.acceptMultiple = false;
                         fileLicenceSelectModalScope.forceMimeTypes = ['ortolang/collection', 'text'];
@@ -1207,7 +1214,15 @@ angular.module('ortolangMarketApp')
                             });
                         }
 
+                        scope.publicationsModel = [];
+                        if(scope.metadata.publications.length>0) {
+                            angular.forEach(scope.metadata.publications, function(publication) {
+                                scope.publicationsModel.push({value:publication.value});
+                            });
+                        }
 
+
+                        scope.selectedCreationLocations = [];
                         scope.corporaStyleTag = [];
                         scope.selectedAnnotationLevels = [];
                         scope.selectedCorporaFormats = [];
@@ -1227,6 +1242,7 @@ angular.module('ortolangMarketApp')
                         scope.selectedToolLanguages = [];
                         scope.selectedNavigationLanguages = [];
 
+                        loadAllCountries();
                         loadAllResourceType();
                         loadAllStatusOfUse();
                         loadAllCorporaTypes();

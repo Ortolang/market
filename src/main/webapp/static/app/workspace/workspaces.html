@@ -154,7 +154,7 @@
     </div>
     <div ng-if="previewing && !editing" class="row">
         <div class="col-sm-12 col-md-12 container-main workspace-metadata-item">
-            <market-item-preview ng-if="metadataItem" content="metadataItem" alias="WorkspaceBrowserService.workspace.alias" root="'head'" item-key="itemKey"></market-item-preview>
+            <market-item-preview ng-if="metadataItem" ortolang-object="WorkspaceBrowserService.workspace" content="metadataItem" alias="WorkspaceBrowserService.workspace.alias" root="'head'" item-key="itemKey"></market-item-preview>
         </div>
     </div>
     <div ng-show="editing || creating" class="am-fade-and-slide-bottom">

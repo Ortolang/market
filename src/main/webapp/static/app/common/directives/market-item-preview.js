@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             scope: {
                 content: '=',
                 alias: '=',
+                ortolangObject: '=',
                 itemKey: '=',
                 root: '=',
                 tags: '=',

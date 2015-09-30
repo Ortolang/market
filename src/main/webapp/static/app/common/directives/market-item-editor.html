@@ -129,15 +129,16 @@
 				
 				</div>
 
-				<!-- <div class="bs-callout">
+				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}}</h4>
 		            
-					<multivalue-textfield name="'publications'" model="metadata.publications" type="'large'"></multivalue-textfield>
-				
 					<div class="alert alert-info" role="alert">
-					    <p><span class="glyphicon glyphicon-info-sign"></span> Les publications de référence doivent comment la ressource a été créée. Elles sont utilisées pour citer la ressource.</p>
-					    </div>
-				</div> -->
+					    <p><span class="glyphicon glyphicon-info-sign"></span> Les publications de référence sont celles qui décrivent comment la ressource a été créée. Elles sont également utilisées pour citer la ressource.</p>
+					</div>
+
+					<multivalue-textfield name="'publications'" model="publicationsModel" type="'large'"></multivalue-textfield>
+				
+				</div>
 
 				<div class=" bs-callout">
 					<h4 class="bs-callout-label">{{'MARKET.TEMPORAL' | translate}}</h4 class="bs-callout-label">
@@ -146,6 +147,19 @@
 					</div>
 					<div class="alert alert-info" role="alert">
 			    		<p><span class="glyphicon glyphicon-info-sign"></span> Date ou période de création de la ressource.</p>
+			    	</div>
+				</div>
+
+				<div class=" bs-callout">
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.CREATION_LOCATIONS' | translate}}</h4 class="bs-callout-label">
+					<div class="form-group  bs-callout-input">
+						
+                        <tags-input ng-model="selectedCreationLocations" data-display-property="label" name="creationLocations" class="tool-tags" data-placeholder="{{'MARKET.SPACIAL' | translate}}">
+                            <auto-complete source="suggestCountries($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+					</div>
+					<div class="alert alert-info" role="alert">
+			    		<p><span class="glyphicon glyphicon-info-sign"></span> Spécifiez le(s) lieu(x) où la ressource a été créée.</p>
 			    	</div>
 				</div>
 

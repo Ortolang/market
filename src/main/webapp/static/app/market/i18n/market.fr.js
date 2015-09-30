@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
             OPERATING_SYSTEM: 'Systèmes d\'exploitation supportés',
             SUPPORT_TOOL: 'Type de support',
             LANGUAGE: 'Langues concernés par cet objet',
-            PRODUCER: 'Produit par',
+            PRODUCER: 'Produit le {{publicationDate | date}} par',
             RESEARCHER: 'Responsable{{value > 1 ? "s" : ""}} scientifique{{value > 1 ? "s" : ""}}',
             MANAGER: 'Responsable{{value > 1 ? "s" : ""}} informatique{{value > 1 ? "s" : ""}}',
             DESIGNER: 'Concepteur{{value > 1 ? "s" : ""}}',

@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('multivalueTextfield', ['$translate', function ($translate) {
+    .directive('multivalueTextfield', function () {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/multivalue-textfield.html',
@@ -20,11 +20,11 @@ angular.module('ortolangMarketApp')
                 type: '='
             },
             link: {
-                pre : function (scope, elem, attrs) {
+                pre : function (scope) {
                     // scope.values = [];
 
                     scope.addTextfield = function() {
-                        scope.model.push('');
+                        scope.model.push({value:''});
                     };
 
                     function init() {
@@ -33,19 +33,20 @@ angular.module('ortolangMarketApp')
                         //         scope.values.push(val);
                         //     });
                         // }
-                        if(!scope.required) {
-                            scope.required = false;
-                        }
+                        // if(!scope.required) {
+                        //     scope.required = false;
+                        // }
                         if(scope.model===undefined) {
-                            scope.model = [];
+                        //     scope.model = {values:[]};
+                            console.error('Model of multivalue-textfield must be defined.');
+                        } else {
+                            if(scope.model.length===0) {
+                                scope.addTextfield();
+                            }
                         }
-                        if(scope.model.length===0) {
-                            scope.addTextfield();
-                        }
-                        // scope.model.push({lang:'en',value:'tt'});
                     }
                     init();
                 }
             }
         };
-    }]);
+    });

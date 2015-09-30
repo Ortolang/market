@@ -10,7 +10,7 @@
 
                 <div ng-hide="browse">
 
-                    <div class="market-item-producers"><span translate="MARKET.PRODUCER"></span> :
+                    <div class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: ortolangObject.lastModificationDate}"></i> :
                         <ul class="list-unstyled">
                             <li ng-repeat="contributor in content.contributors" ng-if="isProducer(contributor)">
                                 <a ng-href='#/producers/{{contributor.entity.id}}' ng-bind="contributor.entity.fullname"></a>
