@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
         this.canDownload = false;
         this.canPreview = false;
         this.canChangeRoot = true;
-        this.hasBreadcrumb = true;
         this.defaultViewMode = 'line';
         this.canSwitchViewMode = false;
         this.canExecuteTool = false;

@@ -4,7 +4,7 @@
         <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside"></div>
 
         <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
-            <div ng-if="::browserService.hasBreadcrumb" class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
+            <div class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
                 <button ng-if="::isWorkspaceBrowserService" ng-click="toggleBrowsing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
                 <div class="breadcrumb-part">
                     <button ng-if="breadcrumbParts.length > 0" class="btn btn-default"  ng-click="browseToPath('/')">
