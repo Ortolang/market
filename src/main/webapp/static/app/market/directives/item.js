@@ -20,16 +20,15 @@ angular.module('ortolangMarketApp')
             link: {
                 pre : function (scope) {
 
-                    function getValue(titleMultiling, lang) {
-                        var iTitle;
-                        for (iTitle = 0; iTitle < titleMultiling.length; iTitle++) {
-                            if (titleMultiling[iTitle].lang === lang) {
-                                return titleMultiling[iTitle].value;
+                    function getValue(multilingualProperty) {
+                        var i;
+                        for (i = 0; i < multilingualProperty.length; i++) {
+                            if (multilingualProperty[i].lang === Settings.language) {
+                                return multilingualProperty[i].value;
                             }
                         }
-                        return titleMultiling.length > 0 ? titleMultiling[0].value : 'untitle';
+                        return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
                     }
-                    var key = (scope.entry.root !== undefined) ? scope.entry.root : scope.entry.key;
 
                     if (scope.entry.applicationUrl) {
                         scope.itemUrl = scope.entry.applicationUrl;
@@ -53,7 +52,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     if (scope.entry.image) {
-                        scope.image = Content.getContentUrlWithPath(scope.entry.image, scope.entry.alias, 'latest');
+                        scope.image = Content.getContentUrlWithPath(scope.entry.image, scope.entry.alias, scope.entry.snapshotName);
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';
