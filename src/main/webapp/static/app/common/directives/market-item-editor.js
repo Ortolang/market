@@ -365,7 +365,7 @@ angular.module('ortolangMarketApp')
 
                         var query = queryBuilder.toString();
                         scope.allCountries = [];
-                        JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+                        SearchResource.json({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
                                 
@@ -1215,7 +1215,7 @@ angular.module('ortolangMarketApp')
                         }
 
                         scope.publicationsModel = [];
-                        if(scope.metadata.publications.length>0) {
+                        if(angular.isDefined(scope.metadata.publications) && scope.metadata.publications.length>0) {
                             angular.forEach(scope.metadata.publications, function(publication) {
                                 scope.publicationsModel.push({value:publication.value});
                             });

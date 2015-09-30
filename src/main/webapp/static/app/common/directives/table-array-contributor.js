@@ -87,14 +87,16 @@ angular.module('schemaForm')
 
                     function prepareModalScopeWithRole(contributor, modalScope) {
                         modalScope.roleTag = [];
-                        angular.forEach(contributor.role, function(tag) {
-                            var tagFound = $filter('filter')(scope.allRoles, {id:tag});
-                            if(tagFound.length>0) {
-                                modalScope.roleTag.push(tagFound[0]);
-                            } else {
-                                modalScope.roleTag.push({id:tag,label:tag});
-                            }
-                        });
+                        if(angular.isDefined(contributor.role)) {
+                            angular.forEach(contributor.role, function(tag) {
+                                var tagFound = $filter('filter')(scope.allRoles, {id:tag});
+                                if(tagFound.length>0) {
+                                    modalScope.roleTag.push(tagFound[0]);
+                                } else {
+                                    modalScope.roleTag.push({id:tag,label:tag});
+                                }
+                            });
+                        }
                     }
 
                     function setPerson(contributor, myScope) {
@@ -136,7 +138,11 @@ angular.module('schemaForm')
                     function setRole(contributor, myScope) {
                         contributor.role = [];
                         angular.forEach(myScope.roleTag, function(tag) {
-                            contributor.role.push(tag.id);
+                            if(angular.isDefined(tag.id)) {
+                                contributor.role.push(tag.id);
+                            } else {
+                                contributor.role.push(tag.label);
+                            }
                         });
                     }
 
