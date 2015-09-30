@@ -13,8 +13,10 @@ angular.module('ortolangMarketApp')
         return $resource(url.api + '/search', {}, {
             json: {
                 url: url.api + '/search/json',
-                transformRequest: function (data) { return $.param(data); },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                transformRequest: function (data) {
+                    return $.param(data);
+                },
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 method: 'POST',
                 isArray: true
             }
