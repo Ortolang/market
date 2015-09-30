@@ -13,7 +13,9 @@ angular.module('ortolangMarketApp')
         return $resource(url.api + '/search', {}, {
             json: {
                 url: url.api + '/search/json',
-                method: 'GET',
+                transformRequest: function (data) { return $.param(data); },
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                method: 'POST',
                 isArray: true
             }
         });
