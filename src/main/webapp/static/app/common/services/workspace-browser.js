@@ -8,20 +8,9 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('WorkspaceBrowserService', ['WorkspaceElementResource', function (WorkspaceElementResource) {
-
-        function getData(config) {
-            if (config.path) {
-                delete config.key;
-                return WorkspaceElementResource.get(config);
-            }
-            console.error('path must be provided', config);
-            return undefined;
-        }
+    .service('WorkspaceBrowserService', function () {
 
         this.id = 'WorkspaceBrowserService';
-        this.getData = getData;
-        this.dataResource = 'workspace';
         this.canEdit = true;
         this.canDownload = true;
         this.canPreview = true;
@@ -35,4 +24,4 @@ angular.module('ortolangMarketApp')
         this.workspace = {};
 
         return this;
-    }]);
+    });
