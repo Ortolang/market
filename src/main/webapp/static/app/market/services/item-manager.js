@@ -8,19 +8,12 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('ItemManager', function () {
+    .factory('ItemManager', function () {
 
         // Constructor
-        function ItemManager(config) {
+        function ItemManager() {
             this.items = [];
-
-            angular.forEach(config, function (value, key) {
-                if (this.hasOwnProperty(key)) {
-                    this[key] = value;
-                }
-            }, this);
         }
-
 
         // Methods
         ItemManager.prototype = {
@@ -53,7 +46,7 @@ angular.module('ortolangMarketApp')
                 return false;
             },
 
-            setItem: function(item, newItem) {
+            setItem: function (item, newItem) {
                 var i = 0;
                 for (i; i < this.items.length; i++) {
                     if (this.items[i] === item) {
@@ -75,9 +68,9 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        this.make = function (config) {
-            return new ItemManager(config);
+        return {
+            make: function () {
+                return new ItemManager();
+            }
         };
-
-        return this;
     });
