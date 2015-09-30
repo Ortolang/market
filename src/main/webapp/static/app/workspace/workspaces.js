@@ -61,6 +61,7 @@ angular.module('ortolangMarketApp')
                 $location.search('edit', $scope.editing || undefined);
 
                 WorkspaceBrowserService.workspace = workspace;
+                getHead();
                 ProfileResource.getCard({key: WorkspaceBrowserService.workspace.author}, function (data) {
                     WorkspaceBrowserService.workspace.authorCard = data;
                 });
