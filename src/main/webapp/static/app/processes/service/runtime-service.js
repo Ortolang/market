@@ -60,7 +60,6 @@ angular.module('ortolangMarketApp')
                     jobsToSubscribeTo = [jobsToSubscribeTo];
                 }
                 angular.forEach(jobsToSubscribeTo, function (job) {
-                    //console.debug(job, job.processId);
                     AtmosphereService.addFilter({typePattern: 'runtime\\.remote\\..*', fromPattern: job.processId});
                 });
             }

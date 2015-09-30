@@ -33,7 +33,7 @@
                 <div class="row">
                     <h1 ng-class="renameWorkspaceForm.$visible ? 'col-md-8' : 'col-md-12'">
                         <span editable-text="WorkspaceBrowserService.workspace.name" e-ng-init="largeInput = true;" e-form="renameWorkspaceForm" onbeforesave="renameWorkspace($data)">{{WorkspaceBrowserService.workspace.name}}</span>
-                        <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="icons.browser.edit"></span></button>
+                        <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="icons.edit"></span></button>
                     </h1>
                 </div>
                 <i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: WorkspaceBrowserService.workspace.creationDate, author: WorkspaceBrowserService.workspace.authorCard.givenName + ' ' + WorkspaceBrowserService.workspace.authorCard.familyName}"></i>
@@ -42,7 +42,7 @@
                     <button class="btn btn-default" ng-if="metadataItem !== undefined" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> {{'WORKSPACE.PREVIEW_METADATA' | translate}}</button>
                     <button class="btn btn-default" ng-if="metadataItem === undefined" ng-click="createMetadataItem()"><span class="octicon octicon-book"></span> {{'WORKSPACE.CREATE_PRESENTATION_METADATA' | translate}}</button>
                     <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
-                    <button ng-if="!lastPublishedSnapshot" class="btn btn-default btn-danger" ng-click="delete()"><span ng-class="icons.trash"></span> {{'DELETE' | translate}}</button>
+                    <button ng-if="!lastPublishedSnapshot" class="btn btn-default btn-danger" ng-click="deleteWorkspace()"><span ng-class="icons.trash"></span> {{'DELETE' | translate}}</button>
                     <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
                 </div>
                 <div bs-tabs data-nav-class="nav-pills workspace-dashboard-nav-pills">
@@ -147,7 +147,7 @@
 
             <div class="btn-toolbar btn-toolbar-right" role="toolbar" ng-if="!(editing || creating)">
                 <div class="btn-group">
-                    <button ng-click="toggleEditing()" class="btn btn-default" data-title="{{'WORKSPACE.EDIT_PRESENTATION_METADATA' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.edit"></span></button>
+                    <button ng-click="toggleEditing()" class="btn btn-default" data-title="{{'WORKSPACE.EDIT_PRESENTATION_METADATA' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.edit"></span></button>
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
         this.profileDatas = {};
 
-        this.name = function () {
+        this.fullName = function () {
             if (this.givenName) {
                 return this.givenName + ' ' + this.familyName;
             }

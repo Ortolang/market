@@ -8,19 +8,17 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducersCtrl', ['$scope', 'icons', 'QueryBuilderFactory', 'ItemManager', 'JsonResultResource', function ($scope, icons, QueryBuilderFactory, ItemManager, JsonResultResource) {
+    .controller('ProducersCtrl', ['$scope', 'QueryBuilderFactory', 'ItemManager', 'SearchResource', function ($scope, QueryBuilderFactory, ItemManager, SearchResource) {
 
-        $scope.search = function() {
+        $scope.search = function () {
             var query = buildQuery();
             console.log('query : ' + query);
-            JsonResultResource.get({query: query}).$promise.then(function (jsonResults) {
+            SearchResource.json({query: query}, function (jsonResults) {
                 $scope.producers.clear();
 
-                angular.forEach(jsonResults, function(jsonResult) {
+                angular.forEach(jsonResults, function (jsonResult) {
                     $scope.producers.addItem(angular.fromJson(jsonResult));
                 });
-            }, function (reason) {
-                console.error(reason);
             });
         };
 

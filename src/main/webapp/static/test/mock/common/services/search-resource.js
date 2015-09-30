@@ -2,17 +2,17 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketAppMock.JsonResultResource
+ * @name ortolangMarketAppMock.SearchResource
  * @description
- * # JsonResultResource
+ * # SearchResource
  * Factory in the ortolangMarketAppMock.
  */
 angular.module('ortolangMarketAppMock')
-    .factory('JsonResultResource', [ '$q', 'sample', function ($q, sample) {
+    .factory('SearchResource', [ '$q', 'sample', function ($q, sample) {
 
         var conditions = [];
 
-        function get(params) {
+        function json(params) {
             var defer = $q.defer(), data;
 
             angular.forEach(conditions, function (condition) {
@@ -39,8 +39,8 @@ angular.module('ortolangMarketAppMock')
         }
 
         return {
-            get: get,
-            element: get,
+            json: json,
+            element: json,
             when: when,
             clear: clear
         };

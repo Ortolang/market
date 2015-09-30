@@ -59,7 +59,7 @@
             <li class="dropdown" ng-if="authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <span avatar data-email-hash="User.emailHash" data-size="30" data-img-classes="img-circle profile-image"></span>
-                    {{User.name()}} <span class="fa fa-caret-down"></span>
+                    {{User.fullName()}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-show="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>

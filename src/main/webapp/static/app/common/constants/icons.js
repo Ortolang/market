@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
             tag: 'fa fa-fw fa-tag',
             cart: 'fa fa-fw fa-shopping-cart',
             cartPlus: 'fa fa-shopping-cart',
+            edit: 'glyphicon glyphicon-pencil',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',
@@ -58,7 +59,6 @@ angular.module('ortolangMarketApp')
                 uploadToWorkspace: 'glyphicon glyphicon-cloud-upload',
                 delete: 'glyphicon glyphicon-trash',
                 remove: 'glyphicon glyphicon-remove',
-                edit: 'glyphicon glyphicon-pencil',
                 move: 'fa fa-folder',
                 preview: 'glyphicon glyphicon-eye-open',
                 search: 'glyphicon glyphicon-search',

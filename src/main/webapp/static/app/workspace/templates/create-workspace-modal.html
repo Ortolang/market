@@ -10,7 +10,7 @@
                     <div class="form-group" ng-class="{'has-error': (createWorkspace.$submitted || createWorkspace.name.$dirty) && createWorkspace.name.$invalid}">
                         <label for="new-workspace-name" class="col-sm-2 control-label" translate="NAME"></label>
                         <div class="col-sm-10">
-                            <input ng-model="$parent.name" type="text" class="form-control" id="new-workspace-name" name="name" required autofocus placeholder="{{'NAME' | translate}}">
+                            <input ng-model="models.name" type="text" class="form-control" id="new-workspace-name" name="name" required autofocus placeholder="{{'NAME' | translate}}">
                         </div>
                         <div class="help-block col-sm-offset-2 col-sm-10" ng-if='createWorkspace.$submitted || createWorkspace.name.$dirty' ng-messages="createWorkspace.name.$error">
                             <div ng-messages-include="common/forms/messages-template.html"></div>
@@ -19,11 +19,11 @@
                     <div class="form-group" ng-class="{'has-error': (createWorkspace.$submitted || createWorkspace.alias.$dirty) && createWorkspace.alias.$invalid}">
                         <label for="new-workspace-alias" class="col-sm-2 control-label" translate="WORKSPACE.ALIAS"></label>
                         <div class="col-sm-10">
-                            <input ng-model="$parent.alias" type="text" ng-change="normalizeAlias($parent.alias, createWorkspace)" class="form-control" id="new-workspace-alias" name="alias" ng-minlength="3" required placeholder="{{'WORKSPACE.ALIAS' | translate}}" ng-disabled="checked">
+                            <input ng-model="models.alias" type="text" ng-change="normalizeAlias(models.alias, createWorkspace)" class="form-control" id="new-workspace-alias" name="alias" ng-minlength="3" required placeholder="{{'WORKSPACE.ALIAS' | translate}}" ng-disabled="models.checked">
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox checkbox-primary">
-                                <input id="auto-generated" type="checkbox" ng-model="$parent.checked" ng-change="generateAlias()">
+                                <input id="auto-generated" type="checkbox" ng-model="models.checked" ng-change="generateAlias()">
                                 <label for="auto-generated">{{'WORKSPACE.CREATE_WORKSPACE_MODAL.AUTO_GENERATED' | translate}}</label>
                             </div>
                         </div>

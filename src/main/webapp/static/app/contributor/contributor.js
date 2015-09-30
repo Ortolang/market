@@ -8,13 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'JsonResultResource', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, JsonResultResource, ItemManager, FacetedFilterManager, ReferentielResource) {
+    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, ItemManager, FacetedFilterManager, ReferentielResource) {
 
         function loadItem(id) {
 
             ReferentielResource.get({refKey: id}).$promise.then(function (referentielEntity) {
                 $scope.contributor = angular.fromJson(referentielEntity.content);
-                
+
                 $scope.ready = true;
                 loadResources($scope.contributor.id);
             });
@@ -74,7 +74,7 @@ angular.module('ortolangMarketApp')
             $scope.items = ItemManager.make();
 
             $scope.filtersManager = FacetedFilterManager.make();
-            
+
             var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
             $scope.viewMode = viewModeGrid;
             $scope.orderDirection = true;

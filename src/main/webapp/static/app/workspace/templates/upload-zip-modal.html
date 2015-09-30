@@ -16,15 +16,15 @@
                     <div class="form-group">
                         <label for="upload-zip-root" class="col-sm-3 control-label" translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT"></label>
                         <div class="col-sm-9">
-                            <input ng-model="$parent.root" type="text" class="form-control" id="upload-zip-root" placeholder="{{'WORKSPACE.UPLOAD_ZIP_MODAL.ROOT' | translate}}">
+                            <input ng-model="models.root" type="text" class="form-control" id="upload-zip-root" placeholder="{{'WORKSPACE.UPLOAD_ZIP_MODAL.ROOT' | translate}}">
                         </div>
-                        <span ng-show="$parent.root.length === 0" class="help-block col-sm-offset-3 col-sm-9"  translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT_HELP" data-translate-values="{path: parent.path, root: $parent.root, wsName: wsName}"></span>
-                        <span ng-show="$parent.root.length > 0" class="help-block col-sm-offset-3 col-sm-9"  translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT_HELP_FILLED" data-translate-values="{path: parent.path, root: $parent.root, wsName: wsName}"></span>
+                        <span ng-show="models.root.length === 0" class="help-block col-sm-offset-3 col-sm-9"  translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT_HELP" data-translate-values="{path: parent.path, root: models.root, wsName: wsName}"></span>
+                        <span ng-show="models.root.length > 0" class="help-block col-sm-offset-3 col-sm-9"  translate="WORKSPACE.UPLOAD_ZIP_MODAL.ROOT_HELP_FILLED" data-translate-values="{path: parent.path, root: models.root, wsName: wsName}"></span>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
                             <div class="checkbox checkbox-primary">
-                                <input type="checkbox" ng-model="$parent.zipoverwrites" id="upload-zip-overwrite"/>
+                                <input type="checkbox" ng-model="models.zipoverwrites" id="upload-zip-overwrite"/>
                                 <label for="upload-zip-overwrite" translate="WORKSPACE.UPLOAD_ZIP_MODAL.OVERWRITE"></label>
                             </div>
                         </div>
