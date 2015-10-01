@@ -14,11 +14,6 @@ angular.module('ortolangMarketApp')
             scope: {
                 title: '=',
                 query: '=',
-                viewMode: '=',
-                viewModes: '=',
-                orderProp: '=',
-                orderProps: '=',
-                orderDirection: '=',
                 filtersManager: '='
             },
             templateUrl: 'market/directives/items.html',

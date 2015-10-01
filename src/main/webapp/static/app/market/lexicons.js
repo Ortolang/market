@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LexiconsCtrl', ['$scope', 'icons', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, icons, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('LexiconsCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
 
         function initScopeVariables() {
 
@@ -111,11 +111,6 @@ angular.module('ortolangMarketApp')
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_LANGUAGE_TYPE'
             });
             $scope.filtersManager.addAvailableFilter(lexiconLanguageTypeFilter);
-
-            var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
-            var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
-            $scope.viewModes = [viewModeGrid, viewModeLine];
-            $scope.viewMode = viewModeGrid;
 
             $scope.orderDirection = true;
             var orderTitle = {id: 'title', sort: 'titleToSort', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};

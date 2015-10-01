@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('CorporaCtrl', ['$scope', 'icons', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, icons, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('CorporaCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
 
         function initScopeVariables() {
             $scope.filtersManager = FacetedFilterManager.make();
@@ -137,11 +137,6 @@ angular.module('ortolangMarketApp')
                 view: 'dropdown-faceted-filter'
             });
             $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
-
-            var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
-            var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
-            $scope.viewModes = [viewModeGrid, viewModeLine];
-            $scope.viewMode = viewModeGrid;
 
             $scope.orderDirection = true;
             var orderTitle = {id: 'title', sort: 'titleToSort', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};

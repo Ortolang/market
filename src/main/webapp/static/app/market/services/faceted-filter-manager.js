@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', function (QueryBuilderFactory, $filter) {
+    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', 'Search', function (QueryBuilderFactory, $filter, Search) {
 
         // Constructor
         function FacetedFilterManager() {
@@ -122,6 +122,7 @@ angular.module('ortolangMarketApp')
 
                 queryBuilder.addProjection('meta_ortolang-item-json.type', 'type');
                 queryBuilder.addProjection('meta_ortolang-item-json.title', 'title');
+                // TODO ask for description only when view mode line
                 queryBuilder.addProjection('meta_ortolang-item-json.description', 'description');
                 queryBuilder.addProjection('meta_ortolang-item-json.image', 'image');
                 queryBuilder.addProjection('meta_ortolang-item-json.applicationUrl', 'applicationUrl');
