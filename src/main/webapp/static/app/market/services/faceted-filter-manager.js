@@ -122,6 +122,7 @@ angular.module('ortolangMarketApp')
 
                 queryBuilder.addProjection('meta_ortolang-item-json.type', 'type');
                 queryBuilder.addProjection('meta_ortolang-item-json.title', 'title');
+                queryBuilder.addProjection('meta_ortolang-item-json.description', 'description');
                 queryBuilder.addProjection('meta_ortolang-item-json.image', 'image');
                 queryBuilder.addProjection('meta_ortolang-item-json.applicationUrl', 'applicationUrl');
                 queryBuilder.addProjection('meta_ortolang-item-json.publicationDate', 'publicationDate');

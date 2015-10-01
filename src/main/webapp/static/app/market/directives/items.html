@@ -1,13 +1,16 @@
 <section class="items">
     <h3 ng-if="title" translate="{{title}}"></h3>
 
-    <div ng-if="items.size() > 0 && viewMode.id === 'tile'" class="flex-row medium-item-wrapper">
-        <item class="flex-column" ng-repeat="item in items.getItems() | orderBy:orderProp.sort:orderDirection" data-entry="item" data-template="market/templates/medium-item.html"></item>
+    <div ng-hide="Search.isProcessing()">
+        <div ng-if="Search.hasResults() && viewMode.id === 'tile'" class="flex-row medium-item-wrapper">
+            <item class="flex-column" ng-repeat="item in Search.getResults() | orderBy:orderProp.sort:orderDirection" data-entry="item" data-template="market/templates/medium-item.html"></item>
+        </div>
+
+        <div ng-if="Search.hasResults() && viewMode.id === 'line'" class="full-item-wrapper">
+            <item ng-repeat="item in Search.getResults() | orderBy:orderProp.sort:orderDirection" data-entry="item" data-template="market/templates/full-item.html"></item>
+        </div>
+
+        <p ng-if="!Search.isProcessing() && !Search.hasResults()" class="text-center"><em translate="MARKET.NO_ITEM"></em></p>
     </div>
 
-    <div ng-if="items.size() > 0 && viewMode.id === 'line'" class="full-item-wrapper">
-        <item ng-repeat="item in items.getItems() | orderBy:orderProp.sort:orderDirection" data-entry="item" data-template="market/templates/full-item.html"></item>
-    </div>
-
-    <p ng-if="!lock && items.size()===0" class="text-center"><em>{{'MARKET.NO_ITEM' | translate}}</em></p>
 </section>

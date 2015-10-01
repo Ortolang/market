@@ -3,7 +3,7 @@
 	<div class="row toolbar">
 	    <div class="col-sm-5">
 	        <div class="input-group">
-	        	<div class="input-group-addon"><span class="glyphicon glyphicon-search"></div>
+	        	<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 	            <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{('MARKET.SEARCH.PRODUCERS') | translate}}">
 	            <!-- <span class="input-group-btn">
 	                <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -12,15 +12,15 @@
 	    </div>
 	</div>
 
-	<section ng-if="producers.size()>0" class="items">
+	<section ng-if="Search.hasResults()" class="items">
 
 	    <div class="row market-list-line">
-	        <div ng-repeat="producer in producers.getItems() | filter:content" class="col-md-8 line">
-	            <div ng-include="'producer/directives/producer.html'" class="row"></item>
+	        <div ng-repeat="producer in Search.getResults() | filter:content" class="col-md-8 line">
+	            <div ng-include="'producer/directives/producer.html'"></div>
 	        </div>
 	    </div>
 	</section>
-	<section ng-if="producers.size()===0" class="row items">
+	<section ng-if="!Search.hasResults()" class="row items">
 	    <p class="text-center"><em>{{'MARKET.NO_PRODUCER' | translate}}</em></p>
 	</section>
 

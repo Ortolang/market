@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
                 type: '=',
                 content: '=',
                 query: '=',
-                items: '=',
                 viewMode: '=',
                 viewModes: '=',
                 orderProp: '=',

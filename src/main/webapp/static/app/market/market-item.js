@@ -16,12 +16,8 @@ angular.module('ortolangMarketApp')
             queryBuilder.equals('status', 'published').and().equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
 
             console.log(queryBuilder.toString());
-            SearchResource.json({query: queryBuilder.toString()}, function (jsonResults) {
-                if (jsonResults.length >= 1) {
-                    var results = [];
-                    angular.forEach(jsonResults, function (result) {
-                        results.push(angular.fromJson(result));
-                    });
+            SearchResource.json({query: queryBuilder.toString()}, function (results) {
+                if (results.length >= 1) {
                     if ($routeParams.section === 'item') {
                         switch (results[results.length - 1].type) {
                             case 'Corpus':
@@ -41,11 +37,11 @@ angular.module('ortolangMarketApp')
 
                     queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-workspace-json.wsalias as wsalias, meta_ortolang-workspace-json.tags as tags', source: 'workspace'});
                     queryBuilder.equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
-                    SearchResource.json({query: queryBuilder.toString()}, function (jsonResults) {
+                    SearchResource.json({query: queryBuilder.toString()}, function (workspace) {
 
-                        if (jsonResults.length === 1) {
-                            var workspace = angular.fromJson(jsonResults[0]),
-                                filteredResult;
+                        if (workspace.length === 1) {
+                            var filteredResult;
+                            workspace = workspace[0];
 
                             $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
                                 return tag.name;
@@ -69,7 +65,7 @@ angular.module('ortolangMarketApp')
 
                             var queryOrtolangMeta = 'SELECT FROM ' + $scope.ortolangObject['meta_ortolang-item-json'];
                             SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
-                                $scope.item = angular.fromJson(jsonObject[0]);
+                                $scope.item = jsonObject[0];
                                 $scope.ready = true;
                             });
 

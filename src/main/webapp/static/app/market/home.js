@@ -8,14 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('HomeCtrl', ['$scope', 'icons', 'ItemManager', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'StaticWebsite',
-        function ($scope, icons, ItemManager, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, StaticWebsite) {
+    .controller('HomeCtrl', ['$scope', 'icons', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'StaticWebsite',
+        function ($scope, icons, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, StaticWebsite) {
 
             // Scope variables
             function initScopeVariables() {
                 $scope.StaticWebsite = StaticWebsite;
-
-                $scope.items = ItemManager.make();
 
                 $scope.filtersManager = FacetedFilterManager.make();
 

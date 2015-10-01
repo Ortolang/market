@@ -8,11 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducerCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($scope, $routeParams, icons, QueryBuilderFactory, ItemManager, FacetedFilterManager, ReferentielResource) {
+    .controller('ProducerCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'FacetedFilterManager', 'ReferentielResource', function ($scope, $routeParams, icons, QueryBuilderFactory, FacetedFilterManager, ReferentielResource) {
 
         function loadItem(id) {
 
-            ReferentielResource.get({refKey: id}).$promise.then(function (referentielEntity) {
+            ReferentielResource.get({refKey: 'ORGANIZATION:' + id}).$promise.then(function (referentielEntity) {
                 $scope.producer = angular.fromJson(referentielEntity.content);
 
                 if (!$scope.producer.img) {
@@ -77,8 +77,6 @@ angular.module('ortolangMarketApp')
             $scope.queryBuilder.addProjection('lastModificationDate', 'lastModificationDate');
 
             $scope.queryBuilder.equals('status', 'published');
-
-            $scope.items = ItemManager.make();
 
             $scope.filtersManager = FacetedFilterManager.make();
 
