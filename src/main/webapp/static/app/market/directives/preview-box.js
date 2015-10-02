@@ -23,12 +23,12 @@ angular.module('ortolangMarketApp')
 
                     function loadPreview(paths) {
                         angular.forEach(paths, function (path) {
-                            
+
                             if(path.substr(path.lastIndexOf('/')+1).toLowerCase() === 'index.html') {
                                 scope.path = path;
                                 scope.preview.type = 'url';
                             }
-                            
+
                         });
                     }
 

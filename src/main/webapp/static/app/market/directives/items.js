@@ -35,10 +35,8 @@ angular.module('ortolangMarketApp')
                                 result.titleToSort = getTitleValue(result.title);
 
                                 var itemFromManager = Search.getResult(result.wskey);
-                                if (itemFromManager) {
-                                    if (result.lastModificationDate > itemFromManager.lastModificationDate) {
-                                        Search.removeResult(itemFromManager['@rid']);
-                                    }
+                                if (itemFromManager && result.lastModificationDate > itemFromManager.lastModificationDate) {
+                                    Search.removeResult(itemFromManager['@rid']);
                                 }
                             }
 
