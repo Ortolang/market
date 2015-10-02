@@ -10,8 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('CorporaCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
 
-        function initScopeVariables() {
-            $scope.filtersManager = FacetedFilterManager.make();
+        function addAvailableFilters() {
 
             $scope.typeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.type',
@@ -45,51 +44,46 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
-            var annotationLevelsFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.annotationLevels',
                 alias: 'annotationLevels',
                 type: 'array',
                 label: 'MARKET.FACET.ANNOTATION_LEVEL',
                 resetLabel: 'MARKET.FACET.ALL_ANNOTATION_LEVEL'
-            });
-            $scope.filtersManager.addAvailableFilter(annotationLevelsFilter);
+            }));
 
-            var corporaFormatsFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaFormats',
                 alias: 'corporaFormats',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_FORMAT',
                 resetLabel: 'MARKET.FACET.ALL_TEXT_FORMAT'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaFormatsFilter);
+            }));
 
-            var corporaDataTypesFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaDataTypes',
                 alias: 'corporaDataTypes',
                 type: 'array',
                 label: 'MARKET.FACET.CORPORA_DATATYPES',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA_DATATYPES'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaDataTypesFilter);
+            }));
 
-            var corporaLanguageTypeFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaLanguageType',
                 alias: 'corporaLanguageType',
                 label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaLanguageTypeFilter);
+            }));
 
-            var corporaFileEncodingsFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaFileEncodings',
                 alias: 'corporaFileEncodings',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_ENCODING',
                 resetLabel: 'MARKET.FACET.ALL_TEXT_ENCODING'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaFileEncodingsFilter);
+            }));
 
-            var corpusTypeFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaType',
                 alias: 'corporaType',
                 label: 'MARKET.FACET.CORPORA_TYPE',
@@ -114,10 +108,9 @@ angular.module('ortolangMarketApp')
                 ],
                 lockOptions: true,
                 view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(corpusTypeFilter);
+            }));
 
-            var languageFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.corporaLanguages',
                 alias: 'corporaLanguages',
                 type: 'array',
@@ -125,29 +118,33 @@ angular.module('ortolangMarketApp')
                 resetLabel: 'MARKET.FACET.ALL_LANG',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(languageFilter);
+            }));
 
-            var statusOfUseFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',
                 resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
+            }));
+        }
 
-            $scope.orderDirection = true;
-            var orderTitle = {id: 'title', sort: 'titleToSort', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
-            var orderPublicationDate = {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
-            $scope.orderProps = [orderTitle, orderPublicationDate];
-            $scope.orderProp = orderPublicationDate;
+        function addCustomProjections() {
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.corporaLanguages', 'corporaLanguages');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.corporaType', 'corporaType');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.corporaFormats', 'corporaFormats');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.corporaFileEncodings', 'corporaFileEncodings');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.corporaDataTypes', 'corporaDataTypes');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.corporaLanguageType', 'corporaLanguageType');
         }
 
         function init() {
-            initScopeVariables();
+            $scope.filtersManager = FacetedFilterManager.make();
+            addAvailableFilters();
+            addCustomProjections();
         }
+
         init();
 
     }]);

@@ -10,9 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('LexiconsCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
 
-        function initScopeVariables() {
-
-            $scope.filtersManager = FacetedFilterManager.make();
+        function addAvailableFilters() {
 
             $scope.typeFilter = FacetedFilter.make({
                 id: 'meta_ortolang-item-json.type',
@@ -46,17 +44,16 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
-            var lexiconInputTypeFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconInputType',
                 alias: 'lexiconInputType',
                 label: 'MARKET.FACET.LEXICON_INPUT_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_INPUT_TYPE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(lexiconInputTypeFilter);
+            }));
 
-            var lexiconDescriptionTypesFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconDescriptionTypes',
                 alias: 'lexiconDescriptionTypes',
                 type: 'array',
@@ -64,64 +61,64 @@ angular.module('ortolangMarketApp')
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_DESCRIPTION_TYPE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(lexiconDescriptionTypesFilter);
+            }));
 
-            var statusOfUseFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',
                 resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
+            }));
 
-            var lexiconInputLanguagesFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconInputLanguages',
                 alias: 'lexiconInputLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_INPUT_LANGUAGE',
                 resetLabel: 'MARKET.FACET.ALL_LANG'
-            });
-            $scope.filtersManager.addAvailableFilter(lexiconInputLanguagesFilter);
+            }));
 
-            var lexiconDescriptionLanguagesFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconDescriptionLanguages',
                 alias: 'lexiconDescriptionLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE',
                 resetLabel: 'MARKET.FACET.ALL_LANG'
-            });
-            $scope.filtersManager.addAvailableFilter(lexiconDescriptionLanguagesFilter);
+            }));
 
-            var lexiconFormatsFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconFormats',
                 alias: 'lexiconFormats',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_FORMAT',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_FORMAT'
-            });
-            $scope.filtersManager.addAvailableFilter(lexiconFormatsFilter);
+            }));
 
-            var lexiconLanguageTypeFilter = FacetedFilter.make({
+            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
                 id: 'meta_ortolang-item-json.lexiconLanguageType',
                 alias: 'lexiconLanguageType',
                 label: 'MARKET.FACET.LEXICON_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_LANGUAGE_TYPE'
-            });
-            $scope.filtersManager.addAvailableFilter(lexiconLanguageTypeFilter);
+            }));
+        }
 
-            $scope.orderDirection = true;
-            var orderTitle = {id: 'title', sort: 'titleToSort', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'};
-            var orderPublicationDate = {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
-            $scope.orderProps = [orderTitle, orderPublicationDate];
-            $scope.orderProp = orderPublicationDate;
+        function addCustomProjections() {
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.lexiconInputType', 'lexiconInputType');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.lexiconDescriptionTypes', 'lexiconDescriptionTypes');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.lexiconInputLanguages', 'lexiconInputLanguages');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.lexiconDescriptionLanguages', 'lexiconDescriptionLanguages');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.lexiconFormats', 'lexiconFormats');
+            $scope.filtersManager.addCustomProjection('meta_ortolang-item-json.lexiconLanguageType', 'lexiconLanguageType');
         }
 
         function init() {
-            initScopeVariables();
+            $scope.filtersManager = FacetedFilterManager.make();
+            addAvailableFilters();
+            addCustomProjections();
         }
+
         init();
 
     }]);
