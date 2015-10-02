@@ -13,9 +13,7 @@ angular.module('ortolangMarketApp')
             restrict: 'E',
             scope: {
                 type: '=',
-                content: '=',
                 query: '=',
-                orderDirection: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
                 searchPlaceHolder: '@'
@@ -66,15 +64,15 @@ angular.module('ortolangMarketApp')
                         //    $analytics.trackSiteSearch(content, scope.type);
                         //}
 
-                        $location.search(scope.filtersManager.urlParam(scope.content, Search.getActiveViewMode(), Search.getActiveOrderProp(), scope.orderDirection, scope.facets));
+                        $location.search(scope.filtersManager.urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse, scope.facets));
                         scope.query = scope.filtersManager.toQuery(scope.content);
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
-                        if (Search.getActiveOrderProp().id !== orderProp.id) {
+                        if (Search.activeOrderProp.id !== orderProp.id) {
                             Search.setActiveOrderProp(orderProp.id, false);
                         } else {
-                            Search.setActiveOrderProp(orderProp.id, !Search.getOrderDirection());
+                            Search.setActiveOrderProp(orderProp.id, !Search.orderReverse);
                         }
                     };
 
@@ -185,13 +183,13 @@ angular.module('ortolangMarketApp')
                             scope.facets = false;
                         }
 
-                        if($routeParams.facets) {
+                        if ($routeParams.facets) {
                             scope.facets = ($routeParams.facets === 'true');
                         }
 
                         var newQuery = scope.filtersManager.toQuery(scope.content);
 
-                        if(scope.query !== newQuery) {
+                        if (scope.query !== newQuery) {
                             scope.query = newQuery;
                         }
                     }

@@ -6,32 +6,28 @@
  * @description
  * # Search
  * Factory in the ortolangMarketApp.
+ * @property {Array}    results         - an array holding the results
+ * @property {object}   viewModes       - the different available view modes
+ * @property {object}   activeViewMode  - the active view mode
+ * @property {object}   orderProps      - the different ways of ordering the results
+ * @property {object}   activeOrderProp - the active way of ordering the results
+ * @property {boolean}  orderReverse    - if reverse ordering
  */
-angular.module('ortolangMarketApp').service('Search', ['$filter', '$q', 'SearchResource', 'icons', function ($filter, $q, SearchResource, icons) {
+angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResource', 'icons', function ($filter, SearchResource, icons) {
 
-    var results = [],   // an array holding the results
-        tmpResults,     // an temporary array holding the results while they are being processed
-        viewModes,      // the different view modes
-        activeViewMode, // the active view mode
-        orderProps,     // the different ways of ordering the results
-        activeOrderProp,// the active way of ordering the result
-        orderDirection;
+    var tmpResults; // a temporary array holding the results while they are being processed
 
     this.clearResults = function () {
-        results = [];
+        this.results = [];
         tmpResults = undefined;
     };
 
     this.hasResults = function () {
-        return results.length > 0;
-    };
-
-    this.getResults = function () {
-        return results;
+        return this.results.length > 0;
     };
 
     this.endProcessing = function () {
-        results = tmpResults;
+        this.results = tmpResults;
         tmpResults = undefined;
     };
 
@@ -40,7 +36,7 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', '$q', 'SearchR
     };
 
     this.getResult = function (wskey) {
-        var i = 0, array = tmpResults || results;
+        var i = 0, array = tmpResults || this.results;
         for (i; i < array.length; i++) {
             if (array[i].wskey === wskey) {
                 return array[i];
@@ -50,21 +46,22 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', '$q', 'SearchR
     };
 
     this.removeResult = function (resultId) {
-        var array = tmpResults || results,
+        var array = tmpResults || this.results,
             filteredResults;
         filteredResults = $filter('filter')(array, {'@rid': '!' + resultId});
         if (tmpResults) {
             tmpResults = filteredResults;
         } else {
-            results = filteredResults;
+            this.results = filteredResults;
         }
     };
 
     this.search = function (query, noProcessing) {
         this.clearResults();
+        var Search = this;
         return SearchResource.json({query: query}, function (data) {
             if (noProcessing) {
-                results = data;
+                Search.results = data;
             } else {
                 tmpResults = data;
             }
@@ -72,55 +69,36 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', '$q', 'SearchR
     };
 
     this.addViewMode = function (viewMode) {
-        viewModes[viewMode.id] = viewMode;
-    };
-
-    this.getActiveViewMode = function () {
-        return activeViewMode;
+        this.viewModes[viewMode.id] = viewMode;
     };
 
     this.setActiveViewMode = function (viewModeId) {
-        activeViewMode = viewModes[viewModeId] || viewModes.tile;
+        this.activeViewMode = this.viewModes[viewModeId] || this.viewModes.tile;
     };
 
-    this.getViewModes = function () {
-        return viewModes;
-    };
-
-    this.getOrderProps = function () {
-        return orderProps;
-    };
-
-    this.getActiveOrderProp = function () {
-        return activeOrderProp;
-    };
-
-    this.setActiveOrderProp = function (orderPropId, newOrderDirection) {
-        activeOrderProp = orderProps[orderPropId] || orderProps.publicationDate;
-        if (newOrderDirection !== undefined) {
-            orderDirection = newOrderDirection;
+    this.setActiveOrderProp = function (orderPropId, orderReverse) {
+        this.activeOrderProp = this.orderProps[orderPropId] || this.orderProps.publicationDate;
+        if (orderReverse !== undefined) {
+            this.orderReverse = orderReverse;
         }
     };
 
-    this.getOrderDirection = function () {
-        return orderDirection;
-    };
-
-    function init() {
-        viewModes = {
+    this.init = function () {
+        this.results = [];
+        this.viewModes = {
             line: {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'},
             tile: {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'}
         };
-        activeViewMode = viewModes.tile;
+        this.activeViewMode = this.viewModes.tile;
 
-        orderProps = {
+        this.orderProps = {
             title: {id: 'title', sort: 'titleToSort', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'},
             publicationDate: {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'}
         };
-        activeOrderProp = orderProps.publicationDate;
-        orderDirection = true;
-    }
-    init();
+        this.activeOrderProp = this.orderProps.publicationDate;
+        this.orderReverse = true;
+    };
+    this.init();
 
     return this;
 

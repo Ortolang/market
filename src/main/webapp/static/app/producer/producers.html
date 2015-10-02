@@ -15,7 +15,7 @@
 	<section ng-if="Search.hasResults()" class="items">
 
 	    <div class="row market-list-line">
-	        <div ng-repeat="producer in Search.getResults() | filter:content" class="col-md-8 line">
+	        <div ng-repeat="producer in Search.results | filter:content" class="col-md-8 line">
 	            <div ng-include="'producer/directives/producer.html'"></div>
 	        </div>
 	    </div>
