@@ -6,6 +6,26 @@
  * @description
  * # BrowserCtrl
  * Controller of the ortolangMarketApp
+ *
+ * @extends $rootScope.Scope
+ *
+ * @property {Object}   parent              - Browsed element
+ * @property {Array}    children            - Children of the browsed element
+ * @property {Array}    selectedElements    - Selected elements
+ * @property {String}   path                - Current path (i.e. parent's path)
+ * @property {String}   root                - Current root (snapshot/tag)
+ * @property {Array}    visualizers         - List of the compatible visualizers for the selected element(s)
+ * @property {Object}   filterModels        - Filtering query models for filtering by name, mimeType, etc.
+ * @property {Array}    orderProp           - Ways of ordering the children
+ * @property {boolean}  reverse             - If the ordering is reversed
+ * @property {String}   dateFormat          - Date format (ex: 'short', 'full')
+ * @property {boolean}  isFileSelectBrowserService  - If the browser is a file selector browser
+ * @property {boolean}  fileSelectAcceptMultiple    - If multiple file selection is accepted in the case of a file selector browser
+ * @property {boolean}  isContextMenuActive - If the context menu is opened
+ * @property {Array}    forceMimeTypes      - List of the only mime types to be displayed
+ * @property {Array}    contextMenuItems    - Context menu elements
+ * @property {Array}    breadcrumbParts     - Paths of all the ancestors of the browsed element
+ * @property {Array}    breadcrumbDropdownItems - List of the elements to be displayed in the context menu
  */
 angular.module('ortolangMarketApp')
     .controller('BrowserCtrl', [
@@ -36,7 +56,7 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function ($scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
             var isMacOs, isClickedOnce, marketItemHeader, footerHeight, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
@@ -803,7 +823,7 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function clearVisualizers() {
-                $scope.visualizers = undefined;
+                $scope.visualizers = null;
             }
 
             function checkCompatibleVisualizers() {
@@ -1634,13 +1654,13 @@ angular.module('ortolangMarketApp')
                     tile: {id: 'tile', icon: icons.browser.viewModeLine, text: 'BROWSER.VIEW_MODE_LINE'}
                 };
                 bindHotkeys();
-                $scope.parent = undefined;
-                $scope.children = undefined;
-                $scope.selectedElements = undefined;
+                $scope.parent = null;
+                $scope.children = null;
+                $scope.selectedElements = null;
                 $scope.icons = icons;
                 $scope.ortolangType = ortolangType;
                 // Breadcrumb
-                $scope.breadcrumbParts = undefined;
+                $scope.breadcrumbParts = null;
                 $scope.breadcrumbDropdownItems = [];
                 // Context Menu
                 $scope.isContextMenuActive = false;
@@ -1650,7 +1670,7 @@ angular.module('ortolangMarketApp')
                 $scope.dateFormat = 'short';
                 $scope.reverse = false;
                 // Visualizers
-                $scope.visualizers = undefined;
+                $scope.visualizers = null;
                 // Workspace
                 $scope.isScreenMd = false;
                 $scope.displayedItemLimit = initialDisplayedItemLimit;
