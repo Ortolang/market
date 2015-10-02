@@ -92,7 +92,7 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
         this.activeViewMode = this.viewModes.tile;
 
         this.orderProps = {
-            title: {id: 'title', sort: 'titleToSort', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'},
+            title: {id: 'title', sort: 'effectiveTitle', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'},
             publicationDate: {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'}
         };
         this.activeOrderProp = this.orderProps.publicationDate;

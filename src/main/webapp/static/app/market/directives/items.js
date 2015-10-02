@@ -32,7 +32,7 @@ angular.module('ortolangMarketApp')
 
                         angular.forEach(results, function (result) {
                             if (result.wskey) {
-                                result.titleToSort = getTitleValue(result.title);
+                                result.effectiveTitle = getTitleValue(result.title);
 
                                 var itemFromManager = Search.getResult(result.wskey);
                                 if (itemFromManager && result.lastModificationDate > itemFromManager.lastModificationDate) {

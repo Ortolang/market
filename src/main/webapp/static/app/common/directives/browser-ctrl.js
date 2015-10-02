@@ -967,6 +967,8 @@ angular.module('ortolangMarketApp')
                 if (!$scope.isFileSelectBrowserService) {
                     $rootScope.noFooter = false;
                 }
+                // Unbind listeners
+                angular.element($window).unbind('resize.' + $scope.$id);
             });
 
             $rootScope.$on('browserAskSelectedElements', function () {
@@ -1487,7 +1489,8 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            angular.element($window).bind('resize', function () {
+            angular.element($window).bind('resize.' + $scope.$id, function () {
+                console.log('resize');
                 $scope.resizeBrowser();
             });
 

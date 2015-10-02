@@ -3,11 +3,11 @@
 
     <div ng-hide="Search.isProcessing()">
         <div ng-if="Search.hasResults() && Search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper">
-            <item class="flex-column" ng-repeat="item in Search.results | orderBy:Search.activeOrderProp.sort:Search.orderReverse" data-entry="item" data-template="market/templates/medium-item.html"></item>
+            <item class="flex-column" ng-repeat="item in Search.results | orderBy:Search.activeOrderProp.sort:Search.orderReverse track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
         </div>
 
         <div ng-if="Search.hasResults() && Search.activeViewMode.id === 'line'" class="full-item-wrapper">
-            <item ng-repeat="item in Search.results | orderBy:Search.activeOrderProp.sort:Search.orderReverse" data-entry="item" data-template="market/templates/full-item.html"></item>
+            <item ng-repeat="item in Search.results | orderBy:Search.activeOrderProp.sort:Search.orderReverse track by item.key" data-entry="item" data-template="market/templates/full-item.html"></item>
         </div>
 
         <p ng-if="!Search.isProcessing() && !Search.hasResults()" class="text-center"><em translate="MARKET.NO_ITEM"></em></p>

@@ -291,6 +291,7 @@ angular.module('ortolangMarketApp')
                     scope.$on('$destroy', function () {
                         deregisterFileLicenceSelectModal();
                         deregisterFileImageSelectModal();
+                        angular.element($window).unbind('resize.' + scope.$id);
                     });
 
 
@@ -332,7 +333,7 @@ angular.module('ortolangMarketApp')
                         }
                     };
 
-                    angular.element($window).bind('resize', function () {
+                    angular.element($window).bind('resize.' + scope.$id, function () {
                         scope.resizeMetadataItemEditor();
                     });
 

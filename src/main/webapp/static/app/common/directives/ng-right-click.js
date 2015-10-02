@@ -12,11 +12,14 @@ angular.module('ortolangMarketApp')
             restrict: 'A',
             link: function (scope, element, attrs) {
                 var fn = $parse(attrs.ngRightClick);
-                element.bind('contextmenu', function (event) {
+                element.bind('contextmenu.' + scope.$id, function (event) {
                     scope.$apply(function () {
                         event.preventDefault();
                         fn(scope, {$event: event});
                     });
+                });
+                scope.$on('$destroy', function () {
+                    element.unbind('contextmenu.' + scope.$id);
                 });
             }
         };
