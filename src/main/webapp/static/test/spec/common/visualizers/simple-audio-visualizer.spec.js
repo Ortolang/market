@@ -7,10 +7,9 @@ describe('Visualizer: SimpleAudioVisualizer', function () {
     beforeEach(module('common/visualizers/simple-audio-visualizer/simple-audio-visualizer.html'));
 
     // instantiate service
-    var SimpleAudioVisualizer, element, scope, AuthService;
-    beforeEach(inject(function ($rootScope, $compile, _SimpleAudioVisualizer_, _AuthServiceMock_) {
+    var SimpleAudioVisualizer, element, scope;
+    beforeEach(inject(function ($rootScope, $compile, _SimpleAudioVisualizer_) {
         SimpleAudioVisualizer = _SimpleAudioVisualizer_;
-        AuthService = _AuthServiceMock_;
         scope = $rootScope.$new();
         element = angular.element('<div simple-audio-visualizer></div>');
         element = $compile(element)(scope);
