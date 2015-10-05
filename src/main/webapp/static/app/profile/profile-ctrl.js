@@ -8,12 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$rootScope', '$translate', '$http', 'User', 'Profile', 'icons',
-        function ($scope, $rootScope, $translate, $http, User, Profile, icons) {
+    .controller('ProfileCtrl', ['$scope', '$rootScope', '$translate', '$http', 'User', 'Profile',
+        function ($scope, $rootScope, $translate, $http, User, Profile) {
 
             var fieldTemplates;
             $scope.User = User;
-            $scope.icons = icons;
 
             $rootScope.$on('$translateChangeSuccess', function () {
                 $scope.emptyText = $translate.instant('PROFILE.EMPTY');

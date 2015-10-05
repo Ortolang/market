@@ -8,6 +8,7 @@ angular.element(document).ready(function () {
         /**
          * @ngdoc service
          * @name ortolangMarketApp.AuthService
+         *
          * @description
          * # AuthService
          * Factory in the ortolangMarketApp.
@@ -17,12 +18,18 @@ angular.element(document).ready(function () {
 
                 var deferred = $q.defer();
 
+                /**
+                 * @ngdoc function
+                 * @name ortolangMarketApp.AuthService#isAuthenticated
+                 * @methodOf ortolangMarketApp.AuthService
+                 *
+                 * @description
+                 * Is user authenticated on Keycloak server
+                 *
+                 * @returns {boolean}
+                 */
                 function isAuthenticated() {
                     return keycloakAuth.authenticated;
-                }
-
-                function isSuperUser() {
-                    return isAuthenticated() && keycloakAuth.tokenParsed.preferred_username === 'root';
                 }
 
                 function login() {
@@ -41,6 +48,13 @@ angular.element(document).ready(function () {
                     $window.location.reload();
                 }
 
+                /**
+                 * @ngdoc function
+                 * @name ortolangMarketApp.AuthService#sessionInitialized
+                 * @methodOf ortolangMarketApp.AuthService
+                 *
+                 * @returns {Promise} a promise resolved once the user profile is fully loaded
+                 */
                 function sessionInitialized() {
                     return deferred.promise;
                 }
@@ -57,7 +71,6 @@ angular.element(document).ready(function () {
                     getKeycloak: function () { return keycloakAuth; },
                     isAuthenticated: isAuthenticated,
                     forceReload: forceReload,
-                    isSuperUser: isSuperUser,
                     sessionInitialized: sessionInitialized,
                     resolveSessionInitialized: resolveSessionInitialized
                 };

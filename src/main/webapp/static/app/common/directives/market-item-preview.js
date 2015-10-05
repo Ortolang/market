@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemPreview', ['$rootScope', '$filter', '$location', 'ObjectResource', 'Settings', 'Content', 'icons', '$translate', function ($rootScope, $filter, $location, ObjectResource, Settings, Content, icons, $translate) {
+    .directive('marketItemPreview', ['$rootScope', '$filter', '$location', 'ObjectResource', 'Settings', 'Content', '$translate', function ($rootScope, $filter, $location, ObjectResource, Settings, Content, $translate) {
         return {
             restrict: 'EA',
             scope: {
@@ -187,7 +187,6 @@ angular.module('ortolangMarketApp')
                         scope.marketItemTemplate = undefined;
                         scope.image = undefined;
                         scope.imgtitle = undefined;
-                        scope.icons = icons;
                         scope.currentContent = scope.content;
                         scope.showingDescription = false;
                     }

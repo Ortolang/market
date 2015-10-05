@@ -9,7 +9,7 @@
  *
  * @extends $rootScope.Scope
  *
- * @property {boolean} authenticated    - Shortcut for AuthService.isAuthenticated()
+ * @property {boolean} authenticated    - Shortcut for {@link ortolangMarketApp.AuthService#isAuthenticated}
  */
 angular.module('ortolangMarketApp')
     .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', '$analytics', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, $analytics, url, User, AuthService, ProfileResource, AtmosphereService) {

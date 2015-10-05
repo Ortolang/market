@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketAppMock.AuthService
+ * @name ortolangMarketAppMock.AuthServiceMock
  * @description
  * # AuthService
  * Factory in the ortolangMarketAppMock.
  */
 angular.module('ortolangMarketAppMock')
-    .factory('AuthService', ['$window', '$q', function ($window, $q) {
+    .factory('AuthServiceMock', ['$window', '$q', function ($window, $q) {
 
         var keycloakAuth = {
                 authServerUrl: 'authServerUrl',

@@ -9,9 +9,9 @@ describe('Factory: Runtime', function () {
     var Runtime, RuntimeResource, sample, $rootScope, AuthService;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_$rootScope_, _RuntimeResource_, _Runtime_, _sample_, _AuthService_) {
+    beforeEach(inject(function (_$rootScope_, _RuntimeResource_, _Runtime_, _sample_, _AuthServiceMock_) {
         RuntimeResource = _RuntimeResource_;
-        AuthService = _AuthService_;
+        AuthService = _AuthServiceMock_;
         Runtime = _Runtime_;
         sample = _sample_;
         $rootScope = _$rootScope_;

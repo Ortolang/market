@@ -8,9 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddMemberCtrl', ['$scope', '$filter', 'ProfileResource', 'GroupResource', 'icons', 'User', 'QueryBuilderFactory', 'SearchResource', function ($scope, $filter, ProfileResource, GroupResource, icons, User, QueryBuilderFactory, SearchResource) {
-
-        $scope.icons = icons;
+    .controller('AddMemberCtrl', ['$scope', '$filter', 'ProfileResource', 'GroupResource', 'User', 'QueryBuilderFactory', 'SearchResource', function ($scope, $filter, ProfileResource, GroupResource, User, QueryBuilderFactory, SearchResource) {
 
         if (!$scope.addFriend) {
             User.sessionInitialized().then(function () {

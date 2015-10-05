@@ -8,9 +8,9 @@ describe('Visualizer: SimpleAudioVisualizer', function () {
 
     // instantiate service
     var SimpleAudioVisualizer, element, scope, AuthService;
-    beforeEach(inject(function ($rootScope, $compile, _SimpleAudioVisualizer_, _AuthService_) {
+    beforeEach(inject(function ($rootScope, $compile, _SimpleAudioVisualizer_, _AuthServiceMock_) {
         SimpleAudioVisualizer = _SimpleAudioVisualizer_;
-        AuthService = _AuthService_;
+        AuthService = _AuthServiceMock_;
         scope = $rootScope.$new();
         element = angular.element('<div simple-audio-visualizer></div>');
         element = $compile(element)(scope);

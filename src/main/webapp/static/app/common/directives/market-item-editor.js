@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'icons', 'url', 'WorkspaceElementResource', 'ObjectResource', 'QueryBuilderFactory', 'Settings', 'SearchResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, icons, url, WorkspaceElementResource, ObjectResource, QueryBuilderFactory, Settings, SearchResource) {
+    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'url', 'WorkspaceElementResource', 'ObjectResource', 'QueryBuilderFactory', 'Settings', 'SearchResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, url, WorkspaceElementResource, ObjectResource, QueryBuilderFactory, Settings, SearchResource) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',

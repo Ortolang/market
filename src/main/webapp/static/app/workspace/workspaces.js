@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'Content', 'MetadataFormatResource', 'Settings', 'Runtime', 'icons', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, Content, MetadataFormatResource, Settings, Runtime, icons) {
+    .controller('WorkspacesCtrl', ['$scope', '$rootScope', '$filter', '$location', '$modal', '$alert', '$translate', '$window', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'ObjectResource', 'WorkspaceBrowserService', 'GroupResource', 'ProfileResource', 'Content', 'MetadataFormatResource', 'Settings', 'Runtime', function ($scope, $rootScope, $filter, $location, $modal, $alert, $translate, $window, $q, WorkspaceResource, WorkspaceElementResource, ObjectResource, WorkspaceBrowserService, GroupResource, ProfileResource, Content, MetadataFormatResource, Settings, Runtime) {
 
         var modalScope, workspaceListDeferred, workspaceMembersDeferred;
 
@@ -499,7 +499,6 @@ angular.module('ortolangMarketApp')
             $scope.WorkspaceBrowserService = WorkspaceBrowserService;
             $scope.workspaceHistory = undefined;
             $scope.resizeBrowser();
-            $scope.icons = icons;
 
             $scope.previewing = !!$location.search().preview;
             $scope.editing = !!$location.search().edit;

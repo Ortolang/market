@@ -183,6 +183,8 @@ angular
         copy.submitTpl = '<button type="submit" class="btn btn-default"><span></span></button>';
         editableThemes.bs3 = copy;
         editableOptions.theme = 'bs3';
+    }]).run(['$rootScope', 'icons', function ($rootScope, icons) {
+        $rootScope.icons = icons;
     }]);
 
 
