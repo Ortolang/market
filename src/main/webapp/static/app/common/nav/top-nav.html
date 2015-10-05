@@ -40,8 +40,8 @@
                     <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-repeat="page in StaticWebsite.getInformationContent()" >
-                        <a ng-href="#/information/{{page.id}}"><span class="fa fa-fw" ng-class="page.iconTop"></span> {{StaticWebsite.getInformationPageTitle(page)}}</a>
+                    <li ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id" >
+                        <a ng-href="#/information/{{::page.id}}"><span class="fa fa-fw" ng-class="::page.iconTop"></span> {{StaticWebsite.getInformationPageTitle(page)}}</a>
                     </li>
                 </ul>
             </li>
