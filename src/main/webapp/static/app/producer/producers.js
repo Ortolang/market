@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
                 projection: 'meta_ortolang-referentiel-json.fullname as fullname, meta_ortolang-referentiel-json.name as name, meta_ortolang-referentiel-json.id as id, meta_ortolang-referentiel-json.img as img, meta_ortolang-referentiel-json.homepage as homepage',
                 source: 'ReferentielEntity'
             });
-
+            queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Organization');
             // var contentSplit = [];
             // if ($scope.content && $scope.content !== '') {
             //     contentSplit = queryBuilder.tokenize($scope.content);

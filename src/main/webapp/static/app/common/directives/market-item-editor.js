@@ -32,12 +32,6 @@ angular.module('ortolangMarketApp')
                             return;
                         }
 
-                        for(var propertyName in scope.metadata) {
-                            if(scope.metadata[propertyName].length===0) {
-                                delete scope.metadata[propertyName];
-                            }
-                        }
-
                         if(scope.publicationsModel.length>0) {
                             scope.metadata.publications = [];
                             angular.forEach(scope.publicationsModel, function(value) {
@@ -144,6 +138,14 @@ angular.module('ortolangMarketApp')
                         angular.forEach(scope.selectedToolFileEncodings, function(tag) {
                             scope.metadata.toolFileEncodings.push(tag.id);
                         });
+
+                        scope.metadata.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+                        for(var propertyName in scope.metadata) {
+                            if(scope.metadata[propertyName].length===0) {
+                                delete scope.metadata[propertyName];
+                            }
+                        }
 
                         var content = angular.toJson(scope.metadata),
                             contentType = 'text/json';
@@ -361,7 +363,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'country');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Country');
 
                         var query = queryBuilder.toString();
                         scope.allCountries = [];
@@ -398,7 +400,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaType');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaType');
 
                         var query = queryBuilder.toString();
                         scope.allCorporaType = [];
@@ -431,7 +433,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaLanguageType');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaLanguageType');
 
                         var query = queryBuilder.toString();
                         scope.allCorporaLanguageType = [];
@@ -464,7 +466,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaStyle');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaStyle');
 
                         var query = queryBuilder.toString();
                         scope.allCorporaStyles = [];
@@ -501,7 +503,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'annotationLevel');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'AnnotationLevel');
 
                         var query = queryBuilder.toString();
                         scope.allAnnotationLevels = [];
@@ -538,7 +540,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaFormat');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaFormat');
 
                         var query = queryBuilder.toString();
                         scope.allCorporaFormats = [];
@@ -575,7 +577,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaFileEncoding');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaFileEncoding');
 
                         var query = queryBuilder.toString();
                         scope.allCorporaFileEncodings = [];
@@ -612,7 +614,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'corporaDataType');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaDataType');
 
                         var query = queryBuilder.toString();
                         scope.allCorporaDataTypes = [];
@@ -649,7 +651,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'language');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Language');
 
                         var query = queryBuilder.toString();
                         scope.allLanguages = [];
@@ -734,7 +736,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'lexiconInputType');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconInputType');
 
                         var query = queryBuilder.toString();
                         scope.allLexiconInputTypes = [];
@@ -767,7 +769,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'lexiconDescriptionType');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconDescriptionType');
 
                         var query = queryBuilder.toString();
                         scope.allLexiconDescriptionTypes = [];
@@ -804,7 +806,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'lexiconLanguageType');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconLanguageType');
 
                         var query = queryBuilder.toString();
                         scope.allLexiconLanguageTypes = [];
@@ -837,7 +839,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'lexiconFormat');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconFormat');
 
                         var query = queryBuilder.toString();
                         scope.allLexiconFormats = [];
@@ -874,7 +876,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'programmingLanguage');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ProgrammingLanguage');
 
                         var query = queryBuilder.toString();
                         scope.allProgrammingLanguages = [];
@@ -911,7 +913,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'operatingSystem');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'OperatingSystem');
 
                         var query = queryBuilder.toString();
                         scope.allOperatingSystems = [];
@@ -948,7 +950,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolSupport');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolSupport');
 
                         var query = queryBuilder.toString();
                         scope.allToolSupports = [];
@@ -972,7 +974,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolFunctionality');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolFunctionality');
 
                         var query = queryBuilder.toString();
                         scope.allToolFunctionalities = [];
@@ -1009,7 +1011,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolInputData');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolInputData');
 
                         var query = queryBuilder.toString();
                         scope.allToolInputData = [];
@@ -1046,7 +1048,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolOutputData');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolOutputData');
 
                         var query = queryBuilder.toString();
                         scope.allToolOutputData = [];
@@ -1083,7 +1085,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'toolFileEncoding');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolFileEncoding');
 
                         var query = queryBuilder.toString();
                         scope.allToolFileEncodings = [];
@@ -1120,7 +1122,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'type');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ResourceType');
 
                         var query = queryBuilder.toString();
                         scope.allResourceType = [];
@@ -1153,7 +1155,7 @@ angular.module('ortolangMarketApp')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'statusOfUse');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'StatusOfUse');
 
                         var query = queryBuilder.toString();
                         scope.allStatusOfUse = [];

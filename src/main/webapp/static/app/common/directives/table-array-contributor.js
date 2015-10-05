@@ -427,7 +427,7 @@ angular.module('schemaForm')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.midname', 'midname');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.organization', 'organization');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'person');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Person');
 
                         var query = queryBuilder.toString();
                         scope.allPersons = [];
@@ -460,7 +460,7 @@ angular.module('schemaForm')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'organization');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Organization');
 
                         var query = queryBuilder.toString();
                         scope.allOrganizations = [];
@@ -498,7 +498,7 @@ angular.module('schemaForm')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'role');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Role');
 
                         var query = queryBuilder.toString();
                         scope.allRoles = [];
