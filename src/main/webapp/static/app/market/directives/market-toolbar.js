@@ -8,19 +8,12 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter',  function ($routeParams, $location, $analytics, OptionFacetedFilter) {
+    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search) {
         return {
             restrict: 'E',
             scope: {
                 type: '=',
-                content: '=',
                 query: '=',
-                items: '=',
-                viewMode: '=',
-                viewModes: '=',
-                orderProp: '=',
-                orderDirection: '=',
-                orderProps: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
                 searchPlaceHolder: '@'
@@ -28,6 +21,8 @@ angular.module('ortolangMarketApp')
             templateUrl: 'market/directives/market-toolbar.html',
             link: {
                 post : function (scope) {
+
+                    scope.Search = Search;
 
                     scope.setFilter = function (filter, opt) {
                         addSelectedOptionFilter(filter, opt.getValue());
@@ -69,21 +64,16 @@ angular.module('ortolangMarketApp')
                         //    $analytics.trackSiteSearch(content, scope.type);
                         //}
 
-                        $location.search(scope.filtersManager.urlParam(scope.content, scope.viewMode, scope.orderProp, scope.orderDirection, scope.facets));
-                        scope.query = scope.filtersManager.toQuery(scope.content, scope.type);
+                        $location.search(scope.filtersManager.urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse, scope.facets));
+                        scope.query = scope.filtersManager.toQuery(scope.content);
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
-                        if (scope.orderProp.id !== orderProp.id) {
-                            scope.orderDirection = false;
-                            scope.orderProp = orderProp;
+                        if (Search.activeOrderProp.id !== orderProp.id) {
+                            Search.setActiveOrderProp(orderProp.id, false);
                         } else {
-                            scope.orderDirection = !scope.orderDirection;
+                            Search.setActiveOrderProp(orderProp.id, !Search.orderReverse);
                         }
-                    };
-
-                    scope.setViewMode = function (view) {
-                        scope.viewMode = view;
                     };
 
                     scope.hasAppliedFacets = function () {
@@ -155,23 +145,11 @@ angular.module('ortolangMarketApp')
                     function applyParams() {
 
                         if ($routeParams.viewMode) {
-                            angular.forEach(scope.viewModes, function (vm) {
-                                if (vm.id === $routeParams.viewMode) {
-                                    scope.viewMode = vm;
-                                }
-                            });
+                            Search.setActiveViewMode($routeParams.viewMode);
                         }
 
                         if ($routeParams.orderProp) {
-                            angular.forEach(scope.orderProps, function (op) {
-                                if (op.id === $routeParams.orderProp) {
-                                    scope.orderProp = op;
-                                }
-                            });
-                        }
-
-                        if ($routeParams.orderDirection) {
-                            scope.orderDirection = $routeParams.orderDirection;
+                            Search.setActiveOrderProp($routeParams.orderProp, $routeParams.orderDirection);
                         }
 
                         scope.content = $routeParams.content || undefined;
@@ -205,13 +183,13 @@ angular.module('ortolangMarketApp')
                             scope.facets = false;
                         }
 
-                        if($routeParams.facets) {
+                        if ($routeParams.facets) {
                             scope.facets = ($routeParams.facets === 'true');
                         }
 
-                        var newQuery = scope.filtersManager.toQuery(scope.content, scope.type);
+                        var newQuery = scope.filtersManager.toQuery(scope.content);
 
-                        if(scope.query !== newQuery) {
+                        if (scope.query !== newQuery) {
                             scope.query = newQuery;
                         }
                     }

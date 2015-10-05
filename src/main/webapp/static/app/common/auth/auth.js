@@ -6,9 +6,13 @@
  * @description
  * # AuthCtrl
  * Controller of the ortolangMarketApp
+ *
+ * @extends $rootScope.Scope
+ *
+ * @property {boolean} authenticated    - Shortcut for AuthService.isAuthenticated()
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', '$analytics', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function ($scope, $rootScope, $http, $modal, $analytics, url, User, AuthService, ProfileResource, AtmosphereService) {
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', '$analytics', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, $analytics, url, User, AuthService, ProfileResource, AtmosphereService) {
 
         var serverDownModal;
 

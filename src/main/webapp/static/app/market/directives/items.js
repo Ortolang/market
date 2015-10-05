@@ -8,59 +8,42 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['SearchResource', 'OptionFacetedFilter', 'ItemManager', 'Settings', function (SearchResource, OptionFacetedFilter, ItemManager, Settings) {
+    .directive('items', ['Search', 'OptionFacetedFilter', 'Settings', function (Search, OptionFacetedFilter, Settings) {
         return {
             restrict: 'E',
             scope: {
                 title: '=',
                 query: '=',
-                items: '=',
-                viewMode: '=',
-                viewModes: '=',
-                orderProp: '=',
-                orderProps: '=',
-                orderDirection: '=',
-                filtersManager: '=',
-                loadAtStartup: '='
+                filtersManager: '='
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
 
+                scope.Search = Search;
+
                 function load(query) {
                     console.log('query : ' + query);
-                    scope.lock = true;
-                    SearchResource.json({query: query}, function (jsonResults) {
-
-                        scope.items.clear();
+                    Search.search(query).$promise.then(function (results) {
                         if (scope.filtersManager) {
                             angular.forEach(scope.filtersManager.getAvailableFilters(), function (filter) {
                                 filter.clearOptions();
                             });
                         }
 
-                        angular.forEach(jsonResults, function (jsonResult) {
-                            var jsEntry = angular.fromJson(jsonResult);
+                        angular.forEach(results, function (result) {
+                            if (result.wskey) {
+                                result.effectiveTitle = getTitleValue(result.title);
 
-                            if (jsEntry.wskey) {
-                                jsEntry.titleToSort = getTitleValue(jsEntry.title);
-
-                                var itemFromManager = scope.items.getItem(jsEntry.wskey);
-                                if (itemFromManager) {
-                                    var entryVersionDate = jsEntry.lastModificationDate,
-                                        managerVersionDate = itemFromManager.lastModificationDate;
-
-                                    if (entryVersionDate > managerVersionDate) {
-                                        scope.items.setItem(itemFromManager, jsEntry);
-                                    }
-                                } else {
-                                    scope.items.addItem(jsEntry);
+                                var itemFromManager = Search.getResult(result.wskey);
+                                if (itemFromManager && result.lastModificationDate > itemFromManager.lastModificationDate) {
+                                    Search.removeResult(itemFromManager['@rid']);
                                 }
                             }
 
                         });
 
                         if (scope.filtersManager) {
-                            angular.forEach(scope.items.getItems(), function (item) {
+                            angular.forEach(results, function (item) {
                                 var i = 0;
                                 for (i; i < scope.filtersManager.getAvailableFilters().length; i++) {
                                     if (item[scope.filtersManager.getAvailableFilters()[i].getAlias()]) {
@@ -70,15 +53,14 @@ angular.module('ortolangMarketApp')
                             });
                         }
 
-                        scope.lock = false;
-                    }, function () {
-                        scope.lock = false;
+                        Search.endProcessing();
+
                     });
                 }
 
                 function addOptionFilter(filter, optionValue) {
                     if (angular.isArray(optionValue)) {
-                        angular.forEach(optionValue, function(opt) {
+                        angular.forEach(optionValue, function (opt) {
                             filter.putOption(OptionFacetedFilter.make({
                                 label: opt,
                                 value: opt,
@@ -105,21 +87,10 @@ angular.module('ortolangMarketApp')
                 }
 
                 scope.$watch('query', function () {
-                    if (scope.query !== undefined && scope.query !== '') {
+                    if (scope.query) {
                         load(scope.query);
                     }
                 });
-
-                function init() {
-                    scope.lock = false;
-                    if (scope.query !== '' && scope.loadAtStartup) {
-                        load(scope.query);
-                    }
-                    if (!scope.items) {
-                        scope.items = ItemManager.make();
-                    }
-                }
-                init();
             }
         };
     }]);

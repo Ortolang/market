@@ -174,25 +174,25 @@ angular.module('ortolangMarketApp')
                             transformRequest: angular.identity,
                             headers: {'Content-Type': undefined}
                         })
-                        .success(function () {
+                            .success(function () {
 
-                            console.log('submit form success');
-                            // scope.hideEditor();
-                            // resetMetadataFormat();
-                            // scope.refreshSelectedElement();
-                            if(scope.step) {
-                                scope.toggleCreating();
-                                scope.togglePreviewing();
-                            } else {
-                                scope.toggleEditing();
-                            }
+                                console.log('submit form success');
+                                // scope.hideEditor();
+                                // resetMetadataFormat();
+                                // scope.refreshSelectedElement();
+                                if(scope.step) {
+                                    scope.toggleCreating();
+                                    scope.togglePreviewing();
+                                } else {
+                                    scope.toggleEditing();
+                                }
 
-                        })
-                        .error(function (error) {
-                            console.error('creation of metadata failed !', error);
-                            // scope.hideEditor();
-                            // resetMetadataFormat();
-                        });
+                            })
+                            .error(function (error) {
+                                console.error('creation of metadata failed !', error);
+                                // scope.hideEditor();
+                                // resetMetadataFormat();
+                            });
                     }
 
                     scope.selectType = function () {
@@ -293,6 +293,7 @@ angular.module('ortolangMarketApp')
                     scope.$on('$destroy', function () {
                         deregisterFileLicenceSelectModal();
                         deregisterFileImageSelectModal();
+                        angular.element($window).unbind('resize.' + scope.$id);
                     });
 
 
@@ -325,16 +326,16 @@ angular.module('ortolangMarketApp')
                         if (height > topOffset) {
                             height -= 1;
 
-                        var editorWrapper = angular.element('.metadata-item-editor'),
-                            editorAside = angular.element('.editor-aside'),
-                            editorStepHeight = angular.element('.metadata-editor-progress-bar').innerHeight();
+                            var editorWrapper = angular.element('.metadata-item-editor'),
+                                editorAside = angular.element('.editor-aside'),
+                                editorStepHeight = angular.element('.metadata-editor-progress-bar').innerHeight();
 
-                        editorAside.css('min-height', (height - browserToolbarHeight) + 'px');
-                        editorWrapper.find('.editor-pane').css('height', (height - browserToolbarHeight - editorStepHeight) + 'px');
+                            editorAside.css('min-height', (height - browserToolbarHeight) + 'px');
+                            editorWrapper.find('.editor-pane').css('height', (height - browserToolbarHeight - editorStepHeight) + 'px');
                         }
                     };
 
-                    angular.element($window).bind('resize', function () {
+                    angular.element($window).bind('resize.' + scope.$id, function () {
                         scope.resizeMetadataItemEditor();
                     });
 
@@ -353,7 +354,7 @@ angular.module('ortolangMarketApp')
                     };
 
                     function loadAllCountries() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -370,7 +371,7 @@ angular.module('ortolangMarketApp')
                         SearchResource.json({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allCountries.push({id: term.id, label: term.label});
                             });
 
@@ -1092,7 +1093,7 @@ angular.module('ortolangMarketApp')
                         SearchResource.json({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allToolFileEncodings.push({id: term.id, label: term.label});
                             });
 
@@ -1112,7 +1113,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllResourceType() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -1129,7 +1130,7 @@ angular.module('ortolangMarketApp')
                         SearchResource.json({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allResourceType.push({key: term.id, value: term.label});
                             });
 
@@ -1145,7 +1146,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function loadAllStatusOfUse() {
-                        
+
                         var queryBuilder = QueryBuilderFactory.make({
                             projection: 'key, meta_ortolang-referentiel-json',
                             source: 'ReferentielEntity'
@@ -1162,17 +1163,17 @@ angular.module('ortolangMarketApp')
                         SearchResource.json({query: query}).$promise.then(function (jsonResults) {
                             angular.forEach(jsonResults, function (result) {
                                 var term = angular.fromJson(result);
-                                
+
                                 scope.allStatusOfUse.push({key: term.id, value: term.label});
                             });
 
                             if(angular.isDefined(scope.metadata.statusOfUse)) {
 
-                            var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
-                            if(statusOfUseFound.length>0) {
-                                scope.selectedStatusOfUse = statusOfUseFound[0];
+                                var statusOfUseFound = $filter('filter')(scope.allStatusOfUse, {key:scope.metadata.statusOfUse});
+                                if(statusOfUseFound.length>0) {
+                                    scope.selectedStatusOfUse = statusOfUseFound[0];
+                                }
                             }
-                        }
 
                         });
                     }

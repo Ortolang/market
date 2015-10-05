@@ -8,14 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('HomeCtrl', ['$scope', 'icons', 'ItemManager', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'StaticWebsite',
-        function ($scope, icons, ItemManager, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, StaticWebsite) {
+    .controller('HomeCtrl', ['$scope', 'Search', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'StaticWebsite',
+        function ($scope, Search, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, StaticWebsite) {
 
             // Scope variables
             function initScopeVariables() {
                 $scope.StaticWebsite = StaticWebsite;
-
-                $scope.items = ItemManager.make();
 
                 $scope.filtersManager = FacetedFilterManager.make();
 
@@ -58,11 +56,7 @@ angular.module('ortolangMarketApp')
                 wsAliasFilter.putSelectedOption(optComere);
                 $scope.filtersManager.addFilter(wsAliasFilter);
 
-                var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
-                $scope.viewMode = viewModeGrid;
-                $scope.orderDirection = true;
-                var orderPublicationDate = {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'};
-                $scope.orderProp = orderPublicationDate;
+                Search.setActiveOrderProp('publicationDate', true);
             }
 
             function init() {

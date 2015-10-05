@@ -8,12 +8,13 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', function (QueryBuilderFactory, $filter) {
+    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', 'Search', function (QueryBuilderFactory, $filter, Search) {
 
         // Constructor
         function FacetedFilterManager() {
             this.enabledFilters = [];
             this.availabledFilters = [];
+            this.customProjections = [];
         }
 
         // Methods
@@ -105,6 +106,10 @@ angular.module('ortolangMarketApp')
                 return params;
             },
 
+            addCustomProjection: function (propertyName, propertyAlias) {
+                this.customProjections.push({name: propertyName, alias: propertyAlias});
+            },
+
             toAnalytics: function (content) {
                 var result = content || '';
                 angular.forEach($filter('orderBy')(this.getFilters(), '+alias'), function (filter) {
@@ -115,13 +120,15 @@ angular.module('ortolangMarketApp')
                 return result;
             },
 
-            toQuery: function (content, type) {
+            toQuery: function (content) {
                 var queryBuilder = QueryBuilderFactory.make({projection: 'key', source: 'collection'});
 
                 queryBuilder.addProjection('lastModificationDate', 'lastModificationDate');
 
                 queryBuilder.addProjection('meta_ortolang-item-json.type', 'type');
                 queryBuilder.addProjection('meta_ortolang-item-json.title', 'title');
+                // TODO ask for description only when view mode line
+                queryBuilder.addProjection('meta_ortolang-item-json.description', 'description');
                 queryBuilder.addProjection('meta_ortolang-item-json.image', 'image');
                 queryBuilder.addProjection('meta_ortolang-item-json.applicationUrl', 'applicationUrl');
                 queryBuilder.addProjection('meta_ortolang-item-json.publicationDate', 'publicationDate');
@@ -132,27 +139,9 @@ angular.module('ortolangMarketApp')
                 queryBuilder.addProjection('meta_ortolang-workspace-json.wsalias', 'alias');
                 queryBuilder.addProjection('meta_ortolang-workspace-json.snapshotName', 'snapshotName');
 
-                if (type === 'Corpus') {
-                    queryBuilder.addProjection('meta_ortolang-item-json.corporaLanguages', 'corporaLanguages');
-                    queryBuilder.addProjection('meta_ortolang-item-json.corporaType', 'corporaType');
-                    queryBuilder.addProjection('meta_ortolang-item-json.corporaFormats', 'corporaFormats');
-                    queryBuilder.addProjection('meta_ortolang-item-json.corporaFileEncodings', 'corporaFileEncodings');
-                    queryBuilder.addProjection('meta_ortolang-item-json.corporaDataTypes', 'corporaDataTypes');
-                    queryBuilder.addProjection('meta_ortolang-item-json.corporaLanguageType', 'corporaLanguageType');
-                } else if (type === 'Outil') {
-                    queryBuilder.addProjection('meta_ortolang-item-json.toolLanguages', 'toolLanguages');
-                    queryBuilder.addProjection('meta_ortolang-item-json.toolFunctionalities', 'toolFunctionalities');
-                    queryBuilder.addProjection('meta_ortolang-item-json.toolInputData', 'toolInputData');
-                    queryBuilder.addProjection('meta_ortolang-item-json.toolOutputData', 'toolOutputData');
-                    queryBuilder.addProjection('meta_ortolang-item-json.toolFileEncodings', 'toolFileEncodings');
-                } else if (type === 'Lexique') {
-                    queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputType', 'lexiconInputType');
-                    queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionTypes', 'lexiconDescriptionTypes');
-                    queryBuilder.addProjection('meta_ortolang-item-json.lexiconInputLanguages', 'lexiconInputLanguages');
-                    queryBuilder.addProjection('meta_ortolang-item-json.lexiconDescriptionLanguages', 'lexiconDescriptionLanguages');
-                    queryBuilder.addProjection('meta_ortolang-item-json.lexiconFormats', 'lexiconFormats');
-                    queryBuilder.addProjection('meta_ortolang-item-json.lexiconLanguageType', 'lexiconLanguageType');
-                }
+                angular.forEach(this.customProjections, function (customProjection) {
+                    queryBuilder.addProjection(customProjection.name, customProjection.alias);
+                });
 
                 queryBuilder.equals('status', 'published');
 

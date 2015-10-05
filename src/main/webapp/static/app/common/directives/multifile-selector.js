@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
             },
             link: {
                 pre : function (scope) {
-                    
+
                     scope.addFile = function() {
                         var multifileSelectorModalScope = $rootScope.$new(true);
 
@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
 
                     var deregisterMultifileSelectorModal = $rootScope.$on('browserSelectedElements-multifileSelecterModal', function ($event, elements) {
                         console.log('metadata-form-market-ortolang caught event "browserSelectedElements-multifileSelecterModal" (selected elements: %o)', elements);
-                        
+
                         if(elements.length>0) {
                             if(scope.model.indexOf(elements[0].path) === -1){
                                 scope.model.push(elements[0].path);

@@ -25,8 +25,8 @@ angular.module('ortolangMarketApp')
                     // scope.values = [];
                     scope.type = scope.type || 'default';
                     scope.languages = [
-                        {key:'fr',value: $translate.instant('LANGUAGES.FR')}, 
-                        {key:'en', value: $translate.instant('LANGUAGES.EN')}, 
+                        {key:'fr',value: $translate.instant('LANGUAGES.FR')},
+                        {key:'en', value: $translate.instant('LANGUAGES.EN')},
                         {key:'es', value: $translate.instant('LANGUAGES.ES')},
                         {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
                     ];
