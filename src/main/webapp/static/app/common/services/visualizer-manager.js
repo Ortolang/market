@@ -179,7 +179,7 @@ angular.module('ortolangVisualizers')
                 console.error('id, name and compatiblesTypes are mandatory', config);
                 return {};
             }
-            if (!config.id.match(/^[A-Z]/)) {
+            if (!/^[A-Z]/.test(config.id)) {
                 console.error('id must start with an upper-case letter', config.id);
                 return {};
             }

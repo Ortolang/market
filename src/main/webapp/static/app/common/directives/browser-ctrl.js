@@ -939,8 +939,8 @@ angular.module('ortolangMarketApp')
                     if (isForceMimeTypesArray) {
                         var i, mimeTypeRegExp;
                         for (i = 0; i < $scope.forceMimeTypes.length; i++) {
-                            mimeTypeRegExp = new RegExp($scope.forceMimeTypes[i], 'gi');
-                            if (element.mimeType.match(mimeTypeRegExp)) {
+                            mimeTypeRegExp = new RegExp($scope.forceMimeTypes[i], 'i');
+                            if (mimeTypeRegExp.test(element.mimeType)) {
                                 matchingSelectedElements.push(element);
                                 break;
                             }
@@ -1131,10 +1131,8 @@ angular.module('ortolangMarketApp')
                     if (!nameQuery && !mimeTypeQuery) {
                         return true;
                     }
-                    var nameRegExp = new RegExp(nameQuery, 'gi'),
-                        mimeTypeRegExp,
-                        matchMimeTypes = false,
-                        matchName = !nameQuery || nameQuery.length < 2 || child.name.match(nameRegExp);
+                    var matchMimeTypes = false,
+                        matchName = !nameQuery || nameQuery.length < 2 || new RegExp(nameQuery, 'i').test(child.name);
                     if (matchName) {
                         if (!mimeTypeQuery || mimeTypeQuery.length < 2) {
                             matchMimeTypes = true;
@@ -1142,15 +1140,13 @@ angular.module('ortolangMarketApp')
                             if (angular.isArray(mimeTypeQuery)) {
                                 var i;
                                 for (i = 0; i < mimeTypeQuery.length; i++) {
-                                    mimeTypeRegExp = new RegExp(mimeTypeQuery[i], 'gi');
-                                    if (child.mimeType.match(mimeTypeRegExp)) {
+                                    if (new RegExp(mimeTypeQuery[i], 'i').test(child.mimeType)) {
                                         matchMimeTypes = true;
                                         break;
                                     }
                                 }
                             } else {
-                                mimeTypeRegExp = new RegExp(mimeTypeQuery, 'gi');
-                                matchMimeTypes = child.mimeType.match(mimeTypeRegExp);
+                                matchMimeTypes = new RegExp(mimeTypeQuery, 'i').test(child.mimeType);
                             }
                         }
                         return matchMimeTypes;
@@ -1628,7 +1624,7 @@ angular.module('ortolangMarketApp')
                     if ($scope.forceMimeTypes) {
                         $scope.filterModels.mimeTypeQuery = $scope.forceMimeTypes;
                     }
-                } else if ($route.current && $route.current.originalPath.match(/\/workspaces/)) {
+                } else if ($route.current && /\/workspaces/.test($route.current.originalPath)) {
                     $scope.browserService = WorkspaceBrowserService;
                     $scope.isWorkspaceBrowserService = true;
                 } else {

@@ -11,11 +11,10 @@ angular.module('ortolangMarketApp')
     .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements', function ($rootScope, $scope, $route, sideNavElements) {
 
         $scope.sideNavElements = sideNavElements;
+        $scope.sideNavActiveClass = null;
 
         $scope.select = function (element) {
-            angular.forEach(sideNavElements, function (value) {
-                value.active = value.class === element.class ? 'active' : undefined;
-            });
+            $scope.sideNavActiveClass = element.class;
         };
 
         // *********************** //
@@ -36,7 +35,7 @@ angular.module('ortolangMarketApp')
                     switch (current.$$route.originalPath) {
                         case '/':
                             $scope.select({class: 'home'});
-                            $rootScope.ortolangPageTitle = undefined;
+                            $rootScope.ortolangPageTitle = null;
                             break;
                         case '/tasks':
                             $scope.select({class: 'tasks'});
@@ -70,9 +69,9 @@ angular.module('ortolangMarketApp')
                         if (currentPath.indexOf(':section') !== -1) {
                             currentPath = currentPath.replace(':section', $route.current.params.section);
                         }
-                        if (currentPath.match(regExp) ||
-                            (regExpBis && $route.current.originalPath && $route.current.originalPath.match(regExpBis))) {
-                            sideNavElements[i].active = 'active';
+                        if (regExp.test(currentPath) ||
+                            (regExpBis && $route.current.originalPath && regExpBis.test($route.current.originalPath))) {
+                            $scope.sideNavActiveClass = sideNavElements[i].class;
                             break;
                         }
                     }

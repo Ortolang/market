@@ -22,6 +22,6 @@ angular.module('ortolangMarketApp')
                 number = Math.floor(Math.log(bytes) / Math.log(1024)),
                 val = (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision);
 
-            return (val.match(/\.0*$/) ? val.substr(0, val.indexOf('.')) : val) +  ' ' + units[number];
+            return (/\.0*$/.test(val) ? val.substr(0, val.indexOf('.')) : val) +  ' ' + units[number];
         };
     });
