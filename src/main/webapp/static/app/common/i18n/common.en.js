@@ -54,9 +54,12 @@ angular.module('ortolangMarketApp')
         },
         ROLES: {
             DEVELOPER: 'Developer',
+            CHIEF_DEVELOPER: 'Chief developer',
             MANAGER: 'Manager',
+            IT_MANAGER: 'IT manager',
             DESIGNER: 'Designer',
             RESEARCHER: 'Researcher',
+            SCIENTIFIC_DIRECTOR: 'Scientific director',
             AUTHOR: 'Author',
             ANNOTATOR: 'Annotator',
             COMPILER: 'Compiler',

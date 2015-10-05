@@ -53,10 +53,13 @@ angular.module('ortolangMarketApp')
             CONTENT: 'Une erreur inattendue s\'est produite'
         },
         ROLES: {
-            DEVELOPER: 'Responsable technique',
+            DEVELOPER: 'Développeur',
+            CHIEF_DEVELOPER: 'Responsable technique',
             MANAGER: 'Responsable informatique',
+            IT_MANAGER: 'Responsable informatique',
             DESIGNER: 'Concepteur',
             RESEARCHER: 'Responsable scientifique',
+            SCIENTIFIC_DIRECTOR: 'Responsable scientifique',
             AUTHOR: 'Auteur',
             ANNOTATOR: 'Annotateur',
             COMPILER: 'Compilateur',
