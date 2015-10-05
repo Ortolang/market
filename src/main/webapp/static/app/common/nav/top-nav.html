@@ -14,8 +14,8 @@
         </div>
 
         <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse" ng-cloak>
-            <li ng-show="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hiddenTopNav : false}:true">
-                <a ng-href="#{{element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="::element.iconCss"></span> {{element.description | translate}}</a>
+            <li ng-if="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hiddenTopNav : false}:true track by element.class">
+                <a ng-href="#{{::element.hiddenPath ? element.hiddenPath : element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="::element.iconCss"></span> {{::element.description | translate}}</a>
             </li>
             <!--<li ng-if="Cart.size() > 0" ng-hide="navbarCollapsed">-->
                 <!--<a data-title="{{'CART' | translate}}" data-auto-close="true" data-template="common/directives/cart-popover-template.html" data-placement="bottom" bs-popover>-->
@@ -23,19 +23,19 @@
                     <!--<span class="hidden-description" translate="CART"></span>-->
                 <!--</a>-->
             <!--</li>-->
-            <li ng-if="authenticated" ng-hide="navbarCollapsed">
+            <li ng-if="authenticated && !navbarCollapsed">
                 <a href="#/processes" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-fw fa-tasks"></span><span class="badge processes">{{Runtime.getEveryActiveProcessesNumber() === 0 ? '' : Runtime.getEveryActiveProcessesNumber()}}</span>
                     <span class="hidden-description" translate="PROCESSES"></span>
                 </a>
             </li>
-            <li ng-if="authenticated && Runtime.getTasks().length > 0" ng-hide="navbarCollapsed">
+            <li ng-if="authenticated && Runtime.getTasks().length > 0 && !navbarCollapsed">
                 <a href="#/tasks" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-fw fa-bell"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
                     <span class="hidden-description" translate="TASKS"></span>
                 </a>
             </li>
-            <li class="dropdown" ng-hide="navbarCollapsed">
+            <li class="dropdown" ng-if="!navbarCollapsed">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
                 </a>
@@ -50,10 +50,10 @@
                     <span class="fa fa-fw fa-globe"></span> {{'NAV.LANGUAGE' | translate}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-show="navbarCollapsed" ng-click="changeLanguage('en'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
-                    <li ng-show="navbarCollapsed" ng-click="changeLanguage('fr'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
-                    <li ng-hide="navbarCollapsed" ng-click="changeLanguage('en')" class="language" ng-class="{active: Settings.language === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
-                    <li ng-hide="navbarCollapsed" ng-click="changeLanguage('fr')" class="language" ng-class="{active: Settings.language === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
+                    <li ng-if="navbarCollapsed" ng-click="changeLanguage('en'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                    <li ng-if="navbarCollapsed" ng-click="changeLanguage('fr'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
+                    <li ng-if="!navbarCollapsed" ng-click="changeLanguage('en')" class="language" ng-class="{active: Settings.language === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                    <li ng-if="!navbarCollapsed" ng-click="changeLanguage('fr')" class="language" ng-class="{active: Settings.language === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
                 </ul>
             </li>
             <li class="dropdown" ng-if="authenticated">
@@ -62,8 +62,8 @@
                     {{User.fullName()}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-show="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                    <li ng-hide="navbarCollapsed"><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-if="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-if="!navbarCollapsed"><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                     <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
                 </ul>
             </li>

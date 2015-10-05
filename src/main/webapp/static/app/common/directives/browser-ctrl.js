@@ -868,7 +868,6 @@ angular.module('ortolangMarketApp')
                         fileName: modalScope.elements[0].name,
                         fileType: modalScope.elements[0].mimeType
                     };
-                    modalScope.icons = icons;
                     modalScope.download = function () {
                         $scope.download($scope.selectedElements);
                     };

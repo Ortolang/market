@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('profileDataField', ['$translate', 'Profile', function ($translate, Profile) {
+    .directive('profileDataField', ['$translate', 'Profile', 'icons', function ($translate, Profile, icons) {
         return {
             restrict: 'A',
             scope: {
@@ -33,6 +33,7 @@ angular.module('ortolangMarketApp')
                     };
                     scope.emptyText = $translate.instant('PROFILE.EMPTY');
                     scope.Profile = Profile;
+                    scope.icons = icons;
                 }
             }
         };

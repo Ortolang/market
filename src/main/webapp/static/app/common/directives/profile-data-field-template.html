@@ -4,8 +4,8 @@
     <div ng-class="inputClass">
 
         <div ng-switch="::profileData.forceVisibilities">
-            <button ng-switch-when="333" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="icons.everybody"></span></button>
-            <button ng-switch-when="300" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="icons.nobody"></span></button>
+            <button ng-switch-when="333" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="::icons.everybody"></span></button>
+            <button ng-switch-when="300" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="::icons.nobody"></span></button>
             <div ng-switch-default toggle-visibility class="pull-left" data-options="::Profile.getVisibilityOptions(profileData.forceVisibilities)" data-profile-data="profileData"
                  data-onaftersave="Profile.updateUserProfileData(profileData)"></div>
         </div>

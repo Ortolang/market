@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketAppMock.StaticWebsite
+ * @name ortolangMarketAppMock.StaticWebsiteMock
  * @description
  * # StaticWebsite
  * Factory in the ortolangMarketAppMock.
  */
 angular.module('ortolangMarketAppMock')
-    .factory('StaticWebsite', [function () {
+    .factory('StaticWebsiteMock', [function () {
 
         return {
             getInformationContent: function () { return undefined; },

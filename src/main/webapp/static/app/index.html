@@ -58,7 +58,7 @@
                ng-click="select(element)"
                ng-class="::element.class">
                 <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="myWorkspaces" data-placement="right" data-container="false" bs-tooltip></span>
-                <span class="item-description" translate="{{element.description}}"></span>
+                <span class="item-description" translate="{{::element.description}}"></span>
             </a>
             <span ng-if="::element.class === 'divider'"></span>
         </li>
