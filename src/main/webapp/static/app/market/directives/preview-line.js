@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
             },
             link: {
                 pre : function (scope) {
-                    
+
                     function init() {
                         scope.previewFiles = [];
                         angular.forEach(scope.paths, function (path) {

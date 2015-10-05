@@ -8,11 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'ItemManager', 'FacetedFilterManager', 'ReferentielResource', function ($rootScope, $scope, $routeParams, icons, QueryBuilderFactory, ItemManager, FacetedFilterManager, ReferentielResource) {
+    .controller('ContributorCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'FacetedFilterManager', 'ReferentielResource', function ($scope, $routeParams, icons, QueryBuilderFactory, FacetedFilterManager, ReferentielResource) {
 
         function loadItem(id) {
 
-            ReferentielResource.get({refKey: id}).$promise.then(function (referentielEntity) {
+            ReferentielResource.get({refKey: 'PERSON:' + id}).$promise.then(function (referentielEntity) {
                 $scope.contributor = angular.fromJson(referentielEntity.content);
 
                 $scope.ready = true;
@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
         }
 
         function loadResources(contributor) {
-            if(contributor) {
+            if (contributor) {
                 $scope.queryBuilder.and();
                 $scope.queryBuilder.in('meta_ortolang-item-json.contributors[entity][id]', [contributor]);
                 $scope.query = $scope.queryBuilder.toString();
@@ -35,9 +35,9 @@ angular.module('ortolangMarketApp')
 
             $scope.query = '';
             $scope.queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate',
-                    source: 'collection'
-                });
+                projection: 'key, meta_ortolang-item-json.type as type, meta_ortolang-item-json.title as title, meta_ortolang-item-json.description as description, meta_ortolang-item-json.image as image, meta_ortolang-item-json.applicationUrl as applicationUrl, meta_ortolang-item-json.publicationDate as publicationDate',
+                source: 'collection'
+            });
 
             // TODO removes duplication with facted-filter-manager
             $scope.queryBuilder.addProjection('meta_ortolang-item-json.statusOfUse', 'statusOfUse');
@@ -70,8 +70,6 @@ angular.module('ortolangMarketApp')
             $scope.queryBuilder.addProjection('lastModificationDate', 'lastModificationDate');
 
             $scope.queryBuilder.equals('status', 'published');
-
-            $scope.items = ItemManager.make();
 
             $scope.filtersManager = FacetedFilterManager.make();
 

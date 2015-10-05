@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
             };
 
             function populateInformationPage(language) {
-                Content.downloadWithPath(informationId + '/' + informationId + '.json', staticWebsiteAlias, 'latest', 'default').promise.success(function (data) {
+                Content.downloadWithPath(informationId + '/' + informationId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.success(function (data) {
                     informationContent = data.content;
                     angular.forEach(data.content, function (page) {
                         informationPages[page.id] = $rootScope.staticWebsiteBase + '/' + informationId + '/' + page.id + '/' + page.id + '.' + (language || 'fr') + '.html';
@@ -52,7 +52,7 @@ angular.module('ortolangMarketApp')
 
             function populateHomePage(language) {
                 homePage = $rootScope.staticWebsiteBase + '/' + homePageId + '/' + homePageId + '.' + (language || 'fr') + '.html';
-                Content.downloadWithPath(newsId + '/' + newsId + '.json', staticWebsiteAlias, 'latest', 'default').promise.success(function (data) {
+                Content.downloadWithPath(newsId + '/' + newsId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.success(function (data) {
                     news = [];
                     angular.forEach(data.news, function (id) {
                         news.push($rootScope.staticWebsiteBase + '/' + newsId + '/' + id + '/' + id + '.' + (language || 'fr') + '.html');
@@ -73,7 +73,7 @@ angular.module('ortolangMarketApp')
             });
 
             function init() {
-                $rootScope.staticWebsiteBase = url.content + '/' + staticWebsiteAlias + '/latest';
+                $rootScope.staticWebsiteBase = url.content + '/' + staticWebsiteAlias + '/' + OrtolangConfig.staticSiteVersion;
             }
             init();
 

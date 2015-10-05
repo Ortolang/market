@@ -82,6 +82,8 @@ angular.module('ortolangMarketApp')
             $rootScope.browsing = false;
             $rootScope.noFooter = false;
             $rootScope.myWorkspaces = undefined;
+            // Unbind listeners
+            angular.element($window).unbind('resize.' + $scope.$id);
         });
 
         $scope.$on('$routeUpdate', function () {
@@ -484,7 +486,7 @@ angular.module('ortolangMarketApp')
             }
         };
 
-        angular.element($window).bind('resize', function () {
+        angular.element($window).bind('resize.' + $scope.$id, function () {
             $scope.resizeBrowser();
         });
 

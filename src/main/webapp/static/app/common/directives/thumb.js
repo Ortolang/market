@@ -12,12 +12,15 @@ angular.module('ortolangMarketApp')
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                element.children('img').bind('load', function () {
+                element.children('img').bind('load.' + scope.$id, function () {
                     if (element.children('img')[0].naturalWidth > 1) {
                         element.removeClass('ng-hide');
                     } else {
                         element.addClass('ng-hide');
                     }
+                });
+                scope.$on('$destroy', function () {
+                    element.children('img').unbind('load.' + scope.$id);
                 });
             }
         };

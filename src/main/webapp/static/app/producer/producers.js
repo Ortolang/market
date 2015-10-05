@@ -8,18 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducersCtrl', ['$scope', 'QueryBuilderFactory', 'ItemManager', 'SearchResource', function ($scope, QueryBuilderFactory, ItemManager, SearchResource) {
+    .controller('ProducersCtrl', ['$scope', 'QueryBuilderFactory', 'Search', function ($scope, QueryBuilderFactory, Search) {
 
         $scope.search = function () {
             var query = buildQuery();
             console.log('query : ' + query);
-            SearchResource.json({query: query}, function (jsonResults) {
-                $scope.producers.clear();
-
-                angular.forEach(jsonResults, function (jsonResult) {
-                    $scope.producers.addItem(angular.fromJson(jsonResult));
-                });
-            });
+            Search.search(query, true);
         };
 
         function buildQuery() {
@@ -27,7 +21,7 @@ angular.module('ortolangMarketApp')
                 projection: 'meta_ortolang-referentiel-json.fullname as fullname, meta_ortolang-referentiel-json.name as name, meta_ortolang-referentiel-json.id as id, meta_ortolang-referentiel-json.img as img, meta_ortolang-referentiel-json.homepage as homepage',
                 source: 'ReferentielEntity'
             });
-
+            queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Organization');
             // var contentSplit = [];
             // if ($scope.content && $scope.content !== '') {
             //     contentSplit = queryBuilder.tokenize($scope.content);
@@ -52,9 +46,6 @@ angular.module('ortolangMarketApp')
         }
 
         function initScopeVariables() {
-            // $scope.query = '';
-            $scope.producers = ItemManager.make();
-
             //       var viewModeLine = {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'};
             //       var viewModeGrid = {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'};
             //       $scope.viewModes = [viewModeGrid, viewModeLine];
@@ -69,6 +60,7 @@ angular.module('ortolangMarketApp')
 
         function init() {
             initScopeVariables();
+            $scope.Search = Search;
 
             $scope.search();
         }

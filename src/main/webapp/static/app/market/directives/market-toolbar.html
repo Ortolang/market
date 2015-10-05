@@ -54,15 +54,20 @@
     <div class="row toolbar toolbar-options toolbar-options-sorted">
         <div class="col-sm-12">
             <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'MARKET.SHOW_IN' | translate}} : {{viewMode.text | translate}} <span class="caret"></span></button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'MARKET.SHOW_IN' | translate}} : {{Search.activeViewMode.text | translate}} <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li role="menuitem" ng-repeat="vm in viewModes"><a ng-click="setViewMode(vm)">{{vm.text | translate}}</a></li>
+                    <li role="menuitem" ng-repeat="vm in Search.viewModes"><a ng-click="Search.setActiveViewMode(vm.id)">{{vm.text | translate}}</a></li>
                 </ul>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'BROWSER.SORT_BY' | translate}} : {{orderProp.label | translate}} <span class="caret"></span></button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button">{{'BROWSER.SORT_BY' | translate}} : {{Search.activeOrderProp.label | translate}} <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="order in orderProps"><div ng-click="toggleOrderBy(order)">{{order.text | translate}}</div></li>
+                    <li ng-repeat="orderProp in Search.orderProps">
+                        <div ng-click="toggleOrderBy(orderProp)">
+                            <span>{{orderProp.text | translate}}</span>
+                            <span order-indicator data-name="{{Search.activeOrderProp.id}}" data-array="id" data-order-prop="orderProp" data-order-reverse="Search.orderReverse"></span>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
             OPERATING_SYSTEM: 'Operating systems supported',
             SUPPORT_TOOL: 'Support tool',
             LANGUAGE: 'Languages',
-            PRODUCER: 'Made on {{publicationDate | date}} by',
+            PRODUCER: 'Made on {{publicationDate}} by',
             RESEARCHER: 'Researcher{{value > 1 ? "s" : ""}}',
             MANAGER: 'Manager{{value > 1 ? "s" : ""}}',
             DESIGNER: 'Designer{{value > 1 ? "s" : ""}}',
@@ -130,7 +130,7 @@ angular.module('ortolangMarketApp')
                 CORPORA: 'Corpora',
                 LEXICON: 'Lexicon',
                 TOOL: 'Tool',
-                INTEGRATED_PROJECT: 'Integrated Project',
+                INTEGRATED_PROJECT: 'Integrated Project'
             }
         }
     });

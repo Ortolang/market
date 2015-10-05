@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
                 tags: '=',
                 browse: '='
             },
-            templateUrl: 'common/directives/market-item.html',
+            template: '<div ng-include="marketItemTemplate"></div>',
             link: {
                 pre: function (scope) {
 

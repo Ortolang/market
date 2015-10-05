@@ -16,6 +16,14 @@ angular.module('ortolangMarketApp')
                 transformRequest: function (data) {
                     return $.param(data);
                 },
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    var i = 0;
+                    for (i; i < data.length; i++) {
+                        data[i] = angular.fromJson(data[i]);
+                    }
+                    return data;
+                },
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 method: 'POST',
                 isArray: true

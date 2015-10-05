@@ -129,6 +129,22 @@
 				
 				</div>
 
+				<div class=" bs-callout">
+					<h4 class="bs-callout-label">{{'MARKET.WEBSITE' | translate}}</h4 class="bs-callout-label">
+					<div class="alert alert-info" role="alert">
+			    		<p><span class="glyphicon glyphicon-info-sign"></span> Adresse du site web contenant des informations sur la ressource.</p>
+			    	</div>
+					<div class="form-group  bs-callout-input">
+					    <input type="url" name="website" ng-model="metadata.website" class="form-control" placeholder="http://">
+					</div>
+				</div>
+
+				<div class="bs-callout">
+					<h4 class="bs-callout-label">{{'MARKET.KEYWORDS' | translate}}</h4>
+		            
+					<multilingual-textfield name="'keyword'" model="metadata.keywords"></multilingual-textfield>
+				</div>
+
 				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}}</h4>
 		            
@@ -140,47 +156,12 @@
 				
 				</div>
 
-				<div class=" bs-callout">
-					<h4 class="bs-callout-label">{{'MARKET.TEMPORAL' | translate}}</h4 class="bs-callout-label">
-					<div class="form-group  bs-callout-input">
-					    <input type="text" name="creationDate" ng-model="metadata.creationDate" class="form-control">
-					</div>
-					<div class="alert alert-info" role="alert">
-			    		<p><span class="glyphicon glyphicon-info-sign"></span> Date ou période de création de la ressource.</p>
-			    	</div>
-				</div>
-
-				<div class=" bs-callout">
-					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.CREATION_LOCATIONS' | translate}}</h4 class="bs-callout-label">
-					<div class="form-group  bs-callout-input">
-						
-                        <tags-input ng-model="selectedCreationLocations" data-display-property="label" name="creationLocations" class="tool-tags" data-placeholder="{{'MARKET.SPACIAL' | translate}}">
-                            <auto-complete source="suggestCountries($query)" min-length="0" load-on-focus="false"></auto-complete>
-                        </tags-input>
-					</div>
-					<div class="alert alert-info" role="alert">
-			    		<p><span class="glyphicon glyphicon-info-sign"></span> Spécifiez le(s) lieu(x) où la ressource a été créée.</p>
-			    	</div>
-				</div>
-
-				<div class="bs-callout">
-					<h4 class="bs-callout-label">{{'MARKET.KEYWORDS' | translate}}</h4>
-		            
-					<multilingual-textfield name="'keyword'" model="metadata.keywords"></multilingual-textfield>
-				</div>
-
-				<div class=" bs-callout">
-					<h4 class="bs-callout-label">{{'MARKET.WEBSITE' | translate}}</h4 class="bs-callout-label">
-					<div class="form-group  bs-callout-input">
-					    <input type="url" name="website" ng-model="metadata.website" class="form-control" placeholder="http://">
-					</div>
-					<div class="alert alert-info" role="alert">
-			    		<p><span class="glyphicon glyphicon-info-sign"></span> Adresse du site web contenant des informations sur la ressource.</p>
-			    	</div>
-				</div>
 
 				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_IMAGE' | translate}}</h4 class="bs-callout-label">
+					<div class="alert alert-info" role="alert">
+					    <p><span class="glyphicon glyphicon-info-sign"></span> Afin d'avoir une identité graphique propre à votre ressource, vous pouvez joindre une image qui s'affichera en haut à gauche dans la fiche d'information.</p>
+					</div>
 					<div class="form-group  bs-callout-input">
 					    <div class="input-group">
 	                        <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="icons.imageFile"></span> {{image.path}}</span>
@@ -192,13 +173,13 @@
 
 					</div>
 
-					<div class="alert alert-info" role="alert">
-					    <p><span class="glyphicon glyphicon-info-sign"></span> Afin d'avoir une meilleure visibilité sur le site de consultation, vous pouvez joindre à la fiche une image représentatif de la ressource.</p>
-					    </div>
 				</div>
 
 				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'MARKET.PREVIEW' | translate}}</h4 class="bs-callout-label">
+					<div class="alert alert-info" role="alert">
+					    <p><span class="glyphicon glyphicon-info-sign"></span> Selectionnez un répertoire dans votre espace de travail ORTOLANG contenant des exemples illustant votre ressource (extrait vidéo ou son, partie d'un fichier XML, ...).</p>
+					</div>
 					<div class="form-group bs-callout-input">
 						<div>
 							<div multifile-selector collection="workspace.head" model="metadata.preview.paths" workspace="workspace"></div>
@@ -213,16 +194,60 @@
 	                    <input type="hidden" name="preview" ng-model="metadata.preview">
 					</div>
 
-					<div class="alert alert-info" role="alert">
-					    <p><span class="glyphicon glyphicon-info-sign"></span> Selectionnez un répertoire dans votre espace de travail ORTOLANG contenant des exemples illustant votre ressource (extrait vidéo ou son, partie d'un fichier XML, ...).</p>
-					    </div>
 				</div>
+
+				<div class=" bs-callout">
+					<h4 class="bs-callout-label">{{'MARKET.TEMPORAL' | translate}}</h4 class="bs-callout-label">
+					<div class="alert alert-info" role="alert">
+			    		<p><span class="glyphicon glyphicon-info-sign"></span> Date ou période de création de la ressource.</p>
+			    	</div>
+					<div class="form-group  bs-callout-input">
+					    <input type="text" name="creationDate" ng-model="metadata.creationDate" class="form-control">
+					</div>
+				</div>
+
+				<div class=" bs-callout">
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.CREATION_LOCATIONS' | translate}}</h4 class="bs-callout-label">
+					<div class="alert alert-info" role="alert">
+			    		<p><span class="glyphicon glyphicon-info-sign"></span> Spécifiez le(s) lieu(x) où la ressource a été créée.</p>
+			    	</div>
+					<div class="form-group  bs-callout-input">
+						
+                        <tags-input ng-model="selectedCreationLocations" data-display-property="label" name="creationLocations" class="tool-tags" data-placeholder="{{'MARKET.SPACIAL' | translate}}">
+                            <auto-complete source="suggestCountries($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+					</div>
+				</div>
+
 			</section>
 
 
 			<section ng-show="!step || (step && stepCurrent === 'licence')" id="licence">
 				<h2>{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</h2>
 
+	            <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(metadataItemform.$submitted || metadataItemform.statusOfUse.$dirty) && metadataItemform.statusOfUse.$invalid'>
+	                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
+	            </div>
+				<div class="form-group bs-callout" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.statusOfUse.$dirty) && metadataItemform.statusOfUse.$invalid}">
+					<h4 class="bs-callout-label">Droit d'utilisation <span class="text-danger">*</span></h4>
+				    <select 
+						name="statusOfUse"
+						class="form-control"
+						required
+						ng-model="selectedStatusOfUse" 
+						ng-options="sou as sou.value for sou in allStatusOfUse track by sou.key"
+						ng-change="selectStatusOfUse()">
+					</select>
+				</div>
+
+				<div class="form-group bs-callout">
+					<h4 class="bs-callout-label">Description des conditions d'utilisation</h4 class="bs-callout-label">
+
+					<div class="form-group">
+						<textarea name="conditionsOfUse" ng-model="metadata.conditionsOfUse" rows="10" class="form-control"></textarea>
+					</div>
+				</div>
+				
 				<div class=" bs-callout">
 					<h4 class="bs-callout-label">Licence à accepter</h4 class="bs-callout-label">
 					<div class="form-group">
@@ -248,29 +273,6 @@
 				</div>
 
 
-	            <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(metadataItemform.$submitted || metadataItemform.statusOfUse.$dirty) && metadataItemform.statusOfUse.$invalid'>
-	                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
-	            </div>
-				<div class="form-group bs-callout" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.statusOfUse.$dirty) && metadataItemform.statusOfUse.$invalid}">
-					<h4 class="bs-callout-label">Droit d'utilisation <span class="text-danger">*</span></h4>
-				    <select 
-						name="statusOfUse"
-						class="form-control"
-						required
-						ng-model="selectedStatusOfUse" 
-						ng-options="sou as sou.value for sou in allStatusOfUse track by sou.key"
-						ng-change="selectStatusOfUse()">
-					</select>
-				</div>
-
-				<div class="form-group bs-callout">
-					<h4 class="bs-callout-label">Description des conditions d'utilisation</h4 class="bs-callout-label">
-
-					<div class="form-group">
-						<textarea name="conditionsOfUse" ng-model="metadata.conditionsOfUse" rows="10" class="form-control"></textarea>
-					</div>
-				</div>
-				
 			</section>
 
 			<section ng-show="!step || (step && stepCurrent === 'specific_fields')" id="specific_fields">
@@ -296,6 +298,9 @@
 
 					<div class=" bs-callout">
 						<h4 class="bs-callout-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</h4 class="bs-callout-label">
+						<div class="alert alert-info" role="alert">
+					    	<p><span class="glyphicon glyphicon-info-sign"></span> Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
+					    </div>
 						<div class="form-group bs-callout-input">
 						    <!-- <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input> -->
 
@@ -303,9 +308,6 @@
 	                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
 	                        </tags-input>
 						</div>
-						<div class="alert alert-info" role="alert">
-					    	<p><span class="glyphicon glyphicon-info-sign"></span> Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
-					    </div>
 					</div>
 
 					<div class="bs-callout">
@@ -376,12 +378,12 @@
 
 					<div class=" bs-callout">
 						<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}}</h4 class="bs-callout-label">
-						<div class="form-group  bs-callout-input">
-						    <input type="text" name="wordCount" ng-model="metadata.wordCount" class="form-control">
-						</div>
 						<div class="alert alert-info" role="alert">
 				    		<p><span class="glyphicon glyphicon-info-sign"></span> Nomre de mots dans l'ensemble des fichiers de la ressource (Hors documentation, etc).</p>
 				    	</div>
+						<div class="form-group  bs-callout-input">
+						    <input type="text" name="wordCount" ng-model="metadata.wordCount" class="form-control">
+						</div>
 					</div>
 
 				</div>

@@ -23,9 +23,9 @@ angular.module('schemaForm')
                      **/
 
                     scope.editContributor = function (contributor) {
-                        if(contributor.entity.type==='person') {
+                        if (contributor.entity.type === 'person') {
                             scope.editPerson(contributor);
-                        } else if(contributor.entity.type==='organization') {
+                        } else if (contributor.entity.type === 'organization') {
                             scope.editOrganization(contributor);
                         }
                     };
@@ -49,19 +49,18 @@ angular.module('schemaForm')
                         // Role
                         // var roles = ['developer', 'manager'];
                         modalScope.suggestRole = function (query) {
-                            var result = $filter('filter')(scope.allRoles, {label:query});
-                            return result;
+                            return $filter('filter')(scope.allRoles, {label: query});
                         };
 
                         modalScope.searchPerson = '';
                         modalScope.persons = scope.allPersons;
 
-                        modalScope.$on('talastname.select', function(v,i){
+                        modalScope.$on('talastname.select', function (v, i) {
                             modalScope.id = i.id;
                             modalScope.lastname = i.lastname;
                             modalScope.firstname = i.firstname;
                             modalScope.midname = i.midname;
-                            if(angular.isDefined(i.org)) {
+                            if (angular.isDefined(i.org)) {
                                 modalScope.organizationFullname = i.org.fullname;
                                 modalScope.organization = i.org;
                             }
@@ -73,7 +72,7 @@ angular.module('schemaForm')
                         modalScope.organizationFullname = '';
                         modalScope.allOrganizations = scope.allOrganizations;
 
-                        modalScope.$on('taorg.select', function(v,i){
+                        modalScope.$on('taorg.select', function (v, i) {
                             modalScope.organization = i.org;
 
                             modalScope.$apply();
@@ -87,13 +86,13 @@ angular.module('schemaForm')
 
                     function prepareModalScopeWithRole(contributor, modalScope) {
                         modalScope.roleTag = [];
-                        if(angular.isDefined(contributor.role)) {
-                            angular.forEach(contributor.role, function(tag) {
-                                var tagFound = $filter('filter')(scope.allRoles, {id:tag});
-                                if(tagFound.length>0) {
+                        if (angular.isDefined(contributor.role)) {
+                            angular.forEach(contributor.role, function (tag) {
+                                var tagFound = $filter('filter')(scope.allRoles, {id: tag});
+                                if (tagFound.length > 0) {
                                     modalScope.roleTag.push(tagFound[0]);
                                 } else {
-                                    modalScope.roleTag.push({id:tag,label:tag});
+                                    modalScope.roleTag.push({id: tag, label: tag});
                                 }
                             });
                         }
@@ -112,7 +111,7 @@ angular.module('schemaForm')
                         //     contributor.entity.lastname = myScope.searchLastname;
                         // }
 
-                        if(angular.isDefined(myScope.organization)) {
+                        if (angular.isDefined(myScope.organization)) {
                             contributor.entity.organization = myScope.organization;
                         }
 
@@ -148,8 +147,8 @@ angular.module('schemaForm')
 
                     function getFullnameOfPerson(person) {
                         var fullname = person.firstname;
-                        fullname += angular.isDefined(person.midname) ? ' '+person.midname : '';
-                        fullname += ' '+person.lastname;
+                        fullname += angular.isDefined(person.midname) ? ' ' + person.midname : '';
+                        fullname += ' ' + person.lastname;
                         return fullname;
                     }
 
@@ -248,7 +247,7 @@ angular.module('schemaForm')
                         modalScope.searchOrganization = '';
                         modalScope.organizations = scope.allOrganizations;
 
-                        modalScope.$on('taorg.select', function(v,i){
+                        modalScope.$on('taorg.select', function (v, i) {
                             modalScope.id = i.org.id;
                             modalScope.name = i.org.name;
                             modalScope.acronym = i.org.acronym;
@@ -261,7 +260,7 @@ angular.module('schemaForm')
                             modalScope.$apply();
                         });
 
-                        modalScope.clearSearch = function clearSearchOrganization() {
+                        modalScope.clearSearch = function () {
                             angular.element('#add-organization-searchOrganization').val('');
 
                             clearModalScopeForOrganization(modalScope);
@@ -277,14 +276,14 @@ angular.module('schemaForm')
                     }
 
                     function getFullnameOfOrganization(org) {
-                        var fullname = org.name;
-                        var details = '';
+                        var fullname = org.name,
+                            details = '';
                         details += angular.isDefined(org.acronym) ? org.acronym : '';
                         details += (angular.isDefined(org.acronym) && (angular.isDefined(org.city) || angular.isDefined(org.country))) ? ', ' : '';
                         details += angular.isDefined(org.city) ? org.city : '';
-                        details += angular.isDefined(org.country) ? ' '+org.country : '';
-                        if(details!=='') {
-                            fullname += ' ('+details+')';
+                        details += angular.isDefined(org.country) ? ' ' + org.country : '';
+                        if (details !== '') {
+                            fullname += ' (' + details + ')';
                         }
                         return fullname;
                     }
@@ -316,10 +315,10 @@ angular.module('schemaForm')
                         var modalScope = prepareModalScopeForOrganization(),
                             addOrganizationModal;
 
-                        modalScope.roleTag = [{id:'producer',label:'producer'}];
+                        modalScope.roleTag = [{id: 'producer', label: 'producer'}];
 
                         modalScope.newOrganization = false;
-                        modalScope.createOrganization = function() {
+                        modalScope.createOrganization = function () {
                             modalScope.newOrganization = !modalScope.newOrganization;
 
                             clearSearchOrganization(modalScope);
@@ -338,7 +337,7 @@ angular.module('schemaForm')
                             }
 
                             if (addOrganizationForm.$valid) {
-                                var organization = {entity:{},role:[]};
+                                var organization = {entity: {}, role: []};
 
                                 setOrganization(organization, modalScope);
 
@@ -427,7 +426,7 @@ angular.module('schemaForm')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.midname', 'midname');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.organization', 'organization');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'person');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Person');
 
                         var query = queryBuilder.toString();
                         scope.allPersons = [];
@@ -435,16 +434,16 @@ angular.module('schemaForm')
                             angular.forEach(jsonResults, function (result) {
                                 var person = angular.fromJson(result);
 
-                                    scope.allPersons.push({
-                                        value: person.fullname,
-                                        id: person.id,
-                                        fullname: person.fullname,
-                                        lastname: person.lastname,
-                                        firstname: person.firstname,
-                                        midname: person.midname,
-                                        org: person.organization,
-                                        label: '<span>'+person.fullname+'</span>'
-                                    });
+                                scope.allPersons.push({
+                                    value: person.fullname,
+                                    id: person.id,
+                                    fullname: person.fullname,
+                                    lastname: person.lastname,
+                                    firstname: person.firstname,
+                                    midname: person.midname,
+                                    org: person.organization,
+                                    label: '<span>' + person.fullname + '</span>'
+                                });
 
                             });
                         });
@@ -460,7 +459,7 @@ angular.module('schemaForm')
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'organization');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Organization');
 
                         var query = queryBuilder.toString();
                         scope.allOrganizations = [];
@@ -479,7 +478,7 @@ angular.module('schemaForm')
                                         value: organization.fullname,
                                         fullname: organization.fullname,
                                         org: org,
-                                        label: '<span>'+organization.fullname+'</span>'
+                                        label: '<span>' + organization.fullname + '</span>'
                                     });
                                 });
 
@@ -496,9 +495,9 @@ angular.module('schemaForm')
                         });
 
                         queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+                        queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=' + Settings.language + '].value', 'label');
 
-                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'role');
+                        queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Role');
 
                         var query = queryBuilder.toString();
                         scope.allRoles = [];
@@ -512,7 +511,7 @@ angular.module('schemaForm')
                     }
 
                     function cleanJsonDocument(doc) {
-                        for(var propertyName in doc) {
+                        for (var propertyName in doc) {
                             if(propertyName.substring(0,1)==='@') {
                                 delete doc[propertyName];
                             }
