@@ -125,7 +125,7 @@ angular.module('ortolangMarketApp')
             $scope.sparqlSpartial = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?geographicRegion ?label WHERE { ?geographicRegion rdf:type <lvont:GeographicRegion> ; rdfs:label ?label .FILTER (langMatches( lang(?label), "fr") && regex(?label, "^$searchText", "i")) }';
             $scope.sparqlLanguage = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?label WHERE { ?lang rdf:type <lvont:Language> ; rdfs:label ?label .FILTER (langMatches( lang(?label), "fr") && regex(?label, "^$searchText", "i")) }';
 
-            var folderSelectModalScope = $rootScope.$new(true);
+            var folderSelectModalScope = $rootScope.$new();
             folderSelectModalScope.acceptMultiple = false;
             folderSelectModalScope.forceMimeTypes = 'ortolang/collection';
             folderSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
@@ -133,7 +133,7 @@ angular.module('ortolangMarketApp')
             folderSelectModalScope.fileSelectId = 'folderSelectModal';
             $scope.folderSelectModal = $modal({scope: folderSelectModalScope, title: 'Folder select', template: 'common/directives/file-select-modal-template.html', show: false});
 
-            var fileImageSelectModalScope = $rootScope.$new(true);
+            var fileImageSelectModalScope = $rootScope.$new();
             fileImageSelectModalScope.acceptMultiple = false;
             fileImageSelectModalScope.forceMimeTypes = 'image';
             fileImageSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;
@@ -141,7 +141,7 @@ angular.module('ortolangMarketApp')
             fileImageSelectModalScope.fileSelectId = 'fileImageSelectModal';
             $scope.fileImageSelectModal = $modal({scope: fileImageSelectModalScope, title: 'File select', template: 'common/directives/file-select-modal-template.html', show: false});
 
-            var fileLicenceSelectModalScope = $rootScope.$new(true);
+            var fileLicenceSelectModalScope = $rootScope.$new();
             fileLicenceSelectModalScope.acceptMultiple = false;
             fileLicenceSelectModalScope.forceMimeTypes = 'text';
             fileLicenceSelectModalScope.forceWorkspace = $scope.browserService.workspace.key;

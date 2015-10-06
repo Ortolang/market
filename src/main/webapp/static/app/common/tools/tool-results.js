@@ -138,7 +138,7 @@ angular.module('ortolangMarketApp')
             });
 
             function init() {
-                var folderSelectModalScope = $rootScope.$new(true);
+                var folderSelectModalScope = $rootScope.$new();
                 folderSelectModalScope.acceptMultiple = false;
                 folderSelectModalScope.forceMimeTypes = 'ortolang/collection';
                 folderSelectModalScope.forceHead = true;

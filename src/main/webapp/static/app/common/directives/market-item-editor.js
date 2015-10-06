@@ -1189,7 +1189,7 @@ angular.module('ortolangMarketApp')
                             scope.metadata.datasize = data.size.toString();
                         });
 
-                        var fileLicenceSelectModalScope = $rootScope.$new(true);
+                        var fileLicenceSelectModalScope = $rootScope.$new();
                         fileLicenceSelectModalScope.acceptMultiple = false;
                         fileLicenceSelectModalScope.forceMimeTypes = ['ortolang/collection', 'text'];
                         fileLicenceSelectModalScope.forceWorkspace = scope.workspace.key;
@@ -1204,7 +1204,7 @@ angular.module('ortolangMarketApp')
                             });
                         }
 
-                        var fileImageSelectModalScope = $rootScope.$new(true);
+                        var fileImageSelectModalScope = $rootScope.$new();
                         fileImageSelectModalScope.acceptMultiple = false;
                         fileImageSelectModalScope.forceMimeTypes = ['ortolang/collection', 'image'];
                         fileImageSelectModalScope.forceWorkspace = scope.workspace.key;

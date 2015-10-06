@@ -10,13 +10,14 @@
 angular.module('ortolangMarketApp')
     .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search) {
         return {
-            restrict: 'E',
+            restrict: 'EA',
             scope: {
                 type: '=',
                 query: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
-                searchPlaceHolder: '@'
+                searchPlaceHolder: '@',
+                icons: '='
             },
             templateUrl: 'market/directives/market-toolbar.html',
             link: {

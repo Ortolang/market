@@ -332,7 +332,7 @@ angular.module('ortolangMarketApp')
             };
 
             function createModalScope() {
-                modalScope = $scope.$new(true);
+                modalScope = $rootScope.$new();
                 modalScope.$on('modal.hide', function () {
                     modalScope.$destroy();
                 });
