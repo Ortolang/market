@@ -18,7 +18,8 @@ angular.module('ortolangMarketApp')
                 itemKey: '=',
                 root: '=',
                 tags: '=',
-                browse: '='
+                browse: '=',
+                icons: '='
             },
             template: '<div ng-include="marketItemTemplate"></div>',
             link: {
