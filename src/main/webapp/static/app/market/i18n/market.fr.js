@@ -47,6 +47,7 @@ angular.module('ortolangMarketApp')
             SPACIAL: 'Lieux',
             TEMPORAL: 'Date de création',
             PREVIEW: 'Aperçu',
+            PREVIEW_OF: 'Aperçu de',
             LOCATION: 'Localisation',
             CONTRIBUTOR: 'Contribution',
             DOWNLOAD: 'Téléchargement',

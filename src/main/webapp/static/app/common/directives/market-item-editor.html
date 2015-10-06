@@ -24,7 +24,7 @@
                 <i ng-if="stepLicenceSuccess" class="fa fa-check-circle"></i>
                 {{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}
             </li>
-            <li>
+            <li ng-class="(stepCurrent==='specific_fields')?'completed':''">
                 <span class="bubble"></span>
                 {{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}
             </li>
@@ -35,8 +35,6 @@
 		<div ng-if="!step" class="col-md-3 editor-aside">
 			<!-- <div class="bs-sidebar hidden-print"> -->
 				<ul class="nav bs-sidenav" bs-scrollspy>
-				  <li>
-				    <ul class="nav">
 				    	<li data-target="#basic_info" bs-scrollspy><a href="" ng-click="scrolltoHref('basic_info')">{{'WORKSPACE.METADATA_EDITOR.BASIC_INFO' | translate}}</a></li>
 						<li data-target="#whos_involved" bs-scrollspy><a href="" ng-click="scrolltoHref('whos_involved')">{{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}</a></li>
 						<li data-target="#describe" bs-scrollspy><a href="" ng-click="scrolltoHref('describe')">{{'WORKSPACE.METADATA_EDITOR.DESCRIBE' | translate}}</a></li>
@@ -44,8 +42,7 @@
 						<li><a href="" ng-click="scrolltoHref('specific_fields')">{{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}</a></li>
 						<li><hr/></li>
 						<li><button class="btn btn-primary" type="submit">{{'WORKSPACE.METADATA_EDITOR.APPLY' | translate}}</button></li>
-				    </ul>
-				  </li>
+				   
 				</ul>
 				<!-- <ul class="progress-indicator stacked">
 		            <li class="completed warning">

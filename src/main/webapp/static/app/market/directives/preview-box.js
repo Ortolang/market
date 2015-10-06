@@ -32,7 +32,11 @@ angular.module('ortolangMarketApp')
                         });
                     }
 
-                    loadPreview(scope.preview.paths);
+                    function init() {
+                        scope.type = (scope.preview.type!==undefined) ? scope.preview.type : 'line';
+                        loadPreview(scope.preview.paths);
+                    }
+                    init();
                 }
             }
         };

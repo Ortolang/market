@@ -32,6 +32,10 @@ angular.module('ortolangMarketApp')
                             return;
                         }
 
+                        if(scope.metadata.preview.paths.length===0) {
+                            delete scope.metadata.preview;
+                        }
+
                         if(scope.publicationsModel.length>0) {
                             scope.metadata.publications = [];
                             angular.forEach(scope.publicationsModel, function(value) {
@@ -1215,6 +1219,10 @@ angular.module('ortolangMarketApp')
                             WorkspaceElementResource.get({path: scope.metadata.image, wskey: scope.workspace.key, root: scope.root}).$promise.then(function (data) {
                                 scope.image = data;
                             });
+                        }
+
+                        if(angular.isUndefined(scope.metadata.preview)) {
+                            scope.metadata.preview = {type: 'line', paths:[]};
                         }
 
                         scope.publicationsModel = [];
