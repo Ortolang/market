@@ -80,7 +80,6 @@ angular.module('ortolangMarketApp')
 
         $scope.$on('$destroy', function () {
             $rootScope.browsing = false;
-            $rootScope.noFooter = false;
             $rootScope.myWorkspaces = undefined;
             // Unbind listeners
             angular.element($window).unbind('resize.' + $scope.$id);
@@ -467,9 +466,9 @@ angular.module('ortolangMarketApp')
         //          Resize         //
         // *********************** //
 
-        $scope.resizeBrowser = function () {
+        $scope.resizeDashboard = function () {
             if (!$rootScope.browsing) {
-                var topOffset = angular.element('#top-nav-wrapper').outerHeight(),
+                var topOffset = angular.element('.top-nav').outerHeight(),
                     height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
                     browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
                 height -= topOffset;
@@ -482,19 +481,18 @@ angular.module('ortolangMarketApp')
                         height -= angular.element('.upload-queue').innerHeight();
                     }
                     angular.element('.browser-aside-left').css('min-height', (height - browserToolbarHeight) + 'px');
+                    angular.element('.workspace-dashboard').css('min-height', (height - browserToolbarHeight) + 'px');
                 }
             }
         };
 
         $scope.resizeMetadataItemPreview = function () {
-            var topNavWrapper = angular.element('#top-nav-wrapper'),
-                footerWrapper = angular.element('#footer-wrapper'),
+            var topNavWrapper = angular.element('.top-nav'),
                 topOffset = topNavWrapper.outerHeight(),
                 height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-                bottomOffset = footerWrapper.outerHeight(),
                 browserToolbarHeight = angular.element('#metadata-item-editor-toolbar').innerHeight();
 
-            height = height - topOffset - bottomOffset;
+            height = height - topOffset;
             if (height < 1) {
                 height = 1;
             }
@@ -511,19 +509,18 @@ angular.module('ortolangMarketApp')
         };
 
         angular.element($window).bind('resize.' + $scope.$id, function () {
-            $scope.resizeBrowser();
+            $scope.resizeDashboard();
             $scope.resizeMetadataItemPreview();
         });
 
         function init() {
             $rootScope.browsing = !!$location.search().browse;
-            $rootScope.noFooter = true;
             $rootScope.myWorkspaces = true;
 
             $scope.browserCtrlInitialized = false;
             $scope.WorkspaceBrowserService = WorkspaceBrowserService;
             $scope.workspaceHistory = undefined;
-            $scope.resizeBrowser();
+            $scope.resizeDashboard();
 
             $scope.previewing = !!$location.search().preview;
             $scope.editing = !!$location.search().edit;

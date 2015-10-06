@@ -58,9 +58,9 @@ angular.module('ortolangMarketApp')
         'FileSelectBrowserService',
         function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
 
-            var isMacOs, isClickedOnce, marketItemHeader, footerHeight, previousFilterNameQuery,
+            var isMacOs, isClickedOnce, marketItemHeader, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
-                topNavWrapper, footerWrapper, lastSelectedElement, lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred;
+                topNavWrapper, lastSelectedElement, lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred;
 
             // *********************** //
             //        Breadcrumb       //
@@ -150,10 +150,7 @@ angular.module('ortolangMarketApp')
                         if (!marketItemHeader) {
                             marketItemHeader = angular.element('.market-item').find('header').outerHeight();
                         }
-                        if (!footerHeight) {
-                            footerHeight = angular.element('#footer-wrapper').outerHeight();
-                        }
-                        var pageWrapperMarginLeft = parseInt(angular.element('#main-wrapper').css('margin-left'), 10);
+                        var pageWrapperMarginLeft = parseInt(angular.element('#main-wrapper > main').css('margin-left'), 10);
                         $scope.contextMenuStyle = {
                             position: 'absolute',
                             display: 'block',
@@ -983,9 +980,6 @@ angular.module('ortolangMarketApp')
                     $rootScope.browsing = false;
                     $rootScope.ortolangPageSubtitle = null;
                 }
-                if (!$scope.isFileSelectBrowserService) {
-                    $rootScope.noFooter = false;
-                }
                 // Unbind listeners
                 angular.element($window).unbind('resize.' + $scope.$id);
             });
@@ -1474,14 +1468,13 @@ angular.module('ortolangMarketApp')
             $scope.resizeBrowser = function () {
                 if (!$scope.isFileSelectBrowserService) {
                     var topOffset = topNavWrapper.outerHeight(),
-                        height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-                        bottomOffset = footerWrapper.outerHeight();
+                        height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
                     browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
                     if ($scope.isMarketBrowserService) {
                         topOffset += angular.element('.market-item').find('header').outerHeight();
                         height -= 1;
                     }
-                    height = height - topOffset - bottomOffset;
+                    height = height - topOffset;
                     if (height < 1) {
                         height = 1;
                     }
@@ -1612,8 +1605,7 @@ angular.module('ortolangMarketApp')
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 isClickedOnce = false;
                 clearPreviousFilteringQueries();
-                topNavWrapper = angular.element('#top-nav-wrapper');
-                footerWrapper = angular.element('#footer-wrapper');
+                topNavWrapper = angular.element('.top-nav');
                 initialDisplayedItemLimit = 50;
             }
 
@@ -1630,9 +1622,6 @@ angular.module('ortolangMarketApp')
                 } else {
                     $scope.browserService = MarketBrowserService;
                     $scope.isMarketBrowserService = true;
-                }
-                if (!$scope.isFileSelectBrowserService) {
-                    $rootScope.noFooter = true;
                 }
                 console.log('Initializing browser using %s', $scope.browserService.id);
                 // Settings

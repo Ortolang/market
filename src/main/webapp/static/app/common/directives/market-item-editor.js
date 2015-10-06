@@ -316,14 +316,12 @@ angular.module('ortolangMarketApp')
                     // *********************** //
 
                     scope.resizeMetadataItemEditor = function () {
-                        var topNavWrapper = angular.element('#top-nav-wrapper'),
-                            footerWrapper = angular.element('#footer-wrapper'),
+                        var topNavWrapper = angular.element('.top-nav'),
                             topOffset = topNavWrapper.outerHeight(),
                             height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-                            bottomOffset = footerWrapper.outerHeight(),
                             browserToolbarHeight = angular.element('#metadata-item-editor-toolbar').innerHeight();
 
-                        height = height - topOffset - bottomOffset;
+                        height = height - topOffset;
                         if (height < 1) {
                             height = 1;
                         }

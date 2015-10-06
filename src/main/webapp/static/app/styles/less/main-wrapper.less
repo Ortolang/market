@@ -1,42 +1,69 @@
 #main-wrapper {
-  min-height: 100%;
-  min-height: -webkit-calc(100% ~'-' @top-nav-plus-footer);
-  min-height: -moz-calc(100% ~'-' @top-nav-plus-footer);
-  min-height: calc(100% ~'-' @top-nav-plus-footer);
+  position: absolute;
+  top: @top-navbar-height;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+#main-wrapper > main {
+  height: 100%;
   background-color: @main-bg;
   position: relative;
 }
 
-#main-wrapper.no-footer {
-  min-height: -webkit-calc(100% ~'-' @top-navbar-height);
-  min-height: -moz-calc(100% ~'-' @top-navbar-height);
-  min-height: calc(100% ~'-' @top-navbar-height);
-}
-
-#main-wrapper.no-footer.my-workspaces {
-  min-height: initial;
+.view-wrapper {
   height: 100%;
-  height: -webkit-calc(100% ~'-' @top-navbar-height);
-  height: -moz-calc(100% ~'-' @top-navbar-height);
-  height: calc(100% ~'-' @top-navbar-height);
+  > .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    z-index: 100;
+  }
+  > .container-fluid {
+    position: absolute;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+  }
+
+  > .toolbar + .container-fluid {
+    top: @toolbar-min-height;
+    &.container-main {
+      padding-top: 0;
+      padding-bottom: 0;
+      > .container-main-inner {
+        padding-top: @line-height-computed;
+        padding-bottom: @container-main-padding;
+      }
+    }
+
+  }
 }
 
 @media (min-width:768px) {
-  #main-wrapper {
+  #main-wrapper > main {
     position: relative;
     margin-left: @side-nav-width;
     border-left: 1px solid darken(@gray-lighter, 6.5%);
-    -webkit-transition: margin-left 0.8s;
-    -moz-transition: margin-left 0.8s;
-    -ms-transition: margin-left 0.8s;
-    -o-transition: margin-left 0.8s;
-    transition: margin-left 0.8s;
+
   }
 }
 
 @media (min-width:768px) and (max-width:1280px) {
-  #main-wrapper {
-    &.no-footer.my-workspaces {
+  #main-wrapper > main {
+    &.my-workspaces {
+      -webkit-transition: margin-left 0.8s;
+      -moz-transition: margin-left 0.8s;
+      -ms-transition: margin-left 0.8s;
+      -o-transition: margin-left 0.8s;
+      transition: margin-left 0.8s;
       margin-left: @side-nav-item-icon-width;
     }
   }

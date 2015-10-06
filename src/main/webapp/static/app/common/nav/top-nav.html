@@ -1,4 +1,4 @@
-<nav ng-controller="TopNavCtrl" class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-default navbar-static-top top-nav" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button ng-click="toggleNavbar()" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsed">
@@ -37,7 +37,7 @@
             </li>
             <li class="dropdown" ng-if="!navbarCollapsed">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
+                    <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}}
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id" >
@@ -47,7 +47,7 @@
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-fw fa-globe"></span> {{'NAV.LANGUAGE' | translate}} <span class="fa fa-caret-down"></span>
+                    <span class="fa fa-fw fa-globe"></span> {{'NAV.LANGUAGE' | translate}}
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-if="navbarCollapsed" ng-click="changeLanguage('en'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
@@ -59,7 +59,7 @@
             <li class="dropdown" ng-if="authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <span avatar data-email-hash="User.emailHash" data-size="30" data-img-classes="img-circle profile-image"></span>
-                    {{User.fullName()}} <span class="fa fa-caret-down"></span>
+                    {{User.fullName()}}
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-if="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>

@@ -1,35 +1,45 @@
+<div class="toolbar"></div>
 <div class="container-fluid container-main">
-    <div class="row toolbar">
-        <div class="col-sm-12">
-        </div>
-    </div>
-    <section class="row">
-        <div class="col-md-8">
-            <h3 class="ortolang-title" translate="ORTOLANG"></h3>
-            <hr/>
-            <div ng-include="StaticWebsite.getHomePage()"></div>
-            <hr />
-            <div class="media small marianne" >
-                <div class="media-left">
-                    <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
-                </div>
-                <div class="media-body">
-                    <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
-                    <i>ORTOLANG ISSN 2417&ndash;7482</i>
+    <div class="container-main-inner">
+        <section class="row">
+            <div class="col-md-8">
+                <h3 class="ortolang-title" translate="ORTOLANG"></h3>
+                <hr/>
+                <div ng-include="StaticWebsite.getHomePage()"></div>
+                <hr />
+                <div class="media small marianne" >
+                    <div class="media-left">
+                        <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
+                    </div>
+                    <div class="media-body">
+                        <p>{{'NAV.STATE_SUPPORT' | translate}}<br/>(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
+                        <i>ORTOLANG ISSN 2417&ndash;7482</i>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4" >
-            <div class="news-well well">
-                <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATIC_WEBSITE.NEWS' | translate}}</p>
-                <div ng-if="StaticWebsite.getNews().length === 0"> <hr/> {{ 'STATIC_WEBSITE.NO_NEWS' | translate }} </div>
-                <div ng-if="StaticWebsite.getNews().length > 0" ng-repeat="news in StaticWebsite.getNews() track by news">
-                    <hr/>
-                    <div ng-include="news"></div>
+            <div class="col-md-4" >
+                <div class="news-well well">
+                    <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATIC_WEBSITE.NEWS' | translate}}</p>
+                    <div ng-if="StaticWebsite.getNews().length === 0"> <hr/> {{ 'STATIC_WEBSITE.NO_NEWS' | translate }} </div>
+                    <div ng-if="StaticWebsite.getNews().length > 0" ng-repeat="news in StaticWebsite.getNews() track by news">
+                        <hr/>
+                        <div ng-include="news"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <items data-title="'MARKET.NEW_RESOURCES'" data-filters-manager="filtersManager" data-items="items" data-view-mode="viewMode" data-order-prop="orderProp" data-order-direction="orderDirection" data-query="query"></items>
+        <items data-title="'MARKET.NEW_RESOURCES'" data-filters-manager="filtersManager" data-items="items" data-view-mode="viewMode" data-order-prop="orderProp" data-order-direction="orderDirection" data-query="query"></items>
+    </div>
+
+    <footer class="main-footer small" ng-controller="FooterCtrl" ng-cloak>
+        <p class="pull-left">© 2015 <a href="http://dev.ortolang.fr/team-list.html" translate="NAV.TEAM"></a> | @@version</p>
+        <p class="pull-right">
+            <a href="https://dev.ortolang.fr/" target="_blank" translate="NAV.COMMUNITY_WEBSITE"></a>
+            &bull;
+            <a ng-href="#/legal-notices" translate="NAV.LEGAL_NOTICES"></a>
+            &bull;
+            <span ng-click="contactUs()" translate="NAV.CONTACT"></span>
+        </p>
+    </footer>
 </div>

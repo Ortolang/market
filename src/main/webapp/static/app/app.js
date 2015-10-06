@@ -58,21 +58,25 @@ angular
             })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
+                controller: 'CorporaCtrl',
                 title: 'CORPORA',
                 reloadOnSearch: false
             })
             .when('/market/tools', {
                 templateUrl: 'market/tools.html',
+                controller: 'ToolsCtrl',
                 title: 'TOOLS',
                 reloadOnSearch: false
             })
             .when('/market/lexicons', {
                 templateUrl: 'market/lexicons.html',
+                controller: 'LexiconsCtrl',
                 title: 'LEXICONS',
                 reloadOnSearch: false
             })
             .when('/market/applications', {
                 templateUrl: 'market/applications.html',
+                controller: 'ApplicationsCtrl',
                 title: 'INTEGRATED_PROJECTS'
             })
             .when('/market/:section/:alias/:version?', {

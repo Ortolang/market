@@ -71,8 +71,6 @@ angular.module('ortolangMarketApp')
             }
         });
 
-        $rootScope.noFooter = false;
-
         function initializeSession() {
             $scope.authenticated = AuthService.isAuthenticated();
             if (AuthService.isAuthenticated()) {
