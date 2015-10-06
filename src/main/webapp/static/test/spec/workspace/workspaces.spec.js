@@ -58,10 +58,6 @@ describe('Controller: WorkspacesCtrl', function () {
             $httpBackend.flush();
         }));
 
-        it('should not display footer', function () {
-            expect($rootScope.noFooter).toBe(true);
-        });
-
         it('should not be browsing workspace content by default', function () {
             expect($rootScope.browsing).toBe(false);
             expect($scope.browserCtrlInitialized).toBe(false);
@@ -88,10 +84,9 @@ describe('Controller: WorkspacesCtrl', function () {
             expect($location.search().alias).toBe(sample().barWs.alias);
         });
 
-        it('should reinitialize browsing and noFooter when controller is destroyed', function () {
+        it('should reinitialize browsing when controller is destroyed', function () {
             $scope.$emit('$destroy');
             $rootScope.browsing = false;
-            $rootScope.noFooter = false;
         });
 
         it('should have a list of members of the selected workspace', function () {
