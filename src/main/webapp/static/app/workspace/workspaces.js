@@ -486,8 +486,33 @@ angular.module('ortolangMarketApp')
             }
         };
 
+        $scope.resizeMetadataItemPreview = function () {
+            var topNavWrapper = angular.element('#top-nav-wrapper'),
+                footerWrapper = angular.element('#footer-wrapper'),
+                topOffset = topNavWrapper.outerHeight(),
+                height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+                bottomOffset = footerWrapper.outerHeight(),
+                browserToolbarHeight = angular.element('#metadata-item-editor-toolbar').innerHeight();
+
+            height = height - topOffset - bottomOffset;
+            if (height < 1) {
+                height = 1;
+            }
+            if (height > topOffset) {
+                height -= 1;
+
+                // var editorWrapper = angular.element('.metadata-item-editor');
+                    // editorAside = angular.element('.editor-aside'),
+                    // editorStepHeight = angular.element('.metadata-editor-progress-bar').innerHeight();
+
+                // editorAside.css('min-height', (height - browserToolbarHeight) + 'px');
+                angular.element('.workspace-metadata-item-preview').css('height', (height - browserToolbarHeight) + 'px');
+            }
+        };
+
         angular.element($window).bind('resize.' + $scope.$id, function () {
             $scope.resizeBrowser();
+            $scope.resizeMetadataItemPreview();
         });
 
         function init() {

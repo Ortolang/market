@@ -6,7 +6,7 @@
                 <img ng-if="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
             </a>
             <div class="media-body">
-                <h1 class="market-item-title">{{title}}</h1>
+                <h1 class="market-item-title" ng-class="root === 'head'?'text-danger':''"><span ng-if="root === 'head'" translate="MARKET.PREVIEW_OF"></span> {{title}}</h1>
 
                 <div ng-hide="browse">
 
@@ -226,7 +226,7 @@
                 </div>
             </div>
 
-            <div data-preview-box key="itemKey" preview="content.preview" alias="alias" root="root" ng-if="content.preview"></div>
+            <div data-preview-box key="itemKey" preview="content.preview" alias="alias" root="root" ng-if="content.preview && content.preview.paths.length>0"></div>
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
                     <button class="btn btn-default">
