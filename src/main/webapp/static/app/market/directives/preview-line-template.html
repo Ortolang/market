@@ -1,8 +1,8 @@
 <table class="table table-hover table-condensed table-responsive" visualizer>
 	<tbody>
-	    <tr ng-repeat="element in previewFiles" ng-click="showPreview(element.key)">
-	        <td>
-	            <span class="type" ng-class="element.object.mimeType | mimeTypeIconCss"></span> {{element.object.name}}
+	    <tr ng-repeat="element in previewFiles">
+	        <td ng-click="element.external===true ? openContentInNewTab(element.value.key) : showPreview(element.value.key)">
+	            <span class="type" ng-class="element.value.object.mimeType | mimeTypeIconCss"></span> {{element.value.object.name}}
 	        </td>
 	    </tr>
 	</tbody>
