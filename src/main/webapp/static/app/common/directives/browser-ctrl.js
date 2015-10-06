@@ -844,6 +844,8 @@ angular.module('ortolangMarketApp')
                     content: {},
                     footer: {}
                 };
+                modalScope.root = $scope.root;
+                modalScope.wsAlias = $scope.browserService.workspace.alias;
                 modalScope.actions = {};
                 modalScope.doAction = function (name) {
                     if (modalScope.actions && modalScope.actions[name]) {
@@ -1484,7 +1486,7 @@ angular.module('ortolangMarketApp')
                             height -= angular.element('.upload-queue').innerHeight();
                         }
                         var browserWrapper = angular.element('.browser-wrapper'),
-                            browserAside = angular.element('.browser-aside');
+                            browserAside = browserWrapper.find('.browser-aside');
                         browserAside.css('min-height', (height - browserToolbarHeight) + 'px');
                         browserAside.find('.my-workspaces').css('height', (height - browserToolbarHeight - 80) + 'px');
                         browserWrapper.find('.table-wrapper.table-workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');

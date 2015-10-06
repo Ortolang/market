@@ -211,14 +211,12 @@
         <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkDeselection($event)" ng-right-click="checkDeselection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
             <span class="btn-collapse" ng-if="!isFileSelectBrowserService" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
             <div ng-if="::browserService.canEdit" class="btn-group dropdown-wrapper add-action">
-                <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
+                <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW" ng-disabled="!isHead"></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li ng-show="isHead"><div ng-click="addCollection()"><span ng-class="icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
-                    <li ng-show="isHead" class="divider"></li>
-                    <li ng-show="isHead"><div ng-click="doAction('uploadFiles')"><span ng-class="icons.browser.upload"></span> {{'BROWSER.UPLOAD_FILES' | translate}}</div></li>
-                    <li ng-show="isHead"><div ng-click="doAction('uploadZip')"><span ng-class="icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div></li>
-                    <li ng-show="isHead" class="divider"></li>
-                    <li><div ng-click="createWorkspace()"><span ng-class="icons.browser.workspace"></span> {{'BROWSER.WORKSPACE' | translate}}</div></li>
+                    <li><div ng-click="addCollection()"><span ng-class="icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
+                    <li class="divider"></li>
+                    <li><div ng-click="doAction('uploadFiles')"><span ng-class="icons.browser.upload"></span> {{'BROWSER.UPLOAD_FILES' | translate}}</div></li>
+                    <li><div ng-click="doAction('uploadZip')"><span ng-class="icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div></li>
                 </ul>
             </div>
             <section class="my-workspaces">
