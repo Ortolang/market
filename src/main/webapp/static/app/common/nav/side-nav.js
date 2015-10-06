@@ -13,8 +13,8 @@ angular.module('ortolangMarketApp')
         $scope.sideNavElements = sideNavElements;
         $scope.sideNavActiveClass = null;
 
-        $scope.select = function (element) {
-            $scope.sideNavActiveClass = element.class;
+        $scope.select = function (elementClass) {
+            $scope.sideNavActiveClass = elementClass;
         };
 
         // *********************** //
@@ -34,43 +34,39 @@ angular.module('ortolangMarketApp')
                 if (previous) {
                     switch (current.$$route.originalPath) {
                         case '/':
-                            $scope.select({class: 'home'});
+                            $scope.select('home');
                             $rootScope.ortolangPageTitle = null;
                             break;
                         case '/tasks':
-                            $scope.select({class: 'tasks'});
+                            $scope.select('tasks');
                             break;
                         case '/processes':
-                            $scope.select({class: 'processes'});
+                            $scope.select('processes');
                             break;
                         case '/profile':
-                            $scope.select({class: 'profile'});
+                            $scope.select('profile');
                             break;
                         case '/search':
-                            $scope.select({class: 'search'});
+                            $scope.select('search');
                             break;
                         case '/information/:section?':
-                            $scope.select({class: 'information'});
+                            $scope.select('information');
                             break;
                         default:
                             if (current.params.section && previous.params.section === 'item') {
-                                $scope.select({class: current.params.section});
+                                $scope.select(current.params.section);
                             }
                     }
                 } else {
-                    var regExp, regExpBis, i, currentPath;
+                    var regExp, i, currentPath;
 
                     for (i = 0; i < sideNavElements.length; i++) {
                         regExp = new RegExp('^' + sideNavElements[i].path);
-                        if (sideNavElements[i].otherPath) {
-                            regExpBis = new RegExp('^' + sideNavElements[i].otherPath);
-                        }
                         currentPath = $route.current.originalPath;
                         if (currentPath.indexOf(':section') !== -1) {
                             currentPath = currentPath.replace(':section', $route.current.params.section);
                         }
-                        if (regExp.test(currentPath) ||
-                            (regExpBis && $route.current.originalPath && regExpBis.test($route.current.originalPath))) {
+                        if (regExp.test(currentPath)) {
                             $scope.sideNavActiveClass = sideNavElements[i].class;
                             break;
                         }

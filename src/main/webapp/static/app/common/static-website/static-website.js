@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
             };
 
             this.getInformationPageTitle = function (page) {
-                return page.title[(Settings.language || 'fr')] || page.title.fr || page.title;
+                return page.title[(Settings.language || 'fr')] || page.title;
             };
 
             this.getInformationPage = function (id) {

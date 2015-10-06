@@ -2,8 +2,8 @@
     <div class="row toolbar nav-pills-toolbar information-toolbar">
         <div class="col-md-12">
             <ul ng-if="section !== 'legal-notices'" class="nav nav-pills">
-                <li ng-class="{active: section === page.id}" ng-repeat="page in StaticWebsite.getInformationContent()">
-                    <a ng-href="#/information/{{page.id}}">{{StaticWebsite.getInformationPageTitle(page)}}</a>
+                <li ng-class="{active: section === page.id}" ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id">
+                    <a ng-href="#/information/{{::page.id}}">{{StaticWebsite.getInformationPageTitle(page)}}</a>
                 </li>
             </ul>
         </div>

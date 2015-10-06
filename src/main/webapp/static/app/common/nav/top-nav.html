@@ -17,7 +17,7 @@
             <li ng-if="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hiddenTopNav : false}:true track by element.class">
                 <a ng-href="#{{::element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="::element.iconCss"></span> {{::element.description | translate}}</a>
             </li>
-            <!--<li ng-if="Cart.size() > 0" ng-hide="navbarCollapsed">-->
+            <!--<li ng-if="Cart.size() > 0 && !navbarCollapsed">-->
                 <!--<a data-title="{{'CART' | translate}}" data-auto-close="true" data-template="common/directives/cart-popover-template.html" data-placement="bottom" bs-popover>-->
                     <!--<span class="fa fa-fw fa-shopping-cart"></span><span class="badge cart">{{Cart.size() === 0 ? '' : Cart.size()}}</span>-->
                     <!--<span class="hidden-description" translate="CART"></span>-->
@@ -40,8 +40,8 @@
                     <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}} <span class="fa fa-caret-down"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-repeat="page in StaticWebsite.getInformationContent()" >
-                        <a ng-href="#/information/{{page.id}}"><span class="fa fa-fw" ng-class="page.iconTop"></span> {{StaticWebsite.getInformationPageTitle(page)}}</a>
+                    <li ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id" >
+                        <a ng-href="#/information/{{::page.id}}"><span class="fa fa-fw" ng-class="::page.iconTop"></span> {{StaticWebsite.getInformationPageTitle(page)}}</a>
                     </li>
                 </ul>
             </li>
