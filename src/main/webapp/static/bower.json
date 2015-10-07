@@ -30,7 +30,6 @@
     "holderjs": "2.8.2",
     "keycloak": "1.4.0.Final",
     "angular-xeditable": "prismsoundzero/angular-xeditable#0.1.9",
-    "angular-schema-form": "0.8.12",
     "ng-tags-input": "3.0.0",
     "atmosphere.js": "2.2.12",
     "awesome-bootstrap-checkbox": "0.3.5",

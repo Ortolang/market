@@ -40,7 +40,6 @@ angular
         'zeroclipboard',
         'diff-match-patch',
         'xeditable',
-        'schemaForm',
         'ngTagsInput',
         'angularMoment',
         'angulartics',

@@ -41,8 +41,8 @@ angular.module('ortolangMarketApp')
             STATISTICS: 'Statistics',
             ADVANCED_INFORMATION: 'Advanced information',
             CREATE_PRESENTATION_METADATA_FIRST: 'You must create presentation metadata first',
-            CREATE_PRESENTATION_METADATA: 'Create presentation metadata',
-            EDIT_PRESENTATION_METADATA: 'Edit presentation metadata',
+            CREATE_PRESENTATION_METADATA: 'Create metadata',
+            EDIT_PRESENTATION_METADATA: 'Edit metadata',
             ADD_MEMBER: 'Add member',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',

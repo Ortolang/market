@@ -1,3 +1,38 @@
+
+/***********************************************
+ * Styles use by 
+ * . the directive market-item-editor 
+ * . the HTML template add-contributor-template
+ * . the HTML template add-organization-template
+ * . the directive Multifile-selector-box
+ ***********************************************/
+
+.metadata-item-editor {
+
+    .metadata-editor-progress-bar {
+        padding: @padding-large-horizontal
+    }
+
+    .editor-aside {
+        padding-top: @padding-large-vertical*2;
+        border-right: 1px solid #efefef;
+        overflow: auto;
+    }
+    .editor-pane {
+        padding: @padding-large-horizontal*2;
+        overflow: auto;
+    }
+    section {
+        h2 {
+            border-bottom: 1px solid #efefef;
+        }
+    }
+}
+
+/************************
+ * Set of input fields
+ ************************/
+
 .bs-callout {
     padding: 20px;
     margin: 20px 0px;
@@ -49,6 +84,11 @@
     }
 }
 
+
+/*****************************************
+ * HTML template add-contributor-template
+ *****************************************/
+
 .form-control-feedback-button {
     pointer-events: auto;
     cursor: pointer;
@@ -59,60 +99,17 @@
     margin-bottom: @padding-large-vertical;
 }
 
+/************************************************
+ * Modifcations of Progess wizard styles
+ ***********************************************/
+
 .progress-indicator.stacked > li {
     height: 150px;
 }
 
-.metadata-item-editor {
-
-    .metadata-editor-progress-bar {
-        padding: @padding-large-horizontal
-    }
-
-    .editor-aside {
-        padding-top: @padding-large-vertical*2;
-        border-right: 1px solid #efefef;
-        overflow: auto;
-    }
-    .editor-pane {
-        padding: @padding-large-horizontal*2;
-        overflow: auto;
-    }
-    section {
-        h2 {
-            border-bottom: 1px solid #efefef;
-        }
-    }
-}
-
-.metadata-editor {
-	-webkit-transition:all ease-in-out 0.25s;
-	transition:all ease-in-out 0.25s;
-	z-index: 1000;
-	.aside-body {
-		overflow: auto;
-	}
-
-    blockquote {
-        margin-left: 10px;
-    }
-
-    .tab-content {
-        max-height: 600px;
-        overflow: auto;
-        margin-top: @padding-large-vertical;
-    }
-
-}
-
-.metadata-editor-header {
-	padding: 15px;
-	border-bottom: 1px solid #e5e5e5;
-	min-height: @top-navbar-height;
-	padding: 6px 15px;
-	background: @side-nav-item-hover-bg;
-	color: @inverse-text-color;
-}
+/************************************************
+ * Multifile-selector-box directive
+ ***********************************************/
 
 .multifile-selector-box {
     overflow: auto;
@@ -135,139 +132,3 @@
         cursor: pointer;
     }
 }
-
-.metadata-list {
-	-webkit-transition:all ease-in-out 0.25s;
-  transition:all ease-in-out 0.25s;
-}
-
-.metadata-editor-backdrop {
-	z-index: 1000;
-}
-
-.metadata-list.middle {
-	right: 35rem;
-}
-
-#add-metadata {
-
-	.collapse-box {
-		-webkit-transition:all linear 0.2s;
-  		transition:all linear 0.2s;
-	}
-
-}
-
-#metadata-form {
-    margin-left: 10px;
-    margin-right: 10px;
-
-    .nav-metadata {
-        position: absolute;
-        width: 200px;
-    }
-
-    #metadata-form-panels {
-        position: absolute;
-        width: 760px;
-        margin-left: 220px;
-        overflow: auto;
-
-        .metadata-form-panel {
-            padding-left: 20px;
-
-        }
-    }
-}
-
-
-/***************************
- * Auto complete directive
- ***************************/
-
-.tags-wrapper {
-    position: relative;
-
-    .tags-cloud {
-        margin-bottom: 0;
-
-        .tag {
-            float: left;
-            padding: 4px 6px;
-            font-size: 1em;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            background: #f2f2f2;
-            font-weight: 600;
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
-            -moz-background-clip: padding;
-            -webkit-background-clip: padding-box;
-            background-clip: padding-box;
-            border: 1px solid #dddddd;
-        }
-
-        .tag:hover {
-            border: 1px solid #cccccc;
-        }
-
-        .tag:hover .cross {
-            opacity: 1;
-        }
-        .tag .cross {
-            margin-left: 5px;
-            margin-right: 3px;
-            font-size: 1em;
-            color: #20a28e;
-            opacity: .7;
-            cursor: pointer;
-        }
-    }
-
-    .suggestions-list {
-        position: absolute;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: auto;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
-        -moz-background-clip: padding;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-        font-size: 14px;
-        z-index: 200;
-
-        li {
-            color: @text-color;
-            font-weight: 600;
-            padding: 4px 25px;
-            font-size: 1em;
-            cursor: pointer;
-            background: @alternate-bg;
-            border-bottom: 1px solid #dddddd;
-        }
-
-        li:hover {
-            background: #dddddd;
-        }
-
-        li.active {
-            color: #20a28e;
-            background: #dddddd;
-        }
-
-        &:focus{
-            outline:none;
-        }
-
-    }
-}
-
-
-
-
-
-

@@ -137,17 +137,12 @@
 <div ng-if="metadataItemLoaded && (previewing || creating)" class="container-fluid">
     <div id="metadata-item-editor-toolbar" class="row toolbar browser-toolbar">
         <div class="btn-toolbar col-md-12" role="toolbar">
-            <div class="browser-breadcrumb">
-                <button ng-if="previewing && !editing" ng-click="togglePreviewing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
-                <button ng-if="editing" ng-click="toggleEditing()" class="btn btn-default back-to-dashboard" data-title="{{'WORKSPACE.METADATA_EDITOR.BACK_TO_PREVIEW' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
-            </div>
-            <div class="btn-toolbar" role="toolbar" ng-if="creating">
-                <button ng-click="toggleCreating()" class="btn btn-default" data-title="{{'WORKSPACE.CANCEL_ALL' | translate}}" data-placement="bottom" bs-tooltip>{{'WORKSPACE.CANCEL_ALL' | translate}}</button>
-            </div>
+                <button ng-if="previewing && !editing" ng-click="togglePreviewing()" class="btn btn-default"><span ng-class="icons.browser.backToDashboard"></span> {{'BROWSER.BACK_TO_DASHBOARD' | translate}}</button>
+                <button ng-if="editing" ng-click="toggleEditing()" class="btn btn-default"><span ng-class="icons.browser.backToDashboard"></span> {{'WORKSPACE.METADATA_EDITOR.BACK_TO_PREVIEW' | translate}}</button>
 
             <div class="btn-toolbar btn-toolbar-right" role="toolbar" ng-if="!(editing || creating)">
                 <div class="btn-group">
-                    <button ng-click="toggleEditing()" class="btn btn-default" data-title="{{'WORKSPACE.EDIT_PRESENTATION_METADATA' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.edit"></span></button>
+                    <button ng-click="toggleEditing()" class="btn btn-primary"><span ng-class="icons.edit"></span> {{'WORKSPACE.EDIT_PRESENTATION_METADATA' | translate}}</button>
                 </div>
             </div>
         </div>
@@ -158,10 +153,7 @@
         </div>
     </div>
     <div ng-show="editing || creating">
-        <!-- <div ng-include="'workspace/templates/metadata-item-form.html'"></div> -->
         <market-item-editor metadata="metadataItem" workspace="WorkspaceBrowserService.workspace" root="'head'" toggle-previewing="togglePreviewing()" toggle-editing="toggleEditing()" toggle-creating="toggleCreating()" step="creating"></market-item-editor>
     </div>
 
 </div>
-
-<div ng-include="'workspace/metadata-editor.html'" ng-controller="MetadataEditorCtrl"></div>

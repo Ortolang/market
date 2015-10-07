@@ -7,7 +7,7 @@
  * # tableArrayContributor
  * Directive of the ortolangMarketApp
  */
-angular.module('schemaForm')
+angular.module('ortolangMarketApp')
     .directive('tableArrayContributor', ['$rootScope', '$modal', '$filter', '$translate', '$sce', 'QueryBuilderFactory', 'SearchResource', 'Settings', function ($rootScope, $modal, $filter, $translate, $sce, QueryBuilderFactory, SearchResource, Settings) {
         return {
             restrict: 'AE',

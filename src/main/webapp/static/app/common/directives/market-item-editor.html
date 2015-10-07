@@ -4,27 +4,27 @@
 
 	<div ng-show="step" class="row metadata-editor-progress-bar">
 		<ul class="progress-indicator">
-            <li ng-class="(stepCurrent==='basic_info' || stepBasicInfoSuccess)?'completed':''">
+            <li ng-class="(stepBasicInfoStarted)?'completed':''" ng-click="changeStep('basic_info', stepBasicInfoStarted)">
                 <span class="bubble"></span>
                 <i ng-if="stepBasicInfoSuccess" class="fa fa-check-circle"></i>
                 {{'WORKSPACE.METADATA_EDITOR.BASIC_INFO' | translate}}
             </li>
-            <li ng-class="(stepCurrent==='whos_involved' || stepWhosInvolvedSuccess)?'completed':''">
+            <li ng-class="(stepWhosInvolvedStarted)?'completed':''" ng-click="changeStep('whos_involved', stepWhosInvolvedStarted)">
                 <span class="bubble"></span>
                 <i ng-if="stepWhosInvolvedSuccess" class="fa fa-check-circle"></i>
                 {{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}
             </li>
-            <li ng-class="(stepCurrent==='describe' || stepDescribeSuccess)?'completed':''">
+            <li ng-class="(stepDescribeStarted)?'completed':''" ng-click="changeStep('describe', stepDescribeStarted)">
                 <span class="bubble"></span>
                 <i ng-if="stepDescribeSuccess" class="fa fa-check-circle"></i>
                 {{'WORKSPACE.METADATA_EDITOR.DESCRIBE' | translate}}
             </li>
-            <li ng-class="(stepCurrent==='licence' || stepLicenceSuccess)?'completed':''">
+            <li ng-class="(stepWhosLicenceStarted)?'completed':''" ng-click="changeStep('licence', stepWhosLicenceStarted)">
                 <span class="bubble"></span>
                 <i ng-if="stepLicenceSuccess" class="fa fa-check-circle"></i>
                 {{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}
             </li>
-            <li ng-class="(stepCurrent==='specific_fields')?'completed':''">
+            <li ng-class="(stepSpecificFieldsStarted)?'completed':''">
                 <span class="bubble"></span>
                 {{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}
             </li>

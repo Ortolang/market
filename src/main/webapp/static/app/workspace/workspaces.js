@@ -375,49 +375,6 @@ angular.module('ortolangMarketApp')
             }
         }
 
-        $scope.showMetadataItem = function () {
-            //TODO pre load metadataFormat
-            MetadataFormatResource.get({name: 'ortolang-item-json'}).$promise.then(
-                function (data) {
-                    if (data.entries.length > 0) {
-                        var entry = data.entries[0];
-                        MetadataFormatResource.download({name: 'ortolang-item-json'}).$promise.then(
-                            function (schema) {
-                                entry.schemaContent = schema;
-                                entry.view = 'workspace/metadata-form-schema.html';
-                                entry.displayed = false;
-
-                                // $scope.metadataFormats.push(entry);
-                                WorkspaceElementResource.get({wskey: WorkspaceBrowserService.workspace.key, path: '/', metadata: 'ortolang-item-json'}).$promise.then(
-                                    function (data) {
-                                        $rootScope.$broadcast('metadata-editor-edit', entry, data);
-                                    },
-                                    function () {
-                                        $rootScope.$broadcast('metadata-editor-show', entry);
-                                    }
-                                );
-                            },
-                            function (reason) {
-                                console.error('Cant get schema of metadata formats ' + entry.name + ' ; failed cause ' + reason + ' !');
-                            }
-                        );
-                    }
-                },
-                function (reason) {
-                    console.error('Cant get metadata formats for item ; failed cause ' + reason + ' !');
-                }
-            );
-        };
-
-        $scope.editMetadataItem = function () {
-            var entry = {view: 'workspace/templates/metadata-item-form.html', name: 'ortolang-item-json'};
-            if (hasPresentationMetadata()) {
-                $rootScope.$broadcast('metadata-editor-edit', entry, $scope.metadataItem);
-            } else {
-                $rootScope.$broadcast('metadata-editor-show', entry);
-            }
-        };
-
         $scope.togglePreviewing = function () {
             $scope.previewing = !$scope.previewing;
             $location.search('preview', $scope.previewing || undefined);

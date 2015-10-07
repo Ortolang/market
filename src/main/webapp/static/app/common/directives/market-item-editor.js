@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'url', 'WorkspaceElementResource', 'ObjectResource', 'QueryBuilderFactory', 'Settings', 'SearchResource', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, url, WorkspaceElementResource, ObjectResource, QueryBuilderFactory, Settings, SearchResource) {
+    .directive('marketItemEditor', ['$rootScope', '$translate', '$http', '$location', '$window', '$modal', '$anchorScroll', '$filter', 'ortolangType', 'url', 'WorkspaceElementResource', 'ObjectResource', 'QueryBuilderFactory', 'Settings', 'SearchResource', 'icons', function ($rootScope, $translate, $http, $location, $window, $modal, $anchorScroll, $filter, ortolangType, url, WorkspaceElementResource, ObjectResource, QueryBuilderFactory, Settings, SearchResource, icons) {
         return {
             restrict: 'EA',
             templateUrl: 'common/directives/market-item-editor.html',
@@ -220,26 +220,37 @@ angular.module('ortolangMarketApp')
                             scope.stepBasicInfoSuccess = stepBasicInfoSuccess();
                             if(scope.stepBasicInfoSuccess) {
                                 scope.stepCurrent = 'whos_involved';
+                                scope.stepWhosInvolvedStarted = true;
                             }
                         } else if(scope.stepCurrent==='whos_involved') {
                             scope.stepWhosInvolvedSuccess = stepWhosInvolvedSuccess();
                             if(scope.stepWhosInvolvedSuccess) {
                                 scope.stepCurrent = 'describe';
+                                scope.scrolltoHref('describe');
+                                scope.stepDescribeStarted = true;
                             }
                         } else if(scope.stepCurrent==='describe') {
                             scope.stepDescribeSuccess = stepDescribeSuccess();
                             if(scope.stepDescribeSuccess) {
                                 scope.stepCurrent = 'licence';
                                 scope.scrolltoHref('licence');
+                                scope.stepWhosLicenceStarted = true;
                             }
                         } else if(scope.stepCurrent==='licence') {
                             scope.stepLicenceSuccess = stepLicenceSuccess();
                             if(scope.stepLicenceSuccess) {
                                 scope.stepCurrent = 'specific_fields';
                                 scope.scrolltoHref('specific_fields');
+                                scope.stepSpecificFieldsStarted = true;
                             }
                         } else if(scope.stepCurrent==='specific_fields') {
                             scope.submitForm();
+                        }
+                    };
+
+                    scope.changeStep = function(step, changeSection) {
+                        if(changeSection) {
+                            scope.stepCurrent = step;
                         }
                     };
 
@@ -1275,6 +1286,7 @@ angular.module('ortolangMarketApp')
                         loadAllToolFileEncodings();
 
                         scope.stepCurrent = 'basic_info';
+                        scope.stepBasicInfoStarted = true;
                         scope.stepBasicInfoSuccess = false;
                         scope.stepWhosInvolvedSuccess = false;
                         scope.stepDescribeSuccess = false;
