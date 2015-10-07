@@ -334,26 +334,23 @@
 .preview-box {
   overflow: auto;
   height: 100px;
-  // border: 1px solid lightgray;
 
   .table {
     tr {
       cursor: pointer;
 
       &:first-child > td {
-        border-top: 0px;
+        border-top: none;
       }
     }
   }
 }
 
 .market-toolbar-wrapper {
-  .main-market-toolbar {
-    margin-bottom: 0;
-  }
-  .toolbar-options {
-    margin-bottom: 0;
 
+  .facets-toolbar {
+    padding-top: 0;
+    padding-bottom: 0;
     dl {
       margin-bottom: 0;
       dt {
@@ -370,21 +367,9 @@
     }
   }
 
-  .toolbar-options-sorted {
-    background: none;
-    border-bottom: none;
-    margin-top: 2 * @padding-large-vertical;
-    .btn {
-      &:hover {
-        border-color: @btn-default-border;
-        background-color: @main-bg;
-      }
-      border-color: @main-bg;
-    }
-  }
-
   .applied-filters {
-    margin-top: 2 * @padding-large-vertical;
+    margin-top: @line-height-computed;
+    padding-bottom: 0;
     button {
       margin-right: @padding-small-horizontal;
       margin-top: @padding-large-vertical;
@@ -419,10 +404,8 @@
     }
   }
 
-  .high-available-filters-wrapper {
-    padding-top: 0;
-    padding-bottom: 0;
-    .high-available-filter {
+  .high-filters-wrapper {
+    .high-filter {
       display: inline-block;
       margin-right: @padding-small-horizontal;
       margin-top: @padding-large-vertical;
@@ -437,18 +420,18 @@
     }
   }
 
-  .low-available-filters-wrapper {
-    padding-top: 0;
+  .low-filters-wrapper {
+    padding-bottom: @padding-large-vertical;
     position: relative;
     top: -1px;
     border-top: @alternate-border;
     border-bottom: @alternate-border;
     background-color: @alternate-bg;
-    .low-available-filters {
+    .low-filters {
       margin-top: 2 * @padding-large-vertical;
       padding-bottom: 2 * @padding-large-vertical;
       border-bottom: 1px solid darken(@alternate-bg, 4%);
-      &.low-available-checkbox-filters {
+      &.low-checkbox-filters {
         padding-bottom: @padding-large-vertical;
         .checkbox {
           margin-bottom: @padding-large-vertical;

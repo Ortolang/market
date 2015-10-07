@@ -1,7 +1,8 @@
-<div class="container-fluid container-main">
-
-	<market-toolbar data-type="'Outil'" data-search-place-holder="MARKET.SEARCH.TOOLS" data-filters-manager="filtersManager" data-pre-selected-filter="typeFilter" data-query='query' data-icons="icons"></market-toolbar>
-
-	<items data-filters-manager="filtersManager" data-query="query"></items>
-
+<div class="view-wrapper-flex">
+    <div class="toolbar-wrapper market-toolbar-wrapper" market-toolbar data-type="'Outil'" data-search-place-holder="MARKET.SEARCH.TOOLS" data-filters-manager="filtersManager" data-pre-selected-filter="typeFilter" data-query='query' data-icons="icons"></div>
+    <div class="container-main">
+        <div class="container-main-inner">
+            <items data-filters-manager="filtersManager" data-query="query"></items>
+        </div>
+    </div>
 </div>

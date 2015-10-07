@@ -85,6 +85,7 @@ angular
             })
             .when('/market/search', {
                 templateUrl: 'market/search.html',
+                controller: 'SearchCtrl',
                 title: 'SEARCH',
                 reloadOnSearch: false
             })

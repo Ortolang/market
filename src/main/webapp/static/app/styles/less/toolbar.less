@@ -8,14 +8,8 @@
   padding-right: @container-main-padding - floor(@grid-gutter-width/2);
 }
 
-.container-main .row.toolbar:not(.browser-toolbar):not(.visualizer-toolbar) {
-  margin-left: -@container-main-padding;
-  margin-right: -@container-main-padding;
-}
-
 .toolbar {
-  padding: @padding-large-vertical (@container-main-padding - floor(@grid-gutter-width/2));
-  margin-bottom: 2 * @padding-large-vertical;
+  padding: @padding-large-vertical @container-main-padding;
   border-bottom: @default-border;
   min-height: @toolbar-min-height;
   background-color: @default-bg;
@@ -65,14 +59,11 @@
 }
 
 .nav-pills-toolbar {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 
   ul.nav-pills {
-    margin: 0 -@nav-pills-toolbar-item-side-padding;
     > li {
       &:first-child {
-        margin-left: -@container-main-padding + @nav-pills-toolbar-item-side-padding;
         padding-left: @container-main-padding - @nav-pills-toolbar-item-side-padding;
       }
       + li {

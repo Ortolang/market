@@ -1,6 +1,8 @@
-<div ng-controller="SearchCtrl" class="container-fluid container-main">
-
-	<market-toolbar data-search-place-holder="MARKET.SEARCH.ALL" data-filters-manager="filtersManager" data-query='query' data-items="items" data-view-mode="viewMode" data-view-modes="viewModes" data-order-prop="orderProp" data-order-direction="orderDirection" data-order-props="orderProps"></market-toolbar>
-
-	<items data-filters-manager="filtersManager" data-items="items" data-view-mode="viewMode" data-order-prop="orderProp" data-order-direction="orderDirection" data-query="query"></items>
+<div class="view-wrapper-flex">
+    <div class="toolbar-wrapper market-toolbar-wrapper" market-toolbar data-search-place-holder="MARKET.SEARCH.ALL" data-filters-manager="filtersManager" data-query='query' data-items="items" data-view-mode="viewMode" data-view-modes="viewModes" data-order-prop="orderProp" data-order-direction="orderDirection" data-order-props="orderProps"></div>
+    <div class="container-main">
+        <div class="container-main-inner">
+            <items data-filters-manager="filtersManager" data-query="query"></items>
+        </div>
+    </div>
 </div>

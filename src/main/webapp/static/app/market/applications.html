@@ -1,6 +1,10 @@
-<div class="container-fluid container-main">
-	<div class="row toolbar"></div>
-
-	<items data-view-mode="viewMode" data-order-prop="orderProp" data-order-direction="orderDirection" data-query="query"></items>
-
+<div class="view-wrapper-flex">
+    <div class="toolbar-wrapper">
+        <div class="toolbar"></div>
+    </div>
+    <div class="container-main">
+        <div class="container-main-inner">
+            <items data-filters-manager="filtersManager" data-query="query"></items>
+        </div>
+    </div>
 </div>

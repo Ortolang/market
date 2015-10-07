@@ -424,23 +424,23 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $scope.resizeDashboard = function () {
-            if (!$rootScope.browsing) {
-                var topOffset = angular.element('.top-nav').outerHeight(),
-                    height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-                    browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
-                height -= topOffset;
-                if (height < 1) {
-                    height = 1;
-                }
-                if (height > topOffset) {
-                    height -= 1;
-                    if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
-                        height -= angular.element('.upload-queue').innerHeight();
-                    }
-                    angular.element('.browser-aside-left').css('min-height', (height - browserToolbarHeight) + 'px');
-                    angular.element('.workspace-dashboard').css('min-height', (height - browserToolbarHeight) + 'px');
-                }
-            }
+            //if (!$rootScope.browsing) {
+            //    var topOffset = angular.element('.top-nav').outerHeight(),
+            //        height = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+            //        browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
+            //    height -= topOffset;
+            //    if (height < 1) {
+            //        height = 1;
+            //    }
+            //    if (height > topOffset) {
+            //        height -= 1;
+            //        if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
+            //            height -= angular.element('.upload-queue').innerHeight();
+            //        }
+            //        angular.element('.browser-aside-left').css('min-height', (height - browserToolbarHeight) + 'px');
+            //        angular.element('.workspace-dashboard').css('min-height', (height - browserToolbarHeight) + 'px');
+            //    }
+            //}
         };
 
         $scope.resizeMetadataItemPreview = function () {

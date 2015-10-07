@@ -1,13 +1,13 @@
-<div class="container-fluid container-main">
-    <div class="row toolbar nav-pills-toolbar tasks-toolbar">
-        <div class="col-md-12">
+<div class="view-wrapper-flex">
+    <div class="toolbar-wrapper">
+        <div class="toolbar nav-pills-toolbar tasks-toolbar">
             <ul class="nav nav-pills" role="tablist">
                 <li class="active"><a href="#/tasks">{{'NAV.TASKS' | translate}} <span class='badge'>{{Runtime.getTasks().length}}</span></a></li>
             </ul>
         </div>
     </div>
-    <div class="row">
-        <section class="col-md-12">
+    <div class="container-main">
+        <div class="container-main-inner">
             <div class="panel panel-default">
                 <!--<div class="panel-heading" translate="TASKS"></div>-->
                 <div ng-if="Runtime.getTasks().length == 0" class="panel-body">
@@ -37,6 +37,6 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
     </div>
 </div>

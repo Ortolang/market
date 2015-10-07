@@ -77,6 +77,9 @@ angular.module('ortolangMarketApp')
                 }
 
                 function getTitleValue(multilingualTitle) {
+                    if (!multilingualTitle) {
+                        return null;
+                    }
                     var i;
                     for (i = 0; i < multilingualTitle.length; i++) {
                         if (multilingualTitle[i].lang === Settings.language) {

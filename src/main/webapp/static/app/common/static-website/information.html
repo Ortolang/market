@@ -1,14 +1,16 @@
-<div class="row toolbar nav-pills-toolbar information-toolbar">
-    <div class="col-md-12">
-        <ul ng-if="section !== 'legal-notices'" class="nav nav-pills">
-            <li ng-class="{active: section === page.id}" ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id">
-                <a ng-href="#/information/{{::page.id}}">{{StaticWebsite.getInformationPageTitle(page)}}</a>
-            </li>
-        </ul>
+<div class="view-wrapper-flex">
+    <div class="toolbar-wrapper">
+        <div class="toolbar nav-pills-toolbar information-toolbar">
+            <ul ng-if="section !== 'legal-notices'" class="nav nav-pills">
+                <li ng-class="{active: section === page.id}" ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id">
+                    <a ng-href="#/information/{{::page.id}}">{{StaticWebsite.getInformationPageTitle(page)}}</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
-<div class="container-fluid container-main">
-    <div class="row container-main-inner">
-        <div class="col-sm-12" ng-include="StaticWebsite.getInformationPage(section)"></div>
+    <div class="container-main">
+        <div class="container-main-inner">
+            <div ng-include="StaticWebsite.getInformationPage(section)"></div>
+        </div>
     </div>
 </div>

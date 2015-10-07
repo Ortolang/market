@@ -15,6 +15,40 @@
 
 .view-wrapper {
   height: 100%;
+
+  > .view-wrapper-flex {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    height: 100%;
+    > .toolbar-wrapper {
+      flex: 0 1 auto;
+      > .toolbar {
+        &.row {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+    > .container-fluid {
+      margin-left: 0;
+      margin-right: 0;
+      padding-bottom: 0;
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    > .container-main {
+      padding-top: @line-height-computed;
+      padding-bottom: 0;
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+      > .container-main-inner {
+        padding-bottom: @line-height-computed;
+      }
+    }
+  }
   > .toolbar {
     position: absolute;
     top: 0;
@@ -24,26 +58,28 @@
     margin-right: 0 !important;
     z-index: 100;
   }
-  > .container-fluid {
-    position: absolute;
-    overflow: auto;
-    top: 0;
-    left: 0;
-    width: 100%;
-    bottom: 0;
-  }
 
-  > .toolbar + .container-fluid {
-    top: @toolbar-min-height;
-    &.container-main {
-      padding-top: 0;
-      padding-bottom: 0;
-      > .container-main-inner {
-        padding-top: @line-height-computed;
-        padding-bottom: @container-main-padding;
+  > .workspaces {
+    > .container-fluid {
+      position: absolute;
+      overflow: auto;
+      top: @toolbar-min-height;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      > .container-fluid-inner {
+        height: 100%;
+        .browser-aside-left {
+          height: 100%;
+          overflow: auto;
+        }
+        .workspace-dashboard {
+          height: 100%;
+          overflow: auto;
+          padding-bottom: 0;
+        }
       }
     }
-
   }
 }
 
