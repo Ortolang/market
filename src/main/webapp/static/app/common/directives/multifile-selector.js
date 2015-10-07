@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
                 pre : function (scope) {
 
                     scope.addFile = function() {
-                        var multifileSelectorModalScope = $rootScope.$new(true);
+                        var multifileSelectorModalScope = $rootScope.$new();
 
                         multifileSelectorModalScope.$on('modal.hide', function () {
                             multifileSelectorModalScope.$destroy();

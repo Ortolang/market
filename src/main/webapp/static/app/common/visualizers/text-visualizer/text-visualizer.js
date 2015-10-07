@@ -121,7 +121,7 @@ angular.module('ortolangVisualizers')
                         scope.actions.showPreview = function () {
                             scope.tabs.activeTab = 'preview';
                         };
-                        scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.$parent.browserService.workspace.alias, scope.$parent.root);
+                        scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.wsAlias, scope.root);
                     }
 
                     if (mimeType === 'text/html' || mimeType === 'application/xhtml+xml') {

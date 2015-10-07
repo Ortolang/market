@@ -512,7 +512,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%= yeoman.dist %>',
-                        src: ['scripts/scripts.js', 'index.html', 'common/nav/footer.html'],
+                        src: ['scripts/scripts.js', 'index.html', 'common/nav/footer.html', 'market/home.html'],
                         dest: '<%= yeoman.dist %>/'
                     }
                 ]
