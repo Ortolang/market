@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .directive('items', ['Search', 'OptionFacetedFilter', 'Settings', function (Search, OptionFacetedFilter, Settings) {
         return {
-            restrict: 'E',
+            restrict: 'A',
             scope: {
                 title: '=',
                 query: '=',
