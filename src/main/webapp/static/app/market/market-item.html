@@ -1,3 +1,5 @@
-<div class="container-main" ng-class="{'container-market-browser': browse}">
-	<market-item-preview ng-if="ready" ortolang-object="ortolangObject" content="item" alias="itemAlias" item-key="itemKey" root="root" tags="tags" icons="icons" browse="$parent.browse"></market-item-preview>
+<div class="view-wrapper-flex">
+    <div class="container-main container-main-no-toolbar">
+        <market-item-preview ng-if="ready" ortolang-object="ortolangObject" content="item" alias="itemAlias" item-key="itemKey" root="root" tags="tags" icons="icons" browse="$parent.browse"></market-item-preview>
+    </div>
 </div>
