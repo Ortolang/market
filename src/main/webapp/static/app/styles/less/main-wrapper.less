@@ -7,10 +7,28 @@
   overflow: hidden;
 }
 
-#main-wrapper > main {
+#main-wrapper main {
   height: 100%;
   background-color: @main-bg;
-  position: relative;
+  flex: 1 1 auto;
+  //position: relative;
+}
+
+.container-flex {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  &.container-flex-column {
+    flex-direction: column;
+  }
+}
+
+.main-wrapper-inner {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .view-wrapper {
@@ -29,14 +47,6 @@
           margin-right: 0;
         }
       }
-    }
-    > .container-fluid {
-      margin-left: 0;
-      margin-right: 0;
-      padding-bottom: 0;
-      flex: 1 1 auto;
-      overflow-x: hidden;
-      overflow-y: auto;
     }
     > .container-main {
       padding-top: @line-height-computed;
@@ -59,48 +69,65 @@
     z-index: 100;
   }
 
-  > .workspaces {
-    > .container-fluid {
-      position: absolute;
-      overflow: auto;
-      top: @toolbar-min-height;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      > .container-fluid-inner {
+  .workspaces {
+    > .container-workspace {
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      .container-fluid-inner {
+        position: absolute;
         height: 100%;
-        .browser-aside-left {
+        width: 100%;
+        overflow: hidden;
+        padding: 0 floor(@grid-gutter-width/2);
+        > .row {
           height: 100%;
-          overflow: auto;
+          > div {
+            overflow-y: auto;
+            height: 100%;
+          }
         }
-        .workspace-dashboard {
-          height: 100%;
-          overflow: auto;
-          padding-bottom: 0;
-        }
+    //    overflow: auto;
+    //    top: @toolbar-min-height;
+    //    left: 0;
+    //    bottom: 0;
+    //    width: 100%;
+    //    > .container-fluid-inner {
+    //      height: 100%;
+    //      .browser-aside-left {
+    //        height: 100%;
+    //        overflow: auto;
+    //      }
+    //      .workspace-dashboard {
+    //        height: 100%;
+    //        overflow: auto;
+    //        padding-bottom: 0;
+    //      }
+    //    }
       }
     }
   }
 }
 
 @media (min-width:768px) {
-  #main-wrapper > main {
-    position: relative;
-    margin-left: @side-nav-width;
-    border-left: 1px solid darken(@gray-lighter, 6.5%);
+  #main-wrapper main {
+    //position: relative;
+    //margin-left: @side-nav-width;
+    //border-left: 1px solid darken(@gray-lighter, 6.5%);
 
   }
 }
 
 @media (min-width:768px) and (max-width:1280px) {
-  #main-wrapper > main {
-    &.my-workspaces {
-      -webkit-transition: margin-left 0.8s;
-      -moz-transition: margin-left 0.8s;
-      -ms-transition: margin-left 0.8s;
-      -o-transition: margin-left 0.8s;
-      transition: margin-left 0.8s;
-      margin-left: @side-nav-item-icon-width;
-    }
+  #main-wrapper main {
+    //&.my-workspaces {
+    //  -webkit-transition: margin-left 0.8s;
+    //  -moz-transition: margin-left 0.8s;
+    //  -ms-transition: margin-left 0.8s;
+    //  -o-transition: margin-left 0.8s;
+    //  transition: margin-left 0.8s;
+      //margin-left: @side-nav-item-icon-width;
+    //}
   }
 }

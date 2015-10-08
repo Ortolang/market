@@ -150,12 +150,12 @@ angular.module('ortolangMarketApp')
                         if (!marketItemHeader) {
                             marketItemHeader = angular.element('.market-item').find('header').outerHeight();
                         }
-                        var pageWrapperMarginLeft = parseInt(angular.element('#main-wrapper > main').css('margin-left'), 10);
+                        var sideNavWidth = angular.element('#side-nav-wrapper').outerWidth();
                         $scope.contextMenuStyle = {
                             position: 'absolute',
                             display: 'block',
                             // Fix dropdown offset because of margin-left on page wrapper
-                            left: clickEvent.pageX - pageWrapperMarginLeft - 3 + 'px',
+                            left: clickEvent.pageX - sideNavWidth - 3 + 'px',
                             // Fix dropdown offset because of navbar and toolbar
                             top: clickEvent.pageY - marketItemHeader - browserToolbarHeight - 3 + 'px'
                         };
