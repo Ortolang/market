@@ -54,6 +54,19 @@
       flex: 1 1 auto;
       overflow-x: hidden;
       overflow-y: auto;
+      &.container-main-home {
+        display: flex;
+        flex-direction: column;
+        align-content: stretch;
+        > .container-main-inner {
+          flex: 1 1 auto;
+          padding-bottom: 0;
+        }
+        > footer {
+          flex: 0 0 auto;
+          margin-top: @line-height-computed;
+        }
+      }
       &.container-main-no-toolbar {
         padding-top: 0;
       }
