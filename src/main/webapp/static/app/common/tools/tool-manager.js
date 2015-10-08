@@ -223,7 +223,8 @@ angular.module('ortolangMarketApp')
                 loaded = false,
                 grantPopup,
                 grantTimeout,
-                grantTimeoutDelay = 500;
+                grantTimeoutDelay = 500,
+                initialized = false;
 
             function getRegistry() {
                 return registry;
@@ -414,10 +415,11 @@ angular.module('ortolangMarketApp')
             });
 
             function init() {
-                populateToolList();
+                if (!initialized) {
+                    initialized = true;
+                    populateToolList();
+                }
             }
-
-            init();
 
             return {
                 getRegistry: getRegistry,
@@ -430,6 +432,7 @@ angular.module('ortolangMarketApp')
                 toArray: toArray,
                 getFunctionalities: getFunctionalities,
                 getInputData: getInputDatas,
-                getOutputData: getOutputDatas
+                getOutputData: getOutputDatas,
+                init: init
             };
         }]);

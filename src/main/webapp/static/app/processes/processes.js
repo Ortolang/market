@@ -251,6 +251,7 @@ angular.module('ortolangMarketApp')
             }
 
             function init() {
+                ToolManager.init();
                 $scope.Runtime = Runtime;
 
                 $scope.processus = {};

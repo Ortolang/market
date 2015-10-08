@@ -56,7 +56,8 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        'ToolManager',
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, ToolManager) {
 
             var isMacOs, isClickedOnce, marketItemHeader, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
@@ -1707,6 +1708,7 @@ angular.module('ortolangMarketApp')
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                     }
                 }
+                ToolManager.init();
             }
             init();
 
