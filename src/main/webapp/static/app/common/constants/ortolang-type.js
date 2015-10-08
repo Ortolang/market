@@ -11,5 +11,6 @@ angular.module('ortolangMarketApp')
     .constant('ortolangType', {
         collection: 'collection',
         object: 'object',
-        metadata: 'metadata'
+        metadata: 'metadata',
+        link: 'link'
     });

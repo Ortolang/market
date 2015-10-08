@@ -25,6 +25,10 @@ describe('Filter: mimeTypeIconCss', function () {
         expect(mimeTypeIconCss('ortolang/collection')).toBe(icons.folder);
     });
 
+    it('should return link icon for mime type "ortolang/link"', function () {
+        expect(mimeTypeIconCss('ortolang/link')).toBe(icons.link);
+    });
+
     it('should return code icon for xml files', function () {
         expect(mimeTypeIconCss('text/xml')).toBe(icons.codeFile);
         expect(mimeTypeIconCss('application/rdf+xml')).toBe(icons.codeFile);

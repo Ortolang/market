@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
             folderPlain: 'fa fa-fw fa-folder',
             folderOpen: 'fa fa-fw fa-folder-open-o',
             folderOpenPlain: 'fa fa-fw fa-folder-open',
+            link: 'fa fa-fw fa-link',
             file: 'fa fa-fw fa-file-o',
             files: 'fa fa-fw fa-files-o',
             textFile: 'fa fa-fw fa-file-text-o',
@@ -40,6 +41,7 @@ angular.module('ortolangMarketApp')
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',
+                link: 'glyphicon glyphicon-link',
                 object: 'glyphicon glyphicon-file',
                 metadata: 'glyphicon glyphicon-list-alt',
                 unknown: 'glyphicon glyphicon-minus'
