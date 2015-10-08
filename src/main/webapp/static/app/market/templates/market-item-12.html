@@ -158,19 +158,14 @@
                 </article>
             </section>
 
-            <section id="publications" ng-if="content.publications">
+            <section id="publications" ng-if="primaryPublications.length>0">
                 <h4>{{'MARKET.PUBLICATIONS' | translate}}</h4>
                 <div class="section-body-wrapper">
-                    <dl ng-if="primaryPublications.length>0">
+                    <dl>
                         <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>
                         <dd ng-repeat="pub in primaryPublications" ng-bind-html="pub">
                         </dd>
                     </dl>
-                    <!-- <dl ng-if="secondaryPublications.length>0">
-                        <dt translate="MARKET.SECONDARY_PUBLICATIONS"></dt>
-                        <dd ng-repeat="pub in secondaryPublications" ng-bind-html="pub">
-                        </dd>
-                    </dl> -->
                 </div>
             </section>
         </div>
