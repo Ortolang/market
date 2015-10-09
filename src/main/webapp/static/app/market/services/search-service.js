@@ -18,12 +18,12 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
     var tmpResults; // a temporary array holding the results while they are being processed
 
     this.clearResults = function () {
-        this.results = [];
+        this.results = null;
         tmpResults = undefined;
     };
 
     this.hasResults = function () {
-        return this.results.length > 0;
+        return this.results && this.results.length > 0;
     };
 
     this.endProcessing = function () {
@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
     };
 
     this.search = function (query, noProcessing) {
-        this.clearResults();
+        tmpResults = undefined;
         var Search = this;
         return SearchResource.json({query: query}, function (data) {
             if (noProcessing) {
@@ -84,7 +84,7 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
     };
 
     this.init = function () {
-        this.results = [];
+        this.results = null;
         this.viewModes = {
             line: {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'},
             tile: {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'}
