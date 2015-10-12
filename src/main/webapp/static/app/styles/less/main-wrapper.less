@@ -10,7 +10,7 @@
 #main-wrapper main {
   height: 100%;
   background-color: @main-bg;
-  flex: 1 1 auto;
+  flex: 1 1 0%;
   //position: relative;
 }
 
@@ -54,6 +54,19 @@
       flex: 1 1 auto;
       overflow-x: hidden;
       overflow-y: auto;
+      &.container-main-home {
+        display: flex;
+        flex-direction: column;
+        align-content: stretch;
+        > .container-main-inner {
+          flex: 1 1 0%;
+          padding-bottom: 0;
+        }
+        > footer {
+          flex: 0 0 0%;
+          margin-top: @line-height-computed;
+        }
+      }
       &.container-main-no-toolbar {
         padding-top: 0;
       }
@@ -97,7 +110,7 @@
               flex: 0 0 auto;
             }
             > .my-workspaces {
-              flex: 1 1 auto;
+              flex: 1 1 0%;
             }
           }
         }

@@ -56,7 +56,8 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        'ToolManager',
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $routeParams, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, ToolManager) {
 
             var isMacOs, isClickedOnce, marketItemHeader, previousFilterNameQuery,
                 previousFilterMimeTypeQuery, previousFilterType, previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit,
@@ -114,6 +115,7 @@ angular.module('ortolangMarketApp')
                         clearContextMenuItems();
                         if ($scope.browserService.canEdit && $scope.isHead && $scope.selectedElements.length === 1 && $scope.isCollection($scope.selectedElements[0])) {
                             $scope.contextMenuItems.push({text: 'BROWSER.NEW_COLLECTION', icon: icons.plus, action: 'addCollection'});
+                            //$scope.contextMenuItems.push({text: 'BROWSER.NEW_LINK', icon: icons.link, action: 'addLink'});
                             // TODO Support importing files into selected directory
                             if ($scope.hasOnlyParentSelected()) {
                                 $scope.contextMenuItems.push({divider: true});
@@ -127,11 +129,11 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                             $scope.contextMenuItems.push({divider: true});
                         }
-                        if ($scope.browserService.canEdit && $scope.isHead && $scope.selectedElements.length === 1 && !$scope.hasOnlyParentSelected()) {
-                            $scope.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
-                            $scope.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
-                        }
                         if ($scope.browserService.canEdit && $scope.isHead && !$scope.hasOnlyParentSelected()) {
+                            if ($scope.selectedElements.length === 1) {
+                                $scope.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
+                                $scope.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
+                            }
                             $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
                             $scope.contextMenuItems.push({divider: true});
                         }
@@ -356,9 +358,12 @@ angular.module('ortolangMarketApp')
                 return false;
             };
 
+            $scope.isLink = function (element) {
+                return element.type === ortolangType.link;
+            };
+
             $scope.isCollection = function (element) {
-                return element.type === ortolangType.collection ||
-                    (element.objectIdentifier && element.objectIdentifier.type === ortolangType.collection);
+                return element.type === ortolangType.collection;
             };
 
             $scope.hasOnlyParentSelected = function () {
@@ -980,7 +985,7 @@ angular.module('ortolangMarketApp')
             $scope.$on('$destroy', function () {
                 if ($scope.isWorkspaceBrowserService) {
                     $rootScope.browsing = false;
-                    $rootScope.ortolangPageSubtitle = null;
+                    $rootScope.ortolangPageSubtitle = undefined;
                 }
                 // Unbind listeners
                 angular.element($window).unbind('resize.' + $scope.$id);
@@ -1707,6 +1712,7 @@ angular.module('ortolangMarketApp')
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);
                     }
                 }
+                ToolManager.init();
             }
             init();
 

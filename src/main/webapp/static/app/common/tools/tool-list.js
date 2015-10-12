@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert',
-        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, Runtime, $alert) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert', 'Settings',
+        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, Runtime, $alert, Settings) {
 
 
             // ***************** //
@@ -157,9 +157,9 @@ angular.module('ortolangMarketApp')
                                 var toolNoAccent =  $filter('removeAccents')(JSON.stringify(tool.functionalities).toLowerCase());
                                 toolNoAccent = toolNoAccent + $filter('removeAccents')(JSON.stringify(tool.inputData).toLowerCase());
                                 //search in names too
-                                toolNoAccent = toolNoAccent + tool.name.toLowerCase();
+                                toolNoAccent = toolNoAccent + $scope.getTitleValue(tool.name);
                                 toolNoAccent = toolNoAccent.replace(new RegExp('\\s', 'g'), '-');
-                                if(toolNoAccent.search(term.toLowerCase()) !== -1) {
+                                if(toolNoAccent.toLowerCase().search(term.toLowerCase()) !== -1) {
                                     return tool;
                                 }
                             });
@@ -180,10 +180,10 @@ angular.module('ortolangMarketApp')
             $scope.abortToolJob = function () {
                 ToolManager.getTool($scope.currentJob.job.toolKey).abortJob($scope.currentJob.job.id).$promise.then(
                     function () {
-                        $alert({title: ToolManager.getTool($scope.currentJob.job.toolKey).name, content: 'annulé', type: 'success'});
+                        $alert({title: $scope.getTitleValue(ToolManager.getTool($scope.currentJob.job.toolKey).name), content: 'annulé', type: 'success'});
                     },
                     function () {
-                        $alert({title: ToolManager.getTool($scope.currentJob.job.toolKey).name, content: 'pas annulé', type: 'danger'});
+                        $alert({title: $scope.getTitleValue(ToolManager.getTool($scope.currentJob.job.toolKey).name), content: 'pas annulé', type: 'danger'});
                     }
                 );
             };
@@ -260,6 +260,19 @@ angular.module('ortolangMarketApp')
                     }
                 }
             });
+
+            $scope.getTitleValue = function (multilingualTitle) {
+                if (!multilingualTitle) {
+                    return null;
+                }
+                var i;
+                for (i = 0; i < multilingualTitle.length; i++) {
+                    if (multilingualTitle[i].lang === Settings.language) {
+                        return multilingualTitle[i].value;
+                    }
+                }
+                return multilingualTitle.length > 0 ? multilingualTitle[0].value : undefined;
+            };
 
 
             // ************** //

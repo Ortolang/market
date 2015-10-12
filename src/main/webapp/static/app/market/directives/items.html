@@ -1,16 +1,16 @@
 <section class="items">
     <h3 ng-if="title" translate="{{title}}"></h3>
 
-    <div ng-hide="Search.isProcessing()">
-        <div ng-if="Search.hasResults() && Search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper">
+    <div ng-hide="Search.isProcessing()" ng-if="Search.results">
+        <div ng-if="Search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper">
             <item class="flex-column" ng-repeat="item in Search.results | orderBy:Search.activeOrderProp.sort:Search.orderReverse track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
         </div>
 
-        <div ng-if="Search.hasResults() && Search.activeViewMode.id === 'line'" class="full-item-wrapper">
+        <div ng-if="Search.activeViewMode.id === 'line'" class="full-item-wrapper">
             <item ng-repeat="item in Search.results | orderBy:Search.activeOrderProp.sort:Search.orderReverse track by item.key" data-entry="item" data-template="market/templates/full-item.html"></item>
         </div>
-
-        <p ng-if="!Search.isProcessing() && !Search.hasResults()" class="text-center"><em translate="MARKET.NO_ITEM"></em></p>
+        <p ng-if="!Search.hasResults()" class="text-center"><em translate="MARKET.NO_ITEM"></em></p>
     </div>
+    <p ng-show="Search.isProcessing()"><span class="fa fa-refresh fa-spin"></span> Chargement...</p>
 
 </section>

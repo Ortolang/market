@@ -2,13 +2,13 @@
   "name": "ortolang-market",
   "version": "3.2.0-SNAPSHOT",
   "dependencies": {
-    "angular": "1.4.6",
-    "angular-animate": "1.4.6",
-    "angular-route": "1.4.6",
-    "angular-resource": "1.4.6",
-    "angular-sanitize": "1.4.6",
-    "angular-messages": "1.4.6",
-    "angular-i18n": "1.4.6",
+    "angular": "1.4.7",
+    "angular-animate": "1.4.7",
+    "angular-route": "1.4.7",
+    "angular-resource": "1.4.7",
+    "angular-sanitize": "1.4.7",
+    "angular-messages": "1.4.7",
+    "angular-i18n": "1.4.7",
     "font-awesome": "4.3.0",
     "octicons": "3.1.0",
     "angular-file-upload": "2.1.4",
@@ -37,8 +37,8 @@
     "angulartics": "0.20.1"
   },
   "devDependencies": {
-    "angular-mocks": "1.4.6",
-    "angular-scenario": "1.4.6"
+    "angular-mocks": "1.4.7",
+    "angular-scenario": "1.4.7"
   },
   "overrides": {
     "angular-i18n": {
@@ -72,6 +72,6 @@
   },
   "appPath": "app",
   "resolutions": {
-    "angular": "1.4.6"
+    "angular": "1.4.7"
   }
 }
