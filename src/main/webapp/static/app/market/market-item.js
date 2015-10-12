@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
             console.log(queryBuilder.toString());
             SearchResource.json({query: queryBuilder.toString()}, function (results) {
                 if (results.length >= 1) {
-                    if ($routeParams.section === 'item') {
+                    if (!/^(corpora|lexicons|applications|tools)$/.test($routeParams.section)) {
                         switch (results[results.length - 1].type) {
                             case 'Corpus':
                                 $route.updateParams({section: 'corpora'});

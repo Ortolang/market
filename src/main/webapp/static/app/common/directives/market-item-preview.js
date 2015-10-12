@@ -27,7 +27,7 @@ angular.module('ortolangMarketApp')
 
                     function loadItem() {
 
-                        $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'untitle');
+                        $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'Untitled');
 
                         if (scope.content.schema) {
 
@@ -38,6 +38,7 @@ angular.module('ortolangMarketApp')
                                 scope.marketItemTemplate = 'market/templates/market-item-12.html';
 
                                 refreshMultilingualValue(scope.content, Settings.language);
+                                scope.itemMarketType = getItemType(scope.content);
 
                                 if (scope.content.image) {
                                     ObjectResource.element({key: scope.itemKey, path: scope.content.image}).$promise.then(function (oobject) {
@@ -163,6 +164,19 @@ angular.module('ortolangMarketApp')
                             $location.url('/contributors/' + contributor.entity.id);
                         }
                     };
+
+                    function getItemType(item) {
+                        switch (item.type) {
+                            case 'Corpus':
+                                return 'corpora';
+                            case 'Lexique':
+                                return 'lexicons';
+                            case 'Application':
+                                return 'applications';
+                            case 'Outil':
+                                return 'tools';
+                        }
+                    }
 
                     scope.$on('$routeUpdate', function () {
                         if ($location.search().browse !== scope.browse) {
