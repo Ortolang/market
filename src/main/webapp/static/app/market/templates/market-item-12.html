@@ -221,6 +221,21 @@
                 </div>
             </div>
 
+            <div class="panel panel-default" ng-hide="bibliographicCitation">
+                <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
+                <div data-target-blank data-content="bibliographicCitation" class="panel-body">
+                    <p ng-if="primaryPublications.length>0" ng-repeat="pub in primaryPublications" ng-bind-html="pub">
+                    </p>
+                    <p>{{title}} 
+                        <span ng-repeat="contributor in content.contributors" ng-if="isProducer(contributor)">
+                            , <a ng-href='#/producers/{{contributor.entity.id}}' ng-bind="contributor.entity.fullname"></a>
+                        </span>
+                        , Equipex ORTOLANG <a target="_BLANK" href="http://www.ortolang.fr">www.ortolang.fr</a> : 
+                        <a target="_BLANK" href="http://hdl.handle.net/11403/{{alias}}/{{ortolangObject.snapshotName}}">http://hdl.handle.net/11403/{{alias}}/{{ortolangObject.snapshotName}}</a>
+                    </p>
+                </div>
+            </div>
+
             <div data-preview-box key="itemKey" preview="content.preview" alias="alias" root="root" ng-if="content.preview && content.preview.paths.length>0"></div>
             <!-- <div class="btn-group btn-group-justified">
                 <div class="btn-group">
