@@ -79,14 +79,13 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $scope.$on('$destroy', function () {
-            $rootScope.browsing = false;
             // Unbind listeners
             angular.element($window).unbind('resize.' + $scope.$id);
         });
 
         $scope.$on('$routeUpdate', function () {
             if ($location.search().browse) {
-                $rootScope.browsing = true;
+                $scope.browsing = true;
             }
             $scope.previewing = !!$location.search().preview;
             $scope.editing = !!$location.search().edit;
@@ -153,16 +152,16 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.toggleBrowsing = function () {
-            $rootScope.browsing = !$rootScope.browsing;
-            $location.search('browse', $rootScope.browsing || undefined);
-            if (!$rootScope.browsing) {
+            $scope.browsing = !$scope.browsing;
+            $location.search('browse', $scope.browsing || undefined);
+            if (!$scope.browsing) {
                 refreshWorkspace();
                 $location.search('root', undefined);
                 $location.search('path', undefined);
             }
             if (!$scope.browserCtrlInitialized) {
                 $scope.browserCtrlInitialized = true;
-            } else if ($rootScope.browsing) {
+            } else if ($scope.browsing) {
                 $scope.$broadcast('initWorkspaceVariables');
             }
         };
@@ -449,7 +448,7 @@ angular.module('ortolangMarketApp')
         });
 
         function init() {
-            $rootScope.browsing = !!$location.search().browse;
+            $scope.browsing = !!$location.search().browse;
 
             $scope.browserCtrlInitialized = false;
             $scope.WorkspaceBrowserService = WorkspaceBrowserService;
@@ -486,7 +485,7 @@ angular.module('ortolangMarketApp')
                 }
                 if (workspace) {
                     $scope.changeWorkspace(workspace, true);
-                    if ($rootScope.browsing) {
+                    if ($scope.browsing) {
                         $scope.browserCtrlInitialized = true;
                     }
 

@@ -984,7 +984,6 @@ angular.module('ortolangMarketApp')
 
             $scope.$on('$destroy', function () {
                 if ($scope.isWorkspaceBrowserService) {
-                    $rootScope.browsing = false;
                     $rootScope.ortolangPageSubtitle = undefined;
                 }
                 // Unbind listeners
@@ -1033,9 +1032,9 @@ angular.module('ortolangMarketApp')
                         resetFilterModels();
                         getParentData();
                     }
-                } else if ($rootScope.browsing) {
+                } else if ($scope.browsing) {
                     if (!$location.search().browse) {
-                        $rootScope.browsing = false;
+                        $scope.toggleBrowsing();
                         return;
                     }
                     // TODO need fix: when changing workspace getParentData() called twice

@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
                     })
                     .error(function () {
                         if (!serverDownModal) {
-                            var modalScope = $rootScope.$new(true);
+                            var modalScope = $scope.$new(true);
                             modalScope.refresh = function () {
                                 AuthService.forceReload();
                             };
