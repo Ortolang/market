@@ -179,6 +179,9 @@ angular
             $analyticsProvider.firstPageview(false);
         }
     }])
+    .config(['$compileProvider', function ($compileProvider) {
+        $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
+    }])
     .run(['editableOptions', 'editableThemes', function (editableOptions, editableThemes) {
         var copy = editableThemes.bs3;
         copy.formTpl = '<form class="" role="form"></form>';
