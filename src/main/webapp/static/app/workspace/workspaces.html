@@ -11,7 +11,7 @@
                     <div class="btn-group dropdown-wrapper add-action">
                         <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW"></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><div ng-click="createWorkspace()"><span ng-class="icons.browser.workspace"></span> {{'BROWSER.WORKSPACE' | translate}}</div></li>
+                            <li><div ng-click="createWorkspace()"><span ng-class="::icons.browser.workspace"></span> {{'BROWSER.WORKSPACE' | translate}}</div></li>
                         </ul>
                     </div>
                     <section class="my-workspaces">
@@ -32,17 +32,17 @@
                         <div class="row">
                             <h1 ng-class="renameWorkspaceForm.$visible ? 'col-md-8' : 'col-md-12'">
                                 <span editable-text="WorkspaceBrowserService.workspace.name" e-ng-init="largeInput = true;" e-form="renameWorkspaceForm" onbeforesave="renameWorkspace($data)">{{WorkspaceBrowserService.workspace.name}}</span>
-                                <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="icons.edit"></span></button>
+                                <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="::icons.edit"></span></button>
                             </h1>
                         </div>
                         <i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: WorkspaceBrowserService.workspace.creationDate, author: WorkspaceBrowserService.workspace.authorCard.givenName + ' ' + WorkspaceBrowserService.workspace.authorCard.familyName}"></i>
                         <div class="workspace-actions-toolbar">
-                            <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>
+                            <button class="btn btn-default" ng-click="toggleBrowsing()"><span ng-class="::icons.browser.browse"></span> {{'MARKET.BROWSE' | translate}}</button>
                             <button class="btn btn-default" ng-if="metadataItem !== undefined" ng-click="togglePreviewing()"><span class="octicon octicon-book"></span> {{'WORKSPACE.PREVIEW_METADATA' | translate}}</button>
                             <button class="btn btn-default" ng-if="metadataItem === undefined" ng-click="createMetadataItem()"><span class="octicon octicon-book"></span> {{'WORKSPACE.CREATE_PRESENTATION_METADATA' | translate}}</button>
-                            <button class="btn btn-default" ng-click="publish()"><span ng-class="icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
-                            <button ng-if="!lastPublishedSnapshot" class="btn btn-default btn-danger" ng-click="deleteWorkspace()"><span ng-class="icons.trash"></span> {{'DELETE' | translate}}</button>
-                            <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
+                            <button class="btn btn-default" ng-click="publish()"><span ng-class="::icons.browser.publish"></span> {{'WORKSPACE.PUBLISH' | translate}}</button>
+                            <button ng-if="!lastPublishedSnapshot" class="btn btn-default btn-danger" ng-click="deleteWorkspace()"><span ng-class="::icons.trash"></span> {{'DELETE' | translate}}</button>
+                            <!--<button class="btn btn-default" ng-click="snapshot()"><span ng-class="::icons.browser.snapshot"></span> {{'WORKSPACE.SNAPSHOT' | translate}}</button>-->
                         </div>
                         <div bs-tabs data-nav-class="nav-pills workspace-dashboard-nav-pills">
                             <section data-title="{{'BROWSER.INFORMATION' | translate}}" bs-pane>
@@ -63,7 +63,7 @@
                                         <ul class="list-inline">
                                             <li ng-repeat="tag in WorkspaceBrowserService.workspace.tags" class="tag-wrapper">
                                                 <div class="label tag label-default">
-                                                    <span ng-class="icons.tag"></span>
+                                                    <span ng-class="::icons.tag"></span>
                                                     <span translate="BROWSER.VERSION" data-translate-values="{number: tag.name}"></span>
                                                 </div>
                                             </li>
@@ -90,7 +90,7 @@
                                 <ul class="list-unstyled row">
                                     <li ng-repeat="member in workspaceMembers track by member.key" class="col-lg-3 col-md-4 col-sm-6" profile-card data-profile="member" data-size="50" data-img-classes="img-circle"></li>
                                     <li class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
-                                        <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="icons.plus"></span></button></div>
+                                        <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
                                         <div class="media-body">{{'WORKSPACE.ADD_MEMBER' | translate}}</div>
                                     </li>
                                 </ul>
@@ -124,12 +124,12 @@
 <div ng-if="metadataItemLoaded && (previewing || creating)" class="container-fluid">
     <div id="metadata-item-editor-toolbar" class="row toolbar browser-toolbar">
         <div class="btn-toolbar col-md-12" role="toolbar">
-                <button ng-if="previewing && !editing" ng-click="togglePreviewing()" class="btn btn-default"><span ng-class="icons.browser.backToDashboard"></span> {{'BROWSER.BACK_TO_DASHBOARD' | translate}}</button>
-                <button ng-if="editing" ng-click="toggleEditing()" class="btn btn-default"><span ng-class="icons.browser.backToDashboard"></span> {{'WORKSPACE.METADATA_EDITOR.BACK_TO_PREVIEW' | translate}}</button>
+                <button ng-if="previewing && !editing" ng-click="togglePreviewing()" class="btn btn-default"><span ng-class="::icons.browser.backToDashboard"></span> {{'BROWSER.BACK_TO_DASHBOARD' | translate}}</button>
+                <button ng-if="editing" ng-click="toggleEditing()" class="btn btn-default"><span ng-class="::icons.browser.backToDashboard"></span> {{'WORKSPACE.METADATA_EDITOR.BACK_TO_PREVIEW' | translate}}</button>
 
             <div class="btn-toolbar btn-toolbar-right" role="toolbar" ng-if="!(editing || creating)">
                 <div class="btn-group">
-                    <button ng-click="toggleEditing()" class="btn btn-primary"><span ng-class="icons.edit"></span> {{'WORKSPACE.EDIT_PRESENTATION_METADATA' | translate}}</button>
+                    <button ng-click="toggleEditing()" class="btn btn-primary"><span ng-class="::icons.edit"></span> {{'WORKSPACE.EDIT_PRESENTATION_METADATA' | translate}}</button>
                 </div>
             </div>
         </div>
