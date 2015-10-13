@@ -21,6 +21,10 @@ angular.module('ortolangMarketApp')
 
                 scope.Search = Search;
 
+                scope.$on('$destroy', function () {
+                    Search.clearResults();
+                });
+
                 function load(query) {
                     console.log('query : ' + query);
                     Search.search(query).$promise.then(function (results) {

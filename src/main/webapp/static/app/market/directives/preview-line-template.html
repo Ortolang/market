@@ -2,7 +2,7 @@
 	<tbody>
 	    <tr ng-repeat="element in previewFiles">
 	        <td ng-click="element.external===true ? openContentInNewTab(element.value.key) : showPreview(element.value.key)">
-	            <span class="type" ng-class="element.value.object.mimeType | mimeTypeIconCss"></span> {{element.value.object.name}}
+	            <span class="type" ng-class="::element.value.object.mimeType | mimeTypeIconCss"></span> {{element.value.object.name}}
 	        </td>
 	    </tr>
 	</tbody>

@@ -11,7 +11,7 @@
                     <div>
                         <span class="thumb-icon fa-4x" ng-class="::child.mimeType | mimeTypeIconCss"></span>
                         <div class="thumb" style="background-image: url({{::Content.getPreviewUrlWithKey(child.key)}})"></div>
-                        <div ng-if="(child.mimeType | mimeTypeIconCss) === icons.videoFile" class="thumb-overlay">
+                        <div ng-if="::(child.mimeType | mimeTypeIconCss) === icons.videoFile" class="thumb-overlay">
                             <span class="fa-2x" ng-class="::icons.play"></span>
                         </div>
                     </div>
