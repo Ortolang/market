@@ -1,5 +1,5 @@
 <section class="items">
-    <h3 ng-if="title" translate="{{title}}"></h3>
+    <h3 ng-if="::title" translate="{{::title}}"></h3>
 
     <div ng-hide="Search.isProcessing()" ng-if="Search.results">
         <div ng-if="Search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper">

@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', 'Search', function (QueryBuilderFactory, $filter, Search) {
+    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', function (QueryBuilderFactory, $filter) {
 
         // Constructor
         function FacetedFilterManager() {
@@ -19,10 +19,6 @@ angular.module('ortolangMarketApp')
 
         // Methods
         FacetedFilterManager.prototype = {
-
-            getFilters: function () {
-                return this.enabledFilters;
-            },
 
             addFilter : function (filter) {
                 var i = 0;
@@ -40,7 +36,7 @@ angular.module('ortolangMarketApp')
                     if (this.enabledFilters[i].getId() === filter.getId()) {
                         filter.clearSelectedOptions();
                         this.enabledFilters.splice(i, 1);
-                        return this.getFilters();
+                        return this.enabledFilters;
                     }
                 }
             },
@@ -56,10 +52,6 @@ angular.module('ortolangMarketApp')
                     delete this.enabledFilters[i];
                 }
                 this.enabledFilters = [];
-            },
-
-            getAvailableFilters: function () {
-                return this.availabledFilters;
             },
 
             addAvailableFilter : function (filter) {
@@ -112,7 +104,7 @@ angular.module('ortolangMarketApp')
 
             toAnalytics: function (content) {
                 var result = content || '';
-                angular.forEach($filter('orderBy')(this.getFilters(), '+alias'), function (filter) {
+                angular.forEach($filter('orderBy')(this.enabledFilters, '+alias'), function (filter) {
                     if (filter.getPriority() === 'high' && filter.alias !== 'type') {
                         result += (result === '' ? '' : ' | ') + filter.toString();
                     }

@@ -79,8 +79,8 @@ angular.module('ortolangMarketApp')
 
                     scope.hasAppliedFacets = function () {
                         var i = 0;
-                        for (i; i < scope.filtersManager.getFilters().length; i++) {
-                            if (scope.filtersManager.getFilters()[i].hasSelectedOptions() && !scope.filtersManager.getFilters()[i].isLocked()) {
+                        for (i; i < scope.filtersManager.enabledFilters.length; i++) {
+                            if (scope.filtersManager.enabledFilters[i].hasSelectedOptions() && !scope.filtersManager.enabledFilters[i].isLocked()) {
                                 return true;
                             }
                         }
@@ -89,10 +89,10 @@ angular.module('ortolangMarketApp')
 
                     scope.hasLowFacets = function () {
                         var i = 0;
-                        for (i; i < scope.filtersManager.getAvailableFilters().length; i++) {
-                            if (scope.filtersManager.getAvailableFilters()[i].getPriority() !== 'high' &&
-                                !scope.filtersManager.getAvailableFilters()[i].isLocked() &&
-                                scope.filtersManager.getAvailableFilters()[i].isVisible()) {
+                        for (i; i < scope.filtersManager.availabledFilters.length; i++) {
+                            if (scope.filtersManager.availabledFilters[i].getPriority() !== 'high' &&
+                                !scope.filtersManager.availabledFilters[i].isLocked() &&
+                                scope.filtersManager.availabledFilters[i].isVisible()) {
                                 return true;
                             }
                         }
@@ -165,7 +165,7 @@ angular.module('ortolangMarketApp')
 
                         if (filters) {
                             var filtersO = angular.fromJson($routeParams.filters),
-                                facetedFilters = scope.filtersManager.getAvailableFilters();
+                                facetedFilters = scope.filtersManager.availabledFilters;
 
                             for (var paramName in filtersO) {
                                 if (filtersO.hasOwnProperty(paramName)) {
