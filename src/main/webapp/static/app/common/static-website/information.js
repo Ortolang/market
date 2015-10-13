@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         function ($scope, $rootScope, $routeParams, $route, $location, $anchorScroll, StaticWebsite) {
 
             $scope.StaticWebsite = StaticWebsite;
+            $scope.staticWebsiteBase = StaticWebsite.getStaticWebsiteBase();
 
             $scope.goToAnchor = function (newHash) {
                 if ($location.hash() !== newHash) {
@@ -25,7 +26,8 @@ angular.module('ortolangMarketApp')
                 if (StaticWebsite.getInformationContent()) {
                     $route.updateParams({section: StaticWebsite.getInformationContent()[0].id});
                 } else {
-                    $rootScope.$on('informationPagePopulated', function () {
+                    $rootScope.$on('informationPagePopulated', function (event) {
+                        event.stopPropagation();
                         $route.updateParams({section: StaticWebsite.getInformationContent()[0].id});
                     });
                 }

@@ -18,7 +18,8 @@ angular.module('ortolangMarketApp')
                 homePage, // Url of the HTML content on the home page
                 informationContent, // Menu Information
                 news, // List of news url to display
-                informationPages = {}; // static pages HTML content
+                informationPages = {}, // static pages HTML content
+                staticWebsiteBase = url.content + '/' + staticWebsiteAlias + '/' + OrtolangConfig.staticSiteVersion;
 
             this.getInformationContent = function () {
                 return informationContent;
@@ -40,22 +41,26 @@ angular.module('ortolangMarketApp')
                 return homePage;
             };
 
+            this.getStaticWebsiteBase = function () {
+                return staticWebsiteBase;
+            };
+
             function populateInformationPage(language) {
                 Content.downloadWithPath(informationId + '/' + informationId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.success(function (data) {
                     informationContent = data.content;
                     angular.forEach(data.content, function (page) {
-                        informationPages[page.id] = $rootScope.staticWebsiteBase + '/' + informationId + '/' + page.id + '/' + page.id + '.' + (language || 'fr') + '.html';
+                        informationPages[page.id] = staticWebsiteBase + '/' + informationId + '/' + page.id + '/' + page.id + '.' + (language || 'fr') + '.html';
                     });
                     $rootScope.$emit('informationPagePopulated');
                 });
             }
 
             function populateHomePage(language) {
-                homePage = $rootScope.staticWebsiteBase + '/' + homePageId + '/' + homePageId + '.' + (language || 'fr') + '.html';
+                homePage = staticWebsiteBase + '/' + homePageId + '/' + homePageId + '.' + (language || 'fr') + '.html';
                 Content.downloadWithPath(newsId + '/' + newsId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.success(function (data) {
                     news = [];
                     angular.forEach(data.news, function (id) {
-                        news.push($rootScope.staticWebsiteBase + '/' + newsId + '/' + id + '/' + id + '.' + (language || 'fr') + '.html');
+                        news.push(staticWebsiteBase + '/' + newsId + '/' + id + '/' + id + '.' + (language || 'fr') + '.html');
                     });
                 });
             }
@@ -71,11 +76,6 @@ angular.module('ortolangMarketApp')
                 populateHomePage(language.language);
                 populateInformationPage(language.language);
             });
-
-            function init() {
-                $rootScope.staticWebsiteBase = url.content + '/' + staticWebsiteAlias + '/' + OrtolangConfig.staticSiteVersion;
-            }
-            init();
 
             return this;
 

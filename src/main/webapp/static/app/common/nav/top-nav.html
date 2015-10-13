@@ -14,7 +14,7 @@
         </div>
 
         <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse" ng-cloak>
-            <li ng-if="navbarCollapsed" ng-repeat="element in sideNavElements | filter:{hiddenTopNav : false}:true track by element.class">
+            <li ng-if="navbarCollapsed" ng-repeat="element in ::sideNavElements | filter:{hiddenTopNav : false}:true track by element.class">
                 <a ng-href="#{{::element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="::element.iconCss"></span> {{::element.description | translate}}</a>
             </li>
             <!--<li ng-if="Cart.size() > 0 && !navbarCollapsed">-->
@@ -49,11 +49,13 @@
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fa fa-fw fa-globe"></span> {{'NAV.LANGUAGE' | translate}}
                 </a>
-                <ul class="dropdown-menu">
-                    <li ng-if="navbarCollapsed" ng-click="changeLanguage('en'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
-                    <li ng-if="navbarCollapsed" ng-click="changeLanguage('fr'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
-                    <li ng-if="!navbarCollapsed" ng-click="changeLanguage('en')" class="language" ng-class="{active: Settings.language === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
-                    <li ng-if="!navbarCollapsed" ng-click="changeLanguage('fr')" class="language" ng-class="{active: Settings.language === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
+                <ul ng-if="navbarCollapsed" class="dropdown-menu">
+                    <li ng-click="changeLanguage('en'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                    <li ng-click="changeLanguage('fr'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
+                </ul>
+                <ul ng-if="!navbarCollapsed" class="dropdown-menu">
+                    <li ng-click="changeLanguage('en')" class="language" ng-class="{active: Settings.language === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                    <li ng-click="changeLanguage('fr')" class="language" ng-class="{active: Settings.language === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
                 </ul>
             </li>
             <li class="dropdown" ng-if="authenticated">

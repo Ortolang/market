@@ -11,9 +11,9 @@ angular.module('ortolangMarketApp')
     .controller('HomeCtrl', ['$scope', 'Search', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'StaticWebsite',
         function ($scope, Search, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, StaticWebsite) {
 
-            // Scope variables
             function initScopeVariables() {
                 $scope.StaticWebsite = StaticWebsite;
+                $scope.staticWebsiteBase = StaticWebsite.getStaticWebsiteBase();
 
                 $scope.filtersManager = FacetedFilterManager.make();
 
@@ -61,7 +61,6 @@ angular.module('ortolangMarketApp')
 
             function init() {
                 initScopeVariables();
-
                 $scope.query = $scope.filtersManager.toQuery();
             }
             init();
