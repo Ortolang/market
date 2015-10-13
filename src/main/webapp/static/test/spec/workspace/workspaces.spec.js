@@ -59,17 +59,18 @@ describe('Controller: WorkspacesCtrl', function () {
         }));
 
         it('should not be browsing workspace content by default', function () {
-            expect($rootScope.browsing).toBe(false);
+            expect($scope.browsing).toBe(false);
             expect($scope.browserCtrlInitialized).toBe(false);
         });
 
         it('should be browsing on routeUpdate', function () {
-            expect($rootScope.browsing).toBe(false);
+            expect($scope.browsing).toBe(false);
             $scope.$emit('$routeUpdate');
-            expect($rootScope.browsing).toBe(false);
+            expect($scope.browsing).toBe(false);
             $location.search('browse', true);
             $scope.$emit('$routeUpdate');
-            expect($rootScope.browsing).toBe(true);
+            expect($scope.browsing).toBe(true);
+
         });
 
         it('should have a list of my workspaces ordered by Names', function () {
