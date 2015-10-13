@@ -80,7 +80,6 @@ angular.module('ortolangMarketApp')
 
         $scope.$on('$destroy', function () {
             $rootScope.browsing = false;
-            $rootScope.myWorkspaces = undefined;
             // Unbind listeners
             angular.element($window).unbind('resize.' + $scope.$id);
         });
@@ -451,7 +450,6 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $rootScope.browsing = !!$location.search().browse;
-            $rootScope.myWorkspaces = true;
 
             $scope.browserCtrlInitialized = false;
             $scope.WorkspaceBrowserService = WorkspaceBrowserService;

@@ -31,6 +31,7 @@ angular.module('ortolangMarketApp')
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             if (current.$$route) {
                 $rootScope.ortolangPageTitle = current.$$route.title;
+                $scope.reducedSideNav = current.$$route.originalPath === '/workspaces';
                 if (previous) {
                     switch (current.$$route.originalPath) {
                         case '/':

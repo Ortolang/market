@@ -52,21 +52,21 @@
 <div id="top-nav-wrapper" ng-controller="TopNavCtrl" ng-include="'common/nav/top-nav.html'"></div>
 <div id="main-wrapper">
     <div class="container-flex">
-        <nav id="side-nav-wrapper" ng-controller="SideNavCtrl" ng-class="{'my-workspaces': myWorkspaces}" class="side-nav" role="navigation" ng-cloak>
+        <nav id="side-nav-wrapper" ng-controller="SideNavCtrl" ng-class="{'reduced-side-nav': reducedSideNav}" class="side-nav" role="navigation" ng-cloak>
             <ul class="side-nav-list">
                 <li ng-repeat="element in ::sideNavElements track by element.class" ng-if="!element.hiddenSideNav && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', active: element.class === sideNavActiveClass}">
                     <a ng-if="::element.class !== 'divider'"
                        ng-href="{{:: '#' + element.path}}"
                        ng-click="select(element.class)"
                        ng-class="::element.class">
-                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="myWorkspaces" data-placement="right" data-container="false" bs-tooltip></span>
+                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" bs-tooltip></span>
                         <span class="item-description" translate="{{::element.description}}"></span>
                     </a>
                     <span ng-if="::element.class === 'divider'"></span>
                 </li>
             </ul>
         </nav>
-        <main ng-class="{'my-workspaces': myWorkspaces}" role="main">
+        <main role="main">
             <div class="view-wrapper" ng-view ng-cloak></div>
         </main>
     </div>
