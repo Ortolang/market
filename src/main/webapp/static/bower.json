@@ -17,11 +17,11 @@
     "highlightjs": "highlightjs/cdn-release#8.8.0",
     "angular-highlightjs": "0.4.3",
     "angular-motion": "0.4.3",
-    "angular-formly": "7.1.2",
+    "angular-formly": "7.2.3",
     "angular-formly-templates-bootstrap": "6.1.5",
     "angular-bootstrap-show-errors": "2.3.0",
     "angular-translate": "2.8.1",
-    "angular-zeroclipboard": "0.7.0",
+    "angular-zeroclipboard": "0.8.0",
     "angular-bootstrap-toggle-switch": "0.5.5",
     "angular-diff-match-patch": "0.1.11",
     "bootstrap": "3.3.5",
@@ -65,8 +65,8 @@
     },
     "angulartics": {
       "main": [
-          "src/angulartics.js",
-          "src/angulartics-piwik.js"
+        "src/angulartics.js",
+        "src/angulartics-piwik.js"
       ]
     }
   },
