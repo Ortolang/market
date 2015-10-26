@@ -1,7 +1,7 @@
 #side-nav-wrapper {
   height: 100%;
   width: @side-nav-width;
-  border-right: 1px solid darken(@gray-lighter, 6.5%);
+  border-right: @default-border;
   flex: 0 0 auto;
   overflow-x: hidden;
   overflow-y: auto;
@@ -96,6 +96,9 @@
             background-color: @information-primary;
           }
           &.workspaces {
+            background-color: @workspace-secondary;
+          }
+          &.workspaces-new {
             background-color: @workspace-secondary;
           }
         }

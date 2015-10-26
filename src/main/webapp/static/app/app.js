@@ -15,6 +15,7 @@ angular
         'ngResource',
         'ngMessages',
         'ngSanitize',
+        'ngTouch',
         'ortolangVisualizers',
         'angularFileUpload',
         'mgcrea.ngStrap.tab',
@@ -104,6 +105,13 @@ angular
                 requiresAuthentication: true,
                 reloadOnSearch: false,
                 controller: 'WorkspacesCtrl',
+                title: 'NAV.WORKSPACES'
+            })
+            .when('/workspaces/:alias', {
+                templateUrl: 'workspace/workspace-dashboard.html',
+                requiresAuthentication: true,
+                reloadOnSearch: false,
+                controller: 'WorkspaceDashboardCtrl',
                 title: 'NAV.WORKSPACES'
             })
             .when('/processes', {

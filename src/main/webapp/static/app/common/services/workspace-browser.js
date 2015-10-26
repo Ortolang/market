@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
         this.canSwitchViewMode = true;
         this.canExecuteTool = true;
         this.displayAsideInfo = true;
-        this.displayAsideWorkspaceList = true;
+        this.displayAsideWorkspaceList = false;
         this.workspace = {};
 
         return this;

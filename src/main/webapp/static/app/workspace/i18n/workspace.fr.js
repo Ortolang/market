@@ -12,6 +12,10 @@ angular.module('ortolangMarketApp')
         WORKSPACE: {
             WORKSPACE: 'Workspace',
             ALIAS: 'Identifiant',
+            CONTENT: 'Contenu',
+            METADATA: 'Métadonnées',
+            PERMISSIONS: 'Permissions',
+            PREVIEW: 'Prévisualisation',
             MEMBERS: 'Membres',
             UPLOAD: 'Importer',
             UPLOAD_QUEUE: 'Importation',
@@ -29,13 +33,20 @@ angular.module('ortolangMarketApp')
             PUBLISH: 'Soumettre à publication',
             NO_WORKSPACES: 'Vous n\'avez pas encore créé d\'espace de travail',
             HISTORY: 'Activité récente',
-            MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans le projet',
+            MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans ce projet',
+            MEMBERS_LIST: 'Membres de l\'espace de travail',
+            OWNER: 'Propriétaire de l\'espace de travail',
             PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'Pas de version publiée',
+            CREATED: 'Créé le {{creationDate | date}}',
             CREATION_DATE: 'Créé le {{creationDate | date}} par {{author}}',
             LAST_MODIFICATION_DATE: 'Dernière modification',
-            EXTERNAL_LINKS: 'Liens externes',
+            ACCESS_LINKS: 'Accès',
+            WORKFLOW: 'Demandes en cours',
+            NO_WORKFLOW: 'Il n\'y a pas de demande en cours concernant cet espace de travail',
+            ACTIONS: 'Actions',
+            DELETE_WORKSPACE: 'Supprimer l\'espace de travail',
             MARKET_LINKS: 'Lien vers la dernière version publiée',
             CONTENT_LINKS: 'Liens vers le contenu',
             STATISTICS: 'Statistiques',
@@ -44,6 +55,7 @@ angular.module('ortolangMarketApp')
             CREATE_PRESENTATION_METADATA: 'Créer les métadonnées',
             EDIT_PRESENTATION_METADATA: 'Éditer les métadonnées',
             ADD_MEMBER: 'Ajouter un membre',
+            CREATE_WORKSPACE: 'Créer un espace de travail',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Créer un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'identifiant',
@@ -207,6 +219,29 @@ angular.module('ortolangMarketApp')
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Remplir la fiche des métadonnées'
+            },
+            EVENTS: {
+                CORE: {
+                    WORKSPACE: {
+                        TAG: 'a publié une nouvelle version :<span class="description">{{::arguments["tag-name"]}}</span>',
+                        SNAPSHOT: 'a pris un nouvel instanané',
+                        CREATE: 'a créé cet espace de travail'
+                    },
+                    METADATA: {
+                        CREATE: 'a créé les métadonnées',
+                        UPDATE: 'a mis à jour les métadonnées'
+                    },
+                    OBJECT: {
+                        CREATE: 'a ajouté un élément :<span class="description">{{::arguments.path}}</span>',
+                        MOVE: 'a déplacé une élément :<span class="description">{{::arguments["src-path"]}} vers {{::arguments["dest-path"]}}</span>',
+                        DELETE: 'a supprimé un élément :<span class="description">{{::arguments.path}}</span>'
+                    },
+                    COLLECTION: {
+                        CREATE: 'a créé une collection :<span class="description">{{::arguments.path}}</span>',
+                        MOVE: 'a déplacé une collection :<span class="description">{{::arguments["src-path"]}} vers {{::arguments["dest-path"]}}</span>',
+                        DELETE: 'a supprimé une collection:<span class="description">{{::arguments.path}}</span>'
+                    }
+                }
             }
         }
     });

@@ -49,25 +49,6 @@ angular.module('ortolangMarketApp')
                             scope.$broadcast('initWorkspaceVariables');
                         }
                     });
-
-                    function getSnapshotNameFromHistory(workspaceSnapshot) {
-                        if (FileSelectBrowserService.workspace.snapshots) {
-                            var filteredSnapshot = $filter('filter')(FileSelectBrowserService.workspace.snapshots, {key: workspaceSnapshot.key}, true);
-                            if (filteredSnapshot.length === 1) {
-                                return filteredSnapshot[0].name;
-                            }
-                        }
-                        return undefined;
-                    }
-
-                    scope.getSnapshotsHistory = function () {
-                        ObjectResource.get({key: FileSelectBrowserService.workspace.head}, function (data) {
-                            scope.workspaceHistory = data.history;
-                            angular.forEach(scope.workspaceHistory, function (workspaceSnapshot) {
-                                workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
-                            });
-                        });
-                    };
                 }
             }
         };
