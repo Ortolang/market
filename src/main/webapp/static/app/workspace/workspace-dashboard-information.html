@@ -1,7 +1,6 @@
 <div class="row general-information">
     <div class="col-md-12">
-        <!-- TODO replace by getTitleValue() -->
-        <h1>{{Workspace.active.workspace.name}}</h1>
+        <h2>{{::getTitleValue()}}</h2>
         <p><i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: Workspace.active.workspace.creationDate, author: Workspace.authorCards[Workspace.active.workspace.author].fullName}"></i></p>
         <ul class="list-inline">
             <li>

@@ -18,10 +18,11 @@ angular.module('ortolangMarketApp')
         '$window',
         'Workspace',
         'Content',
+        'Helper',
         'Runtime',
         'WorkspaceResource',
         'WorkspaceBrowserService',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Runtime, WorkspaceResource, WorkspaceBrowserService) {
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, Runtime, WorkspaceResource, WorkspaceBrowserService) {
 
             /**
              * The section selected by default
@@ -130,6 +131,18 @@ angular.module('ortolangMarketApp')
                     show: true
                 });
             }
+
+            $scope.getTitleValue = function () {
+                if (Workspace.active.metadata === null) {
+                    return Workspace.active.workspace.name;
+                }
+                if (Workspace.active.metadata === undefined) {
+                    return;
+                }
+                if (Workspace.active.metadata.title) {
+                    return Helper.getMultilingualValue(Workspace.active.metadata.title);
+                }
+            };
 
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {

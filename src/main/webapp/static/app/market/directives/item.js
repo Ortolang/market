@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', ['Content', 'Settings',  function (Content, Settings) {
+    .directive('item', ['Content', 'Helper',  function (Content, Helper) {
         return {
             restrict: 'EA',
             scope: {
@@ -19,16 +19,6 @@ angular.module('ortolangMarketApp')
             },
             link: {
                 pre : function (scope) {
-
-                    function getValue(multilingualProperty) {
-                        var i;
-                        for (i = 0; i < multilingualProperty.length; i++) {
-                            if (multilingualProperty[i].lang === Settings.language) {
-                                return multilingualProperty[i].value;
-                            }
-                        }
-                        return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
-                    }
 
                     if (scope.entry.applicationUrl) {
                         scope.itemUrl = scope.entry.applicationUrl;
@@ -45,10 +35,10 @@ angular.module('ortolangMarketApp')
                     }
 
                     if (scope.entry.title) {
-                        scope.title = getValue(scope.entry.title, Settings.language);
+                        scope.title = Helper.getMultilingualValue(scope.entry.title);
                     }
                     if (scope.entry.description) {
-                        scope.description = getValue(scope.entry.description, Settings.language);
+                        scope.description = Helper.getMultilingualValue(scope.entry.description);
                     }
 
                     if (scope.entry.image) {
