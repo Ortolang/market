@@ -5,43 +5,42 @@
 
         <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
             <div class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
-                <button ng-if="::isWorkspaceBrowserService" ng-click="toggleBrowsing()" class="btn btn-default back-to-dashboard" data-title="{{'BROWSER.BACK_TO_DASHBOARD' | translate}}" data-placement="bottom" bs-tooltip><span ng-class="icons.browser.backToDashboard"></span></button>
                 <div class="breadcrumb-part">
                     <button ng-if="breadcrumbParts.length > 0" class="btn btn-default"  ng-click="browseToPath('/')">
                         {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
                     </button>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default">
-                            {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root" translate="BROWSER.VERSION" data-translate-values="{number: root}"></span>
+                            {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root" translate="BROWSER.VERSION" data-translate-values="{tag: root}"></span>
                         </button>
                     </div>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
+                            {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root">{{root}}</span>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)" class="{{item.divider ? 'divider' : ''}}"><div><span ng-class="item.icon"></span> {{item.text | translate}}</div></li>
+                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="::doAction(item.action)" class="{{::item.divider ? 'divider' : ''}}"><div><span ng-class="::item.icon"></span> {{item.text | translate}}</div></li>
                         </ul>
                     </div>
                 </div>
 
                 <div ng-repeat="part in breadcrumbParts" class="breadcrumb-part">
-                    <a ng-if="!$last" ng-click="browseToPath(part)" class="btn btn-default">
-                        {{parent.pathParts[$index]}}
+                    <a ng-if="!$last" ng-click="::browseToPath(part)" class="btn btn-default">
+                        {{::parent.pathParts[$index]}}
                     </a>
                     <div class="btn-group" ng-if="$last && breadcrumbDropdownItems.length === 0">
                         <button type="button" class="btn btn-default">
-                            {{parent.pathParts[$index]}}
+                            {{::parent.pathParts[$index]}}
                         </button>
                     </div>
                     <div class="btn-group" ng-if="$last && breadcrumbDropdownItems.length !== 0">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            {{parent.pathParts[$index]}}
+                            {{::parent.pathParts[$index]}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="doAction(item.action)" class="{{item.divider ? 'divider' : ''}}"><div><span ng-class="item.icon"></span> {{item.text | translate}}</div></li>
+                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="::doAction(item.action)" class="{{::item.divider ? 'divider' : ''}}"><div><span ng-class="::item.icon"></span> {{item.text | translate}}</div></li>
                         </ul>
                     </div>
                 </div>
@@ -51,24 +50,24 @@
 
                 <div ng-if="!isFileSelectBrowserService" class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SETTINGS' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.settings"></span>
+                        <span ng-class="::icons.browser.settings"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><div ng-click="showCheatsheet($event)"><span ng-class="icons.browser.keyboard"></span> {{'BROWSER.SHORTCUTS' | translate}}</div></li>
+                        <li><div ng-click="showCheatsheet($event)"><span ng-class="::icons.browser.keyboard"></span> {{'BROWSER.SHORTCUTS' | translate}}</div></li>
                         <li ng-if="::displayAsideWorkspaceList()"><div ng-click="toggleWorkspaceList()"><span class="fa fa-fw"></span> {{'BROWSER.WORKSPACE_LIST' | translate:browserSettings}}</div></li>
                     </ul>
                 </div>
 
                 <div ng-if="::browserService.displayAsideInfo" class="btn-group">
                     <button ng-class="{'btn-inverse': !browserSettings.hideInfo}" class="btn btn-default" ng-click="toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:browserSettings}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.info"></span>
+                        <span ng-class="::icons.browser.info"></span>
                     </button>
                 </div>
 
                 <div class="btn-group">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                            <span ng-class="icons.browser.sort"></span>
+                            <span ng-class="::icons.browser.sort"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li>
@@ -99,18 +98,18 @@
                     </div>
                     <div id="filter-query-wrapper" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.FILTER' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                            <span ng-class="icons.browser.search"></span>
+                            <span ng-class="::icons.browser.search"></span>
                         </button>
                         <div class="dropdown-menu filter dropdown-menu-right" ng-click="openFilter($event)" role="menu">
                             <div class="form-group has-feedback">
                                 <label class="control-label" for="filter-input" translate="NAME"></label>
                                 <input id="filter-input" ng-model="filterModels.nameQuery" class="form-control" placeholder="{{'NAME' | translate}}" type="text">
-                                <span ng-show="filterModels.nameQuery" ng-click="filterModels.nameQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
+                                <span ng-show="filterModels.nameQuery" ng-click="filterModels.nameQuery = ''" ng-class="::icons.browser.remove" class="form-control-feedback"></span>
                             </div>
                             <div ng-if="!forceMimeTypes" class="has-feedback">
                                 <label class="control-label" for="filter-mime-type-input" translate="BROWSER.FILTER.MIME_TYPE"></label>
                                 <input id="filter-mime-type-input" ng-model="filterModels.mimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" bs-options="childrenMimeType.value as childrenMimeType.label for childrenMimeType in filterModels.allChildrenMimeTypes" data-html="true" bs-typeahead>
-                                <span ng-show="filterModels.mimeTypeQuery" ng-click="filterModels.mimeTypeQuery = ''" ng-class="icons.browser.remove" class="form-control-feedback"></span>
+                                <span ng-show="filterModels.mimeTypeQuery" ng-click="filterModels.mimeTypeQuery = ''" ng-class="::icons.browser.remove" class="form-control-feedback"></span>
                             </div>
                         </div>
                     </div>
@@ -124,7 +123,7 @@
 
                 <div class="btn-group">
                     <button ng-if="browserService.canChangeRoot && !forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSIONS' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.history"></span>
+                        <span ng-class="::icons.browser.history"></span>
                     </button>
                     <ul ng-if="browserService.canChangeRoot && !forceHead" class="dropdown-menu dropdown-menu-right snapshots" role="menu">
                         <li ng-click="changeRoot('head')" ng-class="{active: root === 'head'}">
@@ -132,10 +131,15 @@
                         </li>
                         <li ng-if="workspaceHistory.length > 1" class="divider"></li>
                         <li ng-if="workspaceHistory.length > 1" class="dropdown-header">{{'BROWSER.PREVIOUS_VERSIONS' | translate}}</li>
-                        <li ng-repeat="workspaceSnapshot in workspaceHistory | filter:{number:'!!'} | orderBy:'date':true track by workspaceSnapshot.key"
-                            ng-class="{active: root === workspaceSnapshot.number}"
-                            ng-click="changeRoot(workspaceSnapshot.number)">
-                            <div translate="BROWSER.VERSION" data-translate-values="{number: workspaceSnapshot.number}"></div>
+                        <li ng-repeat="workspaceSnapshot in workspaceHistory | filter:{name:'!!'} | orderBy:'date':true track by workspaceSnapshot.key"
+                            ng-class="{active: root === workspaceSnapshot.name}"
+                            ng-click="::changeRoot(workspaceSnapshot.name)">
+                            <div>
+                                <span ng-if="::workspaceSnapshot.tag">
+                                    <span ng-class="::icons.tag"></span> <strong translate="BROWSER.TAG" data-translate-values="workspaceSnapshot"></strong>
+                                </span>
+                                <span ng-class="::workspaceSnapshot.tag ? 'small' : ''" translate="BROWSER.SNAPSHOT" data-translate-values="workspaceSnapshot"></span>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -143,7 +147,7 @@
 
                 <div ng-if="::browserService.canExecuteTool" class="btn-group">
                     <button class="btn btn-default" ng-click="showToolsList()" data-title="{{'BROWSER.TOOLS' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.tools"></span>
+                        <span ng-class="::icons.browser.tools"></span>
                     </button>
                 </div>
 
@@ -151,46 +155,60 @@
 
                 <div ng-if="isWorkspaceBrowserService" class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.OTHERS' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.others"></span>
+                        <span ng-class="::icons.browser.others"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-show="isHead && hasOnlyParentSelected()">
-                            <div ng-click="addCollection()"><span ng-class="icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div>
-                        </li>
-                        <li ng-show="isHead && hasOnlyParentSelected() && !hasOnlyRootCollectionSelected()" class="divider"></li>
                         <li ng-show="isHead && !hasOnlyRootCollectionSelected()">
-                            <div ng-click="renameChild()"><span ng-class="icons.edit"></span> {{'RENAME' | translate}}</div>
+                            <div ng-click="renameChild()"><span ng-class="::icons.edit"></span> {{'RENAME' | translate}}</div>
                         </li>
                         <li ng-show="isHead && !hasOnlyParentSelected()">
-                            <div ng-click="moveChild()"><span ng-class="icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
+                            <div ng-click="moveChild()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
                         </li>
-                        <li ng-show="isHead" class="divider"></li>
-                        <li><div ng-click="download(selectedElements)"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
-                        <!--<li><div ng-click="addToCart()"><span ng-class="icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
+                        <li ng-show="isHead && !hasOnlyParentSelected()" class="divider"></li>
+                        <li><div ng-click="download(selectedElements)"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
+                        <!--<li><div ng-click="addToCart()"><span ng-class="::icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
                     </ul>
                 </div>
 
                 <!--<div ng-show="isMarketBrowserService" class="btn-group">-->
                     <!--<button ng-if="browserService.canDownload" class="btn btn-default" ng-click="addToCart()" data-title="{{'BROWSER.ADD_TO_CART' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>-->
-                        <!--<span ng-class="icons.cartPlus"></span>-->
+                        <!--<span ng-class="::icons.cartPlus"></span>-->
                     <!--</button>-->
                 <!--</div>-->
 
+                <div ng-show="isWorkspaceBrowserService && isHead && hasOnlyParentSelected()" class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'ADD' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.plus"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <div ng-click="addCollection()"><span ng-class="::icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div ng-click="doAction('uploadFiles')"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD_FILES' | translate}}</div>
+                        </li>
+                        <li>
+                            <div ng-click="doAction('uploadZip')"><span ng-class="::icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div>
+                        </li>
+                    </ul>
+                </div>
+
                 <div ng-show="isMarketBrowserService && !hasOnlyParentSelected()" class="btn-group">
-                    <button ng-if="browserService.canDownload" class="btn btn-default" ng-click="download(selectedElements)" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.download"></span>
+                    <button class="btn btn-default" ng-click="download(selectedElements)" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.download"></span>
                     </button>
                 </div>
 
                 <div ng-show="!hasOnlyParentSelected()" class="btn-group">
                     <button ng-if="browserService.canEdit && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.delete"></span>
+                        <span ng-class="::icons.browser.delete"></span>
                     </button>
                 </div>
 
                 <div ng-if="::browserService.canPreview" ng-show="visualizers" class="btn-group">
                     <button class="btn btn-default" ng-click="clickPreview()" data-title="{{'BROWSER.PREVIEW' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="icons.browser.preview"></span>
+                        <span ng-class="::icons.browser.preview"></span>
                     </button>
                     <button ng-if="visualizers.length > 1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
@@ -206,22 +224,22 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="browser-content-wrapper row">
         <div class="browser-aside-left-collapsed" ng-show="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
         <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkDeselection($event)" ng-right-click="checkDeselection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
             <span class="btn-collapse" ng-if="!isFileSelectBrowserService" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
             <div ng-if="::browserService.canEdit" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW" ng-disabled="!isHead"></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><div ng-click="addCollection()"><span ng-class="icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
+                    <li><div ng-click="addCollection()"><span ng-class="::icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
                     <li class="divider"></li>
-                    <li><div ng-click="doAction('uploadFiles')"><span ng-class="icons.browser.upload"></span> {{'BROWSER.UPLOAD_FILES' | translate}}</div></li>
-                    <li><div ng-click="doAction('uploadZip')"><span ng-class="icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div></li>
+                    <li><div ng-click="doAction('uploadFiles')"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD_FILES' | translate}}</div></li>
+                    <li><div ng-click="doAction('uploadZip')"><span ng-class="::icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div></li>
                 </ul>
             </div>
             <section class="my-workspaces">
                 <ul class="list-unstyled">
-                    <li class="my-workspaces-item" ng-repeat="workspace in workspaceList track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
+                    <li class="my-workspaces-item" ng-repeat="workspace in workspaceList | orderBy:'+name' track by workspace.key" ng-click="changeWorkspace(workspace)" ng-class="{active: isActiveWorkspace(workspace)}"><span></span>{{workspace.name}}</li>
                 </ul>
             </section>
         </div>
@@ -258,8 +276,10 @@
                     <dd>{{selectedElements[0].creation | date : dateFormat}}</dd>
                     <dt translate="BROWSER.MODIFICATION"></dt>
                     <dd>{{selectedElements[0].modification | date : dateFormat}}</dd>
+                    <dt ng-if="isLink(selectedElements[0])" translate="BROWSER.TARGET"></dt>
+                    <dd ng-if="isLink(selectedElements[0])">{{selectedElements[0].target}}</dd>
                     <dt translate="BROWSER.KEY"></dt>
-                    <dd>{{selectedElements[0].key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span class="octicon octicon-clippy" ui-zeroclip zeroclip-model="selectedElements[0].key"></span></span></dd>
+                    <dd>{{selectedElements[0].key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="selectedElements[0].key"></span></span></dd>
                     <dt ng-if="isCollection(selectedElements[0])" translate="SIZE"></dt>
                     <dd ng-if="isCollection(selectedElements[0])">
                                     <span ng-hide="selectedElements[0].realSize || selectedElements[0].size === 0">
@@ -283,7 +303,7 @@
             </div>
             <div ng-if="selectedElements && !hasOnlyOneElementSelected()">
                 <p class="lead">
-                    <span ng-class="icons.files"></span> <span translate="BROWSER.ELEMENT" data-translate-values="{value: selectedElements.length}"></span>
+                    <span ng-class="::icons.files"></span> <span translate="BROWSER.ELEMENT" data-translate-values="{value: selectedElements.length}"></span>
                 </p>
                 <dl class="dl-horizontal">
                     <dt translate="SIZE"></dt>
@@ -293,10 +313,10 @@
         </div>
     </div>
 
-    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" ng-right-click="preventRightClick()" class="browser-context-menu dropdown clearfix open">
+    <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" ng-right-click="preventRightClick()" class="browser-context-menu dropdown clearfix open ng-hide">
         <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="item in contextMenuItems" class="{{item.divider ? 'divider' : ''}}">
-                <div ng-click="doAction(item.action)"><span ng-class="item.icon"></span> {{item.text | translate}}</div>
+            <li ng-repeat="item in contextMenuItems" ng-class="::item.divider ? 'divider' : ''">
+                <div ng-click="::doAction(item.action)"><span ng-class="::item.icon"></span> {{item.text | translate}}</div>
             </li>
         </ul>
     </div>

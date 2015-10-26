@@ -18,8 +18,8 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in uploader.queue track by item.file.name">
-                <td ng-if="::uploader.isHTML5"><span ng-class="item.file.type | mimeTypeIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
-                <td ng-if="::!uploader.isHTML5"><span ng-class="item.type | ortolangElementIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
+                <td ng-if="::uploader.isHTML5"><span ng-class="::item.file.type | mimeTypeIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
+                <td ng-if="::!uploader.isHTML5"><span ng-class="::item.type | ortolangElementIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
                 <td>{{::item.wsName}}</td>
                 <td>{{::item.file.path}}</td>
                 <td class="text-nowrap" ng-show="::uploader.isHTML5">{{::item.file.size | bytes}}</td>

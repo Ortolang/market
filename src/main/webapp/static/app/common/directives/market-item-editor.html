@@ -42,7 +42,7 @@
 						<li><a href="" ng-click="scrolltoHref('specific_fields')">{{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}</a></li>
 						<li><hr/></li>
 						<li><button class="btn btn-primary" type="submit">{{'WORKSPACE.METADATA_EDITOR.APPLY' | translate}}</button></li>
-				   
+
 				</ul>
 				<!-- <ul class="progress-indicator stacked">
 		            <li class="completed warning">
@@ -84,12 +84,12 @@
 		                <div class="text-danger col-sm-offset-1">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.NOT_SET' | translate}}</div>
 		            </div>
 					<div class="form-group bs-callout-input" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.type.$dirty) && metadataItemform.type.$invalid}">
-						
-					    <select 
+
+					    <select
 						name="type"
 						class="form-control"
 						required
-						ng-model="selectedType" 
+						ng-model="selectedType"
 						ng-options="type as type.value for type in allResourceType track by type.key"
 						ng-change="selectType()">
 						</select>
@@ -101,7 +101,7 @@
 	            </div>
 				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_TITLE' | translate}} <span class="text-danger">*</span></h4>
-		            
+
 						<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.title.$dirty) && metadataItemform.title.$invalid) || ((metadataItemform.$submitted || metadataItemform.langtitle.$dirty) && metadataItemform.langtitle.$invalid)" name="'title'" label="'Titre de la ressource'" model="metadata.title" required="true"></multilingual-textfield>
 				</div>
 			</section>
@@ -121,13 +121,13 @@
 	            </div>
 				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_DESCRIPTION' | translate}}</h4>
-		            
+
 					<multilingual-textfield error="((metadataItemform.$submitted || metadataItemform.description.$dirty) && metadataItemform.description.$invalid) || ((metadataItemform.$submitted || metadataItemform.langdescription.$dirty) && metadataItemform.langdescription.$invalid)" name="'description'" label="'Description'" model="metadata.description" type="'large'" required="true"></multilingual-textfield>
-				
+
 				</div>
 
 				<div class=" bs-callout">
-					<h4 class="bs-callout-label">{{'MARKET.WEBSITE' | translate}}</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'MARKET.WEBSITE' | translate}}</h4>
 					<div class="alert alert-info" role="alert">
 			    		<p><span class="glyphicon glyphicon-info-sign"></span> Adresse du site web contenant des informations sur la ressource.</p>
 			    	</div>
@@ -138,30 +138,30 @@
 
 				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'MARKET.KEYWORDS' | translate}}</h4>
-		            
+
 					<multilingual-textfield name="'keyword'" model="metadata.keywords"></multilingual-textfield>
 				</div>
 
 				<div class="bs-callout">
 					<h4 class="bs-callout-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}}</h4>
-		            
+
 					<div class="alert alert-info" role="alert">
 					    <p><span class="glyphicon glyphicon-info-sign"></span> Les publications de référence sont celles qui décrivent comment la ressource a été créée. Elles sont également utilisées pour citer la ressource.</p>
 					</div>
 
 					<multivalue-textfield name="'publications'" model="publicationsModel" type="'large'"></multivalue-textfield>
-				
+
 				</div>
 
 
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_IMAGE' | translate}}</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.RESOURCE_IMAGE' | translate}}</h4>
 					<div class="alert alert-info" role="alert">
 					    <p><span class="glyphicon glyphicon-info-sign"></span> Afin d'avoir une identité graphique propre à votre ressource, vous pouvez joindre une image qui s'affichera en haut à gauche dans la fiche d'information.</p>
 					</div>
 					<div class="form-group  bs-callout-input">
 					    <div class="input-group">
-	                        <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="icons.imageFile"></span> {{image.path}}</span>
+	                        <span class="form-control" ng-click="fileImageSelectModal.show()"><span ng-class="::icons.imageFile"></span> {{image.path}}</span>
 	                    <span class="input-group-btn">
 	                        <button class="btn btn-default" ng-click="fileImageSelectModal.show()" type="button">{{'SELECT' | translate}}</button>
 	                    </span>
@@ -173,7 +173,7 @@
 				</div>
 
 				<div class="bs-callout">
-					<h4 class="bs-callout-label">{{'MARKET.PREVIEW' | translate}}</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'MARKET.PREVIEW' | translate}}</h4>
 					<div class="alert alert-info" role="alert">
 					    <p><span class="glyphicon glyphicon-info-sign"></span> Selectionnez un répertoire dans votre espace de travail ORTOLANG contenant des exemples illustant votre ressource (extrait vidéo ou son, partie d'un fichier XML, ...).</p>
 					</div>
@@ -194,7 +194,7 @@
 				</div>
 
 				<div class=" bs-callout">
-					<h4 class="bs-callout-label">{{'MARKET.TEMPORAL' | translate}}</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'MARKET.TEMPORAL' | translate}}</h4>
 					<div class="alert alert-info" role="alert">
 			    		<p><span class="glyphicon glyphicon-info-sign"></span> Date ou période de création de la ressource. Le format retenu pour ce champs est le standard <a target="_BLANK" href="https://fr.wikipedia.org/wiki/ISO_8601">ISO 8601</a>. Exemples : 2015-02-01.</p>
 			    	</div>
@@ -204,12 +204,12 @@
 				</div>
 
 				<div class=" bs-callout">
-					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.CREATION_LOCATIONS' | translate}}</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.CREATION_LOCATIONS' | translate}}</h4>
 					<div class="alert alert-info" role="alert">
 			    		<p><span class="glyphicon glyphicon-info-sign"></span> Spécifiez le(s) lieu(x) où la ressource a été créée.</p>
 			    	</div>
 					<div class="form-group  bs-callout-input">
-						
+
                         <tags-input ng-model="selectedCreationLocations" data-display-property="label" name="creationLocations" class="tool-tags" data-placeholder="{{'MARKET.SPACIAL' | translate}}">
                             <auto-complete source="suggestCountries($query)" min-length="0" load-on-focus="false"></auto-complete>
                         </tags-input>
@@ -227,29 +227,29 @@
 	            </div>
 				<div class="form-group bs-callout" ng-class="{'has-error': (metadataItemform.$submitted || metadataItemform.statusOfUse.$dirty) && metadataItemform.statusOfUse.$invalid}">
 					<h4 class="bs-callout-label">Droit d'utilisation <span class="text-danger">*</span></h4>
-				    <select 
+				    <select
 						name="statusOfUse"
 						class="form-control"
 						required
-						ng-model="selectedStatusOfUse" 
+						ng-model="selectedStatusOfUse"
 						ng-options="sou as sou.value for sou in allStatusOfUse track by sou.key"
 						ng-change="selectStatusOfUse()">
 					</select>
 				</div>
 
 				<div class="form-group bs-callout">
-					<h4 class="bs-callout-label">Description des conditions d'utilisation</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">Description des conditions d'utilisation</h4>
 
 					<div class="form-group">
 						<textarea name="conditionsOfUse" ng-model="metadata.conditionsOfUse" rows="10" class="form-control"></textarea>
 					</div>
 				</div>
-				
+
 				<div class=" bs-callout">
-					<h4 class="bs-callout-label">Licence à accepter</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">Licence à accepter</h4>
 					<div class="form-group">
 					    <div class="input-group">
-	                        <span class="form-control" ng-click="fileLicenceSelectModal.show()"><span ng-class="icons.textFile"></span> {{license.path}}</span>
+	                        <span class="form-control" ng-click="fileLicenceSelectModal.show()"><span ng-class="::icons.textFile"></span> {{license.path}}</span>
 	                    <span class="input-group-btn">
 	                        <button class="btn btn-default" ng-click="fileLicenceSelectModal.show()" type="button">{{'SELECT' | translate}}</button>
 	                    </span>
@@ -259,7 +259,7 @@
 				</div>
 
 				<div class=" bs-callout">
-					<h4 class="bs-callout-label">Site web de la licence</h4 class="bs-callout-label">
+					<h4 class="bs-callout-label">Site web de la licence</h4>
 					<div class="form-group">
 					    <input type="url" name="licenseWebsite" ng-model="metadata.licenseWebsite" class="form-control" placeholder="http://">
 					</div>
@@ -274,16 +274,16 @@
 
 			<section ng-show="!step || (step && stepCurrent === 'specific_fields')" id="specific_fields">
 				<h2 translate="WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD"></h2>
-				
-				<div ng-if="metadata.type==='Corpus'"> 
+
+				<div ng-if="metadata.type==='Corpus'">
 
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_TYPE"></h4>
 						<div class="form-group bs-callout-input">
-						    <!-- <select 
+						    <!-- <select
 								name="corporaType"
 								class="form-control"
-								ng-model="selectedCorporaType" 
+								ng-model="selectedCorporaType"
 								ng-options="ct as ct.value for ct in allCorporaType track by ct.key"
 								ng-change="selectCorporaType()">
 							</select> -->
@@ -294,7 +294,7 @@
 					</div>
 
 					<div class=" bs-callout">
-						<h4 class="bs-callout-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</h4 class="bs-callout-label">
+						<h4 class="bs-callout-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</h4>
 						<div class="alert alert-info" role="alert">
 					    	<p><span class="glyphicon glyphicon-info-sign"></span> Il est utile de spécifier les langues utilsés (écrit ou parlé) afin de permettre la recherche de ressources en fonction d'une langue particulière.</p>
 					    </div>
@@ -310,7 +310,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_STYLES"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.corporaStyleTag" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_STYLES' | translate}}" bs-options="corporaStyle as corporaStyle.label for corporaStyle in allCorporaStyles" bs-select>
   								{{'MARKET.FACET.CORPORA_STYLES' | translate}} <span class="caret"></span>
 							</button>
@@ -320,7 +320,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.ANNOTATION_LEVEL"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedAnnotationLevels" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ANNOTATION_LEVELS' | translate}}" bs-options="annotationLevel as annotationLevel.label for annotationLevel in allAnnotationLevels" bs-select>
   								{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}} <span class="caret"></span>
 							</button>
@@ -330,7 +330,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.TEXT_FORMAT"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedCorporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="term as term.label for term in allCorporaFormats" bs-select>
   								{{'MARKET.FACET.TEXT_FORMAT' | translate}} <span class="caret"></span>
 							</button>
@@ -340,7 +340,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_FILE_ENCODINGS"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedCorporaFileEncodings" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FILE_ENCODINGS' | translate}}" bs-options="term as term.label for term in allCorporaFileEncodings" bs-select>
   								{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
 							</button>
@@ -350,7 +350,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_DATATYPES"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedCorporaDataTypes" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_DATATYPES' | translate}}" bs-options="term as term.label for term in allCorporaDataTypes" bs-select>
   								{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
 							</button>
@@ -360,10 +360,10 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.CORPORA_LANGUAGE_TYPE"></h4>
 						<div class="form-group bs-callout-input">
-						    <!-- <select 
+						    <!-- <select
 								name="corporaLanguageType"
 								class="form-control"
-								ng-model="selectedCorporaLanguageType" 
+								ng-model="selectedCorporaLanguageType"
 								ng-options="ct as ct.value for ct in allCorporaLanguageType track by ct.key"
 								ng-change="selectCorporaLanguageType()">
 							</select> -->
@@ -374,7 +374,7 @@
 					</div>
 
 					<div class=" bs-callout">
-						<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}}</h4 class="bs-callout-label">
+						<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}}</h4>
 						<div class="alert alert-info" role="alert">
 				    		<p><span class="glyphicon glyphicon-info-sign"></span> Nomre de mots dans l'ensemble des fichiers de la ressource (Hors documentation, etc).</p>
 				    	</div>
@@ -397,7 +397,7 @@
 					</div>
 
 					<div class=" bs-callout">
-						<h4 class="bs-callout-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</h4 class="bs-callout-label">
+						<h4 class="bs-callout-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</h4>
 						<div class="form-group bs-callout-input">
 						    <!-- <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input> -->
 
@@ -410,14 +410,14 @@
 					<div class=" bs-callout">
 						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.LEXICON_INPUT_COUNT"></h4>
 						<div class="form-group bs-callout-input">
-						    <input type="text" name="lexiconInputCount" ng-model="metadata.lexiconInputCount" class="form-control"></input>
+						    <input type="text" name="lexiconInputCount" ng-model="metadata.lexiconInputCount" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.LEXICON_DESCRIPTION_TYPE"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedLexiconDescriptionTypes" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_DESCRIPTION_TYPES' | translate}}" bs-options="term as term.label for term in allLexiconDescriptionTypes" bs-select>
   								{{'MARKET.FACET.LEXICON_DESCRIPTION_TYPE' | translate}} <span class="caret"></span>
 							</button>
@@ -425,7 +425,7 @@
 					</div>
 
 					<div class=" bs-callout">
-						<h4 class="bs-callout-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</h4 class="bs-callout-label">
+						<h4 class="bs-callout-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</h4>
 						<div class="form-group bs-callout-input">
 						    <!-- <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input> -->
 
@@ -447,7 +447,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.LEXICON_FORMAT"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedLexiconFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_FORMATS' | translate}}" bs-options="term as term.label for term in allLexiconFormats" bs-select>
   								{{'MARKET.FACET.LEXICON_FORMAT' | translate}} <span class="caret"></span>
 							</button>
@@ -462,7 +462,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.PROGRAMMING_LANGUAGES"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedProgrammingLanguages" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_PROGRAMMING_LANGUAGES' | translate}}" bs-options="term as term.label for term in allProgrammingLanguages" bs-select>
   								{{'WORKSPACE.METADATA_EDITOR.PROGRAMMING_LANGUAGES' | translate}} <span class="caret"></span>
 							</button>
@@ -472,7 +472,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedOperatingSystems" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_OPERATING_SYSTEMS' | translate}}" bs-options="term as term.label for term in allOperatingSystems" bs-select>
   								{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <span class="caret"></span>
 							</button>
@@ -484,7 +484,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="metadata.toolSupport" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_SUPPORT' | translate}}" bs-options="term.id as term.label for term in allToolSupports" bs-select>
   								{{'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT' | translate}} <span class="caret"></span>
 							</button>
@@ -494,7 +494,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_FUNCTIONALITY"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolFunctionalities" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FUNCTIONALITIES' | translate}}" bs-options="term as term.label for term in allToolFunctionalities" bs-select>
   								{{'MARKET.FACET.TOOL_FUNCTIONALITY' | translate}} <span class="caret"></span>
 							</button>
@@ -504,7 +504,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_INPUTDATA"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolInputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_INPUTDATA' | translate}}" bs-options="term as term.label for term in allToolInputData" bs-select>
   								{{'MARKET.FACET.TOOL_INPUTDATA' | translate}} <span class="caret"></span>
 							</button>
@@ -514,7 +514,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_OUTPUTDATA"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolOutputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_OUTPUTDATA' | translate}}" bs-options="term as term.label for term in allToolOutputData" bs-select>
   								{{'MARKET.FACET.TOOL_OUTPUTDATA' | translate}} <span class="caret"></span>
 							</button>
@@ -522,7 +522,7 @@
 					</div>
 
 					<div class=" bs-callout">
-						<h4 class="bs-callout-label">{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}</h4 class="bs-callout-label">
+						<h4 class="bs-callout-label">{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}</h4>
 						<div class="form-group bs-callout-input">
 						    <!-- <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input> -->
 
@@ -533,7 +533,7 @@
 					</div>
 
 					<div class=" bs-callout">
-						<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}</h4 class="bs-callout-label">
+						<h4 class="bs-callout-label">{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}</h4>
 						<div class="form-group bs-callout-input">
 						    <!-- <input type="text" name="language" ng-model="metadata.language" ng-disabled="true" class="form-control"></input> -->
 
@@ -546,7 +546,7 @@
 					<div class="bs-callout">
 						<h4 class="bs-callout-label" translate="MARKET.FACET.TOOL_FILE_ENCODINGS"></h4>
 						<div class="form-group bs-callout-input">
-						    
+
 	                        <button type="button" class="btn btn-default" ng-model="$parent.selectedToolFileEncodings" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FILE_ENCODINGS' | translate}}" bs-options="term as term.label for term in allToolFileEncodings" bs-select>
   								{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
 							</button>

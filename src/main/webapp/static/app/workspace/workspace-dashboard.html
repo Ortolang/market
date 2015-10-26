@@ -1,0 +1,42 @@
+<div class="view-wrapper-flex">
+    <div class="toolbar-wrapper">
+        <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="dashboardSection === 'content' ? 'faded' : ''">
+            <ul class="nav nav-pills">
+                <li class="disabled-tab">
+                    <a><strong>{{Workspace.active.workspace.name}}</strong></a>
+                </li>
+                <li ng-class="dashboardSection === 'information'  ? 'active' : ''" role="tab">
+                    <a ng-click="selectDashboardSection()" translate="INFORMATION"></a>
+                </li>
+                <li ng-class="dashboardSection === 'content'  ? 'active' : ''" role="tab">
+                    <a ng-click="selectDashboardSection('content')" translate="WORKSPACE.CONTENT"></a>
+                </li>
+                <li ng-class="dashboardSection === 'members'  ? 'active' : ''" role="tab">
+                    <a ng-click="selectDashboardSection('members')" translate="WORKSPACE.MEMBERS"></a>
+                </li>
+                <li ng-class="dashboardSection === 'metadata'  ? 'active' : ''" role="tab">
+                    <a ng-click="selectDashboardSection('metadata')" translate="WORKSPACE.METADATA"></a>
+                </li>
+                <li ng-class="dashboardSection === 'permissions'  ? 'active' : ''" role="tab">
+                    <a ng-click="selectDashboardSection('permissions')" translate="WORKSPACE.PERMISSIONS"></a>
+                </li>
+                <li ng-class="dashboardSection === 'preview'  ? 'active' : ''" role="tab">
+                    <a ng-click="selectDashboardSection('preview')" translate="WORKSPACE.PREVIEW"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-main workspace-dashboard" ng-class="dashboardSection === 'content' ? 'browsing' : ''">
+        <div class="container-main-inner" ng-switch="dashboardSection">
+            <div ng-switch-when="information">
+                <div ng-include="'workspace/workspace-dashboard-information.html'"></div>
+            </div>
+            <div class="workspace-dashboard-content" ng-switch-when="content">
+                <div browser></div>
+            </div>
+            <div ng-switch-when="members">
+                <div ng-include="'workspace/workspace-dashboard-members.html'"></div>
+            </div>
+        </div>
+    </div>
+</div>

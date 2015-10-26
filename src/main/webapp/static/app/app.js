@@ -15,6 +15,7 @@ angular
         'ngResource',
         'ngMessages',
         'ngSanitize',
+        'ngTouch',
         'ortolangVisualizers',
         'angularFileUpload',
         'mgcrea.ngStrap.tab',
@@ -106,6 +107,13 @@ angular
                 controller: 'WorkspacesCtrl',
                 title: 'NAV.WORKSPACES'
             })
+            .when('/workspaces/:alias', {
+                templateUrl: 'workspace/workspace-dashboard.html',
+                requiresAuthentication: true,
+                reloadOnSearch: false,
+                controller: 'WorkspaceDashboardCtrl',
+                title: 'NAV.WORKSPACES'
+            })
             .when('/processes', {
                 templateUrl: 'processes/processes.html',
                 controller: 'ProcessesCtrl',
@@ -178,6 +186,9 @@ angular
             $analyticsProvider.virtualPageviews(false);
             $analyticsProvider.firstPageview(false);
         }
+    }])
+    .config(['$compileProvider', function ($compileProvider) {
+        $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
     }])
     .run(['editableOptions', 'editableThemes', function (editableOptions, editableThemes) {
         var copy = editableThemes.bs3;

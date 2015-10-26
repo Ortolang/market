@@ -1,0 +1,70 @@
+<div class="row general-information">
+    <div class="col-md-12">
+        <!-- TODO replace by getTitleValue() -->
+        <h1>{{Workspace.active.workspace.name}}</h1>
+        <p><i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: Workspace.active.workspace.creationDate, author: Workspace.authorCards[Workspace.active.workspace.author].fullName}"></i></p>
+        <ul class="list-inline">
+            <li>
+                <strong translate="WORKSPACE.ALIAS"></strong> {{Workspace.active.workspace.alias}}
+            </li>
+            <li>
+                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-trigger="hover" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.workspace.key"></span></span>
+            </li>
+        </ul>
+        <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: Workspace.active.members.length}"></p>
+        <div>
+            <strong translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: Workspace.active.workspace.tags.length}"></strong>
+            <ul class="list-inline">
+                <li ng-repeat="tag in Workspace.active.workspace.tags track by tag.snapshot" class="tag-wrapper">
+                    <div class="label tag">
+                        <span ng-class="::icons.tag"></span>
+                        <span translate="BROWSER.VERSION" data-translate-values="{tag: tag.name}"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="workspace-dashboard-section">
+            <h4 translate="WORKSPACE.ACCESS_LINKS"></h4>
+            <strong>HTTP</strong>
+            <div ng-if="Workspace.active.workspace.tags.length > 0">
+                <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
+                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}/{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="marketLinkFull"></span></span>
+            </div>
+            <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
+            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="contentLink"></span></span>
+            <br/>
+            <br/>
+            <strong>FTP</strong>
+        </div>
+        <div class="workspace-dashboard-section">
+            <h4 translate="WORKSPACE.WORKFLOW"></h4>
+            <p translate="WORKSPACE.NO_WORKFLOW"></p>
+        </div>
+        <div class="workspace-dashboard-section">
+            <h4 translate="WORKSPACE.ACTIONS"></h4>
+            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
+            <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="workspace-dashboard-section">
+            <h4 translate="WORKSPACE.HISTORY"></h4>
+            <ul class="list-unstyled">
+                <li ng-repeat="event in Workspace.active.events | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
+                    <div class="media-left" avatar data-email-hash="Workspace.authorCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                    <div class="media-body">
+                        <span>
+                            <span class="workspace-event-author">{{Workspace.authorCards[event.throwedBy].fullName}}</span>
+                            <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.' + event.type.toUpperCase()}}" data-translate-values="event"></span>
+                        </span>
+                        <span class="workspace-event-date">{{event.date | amTimeAgo}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

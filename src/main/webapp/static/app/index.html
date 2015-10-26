@@ -52,21 +52,21 @@
 <div id="top-nav-wrapper" ng-controller="TopNavCtrl" ng-include="'common/nav/top-nav.html'"></div>
 <div id="main-wrapper">
     <div class="container-flex">
-        <nav id="side-nav-wrapper" ng-controller="SideNavCtrl" ng-class="{'my-workspaces': myWorkspaces}" class="side-nav" role="navigation" ng-cloak>
+        <nav id="side-nav-wrapper" ng-controller="SideNavCtrl" ng-class="{'reduced-side-nav': reducedSideNav}" class="side-nav" role="navigation" ng-cloak>
             <ul class="side-nav-list">
                 <li ng-repeat="element in ::sideNavElements track by element.class" ng-if="!element.hiddenSideNav && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', active: element.class === sideNavActiveClass}">
                     <a ng-if="::element.class !== 'divider'"
                        ng-href="{{:: '#' + element.path}}"
                        ng-click="select(element.class)"
                        ng-class="::element.class">
-                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="myWorkspaces" data-placement="right" data-container="false" bs-tooltip></span>
+                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" bs-tooltip></span>
                         <span class="item-description" translate="{{::element.description}}"></span>
                     </a>
                     <span ng-if="::element.class === 'divider'"></span>
                 </li>
             </ul>
         </nav>
-        <main ng-class="{'my-workspaces': myWorkspaces}" role="main">
+        <main role="main">
             <div class="view-wrapper" ng-view ng-cloak></div>
         </main>
     </div>
@@ -93,6 +93,7 @@
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/angular-i18n/angular-locale_fr.js"></script>
 <script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
@@ -192,6 +193,7 @@
 <script src="common/resources/subscription-resource.js"></script>
 <script src="common/resources/statistics-resource.js"></script>
 <script src="common/resources/runtime-resource.js"></script>
+<script src="common/resources/event-feed-resource.js"></script>
 <script src="common/services/content.js"></script>
 <script src="common/services/market-browser.js"></script>
 <script src="common/services/workspace-browser.js"></script>
@@ -232,6 +234,9 @@
 <script src="common/forms/i18n/forms.fr.js"></script>
 <script src="common/forms/i18n/forms.en.js"></script>
 <script src="workspace/workspaces.js"></script>
+<script src="workspace/workspace-dashboard.js"></script>
+<script src="workspace/workspace-dashboard-members.js"></script>
+<script src="workspace/workspace-service.js"></script>
 <script src="workspace/upload.js"></script>
 <script src="workspace/i18n/workspace.fr.js"></script>
 <script src="workspace/i18n/workspace.en.js"></script>

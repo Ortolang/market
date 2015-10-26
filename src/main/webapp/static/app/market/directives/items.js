@@ -21,11 +21,15 @@ angular.module('ortolangMarketApp')
 
                 scope.Search = Search;
 
+                scope.$on('$destroy', function () {
+                    Search.clearResults();
+                });
+
                 function load(query) {
                     console.log('query : ' + query);
                     Search.search(query).$promise.then(function (results) {
                         if (scope.filtersManager) {
-                            angular.forEach(scope.filtersManager.getAvailableFilters(), function (filter) {
+                            angular.forEach(scope.filtersManager.availabledFilters, function (filter) {
                                 filter.clearOptions();
                             });
                         }
@@ -33,28 +37,24 @@ angular.module('ortolangMarketApp')
                         angular.forEach(results, function (result) {
                             if (result.wskey) {
                                 result.effectiveTitle = getTitleValue(result.title);
-
                                 var itemFromManager = Search.getResult(result.wskey);
                                 if (itemFromManager && result.lastModificationDate > itemFromManager.lastModificationDate) {
                                     Search.removeResult(itemFromManager['@rid']);
                                 }
                             }
-
                         });
 
                         if (scope.filtersManager) {
-                            angular.forEach(results, function (item) {
-                                var i = 0;
-                                for (i; i < scope.filtersManager.getAvailableFilters().length; i++) {
-                                    if (item[scope.filtersManager.getAvailableFilters()[i].getAlias()]) {
-                                        addOptionFilter(scope.filtersManager.getAvailableFilters()[i], item[scope.filtersManager.getAvailableFilters()[i].getAlias()]);
+                            angular.forEach(results, function (result) {
+                                angular.forEach(scope.filtersManager.availabledFilters, function (filter) {
+                                    if (result[filter.alias]) {
+                                        addOptionFilter(filter, result[filter.alias]);
                                     }
-                                }
+                                });
                             });
                         }
 
                         Search.endProcessing();
-
                     });
                 }
 

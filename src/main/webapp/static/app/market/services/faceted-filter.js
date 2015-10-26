@@ -38,16 +38,8 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.id;
         },
 
-        getAlias: function () {
-            return this.alias;
-        },
-
         setAlias: function (alias) {
             this.alias = alias;
-        },
-
-        getLabel: function () {
-            return this.label;
         },
 
         setLabel: function (label) {
@@ -131,7 +123,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
         getSelectedLabel: function () {
             var label = '';
             angular.forEach(this.selectedOptions, function (opt) {
-                label += (label === '' ? '' : ',') + opt.getLabel();
+                label += (label === '' ? '' : ',') + opt.label;
             });
             return label === '' ? this.resetLabel : label;
         },

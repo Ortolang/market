@@ -20,10 +20,10 @@
                     <ul class="list-unstyled">
                         <li ng-repeat="profile in profiles" profile-card data-profile="profile" data-img-classes="img-circle" data-size="50">
                             <div class="btn-group" ng-hide="profile.alreadyMember">
-                                <button ng-click="add(profile)" class="btn btn-default"><span ng-class="icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
+                                <button ng-click="add(profile)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
                             </div>
                             <div class="btn-group" ng-show="profile.alreadyMember">
-                                <button disabled class="btn btn-default"><span ng-class="icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
+                                <button disabled class="btn btn-default"><span ng-class="::icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
                             </div>
                         </li>
                     </ul>
@@ -35,10 +35,10 @@
                     <ul class="list-unstyled">
                         <li ng-repeat="friend in friends" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
                             <div class="btn-group" ng-hide="friend.alreadyMember">
-                                <button ng-click="add(friend)" class="btn btn-default"><span ng-class="icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
+                                <button ng-click="add(friend)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
                             </div>
                             <div class="btn-group" ng-show="friend.alreadyMember">
-                                <button disabled class="btn btn-default"><span ng-class="icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
+                                <button disabled class="btn btn-default"><span ng-class="::icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
                             </div>
                         </li>
                     </ul>

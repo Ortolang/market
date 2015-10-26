@@ -12,14 +12,14 @@
                             <span class="type" ng-class="::item.mimeType | mimeTypeIconCss"></span>
                             <span class="selection-item-name">{{item.name}}</span>
                         </span>
-                        <span class="pull-right remove-selection-item"><button class="btn btn-xs" ng-click="Cart.remove(alias, versionName, $index)"><span ng-class="icons.browser.remove"></span></button></span>
+                        <span class="pull-right remove-selection-item"><button class="btn btn-xs" ng-click="Cart.remove(alias, versionName, $index)"><span ng-class="::icons.browser.remove"></span></button></span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="popover-content popover-footer pull-right">
-        <button class="btn btn-sm btn-default" ng-click="Cart.export()"><span ng-class="icons.browser.download"></span> {{'DOWNLOAD' | translate}}</button>
-        <button class="btn btn-sm btn-default" ng-click="Cart.clear()"><span ng-class="icons.trash"></span> Clear</button>
+        <button class="btn btn-sm btn-default" ng-click="Cart.export()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</button>
+        <button class="btn btn-sm btn-default" ng-click="Cart.clear()"><span ng-class="::icons.trash"></span> Clear</button>
     </div>
 </div>

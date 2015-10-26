@@ -11,20 +11,26 @@
 //
 // ## Background ##
 @white: #ffffff;
-@body-bg: @navbar-default-bg;
 @main-bg: @white;
-@default-bg: @navbar-default-bg;
-@alternate-bg: darken(@default-bg, 6%);
-@highlight-bg-color: #fdf6e3;
 
+@default-bg: @navbar-default-bg;
 @default-border-color: @navbar-default-border;
 @default-border: 1px solid @default-border-color;
+
+@alternate-bg: darken(@default-bg, 6%);
 @alternate-border-color: darken(@alternate-bg, 6,5%);
 @alternate-border: 1px solid @alternate-border-color;
+
+@alternate-light-bg: darken(@default-bg, 3%);
+@alternate-light-border-color: darken(@alternate-light-bg, 6,5%);
+@alternate-light-border: 1px solid @alternate-light-border-color;
+
+@highlight-bg-color: #fdf6e3;
 @modal-border-top-color: darken(@navbar-default-border, 10%);
 
 // ## Color ##
 @ortolang-blue: #008bd0;
+@dark-blue: #475b6e;
 @yellow: #FFC107;
 @dark-yellow: darken(@yellow, 5%);
 @red: #DF5A49;
@@ -82,7 +88,7 @@
 
 //== Top Nav
 //
-@top-navbar-bg-color: #475b6e;
+@top-navbar-bg-color: @dark-blue;
 @top-navbar-color: @default-bg;
 @top-navbar-height: 54px;
 

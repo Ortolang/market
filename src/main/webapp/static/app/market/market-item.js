@@ -18,21 +18,23 @@ angular.module('ortolangMarketApp')
             console.log(queryBuilder.toString());
             SearchResource.json({query: queryBuilder.toString()}, function (results) {
                 if (results.length >= 1) {
-                    if ($routeParams.section === 'item') {
+                    if (!/^(corpora|lexicons|applications|tools)$/.test($routeParams.section)) {
                         switch (results[results.length - 1].type) {
                             case 'Corpus':
                                 $route.updateParams({section: 'corpora'});
-                                return;
+                                break;
                             case 'Lexique':
                                 $route.updateParams({section: 'lexicons'});
-                                return;
+                                break;
                             case 'Application':
                                 $route.updateParams({section: 'applications'});
-                                return;
+                                break;
                             case 'Outil':
                                 $route.updateParams({section: 'tools'});
-                                return;
+                                break;
                         }
+                        $location.replace();
+                        return;
                     }
 
                     queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-workspace-json.wsalias as wsalias, meta_ortolang-workspace-json.tags as tags', source: 'workspace'});

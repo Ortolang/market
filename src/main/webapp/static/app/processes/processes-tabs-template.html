@@ -1,30 +1,14 @@
-<div class="row toolbar nav-pills-toolbar processes-toolbar">
-    <div class="col-md-6">
-        <ul class="nav processes-tabs-nav" ng-class="$navClass" role="tablist">
+<div class="toolbar-wrapper">
+    <div class=" toolbar nav-pills-toolbar processes-toolbar">
+        <ul class="nav nav-pills" ng-class="$navClass" role="tablist">
             <li ng-repeat="$pane in $panes track by $index" ng-class="$index == $panes.$active ? $activeClass : ''" role="tab">
                 <a data-toggle="tab" ng-click="$setActive($index)" data-index="{{ $index }}" ng-bind-html="$pane.title"></a>
             </li>
         </ul>
     </div>
-
-
-    <!--<div class="col-sm-6">-->
-        <!--<div class="btn-toolbar">-->
-            <!--<div class="input-group">-->
-                <!--<tags-input ng-model="processes.searchContent" data-placeholder="{{'PROCESSES.SEARCH' | translate}}"-->
-                            <!--ng-keyup="$event.keyCode == 13 && search(processes.searchContent)" onTagAdded="search(processes.searchContent)" on-tag-removed="search(processes.searchContent)">-->
-                    <!--<auto-complete source="loadToolTags($query)" min-length="0" load-on-focus="true"></auto-complete>-->
-                <!--</tags-input>-->
-                <!--<span class="input-group-btn">-->
-                    <!--<button ng-click="search(processes.searchContent)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>-->
-                <!--</span>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="btn-toolbar btn-toolbar-right">-->
-    <!--</div>-->
-    <!-- -->
 </div>
-
-<div ng-transclude class="row tab-content">
+<div class="container-main">
+    <div class="container-main-inner">
+        <div ng-transclude class="tab-content"></div>
+    </div>
 </div>

@@ -7,3 +7,4 @@ OrtolangConfig.apiContentPath = '/content';
 OrtolangConfig.keycloakConfigLocation = 'keycloak.json';
 OrtolangConfig.piwikHost = '';
 OrtolangConfig.piwikSiteId = '';
+OrtolangConfig.debug = true;

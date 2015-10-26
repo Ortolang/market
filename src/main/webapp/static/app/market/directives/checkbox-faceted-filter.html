@@ -1,8 +1,8 @@
 <div ng-repeat="option in filter.getOptions()" class="checkbox-faceted-filter">
     <div class="checkbox checkbox-primary">
-        <input type="checkbox" id="checkbox{{filter.getLabel()}}{{option.getLabel()}}" ng-model="checkbox[filter.getLabel()+option.getLabel()]" ng-checked="filter.hasSelectedOption(option)" ng-click="switchFilter(filter, option, !lowFacets)">
-        <label for="checkbox{{filter.getLabel()}}{{option.getLabel()}}">
-            {{option.getLabel() | translate}}
+        <input type="checkbox" id="checkbox{{filter.label}}{{option.label}}" ng-model="checkbox[filter.label+option.label]" ng-checked="filter.hasSelectedOption(option)" ng-click="switchFilter(filter, option, !lowFacets)">
+        <label for="checkbox{{filter.label}}{{option.label}}">
+            {{option.label | translate}}
         </label>
     </div>
 </div>
