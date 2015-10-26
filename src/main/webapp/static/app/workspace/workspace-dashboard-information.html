@@ -1,11 +1,7 @@
 <div class="row general-information">
     <div class="col-md-12">
-        <div class="row">
-            <h1 ng-class="renameWorkspaceForm.$visible ? 'col-md-8' : 'col-md-12'">
-                <span editable-text="Workspace.active.workspace.name" e-ng-init="largeInput = true;" e-form="renameWorkspaceForm" onbeforesave="renameWorkspace($data)">{{Workspace.active.workspace.name}}</span>
-                <button class="btn btn-default btn-sm"  ng-click="renameWorkspaceForm.$show()" ng-hide="renameWorkspaceForm.$visible" data-title="{{'RENAME' | translate}}" bs-tooltip><span ng-class="::icons.edit"></span></button>
-            </h1>
-        </div>
+        <!-- TODO replace by getTitleValue() -->
+        <h1>{{Workspace.active.workspace.name}}</h1>
         <p><i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: Workspace.active.workspace.creationDate, author: Workspace.authorCards[Workspace.active.workspace.author].fullName}"></i></p>
         <ul class="list-inline">
             <li>

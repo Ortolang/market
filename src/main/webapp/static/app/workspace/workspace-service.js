@@ -28,28 +28,6 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         } else {
             listDeferred = $q.defer();
             WorkspaceResource.get({md: true}, function (data) {
-                angular.forEach(data.entries, function (workspace) {
-                    if (Workspace.authorCards[workspace.author] === undefined) {
-                        Workspace.authorCards[workspace.author] = null;
-                        ProfileResource.getCard({key: workspace.author}, function (data) {
-                            Workspace.authorCards[workspace.author] = data;
-                        });
-                    }
-                    Workspace.metadatas[workspace.alias] = undefined;
-                    if (workspace.metadata) {
-                        Content.downloadWithKey(workspace.metadata).promise.then(function (data) {
-                            var metadata = angular.fromJson(data.data);
-                            if (metadata.image) {
-                                metadata.imageUrl = Content.getContentUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName);
-                            } else {
-                                metadata.imageUrl = null;
-                            }
-                            Workspace.metadatas[workspace.alias] = metadata;
-                        });
-                    } else {
-                        Workspace.metadatas[workspace.alias] = null;
-                    }
-                });
                 Workspace.list = data.entries;
                 listDeferred.resolve(data.entries);
             }, function () {
@@ -59,9 +37,43 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         return listDeferred.promise;
     };
 
-    this.setActiveWorkspace = function (workspace) {
-        this.active.workspace = workspace;
-        this.active.metadata = Workspace.metadatas[workspace.alias];
+    function getWorkspaceMetadata(workspace) {
+        var deferred = $q.defer();
+        Workspace.metadatas[workspace.alias] = undefined;
+        if (workspace.metadata) {
+            Content.downloadWithKey(workspace.metadata).promise.then(function (data) {
+                var metadata = angular.fromJson(data.data);
+                if (metadata.image) {
+                    metadata.imageUrl = Content.getContentUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName);
+                } else {
+                    metadata.imageUrl = null;
+                }
+                Workspace.metadatas[workspace.alias] = metadata;
+                deferred.resolve(metadata);
+            }, function () {
+                deferred.reject();
+            });
+        } else {
+            Workspace.metadatas[workspace.alias] = null;
+            deferred.resolve(null);
+        }
+        return deferred.promise;
+    }
+
+    function getCard(username) {
+        if (Workspace.authorCards[username] === undefined) {
+            Workspace.authorCards[username] = null;
+            ProfileResource.getCard({key: username}, function (data) {
+                Workspace.authorCards[username] = data;
+            });
+        }
+    }
+
+    this.getWorkspacesMetadata = function () {
+        angular.forEach(Workspace.list, function (workspace) {
+            getCard(workspace.author);
+            getWorkspaceMetadata(workspace);
+        });
     };
 
     this.clearActiveWorkspace = function () {
@@ -78,8 +90,12 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                     console.error('No workspace with alias "%s" available or user not authorized to access this workspace', alias);
                     deferred.reject();
                 } else {
-                    Workspace.setActiveWorkspace(filteredWorkspace[0]);
+                    Workspace.active.workspace = filteredWorkspace[0];
+                    getCard(filteredWorkspace[0].author);
+                    Workspace.getActiveWorkspaceMetadata();
                     Workspace.getActiveWorkspaceMembers();
+                    Workspace.getActiveWorkspaceEvents();
+                    Workspace.getActiveWorkspaceHead();
                     deferred.resolve();
                 }
             });
@@ -95,18 +111,20 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         });
     };
 
+    this.getActiveWorkspaceMetadata = function () {
+        getWorkspaceMetadata(Workspace.active.workspace).then(function () {
+            Workspace.active.metadata = Workspace.metadatas[Workspace.active.workspace.alias];
+        }, function () {
+            Workspace.active.metadata = null;
+        });
+    };
+
     this.getActiveWorkspaceEvents = function () {
         EventFeedResource.get({key: Workspace.active.workspace.eventFeed}, function (data) {
             angular.forEach(data.events, function (event) {
-                if (Workspace.authorCards[event.throwedBy] === undefined) {
-                    Workspace.authorCards[event.throwedBy] = null;
-                    ProfileResource.getCard({key: event.throwedBy}, function (data) {
-                        Workspace.authorCards[event.throwedBy] = data;
-                    });
-                }
+                getCard(event.throwedBy);
             });
             Workspace.active.events = data.events;
-            console.log(data.events);
         });
     };
 

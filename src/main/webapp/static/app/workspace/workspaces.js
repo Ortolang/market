@@ -98,7 +98,9 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.Workspace = Workspace;
-            Workspace.getWorkspaceList();
+            Workspace.getWorkspaceList().then(function () {
+                Workspace.getWorkspacesMetadata();
+            });
             $scope.models = {};
         }
 

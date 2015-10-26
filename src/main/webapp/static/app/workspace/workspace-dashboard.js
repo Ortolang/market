@@ -143,8 +143,6 @@ angular.module('ortolangMarketApp')
                     Workspace.setActiveWorkspaceFromAlias($route.current.params.alias).then(function () {
                         $rootScope.ortolangPageSubtitle = ' - ' + Workspace.active.workspace.alias;
                         setDashboardSection($location.search().section);
-                        Workspace.getActiveWorkspaceEvents();
-                        Workspace.getActiveWorkspaceHead();
                         $scope.dashboardModels.links = {
                             base: $window.location.origin,
                             market: '#/market/item/' + Workspace.active.workspace.alias,
