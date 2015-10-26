@@ -24,11 +24,11 @@
                          ng-click="manageWorkspace($event, workspace)">
                         <div class="media">
                             <div class="media-left">
-                                <img ng-if="workspace.metadata.imageUrl === null || workspace.metadata === null" class="logo" holder-js="holder.js/100x100?theme=ortolang&text={{workspace.alias}}&size=10" alt="{{workspace.metadata.imgtitle}}"/>
-                                <img ng-if="::workspace.metadata.imageUrl" class="logo" ng-src="{{::workspace.metadata.imageUrl}}" alt="{{::workspace.metadata.imgtitle}}"/>
+                                <img ng-if="Workspace.metadatas[workspace.alias].imageUrl === null || Workspace.metadatas[workspace.alias] === null" class="logo" holder-js="holder.js/100x100?theme=ortolang&text={{workspace.alias}}&size=10" alt="{{workspace.alias}}"/>
+                                <img ng-if="::Workspace.metadatas[workspace.alias].imageUrl" class="logo" ng-src="{{::Workspace.metadatas[workspace.alias].imageUrl}}" alt="{{::workspace.alias}}"/>
                             </div>
                             <div class="media-body">
-                                <h4>{{::workspace.metadata ? workspace.metadata.title[0].value : workspace.name}} <span class="small alias">{{::workspace.alias}}</span></h4>
+                                <h4>{{::getTitleValue(workspace)}} <span class="small alias">{{::workspace.alias}}</span></h4>
                                 <div class="date">{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} {{::workspace.lastModificationDate | amTimeAgo}}</div>
                             </div>
                             <div class="media-right">

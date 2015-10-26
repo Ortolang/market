@@ -50,7 +50,7 @@
         </div>
         <div class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>
-            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.workspace.metadata" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
+            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
             <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>
     </div>

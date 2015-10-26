@@ -7,6 +7,7 @@
  * # Workspace
  * Factory in the ortolangMarketApp.
  * @property {Array}    list        - the workspace list of the connected user
+ * @property {Object}   metadatas   - the metadata of all the workspaces in the list
  * @property {Object}   active      - the workspace being managed
  * @property {Object}   authorCards - the cards of all the authors related to the active workspace
  */
@@ -18,6 +19,8 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     this.active = {};
 
     this.authorCards = {};
+
+    this.metadatas = {};
 
     this.getWorkspaceList = function (noRefresh) {
         if (noRefresh && !!this.list) {
@@ -32,6 +35,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                             Workspace.authorCards[workspace.author] = data;
                         });
                     }
+                    Workspace.metadatas[workspace.alias] = undefined;
                     if (workspace.metadata) {
                         Content.downloadWithKey(workspace.metadata).promise.then(function (data) {
                             var metadata = angular.fromJson(data.data);
@@ -40,8 +44,10 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                             } else {
                                 metadata.imageUrl = null;
                             }
-                            workspace.metadata = metadata;
+                            Workspace.metadatas[workspace.alias] = metadata;
                         });
+                    } else {
+                        Workspace.metadatas[workspace.alias] = null;
                     }
                 });
                 Workspace.list = data.entries;
@@ -55,6 +61,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
     this.setActiveWorkspace = function (workspace) {
         this.active.workspace = workspace;
+        this.active.metadata = Workspace.metadatas[workspace.alias];
     };
 
     this.clearActiveWorkspace = function () {

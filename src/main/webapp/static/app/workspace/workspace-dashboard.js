@@ -67,7 +67,7 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             $scope.publishWorkspace = function () {
-                if (Workspace.active.workspace.metadata) {
+                if (Workspace.active.metadata) {
                     var publishModal;
                     createModalScope();
                     modalScope.wsName = Workspace.active.workspace.name;
