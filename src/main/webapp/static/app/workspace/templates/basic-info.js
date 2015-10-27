@@ -11,31 +11,26 @@ angular.module('ortolangMarketApp')
     .controller('BasicInfoCtrl', ['$scope', '$translate', '$filter', 'Workspace', 'Settings',
         function ($scope, $translate, $filter, Workspace, Settings) {
 
-
-        	//TODO put this 2 methods to a service
-            function getValues(arr, propertyName, propertyValue) {
-                var values = [];
-                if (arr) {
-                    var iObject;
-                    for (iObject = 0; iObject < arr.length; iObject++) {
-                        if (arr[iObject][propertyName] === propertyValue) {
-                            values.push(arr[iObject].value);
-                        }
+        	//TODO put this method to a service
+            function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {
+                var iObject;
+                for (iObject = 0; iObject < arr.length; iObject++) {
+                    if (arr[iObject][propertyName] === propertyValue) {
+                        return arr[iObject];
                     }
                 }
-                return values;
-            }
-            function getValue(arr, propertyName, propertyValue, defaultValue) {
-                var values = getValues(arr, propertyName, propertyValue);
-                if (arr && values.length === 0) {
+                if(defaultValue) {
                     return defaultValue;
                 }
-                return values[0];
+                return null;
             }
 
-            $scope.changeLanguage = function (lang) {
-            	$scope.title.lang = lang;
-                $scope.title.value = getValue(Workspace.active.metadata.title, 'lang', lang, '');
+            $scope.changeTitleLanguage = function (lang) {
+                $scope.title = findObjectOfArray(Workspace.active.metadata.title, 'lang', lang);
+            };
+
+            $scope.changeDescriptionLanguage = function (lang) {
+                $scope.description = findObjectOfArray(Workspace.active.metadata.description, 'lang', lang);
             };
 
         	function init() {
@@ -45,8 +40,8 @@ angular.module('ortolangMarketApp')
                     {key:'es', value: $translate.instant('LANGUAGES.ES')},
                     {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
                 ];
-                $scope.title = {};
-                $scope.changeLanguage(Settings.language);
+                $scope.changeTitleLanguage(Settings.language);
+                $scope.changeDescriptionLanguage(Settings.language);
         	}
         	init();
 }]);

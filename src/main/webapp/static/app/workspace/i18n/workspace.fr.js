@@ -197,6 +197,8 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'Cette organisme est déjà dans la liste.'
                     }
                 },
+                SELECT_TITLE: 'Spécifiez un titre pour la ressource',
+                SELECT_DESCRIPTION: 'Décrivez ici la ressource...\n\nIndiquez dans quel contexte la ressource a été créée...',
                 SELECT_TYPE: 'Sélectionnez le type de ressource ...',
                 SELECT_CORPORA_TYPE: 'Sélectionnez le type de corpus ...',
                 SELECT_CORPORA_STYLES: 'Sélectionnez un ou plusieurs genres ...',
