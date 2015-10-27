@@ -3,7 +3,7 @@
         <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="dashboardSection === 'content' ? 'faded' : ''">
             <ul class="nav nav-pills">
                 <li class="disabled-tab">
-                    <a><strong>{{Workspace.active.workspace.name}}</strong></a>
+                    <a><strong>{{::Workspace.active.workspace.alias}}</strong></a>
                 </li>
                 <li ng-class="dashboardSection === 'information'  ? 'active' : ''" role="tab">
                     <a ng-click="selectDashboardSection()" translate="INFORMATION"></a>
@@ -26,7 +26,7 @@
             </ul>
         </div>
     </div>
-    <div class="container-main workspace-dashboard" ng-class="dashboardSection === 'content' ? 'browsing' : ''">
+    <div class="container-main workspace-dashboard" ng-class="dashboardSection">
         <div class="container-main-inner" ng-switch="dashboardSection">
             <div ng-switch-when="information">
                 <div ng-include="'workspace/workspace-dashboard-information.html'"></div>
