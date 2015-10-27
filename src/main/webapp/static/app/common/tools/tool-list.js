@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert', 'Settings',
-        function ($scope, ToolManager, $rootScope, $translate, $http, $filter, Runtime, $alert, Settings) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', 'Helper', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert', 'Settings',
+        function ($scope, ToolManager, Helper, $rootScope, $translate, $http, $filter, Runtime, $alert, Settings) {
 
 
             // ***************** //
@@ -262,16 +262,7 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.getTitleValue = function (multilingualTitle) {
-                if (!multilingualTitle) {
-                    return null;
-                }
-                var i;
-                for (i = 0; i < multilingualTitle.length; i++) {
-                    if (multilingualTitle[i].lang === Settings.language) {
-                        return multilingualTitle[i].value;
-                    }
-                }
-                return multilingualTitle.length > 0 ? multilingualTitle[0].value : undefined;
+                return Helper.getMultilingualValue(multilingualTitle);
             };
 
 
@@ -279,7 +270,7 @@ angular.module('ortolangMarketApp')
             // Initialization //
             // ************** //
 
-            function init() {
+            (function init() {
                 $scope.selectedTypeTranslation = 'MARKET.ALL_TYPE';
                 $scope.tools = {};
                 $scope.searchContent = '';
@@ -287,8 +278,7 @@ angular.module('ortolangMarketApp')
                 loadToolsList();
                 $scope.selectedTool = undefined;
                 $scope.currentJob = undefined;
-            }
+            }());
 
             $scope.onSubmit = onSubmit;
-            init();
         }]);

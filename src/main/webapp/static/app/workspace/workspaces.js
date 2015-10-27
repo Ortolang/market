@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$location', '$modal', '$translate', 'Workspace', 'WorkspaceResource', function ($scope, $location, $modal, $translate, Workspace, WorkspaceResource) {
+    .controller('WorkspacesCtrl', ['$scope', '$location', '$modal', '$translate', 'Workspace', 'WorkspaceResource', 'Helper', function ($scope, $location, $modal, $translate, Workspace, WorkspaceResource, Helper) {
 
         var modalScope;
 
@@ -82,16 +82,7 @@ angular.module('ortolangMarketApp')
                 return undefined;
             }
             if (metadata.title) {
-                if (angular.isArray(metadata.title)) {
-                    var language = $translate.use();
-                    angular.forEach(metadata.title, function (title) {
-                        if (title.name === language) {
-                            return title.value;
-                        }
-                    });
-                    return metadata.title[0].value;
-                }
-                return metadata.title;
+                return Helper.getMultilingualValue(metadata.title);
             }
         };
 
