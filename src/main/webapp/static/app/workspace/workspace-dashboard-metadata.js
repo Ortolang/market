@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardMetadataCtrl', ['$scope', '$http', 'url', 'ortolangType', 'Workspace',
-        function ($scope, $http, url, ortolangType, Workspace) {
+    .controller('WorkspaceDashboardMetadataCtrl', ['$scope', 'ortolangType', 'Workspace', 'WorkspaceElementResource',
+        function ($scope, ortolangType, Workspace, WorkspaceElementResource) {
 
 
             $scope.submitForm = function () {
@@ -31,8 +31,7 @@ angular.module('ortolangMarketApp')
 
             function sendForm(content, contentType) {
 
-                var uploadUrl = url.api + '/workspaces/' + Workspace.active.workspace.key + '/elements/',
-                    fd = new FormData(),
+                var fd = new FormData(),
                     currentPath = '/';
 
                 fd.append('path', currentPath);
@@ -45,23 +44,18 @@ angular.module('ortolangMarketApp')
 
                 fd.append('stream', blob);
 
-                $http.post(uploadUrl, fd, {
-                    transformRequest: angular.identity,
-                    headers: {'Content-Type': undefined}
-                })
-                .success(function () {
-                    console.log('submit form success');
-                    //TODO select preview tab of workspace-dashboard
-                })
-                .error(function (error) {
+                WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function (data) {
+                    console.log(data);
+                    // TODO select preview tab of workspace-dashboard
+                }, function (error) {
                     console.error('creation of metadata failed !', error);
                 });
             }
 
-        	function init() {
-        		$scope.activeTab = 0; 
+            function init() {
+                $scope.activeTab = 0;
 
-        		$scope.allCorporaStyles = [{id:'Scientifique', label:'Scientifique'}, {id:'Littéraire', label:'Littéraire'}];
-        	}
-        	init();
-}]);
+                $scope.allCorporaStyles = [{id:'Scientifique', label:'Scientifique'}, {id:'Littéraire', label:'Littéraire'}];
+            }
+            init();
+        }]);
