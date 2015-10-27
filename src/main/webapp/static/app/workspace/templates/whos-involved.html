@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="col-sm-12 col-md-10 tab-pane-content">
+        <div class="form-group">
+            <label for="producer" class="control-label">Laboratoire(s) producteur(s) <span class="text-danger">*</span></label>
+
+            <div class="row">
+                <div class="col-md-11">
+                    <input ng-model="$parent.searchOrganization" ng-disabled="newOrganization" data-prefix-event="taorg" type="text" class="form-control" id="add-organization-searchOrganization" name="searchOrganization" placeholder="Rechercher dans le référentiel des laboratoires producteurs répertoriés dans ORTOLANG" bs-options="organization as organization.label for organization in models.organizations" data-html="true" bs-typeahead>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-default btn-rounded" data-title="Ajouter un laboratoire n'ayant pas encore contribué à une ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="padding:12px">
+                                        <div class="media-left">
+                                            <img width="60px" class="img-rounded" src="fesfs">
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="pull-left">Analyse et traitement informatique de la langue française - UMR 7118 (ATILF, Nancy FR)</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="padding:12px">
+                                        <div class="media-left">
+                                            <img width="60px" class="img-rounded" src="fesfs">
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="pull-left">Centre de linguistique appliquée (CLA, Neuchâtel CH)</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label for="producer" class="control-label">Personne(s) responsable de la ressource <span class="text-danger">*</span></label>
+
+            <div class="row">
+                <div class="col-md-11">
+                    <input ng-model="$parent.searchPersonResponsable" data-prefix-event="tapersresp" type="text" class="form-control" id="add-person-searchPersonResponsable" name="searchPersonResponsable" placeholder="Rechercher dans le référentiel des personnes répertoriés dans ORTOLANG" bs-options="person as person.label for person in models.persons" data-html="true" bs-typeahead>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-default btn-rounded" data-title="Ajouter une personne responsable de la ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="padding:12px">
+                                            <div class="media-left">
+                                                <img width="60px" class="img-rounded" src="fesfs">
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="pull-left">
+                                                    <span class="name">Emmanuelle Canut (ATILF)</span>
+                                                </span>
+                                                <span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                            </div>
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label for="producer" class="control-label">Personne(s) contributrice(s)</label>
+            <div class="form-group">
+
+                <div class="row">
+                    <div class="col-md-11">
+                        <input ng-model="$parent.searchPerson" ng-disabled="newOrganization" data-prefix-event="taorg" type="text" class="form-control" id="add-person-searchPerson" name="searchPerson" placeholder="Rechercher dans le référentiel des personnes répertoriées dans ORTOLANG" bs-options="person as person.label for person in models.persons" data-html="true" bs-typeahead> 
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-default btn-rounded" data-title="Ajouter un contributeur n'ayant pas encore contribué à une ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover table-condensed table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div style="padding:12px">
+                                            <div class="media-left">
+                                                <img width="60px" class="img-rounded" src="fesfs">
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="pull-left">
+                                                    <span class="name">Cyril Pestel (ATILF)</span>
+                                                    <div class="small roles">
+                                                        <i>Développeur</i>
+                                                    </div>
+                                                </span>
+                                                <span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="padding:12px">
+                                            <div class="media-left">
+                                                <img width="60px" class="img-rounded" src="fesfs">
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="pull-left">
+                                                    <span class="name">Bertrand Gaiffe (ATILF)</span>
+                                                    <div class="small roles">
+                                                        <i>Responsable technique</i>
+                                                    </div>
+                                                </span>
+                                                <span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

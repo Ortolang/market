@@ -1,0 +1,20 @@
+<div class="col-sm-3">
+    <div class="avatar">
+        <img class="logo" ng-src="" holder-js="holder.js/160x160?theme=custom&text=ef"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+        <!-- <img ng-if="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/> -->
+        <!-- <span class="edit fa fa-pencil fa-3x"></span>
+        <span avatar data-email-hash="User.emailHash" data-size="300" data-img-classes="user-avatar img-responsive"></span> -->
+    </div>
+    <div class="list-group" role="tablist">
+        <a  class="list-group-item"
+            ng-repeat="$pane in $panes track by $index"
+            ng-class="$index == $panes.$active ? $activeClass : ''"
+            role="tab"
+            data-toggle="tab"
+            ng-click="$setActive($index)"
+            data-index="{{$index}}"
+            ng-bind-html="$pane.title"></a>
+    </div>
+</div>
+<div class="col-sm-9 tab-content" ng-transclude>
+</div>

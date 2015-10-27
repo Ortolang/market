@@ -1,0 +1,16 @@
+<div class="row" ng-init="allLicences=[{key:'cc0', label:'Creative Commons Zero'}, {key:'ccby', label:'Creative Commons BY'},{key:'ccbync', label:'Creative Commons BY-NC'}]">
+    <div class="col-sm-12 col-md-10 tab-pane-content">
+    	<div class="form-group">
+	        <label for="licence" class="control-label">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</label>
+
+            <div class="row">
+                <div class="col-md-11">
+	        		<button type="button" name="licence" class="form-control btn btn-default" ng-model="$parent.licence" data-placeholder="Sélectionnez une licence ..." bs-options="licence as licence.label for licence in allLicences" bs-select>{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}} <span class="caret"></span></button>
+	        	</div>
+                <div class="col-md-1">
+                    <button class="btn btn-default btn-rounded" data-title="Ajouter une licence si vous ne trouvez pas la votre dans le référentiel ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+	    	</div>
+    	</div>
+	</div>
+</div>

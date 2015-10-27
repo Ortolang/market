@@ -11,7 +11,7 @@
  * @property {Object}   active      - the workspace being managed
  * @property {Object}   authorCards - the cards of all the authors related to the active workspace
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$q', 'ProfileResource', 'WorkspaceResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'Content', function ($rootScope, $filter, $q, ProfileResource, WorkspaceResource, GroupResource, ObjectResource, EventFeedResource, Content) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'Content', function ($rootScope, $filter, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, Content) {
 
     var listDeferred,
         Workspace = this;
@@ -40,23 +40,29 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     function getWorkspaceMetadata(workspace) {
         var deferred = $q.defer();
         Workspace.metadatas[workspace.alias] = undefined;
-        if (workspace.metadata) {
-            Content.downloadWithKey(workspace.metadata).promise.then(function (data) {
-                var metadata = angular.fromJson(data.data);
-                if (metadata.image) {
-                    metadata.imageUrl = Content.getContentUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName);
-                } else {
-                    metadata.imageUrl = null;
-                }
-                Workspace.metadatas[workspace.alias] = metadata;
-                deferred.resolve(metadata);
-            }, function () {
-                deferred.reject();
-            });
-        } else {
+        WorkspaceElementResource.get({path: '/', wskey: workspace.key, root: 'head', metadata: 'ortolang-item-json'}).$promise.then(function (metadataElement) {
+            if(metadataElement) {
+                Content.downloadWithKey(metadataElement.key).promise.then(function (data) {
+                    var metadata = angular.fromJson(data.data);
+                    if (metadata.image) {
+                        metadata.imageUrl = Content.getContentUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName);
+                    } else {
+                        metadata.imageUrl = null;
+                    }
+                    Workspace.metadatas[workspace.alias] = metadata;
+                    deferred.resolve(metadata);
+                }, function () {
+                    deferred.reject();
+                });
+            } else {
+                Workspace.metadatas[workspace.alias] = null;
+                deferred.resolve(null);
+            }
+        },
+        function () {
             Workspace.metadatas[workspace.alias] = null;
             deferred.resolve(null);
-        }
+        });
         return deferred.promise;
     }
 

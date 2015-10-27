@@ -4,6 +4,8 @@
  * . the directive market-item-editor 
  * . the HTML template add-contributor-template
  * . the HTML template add-organization-template
+ * . the HTML template ortolang-item-editor-modal
+ * . the HTML template create-ortolang-item-modal
  * . the directive Multifile-selector-box
  ***********************************************/
 
@@ -25,6 +27,65 @@
     section {
         h2 {
             border-bottom: 1px solid #efefef;
+        }
+    }
+}
+
+
+.metadata-editor {
+    .list-group-item {
+        border: none;
+        cursor: pointer;
+        &.active {
+          background-color: @workspace-primary;
+        }
+    }
+    .list-group-item:first-child {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+    .list-group-item:last-child {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .btn.btn-rounded {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .table {
+        margin-bottom: 0px;
+    }
+
+    .avatar {
+        position: relative;
+        cursor: pointer;
+        .edit {
+            position: absolute;
+            display: none;
+            z-index: 10;
+            color: @side-nav-item-color;
+            top: 50%;
+            top: -webkit-calc(50% ~'-' 21px);
+            top: -moz-calc(50% ~'-' 21px);
+            top: calc(50% ~'-' 21px);
+            left: 50%;
+            left: -webkit-calc(50% ~'-' 18px);
+            left: -moz-calc(50% ~'-' 18px);
+            left: calc(50% ~'-' 18px);
+        }
+        &:hover {
+            img {
+                opacity: 0.6;
+            }
+            .edit {
+                display: block;
+            }
+        }
+        .logo {
+            margin-bottom: 3 * @padding-large-vertical;
         }
     }
 }
@@ -84,6 +145,105 @@
     }
 }
 
+
+/*****************************************
+ * HTML template ortolang-item-editor-modal
+ *****************************************/
+
+.ortolang-item-editor-modal {
+
+    .modal-header > h2 {
+        text-align: center;
+    }
+
+    .modal-body {
+        padding-left: @padding-large-horizontal*2;
+        padding-right: @padding-large-horizontal*2;
+
+        .tab-pane-content {
+            padding-top: @padding-large-horizontal*2;
+        }
+    }
+
+    .nav-justified {
+        background: none;
+        margin: 0;
+        float: left;
+        display: inline-block;
+        border-bottom: 1px solid #efefef;
+    }
+
+    .nav-justified > li {
+        background: none;
+        margin: 0;
+        border: 0;
+        cursor: pointer;
+    }
+
+    .nav-justified > li > a {
+        background: none;
+        border: 0;
+        padding: 2px 10px 13px;
+        color: #444;
+    }
+
+    .nav-justified > li.active,
+    .nav-justified > li.active:hover {
+        border-bottom: 4px solid #f3565d;
+        position: relative;
+      }
+
+      .nav-justified > li:hover {
+        border-bottom: 4px solid #f29b9f;
+      }
+
+    .nav-justified > li.active > a,
+    .nav-justified > li:hover > a {
+        color: #333;
+        background: #fff;
+        border: 0;
+    }
+
+    .btn.btn-rounded {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}
+
+/*****************************************
+ * HTML template create-ortolang-item-modal
+ *****************************************/
+
+.create-ortolang-item-modal {
+
+    h4 {
+        text-align: center;
+    }
+    .animate-enter, 
+    .animate-leave
+    { 
+        -webkit-transition: 475ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -moz-transition: 475ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -ms-transition: 475ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -o-transition: 475ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        transition: 475ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    } 
+     
+    .animate-enter {
+        left: 100%;
+    }
+    .animate-enter.animate-enter-active {
+        left: 0;
+    }
+     
+    .animate-leave {
+        left: 0;
+    }
+    .animate-leave.animate-leave-active{
+        left: -100%;
+    }
+}
 
 /*****************************************
  * HTML template add-contributor-template
