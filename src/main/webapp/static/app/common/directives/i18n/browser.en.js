@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
             NEW_COLLECTION: 'New Folder',
             NEW_LINK: 'New link',
             PREVIEW_WORKSPACE: 'Preview before publication',
-            VERSION: 'Version {{number.replace("v", "")}}',
+            VERSION: 'Version {{tag.replace("v", "")}}',
             VERSIONS: 'Workspace versions',
             HEAD: 'Current version',
             PREVIOUS_VERSIONS: 'Previous versions',
