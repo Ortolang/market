@@ -15,7 +15,7 @@
             <strong translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: Workspace.active.workspace.tags.length}"></strong>
             <ul class="list-inline">
                 <li ng-repeat="tag in Workspace.active.workspace.tags track by tag.snapshot" class="tag-wrapper">
-                    <div class="label tag">
+                    <div class="label tag label-workspace">
                         <span ng-class="::icons.tag"></span>
                         <span translate="BROWSER.VERSION" data-translate-values="{tag: tag.name}"></span>
                     </div>

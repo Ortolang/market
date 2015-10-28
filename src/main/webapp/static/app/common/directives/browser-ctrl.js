@@ -1051,11 +1051,11 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.$on('$routeUpdate', function () {
-                if (!$scope.isFileSelectBrowserService) {
+                if ($scope.isWorkspaceBrowserService || ($scope.isMarketBrowserService && $location.search().browse)) {
                     if ($location.search().path !== $scope.path) {
                         setPath($location.search().path);
                     }
-                    if ($location.search().root !== $scope.root) {
+                    if ($location.search().root && $location.search().root !== $scope.root) {
                         setRoot($location.search().root);
                     }
                     resetFilterModels();
