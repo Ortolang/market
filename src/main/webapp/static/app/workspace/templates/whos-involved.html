@@ -1,5 +1,5 @@
-<div class="row" ng-controller="WhosInvolvedCtrl">
-    <div class="col-sm-12 col-md-10 tab-pane-content">
+<div class="row whos-involved" ng-controller="WhosInvolvedCtrl">
+    <div class="col-sm-12 col-md-12 col-lg-12 tab-pane-content">
         <div class="form-group">
             <label for="producer" class="control-label">Laboratoire(s) producteur(s) <span class="text-danger">*</span></label>
 
@@ -8,25 +8,25 @@
                     <input ng-model="$parent.searchProducer" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires producteurs répertoriés dans ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" bs-typeahead>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-default btn-rounded" data-title="Ajouter un laboratoire n'ayant pas encore contribué à une ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
+                    <button type="button" class="btn btn-default btn-rounded" ng-click="createProducer()" data-title="Ajouter un laboratoire n'ayant pas encore contribué à une ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                    <table class="table table-bordered table-responsive">
                         <tbody>
                             <tr ng-repeat="producer in metadata.contributors | contributorProducer">
                                 <td>
                                     <div style="padding:12px">
                                         <div class="media-left">
-                                            <img width="60px" class="img-rounded" ng-src="{{producer.entity.image}}">
+                                            <img width="60px" class="img-rounded" ng-src="{{producer.entity.img}}">
                                         </div>
                                         <div class="media-body">
                                             <span  ng-bind="producer.entity.fullname"></span>
                                         </div>
                                         <div class="media-right">
-                                            <button type="button" class="btn btn-default" ng-click="deleteContributor(producer)"><span class="glyphicon glyphicon-trash"></span></button>
+                                            <button type="button" class="btn btn-default" ng-click="deleteContributor(producer)"><span class="glyphicon glyphicon-trash text-danger"></span></button>
                                         </div>
                                     </div>
                                 </td>
@@ -37,81 +37,26 @@
             </div>
         </div>
         <hr/>
-        <!-- <div class="form-group">
-            <label for="producer" class="control-label">Personne(s) responsable de la ressource <span class="text-danger">*</span></label>
-
-            <div class="row">
-                <div class="col-md-11">
-                    <input ng-model="$parent.searchPersonResponsable" data-prefix-event="tapersresp" type="text" class="form-control" id="add-person-searchPersonResponsable" name="searchPersonResponsable" placeholder="Rechercher dans le référentiel des personnes répertoriés dans ORTOLANG" bs-options="person as person.label for person in models.persons" data-html="true" bs-typeahead>
-                </div>
-                <div class="col-md-1">
-                    <button class="btn btn-default btn-rounded" data-title="Ajouter une personne responsable de la ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-bordered table-hover table-condensed table-responsive">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div style="padding:12px">
-                                            <div class="media-left">
-                                                <img width="60px" class="img-rounded" src="fesfs">
-                                            </div>
-                                            <div class="media-body">
-                                                <span class="pull-left">
-                                                    <span class="name">Emmanuelle Canut (ATILF)</span>
-                                                </span>
-                                                <span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
-                                            </div>
-                                        </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <hr/> -->
         <div class="form-group">
             <label for="producer" class="control-label">Personne(s) contributrice(s)</label>
             <div class="form-group">
 
                 <div class="row">
-                    <div class="col-md-11">
-                        <input ng-model="$parent.searchPerson" data-prefix-event="tapers" type="text" class="form-control" id="search-person" name="searchPerson" placeholder="Rechercher dans le référentiel des personnes répertoriées dans ORTOLANG" bs-options="person as person.label for person in allPersons" data-html="true" bs-typeahead> 
-                    </div>
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-default btn-rounded" data-title="Ajouter un contributeur n'ayant pas encore contribué à une ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-hover table-condensed table-responsive">
-                            <tbody>
-                                <tr ng-repeat="contributor in metadata.contributors | contributorPerson">
-                                    <td>
-                                        <div style="padding:12px">
-                                            <div class="media-left">
-                                                <img avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
-                                            </div>
-                                            <div class="media-body">
-                                                <span class="pull-left">
-                                                    <span class="name" ng-bind="contributor.entity.fullname"></span>
-                                                    <div class="small roles">
-                                                        <span ng-repeat="role in contributor.role">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
-                                                    </div>
-                                                </span>
-                                                <span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="contributor in metadata.contributors | contributorPerson" class="profile-card contributor-card col-md-6 col-lg-4" ng-class="{'contributor-link': contributor.entity.id}">
+                            <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
+                            <div class="media-body">
+                                <span class="name">{{contributor.entity.fullname}} ({{contributor.entity.organization.acronym}})</span>
+                                <div class="small roles">
+                                    <span ng-repeat="role in contributor.role">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addPerson()">
+                            <div class="media-left"><button type="button" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
+                            <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

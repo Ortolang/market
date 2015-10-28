@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WhosInvolvedCtrl', ['$scope', 'Settings', 'QueryBuilderFactory', 'SearchResource',
-        function ($scope, Settings, QueryBuilderFactory, SearchResource) {
+    .controller('WhosInvolvedCtrl', ['$rootScope', '$scope', '$modal', 'Settings', 'QueryBuilderFactory', 'SearchResource',
+        function ($rootScope, $scope, $modal, Settings, QueryBuilderFactory, SearchResource) {
 
 	        $scope.deleteContributor = function (contributor) {
 	            var index = $scope.metadata.contributors.indexOf(contributor);
@@ -20,10 +20,251 @@ angular.module('ortolangMarketApp')
 
 
             /**
+             * Methods on person
+             **/
+
+            function prepareModalScopeForPerson() {
+                var modalScope = $rootScope.$new(true);
+                modalScope.type = 'Person';
+                modalScope.roleTag = [];
+                modalScope.allRoles = $scope.allRoles;
+
+                modalScope.searchPerson = '';
+                modalScope.allPersons = $scope.allPersons;
+
+                modalScope.$on('tafirstname.select', function (v, i) {
+                    modalScope.type = i.type;
+                    modalScope.id = i.id;
+                    modalScope.lastname = i.lastname;
+                    modalScope.firstname = i.firstname;
+                    modalScope.midname = i.midname;
+                    if (angular.isDefined(i.org)) {
+                        modalScope.organizationFullname = i.org.fullname;
+                        modalScope.organization = i.org;
+                    }
+                    modalScope.fullname = i.fullname;
+
+                    modalScope.$apply();
+                });
+
+                modalScope.organizationFullname = '';
+                modalScope.allOrganizations = $scope.allOrganizations;
+
+                modalScope.$on('taorg.select', function (v, i) {
+                    modalScope.organization = i.org;
+
+                    modalScope.$apply();
+                });
+
+
+                modalScope.clearSearch = clearSearchPerson;
+
+                return modalScope;
+            }
+
+            function setPerson(contributor, myScope) {
+                contributor.entity.type = myScope.type;
+                contributor.entity.id = myScope.id;
+                contributor.entity.lastname = myScope.lastname;
+                contributor.entity.firstname = myScope.firstname;
+                contributor.entity.midname = myScope.midname;
+                // contributor.entity.lastname = myScope.lastname;
+                // if(angular.isDefined(myScope.searchLastname.value)) {
+                //     contributor.entity.lastname = myScope.searchLastname.value;
+                // } else {
+                //     contributor.entity.lastname = myScope.searchLastname;
+                // }
+
+                if (angular.isDefined(myScope.organization)) {
+                    contributor.entity.organization = myScope.organization;
+                }
+
+                contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
+            }
+
+            function clearModalScopeForPerson(modalScope) {
+                delete modalScope.id;
+                delete modalScope.lastname;
+                delete modalScope.firstname;
+                delete modalScope.midname;
+                delete modalScope.organization;
+                delete modalScope.organizationFullname;
+                delete modalScope.fullname;
+            }
+
+            function clearSearchPerson(modalScope) {
+                // angular.element('#add-contributor-searchPerson').val('');
+
+                clearModalScopeForPerson(modalScope);
+            }
+
+            function getFullnameOfPerson(person) {
+                var fullname = person.firstname;
+                fullname += angular.isDefined(person.midname) ? ' ' + person.midname : '';
+                fullname += ' ' + person.lastname;
+                return fullname;
+            }
+
+            function setRole(contributor, myScope) {
+                contributor.role = [];
+                angular.forEach(myScope.roleTag, function(tag) {
+                        contributor.role.push(tag);
+                });
+            }
+
+            $scope.addPerson = function () {
+
+                var modalScope = prepareModalScopeForPerson(),
+                    addContributorModal;
+
+                modalScope.newPerson = true;
+                modalScope.createPerson = function() {
+                    modalScope.newPerson = !modalScope.newPerson;
+                    clearSearchPerson(modalScope);
+                };
+
+                modalScope.$on('modal.hide', function () {
+                    modalScope.$destroy();
+                });
+
+                modalScope.submit = function (addContributorForm) {
+
+                    if(!personExists(modalScope, $scope.metadata.contributors)) {
+                        addContributorForm.fullname.$setValidity('exists', true);
+                    } else {
+                        addContributorForm.fullname.$setValidity('exists', false);
+                    }
+
+                    if(modalScope.roleTag.length>0) {
+                        addContributorForm.roleTag.$setValidity('role', true);
+                    } else {
+                        addContributorForm.roleTag.$setValidity('role', false);
+                    }
+
+                    if (addContributorForm.$valid) {
+                        var contributor = {entity:{},role:[]};
+
+                        setPerson(contributor, modalScope);
+
+                        setRole(contributor, modalScope);
+
+                        $scope.metadata.contributors.push(contributor);
+                        addContributorModal.hide();
+                    }
+                };
+
+                addContributorModal = $modal({
+                    scope: modalScope,
+                    template: 'workspace/templates/add-person-modal.html'
+                });
+            };
+
+
+            /**
+             * Methods on Organizations
+             **/
+
+            function prepareModalScopeForOrganization() {
+                var modalScope = $rootScope.$new(true);
+                modalScope.type = 'organization';
+
+                return modalScope;
+            }
+
+            function getFullnameOfOrganization(org) {
+                var fullname = org.name,
+                    details = '';
+                details += angular.isDefined(org.acronym) ? org.acronym : '';
+                details += (angular.isDefined(org.acronym) && (angular.isDefined(org.city) || angular.isDefined(org.country))) ? ', ' : '';
+                details += angular.isDefined(org.city) ? org.city : '';
+                details += angular.isDefined(org.country) ? ' ' + org.country : '';
+                if (details !== '') {
+                    fullname += ' (' + details + ')';
+                }
+                return fullname;
+            }
+
+            function setOrganization(organization, myScope) {
+                organization.entity.type = myScope.type;
+                organization.entity.id = myScope.id;
+                organization.entity.name = myScope.name;
+                organization.entity.fullname = getFullnameOfOrganization(myScope);
+                organization.entity.acronym = myScope.acronym;
+                organization.entity.city = myScope.city;
+                organization.entity.country = myScope.country;
+                organization.entity.homepage = myScope.homepage;
+                organization.entity.img = myScope.img;
+            }
+
+            $scope.createProducer = function () {
+                var modalScope = prepareModalScopeForOrganization(),
+                    addOrganizationModal;
+
+                modalScope.roleTag = [{id: 'producer', label: 'producer'}];
+
+                modalScope.newOrganization = true;
+
+                modalScope.$on('modal.hide', function () {
+                    modalScope.$destroy();
+                });
+
+                modalScope.submit = function (addOrganizationForm) {
+
+                    if(angular.isUndefined(modalScope.name)) {
+                        addOrganizationForm.name.$setValidity('undefined', false);
+                    } else {
+                        addOrganizationForm.name.$setValidity('undefined', true);
+                    }
+
+                    if(!contributorExists(modalScope, $scope.metadata.contributors)) {
+                        addOrganizationForm.name.$setValidity('exists', true);
+                    } else {
+                        addOrganizationForm.name.$setValidity('exists', false);
+                    }
+
+                    if (addOrganizationForm.$valid) {
+                        var organization = {entity: {}, role: []};
+
+                        setOrganization(organization, modalScope);
+
+                        // setRole(organization, modalScope);
+
+                        $scope.metadata.contributors.push(organization);
+                        addOrganizationModal.hide();
+                    }
+                };
+
+                addOrganizationModal = $modal({
+                    scope: modalScope,
+                    template: 'workspace/templates/add-organization-modal.html'
+                });
+            };
+
+
+            /**
              * Utils
              **/
 
             function contributorExists(contributor, contributors) {
+                if(angular.isDefined(contributor.name) && angular.isDefined(contributors)) {
+                    //TODO with $filter
+                    var iContributor;
+                    for (iContributor = 0; iContributor < contributors.length; iContributor++) {
+                        if(angular.isDefined(contributors[iContributor].entity.id) && angular.isDefined(contributor.id)) {
+                            if (contributors[iContributor].entity.id === contributor.id) {
+                                return true;
+                            }
+                        } else {
+                            if (contributors[iContributor].entity.name === contributor.name) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+
+            function personExists(contributor, contributors) {
                 if(angular.isDefined(contributor.fullname) && angular.isDefined(contributors)) {
                     var iContributor;
                     for (iContributor = 0; iContributor < contributors.length; iContributor++) {
@@ -48,6 +289,7 @@ angular.module('ortolangMarketApp')
                     source: 'ReferentielEntity'
                 });
 
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.type', 'type');
                 queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
                 queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
                 queryBuilder.addProjection('meta_ortolang-referentiel-json.lastname', 'lastname');
@@ -71,6 +313,7 @@ angular.module('ortolangMarketApp')
                             firstname: person.firstname,
                             midname: person.midname,
                             org: person.organization,
+                            type: person.type,
                             label: '<span>' + person.fullname + '</span>'
                         });
 
@@ -151,10 +394,6 @@ angular.module('ortolangMarketApp')
                 angular.element('#search-producer').val('');
             }
 
-            function clearSearchPerson() {
-                angular.element('#search-person').val('');
-            }
-
             /**
              * Initialize the scope
              **/
@@ -167,7 +406,7 @@ angular.module('ortolangMarketApp')
         		$scope.searchOrganization = '';
         		$scope.$on('taorg.select', function (v, i) {
         			var organization = {entity: {}, role: []};
-                    organization.entity.type = 'organization';
+                    organization.entity.type = 'Organization';
                     organization.entity.id = i.org.id;
                     organization.entity.name = i.org.name;
                     organization.entity.acronym = i.org.acronym;
@@ -185,32 +424,6 @@ angular.module('ortolangMarketApp')
                     }
 
                     clearSearchOrganization();
-
-                    $scope.$apply();
-                });
-
-        		$scope.searchPerson = '';
-        		$scope.$on('tapers.select', function (v, i) {
-        			var organization = {entity: {}, role: []};
-                    organization.entity.type = 'person';
-                    organization.entity.id = i.id;
-                    organization.entity.lastname = i.lastname;
-                    organization.entity.firstname = i.firstname;
-                    organization.entity.midname = i.midname;
-                    if (angular.isDefined(i.org)) {
-                        // organization.entity.organizationFullname = i.org.fullname;
-                        organization.entity.organization = i.org;
-                    }
-                    organization.entity.fullname = i.fullname;
-                    // organization.role.push('producer');
-
-                    // if(!contributorExists(organization.entity, $scope.metadata.contributors)) {
-                    // 	$scope.metadata.contributors.push(organization);
-                    // } else {
-                    //     console.log('Le laboratoire est déjà présent dans la liste des producteurs de la ressource.');
-                    // }
-
-                    clearSearchPerson();
 
                     $scope.$apply();
                 });

@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         return function (contributors) {
             var filtered = [];
             angular.forEach(contributors, function(contributor) {
-                if (contributor.entity.type === 'person') {
+                if (contributor.entity.type === 'Person') {
                     filtered.push(contributor);
                 }
             });

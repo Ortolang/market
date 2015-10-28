@@ -152,7 +152,7 @@ angular.module('ortolangMarketApp')
                 NEXT_STEP: 'Continuer',
                 LIST_OF_CONTRIBUTORS: 'Liste des contributeurs',
                 LIST_OF_PRODUCERS: 'Liste des producteurs',
-                ADD_CONTRIBUTOR: 'Ajouter ...',
+                ADD_PERSON: 'Ajouter une personne',
                 NEW_CONTRIBUTOR: 'Nouveau',
                 EDIT_CONTRIBUTOR: 'Modifier',
                 DELETE_CONTRIBUTOR: 'Supprimer',
@@ -183,7 +183,7 @@ angular.module('ortolangMarketApp')
                     }
                 },
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire contributeur',
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire producteur',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     SEARCH: 'Rechercher un organisme ?',
                     SEARCH_LABEL: 'Rechercher',
@@ -194,12 +194,14 @@ angular.module('ortolangMarketApp')
                     HOMEPAGE: 'Site',
                     IMG: 'Logo',
                     MESSAGES: {
-                        EXISTS: 'Cette organisme est déjà dans la liste.'
+                        EXISTS: 'Ce laboratoire est déjà dans la liste.',
+                        UNDEFINED: 'Le nom du laboratoire n\'est pas spécifier.'
                     }
                 },
                 SELECT_TITLE: 'Spécifiez un titre pour la ressource',
                 SELECT_DESCRIPTION: 'Décrivez ici la ressource...\n\nIndiquez dans quel contexte la ressource a été créée...',
                 SELECT_TYPE: 'Sélectionnez le type de ressource ...',
+                SELECT_ROLE: 'Sélectionnez son role ...',
                 SELECT_CORPORA_TYPE: 'Sélectionnez le type de corpus ...',
                 SELECT_CORPORA_STYLES: 'Sélectionnez un ou plusieurs genres ...',
                 SELECT_CORPORA_LANGUAGE_TYPE: 'Sélectionnez le type de langue ...',

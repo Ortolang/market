@@ -150,7 +150,7 @@ angular.module('ortolangMarketApp')
                 NEXT_STEP: 'Next step',
                 LIST_OF_CONTRIBUTORS: 'List of contributors',
                 LIST_OF_PRODUCERS: 'List of producers',
-                ADD_CONTRIBUTOR: 'Add ...',
+                ADD_PERSON: 'Add a person',
                 NEW_CONTRIBUTOR: 'New',
                 EDIT_CONTRIBUTOR: 'Edit',
                 DELETE_CONTRIBUTOR: 'Delete',
@@ -192,12 +192,14 @@ angular.module('ortolangMarketApp')
                     HOMEPAGE: 'Homepage',
                     IMG: 'Image',
                     MESSAGES: {
-                        EXISTS: 'This organization is already in the list.'
+                        EXISTS: 'This organization is already in the list.',
+                        UNDEFINED: 'The name must be specify.'
                     }
                 },
                 SELECT_TITLE: 'Specify a title for the resource ...',
                 SELECT_DESCRIPTION: 'Describe the resource here',
                 SELECT_TYPE: 'Choose the type of resource ...',
+                SELECT_ROLE: 'Choose the role ...',
                 SELECT_CORPORA_TYPE: 'Choose the type of corpora ...',
                 SELECT_CORPORA_STYLES: 'Choose one or more styles ...',
                 SELECT_CORPORA_LANGUAGE_TYPE: 'Choose the kind of language ...',

@@ -1,0 +1,66 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+                    <form role="form" id="add-organization-form" name="addOrganization" class="form-horizontal" ng-submit="submit(addOrganization)" novalidate>
+                        
+                        <div ng-show="newOrganization || editing">
+                            <hr ng-if="!editing"/>
+                            <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.name.$dirty) && addOrganization.name.$invalid}">
+                                <label for="add-organization-name" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.NAME"></label>
+                                <div class="col-sm-10">
+                                    <input ng-model="$parent.name" ng-disabled="$parent.id" type="text" class="form-control" id="add-organization-name" name="name" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.NAME' | translate}}">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.acronym.$dirty) && addOrganization.acronym.$invalid}">
+                                <label for="add-organization-acronym" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.ACRONYM"></label>
+                                <div class="col-sm-10">
+                                    <input  ng-disabled="$parent.id" ng-model="$parent.acronym" type="text" class="form-control" id="add-organization-acronym" name="acronym" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.ACRONYM' | translate}}">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.city.$dirty) && addOrganization.city.$invalid}">
+                                <label for="add-organization-city" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.CITY"></label>
+                                <div class="col-sm-10">
+                                    <input  ng-disabled="$parent.id" ng-model="$parent.city" type="text" class="form-control" id="add-organization-city" name="city" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.CITY' | translate}}">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.country.$dirty) && addOrganization.country.$invalid}">
+                                <label for="add-organization-country" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.COUNTRY"></label>
+                                <div class="col-sm-10">
+                                    <input  ng-disabled="$parent.id" ng-model="$parent.country" type="text" class="form-control" id="add-organization-country" name="country" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.COUNTRY' | translate}}">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.homepage.$dirty) && addOrganization.homepage.$invalid}">
+                                <label for="add-organization-homepage" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.HOMEPAGE"></label>
+                                <div class="col-sm-10">
+                                    <input  ng-disabled="$parent.id" ng-model="$parent.homepage" type="url" class="form-control" id="add-organization-homepage" name="homepage"  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.HOMEPAGE' | translate}}">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.img.$dirty) && addOrganization.img.$invalid}">
+                                <label for="add-organization-img" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.IMG"></label>
+                                <div class="col-sm-10">
+                                    <input  ng-disabled="$parent.id" ng-model="$parent.img" type="text" class="form-control" id="add-organization-img" name="img" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.IMG' | translate}}">
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(addOrganization.$submitted || addOrganization.name.$dirty) && addOrganization.name.$invalid' ng-messages="addOrganization.name.$error">
+                            <div class="text-danger col-sm-offset-2" ng-message="exists">{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.MESSAGES.EXISTS' | translate}}</div>
+                            <div class="text-danger col-sm-offset-2" ng-message="undefined">{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.MESSAGES.UNDEFINED' | translate}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button ng-hide="$parent.id && editing" type="submit" class="btn btn-primary" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
+                                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                            </div>
+
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
