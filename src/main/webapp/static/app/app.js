@@ -36,7 +36,6 @@ angular
         'cfp.hotkeys',
         'formly',
         'formlyBootstrap',
-        'ui.bootstrap.showErrors',
         'pascalprecht.translate',
         'zeroclipboard',
         'diff-match-patch',
