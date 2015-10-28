@@ -8,9 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardMetadataCtrl', ['$scope', 'ortolangType', 'Workspace', 'WorkspaceElementResource',
-        function ($scope, ortolangType, Workspace, WorkspaceElementResource) {
-
+    .controller('WorkspaceDashboardMetadataCtrl', ['$scope', '$location', 'ortolangType', 'Workspace', 'WorkspaceElementResource',
+        function ($scope, $location, ortolangType, Workspace, WorkspaceElementResource) {
 
             $scope.submitForm = function () {
                 console.log('submit form');
@@ -20,9 +19,12 @@ angular.module('ortolangMarketApp')
                     return;
                 }
 
-                delete Workspace.active.metadata.imageUrl;
+                // TODO remove title with empty value
+                // TODO remove description with empty value
 
-                var content = angular.toJson(Workspace.active.metadata),
+                delete $scope.metadata.imageUrl;
+
+                var content = angular.toJson($scope.metadata),
                     contentType = 'text/json';
 
                 sendForm(content, contentType);
@@ -44,16 +46,15 @@ angular.module('ortolangMarketApp')
 
                 fd.append('stream', blob);
 
-                WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function (data) {
-                    console.log(data);
-                    // TODO select preview tab of workspace-dashboard
-                }, function (error) {
-                    console.error('creation of metadata failed !', error);
+                WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function () {
+                	Workspace.getActiveWorkspaceMetadata();
+                    $location.search('section', 'preview');
                 });
             }
 
             function init() {
                 $scope.activeTab = 0;
+                $scope.metadata = angular.copy(Workspace.active.metadata);
 
                 $scope.allCorporaStyles = [{id:'Scientifique', label:'Scientifique'}, {id:'Littéraire', label:'Littéraire'}];
             }

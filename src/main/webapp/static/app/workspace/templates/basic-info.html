@@ -2,8 +2,8 @@
     <div class="col-sm-12 col-md-10 tab-pane-content">
         <div class="form-group">
             <label for="type" class="control-label">Catégorie <span class="text-danger">*</span></label>
-            <div class="btn-group btn-group-justified" ng-model="Workspace.active.metadata.type" bs-radio-group>
-                <label class="btn btn-default active">
+            <div class="btn-group btn-group-justified" ng-model="type" bs-radio-group>
+                <label class="btn btn-default">
                     <input type="radio" name="type" id="corpus" autocomplete="off" value="Corpus"> <span class="fa fa-fw fa-book fa-2x"></span><br/>Corpus
                 </label>
                 <label class="btn btn-default">
@@ -19,9 +19,9 @@
             <label for="title" class="control-label">Titre <span class="text-danger">*</span></label>
             
             <div class="input-group">
-                <input type="text" class="form-control" name="title-value" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" required="required" aria-label="title">
+                <input type="text" class="form-control" name="title-value" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" aria-label="title">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" name="title-lang" required="required" ng-model="title.lang" bs-options="lang.key as lang.value for lang in languages" ng-change="changeTitleLanguage(title.lang)" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                    <button type="button" class="btn btn-default" name="title-lang" required="required" ng-model="selectedTitleLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeTitleLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <label for="description" class="control-label">Description <span class="text-danger">*</span></label>
 
             <div class="input-group">
-                <button type="button" class="btn btn-default" name="description-lang" required="required" ng-model="description.lang" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage(description.lang)" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
             </div>
             
             <textarea class="form-control" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value"></textarea>

@@ -25,12 +25,27 @@ angular.module('ortolangMarketApp')
                 return null;
             }
 
-            $scope.changeTitleLanguage = function (lang) {
-                $scope.title = findObjectOfArray(Workspace.active.metadata.title, 'lang', lang);
+            $scope.changeTitleLanguage = function () {
+            	var title = findObjectOfArray($scope.metadata.title, 'lang', $scope.selectedTitleLanguage);
+            	if(title!==null) {
+                	$scope.title = title;
+            	} else {
+            		title = {lang:$scope.selectedTitleLanguage, value:''};
+            		$scope.metadata.title.push(title);
+                	$scope.title = title;
+            	}
             };
 
-            $scope.changeDescriptionLanguage = function (lang) {
-                $scope.description = findObjectOfArray(Workspace.active.metadata.description, 'lang', lang);
+            $scope.changeDescriptionLanguage = function () {
+            	var description = findObjectOfArray($scope.metadata.description, 'lang', $scope.selectedDescriptionLanguage);
+            	if(description!==null) {
+                	$scope.description = description;
+            	} else {
+            		description = {lang:$scope.selectedDescriptionLanguage, value:''};
+            		$scope.metadata.description.push(description);
+                	$scope.description = description;
+            	}
+                // $scope.description = findObjectOfArray($scope.metadata.description, 'lang', lang, '');
             };
 
         	function init() {
@@ -40,7 +55,10 @@ angular.module('ortolangMarketApp')
                     {key:'es', value: $translate.instant('LANGUAGES.ES')},
                     {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
                 ];
+                $scope.type = $scope.metadata.type;
+                $scope.selectedTitleLanguage = 'fr';
                 $scope.changeTitleLanguage(Settings.language);
+                $scope.selectedDescriptionLanguage = 'fr';
                 $scope.changeDescriptionLanguage(Settings.language);
         	}
         	init();
