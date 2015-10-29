@@ -200,6 +200,7 @@ angular.module('ortolangMarketApp')
                 SELECT_DESCRIPTION: 'Describe the resource here',
                 SELECT_TYPE: 'Choose the type of resource ...',
                 SELECT_ROLE: 'Choose the role ...',
+                SELECT_KEYWORD: 'Adds a keyword.',
                 SELECT_CORPORA_TYPE: 'Choose the type of corpora ...',
                 SELECT_CORPORA_STYLES: 'Choose one or more styles ...',
                 SELECT_CORPORA_LANGUAGE_TYPE: 'Choose the kind of language ...',

@@ -90,9 +90,29 @@
     }
 }
 
-.select {
-    height: 200px;
-    overflow-y: scroll;
+.whos-involved {
+
+    .contributor-card {
+        border: 1px solid white;
+
+
+        .delete-contributor {
+            display: none;
+        }
+
+        &:hover {
+            border-color: lightgray;
+
+            .delete-contributor {
+                display: block;
+            }
+        }
+    }
+
+    .select {
+        height: 200px;
+        overflow-y: scroll;
+    }
 }
 
 /************************

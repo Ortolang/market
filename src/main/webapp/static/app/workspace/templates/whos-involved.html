@@ -26,7 +26,7 @@
                                             <span  ng-bind="producer.entity.fullname"></span>
                                         </div>
                                         <div class="media-right">
-                                            <button type="button" class="btn btn-default" ng-click="deleteContributor(producer)"><span class="glyphicon glyphicon-trash text-danger"></span></button>
+                                            <span class="glyphicon glyphicon-trash text-danger"  ng-click="deleteContributor(producer)"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -50,6 +50,9 @@
                                 <div class="small roles">
                                     <span ng-repeat="role in contributor.role">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
                                 </div>
+                            </div>
+                            <div class="media-right">
+                                <button type="button" class="close delete-contributor" ng-click="deleteContributor(contributor)">&times;</button>
                             </div>
                         </li>
                         <li class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addPerson()">

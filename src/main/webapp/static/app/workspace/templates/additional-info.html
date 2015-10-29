@@ -1,33 +1,35 @@
-<div class="row">
+<div class="row" ng-controller="AdditionalInfoCtrl">
     <div class="col-sm-12 col-md-10 tab-pane-content">
-        <!-- <div class="form-group"> -->
-            <!-- <label for="image" class="control-label">Image</label>
-            <div class="input-group">
-                <span class="form-control" ng-click="fileImageSelectModal.show()"><span class="fa fa-fw fa-file-image-o"></span> {{image.path}}</span>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" ng-click="fileImageSelectModal.show()" type="button">{{'SELECT' | translate}}</button>
-                </span>
-            </div>
-            <input type="hidden" name="image" ng-model="metadata.image" class="form-control"> -->
-        <!-- </div> -->
 
         <div class="form-group">
-            <label for="publications" class="control-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}}</label>
-            <textarea class="form-control" name="publications" placeholder="Les publications de référence sont celles qui décrivent comment la ressource a été créée. Elles sont également utilisées pour citer la ressource." rows="5">Gardent C., Manuélian H. (2006), Création d'un corpus annoté pour le traitement des descriptions définies, à paraître dans la revue Traitement Automatique des Langues.
-            </textarea>
-        </div>
-        <hr/>
-        <div class="form-group">
-            <label for="website" class="control-label">{{'MARKET.WEBSITE' | translate}}</label>
+            <label for="publications" class="control-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Les publications de référence sont celles qui décrivent comment la ressource a été créée. Elles sont également utilisées pour citer la ressource." bs-tooltip></i></label>
+
             <div class="input-group">
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">HTTP <span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a href="#">HTTP</a></li>
-                  <li><a href="#">HTTPS</a></li>
-                </ul>
-              </div>
-              <input type="text" class="form-control" name="website" placeholder="Adresse du site web contenant des informations sur la ressource." aria-label="website">
+                <input type="text" class="form-control" name="publication" ng-model="publication" placeholder="Citation bibliographique de la publication."></input>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="addPublication()">Ajouter</button>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-responsive">
+                        <tbody>
+                            <tr ng-repeat="publication in metadata.publications">
+                                <td>
+                                    <div style="padding:12px">
+                                        <div class="media-body">
+                                            <p ng-bind-html="publication.value"></p>
+                                        </div>
+                                        <div class="media-right">
+                                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removePublication(publication)"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <hr/>
@@ -37,39 +39,26 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="input-group">
-                        <span class="form-control" ng-click="filePreviewSelectModal.show()"></span>
+                        <input type="text" class="form-control" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-click="filePreviewPathSelectorModal.show()"></input>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="filePreviewSelectModal.show()" type="button">{{'SELECT' | translate}}</button>
+                            <button class="btn btn-default" ng-click="filePreviewPathSelectorModal.show()" type="button">{{'SELECT' | translate}}</button>
                         </span>
                     </div>
-                    <input type="hidden" name="preview" ng-model="metadata.preview" class="form-control">
                 </div>
             </div>
             <br/>
-            <div class="row">
+            <div class="row" ng-if="metadata.preview">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                    <table class="table table-bordered table-responsive">
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="path in metadata.preview.paths">
                                 <td>
                                     <div style="padding:12px">
-                                        <div class="media-left">
-                                            <span width="60px" ng-class="icons.codeFile"></span>
-                                        </div>
                                         <div class="media-body">
-                                            <span class="pull-left">Sample.xml</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                            {{path}}
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="padding:12px">
-                                        <div class="media-left">
-                                            <span width="60px" ng-class="icons.videoFile"></span>
-                                        </div>
-                                        <div class="media-body">
-                                            <span class="pull-left">MADELEINE_345.mp3</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                        <div class="media-right">
+                                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removePath(path)"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -83,45 +72,36 @@
         <div class="form-group">
             <label for="keywords" class="control-label">{{'MARKET.KEYWORDS' | translate}}</label>
             
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="keywords" aria-label="keywords">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Français <span class="caret"></span></button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="#">Français</a></li>
-                                <li><a href="#">Anglais</a></li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" name="keywords-lang" ng-model="keyword.lang" bs-options="lang.key as lang.value for lang in languages" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                </div>
+                <input type="text" class="form-control" name="keywords" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_KEYWORD' | translate}}" ng-model="keyword.value" aria-label="keywords">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="addKeyword()">Ajouter</button>
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                    <table class="table table-bordered table-responsive">
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="keyword in metadata.keywords">
                                 <td>
                                     <div style="padding:12px">
-                                        <div class="media-left">
-                                            <span>FR</span>
-                                        </div>
-                                        <div class="media-body">
-                                            <span class="pull-left">Morphosyntaxe</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
-                                        </div>
+                                        {{keyword.lang}}
                                     </div>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <div style="padding:12px">
-                                        <div class="media-left">
-                                            <span>EN</span>
-                                        </div>
+                                        <!-- <div class="media-left">
+                                            <span>{{keyword.lang}}</span>
+                                        </div> -->
                                         <div class="media-body">
-                                            <span class="pull-left">Flux</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
+                                            {{keyword.value}}
+                                        </div>
+                                        <div class="media-right">
+                                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removeKeyword(keyword)"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -130,6 +110,13 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label for="website" class="control-label">{{'MARKET.WEBSITE' | translate}}</label>
+            
+              <input type="text" class="form-control" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website">
+            
         </div>
 
     </div>
