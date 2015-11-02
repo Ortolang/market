@@ -32,7 +32,7 @@
 }
 
 
-.metadata-editor {
+.workspace-dashboard-metadata {
     .list-group-item {
         border: none;
         cursor: pointer;
@@ -88,32 +88,77 @@
             margin-bottom: 3 * @padding-large-vertical;
         }
     }
-}
 
-.whos-involved {
+    section {
+        margin-top: 2 * @padding-base-vertical;
+        padding-bottom: 3 * @padding-large-vertical;
 
-    .contributor-card {
-        border: 1px solid white;
-
-
-        .delete-contributor {
-            display: none;
+        &:first-child {
+            margin-top: 0;
         }
 
-        &:hover {
-            border-color: lightgray;
+        &:not(:last-child) {
+            border-bottom: 1px solid @gray-lighter;
+        }
+    }
+
+
+    .whos-involved {
+
+        .contributor-card {
+            border: 1px solid white;
+
 
             .delete-contributor {
-                display: block;
+                display: none;
+            }
+
+            &:hover {
+                border-color: lightgray;
+
+                .delete-contributor {
+                    display: block;
+                }
+            }
+        }
+
+        .select {
+            height: 200px;
+            overflow-y: scroll;
+        }
+    }
+
+    .language-tags {
+        .tags {
+            .tag-item {
+                color: black;
+                background: white;
+                border-color: #e6e6e6;
+                .remove-button {
+                    opacity: 0.3;
+                }
+                &:hover {
+                    background-color: lightgray;
+
+                    .remove-button {
+                        opacity: 1;
+                        text-decoration: none;
+                    }
+                }
             }
         }
     }
 
-    .select {
-        height: 200px;
-        overflow-y: scroll;
+    .o-radio-button-group {
+
+        input[type=radio] {
+            position: absolute;
+            clip: rect(0,0,0,0);
+            pointer-events: none;
+        }
     }
 }
+
 
 /************************
  * Set of input fields

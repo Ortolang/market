@@ -55,8 +55,6 @@ angular.module('ortolangMarketApp')
             function init() {
                 $scope.activeTab = 0;
                 $scope.metadata = angular.copy(Workspace.active.metadata);
-
-                $scope.allCorporaStyles = [{id:'Scientifique', label:'Scientifique'}, {id:'Littéraire', label:'Littéraire'}];
             }
             init();
         }]);
