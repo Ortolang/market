@@ -48,6 +48,10 @@ angular.module('ortolangMarketApp')
                 // $scope.description = findObjectOfArray($scope.metadata.description, 'lang', lang, '');
             };
 
+            $scope.updateType = function(model) {
+            	console.log(model);
+            };
+
         	function init() {
         		$scope.languages = [
                     {key:'fr',value: $translate.instant('LANGUAGES.FR')},
@@ -56,6 +60,7 @@ angular.module('ortolangMarketApp')
                     {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
                 ];
                 $scope.type = $scope.metadata.type;
+                $scope.button = {type: $scope.metadata.type};
                 $scope.selectedTitleLanguage = 'fr';
                 $scope.changeTitleLanguage(Settings.language);
                 $scope.selectedDescriptionLanguage = 'fr';

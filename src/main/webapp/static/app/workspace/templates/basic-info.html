@@ -2,15 +2,15 @@
     <div class="col-sm-12 col-md-12 col-lg-12 tab-pane-content">
         <div class="form-group">
             <label for="type" class="control-label">Catégorie <span class="text-danger">*</span></label>
-            <div class="btn-group btn-group-justified" ng-model="type" bs-radio-group>
-                <label class="btn btn-default">
-                    <input type="radio" name="type" id="corpus" autocomplete="off" value="Corpus"> <span class="fa fa-fw fa-book fa-2x"></span><br/>Corpus
+            <div class="btn-group btn-group-justified o-radio-button-group">
+                <label class="btn btn-default" ng-class="{'active': metadata.type==='Corpus'}">
+                    <input type="radio" value="Corpus" ng-model="metadata.type"> <span class="fa fa-fw fa-book fa-2x"></span><br/>Corpus
                 </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="type" id="lexique" autocomplete="off" value="Lexique"> <span class="fa fa-fw fa-cubes fa-2x"></span><br/>Lexique
+                <label class="btn btn-default" ng-class="{'active': metadata.type==='Lexique'}">
+                    <input type="radio" value="Lexique" ng-model="metadata.type"> <span class="fa fa-fw fa-cubes fa-2x"></span><br/>Lexique
                 </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="type" id="outil" autocomplete="off" value="Outil"> <span class="fa fa-fw fa-quote-right fa-2x"></span><br/>Outil
+                <label class="btn btn-default" ng-class="{'active': metadata.type==='Outil'}">
+                    <input type="radio" value="Outil" ng-model="metadata.type"> <span class="fa fa-fw fa-quote-right fa-2x"></span><br/>Outil
                 </label>
             </div>
         </div>

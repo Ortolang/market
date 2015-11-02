@@ -1,157 +1,267 @@
-<div class="row">
-    <div class="col-sm-12 col-md-10 tab-pane-content">
+<div class="row" ng-controller="SpecificFieldsCtrl">
+    <div class="col-sm-12 col-md-10 tab-pane-content" ng-switch on="metadata.type">
 
-    	<div class="form-group">
-            <label for="corporaType" class="control-label" translate="MARKET.FACET.CORPORA_TYPE"></label>
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default active">
-                    <input type="radio" name="corporaType" id="ecrit" autocomplete="off" checked> <span class="fa fa-fw fa-file-text-o fa-2x"></span><br/>Écrit
-                </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="corporaType" id="oral" autocomplete="off"> <span class="fa fa-fw fa-file-audio-o fa-2x"></span><br/>Oral
-                </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="corporaType" id="multimodal" autocomplete="off"> <span class="fa fa-fw fa-square-o fa-2x"></span><br/>Multimodal
-                </label>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}}</label>
-                    <button type="button" class="form-control btn btn-default" ng-model="$parent.corporaType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaType.key as corporaType.value for corporaType in allCorporaType" bs-select>{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
-                    </button>
+        <div ng-switch-when="Corpus">
+        	<section id="corporaType" class="form-group">
+                <label for="corporaType" class="control-label" translate="MARKET.FACET.CORPORA_TYPE"></label>
+                <div class="btn-group btn-group-justified  o-radio-button-group">
+                    <label class="btn btn-default" ng-class="{'active': metadata.corporaType==='Écrit'}">
+                        <input type="radio" value="Écrit" ng-model="metadata.corporaType"> <span class="fa fa-fw fa-file-text-o fa-2x"></span><br/>Écrit
+                    </label>
+                    <label class="btn btn-default" ng-class="{'active': metadata.corporaType==='Oral'}">
+                        <input type="radio" value="Oral" ng-model="metadata.corporaType"> <span class="fa fa-fw fa-file-audio-o fa-2x"></span><br/>Oral
+                    </label>
+                    <label class="btn btn-default" ng-class="{'active': metadata.corporaType==='Multimodal'}">
+                        <input type="radio" value="Multimodal" ng-model="metadata.corporaType"> <span class="fa fa-fw fa-square-o fa-2x"></span><br/>Multimodal
+                    </label>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="corporaLanguages" class="control-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</label>
-
+            </section>
+            <section>
                 <div class="row">
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" name="corporaLanguagesSearch" placeholder="Indiquer les langues du corpus">
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-default btn-rounded" data-title="Ajouter une langues non répertoriées sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}}</label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaLanguageType.id as corporaLanguageType.label for corporaLanguageType in allCorporaLanguageType" bs-select>{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <br/>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-hover table-condensed table-responsive">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div style="padding:12px">
-                                            <div class="media-body">
-                                                <span class="pull-left">Français</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div style="padding:12px">
-                                            <div class="media-body">
-                                                <span class="pull-left">Espagnol</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <label for="corporaLanguages" class="control-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</label>
+                        <tags-input name="corporaLanguages" class="language-tags" ng-model="selectedCorporaLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_LANG' | translate}}" data-on-tag-added="addCorporaLanguage($tag)" data-on-tag-removed="removeCorporaLanguage($tag)">
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
                     </div>
                 </div>
-            </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_STYLES' | translate}}</label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaStyles" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_STYLES' | translate}}" data-max-length="2" bs-options="corporaStyle.id as corporaStyle.label for corporaStyle in allCorporaStyles" bs-select>{{'MARKET.FACET.CORPORA_STYLES' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}}</label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.annotationLevels" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ANNOTATION_LEVELS' | translate}}" data-max-length="2" bs-options="annotationLevel.id as annotationLevel.label for annotationLevel in allAnnotationLevels" bs-select>{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.TEXT_FORMAT' | translate}}</label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaFormat.id as corporaFormat.label for corporaFormat in allCorporaFormats" bs-select>{{'MARKET.FACET.TEXT_FORMAT' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}}</label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaFileEncodings" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaFileEncoding.id as corporaFileEncoding.label for corporaFileEncoding in allCorporaFileEncodings" bs-select>{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_DATATYPES' | translate}}</label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaDataTypes" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaDataType.id as corporaDataType.label for corporaDataType in allCorporaDataTypes" bs-select>{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="form-group">
+                    <label for="wordcount" class="control-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}}</label>
+                    
+                    <div class="row">
+                        <div class=" col-md-3">
+                            <input type="text" class="form-control text-right" name="wordcount" placeholder="Nomre de mots dans l'ensemble des fichiers de la ressource" aria-label="wordcount" ng-model="metadata.wordCount">
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <!-- <div class="form-group">
-            <label for="corporaLanguages" class="control-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</label>
+        <div ng-switch-when="Lexique">
+            <section name="lexicon-input">
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-            <div class="row">
-                <div class="col-md-11">
-                    <input type="text" class="form-control" name="corporaLanguagesSearch" placeholder="Rechercher dans le référentiel des langues répertoriées dans ORTOLANG">
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.lexiconInputType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_INPUT_TYPE' | translate}}" bs-options="lexiconInputType.id as lexiconInputType.label for lexiconInputType in allLexiconInputTypes" bs-select>{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-1">
-                    <button class="btn btn-default btn-rounded" data-title="Ajouter une langues non répertoriées sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.lexiconLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_LANGUAGE_TYPE' | translate}}" bs-options="lexiconLanguageType.id as lexiconLanguageType.label for lexiconLanguageType in allLexiconLanguageTypes" bs-select>{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-bordered table-hover table-condensed table-responsive">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div style="padding:12px">
-                                        <div class="media-body">
-                                            <span class="pull-left">Français</span><span class="pull-right glyphicon glyphicon-trash" ng-click="removeFile($index)"></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class=" col-md-12">
+                        <div class="form-group">
+                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</label>
+                            <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="selectedLexiconInputLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}" data-on-tag-added="addLexiconInputLanguage($tag)" data-on-tag-removed="removeLexiconInputLanguage($tag)">
+                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div> -->
-        <hr/>
-        <div class="row">
-            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_STYLES' | translate}}</label>
-                    <button type="button" class="form-control btn btn-default" ng-model="$parent.corporaStyleTag" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_STYLES' | translate}}" bs-options="corporaStyle as corporaStyle.label for corporaStyle in allCorporaStyles" bs-select>{{'MARKET.FACET.CORPORA_STYLES' | translate}} <span class="caret"></span>
-                    </button>
+                    <label for="lexiconInputCount" class="control-label">{{'WORKSPACE.METADATA_EDITOR.LEXICON_INPUT_COUNT' | translate}}</label>
+                    
+                    <div class="row">
+                        <div class=" col-md-3">
+                            <input type="text" class="form-control text-right" name="lexiconInputCount" placeholder="Nomre d'entrée dans le lexique." aria-label="lexiconInputCount" ng-model="metadata.lexiconInputCount">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="corporaStyles" class="control-label">{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}}</label>
-                    <button type="button" class="form-control btn btn-default" ng-model="$parent.selectedAnnotationLevels" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ANNOTATION_LEVELS' | translate}}" bs-options="annotationLevel as annotationLevel.label for annotationLevel in allAnnotationLevels" bs-select>{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}} <span class="caret"></span>
-                    </button>
+            </section>
+            <section name="lexicon-description">
+                <div class="row">
+                    <div class=" col-md-8">
+                        <div class="form-group">
+                            <label for="lexiconDescriptionType" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="lexiconDescriptionType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconDescriptionTypes" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_DESCRIPTION_TYPES' | translate}}" bs-options="lexiconDescriptionType.id as lexiconDescriptionType.label for lexiconDescriptionType in allLexiconDescriptionTypes" bs-select>{{'MARKET.FACET.LEXICON_DESCRIPTION_TYPE' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class=" col-md-12">
+                        <div class="form-group">
+                            <label for="lexiconInputLanguages" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</label>
+                            <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="selectedLexiconDescriptionLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}" data-on-tag-added="addLexiconDescriptionLanguage($tag)" data-on-tag-removed="removeLexiconDescriptionLanguage($tag)">
+                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section name="lexicon-format">
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="lexiconFormat" class="control-label">{{'MARKET.FACET.LEXICON_FORMAT' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="lexiconFormat" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconFormats" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_FORMATS' | translate}}" bs-options="lexiconFormat.id as lexiconFormat.label for lexiconFormat in allLexiconFormats" bs-select>{{'MARKET.FACET.LEXICON_FORMAT' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="corporaStyles" class="control-label">{{'MARKET.FACET.TEXT_FORMAT' | translate}}</label>
-                    <button type="button" class="form-control btn btn-default" ng-model="$parent.selectedCorporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="term as term.label for term in allCorporaFormats" bs-select>{{'MARKET.FACET.TEXT_FORMAT' | translate}} <span class="caret"></span>
-                    </button>
+        <div ng-switch-when="Outil">
+            <section name="tool-environnement">
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="operatingSystem" class="control-label">{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="operatingSystem" type="button" class="form-control btn btn-default" ng-model="metadata.operatingSystems" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_OPERATING_SYSTEMS' | translate}}" bs-options="operatingSystem.id as operatingSystem.label for operatingSystem in allOperatingSystems" bs-select>{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="programmingLanguage" class="control-label">{{'MARKET.PROGRAMMING_LANGUAGE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="programmingLanguage" type="button" class="form-control btn btn-default" ng-model="metadata.programmingLanguages" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_PROGRAMMING_LANGUAGES' | translate}}" bs-options="programmingLanguage.id as programmingLanguage.label for programmingLanguage in allProgrammingLanguages" bs-select>{{'WORKSPACE.METADATA_EDITOR.PROGRAMMING_LANGUAGES' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="corporaStyles" class="control-label">{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}}</label>
-                    <button type="button" class="form-control btn btn-default" ng-model="$parent.corporaType" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaType.key as corporaType.value for corporaType in allCorporaType" bs-select>{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
-                    </button>
+            </section>
+            <section name="tool-details">
+                <div class="row">
+                    <div class=" col-md-12">
+                        <div class="form-group">
+                            <label for="toolFunctionalities" class="control-label">{{'MARKET.FACET.TOOL_FUNCTIONALITY' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="toolFunctionalities" type="button" class="form-control btn btn-default" ng-model="metadata.toolFunctionalities" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FUNCTIONALITIES' | translate}}" bs-options="toolFunctionality.id as toolFunctionality.label for toolFunctionality in allToolFunctionalities" bs-select>{{'MARKET.FACET.TOOL_FUNCTIONALITY' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_DATATYPES' | translate}}</label>
-                    <button type="button" class="form-control btn btn-default" ng-model="$parent.selectedCorporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="term as term.label for term in allCorporaFormats" bs-select>{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
-                    </button>
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="toolInputData" class="control-label">{{'MARKET.FACET.TOOL_INPUTDATA' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="toolInputData" type="button" class="form-control btn btn-default" ng-model="metadata.toolInputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_INPUTDATA' | translate}}" bs-options="toolInputData.id as toolInputData.label for toolInputData in allToolInputData" bs-select>{{'MARKET.FACET.TOOL_INPUTDATA' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="toolOutputData" class="control-label">{{'MARKET.FACET.TOOL_OUTPUTDATA' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="toolOutputData" type="button" class="form-control btn btn-default" ng-model="metadata.toolOutputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_OUTPUTDATA' | translate}}" bs-options="toolOutputData.id as toolOutputData.label for toolOutputData in allToolOutputData" bs-select>{{'MARKET.FACET.TOOL_OUTPUTDATA' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <hr/>
-        <div class="form-group">
-            <label for="wordcount" class="control-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}}</label>
-            <div class="input-group">
-                <input type="text" class="form-control" name="wordcount" placeholder="Nomre de mots dans l'ensemble des fichiers de la ressource" aria-label="wordcount">
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Milliers de mots <span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a href="#">Milliers de mots</a></li>
-                  <li><a href="#">Millions de mots</a></li>
-                </ul>
-              </div>
-              
-            </div>
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="toolFileEncodings" class="control-label">{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="toolFileEncodings" type="button" class="form-control btn btn-default" ng-model="metadata.toolFileEncodings" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FILE_ENCODINGS' | translate}}" bs-options="toolFileEncoding.id as toolFileEncoding.label for toolFileEncoding in allToolFileEncodings" bs-select>{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section name="tool-language">
+                <div class="row">
+                    <div class=" col-md-12">
+                        <div class="form-group">
+                            <label for="toolLanguages" class="control-label">{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}</label>
+                            <tags-input name="toolLanguages" class="language-tags" ng-model="selectedToolLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}" data-on-tag-added="addToolLanguage($tag)" data-on-tag-removed="removeToolLanguage($tag)">
+                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-12">
+                        <div class="form-group">
+                            <label for="navigationLanguages" class="control-label">{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}</label>
+                            <tags-input name="navigationLanguages" class="language-tags" ng-model="selectedNavigationLanguages" data-display-property="label" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}" data-on-tag-added="addNavigationLanguage($tag)" data-on-tag-removed="removeNavigationLanguage($tag)">
+                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section name="tool-support">
+                <div class="row">
+                    <div class=" col-md-6">
+                        <div class="form-group">
+                            <label for="toolSupport" class="control-label">{{'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+
+                            <button name="toolSupport" type="button" class="form-control btn btn-default" ng-model="metadata.toolSupport" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_SUPPORT' | translate}}" bs-options="toolSupport.id as toolSupport.label for toolSupport in allToolSupports" bs-select>{{'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 </div>
