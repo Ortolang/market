@@ -491,6 +491,10 @@ module.exports = function (grunt) {
                             replacement: '../vendor/ZeroClipboard.swf'
                         },
                         {
+                            match: /<!--<script src="ortolang-config-url"><\/script>-->/,
+                            replacement: '<script src="@ORTOLANG_API_URL@/config/client"></script>'
+                        },
+                        {
                             match: 'version',
                             replacement: require('./bower.json').version
                         }
