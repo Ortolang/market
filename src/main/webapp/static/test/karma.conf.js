@@ -34,7 +34,6 @@ module.exports = function (config) {
             'bower_components/api-check/dist/api-check.js',
             'bower_components/angular-formly/dist/formly.js',
             'bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js',
-            'bower_components/angular-bootstrap-show-errors/src/showErrors.js',
             'bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js',
             'bower_components/angular-sanitize/angular-sanitize.js',
             'bower_components/angular-i18n/angular-locale_fr.js',
