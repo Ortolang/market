@@ -22,7 +22,6 @@
     </scm>
 
     <properties>
-        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
         <version.grunt.maven.plugin>1.5.0</version.grunt.maven.plugin>
         <version.clean.maven.plugin>2.6.1</version.clean.maven.plugin>
         <version.sonar.maven.plugin>2.5</version.sonar.maven.plugin>
@@ -121,14 +120,23 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>${version.wildfly.maven.plugin}</version>
+		<artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
-                    <filename>${project.build.finalName}.${project.packaging}</filename>
-                    <skip>false</skip>
+                    <descriptors>
+                        <descriptor>src/main/assembly/static.xml</descriptor>
+                    </descriptors>
                 </configuration>
-            </plugin>
+		<executions>
+	            <execution>
+          	        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+	                <phase>package</phase> <!-- bind to the packaging phase -->
+	                <goals>
+		           <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+ 	    </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>

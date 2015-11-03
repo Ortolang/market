@@ -491,16 +491,8 @@ module.exports = function (grunt) {
                             replacement: '../vendor/ZeroClipboard.swf'
                         },
                         {
-                            match: /<!--<script src="online-config-url"><\/script>-->/,
-                            replacement: '<script src="<% out.print(System.getenv().containsKey("ORTOLANG_API_URL")?System.getenv().get("ORTOLANG_API_URL") + "/config/client":"http://localhost:8080/api/config/client"); JSP_ENDTAG"></script>'
-                        },
-                        {
-                            match: /<!--JSP_ENCODING_HEADER-->/,
-                            replacement: '<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" JSP_ENDTAG'
-                        },
-                        {
-                            match: /JSP_ENDTAG/g,
-                            replacement: '%>'
+                            match: /<!--<script src="ortolang-config-url"><\/script>-->/,
+                            replacement: '<script src="@ORTOLANG_API_URL@/config/client"></script>'
                         },
                         {
                             match: 'version',
@@ -512,17 +504,9 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%= yeoman.dist %>',
-                        src: ['scripts/scripts.js', 'index.html', 'common/nav/footer.html', 'market/home.html'],
+                        src: ['scripts/scripts.js', 'index.html', 'market/home.html'],
                         dest: '<%= yeoman.dist %>/'
                     }
-                ]
-            }
-        },
-
-        rename: {
-            dist: {
-                files: [
-                    {src: ['<%= yeoman.dist %>/index.html'], dest: '<%= yeoman.dist %>/index.jsp'}
                 ]
             }
         },
@@ -660,8 +644,7 @@ module.exports = function (grunt) {
         'filerev',
         'usemin',
         'htmlmin',
-        'replace:dist',
-        'rename:dist'
+        'replace:dist'
     ]);
 
     grunt.registerTask('dev-build', [
