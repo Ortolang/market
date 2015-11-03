@@ -19,8 +19,7 @@ angular.module('ortolangMarketApp')
                 root: '=',
                 tag: '=',
                 tags: '=',
-                browse: '=',
-                icons: '='
+                browse: '='
             },
             template: '<div ng-include="marketItemTemplate"></div>',
             link: {
@@ -39,6 +38,10 @@ angular.module('ortolangMarketApp')
                                 scope.marketItemTemplate = 'market/templates/market-item-12.html';
 
                                 refreshMultilingualValue(scope.content, Settings.language);
+                                if (scope.content.publications) {
+                                    scope.primaryPublications = getValues(scope.content.publications, 'priority', 'primary');
+                                    scope.secondaryPublications = getValues(scope.content.publications, 'priority', 'secondary');
+                                }
                                 scope.itemMarketType = getItemType(scope.content);
 
                                 if (scope.content.image) {
@@ -63,7 +66,40 @@ angular.module('ortolangMarketApp')
                                 if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
                                     scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
                                 }
-                            } else {
+                            } if (scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
+                                scope.marketItemTemplate = 'market/templates/market-item-13.html';
+
+                                refreshMultilingualValue(scope.content, Settings.language);
+                                if (scope.content.publications) {
+                                    scope.primaryPublications = getValues(scope.content.publications, 'priority', 'primary');
+                                    scope.secondaryPublications = getValues(scope.content.publications, 'priority', 'secondary');
+                                }
+                                scope.itemMarketType = getItemType(scope.content);
+
+                                if (scope.content.image) {
+                                    ObjectResource.element({key: scope.itemKey, path: scope.content.image}).$promise.then(function (oobject) {
+                                        scope.image = Content.getContentUrlWithKey(oobject.key);
+                                    }, function (reason) {
+                                        console.error(reason);
+                                    });
+                                } else {
+                                    scope.imgtitle = '';
+                                    scope.imgtheme = 'custom';
+                                    if (scope.title) {
+                                        scope.imgtitle = scope.title.substring(0, 2);
+                                        scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
+                                    }
+                                }
+
+                                // if (scope.content.license !== undefined && scope.content.license !== '') {
+                                //     loadLicense(scope.itemKey, scope.content.license);
+                                // }
+
+                                if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
+                                    scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
+                                }
+
+                            }  else {
                                 //TODO show message like format metadata unknown
                             }
 
@@ -106,12 +142,37 @@ angular.module('ortolangMarketApp')
                         if (item.bibliographicCitation) {
                             scope.bibliographicCitation = getValue(item.bibliographicCitation, 'lang', lang);
                         }
-                        if (item.publications) {
-                            scope.primaryPublications = getValues(item.publications, 'priority', 'primary');
+                        if (item.relations) {
+                            scope.relations = [];
+                            angular.forEach(item.relations, function(relation) {
+                                var url = Content.getContentUrlWithPath(relation.path, scope.alias, scope.root);
+                                if (startsWith(relation.url, 'http')) {
+                                    url = relation.url;
+                                }
+                                scope.relations.push(
+                                    {
+                                        label: getValue(relation.label, 'lang', lang, 'unknown'),
+                                        type: relation.type, 
+                                        url: url,
+                                        extension: relation.path.split('.').pop()
+                                    }
+                                );
+                            });
                         }
-                        if (item.publications) {
-                            scope.secondaryPublications = getValues(item.publications, 'priority', 'secondary');
+                        if (item.commercialLinks) {
+                            scope.commercialLinks = [];
+                            angular.forEach(item.commercialLinks, function(commercialLink) {
+                                scope.commercialLinks.push(
+                                    {
+                                        description: getValue(commercialLink.description, 'lang', lang, 'unknown'),
+                                        acronym: commercialLink.acronym, 
+                                        url: commercialLink.url,
+                                        img: commercialLink.img
+                                    }
+                                );
+                            });
                         }
+
                     }
 
                     function loadLicense(collection, licensePath) {
@@ -177,6 +238,11 @@ angular.module('ortolangMarketApp')
                             case 'Outil':
                                 return 'tools';
                         }
+                    }
+
+                    function startsWith (actual, expected) {
+                        var lowerStr = (actual + '').toLowerCase();
+                        return lowerStr.indexOf(expected.toLowerCase()) === 0;
                     }
 
                     scope.$on('$routeUpdate', function () {

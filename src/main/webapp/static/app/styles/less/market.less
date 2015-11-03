@@ -205,6 +205,12 @@
   }
 
   aside {
+    .license-panel {
+      dt {
+        margin-bottom: @padding-base-vertical;
+      }
+    }
+
     #preview-license {
       cursor: pointer;
     }
@@ -238,6 +244,15 @@
         padding-left: @padding-large-horizontal;
         margin-top: @padding-base-vertical;
       }
+
+      ul.relations {
+        list-style-type: none;
+
+        li {
+          display: inline;
+        }
+      }
+
       article {
         margin-left: 2 * @padding-small-horizontal;
         margin-right: 2 * @padding-small-horizontal;
