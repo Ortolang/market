@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardMetadataCtrl', ['$scope', '$location', 'ortolangType', 'Workspace', 'WorkspaceElementResource',
-        function ($scope, $location, ortolangType, Workspace, WorkspaceElementResource) {
+    .controller('WorkspaceDashboardMetadataCtrl', ['$scope', '$location', 'ortolangType', 'ObjectResource', 'Workspace', 'WorkspaceElementResource',
+        function ($scope, $location, ortolangType, ObjectResource, Workspace, WorkspaceElementResource) {
 
             $scope.submitForm = function () {
                 console.log('submit form');
@@ -18,9 +18,6 @@ angular.module('ortolangMarketApp')
                     console.log('not ready');
                     return;
                 }
-
-                // TODO remove title with empty value
-                // TODO remove description with empty value
 
                 delete $scope.metadata.imageUrl;
 
@@ -47,14 +44,26 @@ angular.module('ortolangMarketApp')
                 fd.append('stream', blob);
 
                 WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function () {
-                	Workspace.getActiveWorkspaceMetadata();
-                    $location.search('section', 'preview');
+                	Workspace.refreshActiveWorkspaceMetadata().then(function() {
+                        Workspace.getActiveWorkspaceMetadata().then(function() {
+                            $location.search('section', 'preview');    
+                        });
+                    });
                 });
             }
 
             function init() {
                 $scope.activeTab = 0;
-                $scope.metadata = angular.copy(Workspace.active.metadata);
+                if(Workspace.active.metadata!==null) {
+                    $scope.metadata = angular.copy(Workspace.active.metadata);
+                } else {
+                    $scope.metadata = {schema: 'http://www.ortolang.fr/schema/013#'};
+                }
+
+                ObjectResource.size({key: Workspace.active.workspace.head}, function (data) {
+                    $scope.metadata.datasize = data.size.toString();
+                });
+
             }
             init();
         }]);

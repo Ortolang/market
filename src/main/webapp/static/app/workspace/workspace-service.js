@@ -11,7 +11,7 @@
  * @property {Object}   active      - the workspace being managed
  * @property {Object}   authorCards - the cards of all the authors related to the active workspace
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$q', 'ProfileResource', 'WorkspaceResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'Content', function ($rootScope, $filter, $q, ProfileResource, WorkspaceResource, GroupResource, ObjectResource, EventFeedResource, Content) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'Content', function ($rootScope, $filter, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, Content) {
 
     var listDeferred,
         Workspace = this;
@@ -53,6 +53,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             }, function () {
                 deferred.reject();
             });
+            
         } else {
             Workspace.metadatas[workspace.alias] = null;
             deferred.resolve(null);
@@ -112,11 +113,28 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     };
 
     this.getActiveWorkspaceMetadata = function () {
+        var deferred = $q.defer();
         getWorkspaceMetadata(Workspace.active.workspace).then(function () {
             Workspace.active.metadata = Workspace.metadatas[Workspace.active.workspace.alias];
+            deferred.resolve();
         }, function () {
             Workspace.active.metadata = null;
+            deferred.reject();
         });
+        return deferred.promise;
+    };
+
+    this.refreshActiveWorkspaceMetadata = function () {
+        var deferred = $q.defer();
+
+        WorkspaceElementResource.get({wskey: Workspace.active.workspace.key, root: 'head', path: '/', metadata: 'ortolang-item-json'}, function(welement) {
+            Workspace.active.workspace.metadatas['ortolang-item-json'] = welement.key;
+            deferred.resolve(welement.key);
+        },
+        function() {
+            deferred.resolve(null);
+        });
+        return deferred.promise;
     };
 
     this.getActiveWorkspaceEvents = function () {

@@ -1,4 +1,4 @@
-<div class="row" ng-controller="BasicInfoCtrl" ng-show="Workspace.active.metadata">
+<div class="row" ng-controller="BasicInfoCtrl">
     <div class="col-sm-12 col-md-12 col-lg-12 tab-pane-content">
         <div class="form-group">
             <label for="type" class="control-label">Catégorie <span class="text-danger">*</span></label>
@@ -19,7 +19,7 @@
             <label for="title" class="control-label">Titre <span class="text-danger">*</span></label>
             
             <div class="input-group">
-                <input type="text" class="form-control" name="title-value" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" aria-label="title">
+                <input type="text" class="form-control" name="title-value" autocomplete="off" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" ng-change="updateTitle()" aria-label="title">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default" name="title-lang" required="required" ng-model="selectedTitleLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeTitleLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
                 </div>
@@ -33,7 +33,7 @@
                 <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
             </div>
             
-            <textarea class="form-control" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value"></textarea>
+            <textarea class="form-control" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value" ng-change="updateDescription()"></textarea>
                 
         </div>
     </div>
