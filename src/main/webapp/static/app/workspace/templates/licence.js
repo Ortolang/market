@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LicenceCtrl', ['$rootScope', '$scope', '$modal', 'Settings', 'QueryBuilderFactory', 'SearchResource',
-        function ($rootScope, $scope, $modal, Settings, QueryBuilderFactory, SearchResource) {
+    .controller('LicenceCtrl', ['$rootScope', '$scope', '$modal', '$translate', 'Settings', 'QueryBuilderFactory', 'SearchResource',
+        function ($rootScope, $scope, $modal, $translate, Settings, QueryBuilderFactory, SearchResource) {
 
 
             /**
@@ -21,7 +21,29 @@ angular.module('ortolangMarketApp')
                 modalScope.type = 'Licence';
                 modalScope.allStatusOfUse = $scope.allStatusOfUse;
 
+                modalScope.languages = [
+                    {key:'fr',value: $translate.instant('LANGUAGES.FR')},
+                    {key:'en', value: $translate.instant('LANGUAGES.EN')},
+                    {key:'es', value: $translate.instant('LANGUAGES.ES')},
+                    {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
+                ];
+
                 return modalScope;
+            }
+
+            function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {
+                if(arr) {
+                    var iObject;
+                    for (iObject = 0; iObject < arr.length; iObject++) {
+                        if (arr[iObject][propertyName] === propertyValue) {
+                            return arr[iObject];
+                        }
+                    }
+                }
+                if(defaultValue) {
+                    return defaultValue;
+                }
+                return null;
             }
 
             $scope.addLicence = function () {
@@ -33,19 +55,38 @@ angular.module('ortolangMarketApp')
                     modalScope.$destroy();
                 });
 
+
+                modalScope.updateDescription = function() {
+                    if(modalScope.descriptionSelected.value!=='') {
+                        var description = findObjectOfArray(modalScope.description, 'lang', $scope.selectedDescriptionLanguage);
+                        if(description===null) {
+                            description = {lang:$scope.selectedDescriptionLanguage, value:modalScope.descriptionSelected.value};
+                            if(angular.isUndefined(modalScope.description)) {
+                                modalScope.description = [];
+                            }
+                            modalScope.description.push(description);
+                        } else {
+                            description.value = modalScope.descriptionSelected.value;
+                        }
+                    }
+                };
+
                 modalScope.submit = function (addLicenceForm) {
 
-                    // if(!personExists(modalScope, $scope.metadata.contributors)) {
-                    //     addLicenceForm.fullname.$setValidity('exists', true);
-                    // } else {
-                    //     addLicenceForm.fullname.$setValidity('exists', false);
-                    // }
-
                     if (addLicenceForm.$valid) {
-                    	$scope.metadata.statusOfUse = modalScope.statusOfUse;
-                    	$scope.metadata.conditionsOfUse = modalScope.conditionsOfUse;
-                    	$scope.metadata.license = modalScope.license;
-                    	$scope.metadata.licenseWebsite = modalScope.licenseWebsite;
+                        if($scope.metadata.license===undefined) {
+                            $scope.metadata.license = {};
+                        }
+
+                        $scope.metadata.license.label = modalScope.label;
+                    	$scope.metadata.license.status = modalScope.status;
+                        if(modalScope.description) {
+                            $scope.metadata.license.description = angular.copy(modalScope.description);
+                        }
+                        if(modalScope.licenseWebsite) {
+                            $scope.metadata.license.text = {lang:'fr', value:{url: modalScope.licenseWebsite}};
+                        }
+                    	// $scope.metadata.license.licenseWebsite = modalScope.licenseWebsite;
 
                         addLicenceModal.hide();
                     }
@@ -82,19 +123,65 @@ angular.module('ortolangMarketApp')
                 });
             }
 
+            function loadAllLicense() {
+
+                var queryBuilder = QueryBuilderFactory.make({
+                    projection: 'key, meta_ortolang-referentiel-json',
+                    source: 'ReferentielEntity'
+                });
+
+                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'License');
+
+                var query = queryBuilder.toString();
+                $scope.allLicences = [];
+                SearchResource.json({query: query}).$promise.then(function (jsonResults) {
+                    angular.forEach(jsonResults, function (result) {
+                        var license = angular.fromJson(result);
+
+                        var queryLicenseMeta = 'select from ' + license['meta_ortolang-referentiel-json'];
+                        SearchResource.json({query: queryLicenseMeta}, function (jsonObject) {
+                            var licenseObject = angular.fromJson(jsonObject[0]);
+
+                            cleanJsonDocument(licenseObject);
+
+                            $scope.allLicences.push({
+                                // value: organization.fullname,
+                                // fullname: organization.fullname,
+                                license: licenseObject,
+                                label: licenseObject.label
+                            });
+                        });
+                        // $scope.allStatusOfUse.push({id: term.id, label: term.label});
+                    });
+                });
+            }
+
+            function cleanJsonDocument(doc) {
+                for (var propertyName in doc) {
+                    if(propertyName.substring(0,1)==='@') {
+                        delete doc[propertyName];
+                    }
+                }
+            }
+
         	function init() {
-        		$scope.allLicences = [
-        			{
-        				id:'cc0', 
-        				label:'Creative Commons Zero : Cette licence permet d\'utiliser, redistribuer et modifier sans contrainte'
-        			},
-        			{
-        				id:'cc-by', 
-        				label:'Creative Commons B.. Y.. : Cette licence permet d\'utiliser, redistribuer et modifier en citant la personne responsable de la ressource'
-        			}
-        		];
+        		// $scope.allLicences = [
+        		// 	{
+        		// 		id:'cc0', 
+        		// 		label:'Creative Commons Zero : Cette licence permet d\'utiliser, redistribuer et modifier sans contrainte'
+        		// 	},
+        		// 	{
+        		// 		id:'cc-by', 
+        		// 		label:'Creative Commons B.. Y.. : Cette licence permet d\'utiliser, redistribuer et modifier en citant la personne responsable de la ressource'
+        		// 	}
+        		// ];
 
         		loadAllStatusOfUse();
+                loadAllLicense();
         	}
         	init();
 }]);

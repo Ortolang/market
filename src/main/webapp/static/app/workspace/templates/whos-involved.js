@@ -11,6 +11,14 @@ angular.module('ortolangMarketApp')
     .controller('WhosInvolvedCtrl', ['$rootScope', '$scope', '$modal', 'Settings', 'QueryBuilderFactory', 'SearchResource',
         function ($rootScope, $scope, $modal, Settings, QueryBuilderFactory, SearchResource) {
 
+            $scope.deleteProducer = function (producer) {
+                var index = $scope.metadata.producers.indexOf(producer);
+                if (index > -1) {
+                    $scope.metadata.producers.splice(index, 1);
+                }
+            };
+
+
 	        $scope.deleteContributor = function (contributor) {
 	            var index = $scope.metadata.contributors.indexOf(contributor);
 	            if (index > -1) {
@@ -105,10 +113,10 @@ angular.module('ortolangMarketApp')
                 return fullname;
             }
 
-            function setRole(contributor, myScope) {
-                contributor.role = [];
+            function setRoles(contributor, myScope) {
+                contributor.roles = [];
                 angular.forEach(myScope.roleTag, function(tag) {
-                        contributor.role.push(tag);
+                        contributor.roles.push(tag);
                 });
             }
 
@@ -142,12 +150,16 @@ angular.module('ortolangMarketApp')
                     }
 
                     if (addContributorForm.$valid) {
-                        var contributor = {entity:{},role:[]};
+                        var contributor = {entity:{},roles:[]};
 
                         setPerson(contributor, modalScope);
 
-                        setRole(contributor, modalScope);
+                        setRoles(contributor, modalScope);
 
+                        if($scope.metadata.contributors===undefined) {
+                            $scope.metadata.contributors = [];
+                        }
+                        
                         $scope.metadata.contributors.push(contributor);
                         addContributorModal.hide();
                     }
@@ -185,24 +197,20 @@ angular.module('ortolangMarketApp')
             }
 
             function setOrganization(organization, myScope) {
-                organization.entity.type = myScope.type;
-                organization.entity.id = myScope.id;
-                organization.entity.name = myScope.name;
-                organization.entity.fullname = getFullnameOfOrganization(myScope);
-                organization.entity.acronym = myScope.acronym;
-                organization.entity.city = myScope.city;
-                organization.entity.country = myScope.country;
-                organization.entity.homepage = myScope.homepage;
-                organization.entity.img = myScope.img;
+                organization.type = myScope.type;
+                organization.id = myScope.id;
+                organization.name = myScope.name;
+                organization.fullname = getFullnameOfOrganization(myScope);
+                organization.acronym = myScope.acronym;
+                organization.city = myScope.city;
+                organization.country = myScope.country;
+                organization.homepage = myScope.homepage;
+                organization.img = myScope.img;
             }
 
             $scope.createProducer = function () {
                 var modalScope = prepareModalScopeForOrganization(),
                     addOrganizationModal;
-
-                modalScope.roleTag = [{id: 'producer', label: 'producer'}];
-
-                modalScope.newOrganization = true;
 
                 modalScope.$on('modal.hide', function () {
                     modalScope.$destroy();
@@ -216,20 +224,21 @@ angular.module('ortolangMarketApp')
                         addOrganizationForm.name.$setValidity('undefined', true);
                     }
 
-                    if(!contributorExists(modalScope, $scope.metadata.contributors)) {
+                    if(!producerExists(modalScope, $scope.metadata.contributors)) {
                         addOrganizationForm.name.$setValidity('exists', true);
                     } else {
                         addOrganizationForm.name.$setValidity('exists', false);
                     }
 
                     if (addOrganizationForm.$valid) {
-                        var organization = {entity: {}, role: []};
+                        var organization = {};
 
                         setOrganization(organization, modalScope);
 
-                        // setRole(organization, modalScope);
-
-                        $scope.metadata.contributors.push(organization);
+                        if($scope.metadata.producers===undefined) {
+                            $scope.metadata.producers = [];
+                        }
+                        $scope.metadata.producers.push(organization);
                         addOrganizationModal.hide();
                     }
                 };
@@ -244,18 +253,17 @@ angular.module('ortolangMarketApp')
             /**
              * Utils
              **/
-
-            function contributorExists(contributor, contributors) {
-                if(angular.isDefined(contributor.name) && angular.isDefined(contributors)) {
+            function producerExists(producer, producers) {
+                if(angular.isDefined(producer.name) && angular.isDefined(producers)) {
                     //TODO with $filter
-                    var iContributor;
-                    for (iContributor = 0; iContributor < contributors.length; iContributor++) {
-                        if(angular.isDefined(contributors[iContributor].entity.id) && angular.isDefined(contributor.id)) {
-                            if (contributors[iContributor].entity.id === contributor.id) {
+                    var indexProducer;
+                    for (indexProducer = 0; indexProducer < producers.length; indexProducer++) {
+                        if(angular.isDefined(producers[indexProducer].id) && angular.isDefined(producer.id)) {
+                            if (producers[indexProducer].id === producer.id) {
                                 return true;
                             }
                         } else {
-                            if (contributors[iContributor].entity.name === contributor.name) {
+                            if (producers[indexProducer].name === producer.name) {
                                 return true;
                             }
                         }
@@ -405,20 +413,22 @@ angular.module('ortolangMarketApp')
 
         		$scope.searchOrganization = '';
         		$scope.$on('taorg.select', function (v, i) {
-        			var organization = {entity: {}, role: []};
-                    organization.entity.type = 'Organization';
-                    organization.entity.id = i.org.id;
-                    organization.entity.name = i.org.name;
-                    organization.entity.acronym = i.org.acronym;
-                    organization.entity.city = i.org.city;
-                    organization.entity.country = i.org.country;
-                    organization.entity.homepage = i.org.homepage;
-                    organization.entity.img = i.org.img;
-                    organization.entity.fullname = i.org.fullname;
-                    organization.role.push('producer');
+        			var organization = {};
+                    organization.type = 'Organization';
+                    organization.id = i.org.id;
+                    organization.name = i.org.name;
+                    organization.acronym = i.org.acronym;
+                    organization.city = i.org.city;
+                    organization.country = i.org.country;
+                    organization.homepage = i.org.homepage;
+                    organization.img = i.org.img;
+                    organization.fullname = i.org.fullname;
 
-                    if(!contributorExists(organization.entity, $scope.metadata.contributors)) {
-                    	$scope.metadata.contributors.push(organization);
+                    if($scope.metadata.producers===undefined || ($scope.metadata.producers!==undefined && !producerExists(organization, $scope.metadata.producers))) {
+                        if($scope.metadata.producers===undefined) {
+                            $scope.metadata.producers = [];
+                        }
+                    	$scope.metadata.producers.push(organization);
                     } else {
                         console.log('Le laboratoire est déjà présent dans la liste des producteurs de la ressource.');
                     }

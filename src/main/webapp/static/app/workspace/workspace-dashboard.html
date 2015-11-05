@@ -38,7 +38,7 @@
                 <div ng-include="'workspace/workspace-dashboard-members.html'"></div>
             </div>
             <div ng-switch-when="metadata">
-                <div ng-include="'workspace/workspace-dashboard-metadata.html'"></div>
+                <div ng-if="Workspace.active.metadata!==undefined && Workspace.active.metadata!==null" ng-include="'workspace/workspace-dashboard-metadata.html'"></div>
             </div>
             <div ng-switch-when="preview">
                 <div market-item-preview content="Workspace.active.metadata" alias="Workspace.active.workspace.alias" ortolang-object="Workspace.active.workspace" item-key="Workspace.active.workspace.head"  root="'head'" ></div>

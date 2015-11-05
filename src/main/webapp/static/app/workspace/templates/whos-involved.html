@@ -16,17 +16,17 @@
                 <div class="col-md-12">
                     <table class="table table-bordered table-responsive">
                         <tbody>
-                            <tr ng-repeat="producer in metadata.contributors | contributorProducer">
+                            <tr ng-repeat="producer in metadata.producers">
                                 <td>
                                     <div style="padding:12px">
                                         <div class="media-left">
-                                            <img width="60px" class="img-rounded" ng-src="{{producer.entity.img}}">
+                                            <img width="60px" class="img-rounded" ng-src="{{producer.img}}">
                                         </div>
                                         <div class="media-body">
-                                            <span  ng-bind="producer.entity.fullname"></span>
+                                            <span  ng-bind="producer.fullname"></span>
                                         </div>
                                         <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger"  ng-click="deleteContributor(producer)"></span>
+                                            <span class="glyphicon glyphicon-trash text-danger"  ng-click="deleteProducer(producer)"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -48,7 +48,7 @@
                             <div class="media-body">
                                 <span class="name">{{contributor.entity.fullname}} ({{contributor.entity.organization.acronym}})</span>
                                 <div class="small roles">
-                                    <span ng-repeat="role in contributor.role">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
+                                    <span ng-repeat="role in contributor.roles">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
                                 </div>
                             </div>
                             <div class="media-right">

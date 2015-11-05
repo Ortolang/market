@@ -198,7 +198,8 @@ angular.module('ortolangMarketApp')
                     }
                 },
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Add a licence'
+                    TITLE: 'Add a licence',
+                    LABEL: 'Gets a name for this licnse'
                 },
                 SELECT_TITLE: 'Specify a title for the resource',
                 SELECT_DESCRIPTION: 'Describe the resource here',

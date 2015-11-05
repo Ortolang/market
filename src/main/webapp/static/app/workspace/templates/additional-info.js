@@ -19,12 +19,18 @@ angular.module('ortolangMarketApp')
         		var index = $scope.metadata.publications.indexOf(publication);
 	            if (index > -1) {
 	                $scope.metadata.publications.splice(index, 1);
+                    if($scope.metadata.publications.length===0) {
+                        delete $scope.metadata.publications;
+                    }
 	            }
         	};
 
         	$scope.addPublication = function() {
         		if($scope.publication) {
-        			$scope.metadata.publications.push({priority:'primary', value:$scope.publication});
+                    if($scope.metadata.publications===undefined) {
+                        $scope.metadata.publications = [];
+                    }
+        			$scope.metadata.publications.push($scope.publication);
         			$scope.publication = '';
         		}
         	};
@@ -34,9 +40,12 @@ angular.module('ortolangMarketApp')
              **/
 
             $scope.removePath = function(path) {
-        		var index = $scope.metadata.preview.paths.indexOf(path);
+        		var index = $scope.metadata.preview.indexOf(path);
 	            if (index > -1) {
-	                $scope.metadata.preview.paths.splice(index, 1);
+	                $scope.metadata.preview.splice(index, 1);
+                    if($scope.metadata.preview.length===0) {
+                        delete $scope.metadata.preview;
+                    }
 	            }
             };
 
@@ -66,11 +75,11 @@ angular.module('ortolangMarketApp')
 
                if(elements.length>0) {
                		if(angular.isUndefined($scope.metadata.preview)) {
-               			$scope.metadata.preview = {type: 'line', paths:[]};
+               			$scope.metadata.preview = [];
                		}
 
-                    if($scope.metadata.preview.paths.indexOf(elements[0].path) === -1){
-                        $scope.metadata.preview.paths.push(elements[0].path);
+                    if($scope.metadata.preview.indexOf(elements[0].path) === -1){
+                        $scope.metadata.preview.push(elements[0].path);
                     }
                     $scope.filePreviewPathSelectorModal.hide();
                 }

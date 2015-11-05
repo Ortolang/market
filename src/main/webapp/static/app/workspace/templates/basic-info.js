@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BasicInfoCtrl', ['$scope', '$translate', '$filter', 'Settings',
-        function ($scope, $translate, $filter, Workspace, Settings) {
+    .controller('BasicInfoCtrl', ['$scope', '$translate',
+        function ($scope, $translate) {
 
         	//TODO put this method to a service
             function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {

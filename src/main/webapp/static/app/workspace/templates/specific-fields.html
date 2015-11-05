@@ -95,9 +95,9 @@
                 <div class="row">
                     <div class=" col-md-6">
                         <div class="form-group">
-                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+                            <label for="lexiconInputType" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.lexiconInputType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_INPUT_TYPE' | translate}}" bs-options="lexiconInputType.id as lexiconInputType.label for lexiconInputType in allLexiconInputTypes" bs-select>{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <span class="caret"></span>
+                            <button name="lexiconInputType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconInputType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_INPUT_TYPE' | translate}}" bs-options="lexiconInputType.id as lexiconInputType.label for lexiconInputType in allLexiconInputTypes" bs-select>{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -105,9 +105,9 @@
                 <div class="row">
                     <div class=" col-md-6">
                         <div class="form-group">
-                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+                            <label for="lexiconLanguageType" class="control-label">{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.lexiconLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_LANGUAGE_TYPE' | translate}}" bs-options="lexiconLanguageType.id as lexiconLanguageType.label for lexiconLanguageType in allLexiconLanguageTypes" bs-select>{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+                            <button name="lexiconLanguageType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_LANGUAGE_TYPE' | translate}}" bs-options="lexiconLanguageType.id as lexiconLanguageType.label for lexiconLanguageType in allLexiconLanguageTypes" bs-select>{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                 <div class="row">
                     <div class=" col-md-12">
                         <div class="form-group">
-                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</label>
+                            <label for="lexiconInputLanguages" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</label>
                             <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="selectedLexiconInputLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}" data-on-tag-added="addLexiconInputLanguage($tag)" data-on-tag-removed="removeLexiconInputLanguage($tag)">
                                 <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                             </tags-input>

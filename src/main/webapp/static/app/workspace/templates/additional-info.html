@@ -19,7 +19,7 @@
                                 <td>
                                     <div style="padding:12px">
                                         <div class="media-body">
-                                            <p ng-bind-html="publication.value"></p>
+                                            <p ng-bind-html="publication"></p>
                                         </div>
                                         <div class="media-right">
                                             <span class="glyphicon glyphicon-trash text-danger" ng-click="removePublication(publication)"></span>
@@ -51,7 +51,7 @@
                 <div class="col-md-12">
                     <table class="table table-bordered table-responsive">
                         <tbody>
-                            <tr ng-repeat="path in metadata.preview.paths">
+                            <tr ng-repeat="path in metadata.preview">
                                 <td>
                                     <div style="padding:12px">
                                         <div class="media-body">

@@ -200,7 +200,8 @@ angular.module('ortolangMarketApp')
                     }
                 },
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Ajouter une licence particulière'
+                    TITLE: 'Ajouter une licence particulière',
+                    LABEL: 'Donnez un nom à cette licence'
                 },
                 SELECT_TITLE: 'Spécifiez un titre pour la ressource',
                 SELECT_DESCRIPTION: 'Décrivez ici la ressource...\n\nIndiquez dans quel contexte la ressource a été créée...',
