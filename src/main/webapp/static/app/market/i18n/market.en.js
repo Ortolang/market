@@ -17,7 +17,6 @@ angular.module('ortolangMarketApp')
             SEARCH_PAGE: 'Search in data',
             REDACTOR_CHOICES: 'Redactor choices',
             CONDITIONS_OF_USE: 'Conditions of use',
-            COPYRIGHT: 'Copyright',
             BROWSE: 'Browse',
             GO_BACK_INFO: 'Go back',
             ADD_TO_FAVOURITES: 'Add to my favourites',
