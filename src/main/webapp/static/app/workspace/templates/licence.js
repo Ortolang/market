@@ -21,12 +21,7 @@ angular.module('ortolangMarketApp')
                 modalScope.type = 'Licence';
                 modalScope.allStatusOfUse = $scope.allStatusOfUse;
 
-                modalScope.languages = [
-                    {key:'fr',value: $translate.instant('LANGUAGES.FR')},
-                    {key:'en', value: $translate.instant('LANGUAGES.EN')},
-                    {key:'es', value: $translate.instant('LANGUAGES.ES')},
-                    {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
-                ];
+                modalScope.languages = $scope.languages;
 
                 return modalScope;
             }
@@ -88,6 +83,8 @@ angular.module('ortolangMarketApp')
                         }
                     	// $scope.metadata.license.licenseWebsite = modalScope.licenseWebsite;
 
+                        $scope.metadata.statusOfUse = modalScope.status;
+                        
                         addLicenceModal.hide();
                     }
                 };
@@ -98,6 +95,30 @@ angular.module('ortolangMarketApp')
                 });
             };
 
+            $scope.changeConditionsOfUseLanguage = function () {
+                var conditionsOfUse = findObjectOfArray($scope.metadata.conditionsOfUse, 'lang', $scope.selectedConditionsOfUseLanguage);
+                if(conditionsOfUse!==null) {
+                    $scope.conditionsOfUse = conditionsOfUse;
+                } else {
+                    conditionsOfUse = {lang:$scope.selectedConditionsOfUseLanguage, value:''};
+                    $scope.conditionsOfUse = conditionsOfUse;
+                }
+            };
+
+            $scope.updateConditionsOfUse = function() {
+                if($scope.conditionsOfUse.value!=='') {
+                    var conditionsOfUse = findObjectOfArray($scope.metadata.conditionsOfUse, 'lang', $scope.selectedConditionsOfUseLanguage);
+                    if(conditionsOfUse===null) {
+                        conditionsOfUse = {lang:$scope.selectedConditionsOfUseLanguage, value:$scope.conditionsOfUse.value};
+                        if(angular.isUndefined($scope.metadata.conditionsOfUse)) {
+                            $scope.metadata.conditionsOfUse = [];
+                        }
+                        $scope.metadata.conditionsOfUse.push(conditionsOfUse);
+                    } else {
+                        conditionsOfUse.value = $scope.conditionsOfUse.value;
+                    }
+                }
+            };
 
             function loadAllStatusOfUse() {
 
@@ -130,10 +151,6 @@ angular.module('ortolangMarketApp')
                     source: 'ReferentielEntity'
                 });
 
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
                 queryBuilder.equals('meta_ortolang-referentiel-json.type', 'License');
 
                 var query = queryBuilder.toString();
@@ -149,13 +166,10 @@ angular.module('ortolangMarketApp')
                             cleanJsonDocument(licenseObject);
 
                             $scope.allLicences.push({
-                                // value: organization.fullname,
-                                // fullname: organization.fullname,
                                 license: licenseObject,
                                 label: licenseObject.label
                             });
                         });
-                        // $scope.allStatusOfUse.push({id: term.id, label: term.label});
                     });
                 });
             }
@@ -169,19 +183,25 @@ angular.module('ortolangMarketApp')
             }
 
         	function init() {
-        		// $scope.allLicences = [
-        		// 	{
-        		// 		id:'cc0', 
-        		// 		label:'Creative Commons Zero : Cette licence permet d\'utiliser, redistribuer et modifier sans contrainte'
-        		// 	},
-        		// 	{
-        		// 		id:'cc-by', 
-        		// 		label:'Creative Commons B.. Y.. : Cette licence permet d\'utiliser, redistribuer et modifier en citant la personne responsable de la ressource'
-        		// 	}
-        		// ];
+                $scope.languages = [
+                    {key:'fr',value: $translate.instant('LANGUAGES.FR')},
+                    {key:'en', value: $translate.instant('LANGUAGES.EN')},
+                    {key:'es', value: $translate.instant('LANGUAGES.ES')},
+                    {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
+                ];
+
+                if(angular.isUndefined($scope.metadata.statusOfUse)) {
+                    $scope.metadata.statusOfUse = 'Libre';
+                }
 
         		loadAllStatusOfUse();
                 loadAllLicense();
+
+                $scope.selectedConditionsOfUseLanguage = 'fr';
+                $scope.conditionsOfUse = {value: ''};
+                if($scope.metadata.conditionsOfUse) {
+                    $scope.changeConditionsOfUseLanguage($scope.selectedConditionsOfUseLanguage);
+                }
         	}
         	init();
 }]);

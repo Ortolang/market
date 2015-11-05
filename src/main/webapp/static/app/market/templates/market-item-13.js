@@ -45,15 +45,25 @@ angular.module('ortolangMarketApp')
         		}
         	}
 
+            function loadConditionsOfUse(lang) {
+                if($scope.content.conditionsOfUse) {
+                    $scope.conditionsOfUse = getValue($scope.content.conditionsOfUse, 'lang', lang);
+                }
+            }
+
 
             $rootScope.$on('$translateChangeSuccess', function () {
                 loadLicense($translate.use());
+                loadConditionsOfUse($translate.use());
             });
 
         	function init() {
 
                 if ($scope.content.license !== undefined && $scope.content.license !== '') {
                     loadLicense(Settings.language);
+                }
+                if ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {
+                    loadConditionsOfUse(Settings.language);
                 }
 
         	}

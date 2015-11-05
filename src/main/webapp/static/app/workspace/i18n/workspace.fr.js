@@ -208,7 +208,7 @@ angular.module('ortolangMarketApp')
                 SELECT_TYPE: 'Sélectionnez le type de ressource ...',
                 SELECT_ROLE: 'Sélectionnez son role ...',
                 SELECT_KEYWORD: 'Ajouter un mot-clé.',
-                SELECT_CONDITIONS_OF_USE: 'Résumez des conditions d\'utilisation de la ressource selon cette licence...\n\nDroit de modification...\n\nDroit de commerialisation...',
+                SELECT_CONDITIONS_OF_USE: 'Conditions d\'utilisation spécifiques',
                 SELECT_CORPORA_TYPE: 'Sélectionnez le type de corpus',
                 SELECT_CORPORA_LANGUAGE: 'Indiquer les langues du corpus',
                 SELECT_CORPORA_STYLES: 'Sélectionnez un ou plusieurs genres',

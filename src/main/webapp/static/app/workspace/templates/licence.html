@@ -12,5 +12,23 @@
                 </div> -->
 	    	</div>
     	</div>
+        <hr/>
+        <div class="form-group">
+            <label for="conditionsOfUse" class="control-label">{{'MARKET.CONDITIONS_OF_USE' | translate}}</label>
+
+            <div class="input-group">
+                <button type="button" class="btn btn-default" name="conditionsOfUse-lang" ng-model="selectedConditionsOfUseLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeConditionsOfUseLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+            </div>
+            
+            <textarea class="form-control" name="conditionsOfUse" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse.value" ng-change="updateConditionsOfUse()"></textarea>
+                
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label for="copyright" class="control-label">{{'MARKET.COPYRIGHT' | translate}}</label>
+            
+              <input type="text" class="form-control" name="copyright" placeholder="Copyright ..." aria-label="copyright" ng-model="metadata.copyright">
+            
+        </div>
 	</div>
 </div>

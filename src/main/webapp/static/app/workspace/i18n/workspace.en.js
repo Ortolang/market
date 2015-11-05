@@ -206,7 +206,7 @@ angular.module('ortolangMarketApp')
                 SELECT_TYPE: 'Choose the type of resource',
                 SELECT_ROLE: 'Choose the role',
                 SELECT_KEYWORD: 'Adds a keyword.',
-                SELECT_CONDITIONS_OF_USE: 'Abstract of the conditions of use for this licence (modified, commercial)',
+                SELECT_CONDITIONS_OF_USE: 'Abstract of the conditions if necessary',
                 SELECT_CORPORA_TYPE: 'Choose the type of corpora',
                 SELECT_CORPORA_LANGUAGE: 'Specify the corpora language',
                 SELECT_CORPORA_STYLES: 'Choose one or more styles',

@@ -211,7 +211,7 @@
             <div class="panel panel-default license-panel" ng-show="content.type !== 'Application'">
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
-                    <dl>
+                    <dl ng-if="content.license">
                         <dt>
                             {{content.license.label}} <a target="_BLANK" ng-if="!licenseDescription && licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dt>
@@ -219,6 +219,7 @@
                             {{licenseDescription}}<a target="_BLANK" ng-if="licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dd>
                     </dl>
+                    <p ng-if="conditionsOfUse">{{conditionsOfUse}}</p>
                     <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
                         <div class="btn-group" role="group">
