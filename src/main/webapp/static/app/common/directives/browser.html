@@ -1,6 +1,6 @@
-<div class="browser-wrapper container-fluid" ng-class="{'market-browser-wrapper': isMarketBrowserService, 'file-select-browser-wrapper': isFileSelectBrowserService}" ng-controller="BrowserCtrl">
+<div class="browser-wrapper container-fluid" ng-class="::{'market-browser-wrapper': isMarketBrowserService, 'file-select-browser-wrapper': isFileSelectBrowserService}" ng-controller="BrowserCtrl">
 
-    <div class="row toolbar browser-toolbar" ng-class="{'market-browser-toolbar': isMarketBrowserService}" ng-click="deactivateContextMenu()" ng-right-click="deactivateContextMenu()">
+    <div class="row toolbar browser-toolbar" ng-class="::{'market-browser-toolbar': isMarketBrowserService}" ng-click="deactivateContextMenu()" ng-right-click="deactivateContextMenu()">
         <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" class="col-md-2 toolbar-aside"></div>
 
         <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
@@ -176,7 +176,7 @@
                     <!--</button>-->
                 <!--</div>-->
 
-                <div ng-show="isWorkspaceBrowserService && isHead && hasOnlyParentSelected()" class="btn-group">
+                <div ng-show="browserService.canEdit && isHead && hasOnlyParentSelected()" class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'ADD' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.plus"></span>
                     </button>
@@ -228,7 +228,7 @@
         <div class="browser-aside-left-collapsed" ng-show="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-right"></span></div>
         <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen" ng-click="checkDeselection($event)" ng-right-click="checkDeselection($event)" ng-class="{'browser-aside-over': isScreenMd}" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
             <span class="btn-collapse" ng-if="!isFileSelectBrowserService" ng-click="toggleWorkspaceList()"><span class="fa fa-chevron-left "></span></span>
-            <div ng-if="::browserService.canEdit" class="btn-group dropdown-wrapper add-action">
+            <div ng-if="browserService.canEdit" class="btn-group dropdown-wrapper add-action">
                 <button type="button" class="btn btn-workspace dropdown-toggle" data-toggle="dropdown" translate="BROWSER.NEW" ng-disabled="!isHead"></button>
                 <ul class="dropdown-menu" role="menu">
                     <li><div ng-click="addCollection()"><span ng-class="::icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div></li>
@@ -244,15 +244,16 @@
             </section>
         </div>
 
-        <div ng-if="browserService.canEdit && isHead" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="middleCssClass()" ng-controller="UploadCtrl" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: ortolangType.object}">
-            <div ng-include="'common/directives/browser-line-template.html'"></div>
-            <div ng-include="'common/directives/browser-tile-template.html'"></div>
+        <div ng-if="browserService.canEdit && isHead" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)"
+             ng-class="middleCssClass()" class="workspace-elements-wrapper" ng-controller="UploadCtrl"
+             nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: ortolangType.object}">
+            <div ng-include="isViewModeLine() ? 'common/directives/browser-line-template.html' : 'common/directives/browser-tile-template.html'"></div>
             <input id="object-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{ortolangType: ortolangType.object}">
         </div>
 
-        <div ng-if="!browserService.canEdit || !isHead" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)" ng-class="middleCssClass()">
-            <div ng-include="'common/directives/browser-line-template.html'"></div>
-            <div ng-include="'common/directives/browser-tile-template.html'"></div>
+        <div ng-if="!browserService.canEdit || !isHead" ng-click="checkSelection($event)" ng-right-click="checkSelection($event)"
+             ng-class="middleCssClass()" class="workspace-elements-wrapper">
+            <div ng-include="isViewModeLine() ? 'common/directives/browser-line-template.html' : 'common/directives/browser-tile-template.html'"></div>
         </div>
 
         <div ng-if="::browserService.displayAsideInfo" ng-hide="browserSettings.hideInfo" ng-class="isScreenMd ? 'col-sm-4' : 'col-sm-3'" ng-click="checkContextMenu($event)" ng-right-click="checkContextMenu($event)" class="browser-aside browser-aside-right browser-aside-info">
@@ -307,7 +308,7 @@
                 </p>
                 <dl class="dl-horizontal">
                     <dt translate="SIZE"></dt>
-                    <dd translate="BROWSER.FULL_SIZE" translate-values="{size: selectedElementsSize()}"></dd>
+                    <dd translate="BROWSER.FULL_SIZE" data-translate-values="{size: selectedElementsSize()}"></dd>
                 </dl>
             </div>
         </div>

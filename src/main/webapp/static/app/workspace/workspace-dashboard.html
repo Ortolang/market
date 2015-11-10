@@ -2,7 +2,7 @@
     <div class="toolbar-wrapper">
         <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="dashboardSection === 'content' ? 'faded' : ''">
             <ul class="nav nav-pills">
-                <li class="disabled-tab">
+                <li class="workspace-alias-tab">
                     <a><strong>{{::Workspace.active.workspace.alias}}</strong></a>
                 </li>
                 <li ng-class="dashboardSection === 'information'  ? 'active' : ''" role="tab">
@@ -32,7 +32,7 @@
                 <div ng-include="'workspace/workspace-dashboard-information.html'"></div>
             </div>
             <div class="workspace-dashboard-content" ng-switch-when="content">
-                <div browser></div>
+                <div ng-class="{'read-only': Workspace.active.workspace.readOnly}" browser></div>
             </div>
             <div ng-switch-when="members">
                 <div ng-include="'workspace/workspace-dashboard-members.html'"></div>

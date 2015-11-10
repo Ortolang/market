@@ -21,8 +21,10 @@ angular.module('ortolangMarketApp')
         'Helper',
         'Runtime',
         'WorkspaceResource',
+        'WorkspaceElementResource',
+        'ortolangType',
         'WorkspaceBrowserService',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, Runtime, WorkspaceResource, WorkspaceBrowserService) {
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, Runtime, WorkspaceResource, WorkspaceElementResource, ortolangType, WorkspaceBrowserService) {
 
             /**
              * The section selected by default
@@ -31,14 +33,6 @@ angular.module('ortolangMarketApp')
             var defaultSection = 'information';
             var modalScope;
 
-            $scope.selectDashboardSection = function (id) {
-                if ($location.search().section === 'content' && id !== 'content') {
-                    setDashboardSection(id, true);
-                } else {
-                    setDashboardSection(id, false);
-                }
-            };
-
             /**
              *
              * @param {String} id                   - the section id; if null or undefined sets default section
@@ -46,6 +40,7 @@ angular.module('ortolangMarketApp')
              */
             function setDashboardSection(id, clearSearchParts) {
                 if (id === 'content') {
+                    WorkspaceBrowserService.canEdit = !Workspace.active.workspace.readOnly;
                     WorkspaceBrowserService.workspace = Workspace.active.workspace;
                 }
                 if (clearSearchParts) {
@@ -63,6 +58,14 @@ angular.module('ortolangMarketApp')
                 });
             }
 
+            $scope.selectDashboardSection = function (id) {
+                if ($location.search().section === 'content' && id !== 'content') {
+                    setDashboardSection(id, true);
+                } else {
+                    setDashboardSection(id, false);
+                }
+            };
+
             // *********************** //
             //       Publication       //
             // *********************** //
@@ -77,6 +80,8 @@ angular.module('ortolangMarketApp')
                             'process-type': 'publish-workspace',
                             'process-name': 'Publication of workspace: ' + Workspace.active.workspace.name,
                             'wskey': Workspace.active.workspace.key
+                        }, function () {
+                            Workspace.refreshActiveWorkspaceInfo();
                         });
                         publishModal.hide();
                     };
@@ -86,7 +91,7 @@ angular.module('ortolangMarketApp')
                         show: true
                     });
                 } else {
-                    // TODO Add alert
+                     //TODO Add alert
                 }
             };
 

@@ -1,0 +1,53 @@
+<div class="modal" tabindex="-1" role="dialog" holder-js-editor>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" translate="WORKSPACE.HOLDER_EDITOR_MODAL.TITLE">
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" ng-submit="generate()">
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <img id="holder-editor-img" holder-js="{{holder}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="holder-editor-text" translate="WORKSPACE.HOLDER_EDITOR_MODAL.TEXT"></label>
+                        <div class="col-sm-8">
+                            <input id="holder-editor-text" class="form-control" type="text" name="text" ng-model="models.text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="holder-editor-size" translate="WORKSPACE.HOLDER_EDITOR_MODAL.SIZE"></label>
+                        <div class="col-sm-8">
+                            <input id="holder-editor-size" class="form-control" type="range" name="size" min="10" max="50" ng-model="models.size">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="holder-editor-fg" translate="WORKSPACE.HOLDER_EDITOR_MODAL.FOREGROUND"></label>
+                        <div class="col-sm-2">
+                            <input id="holder-editor-fg" class="form-control" type="color" name="fg" ng-model="models.fg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="holder-editor-bg" translate="WORKSPACE.HOLDER_EDITOR_MODAL.BACKGROUND"></label>
+                        <div class="col-sm-2">
+                            <input id="holder-editor-bg" class="form-control" type="color" name="bg" ng-model="models.bg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="holder-editor-bold"  translate="WORKSPACE.HOLDER_EDITOR_MODAL.BOLD"></label>
+                        <div class="col-sm-8">
+                            <input id="holder-editor-bold" type="checkbox" name="bold" ng-model="models.bold">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-primary" translate="WORKSPACE.HOLDER_EDITOR_MODAL.SUBMIT"></button>
+                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

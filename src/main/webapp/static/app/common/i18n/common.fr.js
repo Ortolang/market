@@ -36,7 +36,7 @@ angular.module('ortolangMarketApp')
         TOOLS: 'Outils',
         INTEGRATED_PROJECTS: 'Projets Intégrés',
         PRODUCERS: 'Institutions productrices',
-        SELECT_WORKSPACE_ELEMENT: 'Selectionner un élément',
+        SELECT_WORKSPACE_ELEMENT: 'Sélectionner un élément',
         PENDING_DATA: 'Chargement...',
         CART: 'Sélection',
         404: {

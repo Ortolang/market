@@ -58,10 +58,12 @@
     }
   }
   .nav-pills {
-    li.disabled-tab a {
-      cursor: default;
-      &:hover {
-        background-color: inherit;
+    li.workspace-alias-tab {
+      a {
+        cursor: default;
+        &:hover {
+          background-color: inherit;
+        }
       }
     }
   }
@@ -83,6 +85,17 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
+      &.read-only {
+        .workspace-elements-wrapper {
+          background-color: @alternate-bg;
+          .table-workspace-elements td {
+            border-top-color: darken(@alternate-border-color, 2%) !important;
+          }
+          .thumb-wrapper {
+            background-color: darken(@white, 2%) !important;
+          }
+        }
+      }
       .browser-wrapper {
         display: flex;
         flex-direction: column;
@@ -158,6 +171,9 @@
     }
     .workspace-event-author {
       font-weight: 600;
+    }
+    .workspace-event-status {
+      display: block;
     }
     .workspace-event-date {
       display: block;
