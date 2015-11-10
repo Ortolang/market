@@ -19,7 +19,8 @@ angular.module('ortolangMarketApp')
                 root: '=',
                 tag: '=',
                 tags: '=',
-                browse: '='
+                browse: '=',
+                icons: '='
             },
             template: '<div ng-include="marketItemTemplate"></div>',
             link: {
@@ -152,7 +153,7 @@ angular.module('ortolangMarketApp')
                                 scope.relations.push(
                                     {
                                         label: getValue(relation.label, 'lang', lang, 'unknown'),
-                                        type: relation.type, 
+                                        type: relation.type,
                                         url: url,
                                         extension: relation.path.split('.').pop()
                                     }
@@ -165,7 +166,7 @@ angular.module('ortolangMarketApp')
                                 scope.commercialLinks.push(
                                     {
                                         description: getValue(commercialLink.description, 'lang', lang, 'unknown'),
-                                        acronym: commercialLink.acronym, 
+                                        acronym: commercialLink.acronym,
                                         url: commercialLink.url,
                                         img: commercialLink.img
                                     }
