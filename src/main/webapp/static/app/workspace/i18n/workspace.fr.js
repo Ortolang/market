@@ -150,6 +150,7 @@ angular.module('ortolangMarketApp')
                 LICENCE: 'Licence',
                 LICENCE_WEBSITE: 'Page web de la Licence',
                 SPECIFIC_FIELD: 'Champs spécifiques',
+                ADDITIONAL_INFO: 'Informations complémentaires',
                 NEXT_STEP: 'Continuer',
                 LIST_OF_CONTRIBUTORS: 'Liste des contributeurs',
                 LIST_OF_PRODUCERS: 'Liste des producteurs',
