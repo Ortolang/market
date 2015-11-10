@@ -199,7 +199,7 @@ angular.module('ortolangMarketApp')
 
             function completeTask(task) {
                 FormResource.get({formKey: task.form}, {}, function (form) {
-                    var modalScope = $scope.$new(true);
+                    var modalScope = $rootScope.$new(true);
                     modalScope.formData = {};
                     modalScope.formFields = JSON.parse(form.definition);
                     modalScope.submitText = $translate.instant('TASKS.COMPLETE_TASK');
@@ -222,7 +222,7 @@ angular.module('ortolangMarketApp')
                         title: form.name,
                         html: true,
                         scope: modalScope,
-                        template: 'processes/services/runtime-form-modal-template.html',
+                        template: 'processes/service/runtime-form-modal-template.html',
                         show: true
                     });
                 });
