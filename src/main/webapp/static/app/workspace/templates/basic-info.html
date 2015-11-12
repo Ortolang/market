@@ -1,7 +1,7 @@
 <div class="row" ng-controller="BasicInfoCtrl">
     <div class="col-sm-12 col-md-12 col-lg-12 tab-pane-content">
         <div class="form-group">
-            <label for="type" class="control-label">Catégorie <span class="text-danger">*</span></label>
+            <label for="type" class="control-label">Catégorie <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
             <div class="btn-group btn-group-justified o-radio-button-group">
                 <label class="btn btn-default" ng-class="{'active': metadata.type==='Corpus'}">
                     <input type="radio" value="Corpus" ng-model="metadata.type"> <span class="fa fa-fw fa-book fa-2x"></span><br/>Corpus
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-            <label for="title" class="control-label">Titre <span class="text-danger">*</span></label>
+            <label for="title" class="control-label">Titre <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
             
             <div class="input-group">
                 <input type="text" class="form-control" name="title-value" autocomplete="off" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" ng-change="updateTitle()" aria-label="title">
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            <label for="description" class="control-label">Description <span class="text-danger">*</span></label>
+            <label for="description" class="control-label">Description <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
 
             <div class="input-group">
                 <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>

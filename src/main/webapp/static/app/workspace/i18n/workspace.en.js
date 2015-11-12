@@ -149,6 +149,7 @@ angular.module('ortolangMarketApp')
                 LICENCE_WEBSITE: 'Web page of the licence',
                 SPECIFIC_FIELD: 'Specific fields',
                 ADDITIONAL_INFO: 'Additionals informations',
+                MANDATORY_FIELD: 'Mandatory field',
                 NEXT_STEP: 'Next step',
                 LIST_OF_CONTRIBUTORS: 'List of contributors',
                 LIST_OF_PRODUCERS: 'List of producers',

@@ -27,10 +27,10 @@ angular.module('ortolangMarketApp')
         };
     }).config(function () {
         Holder.addTheme('ortolang', {
-            background: '#008bd0',
+            background: '#475b6e',
             foreground: '#FFFFFF',
             fontweight: 'normal',
-            nowrap: true
+            nowrap: false
         }).addTheme('ortolangBold', {
             background: '#008bd0',
             foreground: '#FFFFFF',

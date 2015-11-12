@@ -1,9 +1,7 @@
 <div class="col-sm-4 col-md-3 col-lg-3">
-    <div class="avatar">
-        <img class="logo" ng-src="" holder-js="holder.js/160x160?theme=custom&text=ef"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
-        <!-- <img ng-if="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/> -->
-        <!-- <span class="edit fa fa-pencil fa-3x"></span>
-        <span avatar data-email-hash="User.emailHash" data-size="300" data-img-classes="user-avatar img-responsive"></span> -->
+    <div class="avatar" ng-click="fileImageSelectModal.show()">
+        <img ng-if="image===undefined && imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{imgTitle}}"/>
+        <img ng-if="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
     </div>
     <div class="list-group" role="tablist">
         <a  class="list-group-item"

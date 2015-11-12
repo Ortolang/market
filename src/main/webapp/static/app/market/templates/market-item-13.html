@@ -10,7 +10,7 @@
 
                 <div ng-hide="browse">
 
-                    <div class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: content.publicationDate}"></i> :
+                    <div ng-if="ontent.producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: content.publicationDate}"></i> :
                         <ul class="list-unstyled">
                             <li ng-repeat="producer in content.producers">
                                 <a ng-href='#/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
