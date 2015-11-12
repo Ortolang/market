@@ -14,7 +14,7 @@
             ng-bind-html="$pane.title"></a>
     </div>
     <div>
-        <button type="submit" name="submitForm" class="btn btn-primary btn-block">Appliquer</button>
+        <button type="button" ng-click="submitForm()" name="submitForm" class="btn btn-primary btn-block">Appliquer</button>
     </div>
 </div>
 <div class="col-sm-8 col-md-9 col-lg-8 tab-content" ng-transclude>
