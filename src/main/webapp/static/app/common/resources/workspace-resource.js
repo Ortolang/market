@@ -23,7 +23,15 @@ angular.module('ortolangMarketApp')
             },
             checkAliasAvailability: {
                 method: 'GET',
-                url: url.api + '/workspaces/:alias/available'
+                url: url.api + '/workspaces/alias/:alias/available'
+            },
+            getWorkspaceFromAlias: {
+                method: 'GET',
+                url: url.api + '/workspaces/alias/:alias'
+            },
+            getFtpUrl: {
+                method: 'GET',
+                url: url.api + '/workspaces/alias/:alias/ftp'
             }
         });
     }]);

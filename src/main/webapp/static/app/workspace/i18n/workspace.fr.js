@@ -133,6 +133,16 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Limite d\'importation',
                 BODY: 'Il n\'est pas possible d\'importer plus de <strong>50 fichiers à la fois</strong> par cette méthode : <ul><li>pour importer simultanément plus de 50 fichiers vous avez la possibilité <strong>d\'importer un zip</strong></li><li>pour importer de grande quantité de données vous avez également la faculté de vous connecter à votre workspace <strong>par FTP</strong></li></ul>'
             },
+            READ_ONLY_MODE: '<strong>Espace de travail en lecture seule:</strong> certaines propriétés tels que le contenu, les métadonnées et les permissions ne sont pas éditables.',
+            HOLDER_EDITOR_MODAL: {
+                TITLE: 'Création de logo',
+                TEXT: 'Texte',
+                SIZE: 'Taille du texte',
+                FOREGROUND: 'Couleur du texte',
+                BACKGROUND: 'Couleur de fond',
+                BOLD: 'Texte gras',
+                SUBMIT: 'Créer'
+            },
             DELETE_NON_EMPTY_FOLDER_ALERT: {
                 TITLE: 'Erreur',
                 CONTENT: 'Impossible de supprimer un dossier non vide'
@@ -242,20 +252,29 @@ angular.module('ortolangMarketApp')
                         CREATE: 'a créé cet espace de travail'
                     },
                     METADATA: {
-                        CREATE: 'a créé les métadonnées',
-                        UPDATE: 'a mis à jour les métadonnées'
+                        CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}}</span>',
+                        UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}}</span>'
                     },
                     OBJECT: {
                         CREATE: 'a ajouté un élément :<span class="description">{{::arguments.path}}</span>',
+                        UPDATE: 'a mis à jour un élément :<span class="description">{{::arguments.path}}</span>',
                         MOVE: 'a déplacé une élément :<span class="description">{{::arguments["src-path"]}} vers {{::arguments["dest-path"]}}</span>',
                         DELETE: 'a supprimé un élément :<span class="description">{{::arguments.path}}</span>'
                     },
                     COLLECTION: {
                         CREATE: 'a créé une collection :<span class="description">{{::arguments.path}}</span>',
+                        UPDATE: 'a mis à jour une collection :<span class="description">{{::arguments.path}}</span>',
                         MOVE: 'a déplacé une collection :<span class="description">{{::arguments["src-path"]}} vers {{::arguments["dest-path"]}}</span>',
                         DELETE: 'a supprimé une collection:<span class="description">{{::arguments.path}}</span>'
                     }
+                },
+                PROCESSES: {
+                    PUBLISH_WORKSPACE: {
+                        PUBLISH_WORKSPACE: 'a fait une demande de publication'
+                    }
                 }
             }
-        }
+        },
+        'ortolang-item-json': 'Fiche de présentation',
+        'ortolang-thumb-json': 'Logo'
     });
