@@ -56,6 +56,8 @@ angular.module('ortolangMarketApp')
             EDIT_PRESENTATION_METADATA: 'Éditer les métadonnées',
             ADD_MEMBER: 'Ajouter un membre',
             CREATE_WORKSPACE: 'Créer un espace de travail',
+            NO_METATDATA: 'Les métadonnées ne sont pas encore renseignées.',
+            GO_TO_METATDATA: 'Allez à la page des métadonnées.',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Créer un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'identifiant',

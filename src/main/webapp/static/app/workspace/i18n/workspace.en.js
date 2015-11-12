@@ -54,6 +54,8 @@ angular.module('ortolangMarketApp')
             EDIT_PRESENTATION_METADATA: 'Edit metadata',
             ADD_MEMBER: 'Add member',
             CREATE_WORKSPACE: 'Create a new workspace',
+            NO_METATDATA: 'Metadata is not filled.',
+            GO_TO_METATDATA: 'Go to metadata page.',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
                 AUTO_GENERATED: 'Auto-generated ID',

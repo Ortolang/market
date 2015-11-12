@@ -20,7 +20,7 @@
                 <li ng-class="dashboardSection === 'permissions'  ? 'active' : ''" role="tab">
                     <a ng-click="selectDashboardSection('permissions')" translate="WORKSPACE.PERMISSIONS"></a>
                 </li>
-                <li ng-class="dashboardSection === 'preview'  ? 'active' : ''" role="tab" ng-if="Workspace.active.metadata!==null">
+                <li ng-class="dashboardSection === 'preview'  ? 'active' : ''" role="tab">
                     <a ng-click="selectDashboardSection('preview')" translate="WORKSPACE.PREVIEW"></a>
                 </li>
             </ul>
@@ -42,6 +42,15 @@
             </div>
             <div ng-switch-when="preview">
                 <div ng-if="Workspace.active.metadata!==null" market-item-preview content="Workspace.active.metadata" alias="Workspace.active.workspace.alias" ortolang-object="Workspace.active.workspace" item-key="Workspace.active.workspace.head"  root="'head'" ></div>
+                <div class="no_metadata" ng-if="Workspace.active.metadata===null">
+                    <i class="fa fa-eye fa-4x"></i>
+                    <br/>
+                    <p>
+                        <b>{{'WORKSPACE.NO_METATDATA' | translate}}<b>
+                        <br/>
+                        <small><a href="#/workspaces/colaje?section=metadata">{{'WORKSPACE.GO_TO_METATDATA' | translate}}</a></small>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
