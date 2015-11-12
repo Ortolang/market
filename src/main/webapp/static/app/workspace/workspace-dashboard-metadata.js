@@ -14,8 +14,30 @@ angular.module('ortolangMarketApp')
             $scope.submitForm = function () {
                 console.log('submit form');
 
-                if ($scope.ortolangItemJsonform.$invalid) {
-                    console.log('not ready');
+                var error = false;
+                if(angular.isUndefined($scope.metadata.type)) {
+                    $scope.errors.type = true;
+                    error = true;
+                } else {
+                    $scope.errors.type = false;
+                }
+
+                if(angular.isUndefined($scope.metadata.title)) {
+                    $scope.errors.title = true;
+                    error = true;
+                } else {
+                    $scope.errors.title = false;
+                }
+
+                if(angular.isUndefined($scope.metadata.description)) {
+                    $scope.errors.description = true;
+                    error = true;
+                } else {
+                    $scope.errors.description = false;
+                }
+
+                if(error) {
+                    showErrorMessages();
                     return;
                 }
 
@@ -28,7 +50,6 @@ angular.module('ortolangMarketApp')
 
                 sendForm(content, contentType);
             };
-
 
             function sendForm(content, contentType) {
 
@@ -54,6 +75,34 @@ angular.module('ortolangMarketApp')
                 });
             }
 
+            /**
+             * Methods on person
+             **/
+
+            function prepareModalScopeForErrorMessages() {
+                var modalScope = $rootScope.$new(true);
+
+                return modalScope;
+            }
+
+            function showErrorMessages () {
+
+                var modalScope = prepareModalScopeForErrorMessages(),
+                    addContributorModal;
+
+                modalScope.errors = $scope.errors;
+
+                modalScope.$on('modal.hide', function () {
+                    modalScope.$destroy();
+                });
+
+                addContributorModal = $modal({
+                    scope: modalScope,
+                    template: 'workspace/templates/error-messages-modal.html'
+                });
+            }
+
+
             var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
                 console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileImageSelectModal" (selected elements: %o)', elements);
 
@@ -67,6 +116,7 @@ angular.module('ortolangMarketApp')
             });
 
             function init() {
+                $scope.errors = {title: false, type: false, description: false};
                 $scope.activeTab = 0;
                 if(Workspace.active.metadata!==null) {
                     $scope.metadata = angular.copy(Workspace.active.metadata);

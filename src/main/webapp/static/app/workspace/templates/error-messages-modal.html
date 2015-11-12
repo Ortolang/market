@@ -1,0 +1,20 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-danger">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" translate="WORKSPACE.METADATA_EDITOR.ERROR_MESSAGES_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+                <ul class="error-block col-sm-12" ng-messages="errors" data-multiple="true">
+                    <li class="text-danger col-sm-offset-2" ng-message="type">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.TYPE_NOT_SET' | translate}}</li>
+                    <li class="text-danger col-sm-offset-2" ng-message="title">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.TITLE_NOT_SET' | translate}}</li>
+                    <li class="text-danger col-sm-offset-2" ng-message="description">{{'WORKSPACE.METADATA_EDITOR.MESSAGES.DESCRIPTION_NOT_SET' | translate}}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            </div>
+        </div>
+    </div>
+</div>

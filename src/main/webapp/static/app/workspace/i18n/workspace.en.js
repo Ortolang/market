@@ -148,6 +148,9 @@ angular.module('ortolangMarketApp')
             },
             METADATA_EDITOR: {
                 MESSAGES: {
+                    TITLE_NOT_SET: 'Please fills the title field.',
+                    TYPE_NOT_SET: 'Please fills the type field.',
+                    DESCRIPTION_NOT_SET: 'Please fills the description field.',
                     NOT_SET: 'Please fills this field.',
                     NEED_ONE_VALUE: 'Please specify at least one value for this field.'
                 },
@@ -213,6 +216,9 @@ angular.module('ortolangMarketApp')
                 ADD_LICENCE_MODAL: {
                     TITLE: 'Add a licence',
                     LABEL: 'Gets a name for this licnse'
+                },
+                ERROR_MESSAGES_MODAL: {
+                    TITLE: 'Error in metadata'
                 },
                 SELECT_TITLE: 'Specify a title for the resource',
                 SELECT_DESCRIPTION: 'Describe the resource here',

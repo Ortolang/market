@@ -151,6 +151,9 @@ angular.module('ortolangMarketApp')
             },
             METADATA_EDITOR: {
                 MESSAGES: {
+                    TITLE_NOT_SET: 'Veuillez renseigner le titre.',
+                    TYPE_NOT_SET: 'Veuillez renseigner la catéorie.',
+                    DESCRIPTION_NOT_SET: 'Veuillez renseigner la description.',
                     NOT_SET: 'Veuillez renseigner ce champs.',
                     NEED_ONE_VALUE: 'Veuillez spécifier au moins une valeur pour ce champs.'
                 },
@@ -216,6 +219,9 @@ angular.module('ortolangMarketApp')
                 ADD_LICENCE_MODAL: {
                     TITLE: 'Ajouter une licence particulière',
                     LABEL: 'Donnez un nom à cette licence'
+                },
+                ERROR_MESSAGES_MODAL: {
+                    TITLE: 'Erreur dans les métadonnées'
                 },
                 SELECT_TITLE: 'Spécifiez un titre pour la ressource',
                 SELECT_DESCRIPTION: 'Décrivez ici la ressource...\n\nIndiquez dans quel contexte la ressource a été créée...',
