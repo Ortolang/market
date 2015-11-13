@@ -40,14 +40,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_STYLES' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaStyles" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_STYLES' | translate}}" data-max-length="2" bs-options="corporaStyle.id as corporaStyle.label for corporaStyle in allCorporaStyles" bs-select>{{'MARKET.FACET.CORPORA_STYLES' | translate}} <span class="caret"></span>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaStyles" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_STYLES' | translate}}" data-max-length="1" bs-options="corporaStyle.id as corporaStyle.label for corporaStyle in allCorporaStyles" bs-select>{{'MARKET.FACET.CORPORA_STYLES' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="corporaStyles" class="control-label">{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.annotationLevels" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ANNOTATION_LEVELS' | translate}}" data-max-length="2" bs-options="annotationLevel.id as annotationLevel.label for annotationLevel in allAnnotationLevels" bs-select>{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}} <span class="caret"></span>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.annotationLevels" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ANNOTATION_LEVELS' | translate}}" data-max-length="1" bs-options="annotationLevel.id as annotationLevel.label for annotationLevel in allAnnotationLevels" bs-select>{{'MARKET.FACET.ANNOTATION_LEVEL' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -80,11 +80,11 @@
             </section>
             <section>
                 <div class="form-group">
-                    <label for="wordcount" class="control-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}}</label>
+                    <label for="wordcount" class="control-label">{{'WORKSPACE.METADATA_EDITOR.WORD_COUNT' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Nomre de mots dans l'ensemble des fichiers de la ressource." data-placement="right" bs-tooltip></i></label>
                     
                     <div class="row">
                         <div class=" col-md-3">
-                            <input type="text" class="form-control text-right" name="wordcount" placeholder="Nomre de mots dans l'ensemble des fichiers de la ressource" aria-label="wordcount" ng-model="metadata.wordCount">
+                            <input type="text" class="form-control text-right" name="wordcount" placeholder="Nomre de mots" aria-label="wordcount" ng-model="metadata.wordCount">
                         </div>
                     </div>
                 </div>
