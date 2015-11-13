@@ -64,7 +64,7 @@
                                 <ul class="relations">
                                     <li ng-repeat="relation in relations">
                                         <a target="_BLANK" class="btn btn-default" ng-href="{{relation.url}}">
-                                            <span class="fa fa-link fa-fw"></span> {{relation.label}}</span> <span class="small">({{relation.extension}})</span>
+                                            <span class="fa fa-link fa-fw"></span> {{relation.label}}
                                         </a>
                                     </li>
                                 </ul>
@@ -219,7 +219,7 @@
                             {{licenseDescription}}<a target="_BLANK" ng-if="licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dd>
                     </dl>
-                    <p ng-if="conditionsOfUse">{{conditionsOfUse}}</p>
+                    <p ng-if="conditionsOfUse" ng-bind-html="conditionsOfUse"></p>
                     <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
                     <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
                         <div class="btn-group" role="group">
