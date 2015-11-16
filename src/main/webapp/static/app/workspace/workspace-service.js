@@ -99,7 +99,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     };
 
     this.getActiveWorkspaceFtpUrl = function () {
-        WorkspaceResource.getFtpUrl({key: Workspace.active.workspace.key}, function (data) {
+        WorkspaceResource.getFtpUrl({alias: Workspace.active.workspace.alias}, function (data) {
             Workspace.active.ftp = data;
         });
     };
