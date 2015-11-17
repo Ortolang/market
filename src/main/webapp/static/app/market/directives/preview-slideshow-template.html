@@ -1,8 +1,18 @@
-<div class="slider">
-	<img ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" class="slide" ng-src="{{previewFile.thumb}}">
-	
-	<a class="arrow prev fa fa-arrow-circle-left fa-2x" ng-click="prevSlide()"></a>
-    <a class="arrow next fa fa-arrow-circle-right fa-2x" ng-click="nextSlide()"></a>
+<div class="slider" visualizer>
+	<!-- <img ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" class="slide" ng-src="{{previewFile.thumb}}"> -->
+	<!-- <div ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" class="slide" class="thumb" style="background-image: url({{::previewFile.thumb}})"></div> -->
+	<div ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" ng-dblclick="previewFile.external===true ? openContentInNewTab(previewFile.key) : showPreview(previewFile.key)" class="slide thumb-wrapper">
+        <div>
+            <span class="thumb-icon fa-4x" ng-class="::previewFile.mimeType | mimeTypeIconCss"></span>
+            <div class="thumb" style="background-image: url({{::previewFile.thumbUrl}})"></div>
+            <div ng-if="::(previewFile.mimeType | mimeTypeIconCss) === icons.videoFile" class="thumb-overlay">
+                <span class="fa-2x" ng-class="::icons.play"></span>
+            </div>
+        </div>
+    </div>
+
+	<a class="arrow prev fa-2x" ng-class="::icons.slideshow.arrowLeft" ng-click="prevSlide()"></a>
+    <a class="arrow next fa-2x" ng-class="::icons.slideshow.arrowRight" ng-click="nextSlide()"></a>
 	<nav class="nav">
 	    <div class="wrapper">
 	        <ul class="dots">

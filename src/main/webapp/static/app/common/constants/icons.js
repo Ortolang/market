@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
             folderOpen: 'fa fa-fw fa-folder-open-o',
             folderOpenPlain: 'fa fa-fw fa-folder-open',
             link: 'fa fa-fw fa-link',
+            externalLink: 'fa fa-fw fa-external-link',
             file: 'fa fa-fw fa-file-o',
             files: 'fa fa-fw fa-files-o',
             textFile: 'fa fa-fw fa-file-text-o',
@@ -84,5 +85,9 @@ angular.module('ortolangMarketApp')
                 backToDashboard: 'glyphicon glyphicon-triangle-left',
                 others: 'fa fa-fw fa-ellipsis-v',
                 keyboard: 'fa fa-fw fa-keyboard-o'
+            },
+            slideshow: {
+                arrowLeft: 'fa fa-arrow-circle-left',
+                arrowRight: 'fa fa-arrow-circle-right'
             }
         });

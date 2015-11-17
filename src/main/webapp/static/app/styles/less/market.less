@@ -323,23 +323,64 @@
   }
 
   .image {
-    width: 180px;
+    // width: 180px;
     height: 180px;
     background-color: @main-bg;
   }
+
+  /*********
+   * Thumb
+   *********/
+   .thumb-wrapper {
+      cursor: default;
+      width: 100%;
+      display: table;
+      text-align: center;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      > div {
+        color: darken(@gray-lighter, 15%);
+        display: table-cell;
+        vertical-align: middle;
+        .thumb {
+          position: absolute;
+          overflow: hidden;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          background-size: cover;
+          background: no-repeat top center;
+        }
+        .thumb-icon {
+          &.fa-file-video-o {
+            display: none;
+          }
+        }
+        .thumb-overlay {
+          position: relative;
+          overflow: hidden;
+          display: table;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          color: @white;
+          .fa {
+            display: table-cell;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
 
   /********
    * Slider
    ********/
    .slider {
-      //width: 180px;
       height: 200px;
       overflow: hidden;
       position: relative;
-      // background: #e6e6e6;
       background-color: @main-bg;
-      // border: 20px solid #FFF;
-      // margin-bottom: 20px;
 
       a {
         cursor: pointer;
@@ -347,7 +388,6 @@
   }
 
   .slide {
-    width: 200px;
     height: 200px;
   }
 
@@ -386,32 +426,27 @@
       height: 71px;
       outline: none;
       cursor: pointer;
-      background: url(/assets/slider/img/blank.gif) no-repeat;
   }
 
   .arrow.prev {
       opacity: 0.2;
       left: 5px;
-      // background-image: url(/assets/slider/img/paddle_prev_999.png);
       transition: 0.2s linear all;
   }
 
   .arrow.next {
       opacity: 0.2;
       right: 5px;
-      // background-image: url(/assets/slider/img/paddle_next_999.png);
       transition: 0.2s linear all;
   }
 
   .arrow.prev:hover {
       opacity: 1;
-      // background-image: url(/assets/slider/img/paddle_prev_fff.png);
       text-decoration: none;
   }
 
   .arrow.next:hover {
       opacity: 1;
-      // background-image: url(/assets/slider/img/paddle_next_fff.png);
       text-decoration: none;
   }
 
@@ -439,12 +474,12 @@
   .nav .wrapper {
       margin: 0 auto;
       width: 100%;
-      // padding: 1em 0 .8em;
   }
 
   .nav ul {
       margin: 0;
       width: 100%;
+      padding: 0px;
   }
 
   .nav .dot, .nav .dot a {

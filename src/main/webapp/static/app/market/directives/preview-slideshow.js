@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('previewSlideshow', ['$window', '$timeout', 'ObjectResource', 'VisualizerManager', 'Content',  function ($window, $timeout, ObjectResource, VisualizerManager, Content) {
+    .directive('previewSlideshow', ['$window', '$timeout', 'ObjectResource', 'VisualizerManager', 'Content', 'icons',  function ($window, $timeout, ObjectResource, VisualizerManager, Content, icons) {
         return {
             restrict: 'EA',
             templateUrl: 'market/directives/preview-slideshow-template.html',
@@ -57,18 +57,24 @@ angular.module('ortolangMarketApp')
                         $timeout.cancel(myTimeout);
                     }
                     
+                    scope.openContentInNewTab  = function(key) {
+                        var url = Content.getContentUrlWithKey(key);
+                        $window.open(url, key);
+                    };
+
                     scope.$on('$destroy', function () {
                         stopTimeout();
                     });
 
                     function init() {
+                        scope.icons = icons;
                         scope.currentIndex = 0;
                         scope.previewFiles = [];
                         angular.forEach(scope.paths, function (path) {
                             ObjectResource.element({key: scope.collection, path: path}).$promise.then(function (oobject) {
                                 var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
-
-                                scope.previewFiles.push({thumb: Content.getContentUrlWithKey(oobject.key), value: oobject, external: visualizers.length===0});
+                                var thumbUrl = Content.getPreviewUrlWithKey(oobject.key);
+                                scope.previewFiles.push({key: oobject.key, thumbUrl: thumbUrl, mimeType: oobject.object.mimeType, external: visualizers.length===0});
                             }, function (reason) {
                                 console.error(reason);
                             });
