@@ -1,0 +1,15 @@
+<div class="slider">
+	<img ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" class="slide" ng-src="{{previewFile.thumb}}">
+	
+	<a class="arrow prev fa fa-arrow-circle-left fa-2x" ng-click="prevSlide()"></a>
+    <a class="arrow next fa fa-arrow-circle-right fa-2x" ng-click="nextSlide()"></a>
+	<nav class="nav">
+	    <div class="wrapper">
+	        <ul class="dots">
+	            <li class="dot" ng-repeat="slide in previewFiles">
+	                <a ng-class="{'active':isCurrentSlideIndex($index)}"
+	                  ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a></li>
+	        </ul>
+	    </div>
+	</nav>
+</div>
