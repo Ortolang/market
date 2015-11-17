@@ -146,10 +146,16 @@ angular.module('ortolangMarketApp')
                         if (item.relations) {
                             scope.relations = [];
                             angular.forEach(item.relations, function(relation) {
-                                var url = Content.getContentUrlWithPath(relation.path, scope.alias, scope.root);
-                                if (startsWith(relation.url, 'http')) {
-                                    url = relation.url;
+                                var url = null;
+                                if(relation.type==='hasPart') {
+                                    url = relation.path;
+                                } else {
+                                    url = Content.getContentUrlWithPath(relation.path, scope.alias, scope.root);
+                                    if (startsWith(relation.url, 'http')) {
+                                        url = relation.url;
+                                    }
                                 }
+                                
                                 scope.relations.push(
                                     {
                                         label: getValue(relation.label, 'lang', lang, 'unknown'),
