@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BasicInfoCtrl', ['$scope', '$translate',
-        function ($scope, $translate) {
+    .controller('BasicInfoCtrl', ['$rootScope', '$scope', '$translate', '$modal', 'Workspace',
+        function ($rootScope, $scope, $translate, $modal, Workspace) {
 
         	//TODO put this method to a service
             function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {
@@ -77,6 +77,45 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            /**
+             * Methods on documentations
+             **/
+
+            $scope.removeDocumentation = function(documentation) {
+                var index = $scope.metadata.relations.indexOf(documentation);
+                var indexDoc = $scope.documentations.indexOf(documentation);
+                if (index > -1) {
+                    $scope.metadata.relations.splice(index, 1);
+                    if($scope.metadata.relations.length===0) {
+                        delete $scope.metadata.relations;
+                    }
+                    
+                    $scope.documentations.splice(indexDoc, 1);
+                }
+            };
+
+            var deregisterFileDocumentationPathSelectorModal = $rootScope.$on('browserSelectedElements-fileDocumentationPathSelectorModal', function ($event, elements) {
+                console.log('additional-info caught event "browserSelectedElements-fileDocumentationPathSelectorModal" (selected elements: %o)', elements);
+
+               if(elements.length>0) {
+                    if(angular.isUndefined($scope.metadata.relations)) {
+                        $scope.metadata.relations = [];
+                    }
+
+                    //TODO check if it exists
+                    var relationDocumentation = {type:'documentation', label:[{lang:'fr', value:'Lire la documentation'},{lang:'en', value:'Read the documentation'}], path: elements[0].path};
+                    $scope.metadata.relations.push(relationDocumentation);
+
+                    $scope.documentations.push(relationDocumentation);
+
+                    $scope.fileDocumentationPathSelectorModal.hide();
+                }
+            });
+
+            $scope.$on('$destroy', function () {
+                deregisterFileDocumentationPathSelectorModal();
+            });
+
         	function init() {
         		$scope.languages = [
                     {key:'fr',value: $translate.instant('LANGUAGES.FR')},
@@ -98,6 +137,27 @@ angular.module('ortolangMarketApp')
                 if($scope.metadata.description) {
                     $scope.changeDescriptionLanguage($scope.selectedDescriptionLanguage);
                 }
+
+                $scope.documentations = [];
+                if($scope.metadata.relations) {
+                    angular.forEach($scope.metadata.relations, function(relation) {
+                        if(relation.type === 'documentation') {
+                            $scope.documentations.push(relation);
+                        }
+                    });
+                }
+
+                var fileDocumentationPathSelectorModalScope = $rootScope.$new();
+                fileDocumentationPathSelectorModalScope.acceptMultiple = false;
+                fileDocumentationPathSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
+                fileDocumentationPathSelectorModalScope.forceHead = true;
+                fileDocumentationPathSelectorModalScope.fileSelectId = 'fileDocumentationPathSelectorModal';
+                $scope.fileDocumentationPathSelectorModal = $modal({scope: fileDocumentationPathSelectorModalScope, 
+                    title: 'Sélectionnez un fichier contenant la documentation',
+                    template: 'common/directives/file-select-modal-template.html', 
+                    show: false
+                });
+
         	}
         	init();
 }]);

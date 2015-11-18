@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItem13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings',
-        function ($scope, $rootScope, $translate, Settings) {
+    .controller('MarketItem13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content',
+        function ($scope, $rootScope, $translate, Settings, Content) {
 
 
             function getValues(arr, propertyName, propertyValue) {
@@ -34,21 +34,55 @@ angular.module('ortolangMarketApp')
             }
 
         	function loadLicense(lang) {
-        		if($scope.content.license.description) {
+        		if($scope.content.license !== undefined && $scope.content.license.description) {
         			$scope.licenseDescription = getValue($scope.content.license.description, 'lang', lang);
         		}
 
         		// $scope.licenseDescription = $scope.content.license.description[0].value;
-        		if($scope.content.license.text) {
+        		if($scope.content.license !== undefined && $scope.content.license.text) {
         			// $scope.licenseURL = $scope.content.license.text[0].value.url;
         			$scope.licenseText = getValue($scope.content.license.text, 'lang', lang);
         		}
         	}
 
             function loadConditionsOfUse(lang) {
-                if($scope.content.conditionsOfUse) {
+                if($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {
                     $scope.conditionsOfUse = getValue($scope.content.conditionsOfUse, 'lang', lang);
                 }
+            }
+
+            function loadRelation(relation, lang) {
+                var url = null;
+                if(relation.type==='hasPart') {
+                    url = relation.path;
+                } else {
+                    url = Content.getContentUrlWithPath(relation.path, $scope.alias, $scope.root);
+                    if (startsWith(relation.url, 'http')) {
+                        url = relation.url;
+                    }
+                }
+                
+                return {
+                        label: getValue(relation.label, 'lang', lang, 'unknown'),
+                        type: relation.type,
+                        url: url,
+                        extension: relation.path.split('.').pop()
+                    };
+            }
+
+            function loadRelations() {
+                if($scope.content.relations) {
+                    angular.forEach($scope.content.relations, function(relation) {
+                        if(relation.type === 'documentation') {
+                            $scope.documentations.push(loadRelation(relation));
+                        }
+                    });
+                }
+            }
+
+            function startsWith (actual, expected) {
+                var lowerStr = (actual + '').toLowerCase();
+                return lowerStr.indexOf(expected.toLowerCase()) === 0;
             }
 
 
@@ -58,13 +92,11 @@ angular.module('ortolangMarketApp')
             });
 
         	function init() {
+                $scope.documentations = [];
 
-                if ($scope.content.license !== undefined && $scope.content.license !== '') {
-                    loadLicense(Settings.language);
-                }
-                if ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {
-                    loadConditionsOfUse(Settings.language);
-                }
+                loadLicense(Settings.language);
+                loadConditionsOfUse(Settings.language);
+                loadRelations();
 
         	}
 			init();

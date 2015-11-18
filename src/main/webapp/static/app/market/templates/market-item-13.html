@@ -60,9 +60,9 @@
                         <div class="text-pane" ng-class="showingDescription ? '' : 'text-pane-small'" data-target-blank>
                             <p ng-bind-html="description"></p>
                             <br/>
-                            <p ng-if="relations">
+                            <p ng-if="documentations">
                                 <ul class="relations">
-                                    <li ng-repeat="relation in relations">
+                                    <li ng-repeat="relation in documentations">
                                         <a target="_BLANK" class="btn btn-default" ng-href="{{relation.url}}">
                                             <span class="fa fa-link fa-fw"></span> {{relation.label}}
                                         </a>
