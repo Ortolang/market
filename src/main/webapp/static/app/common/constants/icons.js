@@ -48,6 +48,17 @@ angular.module('ortolangMarketApp')
                 metadata: 'glyphicon glyphicon-list-alt',
                 unknown: 'glyphicon glyphicon-minus'
             },
+            tree: {
+                collection: 'fa fa-folder',
+                collectionOpen: 'fa fa-folder-open',
+                object: 'fa fa-file-o'
+            },
+            acl: {
+                forall: 'fa fa-fw fa-globe',
+                authentified: 'fa fa-fw fa-user',
+                esr: 'fa fa-fw fa-graduation-cap',
+                restricted: 'fa fa-fw fa-ban'
+            },
             // Visibility
             everybody: 'fa fa-fw fa-globe',
             friends: 'fa fa-fw fa-users',
