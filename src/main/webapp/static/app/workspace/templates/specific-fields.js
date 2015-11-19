@@ -93,7 +93,7 @@ angular.module('ortolangMarketApp')
             function loadAllCorporaLanguageType() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -109,7 +109,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allCorporaLanguageType.push({id: term.id, label: term.label});
+                        $scope.allCorporaLanguageType.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
