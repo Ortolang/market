@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('WorkspaceDashboardPermissionsCtrl', ['$scope', 'Workspace', 'Content', 'WorkspaceElementResource', 'ortolangType', function ($scope, Workspace, Content,WorkspaceElementResource, ortolangType) {
 
-        function loadChildren(from, destination) {
+        function loadChildren(from, isRoot) {
             angular.forEach(from.elements, function (element, key) {
                 WorkspaceElementResource.get({wskey: Workspace.active.workspace.key, path: '/' + (from.path ? from.path + '/' : '') + element.name}, function (data) {
                     var i, aclKey;
@@ -28,12 +28,15 @@ angular.module('ortolangMarketApp')
                         data.effectiveAcl = from.acl || from.effectiveAcl || 'forall';
                     }
                     data.parent = from.key;
-                    if (destination) {
-                        destination.push(data);
+                    if (isRoot) {
+                        data.expanded = true;
+                        data.name = '/';
+                        $scope.models.treeData.push(data);
+                        loadChildren(data);
                     } else {
                         from.elements[key] = data;
                     }
-                    $scope.tree[data.key] = data;
+                    $scope.models.tree[data.key] = data;
                 });
             });
         }
@@ -49,11 +52,11 @@ angular.module('ortolangMarketApp')
 
         function propagateAcl(parent, template) {
             angular.forEach(parent.elements, function (child) {
-                if ($scope.tree[child.key]) {
-                    if (!$scope.tree[child.key].acl) {
-                        $scope.tree[child.key].effectiveAcl = template;
+                if ($scope.models.tree[child.key]) {
+                    if (!$scope.models.tree[child.key].acl) {
+                        $scope.models.tree[child.key].effectiveAcl = template;
                     }
-                    propagateAcl(child, $scope.tree[child.key].acl || $scope.tree[child.key].effectiveAcl);
+                    propagateAcl(child, $scope.models.tree[child.key].acl || $scope.models.tree[child.key].effectiveAcl);
                 }
             });
         }
@@ -61,11 +64,11 @@ angular.module('ortolangMarketApp')
         function removeAcl(element) {
             WorkspaceElementResource.delete({wskey: Workspace.active.workspace.key, path: element.path, metadataname: 'ortolang-acl-json'}, function () {
                 element.acl = null;
-                if (element.pathParts.length === 1) {
+                if (element.pathParts.length === 0) {
                     element.effectiveAcl = 'forall';
                     propagateAcl(element, element.effectiveAcl);
                 } else {
-                    propagateAcl($scope.tree[element.parent], $scope.tree[element.parent].acl || $scope.tree[element.parent].effectiveAcl);
+                    propagateAcl($scope.models.tree[element.parent], $scope.models.tree[element.parent].acl || $scope.models.tree[element.parent].effectiveAcl);
                 }
             });
         }
@@ -86,7 +89,6 @@ angular.module('ortolangMarketApp')
             formData.append('stream', blob);
 
             WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, formData, function () {
-                $scope.tree[element.key].acl = template;
                 element.acl = template;
                 element.effectiveAcl = null;
                 propagateAcl(element, template);
@@ -94,10 +96,14 @@ angular.module('ortolangMarketApp')
         };
 
         (function init() {
-            $scope.tree = {};
+            $scope.models = {};
+            $scope.models.treeData = [];
+            $scope.models.tree = {};
+            $scope.models.showObjects = false;
             Workspace.isActiveWorkspaceInfoLoaded().then(function () {
-                $scope.treeData = [];
-                loadChildren(Workspace.active.head, $scope.treeData);
+                var headCopy = angular.copy(Workspace.active.head);
+                headCopy.name = '';
+                loadChildren({elements: [headCopy]}, true);
             });
         }());
     }]);
