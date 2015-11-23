@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header modal-header-border" ng-show="title">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <span class="modal-title" ng-bind-html="title"></span>
+                <span class="modal-title">{{title | translate}}</span>
             </div>
             <div class="modal-body file-select-modal-body">
                 <div file-select-browser data-accept-multiple="acceptMultiple" data-force-workspace="forceWorkspace" data-force-mime-types="forceMimeTypes" data-force-head="forceHead" data-file-select-id="fileSelectId" data-force-path="forcePath" data-hide-element="hideElement" data-icons="icons"></div>

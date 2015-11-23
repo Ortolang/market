@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('fileSelectBrowser', ['$filter', 'FileSelectBrowserService', 'WorkspaceResource', 'ObjectResource', 'Settings', function ($filter, FileSelectBrowserService, WorkspaceResource, ObjectResource, Settings) {
+    .directive('fileSelectBrowser', ['$filter', 'FileSelectBrowserService', 'WorkspaceResource', 'Settings', function ($filter, FileSelectBrowserService, WorkspaceResource, Settings) {
         return {
             restrict: 'A',
             scope: {

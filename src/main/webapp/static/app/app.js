@@ -38,7 +38,6 @@ angular
         'formlyBootstrap',
         'pascalprecht.translate',
         'zeroclipboard',
-        'diff-match-patch',
         'xeditable',
         'ngTagsInput',
         'angularMoment',
