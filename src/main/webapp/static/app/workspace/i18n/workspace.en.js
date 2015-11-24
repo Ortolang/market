@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} member{{number > 1 ? "s" : ""}}</strong> in the project',
             MEMBERS_LIST: 'Workspace members',
             OWNER: 'Workspace owner',
+            WS_PERMISSIONS: 'Workspace permissions',
             PUBLISHED_VERSIONS: '<strong>{{number}} published version{{number > 1 ? "s" : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'No published version',
@@ -248,6 +249,12 @@ angular.module('ortolangMarketApp')
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Create metadata item'
+            },
+            ACL: {
+                FORALL: 'For all',
+                AUTHENTIFIED: 'ORTOLANG members',
+                ESR: 'ESR members',
+                RESTRICTED: 'Workspace members'
             }
         }
     });

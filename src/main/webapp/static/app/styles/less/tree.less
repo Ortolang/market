@@ -1,0 +1,71 @@
+.tree {
+  .user-select-mixin();
+  .tree-node {
+    border: @alternate-border;
+    border-left-width: 5px;
+    border-radius: @border-radius-large;
+    background: @default-bg;
+    display: flex;
+    align-items: center;
+    align-content: stretch;
+    font-weight: 600;
+    margin: @padding-large-vertical 0;
+    padding: @padding-base-vertical @padding-base-horizontal @padding-base-vertical @padding-large-horizontal;
+    cursor: default;
+    &.collection {
+      cursor: pointer;
+    }
+    &.forall {
+      border-left-color: @btn-success-bg;
+    }
+    &.authentified {
+      border-left-color: @ortolang-blue;
+    }
+    &.esr {
+      border-left-color: @dark-yellow;
+    }
+    &.restricted {
+      border-left-color: @red;
+    }
+    .node-body {
+      flex: 1 0 0%;
+    }
+    .icon {
+      margin-right: @padding-base-horizontal;
+    }
+    .node-actions {
+      .btn.muted {
+        opacity: 0.6;
+      }
+    }
+  }
+  .tree-nodes .tree-nodes {
+    padding-left: 2 * @padding-base-horizontal;
+    border-left: 1px solid lighten(@alternate-light-border-color, 3%);
+  }
+  .tree-nodes {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+.legend {
+  margin-bottom: 1.5 * @line-height-computed;
+  .tag {
+    padding: .3em .8em .4em;
+    margin-right: @padding-xs-horizontal;
+    &.label-success {
+      background-color: @btn-success-bg;
+    }
+    &.label-primary {
+      background-color: @ortolang-blue;
+    }
+    &.label-warning {
+      background-color: @dark-yellow;
+    }
+    &.label-danger {
+      background-color: @red;
+    }
+  }
+}

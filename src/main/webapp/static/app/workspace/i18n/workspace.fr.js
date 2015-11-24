@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans ce projet',
             MEMBERS_LIST: 'Membres de l\'espace de travail',
             OWNER: 'Propriétaire de l\'espace de travail',
+            WS_PERMISSIONS: 'Permissions de l\'espace de travail',
             PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'Pas de version publiée',
@@ -260,8 +261,8 @@ angular.module('ortolangMarketApp')
                         CREATE: 'a créé cet espace de travail'
                     },
                     METADATA: {
-                        CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}}</span>',
-                        UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}}</span>'
+                        CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
+                        UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>'
                     },
                     OBJECT: {
                         CREATE: 'a ajouté un élément :<span class="description">{{::arguments.path}}</span>',
@@ -281,8 +282,16 @@ angular.module('ortolangMarketApp')
                         PUBLISH_WORKSPACE: 'a fait une demande de publication'
                     }
                 }
+            },
+            ACL: {
+                FORALL: 'Pour tous',
+                AUTHENTIFIED: 'Membres ORTOLANG',
+                ESR: 'Membres de l\'ESR',
+                RESTRICTED: 'Membres de l\'espace de travail'
             }
         },
         'ortolang-item-json': 'Fiche de présentation',
-        'ortolang-thumb-json': 'Logo'
+        'ortolang-thumb-json': 'Logo',
+        'ortolang-acl-json': 'Permissions',
+        'ortolang-pid-json': 'Identifiant pérenne'
     });

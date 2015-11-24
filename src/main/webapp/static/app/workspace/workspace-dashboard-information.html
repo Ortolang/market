@@ -75,6 +75,7 @@
                 <li ng-repeat="event in Workspace.active.events | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
                     <div class="media-left" avatar data-email-hash="Workspace.authorCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
                     <div class="media-body">
+                        <!--<pre>{{event | json}}</pre>-->
                         <span>
                             <span class="workspace-event-author">{{Workspace.authorCards[event.throwedBy].fullName}}</span>
                             <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.' + event.type.toUpperCase()}}" data-translate-values="event"></span>

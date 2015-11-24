@@ -14,6 +14,7 @@
 angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'Content', function ($rootScope, $filter, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, Content) {
 
     var listDeferred,
+        activeWorkspaceInfoDeferred,
         Workspace = this;
 
     this.active = {};
@@ -84,24 +85,43 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
 
     function getActiveWorkspaceInfo() {
+        var promises = [];
+        activeWorkspaceInfoDeferred = $q.defer();
         getCard(Workspace.active.workspace.author);
         getCard(Workspace.active.workspace.owner);
-        Workspace.getActiveWorkspaceMetadata();
-        Workspace.getActiveWorkspaceMembers();
-        Workspace.getActiveWorkspaceEvents();
-        Workspace.getActiveWorkspaceHead();
-        Workspace.getActiveWorkspaceRequests();
-        Workspace.getActiveWorkspaceFtpUrl();
+        promises.push(Workspace.getActiveWorkspaceMetadata());
+        promises.push(Workspace.getActiveWorkspaceMembers());
+        promises.push(Workspace.getActiveWorkspaceEvents());
+        promises.push(Workspace.getActiveWorkspaceHead());
+        promises.push(Workspace.getActiveWorkspaceRequests());
+        promises.push(Workspace.getActiveWorkspaceFtpUrl());
+        $q.all(promises).then(function () {
+            activeWorkspaceInfoDeferred.resolve();
+        }, function (reason) {
+            console.error(reason);
+            activeWorkspaceInfoDeferred.reject();
+        });
+        return activeWorkspaceInfoDeferred.promise;
     }
 
+    this.isActiveWorkspaceInfoLoaded = function () {
+        return activeWorkspaceInfoDeferred.promise;
+    };
+
     this.refreshActiveWorkspaceInfo = function () {
-        getActiveWorkspaceInfo();
+        return getActiveWorkspaceInfo();
     };
 
     this.getActiveWorkspaceFtpUrl = function () {
+        var deferred = $q.defer();
         WorkspaceResource.getFtpUrl({alias: Workspace.active.workspace.alias}, function (data) {
             Workspace.active.ftp = data;
+            deferred.resolve();
+        }, function () {
+            Workspace.active.ftp = null;
+            deferred.reject();
         });
+        return deferred.promise;
     };
 
     this.setActiveWorkspaceFromAlias = function (alias) {
@@ -132,16 +152,21 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     };
 
     this.getActiveWorkspaceMembers = function () {
+        var deferred = $q.defer();
         GroupResource.get({key: Workspace.active.workspace.members}, function (data) {
             Workspace.active.members = data.members;
+            deferred.resolve();
+        }, function () {
+            Workspace.active.members = null;
+            deferred.reject();
         });
+        return deferred.promise;
     };
 
     this.getActiveWorkspaceMetadata = function () {
         var deferred = $q.defer();
         getWorkspaceMetadata(Workspace.active.workspace).then(function () {
             Workspace.active.metadata = Workspace.metadatas[Workspace.active.workspace.alias];
-            console.log(Workspace.active.metadata);
             deferred.resolve();
         }, function () {
             Workspace.active.metadata = null;
@@ -152,7 +177,6 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
     this.refreshActiveWorkspaceMetadata = function () {
         var deferred = $q.defer();
-
         WorkspaceElementResource.get({wskey: Workspace.active.workspace.key, root: 'head', path: '/', metadata: 'ortolang-item-json'}, function (welement) {
             Workspace.active.workspace.metadatas['ortolang-item-json'] = welement.key;
             deferred.resolve(welement.key);
@@ -163,24 +187,36 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     };
 
     this.getActiveWorkspaceEvents = function () {
+        var deferred = $q.defer();
         EventFeedResource.get({key: Workspace.active.workspace.eventFeed}, function (data) {
             angular.forEach(data.events, function (event) {
                 getCard(event.throwedBy);
             });
             Workspace.active.events = data.events;
+            deferred.resolve();
+        }, function () {
+            deferred.reject();
         });
+        return deferred.promise;
     };
 
     this.getActiveWorkspaceRequests = function () {
+        var deferred = $q.defer();
         RuntimeResource.processes({wskey: Workspace.active.workspace.key}, function (data) {
             Workspace.active.requests = data.entries;
             angular.forEach(data.entries, function (request) {
                 getCard(request.initier);
             });
+            deferred.resolve();
+        }, function () {
+            Workspace.active.requests = null;
+            deferred.reject();
         });
+        return deferred.promise;
     };
 
     this.getActiveWorkspaceHead = function () {
+        var deferred = $q.defer();
         ObjectResource.get({key: Workspace.active.workspace.head}, function (data) {
             Workspace.active.head = data.object;
             Workspace.active.history = {};
@@ -195,7 +231,13 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                     }
                 }
             });
+            deferred.resolve();
+        }, function () {
+            Workspace.active.head = null;
+            Workspace.active.history = null;
+            deferred.reject();
         });
+        return deferred.promise;
     };
 
     // *********************** //
