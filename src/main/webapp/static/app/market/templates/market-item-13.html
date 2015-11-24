@@ -1,10 +1,12 @@
 <section class="market-item" ng-controller="MarketItem13Ctrl">
     <header>
         <div class="media">
-            <a class="pull-left item-logo">
-                <img ng-if="imgtitle !== undefined" class="image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
-                <img ng-if="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
-            </a>
+            <div class="media-left">
+                <a class="item-logo">
+                    <img ng-if="imgtitle !== undefined" class="image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                    <img ng-show="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                </a>
+            </div>
             <div class="media-body">
                 <h1 class="market-item-title" ng-class="root === 'head'?'text-danger':''"><span ng-if="root === 'head'" translate="MARKET.PREVIEW_OF"></span> {{title}}</h1>
 

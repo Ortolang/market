@@ -172,8 +172,9 @@
     padding: 15px @container-main-padding;
     background-color: @default-bg;
     border-bottom: @default-border;
-    .media .pull-left {
+    .media-left {
       padding-right: 2 * @padding-large-horizontal;
+      width: 180px;
     }
 
     button, .item-logo {
@@ -184,6 +185,20 @@
       max-height: 180px;
       background-color: @main-bg;
       margin-bottom: 2 * @padding-large-vertical;
+    }
+
+    .image.ng-hide-add,
+    .image.ng-hide-remove,
+    .image.ng-hide-add.ng-hide-add-active {
+      opacity: 0;
+    }
+
+    .image.ng-hide-remove.ng-hide-remove-active {
+      -webkit-transition: all linear 2.5s;
+      -moz-transition: all linear 2.5s;
+      -o-transition: all linear 2.5s;
+      transition: all linear 2.5s;
+      opacity: 1;
     }
 
     ul {
