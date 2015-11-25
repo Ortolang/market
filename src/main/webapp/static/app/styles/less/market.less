@@ -174,10 +174,13 @@
     border-bottom: @default-border;
     .media-left {
       padding-right: 2 * @padding-large-horizontal;
-      width: 180px;
     }
-
-    button, .item-logo {
+    .item-logo {
+      margin-top: @padding-large-vertical;
+      width: 180px;
+      display: block;
+    }
+    button {
       margin-top: @padding-large-vertical;
     }
     .image {
@@ -194,10 +197,10 @@
     }
 
     .image.ng-hide-remove.ng-hide-remove-active {
-      -webkit-transition: all linear 2.5s;
-      -moz-transition: all linear 2.5s;
-      -o-transition: all linear 2.5s;
-      transition: all linear 2.5s;
+      -webkit-transition: all ease 0.5s;
+      -moz-transition: all ease 0.5s;
+      -o-transition: all ease 0.5s;
+      transition: all ease 0.5s;
       opacity: 1;
     }
 
@@ -366,6 +369,7 @@
           top: 0;
           background-size: cover;
           background: no-repeat top center;
+          cursor: pointer;
         }
         .thumb-icon {
           &.fa-file-video-o {
@@ -408,26 +412,26 @@
 
   .slide.ng-hide-add,
   .slide.ng-hide-remove {
-    -webkit-transition: all linear 0.5s;
-    -moz-transition: all linear 0.5s;
-    -o-transition: all linear 0.5s;
-    transition: all linear 0.5s;
+    -webkit-transition: all ease-out 0.5s;
+    -moz-transition: all ease-out 0.5s;
+    -o-transition: all ease-out 0.5s;
+    transition: all ease-out 0.5s;
     opacity: 0;
   }
   .slide.ng-hide-add.ng-hide-add-active,
   .slide.ng-hide-remove {
-    -webkit-transition: all linear 0.5s;
-    -moz-transition: all linear 0.5s;
-    -o-transition: all linear 0.5s;
-    transition: all linear 0.5s;
+    -webkit-transition: all ease-out 0.5s;
+    -moz-transition: all ease-out 0.5s;
+    -o-transition: all ease-out 0.5s;
+    transition: all ease-out 0.5s;
     opacity: 0;
   }
   .slide.ng-hide-add,
   .slide.ng-hide-remove.ng-hide-remove-active {
-    -webkit-transition: all linear 1.5s;
-    -moz-transition: all linear 1.5s;
-    -o-transition: all linear 1.5s;
-    transition: all linear 1.5s;
+    -webkit-transition: all lienar 1.5s;
+    -moz-transition: all lienar 1.5s;
+    -o-transition: all lienar 1.5s;
+    transition: all lienar 1.5s;
     opacity: 1;
   }
 

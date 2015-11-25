@@ -1,7 +1,7 @@
 <div class="slider" visualizer>
 	<!-- <img ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" class="slide" ng-src="{{previewFile.thumb}}"> -->
 	<!-- <div ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" class="slide" class="thumb" style="background-image: url({{::previewFile.thumb}})"></div> -->
-	<div ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" ng-dblclick="previewFile.external===true ? openContentInNewTab(previewFile.key) : showPreview(previewFile.key)" class="slide thumb-wrapper">
+	<div ng-repeat="previewFile in previewFiles" ng-hide="!isCurrentSlideIndex($index)" ng-click="previewFile.external===true ? openContentInNewTab(previewFile.key) : showPreview(previewFile.key)" class="slide thumb-wrapper">
         <div>
             <span class="thumb-icon fa-4x" ng-class="::previewFile.mimeType | mimeTypeIconCss"></span>
             <div class="thumb" style="background-image: url({{::previewFile.thumbUrl}})"></div>
@@ -11,9 +11,9 @@
         </div>
     </div>
 
-	<a class="arrow prev fa-2x" ng-class="::icons.slideshow.arrowLeft" ng-click="prevSlide()"></a>
-    <a class="arrow next fa-2x" ng-class="::icons.slideshow.arrowRight" ng-click="nextSlide()"></a>
-	<nav class="nav">
+	<a ng-if="previewFiles.length>1" class="arrow prev fa-2x" ng-class="::icons.slideshow.arrowLeft" ng-click="prevSlide()"></a>
+    <a ng-if="previewFiles.length>1" class="arrow next fa-2x" ng-class="::icons.slideshow.arrowRight" ng-click="nextSlide()"></a>
+	<nav ng-if="previewFiles.length>1" class="nav">
 	    <div class="wrapper">
 	        <ul class="dots">
 	            <li class="dot" ng-repeat="slide in previewFiles">
