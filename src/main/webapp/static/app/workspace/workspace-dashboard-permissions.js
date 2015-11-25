@@ -8,102 +8,117 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardPermissionsCtrl', ['$scope', 'Workspace', 'Content', 'WorkspaceElementResource', 'ortolangType', function ($scope, Workspace, Content,WorkspaceElementResource, ortolangType) {
+    .controller('WorkspaceDashboardPermissionsCtrl', ['$scope', '$modal', '$q', 'Workspace', 'WorkspaceElementResource', 'ortolangType', function ($scope, $modal, $q, Workspace, WorkspaceElementResource, ortolangType) {
 
-        function loadChildren(from, isRoot) {
-            angular.forEach(from.elements, function (element, key) {
-                WorkspaceElementResource.get({wskey: Workspace.active.workspace.key, path: '/' + (from.path ? from.path + '/' : '') + element.name}, function (data) {
-                    var i, aclKey;
-                    for (i = 0; i < data.metadatas.length; i++) {
-                        if (data.metadatas[i].name === 'ortolang-acl-json') {
-                            aclKey = data.metadatas[i].key;
-                            break;
-                        }
+        var modalScope;
+
+        function loadChild(path) {
+            var deferred = $q.defer();
+            WorkspaceElementResource.get({wskey: Workspace.active.workspace.key, path: path, policy: true}, function (data) {
+                var i;
+                data.effectiveAcl = data.publicationPolicy;
+                for (i = 0; i < data.metadatas.length; i++) {
+                    if (data.metadatas[i].name === 'ortolang-acl-json') {
+                        data.effectiveAcl = null;
+                        break;
                     }
-                    if (aclKey) {
-                        Content.downloadWithKey(aclKey).promise.then(function (aclMetadata) {
-                            data.acl = angular.fromJson(aclMetadata.data).template;
-                        });
-                    } else {
-                        data.effectiveAcl = from.acl || from.effectiveAcl || 'forall';
-                    }
-                    data.parent = from.key;
-                    if (isRoot) {
-                        data.expanded = true;
-                        data.name = '/';
-                        $scope.models.treeData.push(data);
-                        loadChildren(data);
-                    } else {
-                        from.elements[key] = data;
-                    }
-                    $scope.models.tree[data.key] = data;
-                });
+                }
+                if (path === '/') {
+                    data.name = '/';
+                }
+                data.expanded = $scope.models.tree[data.key] ? $scope.models.tree[data.key].expanded : false;
+                $scope.models.tree[data.key] = data;
+                deferred.resolve(data);
+            });
+            return deferred.promise;
+        }
+
+        function loadChildren(parent) {
+            angular.forEach(parent.elements, function (element) {
+                loadChild('/' + (parent.path ? parent.path + '/' : '') + element.name);
             });
         }
 
         $scope.nodeToggle = function (element) {
             if (element.type === ortolangType.collection) {
-                element.expanded = !element.expanded;
-                if (element.elements.length > 0 && !element.elements[0].path) {
-                    loadChildren(element);
+                $scope.models.tree[element.key].expanded = !$scope.models.tree[element.key].expanded;
+                $scope.models.expanded[element.key] = !$scope.models.expanded[element.key];
+                var children = $scope.models.tree[element.key].elements;
+                if (children.length > 0 && !$scope.models.tree[children[0].key]) {
+                    loadChildren($scope.models.tree[element.key]);
                 }
             }
         };
 
-        function propagateAcl(parent, template) {
+        function refreshChildren(parent) {
             angular.forEach(parent.elements, function (child) {
-                if ($scope.models.tree[child.key]) {
-                    if (!$scope.models.tree[child.key].acl) {
-                        $scope.models.tree[child.key].effectiveAcl = template;
+                if ($scope.models.tree[child.key] && $scope.models.tree[child.key].path) {
+                    loadChild($scope.models.tree[child.key].path);
+                    if (child.type === ortolangType.collection) {
+                        refreshChildren($scope.models.tree[child.key]);
                     }
-                    propagateAcl(child, $scope.models.tree[child.key].acl || $scope.models.tree[child.key].effectiveAcl);
                 }
             });
         }
 
-        function removeAcl(element) {
+        $scope.removeAcl = function (element, $event) {
+            $event.stopPropagation();
             WorkspaceElementResource.delete({wskey: Workspace.active.workspace.key, path: element.path, metadataname: 'ortolang-acl-json'}, function () {
-                element.acl = null;
-                if (element.pathParts.length === 0) {
-                    element.effectiveAcl = 'forall';
-                    propagateAcl(element, element.effectiveAcl);
-                } else {
-                    propagateAcl($scope.models.tree[element.parent], $scope.models.tree[element.parent].acl || $scope.models.tree[element.parent].effectiveAcl);
-                }
+                loadChild(element.path);
+                refreshChildren(element);
+            });
+        };
+
+        function createModalScope() {
+            modalScope = $scope.$new(true);
+            modalScope.models = {};
+            modalScope.$on('modal.hide', function () {
+                modalScope.$destroy();
+            });
+        }
+
+        function setAcl(element, template, recursive) {
+            WorkspaceElementResource.setPublicationPolicy({wskey: Workspace.active.workspace.key, path: element.path, recursive: recursive}, {template: template}, function () {
+                loadChild(element.path);
+                refreshChildren(element);
             });
         }
 
         $scope.setAcl = function (element, template, $event) {
             $event.stopPropagation();
-            if (element.acl === template) {
-                removeAcl(element);
-                return;
+            if (element.type === ortolangType.collection && $scope.models.advancedMode) {
+                var permissionsModal;
+                createModalScope();
+                modalScope.element = element;
+                modalScope.template = template;
+                modalScope.models = {
+                    recursive: true
+                };
+                modalScope.set = function () {
+                    setAcl(element, template, modalScope.models.recursive);
+                    permissionsModal.hide();
+                };
+                permissionsModal = $modal({
+                    scope: modalScope,
+                    template: 'workspace/templates/permissions-modal.html',
+                    show: true
+                });
+            } else {
+                setAcl(element, template);
             }
-            var formData = new FormData();
-
-            formData.append('path', element.path);
-            formData.append('type', ortolangType.metadata);
-            formData.append('name', 'ortolang-acl-json');
-
-            var blob = new Blob([angular.toJson({template: template})], { type: 'application/json'});
-            formData.append('stream', blob);
-
-            WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, formData, function () {
-                element.acl = template;
-                element.effectiveAcl = null;
-                propagateAcl(element, template);
-            });
         };
 
         (function init() {
             $scope.models = {};
-            $scope.models.treeData = [];
+            $scope.models.expanded = {};
             $scope.models.tree = {};
             $scope.models.showObjects = false;
+            $scope.models.advancedMode = false;
             Workspace.isActiveWorkspaceInfoLoaded().then(function () {
-                var headCopy = angular.copy(Workspace.active.head);
-                headCopy.name = '';
-                loadChildren({elements: [headCopy]}, true);
+                loadChild('/', true).then(function (data) {
+                    data.expanded = true;
+                    loadChildren(data);
+                });
             });
         }());
     }]);

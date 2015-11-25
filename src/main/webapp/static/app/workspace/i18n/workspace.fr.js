@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
             ALIAS: 'Identifiant',
             CONTENT: 'Contenu',
             METADATA: 'Métadonnées',
-            PERMISSIONS: 'Permissions',
+            PERMISSIONS: 'Visibilité',
             PREVIEW: 'Prévisualisation',
             MEMBERS: 'Membres',
             UPLOAD: 'Importer',
@@ -36,7 +36,6 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans ce projet',
             MEMBERS_LIST: 'Membres de l\'espace de travail',
             OWNER: 'Propriétaire de l\'espace de travail',
-            WS_PERMISSIONS: 'Permissions de l\'espace de travail',
             PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'Pas de version publiée',
@@ -44,8 +43,8 @@ angular.module('ortolangMarketApp')
             CREATION_DATE: 'Créé le {{creationDate | date}} par {{author}}',
             LAST_MODIFICATION_DATE: 'Dernière modification',
             ACCESS_LINKS: 'Accès',
-            WORKFLOW: 'Demandes en cours',
-            NO_WORKFLOW: 'Il n\'y a pas de demande en cours concernant cet espace de travail',
+            WORKFLOW: 'Demandes de publication',
+            NO_WORKFLOW: 'Il n\'y a pas de demande de publication en cours concernant cet espace de travail',
             ACTIONS: 'Actions',
             DELETE_WORKSPACE: 'Supprimer l\'espace de travail',
             MARKET_LINKS: 'Lien vers la dernière version publiée',
@@ -226,6 +225,7 @@ angular.module('ortolangMarketApp')
                 },
                 SELECT_TITLE: 'Spécifiez un titre pour la ressource',
                 SELECT_DESCRIPTION: 'Décrivez ici la ressource...\n\nIndiquez dans quel contexte la ressource a été créée...',
+                SELECT_LOGO: 'Sélectionnez une image',
                 SELECT_TYPE: 'Sélectionnez le type de ressource ...',
                 SELECT_ROLE: 'Sélectionnez son role ...',
                 SELECT_KEYWORD: 'Ajouter un mot-clé.',
@@ -252,6 +252,22 @@ angular.module('ortolangMarketApp')
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Remplir la fiche des métadonnées'
+            },
+            PERMISSIONS_EDITOR: {
+                TITLE: 'Visibilité du contenu de l\'espace de travail',
+                SHOW_FILES: 'Afficher les fichiers',
+                ADVANCED_MODE: 'Édition avancée'
+            },
+            PERMISSIONS_MODAL: {
+                TITLE: 'Visibilité de {{::path}}',
+                BODY: '<p>Vous allez appliquer une visibilité "{{::"WORKSPACE.ACL." + template.toUpperCase() | translate}}" au dossier "{{::name}}".</p><p>Souhaitez vous appliquer cette option de visibilité aux éléments de ce dossier ? Dans le cas contraire, les options de visibilité déjà réglées sur les éléments de ce dossier seront conservées.</p>',
+                RECURSIVE: 'Appliquer aux enfants <strong>(recommandé)</strong>'
+            },
+            ACL: {
+                FORALL: 'Pour tous',
+                AUTHENTIFIED: 'Utilisateur connecté',
+                ESR: 'Membres de l\'ESR',
+                RESTRICTED: 'Membres de l\'espace de travail'
             },
             EVENTS: {
                 CORE: {
@@ -282,12 +298,6 @@ angular.module('ortolangMarketApp')
                         PUBLISH_WORKSPACE: 'a fait une demande de publication'
                     }
                 }
-            },
-            ACL: {
-                FORALL: 'Pour tous',
-                AUTHENTIFIED: 'Membres ORTOLANG',
-                ESR: 'Membres de l\'ESR',
-                RESTRICTED: 'Membres de l\'espace de travail'
             }
         },
         'ortolang-item-json': 'Fiche de présentation',

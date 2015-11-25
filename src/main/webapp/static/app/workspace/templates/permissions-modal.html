@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" translate="WORKSPACE.PERMISSIONS_MODAL.TITLE" data-translate-values="{path: element.path}"></span>
+            </div>
+            <div class="modal-body">
+                <div translate="WORKSPACE.PERMISSIONS_MODAL.BODY" data-translate-values="{template: template, name: element.name}"></div>
+                <div class="checkbox">
+                    <input type="checkbox" id="recursive" ng-model="models.recursive">
+                    <label for="recursive" translate="WORKSPACE.PERMISSIONS_MODAL.RECURSIVE"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="set()" translate="SUBMIT"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+            </div>
+        </div>
+    </div>
+</div>
