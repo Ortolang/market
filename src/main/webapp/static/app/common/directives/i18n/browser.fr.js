@@ -69,6 +69,7 @@ angular.module('ortolangMarketApp')
             DRAFT: 'Non publié',
             PUBLISHED: 'Publié',
             CREATED: '{{author}} a créé',
+            VISIBILITY: 'Visibilité',
             SHORTCUTS: {
                 SHORTCUTS: 'Raccourcis clavier',
                 FILTER: 'Filtrer les éléments',

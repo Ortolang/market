@@ -14,6 +14,10 @@ angular.module('ortolangMarketApp')
             put: {
                 method: 'PUT'
             },
+            setPublicationPolicy: {
+                method: 'PUT',
+                url: url.api + '/workspaces/:wskey/elements/publication'
+            },
             post: {
                 method: 'POST',
                 transformRequest: angular.identity,

@@ -1,40 +1,45 @@
 <div ng-controller="WorkspaceDashboardPermissionsCtrl">
     <script type="text/ng-template" id="nodes_renderer.html">
-        <div ui-tree-handle ng-click="nodeToggle(element)" class="tree-node" ng-class="element.type + ' ' + (models.tree[element.key].acl || models.tree[element.key].effectiveAcl)">
+        <div ng-click="nodeToggle(element)" class="tree-node" ng-class="element.type + ' ' + models.tree[element.key].publicationPolicy">
             <div class="node-body">
-                <span class="icon" ng-class="element.expanded ? icons.tree.collectionOpen : icons.tree[element.type]"></span>
+                <span class="icon" ng-class="models.tree[element.key].expanded ? icons.tree.collectionOpen : icons.tree[element.type]"></span>
                 {{element.name}}
             </div>
             <div class="node-actions">
                 <div class="btn-group">
-                    <button ng-class="{'btn-success' : models.tree[element.key].acl === 'forall', 'btn-success muted' : models.tree[element.key].effectiveAcl === 'forall'}" ng-click="setAcl(element, 'forall', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.forall"></span></button>
-                    <button ng-class="{'btn-primary' : models.tree[element.key].acl === 'authentified', 'btn-primary muted' : models.tree[element.key].effectiveAcl === 'authentified'}" ng-click="setAcl(element, 'authentified', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.authentified"></span></button>
-                    <button ng-class="{'btn-warning' : models.tree[element.key].acl === 'esr', 'btn-warning muted' : models.tree[element.key].effectiveAcl === 'esr'}" ng-click="setAcl(element, 'esr', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.esr"></span></button>
-                    <button ng-class="{'btn-danger' : models.tree[element.key].acl === 'restricted', 'btn-danger muted' : models.tree[element.key].effectiveAcl === 'restricted'}" ng-click="setAcl(element, 'restricted', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.restricted"></span></button>
+                    <button ng-class="{'btn-success' : models.tree[element.key].publicationPolicy === 'forall', 'muted' : models.tree[element.key].effectiveAcl === 'forall'}" ng-click="setAcl(models.tree[element.key], 'forall', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.forall"></span></button>
+                    <button ng-class="{'btn-primary' : models.tree[element.key].publicationPolicy === 'authentified', 'muted' : models.tree[element.key].effectiveAcl === 'authentified'}" ng-click="setAcl(models.tree[element.key], 'authentified', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.authentified"></span></button>
+                    <button ng-class="{'btn-warning' : models.tree[element.key].publicationPolicy === 'esr', 'muted' : models.tree[element.key].effectiveAcl === 'esr'}" ng-click="setAcl(models.tree[element.key], 'esr', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.esr"></span></button>
+                    <button ng-class="{'btn-danger' : models.tree[element.key].publicationPolicy === 'restricted', 'muted' : models.tree[element.key].effectiveAcl === 'restricted'}" ng-click="setAcl(models.tree[element.key], 'restricted', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.restricted"></span></button>
                 </div>
+                <button class="btn btn-sm btn-default" data-ng-disabled="models.tree[element.key].effectiveAcl" ng-click="removeAcl(models.tree[element.key], $event)"><span ng-class="::icons.browser.remove"></span></button>
             </div>
         </div>
-        <ol ng-show="element.expanded" class="tree-nodes">
-            <li ng-repeat="element in element.elements | orderBy:['type','name'] track by element.key" ng-show="element.type !== 'object' || models.showObjects" ng-include="'nodes_renderer.html'"></li>
+        <ol ng-show="models.tree[element.key].expanded" class="tree-nodes">
+            <li ng-repeat="element in models.tree[element.key].elements | orderBy:['type','name'] track by element.key" ng-show="element.type !== 'object' || models.showObjects" ng-include="'nodes_renderer.html'"></li>
         </ol>
     </script>
     <div class="workspace-dashboard-section">
-        <h4 translate="WORKSPACE.WS_PERMISSIONS" class="no-border-bottom"></h4>
+        <h4 translate="WORKSPACE.PERMISSIONS_EDITOR.TITLE" class="no-border-bottom"></h4>
         <div class="legend">
             <span class="label tag label-success"><span ng-class="::icons.acl.forall"></span> {{'WORKSPACE.ACL.FORALL' | translate}}</span>
             <span class="label tag label-primary"><span ng-class="::icons.acl.authentified"></span> {{'WORKSPACE.ACL.AUTHENTIFIED' | translate}}</span>
             <span class="label tag label-warning"><span ng-class="::icons.acl.esr"></span> {{'WORKSPACE.ACL.ESR' | translate}}</span>
             <span class="label tag label-danger"><span ng-class="::icons.acl.restricted"></span> {{'WORKSPACE.ACL.RESTRICTED' | translate}}</span>
         </div>
-        <div class="checkbox">
-            <input type="checkbox" id="showObjects" ng-model="models.showObjects">
-            <label for="showObjects">
-                Afficher les fichiers
-            </label>
+        <div class="options">
+            <div class="checkbox checkbox-inline">
+                <input type="checkbox" id="showObjects" ng-model="models.showObjects">
+                <label for="showObjects" translate="WORKSPACE.PERMISSIONS_EDITOR.SHOW_FILES"></label>
+            </div>
+            <div class="checkbox checkbox-inline">
+                <input type="checkbox" id="advancedMode" ng-model="models.advancedMode">
+                <label for="advancedMode" translate="WORKSPACE.PERMISSIONS_EDITOR.ADVANCED_MODE"></label>
+            </div>
         </div>
         <div class="tree">
             <ol class="tree-nodes">
-                <li ng-repeat="element in models.treeData | orderBy:['type','name']" ng-show="element.type !== 'object' || models.showObjects" ng-include="'nodes_renderer.html'"></li>
+                <li ng-repeat="element in [models.tree[Workspace.active.head.key]] | orderBy:['type','name'] track by element.key" ng-show="element.type !== 'object' || models.showObjects" ng-include="'nodes_renderer.html'"></li>
             </ol>
         </div>
     </div>

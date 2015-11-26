@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
             ALIAS: 'ID',
             CONTENT: 'Content',
             METADATA: 'Metadata',
-            PERMISSIONS: 'Permissions',
+            PERMISSIONS: 'Visibility',
             PREVIEW: 'Preview',
             MEMBERS: 'Members',
             UPLOAD: 'Upload',
@@ -36,7 +36,6 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} member{{number > 1 ? "s" : ""}}</strong> in the project',
             MEMBERS_LIST: 'Workspace members',
             OWNER: 'Workspace owner',
-            WS_PERMISSIONS: 'Workspace permissions',
             PUBLISHED_VERSIONS: '<strong>{{number}} published version{{number > 1 ? "s" : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'No published version',
@@ -223,6 +222,7 @@ angular.module('ortolangMarketApp')
                 },
                 SELECT_TITLE: 'Specify a title for the resource',
                 SELECT_DESCRIPTION: 'Describe the resource here',
+                SELECT_LOGO: 'Select an image',
                 SELECT_TYPE: 'Choose the type of resource',
                 SELECT_ROLE: 'Choose the role',
                 SELECT_KEYWORD: 'Adds a keyword.',
@@ -250,9 +250,14 @@ angular.module('ortolangMarketApp')
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Create metadata item'
             },
+            PERMISSIONS_EDITOR: {
+                TITLE: 'Visibility of the workspace content',
+                SHOW_FILES: 'Show files',
+                ADVANCED_MODE: 'Advanced edition'
+            },
             ACL: {
                 FORALL: 'For all',
-                AUTHENTIFIED: 'ORTOLANG members',
+                AUTHENTIFIED: 'Connected user',
                 ESR: 'ESR members',
                 RESTRICTED: 'Workspace members'
             }

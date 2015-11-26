@@ -202,7 +202,7 @@ angular.module('ortolangMarketApp')
                     refresh = false;
                 }
                 var promise;
-                promise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root}).$promise;
+                promise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root, policy: true}).$promise;
                 promise.then(function (element) {
                     finishGetParentData(element, refresh, forceNewSelection);
                 }, function (response) {
@@ -295,7 +295,8 @@ angular.module('ortolangMarketApp')
                 return WorkspaceElementResource.get({
                     wskey: $scope.browserService.workspace.key,
                     path: $scope.path + '/' + child.name,
-                    root: $scope.root
+                    root: $scope.root,
+                    policy: true
                 }).$promise;
             }
 

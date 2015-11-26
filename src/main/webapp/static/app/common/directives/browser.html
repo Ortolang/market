@@ -295,12 +295,13 @@
                     <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
                 </dl>
                 <hr/>
-                <!--<dl class="dl-horizontal">-->
-                    <!--<dt>Permissions</dt>-->
-                    <!--<dd>-->
+                <dl class="dl-horizontal">
+                    <dt translate="BROWSER.VISIBILITY"></dt>
+                    <dd>
+                        {{'WORKSPACE.ACL.' + selectedElements[0].publicationPolicy.toUpperCase() | translate}}
                         <!--<acl-select data-element="selectedElements[0]" data-readonly="root !== 'head'"></acl-select>-->
-                    <!--</dd>-->
-                <!--</dl>-->
+                    </dd>
+                </dl>
             </div>
             <div ng-if="selectedElements && !hasOnlyOneElementSelected()">
                 <p class="lead">
