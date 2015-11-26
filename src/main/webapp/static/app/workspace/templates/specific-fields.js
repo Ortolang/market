@@ -138,12 +138,17 @@ angular.module('ortolangMarketApp')
 
                     if(angular.isDefined($scope.metadata.corporaLanguages)) {
 
-                        angular.forEach($scope.metadata.corporaLanguages, function(tag) {
-                            var tagFound = $filter('filter')($scope.allLanguages, {id:tag});
+                        angular.forEach($scope.metadata.corporaLanguages, function(lang) {
+                            var tagFound = $filter('filter')($scope.allLanguages, {id:lang});
                             if(tagFound.length>0) {
-                                $scope.selectedCorporaLanguages.push(tagFound[0]);
+                                angular.forEach(tagFound, function(tag) {
+                                    if(tag.id === lang) {
+                                        $scope.selectedCorporaLanguages.push(tag);
+                                        return;
+                                    }
+                                });
                             } else {
-                                $scope.selectedCorporaLanguages.push({id:tag,label:tag});
+                                $scope.selectedCorporaLanguages.push({id:lang,label:lang});
                             }
                         });
                     }

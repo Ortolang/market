@@ -76,14 +76,8 @@ angular.module('ortolangMarketApp')
                 contributor.entity.lastname = myScope.lastname;
                 contributor.entity.firstname = myScope.firstname;
                 contributor.entity.midname = myScope.midname;
-                // contributor.entity.lastname = myScope.lastname;
-                // if(angular.isDefined(myScope.searchLastname.value)) {
-                //     contributor.entity.lastname = myScope.searchLastname.value;
-                // } else {
-                //     contributor.entity.lastname = myScope.searchLastname;
-                // }
 
-                if (angular.isDefined(myScope.organization)) {
+                if (angular.isDefined(myScope.organization) && myScope.organization.fullname === myScope.organizationFullname) {
                     contributor.entity.organization = myScope.organization;
                 }
 
