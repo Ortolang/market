@@ -51,6 +51,8 @@ module.exports = function (config) {
             'bower_components/angulartics/src/angulartics.js',
             'bower_components/angulartics/src/angulartics-piwik.js',
             'bower_components/holderjs/holder.js',
+            'bower_components/showdown/src/showdown.js',
+            'bower_components/angular-markdown-directive/markdown.js',
             'test/mock/global.js',
             'app/**/!(ortolang-config).js',
             'test/mock/**/*.js',
