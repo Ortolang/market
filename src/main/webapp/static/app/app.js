@@ -42,7 +42,8 @@ angular
         'ngTagsInput',
         'angularMoment',
         'angulartics',
-        'angulartics.piwik'
+        'angulartics.piwik',
+        'btford.markdown'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
