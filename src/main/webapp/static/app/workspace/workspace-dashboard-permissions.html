@@ -19,7 +19,7 @@
             <li ng-repeat="element in models.tree[element.key].elements | orderBy:['type','name'] track by element.key" ng-show="element.type !== 'object' || models.showObjects" ng-include="'nodes_renderer.html'"></li>
         </ol>
     </script>
-    <div class="workspace-dashboard-section">
+    <div class="workspace-dashboard-section workspace-dashboard-permissions">
         <h4 translate="WORKSPACE.PERMISSIONS_EDITOR.TITLE" class="no-border-bottom"></h4>
         <div class="legend">
             <span class="label tag label-success"><span ng-class="::icons.acl.forall"></span> {{'WORKSPACE.ACL.FORALL' | translate}}</span>

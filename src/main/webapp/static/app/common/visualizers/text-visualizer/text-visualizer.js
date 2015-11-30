@@ -31,7 +31,6 @@ angular.module('ortolangVisualizers')
                 'text/javascript': true,
                 'application/javascript': true,
                 'application/json': true,
-                'text/x-web-markdown': true,
                 'text/csv': true
             }
         });
