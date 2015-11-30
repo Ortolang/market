@@ -26,11 +26,11 @@
                             </li>
                         </ul>
                     </div>
-                    <div ng-if="content.website" class="market-item-website"><span translate="MARKET.WEBSITE"></span> :
+                    <!-- <div ng-if="content.website" class="market-item-website"><span translate="MARKET.WEBSITE"></span> :
                         <ul class="list-unstyled">
                             <li><a ng-href="{{content.website}}" ng-bind="content.website" target="_BLANK"></a></li>
                         </ul>
-                    </div>
+                    </div> -->
                     <div ng-if="tags.length > 1"><span translate="MARKET.ALL_VERSIONS"></span> :
                         <ul class="list-inline all-versions">
                             <li ng-repeat="t in ::tags">
@@ -57,24 +57,37 @@
         <div ng-show="!browse" class="col-md-8 market-item-presentation-metadata">
             <section id="description">
                 <h4>{{'DESCRIPTION' | translate}}</h4>
-                <article data-content="description">
-                    <div class="description-wrapper">
-                        <div class="text-pane" ng-class="showingDescription ? '' : 'text-pane-small'" data-target-blank>
-                            <p ng-bind-html="description"></p>
-                            <br/>
-                            <p ng-if="documentations">
-                                <ul class="relations">
+                <article data-content="description" data-target-blank>
+                    <p ng-bind-html="description"></p>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div ng-if="documentations && documentations.length>1" class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    {{'MARKET.SEE_DOCUMENTATIONS' | translate}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-left" role="menu">
                                     <li ng-repeat="relation in documentations">
-                                        <a target="_BLANK" class="btn btn-default" ng-href="{{relation.url}}">
-                                            <span class="fa fa-link fa-fw"></span> {{relation.label}}
+                                        <a target="_BLANK" ng-href="{{relation.url}}">
+                                            {{relation.name}}
                                         </a>
                                     </li>
                                 </ul>
-                            </p>
+                            </div>
+                            <div ng-if="documentations && documentations.length===1">
+                                <a target="_BLANK" class="btn btn-default" ng-href="{{documentations[0].url}}">
+                                    <span class="fa fa-fw fa-info-circle"></span> {{'MARKET.SEE_DOCUMENTATIONS' | translate}}
+                                </a>
+                            </div>
                         </div>
-                        <div ng-if="!showingDescription" class="show-more-end" ng-click="toggleDescription()"></div>
+                        <div class="col-md-6">
+                            <div class="pull-right" ng-if="content.website">
+                                <a target="_BLANK" class="btn btn-primary" ng-href="{{content.website}}">
+                                    <span class="fa fa-fw fa-external-link"></span> {{'MARKET.SEE_WEBSITE' | translate}}
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <button ng-if="!showingDescription" class="btn btn-default" ng-click="toggleDescription()">Lire la suite</button>
                 </article>
             </section>
 

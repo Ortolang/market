@@ -66,6 +66,8 @@ angular.module('ortolangMarketApp')
             ALL_RESOURCE: 'All type of resources',
             RESOURCE_TYPE: 'Type of resource',
             DOCUMENTATIONS: 'Documentations',
+            SEE_DOCUMENTATIONS: 'See the documentation',
+            SEE_WEBSITE: 'Go to the website',
             FACET: {
                 CORPORA_TYPE: 'Type of corpora',
                 ALL_CORPORA: 'All corpus',

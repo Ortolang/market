@@ -52,10 +52,11 @@ angular.module('ortolangMarketApp')
             }
 
             function loadRelation(relation, lang) {
-                var url = null;
+                var url = null, name = 'unknown';
                 if(relation.type==='hasPart') {
                     url = relation.path;
                 } else {
+                    name = relation.path.split('/').pop();
                     url = Content.getContentUrlWithPath(relation.path, $scope.alias, $scope.root);
                     if (startsWith(relation.url, 'http')) {
                         url = relation.url;
@@ -64,6 +65,7 @@ angular.module('ortolangMarketApp')
                 
                 return {
                         label: getValue(relation.label, 'lang', lang, 'unknown'),
+                        name: name,
                         type: relation.type,
                         url: url,
                         extension: relation.path.split('.').pop()
