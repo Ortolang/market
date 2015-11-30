@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
         SELECT_WORKSPACE_ELEMENT: 'Select workspace element',
         PENDING_DATA: 'Loading...',
         CART: 'Selection',
+        SEE_MORE: 'See more',
         404: {
             TITLE: 'Page not found',
             BODY: 'Sorry, but we can\'t find the page you are looking for. Maybe you should try heading home.',

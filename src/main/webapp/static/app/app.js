@@ -43,7 +43,8 @@ angular
         'angularMoment',
         'angulartics',
         'angulartics.piwik',
-        'btford.markdown'
+        'btford.markdown',
+        'lrInfiniteScroll'
     ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider

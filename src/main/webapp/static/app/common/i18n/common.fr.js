@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
         SELECT_WORKSPACE_ELEMENT: 'Sélectionner un élément',
         PENDING_DATA: 'Chargement...',
         CART: 'Sélection',
+        SEE_MORE: 'Voir plus',
         404: {
             TITLE: 'Page non trouvée',
             BODY: 'Désolé, mais la page que vous recherchez est introuvable. Vous devriez peut être essayé de retourner sur la page d\'accueuil.',

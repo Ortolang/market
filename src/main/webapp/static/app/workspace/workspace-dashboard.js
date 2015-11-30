@@ -21,10 +21,8 @@ angular.module('ortolangMarketApp')
         'Helper',
         'Runtime',
         'WorkspaceResource',
-        'WorkspaceElementResource',
-        'ortolangType',
         'WorkspaceBrowserService',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, Runtime, WorkspaceResource, WorkspaceElementResource, ortolangType, WorkspaceBrowserService) {
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, Runtime, WorkspaceResource, WorkspaceBrowserService) {
 
             /**
              * The section selected by default
@@ -149,13 +147,29 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.seeMoreEvents = function () {
+                console.log('seeMoreEvents');
+                if (!$scope.dashboardModels.eventsInfiniteScrollBusy) {
+                    $scope.dashboardModels.eventsInfiniteScrollBusy = true;
+                    var eventList = angular.element('.workspace-dashboard-section-events').find('ul.list-unstyled');
+                    if (!eventList.hasClass('once')) {
+                        eventList.addClass('once');
+                        $scope.dashboardModels.eventsSeeMoreHidden = true;
+                        eventList.css('height', eventList.outerHeight() + 'px');
+                    }
+                    $scope.dashboardModels.eventsLimit += 2;
+                    $scope.dashboardModels.eventsInfiniteScrollBusy = false;
+                }
+            };
+
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();
                 }
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
-                    eventsLimit: 5
+                    eventsLimit: 4,
+                    eventsInfiniteScrollBusy: false
                 };
                 Workspace.getWorkspaceList(true).then(function () {
                     Workspace.setActiveWorkspaceFromAlias($route.current.params.alias).then(function () {
