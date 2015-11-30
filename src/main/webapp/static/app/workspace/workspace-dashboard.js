@@ -148,14 +148,12 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.seeMoreEvents = function () {
-                console.log('seeMoreEvents');
                 if (!$scope.dashboardModels.eventsInfiniteScrollBusy) {
                     $scope.dashboardModels.eventsInfiniteScrollBusy = true;
-                    var eventList = angular.element('.workspace-dashboard-section-events').find('ul.list-unstyled');
-                    if (!eventList.hasClass('once')) {
-                        eventList.addClass('once');
-                        $scope.dashboardModels.eventsSeeMoreHidden = true;
+                    if (!$scope.dashboardModels.eventsSeeMoreOnce) {
+                        var eventList = angular.element('.workspace-dashboard-section-events').find('ul.list-unstyled');
                         eventList.css('height', eventList.outerHeight() + 'px');
+                        $scope.dashboardModels.eventsSeeMoreOnce = true;
                     }
                     $scope.dashboardModels.eventsLimit += 2;
                     $scope.dashboardModels.eventsInfiniteScrollBusy = false;
