@@ -14,7 +14,7 @@ angular.element(document).ready(function () {
          * Factory in the ortolangMarketApp.
          */
         angular.module('ortolangMarketApp')
-            .factory('AuthService', ['$window', '$q', function ($window, $q) {
+            .factory('AuthService', ['$window', '$q', 'Settings', function ($window, $q, Settings) {
 
                 var deferred = $q.defer();
 
@@ -33,11 +33,11 @@ angular.element(document).ready(function () {
                 }
 
                 function login() {
-                    $window.location = keycloakAuth.createLoginUrl();
+                    $window.location = keycloakAuth.createLoginUrl() + '&kc_locale=' + Settings.language;
                 }
 
                 function register() {
-                    $window.location = keycloakAuth.createLoginUrl();
+                    $window.location = keycloakAuth.createLoginUrl({action: 'register'}) + '&kc_locale=' + Settings.language;
                 }
 
                 function logout() {

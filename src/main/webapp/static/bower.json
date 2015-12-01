@@ -10,7 +10,7 @@
     "angular-messages": "1.4.8",
     "angular-touch": "1.4.8",
     "angular-i18n": "1.4.8",
-    "font-awesome": "4.3.0",
+    "font-awesome": "4.5.0",
     "octicons": "3.3.0",
     "angular-file-upload": "2.2.0",
     "angular-strap": "2.2.4",
@@ -18,7 +18,7 @@
     "highlightjs": "highlightjs/cdn-release#8.9.1",
     "angular-highlightjs": "0.5.1",
     "angular-motion": "0.4.3",
-    "angular-formly": "7.3.3",
+    "angular-formly": "7.3.4",
     "angular-formly-templates-bootstrap": "6.1.7",
     "angular-translate": "2.8.1",
     "angular-zeroclipboard": "0.8.0",
@@ -68,6 +68,11 @@
       "main": [
         "src/angulartics.js",
         "src/angulartics-piwik.js"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
       ]
     }
   },
