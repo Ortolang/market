@@ -15,7 +15,7 @@
                     <div ng-if="content.producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: content.publicationDate}"></i> :
                         <ul class="list-unstyled">
                             <li ng-repeat="producer in content.producers">
-                                <a ng-href='#/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
+                                <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
                             </li>
                         </ul>
                     </div>
@@ -36,7 +36,7 @@
                             <li ng-repeat="t in ::tags">
                                 <div class="label tag" ng-class="::tag.name === t.name ? 'label-primary' : ''">
                                     <span ng-class="::icons.tag"></span>
-                                    <a ng-if="::tag.name !== t.name" ng-href="#/market/{{::itemMarketType}}/{{::alias}}/{{::t.name}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></a>
+                                    <a ng-if="::tag.name !== t.name" ng-href="/market/{{::itemMarketType}}/{{::alias}}/{{::t.name}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></a>
                                     <span ng-if="::tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></span>
                                 </div>
                             </li>
@@ -286,7 +286,7 @@
                     </p>
                     <p>{{title}}
                         <span ng-repeat="producer in content.producers">
-                            , <a ng-href='#/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
+                            , <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
                         </span>
                         , Equipex ORTOLANG <a target="_BLANK" href="http://www.ortolang.fr">www.ortolang.fr</a> :
                         <a target="_BLANK" href="http://hdl.handle.net/11403/{{alias}}/{{ortolangObject.snapshotName}}">http://hdl.handle.net/11403/{{alias}}/{{ortolangObject.snapshotName}}</a>

@@ -175,7 +175,7 @@ angular.module('ortolangMarketApp')
                         setDashboardSection($location.search().section);
                         $scope.dashboardModels.links = {
                             base: $window.location.origin,
-                            market: '#/market/item/' + Workspace.active.workspace.alias,
+                            market: '/market/item/' + Workspace.active.workspace.alias,
                             content: Content.getContentUrlWithPath('', Workspace.active.workspace.alias)
                         };
                     }, function () {
