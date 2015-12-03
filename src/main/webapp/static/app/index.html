@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
+    <meta name="fragment" content="!">
+    <base href=”/”>
     <title ng-bind="'ORTOLANG' + (ortolangPageTitle ? ' | ' + (ortolangPageTitle | translate) : '') + ortolangPageSubtitle">ORTOLANG</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
@@ -54,7 +56,7 @@
             <ul class="side-nav-list">
                 <li ng-repeat="element in ::sideNavElements track by element.class" ng-if="!element.hiddenSideNav && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', active: element.class === sideNavActiveClass}">
                     <a ng-if="::element.class !== 'divider'"
-                       ng-href="{{:: '#' + element.path}}"
+                       ng-href="{{:: '#!' + element.path}}"
                        ng-click="select(element.class)"
                        ng-class="::element.class">
                         <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" bs-tooltip></span>

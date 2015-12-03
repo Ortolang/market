@@ -46,7 +46,7 @@ angular
         'btford.markdown',
         'lrInfiniteScroll'
     ])
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 redirectTo: '/market/home'
@@ -153,6 +153,8 @@ angular
             .otherwise({
                 redirectTo: '/404'
             });
+        $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
     }])
     .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
