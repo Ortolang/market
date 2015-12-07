@@ -20,11 +20,16 @@ angular.module('ortolangMarketApp')
             	if(angular.isUndefined($scope.metadata.corporaLanguages)) {
             		$scope.metadata.corporaLanguages = [];
             	}
-            	$scope.metadata.corporaLanguages.push(tag.label);
+                if(angular.isDefined(tag.id)) {
+            	   $scope.metadata.corporaLanguages.push(tag.id);
+                } else {
+                    $scope.metadata.corporaLanguages.push(tag.label);
+                }
             };
 
             $scope.removeCorporaLanguage = function(tag) {
-            	var index = $scope.metadata.corporaLanguages.indexOf(tag.label);
+                var value = tag.id ? tag.id : tag.label;
+            	var index = $scope.metadata.corporaLanguages.indexOf(value);
 	            if (index > -1) {
 	                $scope.metadata.corporaLanguages.splice(index, 1);
 	            }
@@ -34,11 +39,18 @@ angular.module('ortolangMarketApp')
             	if(angular.isUndefined($scope.metadata.lexiconInputLanguages)) {
             		$scope.metadata.lexiconInputLanguages = [];
             	}
-            	$scope.metadata.lexiconInputLanguages.push(tag.label);
+            	// $scope.metadata.lexiconInputLanguages.push(tag.label);
+                if(angular.isDefined(tag.id)) {
+                   $scope.metadata.lexiconInputLanguages.push(tag.id);
+                } else {
+                    $scope.metadata.lexiconInputLanguages.push(tag.label);
+                }
             };
 
             $scope.removeLexiconInputLanguage = function(tag) {
-            	var index = $scope.metadata.lexiconInputLanguages.indexOf(tag.label);
+            	// var index = $scope.metadata.lexiconInputLanguages.indexOf(tag.label);
+                var value = tag.id ? tag.id : tag.label;
+                var index = $scope.metadata.lexiconInputLanguages.indexOf(value);
 	            if (index > -1) {
 	                $scope.metadata.lexiconInputLanguages.splice(index, 1);
 	            }
@@ -48,11 +60,18 @@ angular.module('ortolangMarketApp')
             	if(angular.isUndefined($scope.metadata.lexiconDescriptionLanguages)) {
             		$scope.metadata.lexiconDescriptionLanguages = [];
             	}
-            	$scope.metadata.lexiconDescriptionLanguages.push(tag.label);
+            	// $scope.metadata.lexiconDescriptionLanguages.push(tag.label);
+                if(angular.isDefined(tag.id)) {
+                   $scope.metadata.lexiconDescriptionLanguages.push(tag.id);
+                } else {
+                    $scope.metadata.lexiconDescriptionLanguages.push(tag.label);
+                }
             };
 
             $scope.removeLexiconDescriptionLanguage = function(tag) {
-            	var index = $scope.metadata.lexiconDescriptionLanguages.indexOf(tag.label);
+            	// var index = $scope.metadata.lexiconDescriptionLanguages.indexOf(tag.label);
+                var value = tag.id ? tag.id : tag.label;
+                var index = $scope.metadata.lexiconDescriptionLanguages.indexOf(value);
 	            if (index > -1) {
 	                $scope.metadata.lexiconDescriptionLanguages.splice(index, 1);
 	            }
@@ -62,11 +81,18 @@ angular.module('ortolangMarketApp')
             	if(angular.isUndefined($scope.metadata.toolLanguages)) {
             		$scope.metadata.toolLanguages = [];
             	}
-            	$scope.metadata.toolLanguages.push(tag.label);
+            	// $scope.metadata.toolLanguages.push(tag.label);
+                if(angular.isDefined(tag.id)) {
+                   $scope.metadata.toolLanguages.push(tag.id);
+                } else {
+                    $scope.metadata.toolLanguages.push(tag.label);
+                }
             };
 
             $scope.removeToolLanguage = function(tag) {
-            	var index = $scope.metadata.toolLanguages.indexOf(tag.label);
+                var value = tag.id ? tag.id : tag.label;
+                var index = $scope.metadata.toolLanguages.indexOf(value);
+            	// var index = $scope.metadata.toolLanguages.indexOf(tag.label);
 	            if (index > -1) {
 	                $scope.metadata.toolLanguages.splice(index, 1);
 	            }
@@ -76,11 +102,18 @@ angular.module('ortolangMarketApp')
             	if(angular.isUndefined($scope.metadata.navigationLanguages)) {
             		$scope.metadata.navigationLanguages = [];
             	}
-            	$scope.metadata.navigationLanguages.push(tag.label);
+            	// $scope.metadata.navigationLanguages.push(tag.label);
+                if(angular.isDefined(tag.id)) {
+                   $scope.metadata.navigationLanguages.push(tag.id);
+                } else {
+                    $scope.metadata.navigationLanguages.push(tag.label);
+                }
             };
 
             $scope.removeNavigationLanguage = function(tag) {
-            	var index = $scope.metadata.navigationLanguages.indexOf(tag.label);
+            	// var index = $scope.metadata.navigationLanguages.indexOf(tag.label);
+                var value = tag.id ? tag.id : tag.label;
+                var index = $scope.metadata.navigationLanguages.indexOf(value);
 	            if (index > -1) {
 	                $scope.metadata.navigationLanguages.splice(index, 1);
 	            }
@@ -89,6 +122,30 @@ angular.module('ortolangMarketApp')
             /**
              * Methods to load referential entities
              **/
+
+            function loadAllCorporaType() {
+
+                var queryBuilder = QueryBuilderFactory.make({
+                    projection: '*',
+                    source: 'ReferentielEntity'
+                });
+
+                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+
+                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaType');
+
+                var query = queryBuilder.toString();
+                $scope.allCorporaType = [];
+                SearchResource.json({query: query}, function (jsonResults) {
+                    angular.forEach(jsonResults, function (result) {
+                        var term = angular.fromJson(result);
+
+                        $scope.allCorporaType.push({id: term['@rid'], label: term.label});
+                    });
+                });
+            }
 
             function loadAllCorporaLanguageType() {
 
@@ -117,7 +174,7 @@ angular.module('ortolangMarketApp')
             function loadAllLanguages() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -133,7 +190,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allLanguages.push({id: term.id, label: term.label});
+                        $scope.allLanguages.push({id: term['@rid'], label: term.label});
                     });
 
                     if(angular.isDefined($scope.metadata.corporaLanguages)) {
@@ -201,7 +258,7 @@ angular.module('ortolangMarketApp')
             function loadAllCorporaStyles() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -217,7 +274,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allCorporaStyles.push({id: term.id, label: term.label});
+                        $scope.allCorporaStyles.push({id: term['@rid'], label: term.label});
                     });
 
                 });
@@ -226,7 +283,7 @@ angular.module('ortolangMarketApp')
             function loadAllAnnotationLevels() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -242,7 +299,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allAnnotationLevels.push({id: term.id, label: term.label});
+                        $scope.allAnnotationLevels.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -250,7 +307,7 @@ angular.module('ortolangMarketApp')
             function loadAllCorporaFormats() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -266,7 +323,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allCorporaFormats.push({id: term.id, label: term.label});
+                        $scope.allCorporaFormats.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -274,7 +331,7 @@ angular.module('ortolangMarketApp')
             function loadAllCorporaFileEncodings() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -290,7 +347,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allCorporaFileEncodings.push({id: term.id, label: term.label});
+                        $scope.allCorporaFileEncodings.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -298,7 +355,7 @@ angular.module('ortolangMarketApp')
             function loadAllCorporaDataTypes() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -314,7 +371,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allCorporaDataTypes.push({id: term.id, label: term.label});
+                        $scope.allCorporaDataTypes.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -323,7 +380,7 @@ angular.module('ortolangMarketApp')
             function loadAllLexiconInputTypes() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -339,7 +396,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allLexiconInputTypes.push({id: term.id, label: term.label});
+                        $scope.allLexiconInputTypes.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -347,7 +404,7 @@ angular.module('ortolangMarketApp')
             function loadAllLexiconDescriptionTypes() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -363,7 +420,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allLexiconDescriptionTypes.push({id: term.id, label: term.label});
+                        $scope.allLexiconDescriptionTypes.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -371,7 +428,7 @@ angular.module('ortolangMarketApp')
             function loadAllLexiconLanguageTypes() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -387,7 +444,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allLexiconLanguageTypes.push({id: term.id, label: term.label});
+                        $scope.allLexiconLanguageTypes.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -395,7 +452,7 @@ angular.module('ortolangMarketApp')
             function loadAllLexiconFormats() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -411,7 +468,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allLexiconFormats.push({id: term.id, label: term.label});
+                        $scope.allLexiconFormats.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -419,7 +476,7 @@ angular.module('ortolangMarketApp')
             function loadAllOperatingSystems() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -435,7 +492,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allOperatingSystems.push({id: term.id, label: term.label});
+                        $scope.allOperatingSystems.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -443,7 +500,7 @@ angular.module('ortolangMarketApp')
             function loadAllProgrammingLanguages() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -459,7 +516,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allProgrammingLanguages.push({id: term.id, label: term.label});
+                        $scope.allProgrammingLanguages.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -467,7 +524,7 @@ angular.module('ortolangMarketApp')
             function loadAllToolSupports() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -483,7 +540,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allToolSupports.push({id: term.id, label: term.label});
+                        $scope.allToolSupports.push({id: term['@rid'], label: term.label});
                     });
 
                 });
@@ -492,7 +549,7 @@ angular.module('ortolangMarketApp')
             function loadAllToolFunctionalities() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -508,7 +565,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allToolFunctionalities.push({id: term.id, label: term.label});
+                        $scope.allToolFunctionalities.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -516,7 +573,7 @@ angular.module('ortolangMarketApp')
             function loadAllToolInputData() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -532,7 +589,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allToolInputData.push({id: term.id, label: term.label});
+                        $scope.allToolInputData.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -540,7 +597,7 @@ angular.module('ortolangMarketApp')
             function loadAllToolOutputData() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -556,7 +613,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allToolOutputData.push({id: term.id, label: term.label});
+                        $scope.allToolOutputData.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -564,7 +621,7 @@ angular.module('ortolangMarketApp')
             function loadAllToolFileEncodings() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
@@ -580,7 +637,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allToolFileEncodings.push({id: term.id, label: term.label});
+                        $scope.allToolFileEncodings.push({id: term['@rid'], label: term.label});
                     });
                 });
             }
@@ -597,6 +654,7 @@ angular.module('ortolangMarketApp')
                 $scope.selectedNavigationLanguages = [];
 
                 loadAllCorporaLanguageType();
+                loadAllCorporaType();
                 loadAllLanguages();
                 loadAllCorporaStyles();
                 loadAllAnnotationLevels();

@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LexiconsCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('LexiconsCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'QueryBuilderFactory', 'SearchResource', 'Helper', '$q', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, QueryBuilderFactory, SearchResource, Helper, $q) {
 
         function addAvailableFilters() {
 
@@ -44,16 +44,16 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
-            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
+            addAvailableFilter({
                 id: 'meta_ortolang-item-json.lexiconInputType',
                 alias: 'lexiconInputType',
                 label: 'MARKET.FACET.LEXICON_INPUT_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_INPUT_TYPE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            }));
+            }, 'LexiconInputType');
 
-            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
+            addAvailableFilter({
                 id: 'meta_ortolang-item-json.lexiconDescriptionTypes',
                 alias: 'lexiconDescriptionTypes',
                 type: 'array',
@@ -61,47 +61,99 @@ angular.module('ortolangMarketApp')
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_DESCRIPTION_TYPE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            }));
+            }, 'LexiconDescriptionType');
 
-            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
+            addAvailableFilter({
                 id: 'meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',
                 resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
-            }));
+            }, 'StatusOfUse');
 
-            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
+            addAvailableFilter({
                 id: 'meta_ortolang-item-json.lexiconInputLanguages',
                 alias: 'lexiconInputLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_INPUT_LANGUAGE',
                 resetLabel: 'MARKET.FACET.ALL_LANG'
-            }));
+            }, 'Language', 1);
 
-            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
+            addAvailableFilter({
                 id: 'meta_ortolang-item-json.lexiconDescriptionLanguages',
                 alias: 'lexiconDescriptionLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE',
                 resetLabel: 'MARKET.FACET.ALL_LANG'
-            }));
+            }, 'Language', 1);
 
-            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
+            addAvailableFilter({
                 id: 'meta_ortolang-item-json.lexiconFormats',
                 alias: 'lexiconFormats',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_FORMAT',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_FORMAT'
-            }));
+            }, 'LexiconFormat');
 
-            $scope.filtersManager.addAvailableFilter(FacetedFilter.make({
+            addAvailableFilter({
                 id: 'meta_ortolang-item-json.lexiconLanguageType',
                 alias: 'lexiconLanguageType',
                 label: 'MARKET.FACET.LEXICON_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_LANGUAGE_TYPE'
-            }));
+            }, 'LexiconLanguageType');
+        }
+
+        function addAvailableFilter(filterConfig, refType, rank) {
+            var filter = FacetedFilter.make(filterConfig);
+            listReferentialEntities(refType, rank).then(function (entities) {
+                angular.forEach(entities, function(entity) {
+                    filter.putOption(OptionFacetedFilter.make({
+                        label: entity.label,
+                        value: entity.id,
+                        length: 1
+                    }));
+                });
+            });
+            $scope.filtersManager.addAvailableFilter(filter);
+        }
+
+        function listReferentialEntities(entityType, rank) {
+            var deferred = $q.defer();
+
+            var queryBuilder = QueryBuilderFactory.make({
+                projection: '*',
+                source: 'ReferentielEntity'
+            });
+
+            queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
+
+            queryBuilder.equals('meta_ortolang-referentiel-json.type', entityType);
+            if(rank) {
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
+                queryBuilder.and().equals('meta_ortolang-referentiel-json.rank', rank);
+            }
+
+            var query = queryBuilder.toString();
+            var allReferentialEntities = [];
+            SearchResource.json({query: query}, function (jsonResults) {
+                angular.forEach(jsonResults, function (result) {
+                    var term = angular.fromJson(result);
+
+                    if(term.labels) {
+                        var entity = {id: term['@rid'], label: Helper.getMultilingualValue(term.labels)};
+                        if(term.rank) {
+                            entity.rank = term.rank;
+                        }
+                        allReferentialEntities.push(entity);
+                    }
+                });
+                deferred.resolve(allReferentialEntities);
+            }, function () {
+                deferred.reject();
+            });
+
+            return deferred.promise;
         }
 
         function addCustomProjections() {

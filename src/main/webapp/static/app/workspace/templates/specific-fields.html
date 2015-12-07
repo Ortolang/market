@@ -3,7 +3,7 @@
 
         <div ng-switch-when="Corpus">
         	<section id="corporaType" class="form-group">
-                <label for="corporaType" class="control-label" translate="MARKET.FACET.CORPORA_TYPE"></label>
+                <!-- <label for="corporaType" class="control-label" translate="MARKET.FACET.CORPORA_TYPE"></label>
                 <div class="btn-group btn-group-justified  o-radio-button-group">
                     <label class="btn btn-default" ng-class="{'active': metadata.corporaType==='Écrit'}">
                         <input type="radio" value="Écrit" ng-model="metadata.corporaType"> <span class="fa fa-fw fa-file-text-o fa-2x"></span><br/>Écrit
@@ -14,14 +14,20 @@
                     <label class="btn btn-default" ng-class="{'active': metadata.corporaType==='Multimodal'}">
                         <input type="radio" value="Multimodal" ng-model="metadata.corporaType"> <span class="fa fa-fw fa-square-o fa-2x"></span><br/>Multimodal
                     </label>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-6">
+                            <label for="corporaType" class="control-label" translate="MARKET.FACET.CORPORA_TYPE"></label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaType.id as corporaType.label for corporaType in allCorporaType" bs-select>{{'MARKET.FACET.CORPORA_TYPE' | translate}} <span class="caret"></span></button>
+                    </div>
                 </div>
             </section>
             <section>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaLanguageType.id as corporaLanguageType.label for corporaLanguageType in allCorporaLanguageType" bs-select>{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+                            <label for="corporaLanguageType" class="control-label">{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}}</label>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_LANGUAGE_TYPE' | translate}}" bs-options="corporaLanguageType.id as corporaLanguageType.label for corporaLanguageType in allCorporaLanguageType" bs-select>{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -146,8 +152,8 @@
                 <div class="row">
                     <div class=" col-md-12">
                         <div class="form-group">
-                            <label for="lexiconInputLanguages" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</label>
-                            <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="selectedLexiconDescriptionLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}" data-on-tag-added="addLexiconDescriptionLanguage($tag)" data-on-tag-removed="removeLexiconDescriptionLanguage($tag)">
+                            <label for="lexiconDescriptionLanguages" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</label>
+                            <tags-input name="lexiconDescriptionLanguages" class="language-tags" ng-model="selectedLexiconDescriptionLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}" data-on-tag-added="addLexiconDescriptionLanguage($tag)" data-on-tag-removed="removeLexiconDescriptionLanguage($tag)">
                                 <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                             </tags-input>
                         </div>
@@ -172,9 +178,9 @@
                 <div class="row">
                     <div class=" col-md-6">
                         <div class="form-group">
-                            <label for="operatingSystem" class="control-label">{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
+                            <label for="operatingSystems" class="control-label">{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="operatingSystem" type="button" class="form-control btn btn-default" ng-model="metadata.operatingSystems" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_OPERATING_SYSTEMS' | translate}}" bs-options="operatingSystem.id as operatingSystem.label for operatingSystem in allOperatingSystems" bs-select>{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <span class="caret"></span>
+                            <button name="operatingSystems" type="button" class="form-control btn btn-default" ng-model="metadata.operatingSystems" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_OPERATING_SYSTEMS' | translate}}" bs-options="operatingSystem.id as operatingSystem.label for operatingSystem in allOperatingSystems" bs-select>{{'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
