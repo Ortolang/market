@@ -111,83 +111,24 @@
                 </article>
             </section>
 
-            <section class="keywords" ng-if="(keywords && keywords.length>0) || (content.corporaLanguages && content.corporaLanguages.length>0) || content.annotationLevels || content.corporaFormats || content.corporaFileEncodings || content.programmingLanguages || content.opearatingSystems || content.toolLanguages">
+            <section class="keywords" ng-if="additionalInformations.length>0">
                 <h4>{{'MARKET.ADDITIONAL_INFORMATION' | translate}}</h4>
                 <article>
                     <div class="row">
-
-                        <div ng-if="keywords && keywords.length>0" class="col-md-3">
+                        <div ng-repeat="additionalInformation in additionalInformations" class="col-md-3">
                             <dl>
-                                <dt translate="MARKET.KEYWORDS"></dt>
-                                <dd ng-repeat="keyword in keywords">
-                                    {{keyword}}
+                                <dt translate="{{additionalInformation.name}}"></dt>
+                                <dd ng-if="!isArray(additionalInformation.value) && additionalInformation.value['meta_ortolang-referentiel-json']">
+                                    {{additionalInformation.value['meta_ortolang-referentiel-json'].labels | multilingualValue}}
+                                </dd>
+                                <dd ng-if="!isArray(additionalInformation.value) && additionalInformation.value['meta_ortolang-referentiel-json'] === undefined">
+                                    {{additionalInformation.value}}
+                                </dd>
+                                <dd ng-if="isArray(additionalInformation.value)" ng-repeat="valueItem in additionalInformation.value">
+                                    {{valueItem['meta_ortolang-referentiel-json'].labels | multilingualValue}}
                                 </dd>
                             </dl>
                         </div>
-
-                        <div ng-if="content.corporaLanguages && content.corporaLanguages.length>0" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.FACET.CORPORA_LANG"></dt>
-                                <dd ng-repeat="pLang in content.corporaLanguages">
-                                    {{pLang}}
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="content.annotationLevels" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.FACET.ANNOTATION_LEVEL"></dt>
-                                <dd ng-repeat="annLevel in content.annotationLevels">
-                                    {{annLevel}}
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="content.corporaFormats" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.FACET.TEXT_FORMAT"></dt>
-                                <dd ng-repeat="corpFormat in content.corporaFormats">
-                                    {{corpFormat}}
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="content.corporaFileEncodings" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.FACET.CORPORA_FILE_ENCODINGS"></dt>
-                                <dd ng-repeat="corpFileEnc in content.corporaFileEncodings">
-                                    {{corpFileEnc}}
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="content.programmingLanguages" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.PROGRAMMING_LANGUAGE"></dt>
-                                <dd ng-repeat="pl in content.programmingLanguages">
-                                    {{pl}}
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="content.opearatingSystems" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.OPERATING_SYSTEM"></dt>
-                                <dd ng-repeat="os in content.opearatingSystems">
-                                    <a ng-href="">{{os}}</a>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div ng-if="content.toolLanguages" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.LANGUAGE"></dt>
-                                <dd ng-repeat="lang in content.toolLanguages">
-                                    {{lang}}
-                                </dd>
-                            </dl>
-                        </div>
-
                     </div>
                 </article>
             </section>

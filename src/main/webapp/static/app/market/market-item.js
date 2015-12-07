@@ -65,8 +65,10 @@ angular.module('ortolangMarketApp')
                             $scope.root = $scope.ortolangObject.snapshotName;
                             $scope.itemKey = $scope.ortolangObject.key;
 
+                            // var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + $scope.ortolangObject['meta_ortolang-item-json'];
                             var queryOrtolangMeta = 'SELECT FROM ' + $scope.ortolangObject['meta_ortolang-item-json'];
                             SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
+                                // $scope.item = angular.fromJson(jsonObject[0].this);
                                 $scope.item = jsonObject[0];
                                 $scope.ready = true;
                             });

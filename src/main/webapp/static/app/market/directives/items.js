@@ -28,11 +28,6 @@ angular.module('ortolangMarketApp')
                 function load(query) {
                     console.log('query : ' + query);
                     Search.search(query).$promise.then(function (results) {
-                        if (scope.filtersManager) {
-                            angular.forEach(scope.filtersManager.availabledFilters, function (filter) {
-                                filter.clearOptions();
-                            });
-                        }
 
                         angular.forEach(results, function (result) {
                             if (result.wskey) {
@@ -44,36 +39,8 @@ angular.module('ortolangMarketApp')
                             }
                         });
 
-                        if (scope.filtersManager) {
-                            angular.forEach(results, function (result) {
-                                angular.forEach(scope.filtersManager.availabledFilters, function (filter) {
-                                    if (result[filter.alias]) {
-                                        addOptionFilter(filter, result[filter.alias]);
-                                    }
-                                });
-                            });
-                        }
-
                         Search.endProcessing();
                     });
-                }
-
-                function addOptionFilter(filter, optionValue) {
-                    if (angular.isArray(optionValue)) {
-                        angular.forEach(optionValue, function (opt) {
-                            filter.putOption(OptionFacetedFilter.make({
-                                label: opt,
-                                value: opt,
-                                length: 1
-                            }));
-                        });
-                    } else {
-                        filter.putOption(OptionFacetedFilter.make({
-                            label: optionValue,
-                            value: optionValue,
-                            length: 1
-                        }));
-                    }
                 }
 
                 function getTitleValue(multilingualTitle) {
