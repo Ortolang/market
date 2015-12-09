@@ -1,21 +1,34 @@
-<section class="market-item" ng-controller="MarketItem13Ctrl">
+<section class="market-item" ng-controller="MarketItem13Ctrl" typeof="Dataset">
+    <meta property="version" content="{{::tag.name.replace('v', '')}}"/>
+    <meta property="datePublished" content="{{::content.publicationDate}}"/>
     <header>
         <div class="media">
             <div class="media-left">
                 <div class="item-logo">
                     <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
-                    <img ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                    <img property="image" ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 </div>
             </div>
             <div class="media-body">
-                <h1 class="market-item-title" ng-class="root === 'head'?'text-danger':''"><span ng-if="root === 'head'" translate="MARKET.PREVIEW_OF"></span> {{title}}</h1>
+                <h1 class="market-item-title" ng-class="root === 'head' ? 'text-danger' : ''">
+                    <span ng-if="root === 'head'" translate="MARKET.PREVIEW_OF"></span>
+                    <span ng-bind="title" property="name"></span>
+                </h1>
 
                 <div ng-hide="browse">
 
                     <div ng-if="content.producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: content.publicationDate}"></i> :
                         <ul class="list-unstyled">
-                            <li ng-repeat="producer in content.producers">
-                                <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
+                            <li ng-repeat="producer in content.producers track by producer.id" property="producer" typeof="Organization">
+                                <meta property="name" content="{{::producer.name}}"/>
+                                <meta property="url" content="{{::producer.homepage}}"/>
+                                <meta property="logo" content="{{::producer.img}}"/>
+                                <meta property="alternateName" content="{{::producer.acronym}}"/>
+                                <span property="address" typeof="PostalAddress">
+                                    <meta property="addressCountry" content="{{::producer.country}}">
+                                    <meta property="addressLocality" content="{{::producer.city}}">
+                                </span>
+                                <a ng-href='/producers/{{::producer.id}}' ng-bind="producer.fullname"></a>
                             </li>
                         </ul>
                     </div>
@@ -58,7 +71,7 @@
             <section id="description">
                 <h4>{{'DESCRIPTION' | translate}}</h4>
                 <article data-content="description" data-target-blank>
-                    <p ng-bind-html="description"></p>
+                    <div ng-bind-html="description" property="description"></div>
                     <br/>
                     <div class="row">
                         <div class="col-md-6">
@@ -96,12 +109,22 @@
 
                 <article>
                     <div class="row">
-                        <div ng-repeat="contributor in content.contributors" ng-click="seeContributorPage(contributor)"
-                             class="media profile-card contributor-card col-md-6 col-lg-4" ng-class="{'contributor-link': contributor.entity.id}">
+                        <div ng-repeat="contributor in content.contributors track by contributor.entity.id" property="contributor" typeof="Person" ng-click="seeContributorPage(contributor)"
+                             class="media profile-card contributor-card col-md-6 col-lg-6" ng-class="{'contributor-link': contributor.entity.id}">
                             <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
                             </div>
                             <div class="media-body">
-                                <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.entity.organization.acronym">({{contributor.entity.organization.acronym}})</span></span>
+                                <span ng-if="::contributor.entity.organization" property="worksFor" typeof="Organization">
+                                    <meta property="name" content="{{::contributor.entity.organization.name}}">
+                                    <meta property="url" content="{{::contributor.entity.organization.homepage}}"/>
+                                    <meta property="logo" content="{{::contributor.entity.organization.img}}"/>
+                                    <meta property="alternateName" content="{{::contributor.entity.organization.acronym}}"/>
+                                    <span property="address" typeof="PostalAddress">
+                                        <meta property="addressCountry" content="{{::contributor.entity.organization.country}}">
+                                        <meta property="addressLocality" content="{{::contributor.entity.organization.city}}">
+                                    </span>
+                                </span>
+                                <span class="name"><span property="name">{{contributor.entity.fullname}}</span> <span ng-if="contributor.entity.organization.acronym">({{contributor.entity.organization.acronym}})</span></span>
                                 <div class="small roles">
                                     <span ng-repeat="role in contributor.roles">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
                                 </div>
@@ -113,6 +136,7 @@
 
             <section class="keywords" ng-if="additionalInformations.length>0">
                 <h4>{{'MARKET.ADDITIONAL_INFORMATION' | translate}}</h4>
+                <meta property="keywords" content="{{::keywordsString}}"/>
                 <article>
                     <div class="row">
                         <div ng-repeat="additionalInformation in additionalInformations" class="col-md-3">
@@ -230,7 +254,7 @@
                             , <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
                         </span>
                         , Equipex ORTOLANG <a target="_BLANK" href="http://www.ortolang.fr">www.ortolang.fr</a> :
-                        <a target="_BLANK" href="http://hdl.handle.net/11403/{{alias}}/{{ortolangObject.snapshotName}}">http://hdl.handle.net/11403/{{alias}}/{{ortolangObject.snapshotName}}</a>
+                        <a target="_BLANK" ng-href="http://hdl.handle.net/11403/{{::alias}}/{{ortolangObject.snapshotName}}">http://hdl.handle.net/11403/{{::alias}}/{{ortolangObject.snapshotName}}</a>
                     </p>
                 </div>
             </div>

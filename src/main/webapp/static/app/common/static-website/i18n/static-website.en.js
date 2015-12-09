@@ -26,8 +26,13 @@ angular.module('ortolangMarketApp')
                 INTELLECTUAL_PROPERTY: 'Intellectual Property',
                 INTELLECTUAL_PROPERTY_CONTENT: 'The ORTOLANG Community site is a work of creation, exclusive property of the CNRS, protected by French and international legislation on the right to intellectual property. No reproduction or representation can not be done in contravention of the rights of the CNRS from the above legislation.',
                 HYPERLINKS: 'hyperlinks',
-                HYPERLINKS_CONTENT: 'The establishment of hyperlinks by others to pages or documents available on the website of ORTOLANG Community, are permitted provided that the links are not contrary to the interests of partners ORTOLANG project, and they guarantee the possibility for the user to identify the origin and author.'
+                HYPERLINKS_CONTENT: 'The establishment of hyperlinks by others to pages or documents available on the website of ORTOLANG Community, are permitted provided that the links are not contrary to the interests of partners ORTOLANG project, and they guarantee the possibility for the user to identify the origin and author.',
+                CONFIDENTIALITY: 'Confidentiality policy',
+                COOKIES_USE: 'Cookies usage',
+                COOKIES_USE_CONTENT: 'The ORTOLANG website uses cookies to anonymously measure your use of this website for intern analysis. These measures are collected by an open-source web analytics platform: <a href="https://piwik.org/" target="_blank">Piwik</a> host on our own servers.',
+                DO_NOT_TRACK: 'Do not track my visits',
+                DO_NOT_TRACK_CONTENT: '<ul><li>If the "Do No Track" functionality of your browser is turned on, our analytics tool will not record your activity on this website.</li><li>You may also choose not to be tracked on this website:</li></ul>',
+                DO_NOT_TRACK_ACTUAL_CONFIG: 'Current configuration:'
             }
         }
-    }
-);
+    });

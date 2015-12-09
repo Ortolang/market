@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
                     Settings.language = $translate.use();
                 }
                 amMoment.changeLocale(Settings.language);
-                $rootScope.$emit('languageInitialized');
+                $rootScope.$emit('languageInitialized', Settings.language);
             }
 
             if (AuthService.isAuthenticated()) {
