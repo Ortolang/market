@@ -134,7 +134,8 @@ angular
                 title: 'NAV.INFORMATION'
             })
             .when('/legal-notices', {
-                templateUrl: 'common/static-website/legal-notices.html'
+                templateUrl: 'common/static-website/legal-notices.html',
+                title: 'NAV.LEGAL_NOTICES'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
