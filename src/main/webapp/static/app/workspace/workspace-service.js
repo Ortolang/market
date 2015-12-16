@@ -130,7 +130,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         var deferred = $q.defer();
         if (!this.active.workspace || this.active.workspace.alias !== alias) {
             listDeferred.promise.then(function () {
-                var filteredWorkspace = $filter('filter')(Workspace.list, {alias: alias});
+                var filteredWorkspace = $filter('filter')(Workspace.list, {alias: alias}, true);
                 if (filteredWorkspace.length === 0) {
                     Workspace.clearActiveWorkspace();
                     WorkspaceResource.getWorkspaceFromAlias({alias: alias, md: true}, function (data) {
@@ -205,7 +205,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     this.getActiveWorkspaceRequests = function () {
         var deferred = $q.defer();
         RuntimeResource.listProcesses({wskey: Workspace.active.workspace.key}, function (data) {
-            Workspace.active.requests = $filter('filter')(data.entries, {'type': 'publish-workspace'});
+            Workspace.active.requests = $filter('filter')(data.entries, {'type': 'publish-workspace'}, true);
             angular.forEach(Workspace.active.requests, function (request) {
                 getCard(request.initier);
             });
@@ -270,7 +270,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
      */
     $rootScope.$on('membership.group.add-member', function (event, eventMessage) {
         listDeferred.promise.then(function () {
-            var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject});
+            var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject}, true);
             // Connected user has just been added to this workspace; refreshing workspace list
             if (workspaces.length !== 1) {
                 Workspace.getWorkspaceList().then(function () {
@@ -286,7 +286,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
     $rootScope.$on('core.workspace.delete', function (event, eventMessage) {
         listDeferred.promise.then(function () {
-            var workspaces = $filter('filter')(Workspace.list, {key: eventMessage.fromObject});
+            var workspaces = $filter('filter')(Workspace.list, {key: eventMessage.fromObject}, true);
             if (workspaces.length === 1) {
                 Workspace.getWorkspaceList();
                 listDeferred.promise.then(function () {

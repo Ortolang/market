@@ -38,13 +38,13 @@ angular.module('ortolangMarketApp')
 
                 // EVENTS
                 $rootScope.$on('runtime.process.change-state', function ($event, message) {
-                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject});
+                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject}, true);
                     if (queueItem.length > 0) {
                         queueItem[0].state = message.arguments.state;
                     }
                 });
                 $rootScope.$on('runtime.process.update-activity', function ($event, message) {
-                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject});
+                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject}, true);
                     if (queueItem.length > 0) {
                         queueItem[0].progress = message.arguments.progress;
                     }

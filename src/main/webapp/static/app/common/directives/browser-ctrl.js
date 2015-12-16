@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
-                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred;
+                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred, refreshTimeoutPromise;
 
             // *********************** //
             //        Breadcrumb       //
@@ -1044,7 +1044,12 @@ angular.module('ortolangMarketApp')
                     if (path) {
                         path = path.substring(0, path.lastIndexOf('/') + 1);
                         if ($scope.path === path) {
-                            getParentData(true);
+                            if (refreshTimeoutPromise) {
+                                $timeout.cancel(refreshTimeoutPromise);
+                            }
+                            refreshTimeoutPromise = $timeout(function () {
+                                getParentData(true);
+                            }, 400);
                         }
                     }
                 }
