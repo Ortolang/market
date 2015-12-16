@@ -200,7 +200,7 @@ angular.module('ortolangMarketApp')
                             $location.search('browse', true);
                         } else {
                             // Clear search parts by keeping only the path
-                            $location.url($location.path());
+                            $location.search({});
                         }
                     };
 
@@ -210,7 +210,7 @@ angular.module('ortolangMarketApp')
                             $location.search('preview', true);
                         } else {
                             // Clear search parts by keeping only the path
-                            $location.url($location.path());
+                            $location.search({});
                         }
                     };
 

@@ -40,6 +40,7 @@ angular.module('ortolangMarketApp')
             cartPlus: 'fa fa-shopping-cart',
             edit: 'glyphicon glyphicon-pencil',
             copyToClipboard: 'octicon octicon-clippy',
+            cloudUpload: 'glyphicon glyphicon-cloud-upload',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

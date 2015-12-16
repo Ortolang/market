@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', 'Helper', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert', 'Settings',
-        function ($scope, ToolManager, Helper, $rootScope, $translate, $http, $filter, Runtime, $alert, Settings) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', 'Helper', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert',
+        function ($scope, ToolManager, Helper, $rootScope, $translate, $http, $filter, Runtime, $alert) {
 
 
             // ***************** //

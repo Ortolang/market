@@ -44,7 +44,6 @@ angular.module('ortolangMarketApp')
         'hotkeys',
         'ObjectResource',
         'Content',
-        'Runtime',
         'AuthService',
         'WorkspaceElementResource',
         'VisualizerManager',
@@ -56,7 +55,7 @@ angular.module('ortolangMarketApp')
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
         'ToolManager',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, ToolManager) {
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, ToolManager) {
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
@@ -640,7 +639,7 @@ angular.module('ortolangMarketApp')
                     var files = angular.element('#upload-zip-file').prop('files');
                     $rootScope.uploader.addToQueue(files, {
                         'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.browserService.workspace.name}),
-                        'ziproot': $scope.parent.path + '/' + modalScope.models.root,
+                        'ziproot': ($scope.parent.path === '/' ? '' : $scope.parent.path) + '/' + modalScope.models.root,
                         'zipoverwrites': modalScope.models.zipoverwrites,
                         'wskey': $scope.browserService.workspace.key,
                         'wsName': $scope.browserService.workspace.name,
@@ -1039,7 +1038,7 @@ angular.module('ortolangMarketApp')
                 getParentData(true, $scope.hasOnlyParentSelected());
             });
 
-            $rootScope.$on('core.workspace.update', function ($event, eventMessage) {
+            function checkCRUDEvent(eventMessage) {
                 if ($scope.browserService.workspace.key === eventMessage.fromObject) {
                     var path = eventMessage.arguments.path;
                     if (path) {
@@ -1049,6 +1048,33 @@ angular.module('ortolangMarketApp')
                         }
                     }
                 }
+            }
+
+            // OBJECT
+            $rootScope.$on('core.object.create', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.object.update', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.object.delete', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.object.move', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            // COLLECTION
+            $rootScope.$on('core.collection.create', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.collection.update', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.collection.delete', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.collection.move', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
             });
 
             $scope.$on('$routeUpdate', function () {
@@ -1479,6 +1505,7 @@ angular.module('ortolangMarketApp')
 
             $scope.resizeBrowser = function () {
                 if ($scope.isMarketBrowserService) {
+                    console.log('resize');
                     var topOffset = angular.element('.browser-wrapper').offset().top,
                         height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
                     browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
@@ -1506,7 +1533,6 @@ angular.module('ortolangMarketApp')
             };
 
             angular.element($window).bind('resize.' + $scope.$id, function () {
-                console.log('resize');
                 $scope.resizeBrowser();
             });
 

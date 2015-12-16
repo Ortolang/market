@@ -50,8 +50,8 @@
         </tr>
         <tr ng-if="filteredOrderedChildrenArray.length === 0" class="no-children-wrapper">
             <td colspan="{{isScreenMd ? 2 : 4}}" class="text-center">
-                <div ng-if="parent.elements.length === 0 && browserService.canEdit && isHead">
-                    <span class="icon glyphicon glyphicon-cloud-upload"></span>
+                <div ng-if="parent.elements.length === 0 && browserService.canEdit && isHead" >
+                    <span class="icon" ng-class="::icons.cloudUpload"></span>
                     <br/>
                     <span translate="BROWSER.NO_CHILDREN" class="file-not-hover"></span>
                 </div>

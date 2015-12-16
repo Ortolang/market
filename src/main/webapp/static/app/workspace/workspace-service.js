@@ -25,6 +25,8 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
     this.list = null;
 
+    this.refresh = {};
+
     this.getWorkspaceList = function (noRefresh) {
         if (noRefresh && !!this.list) {
             listDeferred.resolve(this.list);
@@ -202,9 +204,9 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
     this.getActiveWorkspaceRequests = function () {
         var deferred = $q.defer();
-        RuntimeResource.processes({wskey: Workspace.active.workspace.key}, function (data) {
-            Workspace.active.requests = data.entries;
-            angular.forEach(data.entries, function (request) {
+        RuntimeResource.listProcesses({wskey: Workspace.active.workspace.key}, function (data) {
+            Workspace.active.requests = $filter('filter')(data.entries, {'type': 'publish-workspace'});
+            angular.forEach(Workspace.active.requests, function (request) {
                 getCard(request.initier);
             });
             deferred.resolve();
@@ -240,20 +242,43 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         return deferred.promise;
     };
 
+    var refreshActions = {
+        events: Workspace.getActiveWorkspaceEvents,
+        head: Workspace.getActiveWorkspaceHead
+    };
+
+    this.refreshActiveWorkspace = function (infos) {
+        angular.forEach(infos, function (info) {
+            if (Workspace.refresh[info]) {
+                Workspace.refresh[info] = false;
+                refreshActions[info]();
+            }
+        });
+    };
+
     // *********************** //
     //         Events          //
     // *********************** //
 
+    function needInfoRefresh(eventMessage) {
+        return Workspace.active.workspace.key === eventMessage.fromObject || Workspace.refresh.events;
+    }
+
     /**
      * Fired when a new workspace is created or when the connected user is added to the members of a workspace
+     * or when a member is added to one of the connected user workspaces
      */
     $rootScope.$on('membership.group.add-member', function (event, eventMessage) {
         listDeferred.promise.then(function () {
             var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject});
+            // Connected user has just been added to this workspace; refreshing workspace list
             if (workspaces.length !== 1) {
                 Workspace.getWorkspaceList().then(function () {
                     Workspace.getWorkspacesMetadata();
                 });
+            } else if (Workspace.active.workspace && Workspace.active.workspace.key === workspaces[0].key) {
+                // A member has been added to the active workspace; refreshing active workspace members
+                Workspace.getActiveWorkspaceMembers();
             }
         });
         event.stopPropagation();
@@ -278,44 +303,52 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         event.stopPropagation();
     });
 
-    function refreshEvents(eventMessage) {
-        if (Workspace.active.workspace.key === eventMessage.fromObject) {
-            Workspace.getActiveWorkspaceEvents();
-        }
-    }
-
     // OBJECT
     $rootScope.$on('core.object.create', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     $rootScope.$on('core.object.update', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     $rootScope.$on('core.object.delete', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     $rootScope.$on('core.object.move', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     // COLLECTION
     $rootScope.$on('core.collection.create', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     $rootScope.$on('core.collection.update', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     $rootScope.$on('core.collection.delete', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     $rootScope.$on('core.collection.move', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     // METADATA
     $rootScope.$on('core.metadata.create', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
     $rootScope.$on('core.metadata.update', function ($event, eventMessage) {
-        refreshEvents(eventMessage);
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
+    });
+    $rootScope.$on('core.metadata.delete', function ($event, eventMessage) {
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+        Workspace.refresh.head = Workspace.refresh.events;
     });
 
     return this;

@@ -10,9 +10,13 @@
 angular.module('ortolangMarketApp')
     .factory('RuntimeResource', ['$resource', 'url', function ($resource, url) {
         return $resource(url.api + '/runtime/', {}, {
-            processes: {
+            readProcess: {
                 method: 'GET',
-                url: url.api + '/runtime/processes/:pcKey'
+                url: url.api + '/runtime/processes/:key'
+            },
+            listProcesses: {
+                method: 'GET',
+                url: url.api + '/runtime/processes'
             },
             tasks: {
                 method: 'GET',
