@@ -66,7 +66,6 @@ angular.module('ortolangMarketApp')
             }
 
             $rootScope.$on('languageInitialized', function () {
-                console.log('Loading static content');
                 populateHomePage(Settings.language);
                 populateInformationPage(Settings.language);
             });

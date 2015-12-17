@@ -30,36 +30,5 @@ describe('Factory: Runtime', function () {
         expect(states.completed).toEqual('COMPLETED');
     });
 
-    it('should be possible to know if there are some active processes', function () {
-        expect(Runtime.hasActiveProcesses).toBeDefined();
-        expect(Runtime.hasActiveProcesses()).toBe(false);
-        Runtime.createProcess('completedProcess');
-        $rootScope.$apply();
-        expect(Runtime.hasActiveProcesses()).toBe(false);
-        Runtime.createProcess('pendingProcess');
-        $rootScope.$apply();
-        expect(Runtime.hasActiveProcesses()).toBe(true);
-        Runtime.createProcess('runningProcess');
-        $rootScope.$apply();
-        expect(Runtime.hasActiveProcesses()).toBe(true);
-    });
-
-    it('should be possible to know if there are some processes of a given type', function () {
-        var states = Runtime.getStates();
-        expect(Runtime.hasProcessesWithState).toBeDefined();
-        Runtime.createProcess('pendingProcess');
-        $rootScope.$apply();
-        expect(Runtime.hasProcessesWithState(states.pending)).toBe(true);
-        expect(Runtime.hasProcessesWithState(states.completed)).toBe(false);
-        expect(Runtime.hasProcessesWithState(states.running)).toBe(false);
-        Runtime.createProcess('completedProcess');
-        $rootScope.$apply();
-        expect(Runtime.hasProcessesWithState(states.completed)).toBe(true);
-        expect(Runtime.hasProcessesWithState('TOTO')).toBe(false);
-        Runtime.createProcess('runningProcess');
-        $rootScope.$apply();
-        expect(Runtime.hasProcessesWithState(states.running)).toBe(true);
-    });
-
 });
 

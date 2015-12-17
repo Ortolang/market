@@ -44,7 +44,6 @@ angular.module('ortolangMarketApp')
         'hotkeys',
         'ObjectResource',
         'Content',
-        'Runtime',
         'AuthService',
         'WorkspaceElementResource',
         'VisualizerManager',
@@ -56,11 +55,11 @@ angular.module('ortolangMarketApp')
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
         'ToolManager',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, Runtime, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, ToolManager) {
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, ToolManager) {
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
-                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred;
+                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred, eventRefreshTimeoutPromise, uploadRefreshTimeoutPromise;
 
             // *********************** //
             //        Breadcrumb       //
@@ -340,7 +339,7 @@ angular.module('ortolangMarketApp')
                 if (elements.length > 1 || elements[0].type === ortolangType.collection) {
                     var paths = [];
                     angular.forEach(elements, function (element) {
-                        paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : element.name));
+                        paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : '/' + element.name));
                     });
                     if (elements.length === 1) {
                         if ($scope.path === '/' && $scope.hasOnlyParentSelected()) {
@@ -352,7 +351,7 @@ angular.module('ortolangMarketApp')
                         Content.export(paths);
                     }
                 } else {
-                    Content.downloadWithKeyInWindow(elements[0].key);
+                    Content.downloadWithKeyInWindow(elements[0].key, true);
                 }
             };
 
@@ -640,7 +639,7 @@ angular.module('ortolangMarketApp')
                     var files = angular.element('#upload-zip-file').prop('files');
                     $rootScope.uploader.addToQueue(files, {
                         'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.browserService.workspace.name}),
-                        'ziproot': $scope.parent.path + '/' + modalScope.models.root,
+                        'ziproot': ($scope.parent.path === '/' ? '' : $scope.parent.path) + '/' + modalScope.models.root,
                         'zipoverwrites': modalScope.models.zipoverwrites,
                         'wskey': $scope.browserService.workspace.key,
                         'wsName': $scope.browserService.workspace.name,
@@ -1036,19 +1035,56 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('uploaderObjectUploadCompleted', function () {
-                getParentData(true, $scope.hasOnlyParentSelected());
+                if (uploadRefreshTimeoutPromise) {
+                    $timeout.cancel(uploadRefreshTimeoutPromise);
+                }
+                uploadRefreshTimeoutPromise = $timeout(function () {
+                    getParentData(true, $scope.hasOnlyParentSelected());
+                }, 400);
             });
 
-            $rootScope.$on('core.workspace.update', function ($event, eventMessage) {
+            function checkCRUDEvent(eventMessage) {
                 if ($scope.browserService.workspace.key === eventMessage.fromObject) {
                     var path = eventMessage.arguments.path;
                     if (path) {
                         path = path.substring(0, path.lastIndexOf('/') + 1);
                         if ($scope.path === path) {
-                            getParentData(true);
+                            if (eventRefreshTimeoutPromise) {
+                                $timeout.cancel(eventRefreshTimeoutPromise);
+                            }
+                            eventRefreshTimeoutPromise = $timeout(function () {
+                                getParentData(true);
+                            }, 400);
                         }
                     }
                 }
+            }
+
+            // OBJECT
+            $rootScope.$on('core.object.create', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.object.update', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.object.delete', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.object.move', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            // COLLECTION
+            $rootScope.$on('core.collection.create', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.collection.update', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.collection.delete', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
+            });
+            $rootScope.$on('core.collection.move', function ($event, eventMessage) {
+                checkCRUDEvent(eventMessage);
             });
 
             $scope.$on('$routeUpdate', function () {
@@ -1479,6 +1515,7 @@ angular.module('ortolangMarketApp')
 
             $scope.resizeBrowser = function () {
                 if ($scope.isMarketBrowserService) {
+                    console.log('resize');
                     var topOffset = angular.element('.browser-wrapper').offset().top,
                         height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
                     browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
@@ -1506,7 +1543,6 @@ angular.module('ortolangMarketApp')
             };
 
             angular.element($window).bind('resize.' + $scope.$id, function () {
-                console.log('resize');
                 $scope.resizeBrowser();
             });
 

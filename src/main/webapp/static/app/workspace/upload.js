@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', 'FileUploader', 'url', 'ortolangType', 'AuthService',
-        function ($scope, $rootScope, $window, $timeout, $modal, FileUploader, url, ortolangType, AuthService) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'Runtime', 'AtmosphereService',
+        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, Runtime, AtmosphereService) {
 
             var uploader, queueLimitReached, queueLimitModal;
 
@@ -34,6 +34,21 @@ angular.module('ortolangMarketApp')
                 uploader.uploadQueueStatus = undefined;
                 uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
                 uploader.tokenJustRefreshed = false;
+                uploader.zipExtractionQueue = [];
+
+                // EVENTS
+                $rootScope.$on('runtime.process.change-state', function ($event, message) {
+                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject}, true);
+                    if (queueItem.length > 0) {
+                        queueItem[0].state = message.arguments.state;
+                    }
+                });
+                $rootScope.$on('runtime.process.update-activity', function ($event, message) {
+                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject}, true);
+                    if (queueItem.length > 0) {
+                        queueItem[0].progress = message.arguments.progress;
+                    }
+                });
             }
 
             function deactivateUploadQueue() {
@@ -43,7 +58,7 @@ angular.module('ortolangMarketApp')
             function clearItem(fileItem) {
                 $timeout(function () {
                     fileItem.remove();
-                    if (uploader.queue.length === 0) {
+                    if (uploader.queue.length === 0 && uploader.zipExtractionQueue.length === 0) {
                         deactivateUploadQueue();
                     }
                 }, 1500);
@@ -52,7 +67,7 @@ angular.module('ortolangMarketApp')
             function activateUploadQueue() {
                 uploader.uploadQueueStatus = 'active';
                 var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-                $('.upload-queue').find('.upload-elements-wrapper').css('max-height', height / 3);
+                angular.element('.upload-queue').css('max-height', 2 * height / 5);
             }
 
             $scope.toggleUploadQueueStatus = function () {
@@ -65,12 +80,23 @@ angular.module('ortolangMarketApp')
 
             $scope.clearUploaderQueue = function () {
                 uploader.clearQueue();
+                uploader.zipExtractionQueue = [];
                 deactivateUploadQueue();
             };
 
             $scope.clearItem = function (item) {
                 item.remove();
                 $scope.resizeBrowser();
+            };
+
+            $scope.isZipExtractionQueueEmpty = function () {
+                var empty = true;
+                angular.forEach(uploader.zipExtractionQueue, function (extractionQueueItem) {
+                    if (extractionQueueItem.state !== Runtime.getStates().completed && extractionQueueItem.state !== Runtime.getStates().aborted) {
+                        empty = false;
+                    }
+                });
+                return empty;
             };
 
             uploader.onAfterAddingFile = function (fileItem) {
@@ -95,6 +121,7 @@ angular.module('ortolangMarketApp')
 
                     case 'zip':
                         fileItem.url = url.api + '/runtime/processes/';
+                        fileItem.file.path = fileItem.ziproot;
                         fileItem.alias = 'zippath';
                         fileItem.formData = [];
                         fileItem.formData.push({'process-type': 'import-zip'});
@@ -142,11 +169,18 @@ angular.module('ortolangMarketApp')
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
-                        $rootScope.$emit('uploaderObjectUploadCompleted');
+                        if (!AtmosphereService.isConnected()) {
+                            $rootScope.$emit('uploaderObjectUploadCompleted');
+                        }
                         break;
                     case 'zip':
-                        $rootScope.$emit('uploaderZipUploadCompleted', fileItem, response);
-                        $rootScope.$emit('process-created', response);
+                        var zipExtractionQueueItem = {};
+                        zipExtractionQueueItem.key = response.key;
+                        zipExtractionQueueItem.fileName = fileItem.file.name;
+                        zipExtractionQueueItem.wsName = fileItem.wsName;
+                        zipExtractionQueueItem.ziproot = fileItem.ziproot;
+                        zipExtractionQueueItem.state = Runtime.getStates().pending;
+                        uploader.zipExtractionQueue.push(zipExtractionQueueItem);
                         break;
                     case ortolangType.metadata:
                         $rootScope.$emit('metadataUploadCompleted');

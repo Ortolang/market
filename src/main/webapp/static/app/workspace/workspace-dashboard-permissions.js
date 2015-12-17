@@ -113,7 +113,7 @@ angular.module('ortolangMarketApp')
             $scope.models.expanded = {};
             $scope.models.tree = {};
             $scope.models.showObjects = false;
-            $scope.models.advancedMode = false;
+            $scope.models.advancedMode = true;
             Workspace.isActiveWorkspaceInfoLoaded().then(function () {
                 loadChild('/', true).then(function (data) {
                     data.expanded = true;

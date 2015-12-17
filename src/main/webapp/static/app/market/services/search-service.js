@@ -48,7 +48,7 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
     this.removeResult = function (resultId) {
         var array = tmpResults || this.results,
             filteredResults;
-        filteredResults = $filter('filter')(array, {'@rid': '!' + resultId});
+        filteredResults = $filter('filter')(array, {'@rid': '!' + resultId}, true);
         if (tmpResults) {
             tmpResults = filteredResults;
         } else {

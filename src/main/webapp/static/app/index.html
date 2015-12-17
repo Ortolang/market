@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
     <meta name="fragment" content="!">
+    <!--<meta name="robots" content="noindex, nofollow">-->
     <base href="/">
     <title ng-bind="'ORTOLANG' + (ortolangPageTitle ? ' | ' + (ortolangPageTitle | translate) : '') + ortolangPageSubtitle">ORTOLANG</title>
 
@@ -71,6 +72,17 @@
         </main>
     </div>
 </div>
+<script type="text/ng-template" id="cookies-consent.html">
+    <div class="alert alert-info">
+        <p>
+            <strong translate="COOKIE_CONSENT.TITLE"></strong>
+            <span translate="COOKIE_CONSENT.BODY"></span>
+        </p>
+        <button class="btn btn-primary btn-sm btn-cookies-consent" ng-click="$root.cookieConsent()" translate="COOKIE_CONSENT.ACCEPT"></button>
+        <a class="btn btn-default btn-sm btn-cookies-consent" ng-click="$root.cookieConsent()" href="/legal-notices" translate="COOKIE_CONSENT.MORE"></a>
+    </div>
+</script>
+<div cookies-consent></div>
 <div class="alerts-wrapper"></div>
 
 <!--[if lt IE 10]>
@@ -94,6 +106,7 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/angular-i18n/angular-locale_fr.js"></script>
 <script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
 <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
@@ -113,7 +126,7 @@
 <script src="bower_components/keycloak/dist/keycloak.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
-<script src="bower_components/atmosphere.js/atmosphere.js"></script>
+<script src="bower_components/atmosphere/modules/javascript/src/main/webapp/javascript/atmosphere.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/moment/locale/fr.js"></script>
 <script src="bower_components/angular-moment/angular-moment.js"></script>
@@ -177,6 +190,7 @@
 <script src="common/directives/profile-card.js"></script>
 <script src="common/directives/target-blank.js"></script>
 <script src="common/directives/cart-content.js"></script>
+<script src="common/directives/cookies-consent.js"></script>
 <script src="common/directives/i18n/browser.fr.js"></script>
 <script src="common/directives/i18n/browser.en.js"></script>
 <script src="common/formly/formly-file-select.js"></script>
@@ -220,6 +234,7 @@
 <script src="common/visualizers/i18n/visualizers.en.js"></script>
 <script src="common/visualizers/text-visualizer/text-visualizer.js"></script>
 <script src="common/visualizers/markdown-visualizer/markdown-visualizer.js"></script>
+<script src="common/visualizers/pdf-visualizer/pdf-visualizer.js"></script>
 <script src="common/nav/side-nav-elements.js"></script>
 <script src="common/nav/side-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
@@ -303,6 +318,19 @@
 <script type="text/javascript">
     if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
         var _paq = _paq || [];
+        _paq.push([function() {
+            var self = this;
+            function getOriginalVisitorCookieTimeout() {
+                var now = new Date(),
+                    nowTs = Math.round(now.getTime() / 1000),
+                    visitorInfo = self.getVisitorInfo();
+                var createTs = parseInt(visitorInfo[2]);
+                var cookieTimeout = 33696000; // 13 months in seconds
+                var originalTimeout = createTs + cookieTimeout - nowTs;
+                return originalTimeout;
+            }
+            this.setVisitorCookieTimeout(getOriginalVisitorCookieTimeout());
+        }]);
         _paq.push(['enableLinkTracking']);
         (function() {
             var u="//" + OrtolangConfig.piwikHost;

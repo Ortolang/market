@@ -39,7 +39,8 @@ angular.module('ortolangMarketAppMock')
         }
 
         return {
-            processes: processes,
+            readProcess: processes,
+            listProcesses: processes,
             tasks: tasks,
             createProcess: createProcess,
             remoteProcesses: remoteProcesses

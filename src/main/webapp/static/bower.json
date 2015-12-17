@@ -9,20 +9,21 @@
     "angular-sanitize": "1.4.8",
     "angular-messages": "1.4.8",
     "angular-touch": "1.4.8",
+    "angular-cookies": "1.4.8",
     "angular-i18n": "1.4.8",
     "font-awesome": "4.5.0",
     "octicons": "3.3.0",
     "angular-file-upload": "2.2.0",
     "angular-strap": "2.2.4",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#1.6.0",
-    "highlightjs": "highlightjs/cdn-release#8.9.1",
+    "highlightjs": "highlightjs/cdn-release#9.0.0",
     "angular-highlightjs": "0.5.1",
     "angular-motion": "0.4.3",
-    "angular-formly": "7.3.4",
-    "angular-formly-templates-bootstrap": "6.1.7",
+    "angular-formly": "7.3.8",
+    "angular-formly-templates-bootstrap": "6.2.0",
     "angular-translate": "2.8.1",
     "angular-zeroclipboard": "0.8.0",
-    "angular-bootstrap-toggle-switch": "0.5.5",
+    "angular-bootstrap-toggle-switch": "0.5.6",
     "bootstrap": "3.3.5",
     "bootstrap-additions": "0.3.1",
     "zeroclipboard": "2.2.0",
@@ -30,7 +31,7 @@
     "keycloak": "1.6.1",
     "angular-xeditable": "prismsoundzero/angular-xeditable#0.1.9",
     "ng-tags-input": "3.0.0",
-    "atmosphere.js": "2.2.12",
+    "atmosphere": "Atmosphere/atmosphere-javascript#javascript-project-2.2.13",
     "awesome-bootstrap-checkbox": "0.3.5",
     "angular-moment": "0.10.3",
     "angulartics": "0.20.2",
@@ -73,6 +74,11 @@
     "font-awesome": {
       "main": [
         "css/font-awesome.css"
+      ]
+    },
+    "atmosphere": {
+      "main": [
+          "modules/javascript/src/main/webapp/javascript/atmosphere.js"
       ]
     }
   },

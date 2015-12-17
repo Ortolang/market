@@ -67,9 +67,9 @@ angular.module('ortolangMarketApp')
                 fd.append('stream', blob);
 
                 WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function () {
-                	Workspace.refreshActiveWorkspaceMetadata().then(function() {
+                    Workspace.refreshActiveWorkspaceMetadata().then(function() {
                         Workspace.getActiveWorkspaceMetadata().then(function() {
-                            $location.search('section', 'preview');    
+                            $location.search('section', 'preview');
                         });
                     });
                 });
@@ -137,9 +137,9 @@ angular.module('ortolangMarketApp')
                 fileImageSelectModalScope.forceHead = true;
                 fileImageSelectModalScope.fileSelectId = 'fileImageSelectModal';
                 $scope.fileImageSelectModal = $modal({
-                    scope: fileImageSelectModalScope, 
-                    title: 'File select', 
-                    template: 'common/directives/file-select-modal-template.html', 
+                    scope: fileImageSelectModalScope,
+                    title: 'WORKSPACE.METADATA_EDITOR.SELECT_LOGO',
+                    template: 'common/directives/file-select-modal-template.html',
                     show: false
                 });
 

@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('WORKSPACE_EN', {
         WORKSPACE: {
             WORKSPACE: 'Workspace',
-            ALIAS: 'ID',
+            ALIAS: 'Alias',
             CONTENT: 'Content',
             METADATA: 'Metadata',
             PERMISSIONS: 'Visibility',
@@ -58,13 +58,16 @@ angular.module('ortolangMarketApp')
             GO_TO_METATDATA: 'Go to metadata page.',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
-                AUTO_GENERATED: 'Auto-generated ID',
+                AUTO_GENERATED: 'Auto-generated alias',
+                POLICY: 'I have read and agree to <a href="/information/policy" target="_blank">the ORTOLANG policy</a>',
                 MESSAGES: {
-                    AVAILABILITY: 'ID already used',
-                    MIN_LENGTH: 'Minimum length of 3 characters'
+                    AVAILABILITY: 'Alias already used',
+                    MIN_LENGTH: 'Minimum length of 3 characters',
+                    CONSENT: 'You must accept the ORTOLANG policy'
                 },
                 HELP: {
-                    ALIAS: 'The ID is unique and it cannot be modified afterwards'
+                    ALIAS: 'The alias is unique and will appear in the URLs relative to your workspace. It cannot be modified afterwards',
+                    POLICY: 'The ultimate goal of a workspace creation is to published the resources that will be transferred on it. Please note that any workspace that has not published all or part of its content after a period of 6 months may be closed by the platform administrators.'
                 },
                 SUBMIT: 'Create'
             },
@@ -127,7 +130,7 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Error',
                 BODY_PATH: 'Wrong path \'{{path}}\'. You have been redirected to the root directory.',
                 BODY_ROOT: 'No snapshot with name \'{{root}}\' found. You have been redirected to the current version of the workspace.',
-                BODY_ALIAS: 'No workspace with ID \'{{alias}}\' found or you are not authorized to access this workspace.'
+                BODY_ALIAS: 'No workspace with alias \'{{alias}}\' found or you are not authorized to access this workspace.'
             },
             QUEUE_LIMIT_MODAL: {
                 TITLE: 'Import limit',

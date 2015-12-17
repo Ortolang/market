@@ -6,7 +6,7 @@
                     <a><strong>{{::Workspace.active.workspace.alias}}</strong></a>
                 </li>
                 <li ng-class="dashboardSection === 'information'  ? 'active' : ''" role="tab">
-                    <a ng-click="selectDashboardSection()" translate="INFORMATION"></a>
+                    <a ng-click="selectDashboardSection('information')" translate="INFORMATION"></a>
                 </li>
                 <li ng-class="dashboardSection === 'content'  ? 'active' : ''" role="tab">
                     <a ng-click="selectDashboardSection('content')" translate="WORKSPACE.CONTENT"></a>

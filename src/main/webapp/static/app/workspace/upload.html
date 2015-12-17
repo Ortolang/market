@@ -1,48 +1,89 @@
 <div ng-controller="UploadCtrl" class="container-fluid" nv-file-over="" nv-file-drop="" uploader="uploader" options="{ortolangType: 'object'}">
+    <div ng-if="uploader.queue.length > 0">
+        <div class="modal-header">
+            <h4 translate="WORKSPACE.UPLOAD_QUEUE"></h4>
+        </div>
 
-    <div class="modal-header">
-        <h4 translate="WORKSPACE.UPLOAD_QUEUE"></h4>
+        <div class="table-wrapper upload-elements-wrapper">
+            <table class="table table-responsive table-condensed">
+                <thead>
+                <tr>
+                    <th translate="NAME"></th>
+                    <th translate="WORKSPACE"></th>
+                    <th translate="WORKSPACE.PATH"></th>
+                    <th ng-show="::uploader.isHTML5" translate="SIZE"></th>
+                    <th translate="WORKSPACE.PROGRESS"></th>
+                    <th translate="WORKSPACE.STATUS"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in uploader.queue track by item.file.name">
+                    <td ng-if="::uploader.isHTML5"><span ng-class="item.file.type | mimeTypeIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
+                    <td ng-if="::!uploader.isHTML5"><span ng-class="item.type | ortolangElementIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
+                    <td>{{::item.wsName}}</td>
+                    <td>{{::item.file.path}}</td>
+                    <td class="text-nowrap" ng-show="::uploader.isHTML5">{{::item.file.size | bytes}}</td>
+                    <td ng-show="::uploader.isHTML5">
+                        <div class="progress">
+                            <div ng-if="item.extracting" class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                    <td ng-show="::!uploader.isHTML5">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="table-wrapper upload-elements-wrapper">
-        <table class="table table-responsive table-condensed">
-            <thead>
-            <tr>
-                <th translate="NAME"></th>
-                <th translate="WORKSPACE"></th>
-                <th translate="WORKSPACE.PATH">Path</th>
-                <th ng-show="::uploader.isHTML5" translate="SIZE"></th>
-                <th ng-show="::uploader.isHTML5" translate="WORKSPACE.PROGRESS"></th>
-                <th translate="WORKSPACE.STATUS"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="item in uploader.queue track by item.file.name">
-                <td ng-if="::uploader.isHTML5"><span ng-class="::item.file.type | mimeTypeIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
-                <td ng-if="::!uploader.isHTML5"><span ng-class="::item.type | ortolangElementIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
-                <td>{{::item.wsName}}</td>
-                <td>{{::item.file.path}}</td>
-                <td class="text-nowrap" ng-show="::uploader.isHTML5">{{::item.file.size | bytes}}</td>
-                <td ng-show="::uploader.isHTML5">
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                    </div>
-                </td>
-                <td class="text-center">
-                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div ng-if="uploader.zipExtractionQueue.length > 0" class="zip-extraction-queue">
+        <div class="modal-header">
+            <h4 translate="WORKSPACE.EXTRACTION_QUEUE"></h4>
+        </div>
+        <div class="table-wrapper">
+            <table class="table table-responsive table-condensed">
+                <thead>
+                <tr>
+                    <th translate="NAME"></th>
+                    <th translate="WORKSPACE"></th>
+                    <th translate="WORKSPACE.PATH"></th>
+                    <th translate="WORKSPACE.STATUS"></th>
+                    <th translate="WORKSPACE.PROGRESS"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in uploader.zipExtractionQueue">
+                    <td><span ng-class="'application/zip' | mimeTypeIconCss" class="type"></span> <strong>{{::item.fileName}}</strong></td>
+                    <td>{{::item.wsName}}</td>
+                    <td>{{::item.ziproot}}</td>
+                    <td>{{(item.state ? 'PROCESSES.' + item.state : '') | translate}}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar" ng-class="(item.state === 'COMPLETED' ? 'progress-bar-success' : '') + (item.state === 'PENDING' ? 'progress-bar-striped active' : '')" role="progressbar" ng-style="{width: (item.state === 'PENDING' ? '100%' : item.progress + '%')}">
+                                <span ng-if="item.state === 'COMPLETED'" class="fa fa-check"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-danger btn-sm" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading" disabled="disabled">
             <span class="glyphicon glyphicon-ban-circle"></span> {{'WORKSPACE.CANCEL_ALL' | translate}}
         </button>
-        <button type="button" class="btn btn-default btn-sm" ng-click="clearUploaderQueue()" ng-disabled="uploader.isUploading" disabled="disabled">
+        <button type="button" class="btn btn-default btn-sm" ng-click="clearUploaderQueue()" ng-disabled="uploader.isUploading || !isZipExtractionQueueEmpty()" disabled="disabled">
             <span class="glyphicon glyphicon-remove"></span> {{'WORKSPACE.CLEAR_ALL' | translate}}
         </button>
     </div>
