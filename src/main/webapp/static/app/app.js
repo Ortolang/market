@@ -16,6 +16,7 @@ angular
         'ngMessages',
         'ngSanitize',
         'ngTouch',
+        'ngCookies',
         'ortolangVisualizers',
         'angularFileUpload',
         'mgcrea.ngStrap.tab',
@@ -43,9 +44,10 @@ angular
         'angularMoment',
         'angulartics',
         'angulartics.piwik',
-        'btford.markdown'
+        'btford.markdown',
+        'lrInfiniteScroll'
     ])
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 redirectTo: '/market/home'
@@ -132,7 +134,8 @@ angular
                 title: 'NAV.INFORMATION'
             })
             .when('/legal-notices', {
-                templateUrl: 'common/static-website/legal-notices.html'
+                templateUrl: 'common/static-website/legal-notices.html',
+                title: 'NAV.LEGAL_NOTICES'
             })
             .when('/profile', {
                 templateUrl: 'profile/profile.html',
@@ -152,13 +155,17 @@ angular
             .otherwise({
                 redirectTo: '/404'
             });
+        $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
     }])
     .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
             'self',
             OrtolangConfig.apiServerUrlDefault + '**',
-            OrtolangConfig.apiServerUrlNoSSL + '**'
+            OrtolangConfig.apiServerUrlNoSSL + '**',
+            'http://' + OrtolangConfig.piwikHost + '**',
+            'https://' + OrtolangConfig.piwikHost + '**'
         ]);
     }])
     .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
@@ -184,6 +191,17 @@ angular
             $analyticsProvider.developerMode(true);
             $analyticsProvider.virtualPageviews(false);
             $analyticsProvider.firstPageview(false);
+        }
+    }])
+    .run(['$rootScope', function ($rootScope) {
+        if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
+            var optOutUrl = '//' + OrtolangConfig.piwikHost + 'index.php?module=CoreAdminHome&action=optOut&language=';
+            $rootScope.$on('languageInitialized', function (event, language) {
+                $rootScope.piwikIframeSrc =  optOutUrl + language;
+            });
+            $rootScope.$on('$translateChangeSuccess', function (event, data) {
+                $rootScope.piwikIframeSrc = optOutUrl + data.language;
+            });
         }
     }])
     .config(['$compileProvider', function ($compileProvider) {

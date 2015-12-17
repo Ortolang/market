@@ -35,7 +35,7 @@
     </div>
     <div ng-if="isHead && parent.elements.length === 0 && browserService.canEdit" class="no-children-wrapper-head text-center">
         <div class="no-children">
-            <span class="icon glyphicon glyphicon-cloud-upload"></span>
+            <span class="icon" ng-class="::icons.cloudUpload"></span>
             <br/>
             <span translate="BROWSER.NO_CHILDREN" class="file-not-hover"></span>
         </div>

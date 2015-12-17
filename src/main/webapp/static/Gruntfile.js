@@ -91,7 +91,10 @@ module.exports = function (grunt) {
                                 '/bower_components',
                                 connect.static('./bower_components')
                             ),
-                            connect.static(appConfig.app)
+                            connect.static(appConfig.app),
+                            connect().use(function (req, res, next) {
+                                res.end(grunt.file.read(appConfig.app + '/index.html'));
+                            })
                         ];
                     }
                 }

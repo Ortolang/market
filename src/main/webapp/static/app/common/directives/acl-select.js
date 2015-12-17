@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
 
                         scope.model = '';
                         if (element.metadatas.length > 0) {
-                            var acl = $filter('filter')(element.metadatas, {'name': 'ortolang-acl-json'});
+                            var acl = $filter('filter')(element.metadatas, {'name': 'ortolang-acl-json'}, true);
 
                             if (acl.length === 1) {
 

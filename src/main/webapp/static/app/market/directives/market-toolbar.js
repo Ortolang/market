@@ -118,18 +118,22 @@ angular.module('ortolangMarketApp')
                     function addOptionFilter(filter, optionValue) {
                         if (angular.isArray(optionValue)) {
                             angular.forEach(optionValue, function (opt) {
-                                filter.putOption(OptionFacetedFilter.make({
-                                    label: opt,
-                                    value: opt,
-                                    length: 1
-                                }));
+                                if(!filter.getOption(opt)) {
+                                    filter.putOption(OptionFacetedFilter.make({
+                                        // label: opt,
+                                        value: opt,
+                                        length: 1
+                                    }));
+                                }
                             });
                         } else {
-                            filter.putOption(OptionFacetedFilter.make({
-                                label: optionValue,
-                                value: optionValue,
-                                length: 1
-                            }));
+                            if(!filter.getOption(optionValue)) {
+                                filter.putOption(OptionFacetedFilter.make({
+                                    // label: optionValue,
+                                    value: optionValue,
+                                    length: 1
+                                }));
+                            }
                         }
                     }
 

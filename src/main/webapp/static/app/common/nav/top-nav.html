@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/" data-title="{{'NAV.BETA_VERSION_TOOLTIP' | translate}}" data-html="true" bs-tooltip data-placement="right" data-template-url="common/nav/beta-tooltip-template.html">
+            <a class="navbar-brand" href="/" data-title="{{'NAV.BETA_VERSION_TOOLTIP' | translate}}" data-html="true" bs-tooltip data-placement="right" data-template-url="common/nav/beta-tooltip-template.html">
                 <img class="ortolang-logo" alt="Logo ORTOLANG" src="assets/images/logo-ortolang-white.png"/>
                 <span>ORTOLANG</span>
                 <span class="beta-version">&nbsp;({{'NAV.BETA_VERSION' | translate}})</span>
@@ -23,25 +23,25 @@
                     <!--<span class="hidden-description" translate="CART"></span>-->
                 <!--</a>-->
             <!--</li>-->
-            <li ng-if="authenticated && !navbarCollapsed">
-                <a href="#/processes" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>
-                    <span class="fa fa-fw fa-tasks"></span><span class="badge processes">{{Runtime.getEveryActiveProcessesNumber() === 0 ? '' : Runtime.getEveryActiveProcessesNumber()}}</span>
-                    <span class="hidden-description" translate="PROCESSES"></span>
-                </a>
-            </li>
-            <li ng-if="authenticated && Runtime.getTasks().length > 0 && !navbarCollapsed">
-                <a href="#/tasks" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
-                    <span class="fa fa-fw fa-bell"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
-                    <span class="hidden-description" translate="TASKS"></span>
-                </a>
-            </li>
+            <!--<li ng-if="authenticated && !navbarCollapsed">-->
+                <!--<a href="/processes" data-title="{{'PROCESSES' | translate}}" data-placement="bottom" bs-tooltip>-->
+                    <!--<span class="fa fa-fw fa-tasks"></span><span class="badge processes">{{Runtime.getEveryActiveProcessesNumber() === 0 ? '' : Runtime.getEveryActiveProcessesNumber()}}</span>-->
+                    <!--<span class="hidden-description" translate="PROCESSES"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-if="authenticated && Runtime.getTasks().length > 0 && !navbarCollapsed">-->
+                <!--<a href="/tasks" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>-->
+                    <!--<span class="fa fa-fw fa-bell"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>-->
+                    <!--<span class="hidden-description" translate="TASKS"></span>-->
+                <!--</a>-->
+            <!--</li>-->
             <li class="dropdown" ng-if="!navbarCollapsed">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}}
                 </a>
                 <ul class="dropdown-menu">
                     <li ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id" >
-                        <a ng-href="#/information/{{::page.id}}"><span class="fa fa-fw" ng-class="::page.iconTop"></span> {{StaticWebsite.getInformationPageTitle(page)}}</a>
+                        <a ng-href="/information/{{::page.id}}"><span class="fa fa-fw" ng-class="::page.iconTop"></span> {{StaticWebsite.getInformationPageTitle(page)}}</a>
                     </li>
                 </ul>
             </li>
@@ -64,8 +64,8 @@
                     {{User.fullName()}}
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-if="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                    <li ng-if="!navbarCollapsed"><a href="#/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-if="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-if="!navbarCollapsed"><a href="/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                     <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
                 </ul>
             </li>

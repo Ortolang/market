@@ -37,7 +37,7 @@
                         <br/>
                         <div id="results_list" >
                             <div ng-repeat="tool in filteredTools track by $index | orderBy: tool.title " class="media tool-item" >
-                                <a class="pull-left" ng-href="::#/market/item/{{tool.meta.alias}}" target="_blank" bs-tooltip data-title="{{'TOOLS.DOCUMENTATION' | translate }}">
+                                <a class="pull-left" ng-href="::/market/item/{{tool.meta.alias}}" target="_blank" bs-tooltip data-title="{{'TOOLS.DOCUMENTATION' | translate }}">
                                     <span ng-class="::icons.browser.tools" class="fa-4x" ng-if="!tool.image"></span>
                                     <img ng-if="tool.image" ng-src="{{tool.image}}" class="thumbnail image" />
                                 </a>

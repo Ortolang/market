@@ -29,6 +29,7 @@ angular.module('ortolangMarketApp')
                 regExp = new RegExp(' +', 'g');
             createModalScope();
             modalScope.submit = function (createWorkspaceForm) {
+                modalScope.models.pendingSubmit = true;
                 if (createWorkspaceForm.$valid) {
                     WorkspaceResource.checkAliasAvailability({alias: modalScope.models.alias}, function (data) {
                         if (data.available) {
@@ -39,6 +40,7 @@ angular.module('ortolangMarketApp')
                         } else {
                             createWorkspaceForm.alias.$setValidity('availability', false);
                             modalScope.models.checked = false;
+                            modalScope.models.pendingSubmit = false;
                         }
                     });
                 }

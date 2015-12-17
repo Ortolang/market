@@ -69,21 +69,25 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="workspace-dashboard-section">
+        <div class="workspace-dashboard-section workspace-dashboard-section-events">
             <h4 translate="WORKSPACE.HISTORY"></h4>
-            <ul class="list-unstyled">
-                <li ng-repeat="event in Workspace.active.events | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
-                    <div class="media-left" avatar data-email-hash="Workspace.authorCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
-                    <div class="media-body">
-                        <!--<pre>{{event | json}}</pre>-->
-                        <span>
-                            <span class="workspace-event-author">{{Workspace.authorCards[event.throwedBy].fullName}}</span>
-                            <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.' + event.type.toUpperCase()}}" data-translate-values="event"></span>
-                        </span>
-                        <span class="workspace-event-date">{{event.date | amTimeAgo}}</span>
-                    </div>
-                </li>
-            </ul>
+            <div class="infinite-list-wrapper">
+                <ul class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreEvents">
+                    <li ng-repeat="event in Workspace.active.events | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
+                        <div class="media-left" avatar data-email-hash="Workspace.authorCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                        <div class="media-body">
+                            <!--<pre>{{event | json}}</pre>-->
+                            <span>
+                                <span class="workspace-event-author">{{Workspace.authorCards[event.throwedBy].fullName}}</span>
+                                <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.' + event.type.toUpperCase()}}" data-translate-values="event"></span>
+                            </span>
+                            <span class="workspace-event-date">{{event.date | amTimeAgo}}</span>
+                        </div>
+                    </li>
+                    <li ng-show="dashboardModels.eventsInfiniteScrollBusy" class="workspace-event media card-well" translate="PENDING_DATA"></li>
+                </ul>
+                <div ng-if="!dashboardModels.eventsSeeMoreOnce" class="workspace-event media card-well see-more-card" ng-click="seeMoreEvents()" translate="SEE_MORE"></div>
+            </div>
         </div>
     </div>
 </div>

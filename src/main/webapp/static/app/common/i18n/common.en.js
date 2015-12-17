@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
         SELECT_WORKSPACE_ELEMENT: 'Select workspace element',
         PENDING_DATA: 'Loading...',
         CART: 'Selection',
+        SEE_MORE: 'See more',
         404: {
             TITLE: 'Page not found',
             BODY: 'Sorry, but we can\'t find the page you are looking for. Maybe you should try heading home.',
@@ -93,5 +94,11 @@ angular.module('ortolangMarketApp')
         MULTILINGUAL_TEXTFIELD: {
             LANGUAGE: 'Language',
             SELECT_LANGUAGE: 'Choose a language ...'
+        },
+        COOKIE_CONSENT: {
+            TITLE: 'This website uses cookies:',
+            BODY: 'we are using statistics cookies to understand how visitors interact with the website by collecting and reporting information anonymously. You can find out more or switch them off if you prefer. However, by continuing to use the site without changing settings, you are agreeing to our use of cookies.',
+            ACCEPT: 'I agree',
+            MORE: 'More information'
         }
     });

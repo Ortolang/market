@@ -86,7 +86,7 @@ angular.module('ortolangMarketApp')
             WORKSPACE_KEY: 'Copy workspace key',
             BEARER_TOKEN: 'Copy token',
             SEE_ALL: 'See all',
-            NO_CHILDREN: 'This folder is empty<br/><small>Drag and drop files here or click on the button New</small>',
+            NO_CHILDREN: 'This folder is empty<br/><small>Drag and drop files here or click on the <span class="glyphicon glyphicon-plus"></span> button</small>',
             NO_CHILDREN_NOT_HEAD: 'This folder is empty',
             NO_FILTERED_CHILDREN: 'No elements'
         }

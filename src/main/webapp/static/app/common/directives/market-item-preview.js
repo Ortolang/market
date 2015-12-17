@@ -139,6 +139,10 @@ angular.module('ortolangMarketApp')
                             if (scope.keywords.length === 0) {
                                 scope.keywords = getValues(item.keywords, 'lang', 'fr');
                             }
+                            scope.keywordsString = '';
+                            angular.forEach(scope.keywords, function (keyword, index) {
+                                scope.keywordsString += (index === 0 ? '' : ', ') + keyword;
+                            });
                         }
                         if (item.bibliographicCitation) {
                             scope.bibliographicCitation = getValue(item.bibliographicCitation, 'lang', lang);
@@ -155,7 +159,7 @@ angular.module('ortolangMarketApp')
                                         url = relation.url;
                                     }
                                 }
-                                
+
                                 scope.relations.push(
                                     {
                                         label: getValue(relation.label, 'lang', lang, 'unknown'),
@@ -196,7 +200,7 @@ angular.module('ortolangMarketApp')
                             $location.search('browse', true);
                         } else {
                             // Clear search parts by keeping only the path
-                            $location.url($location.path());
+                            $location.search({});
                         }
                     };
 
@@ -206,7 +210,7 @@ angular.module('ortolangMarketApp')
                             $location.search('preview', true);
                         } else {
                             // Clear search parts by keeping only the path
-                            $location.url($location.path());
+                            $location.search({});
                         }
                     };
 

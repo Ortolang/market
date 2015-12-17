@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
                         } else if (scope.entry.type === 'Outil') {
                             type = 'tools';
                         }
-                        scope.itemUrl = '#/market/' + type + '/' + scope.entry.alias;
+                        scope.itemUrl = '/market/' + type + '/' + scope.entry.alias;
                     }
 
                     if (scope.entry.title) {

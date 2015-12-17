@@ -34,6 +34,10 @@ angular.module('ortolangMarketApp').provider('OptionFacetedFilter', function () 
                 this.value = value;
             },
 
+            getLabel: function () {
+                return this.label;
+            },
+
             setLabel: function(label) {
                 this.label = label;
             },

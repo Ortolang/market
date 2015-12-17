@@ -50,7 +50,7 @@ angular.module('ortolangMarketApp')
                             });
 
                             if ($routeParams.version) {
-                                var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version});
+                                var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
                                 if (filteredTag.length === 1) {
                                     $scope.tag = filteredTag[0];
                                 }
@@ -58,15 +58,17 @@ angular.module('ortolangMarketApp')
                             if (!$scope.tag) {
                                 $scope.tag = $scope.tags[$scope.tags.length - 1];
                             }
-                            filteredResult = $filter('filter')(results, {snapshotName:  $scope.tag.snapshot});
+                            filteredResult = $filter('filter')(results, {snapshotName:  $scope.tag.snapshot}, true);
                             $scope.ortolangObject = filteredResult[0];
 
                             MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey};
                             $scope.root = $scope.ortolangObject.snapshotName;
                             $scope.itemKey = $scope.ortolangObject.key;
 
+                            // var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + $scope.ortolangObject['meta_ortolang-item-json'];
                             var queryOrtolangMeta = 'SELECT FROM ' + $scope.ortolangObject['meta_ortolang-item-json'];
                             SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
+                                // $scope.item = angular.fromJson(jsonObject[0].this);
                                 $scope.item = jsonObject[0];
                                 $scope.ready = true;
                             });

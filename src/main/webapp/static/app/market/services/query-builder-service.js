@@ -44,34 +44,34 @@ angular.module('ortolangMarketApp')
 
             equals : function (name, content) {
                 if (angular.isArray(content)) {
-                    var optionalValues = '', sanitize = this.sanitize;
+                    var optionalValues = '';
                     angular.forEach(content, function (val) {
-                        optionalValues += (optionalValues === '' ? '' : ' OR ') + name + ' = \'' + sanitize(val) + '\'';
+                        optionalValues += (optionalValues === '' ? '' : ' OR ') + name + ' = ' + getValue(val);
                     });
                     this.conditions += '(' + optionalValues + ')';
                 } else {
-                    this.conditions += name + ' = \'' + this.sanitize(content) + '\'';
+                    this.conditions += name + ' = ' + getValue(content);
                 }
                 return this;
             },
 
             contains : function (name, content) {
                 //TODO if content is an array
-                this.conditions += name + ' contains \'' + this.sanitize(content) + '\'';
+                this.conditions += name + ' contains \'' + sanitize(content) + '\'';
                 return this;
             },
 
             containsText : function (name, content) {
-                this.conditions += 'any() traverse(0,3) (' + name + '.toLowerCase().indexOf(\'' + this.sanitize(content.toLowerCase()) + '\') > -1 )';
+                this.conditions += 'any() traverse(0,3) (' + name + '.toLowerCase().indexOf(\'' + sanitize(content.toLowerCase()) + '\') > -1 )';
                 // this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
                 return this;
             },
 
             in : function (name, arrayOfContent) {
-                var inValue = '',
-                    builder = this;
+                var inValue = '';
                 angular.forEach(arrayOfContent, function (content) {
-                    inValue += ((inValue !== '') ? ', ' : '') + '\'' + builder.sanitize(content) + '\'';
+                    // inValue += ((inValue !== '') ? ', ' : '') + '\'' + builder.sanitize(content) + '\'';
+                    inValue += ((inValue !== '') ? ', ' : '') + sanitize(content);
                 });
                 if (inValue !== '') {
                     this.conditions += name + ' IN [' + inValue + ']';
@@ -93,14 +93,27 @@ angular.module('ortolangMarketApp')
                 return content.split(' ');
             },
 
-            sanitize : function (content) {
-                return content.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-').replace(/'/g, '\\\'');
-            },
-
             toString : function () {
                 return 'SELECT ' + this.projection + ' FROM ' + this.source + ((this.conditions !== '') ? ' WHERE ' + this.conditions : '');
             }
         };
+
+        function getValue(value) {
+            var typeOfValue = typeof value;
+            if(typeOfValue === 'string') {
+                return '\'' + sanitize(value) + '\'';
+            } else {
+                return sanitize(value);
+            }
+        }
+
+        function sanitize (content) {
+            if(typeof(content.replace) === typeof(Function)) {
+                return content.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-').replace(/'/g, '\\\'');
+            } else {
+                return content;
+            }
+        }
 
         function make(config) {
             return new QueryBuilder(config);

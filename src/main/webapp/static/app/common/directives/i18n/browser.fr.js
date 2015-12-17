@@ -88,7 +88,7 @@ angular.module('ortolangMarketApp')
             WORKSPACE_KEY: 'Copier la clé du workspace',
             BEARER_TOKEN: 'Copier le token',
             SEE_ALL: 'Voir tous les fichiers',
-            NO_CHILDREN: 'Ce dossier est vide<br/><small>Faites glisser et déposez des fichiers dans cette fenêtre ou cliquez sur le bouton Nouveau</small>',
+            NO_CHILDREN: 'Ce dossier est vide<br/><small>Faites glisser et déposez des fichiers dans cette fenêtre ou cliquez sur le bouton <span class="glyphicon glyphicon-plus"></span></small>',
             NO_CHILDREN_NOT_HEAD: 'Ce dossier est vide',
             NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants'
         }

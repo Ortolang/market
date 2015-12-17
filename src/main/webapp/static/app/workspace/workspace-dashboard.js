@@ -19,12 +19,10 @@ angular.module('ortolangMarketApp')
         'Workspace',
         'Content',
         'Helper',
-        'Runtime',
+        'RuntimeResource',
         'WorkspaceResource',
-        'WorkspaceElementResource',
-        'ortolangType',
         'WorkspaceBrowserService',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, Runtime, WorkspaceResource, WorkspaceElementResource, ortolangType, WorkspaceBrowserService) {
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService) {
 
             /**
              * The section selected by default
@@ -35,19 +33,28 @@ angular.module('ortolangMarketApp')
 
             /**
              *
-             * @param {String} id                   - the section id; if null or undefined sets default section
-             * @param {boolean} [clearSearchParts]  - true to clear search parts
+             * @param {String} id   - the section id; if null or undefined sets default section
              */
-            function setDashboardSection(id, clearSearchParts) {
+            function setDashboardSection(id) {
+                $scope.dashboardSection = id || defaultSection;
+                if ($scope.dashboardSection === defaultSection) {
+                    $location.search({});
+                } else {
+                    if ($scope.dashboardSection === 'content') {
+                        $location.search('section', id);
+                    } else {
+                        $location.search({section: id});
+                    }
+                }
+                // Refresh active workspace info
+                if ($scope.dashboardSection === 'information') {
+                    Workspace.refreshActiveWorkspace(['events', 'head']);
+                }
+                // If browsing content
                 if (id === 'content') {
                     WorkspaceBrowserService.canEdit = !Workspace.active.workspace.readOnly;
                     WorkspaceBrowserService.workspace = Workspace.active.workspace;
                 }
-                if (clearSearchParts) {
-                    $location.url($location.path());
-                }
-                $scope.dashboardSection = id || defaultSection;
-                $location.search('section', id);
             }
 
             function createModalScope() {
@@ -59,12 +66,17 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.selectDashboardSection = function (id) {
-                if ($location.search().section === 'content' && id !== 'content') {
-                    setDashboardSection(id, true);
-                } else {
-                    setDashboardSection(id, false);
-                }
+                setDashboardSection(id);
             };
+
+            $scope.$on('$routeUpdate', function () {
+                if ($scope.dashboardSection === 'information' && !$location.search().section) {
+                    return;
+                }
+                if ($scope.dashboardSection !== $location.search().section) {
+                    setDashboardSection($location.search().section);
+                }
+            });
 
             // *********************** //
             //       Publication       //
@@ -76,7 +88,7 @@ angular.module('ortolangMarketApp')
                     createModalScope();
                     modalScope.wsName = Workspace.active.workspace.name;
                     modalScope.publish = function () {
-                        Runtime.createProcess({
+                        RuntimeResource.createProcess({
                             'process-type': 'publish-workspace',
                             'process-name': 'Publication of workspace: ' + Workspace.active.workspace.name,
                             'wskey': Workspace.active.workspace.key
@@ -117,19 +129,11 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            $scope.$on('$routeUpdate', function () {
-                if ($scope.dashboardSection !== $location.search().section) {
-                    var clearSearch = $scope.dashboardSection === 'content' && $location.search().section !== 'content';
-                    setDashboardSection($location.search().section, clearSearch);
-                }
-            });
-
             $scope.$on('$destroy', function () {
                 $rootScope.ortolangPageSubtitle = undefined;
             });
 
             function displaySearchErrorModal(cause, params) {
-                console.log('displaySearchErrorModal', cause, params);
                 $modal({
                     title: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.TITLE'),
                     content: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.BODY_' + cause, params),
@@ -149,13 +153,27 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.seeMoreEvents = function () {
+                if (!$scope.dashboardModels.eventsInfiniteScrollBusy) {
+                    $scope.dashboardModels.eventsInfiniteScrollBusy = true;
+                    if (!$scope.dashboardModels.eventsSeeMoreOnce) {
+                        var eventList = angular.element('.workspace-dashboard-section-events').find('ul.list-unstyled');
+                        eventList.css('height', eventList.outerHeight() + 'px');
+                        $scope.dashboardModels.eventsSeeMoreOnce = true;
+                    }
+                    $scope.dashboardModels.eventsLimit += 2;
+                    $scope.dashboardModels.eventsInfiniteScrollBusy = false;
+                }
+            };
+
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();
                 }
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
-                    eventsLimit: 5
+                    eventsLimit: 4,
+                    eventsInfiniteScrollBusy: false
                 };
                 Workspace.getWorkspaceList(true).then(function () {
                     Workspace.setActiveWorkspaceFromAlias($route.current.params.alias).then(function () {
@@ -163,7 +181,7 @@ angular.module('ortolangMarketApp')
                         setDashboardSection($location.search().section);
                         $scope.dashboardModels.links = {
                             base: $window.location.origin,
-                            market: '#/market/item/' + Workspace.active.workspace.alias,
+                            market: '/market/item/' + Workspace.active.workspace.alias,
                             content: Content.getContentUrlWithPath('', Workspace.active.workspace.alias)
                         };
                     }, function () {

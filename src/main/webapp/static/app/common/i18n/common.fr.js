@@ -39,6 +39,7 @@ angular.module('ortolangMarketApp')
         SELECT_WORKSPACE_ELEMENT: 'Sélectionner un élément',
         PENDING_DATA: 'Chargement...',
         CART: 'Sélection',
+        SEE_MORE: 'Voir plus',
         404: {
             TITLE: 'Page non trouvée',
             BODY: 'Désolé, mais la page que vous recherchez est introuvable. Vous devriez peut être essayé de retourner sur la page d\'accueuil.',
@@ -93,6 +94,11 @@ angular.module('ortolangMarketApp')
         MULTILINGUAL_TEXTFIELD: {
             LANGUAGE: 'Langue',
             SELECT_LANGUAGE: 'Selectionner une langue ...'
+        },
+        COOKIE_CONSENT: {
+            TITLE: 'Ce site internet utilise des cookies :',
+            BODY: 'en poursuivant votre navigation sur ce site, vous acceptez l\'utilisation de cookies afin de réaliser des statistiques d\'audiences anonymes. Vous avez la possibilité de vous y opposer en cliquant sur "{{"COOKIE_CONSENT.MORE" | translate}}".',
+            ACCEPT: 'J\'accepte',
+            MORE: 'En savoir plus'
         }
-
     });

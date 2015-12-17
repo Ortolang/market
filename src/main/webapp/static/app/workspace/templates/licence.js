@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LicenceCtrl', ['$rootScope', '$scope', '$modal', '$translate', 'Settings', 'QueryBuilderFactory', 'SearchResource',
-        function ($rootScope, $scope, $modal, $translate, Settings, QueryBuilderFactory, SearchResource) {
+    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'QueryBuilderFactory', 'SearchResource',
+        function ($rootScope, $scope, $filter, $modal, $translate, Settings, QueryBuilderFactory, SearchResource) {
 
 
             /**
@@ -123,12 +123,12 @@ angular.module('ortolangMarketApp')
             function loadAllStatusOfUse() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
+                    projection: '*',
                     source: 'ReferentielEntity'
                 });
 
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
+                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                 queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
                 queryBuilder.equals('meta_ortolang-referentiel-json.type', 'StatusOfUse');
@@ -139,7 +139,11 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allStatusOfUse.push({id: term.id, label: term.label});
+                        $scope.allStatusOfUse.push({id: term['@rid'], label: term.label});
+
+                        if(term.id === 'free') {
+                            $scope.metadata.statusOfUse = term['@rid'];
+                        }
                     });
                 });
             }
@@ -189,10 +193,6 @@ angular.module('ortolangMarketApp')
                     {key:'es', value: $translate.instant('LANGUAGES.ES')},
                     {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
                 ];
-
-                if(angular.isUndefined($scope.metadata.statusOfUse)) {
-                    $scope.metadata.statusOfUse = 'Libre';
-                }
 
         		loadAllStatusOfUse();
                 loadAllLicense();

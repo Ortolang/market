@@ -293,6 +293,11 @@ angular.module('ortolangMarketApp')
                         DELETE: 'a supprimé une collection:<span class="description">{{::arguments.path}}</span>'
                     }
                 },
+                MEMBERSHIP: {
+                    GROUP: {
+                        'ADD-MEMBER': 'a ajouté un membre à l\'espace de travail'
+                    }
+                },
                 PROCESSES: {
                     PUBLISH_WORKSPACE: {
                         PUBLISH_WORKSPACE: 'a fait une demande de publication'
