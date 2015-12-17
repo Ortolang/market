@@ -8,12 +8,12 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AtmosphereService', ['$rootScope', '$q', '$timeout', 'AtmosphereListener', 'url', 'ProfileResource', 'SubscriptionResource', 'User', function ($rootScope, $q, $timeout, AtmosphereListener, url, ProfileResource, SubscriptionResource, User) {
+    .factory('AtmosphereService', ['$rootScope', '$timeout', 'AtmosphereListener', 'url', 'ProfileResource', 'SubscriptionResource', 'User', function ($rootScope, $timeout, AtmosphereListener, url, ProfileResource, SubscriptionResource, User) {
 
         var responseParameterDelegateFunctions = ['onOpen', 'onClientTimeout', 'onReopen', 'onMessage', 'onClose', 'onError'],
             delegateFunctions = responseParameterDelegateFunctions,
             socket,
-            connected = $q.defer(),
+            connected = false,
             config = {
                 contentType: 'application/json',
                 logLevel: 'info',
@@ -30,12 +30,12 @@ angular.module('ortolangMarketApp')
         delegateFunctions.push('onReconnect');
 
         function disconnect() {
-            connected = $q.defer();
+            connected = false;
         }
 
         config.onOpen = function (response) {
             console.log('Atmosphere connected using ' + response.transport);
-            connected.resolve();
+            connected = true;
             SubscriptionResource.addDefaultFilters();
         };
 
@@ -49,7 +49,7 @@ angular.module('ortolangMarketApp')
 
         config.onReopen = function (response) {
             console.log('Atmosphere re-connected using ' + response.transport);
-            connected.resolve();
+            connected = true;
         };
 
         config.onTransportFailure = function (errorMsg, request) {
@@ -108,7 +108,7 @@ angular.module('ortolangMarketApp')
         }
 
         function isConnected() {
-            return connected.promise;
+            return connected;
         }
 
         return {

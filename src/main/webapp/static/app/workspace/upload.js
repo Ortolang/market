@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'Runtime',
-        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, Runtime) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'Runtime', 'AtmosphereService',
+        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, Runtime, AtmosphereService) {
 
             var uploader, queueLimitReached, queueLimitModal;
 
@@ -169,9 +169,9 @@ angular.module('ortolangMarketApp')
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
-                        //if (!AtmosphereService.isConnected()) {
-                        //    $rootScope.$emit('uploaderObjectUploadCompleted');
-                        //}
+                        if (!AtmosphereService.isConnected()) {
+                            $rootScope.$emit('uploaderObjectUploadCompleted');
+                        }
                         break;
                     case 'zip':
                         var zipExtractionQueueItem = {};
