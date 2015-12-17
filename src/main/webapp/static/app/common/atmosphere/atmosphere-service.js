@@ -111,24 +111,8 @@ angular.module('ortolangMarketApp')
             return connected.promise;
         }
 
-        function pushFilter(action, filter) {
-            connected.promise.then(function () {
-                socket.push(atmosphere.util.stringifyJSON({action: action, filter: filter}));
-            });
-        }
-
-        function addFilter(filter) {
-            pushFilter('ADD', filter);
-        }
-
-        function removeFilter(filter) {
-            pushFilter('REMOVE', filter);
-        }
-
         return {
             subscribe: subscribe,
-            addFilter: addFilter,
-            removeFilter: removeFilter,
             isConnected: isConnected
         };
     }]);

@@ -10,7 +10,7 @@
                 <tr>
                     <th translate="NAME"></th>
                     <th translate="WORKSPACE"></th>
-                    <th translate="WORKSPACE.PATH">Path</th>
+                    <th translate="WORKSPACE.PATH"></th>
                     <th ng-show="::uploader.isHTML5" translate="SIZE"></th>
                     <th translate="WORKSPACE.PROGRESS"></th>
                     <th translate="WORKSPACE.STATUS"></th>
@@ -54,21 +54,22 @@
                 <thead>
                 <tr>
                     <th translate="NAME"></th>
+                    <th translate="WORKSPACE"></th>
+                    <th translate="WORKSPACE.PATH"></th>
                     <th translate="WORKSPACE.STATUS"></th>
                     <th translate="WORKSPACE.PROGRESS"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="item in uploader.zipExtractionQueue">
-                    <td>
-                        <span>{{::item.fileName}} ({{::item.wsName}})</span>
-                    </td>
+                    <td><span ng-class="'application/zip' | mimeTypeIconCss" class="type"></span> <strong>{{::item.fileName}}</strong></td>
+                    <td>{{::item.wsName}}</td>
+                    <td>{{::item.ziproot}}</td>
                     <td>{{(item.state ? 'PROCESSES.' + item.state : '') | translate}}</td>
                     <td>
                         <div class="progress">
                             <div class="progress-bar" ng-class="(item.state === 'COMPLETED' ? 'progress-bar-success' : '') + (item.state === 'PENDING' ? 'progress-bar-striped active' : '')" role="progressbar" ng-style="{width: (item.state === 'PENDING' ? '100%' : item.progress + '%')}">
                                 <span ng-if="item.state === 'COMPLETED'" class="fa fa-check"></span>
-                                <!--<span ng-if="!item.completed">En cours</span>-->
                             </div>
                         </div>
                     </td>

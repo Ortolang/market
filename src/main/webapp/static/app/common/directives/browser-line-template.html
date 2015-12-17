@@ -40,7 +40,7 @@
             <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>
             <td ng-hide="isScreenMd">{{::child.size | bytes}}</td>
         </tr>
-        <tr ng-if="displayedItemLimit < parent.elements.length" class="see-all-wrapper">
+        <tr ng-if="displayedItemLimit && displayedItemLimit < parent.elements.length" class="see-all-wrapper">
             <td colspan="{{isScreenMd ? 2 : 4}}">
                 <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
                     <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>

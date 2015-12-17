@@ -121,6 +121,7 @@ angular.module('ortolangMarketApp')
 
                     case 'zip':
                         fileItem.url = url.api + '/runtime/processes/';
+                        fileItem.file.path = fileItem.ziproot;
                         fileItem.alias = 'zippath';
                         fileItem.formData = [];
                         fileItem.formData.push({'process-type': 'import-zip'});
@@ -168,7 +169,9 @@ angular.module('ortolangMarketApp')
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
-                        $rootScope.$emit('uploaderObjectUploadCompleted');
+                        //if (!AtmosphereService.isConnected()) {
+                        //    $rootScope.$emit('uploaderObjectUploadCompleted');
+                        //}
                         break;
                     case 'zip':
                         var zipExtractionQueueItem = {};

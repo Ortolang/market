@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('WORKSPACE_FR', {
         WORKSPACE: {
             WORKSPACE: 'Workspace',
-            ALIAS: 'Identifiant',
+            ALIAS: 'Alias',
             CONTENT: 'Contenu',
             METADATA: 'Métadonnées',
             PERMISSIONS: 'Visibilité',
@@ -60,13 +60,16 @@ angular.module('ortolangMarketApp')
             GO_TO_METATDATA: 'Allez à la page des métadonnées.',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Créer un espace de travail',
-                AUTO_GENERATED: 'Générer automatiquement l\'identifiant',
+                AUTO_GENERATED: 'Générer automatiquement l\'alias',
+                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserves <a href="/information/policy" target="_blank">la charte ORTOLANG</a>',
                 MESSAGES: {
-                    AVAILABILITY: 'Identifiant déjà utilisé',
-                    MIN_LENGTH: 'L\'identifiant doit contenir au minimum 3 caractères'
+                    AVAILABILITY: 'Alias déjà utilisé',
+                    MIN_LENGTH: 'L\'alias doit contenir au minimum 3 caractères',
+                    CONSENT: 'Vous devez accepter la charte ORTOLANG'
                 },
                 HELP: {
-                    ALIAS: 'L\'identifiant est unique et ne pourra plus être modifié par la suite'
+                    ALIAS: 'L\'alias est unique et apparaîtra dans les URLs menant à votre espace de travail. Il ne pourra plus être modifié par la suite.',
+                    POLICY: 'La création d\'un espace de travail doit avoir pour objectif la publication des ressources qui y seront déposées. Tout espace qui n\'aura pas publié tout ou partie de son contenu à l\'issue d\'une période de 6 mois (sauf motivation particulière) pourra être fermé par les administrateurs de la plate-forme.'
                 },
                 SUBMIT: 'Créer'
             },
@@ -129,7 +132,7 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Erreur',
                 BODY_PATH: 'Mauvais chemin \'{{path}}\'. Vous avez été redirigé vers le dossier racine de l\'espace de travail.',
                 BODY_ROOT: 'Il n\'existe pas de version avec le nom \'{{root}}\'. Vous avez été redirigé vers la version actuelle de l\'espace de travail.',
-                BODY_ALIAS: 'Il n\'existe pas d\'espace de travail avec l\'identifiant \'{{alias}}\' ou vous n\'êtes pas autorisé à acceder à ce workspace.'
+                BODY_ALIAS: 'Il n\'existe pas d\'espace de travail avec l\'alias \'{{alias}}\' ou vous n\'êtes pas autorisé à acceder à ce workspace.'
             },
             QUEUE_LIMIT_MODAL: {
                 TITLE: 'Limite d\'importation',

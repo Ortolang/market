@@ -32,8 +32,12 @@ angular.module('ortolangMarketApp')
             return this.getContentUrlWithPath(path, alias, root, noSSL) + forceDownloadQueryParam;
         };
 
-        this.downloadWithKeyInWindow = function (key, noSSL) {
-            $window.location = this.getDownloadUrlWithKey(key, noSSL);
+        this.downloadWithKeyInWindow = function (key, newWindow, noSSL) {
+            if (newWindow) {
+                $window.open(this.getDownloadUrlWithKey(key, noSSL));
+            } else {
+                $window.location = this.getDownloadUrlWithKey(key, noSSL);
+            }
         };
 
         function downloadWith(url, config) {

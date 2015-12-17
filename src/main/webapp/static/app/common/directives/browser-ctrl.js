@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
-                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred, refreshTimeoutPromise;
+                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred, eventRefreshTimeoutPromise, uploadRefreshTimeoutPromise;
 
             // *********************** //
             //        Breadcrumb       //
@@ -351,7 +351,7 @@ angular.module('ortolangMarketApp')
                         Content.export(paths);
                     }
                 } else {
-                    Content.downloadWithKeyInWindow(elements[0].key);
+                    Content.downloadWithKeyInWindow(elements[0].key, true);
                 }
             };
 
@@ -1035,7 +1035,12 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('uploaderObjectUploadCompleted', function () {
-                getParentData(true, $scope.hasOnlyParentSelected());
+                if (uploadRefreshTimeoutPromise) {
+                    $timeout.cancel(uploadRefreshTimeoutPromise);
+                }
+                uploadRefreshTimeoutPromise = $timeout(function () {
+                    getParentData(true, $scope.hasOnlyParentSelected());
+                }, 400);
             });
 
             function checkCRUDEvent(eventMessage) {
@@ -1044,10 +1049,10 @@ angular.module('ortolangMarketApp')
                     if (path) {
                         path = path.substring(0, path.lastIndexOf('/') + 1);
                         if ($scope.path === path) {
-                            if (refreshTimeoutPromise) {
-                                $timeout.cancel(refreshTimeoutPromise);
+                            if (eventRefreshTimeoutPromise) {
+                                $timeout.cancel(eventRefreshTimeoutPromise);
                             }
-                            refreshTimeoutPromise = $timeout(function () {
+                            eventRefreshTimeoutPromise = $timeout(function () {
                                 getParentData(true);
                             }, 400);
                         }
