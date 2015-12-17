@@ -340,7 +340,7 @@ angular.module('ortolangMarketApp')
                 if (elements.length > 1 || elements[0].type === ortolangType.collection) {
                     var paths = [];
                     angular.forEach(elements, function (element) {
-                        paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : element.name));
+                        paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : '/' + element.name));
                     });
                     if (elements.length === 1) {
                         if ($scope.path === '/' && $scope.hasOnlyParentSelected()) {
