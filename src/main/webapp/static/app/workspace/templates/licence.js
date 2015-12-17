@@ -123,15 +123,14 @@ angular.module('ortolangMarketApp')
             function loadAllStatusOfUse() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'ReferentielEntity'
+                    projection: 'key',
+                    source: 'statusofuse'
                 });
 
                 queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
                 queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
 
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'StatusOfUse');
+                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'StatusOfUse');
 
                 var query = queryBuilder.toString();
                 $scope.allStatusOfUse = [];
@@ -139,10 +138,10 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allStatusOfUse.push({id: term['@rid'], label: term.label});
+                        $scope.allStatusOfUse.push({id: '${'+term.key+'}', label: term.label});
 
-                        if(term.id === 'free') {
-                            $scope.metadata.statusOfUse = term['@rid'];
+                        if(!$scope.metadata.statusOfUse && term.id === 'free_use') {
+                            $scope.metadata.statusOfUse = '${'+term.key+'}';
                         }
                     });
                 });
@@ -151,11 +150,14 @@ angular.module('ortolangMarketApp')
             function loadAllLicense() {
 
                 var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key, meta_ortolang-referentiel-json',
-                    source: 'ReferentielEntity'
+                    projection: 'key',
+                    source: 'license'
                 });
 
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'License');
+                // queryBuilder.addProjection('@rid', 'id');
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.label', 'label');
+
+                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'License');
 
                 var query = queryBuilder.toString();
                 $scope.allLicences = [];
@@ -163,17 +165,18 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var license = angular.fromJson(result);
 
-                        var queryLicenseMeta = 'select from ' + license['meta_ortolang-referentiel-json'];
-                        SearchResource.json({query: queryLicenseMeta}, function (jsonObject) {
-                            var licenseObject = angular.fromJson(jsonObject[0]);
+                        $scope.allLicences.push({id: '${'+license.key+'}', label: license.label});
+                        // var queryLicenseMeta = 'select from ' + license['meta_ortolang-referentiel-json'];
+                        // SearchResource.json({query: queryLicenseMeta}, function (jsonObject) {
+                        //     var licenseObject = angular.fromJson(jsonObject[0]);
 
-                            cleanJsonDocument(licenseObject);
+                        //     cleanJsonDocument(licenseObject);
 
-                            $scope.allLicences.push({
-                                license: licenseObject,
-                                label: licenseObject.label
-                            });
-                        });
+                        //     $scope.allLicences.push({
+                        //         license: licenseObject,
+                        //         label: licenseObject.label
+                        //     });
+                        // });
                     });
                 });
             }

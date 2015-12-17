@@ -12,9 +12,9 @@
 
                 <div ng-hide="browse">
 
-                    <div ng-if="content.producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: content.publicationDate}"></i> :
+                    <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: content.publicationDate}"></i> :
                         <ul class="list-unstyled">
-                            <li ng-repeat="producer in content.producers">
+                            <li ng-repeat="producer in producers">
                                 <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
                             </li>
                         </ul>
@@ -91,19 +91,19 @@
                 </article>
             </section>
 
-            <section class="contributors" ng-if="content.contributors">
+            <section class="contributors" ng-if="contributors">
                 <h4>{{'MARKET.CONTRIBUTOR' | translate}}</h4>
 
                 <article>
                     <div class="row">
-                        <div ng-repeat="contributor in content.contributors" ng-click="seeContributorPage(contributor)"
+                        <div ng-repeat="contributor in contributors" ng-click="seeContributorPage(contributor)"
                              class="media profile-card contributor-card col-md-6 col-lg-4" ng-class="{'contributor-link': contributor.entity.id}">
                             <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
                             </div>
                             <div class="media-body">
-                                <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.entity.organization.acronym">({{contributor.entity.organization.acronym}})</span></span>
+                                <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span></span>
                                 <div class="small roles">
-                                    <span ng-repeat="role in contributor.roles">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span>
+                                    <span ng-repeat="role in contributor.roles">{{role.labels | multilingualValue}}<span ng-if="!$last">, </span></span>
                                 </div>
                             </div>
                         </div>
@@ -167,16 +167,19 @@
             <div class="panel panel-default license-panel" ng-show="content.type !== 'Application'">
                 <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
                 <div class="panel-body">
-                    <dl ng-if="content.license">
+                    <dl ng-if="license">
                         <dt>
-                            {{content.license.label}} <a target="_BLANK" ng-if="!licenseDescription && licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                            {{license.label}} <a target="_BLANK" ng-if="(!license.description || conditionsOfUse) && licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dt>
-                        <dd ng-show="licenseDescription">
-                            {{licenseDescription}}<a target="_BLANK" ng-if="licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                        <dd ng-show="!conditionsOfUse && license.description">
+                            <span ng-if="license.description">{{license.description | multilingualValue}}</span><a target="_BLANK" ng-if="licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                        </dd>
+                        <dd ng-show="conditionsOfUse">
+                            <span ng-bind-html="conditionsOfUse"></span>
                         </dd>
                     </dl>
-                    <p ng-if="conditionsOfUse" ng-bind-html="conditionsOfUse"></p>
-                    <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p>
+                    <p ng-if="!license && conditionsOfUse" ng-bind-html="conditionsOfUse"></p>
+                    <!-- <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p> -->
                     <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
                         <div class="btn-group" role="group">
                             <button class="btn btn-success" data-ng-disabled="root === 'head'" ng-click="exportItem()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
@@ -226,7 +229,7 @@
                     <p ng-if="publications.length>0" ng-repeat="pub in publications" ng-bind-html="pub">
                     </p>
                     <p>{{title}}
-                        <span ng-repeat="producer in content.producers">
+                        <span ng-repeat="producer in producers">
                             , <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
                         </span>
                         , Equipex ORTOLANG <a target="_BLANK" href="http://www.ortolang.fr">www.ortolang.fr</a> :

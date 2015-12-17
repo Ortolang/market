@@ -71,10 +71,6 @@ angular.module('ortolangMarketApp')
                                 scope.marketItemTemplate = 'market/templates/market-item-13.html';
 
                                 refreshMultilingualValue(scope.content, Settings.language);
-                                if (scope.content.publications) {
-                                    scope.primaryPublications = getValues(scope.content.publications, 'priority', 'primary');
-                                    scope.secondaryPublications = getValues(scope.content.publications, 'priority', 'secondary');
-                                }
                                 scope.itemMarketType = getItemType(scope.content);
 
                                 if (scope.content.image) {
@@ -91,10 +87,6 @@ angular.module('ortolangMarketApp')
                                         scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
                                     }
                                 }
-
-                                // if (scope.content.license !== undefined && scope.content.license !== '') {
-                                //     loadLicense(scope.itemKey, scope.content.license);
-                                // }
 
                                 if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
                                     scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
@@ -143,43 +135,6 @@ angular.module('ortolangMarketApp')
                         if (item.bibliographicCitation) {
                             scope.bibliographicCitation = getValue(item.bibliographicCitation, 'lang', lang);
                         }
-                        if (item.relations) {
-                            scope.relations = [];
-                            angular.forEach(item.relations, function(relation) {
-                                var url = null;
-                                if(relation.type==='hasPart') {
-                                    url = relation.path;
-                                } else {
-                                    url = Content.getContentUrlWithPath(relation.path, scope.alias, scope.root);
-                                    if (startsWith(relation.url, 'http')) {
-                                        url = relation.url;
-                                    }
-                                }
-                                
-                                scope.relations.push(
-                                    {
-                                        label: getValue(relation.label, 'lang', lang, 'unknown'),
-                                        type: relation.type,
-                                        url: url,
-                                        extension: relation.path.split('.').pop()
-                                    }
-                                );
-                            });
-                        }
-                        if (item.commercialLinks) {
-                            scope.commercialLinks = [];
-                            angular.forEach(item.commercialLinks, function(commercialLink) {
-                                scope.commercialLinks.push(
-                                    {
-                                        description: getValue(commercialLink.description, 'lang', lang, 'unknown'),
-                                        acronym: commercialLink.acronym,
-                                        url: commercialLink.url,
-                                        img: commercialLink.img
-                                    }
-                                );
-                            });
-                        }
-
                     }
 
                     function loadLicense(collection, licensePath) {
@@ -214,16 +169,6 @@ angular.module('ortolangMarketApp')
                         scope.showingDescription = !scope.showingDescription;
                     };
 
-                    scope.isProducer = function (contributor) {
-                        var iRole;
-                        for (iRole = 0; iRole < contributor.role.length; iRole++) {
-                            if (contributor.role[iRole] === 'producer') {
-                                return true;
-                            }
-                        }
-                        return false;
-                    };
-
                     scope.exportItem = function () {
                         Content.exportSingle(scope.alias, scope.root, '/', scope.alias);
                     };
@@ -245,11 +190,6 @@ angular.module('ortolangMarketApp')
                             case 'Outil':
                                 return 'tools';
                         }
-                    }
-
-                    function startsWith (actual, expected) {
-                        var lowerStr = (actual + '').toLowerCase();
-                        return lowerStr.indexOf(expected.toLowerCase()) === 0;
                     }
 
                     scope.$on('$routeUpdate', function () {

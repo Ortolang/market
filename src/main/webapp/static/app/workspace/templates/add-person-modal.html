@@ -39,7 +39,7 @@
                         <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.roleTag.$dirty) && addContributor.roleTag.$invalid}">
                             <label for="add-contributor-role" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE"></label>
                             <div class="col-sm-10">
-                                <button type="button" class="btn btn-default" name="roleTag" ng-model="$parent.roleTag" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" bs-options="role.id as role.label for role in allRoles" bs-select>{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span></button>
+                                <button type="button" class="btn btn-default" name="roleTag" ng-model="$parent.roleTag" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" bs-options="role as role.label for role in allRoles" bs-select>{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span></button>
                             </div>
                         </div>
                         <hr/>

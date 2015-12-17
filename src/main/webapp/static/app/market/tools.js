@@ -55,15 +55,6 @@ angular.module('ortolangMarketApp')
             }, 'Language', 1);
 
             addAvailableFilter({
-                id: 'meta_ortolang-item-json.statusOfUse',
-                alias: 'statusOfUse',
-                label: 'MARKET.FACET.STATUS_OF_USE',
-                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            }, 'StatusOfUse');
-
-            addAvailableFilter({
                 id: 'meta_ortolang-item-json.toolFunctionalities',
                 alias: 'toolFunctionalities',
                 type: 'array',
@@ -94,6 +85,25 @@ angular.module('ortolangMarketApp')
                 label: 'MARKET.FACET.TOOL_FILE_ENCODINGS',
                 resetLabel: 'MARKET.FACET.ALL_TOOL_FILE_ENCODINGS'
             }, 'ToolFileEncoding');
+
+            var statusOfUseFilter = FacetedFilter.make({
+                id: 'meta_ortolang-item-json.statusOfUse',
+                alias: 'statusOfUse',
+                label: 'MARKET.FACET.STATUS_OF_USE',
+                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
+            });
+            listStatusOfUses().then(function (entities) {
+                angular.forEach(entities, function(entity) {
+                    statusOfUseFilter.putOption(OptionFacetedFilter.make({
+                        label: entity.label,
+                        value: entity.id,
+                        length: 1
+                    }));
+                });
+            });
+            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
         }
 
         function addAvailableFilter(filterConfig, refType, rank) {
@@ -115,12 +125,13 @@ angular.module('ortolangMarketApp')
 
             var queryBuilder = QueryBuilderFactory.make({
                 projection: '*',
-                source: 'ReferentielEntity'
+                source: 'term'
             });
 
             queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
 
-            queryBuilder.equals('meta_ortolang-referentiel-json.type', entityType);
+            // queryBuilder.equals('meta_ortolang-referentiel-json.type', entityType);
+            queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"'+entityType+'"']);
             if(rank) {
                 queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
                 queryBuilder.and().equals('meta_ortolang-referentiel-json.rank', rank);
@@ -141,6 +152,38 @@ angular.module('ortolangMarketApp')
                     }
                 });
                 deferred.resolve(allReferentialEntities);
+            }, function () {
+                deferred.reject();
+            });
+
+            return deferred.promise;
+        }
+
+        function listStatusOfUses() {
+            var deferred = $q.defer();
+
+            var queryBuilder = QueryBuilderFactory.make({
+                projection: '*',
+                source: 'statusofuse'
+            });
+
+            queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
+
+            var query = queryBuilder.toString();
+            var allStatusOfUses = [];
+            SearchResource.json({query: query}, function (jsonResults) {
+                angular.forEach(jsonResults, function (result) {
+                    var term = angular.fromJson(result);
+
+                    if(term.labels) {
+                        var entity = {id: term['@rid'], label: Helper.getMultilingualValue(term.labels)};
+                        if(term.rank) {
+                            entity.rank = term.rank;
+                        }
+                        allStatusOfUses.push(entity);
+                    }
+                });
+                deferred.resolve(allStatusOfUses);
             }, function () {
                 deferred.reject();
             });

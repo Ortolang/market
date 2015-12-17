@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItem13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'SearchResource',
-        function ($scope, $rootScope, $translate, Settings, Content, SearchResource) {
+    .controller('MarketItem13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'SearchResource', 'Helper',
+        function ($scope, $rootScope, $translate, Settings, Content, SearchResource, Helper) {
 
 
             function getValues(arr, propertyName, propertyValue) {
@@ -33,16 +33,161 @@ angular.module('ortolangMarketApp')
                 return values[0];
             }
 
-        	function loadLicense(lang) {
-        		if($scope.content.license !== undefined && $scope.content.license.description) {
-        			$scope.licenseDescription = getValue($scope.content.license.description, 'lang', lang);
-        		}
+            function loadProducers() {
+                if($scope.content.producers) {
+                    $scope.producers = [];
 
-        		// $scope.licenseDescription = $scope.content.license.description[0].value;
-        		if($scope.content.license !== undefined && $scope.content.license.text) {
-        			// $scope.licenseURL = $scope.content.license.text[0].value.url;
-        			$scope.licenseText = getValue($scope.content.license.text, 'lang', lang);
-        		}
+                    angular.forEach($scope.content.producers, function(producer) {
+                        if(startsWith(producer, '$')) {
+                            // From Workspace 
+                            getReferentialByKey('organization', producer, function (jsonObject) {
+                                if(jsonObject.length>0) {
+                                    var producerFromRef = angular.fromJson(jsonObject[0].this);
+                                    $scope.producers.push(producerFromRef['meta_ortolang-referentiel-json']);
+                                }
+                            });
+                        } else if(angular.isDefined(producer['meta_ortolang-referentiel-json'])) {
+                            // From Market 
+                            $scope.producers.push(producer['meta_ortolang-referentiel-json']);
+                        } else {
+                            // From Workspace (Producer that needs to be checked)
+                            $scope.producers.push(producer);
+                        }
+                    });
+                }
+            }
+
+            function loadContributors() {
+                if($scope.content.contributors) {
+                    $scope.contributors = [];
+
+                    angular.forEach($scope.content.contributors, function(contributor) {
+                        var loadedContributor = {};
+                        if(startsWith(contributor.entity, '#')) {
+                            // From Market 
+                            var queryEntityMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + contributor.entity;
+                            SearchResource.json({query: queryEntityMeta}, function (jsonObject) {
+                                if(jsonObject.length>0) {
+                                    var contributorEntityFromRef = angular.fromJson(jsonObject[0].this);
+                                    loadedContributor.entity = contributorEntityFromRef['meta_ortolang-referentiel-json'];
+                                }
+                            });
+
+                            if(contributor.roles && contributor.roles.length>0) {
+
+                                loadedContributor.roles = [];
+                                angular.forEach(contributor.roles, function(role) {
+
+                                    var queryRoleMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + role;
+                                    SearchResource.json({query: queryRoleMeta}, function (jsonObject) {
+                                        if(jsonObject.length>0) {
+                                            var roleFromRef = angular.fromJson(jsonObject[0].this);
+                                            loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
+                                        }
+                                    });
+                                });
+                            }
+
+                            if(contributor.organization) {
+
+                                var queryOrganizationMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + contributor.organization;
+                                SearchResource.json({query: queryOrganizationMeta}, function (jsonObject) {
+                                    if(jsonObject.length>0) {
+                                        var orgFromRef = angular.fromJson(jsonObject[0].this);
+                                        loadedContributor.organization = orgFromRef['meta_ortolang-referentiel-json'];
+                                    }
+                                });
+                            }
+
+                            $scope.contributors.push(loadedContributor);
+
+                        } else if(startsWith(contributor.entity, '$')) {
+                            // From Workspace preview
+                            getReferentialByKey('person', contributor.entity, function (jsonObject) {
+                                if(jsonObject.length>0) {
+                                    var contributorEntityFromRef = angular.fromJson(jsonObject[0].this);
+                                    loadedContributor.entity = contributorEntityFromRef['meta_ortolang-referentiel-json'];
+                                }
+                            });
+
+                            if(contributor.roles && contributor.roles.length>0) {
+                                loadedContributor.roles = [];
+                                angular.forEach(contributor.roles, function(role) {
+                                    getReferentialByKey('term', role, function (jsonObject) {
+                                        if(jsonObject.length>0) {
+                                            var roleFromRef = angular.fromJson(jsonObject[0].this);
+                                            loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
+                                        }
+                                    });
+                                });
+                            }
+
+                            if(contributor.organization) {
+                                getReferentialByKey('organization', contributor.organization, function (jsonObject) {
+                                    if(jsonObject.length>0) {
+                                        var orgFromRef = angular.fromJson(jsonObject[0].this);
+                                        loadedContributor.organization = orgFromRef['meta_ortolang-referentiel-json'];
+                                    }
+                                });
+                            }
+
+                            $scope.contributors.push(loadedContributor);
+
+                        } else if(angular.isDefined(contributor.entity['meta_ortolang-referentiel-json'])) {
+                            // From Market 
+                            $scope.contributors.push(contributor.entity['meta_ortolang-referentiel-json']);
+                        } else {
+                            // From Workspace (Contributor that needs to be checked)
+                            loadedContributor.entity = contributor.entity;
+
+                            if(contributor.organization) {
+                                getReferentialByKey('organization', contributor.organization, function (jsonObject) {
+                                    if(jsonObject.length>0) {
+                                        var orgFromRef = angular.fromJson(jsonObject[0].this);
+                                        loadedContributor.organization = orgFromRef['meta_ortolang-referentiel-json'];
+                                    }
+                                });
+                            }
+
+                            if(contributor.roles && contributor.roles.length>0) {
+
+                                loadedContributor.roles = [];
+                                angular.forEach(contributor.roles, function(role) {
+                                    getReferentialByKey('term', role, function (jsonObject) {
+                                        if(jsonObject.length>0) {
+                                            var roleFromRef = angular.fromJson(jsonObject[0].this);
+                                            loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
+                                        }
+                                    });
+                                });
+                            }
+                            $scope.contributors.push(loadedContributor);
+                        }
+                    });
+                }
+            }
+
+        	function loadLicense(lang) {
+                if($scope.content.license) {
+                    if(startsWith($scope.content.license, '$')) {
+                        // From Workspace
+                        getReferentialByKey('license', $scope.content.license, function (jsonObject) {
+                            if(jsonObject.length>0) {
+                                var licenseFromRef = angular.fromJson(jsonObject[0].this);
+                                $scope.license = licenseFromRef['meta_ortolang-referentiel-json'];
+                                if($scope.license.text) {
+                                    $scope.licenseText = getValue($scope.license.text, 'lang', lang);
+                                }
+                            }
+                        });
+                    } else if(angular.isDefined($scope.content.license['meta_ortolang-referentiel-json'])) {
+                        // From Market 
+                        $scope.license = $scope.content.license['meta_ortolang-referentiel-json'];
+                        if($scope.license.text) {
+                            $scope.licenseText = getValue($scope.license.text, 'lang', lang);
+                        }
+                    }
+                }
         	}
 
             function loadConditionsOfUse(lang) {
@@ -82,6 +227,22 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function loadCommerciaLinks(lang) {
+                if ($scope.content.commercialLinks) {
+                    $scope.commercialLinks = [];
+                    angular.forEach($scope.content.commercialLinks, function(commercialLink) {
+                        $scope.commercialLinks.push(
+                            {
+                                description: getValue(commercialLink.description, 'lang', lang, 'unknown'),
+                                acronym: commercialLink.acronym,
+                                url: commercialLink.url,
+                                img: commercialLink.img
+                            }
+                        );
+                    });
+                }
+            }
+
             function loadFieldValuesInAdditionalInformations(fieldKey, fieldName) {
                 if($scope.content[fieldKey]) {
                     var fieldValues = [];
@@ -89,26 +250,50 @@ angular.module('ortolangMarketApp')
                         angular.forEach($scope.content[fieldKey], function(ridOfValue) {
 
                             if(startsWith(ridOfValue, '#')) {
+                                // For Market
                                 var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + ridOfValue;
                                 SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
                                     if(jsonObject.length>0) {
                                         fieldValues.push(angular.fromJson(jsonObject[0].this));
                                     }
                                 });
-                            } else {
-                                fieldValues.push({'meta_ortolang-referentiel-json':{labels:[{lang:'fr',value:ridOfValue}]}});
+                            } else if(ridOfValue['meta_ortolang-referentiel-json']) {
+                                if(angular.isDefined(ridOfValue['meta_ortolang-referentiel-json'])) {
+                                    // For market
+                                    fieldValues.push(ridOfValue);
+                                } else {
+                                    // For Workspace (value needs to be checked)
+                                    fieldValues.push({'meta_ortolang-referentiel-json':{labels:[{lang:'fr',value:ridOfValue}]}});
+                                }
+                            } else if(startsWith(ridOfValue, '$')) {
+                                // For Workspace
+                                var queryMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM term WHERE key="' + ridOfValue.substring(2, ridOfValue.length-1)+'"';
+                                SearchResource.json({query: queryMeta}, function (jsonObject) {
+                                    if(jsonObject.length>0) {
+                                        fieldValues.push(angular.fromJson(jsonObject[0].this));
+                                    }
+                                });
                             }
                         });
                         $scope.additionalInformations.push({key: fieldKey, value: fieldValues, name: fieldName});
                     } else {
 
                         if(startsWith($scope.content[fieldKey], '#')) {
+                            // For Workspace
                             var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + $scope.content[fieldKey];
                             SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
                                 if(jsonObject.length>0) {
                                     $scope.additionalInformations.push({key: fieldKey, value: angular.fromJson(jsonObject[0].this), name: fieldName});
                                 }
                             });
+                        } else if(startsWith($scope.content[fieldKey], '$')) {
+                                // For Workspace
+                                var queryMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM term WHERE key="' + $scope.content[fieldKey].substring(2, $scope.content[fieldKey].length-1)+'"';
+                                SearchResource.json({query: queryMeta}, function (jsonObject) {
+                                    if(jsonObject.length>0) {
+                                        $scope.additionalInformations.push({key: fieldKey, value: angular.fromJson(jsonObject[0].this), name: fieldName});
+                                    }
+                                });
                         } else {
                             $scope.additionalInformations.push({key: fieldKey, value: $scope.content[fieldKey], name: fieldName});
                         }
@@ -128,12 +313,12 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('corporaFormats', 'MARKET.FACET.TEXT_FORMAT');
                 loadFieldValuesInAdditionalInformations('corporaFileEncodings', 'MARKET.FACET.TEXT_ENCODING');
                 loadFieldValuesInAdditionalInformations('corporaDataTypes', 'MARKET.FACET.CORPORA_DATATYPES');
-                loadFieldValuesInAdditionalInformations('wordCount', 'WORKSPACE.METADATA_EDITOR.WORD_COUNT');
+                // loadFieldValuesInAdditionalInformations('wordCount', 'WORKSPACE.METADATA_EDITOR.WORD_COUNT');
 
                 loadFieldValuesInAdditionalInformations('lexiconInputType', 'MARKET.FACET.LEXICON_INPUT_TYPE');
                 loadFieldValuesInAdditionalInformations('lexiconLanguageType', 'MARKET.FACET.LEXICON_LANGUAGE_TYPE');
                 loadFieldValuesInAdditionalInformations('lexiconInputLanguages', 'MARKET.FACET.LEXICON_INPUT_LANGUAGE');
-                loadFieldValuesInAdditionalInformations('lexiconInputCount', 'WORKSPACE.METADATA_EDITOR.LEXICON_INPUT_COUNT');
+                // loadFieldValuesInAdditionalInformations('lexiconInputCount', 'WORKSPACE.METADATA_EDITOR.LEXICON_INPUT_COUNT');
                 loadFieldValuesInAdditionalInformations('lexiconDescriptionTypes', 'MARKET.FACET.LEXICON_DESCRIPTION_TYPE');
                 loadFieldValuesInAdditionalInformations('lexiconDescriptionLanguages', 'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE');
                 loadFieldValuesInAdditionalInformations('lexiconFormats', 'MARKET.FACET.LEXICON_FORMAT');
@@ -155,10 +340,15 @@ angular.module('ortolangMarketApp')
                 return lowerStr.indexOf(expected.toLowerCase()) === 0;
             }
 
+            function getReferentialByKey(type, key, func) {
+                var queryRoleByKey = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM '+type+' WHERE key="' + Helper.extractKeyFromReferentialId(key) + '"';
+                SearchResource.json({query: queryRoleByKey}, func);
+            }
 
             $rootScope.$on('$translateChangeSuccess', function () {
                 loadLicense($translate.use());
                 loadConditionsOfUse($translate.use());
+                loadCommerciaLinks($translate.use());
             });
 
         	function init() {
@@ -166,8 +356,11 @@ angular.module('ortolangMarketApp')
                 $scope.additionalInformations = [];
                 $scope.isArray = angular.isArray;
 
+                loadProducers();
+                loadContributors();
                 loadLicense(Settings.language);
                 loadConditionsOfUse(Settings.language);
+                loadCommerciaLinks(Settings.language);
                 loadRelations();
                 loadAdditionalInformations();
         	}
