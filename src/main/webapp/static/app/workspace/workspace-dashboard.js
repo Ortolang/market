@@ -86,16 +86,23 @@ angular.module('ortolangMarketApp')
                 if (Workspace.active.metadata) {
                     var publishModal;
                     createModalScope();
-                    modalScope.wsName = Workspace.active.workspace.name;
-                    modalScope.publish = function () {
-                        RuntimeResource.createProcess({
-                            'process-type': 'publish-workspace',
-                            'process-name': 'Publication of workspace: ' + Workspace.active.workspace.name,
-                            'wskey': Workspace.active.workspace.key
-                        }, function () {
-                            Workspace.refreshActiveWorkspaceInfo();
-                        });
-                        publishModal.hide();
+                    modalScope.wsName = $scope.getTitleValue();
+                    modalScope.submit = function (publishWorkspaceForm) {
+                        if (!modalScope.models.pendingSubmit) {
+                            modalScope.models.pendingSubmit = true;
+                            if (publishWorkspaceForm.$valid) {
+                                RuntimeResource.createProcess({
+                                    'process-type': 'publish-workspace',
+                                    'process-name': 'Publication of workspace: ' + Workspace.active.workspace.name,
+                                    'wskey': Workspace.active.workspace.key
+                                }, function () {
+                                    Workspace.refreshActiveWorkspaceInfo();
+                                });
+                                publishModal.hide();
+                            } else {
+                                modalScope.models.pendingSubmit = false;
+                            }
+                        }
                     };
                     publishModal = $modal({
                         scope: modalScope,

@@ -5,11 +5,33 @@
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
                 <span class="modal-title" translate="WORKSPACE.PUBLISH_MODAL.TITLE"></span>
             </div>
-            <div class="modal-body" translate="WORKSPACE.PUBLISH_MODAL.BODY" translate-values="{wsName: wsName}"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="publish()" translate="WORKSPACE.PUBLISH_MODAL.SUBMIT"></button>
-                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
-            </div>
+            <form role="form" id="publish-workspace-form" name="publishWorkspace" ng-submit="submit(publishWorkspace)" novalidate>
+                <div class="modal-body">
+                    <strong translate="WORKSPACE.PUBLISH_MODAL.BODY" translate-values="{wsName: wsName}"></strong>
+                    <div class="form-group" ng-class="{'has-error': publishWorkspace.$submitted && publishWorkspace.content.$invalid}">
+                        <div class="checkbox checkbox-primary">
+                            <input id="publish-content" type="checkbox" ng-model="models.content" name="content" required ng-disabled="models.pendingSubmit">
+                            <label for="publish-content" translate="WORKSPACE.PUBLISH_MODAL.CONTENT"></label>
+                        </div>
+                        <div class="help-block" ng-if='publishWorkspace.$submitted' ng-messages="publishWorkspace.content.$error">
+                            <div ng-message="required">{{'WORKSPACE.PUBLISH_MODAL.MESSAGES.CONTENT' | translate}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': publishWorkspace.$submitted && publishWorkspace.policy.$invalid}">
+                        <div class="checkbox checkbox-primary">
+                            <input id="publish-policy" type="checkbox" ng-model="models.policy" name="policy" required ng-disabled="models.pendingSubmit">
+                            <label for="publish-policy" translate="WORKSPACE.PUBLISH_MODAL.POLICY"></label>
+                        </div>
+                        <div class="help-block" ng-if='publishWorkspace.$submitted' ng-messages="publishWorkspace.policy.$error">
+                            <div ng-message="required">{{'WORKSPACE.PUBLISH_MODAL.MESSAGES.POLICY' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" translate="SUBMIT" ng-disabled="models.pendingSubmit"></button>
+                    <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL" ng-disabled="models.pendingSubmit"></button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
