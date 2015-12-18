@@ -73,8 +73,13 @@ angular.module('ortolangMarketApp')
             },
             PUBLISH_MODAL: {
                 TITLE: 'Workspace Publication',
-                BODY: 'Are you sure you want to publish "{{wsName}}"?',
-                SUBMIT: 'Publish'
+                BODY: 'You are about to submit the workspace "{{wsName}}" for publication:',
+                CONTENT: 'I acknowledge being responsible for the content that I publish and I have all the authorizations, consents and rights that allow me to publish these contents',
+                POLICY: 'I have read and agree to <a href="/information/policy" target="_blank">the ORTOLANG policy</a>',
+                MESSAGES: {
+                    CONTENT: 'You must check this box',
+                    POLICY: 'You must accept the ORTOLANG policy'
+                }
             },
             DELETE_WORKSPACE_MODAL: {
                 TITLE: 'Workspace deletion',

@@ -74,9 +74,14 @@ angular.module('ortolangMarketApp')
                 SUBMIT: 'Créer'
             },
             PUBLISH_MODAL: {
-                TITLE: 'Publication d\'un espace de travail',
-                BODY: 'Êtes-vous sûr de vouloir publier l\'espace de travail "{{wsName}}" ?',
-                SUBMIT: 'Publier'
+                TITLE: 'Demande de publication',
+                BODY: 'Vous allez soumettre l\'espace de travail "{{wsName}}" à publication :',
+                CONTENT: 'Je reconnais être responsable des contenus que je publie et posséder toutes les autorisations, consentements et droits qui me permettent de publier ces contenus',
+                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserves <a href="/information/policy" target="_blank">la charte ORTOLANG</a>',
+                MESSAGES: {
+                    CONTENT: 'Vous devez cocher cette case',
+                    POLICY: 'Vous devez accepter la charte ORTOLANG'
+                }
             },
             DELETE_WORKSPACE_MODAL: {
                 TITLE: 'Suppression d\'un espace de travail',
