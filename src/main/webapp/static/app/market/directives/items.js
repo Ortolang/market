@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
                 });
 
                 function load(query) {
-                    console.log('query : ' + query);
+                    //console.log('query : ' + query);
                     Search.search(query).$promise.then(function (results) {
 
                         angular.forEach(results, function (result) {
