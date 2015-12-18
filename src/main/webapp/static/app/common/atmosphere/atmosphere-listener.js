@@ -18,7 +18,6 @@ angular.module('ortolangMarketApp')
                 if (message.type) {
                     $rootScope.$emit(message.type, message);
                 }
-                console.log('ATMOSPHERE MESSAGE', message);
             } catch (e) {
                 console.error('Error parsing JSON: ', responseText);
                 throw e;
