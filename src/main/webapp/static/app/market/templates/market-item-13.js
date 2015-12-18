@@ -196,6 +196,27 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function loadSponsors(lang) {
+                if($scope.content.sponsors !== undefined && $scope.content.sponsors.length>0) {
+                    $scope.sponsors = [];
+
+                    angular.forEach($scope.content.sponsors, function(sponsor) {
+                        if(startsWith(sponsor, '$')) {
+                            // From Workspace
+                            getReferentialByKey('term', sponsor, function (jsonObject) {
+                                if(jsonObject.length>0) {
+                                    var sponsorFromRef = angular.fromJson(jsonObject[0].this);
+                                    $scope.sponsors.push(getValue(sponsorFromRef['meta_ortolang-referentiel-json'].labels, 'lang', lang));
+                                }
+                            });
+                        } else if(angular.isDefined(sponsor['meta_ortolang-referentiel-json'])) {
+                            // For Market
+                            $scope.sponsors.push(getValue(sponsor['meta_ortolang-referentiel-json'].labels, 'lang', lang));
+                        }
+                    });
+                }
+            }
+
             function loadRelation(relation, lang) {
                 var url = null, name = 'unknown';
                 if(relation.type==='hasPart') {
@@ -349,6 +370,7 @@ angular.module('ortolangMarketApp')
                 loadLicense($translate.use());
                 loadConditionsOfUse($translate.use());
                 loadCommerciaLinks($translate.use());
+                loadSponsors($translate.use());
             });
 
         	function init() {
@@ -358,6 +380,7 @@ angular.module('ortolangMarketApp')
 
                 loadProducers();
                 loadContributors();
+                loadSponsors(Settings.language);
                 loadLicense(Settings.language);
                 loadConditionsOfUse(Settings.language);
                 loadCommerciaLinks(Settings.language);

@@ -32,10 +32,10 @@
                             </li>
                         </ul>
                     </div>
-                    <div ng-if="content.sponsors" class="market-item-producers"><i>{{'MARKET.SPONSORS' | translate}}</i> :
+                    <div ng-if="sponsors" class="market-item-producers"><i>{{'MARKET.SPONSORS' | translate}}</i> :
                         <ul class="list-unstyled">
-                            <li class="sponsor" ng-repeat="sponsor in content.sponsors">
-                                {{sponsor.fullname}}
+                            <li class="sponsor" ng-repeat="sponsor in sponsors">
+                                {{sponsor}}
                             </li>
                         </ul>
                     </div>
