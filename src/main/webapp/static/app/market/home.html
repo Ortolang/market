@@ -8,7 +8,7 @@
                 <div class="col-md-8">
                     <h3 class="ortolang-title" translate="ORTOLANG"></h3>
                     <hr/>
-                    <div ng-include="::StaticWebsite.getHomePage()"></div>
+                    <div ng-include="StaticWebsite.getHomePage()"></div>
                     <hr />
                     <div class="media small marianne" >
                         <div class="media-left">
@@ -23,7 +23,7 @@
                 <div class="col-md-4" >
                     <div class="card-well card-news-well">
                         <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATIC_WEBSITE.NEWS' | translate}}</p>
-                        <div ng-repeat="news in ::StaticWebsite.getNews() track by news">
+                        <div ng-repeat="news in StaticWebsite.getNews() track by news">
                             <hr/>
                             <div ng-include="::news"></div>
                         </div>

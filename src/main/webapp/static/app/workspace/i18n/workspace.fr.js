@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
             NO_METATDATA: 'Les métadonnées ne sont pas encore renseignées.',
             GO_TO_METATDATA: 'Allez à la page des métadonnées.',
             CREATE_WORKSPACE_MODAL: {
-                TITLE: 'Créer un espace de travail',
+                TITLE: 'Création d\'un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'alias',
                 POLICY: 'Je déclare avoir pris connaissance et accepter sans réserves <a href="/information/policy" target="_blank">la charte ORTOLANG</a>',
                 MESSAGES: {
