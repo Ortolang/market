@@ -250,7 +250,7 @@
             <div class="panel panel-default" ng-hide="bibliographicCitation">
                 <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
                 <div data-target-blank data-content="bibliographicCitation" class="panel-body">
-                    <p ng-if="publications.length>0" ng-repeat="pub in publications" ng-bind-html="pub">
+                    <p ng-if="content.publications && content.publications.length>0" ng-repeat="pub in content.publications" ng-bind-html="pub">
                     </p>
                     <p>{{title}}
                         <span ng-repeat="producer in producers">
