@@ -8,22 +8,33 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'FacetedFilterManager', 'ReferentielResource', function ($scope, $routeParams, icons, QueryBuilderFactory, FacetedFilterManager, ReferentielResource) {
+    .controller('ContributorCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'FacetedFilterManager', 'SearchResource', function ($scope, $routeParams, icons, QueryBuilderFactory, FacetedFilterManager, SearchResource) {
 
         function loadItem(id) {
 
-            ReferentielResource.get({refKey: 'PERSON:' + id}).$promise.then(function (referentielEntity) {
-                $scope.contributor = angular.fromJson(referentielEntity.content);
+            var queryBuilder = QueryBuilderFactory.make({
+                projection: 'key, @this.toJSON("fetchPlan:*:-1")',
+                source: 'person'
+            });
 
-                $scope.ready = true;
-                loadResources($scope.contributor.id);
+            queryBuilder.equals('meta_ortolang-referentiel-json.id', id);
+
+            var query = queryBuilder.toString();
+            SearchResource.json({query: query}, function (jsonResults) {
+                if(jsonResults.length>0) {
+                    var person = angular.fromJson(jsonResults[0]['this']);
+
+                    $scope.contributor = person['meta_ortolang-referentiel-json'];
+                    $scope.ready = true;
+                    loadResources(jsonResults[0].key);
+                }
             });
         }
 
         function loadResources(contributor) {
             if (contributor) {
                 $scope.queryBuilder.and();
-                $scope.queryBuilder.in('meta_ortolang-item-json.contributors[entity][id]', [contributor]);
+                $scope.queryBuilder.in('meta_ortolang-item-json.contributors[entity]', ['${' + contributor + '}']);
                 $scope.query = $scope.queryBuilder.toString();
             }
         }
