@@ -1,75 +1,59 @@
-<div class="row" ng-controller="BasicInfoCtrl">
-    <div class="col-sm-12 col-md-12 col-lg-12 tab-pane-content">
-        <div class="form-group" ng-class="{'has-error': errors.type===true}">
-            <label for="type" class="control-label">{{'ITEM.TYPE.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
-            <div class="btn-group btn-group-justified o-radio-button-group">
-                <label class="btn btn-default" ng-class="{'active': metadata.type==='Corpus'}">
-                    <input type="radio" value="Corpus" ng-model="metadata.type"> <span class="fa fa-fw fa-book fa-2x"></span><br/>{{'ITEM.TYPE.VALUES.CORPORA' | translate}}
-                </label>
-                <label class="btn btn-default" ng-class="{'active': metadata.type==='Lexique'}">
-                    <input type="radio" value="Lexique" ng-model="metadata.type"> <span class="fa fa-fw fa-cubes fa-2x"></span><br/>{{'ITEM.TYPE.VALUES.LEXICON' | translate}}
-                </label>
-                <label class="btn btn-default" ng-class="{'active': metadata.type==='Outil'}">
-                    <input type="radio" value="Outil" ng-model="metadata.type"> <span class="fa fa-fw fa-quote-right fa-2x"></span><br/>{{'ITEM.TYPE.VALUES.TOOL' | translate}}
-                </label>
+<div ng-controller="BasicInfoCtrl">
+    <div class="form-group" ng-class="{'has-error': errors.type === true}">
+        <label for="type" class="control-label">{{'ITEM.TYPE.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
+        <div class="btn-group btn-group-justified o-radio-button-group">
+            <label class="btn btn-default" ng-class="{'active': metadata.type === 'Corpus'}">
+                <input type="radio" value="Corpus" ng-model="metadata.type"> <span class="fa-2x" ng-class="::icons.section.corpora"></span><br/>{{'ITEM.TYPE.VALUES.CORPORA' | translate}}
+            </label>
+            <label class="btn btn-default" ng-class="{'active': metadata.type === 'Lexique'}">
+                <input type="radio" value="Lexique" ng-model="metadata.type"> <span class="fa-2x" ng-class="::icons.section.lexicons"></span><br/>{{'ITEM.TYPE.VALUES.LEXICON' | translate}}
+            </label>
+            <label class="btn btn-default" ng-class="{'active': metadata.type === 'Outil'}">
+                <input type="radio" value="Outil" ng-model="metadata.type"> <span class="fa-2x" ng-class="::icons.section.tools"></span><br/>{{'ITEM.TYPE.VALUES.TOOL' | translate}}
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': errors.title === true}">
+        <label for="md-title" class="control-label">{{'ITEM.TITLE.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
+        <div class="input-group">
+            <input id="md-title" type="text" class="form-control" name="title-value" autocomplete="off" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" ng-change="updateTitle()" aria-label="title">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" name="title-lang" ng-model="selectedTitleLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeTitleLanguage()" data-placement="bottom-right" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
             </div>
         </div>
+    </div>
 
-        <div class="form-group" ng-class="{'has-error': errors.title===true}">
-            <label for="title" class="control-label">{{'ITEM.TITLE.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
-            
-            <div class="input-group">
-                <input type="text" class="form-control" name="title-value" autocomplete="off" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" ng-change="updateTitle()" aria-label="title">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" name="title-lang" ng-model="selectedTitleLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeTitleLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
-                </div>
-            </div>
+    <div class="form-group" ng-class="{'has-error': errors.description === true}">
+        <label for="md-description" class="control-label">{{'ITEM.DESCRIPTION.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
+        <div class="input-group">
+            <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
         </div>
+        <textarea class="form-control" id="md-description" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value" ng-change="updateDescription()"></textarea>
+    </div>
 
-        <div class="form-group" ng-class="{'has-error': errors.description===true}">
-            <label for="description" class="control-label">{{'ITEM.DESCRIPTION.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
-
-            <div class="input-group">
-                <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
-            </div>
-            
-            <textarea class="form-control" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value" ng-change="updateDescription()"></textarea>
-                
+    <div class="form-group">
+        <label for="documentation" class="control-label" translate="MARKET.DOCUMENTATIONS"></label>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-click="fileDocumentationPathSelectorModal.show()">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="fileDocumentationPathSelectorModal.show()" type="button">{{'SELECT' | translate}}</button>
+                </span>
         </div>
-        <div class="form-group">
-            <label for="documentation" class="control-label">{{'MARKET.DOCUMENTATIONS' | translate}}</label>
-            
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-click="fileDocumentationPathSelectorModal.show()"></input>
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="fileDocumentationPathSelectorModal.show()" type="button">{{'SELECT' | translate}}</button>
-                        </span>
+        <br/>
+        <table ng-if="documentations" class="table table-bordered table-responsive">
+            <tbody>
+            <tr ng-repeat="documentation in documentations">
+                <td>
+                    <div style="padding:12px">
+                        <div class="media-body">{{documentation.path}}</div>
+                        <div class="media-right">
+                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removeDocumentation(documentation)"></span>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <br/>
-            <div class="row" ng-if="documentations">
-                <div class="col-md-12">
-                    <table class="table table-bordered table-responsive">
-                        <tbody>
-                            <tr ng-repeat="documentation in documentations">
-                                <td>
-                                    <div style="padding:12px">
-                                        <div class="media-body">
-                                            {{documentation.path}}
-                                        </div>
-                                        <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removeDocumentation(documentation)"></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
