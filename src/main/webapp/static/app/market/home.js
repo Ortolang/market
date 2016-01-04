@@ -26,31 +26,31 @@ angular.module('ortolangMarketApp')
 
                 var optMC4 = OptionFacetedFilter.make({
                     label: 'mc4',
-                    value: 'mc4',
+                    value: '"mc4"',
                     length: 1
                 });
                 wsAliasFilter.putSelectedOption(optMC4);
                 var optDemonette = OptionFacetedFilter.make({
                     label: 'demonette',
-                    value: 'demonette',
+                    value: '"demonette"',
                     length: 1
                 });
                 wsAliasFilter.putSelectedOption(optDemonette);
                 var optLA = OptionFacetedFilter.make({
                     label: 'litteracieavancee',
-                    value: 'litteracieavancee',
+                    value: '"litteracieavancee"',
                     length: 1
                 });
                 wsAliasFilter.putSelectedOption(optLA);
                 var optCorpus14 = OptionFacetedFilter.make({
                     label: 'corpus14',
-                    value: 'corpus14',
+                    value: '"corpus14"',
                     length: 1
                 });
                 wsAliasFilter.putSelectedOption(optCorpus14);
                 var optComere = OptionFacetedFilter.make({
                     label: 'comere',
-                    value: 'comere',
+                    value: '"comere"',
                     length: 1
                 });
                 wsAliasFilter.putSelectedOption(optComere);
