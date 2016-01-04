@@ -44,120 +44,140 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
-            addAvailableFilter({
-                id: 'meta_ortolang-item-json.toolLanguages',
-                alias: 'toolLanguages',
-                type: 'array',
-                label: 'MARKET.FACET.TOOL_LANGUAGE',
-                resetLabel: 'MARKET.FACET.ALL_LANG',
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            }, 'Language', 1);
+            listTerms().then(function (terms) {
 
-            addAvailableFilter({
-                id: 'meta_ortolang-item-json.toolFunctionalities',
-                alias: 'toolFunctionalities',
-                type: 'array',
-                label: 'MARKET.FACET.TOOL_FUNCTIONALITY',
-                resetLabel: 'MARKET.FACET.ALL_TOOL_FUNCTIONALITY'
-            }, 'ToolFunctionality');
+                addAvailableFilter({
+                    id: 'meta_ortolang-item-json.toolLanguages',
+                    alias: 'toolLanguages',
+                    type: 'array',
+                    label: 'MARKET.FACET.TOOL_LANGUAGE',
+                    resetLabel: 'MARKET.FACET.ALL_LANG',
+                    priority: 'high',
+                    view: 'dropdown-faceted-filter'
+                }, 'Language', terms);
 
-            addAvailableFilter({
-                id: 'meta_ortolang-item-json.toolInputData',
-                alias: 'toolInputData',
-                type: 'array',
-                label: 'MARKET.FACET.TOOL_INPUTDATA',
-                resetLabel: 'MARKET.FACET.ALL_TOOL_INPUTDATA'
-            }, 'ToolInputData');
-
-            addAvailableFilter({
-                id: 'meta_ortolang-item-json.toolOutputData',
-                alias: 'toolOutputData',
-                type: 'array',
-                label: 'MARKET.FACET.TOOL_OUTPUTDATA',
-                resetLabel: 'MARKET.FACET.ALL_TOOL_OUTPUTDATA'
-            }, 'ToolOutputData');
-
-            addAvailableFilter({
-                id: 'meta_ortolang-item-json.toolFileEncodings',
-                alias: 'toolFileEncodings',
-                type: 'array',
-                label: 'MARKET.FACET.TOOL_FILE_ENCODINGS',
-                resetLabel: 'MARKET.FACET.ALL_TOOL_FILE_ENCODINGS'
-            }, 'ToolFileEncoding');
-
-            var statusOfUseFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.statusOfUse',
-                alias: 'statusOfUse',
-                label: 'MARKET.FACET.STATUS_OF_USE',
-                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            });
-            listStatusOfUses().then(function (entities) {
-                angular.forEach(entities, function(entity) {
-                    statusOfUseFilter.putOption(OptionFacetedFilter.make({
-                        label: entity.label,
-                        value: entity.id,
-                        length: 1
-                    }));
+                var statusOfUseFilter = FacetedFilter.make({
+                    id: 'meta_ortolang-item-json.statusOfUse',
+                    alias: 'statusOfUse',
+                    label: 'MARKET.FACET.STATUS_OF_USE',
+                    resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
+                    priority: 'high',
+                    view: 'dropdown-faceted-filter'
                 });
+                listStatusOfUses().then(function (entities) {
+                    angular.forEach(entities, function(entity) {
+                        statusOfUseFilter.putOption(OptionFacetedFilter.make({
+                            label: entity.label,
+                            value: entity.id,
+                            length: 1
+                        }));
+                    });
+                });
+                $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
+
+                addAvailableFilter({
+                    id: 'meta_ortolang-item-json.toolFunctionalities',
+                    alias: 'toolFunctionalities',
+                    type: 'array',
+                    label: 'MARKET.FACET.TOOL_FUNCTIONALITY',
+                    resetLabel: 'MARKET.FACET.ALL_TOOL_FUNCTIONALITY'
+                }, 'ToolFunctionality', terms);
+
+                addAvailableFilter({
+                    id: 'meta_ortolang-item-json.toolInputData',
+                    alias: 'toolInputData',
+                    type: 'array',
+                    label: 'MARKET.FACET.TOOL_INPUTDATA',
+                    resetLabel: 'MARKET.FACET.ALL_TOOL_INPUTDATA'
+                }, 'ToolInputData', terms);
+
+                addAvailableFilter({
+                    id: 'meta_ortolang-item-json.toolOutputData',
+                    alias: 'toolOutputData',
+                    type: 'array',
+                    label: 'MARKET.FACET.TOOL_OUTPUTDATA',
+                    resetLabel: 'MARKET.FACET.ALL_TOOL_OUTPUTDATA'
+                }, 'ToolOutputData', terms);
+
+                addAvailableFilter({
+                    id: 'meta_ortolang-item-json.toolFileEncodings',
+                    alias: 'toolFileEncodings',
+                    type: 'array',
+                    label: 'MARKET.FACET.TOOL_FILE_ENCODINGS',
+                    resetLabel: 'MARKET.FACET.ALL_TOOL_FILE_ENCODINGS'
+                }, 'ToolFileEncoding', terms);
+
+
             });
-            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
+
         }
 
-        function addAvailableFilter(filterConfig, refType, rank) {
+        function addAvailableFilter(filterConfig, refType, terms) {
             var filter = FacetedFilter.make(filterConfig);
-            listReferentialEntities(refType, rank).then(function (entities) {
-                angular.forEach(entities, function(entity) {
+            angular.forEach(terms, function(term) {
+                if(angular.isDefined(term.compatibilities) && term.compatibilities.indexOf(refType)>-1) {
                     filter.putOption(OptionFacetedFilter.make({
-                        label: entity.label,
-                        value: entity.id,
+                        label: term.label,
+                        value: term.id,
                         length: 1
                     }));
-                });
+                }
             });
             $scope.filtersManager.addAvailableFilter(filter);
         }
 
-        function listReferentialEntities(entityType, rank) {
-            var deferred = $q.defer();
+        // function addAvailableFilter(filterConfig, refType, rank) {
+        //     var filter = FacetedFilter.make(filterConfig);
+        //     listReferentialEntities(refType, rank).then(function (entities) {
+        //         angular.forEach(entities, function(entity) {
+        //             filter.putOption(OptionFacetedFilter.make({
+        //                 label: entity.label,
+        //                 value: entity.id,
+        //                 length: 1
+        //             }));
+        //         });
+        //     });
+        //     $scope.filtersManager.addAvailableFilter(filter);
+        // }
 
-            var queryBuilder = QueryBuilderFactory.make({
-                projection: '*',
-                source: 'term'
-            });
+        // function listReferentialEntities(entityType, rank) {
+        //     var deferred = $q.defer();
 
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
+        //     var queryBuilder = QueryBuilderFactory.make({
+        //         projection: '*',
+        //         source: 'term'
+        //     });
 
-            // queryBuilder.equals('meta_ortolang-referentiel-json.type', entityType);
-            queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"'+entityType+'"']);
-            if(rank) {
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
-                queryBuilder.and().equals('meta_ortolang-referentiel-json.rank', rank);
-            }
+        //     queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
 
-            var query = queryBuilder.toString();
-            var allReferentialEntities = [];
-            SearchResource.json({query: query}, function (jsonResults) {
-                angular.forEach(jsonResults, function (result) {
-                    var term = angular.fromJson(result);
+        //     // queryBuilder.equals('meta_ortolang-referentiel-json.type', entityType);
+        //     queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"'+entityType+'"']);
+        //     if(rank) {
+        //         queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
+        //         queryBuilder.and().equals('meta_ortolang-referentiel-json.rank', rank);
+        //     }
 
-                    if(term.labels) {
-                        var entity = {id: term['@rid'], label: Helper.getMultilingualValue(term.labels)};
-                        if(term.rank) {
-                            entity.rank = term.rank;
-                        }
-                        allReferentialEntities.push(entity);
-                    }
-                });
-                deferred.resolve(allReferentialEntities);
-            }, function () {
-                deferred.reject();
-            });
+        //     var query = queryBuilder.toString();
+        //     var allReferentialEntities = [];
+        //     SearchResource.json({query: query}, function (jsonResults) {
+        //         angular.forEach(jsonResults, function (result) {
+        //             var term = angular.fromJson(result);
 
-            return deferred.promise;
-        }
+        //             if(term.labels) {
+        //                 var entity = {id: term['@rid'], label: Helper.getMultilingualValue(term.labels)};
+        //                 if(term.rank) {
+        //                     entity.rank = term.rank;
+        //                 }
+        //                 allReferentialEntities.push(entity);
+        //             }
+        //         });
+        //         deferred.resolve(allReferentialEntities);
+        //     }, function () {
+        //         deferred.reject();
+        //     });
+
+        //     return deferred.promise;
+        // }
 
         function listStatusOfUses() {
             var deferred = $q.defer();
@@ -184,6 +204,46 @@ angular.module('ortolangMarketApp')
                     }
                 });
                 deferred.resolve(allStatusOfUses);
+            }, function () {
+                deferred.reject();
+            });
+
+            return deferred.promise;
+        }
+
+        function listTerms() {
+            var deferred = $q.defer();
+
+            var queryBuilder = QueryBuilderFactory.make({
+                projection: '*',
+                source: 'term'
+            });
+
+            queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
+
+            queryBuilder.addProjection('meta_ortolang-referentiel-json.compatibilities', 'compatibilities');
+
+            queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
+            queryBuilder.equals('meta_ortolang-referentiel-json.rank', 1);
+
+            var query = queryBuilder.toString();
+            var terms = [];
+            SearchResource.json({query: query}, function (jsonResults) {
+                angular.forEach(jsonResults, function (result) {
+                    var term = angular.fromJson(result);
+
+                    if(term.labels) {
+                        var entity = {id: term['@rid'], label: Helper.getMultilingualValue(term.labels)};
+                        if(term.rank) {
+                            entity.rank = term.rank;
+                        }
+                        if(term.compatibilities) {
+                            entity.compatibilities = term.compatibilities;
+                        }
+                        terms.push(entity);
+                    }
+                });
+                deferred.resolve(terms);
             }, function () {
                 deferred.reject();
             });
