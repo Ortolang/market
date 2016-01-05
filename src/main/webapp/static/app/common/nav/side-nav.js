@@ -39,12 +39,6 @@ angular.module('ortolangMarketApp')
                             $scope.select('home');
                             $rootScope.ortolangPageTitle = undefined;
                             break;
-                        case '/tasks':
-                            $scope.select('tasks');
-                            break;
-                        case '/processes':
-                            $scope.select('processes');
-                            break;
                         case '/profile':
                             $scope.select('profile');
                             break;

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'Runtime', 'AtmosphereService',
-        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, Runtime, AtmosphereService) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService',
+        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService) {
 
             var uploader, queueLimitReached, queueLimitModal;
 
@@ -92,7 +92,7 @@ angular.module('ortolangMarketApp')
             $scope.isZipExtractionQueueEmpty = function () {
                 var empty = true;
                 angular.forEach(uploader.zipExtractionQueue, function (extractionQueueItem) {
-                    if (extractionQueueItem.state !== Runtime.getStates().completed && extractionQueueItem.state !== Runtime.getStates().aborted) {
+                    if (extractionQueueItem.state !== processStates.completed && extractionQueueItem.state !== processStates.aborted) {
                         empty = false;
                     }
                 });
@@ -179,7 +179,7 @@ angular.module('ortolangMarketApp')
                         zipExtractionQueueItem.fileName = fileItem.file.name;
                         zipExtractionQueueItem.wsName = fileItem.wsName;
                         zipExtractionQueueItem.ziproot = fileItem.ziproot;
-                        zipExtractionQueueItem.state = Runtime.getStates().pending;
+                        zipExtractionQueueItem.state = processStates.pending;
                         uploader.zipExtractionQueue.push(zipExtractionQueueItem);
                         break;
                     case ortolangType.metadata:

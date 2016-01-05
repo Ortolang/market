@@ -16,7 +16,6 @@ angular.module('ortolangMarketApp')
             $scope.User = User;
             $scope.Settings = Settings;
             $scope.Cart = Cart;
-            //$scope.Runtime = Runtime;
             $scope.StaticWebsite = StaticWebsite;
 
             $scope.toggleNavbar = function () {

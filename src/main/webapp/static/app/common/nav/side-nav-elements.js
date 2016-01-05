@@ -75,23 +75,5 @@ angular.module('ortolangMarketApp')
             hiddenSideNav: false,
             hiddenTopNav: false,
             authenticated: true
-        },
-        {
-            class: 'processes',
-            path: '/processes',
-            description: 'NAV.PROCESSES',
-            iconCss: 'fa fa-fw fa-tasks fa-2x',
-            hiddenSideNav: true,
-            hiddenTopNav: false,
-            authenticated: true
-        },
-        {
-            class: 'tasks',
-            path: '/tasks',
-            description: 'NAV.TASKS',
-            iconCss: 'fa fa-fw fa-bell fa-2x',
-            hiddenSideNav: true,
-            hiddenTopNav: false,
-            authenticated: true
         }
     ]);

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolListCtrl', ['$scope', 'ToolManager', 'Helper', '$rootScope', '$translate', '$http', '$filter', 'Runtime', '$alert',
-        function ($scope, ToolManager, Helper, $rootScope, $translate, $http, $filter, Runtime, $alert) {
+    .controller('ToolListCtrl', ['$scope', 'ToolManager', 'Helper', '$rootScope', '$translate', '$http', '$filter', 'processStates', '$alert',
+        function ($scope, ToolManager, Helper, $rootScope, $translate, $http, $filter, processStates, $alert) {
 
 
             // ***************** //
@@ -117,7 +117,7 @@ angular.module('ortolangMarketApp')
             function onSubmit () {
                 $scope.config.model.toolKey = $scope.selectedTool.getKey();
                 $scope.currentJob = {};
-                $scope.currentJob.state = $translate.instant('PROCESSES.'+ Runtime.getStates().submitted);
+                $scope.currentJob.state = $translate.instant('PROCESSES.'+ processStates.submitted);
                 $scope.currentJob.completedStates = [];
                 ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.config.model).$promise.then(
                     function (job) {
@@ -250,11 +250,11 @@ angular.module('ortolangMarketApp')
                 if($scope.currentJob !== undefined && message.fromObject === $scope.currentJob.job.processId) {
                     $scope.currentJob.completedStates.push($scope.currentJob.state);
                     $scope.currentJob.state = $translate.instant('PROCESSES.' + message.arguments.state);
-                    if(message.arguments.state === Runtime.getStates().completed) {
+                    if(message.arguments.state === processStates.completed) {
                         $scope.currentJob.completed = true;
                         $scope.currentJob.error = false;
                     }
-                    if((message.arguments.state === Runtime.getStates().suspended) || (message.arguments.state === Runtime.getStates().aborted)) {
+                    if((message.arguments.state === processStates.suspended) || (message.arguments.state === processStates.aborted)) {
                         $scope.currentJob.completed = true;
                         $scope.currentJob.error = true;
                     }
