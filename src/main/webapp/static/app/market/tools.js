@@ -126,59 +126,6 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(filter);
         }
 
-        // function addAvailableFilter(filterConfig, refType, rank) {
-        //     var filter = FacetedFilter.make(filterConfig);
-        //     listReferentialEntities(refType, rank).then(function (entities) {
-        //         angular.forEach(entities, function(entity) {
-        //             filter.putOption(OptionFacetedFilter.make({
-        //                 label: entity.label,
-        //                 value: entity.id,
-        //                 length: 1
-        //             }));
-        //         });
-        //     });
-        //     $scope.filtersManager.addAvailableFilter(filter);
-        // }
-
-        // function listReferentialEntities(entityType, rank) {
-        //     var deferred = $q.defer();
-
-        //     var queryBuilder = QueryBuilderFactory.make({
-        //         projection: '*',
-        //         source: 'term'
-        //     });
-
-        //     queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
-
-        //     // queryBuilder.equals('meta_ortolang-referentiel-json.type', entityType);
-        //     queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"'+entityType+'"']);
-        //     if(rank) {
-        //         queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
-        //         queryBuilder.and().equals('meta_ortolang-referentiel-json.rank', rank);
-        //     }
-
-        //     var query = queryBuilder.toString();
-        //     var allReferentialEntities = [];
-        //     SearchResource.json({query: query}, function (jsonResults) {
-        //         angular.forEach(jsonResults, function (result) {
-        //             var term = angular.fromJson(result);
-
-        //             if(term.labels) {
-        //                 var entity = {id: term['@rid'], label: Helper.getMultilingualValue(term.labels)};
-        //                 if(term.rank) {
-        //                     entity.rank = term.rank;
-        //                 }
-        //                 allReferentialEntities.push(entity);
-        //             }
-        //         });
-        //         deferred.resolve(allReferentialEntities);
-        //     }, function () {
-        //         deferred.reject();
-        //     });
-
-        //     return deferred.promise;
-        // }
-
         function listStatusOfUses() {
             var deferred = $q.defer();
 
