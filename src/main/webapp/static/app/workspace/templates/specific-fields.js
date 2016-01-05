@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'QueryBuilderFactory', 'SearchResource',
-        function ($rootScope, $scope, $filter, Settings, QueryBuilderFactory, SearchResource) {
+    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'QueryBuilderFactory', 'SearchResource', 'Helper', '$q',
+        function ($rootScope, $scope, $filter, Settings, QueryBuilderFactory, SearchResource, Helper, $q) {
 
             $scope.suggestLanguages = function (query) {
                 var result = $filter('filter')($scope.allLanguages, {label:query});
@@ -123,56 +123,6 @@ angular.module('ortolangMarketApp')
              * Methods to load referential entities
              **/
 
-            function loadAllCorporaType() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaType');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"CorporaType"']);
-
-                var query = queryBuilder.toString();
-                $scope.allCorporaType = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allCorporaType.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllCorporaLanguageType() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaLanguageType');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"CorporaLanguageType"']);
-
-                var query = queryBuilder.toString();
-                $scope.allCorporaLanguageType = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allCorporaLanguageType.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
             function loadAllLanguages() {
 
                 var queryBuilder = QueryBuilderFactory.make({
@@ -180,11 +130,9 @@ angular.module('ortolangMarketApp')
                     source: 'term'
                 });
 
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
 
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Language');
+                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"Language"']);
 
                 var query = queryBuilder.toString();
                 $scope.allLanguages = [];
@@ -192,7 +140,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allLanguages.push({id: term['@rid'], label: term.label});
+                        $scope.allLanguages.push({id: '${' + term.key + '}', label: Helper.getMultilingualValue(term.labels)});
                     });
 
                     if(angular.isDefined($scope.metadata.corporaLanguages)) {
@@ -262,421 +210,53 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            function loadAllCorporaStyles() {
+            function listTerms() {
+                var deferred = $q.defer();
 
                 var queryBuilder = QueryBuilderFactory.make({
                     projection: '*',
                     source: 'term'
                 });
 
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
 
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaStyle');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"CorporaStyle"']);
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.compatibilities', 'compatibilities');
+
+                queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
+                queryBuilder.equals('meta_ortolang-referentiel-json.rank', 1);
 
                 var query = queryBuilder.toString();
-                $scope.allCorporaStyles = [];
+                var terms = [];
                 SearchResource.json({query: query}, function (jsonResults) {
                     angular.forEach(jsonResults, function (result) {
                         var term = angular.fromJson(result);
 
-                        $scope.allCorporaStyles.push({id: '${' + term.key + '}', label: term.label});
+                        if(term.labels) {
+                            var entity = {id: '${' + term.key + '}', label: Helper.getMultilingualValue(term.labels)};
+                            if(term.rank) {
+                                entity.rank = term.rank;
+                            }
+                            if(term.compatibilities) {
+                                entity.compatibilities = term.compatibilities;
+                            }
+                            terms.push(entity);
+                        }
                     });
-
+                    deferred.resolve(terms);
+                }, function () {
+                    deferred.reject();
                 });
+
+                return deferred.promise;
             }
 
-            function loadAllAnnotationLevels() {
+            function addTerms(compatibility, arrayName, terms) {
 
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'AnnotationLevel');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"AnnotationLevel"']);
-
-                var query = queryBuilder.toString();
-                $scope.allAnnotationLevels = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allAnnotationLevels.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllCorporaFormats() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaFormat');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"CorporaFormat"']);
-
-                var query = queryBuilder.toString();
-                $scope.allCorporaFormats = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allCorporaFormats.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllCorporaFileEncodings() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaFileEncoding');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"CorporaFileEncoding"']);
-
-                var query = queryBuilder.toString();
-                $scope.allCorporaFileEncodings = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allCorporaFileEncodings.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllCorporaDataTypes() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'CorporaDataType');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"CorporaDataType"']);
-
-                var query = queryBuilder.toString();
-                $scope.allCorporaDataTypes = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allCorporaDataTypes.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-
-            function loadAllLexiconInputTypes() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconInputType');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"LexiconInputType"']);
-
-                var query = queryBuilder.toString();
-                $scope.allLexiconInputTypes = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allLexiconInputTypes.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllLexiconDescriptionTypes() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconDescriptionType');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"LexiconDescriptionType"']);
-
-                var query = queryBuilder.toString();
-                $scope.allLexiconDescriptionTypes = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allLexiconDescriptionTypes.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllLexiconLanguageTypes() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconLanguageType');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"LexiconLanguageType"']);
-
-                var query = queryBuilder.toString();
-                $scope.allLexiconLanguageTypes = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allLexiconLanguageTypes.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllLexiconFormats() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'LexiconFormat');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"LexiconFormat"']);
-
-                var query = queryBuilder.toString();
-                $scope.allLexiconFormats = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allLexiconFormats.push({id: '${' + term.key + '}', label: term.label});
-                    });
-                });
-            }
-
-            function loadAllOperatingSystems() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'OperatingSystem');
-
-                var query = queryBuilder.toString();
-                $scope.allOperatingSystems = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allOperatingSystems.push({id: term['@rid'], label: term.label});
-                    });
-                });
-            }
-
-            function loadAllProgrammingLanguages() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ProgrammingLanguage');
-
-                var query = queryBuilder.toString();
-                $scope.allProgrammingLanguages = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allProgrammingLanguages.push({id: term['@rid'], label: term.label});
-                    });
-                });
-            }
-
-            function loadAllToolSupports() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolSupport');
-
-                var query = queryBuilder.toString();
-                $scope.allToolSupports = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allToolSupports.push({id: term['@rid'], label: term.label});
-                    });
-
-                });
-            }
-
-            function loadAllToolFunctionalities() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolFunctionality');
-
-                var query = queryBuilder.toString();
-                $scope.allToolFunctionalities = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allToolFunctionalities.push({id: term['@rid'], label: term.label});
-                    });
-                });
-            }
-
-            function loadAllToolInputData() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolInputData');
-
-                var query = queryBuilder.toString();
-                $scope.allToolInputData = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allToolInputData.push({id: term['@rid'], label: term.label});
-                    });
-                });
-            }
-
-            function loadAllToolOutputData() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolOutputData');
-
-                var query = queryBuilder.toString();
-                $scope.allToolOutputData = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allToolOutputData.push({id: term['@rid'], label: term.label});
-                    });
-                });
-            }
-
-            function loadAllToolFileEncodings() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=fr].value', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.equals('meta_ortolang-referentiel-json.type', 'ToolFileEncoding');
-
-                var query = queryBuilder.toString();
-                $scope.allToolFileEncodings = [];
-                SearchResource.json({query: query}).$promise.then(function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allToolFileEncodings.push({id: term['@rid'], label: term.label});
-                    });
-                });
-            }
-
-            function loadAllTerms(compatibility, arrayName) {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"'+compatibility+'"']);
-
-                var query = queryBuilder.toString();
                 $scope[arrayName] = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope[arrayName].push({id: '${' + term.key + '}', label: term.label});
-                    });
+                angular.forEach(terms, function (term) {
+                    if(angular.isDefined(term.compatibilities) && term.compatibilities.indexOf(compatibility)>-1) {
+                        $scope[arrayName].push(term);
+                    }
                 });
             }
 
@@ -691,43 +271,28 @@ angular.module('ortolangMarketApp')
                 $scope.selectedToolLanguages = [];
                 $scope.selectedNavigationLanguages = [];
 
-                loadAllTerms('CorporaLanguageType', 'allCorporaLanguageType');
-                loadAllTerms('CorporaType', 'allCorporaType');
-                loadAllTerms('CorporaStyle', 'allCorporaStyles');
-                loadAllTerms('AnnotationLevel', 'allAnnotationLevels');
-                loadAllTerms('CorporaFormat', 'allCorporaFormats');
-                loadAllTerms('CorporaFileEncoding', 'allCorporaFileEncodings');
-                loadAllTerms('CorporaDataType', 'allCorporaDataTypes');
-                loadAllTerms('LexiconInputType', 'allLexiconInputTypes');
-                loadAllTerms('LexiconDescriptionType', 'allLexiconDescriptionTypes');
-                loadAllTerms('LexiconLanguageType', 'allLexiconLanguageTypes');
-                loadAllTerms('LexiconFormat', 'allLexiconFormats');
-                loadAllTerms('OperatingSystem', 'allOperatingSystems');
-                loadAllTerms('ProgrammingLanguage', 'allProgrammingLanguages');
-                loadAllTerms('ToolSupport', 'allToolSupports');
-                loadAllTerms('ToolFunctionality', 'allToolFunctionalities');
-                loadAllTerms('ToolInputData', 'allToolInputData');
-                loadAllTerms('ToolOutputData', 'allToolOutputData');
-                loadAllTerms('ToolFileEncoding', 'allToolFileEncodings');
-                // loadAllCorporaLanguageType();
-                // loadAllCorporaType();
+                listTerms().then(function (terms) {
+                    addTerms('CorporaLanguageType', 'allCorporaLanguageType', terms);
+                    addTerms('CorporaType', 'allCorporaType', terms);
+                    addTerms('CorporaStyle', 'allCorporaStyles', terms);
+                    addTerms('AnnotationLevel', 'allAnnotationLevels', terms);
+                    addTerms('CorporaFormat', 'allCorporaFormats', terms);
+                    addTerms('CorporaFileEncoding', 'allCorporaFileEncodings', terms);
+                    addTerms('CorporaDataType', 'allCorporaDataTypes', terms);
+                    addTerms('LexiconInputType', 'allLexiconInputTypes', terms);
+                    addTerms('LexiconDescriptionType', 'allLexiconDescriptionTypes', terms);
+                    addTerms('LexiconLanguageType', 'allLexiconLanguageTypes', terms);
+                    addTerms('LexiconFormat', 'allLexiconFormats', terms);
+                    addTerms('OperatingSystem', 'allOperatingSystems', terms);
+                    addTerms('ProgrammingLanguage', 'allProgrammingLanguages', terms);
+                    addTerms('ToolSupport', 'allToolSupports', terms);
+                    addTerms('ToolFunctionality', 'allToolFunctionalities', terms);
+                    addTerms('ToolInputData', 'allToolInputData', terms);
+                    addTerms('ToolOutputData', 'allToolOutputData', terms);
+                    addTerms('ToolFileEncoding', 'allToolFileEncodings', terms);
+                });
+
                 loadAllLanguages();
-                // loadAllCorporaStyles();
-                // loadAllAnnotationLevels();
-                // loadAllCorporaFormats();
-                // loadAllCorporaFileEncodings();
-                // loadAllCorporaDataTypes();
-                // loadAllLexiconInputTypes();
-                // loadAllLexiconDescriptionTypes();
-                // loadAllLexiconLanguageTypes();
-                // loadAllLexiconFormats();
-                // loadAllOperatingSystems();
-                // loadAllProgrammingLanguages();
-                // loadAllToolSupports();
-                // loadAllToolFunctionalities();
-                // loadAllToolInputData();
-                // loadAllToolOutputData();
-                // loadAllToolFileEncodings();
             }
             init();
 }]);
