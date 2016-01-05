@@ -11,6 +11,12 @@ angular.module('ortolangMarketApp')
     .controller('WorkspaceDashboardMetadataCtrl', ['$rootScope', '$scope', '$location', '$filter', '$modal', 'ortolangType', 'ObjectResource', 'Workspace', 'WorkspaceElementResource', 'Content',
         function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content) {
 
+            $scope.applyChange = function () {
+                startSubmit();
+
+                $scope.submitForm();
+            };
+
             $scope.submitForm = function () {
                 console.log('submit form');
 
@@ -37,6 +43,7 @@ angular.module('ortolangMarketApp')
                 }
 
                 if(error) {
+                    abortSubmit();
                     showErrorMessages();
                     return;
                 }
@@ -69,10 +76,22 @@ angular.module('ortolangMarketApp')
                 WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function () {
                     Workspace.refreshActiveWorkspaceMetadata().then(function() {
                         Workspace.getActiveWorkspaceMetadata().then(function() {
+
+                            $scope.applying = false;
                             $location.search('section', 'preview');
                         });
                     });
                 });
+            }
+
+            function startSubmit() {
+                $scope.submitButtonText = '<span class="fa fa-refresh fa-spin"></span> Sauvegarde...';
+                $scope.applying = true;
+            }
+
+            function abortSubmit() {
+                $scope.submitButtonText = 'Appliquer';
+                $scope.applying = false;
             }
 
             /**
@@ -116,6 +135,7 @@ angular.module('ortolangMarketApp')
             });
 
             function init() {
+                $scope.submitButtonText = 'Appliquer';
                 $scope.errors = {title: false, type: false, description: false};
                 $scope.activeTab = 0;
                 if(Workspace.active.metadata!==null) {
