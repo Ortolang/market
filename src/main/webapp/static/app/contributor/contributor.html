@@ -3,10 +3,10 @@
         <header>
             <div class="media">
                 <div class="pull-left">
-                    <div ng-if="ready && contributor.emailhash" class="logo-contributor">
+                    <div ng-if="contributor.emailhash" class="logo-contributor">
                         <span avatar data-email-hash="contributor.emailhash" data-size="90" data-img-classes="user-avatar img-responsive"></span>
                     </div>
-                    <div ng-if="ready && !contributor.emailhash" class="logo-contributor thumbnail">
+                    <div ng-if="!contributor.emailhash" class="logo-contributor thumbnail">
                         <span ng-if="!contributor.img" class="fa fa-user fa-5x"></span>
                     </div>
                 </div>
@@ -16,6 +16,6 @@
             </div>
         </header>
 
-        <div items data-title="'CONTRIBUTOR.LIST_OF_RESOURCES'" data-filters-manager="filtersManager" data-query="query"></div>
+        <div items data-title="'CONTRIBUTOR.LIST_OF_RESOURCES'" data-query="query"></div>
     </section>
 </div>
