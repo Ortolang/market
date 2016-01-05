@@ -106,7 +106,7 @@ angular.module('ortolangMarketApp')
                     };
                     publishModal = $modal({
                         scope: modalScope,
-                        template: 'workspace/templates/publish-modal.html',
+                        templateUrl: 'workspace/templates/publish-modal.html',
                         show: true
                     });
                 } else {
@@ -131,7 +131,7 @@ angular.module('ortolangMarketApp')
                 };
                 deleteWorkspaceModal = $modal({
                     scope: modalScope,
-                    template: 'workspace/templates/delete-workspace-modal.html',
+                    templateUrl: 'workspace/templates/delete-workspace-modal.html',
                     show: true
                 });
             };

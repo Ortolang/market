@@ -70,7 +70,7 @@ angular.module('ortolangMarketApp')
             });
             createWorkspaceModal = $modal({
                 scope: modalScope,
-                template: 'workspace/templates/create-workspace-modal.html',
+                templateUrl: 'workspace/templates/create-workspace-modal.html',
                 show: true
             });
         };

@@ -19,6 +19,33 @@ a:focus {
   outline: none;
 }
 
+button.no-border {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  opacity: 0.5;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.clear-md {
+  @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    clear: both;
+  }
+}
+.clear-lg {
+  @media (min-width: @screen-lg-min) {
+    clear: both;
+  }
+}
+
 .btn-secondary {
   .button-variant(@btn-secondary-color; @btn-secondary-bg; @btn-secondary-border);
 }

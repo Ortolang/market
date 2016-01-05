@@ -154,7 +154,7 @@ angular.module('ortolangMarketApp')
                     queueLimitReached = true;
                     if (!queueLimitModal) {
                         queueLimitModal = $modal({
-                            template: 'workspace/templates/queue-limit-modal.html',
+                            templateUrl: 'workspace/templates/queue-limit-modal.html',
                             show: true
                         });
                         queueLimitModal.$promise.then(function () {

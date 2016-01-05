@@ -68,6 +68,7 @@ angular.module('ortolangMarketApp')
 
                 // fd.append('format', $scope.userMetadataFormat.key);
                 fd.append('name', 'ortolang-item-json');
+                console.log(content);
 
                 var blob = new Blob([content], { type: contentType});
 
@@ -117,7 +118,7 @@ angular.module('ortolangMarketApp')
 
                 addContributorModal = $modal({
                     scope: modalScope,
-                    template: 'workspace/templates/error-messages-modal.html'
+                    templateUrl: 'workspace/templates/error-messages-modal.html'
                 });
             }
 
@@ -159,7 +160,7 @@ angular.module('ortolangMarketApp')
                 $scope.fileImageSelectModal = $modal({
                     scope: fileImageSelectModalScope,
                     title: 'WORKSPACE.METADATA_EDITOR.SELECT_LOGO',
-                    template: 'common/directives/file-select-modal-template.html',
+                    templateUrl: 'common/directives/file-select-modal-template.html',
                     show: false
                 });
 

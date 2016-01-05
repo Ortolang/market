@@ -96,9 +96,9 @@ angular.module('ortolangMarketApp')
                 filePreviewPathSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
                 filePreviewPathSelectorModalScope.forceHead = true;
                 filePreviewPathSelectorModalScope.fileSelectId = 'filePreviewPathSelectorModal';
-                $scope.filePreviewPathSelectorModal = $modal({scope: filePreviewPathSelectorModalScope, 
-                	title: 'Sélectionnez un fichier pour l\'aperçu', 
-                	template: 'common/directives/file-select-modal-template.html', 
+                $scope.filePreviewPathSelectorModal = $modal({scope: filePreviewPathSelectorModalScope,
+                	title: 'Sélectionnez un fichier pour l\'aperçu',
+                	templateUrl: 'common/directives/file-select-modal-template.html',
                 	show: false
                 });
 
