@@ -110,7 +110,8 @@
                 <article>
                     <div class="row">
                         <div ng-repeat="contributor in contributors" property="contributor" typeof="Person" ng-click="seeContributorPage(contributor)"
-                             class="media profile-card contributor-card col-md-6 col-lg-4" ng-class="{'contributor-link': contributor.entity.id}">
+                             class="media profile-card contributor-card col-md-6 col-lg-4"
+                             ng-class="{'contributor-link': contributor.entity.id, 'clear-md': $index % 2 === 0, 'clear-lg': $index % 3 === 0}">
                             <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
                             </div>
                             <div class="media-body">

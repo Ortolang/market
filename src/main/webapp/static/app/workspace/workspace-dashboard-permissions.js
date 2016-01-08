@@ -100,7 +100,7 @@ angular.module('ortolangMarketApp')
                 };
                 permissionsModal = $modal({
                     scope: modalScope,
-                    template: 'workspace/templates/permissions-modal.html',
+                    templateUrl: 'workspace/templates/permissions-modal.html',
                     show: true
                 });
             } else {

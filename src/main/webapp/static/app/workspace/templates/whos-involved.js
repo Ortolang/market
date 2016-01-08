@@ -19,15 +19,13 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-
-	        $scope.deleteContributor = function (contributor) {
+            $scope.deleteContributor = function (contributor) {
                 var index = $scope.contributors.indexOf(contributor);
-	            if (index > -1) {
-	                $scope.metadata.contributors.splice(index, 1);
+                if (index > -1) {
+                    $scope.metadata.contributors.splice(index, 1);
                     $scope.contributors.splice(index, 1);
-	            }
-	        };
-
+                }
+            };
 
             /**
              * Methods on person
@@ -35,80 +33,63 @@ angular.module('ortolangMarketApp')
 
             function prepareModalScopeForPerson() {
                 var modalScope = $rootScope.$new(true);
-                // modalScope.type = 'Person';
-                modalScope.roleTag = [];
-                modalScope.allRoles = $scope.allRoles;
+                modalScope.models = {};
+                modalScope.models.roleTag = [];
+                modalScope.allRoles = $scope.models.allRoles;
 
-                modalScope.searchPerson = '';
                 modalScope.allPersons = $scope.allPersons;
 
                 modalScope.$on('tafirstname.select', function (v, i) {
                     // modalScope.type = i.type;
                     // modalScope.id = i.id;
-                    modalScope.rid = i.rid;
-                    modalScope.key = i.key;
-                    modalScope.lastname = i.lastname;
-                    modalScope.firstname = i.firstname;
-                    modalScope.midname = i.midname;
+                    modalScope.models.rid = i.rid;
+                    modalScope.models.key = i.key;
+                    modalScope.models.lastname = i.lastname;
+                    modalScope.models.firstname = i.firstname;
+                    modalScope.models.midname = i.midname;
                     if (angular.isDefined(i.org)) {
-                        modalScope.organizationFullname = i.org['meta_ortolang-referentiel-json'].fullname;
+                        modalScope.models.organizationFullname = i.org['meta_ortolang-referentiel-json'].fullname;
                         modalScope.organization = i.org;
                     }
-                    modalScope.fullname = i.fullname;
+                    modalScope.models.fullname = i.fullname;
 
                     modalScope.$apply();
                 });
 
-                modalScope.organizationFullname = '';
+                modalScope.models.organizationFullname = '';
                 modalScope.allOrganizations = $scope.allOrganizations;
 
                 modalScope.$on('taorg.select', function (v, i) {
                     modalScope.organization = i.org;
                     modalScope.organizationKey = i.key;
-                    modalScope.organizationFullname = i.org.fullname;
+                    modalScope.models.organizationFullname = i.org.fullname;
 
                     modalScope.$apply();
                 });
 
 
-                modalScope.clearSearch = clearSearchPerson;
+                modalScope.clearSearch = function () {
+                    modalScope.models = {};
+                };
 
                 return modalScope;
             }
 
-            function setPerson(contributor, myScope) {
-                // contributor.entity.type = myScope.type;
-                // contributor.entity.id = myScope.id;
-                contributor.entity.lastname = myScope.lastname;
-                contributor.entity.rid = myScope.rid;
-                contributor.entity.key = myScope.key;
-                contributor.entity.firstname = myScope.firstname;
-                contributor.entity.midname = myScope.midname;
+            function setPerson(contributor, modalScope) {
+                // contributor.entity.type = modalScope.type;
+                // contributor.entity.id = modalScope.id;
+                contributor.entity.lastname = modalScope.models.lastname;
+                contributor.entity.rid = modalScope.models.rid;
+                contributor.entity.key = modalScope.models.key;
+                contributor.entity.firstname = modalScope.models.firstname;
+                contributor.entity.midname = modalScope.models.midname;
 
-                if (angular.isDefined(myScope.organization) && myScope.organization['meta_ortolang-referentiel-json'].fullname === myScope.organizationFullname) {
-                    // contributor.entity.organization = myScope.organization;
-                    contributor.entity.organization = '${' + myScope.organization.key + '}';
+                if (angular.isDefined(modalScope.organization) && modalScope.organization['meta_ortolang-referentiel-json'].fullname === modalScope.models.organizationFullname) {
+                    // contributor.entity.organization = modalScope.organization;
+                    contributor.entity.organization = '${' + modalScope.organization.key + '}';
                 }
 
                 contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
-            }
-
-            function clearModalScopeForPerson(modalScope) {
-                delete modalScope.id;
-                delete modalScope.rid;
-                delete modalScope.key;
-                delete modalScope.lastname;
-                delete modalScope.firstname;
-                delete modalScope.midname;
-                delete modalScope.organization;
-                delete modalScope.organizationFullname;
-                delete modalScope.fullname;
-            }
-
-            function clearSearchPerson(modalScope) {
-                // angular.element('#add-contributor-searchPerson').val('');
-
-                clearModalScopeForPerson(modalScope);
             }
 
             function getFullnameOfPerson(person) {
@@ -120,8 +101,8 @@ angular.module('ortolangMarketApp')
 
             function setRoles(contributor, myScope) {
                 contributor.roles = [];
-                angular.forEach(myScope.roleTag, function(tag) {
-                        contributor.roles.push(tag);
+                angular.forEach(myScope.models.roleTag, function (tag) {
+                    contributor.roles.push(tag);
                 });
             }
 
@@ -131,9 +112,8 @@ angular.module('ortolangMarketApp')
                     addContributorModal;
 
                 modalScope.newPerson = true;
-                modalScope.createPerson = function() {
+                modalScope.createPerson = function () {
                     modalScope.newPerson = !modalScope.newPerson;
-                    clearSearchPerson(modalScope);
                 };
 
                 modalScope.$on('modal.hide', function () {
@@ -142,39 +122,39 @@ angular.module('ortolangMarketApp')
 
                 modalScope.submit = function (addContributorForm) {
 
-                    if(!personExists(modalScope, $scope.contributors)) {
+                    if (!personExists(modalScope, $scope.contributors)) {
                         addContributorForm.fullname.$setValidity('exists', true);
                     } else {
                         addContributorForm.fullname.$setValidity('exists', false);
                     }
 
-                    if(modalScope.roleTag.length>0) {
+                    if (modalScope.models.roleTag.length > 0) {
                         addContributorForm.roleTag.$setValidity('role', true);
                     } else {
                         addContributorForm.roleTag.$setValidity('role', false);
                     }
 
                     if (addContributorForm.$valid) {
-                        var contributor = {entity:{},roles:[]};
+                        var contributor = {entity: {}, roles: []};
 
                         setPerson(contributor, modalScope);
 
                         setRoles(contributor, modalScope);
 
-                        if($scope.contributors===undefined) {
+                        if ($scope.contributors === undefined) {
                             $scope.contributors = [];
                             $scope.metadata.contributors = [];
                         }
-                        
+
                         $scope.contributors.push(contributor);
 
                         var roles = [];
-                        angular.forEach(contributor.roles, function(role) {
+                        angular.forEach(contributor.roles, function (role) {
                             roles.push('${' + role.id + '}');
                         });
                         // if(angular.isDefined(contributor.entity.rid)) {
-                        if(angular.isDefined(contributor.entity.key)) {
-                            $scope.metadata.contributors.push({entity:'${' + contributor.entity.key + '}', roles: roles, organization: contributor.entity.organization});
+                        if (angular.isDefined(contributor.entity.key)) {
+                            $scope.metadata.contributors.push({entity: '${' + contributor.entity.key + '}', roles: roles, organization: contributor.entity.organization});
                         } else {
                             $scope.metadata.contributors.push({entity: contributor.entity, roles: roles, organization: contributor.entity.organization});
                         }
@@ -185,7 +165,7 @@ angular.module('ortolangMarketApp')
 
                 addContributorModal = $modal({
                     scope: modalScope,
-                    template: 'workspace/templates/add-person-modal.html'
+                    templateUrl: 'workspace/templates/add-person-modal.html'
                 });
             };
 
@@ -196,7 +176,7 @@ angular.module('ortolangMarketApp')
 
             function prepareModalScopeForOrganization() {
                 var modalScope = $rootScope.$new(true);
-                // modalScope.type = 'organization';
+                modalScope.models = {};
 
                 return modalScope;
             }
@@ -214,17 +194,17 @@ angular.module('ortolangMarketApp')
                 return fullname;
             }
 
-            function setOrganization(organization, myScope) {
-                // organization.type = myScope.type;
-                // organization.id = myScope.id;
-                organization.key = myScope.key;
-                organization.name = myScope.name;
-                organization.fullname = getFullnameOfOrganization(myScope);
-                organization.acronym = myScope.acronym;
-                organization.city = myScope.city;
-                organization.country = myScope.country;
-                organization.homepage = myScope.homepage;
-                organization.img = myScope.img;
+            function setOrganization(organization, modalScope) {
+                // organization.type = modalScope.type;
+                // organization.id = modalScope.id;
+                organization.key = modalScope.models.key;
+                organization.name = modalScope.models.name;
+                organization.fullname = getFullnameOfOrganization(modalScope.models);
+                organization.acronym = modalScope.models.acronym;
+                organization.city = modalScope.models.city;
+                organization.country = modalScope.models.country;
+                organization.homepage = modalScope.models.homepage;
+                organization.img = modalScope.models.img;
             }
 
             $scope.createProducer = function () {
@@ -237,13 +217,13 @@ angular.module('ortolangMarketApp')
 
                 modalScope.submit = function (addOrganizationForm) {
 
-                    if(angular.isUndefined(modalScope.name)) {
+                    if (angular.isUndefined(modalScope.models.name)) {
                         addOrganizationForm.name.$setValidity('undefined', false);
                     } else {
                         addOrganizationForm.name.$setValidity('undefined', true);
                     }
 
-                    if(!producerExists(modalScope, $scope.metadata.producers)) {
+                    if (!producerExists(modalScope, $scope.metadata.producers)) {
                         addOrganizationForm.name.$setValidity('exists', true);
                     } else {
                         addOrganizationForm.name.$setValidity('exists', false);
@@ -254,7 +234,7 @@ angular.module('ortolangMarketApp')
 
                         setOrganization(organization, modalScope);
 
-                        if($scope.metadata.producers===undefined) {
+                        if ($scope.metadata.producers === undefined) {
                             $scope.metadata.producers = [];
                             $scope.producers = [];
                         }
@@ -267,7 +247,7 @@ angular.module('ortolangMarketApp')
 
                 addOrganizationModal = $modal({
                     scope: modalScope,
-                    template: 'workspace/templates/add-organization-modal.html'
+                    templateUrl: 'workspace/templates/add-organization-modal.html'
                 });
             };
 
@@ -276,11 +256,11 @@ angular.module('ortolangMarketApp')
              * Utils
              **/
             function producerExists(producer, producers) {
-                if(angular.isDefined(producer.name) && angular.isDefined(producers)) {
+                if (angular.isDefined(producer.name) && angular.isDefined(producers)) {
                     //TODO with $filter
                     var indexProducer;
                     for (indexProducer = 0; indexProducer < producers.length; indexProducer++) {
-                        if(angular.isDefined(producers[indexProducer].id) && angular.isDefined(producer.id)) {
+                        if (angular.isDefined(producers[indexProducer].id) && angular.isDefined(producer.id)) {
                             if (producers[indexProducer].id === producer.id) {
                                 return true;
                             }
@@ -295,10 +275,10 @@ angular.module('ortolangMarketApp')
             }
 
             function personExists(contributor, contributors) {
-                if(angular.isDefined(contributor.fullname) && angular.isDefined(contributors)) {
+                if (angular.isDefined(contributor.fullname) && angular.isDefined(contributors)) {
                     var iContributor;
                     for (iContributor = 0; iContributor < contributors.length; iContributor++) {
-                        if(angular.isDefined(contributors[iContributor].entity.id) && angular.isDefined(contributor.id)) {
+                        if (angular.isDefined(contributors[iContributor].entity.id) && angular.isDefined(contributor.id)) {
                             if (contributors[iContributor].entity.id === contributor.id) {
                                 return true;
                             }
@@ -318,16 +298,6 @@ angular.module('ortolangMarketApp')
                     projection: '@this.toJSON("fetchPlan:*:-1")',
                     source: 'person'
                 });
-
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.type', 'type');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.lastname', 'lastname');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.firstname', 'firstname');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.midname', 'midname');
-                // queryBuilder.addProjection('meta_ortolang-referentiel-json.organization', 'organization');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Person');
 
                 var query = queryBuilder.toString();
                 $scope.allPersons = [];
@@ -351,14 +321,14 @@ angular.module('ortolangMarketApp')
 
                     });
 
-                    if(angular.isDefined($scope.metadata.contributors)) {
+                    if (angular.isDefined($scope.metadata.contributors)) {
                         $scope.contributors = [];
                         angular.forEach($scope.metadata.contributors, function(contributor) {
                             var loadedContributor = null;
 
-                            if(typeof contributor.entity  === 'string') {
+                            if (typeof contributor.entity  === 'string') {
                                 var contributorFound = $filter('filter')($scope.allPersons, {key:Helper.extractKeyFromReferentialId(contributor.entity)}, true);
-                                if(contributorFound.length>0) {
+                                if (contributorFound.length > 0) {
                                     loadedContributor = {entity: contributorFound[0]};
                                 } else {
                                     loadedContributor = {entity: contributor.entity};
@@ -366,16 +336,16 @@ angular.module('ortolangMarketApp')
                             } else {
                                 loadedContributor = {entity: contributor.entity};
                             }
-                            
 
-                            if(contributor.roles && contributor.roles.length>0) {
+
+                            if (contributor.roles && contributor.roles.length > 0) {
 
                                 loadedContributor.roles = [];
-                                angular.forEach(contributor.roles, function(role) {
+                                angular.forEach(contributor.roles, function (role) {
 
                                     var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM term WHERE key="' + Helper.extractKeyFromReferentialId(role) + '"';
                                     SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
-                                        if(jsonObject.length>0) {
+                                        if (jsonObject.length > 0) {
                                             var roleFromRef = angular.fromJson(jsonObject[0].this);
                                             loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
                                         }
@@ -383,17 +353,17 @@ angular.module('ortolangMarketApp')
                                 });
                             }
 
-                            if(contributor.organization) {
+                            if (contributor.organization) {
                                 var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM organization WHERE key="' + Helper.extractKeyFromReferentialId(contributor.organization) + '"';
-                                    SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
-                                        if(jsonObject.length>0) {
-                                            var roleFromRef = angular.fromJson(jsonObject[0].this);
-                                            loadedContributor.organization = roleFromRef['meta_ortolang-referentiel-json'];
-                                        }
-                                    });
+                                SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
+                                    if (jsonObject.length > 0) {
+                                        var roleFromRef = angular.fromJson(jsonObject[0].this);
+                                        loadedContributor.organization = roleFromRef['meta_ortolang-referentiel-json'];
+                                    }
+                                });
                             }
 
-                            if(loadedContributor !== null) {
+                            if (loadedContributor !== null) {
                                 $scope.contributors.push(loadedContributor);
                             }
                         });
@@ -447,13 +417,13 @@ angular.module('ortolangMarketApp')
                         });
                     });
 
-                    if(angular.isDefined($scope.metadata.producers)) {
+                    if (angular.isDefined($scope.metadata.producers)) {
                         $scope.producers = [];
                         angular.forEach($scope.metadata.producers, function(producer) {
 
-                            if(typeof producer  === 'string') {
-                                var producerFound = $filter('filter')($scope.allOrganizations, {key:Helper.extractKeyFromReferentialId(producer)}, true);
-                                if(producerFound.length>0) {
+                            if (typeof producer  === 'string') {
+                                var producerFound = $filter('filter')($scope.allOrganizations, {key: Helper.extractKeyFromReferentialId(producer)}, true);
+                                if (producerFound.length > 0) {
                                     $scope.producers.push(producerFound[0]);
                                 } else {
                                     $scope.producers.push(producer);
@@ -481,12 +451,12 @@ angular.module('ortolangMarketApp')
                 queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"Role"']);
 
                 var query = queryBuilder.toString();
-                $scope.allRoles = [];
+                $scope.models.allRoles = [];
                 SearchResource.json({query: query}, function (jsonResults) {
                     angular.forEach(jsonResults, function (result) {
                         var role = angular.fromJson(result);
 
-                        $scope.allRoles.push({id: role.key, label: role.label, labels: role.labels});
+                        $scope.models.allRoles.push({id: role.key, label: role.label, labels: role.labels});
                     });
                 });
             }
@@ -499,14 +469,15 @@ angular.module('ortolangMarketApp')
              * Initialize the scope
              **/
 
-        	function init() {
+            function init() {
+                $scope.models = {};
                 loadAllPersons();
                 loadAllOrganizations();
-        		loadAllRoles();
+                loadAllRoles();
 
-        		$scope.searchOrganization = '';
-        		$scope.$on('taorg.select', function (v, i) {
-        			var organization = {};
+                $scope.searchOrganization = '';
+                $scope.$on('taorg.select', function (v, i) {
+                    var organization = {};
                     organization.type = 'Organization';
                     organization.id = i.org.id;
                     organization.name = i.org.name;
@@ -519,13 +490,13 @@ angular.module('ortolangMarketApp')
 
                     organization.key = i.key;
 
-                    if($scope.producers===undefined || ($scope.producers!==undefined && !producerExists(organization, $scope.producers))) {
-                        if($scope.producers===undefined) {
+                    if ($scope.producers === undefined || ($scope.producers !== undefined && !producerExists(organization, $scope.producers))) {
+                        if ($scope.producers === undefined) {
                             $scope.producers = [];
                             $scope.metadata.producers = [];
                         }
-                    	$scope.producers.push(organization);
-                        $scope.metadata.producers.push('${'+organization.key+'}');
+                        $scope.producers.push(organization);
+                        $scope.metadata.producers.push('${' + organization.key + '}');
                     } else {
                         console.log('Le laboratoire est déjà présent dans la liste des producteurs de la ressource.');
                     }
@@ -534,6 +505,6 @@ angular.module('ortolangMarketApp')
 
                     $scope.$apply();
                 });
-        	}
-        	init();
-}]);
+            }
+            init();
+        }]);

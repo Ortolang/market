@@ -18,9 +18,11 @@ angular.module('ortolangMarketApp')
                 },
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    var i = 0;
-                    for (i; i < data.length; i++) {
-                        data[i] = angular.fromJson(data[i]);
+                    if (data) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
                     }
                     return data;
                 },

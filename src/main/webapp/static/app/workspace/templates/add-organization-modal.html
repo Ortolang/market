@@ -7,43 +7,42 @@
             </div>
             <div class="modal-body">
                     <form role="form" id="add-organization-form" name="addOrganization" class="form-horizontal" ng-submit="submit(addOrganization)" novalidate>
-                        
+
                         <div>
-                            <hr ng-if="!editing"/>
                             <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.name.$dirty) && addOrganization.name.$invalid}">
                                 <label for="add-organization-name" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.NAME"></label>
                                 <div class="col-sm-10">
-                                    <input ng-model="$parent.name" ng-disabled="$parent.id" type="text" class="form-control" id="add-organization-name" name="name" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.NAME' | translate}}">
+                                    <input ng-model="models.name" ng-disabled="models.id" type="text" class="form-control" id="add-organization-name" name="name" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.NAME' | translate}}">
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.acronym.$dirty) && addOrganization.acronym.$invalid}">
                                 <label for="add-organization-acronym" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.ACRONYM"></label>
                                 <div class="col-sm-10">
-                                    <input  ng-disabled="$parent.id" ng-model="$parent.acronym" type="text" class="form-control" id="add-organization-acronym" name="acronym" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.ACRONYM' | translate}}">
+                                    <input  ng-disabled="models.id" ng-model="models.acronym" type="text" class="form-control" id="add-organization-acronym" name="acronym" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.ACRONYM' | translate}}">
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.city.$dirty) && addOrganization.city.$invalid}">
                                 <label for="add-organization-city" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.CITY"></label>
                                 <div class="col-sm-10">
-                                    <input  ng-disabled="$parent.id" ng-model="$parent.city" type="text" class="form-control" id="add-organization-city" name="city" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.CITY' | translate}}">
+                                    <input  ng-disabled="models.id" ng-model="models.city" type="text" class="form-control" id="add-organization-city" name="city" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.CITY' | translate}}">
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.country.$dirty) && addOrganization.country.$invalid}">
                                 <label for="add-organization-country" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.COUNTRY"></label>
                                 <div class="col-sm-10">
-                                    <input  ng-disabled="$parent.id" ng-model="$parent.country" type="text" class="form-control" id="add-organization-country" name="country" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.COUNTRY' | translate}}">
+                                    <input  ng-disabled="models.id" ng-model="models.country" type="text" class="form-control" id="add-organization-country" name="country" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.COUNTRY' | translate}}">
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.homepage.$dirty) && addOrganization.homepage.$invalid}">
                                 <label for="add-organization-homepage" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.HOMEPAGE"></label>
                                 <div class="col-sm-10">
-                                    <input  ng-disabled="$parent.id" ng-model="$parent.homepage" type="url" class="form-control" id="add-organization-homepage" name="homepage"  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.HOMEPAGE' | translate}}">
+                                    <input  ng-disabled="models.id" ng-model="models.homepage" type="url" class="form-control" id="add-organization-homepage" name="homepage"  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.HOMEPAGE' | translate}}">
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error': (addOrganization.$submitted || addOrganization.img.$dirty) && addOrganization.img.$invalid}">
                                 <label for="add-organization-img" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.IMG"></label>
                                 <div class="col-sm-10">
-                                    <input  ng-disabled="$parent.id" ng-model="$parent.img" type="text" class="form-control" id="add-organization-img" name="img" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.IMG' | translate}}">
+                                    <input  ng-disabled="models.id" ng-model="models.img" type="text" class="form-control" id="add-organization-img" name="img" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_ORGANIZATION_MODAL.IMG' | translate}}">
                                 </div>
                             </div>
                         </div>

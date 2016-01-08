@@ -14,8 +14,6 @@ angular.module('ortolangMarketApp')
             SEARCH: 'Résultats',
             WORKSPACES: 'Mes espaces',
             ITEM: 'Objet',
-            PROCESSES: 'Processus',
-            TASKS: 'Tâches',
             SETTINGS: 'Paramètres',
             LOG_OUT: 'Déconnexion',
             PROFILE: 'Mon profil',

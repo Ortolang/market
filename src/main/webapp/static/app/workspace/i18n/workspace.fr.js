@@ -205,7 +205,7 @@ angular.module('ortolangMarketApp')
                     ROLE: 'Role',
                     MESSAGES: {
                         EXISTS: 'Cette personne est déjà dans la liste.',
-                        ROLE: 'Veuillez spécifier le role de cette peronne.'
+                        ROLE: 'Veuillez spécifier le rôle de cette personne.'
                     }
                 },
                 ADD_ORGANIZATION_MODAL: {
@@ -221,7 +221,7 @@ angular.module('ortolangMarketApp')
                     IMG: 'Logo',
                     MESSAGES: {
                         EXISTS: 'Ce laboratoire est déjà dans la liste.',
-                        UNDEFINED: 'Le nom du laboratoire n\'est pas spécifier.'
+                        UNDEFINED: 'Le nom du laboratoire n\'est pas spécifié.'
                     }
                 },
                 ADD_LICENCE_MODAL: {

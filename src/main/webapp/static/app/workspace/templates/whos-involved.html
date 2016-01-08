@@ -1,68 +1,60 @@
-<div class="row whos-involved" ng-controller="WhosInvolvedCtrl">
-    <div class="col-sm-12 col-md-12 col-lg-12 tab-pane-content">
-        <div class="form-group">
-            <label for="producer" class="control-label">Laboratoire(s) producteur(s)</label>
-
-            <div class="row">
-                <div class="col-md-11">
-                    <input ng-model="$parent.searchProducer" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires producteurs répertoriés dans ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" bs-typeahead>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-default btn-rounded" ng-click="createProducer()" data-title="Ajouter un laboratoire n'ayant pas encore contribué à une ressource sur ORTOLANG" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-bordered table-responsive">
-                        <tbody>
-                            <tr ng-repeat="producer in producers">
-                                <td>
-                                    <div style="padding:12px">
-                                        <div class="media-left">
-                                            <img width="60px" class="img-rounded" ng-src="{{producer.img}}">
-                                        </div>
-                                        <div class="media-body">
-                                            <span  ng-bind="producer.fullname"></span>
-                                        </div>
-                                        <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger"  ng-click="deleteProducer(producer)"></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="whos-involved" ng-controller="WhosInvolvedCtrl">
+    <div class="form-group">
+        <label for="search-producer" class="control-label">Laboratoire(s) producteur(s)</label>
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+            <input ng-model="searchProducer" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" bs-typeahead>
         </div>
-        <hr/>
-        <div class="form-group">
-            <label for="producer" class="control-label">Personne(s) contributrice(s)</label>
-            <div class="form-group">
-
-                <div class="row">
-                    <ul class="list-unstyled">
-                        <li ng-repeat="contributor in contributors" class="profile-card contributor-card col-md-6 col-lg-4" ng-class="{'contributor-link': contributor.entity.id}">
-                            <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
-                            <div class="media-body">
-                                <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span>
-                                <div class="small roles">
-                                    <!-- <span ng-repeat="role in contributor.roles">{{'ROLES.'+role | uppercase | translate}}<span ng-if="!$last">, </span></span> -->
-                                    <span ng-repeat="role in contributor.roles">{{role.labels | multilingualValue}}<span ng-if="!$last">, </span></span>
-                                </div>
-                            </div>
-                            <div class="media-right">
-                                <button type="button" class="close delete-contributor" ng-click="deleteContributor(contributor)">&times;</button>
-                            </div>
-                        </li>
-                        <li class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addPerson()">
-                            <div class="media-left"><button type="button" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
-                            <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
-                        </li>
-                    </ul>
+        <p class="help-block">
+            Vous ne trouvez pas votre laboratoire ?
+            <a href="" ng-click="createProducer()">Ajouter un nouveau laboratoire</a>
+        </p>
+    </div>
+    <table class="table table-bordered table-responsive card-well metadata-editor-table">
+        <tbody>
+        <tr ng-repeat="producer in producers">
+            <td>
+                <div class="media">
+                    <div class="media-left">
+                        <img width="60px" class="img-rounded" ng-src="{{producer.img}}">
+                    </div>
+                    <div class="media-body">
+                        <span  ng-bind="producer.fullname"></span>
+                    </div>
+                    <div class="media-right actions">
+                        <button class="no-border" ng-click="deleteProducer(producer)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
+                            <span ng-class="::icons.remove"></span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <div class="form-group">
+        <label class="control-label">Personne(s) contributrice(s)</label>
+            <ul class="row list-unstyled">
+                <li ng-repeat="contributor in contributors"
+                    ng-class="{'contributor-link': contributor.entity.id, 'clear-md': $index % 2 === 0, 'clear-lg': $index % 3 === 0}"
+                    class="profile-card contributor-card col-md-6 col-lg-4">
+                    <div class="media">
+                        <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
+                        <div class="media-body">
+                            <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span>
+                            <div class="small roles">
+                                <span ng-repeat="role in contributor.roles">{{role.labels | multilingualValue}}<span ng-if="!$last">, </span></span>
+                            </div>
+                        </div>
+                        <div class="media-right">
+                            <button type="button" class="close delete-contributor" ng-click="deleteContributor(contributor)">&times;</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-lg-4 col-md-6 add-member-btn-wrapper" ng-click="addPerson()">
+                    <div class="media-left"><button type="button" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
+                    <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
+                </li>
+            </ul>
     </div>
 </div>

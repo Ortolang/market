@@ -12,7 +12,7 @@
                     <button ng-class="{'btn-warning' : models.tree[element.key].publicationPolicy === 'esr', 'muted' : models.tree[element.key].effectiveAcl === 'esr'}" ng-click="setAcl(models.tree[element.key], 'esr', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.esr"></span></button>
                     <button ng-class="{'btn-danger' : models.tree[element.key].publicationPolicy === 'restricted', 'muted' : models.tree[element.key].effectiveAcl === 'restricted'}" ng-click="setAcl(models.tree[element.key], 'restricted', $event)" class="btn btn-sm btn-default"><span ng-class="::icons.acl.restricted"></span></button>
                 </div>
-                <button class="btn btn-sm btn-default" data-ng-disabled="models.tree[element.key].effectiveAcl" ng-click="removeAcl(models.tree[element.key], $event)"><span ng-class="::icons.browser.remove"></span></button>
+                <button class="btn btn-sm btn-default" data-ng-disabled="models.tree[element.key].effectiveAcl" ng-click="removeAcl(models.tree[element.key], $event)"><span ng-class="::icons.remove"></span></button>
             </div>
         </div>
         <ol ng-show="models.tree[element.key].expanded" class="tree-nodes">

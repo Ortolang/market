@@ -115,18 +115,6 @@ angular
                 controller: 'WorkspaceDashboardCtrl',
                 title: 'NAV.WORKSPACES'
             })
-            .when('/processes', {
-                templateUrl: 'processes/processes.html',
-                controller: 'ProcessesCtrl',
-                requiresAuthentication: true,
-                title: 'NAV.PROCESSES'
-            })
-            .when('/tasks', {
-                templateUrl: 'tasks/tasks.html',
-                controller: 'TasksCtrl',
-                requiresAuthentication: true,
-                title: 'NAV.TASKS'
-            })
             .when('/information/:section?', {
                 templateUrl: 'common/static-website/information.html',
                 controller: 'InformationCtrl',

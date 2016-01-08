@@ -33,7 +33,7 @@ angular.module('ortolangMarketApp')
             };
             addMemberModal = $modal({
                 scope: modalScope,
-                template: 'workspace/templates/add-member-modal.html',
+                templateUrl: 'workspace/templates/add-member-modal.html',
                 show: true
             });
         };

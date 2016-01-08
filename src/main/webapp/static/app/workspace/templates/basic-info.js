@@ -89,7 +89,7 @@ angular.module('ortolangMarketApp')
                     if($scope.metadata.relations.length===0) {
                         delete $scope.metadata.relations;
                     }
-                    
+
                     $scope.documentations.splice(indexDoc, 1);
                 }
             };
@@ -126,7 +126,7 @@ angular.module('ortolangMarketApp')
                 ];
                 $scope.type = $scope.metadata.type;
                 $scope.button = {type: $scope.metadata.type};
-                
+
                 $scope.selectedTitleLanguage = 'fr';
                 $scope.title = {value: ''};
                 if($scope.metadata.title) {
@@ -153,9 +153,9 @@ angular.module('ortolangMarketApp')
                 fileDocumentationPathSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
                 fileDocumentationPathSelectorModalScope.forceHead = true;
                 fileDocumentationPathSelectorModalScope.fileSelectId = 'fileDocumentationPathSelectorModal';
-                $scope.fileDocumentationPathSelectorModal = $modal({scope: fileDocumentationPathSelectorModalScope, 
+                $scope.fileDocumentationPathSelectorModal = $modal({scope: fileDocumentationPathSelectorModalScope,
                     title: 'Sélectionnez un fichier contenant la documentation',
-                    template: 'common/directives/file-select-modal-template.html', 
+                    templateUrl: 'common/directives/file-select-modal-template.html',
                     show: false
                 });
 

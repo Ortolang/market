@@ -84,14 +84,14 @@ angular.module('ortolangMarketApp')
                     	// $scope.metadata.license.licenseWebsite = modalScope.licenseWebsite;
 
                         $scope.metadata.statusOfUse = modalScope.status;
-                        
+
                         addLicenceModal.hide();
                     }
                 };
 
                 addLicenceModal = $modal({
                     scope: modalScope,
-                    template: 'workspace/templates/add-licence-modal.html'
+                    templateUrl: 'workspace/templates/add-licence-modal.html'
                 });
             };
 
