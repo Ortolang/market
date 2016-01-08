@@ -102,7 +102,7 @@ angular.module('ortolangMarketApp')
                             $scope.contributors.push(loadedContributor);
 
                         } else if(startsWith(contributor.entity, '$')) {
-                            // From Workspace preview
+                            // From Workspace preview with contributor inside the referential
                             getReferentialByKey('person', contributor.entity, function (jsonObject) {
                                 if(jsonObject.length>0) {
                                     var contributorEntityFromRef = angular.fromJson(jsonObject[0].this);
@@ -134,10 +134,10 @@ angular.module('ortolangMarketApp')
                             $scope.contributors.push(loadedContributor);
 
                         } else if(angular.isDefined(contributor.entity['meta_ortolang-referentiel-json'])) {
-                            // From Market 
+                            // From Market with contributor inside the referential
                             $scope.contributors.push(contributor.entity['meta_ortolang-referentiel-json']);
                         } else {
-                            // From Workspace (Contributor that needs to be checked)
+                            // From Workspace (Contributor that needs to be checked) and Market with contributor outside the referential
                             loadedContributor.entity = contributor.entity;
 
                             if(contributor.organization) {
@@ -153,12 +153,23 @@ angular.module('ortolangMarketApp')
 
                                 loadedContributor.roles = [];
                                 angular.forEach(contributor.roles, function(role) {
-                                    getReferentialByKey('term', role, function (jsonObject) {
-                                        if(jsonObject.length>0) {
-                                            var roleFromRef = angular.fromJson(jsonObject[0].this);
-                                            loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
-                                        }
-                                    });
+
+                                    if(startsWith(role, '#')) {
+                                        var queryRoleMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + role;
+                                        SearchResource.json({query: queryRoleMeta}, function (jsonObject) {
+                                            if(jsonObject.length>0) {
+                                                var roleFromRef = angular.fromJson(jsonObject[0].this);
+                                                loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
+                                            }
+                                        });
+                                    } else { // Starts by $
+                                        getReferentialByKey('term', role, function (jsonObject) {
+                                            if(jsonObject.length>0) {
+                                                var roleFromRef = angular.fromJson(jsonObject[0].this);
+                                                loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
+                                            }
+                                        });
+                                    }
                                 });
                             }
                             $scope.contributors.push(loadedContributor);

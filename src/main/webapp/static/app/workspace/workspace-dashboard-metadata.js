@@ -123,8 +123,7 @@ angular.module('ortolangMarketApp')
 
 
             var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
-                console.log('metadata-form-market-ortolang caught event "browserSelectedElements-fileImageSelectModal" (selected elements: %o)', elements);
-
+                
                 $scope.metadata.image = elements[0].path;
                 $scope.image = Content.getContentUrlWithKey(elements[0].key);
                 $scope.fileImageSelectModal.hide();

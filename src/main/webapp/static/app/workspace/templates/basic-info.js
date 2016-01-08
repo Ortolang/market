@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BasicInfoCtrl', ['$rootScope', '$scope', '$translate', '$modal', 'Workspace',
-        function ($rootScope, $scope, $translate, $modal, Workspace) {
+    .controller('BasicInfoCtrl', ['$rootScope', '$scope', '$filter', '$translate', '$modal', 'Workspace',
+        function ($rootScope, $scope, $filter, $translate, $modal, Workspace) {
 
         	//TODO put this method to a service
             function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {
@@ -95,18 +95,19 @@ angular.module('ortolangMarketApp')
             };
 
             var deregisterFileDocumentationPathSelectorModal = $rootScope.$on('browserSelectedElements-fileDocumentationPathSelectorModal', function ($event, elements) {
-                console.log('additional-info caught event "browserSelectedElements-fileDocumentationPathSelectorModal" (selected elements: %o)', elements);
-
+            
                if(elements.length>0) {
                     if(angular.isUndefined($scope.metadata.relations)) {
                         $scope.metadata.relations = [];
                     }
 
-                    //TODO check if it exists
                     var relationDocumentation = {type:'documentation', label:[{lang:'fr', value:'Lire la documentation'},{lang:'en', value:'Read the documentation'}], path: elements[0].path};
-                    $scope.metadata.relations.push(relationDocumentation);
-
-                    $scope.documentations.push(relationDocumentation);
+                    
+                    var matchedReleations = $filter('filter')($scope.metadata.relations, {path: relationDocumentation.path}, true);
+                    if(matchedReleations.length===0) {
+                        $scope.metadata.relations.push(relationDocumentation);
+                        $scope.documentations.push(relationDocumentation);
+                    }
 
                     $scope.fileDocumentationPathSelectorModal.hide();
                 }

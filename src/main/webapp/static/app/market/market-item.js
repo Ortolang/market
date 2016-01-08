@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
             var queryBuilder = QueryBuilderFactory.make({projection: 'key, meta_ortolang-item-json.toJSON("fetchPlan:*:-1"), meta_ortolang-workspace-json.snapshotName as snapshotName, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-item-json.type as type', source: 'collection'});
             queryBuilder.equals('status', 'published').and().equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
 
-            console.log(queryBuilder.toString());
             SearchResource.json({query: queryBuilder.toString()}, function (results) {
                 if (results.length >= 1) {
                     if (!/^(corpora|lexicons|applications|tools)$/.test($routeParams.section)) {

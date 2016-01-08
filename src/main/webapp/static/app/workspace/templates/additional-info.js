@@ -71,8 +71,6 @@ angular.module('ortolangMarketApp')
         	};
 
             var deregisterFilePreviewPathSelectorModal = $rootScope.$on('browserSelectedElements-filePreviewPathSelectorModal', function ($event, elements) {
-                console.log('additional-info caught event "browserSelectedElements-filePreviewPathSelectorModal" (selected elements: %o)', elements);
-
                if(elements.length>0) {
                		if(angular.isUndefined($scope.metadata.preview)) {
                			$scope.metadata.preview = [];

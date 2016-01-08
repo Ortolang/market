@@ -153,6 +153,14 @@
                                 </dd>
                             </dl>
                         </div>
+                        <div ng-if="keywords" class="col-md-3">
+                            <dl>
+                                <dt translate="MARKET.KEYWORDS"></dt>
+                                <dd ng-repeat="keyword in keywords">
+                                    {{keyword}}
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
                 </article>
             </section>

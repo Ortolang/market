@@ -12,7 +12,6 @@ angular.module('ortolangMarketApp')
 
         $scope.search = function () {
             var query = buildQuery();
-            console.log('query : ' + query);
             Search.search(query, true);
         };
 
