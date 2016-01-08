@@ -27,6 +27,11 @@ angular.module('ortolangMarketApp')
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 method: 'POST',
                 isArray: true
+            },
+            index: {
+                url: url.api + '/search/index',
+                method: 'GET',
+                isArray: true
             }
         });
     }]);
