@@ -495,7 +495,7 @@ module.exports = function (grunt) {
                         },
                         {
                             match: /<!--<script src="ortolang-config-url"><\/script>-->/,
-                            replacement: '<script src="@ORTOLANG_API_URL@/config/client"></script>'
+                            replacement: '<script src="${api_url}/config/client"></script>'
                         },
                         {
                             match: 'version',
