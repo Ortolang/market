@@ -259,7 +259,14 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>/assets/images',
-                    src: '{,*/}*.{png,jpg,jpeg,gif}',
+		    //src: '{,*/}*.{png,jpg,jpeg,gif}',   REMOVE png because generate failure during minification : 
+			//    Running "imagemin:dist" (imagemin) task
+			//    Verifying property imagemin.dist exists in config...OK
+			//    Files: app/assets/images/logo-ortolang-white.png -> dist/assets/images/logo-ortolang-white.png
+			//    Files: app/assets/images/mariane-avenir.png -> dist/assets/images/mariane-avenir.png
+			//    Options: interlaced, optimizationLevel=3, progressive
+			//    Fatal error: Cannot read property 'contents' of undefined
+                    src: '{,*/}*.{jpg,jpeg,gif}',
                     dest: '<%= yeoman.dist %>/assets/images'
                 }]
             }
