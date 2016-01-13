@@ -12,7 +12,12 @@ angular.module('ortolangMarketApp')
 
         function loadItem() {
 
-            var queryBuilder = QueryBuilderFactory.make({projection: 'key, meta_ortolang-item-json.toJSON("fetchPlan:*:-1"), meta_ortolang-workspace-json.snapshotName as snapshotName, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-item-json.type as type', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: '`meta_ortolang-item-json`.toJSON("fetchPlan:*:-1")', source: 'collection'});
+            
+            queryBuilder.addProjection('meta_ortolang-workspace-json.snapshotName', 'snapshotName');
+            queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
+            queryBuilder.addProjection('meta_ortolang-item-json.type', 'type');
+
             queryBuilder.equals('status', 'published').and().equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
 
             SearchResource.json({query: queryBuilder.toString()}, function (results) {
@@ -36,7 +41,10 @@ angular.module('ortolangMarketApp')
                         return;
                     }
 
-                    queryBuilder = QueryBuilderFactory.make({projection: '*, meta_ortolang-workspace-json.wskey as wskey, meta_ortolang-workspace-json.wsalias as wsalias, meta_ortolang-workspace-json.tags as tags', source: 'workspace'});
+                    queryBuilder = QueryBuilderFactory.make({projection: '*', source: 'workspace'});
+                    queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
+                    queryBuilder.addProjection('meta_ortolang-workspace-json.wsalias', 'wsalias');
+                    queryBuilder.addProjection('meta_ortolang-workspace-json.tags', 'tags');
                     queryBuilder.equals('meta_ortolang-workspace-json.wsalias', $scope.itemAlias);
                     SearchResource.json({query: queryBuilder.toString()}, function (workspace) {
 

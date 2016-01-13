@@ -253,19 +253,19 @@ angular.module('ortolangMarketApp')
 
                 var queryBuilder = QueryBuilderFactory.make({
                     projection:
-                    'key, ' +
-                    'meta_ortolang-item-json.title as title, ' +
-                    'meta_ortolang-item-json.description as description, ' +
-                    'meta_ortolang-item-json.image as image, ' +
-                    'meta_ortolang-item-json.toolId as id, ' +
-                    'meta_ortolang-item-json.toolHelp as help, ' +
-                    'meta_ortolang-item-json.toolUrl as url, ' +
-                    'meta_ortolang-item-json.toolInputData as inputData, ' +
-                    'meta_ortolang-item-json.toolOutputData as outputData, ' +
-                    'meta_ortolang-workspace-json.wsalias as alias,' +
-                    'meta_ortolang-item-json.toolFunctionalities as functionalities ',
+                    'key',
                     source: 'collection'
                 });
+                queryBuilder.addProjection('meta_ortolang-item-json.title', 'title');
+                queryBuilder.addProjection('meta_ortolang-item-json.description', 'description');
+                queryBuilder.addProjection('meta_ortolang-item-json.image', 'image');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolId', 'id');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolHelp', 'help');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolUrl', 'url');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolInputData', 'inputData');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolOutputData', 'outputData');
+                queryBuilder.addProjection('meta_ortolang-item-json.toolFunctionalities', 'functionalities');
+                queryBuilder.addProjection('meta_ortolang-workspace-json.wsalias', 'alias');
                 queryBuilder.equals('status', 'published');
                 queryBuilder.and();
                 queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
