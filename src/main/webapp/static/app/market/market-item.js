@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
 
         function loadItem() {
 
-            var queryBuilder = QueryBuilderFactory.make({projection: '`meta_ortolang-item-json`.toJSON("fetchPlan:*:-1")', source: 'collection'});
+            var queryBuilder = QueryBuilderFactory.make({projection: 'key, `meta_ortolang-item-json`.toJSON("fetchPlan:*:-1")', source: 'collection'});
             
             queryBuilder.addProjection('meta_ortolang-workspace-json.snapshotName', 'snapshotName');
             queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
