@@ -62,8 +62,16 @@ angular.module('ortolangMarketApp')
             },
 
             containsText : function (name, content) {
-                this.conditions += 'any() traverse(0,3) (' + '`' + name + '`' + '.toLowerCase().indexOf(\'' + sanitize(content.toLowerCase()) + '\') > -1 )';
-                // this.conditions += name + ' containsText \'' + this.sanitize(content) + '\'';
+                if (angular.isArray(name)) {
+                    var optionalValues = '';
+                    angular.forEach(name, function (val) {
+                        optionalValues += (optionalValues === '' ? '' : ' OR ') + '`' + val + '`' + '.toLowerCase().indexOf(\'' + sanitize(content.toLowerCase()) + '\') > -1';
+                    });
+                    this.conditions += '(' + optionalValues + ')';
+                } else {
+                    // this.conditions += 'any() traverse(0,5) (' + name + '.toLowerCase().indexOf(\'' + sanitize(content.toLowerCase()) + '\') > -1 )';
+                    this.conditions += '`' + name + '`' + '.toLowerCase().indexOf(\'' + sanitize(content.toLowerCase()) + '\') > -1';
+                }
                 return this;
             },
 

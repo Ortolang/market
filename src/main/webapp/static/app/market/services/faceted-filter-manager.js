@@ -143,7 +143,9 @@ angular.module('ortolangMarketApp')
                 }
                 if (contentSplit.length > 0) {
                     angular.forEach(contentSplit, function (contentPart) {
-                        queryBuilder.and().containsText('any()', contentPart);
+                        // queryBuilder.and().containsText('any()', contentPart);
+                        queryBuilder.and().containsText(['meta_ortolang-item-json.description', 'meta_ortolang-item-json.title', 'meta_ortolang-item-json.type', 'meta_ortolang-item-json.keywords'], contentPart);
+                        // The best solution : SELECT FROM Collection LET $temp = (   SELECT FROM (     TRAVERSE * FROM $current WHILE $depth <= 7   )   WHERE any().toLowerCase().indexOf('dede') > -1 ) WHERE $temp.size() > 0
                     });
                 }
 
