@@ -248,15 +248,15 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" ng-show="bibliographicCitation">
+            <!-- <div class="panel panel-default" ng-show="bibliographicCitation">
                 <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
                 <div data-target-blank data-content="bibliographicCitation" class="panel-body">
 
                     <p ng-bind-html="bibliographicCitation"></p>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="panel panel-default" ng-hide="bibliographicCitation">
+            <!-- <div class="panel panel-default" ng-hide="bibliographicCitation">
                 <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
                 <div data-target-blank data-content="bibliographicCitation" class="panel-body">
                     <p ng-if="content.publications && content.publications.length>0" ng-repeat="pub in content.publications" ng-bind-html="pub">
@@ -269,7 +269,7 @@
                         <a target="_BLANK" ng-href="http://hdl.handle.net/11403/{{::alias}}/{{ortolangObject.snapshotName}}">http://hdl.handle.net/11403/{{::alias}}/{{ortolangObject.snapshotName}}</a>
                     </p>
                 </div>
-            </div>
+            </div> -->
 
             <div class="panel panel-default" ng-if="content.preview && content.preview.length>0">
                 <div class="panel-heading"><span class="glyphicon glyphicon-eye-open fa-fw"></span> {{'MARKET.PREVIEW' | translate}}</div>
