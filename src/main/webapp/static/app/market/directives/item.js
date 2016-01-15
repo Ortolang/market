@@ -20,9 +20,6 @@ angular.module('ortolangMarketApp')
             link: {
                 pre : function (scope) {
 
-                    if (scope.entry.applicationUrl) {
-                        scope.itemUrl = scope.entry.applicationUrl;
-                    } else {
                         var type;
                         if (scope.entry.type === 'Corpus') {
                             type = 'corpora';
@@ -30,9 +27,10 @@ angular.module('ortolangMarketApp')
                             type = 'lexicons';
                         } else if (scope.entry.type === 'Outil') {
                             type = 'tools';
+                        } else if (scope.entry.type === 'Application') {
+                            type = 'applications';
                         }
                         scope.itemUrl = '/market/' + type + '/' + scope.entry.alias;
-                    }
 
                     if (scope.entry.title) {
                         scope.title = Helper.getMultilingualValue(scope.entry.title);
