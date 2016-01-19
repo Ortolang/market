@@ -46,9 +46,9 @@ angular.module('ortolangMarketApp')
             };
 
             function populateInformationPage(language) {
-                Content.downloadWithPath(informationId + '/' + informationId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.success(function (data) {
-                    informationContent = data.content;
-                    angular.forEach(data.content, function (page) {
+                Content.downloadWithPath(informationId + '/' + informationId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.then(function (response) {
+                    informationContent = response.data.content;
+                    angular.forEach(response.data.content, function (page) {
                         informationPages[page.id] = staticWebsiteBase + '/' + informationId + '/' + page.id + '/' + page.id + '.' + (language || 'fr') + '.html';
                     });
                     $rootScope.$emit('informationPagePopulated');
@@ -57,9 +57,9 @@ angular.module('ortolangMarketApp')
 
             function populateHomePage(language) {
                 homePage = staticWebsiteBase + '/' + homePageId + '/' + homePageId + '.' + (language || 'fr') + '.html';
-                Content.downloadWithPath(newsId + '/' + newsId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.success(function (data) {
+                Content.downloadWithPath(newsId + '/' + newsId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.then(function (response) {
                     news = [];
-                    angular.forEach(data.news, function (id) {
+                    angular.forEach(response.data.news, function (id) {
                         news.push(staticWebsiteBase + '/' + newsId + '/' + id + '/' + id + '.' + (language || 'fr') + '.html');
                     });
                 });
