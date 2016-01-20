@@ -117,7 +117,7 @@ angular.module('ortolangMarketApp')
 
         function sanitize (content) {
             if(typeof(content.replace) === typeof(Function)) {
-                return content.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\-/g, '\\-').replace(/'/g, '\\\'');
+                return content.replace(/'/g, '\\\'');
             } else {
                 return content;
             }
