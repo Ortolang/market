@@ -47,26 +47,24 @@ angular.module('ortolangMarketApp')
 
         $scope.$on('server-down', function () {
             if (angular.element('.server-down-modal').length === 0) {
-                $http.get(url.api + '/config/ping')
-                    .success(function () {
-                        console.log('API server responded to ping');
-                    })
-                    .error(function () {
-                        if (!serverDownModal) {
-                            var modalScope = $scope.$new(true);
-                            modalScope.refresh = function () {
-                                AuthService.forceReload();
-                            };
-                            modalScope.$on('modal.hide', function () {
-                                modalScope.$destroy();
-                                serverDownModal = undefined;
-                            });
-                            serverDownModal = $modal({
-                                scope: modalScope,
-                                templateUrl: 'common/auth/templates/server-down-modal.html'
-                            });
-                        }
-                    });
+                $http.get(url.api + '/config/ping').then(function () {
+                    console.log('API server responded to ping');
+                }, function () {
+                    if (!serverDownModal) {
+                        var modalScope = $scope.$new(true);
+                        modalScope.refresh = function () {
+                            AuthService.forceReload();
+                        };
+                        modalScope.$on('modal.hide', function () {
+                            modalScope.$destroy();
+                            serverDownModal = undefined;
+                        });
+                        serverDownModal = $modal({
+                            scope: modalScope,
+                            templateUrl: 'common/auth/templates/server-down-modal.html'
+                        });
+                    }
+                });
             }
         });
 

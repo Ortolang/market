@@ -131,9 +131,9 @@ angular.module('ortolangVisualizers')
                     }
                     var contentDownload = Content.downloadWithKey(scope.elements[0].key);
                     scope.pendingRequests.push(contentDownload);
-                    contentDownload.promise.success(function (data) {
+                    contentDownload.promise.then(function (response) {
                         if (!scope.forceFullData && scope.elements[0].size >= limit) {
-                            scope.data = data.substr(0, limit);
+                            scope.data = response.data.substr(0, limit);
                             scope.actions.seeMore = function () {
                                 if (scope.data.length + limit < scope.fullData.length) {
                                     scope.data = scope.fullData.substr(0, scope.data.length + limit);
@@ -143,11 +143,11 @@ angular.module('ortolangVisualizers')
                                     scope.truncated = false;
                                 }
                             };
-                            scope.fullData = data;
+                            scope.fullData = response.data;
                         } else {
-                            scope.data = data;
+                            scope.data = response.data;
                         }
-                        if (mimeType === 'application/xml' && data.indexOf('<?xml-stylesheet') !== -1) {
+                        if (mimeType === 'application/xml' && response.data.indexOf('<?xml-stylesheet') !== -1) {
                             initializeVisualizerWithPreview();
                         }
                         scope.pendingData = false;

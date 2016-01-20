@@ -181,6 +181,21 @@ angular
             $analyticsProvider.firstPageview(false);
         }
     }])
+    .config(['$compileProvider', function ($compileProvider) {
+        $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
+    }])
+    .run(['$templateCache', '$cookies', function ($templateCache, $cookies) {
+        OrtolangConfig.marketVersion = OrtolangConfig.marketVersion || '{{ORTOLANG_MARKET_VERSION}}';
+        if ($cookies.get('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
+            console.log('ORTOLANG Market Version changed; clearing $templateCache (' + $templateCache.info().size + ')');
+            $templateCache.removeAll();
+            var expiringDate = new Date();
+            expiringDate.setFullYear(expiringDate.getFullYear() + 1);
+            $cookies.put('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion, {
+                expires: expiringDate.toISOString()
+            });
+        }
+    }])
     .run(['$rootScope', function ($rootScope) {
         if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
             var optOutUrl = '//' + OrtolangConfig.piwikHost + 'index.php?module=CoreAdminHome&action=optOut&language=';
@@ -192,9 +207,6 @@ angular
             });
         }
     }])
-    .config(['$compileProvider', function ($compileProvider) {
-        $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
-    }])
     .run(['editableOptions', 'editableThemes', function (editableOptions, editableThemes) {
         var copy = editableThemes.bs3;
         copy.formTpl = '<form class="" role="form"></form>';
@@ -203,7 +215,8 @@ angular
         copy.submitTpl = '<button type="submit" class="btn btn-default"><span></span></button>';
         editableThemes.bs3 = copy;
         editableOptions.theme = 'bs3';
-    }]).run(['$rootScope', 'icons', function ($rootScope, icons) {
+    }])
+    .run(['$rootScope', 'icons', function ($rootScope, icons) {
         $rootScope.icons = icons;
     }]);
 
