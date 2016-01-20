@@ -12,8 +12,8 @@ angular.module('ortolangMarketApp')
 
         var forceDownloadQueryParam = '?fd=true';
 
-        this.getContentUrlWithKey = function (key, noSSL) {
-            return (noSSL ? url.contentNoSSL : url.content) + '/key/' + key;
+        this.getContentUrlWithKey = function (key, login, noSSL) {
+            return (noSSL ? url.contentNoSSL : url.content) + '/key/' + key + (login ? '?login=false' : '');
         };
 
         this.getContentUrlWithPath = function (path, alias, root, noSSL) {
@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.getDownloadUrlWithKey = function (key, noSSL) {
-            return this.getContentUrlWithKey(key, noSSL) + forceDownloadQueryParam;
+            return this.getContentUrlWithKey(key, null, noSSL) + forceDownloadQueryParam;
         };
 
         this.getDownloadUrlWithPath = function (path, alias, root, noSSL) {
@@ -60,7 +60,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.downloadWithKey = function (key, config, noSSL) {
-            return downloadWith(this.getContentUrlWithKey(key, noSSL), config);
+            return downloadWith(this.getContentUrlWithKey(key, null, noSSL), config);
         };
 
         this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {
