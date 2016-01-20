@@ -144,13 +144,6 @@
                     </ul>
                 </div>
 
-
-                <div ng-if="::browserService.canExecuteTool" class="btn-group">
-                    <button class="btn btn-default" ng-click="showToolsList()" data-title="{{'BROWSER.TOOLS' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
-                        <span ng-class="::icons.browser.tools"></span>
-                    </button>
-                </div>
-
                 <span class="divider"></span>
 
                 <div ng-if="isWorkspaceBrowserService" class="btn-group">
@@ -322,8 +315,6 @@
             </li>
         </ul>
     </div>
-
-    <div ng-if="::browserService.canExecuteTool" ng-include="'common/tools/tool-list.html'" ng-controller="ToolListCtrl"></div>
 
     <div ng-if="browserService.canEdit && isHead" class="upload-queue" ng-class="uploader.uploadQueueStatus" ng-include="'workspace/upload.html'"></div>
 </div>
