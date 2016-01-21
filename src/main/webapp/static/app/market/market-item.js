@@ -8,12 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$translate', '$location', '$route', '$filter', 'SearchResource', 'QueryBuilderFactory', 'MarketBrowserService', function ($scope, $routeParams, $translate, $location, $route, $filter, SearchResource, QueryBuilderFactory, MarketBrowserService) {
+    .controller('MarketItemCtrl', ['$scope', '$routeParams', '$location', '$route', '$filter', 'SearchResource', 'QueryBuilderFactory', 'MarketBrowserService', 'Helper', function ($scope, $routeParams, $location, $route, $filter, SearchResource, QueryBuilderFactory, MarketBrowserService, Helper) {
 
         function loadItem() {
 
             var queryBuilder = QueryBuilderFactory.make({projection: 'key, `meta_ortolang-item-json`.toJSON("fetchPlan:*:-1")', source: 'collection'});
-            
+
             queryBuilder.addProjection('meta_ortolang-workspace-json.snapshotName', 'snapshotName');
             queryBuilder.addProjection('meta_ortolang-workspace-json.wskey', 'wskey');
             queryBuilder.addProjection('meta_ortolang-item-json.type', 'type');
@@ -80,6 +80,34 @@ angular.module('ortolangMarketApp')
                             //     $scope.ready = true;
                             // });
                             $scope.item = angular.fromJson($scope.ortolangObject['meta_ortolang-item-json']);
+                            //console.log($scope.item);
+                            // TODO Change for short-description
+                            var description = angular.element('<div>').html(Helper.getMultilingualValue($scope.item.description, 'fr')).text();
+                            description = description.substr(0, 255);
+                            description = description.substr(0, Math.min(description.length, description.lastIndexOf(' ')));
+                            $scope.structuredData = {
+                                '@context': 'http://schema.org',
+                                '@type': 'Article',
+                                'name': Helper.getMultilingualValue($scope.item.title, 'fr'),
+                                'headline': Helper.getMultilingualValue($scope.item.title, 'fr'),
+                                'description': description,
+                                //'image': {
+                                //    '@type': 'ImageObject',
+                                //    'url': ''
+                                //},
+                                'datePublished': $scope.item.publicationDate
+                            };
+                            if ($scope.item.website) {
+                                $scope.structuredData.sameAs = $scope.item.website;
+                            }
+                            if ($scope.item.keywords) {
+                                $scope.structuredData.keywords = '';
+                                angular.forEach($scope.item.keywords, function (keyword, index) {
+                                    $scope.structuredData.keywords += (index === 0 ? '' : ', ') + keyword.value;
+                                });
+                            }
+                            //console.log($scope.structuredData);
+                            angular.element('<script>').attr('type', 'application/ld+json').text(angular.toJson($scope.structuredData)).appendTo('head');
                             $scope.ready = true;
                         }
 
