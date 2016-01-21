@@ -111,7 +111,7 @@ angular.module('ortolangMarketApp')
                             description = description.substr(0, Math.min(description.length, description.lastIndexOf(' ')));
                             var itemStructuredData = {
                                 '@context': 'http://schema.org',
-                                '@type': 'Article',
+                                '@type': 'DataSet',
                                 'name': Helper.getMultilingualValue($scope.item.title, 'fr'),
                                 'headline': Helper.getMultilingualValue($scope.item.title, 'fr'),
                                 'description': description,
