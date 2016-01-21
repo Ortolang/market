@@ -55,6 +55,7 @@ angular.module('ortolangMarketApp')
             CREATE_PRESENTATION_METADATA: 'Créer les métadonnées',
             EDIT_PRESENTATION_METADATA: 'Éditer les métadonnées',
             ADD_MEMBER: 'Ajouter un membre',
+            REMOVE_MEMBER: 'Retirer des membres',
             CREATE_WORKSPACE: 'Créer un espace de travail',
             NO_METATDATA: 'Les métadonnées ne sont pas encore renseignées.',
             GO_TO_METATDATA: 'Allez à la page des métadonnées.',

@@ -11,7 +11,7 @@
  * @property {Object}   active      - the workspace being managed
  * @property {Object}   authorCards - the cards of all the authors related to the active workspace
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'Content', function ($rootScope, $filter, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, Content) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'Content', 'User', function ($rootScope, $filter, $location, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, Content, User) {
 
     var listDeferred,
         activeWorkspaceInfoDeferred,
@@ -279,6 +279,27 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             } else if (Workspace.active.workspace && Workspace.active.workspace.key === workspaces[0].key) {
                 // A member has been added to the active workspace; refreshing active workspace members
                 Workspace.getActiveWorkspaceMembers();
+            }
+        });
+        event.stopPropagation();
+    });
+
+    $rootScope.$on('membership.group.remove-member', function (event, eventMessage) {
+        listDeferred.promise.then(function () {
+            var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject}, true);
+            if (User.key === eventMessage.arguments.member) {
+                if (Workspace.active.workspace && Workspace.active.workspace.key === workspaces[0].key) {
+                    $location.url('/workspaces');
+                } else {
+                    Workspace.getWorkspaceList().then(function () {
+                        Workspace.getWorkspacesMetadata();
+                    });
+                }
+            } else {
+                if (Workspace.active.workspace && Workspace.active.workspace.key === workspaces[0].key) {
+                    // A member has been removed from the active workspace; refreshing active workspace members
+                    Workspace.getActiveWorkspaceMembers();
+                }
             }
         });
         event.stopPropagation();

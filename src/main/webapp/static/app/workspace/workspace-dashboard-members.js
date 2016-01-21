@@ -8,7 +8,9 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardMembersCtrl', ['$scope', '$modal', 'Workspace', 'GroupResource', function ($scope, $modal, Workspace, GroupResource) {
+    .controller('WorkspaceDashboardMembersCtrl', ['$scope', '$modal', 'Workspace', 'GroupResource', 'User', function ($scope, $modal, Workspace, GroupResource, User) {
+
+        $scope.User = User;
 
         var modalScope;
 
@@ -36,5 +38,13 @@ angular.module('ortolangMarketApp')
                 templateUrl: 'workspace/templates/add-member-modal.html',
                 show: true
             });
+        };
+
+        $scope.removeMember = function (member) {
+            if (User.key === Workspace.active.workspace.owner) {
+                GroupResource.removeMember({key: Workspace.active.workspace.members, member: member}, function (data) {
+                    Workspace.active.members = data.members;
+                });
+            }
         };
     }]);
