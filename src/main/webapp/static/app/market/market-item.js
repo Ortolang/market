@@ -81,7 +81,7 @@ angular.module('ortolangMarketApp')
                             // });
                             $scope.item = angular.fromJson($scope.ortolangObject['meta_ortolang-item-json']);
                             //console.log($scope.item);
-                            //var type = results[results.length - 1].type;
+                            var type = results[results.length - 1].type;
                             var breadcrumbStructuredData = {
                                 '@context': 'http://schema.org',
                                 '@type': 'BreadcrumbList',
