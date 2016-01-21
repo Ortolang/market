@@ -76,16 +76,40 @@ angular.module('ortolangMarketApp')
                             // var queryOrtolangMeta = 'SELECT FROM ' + $scope.ortolangObject['meta_ortolang-item-json'];
                             // SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
                             //     $scope.item = angular.fromJson(jsonObject[0].this);
-                                // $scope.item = jsonObject[0];
+                            // $scope.item = jsonObject[0];
                             //     $scope.ready = true;
                             // });
                             $scope.item = angular.fromJson($scope.ortolangObject['meta_ortolang-item-json']);
                             //console.log($scope.item);
+                            //var type = results[results.length - 1].type;
+                            var breadcrumbStructuredData = {
+                                '@context': 'http://schema.org',
+                                '@type': 'BreadcrumbList',
+                                'itemListElement': [
+                                    {
+                                        '@type': 'ListItem',
+                                        'position': 1,
+                                        'item': {
+                                            '@id': window.location.origin + '/market',
+                                            'name': 'Market'
+                                        }
+                                    },
+                                    {
+                                        '@type': 'ListItem',
+                                        'position': 2,
+                                        'item': {
+                                            '@id': window.location.origin + '/market/' + $routeParams.section,
+                                            'name': type
+                                        }
+                                    }
+                                ]
+                            };
+                            angular.element('<script>').attr('type', 'application/ld+json').text(angular.toJson(breadcrumbStructuredData)).appendTo('head');
                             // TODO Change for short-description
                             var description = angular.element('<div>').html(Helper.getMultilingualValue($scope.item.description, 'fr')).text();
                             description = description.substr(0, 255);
                             description = description.substr(0, Math.min(description.length, description.lastIndexOf(' ')));
-                            $scope.structuredData = {
+                            var itemStructuredData = {
                                 '@context': 'http://schema.org',
                                 '@type': 'Article',
                                 'name': Helper.getMultilingualValue($scope.item.title, 'fr'),
@@ -98,16 +122,16 @@ angular.module('ortolangMarketApp')
                                 'datePublished': $scope.item.publicationDate
                             };
                             if ($scope.item.website) {
-                                $scope.structuredData.sameAs = $scope.item.website;
+                                itemStructuredData.sameAs = $scope.item.website;
                             }
                             if ($scope.item.keywords) {
-                                $scope.structuredData.keywords = '';
+                                itemStructuredData.keywords = '';
                                 angular.forEach($scope.item.keywords, function (keyword, index) {
-                                    $scope.structuredData.keywords += (index === 0 ? '' : ', ') + keyword.value;
+                                    itemStructuredData.keywords += (index === 0 ? '' : ', ') + keyword.value;
                                 });
                             }
-                            //console.log($scope.structuredData);
-                            angular.element('<script>').attr('type', 'application/ld+json').text(angular.toJson($scope.structuredData)).appendTo('head');
+                            //console.log($scope.itemStructuredData);
+                            angular.element('<script>').attr('type', 'application/ld+json').text(angular.toJson(itemStructuredData)).appendTo('head');
                             $scope.ready = true;
                         }
 
