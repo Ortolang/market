@@ -64,8 +64,8 @@
         <div ng-if="User.key === Workspace.active.workspace.owner" class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>
             <!--<button class="btn btn-default" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>-->
-            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
-            <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
+            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
+            <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>
     </div>
     <div class="col-md-6">
