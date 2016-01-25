@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         var forceDownloadQueryParam = '?fd=true';
 
         this.getContentUrlWithKey = function (key, login, noSSL) {
-            return (noSSL ? url.contentNoSSL : url.content) + '/key/' + key + (angular.isDefined(login) ? '?login=' + login : '');
+            return (noSSL ? url.contentNoSSL : url.content) + '/key/' + key + (angular.isDefined(login) ? '?l=' + login : '');
         };
 
         this.getContentUrlWithPath = function (path, alias, root, noSSL) {
