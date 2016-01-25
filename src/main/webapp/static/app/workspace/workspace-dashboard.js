@@ -22,7 +22,8 @@ angular.module('ortolangMarketApp')
         'RuntimeResource',
         'WorkspaceResource',
         'WorkspaceBrowserService',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService) {
+        'User',
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService, User) {
 
             /**
              * The section selected by default
@@ -177,6 +178,7 @@ angular.module('ortolangMarketApp')
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();
                 }
+                $scope.User = User;
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
                     eventsLimit: 4,
