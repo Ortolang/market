@@ -1,6 +1,12 @@
 <div ng-controller="FriendsCtrl">
-    <ul class="list-unstyled row">
-        <li ng-repeat="friend in friends track by member.key" profile-card data-profile="friend" data-size="50" data-img-classes="img-circle" class="col-lg-3 col-md-4 col-sm-6"></li>
-    </ul>
-    <button class="btn btn-default" ng-click="addFriend()"><span ng-class="::icons.plus"></span> {{'PROFILE.ADD_FRIEND' | translate}}</button>
+    <div class="well">
+        <ul class="list-unstyled row">
+            <li ng-repeat="friend in friends track by friend.key" profile-card data-profile="friend" data-size="50" data-img-classes="img-circle" class="col-lg-4 col-md-6 col-sm-12">
+                <button class="close remove-member-btn" ng-click="removeFriend(friend.key)" data-title="{{::'PROFILE.REMOVE_FRIEND' | translate}}" bs-tooltip>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </li>
+        </ul>
+        <button class="btn btn-default" ng-click="addFriend()"><span ng-class="::icons.plus"></span> {{'PROFILE.ADD_FRIEND' | translate}}</button>
+    </div>
 </div>

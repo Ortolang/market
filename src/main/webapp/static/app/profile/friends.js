@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                         modalScope.members = $scope.friends;
                         modalScope.addFriend = true;
                         modalScope.add = function (profile) {
-                            GroupResource.addMember({key: User.friends, member: profile.key}, function (data) {
+                            GroupResource.addMember({key: User.friends, member: profile.key}, {}, function (data) {
                                 $scope.friends = data.members;
                             });
                             addMemberModal.hide();
@@ -36,5 +36,10 @@ angular.module('ortolangMarketApp')
                         });
                     };
                 });
+                $scope.removeFriend = function (member) {
+                    GroupResource.removeMember({key: User.friends, member: member}, function (data) {
+                        $scope.friends = data.members;
+                    });
+                };
             });
         }]);

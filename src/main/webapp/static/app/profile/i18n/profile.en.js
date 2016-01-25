@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         PROFILE: {
             EMPTY: 'empty',
             ADD_FRIEND: 'Add a co-worker',
+            REMOVE_FRIEND: 'Remove from co-workers',
             NAV: {
                 PERSONAL_INFOS: 'Personal informations',
                 SETTINGS: 'Settings',
