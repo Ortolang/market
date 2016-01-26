@@ -1074,7 +1074,7 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.$on('$routeUpdate', function () {
-                if ($scope.isWorkspaceBrowserService || ($scope.isMarketBrowserService && $location.search().browse)) {
+                if (($scope.isWorkspaceBrowserService && $location.search().section === 'content') || ($scope.isMarketBrowserService && $location.search().browse)) {
                     if ($location.search().path !== $scope.path) {
                         setPath($location.search().path);
                     }
