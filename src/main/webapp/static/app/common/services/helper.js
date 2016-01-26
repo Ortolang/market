@@ -8,7 +8,9 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['Settings', function (Settings) {
+    .service('Helper', ['$rootScope', 'Settings', function ($rootScope, Settings) {
+
+        var modalScope, modal;
 
         this.getMultilingualValue = function (multilingualProperty, language) {
             var i;
@@ -23,12 +25,32 @@ angular.module('ortolangMarketApp')
 
         this.extractKeyFromReferentialId = function (key) {
             // Pattern : ${key}
-            return key.substring(2, key.length-1);
+            return key.substring(2, key.length - 1);
         };
 
         this.startsWith = function (actual, expected) {
             var lowerStr = (actual + '').toLowerCase();
             return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
+
+        $rootScope.$on('modal.show', function (event, _modal_) {
+            modal = _modal_;
+        });
+
+        this.createModalScope = function (isolate) {
+            modalScope = $rootScope.$new(isolate);
+            modalScope.$on('modal.hide', function () {
+                modalScope.$destroy();
+            });
+            modalScope.models = {};
+            return modalScope;
+        };
+
+        this.hideModal = function () {
+            if (modal && modal.hide) {
+                modal.hide();
+                modal = undefined;
+            }
         };
 
         return this;

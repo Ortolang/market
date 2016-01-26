@@ -8,23 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardMembersCtrl', ['$scope', '$modal', 'Workspace', 'GroupResource', 'User', function ($scope, $modal, Workspace, GroupResource, User) {
+    .controller('WorkspaceDashboardMembersCtrl', ['$scope', '$modal', 'Workspace', 'GroupResource', 'User', 'Helper', function ($scope, $modal, Workspace, GroupResource, User, Helper) {
 
         $scope.User = User;
 
-        var modalScope;
-
-        function createModalScope() {
-            modalScope = $scope.$new(true);
-            modalScope.models = {};
-            modalScope.$on('modal.hide', function () {
-                modalScope.$destroy();
-            });
-        }
-
         $scope.addMember = function () {
-            var addMemberModal;
-            createModalScope();
+            var addMemberModal,
+                modalScope = Helper.createModalScope(true);
             modalScope.wsName = Workspace.active.workspace.name;
             modalScope.members = Workspace.active.members;
             modalScope.add = function (profile) {

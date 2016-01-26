@@ -58,14 +58,6 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function createModalScope() {
-                modalScope = $scope.$new(true);
-                modalScope.models = {};
-                modalScope.$on('modal.hide', function () {
-                    modalScope.$destroy();
-                });
-            }
-
             $scope.selectDashboardSection = function (id) {
                 setDashboardSection(id);
             };
@@ -86,7 +78,7 @@ angular.module('ortolangMarketApp')
             $scope.publishWorkspace = function () {
                 if (Workspace.active.metadata) {
                     var publishModal;
-                    createModalScope();
+                    modalScope = Helper.createModalScope(true);
                     modalScope.wsName = $scope.getTitleValue();
                     modalScope.submit = function (publishWorkspaceForm) {
                         if (!modalScope.models.pendingSubmit) {
@@ -121,7 +113,7 @@ angular.module('ortolangMarketApp')
 
             $scope.deleteWorkspace = function () {
                 var deleteWorkspaceModal;
-                createModalScope();
+                modalScope = Helper.createModalScope(true);
                 modalScope.wsName = Workspace.active.workspace.name;
                 modalScope.delete = function () {
                     WorkspaceResource.delete({wskey: Workspace.active.workspace.key}).$promise.then(function (data) {

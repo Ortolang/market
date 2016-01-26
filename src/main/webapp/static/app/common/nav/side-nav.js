@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements', function ($rootScope, $scope, $route, sideNavElements) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements', 'Helper', function ($rootScope, $scope, $route, sideNavElements, Helper) {
 
         $scope.sideNavElements = sideNavElements;
         $scope.sideNavActiveClass = null;
@@ -22,9 +22,9 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $rootScope.$on('$routeUpdate', function () {
-            var modal = angular.element('.modal.am-fade');
+            var modal = angular.element('.modal');
             if (modal.length > 0) {
-                modal.scope().$hide();
+                Helper.hideModal();
             }
         });
 

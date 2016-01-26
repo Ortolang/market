@@ -54,7 +54,8 @@ angular.module('ortolangMarketApp')
         'MarketBrowserService',
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService) {
+        'Helper',
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper) {
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
@@ -200,7 +201,7 @@ angular.module('ortolangMarketApp')
                     refresh = false;
                 }
                 var promise;
-                promise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root, policy: true}).$promise;
+                promise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root, policy: $scope.isWorkspaceBrowserService}).$promise;
                 promise.then(function (element) {
                     finishGetParentData(element, refresh, forceNewSelection);
                 }, function (response) {
@@ -294,7 +295,7 @@ angular.module('ortolangMarketApp')
                     wskey: $scope.browserService.workspace.key,
                     path: $scope.path + '/' + child.name,
                     root: $scope.root,
-                    policy: true
+                    policy: $scope.isWorkspaceBrowserService
                 }).$promise;
             }
 
@@ -359,11 +360,7 @@ angular.module('ortolangMarketApp')
             };
 
             function createModalScope() {
-                modalScope = $rootScope.$new();
-                modalScope.$on('modal.hide', function () {
-                    modalScope.$destroy();
-                });
-                modalScope.models = {};
+                modalScope = Helper.createModalScope();
                 modalScope.$on('modal.show.before', function () {
                     $scope.deactivateContextMenu();
                 });
@@ -852,8 +849,7 @@ angular.module('ortolangMarketApp')
             }
 
             function finishPreview(visualizer) {
-                var element,
-                    visualizerModal;
+                var element, visualizerModal;
                 createModalScope();
                 if ($scope.children && $scope.children.length !== 0) {
                     modalScope.elements = $scope.children;
@@ -913,7 +909,7 @@ angular.module('ortolangMarketApp')
 
             $scope.clickPreview = function (_visualizer_) {
                 if (angular.element('.visualizer-modal').length > 0) {
-                    angular.element('.visualizer-modal').scope().$hide();
+                    Helper.hideModal();
                 } else if (_visualizer_ || $scope.visualizers) {
                     var visualizer = _visualizer_ || $scope.visualizers[0];
                     if (visualizer.needAllChildrenData) {

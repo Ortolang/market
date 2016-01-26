@@ -8,26 +8,17 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspacesCtrl', ['$scope', '$location', '$modal', '$translate', 'Workspace', 'WorkspaceResource', 'Helper', function ($scope, $location, $modal, $translate, Workspace, WorkspaceResource, Helper) {
-
-        var modalScope;
+    .controller('WorkspacesCtrl', ['$scope', '$location', '$modal', 'Workspace', 'WorkspaceResource', 'Helper', function ($scope, $location, $modal, Workspace, WorkspaceResource, Helper) {
 
         // *********************** //
         //     Create Workspace    //
         // *********************** //
 
-        function createModalScope() {
-            modalScope = $scope.$new(true);
-            modalScope.models = {};
-            modalScope.$on('modal.hide', function () {
-                modalScope.$destroy();
-            });
-        }
-
         $scope.createWorkspace = function () {
             var createWorkspaceModal,
-                regExp = new RegExp(' +', 'g');
-            createModalScope();
+                regExp = new RegExp(' +', 'g'),
+                modalScope = Helper.createModalScope(true);
+
             modalScope.submit = function (createWorkspaceForm) {
                 if (!modalScope.models.pendingSubmit) {
                     modalScope.models.pendingSubmit = true;

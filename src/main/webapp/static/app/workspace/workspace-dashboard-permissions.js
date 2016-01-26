@@ -8,9 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardPermissionsCtrl', ['$scope', '$modal', '$q', 'Workspace', 'WorkspaceElementResource', 'ortolangType', function ($scope, $modal, $q, Workspace, WorkspaceElementResource, ortolangType) {
-
-        var modalScope;
+    .controller('WorkspaceDashboardPermissionsCtrl', ['$scope', '$modal', '$q', 'Workspace', 'WorkspaceElementResource', 'ortolangType', 'Helper', function ($scope, $modal, $q, Workspace, WorkspaceElementResource, ortolangType, Helper) {
 
         function loadChild(path) {
             var deferred = $q.defer();
@@ -69,14 +67,6 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        function createModalScope() {
-            modalScope = $scope.$new(true);
-            modalScope.models = {};
-            modalScope.$on('modal.hide', function () {
-                modalScope.$destroy();
-            });
-        }
-
         function setAcl(element, template, recursive) {
             WorkspaceElementResource.setPublicationPolicy({wskey: Workspace.active.workspace.key, path: element.path, recursive: recursive}, {template: template}, function () {
                 loadChild(element.path);
@@ -87,8 +77,8 @@ angular.module('ortolangMarketApp')
         $scope.setAcl = function (element, template, $event) {
             $event.stopPropagation();
             if (element.type === ortolangType.collection && $scope.models.advancedMode) {
-                var permissionsModal;
-                createModalScope();
+                var permissionsModal,
+                    modalScope = Helper.createModalScope(true);
                 modalScope.element = element;
                 modalScope.template = template;
                 modalScope.models = {
