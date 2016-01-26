@@ -41,7 +41,7 @@ angular.element(document).ready(function () {
                 }
 
                 function logout() {
-                    $window.location = keycloakAuth.createLogoutUrl();
+                    $window.location = keycloakAuth.createLogoutUrl({redirectUri: $window.location.origin});
                 }
 
                 function forceReload() {
