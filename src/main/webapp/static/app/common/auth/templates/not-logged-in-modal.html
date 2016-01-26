@@ -1,0 +1,15 @@
+<div class="modal not-logged-in-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" translate="NOT_LOGGED_IN_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body" translate="NOT_LOGGED_IN_MODAL.BODY">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="login()"><span class="fa fa-user fa-fw"></span> {{ 'LOG_IN' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

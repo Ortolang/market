@@ -31,7 +31,9 @@ angular.module('ortolangMarketApp')
                 if (rejection.status === 401) {
                     console.error('session timeout?', rejection);
                     if (!AuthService.isAuthenticated()) {
-                        AuthService.login();
+                        $rootScope.$broadcast('user-not-logged-in');
+                    } else {
+                        $rootScope.$broadcast('unauthorized-user');
                     }
                 } else if (rejection.status === 403) {
                     console.error('Forbidden', rejection);

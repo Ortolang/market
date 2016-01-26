@@ -14,7 +14,7 @@
 angular.module('ortolangMarketApp')
     .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, url, User, AuthService, ProfileResource, AtmosphereService) {
 
-        var serverDownModal;
+        var serverDownModal, unauthorizedModal, notLoggedInModal;
 
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
@@ -65,6 +65,44 @@ angular.module('ortolangMarketApp')
                         });
                     }
                 });
+            }
+        });
+
+        $scope.$on('unauthorized-user', function () {
+            if (angular.element('.unauthorized-modal').length === 0) {
+                if (!unauthorizedModal) {
+                    var modalScope = $scope.$new(true);
+                    modalScope.refresh = function () {
+                        AuthService.forceReload();
+                    };
+                    modalScope.$on('modal.hide', function () {
+                        modalScope.$destroy();
+                        unauthorizedModal = undefined;
+                    });
+                    unauthorizedModal = $modal({
+                        scope: modalScope,
+                        templateUrl: 'common/auth/templates/unauthorized-modal.html'
+                    });
+                }
+            }
+        });
+
+        $scope.$on('user-not-logged-in', function () {
+            if (angular.element('.not-logged-in-modal').length === 0) {
+                if (!notLoggedInModal) {
+                    var modalScope = $scope.$new(true);
+                    modalScope.login = function () {
+                        AuthService.login();
+                    };
+                    modalScope.$on('modal.hide', function () {
+                        modalScope.$destroy();
+                        notLoggedInModal = undefined;
+                    });
+                    notLoggedInModal = $modal({
+                        scope: modalScope,
+                        templateUrl: 'common/auth/templates/not-logged-in-modal.html'
+                    });
+                }
             }
         });
 

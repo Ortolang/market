@@ -50,6 +50,14 @@ angular.module('ortolangMarketApp')
             BODY: '<p>Il semblerait que le serveur soit momentanément indisponible et vous ne pourrez donc pas accéder aux ressources.</p><p>Vous devriez tenter de rafraichir la page et si jamais l\'erreur persiste veuillez nous contacter <a href="mailto:contact@ortolang.fr">contact@ortolang.fr</a>.</p>',
             BUTTON: 'Rafraichir la page'
         },
+        NOT_LOGGED_IN_MODAL: {
+            TITLE: 'Accès refusé',
+            BODY: 'Vous ne disposez pas des permissions nécessaires pour voir le contenu de ce fichier/dossier ou de cette page : veuillez vous authentifier.'
+        },
+        UNAUTHORIZED_MODAL: {
+            TITLE: 'Accès refusé',
+            BODY: 'Vous ne disposez pas des permissions nécessaires pour voir le contenu de ce fichier.'
+        },
         UNEXPECTED_ERROR_ALERT: {
             TITLE: 'Erreur',
             CONTENT: 'Une erreur inattendue s\'est produite'
