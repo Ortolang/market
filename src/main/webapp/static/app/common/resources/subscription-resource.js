@@ -12,6 +12,10 @@ angular.module('ortolangMarketApp')
         return $resource(url.api + '/subscription', {}, {
             addDefaultFilters: {
                 method: 'GET'
+            },
+            refreshWorkspacesFilters: {
+                method: 'GET',
+                url: url.api + '/subscription/workspaces'
             }
         });
     }]);

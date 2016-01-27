@@ -11,7 +11,7 @@
  * @property {Object}   active      - the workspace being managed
  * @property {Object}   authorCards - the cards of all the authors related to the active workspace
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'Content', 'User', function ($rootScope, $filter, $location, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, Content, User) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', function ($rootScope, $filter, $location, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User) {
 
     var listDeferred,
         activeWorkspaceInfoDeferred,
@@ -273,6 +273,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject}, true);
             // Connected user has just been added to this workspace; refreshing workspace list
             if (workspaces.length !== 1) {
+                SubscriptionResource.refreshWorkspacesFilters();
                 Workspace.getWorkspaceList().then(function () {
                     Workspace.getWorkspacesMetadata();
                 });
@@ -312,7 +313,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                 Workspace.getWorkspaceList();
                 listDeferred.promise.then(function () {
                     if (Workspace.list.length > 0) {
-                        if (Workspace.active.workspace.key === eventMessage.fromObject) {
+                        if (Workspace.active.workspace && Workspace.active.workspace.key === eventMessage.fromObject) {
                             Workspace.active.workspace = null;
                         }
                     } else {
