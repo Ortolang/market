@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     }
 
     function getCard(username) {
-        if (Workspace.authorCards[username] === undefined) {
+        if (username && Workspace.authorCards[username] === undefined) {
             Workspace.authorCards[username] = null;
             ProfileResource.getCard({key: username}, function (data) {
                 Workspace.authorCards[username] = data;
@@ -111,7 +111,10 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     };
 
     this.refreshActiveWorkspaceInfo = function () {
-        return getActiveWorkspaceInfo();
+        WorkspaceResource.getWorkspaceFromAlias({alias: Workspace.active.workspace.alias, md: true}, function (data) {
+            Workspace.active.workspace = data;
+            getActiveWorkspaceInfo();
+        });
     };
 
     this.getActiveWorkspaceFtpUrl = function () {
@@ -269,6 +272,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
      * or when a member is added to one of the connected user workspaces
      */
     $rootScope.$on('membership.group.add-member', function (event, eventMessage) {
+        event.stopPropagation();
         listDeferred.promise.then(function () {
             var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject}, true);
             // Connected user has just been added to this workspace; refreshing workspace list
@@ -282,10 +286,10 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                 Workspace.getActiveWorkspaceMembers();
             }
         });
-        event.stopPropagation();
     });
 
     $rootScope.$on('membership.group.remove-member', function (event, eventMessage) {
+        event.stopPropagation();
         listDeferred.promise.then(function () {
             var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject}, true);
             if (User.key === eventMessage.arguments.member) {
@@ -303,10 +307,10 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                 }
             }
         });
-        event.stopPropagation();
     });
 
     $rootScope.$on('core.workspace.delete', function (event, eventMessage) {
+        event.stopPropagation();
         listDeferred.promise.then(function () {
             var workspaces = $filter('filter')(Workspace.list, {key: eventMessage.fromObject}, true);
             if (workspaces.length === 1) {
@@ -322,7 +326,29 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                 });
             }
         });
+    });
+
+    function refreshActiveWorkspaceInfo(eventMessage) {
+        listDeferred.promise.then(function () {
+            if (Workspace.active.workspace && Workspace.active.workspace.key === eventMessage.fromObject) {
+                Workspace.refreshActiveWorkspaceInfo();
+            }
+        });
+    }
+
+    $rootScope.$on('core.workspace.snapshot', function (event, eventMessage) {
         event.stopPropagation();
+        refreshActiveWorkspaceInfo(eventMessage);
+    });
+
+    $rootScope.$on('core.workspace.tag', function (event, eventMessage) {
+        event.stopPropagation();
+        refreshActiveWorkspaceInfo(eventMessage);
+    });
+
+    $rootScope.$on('core.workspace.lock', function (event, eventMessage) {
+        event.stopPropagation();
+        refreshActiveWorkspaceInfo(eventMessage);
     });
 
     // OBJECT

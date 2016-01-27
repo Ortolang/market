@@ -158,6 +158,9 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Erreur',
                 CONTENT: 'Impossible de supprimer un dossier non vide'
             },
+            EDIT_LOGO_MODAL: {
+                TITLE: 'Edition du logo'
+            },
             METADATA_EDITOR: {
                 MESSAGES: {
                     TITLE_NOT_SET: 'Veuillez renseigner le titre.',
@@ -287,7 +290,11 @@ angular.module('ortolangMarketApp')
                     },
                     METADATA: {
                         CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
-                        UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>'
+                        UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
+                        CREATE_ITEM: 'a créé la fiche de métadonnées de présentation',
+                        UPDATE_ITEM: 'a mis à jour la fiche de métadonnées de présentation',
+                        CREATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>',
+                        UPDATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>'
                     },
                     OBJECT: {
                         CREATE: 'a ajouté un élément :<span class="description">{{::arguments.path}}</span>',
