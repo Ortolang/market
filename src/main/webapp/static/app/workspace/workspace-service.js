@@ -11,7 +11,7 @@
  * @property {Object}   active      - the workspace being managed
  * @property {Object}   authorCards - the cards of all the authors related to the active workspace
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', function ($rootScope, $filter, $location, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User, Helper) {
 
     var listDeferred,
         activeWorkspaceInfoDeferred,
@@ -79,6 +79,23 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             getCard(workspace.author);
             getWorkspaceMetadata(workspace);
         });
+    };
+
+    this.getWorkspaceTitle = function (workspace) {
+        var metadata = Workspace.metadatas[workspace.alias];
+        if (metadata === null) {
+            return workspace.name;
+        }
+        if (metadata === undefined) {
+            return undefined;
+        }
+        if (metadata.title) {
+            return Helper.getMultilingualValue(metadata.title);
+        }
+    };
+
+    this.getActiveWorkspaceTitle = function () {
+        return this.getWorkspaceTitle(Workspace.active.workspace);
     };
 
     this.clearActiveWorkspace = function () {

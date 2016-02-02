@@ -188,6 +188,12 @@
     }
     .workspace-event-status {
       display: block;
+      padding-top: @padding-small-vertical;
+      padding-left: @padding-large-horizontal;
+      &::before {
+        content: '\2022';
+        margin-right: @padding-xs-horizontal;
+      }
     }
     .workspace-event-date {
       display: block;

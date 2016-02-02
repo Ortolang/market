@@ -43,6 +43,8 @@ angular.module('ortolangMarketApp')
             CREATION_DATE: 'Created on {{creationDate | date}} by {{author}}',
             LAST_MODIFICATION_DATE: 'Last modification',
             ACCESS_LINKS: 'Access links',
+            WORKFLOW: 'Publication requests',
+            NO_WORKFLOW: 'There are no publication requests for this workspace',
             ACTIONS: 'Actions',
             DELETE_WORKSPACE: 'Delete the workspace',
             MARKET_LINKS: 'Link to the last published version',
@@ -54,6 +56,7 @@ angular.module('ortolangMarketApp')
             EDIT_PRESENTATION_METADATA: 'Edit metadata',
             ADD_MEMBER: 'Add member',
             REMOVE_MEMBER: 'Remove from members',
+            CHANGE_OWNER: 'Change owner',
             CREATE_WORKSPACE: 'Create a new workspace',
             NO_METATDATA: 'Metadata is not filled.',
             GO_TO_METATDATA: 'Go to metadata page.',
@@ -75,11 +78,21 @@ angular.module('ortolangMarketApp')
             PUBLISH_MODAL: {
                 TITLE: 'Workspace Publication',
                 BODY: 'You are about to submit the workspace "{{wsName}}" for publication:',
+                VERSION: 'Version',
+                NEXT_TAG: 'Choose the new version number',
+                NEXT_TAG_HELP: 'You can choose the number of the new version that will be published. Please note that if you decide to "replace the last published version": the last published version will not appear in ORTOLANG\'s resources anymore and will be replaced by this new publication. Nevertheless, the data of the replaced version will remain stored.',
+                NEXT_TAG_CUSTOM: 'Manually enter the new version number',
                 CONTENT: 'I acknowledge being responsible for the content that I publish and I have all the authorizations, consents and rights that allow me to publish these contents',
                 POLICY: 'I have read and agree to <a href="/information/policy" target="_blank">the ORTOLANG policy</a>',
                 MESSAGES: {
                     CONTENT: 'You must check this box',
-                    POLICY: 'You must accept the ORTOLANG policy'
+                    POLICY: 'You must accept the ORTOLANG policy',
+                    PATTERN: 'You mus enter a valid version number (ex: 3 or 3.2)'
+                },
+                LABEL: {
+                    NEXT_MAJOR_VERSION: 'Version {{version}}',
+                    NEXT_MINOR_VERSION: 'Version {{version}} (minor changes)',
+                    SAME_VERSION: 'Version {{version}} (replace the last published version)'
                 }
             },
             DELETE_WORKSPACE_MODAL: {

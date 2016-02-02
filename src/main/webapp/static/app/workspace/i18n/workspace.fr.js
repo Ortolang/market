@@ -56,6 +56,7 @@ angular.module('ortolangMarketApp')
             EDIT_PRESENTATION_METADATA: 'Éditer les métadonnées',
             ADD_MEMBER: 'Ajouter un membre',
             REMOVE_MEMBER: 'Retirer des membres',
+            CHANGE_OWNER: 'Changer le propriétaire',
             CREATE_WORKSPACE: 'Créer un espace de travail',
             NO_METATDATA: 'Les métadonnées ne sont pas encore renseignées.',
             GO_TO_METATDATA: 'Allez à la page des métadonnées.',
@@ -77,11 +78,21 @@ angular.module('ortolangMarketApp')
             PUBLISH_MODAL: {
                 TITLE: 'Demande de publication',
                 BODY: 'Vous allez soumettre l\'espace de travail "{{wsName}}" à publication :',
+                VERSION: 'Version',
+                NEXT_TAG: 'Choisir le numéro de la nouvelle version',
+                NEXT_TAG_HELP: 'Vous pouvez choisir le numéro de la nouvelle version qui sera publiée. Veuillez noter que si vous choisissez de "remplacer la dernière version publiée" : la dernière version publiée n\'apparaitra plus dans les resources d\'ORTOLANG et sera remplacée par cette nouvelle publication. Les données de la version remplacée seront toutefois conservées.',
+                NEXT_TAG_CUSTOM: 'Saisir manuellement le numéro de la nouvelle version',
                 CONTENT: 'Je reconnais être responsable des contenus que je publie et posséder toutes les autorisations, consentements et droits qui me permettent de publier ces contenus',
                 POLICY: 'Je déclare avoir pris connaissance et accepter sans réserves <a href="/information/policy" target="_blank">la charte ORTOLANG</a>',
                 MESSAGES: {
                     CONTENT: 'Vous devez cocher cette case',
-                    POLICY: 'Vous devez accepter la charte ORTOLANG'
+                    POLICY: 'Vous devez accepter la charte ORTOLANG',
+                    PATTERN: 'Vous devez entrer un numéro de version valide (ex : 3 ou 3.2)'
+                },
+                LABEL: {
+                    NEXT_MAJOR_VERSION: 'Version {{version}}',
+                    NEXT_MINOR_VERSION: 'Version {{version}} (modifications mineures)',
+                    SAME_VERSION: 'Version {{version}} (remplacer la dernière version publiée)'
                 }
             },
             DELETE_WORKSPACE_MODAL: {
@@ -115,6 +126,9 @@ angular.module('ortolangMarketApp')
                 NO_FRIENDS: 'Pas de collaborateurs enregistrés',
                 ADD: 'Ajouter',
                 ADDED: 'Ajouté'
+            },
+            CHANGE_OWNER_MODAL: {
+                TITLE: 'Changer le propriétaire de {{wsName}}'
             },
             UPLOAD_ZIP_MODAL: {
                 TITLE: 'Importer un zip',
@@ -159,7 +173,13 @@ angular.module('ortolangMarketApp')
                 CONTENT: 'Impossible de supprimer un dossier non vide'
             },
             EDIT_LOGO_MODAL: {
-                TITLE: 'Edition du logo'
+                TITLE: 'Édition du logo',
+                HOLDER_EDITOR: 'Création d\'un logo',
+                FILE_INPUT: 'Utiliser une image',
+                FILE_INPUT_HELP: 'Pour éviter tout problème d\'affichage éventuel veuillez sélectionner une image carrée et de type : JPG, PNG, GIF ou SVG',
+                LOGO_EDITOR: 'Utiliser le créateur de logo',
+                LOGO_EDITOR_BUTTON: 'Créer un logo',
+                LOGO_EDITOR_HELP: 'Créer facilement un logo à l\'aide du créateur de logo ORTOLANG'
             },
             METADATA_EDITOR: {
                 MESSAGES: {
@@ -286,13 +306,16 @@ angular.module('ortolangMarketApp')
                     WORKSPACE: {
                         TAG: 'a publié une nouvelle version :<span class="description">{{::arguments["tag-name"]}}</span>',
                         SNAPSHOT: 'a pris un nouvel instanané',
-                        CREATE: 'a créé cet espace de travail'
+                        CREATE: 'a créé cet espace de travail',
+                        'CHANGE-OWNER': 'a changé le propriétaire de l\'espace'
                     },
                     METADATA: {
                         CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
                         UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
                         CREATE_ITEM: 'a créé la fiche de métadonnées de présentation',
                         UPDATE_ITEM: 'a mis à jour la fiche de métadonnées de présentation',
+                        CREATE_THUMB: 'a ajouté un logo',
+                        UPDATE_THUMB: 'a modifié le logo',
                         CREATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>',
                         UPDATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>'
                     },
@@ -316,7 +339,11 @@ angular.module('ortolangMarketApp')
                 },
                 PROCESSES: {
                     PUBLISH_WORKSPACE: {
-                        PUBLISH_WORKSPACE: 'a fait une demande de publication'
+                        PUBLISH_WORKSPACE: 'a fait une demande de publication',
+                        SUBMITTED: 'En attente de modération',
+                        RUNNING: 'En attente de modération',
+                        COMPLETED: 'Publication effectuée',
+                        ABORTED: 'Publication annulée'
                     }
                 }
             }

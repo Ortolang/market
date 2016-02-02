@@ -32,6 +32,12 @@ angular.module('ortolangMarketApp')
             getFtpUrl: {
                 method: 'GET',
                 url: url.api + '/workspaces/alias/:alias/ftp'
+            },
+            changeOwner: {
+                method: 'POST',
+                url: url.api + '/workspaces/:wskey/owner',
+                transformRequest: function (data) { return $.param(data); },
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
             }
         });
     }]);

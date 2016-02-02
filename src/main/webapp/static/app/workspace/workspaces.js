@@ -71,20 +71,6 @@ angular.module('ortolangMarketApp')
             $location.url('/workspaces/' + workspace.alias + (section ? '?section=' + section : ''));
         };
 
-        $scope.getTitleValue = function (workspace) {
-            var metadata = Workspace.metadatas[workspace.alias];
-            if (metadata === null) {
-                return workspace.name;
-            }
-            if (metadata === undefined) {
-                return undefined;
-            }
-            if (metadata.title) {
-                return Helper.getMultilingualValue(metadata.title);
-            }
-        };
-
-
         function init() {
             $scope.Workspace = Workspace;
             Workspace.getWorkspaceList().then(function () {

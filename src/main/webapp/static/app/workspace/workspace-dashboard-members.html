@@ -4,6 +4,7 @@
         <ul class="list-unstyled row">
             <li class="col-lg-3 col-md-4 col-sm-6" profile-card data-profile="Workspace.authorCards[Workspace.active.workspace.owner]" data-size="50" data-img-classes="img-circle"></li>
         </ul>
+        <button class="btn btn-default" ng-if="User.key === Workspace.active.workspace.owner" ng-click="changeOwner()" translate="WORKSPACE.CHANGE_OWNER"></button>
     </div>
     <div class="workspace-dashboard-section">
         <h4 translate="WORKSPACE.MEMBERS_LIST" class="no-border-bottom"></h4>

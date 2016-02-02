@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
         '$modal',
         '$translate',
         '$window',
+        '$filter',
         'Workspace',
         'Content',
         'Helper',
@@ -23,7 +24,7 @@ angular.module('ortolangMarketApp')
         'WorkspaceResource',
         'WorkspaceBrowserService',
         'User',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService, User) {
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, $filter, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService, User) {
 
             /**
              * The section selected by default
@@ -79,19 +80,85 @@ angular.module('ortolangMarketApp')
                 if (Workspace.active.metadata) {
                     var publishModal;
                     modalScope = Helper.createModalScope(true);
-                    modalScope.wsName = $scope.getTitleValue();
+                    modalScope.wsName = Workspace.getActiveWorkspaceTitle();
+                    modalScope.models.firstVersion = Workspace.active.workspace.tags.length === 0;
+                    modalScope.models.tags = $filter('orderBy')(Workspace.active.workspace.tags, '-name');
+                    modalScope.models.customVersionPattern = /^([0-9]+|[0-9]+\.[0-9]+)$/;
+                    if (!modalScope.models.firstVersion) {
+                        modalScope.models.lastTag = modalScope.models.tags[0];
+                        var nextMajorVersion,
+                            nextMinorVersion,
+                            lastVersion = modalScope.models.tags[0].name;
+                        if (isNaN(parseInt(lastVersion.substring(1), 10))) {
+                            console.log('Not a number');
+                            modalScope.models.customVersionPattern = '';
+                            modalScope.models.hideVersionSelector = true;
+                            modalScope.models.showCustomVersion = true;
+                            modalScope.models.nextTags = [
+                                {
+                                    label: $translate.instant('WORKSPACE.PUBLISH_MODAL.LABEL.SAME_VERSION', {version: lastVersion.substring(1)}),
+                                    value: lastVersion.substring(1)
+                                }
+                            ];
+                        } else {
+                            if (lastVersion.indexOf('.') > 0) {
+                                nextMajorVersion = parseInt(lastVersion.substring(1, lastVersion.indexOf('.')), 10) + 1;
+                            } else {
+                                nextMajorVersion = parseInt(lastVersion.substring(1), 10) + 1;
+                            }
+                            if (lastVersion.lastIndexOf('.') > 0) {
+                                nextMinorVersion = lastVersion.substring(1, lastVersion.lastIndexOf('.') + 1) +
+                                    (parseInt(lastVersion.substring(lastVersion.lastIndexOf('.') + 1), 10) + 1);
+                            } else {
+                                nextMinorVersion = lastVersion.substr(1) + '.1';
+                            }
+                            modalScope.models.nextTags = [
+                                {
+                                    label: $translate.instant('WORKSPACE.PUBLISH_MODAL.LABEL.NEXT_MAJOR_VERSION', {version: nextMajorVersion}),
+                                    value: nextMajorVersion
+                                },
+                                {
+                                    label: $translate.instant('WORKSPACE.PUBLISH_MODAL.LABEL.NEXT_MINOR_VERSION', {version: nextMinorVersion}),
+                                    value: nextMinorVersion
+                                },
+                                {
+                                    label: $translate.instant('WORKSPACE.PUBLISH_MODAL.LABEL.SAME_VERSION', {version: lastVersion.substring(1)}),
+                                    value: lastVersion.substring(1)
+                                }
+                            ];
+                            modalScope.models.selectedVersion = modalScope.models.nextTags[0];
+                        }
+                    } else {
+                        modalScope.models.nextTags = [
+                            {
+                                label: $translate.instant('WORKSPACE.PUBLISH_MODAL.LABEL.NEXT_MAJOR_VERSION', {version: 1}),
+                                value: 1
+                            }
+                        ];
+                        modalScope.models.selectedVersion = modalScope.models.nextTags[0];
+                    }
+
                     modalScope.submit = function (publishWorkspaceForm) {
                         if (!modalScope.models.pendingSubmit) {
                             modalScope.models.pendingSubmit = true;
                             if (publishWorkspaceForm.$valid) {
-                                RuntimeResource.createProcess({
-                                    'process-type': 'publish-workspace',
-                                    'process-name': 'Publication of workspace: ' + Workspace.active.workspace.name,
-                                    'wskey': Workspace.active.workspace.key
-                                }, function () {
-                                    Workspace.refreshActiveWorkspaceInfo();
-                                });
-                                publishModal.hide();
+                                var wstag;
+                                if (modalScope.models.showCustomVersion) {
+                                    wstag = modalScope.models.customVersion;
+                                } else {
+                                    wstag = modalScope.models.selectedVersion.value;
+                                }
+                                if (wstag) {
+                                    RuntimeResource.createProcess({
+                                        'process-type': 'publish-workspace',
+                                        'process-name': 'Publication of workspace: ' + Workspace.active.workspace.name,
+                                        'wskey': Workspace.active.workspace.key,
+                                        'wstag': 'v' + wstag
+                                    }, function () {
+                                        Workspace.refreshActiveWorkspaceInfo();
+                                    });
+                                    publishModal.hide();
+                                }
                             } else {
                                 modalScope.models.pendingSubmit = false;
                             }
@@ -140,18 +207,6 @@ angular.module('ortolangMarketApp')
                     show: true
                 });
             }
-
-            $scope.getTitleValue = function () {
-                if (Workspace.active.metadata === null) {
-                    return Workspace.active.workspace.name;
-                }
-                if (Workspace.active.metadata === undefined) {
-                    return;
-                }
-                if (Workspace.active.metadata.title) {
-                    return Helper.getMultilingualValue(Workspace.active.metadata.title);
-                }
-            };
 
             $scope.seeMoreEvents = function () {
                 if (!$scope.dashboardModels.eventsInfiniteScrollBusy) {

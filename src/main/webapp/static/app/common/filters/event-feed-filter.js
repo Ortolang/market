@@ -22,6 +22,9 @@ angular.module('ortolangMarketApp')
                 if (event.type === 'core.collection.create' && event.arguments.path === '/') {
                     return;
                 }
+                if (event.type === 'membership.group.change-owner') {
+                    return;
+                }
                 if (/^core\.metadata\./.test(event.type) && event.arguments.name === 'ortolang-workspace-json') {
                     return;
                 }
