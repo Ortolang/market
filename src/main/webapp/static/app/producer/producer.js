@@ -8,42 +8,28 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducerCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'FacetedFilterManager', 'SearchResource', function ($scope, $routeParams, icons, QueryBuilderFactory, FacetedFilterManager, SearchResource) {
+    .controller('ProducerCtrl', ['$scope', '$routeParams', 'icons', 'QueryBuilderFactory', 'ReferentialEntityResource', function ($scope, $routeParams, icons, QueryBuilderFactory, ReferentialEntityResource) {
 
         function loadItem(id) {
 
-            var queryBuilder = QueryBuilderFactory.make({
-                projection: '*',
-                source: 'Organization'
-            });
+            ReferentialEntityResource.get({name: id}, function(refEntity) {
+                $scope.producer = angular.fromJson(refEntity.content);
 
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.img', 'img');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
-            queryBuilder.addProjection('meta_ortolang-referentiel-json.homepage', 'homepage');
-
-            queryBuilder.equals('meta_ortolang-referentiel-json.id', id);
-
-            SearchResource.json({query: queryBuilder.toString()}, function (results) {
-                if(results.length>0) {
-                    $scope.producer = angular.fromJson(results[0]);
-
-                    if (!$scope.producer.img) {
-                        $scope.imgtitle = '';
-                        $scope.imgtheme = 'custom';
-                    }
-
-                    loadResources($scope.producer['@rid']);
+                if (!$scope.producer.img) {
+                    $scope.imgtitle = '';
+                    $scope.imgtheme = 'custom';
                 }
+                // loadResources($scope.producer['@rid']);
             });
         }
 
-        function loadResources(producerRID) {
-            if (producerRID) {
-                $scope.queryBuilder.and();
-                $scope.queryBuilder.in('meta_ortolang-item-json.producers', [producerRID]);
-                $scope.query = $scope.queryBuilder.toString();
-            }
-        }
+        // function loadResources(producerRID) {
+        //     if (producerRID) {
+        //         $scope.queryBuilder.and();
+        //         $scope.queryBuilder.in('meta_ortolang-item-json.producers', [producerRID]);
+        //         $scope.query = $scope.queryBuilder.toString();
+        //     }
+        // }
 
         // Scope variables
         function initScopeVariables() {

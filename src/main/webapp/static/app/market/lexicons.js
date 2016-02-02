@@ -217,6 +217,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager = FacetedFilterManager.make();
             addAvailableFilters();
             addCustomProjections();
+
+            $scope.type = 'Lexique';
         }
 
         init();

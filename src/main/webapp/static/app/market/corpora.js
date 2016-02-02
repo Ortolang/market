@@ -235,6 +235,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager = FacetedFilterManager.make();
             addAvailableFilters();
             addCustomProjections();
+
+            $scope.type = 'Corpus';
         }
 
         init();

@@ -42,6 +42,8 @@ angular.module('ortolangMarketApp')
 
         function init() {
             initScopeVariables();
+
+            $scope.type = 'Application';
         }
         init();
 
