@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
             restrict: 'EA',
             scope: {
                 type: '=',
+                content: '=',
                 query: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
@@ -66,7 +67,7 @@ angular.module('ortolangMarketApp')
                         //}
 
                         $location.search(scope.filtersManager.urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse, scope.facets));
-                        scope.query = scope.filtersManager.toQuery(scope.content);
+                        // scope.query = scope.filtersManager.toQuery(scope.content);
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
@@ -192,11 +193,11 @@ angular.module('ortolangMarketApp')
                             scope.facets = ($routeParams.facets === 'true');
                         }
 
-                        var newQuery = scope.filtersManager.toQuery(scope.content);
+                        // var newQuery = scope.filtersManager.toQuery(scope.content);
 
-                        if (scope.query !== newQuery) {
-                            scope.query = newQuery;
-                        }
+                        // if (scope.query !== newQuery) {
+                        //     scope.query = newQuery;
+                        // }
                     }
 
                     scope.$on('$routeUpdate', function () {

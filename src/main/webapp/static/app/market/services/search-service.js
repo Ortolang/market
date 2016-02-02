@@ -56,10 +56,10 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
         }
     };
 
-    this.search = function (type, noProcessing) {
+    this.search = function (param, noProcessing) {
         tmpResults = undefined;
         var Search = this;
-        return ItemResource.list({type: type}, function (data) {
+        return ItemResource.list(param, function (data) {
             if (noProcessing) {
                 Search.results = data;
             } else {

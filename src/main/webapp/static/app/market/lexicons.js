@@ -219,6 +219,7 @@ angular.module('ortolangMarketApp')
             addCustomProjections();
 
             $scope.type = 'Lexique';
+            $scope.content = '';
         }
 
         init();

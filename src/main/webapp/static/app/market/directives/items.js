@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             scope: {
                 title: '=',
                 type: '=',
+                content: '=',
                 query: '=',
                 filtersManager: '='
             },
@@ -26,8 +27,15 @@ angular.module('ortolangMarketApp')
                     Search.clearResults();
                 });
 
-                function load(type) {
-                    Search.search(type).$promise.then(function (results) {
+                function load() {
+                    var param = {};
+                    if (scope.type) {
+                        param.type = scope.type;
+                    }
+                    if (scope.newContent) {
+                        param.content = scope.newContent;
+                    }
+                    Search.search(param).$promise.then(function (results) {
                         angular.forEach(results, function (result) {
                             if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
                                 var title = result['meta_ortolang-item-json'].title;
@@ -44,9 +52,20 @@ angular.module('ortolangMarketApp')
                     });
                 }
 
+
+                // Scope variables
+                function initScopeVariables() {
+                    scope.newContent = undefined;
+                }
+                initScopeVariables();
+
                 scope.$watch('type', function () {
-                    if (scope.type) {
-                        load(scope.type);
+                    load();
+                });
+                scope.$watch('content', function () {
+                    if (scope.content !== scope.newContent) {
+                        scope.newContent = scope.content;
+                        load();
                     }
                 });
             }

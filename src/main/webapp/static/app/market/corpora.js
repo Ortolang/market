@@ -237,6 +237,7 @@ angular.module('ortolangMarketApp')
             addCustomProjections();
 
             $scope.type = 'Corpus';
+            $scope.content = '';
         }
 
         init();
