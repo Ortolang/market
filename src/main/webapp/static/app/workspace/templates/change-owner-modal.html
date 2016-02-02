@@ -12,6 +12,7 @@
                         <button class="btn btn-default" ng-class="::icons.remove" ng-click="change(member.key)" translate="SELECT"></button>
                     </li>
                 </ul>
+                <p ng-if="members.length <= 1" translate="WORKSPACE.CHANGE_OWNER_MODAL.NO_OTHER_MEMBERS"></p>
             </div>
         </div>
     </div>

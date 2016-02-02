@@ -28,7 +28,7 @@
                                 <img ng-if="::Workspace.metadatas[workspace.alias].imageUrl" class="logo" ng-src="{{::Workspace.metadatas[workspace.alias].imageUrl}}" alt="{{::workspace.alias}}"/>
                             </div>
                             <div class="media-body">
-                                <h4>{{::getTitleValue(workspace)}} <span class="small alias">{{::workspace.alias}}</span></h4>
+                                <h4>{{::Workspace.getWorkspaceTitle(workspace)}} <span class="small alias">{{::workspace.alias}}</span></h4>
                                 <div class="date">{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} {{::workspace.lastModificationDate | amTimeAgo}}</div>
                             </div>
                             <div class="media-right">

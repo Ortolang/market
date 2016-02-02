@@ -128,7 +128,8 @@ angular.module('ortolangMarketApp')
                 ADDED: 'Ajouté'
             },
             CHANGE_OWNER_MODAL: {
-                TITLE: 'Changer le propriétaire de {{wsName}}'
+                TITLE: 'Changer le propriétaire de {{wsName}}',
+                NO_OTHER_MEMBERS: 'Il n\'y a pas d\'autres membres de l\'espace de travail. Veuillez d\'abord ajouter le nouveau propriétaire en tant que membre.'
             },
             UPLOAD_ZIP_MODAL: {
                 TITLE: 'Importer un zip',

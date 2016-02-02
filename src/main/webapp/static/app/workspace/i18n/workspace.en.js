@@ -127,6 +127,10 @@ angular.module('ortolangMarketApp')
                 ADD: 'Add',
                 ADDED: 'Added'
             },
+            CHANGE_OWNER_MODAL: {
+                TITLE: 'Change the owner of {{wsName}}',
+                NO_OTHER_MEMBERS: 'There are no other workspace members. Please add the new owner as member before.'
+            },
             UPLOAD_ZIP_MODAL: {
                 TITLE: 'Upload a zip into "{{name === "root" ? "/" : "name" }}"',
                 SUBMIT: 'Upload',
