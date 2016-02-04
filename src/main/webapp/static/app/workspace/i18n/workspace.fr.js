@@ -173,6 +173,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Erreur',
                 CONTENT: 'Impossible de supprimer un dossier non vide'
             },
+            MOVE_CONFLICT_ALERT: {
+                TITLE: 'Erreur',
+                CONTENT: 'Un fichier ou dossier du même nom existe déjà à cet emplacement: {{path}}'
+            },
             EDIT_LOGO_MODAL: {
                 TITLE: 'Édition du logo',
                 HOLDER_EDITOR: 'Création d\'un logo',

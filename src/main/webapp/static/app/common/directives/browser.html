@@ -155,7 +155,7 @@
                             <div ng-click="renameChild()"><span ng-class="::icons.edit"></span> {{'RENAME' | translate}}</div>
                         </li>
                         <li ng-show="isHead && !hasOnlyParentSelected()">
-                            <div ng-click="moveChild()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
+                            <div ng-click="moveChildren()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
                         </li>
                         <li ng-show="isHead && !hasOnlyParentSelected()" class="divider"></li>
                         <li><div ng-click="download(selectedElements)"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>

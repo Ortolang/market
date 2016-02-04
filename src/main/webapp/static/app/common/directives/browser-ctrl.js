@@ -132,8 +132,8 @@ angular.module('ortolangMarketApp')
                         if ($scope.browserService.canEdit && $scope.isHead && !$scope.hasOnlyParentSelected()) {
                             if ($scope.selectedElements.length === 1) {
                                 $scope.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
-                                $scope.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
                             }
+                            $scope.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
                             $scope.contextMenuItems.push({text: 'BROWSER.DELETE', icon: icons.browser.delete, action: 'delete'});
                             $scope.contextMenuItems.push({divider: true});
                         }
@@ -752,9 +752,9 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.moveChild = function () {
+            $scope.moveChildren = function () {
                 if ($scope.browserService.canEdit && $scope.isHead) {
-                    var moveModal, hideElements = [];
+                    var moveModal, hideElements = [], sources = [];
                     createModalScope();
                     modalScope.title = 'WORKSPACE.MOVE_CHILD_MODAL.TITLE';
                     modalScope.titleValues = {name: $scope.selectedElements.length > 1 ? '' : $scope.selectedElements[0].name};
@@ -762,6 +762,7 @@ angular.module('ortolangMarketApp')
                     modalScope.forceHead = true;
                     angular.forEach($scope.selectedElements, function (selectedElement) {
                         hideElements.push(selectedElement.key);
+                        sources.push(normalizePath($scope.path + '/' + selectedElement.name));
                     });
                     modalScope.hideElements = hideElements;
                     modalScope.forcePath = $scope.parent.path;
@@ -770,22 +771,24 @@ angular.module('ortolangMarketApp')
                     modalScope.fileSelectId = 'moveChildModal';
 
                     modalScope.$on('browserSelectedElements-moveChildModal', function ($event, elements) {
-                        modalScope.moveChild(elements[0]);
+                        modalScope.moveChildren(elements[0]);
                     });
 
-                    modalScope.moveChild = function (selectedCollection) {
-                        var data = $scope.selectedElements[0],
-                            destination = normalizePath(selectedCollection.path + '/' + $scope.selectedElements[0].name);
-                        if (destination !== $scope.selectedElements[0].path) {
-                            WorkspaceElementResource.put({wskey: $scope.browserService.workspace.key, destination: destination}, data, function () {
-                                deselectChildren();
-                                getParentData(true).then(function () {
-                                    moveModal.hide();
-                                });
+                    modalScope.moveChildren = function (selectedCollection) {
+                        WorkspaceElementResource.moveElements({wskey: $scope.browserService.workspace.key}, {sources: sources, destination: selectedCollection.path}, function () {
+                            deselectChildren();
+                            getParentData(true).then(function () {
+                                moveModal.hide();
                             });
-                        } else {
-                            moveModal.hide();
-                        }
+                        }, function (error) {
+                            $alert({
+                                container: '.file-select-modal-body',
+                                placement: 'top',
+                                title: error.status === 409 ? $translate.instant('WORKSPACE.MOVE_CONFLICT_ALERT.TITLE') : $translate.instant('UNEXPECTED_ERROR_ALERT.TITLE'),
+                                content: error.status === 409 ? $translate.instant('WORKSPACE.MOVE_CONFLICT_ALERT.CONTENT', error.data) : $translate.instant('UNEXPECTED_ERROR_ALERT.CONTENT'),
+                                type: 'danger'
+                            });
+                        });
                     };
                     moveModal = $modal({
                         scope: modalScope,
@@ -811,7 +814,7 @@ angular.module('ortolangMarketApp')
                         $scope.renameChild();
                         break;
                     case 'move':
-                        $scope.moveChild();
+                        $scope.moveChildren();
                         break;
                     case 'preview':
                         $scope.clickPreview();
