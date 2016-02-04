@@ -750,17 +750,17 @@ angular.module('ortolangMarketApp')
 
             $scope.moveChild = function () {
                 if ($scope.browserService.canEdit && $scope.isHead) {
-                    var moveModal;
+                    var moveModal, hideElements = [];
                     createModalScope();
-                    modalScope.title = $translate.instant('WORKSPACE.MOVE_CHILD_MODAL.TITLE', {name: $scope.selectedElements[0].name});
+                    modalScope.title = 'WORKSPACE.MOVE_CHILD_MODAL.TITLE';
+                    modalScope.titleValues = {name: $scope.selectedElements.length > 1 ? '' : $scope.selectedElements[0].name};
                     modalScope.forceWorkspace = $scope.browserService.workspace.key;
                     modalScope.forceHead = true;
-                    if ($scope.selectedElements[0].type === ortolangType.collection) {
-                        modalScope.forcePath = $scope.parent.path;
-                        modalScope.hideElement = $scope.selectedElements[0].key;
-                    } else {
-                        modalScope.forcePath = $scope.path;
-                    }
+                    angular.forEach($scope.selectedElements, function (selectedElement) {
+                        hideElements.push(selectedElement.key);
+                    });
+                    modalScope.hideElements = hideElements;
+                    modalScope.forcePath = $scope.parent.path;
                     modalScope.forceMimeTypes = 'ortolang/collection';
                     modalScope.acceptMultiple = false;
                     modalScope.fileSelectId = 'moveChildModal';
@@ -1033,7 +1033,10 @@ angular.module('ortolangMarketApp')
                 if ($scope.browserService.workspace.key === eventMessage.fromObject) {
                     var path = eventMessage.arguments.path;
                     if (path) {
-                        path = path.substring(0, path.lastIndexOf('/') + 1);
+                        path = path.substring(0, path.lastIndexOf('/'));
+                        if (path.length === 0) {
+                            path = '/';
+                        }
                         if ($scope.path === path) {
                             if (eventRefreshTimeoutPromise) {
                                 $timeout.cancel(eventRefreshTimeoutPromise);
@@ -1150,7 +1153,7 @@ angular.module('ortolangMarketApp')
                     if (type && child.type !== type) {
                         return false;
                     }
-                    if ($scope.hideElement && $scope.hideElement === child.key) {
+                    if ($scope.hideElements && $scope.hideElements.indexOf(child.key) >= 0) {
                         return false;
                     }
                     if (!nameQuery && !mimeTypeQuery) {
@@ -1188,7 +1191,7 @@ angular.module('ortolangMarketApp')
             $scope.filteredChildren = function (type) {
                 //console.count('Browser filteredChildren');
                 if ($scope.parent && $scope.parent.elements) {
-                    if (!$scope.hideElement && $scope.filterModels.nameQuery === previousFilterNameQuery &&
+                    if (!$scope.hideElements && $scope.filterModels.nameQuery === previousFilterNameQuery &&
                         $scope.filterModels.mimeTypeQuery === previousFilterMimeTypeQuery &&
                         type === previousFilterType) {
                         if (type) {
