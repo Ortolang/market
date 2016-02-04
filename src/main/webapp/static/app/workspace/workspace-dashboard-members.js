@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.changeOwner = function () {
-            if (User.key === Workspace.active.workspace.owner) {
+            if (User.key === Workspace.active.workspace.owner || User.isRoot()) {
                 var changeOwnerModal,
                     modalScope = Helper.createModalScope(true);
                 modalScope.wsName = Workspace.getActiveWorkspaceTitle();

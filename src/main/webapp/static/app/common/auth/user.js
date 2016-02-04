@@ -48,5 +48,7 @@ angular.module('ortolangMarketApp')
 
         this.isAuthenticated = AuthService.isAuthenticated;
 
+        this.isRoot = AuthService.isRoot;
+
         return this;
     }]);

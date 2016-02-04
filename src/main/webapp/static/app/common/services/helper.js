@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', 'Settings', function ($rootScope, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', 'Settings', function ($rootScope, $translate, $alert, Settings) {
 
         var modalScope, modal;
 
@@ -51,6 +51,19 @@ angular.module('ortolangMarketApp')
                 modal.hide();
                 modal = undefined;
             }
+        };
+
+        this.showUnexpectedErrorAlert = function (container, placement, type) {
+            var config = {
+                placement: placement || 'top-right',
+                title: $translate.instant('UNEXPECTED_ERROR_ALERT.TITLE'),
+                content: $translate.instant('UNEXPECTED_ERROR_ALERT.CONTENT'),
+                type: type || 'danger'
+            };
+            if (container) {
+                config.container = container;
+            }
+            $alert(config);
         };
 
         return this;
