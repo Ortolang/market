@@ -21,10 +21,6 @@ angular.module('ortolangMarketApp')
                 method: 'POST',
                 url: url.api + '/workspaces/:wskey/snapshots'
             },
-            checkAliasAvailability: {
-                method: 'GET',
-                url: url.api + '/workspaces/alias/:alias/available'
-            },
             getWorkspaceFromAlias: {
                 method: 'GET',
                 url: url.api + '/workspaces/alias/:alias'
