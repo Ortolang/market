@@ -115,7 +115,11 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Rename'
             },
             MOVE_CHILD_MODAL: {
-                TITLE: 'Move \'{{name}}\' into...'
+                TITLE: 'Move <strong>{{name}}</strong> into...'
+            },
+            DELETE_NON_EMPTY_COLLECTION_MODAL: {
+                TITLE: 'Delete non-empty folder',
+                BODY: '<strong class="text-danger">One or several folders that you want to delete are non-empty</strong>. Are you sure you want to delete these folders and their content?'
             },
             ADD_MEMBER_MODAL: {
                 TITLE: 'Add a member to {{wsName}}',
@@ -167,10 +171,6 @@ angular.module('ortolangMarketApp')
                 BACKGROUND: 'Background colour',
                 BOLD: 'Bold',
                 SUBMIT: 'Create'
-            },
-            DELETE_NON_EMPTY_FOLDER_ALERT: {
-                TITLE: 'Error',
-                CONTENT: 'Cannot delete a non-empty folder'
             },
             METADATA_EDITOR: {
                 MESSAGES: {

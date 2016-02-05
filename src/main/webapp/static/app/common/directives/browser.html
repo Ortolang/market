@@ -155,7 +155,7 @@
                             <div ng-click="renameChild()"><span ng-class="::icons.edit"></span> {{'RENAME' | translate}}</div>
                         </li>
                         <li ng-show="isHead && !hasOnlyParentSelected()">
-                            <div ng-click="moveChildren()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
+                            <div ng-click="moveElements()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
                         </li>
                         <li ng-show="isHead && !hasOnlyParentSelected()" class="divider"></li>
                         <li><div ng-click="download(selectedElements)"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
@@ -194,7 +194,7 @@
                 </div>
 
                 <div ng-show="!hasOnlyParentSelected()" class="btn-group">
-                    <button ng-if="browserService.canEdit && isHead" class="btn btn-default" ng-click="clickDelete()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
+                    <button ng-if="browserService.canEdit && isHead" class="btn btn-default" ng-click="deleteSelectedElements()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.delete"></span>
                     </button>
                 </div>

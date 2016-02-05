@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
             put: {
                 method: 'PUT'
             },
-            moveElements: {
+            bulkAction: {
                 method: 'PUT',
                 url: url.api + '/workspaces/:wskey/elements/bulk'
             },

@@ -55,7 +55,8 @@ angular.module('ortolangMarketApp')
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
         'Helper',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper) {
+        'AtmosphereService',
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, AtmosphereService) {
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
@@ -599,29 +600,38 @@ angular.module('ortolangMarketApp')
             //         Delete          //
             // *********************** //
 
-            function deleteElements(toBeDeletedElements) {
-                if (toBeDeletedElements.length > 0) {
-                    WorkspaceElementResource.delete({wskey: $scope.browserService.workspace.key, path: $scope.parent.path + '/' + toBeDeletedElements.pop().name}, function () {
-                        deleteElements(toBeDeletedElements);
-                    }, function (error) {
-                        $alert({
-                            title: error.status === 403 ? $translate.instant('WORKSPACE.DELETE_NON_EMPTY_FOLDER_ALERT.TITLE') : $translate.instant('UNEXPECTED_ERROR_ALERT.TITLE'),
-                            content: error.status === 403 ? $translate.instant('WORKSPACE.DELETE_NON_EMPTY_FOLDER_ALERT.CONTENT') : $translate.instant('UNEXPECTED_ERROR_ALERT.CONTENT'),
-                            type: 'danger',
-                            duration: 5
-                        });
-                        $scope.deactivateContextMenu();
+            $scope.deleteSelectedElements = function () {
+                if (!$scope.hasOnlyParentSelected()) {
+                    var sources = [];
+                    angular.forEach($scope.selectedElements, function (element) {
+                        sources.push(normalizePath($scope.parent.path + '/' + element.name));
                     });
-                } else {
-                    getParentData(true).then(function () {
+                    WorkspaceElementResource.bulkAction({wskey: $scope.browserService.workspace.key}, {action: 'delete', sources: sources, force: false}, function () {
+                        if (!AtmosphereService.isConnected()) {
+                            getParentData(true, true);
+                        }
                         deselectChildren();
+                    }, function (error) {
+                        if (error.status === 403) {
+                            var nonEmptyCollectionModal;
+                            modalScope = Helper.createModalScope();
+                            modalScope.delete = function () {
+                                WorkspaceElementResource.bulkAction({wskey: $scope.browserService.workspace.key}, {action: 'delete', sources: sources, force: true}, function () {
+                                    nonEmptyCollectionModal.hide();
+                                    deselectChildren();
+                                });
+                            };
+                            nonEmptyCollectionModal = $modal({
+                                scope: modalScope,
+                                templateUrl: 'workspace/templates/delete-non-empty-collection-modal.html',
+                                show: true
+                            });
+                        } else {
+                            Helper.showUnexpectedErrorAlert();
+                        }
                     });
+                    $scope.deactivateContextMenu();
                 }
-            }
-
-            $scope.clickDelete = function () {
-                var toBeDeletedElements = angular.copy($scope.selectedElements);
-                deleteElements(toBeDeletedElements);
             };
 
             // *********************** //
@@ -752,7 +762,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.moveChildren = function () {
+            $scope.moveElements = function () {
                 if ($scope.browserService.canEdit && $scope.isHead) {
                     var moveModal, hideElements = [], sources = [];
                     createModalScope();
@@ -771,11 +781,11 @@ angular.module('ortolangMarketApp')
                     modalScope.fileSelectId = 'moveChildModal';
 
                     modalScope.$on('browserSelectedElements-moveChildModal', function ($event, elements) {
-                        modalScope.moveChildren(elements[0]);
+                        modalScope.moveElements(elements[0]);
                     });
 
-                    modalScope.moveChildren = function (selectedCollection) {
-                        WorkspaceElementResource.moveElements({wskey: $scope.browserService.workspace.key}, {sources: sources, destination: selectedCollection.path}, function () {
+                    modalScope.moveElements = function (selectedCollection) {
+                        WorkspaceElementResource.bulkAction({wskey: $scope.browserService.workspace.key}, {action: 'move', sources: sources, destination: selectedCollection.path}, function () {
                             deselectChildren();
                             getParentData(true).then(function () {
                                 moveModal.hide();
@@ -808,13 +818,13 @@ angular.module('ortolangMarketApp')
                         $scope.addCollection();
                         break;
                     case 'delete':
-                        $scope.clickDelete();
+                        $scope.deleteSelectedElements();
                         break;
                     case 'rename':
                         $scope.renameChild();
                         break;
                     case 'move':
-                        $scope.moveChildren();
+                        $scope.moveElements();
                         break;
                     case 'preview':
                         $scope.clickPreview();
@@ -1486,7 +1496,7 @@ angular.module('ortolangMarketApp')
                         callback: function (event) {
                             preventDefault(event);
                             if (!$scope.hasOnlyParentSelected()) {
-                                $scope.clickDelete();
+                                $scope.deleteSelectedElements();
                             }
                         }
                     })

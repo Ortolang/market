@@ -117,6 +117,10 @@ angular.module('ortolangMarketApp')
             MOVE_CHILD_MODAL: {
                 TITLE: 'Déplacer <strong>{{name}}</strong> vers...'
             },
+            DELETE_NON_EMPTY_COLLECTION_MODAL: {
+                TITLE: 'Suppression de dossier(s) non vide',
+                BODY: '<strong class="text-danger">Un ou plusieurs dossier(s) que vous souhaitez supprimer ne sont pas vides</strong>. Êtes-vous sûr de vouloir supprimer ces dossiers ainsi que leur contenu ?'
+            },
             ADD_MEMBER_MODAL: {
                 TITLE: 'Ajouter un membre à {{wsName}}',
                 SEARCH: 'Rechercher un membre',
@@ -168,10 +172,6 @@ angular.module('ortolangMarketApp')
                 BACKGROUND: 'Couleur de fond',
                 BOLD: 'Texte gras',
                 SUBMIT: 'Créer'
-            },
-            DELETE_NON_EMPTY_FOLDER_ALERT: {
-                TITLE: 'Erreur',
-                CONTENT: 'Impossible de supprimer un dossier non vide'
             },
             MOVE_CONFLICT_ALERT: {
                 TITLE: 'Erreur',
