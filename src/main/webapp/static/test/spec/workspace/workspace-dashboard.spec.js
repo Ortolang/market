@@ -111,7 +111,7 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
             });
             $httpBackend.expect('GET', url.api + '/workspaces?md=true').respond(200, {entries: []});
             $httpBackend.expect('GET', url.api + '/workspaces/alias/foobar?md=true').respond(404, {});
-            $httpBackend.expect('GET', 'modal/modal.tpl.html').respond(200, '<div class="modal foobar"></div>');
+            $httpBackend.expect('GET', 'common/templates/error-modal.html').respond(200, '<div class="modal foobar"></div>');
             $httpBackend.expect('GET', 'workspace/workspaces.html').respond(200);
             $httpBackend.flush();
         }));
