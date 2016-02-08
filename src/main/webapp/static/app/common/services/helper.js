@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', 'Settings', function ($rootScope, $translate, $alert, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', 'Settings', function ($rootScope, $translate, $alert, $modal, Settings) {
 
         var modalScope, modal;
 
@@ -68,6 +68,25 @@ angular.module('ortolangMarketApp')
                 config.container = container;
             }
             $alert(config);
+        };
+
+        this.showErrorModal = function (error, container, placement) {
+            var scope = this.createModalScope(true);
+            scope.error = error;
+            var config = {
+                title: 'ERROR_MODAL_' + error.code + '.TITLE',
+                content: 'ERROR_MODAL_' + error.code + '.BODY',
+                show: true,
+                templateUrl: 'common/templates/error-modal.html',
+                scope: scope
+            };
+            if (container) {
+                config.container = container;
+            }
+            if (placement) {
+                config.placement = placement;
+            }
+            $modal(config);
         };
 
         return this;

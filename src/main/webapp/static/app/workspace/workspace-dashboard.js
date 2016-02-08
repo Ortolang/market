@@ -201,14 +201,6 @@ angular.module('ortolangMarketApp')
                 $rootScope.ortolangPageSubtitle = undefined;
             });
 
-            function displaySearchErrorModal(cause, params) {
-                $modal({
-                    title: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.TITLE'),
-                    content: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.BODY_' + cause, params),
-                    show: true
-                });
-            }
-
             $scope.seeMoreEvents = function () {
                 if (!$scope.dashboardModels.eventsInfiniteScrollBusy) {
                     $scope.dashboardModels.eventsInfiniteScrollBusy = true;
@@ -241,8 +233,8 @@ angular.module('ortolangMarketApp')
                             market: '/market/item/' + Workspace.active.workspace.alias,
                             content: Content.getContentUrlWithPath('', Workspace.active.workspace.alias)
                         };
-                    }, function () {
-                        displaySearchErrorModal('ALIAS', {alias: $route.current.params.alias});
+                    }, function (error) {
+                        Helper.showErrorModal(error.data);
                         $location.url('/workspaces');
                     });
                 });

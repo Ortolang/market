@@ -108,5 +108,21 @@ angular.module('ortolangMarketApp')
             BODY: 'we are using statistics cookies to understand how visitors interact with the website by collecting and reporting information anonymously. You can find out more or switch them off if you prefer. However, by continuing to use the site without changing settings, you are agreeing to our use of cookies.',
             ACCEPT: 'I agree',
             MORE: 'More information'
+        },
+        ERROR_MODAL_: {
+            TITLE: 'Error',
+            BODY: 'An unexpected error has occurred'
+        },
+        ERROR_MODAL_1: {
+            TITLE: 'The specified path does not exist',
+            BODY: 'The path <strong>{{path}}</strong> does not exist. You have been redirected to the root directory.'
+        },
+        ERROR_MODAL_5: {
+            TITLE: 'The specified path does not exist',
+            BODY: 'No snapshot with name <strong>{{root}}</strong> found. You have been redirected to the current version of the workspace.'
+        },
+        ERROR_MODAL_6: {
+            TITLE: 'Erreur',
+            BODY: 'No workspace with alias <strong>{{alias}}</strong> found or you are not authorized to access this workspace.'
         }
     });

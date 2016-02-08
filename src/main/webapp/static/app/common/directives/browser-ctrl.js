@@ -60,7 +60,8 @@ angular.module('ortolangMarketApp')
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
-                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred, eventRefreshTimeoutPromise, uploadRefreshTimeoutPromise;
+                lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred, eventRefreshTimeoutPromise,
+                uploadRefreshTimeoutPromise, parentDataPromise;
 
             // *********************** //
             //        Breadcrumb       //
@@ -201,19 +202,14 @@ angular.module('ortolangMarketApp')
                 if (refresh === undefined) {
                     refresh = false;
                 }
-                var promise;
-                promise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root, policy: $scope.isWorkspaceBrowserService}).$promise;
-                promise.then(function (element) {
+                parentDataPromise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root, policy: $scope.isWorkspaceBrowserService}).$promise;
+                parentDataPromise.then(function (element) {
                     finishGetParentData(element, refresh, forceNewSelection);
                 }, function (response) {
-                    if (/root \[.*\] does not exists/.test(response.data)) {
-                        displaySearchErrorModal('ROOT', {root: $location.search().root});
-                    } else if (/Element not found at path/.test(response.data)) {
-                        displaySearchErrorModal('PATH', {path: $location.search().path});
-                    }
+                    Helper.showErrorModal(response.data);
                     initWorkspaceVariables();
                 });
-                return promise;
+                return parentDataPromise;
             }
 
             function getSnapshotNameFromHistory(workspaceSnapshot) {
@@ -1065,9 +1061,34 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function checkCreateEvent(eventMessage) {
+                if ($scope.browserService.workspace.key === eventMessage.fromObject) {
+                    var path = eventMessage.arguments.path;
+                    if (path) {
+                        path = path.substring(0, path.lastIndexOf('/'));
+                        if (path.length === 0) {
+                            path = '/';
+                        }
+                        if ($scope.path === path) {
+                            parentDataPromise.then(function () {
+                                var filtered = $filter('filter')($scope.parent.elements, {key: eventMessage.arguments.key});
+                                if (filtered.length === 0) {
+                                    if (eventRefreshTimeoutPromise) {
+                                        $timeout.cancel(eventRefreshTimeoutPromise);
+                                    }
+                                    eventRefreshTimeoutPromise = $timeout(function () {
+                                        getParentData(true);
+                                    }, 400);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
             // OBJECT
             $rootScope.$on('core.object.create', function ($event, eventMessage) {
-                checkCRUDEvent(eventMessage);
+                checkCreateEvent(eventMessage);
             });
             $rootScope.$on('core.object.update', function ($event, eventMessage) {
                 checkCRUDEvent(eventMessage);
@@ -1080,7 +1101,7 @@ angular.module('ortolangMarketApp')
             });
             // COLLECTION
             $rootScope.$on('core.collection.create', function ($event, eventMessage) {
-                checkCRUDEvent(eventMessage);
+                checkCreateEvent(eventMessage);
             });
             $rootScope.$on('core.collection.update', function ($event, eventMessage) {
                 checkCRUDEvent(eventMessage);
@@ -1138,14 +1159,6 @@ angular.module('ortolangMarketApp')
                         });
                 }
             };
-
-            function displaySearchErrorModal(cause, params) {
-                $modal({
-                    title: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.TITLE'),
-                    content: $translate.instant('WORKSPACE.SEARCH_ERROR_MODAL.BODY_' + cause, params),
-                    show: true
-                });
-            }
 
             // *********************** //
             //          Filter         //

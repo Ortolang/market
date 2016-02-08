@@ -108,5 +108,21 @@ angular.module('ortolangMarketApp')
             BODY: 'en poursuivant votre navigation sur ce site, vous acceptez l\'utilisation de cookies afin de réaliser des statistiques d\'audiences anonymes. Vous avez la possibilité de vous y opposer en cliquant sur "{{"COOKIE_CONSENT.MORE" | translate}}".',
             ACCEPT: 'J\'accepte',
             MORE: 'En savoir plus'
+        },
+        ERROR_MODAL_: {
+            TITLE: 'Erreur',
+            BODY: 'Une erreur inattendue s\'est produite'
+        },
+        ERROR_MODAL_1: {
+            TITLE: 'Le chemin d\'accès spécifié n\'existe pas',
+            BODY: 'Le chemin <strong>{{::path}}</strong> n\'existe pas. Vous avez été redirigé vers le dossier racine de l\'espace de travail.'
+        },
+        ERROR_MODAL_5: {
+            TITLE: 'Le chemin d\'accès spécifié n\'existe pas',
+            BODY: 'Il n\'existe pas de version avec le nom <strong>{{root}}</strong>. Vous avez été redirigé vers la version actuelle de l\'espace de travail.'
+        },
+        ERROR_MODAL_6: {
+            TITLE: 'Erreur',
+            BODY: 'Il n\'existe pas d\'espace de travail avec l\'alias <strong>{{alias}}</strong> ou vous n\'êtes pas autorisé à accéder à ce workspace.'
         }
     });

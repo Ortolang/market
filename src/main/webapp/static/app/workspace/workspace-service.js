@@ -157,9 +157,9 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                         Workspace.active.workspace = data;
                         getActiveWorkspaceInfo();
                         deferred.resolve();
-                    }, function () {
+                    }, function (error) {
                         console.error('No workspace with alias "%s" or user not authorized to access this workspace', alias);
-                        deferred.reject();
+                        deferred.reject(error);
                     });
                 } else {
                     Workspace.active.workspace = filteredWorkspace[0];
