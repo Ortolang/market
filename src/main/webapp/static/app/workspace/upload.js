@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService',
-        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService', 'Helper',
+        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService, Helper) {
 
             var uploader, queueLimitReached, queueLimitModal;
 
@@ -109,12 +109,12 @@ angular.module('ortolangMarketApp')
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
-                        fileItem.file.path = angular.copy($scope.parent.path) + '/';
+                        fileItem.file.path = Helper.normalizePath(angular.copy($scope.parent.path) + '/');
                         fileItem.formData.push({path: fileItem.file.path + fileItem.file.name});
                         break;
 
                     case ortolangType.metadata:
-                        fileItem.file.path = angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : '');
+                        fileItem.file.path = Helper.normalizePath(angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : ''));
                         fileItem.formData.push({path: fileItem.file.path});
                         fileItem.formData.push({name: fileItem.file.name});
                         break;

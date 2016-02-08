@@ -33,6 +33,10 @@ angular.module('ortolangMarketApp')
             return lowerStr.indexOf(expected.toLowerCase()) === 0;
         };
 
+        this.normalizePath = function (path) {
+            return path.indexOf('//') === 0 ? path.substring(1) : path;
+        };
+
         $rootScope.$on('modal.show', function (event, _modal_) {
             modal = _modal_;
         });

@@ -281,8 +281,24 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     // *********************** //
 
     function needInfoRefresh(eventMessage) {
-        return Workspace.active.workspace.key === eventMessage.fromObject || Workspace.refresh.events;
+        return Workspace.active.workspace && (Workspace.active.workspace.key === eventMessage.fromObject || Workspace.refresh.events);
     }
+
+    function checkWorkspaceList(members) {
+        listDeferred.promise.then(function () {
+            var workspaces = $filter('filter')(Workspace.list, {members: members}, true);
+            if (workspaces.length !== 1) {
+                SubscriptionResource.refreshWorkspacesFilters();
+                Workspace.getWorkspaceList().then(function () {
+                    Workspace.getWorkspacesMetadata();
+                });
+            }
+        });
+    }
+
+    this.handleWorkspaceCreation = function (newWorkspace) {
+        checkWorkspaceList(newWorkspace.members);
+    };
 
     /**
      * Fired when a new workspace is created or when the connected user is added to the members of a workspace
@@ -290,19 +306,15 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
      */
     $rootScope.$on('membership.group.add-member', function (event, eventMessage) {
         event.stopPropagation();
-        listDeferred.promise.then(function () {
-            var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject}, true);
+        if (eventMessage.arguments.member === User.key) {
             // Connected user has just been added to this workspace; refreshing workspace list
-            if (workspaces.length !== 1) {
-                SubscriptionResource.refreshWorkspacesFilters();
-                Workspace.getWorkspaceList().then(function () {
-                    Workspace.getWorkspacesMetadata();
-                });
-            } else if (Workspace.active.workspace && Workspace.active.workspace.key === workspaces[0].key) {
-                // A member has been added to the active workspace; refreshing active workspace members
+            checkWorkspaceList(eventMessage.fromObject);
+        } else {
+            // A member has been added to the active workspace; refreshing active workspace members
+            if (Workspace.active.workspace && Workspace.active.workspace.members === eventMessage.fromObject) {
                 Workspace.getActiveWorkspaceMembers();
             }
-        });
+        }
     });
 
     $rootScope.$on('membership.group.remove-member', function (event, eventMessage) {

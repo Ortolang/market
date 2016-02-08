@@ -163,10 +163,6 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            function normalizePath(path) {
-                return path.indexOf('//') === 0 ? path.substring(1) : path;
-            }
-
             // *********************** //
             //         Get Data        //
             // *********************** //
@@ -604,7 +600,7 @@ angular.module('ortolangMarketApp')
                 if (!$scope.hasOnlyParentSelected()) {
                     var sources = [];
                     angular.forEach($scope.selectedElements, function (element) {
-                        sources.push(normalizePath($scope.parent.path + '/' + element.name));
+                        sources.push(Helper.normalizePath($scope.parent.path + '/' + element.name));
                     });
                     WorkspaceElementResource.bulkAction({wskey: $scope.browserService.workspace.key}, {action: 'delete', sources: sources, force: false}, function () {
                         if (!AtmosphereService.isConnected()) {
@@ -649,7 +645,7 @@ angular.module('ortolangMarketApp')
                     var files = angular.element('#upload-zip-file').prop('files');
                     $rootScope.uploader.addToQueue(files, {
                         'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: $scope.browserService.workspace.name}),
-                        'ziproot': normalizePath($scope.parent.path + '/' + modalScope.models.root),
+                        'ziproot': Helper.normalizePath($scope.parent.path + '/' + modalScope.models.root),
                         'zipoverwrites': modalScope.models.zipoverwrites,
                         'wskey': $scope.browserService.workspace.key,
                         'wsName': $scope.browserService.workspace.name,
@@ -772,7 +768,7 @@ angular.module('ortolangMarketApp')
                     modalScope.forceHead = true;
                     angular.forEach($scope.selectedElements, function (selectedElement) {
                         hideElements.push(selectedElement.key);
-                        sources.push(normalizePath($scope.path + '/' + selectedElement.name));
+                        sources.push(Helper.normalizePath($scope.path + '/' + selectedElement.name));
                     });
                     modalScope.hideElements = hideElements;
                     modalScope.forcePath = $scope.parent.path;
@@ -944,7 +940,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.browseToPath = function (path) {
-                path = normalizePath(path);
+                path = Helper.normalizePath(path);
                 setPath(path);
                 if ($scope.isFileSelectBrowserService) {
                     getParentData();
@@ -1712,7 +1708,7 @@ angular.module('ortolangMarketApp')
             }
 
             function setPath(path) {
-                path = normalizePath(path);
+                path = Helper.normalizePath(path);
                 $scope.path = path;
                 if (!$scope.isFileSelectBrowserService) {
                     $location.search('path', path);

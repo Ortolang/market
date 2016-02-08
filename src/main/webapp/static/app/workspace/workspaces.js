@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                     modalScope.models.pendingSubmit = true;
                     if (createWorkspaceForm.$valid) {
                         WorkspaceResource.createWorkspace({name: modalScope.models.name, alias: modalScope.models.alias, type: 'user'}, function (newWorkspace) {
-                            $scope.$emit('core.workspace.create', {fromObject: newWorkspace.key});
+                            Workspace.handleWorkspaceCreation(newWorkspace);
                             createWorkspaceModal.hide();
                         }, function (error) {
                             if (error.status === 409) {
