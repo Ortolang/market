@@ -276,6 +276,14 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         });
     };
 
+    this.refreshWorkspaceList = function () {
+        Workspace.getWorkspaceList().then(function () {
+            Workspace.getWorkspacesMetadata();
+        });
+    };
+
+    this.deleted = undefined;
+
     // *********************** //
     //         Events          //
     // *********************** //
@@ -289,9 +297,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             var workspaces = $filter('filter')(Workspace.list, {members: members}, true);
             if (workspaces.length !== 1) {
                 SubscriptionResource.refreshWorkspacesFilters();
-                Workspace.getWorkspaceList().then(function () {
-                    Workspace.getWorkspacesMetadata();
-                });
+                Workspace.refreshWorkspaceList();
             }
         });
     }
@@ -343,8 +349,8 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         listDeferred.promise.then(function () {
             var workspaces = $filter('filter')(Workspace.list, {key: eventMessage.fromObject}, true);
             if (workspaces.length === 1) {
-                Workspace.getWorkspaceList();
-                listDeferred.promise.then(function () {
+                Workspace.getWorkspaceList().then(function () {
+                    Workspace.deleted = undefined;
                     if (Workspace.list.length > 0) {
                         if (Workspace.active.workspace && Workspace.active.workspace.key === eventMessage.fromObject) {
                             Workspace.active.workspace = null;

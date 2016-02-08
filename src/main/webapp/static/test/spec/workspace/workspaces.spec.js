@@ -67,9 +67,9 @@ describe('Controller: WorkspacesCtrl', function () {
     });
 
     it('should refresh workspace list when added as member of a workspace membership.group.add-member', function () {
-        $rootScope.$emit('membership.group.add-member', {fromObject: 'group1'});
+        $rootScope.$emit('membership.group.add-member', {fromObject: 'group1', arguments: {member: 'foo'}});
         $rootScope.$digest();
-        $rootScope.$emit('membership.group.add-member', {fromObject: 'foobar'});
+        $rootScope.$emit('membership.group.add-member', {fromObject: 'foobar', arguments: {member: undefined}});
         $httpBackend.expect('GET', url.api + '/subscription/workspaces').respond(200);
         $httpBackend.expect('GET', workspaceListUrl).respond(200, {entries: sample().workspaceList});
         $rootScope.$digest();

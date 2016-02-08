@@ -21,7 +21,7 @@
                     </div>
                     <div class="card-well card-well-hover card-workspace clearfix"
                          ng-repeat="workspace in Workspace.list | filter:models.query | orderBy:'-lastModificationDate' track by workspace.alias"
-                         ng-click="manageWorkspace($event, workspace)">
+                         ng-click="manageWorkspace($event, workspace)" ng-class="{'deleted': workspace.key === Workspace.deleted}">
                         <div class="media">
                             <div class="media-left">
                                 <img ng-if="Workspace.metadatas[workspace.alias].imageUrl === null || Workspace.metadatas[workspace.alias] === null" class="logo" holder-js="holder.js/100x100?theme=ortolang&text={{workspace.alias}}&size=10" alt="{{workspace.alias}}"/>

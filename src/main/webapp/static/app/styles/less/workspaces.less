@@ -10,6 +10,13 @@
         opacity: 1;
       }
     }
+    &.deleted {
+      background-color: darken(@default-bg, 10%);
+      cursor: not-allowed;
+      .actions {
+        opacity: 0;
+      }
+    }
     .logo {
       height: 100px;
       width: 100px;

@@ -69,17 +69,15 @@ angular.module('ortolangMarketApp')
 
         $scope.manageWorkspace = function ($event, workspace, section) {
             $event.stopPropagation();
-            $location.url('/workspaces/' + workspace.alias + (section ? '?section=' + section : ''));
+            if (workspace.key !== Workspace.deleted) {
+                $location.url('/workspaces/' + workspace.alias + (section ? '?section=' + section : ''));
+            }
         };
 
-        function init() {
+        (function init() {
             $scope.Workspace = Workspace;
-            Workspace.getWorkspaceList().then(function () {
-                Workspace.getWorkspacesMetadata();
-            });
+            Workspace.refreshWorkspaceList();
             $scope.models = {};
-        }
-
-        init();
+        }());
 
     }]);

@@ -170,7 +170,7 @@ angular.module('ortolangMarketApp')
                         show: true
                     });
                 } else {
-                     //TODO Add alert
+                    //TODO Add alert
                 }
             };
 
@@ -186,6 +186,7 @@ angular.module('ortolangMarketApp')
                     WorkspaceResource.delete({wskey: Workspace.active.workspace.key}).$promise.then(function (data) {
                         $rootScope.$emit('process-created', data);
                     });
+                    Workspace.deleted = Workspace.active.workspace.key;
                     deleteWorkspaceModal.hide();
                     $location.url('/workspaces');
                 };
