@@ -13,7 +13,6 @@ angular.module('ortolangMarketApp')
 
             $scope.applyChange = function () {
                 startSubmit();
-
                 $scope.submitForm();
             };
 
@@ -21,28 +20,28 @@ angular.module('ortolangMarketApp')
                 console.log('submit form');
 
                 var error = false;
-                if(angular.isUndefined($scope.metadata.type)) {
+                if (angular.isUndefined($scope.metadata.type)) {
                     $scope.errors.type = true;
                     error = true;
                 } else {
                     $scope.errors.type = false;
                 }
 
-                if(angular.isUndefined($scope.metadata.title)) {
+                if (angular.isUndefined($scope.metadata.title)) {
                     $scope.errors.title = true;
                     error = true;
                 } else {
                     $scope.errors.title = false;
                 }
 
-                if(angular.isUndefined($scope.metadata.description)) {
+                if (angular.isUndefined($scope.metadata.description)) {
                     $scope.errors.description = true;
                     error = true;
                 } else {
                     $scope.errors.description = false;
                 }
 
-                if(error) {
+                if (error) {
                     abortSubmit();
                     showErrorMessages();
                     return;
@@ -105,7 +104,7 @@ angular.module('ortolangMarketApp')
                 return modalScope;
             }
 
-            function showErrorMessages () {
+            function showErrorMessages() {
 
                 var modalScope = prepareModalScopeForErrorMessages(),
                     addContributorModal;
@@ -124,7 +123,7 @@ angular.module('ortolangMarketApp')
 
 
             var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
-                
+
                 $scope.metadata.image = elements[0].path;
                 $scope.image = Content.getContentUrlWithKey(elements[0].key);
                 $scope.fileImageSelectModal.hide();
@@ -138,10 +137,18 @@ angular.module('ortolangMarketApp')
                 $scope.submitButtonText = 'Appliquer';
                 $scope.errors = {title: false, type: false, description: false};
                 $scope.activeTab = 0;
-                if(Workspace.active.metadata!==null) {
+                if (Workspace.active.metadata !== null) {
                     $scope.metadata = angular.copy(Workspace.active.metadata);
                 } else {
-                    $scope.metadata = {schema: 'http://www.ortolang.fr/schema/013#'};
+                    $scope.metadata = {
+                        schema: 'http://www.ortolang.fr/schema/013#',
+                        title: [
+                            {
+                                lang: 'fr',
+                                value: Workspace.active.workspace.name
+                            }
+                        ]
+                    };
                 }
 
                 // Sets datasize

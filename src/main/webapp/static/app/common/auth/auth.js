@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
                     profile.givenName = AuthService.getKeycloak().idTokenParsed.given_name;
                     profile.familyName = AuthService.getKeycloak().idTokenParsed.family_name;
                     profile.email = AuthService.getKeycloak().idTokenParsed.email;
-                    ProfileResource.put({}, profile);
+                    ProfileResource.updateProfile({}, profile);
                 }
                 User.preInit(profile);
                 ProfileResource.getInfos({key: profile.key}).$promise.then(

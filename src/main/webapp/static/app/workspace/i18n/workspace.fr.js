@@ -333,7 +333,8 @@ angular.module('ortolangMarketApp')
                 },
                 MEMBERSHIP: {
                     GROUP: {
-                        'ADD-MEMBER': 'a ajouté un membre à l\'espace de travail'
+                        'ADD-MEMBER': 'a ajouté un membre à l\'espace de travail',
+                        'REMOVE-MEMBER': 'a retiré un membre à l\'espace de travail'
                     }
                 },
                 PROCESSES: {

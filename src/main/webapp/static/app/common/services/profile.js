@@ -41,20 +41,20 @@ angular.module('ortolangMarketApp')
                     if (profileData.alias === 'email') {
                         User.emailVisibility = profileData.visibility.value;
                     }
-                    ProfileResource.put(User, function (updatedProfile) {
+                    ProfileResource.updateProfile(User, function (updatedProfile) {
                         User.emailHash = updatedProfile.emailHash;
                     });
                 }
             } else {
-                var formData = {
+                var profileDataRepresentation = {
                     name: profileData.name,
                     value: profileData.value,
                     type: profileData.type,
                     source: profileData.source,
                     visibility: profileData.visibility.value
                 };
-                ProfileResource.update({key: User.key}, formData, function () {
-                    User.profileDatas[profileData.name] = formData;
+                ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
+                    User.profileDatas[profileData.name] = profileDataRepresentation;
                 });
                 if (profileData.source === 'languages') {
                     $rootScope.$broadcast('askLanguageChange', profileData.value);
