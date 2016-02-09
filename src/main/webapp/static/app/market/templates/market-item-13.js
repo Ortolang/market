@@ -46,6 +46,14 @@ angular.module('ortolangMarketApp')
                                     $scope.producers.push(producerFromRef['meta_ortolang-referentiel-json']);
                                 }
                             });
+                        } else if(startsWith(producer, '#')) {
+                            var queryEntityMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM ' + producer;
+                            SearchResource.json({query: queryEntityMeta}, function (jsonObject) {
+                                if(jsonObject.length>0) {
+                                    var producerFromRef = angular.fromJson(jsonObject[0].this);
+                                    $scope.producers.push(producerFromRef['meta_ortolang-referentiel-json']);
+                                }
+                            });
                         } else if(angular.isDefined(producer['meta_ortolang-referentiel-json'])) {
                             // From Market 
                             $scope.producers.push(producer['meta_ortolang-referentiel-json']);
