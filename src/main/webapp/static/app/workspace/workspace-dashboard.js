@@ -189,6 +189,7 @@ angular.module('ortolangMarketApp')
                     Workspace.deleted = Workspace.active.workspace.key;
                     deleteWorkspaceModal.hide();
                     $location.url('/workspaces');
+                    Workspace.clearActiveWorkspace();
                 };
                 deleteWorkspaceModal = $modal({
                     scope: modalScope,
