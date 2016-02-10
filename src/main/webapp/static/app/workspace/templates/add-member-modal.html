@@ -6,7 +6,7 @@
                 <span class="modal-title" translate="{{(addFriend ?  'PROFILE' : 'WORKSPACE') + '.ADD_MEMBER_MODAL.TITLE'}}" translate-values="{wsName: wsName}"></span>
             </div>
             <div class="modal-body">
-                <form ng-submit="search()" class="search-form">
+                <form ng-submit="search()" class="search-form" autocomplete="off">
                     <div class="input-group">
                         <input class="form-control" type="text" ng-model="searchQuery" placeholder="{{'WORKSPACE.ADD_MEMBER_MODAL.SEARCH' | translate}}" />
                         <span class="input-group-btn">

@@ -6,7 +6,7 @@
                 <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.TITLE"></span>
             </div>
             <div class="modal-body">
-                    <form role="form" id="add-contributor-form" name="addContributor" class="form-horizontal" ng-submit="submit(addContributor)" novalidate>
+                    <form role="form" id="add-contributor-form" name="addContributor" class="form-horizontal" ng-submit="submit(addContributor)" novalidate autocomplete="off">
 
                         <div ng-show="newPerson || editing">
                             <div class="form-group has-feedback" ng-class="{'has-error': (addContributor.$submitted || addContributor.firstname.$dirty) && addContributor.firstname.$invalid}">
