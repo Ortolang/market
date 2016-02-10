@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
             connected = false,
             config = {
                 contentType: 'application/json',
-                logLevel: 'info',
+                logLevel: 'debug',
                 transport: 'websocket',
                 fallbackTransport: 'long-polling',
                 trackMessageLength: true,
@@ -40,7 +40,7 @@ angular.module('ortolangMarketApp')
         };
 
         config.onClientTimeout = function (response) {
-            console.log('Client closed the connection after a timeout. Reconnecting in ' + config.reconnectInterval);
+            console.log('Client closed the connection after a timeout. Reconnecting in ' + config.reconnectInterval, response);
             disconnect();
             $timeout(function () {
                 subscribe();
@@ -53,12 +53,12 @@ angular.module('ortolangMarketApp')
         };
 
         config.onTransportFailure = function (errorMsg, request) {
-            atmosphere.util.info(errorMsg);
+            atmosphere.util.info(errorMsg, request);
         };
 
         config.onClose = function (response) {
             disconnect();
-            console.log('Server closed the connection after a timeout');
+            console.log('Server closed the connection after a timeout', response);
         };
 
         config.onError = function (response) {
@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
         };
 
         config.onReconnect = function (request, response) {
-            console.log('Connection lost. Trying to reconnect ' + request.reconnectInterval);
+            console.log('Connection lost. Trying to reconnect ' + request.reconnectInterval, response);
         };
 
         function subscribe() {
