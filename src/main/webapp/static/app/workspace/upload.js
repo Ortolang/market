@@ -169,8 +169,10 @@ angular.module('ortolangMarketApp')
             uploader.onSuccessItem = function (fileItem, response, status, headers) {
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
-                        if (!AtmosphereService.isConnected()) {
-                            $rootScope.$emit('uploaderObjectUploadCompleted');
+                        if (status === 200) {
+                            $rootScope.$emit('uploader.object.update', response);
+                        } else if (status === 201) {
+                            $rootScope.$emit('uploader.object.create', response);
                         }
                         break;
                     case 'zip':

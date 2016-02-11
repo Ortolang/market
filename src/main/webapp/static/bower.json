@@ -31,7 +31,7 @@
     "keycloak": "1.7.0",
     "angular-xeditable": "prismsoundzero/angular-xeditable#0.1.9",
     "ng-tags-input": "3.0.0",
-    "atmosphere": "Atmosphere/atmosphere-javascript#javascript-project-2.3.0",
+    "atmosphere": "2.3.1",
     "awesome-bootstrap-checkbox": "0.3.5",
     "angular-moment": "0.10.3",
     "angulartics": "1.0.3",
@@ -74,11 +74,6 @@
     "font-awesome": {
       "main": [
         "css/font-awesome.css"
-      ]
-    },
-    "atmosphere": {
-      "main": [
-          "modules/javascript/src/main/webapp/javascript/atmosphere.js"
       ]
     }
   },

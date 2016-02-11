@@ -16,14 +16,13 @@ angular.module('ortolangMarketApp')
             connected = false,
             config = {
                 contentType: 'application/json',
-                logLevel: 'debug',
+                logLevel: 'info',
                 transport: 'websocket',
                 fallbackTransport: 'long-polling',
                 trackMessageLength: true,
                 reconnectInterval: 5000,
                 enableXDR: true,
                 timeout: 300000
-                //shared: true
             };
 
         delegateFunctions.push('onTransportFailure');
