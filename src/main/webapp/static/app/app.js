@@ -185,26 +185,28 @@ angular
         $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
     }])
     .run(['$cookies', function ($cookies) {
-        OrtolangConfig.marketVersion = OrtolangConfig.marketVersion || '{{ORTOLANG_MARKET_VERSION}}';
-        if (localStorage !== undefined) {
-            if (localStorage.getItem('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
-                localStorage.setItem('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion);
-                // If value has never been set no need to force reload
-                if (!!localStorage.getItem('ORTOLANG_MARKET_VERSION')) {
-                    console.log('ORTOLANG Market Version changed; force reload');
-                    location.reload(true);
+        if (!OrtolangConfig.test) {
+            OrtolangConfig.marketVersion = OrtolangConfig.marketVersion || '{{ORTOLANG_MARKET_VERSION}}';
+            if (localStorage !== undefined) {
+                if (localStorage.getItem('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
+                    localStorage.setItem('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion);
+                    // If value has never been set no need to force reload
+                    if (!!localStorage.getItem('ORTOLANG_MARKET_VERSION')) {
+                        console.log('ORTOLANG Market Version changed; force reload');
+                        location.reload(true);
+                    }
                 }
-            }
-        } else {
-            if ($cookies.get('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
-                var expiringDate = new Date();
-                expiringDate.setFullYear(expiringDate.getFullYear() + 1);
-                $cookies.put('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion, {
-                    expires: expiringDate.toISOString()
-                });
-                if (!!$cookies.get('ORTOLANG_MARKET_VERSION')) {
-                    console.log('ORTOLANG Market Version changed; force reload');
-                    location.reload(true);
+            } else {
+                if ($cookies.get('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
+                    var expiringDate = new Date();
+                    expiringDate.setFullYear(expiringDate.getFullYear() + 1);
+                    $cookies.put('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion, {
+                        expires: expiringDate.toISOString()
+                    });
+                    if (!!$cookies.get('ORTOLANG_MARKET_VERSION')) {
+                        console.log('ORTOLANG Market Version changed; force reload');
+                        location.reload(true);
+                    }
                 }
             }
         }
