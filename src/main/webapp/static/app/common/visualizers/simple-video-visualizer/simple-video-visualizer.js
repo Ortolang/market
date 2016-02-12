@@ -23,6 +23,7 @@ angular.module('ortolangVisualizers')
                 'video/quicktime': true,
                 'video/theora': true,
                 'video/x-flv': true,
+                'video/x-m4v': true,
                 'application/octet-stream': {webm: true}
             }
         });
