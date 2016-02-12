@@ -184,16 +184,29 @@ angular
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
     }])
-    .run(['$templateCache', '$cookies', function ($templateCache, $cookies) {
+    .run(['$cookies', function ($cookies) {
         OrtolangConfig.marketVersion = OrtolangConfig.marketVersion || '{{ORTOLANG_MARKET_VERSION}}';
-        if ($cookies.get('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
-            console.log('ORTOLANG Market Version changed; clearing $templateCache (' + $templateCache.info().size + ')');
-            $templateCache.removeAll();
-            var expiringDate = new Date();
-            expiringDate.setFullYear(expiringDate.getFullYear() + 1);
-            $cookies.put('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion, {
-                expires: expiringDate.toISOString()
-            });
+        if (localStorage !== undefined) {
+            if (localStorage.getItem('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
+                localStorage.setItem('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion);
+                // If value has never been set no need to force reload
+                if (!!localStorage.getItem('ORTOLANG_MARKET_VERSION')) {
+                    console.log('ORTOLANG Market Version changed; force reload');
+                    location.reload(true);
+                }
+            }
+        } else {
+            if ($cookies.get('ORTOLANG_MARKET_VERSION') !== OrtolangConfig.marketVersion) {
+                var expiringDate = new Date();
+                expiringDate.setFullYear(expiringDate.getFullYear() + 1);
+                $cookies.put('ORTOLANG_MARKET_VERSION', OrtolangConfig.marketVersion, {
+                    expires: expiringDate.toISOString()
+                });
+                if (!!$cookies.get('ORTOLANG_MARKET_VERSION')) {
+                    console.log('ORTOLANG Market Version changed; force reload');
+                    location.reload(true);
+                }
+            }
         }
     }])
     .run(['$rootScope', function ($rootScope) {
