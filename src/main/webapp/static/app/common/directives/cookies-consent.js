@@ -22,11 +22,11 @@ angular.module('ortolangMarketApp')
 
                     $rootScope.cookieConsent = function () {
                         if (localStorage !== undefined) {
-                            localStorage.setItem('ORTOLANG_COOKIES_CONSENT', true);
+                            localStorage.setItem('ortolang.cookies.consent', true);
                         } else {
                             var expiringDate = new Date();
                             expiringDate.setFullYear(expiringDate.getFullYear() + 1);
-                            $cookies.put('ORTOLANG_COOKIES_CONSENT', 'true', {
+                            $cookies.put('ortolang.cookies.consent', 'true', {
                                 expires: expiringDate.toISOString()
                             });
                         }
@@ -34,11 +34,11 @@ angular.module('ortolangMarketApp')
                     };
                 }
                 if (localStorage !== undefined) {
-                    if (!localStorage.getItem('ORTOLANG_COOKIES_CONSENT')) {
+                    if (!localStorage.getItem('ortolang.cookies.consent')) {
                         cookieAlert();
                     }
                 } else {
-                    if (!$cookies.get('ORTOLANG_COOKIES_CONSENT')) {
+                    if (!$cookies.get('ortolang.cookies.consent')) {
                         cookieAlert();
                     }
                 }
