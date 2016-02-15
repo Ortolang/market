@@ -284,8 +284,8 @@ module.exports = function (grunt) {
                     collapseBooleanAttributes: true,
                     removeComments: true,
                     removeCommentsFromCDATA: true,
-                    removeOptionalTags: false,
-                    processScripts: ['text/ng-template']
+                    removeOptionalTags: false
+                    //processScripts: ['text/ng-template']
                 },
                 files: [{
                     expand: true,

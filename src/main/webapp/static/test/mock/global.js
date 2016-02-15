@@ -8,6 +8,3 @@ OrtolangConfig.keycloakConfigLocation = 'keycloak.json';
 OrtolangConfig.piwikHost = '';
 OrtolangConfig.piwikSiteId = '';
 OrtolangConfig.debug = true;
-OrtolangConfig.marketVersion = '0.0.0';
-OrtolangConfig.test = false;
-localStorage.setItem('ortolang.market.version', OrtolangConfig.marketVersion);

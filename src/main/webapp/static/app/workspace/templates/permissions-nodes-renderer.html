@@ -1,0 +1,35 @@
+<div ng-click="nodeToggle(element)" class="tree-node"
+     ng-class="element.type + ' ' + models.tree[element.key].publicationPolicy">
+    <div class="node-body">
+                <span class="icon"
+                      ng-class="models.tree[element.key].expanded ? icons.tree.collectionOpen : icons.tree[element.type]"></span>
+        {{element.name}}
+    </div>
+    <div class="node-actions">
+        <div class="btn-group">
+            <button
+                ng-class="{'btn-success' : models.tree[element.key].publicationPolicy === 'forall', 'muted' : models.tree[element.key].effectiveAcl === 'forall'}"
+                ng-click="setAcl(models.tree[element.key], 'forall', $event)" class="btn btn-sm btn-default">
+                <span ng-class="::icons.acl.forall"></span></button>
+            <button
+                ng-class="{'btn-primary' : models.tree[element.key].publicationPolicy === 'authentified', 'muted' : models.tree[element.key].effectiveAcl === 'authentified'}"
+                ng-click="setAcl(models.tree[element.key], 'authentified', $event)"
+                class="btn btn-sm btn-default"><span ng-class="::icons.acl.authentified"></span></button>
+            <button
+                ng-class="{'btn-warning' : models.tree[element.key].publicationPolicy === 'esr', 'muted' : models.tree[element.key].effectiveAcl === 'esr'}"
+                ng-click="setAcl(models.tree[element.key], 'esr', $event)" class="btn btn-sm btn-default"><span
+                ng-class="::icons.acl.esr"></span></button>
+            <button
+                ng-class="{'btn-danger' : models.tree[element.key].publicationPolicy === 'restricted', 'muted' : models.tree[element.key].effectiveAcl === 'restricted'}"
+                ng-click="setAcl(models.tree[element.key], 'restricted', $event)"
+                class="btn btn-sm btn-default"><span ng-class="::icons.acl.restricted"></span></button>
+        </div>
+        <button class="btn btn-sm btn-default" data-ng-disabled="models.tree[element.key].effectiveAcl"
+                ng-click="removeAcl(models.tree[element.key], $event)"><span ng-class="::icons.remove"></span>
+        </button>
+    </div>
+</div>
+<ol ng-show="models.tree[element.key].expanded" class="tree-nodes">
+    <li ng-repeat="element in models.tree[element.key].elements | orderBy:['type','name'] track by element.key"
+        ng-show="element.type !== 'object' || models.showObjects" ng-include="'workspace/templates/permissions-nodes-renderer.html'"></li>
+</ol>
