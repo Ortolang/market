@@ -125,7 +125,7 @@ module.exports = function (config) {
 
         reporters: ['dots', 'junit', 'tapFile', 'coverage'],
         junitReporter: {
-            outputFile: 'test/reports/test-results.xml'
+            outputDir: 'test/reports/'
         },
         tapFileReporter: {
             outputFile: 'test/reports/test-results.tap',
