@@ -282,8 +282,10 @@ module.exports = function (grunt) {
                     collapseWhitespace: true,
                     conservativeCollapse: true,
                     collapseBooleanAttributes: true,
+                    removeComments: true,
                     removeCommentsFromCDATA: true,
-                    removeOptionalTags: true
+                    removeOptionalTags: false,
+                    processScripts: ['text/ng-template']
                 },
                 files: [{
                     expand: true,
@@ -609,7 +611,7 @@ module.exports = function (grunt) {
         ngtemplates: {
             dist: {
                 cwd: '<%= yeoman.app %>',
-                src: ['**/top-nav.html'],
+                src: ['*/**/*.html'],
                 dest: '.tmp/templates.js',
                 options:  {
                     module: 'ortolangMarketApp',
