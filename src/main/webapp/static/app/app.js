@@ -194,7 +194,7 @@ angular
                 localStorage.setItem('ortolang.market.version', OrtolangConfig.marketVersion);
                 if (forceReload) {
                     console.log('ORTOLANG Market Version changed; force reload');
-                    location.reload(true);
+                    document.location.reload(true);
                 }
             }
         } else {
@@ -207,7 +207,7 @@ angular
                 });
                 if (forceReload) {
                     console.log('ORTOLANG Market Version changed; force reload');
-                    location.reload(true);
+                    document.location.reload(true);
                 }
             }
         }
