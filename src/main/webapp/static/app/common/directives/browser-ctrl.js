@@ -390,7 +390,7 @@ angular.module('ortolangMarketApp')
                 if (updatedElement && !$scope.hasOnlyParentSelected()) {
                     if ($scope.hasOnlyOneElementSelected()) {
                         if ($scope.selectedElements[0].key === updatedElement.key ||
-                            ($scope.selectedElements[0].name === updatedElement.name)) {
+                            $scope.selectedElements[0].name === updatedElement.name) {
                             selectChild($scope.selectedElements[0], undefined, undefined, true);
                         }
                     } else {

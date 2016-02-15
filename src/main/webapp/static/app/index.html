@@ -72,16 +72,6 @@
         </main>
     </div>
 </div>
-<script type="text/ng-template" id="cookies-consent.html">
-    <div class="alert alert-info">
-        <p>
-            <strong translate="COOKIE_CONSENT.TITLE"></strong>
-            <span translate="COOKIE_CONSENT.BODY"></span>
-        </p>
-        <button class="btn btn-primary btn-sm btn-cookies-consent" ng-click="$root.cookieConsent()" translate="COOKIE_CONSENT.ACCEPT"></button>
-        <a class="btn btn-default btn-sm btn-cookies-consent" ng-click="$root.cookieConsent()" href="/legal-notices" translate="COOKIE_CONSENT.MORE"></a>
-    </div>
-</script>
 <div cookies-consent></div>
 <div class="alerts-wrapper"></div>
 
@@ -146,6 +136,7 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
+<script src="common/templates/templates.js"></script>
 <script src="common/constants/url.js"></script>
 <script src="common/constants/icons.js"></script>
 <script src="common/constants/ortolang-type.js"></script>

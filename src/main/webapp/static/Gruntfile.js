@@ -604,6 +604,20 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/ie.html'
                 ]
             }
+        },
+
+        ngtemplates: {
+            dist: {
+                cwd: '<%= yeoman.app %>',
+                src: ['**/top-nav.html'],
+                dest: '.tmp/templates.js',
+                options:  {
+                    module: 'ortolangMarketApp',
+                    usemin: '<%= yeoman.dist %>/scripts/scripts.js', // <~~ This came from the <!-- build:js --> block
+                    htmlmin:  '<%= htmlmin.dist.options %>',
+                    quotes: 'single'
+                }
+            }
         }
     });
 
@@ -644,6 +658,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
+        'ngtemplates',
         'concat',
         'copy:dist',
         'cssmin',
