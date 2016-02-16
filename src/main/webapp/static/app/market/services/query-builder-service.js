@@ -42,6 +42,11 @@ angular.module('ortolangMarketApp')
                 return this;
             },
 
+            is_not_null : function (name) {
+                this.conditions += '`' + name + '`' + ' IS NOT NULL';
+                return this;
+            },
+
             equals : function (name, content) {
                 if (angular.isArray(content)) {
                     var optionalValues = '';

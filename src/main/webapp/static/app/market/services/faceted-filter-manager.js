@@ -136,6 +136,7 @@ angular.module('ortolangMarketApp')
                 });
 
                 queryBuilder.equals('status', 'published');
+                queryBuilder.and().is_not_null('meta_ortolang-item-json.type');
 
                 var contentSplit = [];
                 if (content && content !== '') {
