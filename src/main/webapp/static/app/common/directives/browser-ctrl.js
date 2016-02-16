@@ -597,31 +597,60 @@ angular.module('ortolangMarketApp')
 
             $scope.deleteSelectedElements = function () {
                 if (!$scope.hasOnlyParentSelected()) {
-                    var sources = [];
+                    var sources = [],
+                        collectionNumber = 0,
+                        objectNumber = 0,
+                        deferred = $q.defer(),
+                        deleteMultipleElementsModal;
                     angular.forEach($scope.selectedElements, function (element) {
                         sources.push(Helper.normalizePath($scope.parent.path + '/' + element.name));
-                    });
-                    WorkspaceElementResource.bulkAction({wskey: $scope.browserService.workspace.key}, {action: 'delete', sources: sources, force: false}, function () {
-                        getParentData(true, true);
-                    }, function (error) {
-                        if (error.data.code === '7') {
-                            // CollectionNotEmptyException
-                            var nonEmptyCollectionModal;
-                            modalScope = Helper.createModalScope();
-                            modalScope.delete = function () {
-                                WorkspaceElementResource.bulkAction({wskey: $scope.browserService.workspace.key}, {action: 'delete', sources: sources, force: true}, function () {
-                                    getParentData(true, true);
-                                    nonEmptyCollectionModal.hide();
-                                });
-                            };
-                            nonEmptyCollectionModal = $modal({
-                                scope: modalScope,
-                                templateUrl: 'workspace/templates/delete-non-empty-collection-modal.html',
-                                show: true
-                            });
-                        } else {
-                            Helper.showUnexpectedErrorAlert();
+                        if (element.type === ortolangType.collection) {
+                            collectionNumber++;
+                        } else if (element.type === ortolangType.object) {
+                            objectNumber++;
                         }
+                    });
+                    if (collectionNumber || objectNumber > 1) {
+                        modalScope = Helper.createModalScope();
+                        modalScope.delete = function () {
+                            deferred.resolve();
+                            deleteMultipleElementsModal.hide();
+                        };
+                        modalScope.cancel = function () {
+                            deferred.reject();
+                            deleteMultipleElementsModal.hide();
+                        };
+                        if (objectNumber === 0) {
+                            if (collectionNumber === 1) {
+                                modalScope.type = 'COLLECTION';
+                            } else {
+                                modalScope.type = 'COLLECTIONS';
+                            }
+                        } else {
+                            if (collectionNumber === 0) {
+                                modalScope.type = 'FILES';
+                            } else {
+                                modalScope.type = 'FILES_COLLECTIONS';
+                            }
+                        }
+                        modalScope.numbers = {
+                            collectionNumber: collectionNumber,
+                            objectNumber: objectNumber
+                        };
+                        deleteMultipleElementsModal = $modal({
+                            scope: modalScope,
+                            templateUrl: 'workspace/templates/delete-multiple-elements-modal.html',
+                            show: true
+                        });
+                    } else {
+                        deferred.resolve();
+                    }
+                    deferred.promise.then(function () {
+                        WorkspaceElementResource.bulkAction({wskey: $scope.browserService.workspace.key}, {action: 'delete', sources: sources, force: true}, function () {
+                            getParentData(true, true);
+                        }, function (error) {
+                            Helper.showErrorModal(error.data);
+                        });
                     });
                     $scope.deactivateContextMenu();
                 }

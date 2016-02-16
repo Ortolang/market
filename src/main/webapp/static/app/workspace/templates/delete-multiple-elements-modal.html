@@ -3,12 +3,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <span class="modal-title" translate="WORKSPACE.DELETE_NON_EMPTY_COLLECTION_MODAL.TITLE"></span>
+                <span class="modal-title" translate="{{'WORKSPACE.DELETE_MULTIPLE_ELEMENTS_MODAL.' + type + '.TITLE'}}" data-translate-values="numbers"></span>
             </div>
-            <div class="modal-body" translate="WORKSPACE.DELETE_NON_EMPTY_COLLECTION_MODAL.BODY" translate-values="models.error"></div>
+            <div class="modal-body" translate="{{'WORKSPACE.DELETE_MULTIPLE_ELEMENTS_MODAL.' + type + '.BODY'}}" data-translate-values="numbers" translate-values="models.error"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" ng-click="delete()" translate="DELETE"></button>
-                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                <button type="button" class="btn btn-default" ng-click="cancel()" translate="CANCEL"></button>
             </div>
         </div>
     </div>

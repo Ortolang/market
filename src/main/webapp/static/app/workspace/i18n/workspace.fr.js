@@ -117,9 +117,23 @@ angular.module('ortolangMarketApp')
             MOVE_CHILD_MODAL: {
                 TITLE: 'Déplacer <strong>{{name}}</strong> vers...'
             },
-            DELETE_NON_EMPTY_COLLECTION_MODAL: {
-                TITLE: 'Suppression de dossier(s) non vide',
-                BODY: '<strong class="text-danger">Un ou plusieurs dossier(s) que vous souhaitez supprimer ne sont pas vides</strong>. Êtes-vous sûr de vouloir supprimer ces dossiers ainsi que leur contenu ?'
+            DELETE_MULTIPLE_ELEMENTS_MODAL: {
+                COLLECTION: {
+                    TITLE: 'Suppression d\'un dossier',
+                    BODY: 'Vous êtes sur le point de supprimer un dossier. <strong class="text-danger">Êtes-vous sûr de vouloir supprimer ce dossier ainsi que son contenu ?</strong>'
+                },
+                COLLECTIONS: {
+                    TITLE: 'Suppression de dossiers multiples',
+                    BODY: 'Vous êtes sur le point de supprimer {{collectionNumber}} dossiers à la fois. <strong class="text-danger">Êtes-vous sûr de vouloir supprimer ces dossiers ainsi que leur contenu ?</strong>'
+                },
+                FILES: {
+                    TITLE: 'Suppression de fichiers multiples',
+                    BODY: '<strong class="text-danger">Vous êtes sur le point de supprimer {{objectNumber}} fichiers à la fois.</strong> Êtes-vous sûr de vouloir les supprimer ?'
+                },
+                FILES_COLLECTIONS: {
+                    TITLE: 'Suppression de fichier{{objectNumber > 1 ? "s" : ""}} et dossier{{collectionNumber > 1 ? "s" : ""}}',
+                    BODY: '<strong class="text-danger">Vous êtes sur le point de supprimer {{objectNumber}} fichier{{objectNumber > 1 ? "s" : ""}} et {{collectionNumber}} dossier{{collectionNumber > 1 ? "s" : ""}}.</strong> Êtes-vous sûr de vouloir supprimer {{objectNumber > 1 ? "ces fichiers" : "ce fichier"}} et {{collectionNumber > 1 ? "ces dossiers ainsi que leur contenu" : "ce dossier ainsi que son contenu"}} ?'
+                }
             },
             ADD_MEMBER_MODAL: {
                 TITLE: 'Ajouter un membre à {{wsName}}',

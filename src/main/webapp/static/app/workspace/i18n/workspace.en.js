@@ -117,6 +117,24 @@ angular.module('ortolangMarketApp')
             MOVE_CHILD_MODAL: {
                 TITLE: 'Move <strong>{{name}}</strong> into...'
             },
+            DELETE_MULTIPLE_ELEMENTS_MODAL: {
+                COLLECTION: {
+                    TITLE: 'Deletion of a folder',
+                    BODY: 'You are about to delete a folder. <strong class="text-danger">Are you sure you want to delete this folder and its content?</strong>'
+                },
+                COLLECTIONS: {
+                    TITLE: 'Deletion of multiple folders',
+                    BODY: 'You are about to delete {{collectionNumber}} folders. <strong class="text-danger">Are you sure you want to delete these folders and their content?</strong>'
+                },
+                FILES: {
+                    TITLE: 'Deletion of multiple files',
+                    BODY: 'You are about to delete {{objectNumber}} files. <strong class="text-danger">Are you sure you want to delete these files?</strong>'
+                },
+                FILES_COLLECTIONS: {
+                    TITLE: 'Deletion of multiple files and folders',
+                    BODY: '<strong class="text-danger">You are about to delete {{objectNumber}} file{{objectNumber > 1 ? "s" : ""}} and {{collectionNumber}} folder{{collectionNumber > 1 ? "s" : ""}}.</strong> Are you sure you want to delete {{objectNumber > 1 ? "these files" : "this file"}} and {{collectionNumber > 1 ? "these folders along with their content" : "this folder along with its content"}} ?'
+                }
+            },
             DELETE_NON_EMPTY_COLLECTION_MODAL: {
                 TITLE: 'Delete non-empty folder',
                 BODY: '<strong class="text-danger">One or several folders that you want to delete are non-empty</strong>. Are you sure you want to delete these folders and their content?'
