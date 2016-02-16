@@ -220,6 +220,7 @@
       cursor: pointer;
     }
   }
+
   .market-item-presentation-metadata, aside {
     margin-top: 3 * @padding-large-vertical;
   }
@@ -235,6 +236,23 @@
 
       &:not(:last-child) {
         border-bottom: 1px solid @gray-lighter;
+      }
+
+      dl.keywords {
+
+        dt {
+          float: left;
+          clear: left;
+          text-align: left;
+          font-weight: bold;
+        }
+        dt:after {
+          content: " : ";
+        }
+        dd {
+          margin: 0 0 0 75px;
+          padding: 0 0 0.5em 0;
+        }
       }
 
       &.keywords, &.contributors {

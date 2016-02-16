@@ -63,6 +63,15 @@
                 <article data-content="description" data-target-blank>
                     <div ng-bind-html="description"></div>
                     <br/>
+                    <div ng-if="keywords">
+                        <dl class="keywords">
+                            <dt data-translate="MARKET.KEYWORDS"> : </dt>
+                            <dd>
+                                <span ng-repeat="keyword in keywords"><span ng-if="!$first">, </span>{{keyword}}</span>
+                            </dd>
+                        </dl>
+                        <br/>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div ng-if="documentations && documentations.length>1" class="btn-group">
@@ -130,14 +139,6 @@
                                 </dd>
                                 <dd ng-if="isArray(additionalInformation.value)" ng-repeat="valueItem in additionalInformation.value">
                                     {{valueItem['meta_ortolang-referentiel-json'].labels | multilingualValue}}
-                                </dd>
-                            </dl>
-                        </div>
-                        <div ng-if="keywords" class="col-md-3">
-                            <dl>
-                                <dt translate="MARKET.KEYWORDS"></dt>
-                                <dd ng-repeat="keyword in keywords">
-                                    {{keyword}}
                                 </dd>
                             </dl>
                         </div>
