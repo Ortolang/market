@@ -169,8 +169,6 @@ angular.module('ortolangMarketApp')
                         templateUrl: 'workspace/templates/publish-modal.html',
                         show: true
                     });
-                } else {
-                    //TODO Add alert
                 }
             };
 

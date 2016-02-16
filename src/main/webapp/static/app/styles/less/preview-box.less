@@ -33,61 +33,61 @@
   /*********
    * Thumb
    *********/
-   .thumb-wrapper {
-      cursor: default;
-      width: 100%;
-      display: table;
-      text-align: center;
-      position: relative;
-      margin-left: auto;
-      margin-right: auto;
-      > div {
-        color: darken(@gray-lighter, 15%);
-        display: table-cell;
-        vertical-align: middle;
-        .thumb {
-          position: absolute;
-          overflow: hidden;
-          height: 100%;
-          width: 100%;
-          top: 0;
-          background-size: cover;
-          background: no-repeat top center;
-          cursor: pointer;
+  .thumb-wrapper {
+    cursor: default;
+    width: 100%;
+    display: table;
+    text-align: center;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    > div {
+      color: darken(@gray-lighter, 15%);
+      display: table-cell;
+      vertical-align: middle;
+      .thumb {
+        position: absolute;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        background-size: cover;
+        background: no-repeat top center;
+        cursor: pointer;
+      }
+      .thumb-icon {
+        &.fa-file-video-o {
+          display: none;
         }
-        .thumb-icon {
-          &.fa-file-video-o {
-            display: none;
-          }
-        }
-        .thumb-overlay {
-          position: relative;
-          overflow: hidden;
-          display: table;
-          height: 100%;
-          width: 100%;
-          top: 0;
-          color: @white;
-          .fa {
-            display: table-cell;
-            vertical-align: middle;
-          }
+      }
+      .thumb-overlay {
+        position: relative;
+        overflow: hidden;
+        display: table;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        color: @white;
+        .fa {
+          display: table-cell;
+          vertical-align: middle;
         }
       }
     }
+  }
 
   /********
    * Slider
    ********/
-   .slider {
-      height: 200px;
-      overflow: hidden;
-      position: relative;
-      background-color: @main-bg;
+  .slider {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    background-color: @main-bg;
 
-      a {
-        cursor: pointer;
-      }
+    a {
+      cursor: pointer;
+    }
   }
 
   .slide {
@@ -96,132 +96,115 @@
 
   .slide.ng-hide-add,
   .slide.ng-hide-remove {
-    -webkit-transition: all ease-out 0.5s;
-    -moz-transition: all ease-out 0.5s;
-    -o-transition: all ease-out 0.5s;
-    transition: all ease-out 0.5s;
+    transition: all ease-out 0.4s;
     opacity: 0;
   }
   .slide.ng-hide-add.ng-hide-add-active,
   .slide.ng-hide-remove {
-    -webkit-transition: all ease-out 0.5s;
-    -moz-transition: all ease-out 0.5s;
-    -o-transition: all ease-out 0.5s;
-    transition: all ease-out 0.5s;
+    transition: all ease-out 0.4s;
     opacity: 0;
   }
   .slide.ng-hide-add,
   .slide.ng-hide-remove.ng-hide-remove-active {
-    -webkit-transition: all lienar 1.5s;
-    -moz-transition: all lienar 1.5s;
-    -o-transition: all lienar 1.5s;
-    transition: all lienar 1.5s;
+    transition: all linear 1s;
     opacity: 1;
   }
 
   .arrow {
-      position: absolute;
-      z-index: 1002;
-      display: block;
-      top: 50%;
-      margin-top: -20px;
-      width: 36px;
-      height: 71px;
-      outline: none;
-      cursor: pointer;
+    position: absolute;
+    z-index: 1002;
+    display: block;
+    top: 50%;
+    margin-top: -20px;
+    width: 36px;
+    height: 71px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .arrow.prev, .arrow.next {
+    color: @white;
+    opacity: 0.4;
+    transition: 0.2s linear all;
+    &:hover {
+      opacity: 1;
+      text-decoration: none;
+    }
   }
 
   .arrow.prev {
-      opacity: 0.2;
-      left: 5px;
-      transition: 0.2s linear all;
+    left: 5px;
   }
 
   .arrow.next {
-      opacity: 0.2;
-      right: 5px;
-      transition: 0.2s linear all;
+    right: 5px;
   }
-
-  .arrow.prev:hover {
-      opacity: 1;
-      text-decoration: none;
-  }
-
-  .arrow.next:hover {
-      opacity: 1;
-      text-decoration: none;
-  }
-
-
 
   /*---------------------------------------------------------
   NAV
   ---------------------------------------------------------*/
 
   .nav {
-      text-align: center;
-      display: block;
-      position: absolute;
-      z-index: 1002;
-      left: 0;
-      bottom: -20px;
-      right: 0;
-      height: 35px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    z-index: 1002;
+    left: 0;
+    bottom: -20px;
+    right: 0;
+    height: 35px;
   }
 
   .nonDraggableImage{
-      -webkit-user-drag: none;
+    -webkit-user-drag: none;
   }
 
   .nav .wrapper {
-      margin: 0 auto;
-      width: 100%;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .nav ul {
-      margin: 0;
-      width: 100%;
-      padding: 0px;
+    margin: 0;
+    width: 100%;
+    padding: 0px;
   }
 
   .nav .dot, .nav .dot a {
-      display: inline-block;
-      zoom: 1;
+    display: inline-block;
+    zoom: 1;
   }
 
   .dots .dot {
-      position: relative;
-      margin: 0 8px;
-      width: 12px;
-      height: 12px;
+    position: relative;
+    margin: 0 8px;
+    width: 12px;
+    height: 12px;
   }
 
   .dots .dot a {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 6px;
-      height: 6px;
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      background: @ortolang-blue;
-      border: 1px solid transparent;
-      outline: none;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-      -webkit-border-radius: 50%;
-      -moz-border-radius: 50%;
-      border-radius: 50%;
-      -webkit-transition: background-color 0.25s, border-color 0.25s;
-      -moz-transition: background-color 0.25s, border-color 0.25s;
-      transition: background-color 0.25s, border-color 0.25s;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    background: lighten(@gray-light, 10%);
+    border: 1px solid transparent;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    transition: background-color 0.25s, border-color 0.25s;
   }
 
   .dots .dot a.active {
-      border-color: @ortolang-blue;
-      background-color: transparent;
+    border-color: lighten(@gray-light, 10%);
+    background-color: transparent;
   }
 }
