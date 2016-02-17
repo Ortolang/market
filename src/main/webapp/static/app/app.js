@@ -167,7 +167,7 @@ angular
         });
     }])
     .config(['hotkeysProvider', function (hotkeysProvider) {
-        hotkeysProvider.cheatSheetDescription = undefined;
+        hotkeysProvider.templateHeader = '<span></span>';
     }])
     .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
         uiZeroclipConfigProvider.setZcConf({

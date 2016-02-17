@@ -70,6 +70,7 @@ angular.module('ortolangMarketApp')
             VISIBILITY: 'Visibility',
             SHORTCUTS: {
                 SHORTCUTS: 'Shortcuts',
+                SHOW_SHORTCUTS: 'Show shortcut list',
                 FILTER: 'Filter elements',
                 UP: 'Navigate up',
                 DOWN: 'Navigate down',

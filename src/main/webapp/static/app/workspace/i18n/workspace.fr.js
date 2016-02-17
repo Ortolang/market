@@ -109,7 +109,10 @@ angular.module('ortolangMarketApp')
             },
             ADD_COLLECTION_MODAL: {
                 TITLE: 'Ajouter un nouveau dossier',
-                SUBMIT: 'Ajouter'
+                SUBMIT: 'Ajouter',
+                MESSAGES: {
+                    CONFLICT: 'Un fichier ou un dossier du même nom existe déjà'
+                }
             },
             RENAME_CHILD_MODAL: {
                 TITLE: 'Renommer'

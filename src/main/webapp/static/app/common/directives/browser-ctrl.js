@@ -694,7 +694,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.browserService.canEdit && $scope.isHead) {
                     var addCollectionModal;
                     createModalScope();
-                    modalScope.addCollection = function () {
+                    modalScope.submit = function (form) {
                         var formData,
                             path = $scope.parent.path + '/';
 
@@ -715,6 +715,12 @@ angular.module('ortolangMarketApp')
                                 }
                                 addCollectionModal.hide();
                             });
+                        }, function (error) {
+                            if (error.data.code === '2') {
+                                form.name.$setValidity('conflict', false);
+                            } else {
+                                Helper.showUnexpectedErrorAlert('#new-collection-modal', 'top');
+                            }
                         });
                     };
                     modalScope.$on('modal.show', function () {
@@ -1632,7 +1638,12 @@ angular.module('ortolangMarketApp')
                             }
                         });
                 }
+                hotkeys.get('?').description = $translate.instant('BROWSER.SHORTCUTS.SHOW_SHORTCUTS');
             }
+
+            $rootScope.$on('$translateChangeSuccess', function () {
+                bindHotkeys();
+            });
 
             $scope.showCheatsheet = function ($event) {
                 hotkeys.get('?').callback($event);
