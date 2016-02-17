@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'QueryBuilderFactory', 'SearchResource', 'Helper', '$q',
-        function ($rootScope, $scope, $filter, Settings, QueryBuilderFactory, SearchResource, Helper, $q) {
+    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'Helper', '$q', 'ReferentialEntityResource',
+        function ($rootScope, $scope, $filter, Settings, Helper, $q, ReferentialEntityResource) {
 
             $scope.suggestLanguages = function (query) {
                 var result = $filter('filter')($scope.allLanguages, {label:query});
@@ -122,25 +122,16 @@ angular.module('ortolangMarketApp')
             /**
              * Methods to load referential entities
              **/
-
             function loadAllLanguages() {
 
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
-
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"Language"']);
-
-                var query = queryBuilder.toString();
                 $scope.allLanguages = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
 
-                        $scope.allLanguages.push({id: '${' + term.key + '}', label: Helper.getMultilingualValue(term.labels)});
+                ReferentialEntityResource.get({type: 'LANGUAGE'}, function(entities) {
+                    angular.forEach(entities.entries, function (entry) {
+
+                        var content = angular.fromJson(entry.content);
+
+                        $scope.allLanguages.push({id: '${' + entry.key + '}', label: Helper.getMultilingualValue(content.labels)});
                     });
 
                     if(angular.isDefined($scope.metadata.corporaLanguages)) {
@@ -210,53 +201,23 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            function listTerms() {
-                var deferred = $q.defer();
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
-
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
-
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.compatibilities', 'compatibilities');
-
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.rank', 'rank');
-                queryBuilder.equals('meta_ortolang-referentiel-json.rank', 1);
-
-                var query = queryBuilder.toString();
-                var terms = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        if(term.labels) {
-                            var entity = {id: '${' + term.key + '}', label: Helper.getMultilingualValue(term.labels)};
-                            if(term.rank) {
-                                entity.rank = term.rank;
-                            }
-                            if(term.compatibilities) {
-                                entity.compatibilities = term.compatibilities;
-                            }
-                            terms.push(entity);
-                        }
-                    });
-                    deferred.resolve(terms);
-                }, function () {
-                    deferred.reject();
-                });
-
-                return deferred.promise;
-            }
-
-            function addTerms(compatibility, arrayName, terms) {
+            function addTerms(compatibility, arrayName) {
 
                 $scope[arrayName] = [];
-                angular.forEach(terms, function (term) {
-                    if(angular.isDefined(term.compatibilities) && term.compatibilities.indexOf(compatibility)>-1) {
-                        $scope[arrayName].push(term);
-                    }
+
+                ReferentialEntityResource.get({type: compatibility.toUpperCase()}, function(entities) {
+                    angular.forEach(entities.entries, function(entry) {
+                        var content = angular.fromJson(entry.content);
+
+                        var entity = {id: '${' + entry.key + '}', label: Helper.getMultilingualValue(content.labels)};
+                        if(content.rank) {
+                            entity.rank = content.rank;
+                        }
+                        if(content.compatibilities) {
+                            entity.compatibilities = content.compatibilities;
+                        }
+                        $scope[arrayName].push(entity);
+                    });
                 });
             }
 
@@ -271,26 +232,38 @@ angular.module('ortolangMarketApp')
                 $scope.selectedToolLanguages = [];
                 $scope.selectedNavigationLanguages = [];
 
-                listTerms().then(function (terms) {
-                    addTerms('CorporaLanguageType', 'allCorporaLanguageType', terms);
-                    addTerms('CorporaType', 'allCorporaType', terms);
-                    addTerms('CorporaStyle', 'allCorporaStyles', terms);
-                    addTerms('AnnotationLevel', 'allAnnotationLevels', terms);
-                    addTerms('CorporaFormat', 'allCorporaFormats', terms);
-                    addTerms('CorporaFileEncoding', 'allCorporaFileEncodings', terms);
-                    addTerms('CorporaDataType', 'allCorporaDataTypes', terms);
-                    addTerms('LexiconInputType', 'allLexiconInputTypes', terms);
-                    addTerms('LexiconDescriptionType', 'allLexiconDescriptionTypes', terms);
-                    addTerms('LexiconLanguageType', 'allLexiconLanguageTypes', terms);
-                    addTerms('LexiconFormat', 'allLexiconFormats', terms);
-                    addTerms('OperatingSystem', 'allOperatingSystems', terms);
-                    addTerms('ProgrammingLanguage', 'allProgrammingLanguages', terms);
-                    addTerms('ToolSupport', 'allToolSupports', terms);
-                    addTerms('ToolFunctionality', 'allToolFunctionalities', terms);
-                    addTerms('ToolInputData', 'allToolInputData', terms);
-                    addTerms('ToolOutputData', 'allToolOutputData', terms);
-                    addTerms('ToolFileEncoding', 'allToolFileEncodings', terms);
-                });
+                // listTerms().then(function (terms) {
+                    // addTerms('CorporaLanguageType', 'allCorporaLanguageType');
+                    addTerms('LanguageType', 'allLanguageType');
+                    // addTerms('LexiconLanguageType', 'allLexiconLanguageTypes');
+
+                    addTerms('CorporaType', 'allCorporaType');
+                    addTerms('CorporaStyle', 'allCorporaStyles');
+                    addTerms('AnnotationLevel', 'allAnnotationLevels');
+
+                    addTerms('FileFormat', 'allFileFormats');
+                    // addTerms('CorporaFormat', 'allCorporaFormats');
+                    // addTerms('LexiconFormat', 'allLexiconFormats');
+                    // addTerms('ToolInputData', 'allToolInputData');
+                    // addTerms('ToolOutputData', 'allToolOutputData');
+
+                    // addTerms('CorporaFileEncoding', 'allCorporaFileEncodings');
+                    addTerms('FileEncoding', 'allFileEncodings');
+                    // addTerms('ToolFileEncoding', 'allToolFileEncodings');
+
+                    // addTerms('CorporaDataType', 'allCorporaDataTypes');
+                    addTerms('DataType', 'allDataTypes');
+
+                    addTerms('LexiconAnnotation', 'allLexiconAnnotations');
+                    // addTerms('LexiconInputType', 'allLexiconInputTypes');
+                    // addTerms('LexiconDescriptionType', 'allLexiconDescriptionTypes');
+
+                    addTerms('OperatingSystem', 'allOperatingSystems');
+                    addTerms('ProgrammingLanguage', 'allProgrammingLanguages');
+                    addTerms('ToolSupport', 'allToolSupports');
+                    addTerms('ToolFunctionality', 'allToolFunctionalities');
+
+                // });
 
                 loadAllLanguages();
             }

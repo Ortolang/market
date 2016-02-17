@@ -127,7 +127,7 @@
                                 </span>
                                 <span class="name"><span property="name">{{contributor.entity.fullname}}</span> <span ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span></span>
                                 <div class="small roles">
-                                    <span ng-repeat="role in contributor.roles">{{role.labels | multilingualValue}}<span ng-if="!$last">, </span></span>
+                                    <span ng-repeat="role in contributor.roles">{{role}}<span ng-if="!$last">, </span></span>
                                 </div>
                             </div>
                         </div>
@@ -141,16 +141,16 @@
                 <article>
                     <div class="row">
                         <div ng-repeat="additionalInformation in additionalInformations" class="col-md-3">
-                            <dl>
+                            <dl ng-if="!isArray(additionalInformation.value)">
                                 <dt translate="{{additionalInformation.name}}"></dt>
-                                <dd ng-if="!isArray(additionalInformation.value) && additionalInformation.value['meta_ortolang-referentiel-json']">
-                                    {{additionalInformation.value['meta_ortolang-referentiel-json'].labels | multilingualValue}}
-                                </dd>
-                                <dd ng-if="!isArray(additionalInformation.value) && additionalInformation.value['meta_ortolang-referentiel-json'] === undefined">
+                                <dd>
                                     {{additionalInformation.value}}
                                 </dd>
-                                <dd ng-if="isArray(additionalInformation.value)" ng-repeat="valueItem in additionalInformation.value">
-                                    {{valueItem['meta_ortolang-referentiel-json'].labels | multilingualValue}}
+                            </dl>
+                            <dl ng-if="isArray(additionalInformation.value)">
+                                <dt translate="{{additionalInformation.name}}"></dt>
+                                <dd ng-repeat="valueItem in additionalInformation.value">
+                                    {{valueItem}}
                                 </dd>
                             </dl>
                         </div>
@@ -202,10 +202,10 @@
                 <div class="panel-body">
                     <dl ng-if="license">
                         <dt>
-                            {{license.label}} <a target="_BLANK" ng-if="(!license.description || conditionsOfUse) && licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                            {{license.label}} <a target="_BLANK" ng-if="(!license.description || conditionsOfUse) && license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dt>
                         <dd ng-show="!conditionsOfUse && license.description">
-                            <span ng-if="license.description">{{license.description | multilingualValue}}</span><a target="_BLANK" ng-if="licenseText && licenseText.url" ng-href="{{licenseText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                            <span ng-if="license.effectiveDescription">{{license.effectiveDescription}}</span><a target="_BLANK" ng-if="license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dd>
                         <dd ng-show="conditionsOfUse">
                             <span ng-bind-html="conditionsOfUse"></span>

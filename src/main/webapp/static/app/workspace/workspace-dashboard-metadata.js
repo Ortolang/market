@@ -66,9 +66,7 @@ angular.module('ortolangMarketApp')
                 fd.append('path', currentPath);
                 fd.append('type', ortolangType.metadata);
 
-                // fd.append('format', $scope.userMetadataFormat.key);
                 fd.append('name', 'ortolang-item-json');
-                console.log(content);
 
                 var blob = new Blob([content], { type: contentType});
 

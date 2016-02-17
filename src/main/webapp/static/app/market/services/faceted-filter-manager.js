@@ -71,8 +71,8 @@ angular.module('ortolangMarketApp')
                 }
             },
 
-            urlParam: function (content, viewMode, orderProp, orderDirection, facets) {
-                var filters = {}, params = {};
+            enabledParamsFilter: function() {
+                var filters = {};
                 angular.forEach(this.enabledFilters, function (filter) {
 
                     var arrValue = [];
@@ -81,6 +81,30 @@ angular.module('ortolangMarketApp')
                     });
 
                     filters[filter.id] = arrValue;
+
+                });
+
+                return filters;
+            },
+
+            urlParam: function (content, viewMode, orderProp, orderDirection) {
+                var filters = {}, params = {};
+                angular.forEach(this.enabledFilters, function (filter) {
+
+                    if(!filter.isLocked()) {
+
+                        if (filter.getType() === 'string') {
+                            filters[filter.id] = filter.getSelectedOptions()[0].getValue();
+                        } else if (filter.getType() === 'array') {
+                            // var arrValue = [];
+                            var arrValue = '';
+                            angular.forEach(filter.getSelectedOptions(), function (opt) {
+                                // arrValue.push(opt.getValue());
+                                arrValue += ((arrValue !== '') ? ',' : '') + opt.getValue();
+                            });
+                            filters[filter.id+'[]'] = arrValue;
+                        }
+                    }
 
                 });
                 params.filters = angular.toJson(filters);
@@ -93,7 +117,6 @@ angular.module('ortolangMarketApp')
                 params.viewMode = viewMode.id;
                 params.orderProp = orderProp.id;
                 params.orderDirection = orderDirection;
-                params.facets = facets.toString();
 
                 return params;
             },

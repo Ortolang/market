@@ -26,9 +26,19 @@ angular.module('ortolangMarketApp')
             return key.substring(2, key.length-1);
         };
 
+        this.extractNameFromReferentialId = function (id) {
+            // Pattern : ${referential:name}
+            var key = this.extractKeyFromReferentialId(id);
+            return key.split(':').pop();
+        };
+
         this.startsWith = function (actual, expected) {
             var lowerStr = (actual + '').toLowerCase();
             return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
+
+        this.endsWith = function(str, suffix) {
+            return str.indexOf(suffix, str.length - suffix.length) !== -1;
         };
 
         return this;

@@ -8,13 +8,11 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search) {
+    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search', 'MetadataResource', 'Helper',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search, MetadataResource, Helper) {
         return {
             restrict: 'EA',
             scope: {
-                type: '=',
-                content: '=',
-                query: '=',
+                params: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
                 searchPlaceHolder: '@',
@@ -66,7 +64,7 @@ angular.module('ortolangMarketApp')
                         //    $analytics.trackSiteSearch(content, scope.type);
                         //}
 
-                        $location.search(scope.filtersManager.urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse, scope.facets));
+                        $location.search(scope.filtersManager.urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse));
                         // scope.query = scope.filtersManager.toQuery(scope.content);
                     };
 
@@ -160,48 +158,106 @@ angular.module('ortolangMarketApp')
 
                         scope.content = $routeParams.content || undefined;
 
-                        var filters = $routeParams.filters;
+                        var params = {};
+                        if($routeParams.filters !== undefined) {
+                            angular.copy(angular.fromJson($routeParams.filters), params);
+                        }
+
+                        if (scope.preSelectedFilter) {
+                            params[scope.preSelectedFilter.getAlias()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
+                        }
+
+                        params.content = scope.content || undefined;
+
+                        scope.params = angular.toJson(params);
+                        
+
                         scope.filtersManager.resetFilter();
 
                         if (scope.preSelectedFilter) {
-                            addSelectedOptionFilter(scope.preSelectedFilter, scope.type);
+                            addSelectedOptionFilter(scope.preSelectedFilter, params[scope.preSelectedFilter.getAlias()]);
                             scope.filtersManager.addFilter(scope.preSelectedFilter);
                         }
 
-                        if (filters) {
-                            var filtersO = angular.fromJson($routeParams.filters),
-                                facetedFilters = scope.filtersManager.availabledFilters;
+                        if ($routeParams.filters && $routeParams.filters !== '{}') {
+                            var facetedFilters = scope.filtersManager.availabledFilters;
 
-                            for (var paramName in filtersO) {
-                                if (filtersO.hasOwnProperty(paramName)) {
+                            for (var paramName in params) {
+                                if (params.hasOwnProperty(paramName)) {
+                                    var paramKey = paramName;
+                                    if(Helper.endsWith(paramKey, '[]')) {
+                                        paramKey = paramKey.substring(0, paramKey.length-2);
+                                    }
                                     var i = 0;
                                     for (i; i < facetedFilters.length; i++) {
-                                        if (facetedFilters[i].getId() === paramName) {
-                                            addOptionFilter(facetedFilters[i], filtersO[paramName]);
-                                            addSelectedOptionFilter(facetedFilters[i], filtersO[paramName]);
+                                        if (facetedFilters[i].getId() === paramKey) {
+                                            addOptionFilter(facetedFilters[i], params[paramName]);
+                                            addSelectedOptionFilter(facetedFilters[i], params[paramName]);
                                             scope.filtersManager.addFilter(facetedFilters[i]);
+                                            break;
                                         }
                                     }
                                 }
                             }
-                            // scope.facets = true;
-                        } else {
-                            scope.facets = false;
                         }
+                    }
 
-                        if ($routeParams.facets) {
-                            scope.facets = ($routeParams.facets === 'true');
+                    function setOptionsFilters() {
+
+                        var facetedFilters = scope.filtersManager.availabledFilters,
+                            i = 0;
+                        for (i; i < facetedFilters.length; i++) {
+                            if (facetedFilters[i] !== scope.preSelectedFilter) {
+                                setOptionsFilter(facetedFilters[i]);
+                            }
                         }
+                    }
 
-                        // var newQuery = scope.filtersManager.toQuery(scope.content);
+                    function setOptionsFilter(filter) {
+                        // type=Corpus&fields=statusOfUse:status&group=statusOfUse.key
+                        var alias = filter.getAlias();
+                        var params = scope.params !== undefined ? angular.fromJson(scope.params) : {};
+                        params.fields = filter.getAlias() + ':' + alias;
+                        params.group = alias;
 
-                        // if (scope.query !== newQuery) {
-                        //     scope.query = newQuery;
-                        // }
+                        MetadataResource.listCollections(params, function(results) {
+                            angular.forEach(results, function(result) {
+                                if(angular.isDefined(result[alias])) {
+                                    //TODO Use WIND Orientdb ?
+                                    if(angular.isArray(result[alias])) {
+                                        angular.forEach(result[alias], function (field) {
+                                            var label = Helper.getMultilingualValue(field['meta_ortolang-referential-json'].labels);
+                                            if(!filter.getOption(label)) {
+                                                filter.putOption(OptionFacetedFilter.make({
+                                                    label: label,
+                                                    value: field.key,
+                                                    length: 1
+                                                }));
+                                            }
+                                        });
+                                    } else {
+                                        var label = Helper.getMultilingualValue(result[alias]['meta_ortolang-referential-json'].labels);
+                                        if(!filter.getOption(label)) {
+                                            filter.putOption(OptionFacetedFilter.make({
+                                                label: label,
+                                                value: result[alias].key,
+                                                length: 1
+                                            }));
+                                        }
+                                    }
+                                }
+                            });
+                        });
                     }
 
                     scope.$on('$routeUpdate', function () {
                         applyParams();
+                    });
+
+                    scope.$watch('Search.results', function () {
+                        if(Search.results !== null) {
+                            setOptionsFilters();
+                        }
                     });
 
                     // Scope variables

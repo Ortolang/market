@@ -13,9 +13,7 @@ angular.module('ortolangMarketApp')
             restrict: 'A',
             scope: {
                 title: '=',
-                type: '=',
-                content: '=',
-                query: '='
+                params: '='
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
@@ -27,13 +25,7 @@ angular.module('ortolangMarketApp')
                 });
 
                 function load() {
-                    var param = {};
-                    if (scope.type) {
-                        param.type = scope.type;
-                    }
-                    if (scope.newContent) {
-                        param.content = scope.newContent;
-                    }
+                    var param = angular.fromJson(scope.newParams);
                     Search.search(param).$promise.then(function (results) {
                         angular.forEach(results, function (result) {
                             if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
@@ -51,22 +43,19 @@ angular.module('ortolangMarketApp')
                     });
                 }
 
+                scope.$watch('params', function () {
+                    if (scope.params !== undefined && scope.params !== scope.newParams) {
+                        scope.newParams = scope.params;
+                        load();
+                    }
+                });
 
                 // Scope variables
                 function initScopeVariables() {
                     scope.newContent = undefined;
+                    scope.newParams = undefined;
                 }
                 initScopeVariables();
-
-                scope.$watch('type', function () {
-                    load();
-                });
-                scope.$watch('content', function () {
-                    if (scope.content !== scope.newContent) {
-                        scope.newContent = scope.content;
-                        load();
-                    }
-                });
             }
         };
     }]);

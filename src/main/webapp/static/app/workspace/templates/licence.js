@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'QueryBuilderFactory', 'SearchResource',
-        function ($rootScope, $scope, $filter, $modal, $translate, Settings, QueryBuilderFactory, SearchResource) {
+    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper',
+        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper) {
 
 
             /**
@@ -122,71 +122,32 @@ angular.module('ortolangMarketApp')
 
             function loadAllStatusOfUse() {
 
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key',
-                    source: 'statusofuse'
-                });
+                ReferentialEntityResource.get({type: 'STATUSOFUSE'}, function(entities) {
+                    $scope.allStatusOfUse = [];
+                    angular.forEach(entities.entries, function(entry) {
+                        var content = angular.fromJson(entry.content);
+                        var label = Helper.getMultilingualValue(content.labels);
 
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang='+Settings.language+'].value', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'StatusOfUse');
-
-                var query = queryBuilder.toString();
-                $scope.allStatusOfUse = [];
-                SearchResource.json({query: query}).$promise.then(function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var term = angular.fromJson(result);
-
-                        $scope.allStatusOfUse.push({id: '${'+term.key+'}', label: term.label});
-
-                        if(!$scope.metadata.statusOfUse && term.id === 'free_use') {
-                            $scope.metadata.statusOfUse = '${'+term.key+'}';
-                        }
+                        $scope.allStatusOfUse.push({id: '${'+entry.key+'}', label: label});
                     });
+
+                    // Init with default value if not already set
+                    if(!$scope.metadata.statusOfUse) {
+                        $scope.metadata.statusOfUse = '${referential:free_use}';
+                    }
                 });
             }
 
             function loadAllLicense() {
 
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: 'key',
-                    source: 'license'
-                });
+                ReferentialEntityResource.get({type: 'LICENSE'}, function(entities) {
+                    $scope.allLicences = [];
+                    angular.forEach(entities.entries, function(entry) {
+                        var content = angular.fromJson(entry.content);
 
-                // queryBuilder.addProjection('@rid', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.label', 'label');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'License');
-
-                var query = queryBuilder.toString();
-                $scope.allLicences = [];
-                SearchResource.json({query: query}).$promise.then(function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var license = angular.fromJson(result);
-
-                        $scope.allLicences.push({id: '${'+license.key+'}', label: license.label});
-                        // var queryLicenseMeta = 'select from ' + license['meta_ortolang-referentiel-json'];
-                        // SearchResource.json({query: queryLicenseMeta}, function (jsonObject) {
-                        //     var licenseObject = angular.fromJson(jsonObject[0]);
-
-                        //     cleanJsonDocument(licenseObject);
-
-                        //     $scope.allLicences.push({
-                        //         license: licenseObject,
-                        //         label: licenseObject.label
-                        //     });
-                        // });
+                        $scope.allLicences.push({id: '${'+entry.key+'}', label: content.label});
                     });
                 });
-            }
-
-            function cleanJsonDocument(doc) {
-                for (var propertyName in doc) {
-                    if(propertyName.substring(0,1)==='@') {
-                        delete doc[propertyName];
-                    }
-                }
             }
 
         	function init() {

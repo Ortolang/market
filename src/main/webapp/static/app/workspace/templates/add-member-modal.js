@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddMemberCtrl', ['$scope', '$filter', 'ProfileResource', 'GroupResource', 'User', 'QueryBuilderFactory', 'SearchResource', function ($scope, $filter, ProfileResource, GroupResource, User, QueryBuilderFactory, SearchResource) {
+    .controller('AddMemberCtrl', ['$scope', '$filter', 'ProfileResource', 'GroupResource', 'User', 'MetadataResource', function ($scope, $filter, ProfileResource, GroupResource, User, MetadataResource) {
 
         if (!$scope.addFriend) {
             User.sessionInitialized().then(function () {
@@ -25,15 +25,12 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.search = function () {
-            var queryBuilder = QueryBuilderFactory.make({projection: 'key', source: 'profile'})
-                .containsText('key', $scope.searchQuery).or().containsText('fullname', $scope.searchQuery).or().containsText('email', $scope.searchQuery);
-            SearchResource.json({query: queryBuilder.toString()}, function (data) {
+            MetadataResource.listProfiles({content: $scope.searchQuery}, function (profiles) {
                 $scope.profiles = [];
-                angular.forEach(data, function (result) {
-                    result = angular.fromJson(result);
-                    if (result.key !== User.key) {
-                        ProfileResource.getCard(result, function (card) {
-                            if ($scope.members && $filter('filter')($scope.members, {key: result.key}, true).length === 1) {
+                angular.forEach(profiles, function (profile) {
+                    if (profile.key !== User.key) {
+                        ProfileResource.getCard({key: profile.key}, function (card) {
+                            if ($scope.members && $filter('filter')($scope.members, {key: profile.key}, true).length === 1) {
                                 card.alreadyMember = true;
                             }
                             $scope.profiles.push(card);
