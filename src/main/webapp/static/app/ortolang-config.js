@@ -7,4 +7,5 @@ OrtolangConfig.keycloakConfigLocation = 'keycloak.json';
 OrtolangConfig.piwikHost = '';
 OrtolangConfig.piwikSiteId = '';
 OrtolangConfig.staticSiteVersion = 'latest';
+OrtolangConfig.handlePrefix = '11402';
 OrtolangConfig.debug = true;

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItem13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'SearchResource', 'Helper',
-        function ($scope, $rootScope, $translate, Settings, Content, SearchResource, Helper) {
+    .controller('MarketItem13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'SearchResource', 'Helper', 'url',
+        function ($scope, $rootScope, $translate, Settings, Content, SearchResource, Helper, url) {
 
 
             function getValues(arr, propertyName, propertyValue) {
@@ -396,6 +396,7 @@ angular.module('ortolangMarketApp')
                 $scope.documentations = [];
                 $scope.additionalInformations = [];
                 $scope.isArray = angular.isArray;
+                $scope.handle = 'http://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias;
 
                 loadProducers();
                 loadContributors();

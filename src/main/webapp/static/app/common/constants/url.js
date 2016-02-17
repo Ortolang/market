@@ -13,5 +13,6 @@ angular.module('ortolangMarketApp')
         apiNoSSL: OrtolangConfig.apiServerUrlNoSSL,
         sub: OrtolangConfig.apiServerUrlDefault + OrtolangConfig.apiSubPath,
         content: OrtolangConfig.apiServerUrlDefault + OrtolangConfig.apiContentPath,
-        contentNoSSL: OrtolangConfig.apiServerUrlNoSSL + OrtolangConfig.apiContentPath
+        contentNoSSL: OrtolangConfig.apiServerUrlNoSSL + OrtolangConfig.apiContentPath,
+        handlePrefix: OrtolangConfig.handlePrefix
     });
