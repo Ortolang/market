@@ -1638,7 +1638,12 @@ angular.module('ortolangMarketApp')
                             }
                         });
                 }
+                hotkeys.get('?').description = $translate.instant('BROWSER.SHORTCUTS.SHOW_SHORTCUTS');
             }
+
+            $rootScope.$on('$translateChangeSuccess', function () {
+                bindHotkeys();
+            });
 
             $scope.showCheatsheet = function ($event) {
                 hotkeys.get('?').callback($event);

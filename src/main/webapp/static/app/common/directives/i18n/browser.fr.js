@@ -72,6 +72,7 @@ angular.module('ortolangMarketApp')
             VISIBILITY: 'Visibilité',
             SHORTCUTS: {
                 SHORTCUTS: 'Raccourcis clavier',
+                SHOW_SHORTCUTS: 'Afficher la liste des raccourcis clavier',
                 FILTER: 'Filtrer les éléments',
                 UP: 'Naviguer vers le haut',
                 DOWN: 'Naviguer vers le bas',
