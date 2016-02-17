@@ -241,11 +241,13 @@
                 <div data-target-blank data-content="bibliographicCitation" class="panel-body">
                     <p ng-if="content.publications && content.publications.length>0" ng-bind-html="content.publications[0]">
                     </p>
-                    <p>{{title}}
+                    <p>
                         <span ng-repeat="producer in producers">
-                            , <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
-                        </span>
-                        , Equipex ORTOLANG <a target="_BLANK" href="http://www.ortolang.fr">www.ortolang.fr</a> :
+                            <span ng-if="!$first">, </span><a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
+                        </span>.
+                        ({{content.publicationDate | date:'yyyy'}}).
+                        <i>{{title}}</i> [{{content.type}}].
+                        Equipex ORTOLANG <a target="_BLANK" href="http://www.ortolang.fr">www.ortolang.fr</a> :
                         <a target="_BLANK" ng-href="{{handle}}">{{handle}}</a>
                     </p>
                 </div>
