@@ -74,11 +74,7 @@ angular.module('ortolangMarketApp')
                                 scope.itemMarketType = getItemType(scope.content);
 
                                 if (scope.content.image) {
-                                    ObjectResource.element({key: scope.itemKey, path: scope.content.image}).$promise.then(function (oobject) {
-                                        scope.image = Content.getContentUrlWithKey(oobject.key);
-                                    }, function (reason) {
-                                        console.error(reason);
-                                    });
+                                    scope.image = Content.getContentUrlWithPath(scope.content.image, scope.alias, scope.root);
                                 } else {
                                     scope.imgtitle = '';
                                     scope.imgtheme = 'custom';
