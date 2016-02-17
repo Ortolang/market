@@ -35,6 +35,25 @@ angular.module('ortolangMarketApp')
 	            }
             };
 
+            $scope.addCorporaStudyLanguage = function(tag) {
+                if(angular.isUndefined($scope.metadata.corporaStudyLanguages)) {
+                    $scope.metadata.corporaStudyLanguages = [];
+                }
+                if(angular.isDefined(tag.id)) {
+                   $scope.metadata.corporaStudyLanguages.push(tag.id);
+                } else {
+                    $scope.metadata.corporaStudyLanguages.push(tag.label);
+                }
+            };
+
+            $scope.removeCorporaStudyLanguage = function(tag) {
+                var value = tag.id ? tag.id : tag.label;
+                var index = $scope.metadata.corporaStudyLanguages.indexOf(value);
+                if (index > -1) {
+                    $scope.metadata.corporaStudyLanguages.splice(index, 1);
+                }
+            };
+
             $scope.addLexiconInputLanguage = function(tag) {
             	if(angular.isUndefined($scope.metadata.lexiconInputLanguages)) {
             		$scope.metadata.lexiconInputLanguages = [];

@@ -40,6 +40,14 @@
                         </tags-input>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="corporaStudyLanguages" class="control-label">{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}</label>
+                        <tags-input name="corporaStudyLanguages" class="language-tags" ng-model="selectedCorporaStudyLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}" data-on-tag-added="addCorporaStudyLanguage($tag)" data-on-tag-removed="removeCorporaStudyLanguage($tag)">
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+                    </div>
+                </div>
             </section>
             <section>
                 <div class="row">

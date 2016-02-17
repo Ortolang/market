@@ -81,6 +81,7 @@ angular.module('ortolangMarketApp')
                 ALL_STATUS_OF_USE: 'Tous les droits d\'utilisations',
                 CORPORA_LANG: 'Langue du corpus',
                 ALL_LANG: 'Toutes les Langues',
+                CORPORA_STUDY_LANG: 'Langue étudié',
                 CORPORA_DATATYPES: 'Type de source',
                 ALL_CORPORA_DATATYPES: 'Tout type de source',
                 CORPORA_FILE_ENCODINGS: 'Encodage de caractères',
