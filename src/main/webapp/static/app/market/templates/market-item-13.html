@@ -63,7 +63,7 @@
                 <article data-content="description" data-target-blank>
                     <div ng-bind-html="description"></div>
                     <br/>
-                    <div ng-if="keywords">
+                    <div ng-if="keywords && keywords.length>0">
                         <dl class="keywords">
                             <dt data-translate="MARKET.KEYWORDS"> : </dt>
                             <dd>

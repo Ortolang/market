@@ -342,8 +342,6 @@ angular.module('ortolangMarketApp')
             }
 
             function loadAdditionalInformations() {
-                //TODO add keywords
-                // loadFieldValuesInAdditionalInformations('keywords', 'MARKET.KEYWORDS');
 
                 loadFieldValuesInAdditionalInformations('corporaType', 'MARKET.FACET.CORPORA_TYPE');
                 loadFieldValuesInAdditionalInformations('corporaLanguageType', 'MARKET.FACET.CORPORA_LANGUAGE_TYPE');
