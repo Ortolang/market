@@ -120,7 +120,11 @@ angular.module('ortolangVisualizers')
                         scope.actions.showPreview = function () {
                             scope.tabs.activeTab = 'preview';
                         };
-                        scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.wsAlias, scope.root);
+                        if (scope.elements[0].path) {
+                            scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.wsAlias, scope.root);
+                        } else {
+                            scope.pageSrc = Content.getDownloadUrlWithKey(scope.elements[0].key);
+                        }
                     }
 
                     if (mimeType === 'text/html' || mimeType === 'application/xhtml+xml') {
