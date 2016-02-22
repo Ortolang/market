@@ -123,7 +123,7 @@ angular.module('ortolangVisualizers')
                         if (scope.elements[0].path) {
                             scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.wsAlias, scope.root);
                         } else {
-                            scope.pageSrc = Content.getDownloadUrlWithKey(scope.elements[0].key);
+                            scope.pageSrc = Content.getContentUrlWithKey(scope.elements[0].key, false);
                         }
                     }
 
