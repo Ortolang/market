@@ -55,8 +55,7 @@ angular.module('ortolangMarketApp')
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
         'Helper',
-        'AtmosphereService',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, AtmosphereService) {
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper) {
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
@@ -204,8 +203,14 @@ angular.module('ortolangMarketApp')
                         }
                     }
                 }, function (response) {
-                    Helper.showErrorModal(response.data);
-                    initWorkspaceVariables();
+                    if (response.status === 401) {
+                        if ($scope.isMarketBrowserService && $scope.path === '/') {
+                            $location.search({});
+                        }
+                    } else {
+                        Helper.showErrorModal(response.data);
+                        initWorkspaceVariables();
+                    }
                 });
                 return parentDataPromise;
             }

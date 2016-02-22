@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
 
         $scope.setAcl = function (element, template, $event) {
             $event.stopPropagation();
-            if (element.type === ortolangType.collection && $scope.models.advancedMode) {
+            if (element.type === ortolangType.collection) {
                 var permissionsModal,
                     modalScope = Helper.createModalScope(true);
                 modalScope.element = element;
@@ -103,7 +103,6 @@ angular.module('ortolangMarketApp')
             $scope.models.expanded = {};
             $scope.models.tree = {};
             $scope.models.showObjects = false;
-            $scope.models.advancedMode = true;
             Workspace.isActiveWorkspaceInfoLoaded().then(function () {
                 loadChild('/', true).then(function (data) {
                     data.expanded = true;
