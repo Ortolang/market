@@ -225,9 +225,9 @@ angular.module('ortolangMarketApp')
                 return null;
             }
 
-            function getTagName(workspaceSnapshot) {
-                if ($scope.browserService.workspace.snapshots) {
-                    var filteredTag = $filter('filter')($scope.browserService.workspace.tags, {snapshot: workspaceSnapshot.name}, true);
+            function getTagName(workspaceSnapshotName) {
+                if ($scope.browserService.workspace.tags) {
+                    var filteredTag = $filter('filter')($scope.browserService.workspace.tags, {snapshot: workspaceSnapshotName}, true);
                     if (filteredTag.length === 1) {
                         return filteredTag[0].name;
                     }
@@ -235,15 +235,23 @@ angular.module('ortolangMarketApp')
                 return null;
             }
 
-            $scope.getSnapshotsHistory = function () {
-                ObjectResource.get({key: $scope.browserService.workspace.head}, function (data) {
-                    $scope.workspaceHistory = data.history;
-                    angular.forEach($scope.workspaceHistory, function (workspaceSnapshot) {
-                        workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
-                        workspaceSnapshot.tag = getTagName(workspaceSnapshot);
+            function getSnapshotsHistory() {
+                $scope.workspaceHistoryTags = {};
+                if (!$scope.isMarketBrowserService) {
+                    ObjectResource.get({key: $scope.browserService.workspace.head}, function (data) {
+                        $scope.workspaceHistory = data.history;
+                        angular.forEach(data.history, function (workspaceSnapshot) {
+                            workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
+                            workspaceSnapshot.tag = getTagName(workspaceSnapshot.name);
+                            if (workspaceSnapshot.name) {
+                                $scope.workspaceHistoryTags[workspaceSnapshot.name] = workspaceSnapshot.tag || workspaceSnapshot.name;
+                            }
+                        });
                     });
-                });
-            };
+                } else {
+                    $scope.workspaceHistoryTags[$scope.root] = getTagName($scope.root);
+                }
+            }
 
             function selectChild(child, push, clickEvent, refresh) {
                 clickEvent = clickEvent || null;
@@ -1873,9 +1881,7 @@ angular.module('ortolangMarketApp')
                 Settings.store();
                 setRoot(root || 'head');
                 setPath(path || '/');
-                if (!$scope.isMarketBrowserService) {
-                    $scope.getSnapshotsHistory();
-                }
+                getSnapshotsHistory();
                 getParentData();
                 console.log('Browsing workspace "%s"', $scope.browserService.workspace.name || $scope.browserService.workspace.alias);
             }

@@ -68,7 +68,7 @@ angular.module('ortolangMarketApp')
                             filteredResult = $filter('filter')(results, {snapshotName:  $scope.tag.snapshot}, true);
                             $scope.ortolangObject = filteredResult[0];
 
-                            MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey};
+                            MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
                             $scope.root = $scope.ortolangObject.snapshotName;
                             $scope.itemKey = $scope.ortolangObject.key;
 
