@@ -256,6 +256,9 @@ angular.module('ortolangMarketApp')
             function selectChild(child, push, clickEvent, refresh) {
                 clickEvent = clickEvent || null;
                 var deferred, promise;
+                if (!child) {
+                    return;
+                }
                 if (push) {
                     deferred = $q.defer();
                     deferred.resolve(child);
@@ -826,6 +829,9 @@ angular.module('ortolangMarketApp')
                             });
                         });
                     };
+                    modalScope.$on('modal.hide', function () {
+                        bindHotkeys();
+                    });
                     moveModal = $modal({
                         scope: modalScope,
                         templateUrl: 'common/directives/file-select-modal-template.html',
@@ -1521,39 +1527,51 @@ angular.module('ortolangMarketApp')
                 $scope.clickPreview();
             }
 
+            function hasOpenedModal() {
+                return angular.element('.modal').length > 0;
+            }
+
             function bindHotkeys() {
                 hotkeys.bindTo($scope)
                     .add({
                         combo: ['up', 'shift+up'],
-                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.UP'),
+                        description: $translate.instant('BROWSER.SHORTCUTS.UP'),
                         callback: function (event) {
-                            preventDefault(event);
-                            navigate(false, event);
+                            if (!hasOpenedModal() || $scope.isFileSelectBrowserService) {
+                                preventDefault(event);
+                                navigate(false, event);
+                            }
                         }
                     })
                     .add({
                         combo: ['down', 'shift+down'],
-                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.DOWN'),
+                        description: $translate.instant('BROWSER.SHORTCUTS.DOWN'),
                         callback: function (event) {
-                            preventDefault(event);
-                            navigate(true, event);
+                            if (!hasOpenedModal() || $scope.isFileSelectBrowserService) {
+                                preventDefault(event);
+                                navigate(true, event);
+                            }
                         }
                     })
                     .add({
                         combo: 'backspace',
-                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.BACKSPACE'),
+                        description: $translate.instant('BROWSER.SHORTCUTS.BACKSPACE'),
                         callback: function (event) {
-                            preventDefault(event);
-                            browseToParent();
+                            if (!hasOpenedModal() || $scope.isFileSelectBrowserService) {
+                                preventDefault(event);
+                                browseToParent();
+                            }
                         }
                     });
                 if ($scope.browserService.canSwitchViewMode) {
                     hotkeys.bindTo($scope).add({
                         combo: 'v',
-                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
+                        description: $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
                         callback: function (event) {
-                            preventDefault(event);
-                            $scope.switchViewMode();
+                            if (!hasOpenedModal()) {
+                                preventDefault(event);
+                                $scope.switchViewMode();
+                            }
                         }
                     });
                 }
@@ -1562,8 +1580,10 @@ angular.module('ortolangMarketApp')
                         combo: 'i',
                         description: $translate.instant('BROWSER.SHORTCUTS.INFO'),
                         callback: function (event) {
-                            preventDefault(event);
-                            $scope.toggleAsideInfo();
+                            if (!hasOpenedModal()) {
+                                preventDefault(event);
+                                $scope.toggleAsideInfo();
+                            }
                         }
                     });
                 }
@@ -1572,8 +1592,10 @@ angular.module('ortolangMarketApp')
                         combo: 'w',
                         description: $translate.instant('BROWSER.SHORTCUTS.WORKSPACE_LIST'),
                         callback: function (event) {
-                            preventDefault(event);
-                            $scope.toggleWorkspaceList();
+                            if (!hasOpenedModal()) {
+                                preventDefault(event);
+                                $scope.toggleWorkspaceList();
+                            }
                         }
                     });
                 }
@@ -1581,33 +1603,37 @@ angular.module('ortolangMarketApp')
                     hotkeys.bindTo($scope)
                         .add({
                             combo: 'space',
-                            description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.PREVIEW'),
+                            description: $translate.instant('BROWSER.PREVIEW'),
                             callback: function (event) {
-                                previewWithShortcut(event);
+                                if (!hasOpenedModal() || angular.element('.visualizer-modal').length === 1) {
+                                    previewWithShortcut(event);
+                                }
                             }
                         });
                 }
                 hotkeys.bindTo($scope)
                     .add({
                         combo: 'enter',
-                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.ENTER'),
+                        description: $translate.instant('BROWSER.SHORTCUTS.ENTER'),
                         callback: function (event) {
-                            preventDefault(event);
-                            if ($scope.hasOnlyParentSelected()) {
-                                return;
-                            }
-                            if ($scope.hasOnlyOneElementSelected() && $scope.isCollection($scope.selectedElements[0])) {
-                                browseToChild($scope.selectedElements[0]);
-                            } else {
-                                previewWithShortcut(event);
+                            if (!hasOpenedModal() || $scope.isFileSelectBrowserService) {
+                                preventDefault(event);
+                                if ($scope.hasOnlyParentSelected()) {
+                                    return;
+                                }
+                                if ($scope.hasOnlyOneElementSelected() && $scope.isCollection($scope.selectedElements[0])) {
+                                    browseToChild($scope.selectedElements[0]);
+                                } else {
+                                    previewWithShortcut(event);
+                                }
                             }
                         }
                     })
                     .add({
                         combo: 'mod+f',
-                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.FILTER'),
+                        description: $translate.instant('BROWSER.SHORTCUTS.FILTER'),
                         callback: function (event) {
-                            if (angular.element('.visualizer-modal').length === 0) {
+                            if (!hasOpenedModal()) {
                                 preventDefault(event);
                                 var filterWrapper = angular.element('#filter-query-wrapper');
                                 filterWrapper.find('button').dropdown('toggle');
@@ -1617,10 +1643,12 @@ angular.module('ortolangMarketApp')
                     })
                     .add({
                         combo: 'mod+a',
-                        description: $scope.isFileSelectBrowserService ? undefined : $translate.instant('BROWSER.SHORTCUTS.SELECT_ALL'),
+                        description: $translate.instant('BROWSER.SHORTCUTS.SELECT_ALL'),
                         callback: function (event) {
-                            preventDefault(event);
-                            selectAll();
+                            if (!hasOpenedModal() || ($scope.isFileSelectBrowserService && $scope.fileSelectAcceptMultiple)) {
+                                preventDefault(event);
+                                selectAll();
+                            }
                         }
                     });
                 if ($scope.browserService.canEdit) {
@@ -1628,9 +1656,11 @@ angular.module('ortolangMarketApp')
                             combo: 'mod+backspace',
                             description: $translate.instant('BROWSER.SHORTCUTS.DELETE'),
                             callback: function (event) {
-                                preventDefault(event);
-                                if (!$scope.hasOnlyParentSelected()) {
-                                    $scope.deleteSelectedElements();
+                                if (!hasOpenedModal()) {
+                                    preventDefault(event);
+                                    if (!$scope.hasOnlyParentSelected()) {
+                                        $scope.deleteSelectedElements();
+                                    }
                                 }
                             }
                         })
@@ -1638,16 +1668,20 @@ angular.module('ortolangMarketApp')
                             combo: 'shift+f',
                             description: $translate.instant('BROWSER.SHORTCUTS.NEW_COLLECTION'),
                             callback: function (event) {
-                                preventDefault(event);
-                                $scope.addCollection();
+                                if (!hasOpenedModal()) {
+                                    preventDefault(event);
+                                    $scope.addCollection();
+                                }
                             }
                         })
                         .add({
                             combo: 'u',
                             description: $translate.instant('BROWSER.UPLOAD_FILES'),
                             callback: function (event) {
-                                preventDefault(event);
-                                $scope.doAction('uploadFiles');
+                                if (!hasOpenedModal()) {
+                                    preventDefault(event);
+                                    $scope.doAction('uploadFiles');
+                                }
                             }
                         });
                 }
