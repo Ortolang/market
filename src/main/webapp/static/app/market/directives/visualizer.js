@@ -22,9 +22,6 @@ angular.module('ortolangMarketApp')
                         modalScope.elements.push(oobject.object);
                         modalScope.forceFullData = true;
 
-                        element = $compile(visualizer.getElement())(modalScope);
-                        element.addClass('close-on-click');
-
                         modalScope.visualizer = {
                             header: {},
                             content: {},
@@ -37,6 +34,8 @@ angular.module('ortolangMarketApp')
                             }
                         };
                         modalScope.pendingRequests = [];
+                        element = $compile(visualizer.getElement())(modalScope);
+                        element.addClass('close-on-click');
                         visualizerModal = $modal({
                             scope: modalScope,
                             templateUrl: 'common/visualizers/visualizer-template.html',
