@@ -13,8 +13,10 @@ angular.module('ortolangMarketApp')
         $scope.getAllOrganizations = function () {
             ReferentialEntityResource.get({type: 'ORGANIZATION'}, function(collectionEntities) {
                 angular.forEach(collectionEntities.entries, function(entry) {
-                    var entity = {key: entry.key, content: angular.fromJson(entry.content)};
-                    $scope.producers.push(entity);
+                    var content = angular.fromJson(entry.content);
+                    if(angular.isUndefined(content.compatibilities)) {
+                        $scope.producers.push({key: entry.key, content: content});
+                    }
                 });
                 $scope.processing = false;
             });

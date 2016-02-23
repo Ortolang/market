@@ -45,16 +45,16 @@ angular.module('ortolangMarketApp')
             $scope.typeFilter.putSelectedOption($scope.typeFilter.getOption('Outil'));
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
-            // var toolLanguagesFilter = FacetedFilter.make({
-            //     id: 'toolLanguages.key',
-            //     alias: 'toolLanguages',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.TOOL_LANGUAGE',
-            //     resetLabel: 'MARKET.FACET.ALL_LANG',
-            //     priority: 'high',
-            //     view: 'dropdown-faceted-filter'
-            // });
-            // $scope.filtersManager.addAvailableFilter(toolLanguagesFilter);
+            var toolLanguagesFilter = FacetedFilter.make({
+                id: 'toolLanguages.key',
+                alias: 'toolLanguages',
+                type: 'array',
+                label: 'MARKET.FACET.TOOL_LANGUAGE',
+                resetLabel: 'MARKET.FACET.ALL_LANG',
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
+            });
+            $scope.filtersManager.addAvailableFilter(toolLanguagesFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
                 id: 'statusOfUse.key',
@@ -66,41 +66,41 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
-            // var toolFunctionalitiesFilter = FacetedFilter.make({
-            //     id: 'toolFunctionalities.key',
-            //     alias: 'toolFunctionalities',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.TOOL_FUNCTIONALITY',
-            //     resetLabel: 'MARKET.FACET.ALL_TOOL_FUNCTIONALITY'
-            // });
-            // $scope.filtersManager.addAvailableFilter(toolFunctionalitiesFilter);
+            var toolFunctionalitiesFilter = FacetedFilter.make({
+                id: 'toolFunctionalities.key',
+                alias: 'toolFunctionalities',
+                type: 'array',
+                label: 'MARKET.FACET.TOOL_FUNCTIONALITY',
+                resetLabel: 'MARKET.FACET.ALL_TOOL_FUNCTIONALITY'
+            });
+            $scope.filtersManager.addAvailableFilter(toolFunctionalitiesFilter);
 
-            // var toolInputDataFilter = FacetedFilter.make({
-            //     id: 'toolInputData.key',
-            //     alias: 'toolInputData',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.TOOL_INPUTDATA',
-            //     resetLabel: 'MARKET.FACET.ALL_TOOL_INPUTDATA'
-            // });
-            // $scope.filtersManager.addAvailableFilter(toolInputDataFilter);
+            var toolInputDataFilter = FacetedFilter.make({
+                id: 'toolInputData.key',
+                alias: 'toolInputData',
+                type: 'array',
+                label: 'MARKET.FACET.TOOL_INPUTDATA',
+                resetLabel: 'MARKET.FACET.ALL_TOOL_INPUTDATA'
+            });
+            $scope.filtersManager.addAvailableFilter(toolInputDataFilter);
 
-            // var toolOutputDataFilter = FacetedFilter.make({
-            //     id: 'toolOutputData.key',
-            //     alias: 'toolOutputData',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.TOOL_OUTPUTDATA',
-            //     resetLabel: 'MARKET.FACET.ALL_TOOL_OUTPUTDATA'
-            // });
-            // $scope.filtersManager.addAvailableFilter(toolOutputDataFilter);
+            var toolOutputDataFilter = FacetedFilter.make({
+                id: 'toolOutputData.key',
+                alias: 'toolOutputData',
+                type: 'array',
+                label: 'MARKET.FACET.TOOL_OUTPUTDATA',
+                resetLabel: 'MARKET.FACET.ALL_TOOL_OUTPUTDATA'
+            });
+            $scope.filtersManager.addAvailableFilter(toolOutputDataFilter);
 
-            // var toolFileEncodingsFilter = FacetedFilter.make({
-            //     id: 'toolFileEncodings.key',
-            //     alias: 'toolFileEncodings',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.TOOL_FILE_ENCODINGS',
-            //     resetLabel: 'MARKET.FACET.ALL_TOOL_FILE_ENCODINGS'
-            // });
-            // $scope.filtersManager.addAvailableFilter(toolFileEncodingsFilter);
+            var toolFileEncodingsFilter = FacetedFilter.make({
+                id: 'toolFileEncodings.key',
+                alias: 'toolFileEncodings',
+                type: 'array',
+                label: 'MARKET.FACET.TOOL_FILE_ENCODINGS',
+                resetLabel: 'MARKET.FACET.ALL_TOOL_FILE_ENCODINGS'
+            });
+            $scope.filtersManager.addAvailableFilter(toolFileEncodingsFilter);
         }
 
         function init() {

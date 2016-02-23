@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc directive
- * @name ortolangMarketApp.directive:marketItemPreview
+ * @name ortolangMarketApp.directive:ortolangItemJsonPreview
  * @description
- * # marketItemPreview
+ * # ortolangItemJsonPreview
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketItemPreview', ['$rootScope', '$filter', '$location', 'ObjectResource', 'Settings', 'Content', '$translate', function ($rootScope, $filter, $location, ObjectResource, Settings, Content, $translate) {
+    .directive('ortolangItemJsonPreview', ['$rootScope', '$filter', '$location', 'ObjectResource', 'Settings', 'Content', '$translate', function ($rootScope, $filter, $location, ObjectResource, Settings, Content, $translate) {
         return {
             restrict: 'EA',
             scope: {
@@ -35,40 +35,8 @@ angular.module('ortolangMarketApp')
                             scope.browse = $location.search().browse;
                             scope.preview = $location.search().preview;
 
-                            if (scope.content.schema === 'http://www.ortolang.fr/schema/012#') {
-                                scope.marketItemTemplate = 'market/templates/market-item-12.html';
-
-                                refreshMultilingualValue(scope.content, Settings.language);
-                                if (scope.content.publications) {
-                                    scope.primaryPublications = getValues(scope.content.publications, 'priority', 'primary');
-                                    scope.secondaryPublications = getValues(scope.content.publications, 'priority', 'secondary');
-                                }
-                                scope.itemMarketType = getItemType(scope.content);
-
-                                if (scope.content.image) {
-                                    ObjectResource.element({key: scope.itemKey, path: scope.content.image}).$promise.then(function (oobject) {
-                                        scope.image = Content.getContentUrlWithKey(oobject.key);
-                                    }, function (reason) {
-                                        console.error(reason);
-                                    });
-                                } else {
-                                    scope.imgtitle = '';
-                                    scope.imgtheme = 'custom';
-                                    if (scope.title) {
-                                        scope.imgtitle = scope.title.substring(0, 2);
-                                        scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
-                                    }
-                                }
-
-                                if (scope.content.license !== undefined && scope.content.license !== '') {
-                                    loadLicense(scope.itemKey, scope.content.license);
-                                }
-
-                                if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
-                                    scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
-                                }
-                            } if (scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
-                                scope.marketItemTemplate = 'market/templates/market-item-13.html';
+                            if (scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
+                                scope.marketItemTemplate = 'market/templates/ortolang-item-json-13.html';
 
                                 refreshMultilingualValue(scope.content, Settings.language);
                                 scope.itemMarketType = getItemType(scope.content);
@@ -139,14 +107,6 @@ angular.module('ortolangMarketApp')
                         if (item.bibliographicCitation) {
                             scope.bibliographicCitation = getValue(item.bibliographicCitation, 'lang', lang);
                         }
-                    }
-
-                    function loadLicense(collection, licensePath) {
-                        ObjectResource.element({key: collection, path: licensePath}).$promise.then(function (oobject) {
-                            scope.licenseDataObject = oobject;
-                        }, function (reason) {
-                            console.error(reason);
-                        });
                     }
 
                     scope.browseContent = function () {

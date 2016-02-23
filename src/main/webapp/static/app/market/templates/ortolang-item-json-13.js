@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:MarketItem13Ctrl
+ * @name ortolangMarketApp.controller:OrtolangItemJson13Ctrl
  * @description
- * # MarketItem13Ctrl
+ * # OrtolangItemJson13Ctrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('MarketItem13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource',
+    .controller('OrtolangItemJson13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource',
         function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialEntityResource) {
 
             function loadProducers() {

@@ -40,15 +40,17 @@ angular.module('ortolangMarketApp')
                 modalScope.allPersons = $scope.allPersons;
 
                 modalScope.$on('tafirstname.select', function (v, i) {
-                    // modalScope.type = i.type;
-                    // modalScope.id = i.id;
                     modalScope.models.rid = i.rid;
                     modalScope.models.key = i.key;
                     modalScope.models.lastname = i.lastname;
                     modalScope.models.firstname = i.firstname;
                     modalScope.models.midname = i.midname;
                     if (angular.isDefined(i.org)) {
-                        modalScope.models.organizationFullname = i.org.fullname;
+                        var orgFound = $filter('filter')($scope.allOrganizations, {key:Helper.extractKeyFromReferentialId(i.org)}, true);
+                        if (orgFound.length > 0) {
+                            modalScope.models.organizationFullname = orgFound[0].fullname;
+                            // modalScope.models.originOrganizationFullname = orgFound[0].fullname;
+                        }
                         modalScope.organization = i.org;
                     }
                     modalScope.models.fullname = i.fullname;
@@ -76,18 +78,17 @@ angular.module('ortolangMarketApp')
             }
 
             function setPerson(contributor, modalScope) {
-                // contributor.entity.type = modalScope.type;
-                // contributor.entity.id = modalScope.id;
                 contributor.entity.lastname = modalScope.models.lastname;
                 contributor.entity.rid = modalScope.models.rid;
                 contributor.entity.key = modalScope.models.key;
                 contributor.entity.firstname = modalScope.models.firstname;
                 contributor.entity.midname = modalScope.models.midname;
 
-                if (angular.isDefined(modalScope.organization) && modalScope.organization.fullname === modalScope.models.organizationFullname) {
+                // if (angular.isDefined(modalScope.organization) && modalScope.organization.originOrganizationFullname === modalScope.models.organizationFullname) {
                     // contributor.entity.organization = modalScope.organization;
-                    contributor.entity.organization = '${' + modalScope.organization.key + '}';
-                }
+                    // contributor.entity.organization = '${' + modalScope.organization.key + '}';
+                    contributor.entity.organization = modalScope.organization;
+                // }
 
                 contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
             }
@@ -366,15 +367,17 @@ angular.module('ortolangMarketApp')
                     angular.forEach(entities.entries, function(entry) {
                         var content = angular.fromJson(entry.content);
 
-                        $scope.allOrganizations.push({
-                            key: entry.key,
-                            value: content.fullname,
-                            fullname: content.fullname,
-                            name: content.name,
-                            img: content.img,
-                            org: content,
-                            label: '<span>' + content.fullname + '</span>'
-                        });
+                        if(angular.isUndefined(content.compatibilities)) {
+                            $scope.allOrganizations.push({
+                                key: entry.key,
+                                value: content.fullname,
+                                fullname: content.fullname,
+                                name: content.name,
+                                img: content.img,
+                                org: content,
+                                label: '<span>' + content.fullname + '</span>'
+                            });
+                        }
                     });
 
                     if (angular.isDefined($scope.metadata.producers)) {
