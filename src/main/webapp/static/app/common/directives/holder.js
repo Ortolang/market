@@ -73,13 +73,13 @@ angular.module('ortolangMarketApp')
             foreground: '#FFFFFF',
             fontweight: 'normal',
             size: 56
-        }).addTheme('f', {
-            background: '#b683db',
+        }).addTheme('g', {
+            background: '#AE7DD8',
             foreground: '#FFFFFF',
             fontweight: 'normal',
             size: 56
-        }).addTheme('g', {
-            background: '#41A6D8',
+        }).addTheme('m', {
+            background: '#EB8200',
             foreground: '#FFFFFF',
             fontweight: 'normal',
             size: 56
@@ -98,8 +98,8 @@ angular.module('ortolangMarketApp')
             foreground: '#FFFFFF',
             fontweight: 'normal',
             size: 56
-        }).addTheme('m', {
-            background: '#EB8200',
+        }).addTheme('t', {
+            background: '#41A6D8',
             foreground: '#FFFFFF',
             fontweight: 'normal',
             size: 56
