@@ -120,7 +120,11 @@ angular.module('ortolangVisualizers')
                         scope.actions.showPreview = function () {
                             scope.tabs.activeTab = 'preview';
                         };
-                        scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.wsAlias, scope.root);
+                        if (scope.elements[0].path) {
+                            scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.wsAlias, scope.root);
+                        } else {
+                            scope.pageSrc = Content.getContentUrlWithKey(scope.elements[0].key, false);
+                        }
                     }
 
                     if (mimeType === 'text/html' || mimeType === 'application/xhtml+xml') {
@@ -149,6 +153,9 @@ angular.module('ortolangVisualizers')
                         }
                         if (mimeType === 'application/xml' && response.data.indexOf('<?xml-stylesheet') !== -1) {
                             initializeVisualizerWithPreview();
+                        }
+                        if (mimeType === 'text/html' && response.data.indexOf('<iframe') === 0 && response.data.indexOf('</iframe>') === response.data.length - '</iframe>'.length) {
+                            scope.inception = true;
                         }
                         scope.pendingData = false;
                     });

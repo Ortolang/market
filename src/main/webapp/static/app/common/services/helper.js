@@ -71,22 +71,24 @@ angular.module('ortolangMarketApp')
         };
 
         this.showErrorModal = function (error, container, placement) {
-            var scope = this.createModalScope(true);
-            scope.error = error;
-            var config = {
-                title: 'ERROR_MODAL_' + error.code + '.TITLE',
-                content: 'ERROR_MODAL_' + error.code + '.BODY',
-                show: true,
-                templateUrl: 'common/templates/error-modal.html',
-                scope: scope
-            };
-            if (container) {
-                config.container = container;
+            if (angular.element('.modal.error-modal').length === 0) {
+                var scope = this.createModalScope(true);
+                scope.error = error;
+                var config = {
+                    title: 'ERROR_MODAL_' + error.code + '.TITLE',
+                    content: 'ERROR_MODAL_' + error.code + '.BODY',
+                    show: true,
+                    templateUrl: 'common/templates/error-modal.html',
+                    scope: scope
+                };
+                if (container) {
+                    config.container = container;
+                }
+                if (placement) {
+                    config.placement = placement;
+                }
+                $modal(config);
             }
-            if (placement) {
-                config.placement = placement;
-            }
-            $modal(config);
         };
 
         return this;

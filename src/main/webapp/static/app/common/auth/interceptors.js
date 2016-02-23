@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
             },
             responseError: function (rejection) {
                 if (rejection.status === 401) {
-                    console.error('session timeout?', rejection);
+                    console.error(rejection);
                     if (!AuthService.isAuthenticated()) {
                         $rootScope.$broadcast('user-not-logged-in');
                     } else {

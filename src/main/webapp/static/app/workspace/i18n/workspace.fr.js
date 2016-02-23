@@ -239,7 +239,7 @@ angular.module('ortolangMarketApp')
                     SEARCH: 'Rechercher une personne ?',
                     SEARCH_LABEL: 'Rechercher',
                     FIRSTNAME: 'Prénom',
-                    MIDNAME: 'Midname',
+                    MIDNAME: 'Deuxième prénom',
                     LASTNAME: 'Nom',
                     ORGANIZATION: 'Organisme',
                     ROLE: 'Role',

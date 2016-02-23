@@ -7,11 +7,11 @@
             <div class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
                 <div class="breadcrumb-part">
                     <button ng-if="breadcrumbParts.length > 0" class="btn btn-default"  ng-click="browseToPath('/')">
-                        {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
+                        {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root">{{workspaceHistoryTags[root]}}</span>
                     </button>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default">
-                            {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root" translate="BROWSER.VERSION" data-translate-values="{tag: root}"></span>
+                            {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root">{{workspaceHistoryTags[root]}}</span>
                         </button>
                     </div>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" class="btn-group">

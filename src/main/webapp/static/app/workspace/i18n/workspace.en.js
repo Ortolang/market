@@ -228,9 +228,9 @@ angular.module('ortolangMarketApp')
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
                     SEARCH: 'Looking for someone ?',
                     SEARCH_LABEL: 'Search',
-                    FIRSTNAME: 'Firstname',
-                    MIDNAME: 'Midname',
-                    LASTNAME: 'Lastname',
+                    FIRSTNAME: 'First name',
+                    MIDNAME: 'Middle name',
+                    LASTNAME: 'Last name',
                     ORGANIZATION: 'Organization',
                     ROLE: 'Role',
                     MESSAGES: {

@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
         },
         UNAUTHORIZED_MODAL: {
             TITLE: 'Accès refusé',
-            BODY: 'Vous ne disposez pas des permissions nécessaires pour voir le contenu de ce fichier.'
+            BODY: 'Vous ne disposez pas des permissions nécessaires pour voir le contenu de ce fichier/dossier ou de cette page.'
         },
         UNEXPECTED_ERROR_ALERT: {
             TITLE: 'Erreur',
