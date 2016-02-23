@@ -34,9 +34,9 @@
     <hr/>
     <div class="form-group">
         <label class="control-label">Personne(s) contributrice(s)</label>
-            <ul class="row list-unstyled">
+            <ul class="row list-unstyled auto-clear">
                 <li ng-repeat="contributor in contributors"
-                    ng-class="{'contributor-link': contributor.entity.id, 'clear-md': $index % 2 === 0, 'clear-lg': $index % 3 === 0}"
+                    ng-class="{'contributor-link': contributor.entity.id}"
                     class="profile-card contributor-card col-md-6 col-lg-4">
                     <div class="media">
                         <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>

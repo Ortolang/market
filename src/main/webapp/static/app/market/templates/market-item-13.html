@@ -107,10 +107,10 @@
                 <h4>{{'MARKET.CONTRIBUTOR' | translate}}</h4>
 
                 <article>
-                    <div class="row">
+                    <div class="row auto-clear">
                         <div ng-repeat="contributor in contributors" ng-click="seeContributorPage(contributor)"
                              class="media profile-card contributor-card col-md-6 col-lg-4"
-                             ng-class="{'contributor-link': contributor.entity.id, 'clear-md': $index % 2 === 0, 'clear-lg': $index % 3 === 0}">
+                             ng-class="{'contributor-link': contributor.entity.id}">
                             <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
                             </div>
                             <div class="media-body">
