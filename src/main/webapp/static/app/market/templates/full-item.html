@@ -1,7 +1,7 @@
 <div class="media full-item">
     <div class="media-left">
         <a ng-href="{{::itemUrl}}">
-            <img ng-if="::imgtitle !== undefined" class="item-logo" holder-js="holder.js/160x160?theme={{::imgtheme}}&text={{::imgtitle}}"/>
+            <img ng-if="::imgtitle !== undefined" class="item-logo" holder-js="holder.js/160x160?theme={{::imgtheme}}&text={{::imgtitle}}&size=56"/>
             <img ng-if="::image" class="item-logo" ng-src="{{::image}}" alt="{{::imgtitle}}"/>
         </a>
         <p class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{::entry.publicationDate}}</span></p>

@@ -178,6 +178,7 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Import limit',
                 BODY: 'You cannot import more than <strong>50 files</strong> at the same time using this method:<ul><li>to import more thant 50 files simultaneously you can <strong>import a zip</strong></li><li>for larger amount of data you are also able to <strong>access your workspace by FTP</strong></li></ul>'
             },
+            EDIT_LOGO: 'Click to edit logo',
             HOLDER_EDITOR_MODAL: {
                 TITLE: 'Logo creator',
                 TEXT: 'Text',
