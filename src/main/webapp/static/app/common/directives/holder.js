@@ -89,7 +89,7 @@ angular.module('ortolangMarketApp')
             fontweight: 'normal',
             size: 56
         }).addTheme('p', {
-            background: '#e2802f',
+            background: '#E2AA2F',
             foreground: '#FFFFFF',
             fontweight: 'normal',
             size: 56
