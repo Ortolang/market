@@ -231,7 +231,6 @@
             <div class="panel panel-default" ng-show="bibliographicCitation">
                 <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
                 <div data-target-blank data-content="bibliographicCitation" class="panel-body">
-
                     <p ng-bind-html="bibliographicCitation"></p>
                 </div>
             </div>
@@ -253,20 +252,16 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" ng-if="content.preview && content.preview.length>0">
+            <div class="panel panel-default preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
                 <div class="panel-heading"><span class="glyphicon glyphicon-eye-open fa-fw"></span> {{'MARKET.PREVIEW' | translate}}</div>
                 <div class="panel-body">
-
-                    <div class="preview-box" ng-show="itemKey">
-                        <div preview-slideshow collection="itemKey" paths="content.preview"></div>
-                   </div>
+                    <div ng-show="itemKey" preview-list collection="itemKey" paths="content.preview"></div>
                 </div>
             </div>
 
             <div class="panel panel-default" ng-if="content.copyright">
                 <div class="panel-heading">{{'MARKET.COPYRIGHT' | translate}}</div>
                 <div class="panel-body">
-
                     <p ng-bind="content.copyright"></p>
                 </div>
             </div>
