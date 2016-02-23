@@ -111,7 +111,6 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.contextMenu = function (clickEvent, sameChild) {
-                // TODO Context menu could be optimized when clicking on a same child but context menu deactivated
                 // If right click
                 if (!$scope.isFileSelectBrowserService && clickEvent && clickEvent.button === 2) {
                     // If the context menu has already been build no need to do it again
@@ -150,13 +149,21 @@ angular.module('ortolangMarketApp')
                         activateContextMenu();
                     }
                     if ($scope.contextMenuItems.length > 0) {
-                        var wrapperOffset = angular.element('.browser-wrapper').offset();
+                        $scope.contextMenuStyle = {};
+                        var wrapper = angular.element('.browser-wrapper'),
+                            wrapperOffset = wrapper.offset(),
+                            top = clickEvent.pageY - wrapperOffset.top - 3,
+                            estimatedHeight = $scope.contextMenuItems.length * 32,
+                            bottom;
                         $scope.contextMenuStyle = {
-                            position: 'absolute',
-                            display: 'block',
-                            left: clickEvent.pageX - wrapperOffset.left - 3 + 'px',
-                            top: clickEvent.pageY - wrapperOffset.top - 3 + 'px'
+                            left: clickEvent.pageX - wrapperOffset.left - 3 + 'px'
                         };
+                        if (top + estimatedHeight > wrapper.height()) {
+                            bottom = wrapper.height() - clickEvent.pageY + wrapperOffset.top;
+                            $scope.contextMenuStyle.bottom = bottom + 'px';
+                        } else {
+                            $scope.contextMenuStyle.top = top + 'px';
+                        }
                     }
                 } else {
                     $scope.deactivateContextMenu();
