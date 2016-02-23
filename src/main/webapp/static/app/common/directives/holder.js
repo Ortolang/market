@@ -103,7 +103,7 @@ angular.module('ortolangMarketApp')
             foreground: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('p', {
-            background: '#E2AA2F',
+            background: '#D49F2C',
             foreground: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('q', {
