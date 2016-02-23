@@ -3,7 +3,7 @@
         <header>
             <div class="media">
                 <a class="pull-left">
-                    <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160/{{imgtheme}}/text:{{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                    <img ng-if="imgtitle !== undefined" class="logo" ng-src="" holder-js="holder.js/160x160/{{imgtheme}}/text={{imgtitle}}&size=56"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                     <img ng-if="producer.img" ng-src="{{producer.img}}" class="thumbnail image-lg-size" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 </a>
                 <div class="media-body">
