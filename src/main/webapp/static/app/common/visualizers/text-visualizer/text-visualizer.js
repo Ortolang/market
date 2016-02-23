@@ -154,6 +154,9 @@ angular.module('ortolangVisualizers')
                         if (mimeType === 'application/xml' && response.data.indexOf('<?xml-stylesheet') !== -1) {
                             initializeVisualizerWithPreview();
                         }
+                        if (mimeType === 'text/html' && response.data.indexOf('<iframe') === 0 && response.data.indexOf('</iframe>') === response.data.length - '</iframe>'.length) {
+                            scope.inception = true;
+                        }
                         scope.pendingData = false;
                     });
                 }
