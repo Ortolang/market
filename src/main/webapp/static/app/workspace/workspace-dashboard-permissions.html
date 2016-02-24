@@ -16,7 +16,7 @@
         <div class="tree">
             <ol class="tree-nodes">
                 <li ng-repeat="element in [models.tree[Workspace.active.head.key]] | orderBy:['type','name'] track by element.key"
-                    ng-show="element.type !== 'object' || models.showObjects" ng-include="'workspace/templates/permissions-nodes-renderer.html'"></li>
+                    ng-show="element.type === 'collection' || models.showObjects" ng-include="'workspace/templates/permissions-nodes-renderer.html'"></li>
             </ol>
         </div>
     </div>
