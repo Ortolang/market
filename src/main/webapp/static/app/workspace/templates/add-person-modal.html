@@ -12,7 +12,7 @@
                             <div class="form-group has-feedback" ng-class="{'has-error': (addContributor.$submitted || addContributor.firstname.$dirty) && addContributor.firstname.$invalid}">
                                 <label for="add-contributor-firstname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME"></label>
                                 <div class="col-sm-10">
-                                    <input ng-disabled="models.key" ng-model="models.firstname" type="text" class="form-control" id="add-contributor-firstname" name="firstname" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}" data-prefix-event="tafirstname" bs-options="person as person.label for person in allPersons | filter:models.firstname" data-html="true" bs-typeahead>
+                                    <input ng-disabled="models.key" ng-model="models.firstname" type="text" class="form-control" id="add-contributor-firstname" name="firstname" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}" data-prefix-event="tafirstname" bs-options="person as person.label for person in allPersons | filter:models.firstname" data-html="true" data-container=".modal" bs-typeahead>
                                     <span ng-show="models.key" ng-click="clearSearch()" class="glyphicon glyphicon-remove form-control-feedback form-control-feedback-button"></span>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                             <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.organizationFullname.$dirty) && addContributor.organizationFullname.$invalid}">
                                 <label for="add-contributor-organizationFullname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION"></label>
                                 <div class="col-sm-10">
-                                    <input ng-model="models.organizationFullname" data-prefix-event="taorg" type="text" class="form-control" id="add-contributor-organizationFullname" name="organizationFullname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION' | translate}}" bs-options="org as org.label for org in allOrganizations" data-html="true" bs-typeahead>
+                                    <input ng-model="models.organizationFullname" data-prefix-event="taorg" type="text" class="form-control" id="add-contributor-organizationFullname" name="organizationFullname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION' | translate}}" bs-options="org as org.label for org in allOrganizations" data-html="true"  data-container=".modal" bs-typeahead>
                                 </div>
                             </div>
                             <input ng-model="models.fullname" type="hidden" name="fullname" id="add-contributor-fullname">
