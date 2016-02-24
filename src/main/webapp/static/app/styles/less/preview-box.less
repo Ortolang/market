@@ -1,3 +1,25 @@
+.preview-box-list-wrapper {
+  .panel-body {
+    padding: 0;
+  }
+  .list-group {
+    margin-bottom: 0;
+    .list-group-item {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      cursor: pointer;
+      &:first-child {
+        border-top: none;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
 
 /***********************************************
  * Styles for preview box

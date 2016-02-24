@@ -37,61 +37,62 @@ angular.module('ortolangMarketApp')
             fontweight: 'bold',
             nowrap: true
         });
-
+        // 160x160 size 56 / 100x100 size 35 / 180x180 size 63
         Holder.addTheme('custom', {
             background: '#f8f8f8',
             foreground: '#AAAAAA',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
         }).addTheme('a', {
             background: '#45b29d',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
         }).addTheme('b', {
             background: '#e27a3f',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
         }).addTheme('c', {
             background: '#df5a49',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
         }).addTheme('d', {
             background: '#00c0a0',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
         }).addTheme('e', {
-            background: '#fce064',
+            background: '#FDDD4E',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
         }).addTheme('f', {
             background: '#b683db',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
-        }).addTheme('l', {
-            background: '#358abf',
+            fontweight: 'normal'
+        }).addTheme('g', {
+            background: '#AE7DD8',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
-        }).addTheme('p', {
-            background: '#e2802f',
+            fontweight: 'normal'
+        }).addTheme('i', {
+            background: '#f7b900',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
-        }).addTheme('s', {
-            background: '#efc94c',
-            foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
         }).addTheme('m', {
             background: '#EB8200',
             foreground: '#FFFFFF',
-            fontweight: 'normal',
-            size: 56
+            fontweight: 'normal'
+        }).addTheme('p', {
+            background: '#D49F2C',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('r', {
+            background: '#5A7FCE',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('s', {
+            background: '#efc94c',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('t', {
+            background: '#41A6D8',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
         });
     });
