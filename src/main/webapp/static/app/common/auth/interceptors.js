@@ -30,11 +30,7 @@ angular.module('ortolangMarketApp')
             responseError: function (rejection) {
                 if (rejection.status === 401) {
                     console.error(rejection);
-                    if (!AuthService.isAuthenticated()) {
-                        $rootScope.$broadcast('user-not-logged-in');
-                    } else {
-                        $rootScope.$broadcast('unauthorized-user');
-                    }
+                    $rootScope.$broadcast('unauthorized-user');
                 } else if (rejection.status === 403) {
                     console.error('Forbidden', rejection);
                 } else if (rejection.status === 404) {

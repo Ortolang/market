@@ -905,12 +905,18 @@ angular.module('ortolangMarketApp')
             }
 
             function finishPreview(visualizer) {
-                var element, visualizerModal;
+                var element, visualizerModal, i;
                 createModalScope();
                 if ($scope.children && $scope.children.length !== 0) {
                     modalScope.elements = $scope.children;
                 } else {
                     modalScope.elements = $scope.selectedElements;
+                }
+                for (i = 0; i < modalScope.elements.length; i++) {
+                    if (modalScope.elements[i].downloadable === false) {
+                        $rootScope.$broadcast('unauthorized-user');
+                        return;
+                    }
                 }
                 modalScope.visualizer = {
                     header: {},
