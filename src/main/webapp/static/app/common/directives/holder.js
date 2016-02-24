@@ -94,5 +94,9 @@ angular.module('ortolangMarketApp')
             background: '#41A6D8',
             foreground: '#FFFFFF',
             fontweight: 'normal'
+        }).addTheme('v', {
+            background: '#66839E',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
         });
     });
