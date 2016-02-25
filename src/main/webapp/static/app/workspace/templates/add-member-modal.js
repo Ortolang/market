@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddMemberCtrl', ['$scope', '$filter', 'ProfileResource', 'GroupResource', 'User', 'MetadataResource', function ($scope, $filter, ProfileResource, GroupResource, User, MetadataResource) {
+    .controller('AddMemberCtrl', ['$scope', '$filter', 'ProfileResource', 'GroupResource', 'User', 'SearchResource', function ($scope, $filter, ProfileResource, GroupResource, User, SearchResource) {
 
         if (!$scope.addFriend) {
             User.sessionInitialized().then(function () {
@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.search = function () {
-            MetadataResource.listProfiles({content: $scope.searchQuery}, function (profiles) {
+            SearchResource.findProfiles({content: $scope.searchQuery}, function (profiles) {
                 $scope.profiles = [];
                 angular.forEach(profiles, function (profile) {
                     if (profile.key !== User.key) {

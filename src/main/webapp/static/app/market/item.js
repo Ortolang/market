@@ -8,10 +8,10 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ItemCtrl', ['$scope', '$routeParams', '$translate', '$location', '$route', '$filter', 'MetadataResource', 'MarketBrowserService', function ($scope, $routeParams, $translate, $location, $route, $filter, MetadataResource, MarketBrowserService) {
+    .controller('ItemCtrl', ['$scope', '$routeParams', '$translate', '$location', '$route', '$filter', 'SearchResource', 'MarketBrowserService', function ($scope, $routeParams, $translate, $location, $route, $filter, SearchResource, MarketBrowserService) {
 
         function loadItem() {
-        	MetadataResource.getWorkspace({alias: $scope.itemAlias}, function (workspace) {
+        	SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
         		workspace =  workspace['meta_ortolang-workspace-json'];
                 $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
                     return tag.name;
@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
 
                 MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey};
 
-                MetadataResource.getCollection({key: $scope.tag.key}, function (collection) {
+                SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
                 	$scope.ortolangObject = collection;
                 	$scope.root = $scope.tag.snapshot;
                     $scope.itemKey = collection.key;

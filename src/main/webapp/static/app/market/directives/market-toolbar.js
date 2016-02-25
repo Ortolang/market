@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search', 'MetadataResource', 'Helper',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search, MetadataResource, Helper) {
+    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search', 'SearchResource', 'Helper',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search, SearchResource, Helper) {
         return {
             restrict: 'EA',
             scope: {
@@ -258,7 +258,7 @@ angular.module('ortolangMarketApp')
                         params.fields = filter.getAlias() + ':' + alias;
                         params.group = alias;
 
-                        MetadataResource.listCollections(params, function(results) {
+                        SearchResource.findCollections(params, function(results) {
                             angular.forEach(results, function(result) {
                                 if(angular.isDefined(result[alias])) {
                                     if(angular.isArray(result[alias])) {
