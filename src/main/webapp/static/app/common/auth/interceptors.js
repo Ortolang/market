@@ -8,7 +8,10 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AuthInterceptor', ['$q', '$rootScope', 'AuthService', function ($q, $rootScope, AuthService) {
+    .factory('AuthInterceptor', ['$q', '$rootScope', 'AuthService', 'url', function ($q, $rootScope, AuthService, url) {
+
+        var scope = AuthService.getScope();
+
         return {
             request: function (config) {
                 var deferred = $q.defer();
@@ -22,6 +25,12 @@ angular.module('ortolangMarketApp')
                             deferred.reject('Failed to refresh token');
                             AuthService.forceReload();
                         });
+                    }
+                    if (config.url.indexOf(url.api) === 0) {
+                        if (!config.params) {
+                            config.params = {};
+                        }
+                        config.params.scope = scope;
                     }
                     return deferred.promise;
                 }

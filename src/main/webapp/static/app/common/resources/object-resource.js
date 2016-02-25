@@ -23,6 +23,10 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/objects/index',
                 method: 'GET',
                 isArray: true
+            },
+            isAuthorized: {
+                url: url.api + '/objects/:key/authorized',
+                method: 'GET'
             }
         });
     }]);
