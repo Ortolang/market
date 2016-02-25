@@ -85,8 +85,10 @@ angular.module('ortolangMarketApp')
         };
 
         function setAcl(element, template, recursive) {
-            WorkspaceElementResource.setPublicationPolicy({wskey: Workspace.active.workspace.key, path: element.path, recursive: recursive}, {template: template}, function () {
+            return WorkspaceElementResource.setPublicationPolicy({wskey: Workspace.active.workspace.key, path: element.path, recursive: recursive}, {template: template}, function () {
                 refreshElement(element);
+            }, function () {
+                Helper.showUnexpectedErrorAlert();
             });
         }
 
@@ -101,8 +103,10 @@ angular.module('ortolangMarketApp')
                     recursive: true
                 };
                 modalScope.set = function () {
-                    setAcl(element, template, modalScope.models.recursive);
-                    permissionsModal.hide();
+                    modalScope.models.pendingSubmit = true;
+                    setAcl(element, template, modalScope.models.recursive).$promise.then(function () {
+                        permissionsModal.hide();
+                    });
                 };
                 permissionsModal = $modal({
                     scope: modalScope,
