@@ -26,7 +26,6 @@ angular.module('ortolangMarketApp')
         function loadCollection(path) {
             var deferred = $q.defer();
             WorkspaceElementResource.getPublicationPolicy({wskey: Workspace.active.workspace.key, path: path}, function (data) {
-                console.log(data);
                 if (path === '/') {
                     data.parent.name = '/';
                 }
