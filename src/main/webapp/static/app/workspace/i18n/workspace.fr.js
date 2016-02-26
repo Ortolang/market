@@ -175,6 +175,7 @@ angular.module('ortolangMarketApp')
                 BODY: 'Il n\'est pas possible d\'importer plus de <strong>50 fichiers à la fois</strong> par cette méthode : <ul><li>pour importer simultanément plus de 50 fichiers vous avez la possibilité <strong>d\'importer un zip</strong></li><li>pour importer de grande quantité de données vous avez également la faculté de vous connecter à votre workspace <strong>par FTP</strong></li></ul>'
             },
             READ_ONLY_MODE: '<strong>Espace de travail en lecture seule:</strong> certaines propriétés tels que le contenu, les métadonnées et les permissions ne sont pas éditables.',
+            EDIT_LOGO: 'Cliquez pour modifier votre logo',
             HOLDER_EDITOR_MODAL: {
                 TITLE: 'Création de logo',
                 TEXT: 'Texte',
@@ -239,7 +240,7 @@ angular.module('ortolangMarketApp')
                     SEARCH: 'Rechercher une personne ?',
                     SEARCH_LABEL: 'Rechercher',
                     FIRSTNAME: 'Prénom',
-                    MIDNAME: 'Midname',
+                    MIDNAME: 'Deuxième prénom',
                     LASTNAME: 'Nom',
                     ORGANIZATION: 'Organisme',
                     ROLE: 'Role',
@@ -327,12 +328,14 @@ angular.module('ortolangMarketApp')
                     },
                     METADATA: {
                         CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
-                        UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
+                        DELETE: 'a supprimé les métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
+                        UPDATE: 'a mis à jour les métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
                         CREATE_ITEM: 'a créé la fiche de métadonnées de présentation',
                         UPDATE_ITEM: 'a mis à jour la fiche de métadonnées de présentation',
                         CREATE_THUMB: 'a ajouté un logo',
                         UPDATE_THUMB: 'a modifié le logo',
                         CREATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>',
+                        DELETE_ACL: 'a supprimé les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>',
                         UPDATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>'
                     },
                     OBJECT: {

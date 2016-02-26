@@ -18,6 +18,10 @@ angular.module('ortolangMarketApp')
                 method: 'PUT',
                 url: url.api + '/workspaces/:wskey/elements/bulk'
             },
+            getPublicationPolicy: {
+                method: 'GET',
+                url: url.api + '/workspaces/:wskey/elements/publication'
+            },
             setPublicationPolicy: {
                 method: 'PUT',
                 url: url.api + '/workspaces/:wskey/elements/publication'

@@ -7,11 +7,11 @@
             <div class="browser-breadcrumb" ng-class="{'aside-left-collapsed': browserSettings.hideWorkspaceList || browserSettings.hideWorkspaceListMdScreen}">
                 <div class="breadcrumb-part">
                     <button ng-if="breadcrumbParts.length > 0" class="btn btn-default"  ng-click="browseToPath('/')">
-                        {{browserService.workspace.alias}} <span ng-show="root !== 'head'" class="root">{{root}}</span>
+                        {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root">{{workspaceHistoryTags[root]}}</span>
                     </button>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length === 0" class="btn-group">
                         <button type="button" class="btn btn-default">
-                            {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root" translate="BROWSER.VERSION" data-translate-values="{tag: root}"></span>
+                            {{browserService.workspace.alias}} <span ng-if="root !== 'head'" class="root">{{workspaceHistoryTags[root]}}</span>
                         </button>
                     </div>
                     <div ng-if="breadcrumbParts.length === 0 && breadcrumbDropdownItems.length !== 0" class="btn-group">
@@ -108,7 +108,7 @@
                             </div>
                             <div ng-if="!forceMimeTypes" class="has-feedback">
                                 <label class="control-label" for="filter-mime-type-input" translate="BROWSER.FILTER.MIME_TYPE"></label>
-                                <input id="filter-mime-type-input" ng-model="filterModels.mimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" bs-options="childrenMimeType.value as childrenMimeType.label for childrenMimeType in filterModels.allChildrenMimeTypes" data-html="true" bs-typeahead>
+                                <input id="filter-mime-type-input" ng-model="filterModels.mimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" bs-options="childrenMimeType.value as childrenMimeType.label for childrenMimeType in filterModels.allChildrenMimeTypes" data-html="true" data-container=".browser-wrapper" bs-typeahead>
                                 <span ng-show="filterModels.mimeTypeQuery" ng-click="filterModels.mimeTypeQuery = ''" ng-class="::icons.remove" class="form-control-feedback"></span>
                             </div>
                         </div>

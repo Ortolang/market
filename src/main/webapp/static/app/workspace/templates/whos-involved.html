@@ -3,7 +3,7 @@
         <label for="search-producer" class="control-label">Laboratoire(s) producteur(s)</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchProducer" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" bs-typeahead>
+            <input ng-model="searchProducer" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" data-container="body" bs-typeahead>
         </div>
         <p class="help-block">
             Vous ne trouvez pas votre laboratoire ?
@@ -34,9 +34,9 @@
     <hr/>
     <div class="form-group">
         <label class="control-label">Personne(s) contributrice(s)</label>
-            <ul class="row list-unstyled">
+            <ul class="row list-unstyled auto-clear">
                 <li ng-repeat="contributor in contributors"
-                    ng-class="{'contributor-link': contributor.entity.id, 'clear-md': $index % 2 === 0, 'clear-lg': $index % 3 === 0}"
+                    ng-class="{'contributor-link': contributor.entity.id}"
                     class="profile-card contributor-card col-md-6 col-lg-4">
                     <div class="media">
                         <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>

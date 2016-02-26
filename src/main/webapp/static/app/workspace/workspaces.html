@@ -24,7 +24,7 @@
                          ng-click="manageWorkspace($event, workspace)" ng-class="{'deleted': workspace.key === Workspace.deleted}">
                         <div class="media">
                             <div class="media-left">
-                                <img ng-if="Workspace.metadatas[workspace.alias].imageUrl === null || Workspace.metadatas[workspace.alias] === null" class="logo" holder-js="holder.js/100x100?theme=ortolang&text={{workspace.alias}}&size=10" alt="{{workspace.alias}}"/>
+                                <img ng-if="Workspace.metadatas[workspace.alias].imageUrl === null || Workspace.metadatas[workspace.alias] === null" class="logo" holder-js="holder.js/100x100?theme={{::Workspace.getWorkspaceTitle(workspace).toLowerCase().charAt(0)}}&text={{::Workspace.getWorkspaceTitle(workspace).substr(0, 2)}}&size=35" alt="{{::workspace.alias}}"/>
                                 <img ng-if="::Workspace.metadatas[workspace.alias].imageUrl" class="logo" ng-src="{{::Workspace.metadatas[workspace.alias].imageUrl}}" alt="{{::workspace.alias}}"/>
                             </div>
                             <div class="media-body">

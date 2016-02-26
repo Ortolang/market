@@ -36,6 +36,12 @@ angular.element(document).ready(function () {
                     return keycloakAuth.idTokenParsed.preferred_username === 'root';
                 }
 
+                function getScope() {
+                    if (keycloakAuth.authenticated) {
+                        return window.btoa(keycloakAuth.idTokenParsed.preferred_username);
+                    }
+                }
+
                 function login() {
                     $window.location = keycloakAuth.createLoginUrl() + '&kc_locale=' + Settings.language;
                 }
@@ -75,6 +81,7 @@ angular.element(document).ready(function () {
                     getKeycloak: function () { return keycloakAuth; },
                     isAuthenticated: isAuthenticated,
                     isRoot: isRoot,
+                    getScope: getScope,
                     forceReload: forceReload,
                     sessionInitialized: sessionInitialized,
                     resolveSessionInitialized: resolveSessionInitialized

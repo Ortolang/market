@@ -10,31 +10,32 @@
 angular.module('ortolangMarketApp')
     .controller('WorkspaceDashboardPermissionsCtrl', ['$scope', '$modal', '$q', 'Workspace', 'WorkspaceElementResource', 'ortolangType', 'Helper', function ($scope, $modal, $q, Workspace, WorkspaceElementResource, ortolangType, Helper) {
 
-        function loadChild(path) {
-            var deferred = $q.defer();
-            WorkspaceElementResource.get({wskey: Workspace.active.workspace.key, path: path, policy: true}, function (data) {
-                var i;
-                data.effectiveAcl = data.publicationPolicy;
-                for (i = 0; i < data.metadatas.length; i++) {
-                    if (data.metadatas[i].name === 'ortolang-acl-json') {
-                        data.effectiveAcl = null;
-                        break;
-                    }
+        function processElement(element) {
+            var i;
+            element.effectiveAcl = element.publicationPolicy;
+            for (i = 0; i < element.metadatas.length; i++) {
+                if (element.metadatas[i].name === 'ortolang-acl-json') {
+                    element.effectiveAcl = null;
+                    break;
                 }
-                if (path === '/') {
-                    data.name = '/';
-                }
-                data.expanded = $scope.models.tree[data.key] ? $scope.models.tree[data.key].expanded : false;
-                $scope.models.tree[data.key] = data;
-                deferred.resolve(data);
-            });
-            return deferred.promise;
+            }
+            element.expanded = $scope.models.tree[element.key] ? $scope.models.tree[element.key].expanded : false;
+            $scope.models.tree[element.key] = element;
         }
 
-        function loadChildren(parent) {
-            angular.forEach(parent.elements, function (element) {
-                loadChild('/' + (parent.path ? parent.path + '/' : '') + element.name);
+        function loadCollection(path) {
+            var deferred = $q.defer();
+            WorkspaceElementResource.getPublicationPolicy({wskey: Workspace.active.workspace.key, path: path}, function (data) {
+                if (path === '/') {
+                    data.parent.name = '/';
+                }
+                processElement(data.parent);
+                angular.forEach(data.elements, function (element) {
+                    processElement(element);
+                });
+                deferred.resolve(data.parent);
             });
+            return deferred.promise;
         }
 
         $scope.nodeToggle = function (element) {
@@ -43,7 +44,7 @@ angular.module('ortolangMarketApp')
                 $scope.models.expanded[element.key] = !$scope.models.expanded[element.key];
                 var children = $scope.models.tree[element.key].elements;
                 if (children.length > 0 && !$scope.models.tree[children[0].key]) {
-                    loadChildren($scope.models.tree[element.key]);
+                    loadCollection($scope.models.tree[element.key].path);
                 }
             }
         };
@@ -51,32 +52,49 @@ angular.module('ortolangMarketApp')
         function refreshChildren(parent) {
             angular.forEach(parent.elements, function (child) {
                 if ($scope.models.tree[child.key] && $scope.models.tree[child.key].path) {
-                    loadChild($scope.models.tree[child.key].path);
                     if (child.type === ortolangType.collection) {
+                        loadCollection($scope.models.tree[child.key].path);
                         refreshChildren($scope.models.tree[child.key]);
                     }
                 }
             });
         }
 
+        function refreshElement(element) {
+            var parentPath = element.path.substring(0, element.path.lastIndexOf('/'));
+            if (parentPath.length === 0) {
+                parentPath = '/';
+            }
+            if (element.type === ortolangType.collection) {
+                loadCollection(element.path);
+                refreshChildren(element);
+                // if refreshing root
+                if (element.path !== parentPath) {
+                    loadCollection(parentPath);
+                }
+            } else {
+                loadCollection(parentPath);
+            }
+        }
+
         $scope.removeAcl = function (element, $event) {
             $event.stopPropagation();
             WorkspaceElementResource.delete({wskey: Workspace.active.workspace.key, path: element.path, metadataname: 'ortolang-acl-json'}, function () {
-                loadChild(element.path);
-                refreshChildren(element);
+                refreshElement(element);
             });
         };
 
         function setAcl(element, template, recursive) {
-            WorkspaceElementResource.setPublicationPolicy({wskey: Workspace.active.workspace.key, path: element.path, recursive: recursive}, {template: template}, function () {
-                loadChild(element.path);
-                refreshChildren(element);
+            return WorkspaceElementResource.setPublicationPolicy({wskey: Workspace.active.workspace.key, path: element.path, recursive: recursive}, {template: template}, function () {
+                refreshElement(element);
+            }, function () {
+                Helper.showUnexpectedErrorAlert();
             });
         }
 
         $scope.setAcl = function (element, template, $event) {
             $event.stopPropagation();
-            if (element.type === ortolangType.collection && $scope.models.advancedMode) {
+            if (element.type === ortolangType.collection) {
                 var permissionsModal,
                     modalScope = Helper.createModalScope(true);
                 modalScope.element = element;
@@ -85,8 +103,10 @@ angular.module('ortolangMarketApp')
                     recursive: true
                 };
                 modalScope.set = function () {
-                    setAcl(element, template, modalScope.models.recursive);
-                    permissionsModal.hide();
+                    modalScope.models.pendingSubmit = true;
+                    setAcl(element, template, modalScope.models.recursive).$promise.then(function () {
+                        permissionsModal.hide();
+                    });
                 };
                 permissionsModal = $modal({
                     scope: modalScope,
@@ -103,11 +123,9 @@ angular.module('ortolangMarketApp')
             $scope.models.expanded = {};
             $scope.models.tree = {};
             $scope.models.showObjects = false;
-            $scope.models.advancedMode = true;
             Workspace.isActiveWorkspaceInfoLoaded().then(function () {
-                loadChild('/', true).then(function (data) {
+                loadCollection('/').then(function (data) {
                     data.expanded = true;
-                    loadChildren(data);
                 });
             });
         }());

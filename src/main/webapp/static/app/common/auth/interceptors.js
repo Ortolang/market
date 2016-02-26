@@ -8,7 +8,10 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AuthInterceptor', ['$q', '$rootScope', 'AuthService', function ($q, $rootScope, AuthService) {
+    .factory('AuthInterceptor', ['$q', '$rootScope', 'AuthService', 'url', function ($q, $rootScope, AuthService, url) {
+
+        var scope = AuthService.getScope();
+
         return {
             request: function (config) {
                 var deferred = $q.defer();
@@ -23,18 +26,20 @@ angular.module('ortolangMarketApp')
                             AuthService.forceReload();
                         });
                     }
+                    if (config.url.indexOf(url.api) === 0) {
+                        if (!config.params) {
+                            config.params = {};
+                        }
+                        config.params.scope = scope;
+                    }
                     return deferred.promise;
                 }
                 return config;
             },
             responseError: function (rejection) {
                 if (rejection.status === 401) {
-                    console.error('session timeout?', rejection);
-                    if (!AuthService.isAuthenticated()) {
-                        $rootScope.$broadcast('user-not-logged-in');
-                    } else {
-                        $rootScope.$broadcast('unauthorized-user');
-                    }
+                    console.error(rejection);
+                    $rootScope.$broadcast('unauthorized-user');
                 } else if (rejection.status === 403) {
                     console.error('Forbidden', rejection);
                 } else if (rejection.status === 404) {

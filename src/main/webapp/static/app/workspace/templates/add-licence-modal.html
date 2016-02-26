@@ -18,14 +18,14 @@
                     </div>
                     <div class="form-group" ng-class="{'has-error': (addLicence.$submitted || addLicence.description.$dirty) && addLicence.description.$invalid}">
                         <label for="add-licence-conditionsOfUse" class="control-label" translate="MARKET.CONDITIONS_OF_USE"></label>
-                        
+
                         <div class="input-group">
                             <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
                         </div>
-                        
+
                         <textarea class="form-control" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="descriptionSelected.value" ng-change="updateDescription()"></textarea>
                             <!-- <textarea rows="10" type="text" class="form-control" id="add-licence-conditionsOfUse" name="conditionsOfUse" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse"></textarea> -->
-                        
+
                     </div>
                     <div class="form-group" ng-class="{'has-error': (addLicence.$submitted || addLicence.licenseWebsite.$dirty) && addLicence.licenseWebsite.$invalid}">
                         <label for="licenseWebsite" class="control-label" translate="WORKSPACE.METADATA_EDITOR.LICENCE_WEBSITE"></label>
@@ -37,7 +37,7 @@
                     <div class="form-group">
                             <button type="submit" class="btn btn-primary" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
                             <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
-                        
+
                     </div>
 				</form>
             </div>

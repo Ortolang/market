@@ -3,7 +3,7 @@
         <div class="media">
             <div class="media-left">
                 <div class="item-logo">
-                    <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                    <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}&size=63"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                     <img ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 </div>
             </div>
@@ -107,10 +107,10 @@
                 <h4>{{'MARKET.CONTRIBUTOR' | translate}}</h4>
 
                 <article>
-                    <div class="row">
+                    <div class="row auto-clear">
                         <div ng-repeat="contributor in contributors" ng-click="seeContributorPage(contributor)"
                              class="media profile-card contributor-card col-md-6 col-lg-4"
-                             ng-class="{'contributor-link': contributor.entity.id, 'clear-md': $index % 2 === 0, 'clear-lg': $index % 3 === 0}">
+                             ng-class="{'contributor-link': contributor.entity.id}">
                             <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
                             </div>
                             <div class="media-body">
@@ -231,7 +231,6 @@
             <div class="panel panel-default" ng-show="bibliographicCitation">
                 <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
                 <div data-target-blank data-content="bibliographicCitation" class="panel-body">
-
                     <p ng-bind-html="bibliographicCitation"></p>
                 </div>
             </div>
@@ -253,20 +252,16 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" ng-if="content.preview && content.preview.length>0">
+            <div class="panel panel-default preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
                 <div class="panel-heading"><span class="glyphicon glyphicon-eye-open fa-fw"></span> {{'MARKET.PREVIEW' | translate}}</div>
                 <div class="panel-body">
-
-                    <div class="preview-box" ng-show="itemKey">
-                        <div preview-slideshow collection="itemKey" paths="content.preview"></div>
-                   </div>
+                    <div ng-show="itemKey" preview-list collection="itemKey" paths="content.preview"></div>
                 </div>
             </div>
 
             <div class="panel panel-default" ng-if="content.copyright">
                 <div class="panel-heading">{{'MARKET.COPYRIGHT' | translate}}</div>
                 <div class="panel-body">
-
                     <p ng-bind="content.copyright"></p>
                 </div>
             </div>
