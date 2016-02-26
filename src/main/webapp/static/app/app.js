@@ -125,7 +125,7 @@ angular
                 templateUrl: 'common/static-website/legal-notices.html',
                 title: 'NAV.LEGAL_NOTICES'
             })
-            .when('/profile', {
+            .when('/profile/information', {
                 templateUrl: 'profile/profile.html',
                 controller: 'ProfileCtrl',
                 requiresAuthentication: true,
