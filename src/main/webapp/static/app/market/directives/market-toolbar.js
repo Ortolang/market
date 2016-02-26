@@ -8,12 +8,11 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search) {
+    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search', 'SearchResource', 'Helper',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search, SearchResource, Helper) {
         return {
             restrict: 'EA',
             scope: {
-                type: '=',
-                query: '=',
+                params: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
                 searchPlaceHolder: '@',
@@ -60,13 +59,7 @@ angular.module('ortolangMarketApp')
 
                     scope.applyFilters = function () {
                         scope.hideLowFacets();
-                        //if (scope.content !== $location.search().content) {
-                        //    var content = scope.filtersManager.toAnalytics(scope.content);
-                        //    $analytics.trackSiteSearch(content, scope.type);
-                        //}
-
-                        $location.search(scope.filtersManager.urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse, scope.facets));
-                        scope.query = scope.filtersManager.toQuery(scope.content);
+                        $location.search(urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse));
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
@@ -115,6 +108,98 @@ angular.module('ortolangMarketApp')
                         scope.facets = !scope.facets;
                     };
 
+                    /**
+                     * Applys the search based on params from routeParams
+                     **/
+                    function applyParams() {
+
+                        if ($routeParams.viewMode) {
+                            Search.setActiveViewMode($routeParams.viewMode);
+                            delete $routeParams.viewMode;
+                        }
+                        if ($routeParams.orderProp) {
+                            Search.setActiveOrderProp($routeParams.orderProp, $routeParams.orderDirection);
+                            delete $routeParams.orderProp;
+                            delete $routeParams.orderDirection;
+                        }
+                        scope.content = $routeParams.content || undefined;
+                        delete $routeParams.content;
+                        var params = {};
+                        if($routeParams.filters !== undefined) {
+                            angular.copy(angular.fromJson($routeParams.filters), params);
+                        }
+                        if (scope.preSelectedFilter) {
+                            params[scope.preSelectedFilter.getAlias()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
+                        }
+                        params.content = scope.content || undefined;
+
+
+                        // -- Sends params to search service (always watching params) --
+                        scope.params = angular.toJson(params);
+
+
+                        // -- Sets filters for HTML render view --
+
+                        // Clears selection and remove all filters enabled
+                        scope.filtersManager.resetFilter();
+                        if (scope.preSelectedFilter) {
+                            addSelectedOptionFilter(scope.preSelectedFilter, params[scope.preSelectedFilter.getAlias()]);
+                            scope.filtersManager.addFilter(scope.preSelectedFilter);
+                        }
+                        var facetedFilters = scope.filtersManager.availabledFilters;
+
+                        for (var paramName in params) {
+                            if (params.hasOwnProperty(paramName) && params[paramName]) {
+                                var paramKey = paramName;
+                                if(Helper.endsWith(paramKey, '[]')) {
+                                    paramKey = paramKey.substring(0, paramKey.length-2);
+                                }
+                                var i = 0;
+                                for (i; i < facetedFilters.length; i++) {
+                                    if (facetedFilters[i].getId() === paramKey) {
+                                        addOptionFilter(facetedFilters[i], params[paramName]);
+                                        addSelectedOptionFilter(facetedFilters[i], params[paramName]);
+                                        scope.filtersManager.addFilter(facetedFilters[i]);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    /**
+                     * Returns an object containing all url param necessary to apply the criteria.
+                     **/
+                    function urlParam (content, viewMode, orderProp, orderDirection) {
+                        var filters = {}, params = {};
+                        var url = '';
+                        angular.forEach(scope.filtersManager.enabledFilters, function (filter) {
+
+                            if(!filter.isLocked()) {
+                                var arrValue = [];
+                                angular.forEach(filter.getSelectedOptions(), function (opt) {
+                                    arrValue.push(opt.getValue());
+                                });
+                                filters[filter.id+'[]'] = arrValue;
+                            }
+
+                        });
+                        params.filters = angular.toJson(filters);
+
+                        if (content && content !== '') {
+                            params.content = content;
+                        }
+
+                        params.viewMode = viewMode.id;
+                        params.orderProp = orderProp.id;
+                        params.orderDirection = orderDirection;
+
+                        return params;
+                    }
+
+                    /**
+                     * Adds an option value to the filter.
+                     **/
                     function addOptionFilter(filter, optionValue) {
                         if (angular.isArray(optionValue)) {
                             angular.forEach(optionValue, function (opt) {
@@ -137,6 +222,9 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
+                    /**
+                     * Adds an option value to the selection of the filter.
+                     **/
                     function addSelectedOptionFilter(filter, optionValue) {
                         if (angular.isArray(optionValue)) {
                             angular.forEach(optionValue, function (opt) {
@@ -147,58 +235,70 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
-                    function applyParams() {
 
-                        if ($routeParams.viewMode) {
-                            Search.setActiveViewMode($routeParams.viewMode);
-                        }
-
-                        if ($routeParams.orderProp) {
-                            Search.setActiveOrderProp($routeParams.orderProp, $routeParams.orderDirection);
-                        }
-
-                        scope.content = $routeParams.content || undefined;
-
-                        var filters = $routeParams.filters;
-                        scope.filtersManager.resetFilter();
-
-                        if (scope.preSelectedFilter) {
-                            addSelectedOptionFilter(scope.preSelectedFilter, scope.type);
-                            scope.filtersManager.addFilter(scope.preSelectedFilter);
-                        }
-
-                        if (filters) {
-                            var filtersO = angular.fromJson($routeParams.filters),
-                                facetedFilters = scope.filtersManager.availabledFilters;
-
-                            for (var paramName in filtersO) {
-                                if (filtersO.hasOwnProperty(paramName)) {
-                                    var i = 0;
-                                    for (i; i < facetedFilters.length; i++) {
-                                        if (facetedFilters[i].getId() === paramName) {
-                                            addOptionFilter(facetedFilters[i], filtersO[paramName]);
-                                            addSelectedOptionFilter(facetedFilters[i], filtersO[paramName]);
-                                            scope.filtersManager.addFilter(facetedFilters[i]);
-                                        }
-                                    }
-                                }
+                    /**
+                     * Sets options values of all filters availabled.
+                     **/
+                    function setOptionsFilters() {
+                        var facetedFilters = scope.filtersManager.availabledFilters,
+                            i = 0;
+                        for (i; i < facetedFilters.length; i++) {
+                            if (facetedFilters[i] !== scope.preSelectedFilter) {
+                                setOptionsFilter(facetedFilters[i]);
                             }
-                            // scope.facets = true;
-                        } else {
-                            scope.facets = false;
-                        }
-
-                        if ($routeParams.facets) {
-                            scope.facets = ($routeParams.facets === 'true');
-                        }
-
-                        var newQuery = scope.filtersManager.toQuery(scope.content);
-
-                        if (scope.query !== newQuery) {
-                            scope.query = newQuery;
                         }
                     }
 
+                    /**
+                     * Sets options values for a filter by sending a request to the server.
+                     **/
+                    function setOptionsFilter(filter) {
+                        var alias = filter.getAlias();
+                        var params = scope.params !== undefined ? angular.fromJson(scope.params) : {};
+                        params.fields = filter.getAlias() + ':' + alias;
+                        params.group = alias;
+
+                        SearchResource.findCollections(params, function(results) {
+                            angular.forEach(results, function(result) {
+                                if(angular.isDefined(result[alias])) {
+                                    if(angular.isArray(result[alias])) {
+                                        angular.forEach(result[alias], function (field) {
+                                            var label = Helper.getMultilingualValue(field['meta_ortolang-referential-json'].labels);
+                                            if(!filter.getOption(label)) {
+                                                filter.putOption(OptionFacetedFilter.make({
+                                                    label: label,
+                                                    value: field.key,
+                                                    length: 1
+                                                }));
+                                            }
+                                        });
+                                    } else {
+                                        var label = Helper.getMultilingualValue(result[alias]['meta_ortolang-referential-json'].labels);
+                                        if(!filter.getOption(label)) {
+                                            filter.putOption(OptionFacetedFilter.make({
+                                                label: label,
+                                                value: result[alias].key,
+                                                length: 1
+                                            }));
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    }
+
+                    /**
+                     * Each time the results change, the option values of each filters are updated.
+                     **/
+                    scope.$watch('Search.results', function () {
+                        if(Search.results !== null) {
+                            setOptionsFilters();
+                        }
+                    });
+
+                    /**
+                     * Applies criteria each time the route (url param) changed.
+                     **/
                     scope.$on('$routeUpdate', function () {
                         applyParams();
                     });

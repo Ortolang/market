@@ -77,12 +77,12 @@ angular
             })
             .when('/market/applications', {
                 templateUrl: 'market/applications.html',
-                controller: 'ApplicationsCtrl',
+                // controller: 'ApplicationsCtrl',
                 title: 'INTEGRATED_PROJECTS'
             })
             .when('/market/:section/:alias/:version?', {
-                templateUrl: 'market/market-item.html',
-                controller: 'MarketItemCtrl',
+                templateUrl: 'market/item.html',
+                controller: 'ItemCtrl',
                 reloadOnSearch: false
             })
             .when('/market/search', {

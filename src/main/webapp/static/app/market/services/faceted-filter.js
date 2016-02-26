@@ -38,6 +38,10 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
             return this.id;
         },
 
+        getAlias: function () {
+            return this.alias;
+        },
+
         setAlias: function (alias) {
             this.alias = alias;
         },

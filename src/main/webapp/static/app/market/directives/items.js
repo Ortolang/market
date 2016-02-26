@@ -8,13 +8,12 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['Search', 'OptionFacetedFilter', 'Settings', function (Search, OptionFacetedFilter, Settings) {
+    .directive('items', ['Search', 'OptionFacetedFilter', 'Settings', 'Helper', function (Search, OptionFacetedFilter, Settings, Helper) {
         return {
             restrict: 'A',
             scope: {
                 title: '=',
-                query: '=',
-                filtersManager: '='
+                params: '='
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
@@ -25,16 +24,17 @@ angular.module('ortolangMarketApp')
                     Search.clearResults();
                 });
 
-                function load(query) {
-                    //console.log('query : ' + query);
-                    Search.search(query).$promise.then(function (results) {
-
+                function load() {
+                    var param = angular.fromJson(scope.newParams);
+                    Search.search(param).$promise.then(function (results) {
                         angular.forEach(results, function (result) {
-                            if (result.wskey) {
-                                result.effectiveTitle = getTitleValue(result.title);
-                                var itemFromManager = Search.getResult(result.wskey);
+                            if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
+                                var title = result['meta_ortolang-item-json'].title;
+                                result.effectiveTitle = Helper.getMultilingualValue(title);
+
+                                var itemFromManager = Search.getResult(result['meta_ortolang-workspace-json'].wskey);
                                 if (itemFromManager && result.lastModificationDate > itemFromManager.lastModificationDate) {
-                                    Search.removeResult(itemFromManager['@rid']);
+                                    Search.removeResult(itemFromManager.key);
                                 }
                             }
                         });
@@ -43,24 +43,19 @@ angular.module('ortolangMarketApp')
                     });
                 }
 
-                function getTitleValue(multilingualTitle) {
-                    if (!multilingualTitle) {
-                        return null;
-                    }
-                    var i;
-                    for (i = 0; i < multilingualTitle.length; i++) {
-                        if (multilingualTitle[i].lang === Settings.language) {
-                            return multilingualTitle[i].value;
-                        }
-                    }
-                    return multilingualTitle.length > 0 ? multilingualTitle[0].value : undefined;
-                }
-
-                scope.$watch('query', function () {
-                    if (scope.query) {
-                        load(scope.query);
+                scope.$watch('params', function () {
+                    if (scope.params !== undefined && scope.params !== scope.newParams) {
+                        scope.newParams = scope.params;
+                        load();
                     }
                 });
+
+                // Scope variables
+                function initScopeVariables() {
+                    scope.newContent = undefined;
+                    scope.newParams = undefined;
+                }
+                initScopeVariables();
             }
         };
     }]);

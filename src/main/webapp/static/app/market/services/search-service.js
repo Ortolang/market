@@ -38,7 +38,7 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
     this.getResult = function (wskey) {
         var i = 0, array = tmpResults || this.results;
         for (i; i < array.length; i++) {
-            if (array[i].wskey === wskey) {
+            if (array[i]['meta_ortolang-workspace-json'].wskey === wskey) {
                 return array[i];
             }
         }
@@ -48,7 +48,7 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
     this.removeResult = function (resultId) {
         var array = tmpResults || this.results,
             filteredResults;
-        filteredResults = $filter('filter')(array, {'@rid': '!' + resultId}, true);
+        filteredResults = $filter('filter')(array, {'key': '!' + resultId}, true);
         if (tmpResults) {
             tmpResults = filteredResults;
         } else {
@@ -56,10 +56,10 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
         }
     };
 
-    this.search = function (query, noProcessing) {
+    this.search = function (param, noProcessing) {
         tmpResults = undefined;
         var Search = this;
-        return SearchResource.json({query: query}, function (data) {
+        return SearchResource.findCollections(param, function (data) {
             if (noProcessing) {
                 Search.results = data;
             } else {
