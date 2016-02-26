@@ -70,16 +70,44 @@ angular.module('ortolangMarketApp')
             background: '#AE7DD8',
             foreground: '#FFFFFF',
             fontweight: 'normal'
+        }).addTheme('h', {
+            background: '#45b29d',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
         }).addTheme('i', {
             background: '#f7b900',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('j', {
+            background: '#e27a3f',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('k', {
+            background: '#df5a49',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('l', {
+            background: '#00c0a0',
             foreground: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('m', {
             background: '#EB8200',
             foreground: '#FFFFFF',
             fontweight: 'normal'
+        }).addTheme('n', {
+            background: '#FDDD4E',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('o', {
+            background: '#b683db',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
         }).addTheme('p', {
             background: '#D49F2C',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('q', {
+            background: '#AE7DD8',
             foreground: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('r', {
@@ -94,8 +122,28 @@ angular.module('ortolangMarketApp')
             background: '#41A6D8',
             foreground: '#FFFFFF',
             fontweight: 'normal'
+        }).addTheme('u', {
+            background: '#f7b900',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
         }).addTheme('v', {
             background: '#66839E',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('w', {
+            background: '#5A7FCE',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('x', {
+            background: '#efc94c',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('y', {
+            background: '#41A6D8',
+            foreground: '#FFFFFF',
+            fontweight: 'normal'
+        }).addTheme('z', {
+            background: '#45b29d',
             foreground: '#FFFFFF',
             fontweight: 'normal'
         });
