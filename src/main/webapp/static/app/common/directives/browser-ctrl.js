@@ -905,62 +905,103 @@ angular.module('ortolangMarketApp')
             }
 
             function finishPreview(visualizer) {
-                var element, visualizerModal;
+                var element, visualizerModal,
+                    deferred = $q.defer();
                 createModalScope();
                 if ($scope.children && $scope.children.length !== 0) {
                     modalScope.elements = $scope.children;
                 } else {
                     modalScope.elements = $scope.selectedElements;
                 }
-                modalScope.visualizer = {
-                    header: {},
-                    content: {},
-                    footer: {}
-                };
-                modalScope.root = $scope.root;
-                modalScope.wsAlias = $scope.browserService.workspace.alias;
-                modalScope.actions = {};
-                modalScope.doAction = function (name) {
-                    if (modalScope.actions && modalScope.actions[name]) {
-                        modalScope.actions[name]();
+                if ($scope.isMarketBrowserService) {
+                    var authorized = true,
+                        promises = [],
+                        i;
+                    for (i = 0; i < modalScope.elements.length; i++) {
+                        if (modalScope.elements[i].unrestrictedDownload === false) {
+                            if (AuthService.isAuthenticated()) {
+                                authorized = false;
+                                break;
+                            } else {
+                                $rootScope.$broadcast('unauthorized-user');
+                                return;
+                            }
+                        }
                     }
-                };
-                modalScope.pendingRequests = [];
-                modalScope.$on('modal.hide.before', function () {
-                    angular.forEach(modalScope.pendingRequests, function (request) {
-                        if (request.promise.$$state && request.promise.$$state.pending) {
-                            request.timeout.resolve();
-                        }
-                    });
-                });
-                if (visualizer) {
-                    element = $compile(visualizer.getElement())(modalScope);
+                    if (authorized) {
+                        deferred.resolve();
+                    } else {
+                        authorized = true;
+                        angular.forEach(modalScope.elements, function (element) {
+                            if (authorized) {
+                                promises.push(ObjectResource.isAuthorized({key: element.key}, function (data) {
+                                    authorized = data.download;
+                                }).$promise);
+                            }
+                        });
+                        $q.all(promises).then(function () {
+                            if (authorized) {
+                                deferred.resolve();
+                            } else {
+                                deferred.reject();
+                                $rootScope.$broadcast('unauthorized-user');
+                            }
+                        });
+                    }
                 } else {
-                    modalScope.visualizer.header = {
-                        fileName: modalScope.elements[0].name,
-                        fileType: modalScope.elements[0].mimeType
-                    };
-                    modalScope.download = function () {
-                        $scope.download($scope.selectedElements);
-                    };
-                    modalScope.visualizer.content.classes = 'center';
-                    element = $compile('<div ng-include="\'common/visualizers/no-visualizer-template.html\'">')(modalScope);
+                    deferred.resolve();
                 }
-                element.addClass('close-on-click');
-                visualizerModal = $modal({
-                    scope: modalScope,
-                    templateUrl: 'common/visualizers/visualizer-template.html',
-                    show: true
-                });
-                modalScope.$on('modal.show.before', function (event, modal) {
-                    modal.$element.find('.visualizer-content').append(element);
-                    modalScope.clickContent = function (event) {
-                        if (angular.element(event.target).hasClass('close-on-click')) {
-                            visualizerModal.hide();
+                deferred.promise.then(function () {
+                    modalScope.visualizer = {
+                        header: {},
+                        content: {},
+                        footer: {}
+                    };
+                    modalScope.root = $scope.root;
+                    modalScope.wsAlias = $scope.browserService.workspace.alias;
+                    modalScope.actions = {};
+                    modalScope.doAction = function (name) {
+                        if (modalScope.actions && modalScope.actions[name]) {
+                            modalScope.actions[name]();
                         }
                     };
+                    modalScope.pendingRequests = [];
+                    modalScope.$on('modal.hide.before', function () {
+                        angular.forEach(modalScope.pendingRequests, function (request) {
+                            if (request.promise.$$state && request.promise.$$state.pending) {
+                                request.timeout.resolve();
+                            }
+                        });
+                    });
+                    if (visualizer) {
+                        element = $compile(visualizer.getElement())(modalScope);
+                    } else {
+                        modalScope.visualizer.header = {
+                            fileName: modalScope.elements[0].name,
+                            fileType: modalScope.elements[0].mimeType
+                        };
+                        modalScope.download = function () {
+                            $scope.download($scope.selectedElements);
+                        };
+                        modalScope.visualizer.content.classes = 'center';
+                        element = $compile('<div ng-include="\'common/visualizers/no-visualizer-template.html\'">')(modalScope);
+                    }
+                    element.addClass('close-on-click');
+                    visualizerModal = $modal({
+                        scope: modalScope,
+                        templateUrl: 'common/visualizers/visualizer-template.html',
+                        show: true
+                    });
+                    modalScope.$on('modal.show.before', function (event, modal) {
+                        modal.$element.find('.visualizer-content').append(element);
+                        modalScope.clickContent = function (event) {
+                            if (angular.element(event.target).hasClass('close-on-click')) {
+                                visualizerModal.hide();
+                            }
+                        };
+                    });
+                    $scope.contextMenu();
                 });
-                $scope.contextMenu();
             }
 
             $scope.clickPreview = function (_visualizer_) {

@@ -1,8 +1,8 @@
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal permissions-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <button type="button" class="close" ng-click="$hide()" ng-disabled="models.pendingSubmit">&times;</button>
                 <span class="modal-title" translate="WORKSPACE.PERMISSIONS_MODAL.TITLE" data-translate-values="{path: element.path}"></span>
             </div>
             <div class="modal-body">
@@ -13,8 +13,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="set()" translate="SUBMIT"></button>
-                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                <button type="button" class="btn btn-primary" ng-click="set()" ng-disabled="models.pendingSubmit" translate="SUBMIT"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" ng-disabled="models.pendingSubmit" translate="CANCEL"></button>
             </div>
         </div>
     </div>

@@ -328,12 +328,14 @@ angular.module('ortolangMarketApp')
                     },
                     METADATA: {
                         CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
-                        UPDATE: 'a mis à jour des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
+                        DELETE: 'a supprimé les métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
+                        UPDATE: 'a mis à jour les métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
                         CREATE_ITEM: 'a créé la fiche de métadonnées de présentation',
                         UPDATE_ITEM: 'a mis à jour la fiche de métadonnées de présentation',
                         CREATE_THUMB: 'a ajouté un logo',
                         UPDATE_THUMB: 'a modifié le logo',
                         CREATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>',
+                        DELETE_ACL: 'a supprimé les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>',
                         UPDATE_ACL: 'a modifié les permissions d\'accès de :<span class="description">{{::arguments.path}}</span>'
                     },
                     OBJECT: {

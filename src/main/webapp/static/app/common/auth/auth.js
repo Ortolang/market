@@ -68,7 +68,7 @@ angular.module('ortolangMarketApp')
             }
         });
 
-        $scope.$on('unauthorized-user', function () {
+        function unauthorized() {
             if (angular.element('.unauthorized-modal').length === 0) {
                 if (!unauthorizedModal) {
                     var modalScope = $scope.$new(true);
@@ -85,9 +85,9 @@ angular.module('ortolangMarketApp')
                     });
                 }
             }
-        });
+        }
 
-        $scope.$on('user-not-logged-in', function () {
+        function notLoggedIn() {
             if (angular.element('.not-logged-in-modal').length === 0) {
                 if (!notLoggedInModal) {
                     var modalScope = $scope.$new(true);
@@ -103,6 +103,14 @@ angular.module('ortolangMarketApp')
                         templateUrl: 'common/auth/templates/not-logged-in-modal.html'
                     });
                 }
+            }
+        }
+
+        $scope.$on('unauthorized-user', function () {
+            if (AuthService.isAuthenticated()) {
+                unauthorized();
+            } else {
+                notLoggedIn();
             }
         });
 
