@@ -11,8 +11,8 @@ angular.module('ortolangMarketApp')
     .controller('ItemCtrl', ['$scope', '$routeParams', '$translate', '$location', '$route', '$filter', 'SearchResource', 'MarketBrowserService', function ($scope, $routeParams, $translate, $location, $route, $filter, SearchResource, MarketBrowserService) {
 
         function loadItem() {
-        	SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
-        		workspace =  workspace['meta_ortolang-workspace-json'];
+            SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
+                workspace =  workspace['meta_ortolang-workspace-json'];
                 $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
                     return tag.name;
                 });
@@ -27,11 +27,11 @@ angular.module('ortolangMarketApp')
                     $scope.tag = $scope.tags[$scope.tags.length - 1];
                 }
 
-                MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey};
+                MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
 
                 SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
-                	$scope.ortolangObject = collection;
-                	$scope.root = $scope.tag.snapshot;
+                    $scope.ortolangObject = collection;
+                    $scope.root = $scope.tag.snapshot;
                     $scope.itemKey = collection.key;
                     $scope.item = collection['meta_ortolang-item-json'];
 
@@ -51,13 +51,12 @@ angular.module('ortolangMarketApp')
                                 break;
                         }
                         $location.replace();
-                        return;
                     }
                 });
 
                 $scope.ready = true;
-        	});
-		}
+            });
+        }
 
         function init() {
             $scope.itemAlias = $routeParams.alias;
