@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ItemCtrl', ['$scope', '$routeParams', '$location', '$route', '$filter', 'SearchResource', 'MarketBrowserService', 'Helper', function ($scope, $routeParams, $location, $route, $filter, SearchResource, MarketBrowserService, Helper) {
+    .controller('ItemCtrl', ['$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'SearchResource', 'MarketBrowserService', 'Helper', function ($scope, $routeParams, $location, $route, $filter, $sanitize, SearchResource, MarketBrowserService, Helper) {
 
         function loadItem() {
             SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
@@ -62,8 +62,20 @@ angular.module('ortolangMarketApp')
                         '@id': location.href
                     };
                     microDataContent.name = Helper.getMultilingualValue(jsonMetadata.title, 'fr');
-                    microDataContent.description = 'Cras id dui. Donec vitae orci sed dolor rutrum auctor. In consectetuer turpis ut velit.';
+                    // Description
+                    var sanitizedDescription = $sanitize(Helper.getMultilingualValue(jsonMetadata.description, 'fr'));
+                    sanitizedDescription = angular.element('<div>').html(sanitizedDescription).text().substring(0, 200);
+                    sanitizedDescription = sanitizedDescription.substring(0, sanitizedDescription.lastIndexOf(' '));
+                    microDataContent.description = sanitizedDescription;
+                    // **************
                     microDataContent.datePublished = jsonMetadata.publicationDate;
+                    // Keywords
+                    var keywordsString = '';
+                    angular.forEach(jsonMetadata.keywords, function (keyword, index) {
+                        keywordsString += (index === 0 ? '' : ', ') + keyword.value;
+                    });
+                    microDataContent.keywords = keywordsString;
+                    // **************
                     microData.text(angular.toJson(microDataContent));
                     angular.element('head').append(microData);
                     //console.log(jsonMetadata);
