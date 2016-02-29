@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                         microDataContent = {},
                         jsonMetadata = collection['meta_ortolang-item-json'];
                     microDataContent['@context'] = 'http://schema.org';
-                    microDataContent.type = 'Article';
+                    microDataContent['@type'] = 'Article';
                     microDataContent.mainEntityOfPage = {
                         '@type': 'WebPage',
                         '@id': location.href
