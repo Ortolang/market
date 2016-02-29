@@ -1935,10 +1935,15 @@ angular.module('ortolangMarketApp')
             }
 
             function setPath(path) {
-                path = Helper.normalizePath(path);
-                $scope.path = path;
-                if (!$scope.isFileSelectBrowserService) {
-                    $location.search('path', path);
+                if (path) {
+                    if (angular.isUndefined($scope.path) && !$scope.isFileSelectBrowserService) {
+                        $location.replace();
+                    }
+                    path = Helper.normalizePath(path);
+                    $scope.path = path;
+                    if (!$scope.isFileSelectBrowserService) {
+                        $location.search('path', path);
+                    }
                 }
             }
 
