@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
                             $scope.select('home');
                             $rootScope.ortolangPageTitle = undefined;
                             break;
-                        case '/profile':
+                        case '/profile/information':
                             $scope.select('profile');
                             break;
                         case '/search':

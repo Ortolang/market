@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WhosInvolvedCtrl', ['$rootScope', '$scope', '$modal', '$filter', 'Settings', 'QueryBuilderFactory', 'SearchResource', 'Helper',
-        function ($rootScope, $scope, $modal, $filter, Settings, QueryBuilderFactory, SearchResource, Helper) {
+    .controller('WhosInvolvedCtrl', ['$rootScope', '$scope', '$modal', '$filter', 'Settings', 'ReferentialEntityResource', 'Helper',
+        function ($rootScope, $scope, $modal, $filter, Settings, ReferentialEntityResource, Helper) {
 
             $scope.deleteProducer = function (producer) {
                 var index = $scope.producers.indexOf(producer);
@@ -40,15 +40,17 @@ angular.module('ortolangMarketApp')
                 modalScope.allPersons = $scope.allPersons;
 
                 modalScope.$on('tafirstname.select', function (v, i) {
-                    // modalScope.type = i.type;
-                    // modalScope.id = i.id;
                     modalScope.models.rid = i.rid;
                     modalScope.models.key = i.key;
                     modalScope.models.lastname = i.lastname;
                     modalScope.models.firstname = i.firstname;
                     modalScope.models.midname = i.midname;
                     if (angular.isDefined(i.org)) {
-                        modalScope.models.organizationFullname = i.org['meta_ortolang-referentiel-json'].fullname;
+                        var orgFound = $filter('filter')($scope.allOrganizations, {key:Helper.extractKeyFromReferentialId(i.org)}, true);
+                        if (orgFound.length > 0) {
+                            modalScope.models.organizationFullname = orgFound[0].fullname;
+                            // modalScope.models.originOrganizationFullname = orgFound[0].fullname;
+                        }
                         modalScope.organization = i.org;
                     }
                     modalScope.models.fullname = i.fullname;
@@ -60,8 +62,8 @@ angular.module('ortolangMarketApp')
                 modalScope.allOrganizations = $scope.allOrganizations;
 
                 modalScope.$on('taorg.select', function (v, i) {
-                    modalScope.organization = i.org;
-                    modalScope.organizationKey = i.key;
+                    modalScope.organization = "${" + i.key + "}";
+                    // modalScope.organizationKey = i.key;
                     modalScope.models.organizationFullname = i.org.fullname;
 
                     modalScope.$apply();
@@ -76,18 +78,17 @@ angular.module('ortolangMarketApp')
             }
 
             function setPerson(contributor, modalScope) {
-                // contributor.entity.type = modalScope.type;
-                // contributor.entity.id = modalScope.id;
                 contributor.entity.lastname = modalScope.models.lastname;
                 contributor.entity.rid = modalScope.models.rid;
                 contributor.entity.key = modalScope.models.key;
                 contributor.entity.firstname = modalScope.models.firstname;
                 contributor.entity.midname = modalScope.models.midname;
 
-                if (angular.isDefined(modalScope.organization) && modalScope.organization['meta_ortolang-referentiel-json'].fullname === modalScope.models.organizationFullname) {
+                // if (angular.isDefined(modalScope.organization) && modalScope.organization.originOrganizationFullname === modalScope.models.organizationFullname) {
                     // contributor.entity.organization = modalScope.organization;
-                    contributor.entity.organization = '${' + modalScope.organization.key + '}';
-                }
+                    // contributor.entity.organization = '${' + modalScope.organization.key + '}';
+                    contributor.entity.organization = modalScope.organization;
+                // }
 
                 contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
             }
@@ -294,31 +295,23 @@ angular.module('ortolangMarketApp')
 
             function loadAllPersons() {
 
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '@this.toJSON("fetchPlan:*:-1")',
-                    source: 'person'
-                });
-
-                var query = queryBuilder.toString();
-                $scope.allPersons = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-
-                        var person = angular.fromJson(result['this']);
+                ReferentialEntityResource.get({type: 'PERSON'}, function(entities) {
+                    $scope.allPersons = [];
+                    angular.forEach(entities.entries, function(entry) {
+                        var content = angular.fromJson(entry.content);
 
                         $scope.allPersons.push({
-                            key: person.key,
-                            value: person['meta_ortolang-referentiel-json'].fullname,
-                            id: person['meta_ortolang-referentiel-json'].id,
-                            fullname: person['meta_ortolang-referentiel-json'].fullname,
-                            lastname: person['meta_ortolang-referentiel-json'].lastname,
-                            firstname: person['meta_ortolang-referentiel-json'].firstname,
-                            midname: person['meta_ortolang-referentiel-json'].midname,
-                            org: person['meta_ortolang-referentiel-json'].organization,
-                            type: person['meta_ortolang-referentiel-json'].type,
-                            label: '<span>' + person['meta_ortolang-referentiel-json'].fullname + '</span>'
+                            key: entry.key,
+                            value: content.fullname,
+                            id: content.id,
+                            fullname: content.fullname,
+                            lastname: content.lastname,
+                            firstname: content.firstname,
+                            midname: content.midname,
+                            org: content.organization,
+                            type: content.type,
+                            label: '<span>' + content.fullname + '</span>'
                         });
-
                     });
 
                     if (angular.isDefined($scope.metadata.contributors)) {
@@ -343,23 +336,19 @@ angular.module('ortolangMarketApp')
                                 loadedContributor.roles = [];
                                 angular.forEach(contributor.roles, function (role) {
 
-                                    var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM term WHERE key="' + Helper.extractKeyFromReferentialId(role) + '"';
-                                    SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
-                                        if (jsonObject.length > 0) {
-                                            var roleFromRef = angular.fromJson(jsonObject[0].this);
-                                            loadedContributor.roles.push(roleFromRef['meta_ortolang-referentiel-json']);
-                                        }
+                                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(roleEntities) {
+                                        var content = angular.fromJson(roleEntities.content);
+                                        content.label = Helper.getMultilingualValue(content.labels);
+                                        loadedContributor.roles.push(content);
                                     });
                                 });
                             }
 
                             if (contributor.organization) {
-                                var queryOrtolangMeta = 'SELECT @this.toJSON("fetchPlan:*:-1") FROM organization WHERE key="' + Helper.extractKeyFromReferentialId(contributor.organization) + '"';
-                                SearchResource.json({query: queryOrtolangMeta}, function (jsonObject) {
-                                    if (jsonObject.length > 0) {
-                                        var roleFromRef = angular.fromJson(jsonObject[0].this);
-                                        loadedContributor.organization = roleFromRef['meta_ortolang-referentiel-json'];
-                                    }
+
+                                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function(roleEntities) {
+                                    var content = angular.fromJson(roleEntities.content);
+                                    loadedContributor.organization = content;
                                 });
                             }
 
@@ -373,48 +362,22 @@ angular.module('ortolangMarketApp')
 
             function loadAllOrganizations() {
 
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'organization'
-                });
+                ReferentialEntityResource.get({type: 'ORGANIZATION'}, function(entities) {
+                    $scope.allOrganizations = [];
+                    angular.forEach(entities.entries, function(entry) {
+                        var content = angular.fromJson(entry.content);
 
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.fullname', 'fullname');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.name', 'name');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.img', 'img');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Organization');
-
-                var query = queryBuilder.toString();
-                $scope.allOrganizations = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var organization = angular.fromJson(result);
-
-                        // Load organization document
-                        // var queryOrganizationgMeta = 'select from ' + organization['meta_ortolang-referentiel-json'];
-                        // SearchResource.json({query: queryOrganizationgMeta}, function (jsonObject) {
-                        //     var org = angular.fromJson(jsonObject[0]);
-
-                        //     cleanJsonDocument(org);
-
-                        //     $scope.allOrganizations.push({
-                        //         value: organization.fullname,
-                        //         fullname: organization.fullname,
-                        //         org: org,
-                        //         label: '<span>' + organization.fullname + '</span>'
-                        //     });
-                        // });
-
-                        $scope.allOrganizations.push({
-                            key: organization.key,
-                            value: organization.fullname,
-                            fullname: organization.fullname,
-                            name: organization.name,
-                            img: organization.img,
-                            org: organization,
-                            label: '<span>' + organization.fullname + '</span>'
-                        });
+                        if(angular.isUndefined(content.compatibilities)) {
+                            $scope.allOrganizations.push({
+                                key: entry.key,
+                                value: content.fullname,
+                                fullname: content.fullname,
+                                name: content.name,
+                                img: content.img,
+                                org: content,
+                                label: '<span>' + content.fullname + '</span>'
+                            });
+                        }
                     });
 
                     if (angular.isDefined($scope.metadata.producers)) {
@@ -438,25 +401,13 @@ angular.module('ortolangMarketApp')
 
             function loadAllRoles() {
 
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection: '*',
-                    source: 'term'
-                });
+                ReferentialEntityResource.get({type: 'ROLE'}, function(entities) {
+                    $scope.models.allRoles = [];
+                    angular.forEach(entities.entries, function(entry) {
+                        var content = angular.fromJson(entry.content);
+                        var label = Helper.getMultilingualValue(content.labels);
 
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.id', 'id');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels[lang=' + Settings.language + '].value', 'label');
-                queryBuilder.addProjection('meta_ortolang-referentiel-json.labels', 'labels');
-
-                // queryBuilder.equals('meta_ortolang-referentiel-json.type', 'Role');
-                queryBuilder.in('meta_ortolang-referentiel-json.compatibilities', ['"Role"']);
-
-                var query = queryBuilder.toString();
-                $scope.models.allRoles = [];
-                SearchResource.json({query: query}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (result) {
-                        var role = angular.fromJson(result);
-
-                        $scope.models.allRoles.push({id: role.key, label: role.label, labels: role.labels});
+                        $scope.models.allRoles.push({id: entry.key, label: label, labels: content.labels});
                     });
                 });
             }

@@ -46,8 +46,8 @@
                     {{User.fullName()}}
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-if="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                    <li ng-if="!navbarCollapsed"><a href="/profile" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-if="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/profile/information" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-if="!navbarCollapsed"><a href="/profile/information" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                     <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
                 </ul>
             </li>

@@ -4,7 +4,7 @@
             <img ng-if="::imgtitle !== undefined" class="item-logo" holder-js="holder.js/160x160?theme={{::imgtheme}}&text={{::imgtitle}}&size=56"/>
             <img ng-if="::image" class="item-logo" ng-src="{{::image}}" alt="{{::imgtitle}}"/>
         </a>
-        <p class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{::entry.publicationDate}}</span></p>
+        <p class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{::publicationDate | date:'mediumDate'}}</span></p>
     </div>
     <div class="media-body">
         <h4><a ng-href="{{::itemUrl}}">{{::title}}</a></h4>
@@ -12,10 +12,10 @@
             <div class="text-pane text-pane-small" data-target-blank ng-bind-html="::description"></div>
             <div class="show-more-end"></div>
         </div>
-        <p class="producers">
-            <span ng-repeat="producer in entry.producer">
+        <!-- <p class="producers">
+            <span ng-repeat="producer in producers">
                 <a ng-href='/search?content="{{producer}}"' ng-bind="producer" class="author"></a><span ng-if="!$last">, </span>
             </span>
-        </p>
+        </p> -->
     </div>
 </div>

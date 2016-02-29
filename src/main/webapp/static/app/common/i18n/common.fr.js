@@ -37,6 +37,7 @@ angular.module('ortolangMarketApp')
         INTEGRATED_PROJECTS: 'Projets Intégrés',
         PRODUCERS: 'Institutions productrices',
         SELECT_WORKSPACE_ELEMENT: 'Sélectionner un élément',
+        PENDING: 'En cours',
         PENDING_DATA: 'Chargement...',
         CART: 'Sélection',
         SEE_MORE: 'Voir plus',

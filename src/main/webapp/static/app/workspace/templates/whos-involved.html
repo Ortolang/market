@@ -43,7 +43,7 @@
                         <div class="media-body">
                             <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span>
                             <div class="small roles">
-                                <span ng-repeat="role in contributor.roles">{{role.labels | multilingualValue}}<span ng-if="!$last">, </span></span>
+                                <span ng-repeat="role in contributor.roles">{{role.label}}<span ng-if="!$last">, </span></span>
                             </div>
                         </div>
                         <div class="media-right">

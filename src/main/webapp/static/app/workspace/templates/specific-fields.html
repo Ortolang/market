@@ -27,7 +27,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="corporaLanguageType" class="control-label">{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_LANGUAGE_TYPE' | translate}}" bs-options="corporaLanguageType.id as corporaLanguageType.label for corporaLanguageType in allCorporaLanguageType" bs-select>{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_LANGUAGE_TYPE' | translate}}" bs-options="corporaLanguageType.id as corporaLanguageType.label for corporaLanguageType in allLanguageType | filter:{compatibilities:'CorporaLanguageType'}" bs-select>{{'MARKET.FACET.CORPORA_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -70,14 +70,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="corporaStyles" class="control-label">{{'MARKET.FACET.TEXT_FORMAT' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaFormat.id as corporaFormat.label for corporaFormat in allCorporaFormats" bs-select>{{'MARKET.FACET.TEXT_FORMAT' | translate}} <span class="caret"></span>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaFormats" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaFormat.id as corporaFormat.label for corporaFormat in allFileFormats | filter:{compatibilities:'CorporaFormat'}" bs-select>{{'MARKET.FACET.TEXT_FORMAT' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="corporaStyles" class="control-label">{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaFileEncodings" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaFileEncoding.id as corporaFileEncoding.label for corporaFileEncoding in allCorporaFileEncodings" bs-select>{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaFileEncodings" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_TYPE' | translate}}" bs-options="corporaFileEncoding.id as corporaFileEncoding.label for corporaFileEncoding in allFileEncodings | filter:{compatibilities:'CorporaFileEncoding'}" bs-select>{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_DATATYPES' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaDataTypes" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaDataType.id as corporaDataType.label for corporaDataType in allCorporaDataTypes" bs-select>{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaDataTypes" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaDataType.id as corporaDataType.label for corporaDataType in allDataTypes" bs-select>{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                         <div class="form-group">
                             <label for="lexiconInputType" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="lexiconInputType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconInputType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_INPUT_TYPE' | translate}}" bs-options="lexiconInputType.id as lexiconInputType.label for lexiconInputType in allLexiconInputTypes" bs-select>{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <span class="caret"></span>
+                            <button name="lexiconInputType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconInputType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_INPUT_TYPE' | translate}}" bs-options="lexiconInputType.id as lexiconInputType.label for lexiconInputType in allLexiconAnnotations | filter:{compatibilities:'LexiconInputType'}" bs-select>{{'MARKET.FACET.LEXICON_INPUT_TYPE' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                         <div class="form-group">
                             <label for="lexiconLanguageType" class="control-label">{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="lexiconLanguageType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_LANGUAGE_TYPE' | translate}}" bs-options="lexiconLanguageType.id as lexiconLanguageType.label for lexiconLanguageType in allLexiconLanguageTypes" bs-select>{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
+                            <button name="lexiconLanguageType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconLanguageType" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_LANGUAGE_TYPE' | translate}}" bs-options="lexiconLanguageType.id as lexiconLanguageType.label for lexiconLanguageType in allLanguageType | filter:{compatibilities:'LexiconLanguageType'}" bs-select>{{'MARKET.FACET.LEXICON_LANGUAGE_TYPE' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                         <div class="form-group">
                             <label for="lexiconDescriptionType" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_TYPE' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="lexiconDescriptionType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconDescriptionTypes" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_DESCRIPTION_TYPES' | translate}}" bs-options="lexiconDescriptionType.id as lexiconDescriptionType.label for lexiconDescriptionType in allLexiconDescriptionTypes" bs-select>{{'MARKET.FACET.LEXICON_DESCRIPTION_TYPE' | translate}} <span class="caret"></span>
+                            <button name="lexiconDescriptionType" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconDescriptionTypes" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_DESCRIPTION_TYPES' | translate}}" bs-options="lexiconDescriptionType.id as lexiconDescriptionType.label for lexiconDescriptionType in allLexiconAnnotations | filter:{compatibilities:'LexiconDescriptionType'}" bs-select>{{'MARKET.FACET.LEXICON_DESCRIPTION_TYPE' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                         <div class="form-group">
                             <label for="lexiconFormat" class="control-label">{{'MARKET.FACET.LEXICON_FORMAT' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="lexiconFormat" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconFormats" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_FORMATS' | translate}}" bs-options="lexiconFormat.id as lexiconFormat.label for lexiconFormat in allLexiconFormats" bs-select>{{'MARKET.FACET.LEXICON_FORMAT' | translate}} <span class="caret"></span>
+                            <button name="lexiconFormat" type="button" class="form-control btn btn-default" ng-model="metadata.lexiconFormats" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_LEXICON_FORMATS' | translate}}" bs-options="lexiconFormat.id as lexiconFormat.label for lexiconFormat in allFileFormats | filter:{compatibilities:'LexiconFormat'}" bs-select>{{'MARKET.FACET.LEXICON_FORMAT' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                         <div class="form-group">
                             <label for="toolInputData" class="control-label">{{'MARKET.FACET.TOOL_INPUTDATA' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="toolInputData" type="button" class="form-control btn btn-default" ng-model="metadata.toolInputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_INPUTDATA' | translate}}" bs-options="toolInputData.id as toolInputData.label for toolInputData in allToolInputData" bs-select>{{'MARKET.FACET.TOOL_INPUTDATA' | translate}} <span class="caret"></span>
+                            <button name="toolInputData" type="button" class="form-control btn btn-default" ng-model="metadata.toolInputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_INPUTDATA' | translate}}" bs-options="toolInputData.id as toolInputData.label for toolInputData in allFileFormats | filter:{compatibilities:'ToolInputData'}" bs-select>{{'MARKET.FACET.TOOL_INPUTDATA' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -226,7 +226,7 @@
                         <div class="form-group">
                             <label for="toolOutputData" class="control-label">{{'MARKET.FACET.TOOL_OUTPUTDATA' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="toolOutputData" type="button" class="form-control btn btn-default" ng-model="metadata.toolOutputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_OUTPUTDATA' | translate}}" bs-options="toolOutputData.id as toolOutputData.label for toolOutputData in allToolOutputData" bs-select>{{'MARKET.FACET.TOOL_OUTPUTDATA' | translate}} <span class="caret"></span>
+                            <button name="toolOutputData" type="button" class="form-control btn btn-default" ng-model="metadata.toolOutputData" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_OUTPUTDATA' | translate}}" bs-options="toolOutputData.id as toolOutputData.label for toolOutputData in allFileFormats | filter:{compatibilities:'ToolOutputData'}" bs-select>{{'MARKET.FACET.TOOL_OUTPUTDATA' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -236,7 +236,7 @@
                         <div class="form-group">
                             <label for="toolFileEncodings" class="control-label">{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Description à venir." data-placement="right" bs-tooltip></i></label>
 
-                            <button name="toolFileEncodings" type="button" class="form-control btn btn-default" ng-model="metadata.toolFileEncodings" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FILE_ENCODINGS' | translate}}" bs-options="toolFileEncoding.id as toolFileEncoding.label for toolFileEncoding in allToolFileEncodings" bs-select>{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
+                            <button name="toolFileEncodings" type="button" class="form-control btn btn-default" ng-model="metadata.toolFileEncodings" data-max-length="2" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TOOL_FILE_ENCODINGS' | translate}}" bs-options="toolFileEncoding.id as toolFileEncoding.label for toolFileEncoding in allFileEncodings | filter:{compatibilities:'ToolFileEncoding'}" bs-select>{{'MARKET.FACET.TOOL_FILE_ENCODINGS' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>

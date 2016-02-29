@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
 
             function init() {
                 initScopeVariables();
-                $scope.query = $scope.filtersManager.toQuery() + ' LIMIT ' + 10;
+                $scope.params = '{"title":"","limit":"10"}';
             }
             init();
 

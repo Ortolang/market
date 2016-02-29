@@ -210,11 +210,11 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
     this.getActiveWorkspaceEvents = function () {
         var deferred = $q.defer();
-        EventFeedResource.get({key: Workspace.active.workspace.eventFeed}, function (data) {
-            angular.forEach(data.events, function (event) {
+        WorkspaceResource.listEvents({wskey: Workspace.active.workspace.key}, function (data) {
+            angular.forEach(data.entries, function (event) {
                 getCard(event.throwedBy);
             });
-            Workspace.active.events = data.events;
+            Workspace.active.events = data.entries;
             deferred.resolve();
         }, function () {
             deferred.reject();
