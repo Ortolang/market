@@ -81,20 +81,28 @@ angular.module('ortolangMarketApp')
                             loadedContributor.entity = contributor.entity;
 
                             if(contributor.organization) {
-                                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function(entity) {
-                                    var contentOrganization = angular.fromJson(entity.content);
-                                    loadedContributor.organization = contentOrganization;
-                                });
+                                if(startsWith(contributor.organization, '$')) {
+                                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function(entity) {
+                                        var contentOrganization = angular.fromJson(entity.content);
+                                        loadedContributor.organization = contentOrganization;
+                                    });
+                                } else {
+                                    loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
+                                }
                             }
 
                             if(contributor.roles && contributor.roles.length>0) {
 
                                 loadedContributor.roles = [];
                                 angular.forEach(contributor.roles, function(role) {
-                                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(entity) {
-                                        var contentRole = angular.fromJson(entity.content);
-                                        loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
-                                    });
+                                    if(startsWith(role, '$')) {
+                                        ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(entity) {
+                                            var contentRole = angular.fromJson(entity.content);
+                                            loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+                                        });
+                                    } else {
+                                        loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+                                    }
                                 });
                             }
                             $scope.contributors.push(loadedContributor);
@@ -145,11 +153,11 @@ angular.module('ortolangMarketApp')
                             // From Workspace
                             ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(sponsor)}, function(entity) {
                                 var content = angular.fromJson(entity.content);
-                                $scope.sponsors.push(Helper.getMultilingualValue(content.labels, lang));
+                                $scope.sponsors.push(content.fullname);
                             });
                         } else if(angular.isDefined(sponsor['meta_ortolang-referential-json'])) {
                             // For Market
-                            $scope.sponsors.push(Helper.getMultilingualValue(sponsor['meta_ortolang-referential-json'].labels, lang));
+                            $scope.sponsors.push(sponsor['meta_ortolang-referential-json'].fullname);
                         }
                     });
                 }
@@ -168,7 +176,6 @@ angular.module('ortolangMarketApp')
                 }
                 
                 return {
-                        label: Helper.getMultilingualValue(relation.label, 'lang', lang),
                         name: name,
                         type: relation.type,
                         url: url,

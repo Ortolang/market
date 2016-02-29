@@ -62,8 +62,8 @@ angular.module('ortolangMarketApp')
                 modalScope.allOrganizations = $scope.allOrganizations;
 
                 modalScope.$on('taorg.select', function (v, i) {
-                    modalScope.organization = i.org;
-                    modalScope.organizationKey = i.key;
+                    modalScope.organization = "${" + i.key + "}";
+                    // modalScope.organizationKey = i.key;
                     modalScope.models.organizationFullname = i.org.fullname;
 
                     modalScope.$apply();
