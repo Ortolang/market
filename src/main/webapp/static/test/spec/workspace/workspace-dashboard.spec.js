@@ -56,7 +56,7 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
                 WorkspaceResource: WorkspaceResource
             });
             $httpBackend.expect('GET', url.api + '/workspaces?md=true').respond(200, {entries: sample().workspaceList});
-            $httpBackend.expect('GET', url.api + '/feeds').respond(200, {entries: {}});
+            $httpBackend.expect('GET', url.api + '/workspaces/foo/events').respond(200, {entries: {}});
             $httpBackend.expect('GET', url.api + '/workspaces/alias/foo/ftp').respond(200, {});
             $httpBackend.flush();
         }));
