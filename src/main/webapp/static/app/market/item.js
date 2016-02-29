@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                         microDataContent = {},
                         jsonMetadata = collection['meta_ortolang-item-json'];
                     microDataContent['@context'] = 'http://schema.org';
-                    microDataContent['@type'] = 'Article';
+                    microDataContent['@type'] = 'DataSet';
                     microDataContent.mainEntityOfPage = {
                         '@type': 'WebPage',
                         '@id': location.href
@@ -66,7 +66,8 @@ angular.module('ortolangMarketApp')
                     microDataContent.datePublished = jsonMetadata.publicationDate;
                     microData.text(angular.toJson(microDataContent));
                     angular.element('head').append(microData);
-                    //console.log(collection);
+                    //console.log(jsonMetadata);
+                    //console.log(microDataContent);
                 });
 
                 $scope.ready = true;
