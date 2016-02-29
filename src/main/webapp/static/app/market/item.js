@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ItemCtrl', ['$scope', '$routeParams', '$translate', '$location', '$route', '$filter', 'SearchResource', 'MarketBrowserService', function ($scope, $routeParams, $translate, $location, $route, $filter, SearchResource, MarketBrowserService) {
+    .controller('ItemCtrl', ['$scope', '$routeParams', '$location', '$route', '$filter', 'SearchResource', 'MarketBrowserService', 'Helper', function ($scope, $routeParams, $location, $route, $filter, SearchResource, MarketBrowserService, Helper) {
 
         function loadItem() {
             SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
@@ -52,6 +52,16 @@ angular.module('ortolangMarketApp')
                         }
                         $location.replace();
                     }
+                    var microData = angular.element('<script type="application/ld+json">'),
+                        microDataContent = {},
+                        jsonMetadata = collection['meta_ortolang-item-json'];
+                    microDataContent['@context'] = 'http://schema.org';
+                    microDataContent.name = Helper.getMultilingualValue(jsonMetadata.title, 'fr');
+                    microDataContent.description = 'Cras id dui. Donec vitae orci sed dolor rutrum auctor. In consectetuer turpis ut velit.';
+                    microDataContent.datePublished = jsonMetadata.publicationDate;
+                    microData.text(angular.toJson(microDataContent));
+                    angular.element('head').append(microData);
+                    //console.log(collection);
                 });
 
                 $scope.ready = true;
