@@ -309,8 +309,9 @@ angular.module('ortolangMarketApp')
             },
             PERMISSIONS_MODAL: {
                 TITLE: 'Visibilité de {{::path}}',
-                BODY: '<p>Vous allez appliquer une visibilité "{{::"WORKSPACE.ACL." + template.toUpperCase() | translate}}" au dossier "{{::name}}".</p><p>Souhaitez vous également appliquer cette option de visibilité aux éléments de ce dossier ? Dans le cas contraire, les options de visibilité déjà réglées sur les éléments de ce dossier seront conservées.</p>',
-                RECURSIVE: 'Appliquer aux enfants <strong>(recommandé)</strong>'
+                BODY: '<p>Vous allez appliquer une visibilité <strong>"{{::"WORKSPACE.ACL." + template.toUpperCase() | translate}}" au dossier "{{::name}}"</strong>.</p><p>Souhaitez vous également appliquer cette option de visibilité aux éléments de ce dossier ? Dans le cas contraire, les options de visibilité déjà réglées sur les éléments de ce dossier seront conservées.</p>',
+                RECURSIVE: 'Appliquer aux enfants <strong>(recommandé)</strong>',
+                HELP: 'Cette opération peut prendre une trentaine de secondes.'
             },
             ACL: {
                 FORALL: 'Pour tous',
