@@ -56,6 +56,11 @@ angular.module('ortolangMarketApp')
                         microDataContent = {},
                         jsonMetadata = collection['meta_ortolang-item-json'];
                     microDataContent['@context'] = 'http://schema.org';
+                    microDataContent.type = 'Article';
+                    microDataContent.mainEntityOfPage = {
+                        '@type': 'WebPage',
+                        '@id': location.href
+                    };
                     microDataContent.name = Helper.getMultilingualValue(jsonMetadata.title, 'fr');
                     microDataContent.description = 'Cras id dui. Donec vitae orci sed dolor rutrum auctor. In consectetuer turpis ut velit.';
                     microDataContent.datePublished = jsonMetadata.publicationDate;
