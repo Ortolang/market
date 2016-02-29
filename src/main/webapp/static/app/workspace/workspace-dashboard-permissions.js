@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardPermissionsCtrl', ['$scope', '$modal', '$q', 'Workspace', 'WorkspaceElementResource', 'ortolangType', 'Helper', function ($scope, $modal, $q, Workspace, WorkspaceElementResource, ortolangType, Helper) {
+    .controller('WorkspaceDashboardPermissionsCtrl', ['$rootScope', '$scope', '$modal', '$q', 'Workspace', 'WorkspaceElementResource', 'ortolangType', 'Helper', function ($rootScope, $scope, $modal, $q, Workspace, WorkspaceElementResource, ortolangType, Helper) {
 
         function processElement(element) {
             var i;
@@ -99,19 +99,29 @@ angular.module('ortolangMarketApp')
                     modalScope = Helper.createModalScope(true);
                 modalScope.element = element;
                 modalScope.template = template;
+                modalScope.icons = $rootScope.icons;
                 modalScope.models = {
                     recursive: true
                 };
                 modalScope.set = function () {
                     modalScope.models.pendingSubmit = true;
                     setAcl(element, template, modalScope.models.recursive).$promise.then(function () {
+                        modalScope.models.pendingSubmit = false;
                         permissionsModal.hide();
+                    }, function () {
+                        modalScope.models.pendingSubmit = false;
                     });
                 };
+                modalScope.$on('permissionsModal.hide.before', function ($event) {
+                    if (modalScope.models.pendingSubmit) {
+                        $event.preventDefault();
+                    }
+                });
                 permissionsModal = $modal({
                     scope: modalScope,
                     templateUrl: 'workspace/templates/permissions-modal.html',
-                    show: true
+                    show: true,
+                    prefixEvent: 'permissionsModal'
                 });
             } else {
                 setAcl(element, template);

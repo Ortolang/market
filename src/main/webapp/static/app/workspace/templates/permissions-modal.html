@@ -11,9 +11,10 @@
                     <input type="checkbox" id="recursive" ng-model="models.recursive">
                     <label for="recursive" translate="WORKSPACE.PERMISSIONS_MODAL.RECURSIVE"></label>
                 </div>
+                <p class="text-danger" ng-show="models.pendingSubmit"><strong translate="WORKSPACE.PERMISSIONS_MODAL.HELP"></strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="set()" ng-disabled="models.pendingSubmit" translate="SUBMIT"></button>
+                <button type="button" class="btn btn-primary" ng-click="set()" ng-disabled="models.pendingSubmit"><span ng-show="models.pendingSubmit" ng-class="::icons.pending"></span> {{models.pendingSubmit ? 'PENDING' : 'SUBMIT' | translate}}</button>
                 <button type="button" class="btn btn-default" ng-click="$hide()" ng-disabled="models.pendingSubmit" translate="CANCEL"></button>
             </div>
         </div>

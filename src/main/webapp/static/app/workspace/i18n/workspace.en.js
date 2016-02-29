@@ -297,6 +297,12 @@ angular.module('ortolangMarketApp')
                 SHOW_FILES: 'Show files',
                 ADVANCED_MODE: 'Advanced edition'
             },
+            PERMISSIONS_MODAL: {
+                TITLE: 'Visibility of {{::path}}',
+                BODY: '<p>You are about to set a visibility <strong>"{{::"WORKSPACE.ACL." + template.toUpperCase() | translate}}" to the folder "{{::name}}"</strong>.</p><p>Do you want to apply this visibility option to all the folder elements as well? Otherwise, the visibility options already set on the elements of this folder will remain unchanged.</p>',
+                RECURSIVE: 'Apply to children <strong>(recommended)</strong>',
+                HELP: 'This operation can take 30 seconds.'
+            },
             ACL: {
                 FORALL: 'For all',
                 AUTHENTIFIED: 'Connected user',
