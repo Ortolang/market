@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource',
-        function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialEntityResource) {
+    .controller('OrtolangItemJson13Ctrl', ['$scope', '$rootScope', '$translate', 'url', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource',
+        function ($scope, $rootScope, $translate, url, Settings, Content, Helper, ReferentialEntityResource) {
 
             function loadProducers() {
                 if($scope.content.producers) {
@@ -325,6 +325,7 @@ angular.module('ortolangMarketApp')
                 $scope.documentations = [];
                 $scope.additionalInformations = [];
                 $scope.isArray = angular.isArray;
+                $scope.handle = 'http://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias;
 
                 loadProducers();
                 loadContributors();
