@@ -250,28 +250,27 @@ angular.module('ortolangMarketApp')
             }
 
             function populateToolList() {
-
-                var queryBuilder = QueryBuilderFactory.make({
-                    projection:
-                    'key',
-                    source: 'collection'
-                });
-                queryBuilder.addProjection('meta_ortolang-item-json.title', 'title');
-                queryBuilder.addProjection('meta_ortolang-item-json.description', 'description');
-                queryBuilder.addProjection('meta_ortolang-item-json.image', 'image');
-                queryBuilder.addProjection('meta_ortolang-item-json.toolId', 'id');
-                queryBuilder.addProjection('meta_ortolang-item-json.toolHelp', 'help');
-                queryBuilder.addProjection('meta_ortolang-item-json.toolUrl', 'url');
-                queryBuilder.addProjection('meta_ortolang-item-json.toolInputData', 'inputData');
-                queryBuilder.addProjection('meta_ortolang-item-json.toolOutputData', 'outputData');
-                queryBuilder.addProjection('meta_ortolang-item-json.toolFunctionalities', 'functionalities');
-                queryBuilder.addProjection('meta_ortolang-workspace-json.wsalias', 'alias');
-                queryBuilder.equals('status', 'published');
-                queryBuilder.and();
-                queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
-
-                var query = queryBuilder.toString();
-                SearchResource.json({query: query}, function (jsonResults) {
+                //
+                //var queryBuilder = QueryBuilderFactory.make({
+                //    projection: 'key',
+                //    source: 'collection'
+                //});
+                //queryBuilder.addProjection('meta_ortolang-item-json.title', 'title');
+                //queryBuilder.addProjection('meta_ortolang-item-json.description', 'description');
+                //queryBuilder.addProjection('meta_ortolang-item-json.image', 'image');
+                //queryBuilder.addProjection('meta_ortolang-item-json.toolId', 'id');
+                //queryBuilder.addProjection('meta_ortolang-item-json.toolHelp', 'help');
+                //queryBuilder.addProjection('meta_ortolang-item-json.toolUrl', 'url');
+                //queryBuilder.addProjection('meta_ortolang-item-json.toolInputData', 'inputData');
+                //queryBuilder.addProjection('meta_ortolang-item-json.toolOutputData', 'outputData');
+                //queryBuilder.addProjection('meta_ortolang-item-json.toolFunctionalities', 'functionalities');
+                //queryBuilder.addProjection('meta_ortolang-workspace-json.wsalias', 'alias');
+                //queryBuilder.equals('status', 'published');
+                //queryBuilder.and();
+                //queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
+                //
+                //var query = queryBuilder.toString();
+                SearchResource.findCollections({type: 'Outil'}, function (jsonResults) {
                     angular.forEach(jsonResults, function (itemMeta) {
                         var item = {},
                             data = angular.fromJson(itemMeta);
