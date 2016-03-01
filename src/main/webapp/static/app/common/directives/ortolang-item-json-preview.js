@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
                                 scope.itemMarketType = getItemType(scope.content);
 
                                 if (scope.content.image) {
-                                    scope.image = Content.getContentUrlWithPath(scope.content.image, scope.alias, scope.root);
+                                    scope.image = Content.getPreviewUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
                                 } else {
                                     scope.imgtitle = '';
                                     scope.imgtheme = 'custom';
