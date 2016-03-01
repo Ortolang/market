@@ -30,7 +30,7 @@ describe('Service: Content', function () {
     });
 
     it('should return the preview url', function () {
-        var expectedUrl = url.api + '/thumb/k1';
+        var expectedUrl = url.api + '/thumbs/k1';
         expect(Content.getPreviewUrlWithKey('k1')).toBe(expectedUrl);
         expect(Content.getPreviewUrlWithKey('k1', '<size>')).toBe(expectedUrl + thumbSizeQueryParam + '<size>');
         expectedUrl = expectedUrl.replace(url.api, url.apiNoSSL);
