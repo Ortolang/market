@@ -15,6 +15,11 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/objects/:key/element',
                 method: 'GET'
             },
+            history: {
+                url: url.api + '/objects/:key/history',
+                method: 'GET',
+                isArray: true
+            },
             size: {
                 url: url.api + '/objects/:key/size',
                 method: 'GET'

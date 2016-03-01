@@ -245,9 +245,9 @@ angular.module('ortolangMarketApp')
             function getSnapshotsHistory() {
                 $scope.workspaceHistoryTags = {};
                 if (!$scope.isMarketBrowserService) {
-                    ObjectResource.get({key: $scope.browserService.workspace.head}, function (data) {
-                        $scope.workspaceHistory = data.history;
-                        angular.forEach(data.history, function (workspaceSnapshot) {
+                    ObjectResource.history({key: $scope.browserService.workspace.head}, function (data) {
+                        $scope.workspaceHistory = data;
+                        angular.forEach(data, function (workspaceSnapshot) {
                             workspaceSnapshot.name = getSnapshotNameFromHistory(workspaceSnapshot);
                             workspaceSnapshot.tag = getTagName(workspaceSnapshot.name);
                             if (workspaceSnapshot.name) {
@@ -1935,10 +1935,15 @@ angular.module('ortolangMarketApp')
             }
 
             function setPath(path) {
-                path = Helper.normalizePath(path);
-                $scope.path = path;
-                if (!$scope.isFileSelectBrowserService) {
-                    $location.search('path', path);
+                if (path) {
+                    if (angular.isUndefined($scope.path) && !$scope.isFileSelectBrowserService) {
+                        $location.replace();
+                    }
+                    path = Helper.normalizePath(path);
+                    $scope.path = path;
+                    if (!$scope.isFileSelectBrowserService) {
+                        $location.search('path', path);
+                    }
                 }
             }
 

@@ -210,11 +210,11 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
 
     this.getActiveWorkspaceEvents = function () {
         var deferred = $q.defer();
-        EventFeedResource.get({key: Workspace.active.workspace.eventFeed}, function (data) {
-            angular.forEach(data.events, function (event) {
+        WorkspaceResource.listEvents({wskey: Workspace.active.workspace.key}, function (data) {
+            angular.forEach(data.entries, function (event) {
                 getCard(event.throwedBy);
             });
-            Workspace.active.events = data.events;
+            Workspace.active.events = data.entries;
             deferred.resolve();
         }, function () {
             deferred.reject();
@@ -237,13 +237,12 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         return deferred.promise;
     };
 
-    this.getActiveWorkspaceHead = function () {
+    this.getActiveWorkspaceHistory = function () {
         var deferred = $q.defer();
-        ObjectResource.get({key: Workspace.active.workspace.head}, function (data) {
-            Workspace.active.head = data.object;
+        ObjectResource.history({key: Workspace.active.workspace.head}, function (data) {
             Workspace.active.history = {};
             var correspondingSnapshot, correspondingTag;
-            angular.forEach(data.history, function (rootCollection) {
+            angular.forEach(data, function (rootCollection) {
                 correspondingSnapshot = $filter('filter')(Workspace.active.workspace.snapshots, {key: rootCollection.key}, true)[0];
                 if (correspondingSnapshot) {
                     Workspace.active.history[correspondingSnapshot.name] = rootCollection;
@@ -254,6 +253,22 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                 }
             });
             deferred.resolve();
+        }, function () {
+            Workspace.active.history = null;
+            deferred.reject();
+        });
+        return deferred.promise;
+    };
+
+    this.getActiveWorkspaceHead = function () {
+        var deferred = $q.defer();
+        ObjectResource.get({key: Workspace.active.workspace.head}, function (data) {
+            Workspace.active.head = data.object;
+            Workspace.getActiveWorkspaceHistory().then(function () {
+                deferred.resolve();
+            }, function () {
+                deferred.reject();
+            });
         }, function () {
             Workspace.active.head = null;
             Workspace.active.history = null;
