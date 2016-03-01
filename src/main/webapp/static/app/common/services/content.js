@@ -21,7 +21,11 @@ angular.module('ortolangMarketApp')
         };
 
         this.getPreviewUrlWithKey = function (key, size, noSSL) {
-            return (noSSL ? url.apiNoSSL : url.api) + '/thumb/' + key + (angular.isDefined(size) ? '?size=' + size : '');
+            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + key + (angular.isDefined(size) ? '?size=' + size : '');
+        };
+
+        this.getPreviewUrlWithPath = function (path, alias, root, size, noSSL) {
+            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + alias + '/' + root + (path.charAt(0) === '/' ? '' : '/') + path + (angular.isDefined(size) ? '?size=' + size : '');
         };
 
         this.getDownloadUrlWithKey = function (key, noSSL) {
