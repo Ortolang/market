@@ -241,8 +241,11 @@
                     <p ng-if="content.publications && content.publications.length>0" ng-bind-html="content.publications[0]">
                     </p>
                     <p>
-                        <span ng-repeat="producer in producers">
-                            <span ng-if="!$first">, </span><a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
+                        <span ng-repeat="producer in producers" ng-if="producers">
+                            <span ng-if="!$first">, </span>{{producer.fullname}}
+                        </span>
+                        <span ng-repeat="author in authors" ng-if="!producers">
+                            <span ng-if="!$first">, </span>{{author.entity.fullname}}
                         </span>.
                         ({{content.publicationDate | date:'yyyy'}}).
                         <i>{{title}}</i> [{{content.type}}].

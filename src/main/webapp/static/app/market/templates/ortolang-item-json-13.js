@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
             function loadContributors() {
                 if($scope.content.contributors) {
                     $scope.contributors = [];
+                    $scope.authors = [];
 
                     angular.forEach($scope.content.contributors, function(contributor) {
                         var loadedContributor = {};
@@ -51,6 +52,10 @@ angular.module('ortolangMarketApp')
                                     ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(entity) {
                                             var contentRole = angular.fromJson(entity.content);
                                             loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+
+                                            if(contentRole.id==='author') {
+                                                $scope.authors.push(loadedContributor);
+                                            }
                                     });
                                 });
                             }
@@ -73,6 +78,10 @@ angular.module('ortolangMarketApp')
                             loadedContributor.roles = [];
                             angular.forEach(contributor.roles, function(role) {
                                 loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+
+                                if(role['meta_ortolang-referential-json'].id==='author') {
+                                    $scope.authors.push(loadedContributor);
+                                }
                             });
 
                             $scope.contributors.push(loadedContributor);
@@ -99,9 +108,17 @@ angular.module('ortolangMarketApp')
                                         ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(entity) {
                                             var contentRole = angular.fromJson(entity.content);
                                             loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+                                            
+                                            if(contentRole.id==='author') {
+                                                $scope.authors.push(loadedContributor);
+                                            }
                                         });
                                     } else {
                                         loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+                                        
+                                        if(role['meta_ortolang-referential-json'].id==='author') {
+                                            $scope.authors.push(loadedContributor);
+                                        }
                                     }
                                 });
                             }
