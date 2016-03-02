@@ -36,6 +36,9 @@ angular.module('ortolangMarketApp')
                                 if (itemFromManager && result.lastModificationDate > itemFromManager.lastModificationDate) {
                                     Search.removeResult(itemFromManager.key);
                                 }
+                                
+                                var publicationDate = result['meta_ortolang-item-json'].publicationDate;
+                                result.publicationDate = publicationDate;
                             }
                         });
 
