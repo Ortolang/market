@@ -123,7 +123,7 @@ angular.module('ortolangMarketApp')
             var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
 
                 $scope.metadata.image = elements[0].path;
-                $scope.image = Content.getContentUrlWithKey(elements[0].key);
+                $scope.image = Content.getPreviewUrlWithKey(elements[0].key, 180);
                 $scope.fileImageSelectModal.hide();
             });
 
@@ -171,7 +171,7 @@ angular.module('ortolangMarketApp')
                 // Sets image
                 if ($scope.metadata.image) {
                     ObjectResource.element({key: Workspace.active.workspace.head, path: $scope.metadata.image}).$promise.then(function (oobject) {
-                        $scope.image = Content.getContentUrlWithKey(oobject.key);
+                        $scope.image = Content.getPreviewUrlWithKey(oobject.key, 180);
                     });
                 } else {
                     $scope.imgtitle = 'Cliquez pour ajouter votre logo';

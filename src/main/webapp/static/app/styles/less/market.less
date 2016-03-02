@@ -49,6 +49,32 @@
   width: 162px;
   overflow: hidden;
   cursor: pointer;
+  .thumb-wrapper {
+    height: 160px;
+    width: 160px;
+    padding: 14px;
+    background-color: @white;
+    text-align: center;
+    > div {
+      position: relative;
+      display: table;
+      height: 100%;
+      width: 100%;
+      > div {
+        display: table-cell;
+        vertical-align: middle;
+        .thumb {
+          position: absolute;
+          overflow: hidden;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          background-size: cover;
+          background: no-repeat center center;
+        }
+      }
+    }
+  }
 
   a {
     color: inherit;

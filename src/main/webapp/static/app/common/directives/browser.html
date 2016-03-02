@@ -257,7 +257,7 @@
                     <span ng-class="selectedElements[0].mimeType | mimeTypeIconCss"></span>
                     <span>{{hasOnlyRootCollectionSelected() ? '/' : selectedElements[0].name}}</span>
                 </p>
-                <div ng-if="selectedElements[0].type === ortolangType.object" thumb class="ng-hide">
+                <div ng-if="selectedElements[0].type === ortolangType.object" thumb class="ng-hide info-thumb-wrapper">
                     <img class="thumb" ng-src="{{Content.getPreviewUrlWithKey(selectedElements[0].key)}}"/>
                     <hr/>
                 </div>
