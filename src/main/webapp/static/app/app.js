@@ -51,8 +51,7 @@ angular
         $routeProvider
             .when('/', {
                 templateUrl: 'market/home.html',
-                controller: 'HomeCtrl',
-                title: 'NAV.HOME'
+                controller: 'HomeCtrl'
             })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
