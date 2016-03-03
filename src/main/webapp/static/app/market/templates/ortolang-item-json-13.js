@@ -201,6 +201,7 @@ angular.module('ortolangMarketApp')
             }
 
             function loadRelations() {
+                $scope.documentations = [];
                 if($scope.content.relations) {
                     angular.forEach($scope.content.relations, function(relation) {
                         if(relation.type === 'documentation') {
@@ -275,6 +276,7 @@ angular.module('ortolangMarketApp')
             }
 
             function loadAdditionalInformations(lang) {
+                $scope.additionalInformations = [];
                 //TODO add keywords
                 // loadFieldValuesInAdditionalInformations('keywords', 'MARKET.KEYWORDS');
 
@@ -322,8 +324,6 @@ angular.module('ortolangMarketApp')
             });
 
         	function init() {
-                $scope.documentations = [];
-                $scope.additionalInformations = [];
                 $scope.isArray = angular.isArray;
                 $scope.handle = 'http://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias;
 
