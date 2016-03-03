@@ -116,8 +116,8 @@ angular.module('ortolangMarketApp')
             microDataElement = angular.element('<script type="application/ld+json">');
             microDataElement.text(angular.toJson(microData));
             angular.element('head').append(microDataElement);
-            console.log(jsonMetadata);
-            console.log(microData);
+            //console.log(jsonMetadata);
+            //console.log(microData);
         }
 
         function generateProducerMicroData(producerWrapper) {

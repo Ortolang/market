@@ -155,6 +155,16 @@ angular
             'http://' + OrtolangConfig.piwikHost + '**',
             'https://' + OrtolangConfig.piwikHost + '**'
         ]);
+        var microDataElement = angular.element('<script type="application/ld+json">'),
+            microData = {
+                '@context': 'http://schema.org',
+                '@type': 'website',
+                'name': 'ORTOLANG',
+                'alternateName': 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
+                'url': OrtolangConfig.marketServerUrl.replace(/\/$/, '')
+            };
+        microDataElement.text(angular.toJson(microData));
+        angular.element('head').append(microDataElement);
     }])
     .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
         angular.extend($tooltipProvider.defaults, {
