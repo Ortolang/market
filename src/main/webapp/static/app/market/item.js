@@ -103,12 +103,14 @@ angular.module('ortolangMarketApp')
             if (jsonMetadata.producers && jsonMetadata.producers.length > 0) {
                 var contributors = [];
                 angular.forEach(jsonMetadata.contributors, function (contributorWrapper) {
-                    var contributor = contributorWrapper.entity['meta_ortolang-referential-json'],
-                        contributorMicroData = {};
-                    contributorMicroData['@type'] = 'Person';
-                    contributorMicroData.name = contributor.fullname;
-                    contributorMicroData.worksFor = generateProducerMicroData(contributorWrapper.organization);
-                    contributors.push(contributorMicroData);
+                    if (contributorWrapper && contributorWrapper.entity && contributorWrapper.entity['meta_ortolang-referential-json']) {
+                        var contributor = contributorWrapper.entity['meta_ortolang-referential-json'],
+                            contributorMicroData = {};
+                        contributorMicroData['@type'] = 'Person';
+                        contributorMicroData.name = contributor.fullname;
+                        contributorMicroData.worksFor = generateProducerMicroData(contributorWrapper.organization);
+                        contributors.push(contributorMicroData);
+                    }
                 });
                 microData.contributor = contributors.length === 1 ? contributors[0] : contributors;
             }
@@ -121,23 +123,25 @@ angular.module('ortolangMarketApp')
         }
 
         function generateProducerMicroData(producerWrapper) {
-            var producer = producerWrapper['meta_ortolang-referential-json'],
-                microDataProducer = {};
-            microDataProducer['@type'] = 'Organization';
-            microDataProducer.name = producer.name;
-            microDataProducer.url = producer.homepage;
-            microDataProducer.logo = producer.img;
-            microDataProducer.alternateName = producer.acronym;
-            if (producer.country) {
-                microDataProducer.address = {
-                    '@type': 'PostalAddress',
-                    'addressCountry': producer.country
-                };
-                if (producer.city) {
-                    microDataProducer.address.addressLocality = producer.city;
+            if (producerWrapper && producerWrapper['meta_ortolang-referential-json']) {
+                var producer = producerWrapper['meta_ortolang-referential-json'],
+                    microDataProducer = {};
+                microDataProducer['@type'] = 'Organization';
+                microDataProducer.name = producer.name;
+                microDataProducer.url = producer.homepage;
+                microDataProducer.logo = producer.img;
+                microDataProducer.alternateName = producer.acronym;
+                if (producer.country) {
+                    microDataProducer.address = {
+                        '@type': 'PostalAddress',
+                        'addressCountry': producer.country
+                    };
+                    if (producer.city) {
+                        microDataProducer.address.addressLocality = producer.city;
+                    }
                 }
+                return microDataProducer;
             }
-            return microDataProducer;
         }
 
         function init() {
