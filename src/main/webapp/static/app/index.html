@@ -134,6 +134,19 @@
 <script src="ortolang-config.js"></script>
 <!-- endbuild -->
 
+<script type="text/javascript">
+    var microDataElement = angular.element('<script type="application/ld+json">'),
+        microData = {
+            '@context': 'http://schema.org',
+            '@type': 'website',
+            'name': 'ORTOLANG',
+            'alternateName': 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
+            'url': location.origin
+        };
+    microDataElement.text(angular.toJson(microData));
+    angular.element('head').append(microDataElement);
+</script>
+
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
 <script src="common/templates/templates.js"></script>
