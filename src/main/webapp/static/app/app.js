@@ -50,9 +50,6 @@ angular
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
-                redirectTo: '/market/home'
-            })
-            .when('/market/home', {
                 templateUrl: 'market/home.html',
                 controller: 'HomeCtrl',
                 title: 'NAV.HOME'

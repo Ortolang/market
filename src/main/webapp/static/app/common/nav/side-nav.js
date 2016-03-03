@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', 'sideNavElements', 'Helper', function ($rootScope, $scope, $route, sideNavElements, Helper) {
+    .controller('SideNavCtrl', [ '$rootScope', '$scope', '$route', '$translate', 'sideNavElements', 'Helper', function ($rootScope, $scope, $route, $translate, sideNavElements, Helper) {
 
         $scope.sideNavElements = sideNavElements;
         $scope.sideNavActiveClass = null;
@@ -30,14 +30,18 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             if (current.$$route) {
-                $rootScope.ortolangPageTitle = current.$$route.title;
+                if (current.$$route.title) {
+                    $rootScope.ortolangPageTitle = 'ORTOLANG | ' + $translate.instant(current.$$route.title);
+                } else if (previous) {
+                    $rootScope.ortolangPageTitle = 'ORTOLANG';
+                } else {
+                    $rootScope.ortolangPageTitle = undefined;
+                }
                 $scope.reducedSideNav = current.$$route.originalPath === '/workspaces' || current.$$route.originalPath === '/workspaces/:alias';
                 if (previous) {
                     switch (current.$$route.originalPath) {
                         case '/':
-                        case '/market/home':
                             $scope.select('home');
-                            $rootScope.ortolangPageTitle = undefined;
                             break;
                         case '/profile/information':
                             $scope.select('profile');
@@ -48,6 +52,18 @@ angular.module('ortolangMarketApp')
                         case '/information/:section?':
                             $scope.select('information');
                             break;
+                        case '/market/corpora':
+                            $scope.select('corpora');
+                            break;
+                        case '/market/applications':
+                            $scope.select('applications');
+                            break;
+                        case '/market/tools':
+                            $scope.select('tools');
+                            break;
+                        case '/market/lexicons':
+                            $scope.select('lexicons');
+                            break;
                         default:
                             if (current.params.section && previous.params.section === 'item') {
                                 $scope.select(current.params.section);
@@ -55,16 +71,19 @@ angular.module('ortolangMarketApp')
                     }
                 } else {
                     var regExp, i, currentPath;
-
-                    for (i = 0; i < sideNavElements.length; i++) {
-                        regExp = new RegExp('^' + sideNavElements[i].path);
-                        currentPath = $route.current.originalPath;
-                        if (currentPath.indexOf(':section') !== -1) {
-                            currentPath = currentPath.replace(':section', $route.current.params.section);
-                        }
-                        if (regExp.test(currentPath)) {
-                            $scope.sideNavActiveClass = sideNavElements[i].class;
-                            break;
+                    if ($route.current.originalPath === '/') {
+                        $scope.sideNavActiveClass = sideNavElements[0].class;
+                    } else {
+                        for (i = 1; i < sideNavElements.length; i++) {
+                            regExp = new RegExp('^' + sideNavElements[i].path);
+                            currentPath = $route.current.originalPath;
+                            if (currentPath.indexOf(':section') !== -1) {
+                                currentPath = currentPath.replace(':section', $route.current.params.section);
+                            }
+                            if (regExp.test(currentPath)) {
+                                $scope.sideNavActiveClass = sideNavElements[i].class;
+                                break;
+                            }
                         }
                     }
                 }
