@@ -31,9 +31,9 @@ angular.module('ortolangMarketApp')
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             if (current.$$route) {
                 if (current.$$route.title) {
-                    $rootScope.ortolangPageTitle = 'ORTOLANG | ' + $translate.instant(current.$$route.title);
+                    $rootScope.ortolangPageTitle = $translate.instant(current.$$route.title) + ' | ';
                 } else if (previous || current.$$route.originalPath === '/') {
-                    $rootScope.ortolangPageTitle = 'ORTOLANG';
+                    $rootScope.ortolangPageTitle = '';
                 } else {
                     $rootScope.ortolangPageTitle = undefined;
                 }

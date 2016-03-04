@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
 
                     function loadItem() {
 
-                        $rootScope.ortolangPageTitle = 'ORTOLANG | ' + getValue(scope.content.title, 'lang', Settings.language, 'Untitled');
+                        $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'Untitled') + ' | ';
 
                         if (scope.content.schema) {
 

@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
 
             ReferentialEntityResource.get({name: id}, function (refEntity) {
                 $scope.contributor = angular.fromJson(refEntity.content);
-                $rootScope.ortolangPageTitle = 'ORTOLANG | ' + $scope.contributor.fullname;
+                $rootScope.ortolangPageTitle = $scope.contributor.fullname + ' | ';
             });
         }
 
