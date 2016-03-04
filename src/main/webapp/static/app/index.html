@@ -7,7 +7,7 @@
     <meta name="fragment" content="!">
     <!--<meta name="robots" content="noindex, nofollow">-->
     <base href="/">
-    <title ng-bind="'ORTOLANG' + (ortolangPageTitle ? ' | ' + (ortolangPageTitle | translate) : '') + ortolangPageSubtitle">ORTOLANG</title>
+    <title ng-bind="ortolangPageTitle + (ortolangPageSubtitle || '')"></title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -133,6 +133,19 @@
 <!-- build:remove -->
 <script src="ortolang-config.js"></script>
 <!-- endbuild -->
+
+<script type="text/javascript">
+    var microDataElement = angular.element('<script type="application/ld+json">'),
+        microData = {
+            '@context': 'http://schema.org',
+            '@type': 'website',
+            'name': 'ORTOLANG',
+            'alternateName': 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
+            'url': location.origin
+        };
+    microDataElement.text(angular.toJson(microData));
+    angular.element('head').append(microDataElement);
+</script>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>

@@ -8,12 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducerCtrl', ['$scope', '$routeParams', 'icons', 'ReferentialEntityResource', function ($scope, $routeParams, icons, ReferentialEntityResource) {
+    .controller('ProducerCtrl', ['$rootScope', '$scope', '$routeParams', 'ReferentialEntityResource', function ($rootScope, $scope, $routeParams, ReferentialEntityResource) {
 
         function loadItem(id) {
 
-            ReferentialEntityResource.get({name: id}, function(refEntity) {
+            ReferentialEntityResource.get({name: id}, function (refEntity) {
                 $scope.producer = angular.fromJson(refEntity.content);
+                $rootScope.ortolangPageTitle = 'ORTOLANG | ' + $scope.producer.name;
 
                 if (!$scope.producer.img) {
                     $scope.imgtitle = '';

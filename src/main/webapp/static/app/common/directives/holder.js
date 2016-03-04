@@ -27,124 +27,124 @@ angular.module('ortolangMarketApp')
         };
     }).config(function () {
         Holder.addTheme('ortolang', {
-            background: '#475b6e',
-            foreground: '#FFFFFF',
+            bg: '#475b6e',
+            fg: '#FFFFFF',
             fontweight: 'normal',
             nowrap: false
         }).addTheme('ortolangBold', {
-            background: '#008bd0',
-            foreground: '#FFFFFF',
+            bg: '#008bd0',
+            fg: '#FFFFFF',
             fontweight: 'bold',
             nowrap: true
         });
         // 160x160 size 56 / 100x100 size 35 / 180x180 size 63
         Holder.addTheme('custom', {
-            background: '#f8f8f8',
-            foreground: '#AAAAAA',
+            bg: '#f8f8f8',
+            fg: '#AAAAAA',
             fontweight: 'normal'
         }).addTheme('a', {
-            background: '#45b29d',
-            foreground: '#FFFFFF',
+            bg: '#45b29d',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('b', {
-            background: '#e27a3f',
-            foreground: '#FFFFFF',
+            bg: '#e27a3f',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('c', {
-            background: '#df5a49',
-            foreground: '#FFFFFF',
+            bg: '#df5a49',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('d', {
-            background: '#00c0a0',
-            foreground: '#FFFFFF',
+            bg: '#00c0a0',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('e', {
-            background: '#FDDD4E',
-            foreground: '#FFFFFF',
+            bg: '#FDDD4E',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('f', {
-            background: '#b683db',
-            foreground: '#FFFFFF',
+            bg: '#b683db',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('g', {
-            background: '#AE7DD8',
-            foreground: '#FFFFFF',
+            bg: '#AE7DD8',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('h', {
-            background: '#45b29d',
-            foreground: '#FFFFFF',
+            bg: '#45b29d',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('i', {
-            background: '#f7b900',
-            foreground: '#FFFFFF',
+            bg: '#f7b900',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('j', {
-            background: '#e27a3f',
-            foreground: '#FFFFFF',
+            bg: '#e27a3f',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('k', {
-            background: '#df5a49',
-            foreground: '#FFFFFF',
+            bg: '#df5a49',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('l', {
-            background: '#00c0a0',
-            foreground: '#FFFFFF',
+            bg: '#00c0a0',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('m', {
-            background: '#EB8200',
-            foreground: '#FFFFFF',
+            bg: '#EB8200',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('n', {
-            background: '#FDDD4E',
-            foreground: '#FFFFFF',
+            bg: '#FDDD4E',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('o', {
-            background: '#b683db',
-            foreground: '#FFFFFF',
+            bg: '#b683db',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('p', {
-            background: '#D49F2C',
-            foreground: '#FFFFFF',
+            bg: '#D49F2C',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('q', {
-            background: '#AE7DD8',
-            foreground: '#FFFFFF',
+            bg: '#AE7DD8',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('r', {
-            background: '#5A7FCE',
-            foreground: '#FFFFFF',
+            bg: '#5A7FCE',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('s', {
-            background: '#efc94c',
-            foreground: '#FFFFFF',
+            bg: '#efc94c',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('t', {
-            background: '#41A6D8',
-            foreground: '#FFFFFF',
+            bg: '#41A6D8',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('u', {
-            background: '#f7b900',
-            foreground: '#FFFFFF',
+            bg: '#f7b900',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('v', {
-            background: '#66839E',
-            foreground: '#FFFFFF',
+            bg: '#66839E',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('w', {
-            background: '#5A7FCE',
-            foreground: '#FFFFFF',
+            bg: '#5A7FCE',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('x', {
-            background: '#efc94c',
-            foreground: '#FFFFFF',
+            bg: '#efc94c',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('y', {
-            background: '#41A6D8',
-            foreground: '#FFFFFF',
+            bg: '#41A6D8',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         }).addTheme('z', {
-            background: '#45b29d',
-            foreground: '#FFFFFF',
+            bg: '#45b29d',
+            fg: '#FFFFFF',
             fontweight: 'normal'
         });
     });
