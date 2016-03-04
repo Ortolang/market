@@ -51,12 +51,14 @@ angular
         $routeProvider
             .when('/', {
                 templateUrl: 'market/home.html',
-                controller: 'HomeCtrl'
+                controller: 'HomeCtrl',
+                description: 'default'
             })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
                 controller: 'CorporaCtrl',
                 title: 'CORPORA',
+                description: 'NAV.DESCRIPTION.CORPORA',
                 reloadOnSearch: false
             })
             .when('/market/tools', {

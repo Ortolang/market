@@ -14,7 +14,9 @@ angular.module('ortolangMarketApp')
         $scope.sideNavActiveClass = null;
 
         $scope.select = function (elementClass) {
-            $scope.sideNavActiveClass = elementClass;
+            if ($scope.sideNavActiveClass !== elementClass) {
+                $scope.sideNavActiveClass = elementClass;
+            }
         };
 
         // *********************** //
@@ -36,6 +38,13 @@ angular.module('ortolangMarketApp')
                     $rootScope.ortolangPageTitle = '';
                 } else {
                     $rootScope.ortolangPageTitle = undefined;
+                }
+                if (angular.isUndefined(current.$$route.description)) {
+                    $rootScope.ortolangPageDescription = '';
+                } else if (current.$$route.description === 'default') {
+                    $rootScope.ortolangPageDescription = 'Outils et Ressources pour un Traitement Optimisé de la LANGue';
+                } else {
+                    $rootScope.ortolangPageDescription = $translate.instant(current.$$route.description);
                 }
                 $scope.reducedSideNav = current.$$route.originalPath === '/workspaces' || current.$$route.originalPath === '/workspaces/:alias';
                 if (previous) {
@@ -64,15 +73,16 @@ angular.module('ortolangMarketApp')
                         case '/market/lexicons':
                             $scope.select('lexicons');
                             break;
-                        default:
-                            if (current.params.section && previous.params.section === 'item') {
+                        case '/market/:section/:alias/:version?':
+                            if (current.params.section) {
                                 $scope.select(current.params.section);
                             }
+                            break;
                     }
                 } else {
                     var regExp, i, currentPath;
                     if ($route.current.originalPath === '/') {
-                        $scope.sideNavActiveClass = sideNavElements[0].class;
+                        $scope.select('home');
                     } else {
                         for (i = 1; i < sideNavElements.length; i++) {
                             regExp = new RegExp('^' + sideNavElements[i].path);
@@ -81,7 +91,7 @@ angular.module('ortolangMarketApp')
                                 currentPath = currentPath.replace(':section', $route.current.params.section);
                             }
                             if (regExp.test(currentPath)) {
-                                $scope.sideNavActiveClass = sideNavElements[i].class;
+                                $scope.select(sideNavElements[i].class);
                                 break;
                             }
                         }
