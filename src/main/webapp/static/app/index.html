@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
     <meta name="fragment" content="!">
     <!--<meta name="robots" content="noindex, nofollow">-->
     <base href="/">
-    <title ng-bind="'ORTOLANG' + (ortolangPageTitle ? ' | ' + (ortolangPageTitle | translate) : '') + ortolangPageSubtitle">ORTOLANG</title>
+    <title ng-bind="ortolangPageTitle !== undefined ? (ortolangPageTitle + (ortolangPageSubtitle || '') + 'ORTOLANG') : ''"></title>
+    <meta description name="description">
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -134,6 +134,19 @@
 <script src="ortolang-config.js"></script>
 <!-- endbuild -->
 
+<script type="text/javascript">
+    var microDataElement = angular.element('<script type="application/ld+json">'),
+        microData = {
+            '@context': 'http://schema.org',
+            '@type': 'website',
+            'name': 'ORTOLANG',
+            'alternateName': 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
+            'url': location.origin
+        };
+    microDataElement.text(angular.toJson(microData));
+    angular.element('head').append(microDataElement);
+</script>
+
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
 <script src="common/templates/templates.js"></script>
@@ -156,6 +169,7 @@
 <script src="common/filters/remove-accents.js"></script>
 <script src="common/filters/event-feed-filter.js"></script>
 <script src="common/filters/event-feed-description.js"></script>
+<script src="common/directives/description.js"></script>
 <script src="common/directives/ng-right-click.js"></script>
 <script src="common/directives/browser.js"></script>
 <script src="common/directives/ortolang-item-json-preview.js"></script>
@@ -255,7 +269,7 @@
 <script src="market/directives/preview-url.js"></script>
 <script src="market/directives/preview-box.js"></script>
 <script src="market/directives/visualizer.js"></script>
-<script src="market/item.js"></script>
+<script src="market/item-ctrl.js"></script>
 <script src="market/templates/ortolang-item-json-13.js"></script>
 <script src="market/home.js"></script>
 <script src="market/services/query-builder-service.js"></script>

@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('sideNavElements', [
         {
             class: 'home',
-            path: '/market/home',
+            path: '/',
             description: 'NAV.HOME',
             iconCss: 'fa fa-fw fa-home fa-2x',
             hiddenSideNav: false,
@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
-            class: 'integrated-projects',
+            class: 'applications',
             path: '/market/applications',
             description: 'INTEGRATED_PROJECTS',
             iconCss: 'fa fa-fw fa-briefcase fa-2x',

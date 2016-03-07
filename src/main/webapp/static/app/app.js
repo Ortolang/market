@@ -50,17 +50,15 @@ angular
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
-                redirectTo: '/market/home'
-            })
-            .when('/market/home', {
                 templateUrl: 'market/home.html',
                 controller: 'HomeCtrl',
-                title: 'NAV.HOME'
+                description: 'default'
             })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
                 controller: 'CorporaCtrl',
                 title: 'CORPORA',
+                description: 'NAV.DESCRIPTION.CORPORA',
                 reloadOnSearch: false
             })
             .when('/market/tools', {

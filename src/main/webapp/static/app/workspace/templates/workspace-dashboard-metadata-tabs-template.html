@@ -1,7 +1,13 @@
 <div class="col-sm-4 col-md-3 col-lg-3">
     <div class="avatar" ng-click="fileImageSelectModal.show()" data-title="{{'WORKSPACE.EDIT_LOGO' | translate}}" bs-tooltip>
         <img ng-if="image===undefined && imgtitle !== undefined" class="image" ng-src="" holder-js="holder.js/180x180?theme={{Workspace.getActiveWorkspaceTitle().toLowerCase().charAt(0)}}&text={{Workspace.getActiveWorkspaceTitle().substr(0, 2)}}&size=63" alt="{{imgTitle}}"/>
-        <img ng-if="image" ng-src="{{image}}" class="image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+        <div ng-if="::image" class="thumb-wrapper">
+            <div>
+                <div>
+                    <div class="thumb" style="background-image: url({{::image}})"></div>
+                </div>
+            </div>
+        </div>
         <span class="edit fa fa-pencil fa-3x"></span>
     </div>
     <div class="list-group" role="tablist">

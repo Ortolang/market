@@ -31,7 +31,7 @@ describe('Controller: SideNavCtrl', function () {
         httpBackend = $httpBackend;
 
         expect(route.current).toBeUndefined();
-        changeLocation('market/home.html', '/market/home');
+        changeLocation('market/home.html', '/');
 
         SideNavCtrl = $controller('SideNavCtrl', {
             $scope: scope,

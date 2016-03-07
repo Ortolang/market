@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
 
                     function loadItem() {
 
-                        $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'Untitled');
+                        $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'Untitled') + ' | ';
 
                         if (scope.content.schema) {
 
@@ -88,7 +88,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function refreshMultilingualValue(item, lang) {
-                        scope.title = getValue(item.title, 'lang', lang, 'untitle');
+                        scope.title = getValue(item.title, 'lang', lang, 'Untitled');
                         scope.description = getValue(item.description, 'lang', lang);
                         if (item.keywords) {
                             scope.keywords = getValues(item.keywords, 'lang', lang);

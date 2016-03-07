@@ -40,7 +40,8 @@ angular.module('ortolangMarketApp')
                     }
 
                     if (scope.entry['meta_ortolang-item-json'].image) {
-                        scope.image = Content.getPreviewUrlWithPath(scope.entry['meta_ortolang-item-json'].image, scope.entry['meta_ortolang-workspace-json'].wsalias, scope.entry['meta_ortolang-workspace-json'].snapshotName, 160);
+                        // 160 - 2 * 14 (padding) = 132
+                        scope.image = Content.getPreviewUrlWithPath(scope.entry['meta_ortolang-item-json'].image, scope.entry['meta_ortolang-workspace-json'].wsalias, scope.entry['meta_ortolang-workspace-json'].snapshotName, 132);
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';

@@ -54,6 +54,42 @@
   }
 }
 
+.workspaces {
+  .thumb-wrapper {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+.workspace-dashboard {
+  .thumb-wrapper {
+    height: 180px;
+    width: 180px;
+  }
+}
+.workspaces, .workspace-dashboard {
+  .thumb-wrapper {
+    cursor: default;
+    display: table;
+    background-color: @white;
+    text-align: center;
+    position: relative;
+    > div {
+      display: table-cell;
+      vertical-align: middle;
+      .thumb {
+        position: absolute;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        background-size: cover;
+        background: no-repeat center center;
+      }
+    }
+  }
+}
+
 .workspace-toolbar {
   &.faded {
     opacity: 0.5;

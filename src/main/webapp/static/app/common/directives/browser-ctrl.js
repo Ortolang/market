@@ -204,9 +204,9 @@ angular.module('ortolangMarketApp')
                     });
                     if ($scope.isWorkspaceBrowserService) {
                         if ($scope.path === '/') {
-                            $rootScope.ortolangPageSubtitle = ' - ' + $scope.browserService.workspace.alias;
+                            $rootScope.ortolangPageSubtitle = $scope.browserService.workspace.alias + ' : / | ';
                         } else {
-                            $rootScope.ortolangPageSubtitle = ' - ' + $scope.browserService.workspace.alias + ' - ' + $scope.path.slice($scope.path.lastIndexOf('/') + 1);
+                            $rootScope.ortolangPageSubtitle = $scope.browserService.workspace.alias + ' : ' + $scope.path.slice($scope.path.lastIndexOf('/') + 1) + ' | ';
                         }
                     }
                 }, function (response) {

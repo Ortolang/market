@@ -9,6 +9,12 @@
  */
 angular.module('ortolangMarketApp')
     .directive('fileSelectBrowser', ['$filter', 'FileSelectBrowserService', 'WorkspaceResource', 'Settings', function ($filter, FileSelectBrowserService, WorkspaceResource, Settings) {
+
+        function initWorkspace(workspace, scope) {
+            FileSelectBrowserService.workspace = workspace;
+            scope.$broadcast('initWorkspaceVariables');
+        }
+
         return {
             restrict: 'A',
             scope: {
@@ -34,19 +40,24 @@ angular.module('ortolangMarketApp')
                             var key = scope.forceWorkspace || scope.browserSettings.wskey,
                                 filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
                             if (filteredWorkspace.length !== 1) {
-                                console.error('No workspace with key "%s" available', key);
-                                if (!scope.forceWorkspace) {
-                                    workspace = data.entries[0];
-                                }
-                            } else {
-                                workspace = filteredWorkspace[0];
+                                WorkspaceResource.get({wskey: key}, function (response) {
+                                    workspace = response;
+                                    initWorkspace(workspace, scope);
+                                }, function () {
+                                    console.error('No workspace with key "%s" available', key);
+                                    if (!scope.forceWorkspace) {
+                                        workspace = data.entries[0];
+                                        initWorkspace(workspace, scope);
+                                    }
+                                });
+                                return;
                             }
+                            workspace = filteredWorkspace[0];
                         } else {
                             workspace = data.entries[0];
                         }
                         if (workspace) {
-                            FileSelectBrowserService.workspace = workspace;
-                            scope.$broadcast('initWorkspaceVariables');
+                            initWorkspace(workspace, scope);
                         }
                     });
                 }

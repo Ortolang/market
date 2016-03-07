@@ -8,19 +8,20 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$scope', '$routeParams', 'icons', 'ReferentialEntityResource', function ($scope, $routeParams, icons, ReferentialEntityResource) {
+    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'ReferentialEntityResource', function ($rootScope, $scope, $routeParams, ReferentialEntityResource) {
 
         function loadItem(id) {
 
-            ReferentialEntityResource.get({name: id}, function(refEntity) {
+            ReferentialEntityResource.get({name: id}, function (refEntity) {
                 $scope.contributor = angular.fromJson(refEntity.content);
+                $rootScope.ortolangPageTitle = $scope.contributor.fullname + ' | ';
             });
         }
 
         function init() {
             $scope.contributor = undefined;
             loadItem($routeParams.contributorId);
-            $scope.params = '{"contributors.entity.meta_ortolang-referential-json.id[]": "'+$routeParams.contributorId+'"}';
+            $scope.params = '{"contributors.entity.meta_ortolang-referential-json.id[]": "' + $routeParams.contributorId + '"}';
         }
         init();
     }]);
