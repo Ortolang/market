@@ -55,6 +55,9 @@ angular.module('ortolangMarketApp')
                         case '/profile/information':
                             $scope.select('profile');
                             break;
+                        case '/profile/tasks':
+                            $scope.select('profile');
+                            break;
                         case '/search':
                             $scope.select('search');
                             break;

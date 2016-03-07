@@ -36,6 +36,10 @@ angular.element(document).ready(function () {
                     return keycloakAuth.idTokenParsed.preferred_username === 'root';
                 }
 
+                function isModerator() {
+                    return keycloakAuth.hasRealmRole('admin');
+                }
+
                 function getScope() {
                     if (keycloakAuth.authenticated) {
                         return window.btoa(keycloakAuth.idTokenParsed.preferred_username);
@@ -48,6 +52,10 @@ angular.element(document).ready(function () {
 
                 function register() {
                     $window.location = keycloakAuth.createLoginUrl({action: 'register'}) + '&kc_locale=' + Settings.language;
+                }
+
+                function account() {
+                    $window.location = keycloakAuth.createAccountUrl() + '&kc_locale=' + Settings.language;
                 }
 
                 function logout() {
@@ -77,10 +85,12 @@ angular.element(document).ready(function () {
                     login: login,
                     register: register,
                     logout: logout,
+                    account: account,
                     getToken: function () { return keycloakAuth.token; },
                     getKeycloak: function () { return keycloakAuth; },
                     isAuthenticated: isAuthenticated,
                     isRoot: isRoot,
+                    isModerator: isModerator,
                     getScope: getScope,
                     forceReload: forceReload,
                     sessionInitialized: sessionInitialized,

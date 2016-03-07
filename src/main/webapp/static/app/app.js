@@ -134,6 +134,12 @@ angular
                 },
                 title: 'NAV.PROFILE'
             })
+            .when('/profile/tasks', {
+                templateUrl: 'profile/tasks.html',
+                controller: 'TasksCtrl',
+                requiresAuthentication: true,
+                title: 'NAV.TASKS'
+            })
             .when('/404', {
                 templateUrl: '404.html',
                 title: 'NAV.404'

@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
             SETTINGS: 'Paramètres',
             LOG_OUT: 'Déconnexion',
             PROFILE: 'Mon profil',
+            TASKS: 'Tâches',
             REGISTER: 'S\'enregistrer',
             LANGUAGE: {
                 LANGUAGE: 'Langue',

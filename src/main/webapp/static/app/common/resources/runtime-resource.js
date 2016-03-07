@@ -18,25 +18,13 @@ angular.module('ortolangMarketApp')
                 method: 'GET',
                 url: url.api + '/runtime/processes'
             },
-            tasks: {
+            listTasks: {
                 method: 'GET',
-                url: url.api + '/runtime/tasks/:tId'
+                url: url.api + '/runtime/tasks'
             },
-            claimTask: {
+            performTaskAction: {
                 method: 'POST',
-                transformRequest: function (data) {
-                    data.action = 'claim';
-                    return angular.toJson(data);
-                },
-                url: url.api + '/runtime/tasks/:tId'
-            },
-            completeTask: {
-                method: 'POST',
-                transformRequest: function (data) {
-                    data.action = 'complete';
-                    return angular.toJson(data);
-                },
-                url: url.api + '/runtime/tasks/:tId'
+                url: url.api + '/runtime/tasks/:id'
             },
             createProcess: {
                 method: 'POST',
