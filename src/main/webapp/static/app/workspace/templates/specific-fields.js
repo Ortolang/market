@@ -8,216 +8,74 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'Helper', '$q', 'ReferentialEntityResource',
-        function ($rootScope, $scope, $filter, Settings, Helper, $q, ReferentialEntityResource) {
+    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'Helper', '$q', 'ReferentialEntityResource', 'SearchResource',
+        function ($rootScope, $scope, $filter, Settings, Helper, $q, ReferentialEntityResource, SearchResource) {
 
-            $scope.suggestLanguages = function (query) {
-                var result = $filter('filter')($scope.allLanguages, {label:query});
-                return result;
-            };
-
-            $scope.addCorporaLanguage = function(tag) {
-            	if(angular.isUndefined($scope.metadata.corporaLanguages)) {
-            		$scope.metadata.corporaLanguages = [];
-            	}
-                if(angular.isDefined(tag.id)) {
-            	   $scope.metadata.corporaLanguages.push(tag.id);
-                } else {
-                    $scope.metadata.corporaLanguages.push(tag.label);
+            $scope.suggestLanguages = function (term) {
+                if(term.length<2) {
+                    return [];
                 }
-            };
-
-            $scope.removeCorporaLanguage = function(tag) {
-                var value = tag.id ? tag.id : tag.label;
-            	var index = $scope.metadata.corporaLanguages.indexOf(value);
-	            if (index > -1) {
-	                $scope.metadata.corporaLanguages.splice(index, 1);
-	            }
-            };
-
-            $scope.addCorporaStudyLanguage = function(tag) {
-                if(angular.isUndefined($scope.metadata.corporaStudyLanguages)) {
-                    $scope.metadata.corporaStudyLanguages = [];
-                }
-                if(angular.isDefined(tag.id)) {
-                   $scope.metadata.corporaStudyLanguages.push(tag.id);
-                } else {
-                    $scope.metadata.corporaStudyLanguages.push(tag.label);
-                }
-            };
-
-            $scope.removeCorporaStudyLanguage = function(tag) {
-                var value = tag.id ? tag.id : tag.label;
-                var index = $scope.metadata.corporaStudyLanguages.indexOf(value);
-                if (index > -1) {
-                    $scope.metadata.corporaStudyLanguages.splice(index, 1);
-                }
-            };
-
-            $scope.addLexiconInputLanguage = function(tag) {
-            	if(angular.isUndefined($scope.metadata.lexiconInputLanguages)) {
-            		$scope.metadata.lexiconInputLanguages = [];
-            	}
-            	// $scope.metadata.lexiconInputLanguages.push(tag.label);
-                if(angular.isDefined(tag.id)) {
-                   $scope.metadata.lexiconInputLanguages.push(tag.id);
-                } else {
-                    $scope.metadata.lexiconInputLanguages.push(tag.label);
-                }
-            };
-
-            $scope.removeLexiconInputLanguage = function(tag) {
-            	// var index = $scope.metadata.lexiconInputLanguages.indexOf(tag.label);
-                var value = tag.id ? tag.id : tag.label;
-                var index = $scope.metadata.lexiconInputLanguages.indexOf(value);
-	            if (index > -1) {
-	                $scope.metadata.lexiconInputLanguages.splice(index, 1);
-	            }
-            };
-
-            $scope.addLexiconDescriptionLanguage = function(tag) {
-            	if(angular.isUndefined($scope.metadata.lexiconDescriptionLanguages)) {
-            		$scope.metadata.lexiconDescriptionLanguages = [];
-            	}
-            	// $scope.metadata.lexiconDescriptionLanguages.push(tag.label);
-                if(angular.isDefined(tag.id)) {
-                   $scope.metadata.lexiconDescriptionLanguages.push(tag.id);
-                } else {
-                    $scope.metadata.lexiconDescriptionLanguages.push(tag.label);
-                }
-            };
-
-            $scope.removeLexiconDescriptionLanguage = function(tag) {
-            	// var index = $scope.metadata.lexiconDescriptionLanguages.indexOf(tag.label);
-                var value = tag.id ? tag.id : tag.label;
-                var index = $scope.metadata.lexiconDescriptionLanguages.indexOf(value);
-	            if (index > -1) {
-	                $scope.metadata.lexiconDescriptionLanguages.splice(index, 1);
-	            }
-            };
-
-            $scope.addToolLanguage = function(tag) {
-            	if(angular.isUndefined($scope.metadata.toolLanguages)) {
-            		$scope.metadata.toolLanguages = [];
-            	}
-            	// $scope.metadata.toolLanguages.push(tag.label);
-                if(angular.isDefined(tag.id)) {
-                   $scope.metadata.toolLanguages.push(tag.id);
-                } else {
-                    $scope.metadata.toolLanguages.push(tag.label);
-                }
-            };
-
-            $scope.removeToolLanguage = function(tag) {
-                var value = tag.id ? tag.id : tag.label;
-                var index = $scope.metadata.toolLanguages.indexOf(value);
-            	// var index = $scope.metadata.toolLanguages.indexOf(tag.label);
-	            if (index > -1) {
-	                $scope.metadata.toolLanguages.splice(index, 1);
-	            }
-            };
-
-            $scope.addNavigationLanguage = function(tag) {
-            	if(angular.isUndefined($scope.metadata.navigationLanguages)) {
-            		$scope.metadata.navigationLanguages = [];
-            	}
-            	// $scope.metadata.navigationLanguages.push(tag.label);
-                if(angular.isDefined(tag.id)) {
-                   $scope.metadata.navigationLanguages.push(tag.id);
-                } else {
-                    $scope.metadata.navigationLanguages.push(tag.label);
-                }
-            };
-
-            $scope.removeNavigationLanguage = function(tag) {
-            	// var index = $scope.metadata.navigationLanguages.indexOf(tag.label);
-                var value = tag.id ? tag.id : tag.label;
-                var index = $scope.metadata.navigationLanguages.indexOf(value);
-	            if (index > -1) {
-	                $scope.metadata.navigationLanguages.splice(index, 1);
-	            }
-            };
-
-            /**
-             * Methods to load referential entities
-             **/
-            function loadAllLanguages() {
-
-                $scope.allLanguages = [];
-
-                ReferentialEntityResource.get({type: 'LANGUAGE'}, function(entities) {
-                    angular.forEach(entities.entries, function (entry) {
-
-                        var content = angular.fromJson(entry.content);
-
-                        $scope.allLanguages.push({id: '${' + entry.key + '}', label: Helper.getMultilingualValue(content.labels)});
+                var lang = Settings.language;
+                var deferred = $q.defer();
+                // var result = $filter('filter')($scope.allLanguages, {label:term});
+                // allLanguages : {id: XX, label: YY}
+                SearchResource.index({query:'CONTENT.PROPERTY.TEXT'+lang.toUpperCase()+':'+term+'*  AND SERVICE:referential AND CONTENT.PROPERTY.TYPE:language'}, function(results) {
+                    var suggestedLanguages = [];
+                    angular.forEach(results, function(result) {
+                        var text;
+                        if(result.properties['CONTENT.PROPERTY.TEXT'+lang.toUpperCase()]) {
+                            text = result.properties['CONTENT.PROPERTY.TEXT'+lang.toUpperCase()];
+                        } else {
+                            if(result.properties['CONTENT.PROPERTY.TEXTFR']) {
+                                text = result.properties['CONTENT.PROPERTY.TEXTFR'];
+                            } else if(result.properties['CONTENT.PROPERTY.TEXTEN']) {
+                                text = result.properties['CONTENT.PROPERTY.TEXTEN'];
+                            }
+                        }
+                        if(text) {
+                            suggestedLanguages.push({id: Helper.createKeyFromReferentialId(result.key), label: text})
+                        }
                     });
-
-                    if(angular.isDefined($scope.metadata.corporaLanguages)) {
-
-                        angular.forEach($scope.metadata.corporaLanguages, function(lang) {
-                            var tagFound = $filter('filter')($scope.allLanguages, {id:lang});
-                            if(tagFound.length>0) {
-                                angular.forEach(tagFound, function(tag) {
-                                    if(tag.id === lang) {
-                                        $scope.selectedCorporaLanguages.push(tag);
-                                        return;
-                                    }
-                                });
-                            } else {
-                                $scope.selectedCorporaLanguages.push({id:lang,label:lang});
-                            }
-                        });
-                    }
-
-                    if(angular.isDefined($scope.metadata.lexiconInputLanguages)) {
-
-                        angular.forEach($scope.metadata.lexiconInputLanguages, function(tag) {
-                            var tagFound = $filter('filter')($scope.allLanguages, {id:tag});
-                            if(tagFound.length>0) {
-                                $scope.selectedLexiconInputLanguages.push(tagFound[0]);
-                            } else {
-                                $scope.selectedLexiconInputLanguages.push({id:tag,label:tag});
-                            }
-                        });
-                    }
-
-                    if(angular.isDefined($scope.metadata.lexiconDescriptionLanguages)) {
-
-                        angular.forEach($scope.metadata.lexiconDescriptionLanguages, function(tag) {
-                            var tagFound = $filter('filter')($scope.allLanguages, {id:tag});
-                            if(tagFound.length>0) {
-                                $scope.selectedLexiconDescriptionLanguages.push(tagFound[0]);
-                            } else {
-                                $scope.selectedLexiconDescriptionLanguages.push({id:tag,label:tag});
-                            }
-                        });
-                    }
-
-                    if(angular.isDefined($scope.metadata.toolLanguages)) {
-
-                        angular.forEach($scope.metadata.toolLanguages, function(tag) {
-                            var tagFound = $filter('filter')($scope.allLanguages, {id:tag});
-                            if(tagFound.length>0) {
-                                $scope.selectedToolLanguages.push(tagFound[0]);
-                            } else {
-                                $scope.selectedToolLanguages.push({id:tag,label:tag});
-                            }
-                        });
-                    }
-
-                    if(angular.isDefined($scope.metadata.navigationLanguages)) {
-
-                        angular.forEach($scope.metadata.navigationLanguages, function(tag) {
-                            var tagFound = $filter('filter')($scope.allLanguages, {id:tag});
-                            if(tagFound.length>0) {
-                                $scope.selectedNavigationLanguages.push(tagFound[0]);
-                            } else {
-                                $scope.selectedNavigationLanguages.push({id:tag,label:tag});
-                            }
-                        });
-                    }
+                    deferred.resolve(suggestedLanguages);
+                }, function (reason) {
+                    deferred.reject([]);
                 });
+                return deferred.promise;
+            };
+
+            $scope.addLanguage = function(name, tag) {
+                if(angular.isUndefined($scope.metadata[name])) {
+                    $scope.metadata[name] = [];
+                }
+                if(angular.isDefined(tag.id)) {
+                   $scope.metadata[name].push(tag.id);
+                } else {
+                    $scope.metadata[name].push(tag.label);
+                }
+            };
+
+            $scope.removeLanguage = function(name, tag) {
+                var value = tag.id ? tag.id : tag.label;
+                var index = $scope.metadata[name].indexOf(value);
+                if (index > -1) {
+                    $scope.metadata[name].splice(index, 1);
+                }
+            };
+
+            function loadLanguage(name) {
+                // Array of the selected language
+                $scope[name] = [];
+                if(angular.isDefined($scope.metadata[name])) {
+                    angular.forEach($scope.metadata[name], function(lang) {
+                        ReferentialEntityResource.get({name:Helper.extractNameFromReferentialId(lang)}, function (entity) {
+                            var content = angular.fromJson(entity.content);
+                            $scope[name].push({id: Helper.createKeyFromReferentialId(entity.key), label: Helper.getMultilingualValue(content.labels)});
+                        },
+                        function () {
+                            $scope[name].push({id:lang,label:lang});
+                        });
+                    });
+                }
             }
 
             function addTerms(compatibility, arrayName) {
@@ -228,7 +86,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach(entities.entries, function(entry) {
                         var content = angular.fromJson(entry.content);
 
-                        var entity = {id: '${' + entry.key + '}', label: Helper.getMultilingualValue(content.labels)};
+                        var entity = {id: Helper.createKeyFromReferentialId(entry.key), label: Helper.getMultilingualValue(content.labels)};
                         if(content.rank) {
                             entity.rank = content.rank;
                         }
@@ -245,46 +103,24 @@ angular.module('ortolangMarketApp')
              **/
 
         	function init() {
-                $scope.selectedCorporaLanguages = [];
-                $scope.selectedLexiconInputLanguages = [];
-                $scope.selectedLexiconDescriptionLanguages = [];
-                $scope.selectedToolLanguages = [];
-                $scope.selectedNavigationLanguages = [];
-
-                // listTerms().then(function (terms) {
-                    // addTerms('CorporaLanguageType', 'allCorporaLanguageType');
-                    addTerms('LanguageType', 'allLanguageType');
-                    // addTerms('LexiconLanguageType', 'allLexiconLanguageTypes');
-
-                    addTerms('CorporaType', 'allCorporaType');
-                    addTerms('CorporaStyle', 'allCorporaStyles');
-                    addTerms('AnnotationLevel', 'allAnnotationLevels');
-
-                    addTerms('FileFormat', 'allFileFormats');
-                    // addTerms('CorporaFormat', 'allCorporaFormats');
-                    // addTerms('LexiconFormat', 'allLexiconFormats');
-                    // addTerms('ToolInputData', 'allToolInputData');
-                    // addTerms('ToolOutputData', 'allToolOutputData');
-
-                    // addTerms('CorporaFileEncoding', 'allCorporaFileEncodings');
-                    addTerms('FileEncoding', 'allFileEncodings');
-                    // addTerms('ToolFileEncoding', 'allToolFileEncodings');
-
-                    // addTerms('CorporaDataType', 'allCorporaDataTypes');
-                    addTerms('DataType', 'allDataTypes');
-
-                    addTerms('LexiconAnnotation', 'allLexiconAnnotations');
-                    // addTerms('LexiconInputType', 'allLexiconInputTypes');
-                    // addTerms('LexiconDescriptionType', 'allLexiconDescriptionTypes');
-
-                    addTerms('OperatingSystem', 'allOperatingSystems');
-                    addTerms('ProgrammingLanguage', 'allProgrammingLanguages');
-                    addTerms('ToolSupport', 'allToolSupports');
-                    addTerms('ToolFunctionality', 'allToolFunctionalities');
-
-                // });
-
-                loadAllLanguages();
+                addTerms('LanguageType', 'allLanguageType');
+                addTerms('CorporaType', 'allCorporaType');
+                addTerms('CorporaStyle', 'allCorporaStyles');
+                addTerms('AnnotationLevel', 'allAnnotationLevels');
+                loadLanguage('corporaLanguages');
+                loadLanguage('corporaStudyLanguages');
+                loadLanguage('lexiconInputLanguages');
+                loadLanguage('lexiconDescriptionLanguages');
+                loadLanguage('toolLanguages');
+                loadLanguage('navigationLanguages');
+                addTerms('FileFormat', 'allFileFormats');
+                addTerms('FileEncoding', 'allFileEncodings');
+                addTerms('DataType', 'allDataTypes');
+                addTerms('LexiconAnnotation', 'allLexiconAnnotations');
+                addTerms('OperatingSystem', 'allOperatingSystems');
+                addTerms('ProgrammingLanguage', 'allProgrammingLanguages');
+                addTerms('ToolSupport', 'allToolSupports');
+                addTerms('ToolFunctionality', 'allToolFunctionalities');
             }
             init();
 }]);
