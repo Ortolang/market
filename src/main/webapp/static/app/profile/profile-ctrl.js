@@ -58,6 +58,10 @@ angular.module('ortolangMarketApp')
                 {value: 'Mr', text: 'PROFILE.CIVILITY.MISTER'}
             ];
 
+            $scope.labelClass = 'col-sm-5 col-md-4';
+            $scope.inputClass = 'col-sm-7 col-lg-6';
+            $scope.helpClass = 'col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8';
+
             function init() {
                 $scope.activeTab = 0;
                 $scope.emptyText = $translate.instant('PROFILE.EMPTY');
