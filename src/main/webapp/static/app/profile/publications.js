@@ -85,7 +85,6 @@ angular.module('ortolangMarketApp')
                     url = 'https://api.archives-ouvertes.fr/search/?q=authFullName_t:' + name.toLowerCase() + '&wt=csv&sort=producedDate_tdate desc&indent=true',
                     request = createCORSRequest('get', url);
                 $scope.publications = [];
-                console.debug($scope.publications);
                 if (request) {
                     request.onload = function () {
                         $scope.publications = csvToArray(request.responseText.trim(), ',');

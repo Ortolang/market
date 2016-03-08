@@ -74,7 +74,7 @@ angular.module('ortolangMarketApp')
                     function(status){
                         var url = '/workspaces?alias='+ $scope.folder.ws + '&root=head&path=' + status.path + '&browse';
                         var path = $scope.folder.ws + '/' + status.path.replace(/^\/*|\/*$/, '');
-                        console.debug(status.path.replace(/^\/*|\/*$/, ''));
+                        //console.log(status.path.replace(/^\/*|\/*$/, ''));
                         var message = $translate.instant('TOOLS.FILES_SAVED_OK', {path: path}) +
                             '<p><a class="btn btn-sm btn-default" href="' + url + '" target="_blank"> ' +
                             $translate.instant('TOOLS.FILES_SAVED_LINK') +
@@ -82,7 +82,7 @@ angular.module('ortolangMarketApp')
                         showAlert('alert-success', message);
                     },
                     function(error) {
-                        console.debug(error);
+                        //console.log(error);
                         var message = $translate.instant('TOOLS.FILES_SAVED_FAIL', {error: error});
                         showAlert('alert-danger', message);
                     }
