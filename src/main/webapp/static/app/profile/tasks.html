@@ -13,6 +13,7 @@
                         <th translate="NAME"></th>
                         <th translate="DESCRIPTION"></th>
                         <th translate="TASKS.ASSIGNEE"></th>
+                        <th translate="WORKSPACE"></th>
                         <th translate="ACTIONS"></th>
                     </tr>
                     </thead>
@@ -22,6 +23,7 @@
                         <td>{{::task.name}}</td>
                         <td>{{::task.description}}</td>
                         <td>{{task.assignee}}</td>
+                        <td><a ng-if="task.processVariables.wsalias" ng-href="/workspaces/{{task.processVariables.wsalias}}">{{task.processVariables.wsalias}}</a></td>
                         <td>
                             <button class="btn btn-sm btn-success" ng-click="Runtime.completeTask(task)" translate="TASKS.COMPLETE_TASK"></button>
                             <button class="btn btn-sm btn-default" ng-if="task.assignee !== User.key" ng-click="Runtime.claimTask(task)" translate="TASKS.CLAIM"></button>
