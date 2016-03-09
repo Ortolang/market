@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'Helper', '$q', 'ReferentialEntityResource', 'SearchResource',
-        function ($rootScope, $scope, $filter, Settings, Helper, $q, ReferentialEntityResource, SearchResource) {
+    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', 'Settings', 'Helper', '$q', 'ReferentialEntityResource',
+        function ($rootScope, $scope, $filter, Settings, Helper, $q, ReferentialEntityResource) {
 
             $scope.suggestLanguages = function (term) {
                 if(term.length<2) {
@@ -17,23 +17,14 @@ angular.module('ortolangMarketApp')
                 }
                 var lang = Settings.language;
                 var deferred = $q.defer();
-                // var result = $filter('filter')($scope.allLanguages, {label:term});
                 // allLanguages : {id: XX, label: YY}
-                SearchResource.index({query:'CONTENT.PROPERTY.TEXT'+lang.toUpperCase()+':'+term+'*  AND SERVICE:referential AND CONTENT.PROPERTY.TYPE:language'}, function(results) {
+                ReferentialEntityResource.get({type: 'LANGUAGE', lang:lang.toUpperCase(),term: term}, function(results) {
                     var suggestedLanguages = [];
-                    angular.forEach(results, function(result) {
-                        var text;
-                        if(result.properties['CONTENT.PROPERTY.TEXT'+lang.toUpperCase()]) {
-                            text = result.properties['CONTENT.PROPERTY.TEXT'+lang.toUpperCase()];
-                        } else {
-                            if(result.properties['CONTENT.PROPERTY.TEXTFR']) {
-                                text = result.properties['CONTENT.PROPERTY.TEXTFR'];
-                            } else if(result.properties['CONTENT.PROPERTY.TEXTEN']) {
-                                text = result.properties['CONTENT.PROPERTY.TEXTEN'];
-                            }
-                        }
+                    angular.forEach(results.entries, function(refentity) {
+                        var content = angular.fromJson(refentity.content);
+                        var text = Helper.getMultilingualValue(content.labels);
                         if(text) {
-                            suggestedLanguages.push({id: Helper.createKeyFromReferentialId(result.key), label: text})
+                            suggestedLanguages.push({id: Helper.createKeyFromReferentialId(refentity.key), label: text})
                         }
                     });
                     deferred.resolve(suggestedLanguages);
