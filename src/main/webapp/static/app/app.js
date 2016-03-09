@@ -51,12 +51,14 @@ angular
         $routeProvider
             .when('/', {
                 templateUrl: 'market/home.html',
-                controller: 'HomeCtrl'
+                controller: 'HomeCtrl',
+                description: 'default'
             })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
                 controller: 'CorporaCtrl',
                 title: 'CORPORA',
+                description: 'NAV.DESCRIPTION.CORPORA',
                 reloadOnSearch: false
             })
             .when('/market/tools', {
@@ -131,6 +133,12 @@ angular
                     }]
                 },
                 title: 'NAV.PROFILE'
+            })
+            .when('/profile/tasks', {
+                templateUrl: 'profile/tasks.html',
+                controller: 'TasksCtrl',
+                requiresAuthentication: true,
+                title: 'NAV.TASKS'
             })
             .when('/404', {
                 templateUrl: '404.html',

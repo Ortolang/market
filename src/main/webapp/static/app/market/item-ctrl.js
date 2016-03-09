@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ItemCtrl', ['$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'MarketBrowserService', 'Helper', function ($scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, MarketBrowserService, Helper) {
+    .controller('ItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'MarketBrowserService', 'Helper', function ($rootScope, $scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, MarketBrowserService, Helper) {
 
         function loadItem() {
             SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
@@ -75,6 +75,7 @@ angular.module('ortolangMarketApp')
             sanitizedDescription = angular.element('<div>').html(sanitizedDescription).text().substring(0, 200);
             sanitizedDescription = sanitizedDescription.substring(0, sanitizedDescription.lastIndexOf(' '));
             microData.description = sanitizedDescription;
+            $rootScope.ortolangPageDescription = sanitizedDescription;
             // **************
             // Image
             if (jsonMetadata.image) {

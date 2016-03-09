@@ -121,7 +121,7 @@ angular.module('ortolangMarketApp')
                 $scope.currentJob.completedStates = [];
                 ToolManager.getTool($scope.selectedTool.getKey()).createJob($scope.config.model).$promise.then(
                     function (job) {
-                        console.debug(job);
+                        //console.log(job);
                         $scope.currentJob.job = job;
                         $scope.currentJob.completedStates.push($scope.currentJob.state);
                         $scope.currentJob.state = $translate.instant('PROCESSES.' + job.status);

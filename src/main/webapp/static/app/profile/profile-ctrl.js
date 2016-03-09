@@ -8,11 +8,12 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$rootScope', '$translate', '$http', 'User', 'Profile',
-        function ($scope, $rootScope, $translate, $http, User, Profile) {
+    .controller('ProfileCtrl', ['$scope', '$rootScope', '$translate', '$http', 'User', 'Profile', 'Runtime',
+        function ($scope, $rootScope, $translate, $http, User, Profile, Runtime) {
 
             var fieldTemplates;
             $scope.User = User;
+            $scope.Runtime = Runtime;
 
             $rootScope.$on('$translateChangeSuccess', function () {
                 $scope.emptyText = $translate.instant('PROFILE.EMPTY');
@@ -57,19 +58,9 @@ angular.module('ortolangMarketApp')
                 {value: 'Mr', text: 'PROFILE.CIVILITY.MISTER'}
             ];
 
-            function loadScript() {
-                if (angular.element('#google-maps-script').length === 0) {
-                    console.log('Loading Google Maps library');
-                    window.initialized = function () {
-                        console.log('Google Maps library loaded');
-                    };
-                    var script = document.createElement('script');
-                    script.id = 'google-maps-script';
-                    script.type = 'text/javascript';
-                    script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=initialized';
-                    document.body.appendChild(script);
-                }
-            }
+            $scope.labelClass = 'col-sm-5 col-md-4';
+            $scope.inputClass = 'col-sm-7 col-lg-6';
+            $scope.helpClass = 'col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8';
 
             function init() {
                 $scope.activeTab = 0;
@@ -81,7 +72,6 @@ angular.module('ortolangMarketApp')
                         initFields();
                     });
                 });
-                loadScript();
             }
 
             init();

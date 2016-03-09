@@ -14,7 +14,9 @@ angular.module('ortolangMarketApp')
         $scope.sideNavActiveClass = null;
 
         $scope.select = function (elementClass) {
-            $scope.sideNavActiveClass = elementClass;
+            if ($scope.sideNavActiveClass !== elementClass) {
+                $scope.sideNavActiveClass = elementClass;
+            }
         };
 
         // *********************** //
@@ -31,11 +33,18 @@ angular.module('ortolangMarketApp')
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             if (current.$$route) {
                 if (current.$$route.title) {
-                    $rootScope.ortolangPageTitle = 'ORTOLANG | ' + $translate.instant(current.$$route.title);
+                    $rootScope.ortolangPageTitle = $translate.instant(current.$$route.title) + ' | ';
                 } else if (previous || current.$$route.originalPath === '/') {
-                    $rootScope.ortolangPageTitle = 'ORTOLANG';
+                    $rootScope.ortolangPageTitle = '';
                 } else {
                     $rootScope.ortolangPageTitle = undefined;
+                }
+                if (angular.isUndefined(current.$$route.description)) {
+                    $rootScope.ortolangPageDescription = '';
+                } else if (current.$$route.description === 'default') {
+                    $rootScope.ortolangPageDescription = 'Outils et Ressources pour un Traitement Optimisé de la LANGue';
+                } else {
+                    $rootScope.ortolangPageDescription = $translate.instant(current.$$route.description);
                 }
                 $scope.reducedSideNav = current.$$route.originalPath === '/workspaces' || current.$$route.originalPath === '/workspaces/:alias';
                 if (previous) {
@@ -44,6 +53,9 @@ angular.module('ortolangMarketApp')
                             $scope.select('home');
                             break;
                         case '/profile/information':
+                            $scope.select('profile');
+                            break;
+                        case '/profile/tasks':
                             $scope.select('profile');
                             break;
                         case '/search':
@@ -64,15 +76,16 @@ angular.module('ortolangMarketApp')
                         case '/market/lexicons':
                             $scope.select('lexicons');
                             break;
-                        default:
-                            if (current.params.section && previous.params.section === 'item') {
+                        case '/market/:section/:alias/:version?':
+                            if (current.params.section) {
                                 $scope.select(current.params.section);
                             }
+                            break;
                     }
                 } else {
                     var regExp, i, currentPath;
                     if ($route.current.originalPath === '/') {
-                        $scope.sideNavActiveClass = sideNavElements[0].class;
+                        $scope.select('home');
                     } else {
                         for (i = 1; i < sideNavElements.length; i++) {
                             regExp = new RegExp('^' + sideNavElements[i].path);
@@ -81,7 +94,7 @@ angular.module('ortolangMarketApp')
                                 currentPath = currentPath.replace(':section', $route.current.params.section);
                             }
                             if (regExp.test(currentPath)) {
-                                $scope.sideNavActiveClass = sideNavElements[i].class;
+                                $scope.select(sideNavElements[i].class);
                                 break;
                             }
                         }

@@ -35,15 +35,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="corporaLanguages" class="control-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</label>
-                        <tags-input name="corporaLanguages" class="language-tags" ng-model="selectedCorporaLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_LANG' | translate}}" data-on-tag-added="addCorporaLanguage($tag)" data-on-tag-removed="removeCorporaLanguage($tag)">
-                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        <tags-input name="corporaLanguages" class="language-tags" ng-model="corporaLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_LANG' | translate}}" data-on-tag-added="addLanguage('corporaLanguages', $tag)" data-on-tag-removed="removeLanguage('corporaLanguages', $tag)">
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false" highlight-matched-text="true"></auto-complete>
                         </tags-input>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <label for="corporaStudyLanguages" class="control-label">{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}</label>
-                        <tags-input name="corporaStudyLanguages" class="language-tags" ng-model="selectedCorporaStudyLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}" data-on-tag-added="addCorporaStudyLanguage($tag)" data-on-tag-removed="removeCorporaStudyLanguage($tag)">
+                        <tags-input name="corporaStudyLanguages" class="language-tags" ng-model="corporaStudyLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}" data-on-tag-added="addLanguage('corporaStudyLanguages', $tag)" data-on-tag-removed="removeLanguage('corporaStudyLanguages', $tag)">
                             <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                         </tags-input>
                     </div>
@@ -130,7 +130,7 @@
                     <div class=" col-md-12">
                         <div class="form-group">
                             <label for="lexiconInputLanguages" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</label>
-                            <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="selectedLexiconInputLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}" data-on-tag-added="addLexiconInputLanguage($tag)" data-on-tag-removed="removeLexiconInputLanguage($tag)">
+                            <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="lexiconInputLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('lexiconInputLanguages', $tag)" data-on-tag-removed="removeLanguage('lexiconInputLanguages', $tag)">
                                 <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                             </tags-input>
                         </div>
@@ -161,7 +161,7 @@
                     <div class=" col-md-12">
                         <div class="form-group">
                             <label for="lexiconDescriptionLanguages" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</label>
-                            <tags-input name="lexiconDescriptionLanguages" class="language-tags" ng-model="selectedLexiconDescriptionLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}" data-on-tag-added="addLexiconDescriptionLanguage($tag)" data-on-tag-removed="removeLexiconDescriptionLanguage($tag)">
+                            <tags-input name="lexiconDescriptionLanguages" class="language-tags" ng-model="lexiconDescriptionLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('lexiconDescriptionLanguages', $tag)" data-on-tag-removed="removeLanguage('lexiconDescriptionLanguages', $tag)">
                                 <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                             </tags-input>
                         </div>
@@ -247,7 +247,7 @@
                     <div class=" col-md-12">
                         <div class="form-group">
                             <label for="toolLanguages" class="control-label">{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}</label>
-                            <tags-input name="toolLanguages" class="language-tags" ng-model="selectedToolLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}" data-on-tag-added="addToolLanguage($tag)" data-on-tag-removed="removeToolLanguage($tag)">
+                            <tags-input name="toolLanguages" class="language-tags" ng-model="toolLanguages" data-display-property="label" data-placeholder="{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('toolLanguages', $tag)" data-on-tag-removed="removeLanguage('toolLanguages', $tag)">
                                 <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                             </tags-input>
                         </div>
@@ -257,7 +257,7 @@
                     <div class=" col-md-12">
                         <div class="form-group">
                             <label for="navigationLanguages" class="control-label">{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}</label>
-                            <tags-input name="navigationLanguages" class="language-tags" ng-model="selectedNavigationLanguages" data-display-property="label" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}" data-on-tag-added="addNavigationLanguage($tag)" data-on-tag-removed="removeNavigationLanguage($tag)">
+                            <tags-input name="navigationLanguages" class="language-tags" ng-model="navigationLanguages" data-display-property="label" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}" data-on-tag-added="addLanguage('navigationLanguages', $tag)" data-on-tag-removed="removeLanguage('navigationLanguages', $tag)">
                                 <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                             </tags-input>
                         </div>

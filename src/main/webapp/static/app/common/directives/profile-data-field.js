@@ -14,9 +14,9 @@ angular.module('ortolangMarketApp')
             scope: {
                 profileData: '=',
                 source: '=',
-                inputClass: '@',
-                labelClass: '@',
-                helpClass: '@'
+                inputClass: '=',
+                labelClass: '=',
+                helpClass: '='
             },
             templateUrl: 'common/directives/profile-data-field-template.html',
 

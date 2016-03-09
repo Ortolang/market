@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Outils et Ressources pour un Traitement Optimisé de la LANGue">
     <meta name="fragment" content="!">
     <!--<meta name="robots" content="noindex, nofollow">-->
     <base href="/">
-    <title ng-bind="ortolangPageTitle + (ortolangPageSubtitle || '')"></title>
+    <title ng-bind="ortolangPageTitle !== undefined ? (ortolangPageTitle + (ortolangPageSubtitle || '') + 'ORTOLANG') : ''"></title>
+    <meta description name="description">
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
@@ -169,6 +169,7 @@
 <script src="common/filters/remove-accents.js"></script>
 <script src="common/filters/event-feed-filter.js"></script>
 <script src="common/filters/event-feed-description.js"></script>
+<script src="common/directives/description.js"></script>
 <script src="common/directives/ng-right-click.js"></script>
 <script src="common/directives/browser.js"></script>
 <script src="common/directives/ortolang-item-json-preview.js"></script>
@@ -215,6 +216,7 @@
 <script src="common/services/profile.js"></script>
 <script src="common/services/settings.js"></script>
 <script src="common/services/cart.js"></script>
+<script src="common/services/runtime.js"></script>
 <script src="common/static-website/static-website.js"></script>
 <script src="common/static-website/information.js"></script>
 <script src="common/static-website/i18n/static-website.fr.js"></script>
@@ -268,7 +270,7 @@
 <script src="market/directives/preview-url.js"></script>
 <script src="market/directives/preview-box.js"></script>
 <script src="market/directives/visualizer.js"></script>
-<script src="market/item.js"></script>
+<script src="market/item-ctrl.js"></script>
 <script src="market/templates/ortolang-item-json-13.js"></script>
 <script src="market/home.js"></script>
 <script src="market/services/query-builder-service.js"></script>
@@ -295,6 +297,7 @@
 <script src="profile/publications.js"></script>
 <script src="profile/contributions.js"></script>
 <script src="profile/friends.js"></script>
+<script src="profile/tasks.js"></script>
 <!-- endbuild -->
 
 <!-- Piwik -->

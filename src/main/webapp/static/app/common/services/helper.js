@@ -28,6 +28,11 @@ angular.module('ortolangMarketApp')
             return key.substring(2, key.length - 1);
         };
 
+        this.createKeyFromReferentialId = function (id) {
+            // Pattern : ${key}
+            return '${' + id + '}';
+        };
+
         this.extractNameFromReferentialId = function (id) {
             // Pattern : ${referential:name}
             var key = this.extractKeyFromReferentialId(id);
@@ -37,6 +42,10 @@ angular.module('ortolangMarketApp')
         this.startsWith = function (actual, expected) {
             var lowerStr = (actual + '').toLowerCase();
             return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
+
+        this.endsWith = function(str, suffix) {
+            return str.indexOf(suffix, str.length - suffix.length) !== -1;
         };
 
         this.normalizePath = function (path) {
@@ -95,10 +104,6 @@ angular.module('ortolangMarketApp')
                 }
                 $modal(config);
             }
-        };
-
-        this.endsWith = function(str, suffix) {
-            return str.indexOf(suffix, str.length - suffix.length) !== -1;
         };
 
         return this;

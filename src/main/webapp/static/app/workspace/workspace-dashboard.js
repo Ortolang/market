@@ -224,8 +224,8 @@ angular.module('ortolangMarketApp')
                     eventsInfiniteScrollBusy: false
                 };
                 Workspace.getWorkspaceList(true).then(function () {
+                    $rootScope.ortolangPageSubtitle = $route.current.params.alias + ' | ';
                     Workspace.setActiveWorkspaceFromAlias($route.current.params.alias).then(function () {
-                        $rootScope.ortolangPageSubtitle = ' - ' + Workspace.active.workspace.alias;
                         setDashboardSection($location.search().section);
                         $scope.dashboardModels.links = {
                             base: $window.location.origin,

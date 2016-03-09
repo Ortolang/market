@@ -12,7 +12,7 @@
  * @property {boolean} authenticated    - Shortcut for {@link ortolangMarketApp.AuthService#isAuthenticated}
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, url, User, AuthService, ProfileResource, AtmosphereService) {
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', 'Runtime', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, url, User, AuthService, ProfileResource, AtmosphereService, Runtime) {
 
         var serverDownModal, unauthorizedModal, notLoggedInModal;
 
@@ -42,6 +42,9 @@ angular.module('ortolangMarketApp')
                         AtmosphereService.subscribe();
                     }
                 );
+                if (AuthService.isModerator()) {
+                    Runtime.init();
+                }
             });
         }
 

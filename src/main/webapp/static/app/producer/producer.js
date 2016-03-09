@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
 
             ReferentialEntityResource.get({name: id}, function (refEntity) {
                 $scope.producer = angular.fromJson(refEntity.content);
-                $rootScope.ortolangPageTitle = 'ORTOLANG | ' + $scope.producer.name;
+                $rootScope.ortolangPageTitle = $scope.producer.name + ' | ';
 
                 if (!$scope.producer.img) {
                     $scope.imgtitle = '';

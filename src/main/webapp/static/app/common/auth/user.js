@@ -50,5 +50,7 @@ angular.module('ortolangMarketApp')
 
         this.isRoot = AuthService.isRoot;
 
+        this.isModerator = AuthService.isModerator;
+
         return this;
     }]);

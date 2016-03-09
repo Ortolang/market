@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
-            class: 'integrated-projects',
+            class: 'applications',
             path: '/market/applications',
             description: 'INTEGRATED_PROJECTS',
             iconCss: 'fa fa-fw fa-briefcase fa-2x',

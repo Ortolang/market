@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('ortolangItemJsonPreview', ['$rootScope', '$filter', '$location', 'ObjectResource', 'Settings', 'Content', '$translate', function ($rootScope, $filter, $location, ObjectResource, Settings, Content, $translate) {
+    .directive('ortolangItemJsonPreview', ['$rootScope', '$filter', '$location', 'Settings', 'Content', '$translate', function ($rootScope, $filter, $location, Settings, Content, $translate) {
         return {
             restrict: 'EA',
             scope: {
@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
 
                     function loadItem() {
 
-                        $rootScope.ortolangPageTitle = 'ORTOLANG | ' + getValue(scope.content.title, 'lang', Settings.language, 'Untitled');
+                        $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'Untitled') + ' | ';
 
                         if (scope.content.schema) {
 
@@ -55,7 +55,6 @@ angular.module('ortolangMarketApp')
                                 if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
                                     scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
                                 }
-
                             }  else {
                                 //TODO show message like format metadata unknown
                             }

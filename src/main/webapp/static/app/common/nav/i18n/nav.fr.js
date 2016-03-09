@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
             SETTINGS: 'Paramètres',
             LOG_OUT: 'Déconnexion',
             PROFILE: 'Mon profil',
+            TASKS: 'Tâches',
             REGISTER: 'S\'enregistrer',
             LANGUAGE: {
                 LANGUAGE: 'Langue',
@@ -39,6 +40,9 @@ angular.module('ortolangMarketApp')
             TEAM: 'Équipe ORTOLANG',
             404: 'Erreur',
             BETA_VERSION: 'pré-version',
-            BETA_VERSION_TOOLTIP: 'ORTOLANG est en cours de développement.<br/>Certaines fonctionnalités ne sont ainsi pas encore accessibles.'
+            BETA_VERSION_TOOLTIP: 'ORTOLANG est en cours de développement.<br/>Certaines fonctionnalités ne sont ainsi pas encore accessibles.',
+            DESCRIPTION: {
+                CORPORA: 'Retrouvez tous les corpus écrits, oraux et multimodaux publiés sur ORTOLANG.'
+            }
         }
     });

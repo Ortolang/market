@@ -77,5 +77,15 @@ angular.module('ortolangMarketApp')
                 SEARCH: 'Search a member',
                 ADD: 'Add'
             }
+        },
+        TASKS: {
+            TASK: 'Task',
+            TASKS: 'Tasks',
+            NO_TASK: 'No task',
+            ASSIGNEE: 'Assignee',
+            CLAIM: 'Claim',
+            UNCLAIM: 'Un-claim',
+            COMPLETE_TASK: 'Complete task',
+            TASK_CREATED: 'a new task has been added'
         }
     });

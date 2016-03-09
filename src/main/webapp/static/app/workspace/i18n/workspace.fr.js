@@ -325,7 +325,9 @@ angular.module('ortolangMarketApp')
                         TAG: 'a publié une nouvelle version :<span class="description">{{::arguments["tag-name"]}}</span>',
                         SNAPSHOT: 'a pris un nouvel instanané',
                         CREATE: 'a créé cet espace de travail',
-                        'CHANGE-OWNER': 'a changé le propriétaire de l\'espace'
+                        'CHANGE-OWNER': 'a changé le propriétaire de l\'espace',
+                        LOCK: 'a verrouillé l\'espace de travail (lecture seule)',
+                        UNLOCK: 'a déverrouillé l\'espace de travail'
                     },
                     METADATA: {
                         CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',
