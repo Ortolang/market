@@ -23,6 +23,7 @@ angular.module('ortolangVisualizers')
                 'text/css': true,
                 'text/xml': true,
                 'text/x-log': true,
+                'text/troff': true,
                 'application/xml': true,
                 'application/xhtml+xml': true,
                 'application/rdf+xml': true,
