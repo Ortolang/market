@@ -163,7 +163,9 @@
     }
   }
   &.information, &.permissions, &.metadata, &.members {
-    max-width: 1300px;
+    > .container-main-inner {
+      max-width: 1300px;
+    }
   }
   &.metadata {
     padding-top: 2 * @line-height-computed;
