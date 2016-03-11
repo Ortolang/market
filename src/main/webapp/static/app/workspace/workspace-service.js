@@ -208,13 +208,26 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         return deferred.promise;
     };
 
-    this.getActiveWorkspaceEvents = function () {
+    this.getActiveWorkspaceEvents = function (next) {
         var deferred = $q.defer();
-        WorkspaceResource.listEvents({wskey: Workspace.active.workspace.key}, function (data) {
+        var params = {wskey: Workspace.active.workspace.key, limit: 25};
+        if (next) {
+            params.offset = (Workspace.active.eventsOffset || 0) + params.limit;
+        }
+        WorkspaceResource.listEvents(params, function (data) {
             angular.forEach(data.entries, function (event) {
                 getCard(event.throwedBy);
             });
-            Workspace.active.events = data.entries;
+            Workspace.active.eventsOffset = data.offset;
+            if (next) {
+                if (data.entries.length === 0) {
+                    deferred.reject();
+                    return;
+                }
+                Workspace.active.events = Workspace.active.events.concat(data.entries);
+            } else {
+                Workspace.active.events = data.entries;
+            }
             deferred.resolve();
         }, function () {
             deferred.reject();
