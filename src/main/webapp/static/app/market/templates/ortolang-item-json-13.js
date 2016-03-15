@@ -277,8 +277,8 @@ angular.module('ortolangMarketApp')
 
             function loadAdditionalInformations(lang) {
                 $scope.additionalInformations = [];
-                //TODO add keywords
-                // loadFieldValuesInAdditionalInformations('keywords', 'MARKET.KEYWORDS');
+
+                loadFieldValuesInAdditionalInformations('statusOfUse', 'MARKET.FACET.STATUS_OF_USE', lang);
 
                 loadFieldValuesInAdditionalInformations('corporaType', 'MARKET.FACET.CORPORA_TYPE', lang);
                 loadFieldValuesInAdditionalInformations('corporaLanguageType', 'MARKET.FACET.CORPORA_LANGUAGE_TYPE', lang);
@@ -309,6 +309,19 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('navigationLanguages', 'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES', lang);
                 loadFieldValuesInAdditionalInformations('toolSupport', 'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT', lang);
 
+                if(angular.isDefined($scope.content['creationLocations'])) {
+                    angular.forEach($scope.content['creationLocations'], function (creationLocation) {
+                        if(creationLocation.name) {
+                            $scope.additionalInformations.push({key: 'creationLocations', value: creationLocation.name, name: 'ITEM.CREATION_LOCATIONS.LABEL'});
+                        }
+                    });
+                }
+
+                loadFieldValuesInAdditionalInformations('originDate', 'ITEM.ORIGIN_DATE.LABEL', lang);
+
+                loadFieldValuesInAdditionalInformations('linguisticDataType', 'ITEM.LINGUISTIC_DATA_TYPE.LABEL', lang);
+                loadFieldValuesInAdditionalInformations('discourseTypes', 'ITEM.DISCOURSE_TYPE.LABEL', lang);
+                loadFieldValuesInAdditionalInformations('linguisticSubjects', 'ITEM.LINGUISTIC_SUBJECT.LABEL', lang);
             }
 
             function startsWith (actual, expected) {

@@ -118,6 +118,23 @@
               <input type="text" class="form-control" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website">
             
         </div>
+        <hr/>
+        <div class="form-group" ng-if="metadata.creationLocations">
+            <label for="creationLocations" class="control-label">{{'ITEM.CREATION_LOCATIONS.LABEL' | translate}}</label>
+            
+                <div  ng-repeat="creationLocation in metadata.creationLocations">
+                    <input ng-if="creationLocation.name" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.name">
+                    <input ng-if="creationLocation.dcmipoint" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIPOINT.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmipoint">
+                    <input ng-if="creationLocation.dcmibox" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIBOX.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmibox">
+                    <input ng-if="creationLocation.iso3166" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.ISO3166.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.iso3166">
+                    <input ng-if="creationLocation.tgn" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.TGN.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.tgn">
+                </div>
+        </div>
+        <hr/>
+        <div ng-if="metadata.originDate" class="form-group">
+            <label for="originDate" class="control-label">{{'ITEM.ORIGIN_DATE.LABEL' | translate}}</label>
+            <input type="text" class="form-control" name="originDate" placeholder="{{'ITEM.ORIGIN_DATE.PLACEHOLDER' | translate}}" aria-label="originDate" ng-model="metadata.originDate">
+        </div>
 
     </div>
 </div>

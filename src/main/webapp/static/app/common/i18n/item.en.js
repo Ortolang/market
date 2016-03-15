@@ -23,7 +23,39 @@ angular.module('ortolangMarketApp')
         	},
         	DESCRIPTION: {
         		LABEL: 'Description'
-        	}
+        	},
+            CREATIONLOCATIONS: {
+                LABEL: 'Creation locations',
+                PLACEHOLDER: 'Creation locations',
+                DCMIPOINT: {
+                    PLACEHOLDER: 'DCMIPoint Code'
+                },
+                DCMIBOX: {
+                    PLACEHOLDER: 'DCMIBox Code'
+                },
+                ISO3166: {
+                    PLACEHOLDER: 'ISO3166 Code'
+                },
+                TGN: {
+                    PLACEHOLDER: 'TGN Code'
+                }
+            },
+            ORIGIN_DATE: {
+                LABEL: 'Origin date',
+                PLACEHOLDER: 'Origin date'
+            },
+            LINGUISTIC_DATA_TYPE: {
+                LABEL: 'Linguistic data type',
+                PLACEHOLDER: 'Linguistic data type'
+            },
+            DISCOURSE_TYPE: {
+                LABEL: 'Discourse type',
+                PLACEHOLDER: 'Discourse type'
+            },
+            LINGUISTIC_SUBJECT: {
+                LABEL: 'LINGUISTIC subject',
+                PLACEHOLDER: 'LINGUISTIC subject'
+            }
         }
     }
 );
