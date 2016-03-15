@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
             modalScope.models.policyConsent = false;
             modalScope.normalizeAlias = function (alias, createWorkspaceForm) {
                 alias = $filter('diacritics')(alias);
-                modalScope.models.alias = alias ? alias.replace(regExp, '-').toLowerCase() : alias;
+                modalScope.models.alias = alias ? alias.replace(/[^\w\s]/g, '').replace(regExp, '-').toLowerCase() : alias;
                 createWorkspaceForm.alias.$setValidity('availability', true);
             };
             modalScope.generateAlias = function (createWorkspaceForm) {

@@ -200,16 +200,30 @@ angular.module('ortolangMarketApp')
                 $rootScope.ortolangPageSubtitle = undefined;
             });
 
+            $scope.showSeeMoreEvents = function () {
+                return ($filter('eventFeedFilter')(Workspace.active.events)).length > $scope.dashboardModels.eventsLimit;
+            };
+
             $scope.seeMoreEvents = function () {
-                if (!$scope.dashboardModels.eventsInfiniteScrollBusy) {
+                if (!$scope.dashboardModels.eventsInfiniteScrollBusy && !$scope.dashboardModels.eventsEnd) {
                     $scope.dashboardModels.eventsInfiniteScrollBusy = true;
                     if (!$scope.dashboardModels.eventsSeeMoreOnce) {
                         var eventList = angular.element('.workspace-dashboard-section-events').find('ul.list-unstyled');
-                        eventList.css('height', eventList.outerHeight() + 'px');
+                        $scope.dashboardModels.EventFeedHeight = eventList.outerHeight() + 'px';
                         $scope.dashboardModels.eventsSeeMoreOnce = true;
                     }
-                    $scope.dashboardModels.eventsLimit += 2;
-                    $scope.dashboardModels.eventsInfiniteScrollBusy = false;
+                    if (Workspace.active.events.length < $scope.dashboardModels.eventsLimit) {
+                        Workspace.getActiveWorkspaceEvents(true).then(function () {
+                            $scope.dashboardModels.eventsLimit += 4;
+                            $scope.dashboardModels.eventsInfiniteScrollBusy = false;
+                        }, function () {
+                            $scope.dashboardModels.eventsEnd = true;
+                            $scope.dashboardModels.eventsInfiniteScrollBusy = false;
+                        });
+                    } else {
+                        $scope.dashboardModels.eventsLimit += 4;
+                        $scope.dashboardModels.eventsInfiniteScrollBusy = false;
+                    }
                 }
             };
 
