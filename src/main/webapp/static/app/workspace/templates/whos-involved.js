@@ -402,13 +402,14 @@ angular.module('ortolangMarketApp')
             function loadAllRoles() {
 
                 ReferentialEntityResource.get({type: 'ROLE'}, function(entities) {
-                    $scope.models.allRoles = [];
+                    var allRoles = [];
                     angular.forEach(entities.entries, function(entry) {
                         var content = angular.fromJson(entry.content);
                         var label = Helper.getMultilingualValue(content.labels);
 
-                        $scope.models.allRoles.push({id: entry.key, label: label, labels: content.labels});
+                        allRoles.push({id: entry.key, label: label, labels: content.labels});
                     });
+                    $scope.models.allRoles = $filter('orderBy')(allRoles, 'label');
                 });
             }
 

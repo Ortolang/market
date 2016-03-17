@@ -1,0 +1,38 @@
+<div id="choose-license-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-border">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.CHOOSE_LICENCE_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+            	<section id="free">
+	                <h4>Libre</h4>
+	                <article>
+		                <div class="media" ng-repeat="license in allLicences | filter:{status:'${referential:free_use}'}">
+		                    <div class="media-body" ng-click="chooseLicense(license)">
+		                    	<dl>
+		                        	<dt ng-bind="license.label"></dt>
+		                        	<dd ng-if="license.description" ng-bind-html="license.description"></dd>
+		                        </dl>
+		                    </div>
+		                </div>
+		            </article>
+		        </section>
+            	<section id="free_for_non_commercial_use">
+	                <h4>Libre sans utilisation commerciale</h4>
+	                <article>
+		                <div class="media" ng-repeat="license in allLicences | filter:{status:'${referential:free_for_non_commercial_use}'}">
+		                    <div class="media-body" ng-click="chooseLicense(license)">
+		                    	<dl>
+		                        	<dt ng-bind="license.label"></dt>
+		                        	<dd ng-if="license.description" ng-bind-html="license.description"></dd>
+		                        </dl>
+		                    </div>
+		                </div>
+		            </article>
+		        </section>
+            </div>
+        </div>
+    </div>
+</div>

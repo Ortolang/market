@@ -1,46 +1,43 @@
-<div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.TITLE"></span>
-            </div>
-            <div class="modal-body">
-				<form role="form" id="add-licence-form" name="addLicence" class="form-horizontal" ng-submit="submit(addLicence)" novalidate>
-
+<div id="add-license-modal" class="modal" tabindex="-1" role="dialog">
+    <form role="form" id="addLicence" name="addLicence" class="form-horizontal" ng-submit="submit(addLicence)" novalidate>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-border">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.TITLE"></span>
+                </div>
+                <div class="modal-body">
                     <div class="form-group" ng-class="{'has-error': (addLicence.$submitted || addLicence.label.$dirty) && addLicence.label.$invalid}">
-                        <label for="add-licence-label" class="control-label" translate="MARKET.FACET.STATUS_OF_USE"></label>
-                            <input ng-model="label" type="text" class="form-control" id="add-licence-label" name="label" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.LABEL' | translate}}">
+                        <label for="label" class="col-sm-3 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.LABEL_FIELD.LABEL"></label>
+                        <div class="col-sm-9">
+                            <input ng-model="model.label" type="text" class="form-control" id="label" name="label" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.LABEL' | translate}}">
+                        </div>
                     </div>
                     <div class="form-group" ng-class="{'has-error': (addLicence.$submitted || addLicence.status.$dirty) && addLicence.status.$invalid}">
-                        <label for="add-licence-status" class="control-label" translate="MARKET.FACET.STATUS_OF_USE"></label>
-                            <button type="button" name="status" class="form-control btn btn-default" ng-model="status" data-placeholder="{{'MARKET.FACET.STATUS_OF_USE' | translate}}" bs-options="status as status.label for status in allStatusOfUse" bs-select>{{'MARKET.FACET.STATUS_OF_USE' | translate}} <span class="caret"></span></button>
+                        <label for="status" class="col-sm-3 control-label" translate="MARKET.FACET.STATUS_OF_USE"></label>
+                        <div class="col-sm-9">
+                            <button type="button" name="status" class="form-control btn btn-default" ng-model="model.status" data-placeholder="{{'MARKET.FACET.STATUS_OF_USE' | translate}}" bs-options="status as status.label for status in allStatusOfUse | orderBy:'label'" bs-select>{{'MARKET.FACET.STATUS_OF_USE' | translate}} <span class="caret"></span></button>
+                        </div>
                     </div>
                     <div class="form-group" ng-class="{'has-error': (addLicence.$submitted || addLicence.description.$dirty) && addLicence.description.$invalid}">
-                        <label for="add-licence-conditionsOfUse" class="control-label" translate="MARKET.CONDITIONS_OF_USE"></label>
-
-                        <div class="input-group">
-                            <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                        <label for="conditionsOfUse" class="col-sm-3 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.DESCRIPTION_FIELD.LABEL"></label>
+                        <div class="col-sm-9">
+                            <button type="button" class="btn btn-default" name="description-lang" ng-model="model.selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                            <textarea class="form-control" name="description" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.DESCRIPTION_FIELD.LABEL' | translate}}" ng-model="model.selectedDescription.value" ng-change="updateDescription()"></textarea>
                         </div>
-
-                        <textarea class="form-control" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="descriptionSelected.value" ng-change="updateDescription()"></textarea>
-                            <!-- <textarea rows="10" type="text" class="form-control" id="add-licence-conditionsOfUse" name="conditionsOfUse" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse"></textarea> -->
-
                     </div>
                     <div class="form-group" ng-class="{'has-error': (addLicence.$submitted || addLicence.licenseWebsite.$dirty) && addLicence.licenseWebsite.$invalid}">
-                        <label for="licenseWebsite" class="control-label" translate="WORKSPACE.METADATA_EDITOR.LICENCE_WEBSITE"></label>
-                        <!-- <div class="col-sm-10"> -->
-                            <input type="text" class="form-control" name="licenseWebsite" placeholder="Adresse HTTP du site web contenant des informations sur la licence." aria-label="licenseWebsite" ng-model="licenseWebsite">
-                        <!-- </div> -->
+                        <label for="licenseWebsite" class="col-sm-3 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.WEBSITE_FIELD.LABEL"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="licenseWebsite" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.WEBSITE_FIELD.PLACEHOLDER' | translate}}" aria-label="licenseWebsite" ng-model="model.licenseWebsite">
+                        </div>
                     </div>
-                    <hr/>
-                    <div class="form-group">
-                            <button type="submit" class="btn btn-primary" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
-                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
-
-                    </div>
-				</form>
+                </div>
+                <div class="modal-footer modal-footer-border">
+                    <button type="submit" class="btn btn-primary" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
+                    <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

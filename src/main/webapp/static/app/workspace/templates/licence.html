@@ -1,16 +1,35 @@
 <div class="row" ng-controller="LicenceCtrl">
     <div class="col-sm-12 col-md-10 tab-pane-content">
     	<div class="form-group">
-	        <label for="licence" class="control-label">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</label>
+	        <label for="license" class="control-label">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</label>
 
-            <div class="row">
-                <div class="col-md-12">
-	        		<button type="button" name="licence" class="form-control btn btn-default" ng-model="metadata.license" ng-change="updateStatusOfUse(metadata.license)" data-placeholder="Sélectionnez une licence" bs-options="licence.id as licence.label for licence in allLicences" bs-select>{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}} <span class="caret"></span></button>
-	        	</div>
-                <!-- <div class="col-md-1">
-                    <button type="button" class="btn btn-default btn-rounded" data-title="Ajouter une licence si vous ne trouvez pas la votre dans le référentiel ORTOLANG" ng-click="addLicence()" bs-tooltip><span class="glyphicon glyphicon-plus"></span></button>
-                </div> -->
-	    	</div>
+            <table class="table table-bordered table-responsive card-well metadata-editor-table">
+                <tbody>
+                    <tr ng-if="selectedLicense">
+                        <td>
+                            <div class="media">
+                                <div class="media-body">
+                                    <span class="clickable" ng-click="editLicense(selectedLicense)" ng-bind="selectedLicense.label"></span>
+                                </div>
+                                <div class="media-right actions">
+                                    <button class="no-border" ng-click="deleteLicense()">
+                                        <span ng-class="::icons.remove"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="!selectedLicense" class="clickable" ng-click="chooseLicence()">
+                        <td>
+                            <span class="fa fa-search"></span>  <span>  Sélectionnez une licence...</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p ng-if="!selectedLicense" class="help-block">
+                Vous ne trouvez pas votre licence ?
+                <a href="" ng-click="addLicence()">Ajouter une nouvelle licence</a>
+            </p>
     	</div>
         <hr/>
         <div class="form-group">

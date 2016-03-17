@@ -267,7 +267,21 @@ angular.module('ortolangMarketApp')
                 },
                 ADD_LICENCE_MODAL: {
                     TITLE: 'Ajouter une licence particulière',
-                    LABEL: 'Donnez un nom à cette licence'
+                    LABEL: 'Donnez un nom à cette licence',
+                    LABEL_FIELD: {
+                        LABEL: 'Nom'
+                    },
+                    DESCRIPTION_FIELD: {
+                        LABEL: 'Description',
+                        PLACEHOLDER: 'Résumez les particularités de la licence'
+                    },
+                    WEBSITE_FIELD: {
+                        LABEL: 'Page web',
+                        PLACEHOLDER: 'Adresse HTTP du site web contenant des informations sur la licence.'
+                    }
+                },
+                CHOOSE_LICENCE_MODAL: {
+                    TITLE: 'Choisir une licence'
                 },
                 ERROR_MESSAGES_MODAL: {
                     TITLE: 'Erreur dans les métadonnées'

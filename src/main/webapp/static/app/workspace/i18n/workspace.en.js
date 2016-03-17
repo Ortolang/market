@@ -256,8 +256,22 @@ angular.module('ortolangMarketApp')
                     }
                 },
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Add a licence',
-                    LABEL: 'Gets a name for this licnse'
+                    TITLE: 'Add a new license',
+                    LABEL: 'Give a name for this licnse',
+                    LABEL_FIELD: {
+                        LABEL: 'Name'
+                    },
+                    DESCRIPTION_FIELD: {
+                        LABEL: 'Description',
+                        PLACEHOLDER: 'Sumary of the particularity'
+                    },
+                    WEBSITE_FIELD: {
+                        LABEL: 'Web page',
+                        PLACEHOLDER: 'HTTP address of the web site which contains informations about the license.'
+                    }
+                },
+                CHOOSE_LICENCE_MODAL: {
+                    TITLE: 'Choose a licence'
                 },
                 ERROR_MESSAGES_MODAL: {
                     TITLE: 'Error in metadata'
