@@ -1,7 +1,7 @@
 <div class="media organization-card card-well card-well-hover">
     <div class="media-left">
         <div ng-if="::organization.content.img" class="organization-logo-wrapper" style="background-image: url({{::organization.content.img}})"></div>
-        <img ng-if="::!organization.content.img" holder-js="holder.js/100x100?theme={{organization.content.name.toLowerCase().charAt(0)}}&text={{organization.content.name.charAt(0)}}&size=40" width="60"/>
+        <img ng-if="::!organization.content.img" holder-js="holder.js/100x100?theme={{::organization.title.toLowerCase()}}&text={{::organization.title}}&size=40" width="60"/>
     </div>
     <div class="media-body">
         <p class="name">
