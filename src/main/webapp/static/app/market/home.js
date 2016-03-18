@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
 
             function init() {
                 initScopeVariables();
-                $scope.params = '{"title":"","limit":"10"}';
+                $scope.params = '{"title":"", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             }
             init();
 
