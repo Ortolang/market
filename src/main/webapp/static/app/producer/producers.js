@@ -23,6 +23,7 @@ angular.module('ortolangMarketApp')
         };
 
         function init() {
+            $scope.models = {};
             $scope.producers = [];
             $scope.processing = true;
             $scope.getAllOrganizations();

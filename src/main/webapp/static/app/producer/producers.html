@@ -2,10 +2,10 @@
     <div class="toolbar-wrapper">
         <div class="toolbar">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-sm-12">
                     <div class="input-group">
-                        <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{('MARKET.SEARCH.PRODUCERS') | translate}}">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                        <div class="input-group-addon"><span ng-class="::icons.search"></span></div>
+                        <input ng-model="models.query" class="form-control" type="text" placeholder="{{('MARKET.SEARCH.PRODUCERS') | translate}}">
                     </div>
                 </div>
             </div>
@@ -15,11 +15,11 @@
         <div class="container-main-inner">
             <section ng-if="producers" class="items">
                 <div class="row auto-clear">
-                    <div ng-repeat="producer in producers | filter:content | orderBy:'+content.name'" organization-card organization="producer" class="col-sm-12 col-md-6 col-lg-6">
+                    <div ng-repeat="producer in producers | filter:models.query | orderBy:'+content.name'" organization-card organization="producer" class="col-sm-12 col-md-6 col-lg-6">
                     </div>
                 </div>
             </section>
-            <p ng-show="processing"><span class="fa fa-refresh fa-spin"></span> Chargement...</p>
+            <p ng-show="processing"><span class="fa fa-refresh fa-spin"></span> {{'PENDING_DATA' | translate}}</p>
             <section ng-if="!producers" class="row items">
                 <p class="text-center"><em>{{'MARKET.NO_PRODUCER' | translate}}</em></p>
             </section>
