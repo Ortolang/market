@@ -111,6 +111,46 @@ button.no-border {
   }
 }
 
+.organization-card {
+  background-color: lighten(@default-bg, 2%);
+  cursor: pointer;
+  margin-bottom: @line-height-computed;
+  .media-left {
+    vertical-align: middle;
+    padding-right: 2 * @padding-base-horizontal;
+    height: 105px;
+    .organization-logo-wrapper {
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+  .media-body {
+    vertical-align: middle;
+    .name {
+      font-weight: 600;
+    }
+    p {
+      padding-bottom: @padding-base-horizontal;
+      border-bottom: @default-border;
+    }
+    .location {
+      padding-right: @padding-large-horizontal;
+    }
+    .website a {
+      color: inherit;
+      border-bottom: 1px dotted @text-color;
+      text-decoration: none;
+      &:hover {
+        color: @ortolang-blue;
+        border-bottom-color: @ortolang-blue;
+      }
+    }
+  }
+}
+
 .order-indicator {
   color: @dark-yellow;
   padding-left: 2px;

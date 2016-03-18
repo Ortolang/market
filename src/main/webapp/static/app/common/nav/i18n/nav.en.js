@@ -32,6 +32,7 @@ angular.module('ortolangMarketApp')
                 NEWSLETTER: 'Newsletter',
                 POLICY: 'ORTOLANG\'s policy'
             },
+            PRODUCERS: 'Producers',
             COMMUNITY_WEBSITE: 'Community website',
             CONTACT: 'Contact us',
             LEGAL_NOTICES: 'Legal notices',

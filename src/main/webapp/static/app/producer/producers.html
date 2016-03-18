@@ -14,9 +14,8 @@
     <div class="container-main">
         <div class="container-main-inner">
             <section ng-if="producers" class="items">
-                <div class="row market-list-line">
-                    <div ng-repeat="producer in producers | filter:content" class="col-md-8 line">
-                        <div ng-include="'producer/directives/producer.html'"></div>
+                <div class="row auto-clear">
+                    <div ng-repeat="producer in producers | filter:content | orderBy:'+content.name'" organization-card organization="producer" class="col-sm-12 col-md-6 col-lg-6">
                     </div>
                 </div>
             </section>

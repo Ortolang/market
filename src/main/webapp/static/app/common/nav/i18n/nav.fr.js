@@ -25,13 +25,14 @@ angular.module('ortolangMarketApp')
                 ENGLISH: 'English'
             },
             INFORMATION: {
-                INFORMATION: 'Information',
+                INFORMATION: 'Informations',
                 PRESENTATION: 'Présentation',
                 PARTNERS: 'Partenaires',
                 ROADMAP: 'Feuille de route',
                 NEWSLETTER: 'Lettre d\'information',
                 POLICY: 'Charte d\'ORTOLANG'
             },
+            PRODUCERS: 'Producteurs',
             COMMUNITY_WEBSITE: 'Site communautaire',
             CONTACT: 'Contactez-nous',
             LEGAL_NOTICES: 'Mentions légales',

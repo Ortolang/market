@@ -68,6 +68,15 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            class: 'producers',
+            path: '/producers',
+            description: 'NAV.PRODUCERS',
+            iconCss: 'fa fa-fw fa-graduation-cap fa-2x',
+            hiddenSideNav: false,
+            hiddenTopNav: false,
+            authenticated: false
+        },
+        {
             class: 'workspaces',
             path: '/workspaces',
             description: 'NAV.WORKSPACES',
