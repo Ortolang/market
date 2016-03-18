@@ -87,7 +87,7 @@ angular.module('ortolangMarketApp')
         {
             id: 'divider2',
             class: 'divider',
-            authenticated: false
+            authenticated: true
         },
         {
             id: 'workspaces',
