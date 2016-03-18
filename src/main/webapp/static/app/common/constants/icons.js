@@ -43,6 +43,7 @@ angular.module('ortolangMarketApp')
             copyToClipboard: 'octicon octicon-clippy',
             cloudUpload: 'glyphicon glyphicon-cloud-upload',
             pending: 'fa fa-refresh fa-spin',
+            search: 'glyphicon glyphicon-search',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',
