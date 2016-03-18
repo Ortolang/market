@@ -15,8 +15,7 @@
         <div class="container-main-inner">
             <section ng-if="producers" class="items">
                 <div class="row auto-clear">
-                    <div ng-repeat="producer in producers | filter:models.query | orderBy:'+content.name'" organization-card organization="producer" class="col-sm-12 col-md-6 col-lg-6">
-                    </div>
+                    <div ng-repeat="producer in producers | filter:models.query | orderBy:'+content.name'" ng-click="showProducer(producer, $event)" organization-card organization="producer" class="col-sm-12 col-md-6 col-lg-6"></div>
                 </div>
             </section>
             <p ng-show="processing"><span class="fa fa-refresh fa-spin"></span> {{'PENDING_DATA' | translate}}</p>
