@@ -1,4 +1,4 @@
-<div ng-controller="ProducersCtrl" class="view-wrapper-flex">
+<div ng-controller="ProducersCtrl" class="producers-wrapper view-wrapper-flex">
     <div class="toolbar-wrapper">
         <div class="toolbar">
             <div class="row">
@@ -6,6 +6,9 @@
                     <div class="input-group">
                         <div class="input-group-addon"><span ng-class="::icons.search"></span></div>
                         <input ng-model="models.query" class="form-control" type="text" placeholder="{{('MARKET.SEARCH.PRODUCERS') | translate}}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="toggleViewMode()"><span ng-class="models.viewMode === 'line' ? icons.browser.viewModeTile : icons.browser.viewModeLine"></span></button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -13,7 +16,25 @@
     </div>
     <div class="container-main">
         <div class="container-main-inner">
-            <section ng-if="producers" class="items">
+            <table ng-if="producers && models.viewMode === 'line'" class="table table-hover producers-table">
+                <thead>
+                    <tr>
+                        <th>Acronyme</th>
+                        <th>Nom</th>
+                        <th>Ville</th>
+                        <th>Site</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="producer in producers | filter:models.query | orderBy:'+name'" ng-click="showProducer(producer, $event)">
+                        <td>{{::producer.content.acronym}}</td>
+                        <td>{{::producer.content.name}}</td>
+                        <td><span class="fa fa-fw fa-map-marker"></span> {{::producer.content.city + ', ' + producer.content.country}}</td>
+                        <td><span ng-show="::producer.content.homepage"><a ng-href="{{::producer.content.homepage}}" target="_blank">Site internet</a></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <section ng-if="producers && models.viewMode === 'tile'" class="items">
                 <div class="row auto-clear">
                     <div ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder" ng-click="showProducer(producer, $event)" organization-card organization="producer" class="col-sm-12 col-md-6 col-lg-6"></div>
                 </div>

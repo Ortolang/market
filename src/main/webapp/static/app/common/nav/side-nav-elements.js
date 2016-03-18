@@ -10,6 +10,7 @@
 angular.module('ortolangMarketApp')
     .constant('sideNavElements', [
         {
+            id: 'home',
             class: 'home',
             path: '/',
             description: 'NAV.HOME',
@@ -19,6 +20,7 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'corpora',
             class: 'corpora',
             path: '/market/corpora',
             description: 'CORPORA',
@@ -28,6 +30,7 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'applications',
             class: 'applications',
             path: '/market/applications',
             description: 'INTEGRATED_PROJECTS',
@@ -37,6 +40,7 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'tools',
             class: 'tools',
             path: '/market/tools',
             description: 'TOOLS',
@@ -46,6 +50,7 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'lexicons',
             class: 'lexicons',
             path: '/market/lexicons',
             description: 'LEXICONS',
@@ -55,10 +60,12 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'divider',
             class: 'divider',
             authenticated: false
         },
         {
+            id: 'information',
             class: 'information',
             path: '/information',
             description: 'NAV.INFORMATION',
@@ -68,6 +75,7 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'producers',
             class: 'producers',
             path: '/producers',
             description: 'NAV.PRODUCERS',
@@ -77,6 +85,12 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'divider2',
+            class: 'divider',
+            authenticated: false
+        },
+        {
+            id: 'workspaces',
             class: 'workspaces',
             path: '/workspaces',
             description: 'NAV.WORKSPACES',

@@ -34,8 +34,14 @@ angular.module('ortolangMarketApp')
             }
         };
 
+        $scope.toggleViewMode = function () {
+            $scope.models.viewMode = $scope.models.viewMode === 'tile' ? 'line' : 'tile';
+        };
+
         function init() {
-            $scope.models = {};
+            $scope.models = {
+                viewMode: 'tile'
+            };
             $scope.producers = [];
             $scope.processing = true;
             $scope.getAllOrganizations();

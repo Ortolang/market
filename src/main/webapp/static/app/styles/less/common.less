@@ -115,10 +115,14 @@ button.no-border {
   background-color: lighten(@default-bg, 2%);
   cursor: pointer;
   margin-bottom: @line-height-computed;
+  &.card-well {
+    padding: 10px 12px 12px;
+    margin-bottom: @padding-large-horizontal;
+  }
   .media-left {
     vertical-align: middle;
     padding-right: 2 * @padding-base-horizontal;
-    height: 105px;
+    height: 102px;
     .organization-logo-wrapper {
       width: 100px;
       height: 100px;
