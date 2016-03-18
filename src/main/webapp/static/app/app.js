@@ -142,7 +142,14 @@ angular
             })
             .when('/404', {
                 templateUrl: '404.html',
-                title: 'NAV.404'
+                title: 'NAV.404',
+                resolve: {
+                    func: [function () {
+                        var meta = angular.element('<meta name="prerender-status-code" content="404">');
+                        angular.element('head').append(meta);
+                        return true;
+                    }]
+                }
             })
             .otherwise({
                 redirectTo: '/404'
