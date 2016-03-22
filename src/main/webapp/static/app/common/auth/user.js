@@ -34,6 +34,7 @@ angular.module('ortolangMarketApp')
             this.familyName = profile.familyName;
             this.email = profile.email;
             this.emailHash = profile.emailHash;
+            this.emailVerified = profile.emailVerified;
             this.emailVisibility = profile.emailVisibility;
             this.status = profile.status;
             this.groups = profile.groups;
@@ -41,6 +42,7 @@ angular.module('ortolangMarketApp')
             this.profileDatas = profile.profileDatas;
             this.isLocked = profile.isLocked;
             this.friends = profile.friends;
+            this.isModerator = this.groups.indexOf('moderators') >= 0;
             return this;
         };
 
@@ -49,8 +51,6 @@ angular.module('ortolangMarketApp')
         this.isAuthenticated = AuthService.isAuthenticated;
 
         this.isRoot = AuthService.isRoot;
-
-        this.isModerator = AuthService.isModerator;
 
         return this;
     }]);

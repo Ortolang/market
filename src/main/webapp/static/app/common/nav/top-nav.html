@@ -17,7 +17,7 @@
             <li ng-if="navbarCollapsed" ng-repeat="element in ::sideNavElements | filter:{hiddenTopNav : false}:true track by element.class">
                 <a ng-href="#{{::element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="::element.iconCss"></span> {{::element.description | translate}}</a>
             </li>
-            <li ng-if="authenticated && User.isModerator() && Runtime.getTasks().length > 0 && !navbarCollapsed">
+            <li ng-if="authenticated && User.isModerator && Runtime.getTasks().length > 0 && !navbarCollapsed">
                 <a href="/profile/tasks" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-fw fa-bell"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
                     <span class="hidden-description" translate="TASKS"></span>

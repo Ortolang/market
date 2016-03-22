@@ -36,7 +36,7 @@ angular.element(document).ready(function () {
                     return keycloakAuth.idTokenParsed.preferred_username === 'root';
                 }
 
-                function isModerator() {
+                function isAdmin() {
                     return keycloakAuth.hasRealmRole('admin');
                 }
 
@@ -90,7 +90,7 @@ angular.element(document).ready(function () {
                     getKeycloak: function () { return keycloakAuth; },
                     isAuthenticated: isAuthenticated,
                     isRoot: isRoot,
-                    isModerator: isModerator,
+                    isAdmin: isAdmin,
                     getScope: getScope,
                     forceReload: forceReload,
                     sessionInitialized: sessionInitialized,

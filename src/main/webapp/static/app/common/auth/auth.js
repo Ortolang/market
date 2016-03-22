@@ -16,6 +16,15 @@ angular.module('ortolangMarketApp')
 
         var serverDownModal, unauthorizedModal, notLoggedInModal;
 
+        function initProfile(profile) {
+            User.create(profile);
+            if (User.isModerator) {
+                Runtime.init();
+            }
+            AuthService.resolveSessionInitialized();
+            AtmosphereService.subscribe();
+        }
+
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
                 if (!profile.complete) {
@@ -32,19 +41,12 @@ angular.module('ortolangMarketApp')
                         angular.forEach(data.entries, function (profileData) {
                             profile.profileDatas[profileData.name] = profileData;
                         });
-                        User.create(profile);
-                        AuthService.resolveSessionInitialized();
-                        AtmosphereService.subscribe();
+                        initProfile(profile);
                     },
                     function () {
-                        User.create(profile);
-                        AuthService.resolveSessionInitialized();
-                        AtmosphereService.subscribe();
+                        initProfile(profile);
                     }
                 );
-                if (AuthService.isModerator()) {
-                    Runtime.init();
-                }
             });
         }
 
