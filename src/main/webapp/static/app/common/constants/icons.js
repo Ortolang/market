@@ -44,6 +44,7 @@ angular.module('ortolangMarketApp')
             cloudUpload: 'glyphicon glyphicon-cloud-upload',
             pending: 'fa fa-refresh fa-spin',
             search: 'glyphicon glyphicon-search',
+            location: 'fa fa-fw fa-map-marker',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

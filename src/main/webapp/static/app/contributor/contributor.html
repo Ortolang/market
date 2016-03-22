@@ -1,17 +1,14 @@
-<div class="container-main">
+<div class="container-main contributor-wrapper">
     <section ng-controller="ContributorCtrl" class="market-item">
         <header>
             <div class="media">
-                <div class="pull-left">
-                    <div ng-if="contributor.emailhash" class="logo-contributor">
-                        <span avatar data-email-hash="contributor.emailhash" data-size="90" data-img-classes="user-avatar img-responsive"></span>
-                    </div>
-                    <div ng-if="!contributor.emailhash" class="logo-contributor thumbnail">
-                        <span ng-if="!contributor.img" class="fa fa-user fa-5x"></span>
+                <div class="media-left">
+                    <div class="item-logo">
+                        <span avatar data-email-hash="contributor.emailhash" data-size="120" data-img-classes="user-avatar img-responsive"></span>
                     </div>
                 </div>
                 <div class="media-body">
-                    <h1>{{contributor.fullname}}</h1>
+                    <h2>{{contributor.fullname}}</h2>
                 </div>
             </div>
         </header>

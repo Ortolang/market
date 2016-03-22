@@ -14,7 +14,8 @@ angular.module('ortolangMarketApp')
             scope: {
                 organization: '=',
                 size: '@',
-                imgClasses: '@'
+                imgClasses: '@',
+                icons: '='
             },
             templateUrl: 'common/directives/organization-card-template.html'
         };

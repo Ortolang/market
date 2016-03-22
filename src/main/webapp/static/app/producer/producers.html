@@ -36,13 +36,10 @@
             </table>
             <section ng-if="producers && models.viewMode === 'tile'" class="items">
                 <div class="row auto-clear">
-                    <div ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder" ng-click="showProducer(producer, $event)" organization-card organization="producer" class="col-sm-12 col-md-6 col-lg-6"></div>
+                    <div ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder track by producer.key" ng-click="showProducer(producer, $event)" organization-card organization="producer" icons="icons" class="col-sm-12 col-md-6 col-lg-6"></div>
                 </div>
             </section>
             <p ng-show="processing"><span class="fa fa-refresh fa-spin"></span> {{'PENDING_DATA' | translate}}</p>
-            <section ng-if="!producers" class="row items">
-                <p class="text-center"><em>{{'MARKET.NO_PRODUCER' | translate}}</em></p>
-            </section>
         </div>
     </div>
 </div>

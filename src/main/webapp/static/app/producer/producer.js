@@ -17,8 +17,7 @@ angular.module('ortolangMarketApp')
                 $rootScope.ortolangPageTitle = $scope.producer.name + ' | ';
 
                 if (!$scope.producer.img) {
-                    $scope.imgtitle = '';
-                    $scope.imgtheme = 'custom';
+                    $scope.title = $scope.producer.acronym ? $scope.producer.acronym.charAt(0) : $scope.producer.name.charAt(0);
                 }
             });
         }
