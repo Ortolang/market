@@ -38,9 +38,16 @@ angular.module('ortolangMarketApp')
             $scope.models.viewMode = $scope.models.viewMode === 'tile' ? 'line' : 'tile';
         };
 
+        $scope.seeMoreProducers = function () {
+            if ($scope.models.viewMode === 'tile' && $scope.models.limit < $scope.producers.length) {
+                $scope.models.limit += 30;
+            }
+        };
+
         function init() {
             $scope.models = {
-                viewMode: 'tile'
+                viewMode: 'tile',
+                limit: 30
             };
             $scope.producers = [];
             $scope.processing = true;
