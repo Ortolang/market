@@ -224,6 +224,8 @@ angular.module('ortolangMarketApp')
                 OPERATING_SYSTEMS: 'Operating systems',
                 TOOL_SUPPORT: 'Tool support',
                 LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
+                NO_ORGANIZATION_FOUND: 'You do not find your organization ?',
+                ADD_NEW_ORGANIZATION: 'Add a new organization',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',

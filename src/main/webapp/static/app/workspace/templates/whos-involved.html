@@ -7,7 +7,7 @@
         </div>
         <p class="help-block">
             Vous ne trouvez pas votre laboratoire ?
-            <a href="" class="btn btn-link" ng-disabled="Workspace.active.workspace.readOnly" ng-click="createProducer()">Ajouter un nouveau laboratoire</a>
+            <a href="" class="btn btn-link" ng-disabled="Workspace.active.workspace.readOnly" ng-click="createOrganization()">Ajouter un nouveau laboratoire</a>
         </p>
     </div>
     <table class="table table-bordered table-responsive card-well metadata-editor-table">
@@ -33,28 +33,61 @@
     </table>
     <hr/>
     <div class="form-group">
+        <label for="search-sponsor" class="control-label">{{'ITEM.SPONSORS.LABEL' | translate}}</label>
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+            <input ng-model="searchSponsor" ng-disabled="Workspace.active.workspace.readOnly" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.label for sponsor in allSponsors" data-html="true" data-container="body" bs-typeahead>
+        </div>
+        <p class="help-block">
+            {{'WORKSPACE.METADATA_EDITOR.NO_ORGANIZATION_FOUND' | translate}}
+            <a href="" class="btn btn-link" ng-disabled="Workspace.active.workspace.readOnly" ng-click="createOrganization('sponsor')">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_ORGANIZATION' | translate}}</a>
+        </p>
+    </div>
+    <table class="table table-bordered table-responsive card-well metadata-editor-table">
+        <tbody>
+        <tr ng-repeat="sponsor in sponsors">
+            <td>
+                <div class="media">
+                    <div class="media-left">
+                        <img width="60px" class="img-rounded" ng-src="{{sponsor.img}}">
+                    </div>
+                    <div class="media-body">
+                        <span  ng-bind="sponsor.fullname"></span>
+                    </div>
+                    <div class="media-right actions">
+                        <button class="no-border" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteSponsor(sponsor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
+                            <span ng-class="::icons.remove"></span>
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <div class="form-group">
         <label class="control-label">Personne(s) contributrice(s)</label>
-            <ul class="row list-unstyled auto-clear">
-                <li ng-repeat="contributor in contributors"
-                    ng-class="{'contributor-link': contributor.entity.id}"
-                    class="profile-card contributor-card col-md-6 col-lg-4">
-                    <div class="media">
-                        <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
-                        <div class="media-body">
-                            <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span>
-                            <div class="small roles">
-                                <span ng-repeat="role in contributor.roles">{{role.label}}<span ng-if="!$last">, </span></span>
-                            </div>
-                        </div>
-                        <div class="media-right">
-                            <button type="button" class="close delete-contributor" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteContributor(contributor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>&times;</button>
+        <ul class="row list-unstyled auto-clear">
+            <li ng-repeat="contributor in contributors"
+                ng-class="{'contributor-link': contributor.entity.id}"
+                class="profile-card contributor-card col-md-6 col-lg-4">
+                <div class="media">
+                    <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
+                    <div class="media-body">
+                        <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span>
+                        <div class="small roles">
+                            <span ng-repeat="role in contributor.roles">{{role.label}}<span ng-if="!$last">, </span></span>
                         </div>
                     </div>
-                </li>
-                <li class="col-lg-4 col-md-6 add-member-btn-wrapper" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addPerson()">
-                    <div class="media-left"><button type="button" ng-disabled="Workspace.active.workspace.readOnly" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
-                    <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
-                </li>
-            </ul>
+                    <div class="media-right">
+                        <button type="button" class="close delete-contributor" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteContributor(contributor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>&times;</button>
+                    </div>
+                </div>
+            </li>
+            <li class="col-lg-4 col-md-6 add-member-btn-wrapper" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addPerson()">
+                <div class="media-left"><button type="button" ng-disabled="Workspace.active.workspace.readOnly" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
+                <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
+            </li>
+        </ul>
     </div>
 </div>
