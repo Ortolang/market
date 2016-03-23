@@ -1,4 +1,5 @@
 <div ng-controller="WorkspaceDashboardPermissionsCtrl">
+    <div ng-if="Workspace.active.workspace.readOnly" class="alert alert-warning" role="alert" translate="WORKSPACE.READ_ONLY_MODE"></div>
     <div class="workspace-dashboard-section workspace-dashboard-permissions">
         <h4 translate="WORKSPACE.PERMISSIONS_EDITOR.TITLE" class="no-border-bottom"></h4>
         <div class="legend">

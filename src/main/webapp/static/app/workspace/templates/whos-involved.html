@@ -3,11 +3,11 @@
         <label for="search-producer" class="control-label">Laboratoire(s) producteur(s)</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchProducer" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" data-container="body" bs-typeahead>
+            <input ng-model="searchProducer" ng-disabled="Workspace.active.workspace.readOnly" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" data-container="body" bs-typeahead>
         </div>
         <p class="help-block">
             Vous ne trouvez pas votre laboratoire ?
-            <a href="" ng-click="createProducer()">Ajouter un nouveau laboratoire</a>
+            <a href="" class="btn btn-link" ng-disabled="Workspace.active.workspace.readOnly" ng-click="createProducer()">Ajouter un nouveau laboratoire</a>
         </p>
     </div>
     <table class="table table-bordered table-responsive card-well metadata-editor-table">
@@ -22,7 +22,7 @@
                         <span  ng-bind="producer.fullname"></span>
                     </div>
                     <div class="media-right actions">
-                        <button class="no-border" ng-click="deleteProducer(producer)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
+                        <button class="no-border" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteProducer(producer)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
                             <span ng-class="::icons.remove"></span>
                         </button>
                     </div>
@@ -47,12 +47,12 @@
                             </div>
                         </div>
                         <div class="media-right">
-                            <button type="button" class="close delete-contributor" ng-click="deleteContributor(contributor)">&times;</button>
+                            <button type="button" class="close delete-contributor" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteContributor(contributor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>&times;</button>
                         </div>
                     </div>
                 </li>
-                <li class="col-lg-4 col-md-6 add-member-btn-wrapper" ng-click="addPerson()">
-                    <div class="media-left"><button type="button" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
+                <li class="col-lg-4 col-md-6 add-member-btn-wrapper" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addPerson()">
+                    <div class="media-left"><button type="button" ng-disabled="Workspace.active.workspace.readOnly" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
                     <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
                 </li>
             </ul>

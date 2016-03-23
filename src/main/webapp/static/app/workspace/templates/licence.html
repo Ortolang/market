@@ -9,17 +9,17 @@
                         <td>
                             <div class="media">
                                 <div class="media-body">
-                                    <span class="clickable" ng-click="editLicense(selectedLicense)" ng-bind="selectedLicense.label"></span>
+                                    <span class="clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="editLicense(selectedLicense)" ng-bind="selectedLicense.label"></span>
                                 </div>
                                 <div class="media-right actions">
-                                    <button class="no-border" ng-click="deleteLicense()">
+                                    <span class="clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteLicense()" data-title="{{::'DELETE' | translate}}" bs-tooltip>
                                         <span ng-class="::icons.remove"></span>
-                                    </button>
+                                    </span>
                                 </div>
                             </div>
                         </td>
                     </tr>
-                    <tr ng-if="!selectedLicense" class="clickable" ng-click="chooseLicence()">
+                    <tr ng-if="!selectedLicense" class="clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="chooseLicence()">
                         <td>
                             <span class="fa fa-search"></span>  <span>  Sélectionnez une licence...</span>
                         </td>
@@ -28,7 +28,7 @@
             </table>
             <p ng-if="!selectedLicense" class="help-block">
                 Vous ne trouvez pas votre licence ?
-                <a href="" ng-click="addLicence()">Ajouter une nouvelle licence</a>
+                <a href="" class="btn btn-link" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addLicence()" translate="WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.TITLE"></a>
             </p>
     	</div>
         <hr/>
@@ -39,14 +39,14 @@
                 <button type="button" class="btn btn-default" name="conditionsOfUse-lang" ng-model="selectedConditionsOfUseLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeConditionsOfUseLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
             </div>
             
-            <textarea class="form-control" name="conditionsOfUse" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse.value" ng-change="updateConditionsOfUse()"></textarea>
+            <textarea class="form-control" name="conditionsOfUse" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse.value" ng-disabled="Workspace.active.workspace.readOnly" ng-change="updateConditionsOfUse()"></textarea>
                 
         </div>
         <hr/>
         <div class="form-group">
             <label for="copyright" class="control-label">{{'MARKET.COPYRIGHT' | translate}}</label>
             
-              <input type="text" class="form-control" name="copyright" placeholder="Copyright ..." aria-label="copyright" ng-model="metadata.copyright">
+              <input type="text" class="form-control" name="copyright" placeholder="Copyright ..." aria-label="copyright" ng-model="metadata.copyright" ng-disabled="Workspace.active.workspace.readOnly">
             
         </div>
 	</div>

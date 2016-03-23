@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper',
-        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper) {
+    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace',
+        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper, Workspace) {
 
             /**
              * Updates the license property.
@@ -34,6 +34,9 @@ angular.module('ortolangMarketApp')
              * Deletes the licence.
              **/
             $scope.deleteLicense = function () {
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
                 delete $scope.metadata.license;
                 delete $scope.selectedLicense;
             }
@@ -42,6 +45,9 @@ angular.module('ortolangMarketApp')
              * Edit the licence.
              **/
             $scope.editLicense = function (license) {
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
                 if (license.id) {
                     $scope.chooseLicence(license);
                 } else {
@@ -62,6 +68,11 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.chooseLicence = function (license) {
+
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
+
                 var modalScope = prepareModalScopeChooseLicence(license),
                     chooseLicenceModal;
 
@@ -148,6 +159,10 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.addLicence = function (license) {
+
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
 
                 var modalScope = prepareModalScopeNewLicence(license),
                     addLicenceModal;

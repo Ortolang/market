@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WhosInvolvedCtrl', ['$rootScope', '$scope', '$modal', '$filter', 'Settings', 'ReferentialEntityResource', 'Helper',
-        function ($rootScope, $scope, $modal, $filter, Settings, ReferentialEntityResource, Helper) {
+    .controller('WhosInvolvedCtrl', ['$rootScope', '$scope', '$modal', '$filter', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace',
+        function ($rootScope, $scope, $modal, $filter, Settings, ReferentialEntityResource, Helper, Workspace) {
 
             $scope.deleteProducer = function (producer) {
                 var index = $scope.producers.indexOf(producer);
@@ -108,7 +108,9 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.addPerson = function () {
-
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
                 var modalScope = prepareModalScopeForPerson(),
                     addContributorModal;
 
@@ -209,6 +211,11 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.createProducer = function () {
+
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
+
                 var modalScope = prepareModalScopeForOrganization(),
                     addOrganizationModal;
 
