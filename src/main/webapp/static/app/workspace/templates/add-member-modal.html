@@ -7,18 +7,21 @@
             </div>
             <div class="modal-body">
                 <form ng-submit="search()" class="search-form" autocomplete="off">
-                    <div class="input-group">
-                        <input class="form-control" type="text" ng-model="searchQuery" placeholder="{{'WORKSPACE.ADD_MEMBER_MODAL.SEARCH' | translate}}" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><span class="fa fa-fw fa-search"></span></button>
-                        </span>
+                    <div class="form-group" ng-class="{'has-error': searchQueryLength}">
+                        <div class="input-group">
+                            <input class="form-control" type="text" ng-model="searchQuery" placeholder="{{'WORKSPACE.ADD_MEMBER_MODAL.SEARCH' | translate}}" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><span class="fa fa-fw fa-search"></span></button>
+                            </span>
+                        </div>
+                        <span ng-if="searchQueryLength" class="help-block" translate="WORKSPACE.ADD_MEMBER_MODAL.QUERY_LENGTH"></span>
                     </div>
                 </form>
                 <div class="search-result" ng-show="profiles.length >= 0">
                     <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.SEARCH_RESULT"></strong></p>
                     <p ng-show="profiles.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_RESULT"></p>
                     <ul class="list-unstyled">
-                        <li ng-repeat="profile in profiles" profile-card data-profile="profile" data-img-classes="img-circle" data-size="50">
+                        <li ng-repeat="profile in profiles | limitTo:models.limit track by profile.key" profile-card data-profile="profile" data-img-classes="img-circle" data-size="50">
                             <div class="btn-group" ng-hide="profile.alreadyMember">
                                 <button ng-click="add(profile)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
                             </div>
@@ -27,13 +30,14 @@
                             </div>
                         </li>
                     </ul>
+                    <p ng-show="profile.length > models.limit"><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MORE_RESULTS"></strong></p>
                 </div>
                 <hr ng-if="!addFriend" ng-show="profiles.length >= 0" />
                 <div class="my-friends" ng-if="!addFriend">
                     <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MY_FRIENDS"></strong></p>
                     <p ng-show="friends.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_FRIENDS"></p>
                     <ul class="list-unstyled">
-                        <li ng-repeat="friend in friends" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
+                        <li ng-repeat="friend in ::friends track by friend.key" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
                             <div class="btn-group" ng-hide="friend.alreadyMember">
                                 <button ng-click="add(friend)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
                             </div>

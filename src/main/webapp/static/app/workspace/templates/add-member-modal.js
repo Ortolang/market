@@ -10,6 +10,10 @@
 angular.module('ortolangMarketApp')
     .controller('AddMemberCtrl', ['$scope', '$filter', 'ProfileResource', 'GroupResource', 'User', 'SearchResource', function ($scope, $filter, ProfileResource, GroupResource, User, SearchResource) {
 
+        $scope.models = {
+            limit: 25
+        };
+
         if (!$scope.addFriend) {
             User.sessionInitialized().then(function () {
                 GroupResource.get({key: User.friends}, function (data) {
@@ -25,18 +29,23 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.search = function () {
-            SearchResource.findProfiles({content: $scope.searchQuery}, function (profiles) {
-                $scope.profiles = [];
-                angular.forEach(profiles, function (profile) {
-                    if (profile.key !== User.key) {
-                        ProfileResource.getCard({key: profile.key}, function (card) {
-                            if ($scope.members && $filter('filter')($scope.members, {key: profile.key}, true).length === 1) {
-                                card.alreadyMember = true;
-                            }
-                            $scope.profiles.push(card);
-                        });
-                    }
+            if ($scope.searchQuery.length > 2) {
+                $scope.searchQueryLength = false;
+                SearchResource.findProfiles({content: $scope.searchQuery}, function (profiles) {
+                    $scope.profiles = [];
+                    angular.forEach(profiles, function (profile) {
+                        if (profile.key !== User.key) {
+                            ProfileResource.getCard({key: profile.key}, function (card) {
+                                if ($scope.members && $filter('filter')($scope.members, {key: profile.key}, true).length === 1) {
+                                    card.alreadyMember = true;
+                                }
+                                $scope.profiles.push(card);
+                            });
+                        }
+                    });
                 });
-            });
+            } else {
+                $scope.searchQueryLength = true;
+            }
         };
     }]);
