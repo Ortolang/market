@@ -24,6 +24,10 @@ angular.module('ortolangMarketApp')
         	DESCRIPTION: {
         		LABEL: 'Description'
         	},
+            SPONSORS: {
+                LABEL: 'Sponsors',
+                PLACEHOLDER: 'Looks for organization registered in ORTOLANG repository'
+            },
             CREATIONLOCATIONS: {
                 LABEL: 'Creation locations',
                 PLACEHOLDER: 'Creation locations',

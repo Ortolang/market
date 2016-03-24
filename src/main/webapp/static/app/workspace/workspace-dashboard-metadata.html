@@ -1,23 +1,27 @@
-<div class="workspace-dashboard-metadata" ng-controller="WorkspaceDashboardMetadataCtrl">
-    <form name="ortolangItemJsonform" novalidate role="form">
-        
-        <div class="row" bs-active-pane="activeTab" data-template="workspace/templates/workspace-dashboard-metadata-tabs-template.html" bs-tabs>
+<div ng-controller="WorkspaceDashboardMetadataCtrl">
+    <div ng-if="Workspace.active.workspace.readOnly" class="alert alert-warning" role="alert" translate="WORKSPACE.READ_ONLY_MODE"></div>
 
-            <div data-title="<span class='fa fa-list-alt fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.BASIC_INFO' | translate}}" bs-pane>
-                <div ng-include="'workspace/templates/basic-info.html'"></div>
+    <div class="workspace-dashboard-metadata">
+        <form name="ortolangItemJsonform" novalidate role="form">
+
+            <div class="row" bs-active-pane="activeTab" data-template="workspace/templates/workspace-dashboard-metadata-tabs-template.html" bs-tabs>
+
+                <div data-title="<span class='fa fa-list-alt fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.BASIC_INFO' | translate}}" bs-pane>
+                    <div ng-include="'workspace/templates/basic-info.html'"></div>
+                </div>
+                <div data-title="<span class='fa fa-user fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}" bs-pane>
+                    <div ng-include="'workspace/templates/whos-involved.html'"></div>
+                </div>
+                <div data-title="<span class='fa fa-puzzle-piece fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}" bs-pane>
+                <div ng-include="'workspace/templates/specific-fields.html'"></div>
+                </div>
+                <div data-title="<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.ADDITIONAL_INFO' | translate}}" bs-pane>
+                    <div ng-include="'workspace/templates/additional-info.html'"></div>
+                </div>
+                <div data-title="<span class='fa fa-gavel fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}" bs-pane>
+                    <div ng-include="'workspace/templates/licence.html'"></div>
+                </div>
             </div>
-            <div data-title="<span class='fa fa-user fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.WHOS_INVOLVED' | translate}}" bs-pane>
-                <div ng-include="'workspace/templates/whos-involved.html'"></div>
-            </div>
-            <div data-title="<span class='fa fa-puzzle-piece fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}" bs-pane>
-            <div ng-include="'workspace/templates/specific-fields.html'"></div>
-            </div>
-            <div data-title="<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.ADDITIONAL_INFO' | translate}}" bs-pane>
-                <div ng-include="'workspace/templates/additional-info.html'"></div>
-            </div>
-            <div data-title="<span class='fa fa-gavel fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}" bs-pane>
-                <div ng-include="'workspace/templates/licence.html'"></div>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

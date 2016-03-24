@@ -29,6 +29,8 @@
 
 
 .workspace-dashboard-metadata {
+  padding-top: 2 * @line-height-computed;
+  
   .list-group-item {
     border: none;
     cursor: pointer;
@@ -149,8 +151,12 @@
     .add-member-btn-wrapper {
       padding-top: @padding-base-vertical;
       padding-bottom: @padding-base-vertical;
-    }
 
+      &[disabled] {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+    }
     .contributor-card {
       margin-bottom: 0;
       padding-top: @padding-base-vertical;
@@ -161,7 +167,6 @@
       .delete-contributor {
         opacity: 0;
       }
-
       &:hover {
         border-color: @alternate-border-color;
         .delete-contributor {
@@ -323,4 +328,8 @@
 
 .clickable {
   cursor: pointer;
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }

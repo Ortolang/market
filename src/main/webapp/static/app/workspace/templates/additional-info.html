@@ -5,9 +5,9 @@
             <label for="publications" class="control-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Les publications de référence sont celles qui décrivent comment la ressource a été créée. Elles sont également utilisées pour citer la ressource." data-placement="right" bs-tooltip></i></label>
 
             <div class="input-group">
-                <input type="text" class="form-control" name="publication" ng-model="publication" placeholder="Citation bibliographique de la publication."></input>
+                <input type="text" class="form-control" name="publication" ng-model="publication" ng-disabled="Workspace.active.workspace.readOnly" placeholder="Citation bibliographique de la publication."></input>
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="addPublication()">Ajouter</button>
+                    <button type="button" class="btn btn-default" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addPublication()">Ajouter</button>
                 </div>
             </div>
             <br/>
@@ -22,7 +22,7 @@
                                             <p ng-bind-html="publication"></p>
                                         </div>
                                         <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removePublication(publication)"></span>
+                                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removePublication(publication)"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -39,9 +39,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-click="filePreviewPathSelectorModal.show()"></input>
+                        <input type="text" class="form-control" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-disabled="Workspace.active.workspace.readOnly" ng-click="filePreviewPathSelectorModal.show()"></input>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="filePreviewPathSelectorModal.show()" type="button">{{'SELECT' | translate}}</button>
+                            <button class="btn btn-default" ng-disabled="Workspace.active.workspace.readOnly" ng-click="filePreviewPathSelectorModal.show()" type="button">{{'SELECT' | translate}}</button>
                         </span>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                                             {{path}}
                                         </div>
                                         <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removePath(path)"></span>
+                                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removePath(path)"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -74,11 +74,11 @@
             
             <div class="input-group">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" name="keywords-lang" ng-model="keyword.lang" bs-options="lang.key as lang.value for lang in languages" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                    <button type="button" class="btn btn-default" name="keywords-lang" ng-model="keyword.lang" ng-disabled="Workspace.active.workspace.readOnly" bs-options="lang.key as lang.value for lang in languages" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
                 </div>
-                <input type="text" class="form-control" name="keywords" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_KEYWORD' | translate}}" ng-model="keyword.value" aria-label="keywords">
+                <input type="text" class="form-control" name="keywords" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_KEYWORD' | translate}}" ng-model="keyword.value" ng-disabled="Workspace.active.workspace.readOnly" aria-label="keywords">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="addKeyword()">Ajouter</button>
+                    <button type="button" class="btn btn-default" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addKeyword()">Ajouter</button>
                 </div>
             </div>
             <br/>
@@ -101,7 +101,7 @@
                                             {{keyword.value}}
                                         </div>
                                         <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removeKeyword(keyword)"></span>
+                                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removeKeyword(keyword)"></span>
                                         </div>
                                     </div>
                                 </td>
@@ -111,29 +111,29 @@
                 </div>
             </div>
         </div>
-        <hr/>
         <div class="form-group">
+            <hr/>
             <label for="website" class="control-label">{{'MARKET.WEBSITE' | translate}}</label>
             
-              <input type="text" class="form-control" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website">
+              <input type="text" class="form-control" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website" ng-disabled="Workspace.active.workspace.readOnly">
             
         </div>
-        <hr/>
         <div class="form-group" ng-if="metadata.creationLocations">
+            <hr/>
             <label for="creationLocations" class="control-label">{{'ITEM.CREATION_LOCATIONS.LABEL' | translate}}</label>
             
                 <div  ng-repeat="creationLocation in metadata.creationLocations">
-                    <input ng-if="creationLocation.name" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.name">
-                    <input ng-if="creationLocation.dcmipoint" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIPOINT.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmipoint">
-                    <input ng-if="creationLocation.dcmibox" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIBOX.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmibox">
-                    <input ng-if="creationLocation.iso3166" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.ISO3166.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.iso3166">
-                    <input ng-if="creationLocation.tgn" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.TGN.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.tgn">
+                    <input ng-if="creationLocation.name" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.name" ng-disabled="Workspace.active.workspace.readOnly">
+                    <input ng-if="creationLocation.dcmipoint" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIPOINT.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmipoint" ng-disabled="Workspace.active.workspace.readOnly">
+                    <input ng-if="creationLocation.dcmibox" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIBOX.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmibox" ng-disabled="Workspace.active.workspace.readOnly">
+                    <input ng-if="creationLocation.iso3166" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.ISO3166.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.iso3166" ng-disabled="Workspace.active.workspace.readOnly">
+                    <input ng-if="creationLocation.tgn" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.TGN.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.tgn" ng-disabled="Workspace.active.workspace.readOnly">
                 </div>
         </div>
-        <hr/>
         <div ng-if="metadata.originDate" class="form-group">
+            <hr/>
             <label for="originDate" class="control-label">{{'ITEM.ORIGIN_DATE.LABEL' | translate}}</label>
-            <input type="text" class="form-control" name="originDate" placeholder="{{'ITEM.ORIGIN_DATE.PLACEHOLDER' | translate}}" aria-label="originDate" ng-model="metadata.originDate">
+            <input type="text" class="form-control" name="originDate" placeholder="{{'ITEM.ORIGIN_DATE.PLACEHOLDER' | translate}}" aria-label="originDate" ng-model="metadata.originDate" ng-disabled="Workspace.active.workspace.readOnly">
         </div>
 
     </div>

@@ -17,7 +17,7 @@
     <div class="form-group" ng-class="{'has-error': errors.title === true}">
         <label for="md-title" class="control-label">{{'ITEM.TITLE.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
         <div class="input-group">
-            <input id="md-title" type="text" class="form-control" name="title-value" autocomplete="off" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" ng-change="updateTitle()" aria-label="title">
+            <input id="md-title" type="text" class="form-control" name="title-value" autocomplete="off" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_TITLE' | translate}}" ng-model="title.value" ng-change="updateTitle()" ng-disabled="Workspace.active.workspace.readOnly" aria-label="title">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default" name="title-lang" ng-model="selectedTitleLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeTitleLanguage()" data-placement="bottom-right" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
             </div>
@@ -29,15 +29,15 @@
         <div class="input-group">
             <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
         </div>
-        <textarea class="form-control" id="md-description" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value" ng-change="updateDescription()"></textarea>
+        <textarea class="form-control" id="md-description" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value" ng-change="updateDescription()" ng-disabled="Workspace.active.workspace.readOnly"></textarea>
     </div>
 
     <div class="form-group">
         <label for="md-documentation" class="control-label" translate="MARKET.DOCUMENTATIONS"></label>
         <div class="input-group">
-            <input type="text" class="form-control" id="md-documentation" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-click="fileDocumentationPathSelectorModal.show()">
+            <input type="text" class="form-control" id="md-documentation" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-click="fileDocumentationPathSelectorModal.show()" ng-disabled="Workspace.active.workspace.readOnly">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" ng-click="fileDocumentationPathSelectorModal.show()" type="button">{{'SELECT' | translate}}</button>
+                    <button type="button" class="btn btn-default" ng-click="fileDocumentationPathSelectorModal.show()" ng-disabled="Workspace.active.workspace.readOnly">{{'SELECT' | translate}}</button>
                 </span>
         </div>
         <br/>
@@ -48,7 +48,7 @@
                     <div style="padding:12px">
                         <div class="media-body">{{documentation.path}}</div>
                         <div class="media-right">
-                            <span class="glyphicon glyphicon-trash text-danger" ng-click="removeDocumentation(documentation)"></span>
+                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removeDocumentation(documentation)"></span>
                         </div>
                     </div>
                 </td>

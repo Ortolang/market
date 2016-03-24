@@ -143,6 +143,8 @@ angular.module('ortolangMarketApp')
                 SEARCH: 'Rechercher un membre',
                 SEARCH_RESULT: 'Résultats',
                 NO_RESULT: 'Aucun membre trouvé',
+                MORE_RESULTS: 'Votre recherche a retourné de nombreux résultats qui ne sont pas tous affichés. Veuillez affiner votre recherche.',
+                QUERY_LENGTH: 'Veuillez entrer au minimum 3 caractères',
                 MY_FRIENDS: 'Mes collaborateurs',
                 NO_FRIENDS: 'Pas de collaborateurs enregistrés',
                 ADD: 'Ajouter',
@@ -234,6 +236,8 @@ angular.module('ortolangMarketApp')
                 OPERATING_SYSTEMS: 'Systèmes d\'exploitation',
                 TOOL_SUPPORT: 'Type de support',
                 LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
+                NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
+                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',

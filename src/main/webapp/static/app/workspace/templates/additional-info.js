@@ -16,6 +16,9 @@ angular.module('ortolangMarketApp')
              **/
 
         	$scope.removePublication = function(publication) {
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
         		var index = $scope.metadata.publications.indexOf(publication);
 	            if (index > -1) {
 	                $scope.metadata.publications.splice(index, 1);
@@ -40,6 +43,9 @@ angular.module('ortolangMarketApp')
              **/
 
             $scope.removePath = function(path) {
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
         		var index = $scope.metadata.preview.indexOf(path);
 	            if (index > -1) {
 	                $scope.metadata.preview.splice(index, 1);
@@ -54,6 +60,9 @@ angular.module('ortolangMarketApp')
              **/
 
         	$scope.removeKeyword = function(keyword) {
+                if (Workspace.active.workspace.readOnly) {
+                    return;
+                }
         		var index = $scope.metadata.keywords.indexOf(keyword);
 	            if (index > -1) {
 	                $scope.metadata.keywords.splice(index, 1);
