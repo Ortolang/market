@@ -170,11 +170,14 @@ angular.module('ortolangMarketApp')
                             // From Workspace
                             ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(sponsor)}, function(entity) {
                                 var content = angular.fromJson(entity.content);
-                                $scope.sponsors.push(content.fullname);
+                                $scope.sponsors.push(content);
                             });
                         } else if(angular.isDefined(sponsor['meta_ortolang-referential-json'])) {
                             // For Market
-                            $scope.sponsors.push(sponsor['meta_ortolang-referential-json'].fullname);
+                            $scope.sponsors.push({fullname: sponsor['meta_ortolang-referential-json'].fullname, 'homepage': sponsor['meta_ortolang-referential-json'].homepage});
+                        } else {
+                            // From Workspace with sponsor created by a user
+                            $scope.sponsors.push(sponsor);
                         }
                     });
                 }

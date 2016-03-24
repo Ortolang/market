@@ -25,7 +25,7 @@
                     <div ng-if="sponsors" class="market-item-producers"><i>{{'MARKET.SPONSORS' | translate}}</i> :
                         <ul class="list-unstyled">
                             <li class="sponsor" ng-repeat="sponsor in sponsors">
-                                {{sponsor}}
+                                {{sponsor.fullname}} <a target="_BLANK" ng-if="sponsor.homepage" ng-href="{{sponsor.homepage}}"><span class="fa fa-fw fa-external-link"></span></a>
                             </li>
                         </ul>
                     </div>
