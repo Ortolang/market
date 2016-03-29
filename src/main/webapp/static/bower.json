@@ -2,15 +2,15 @@
   "name": "ortolang-market",
   "version": "4.3.0-SNAPSHOT",
   "dependencies": {
-    "angular": "1.5.3",
-    "angular-animate": "1.5.3",
-    "angular-route": "1.5.3",
-    "angular-resource": "1.5.3",
-    "angular-sanitize": "1.5.3",
-    "angular-messages": "1.5.3",
-    "angular-touch": "1.5.3",
-    "angular-cookies": "1.5.3",
-    "angular-i18n": "1.5.3",
+    "angular": "1.4.10",
+    "angular-animate": "1.4.10",
+    "angular-route": "1.4.10",
+    "angular-resource": "1.4.10",
+    "angular-sanitize": "1.4.10",
+    "angular-messages": "1.4.10",
+    "angular-touch": "1.4.10",
+    "angular-cookies": "1.4.10",
+    "angular-i18n": "1.4.10",
     "font-awesome": "4.5.0",
     "octicons": "3.5.0",
     "angular-file-upload": "2.2.0",
@@ -39,8 +39,8 @@
     "lrInfiniteScroll": "1.0.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.5.3",
-    "angular-scenario": "1.5.3"
+    "angular-mocks": "1.4.10",
+    "angular-scenario": "1.4.10"
   },
   "overrides": {
     "angular-i18n": {
@@ -79,6 +79,6 @@
   },
   "appPath": "app",
   "resolutions": {
-    "angular": "1.5.3"
+    "angular": "1.4.10"
   }
 }
