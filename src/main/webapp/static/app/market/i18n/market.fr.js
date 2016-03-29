@@ -68,6 +68,7 @@ angular.module('ortolangMarketApp')
             DOCUMENTATIONS: 'Documentations',
             SEE_DOCUMENTATIONS: 'Voir la documentation',
             SEE_WEBSITE: 'Accéder au site internet',
+            ITEM_NOT_FOUND: 'Aucune ressource n\'a été trouvée à cette adresse',
             FACET: {
                 CORPORA_TYPE: 'Type de corpus',
                 ALL_CORPORA: 'Tous les corpus',
