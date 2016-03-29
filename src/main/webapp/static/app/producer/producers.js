@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducersCtrl', ['$scope', '$location', 'ReferentialEntityResource', function ($scope, $location, ReferentialEntityResource) {
+    .controller('ProducersCtrl', ['$rootScope', '$scope', '$location', '$translate', 'ReferentialEntityResource', function ($rootScope, $scope, $location, $translate, ReferentialEntityResource) {
 
         $scope.getAllOrganizations = function () {
             ReferentialEntityResource.get({type: 'ORGANIZATION'}, function (collectionEntities) {
@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp')
                         $scope.producers.push(producer);
                     }
                 });
+                $rootScope.ortolangPageDescription = $translate.instant('PRODUCER.META_DESCRIPTION_PRODUCERS');
                 $scope.processing = false;
             });
         };

@@ -19,10 +19,10 @@
             <table ng-if="producers && models.viewMode === 'line'" class="table table-hover producers-table">
                 <thead>
                     <tr>
-                        <th>Acronyme</th>
-                        <th>Nom</th>
-                        <th>Ville</th>
-                        <th>Site</th>
+                        <th translate="PRODUCER.ACRONYM"></th>
+                        <th translate="NAME"></th>
+                        <th translate="PRODUCER.CITY"></th>
+                        <th translate="PRODUCER.HOMEPAGE"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                         <td>{{::producer.content.acronym}}</td>
                         <td>{{::producer.content.name}}</td>
                         <td><span class="fa fa-fw fa-map-marker"></span> {{::producer.content.city + ', ' + producer.content.country}}</td>
-                        <td><span ng-show="::producer.content.homepage"><a ng-href="{{::producer.content.homepage}}" target="_blank">Site internet</a></span></td>
+                        <td><span ng-show="::producer.content.homepage"><a ng-href="{{::producer.content.homepage}}" target="_blank"  translate="PRODUCER.HOMEPAGE"></a></span></td>
                     </tr>
                 </tbody>
             </table>
