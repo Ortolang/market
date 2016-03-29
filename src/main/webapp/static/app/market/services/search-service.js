@@ -13,7 +13,7 @@
  * @property {object}   activeOrderProp - the active way of ordering the results
  * @property {boolean}  orderReverse    - if reverse ordering
  */
-angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResource', 'icons', function ($filter, SearchResource, icons) {
+angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResource', 'icons', 'Helper', function ($filter, SearchResource, icons, Helper) {
 
     var tmpResults; // a temporary array holding the results while they are being processed
 
@@ -25,6 +25,12 @@ angular.module('ortolangMarketApp').service('Search', ['$filter', 'SearchResourc
     this.hasResults = function () {
         return this.results && this.results.length > 0;
     };
+
+    this.pack = function () {
+        if (tmpResults) {
+            tmpResults = Helper.pack(tmpResults);
+        }
+    }
 
     this.endProcessing = function () {
         this.results = tmpResults;

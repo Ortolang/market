@@ -52,6 +52,29 @@ angular.module('ortolangMarketApp')
             return path.indexOf('//') === 0 ? path.substring(1) : path;
         };
 
+        this.pack = function (list) {
+            var register = {};
+            var results = [];
+            angular.forEach(list, function (result) {
+                if (result.key && result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
+                    var key = result.key;
+                    var wskey = result['meta_ortolang-workspace-json'].wskey;
+                    if (angular.isUndefined(register[wskey])) {
+                        register[wskey] = result;
+                        results.push(result);
+                    } else {
+                        if (register[wskey].lastModificationDate < result.lastModificationDate) {
+                            var index = results.indexOf(register[wskey]);
+                            results.splice(index, 1, result);
+                            // results.push(result);
+                            register[wskey] = result;
+                        }
+                    }
+                }
+            });
+            return results;
+        };
+
         $rootScope.$on('modal.show', function (event, _modal_) {
             modal = _modal_;
         });

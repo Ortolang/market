@@ -27,16 +27,13 @@ angular.module('ortolangMarketApp')
                 function load() {
                     var param = angular.fromJson(scope.newParams);
                     Search.search(param).$promise.then(function (results) {
+                        Search.pack();
+
                         angular.forEach(results, function (result) {
                             if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
                                 var title = result['meta_ortolang-item-json'].title;
                                 result.effectiveTitle = Helper.getMultilingualValue(title);
 
-                                var itemFromManager = Search.getResult(result['meta_ortolang-workspace-json'].wskey);
-                                if (itemFromManager && result.lastModificationDate > itemFromManager.lastModificationDate) {
-                                    Search.removeResult(itemFromManager.key);
-                                }
-                                
                                 var publicationDate = result['meta_ortolang-item-json'].publicationDate;
                                 result.publicationDate = publicationDate;
                             }
