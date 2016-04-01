@@ -19,151 +19,24 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            /**
-             * Methods on person
-             **/
-
-            function prepareModalScopeForPerson() {
-                var modalScope = $rootScope.$new(true);
-                modalScope.models = {};
-                modalScope.models.roleTag = [];
-                modalScope.allRoles = $scope.models.allRoles;
-
-                modalScope.allPersons = $scope.allPersons;
-
-                modalScope.$on('tafirstname.select', function (v, i) {
-                    modalScope.models.rid = i.rid;
-                    modalScope.models.key = i.key;
-                    modalScope.models.lastname = i.lastname;
-                    modalScope.models.firstname = i.firstname;
-                    modalScope.models.midname = i.midname;
-                    if (angular.isDefined(i.org)) {
-                        var orgFound = $filter('filter')($scope.allOrganizations, {key:Helper.extractKeyFromReferentialId(i.org)}, true);
-                        if (orgFound.length > 0) {
-                            modalScope.models.organizationFullname = orgFound[0].fullname;
-                            // modalScope.models.originOrganizationFullname = orgFound[0].fullname;
-                        }
-                        modalScope.organization = i.org;
-                    }
-                    modalScope.models.fullname = i.fullname;
-
-                    modalScope.$apply();
-                });
-
-                modalScope.models.organizationFullname = '';
-                modalScope.allOrganizations = $scope.allOrganizations;
-
-                modalScope.$on('taorg.select', function (v, i) {
-                    modalScope.organization = "${" + i.key + "}";
-                    // modalScope.organizationKey = i.key;
-                    modalScope.models.organizationFullname = i.org.fullname;
-
-                    modalScope.$apply();
-                });
-
-
-                modalScope.clearSearch = function () {
-                    modalScope.models = {};
-                };
-
-                return modalScope;
-            }
-
-            function setPerson(contributor, modalScope) {
-                contributor.entity.lastname = modalScope.models.lastname;
-                contributor.entity.rid = modalScope.models.rid;
-                contributor.entity.key = modalScope.models.key;
-                contributor.entity.firstname = modalScope.models.firstname;
-                contributor.entity.midname = modalScope.models.midname;
-
-                // if (angular.isDefined(modalScope.organization) && modalScope.organization.originOrganizationFullname === modalScope.models.organizationFullname) {
-                    // contributor.entity.organization = modalScope.organization;
-                    // contributor.entity.organization = '${' + modalScope.organization.key + '}';
-                    contributor.entity.organization = modalScope.organization;
-                // }
-
-                contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
-            }
-
-            function getFullnameOfPerson(person) {
-                var fullname = person.firstname;
-                fullname += angular.isDefined(person.midname) ? ' ' + person.midname : '';
-                fullname += ' ' + person.lastname;
-                return fullname;
-            }
-
-            function setRoles(contributor, myScope) {
-                contributor.roles = [];
-                angular.forEach(myScope.models.roleTag, function (tag) {
-                    contributor.roles.push(tag);
-                });
-            }
-
             $scope.addPerson = function () {
                 if (Workspace.active.workspace.readOnly) {
                     return;
                 }
-                var modalScope = prepareModalScopeForPerson(),
+                var modalScope = Helper.createModalScope(true),
                     addContributorModal;
-
-                modalScope.newPerson = true;
-                modalScope.createPerson = function () {
-                    modalScope.newPerson = !modalScope.newPerson;
-                };
-
-                modalScope.$on('modal.hide', function () {
-                    modalScope.$destroy();
-                });
-
-                modalScope.submit = function (addContributorForm) {
-
-                    if (!personExists(modalScope, $scope.contributors)) {
-                        addContributorForm.fullname.$setValidity('exists', true);
-                    } else {
-                        addContributorForm.fullname.$setValidity('exists', false);
-                    }
-
-                    if (modalScope.models.roleTag.length > 0) {
-                        addContributorForm.roleTag.$setValidity('role', true);
-                    } else {
-                        addContributorForm.roleTag.$setValidity('role', false);
-                    }
-
-                    if (addContributorForm.$valid) {
-                        var contributor = {entity: {}, roles: []};
-
-                        setPerson(contributor, modalScope);
-
-                        setRoles(contributor, modalScope);
-
-                        if ($scope.contributors === undefined) {
-                            $scope.contributors = [];
-                            $scope.metadata.contributors = [];
-                        }
-
-                        $scope.contributors.push(contributor);
-
-                        var roles = [];
-                        angular.forEach(contributor.roles, function (role) {
-                            roles.push('${' + role.id + '}');
-                        });
-                        // if(angular.isDefined(contributor.entity.rid)) {
-                        if (angular.isDefined(contributor.entity.key)) {
-                            $scope.metadata.contributors.push({entity: '${' + contributor.entity.key + '}', roles: roles, organization: contributor.entity.organization});
-                        } else {
-                            $scope.metadata.contributors.push({entity: contributor.entity, roles: roles, organization: contributor.entity.organization});
-                        }
-
-                        addContributorModal.hide();
-                    }
-                };
+                modalScope.allRoles = $scope.models.allRoles;
+                // modalScope.allPersons = $scope.allPersons;
+                modalScope.allOrganizations = $scope.allOrganizations;
+                modalScope.metadata = $scope.metadata;
+                modalScope.contributors = $scope.contributors;
 
                 addContributorModal = $modal({
                     scope: modalScope,
-                    templateUrl: 'workspace/templates/add-person-modal.html'
+                    templateUrl: 'workspace/templates/add-person-modal.html',
+                    show: true
                 });
             };
-
 
             /**
              * Methods on Organizations
@@ -315,89 +188,64 @@ angular.module('ortolangMarketApp')
                 return false;
             }
 
-            function personExists(contributor, contributors) {
-                if (angular.isDefined(contributor.fullname) && angular.isDefined(contributors)) {
-                    var iContributor;
-                    for (iContributor = 0; iContributor < contributors.length; iContributor++) {
-                        if (angular.isDefined(contributors[iContributor].entity.id) && angular.isDefined(contributor.id)) {
-                            if (contributors[iContributor].entity.id === contributor.id) {
-                                return true;
+            function loadContributor(contributor) {
+                var loadedContributor = {};
+                if (typeof contributor.entity  === 'string') {
+                    // var contributorFound = $filter('filter')($scope.allPersons, {key:Helper.extractKeyFromReferentialId(contributor.entity)}, true);
+                    // if (contributorFound.length > 0) {
+                        // loadedContributor = {entity: contributorFound[0]};
+                        ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function(entity) {
+                            var content = angular.fromJson(entity.content);
+                            loadedContributor.entity = {
+                                key: entity.key,
+                                value: content.fullname,
+                                id: content.id,
+                                fullname: content.fullname,
+                                lastname: content.lastname,
+                                firstname: content.firstname,
+                                midname: content.midname,
+                                org: content.organization,
+                                type: content.type,
+                                label: '<span>' + content.fullname + '</span>'
                             }
-                        } else {
-                            if (contributors[iContributor].entity.fullname === contributor.fullname) {
-                                return true;
-                            }
-                        }
-                    }
+                        });
+                    // } else {
+                    //     loadedContributor = {entity: contributor.entity};
+                    // }
+                } else {
+                    loadedContributor = {entity: contributor.entity};
                 }
-                return false;
-            }
 
-            function loadAllPersons() {
-
-                ReferentialEntityResource.get({type: 'PERSON'}, function(entities) {
-                    $scope.allPersons = [];
-                    angular.forEach(entities.entries, function(entry) {
-                        var content = angular.fromJson(entry.content);
-
-                        $scope.allPersons.push({
-                            key: entry.key,
-                            value: content.fullname,
-                            id: content.id,
-                            fullname: content.fullname,
-                            lastname: content.lastname,
-                            firstname: content.firstname,
-                            midname: content.midname,
-                            org: content.organization,
-                            type: content.type,
-                            label: '<span>' + content.fullname + '</span>'
+                if (contributor.roles && contributor.roles.length > 0) {
+                    loadedContributor.roles = [];
+                    angular.forEach(contributor.roles, function (role) {
+                        ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(roleEntities) {
+                            var content = angular.fromJson(roleEntities.content);
+                            content.label = Helper.getMultilingualValue(content.labels);
+                            loadedContributor.roles.push(content);
                         });
                     });
+                }
 
-                    if (angular.isDefined($scope.metadata.contributors)) {
-                        $scope.contributors = [];
-                        angular.forEach($scope.metadata.contributors, function(contributor) {
-                            var loadedContributor = null;
+                if (contributor.organization) {
+                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function(roleEntities) {
+                        var content = angular.fromJson(roleEntities.content);
+                        loadedContributor.organization = content;
+                    });
+                }
 
-                            if (typeof contributor.entity  === 'string') {
-                                var contributorFound = $filter('filter')($scope.allPersons, {key:Helper.extractKeyFromReferentialId(contributor.entity)}, true);
-                                if (contributorFound.length > 0) {
-                                    loadedContributor = {entity: contributorFound[0]};
-                                } else {
-                                    loadedContributor = {entity: contributor.entity};
-                                }
-                            } else {
-                                loadedContributor = {entity: contributor.entity};
-                            }
+                // if (loadedContributor !== null) {
+                    $scope.contributors.push(loadedContributor);
+                // }
+            }
 
-
-                            if (contributor.roles && contributor.roles.length > 0) {
-
-                                loadedContributor.roles = [];
-                                angular.forEach(contributor.roles, function (role) {
-
-                                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(roleEntities) {
-                                        var content = angular.fromJson(roleEntities.content);
-                                        content.label = Helper.getMultilingualValue(content.labels);
-                                        loadedContributor.roles.push(content);
-                                    });
-                                });
-                            }
-
-                            if (contributor.organization) {
-
-                                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function(roleEntities) {
-                                    var content = angular.fromJson(roleEntities.content);
-                                    loadedContributor.organization = content;
-                                });
-                            }
-
-                            if (loadedContributor !== null) {
-                                $scope.contributors.push(loadedContributor);
-                            }
-                        });
-                    }
-                });
+            function loadAllContributors () {
+                if (angular.isDefined($scope.metadata.contributors)) {
+                    $scope.contributors = [];
+                    angular.forEach($scope.metadata.contributors, function(contributor) {
+                        loadContributor(contributor);
+                    });
+                }
             }
 
             function loadAllOrganizations() {
@@ -465,7 +313,6 @@ angular.module('ortolangMarketApp')
             }
 
             function loadAllRoles() {
-
                 ReferentialEntityResource.get({type: 'ROLE'}, function(entities) {
                     var allRoles = [];
                     angular.forEach(entities.entries, function(entry) {
@@ -492,7 +339,8 @@ angular.module('ortolangMarketApp')
 
             function init() {
                 $scope.models = {};
-                loadAllPersons();
+                // loadAllPersons();
+                loadAllContributors();
                 loadAllOrganizations();
                 loadAllRoles();
 

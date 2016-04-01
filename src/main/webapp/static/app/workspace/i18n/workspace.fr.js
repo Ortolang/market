@@ -241,7 +241,7 @@ angular.module('ortolangMarketApp')
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
-                    SEARCH: 'Rechercher une personne ?',
+                    SEARCH: 'Rechercher une personne dans le référentiel ORTOLANG',
                     SEARCH_LABEL: 'Rechercher',
                     FIRSTNAME: 'Prénom',
                     MIDNAME: 'Deuxième prénom',

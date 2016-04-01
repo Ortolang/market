@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                         var content = angular.fromJson(refentity.content);
                         var text = Helper.getMultilingualValue(content.labels);
                         if(text) {
-                            suggestedLanguages.push({id: Helper.createKeyFromReferentialId(refentity.key), label: text})
+                            suggestedLanguages.push({id: Helper.createKeyFromReferentialId(refentity.key), label: text});
                         }
                     });
                     deferred.resolve(suggestedLanguages);
