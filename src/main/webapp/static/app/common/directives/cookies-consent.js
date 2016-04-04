@@ -33,13 +33,15 @@ angular.module('ortolangMarketApp')
                         cookieAlert.hide();
                     };
                 }
-                if (localStorage !== undefined) {
-                    if (!localStorage.getItem('ortolang.cookies.consent')) {
-                        cookieAlert();
-                    }
-                } else {
-                    if (!$cookies.get('ortolang.cookies.consent')) {
-                        cookieAlert();
+                if (!/Prerender/.test(navigator.userAgent)) {
+                    if (localStorage !== undefined) {
+                        if (!localStorage.getItem('ortolang.cookies.consent')) {
+                            cookieAlert();
+                        }
+                    } else {
+                        if (!$cookies.get('ortolang.cookies.consent')) {
+                            cookieAlert();
+                        }
                     }
                 }
             }

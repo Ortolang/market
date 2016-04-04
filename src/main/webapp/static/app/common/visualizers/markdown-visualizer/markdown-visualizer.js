@@ -46,8 +46,8 @@ angular.module('ortolangVisualizers')
             restrict: 'A',
             link: {
                 pre: function (scope, element, attrs) {
-                    angular.forEach(scope.elements, function (element) {
-                        element.downloadUrl = Content.getContentUrlWithKey(element.key);
+                    Content.downloadWithKey(scope.elements[0].key).promise.then(function (response) {
+                        scope.markdown = response.data;
                     });
                     if (scope.elements) {
                         scope.visualizer.header.fileName = scope.elements[0].name;
