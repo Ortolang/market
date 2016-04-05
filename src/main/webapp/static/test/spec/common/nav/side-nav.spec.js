@@ -14,9 +14,7 @@ describe('Controller: SideNavCtrl', function () {
         location,
         httpBackend;
 
-    function changeLocation(template, path) {
-        console.log(template, path);
-        httpBackend.expectGET(template).respond(200);
+    function changeLocation(path) {
         location.path(path);
         rootScope.$digest();
     }
@@ -31,7 +29,7 @@ describe('Controller: SideNavCtrl', function () {
         httpBackend = $httpBackend;
 
         expect(route.current).toBeUndefined();
-        changeLocation('market/home.html', '/');
+        changeLocation('/');
 
         SideNavCtrl = $controller('SideNavCtrl', {
             $scope: scope,
@@ -46,7 +44,6 @@ describe('Controller: SideNavCtrl', function () {
 
     it('should have a list of navigation elements', function () {
         expect(scope.sideNavElements).toBeDefined();
-        httpBackend.flush();
     });
 
     function checkSelectedSideNavElement() {
@@ -60,13 +57,8 @@ describe('Controller: SideNavCtrl', function () {
     }
 
     it('should select the right sideNavElements according to the route', function () {
-        var workspaces = {
-            template: 'workspace/workspaces.html',
-            path: '/workspaces'
-        };
         checkSelectedSideNavElement();
-        changeLocation(workspaces.template, workspaces.path);
-        httpBackend.flush();
+        changeLocation('/workspaces');
         checkSelectedSideNavElement();
     });
 

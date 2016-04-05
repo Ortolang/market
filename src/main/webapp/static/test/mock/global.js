@@ -9,3 +9,4 @@ OrtolangConfig.piwikHost = '';
 OrtolangConfig.piwikSiteId = '';
 OrtolangConfig.marketServerUrl = 'http://localhost:9000/';
 OrtolangConfig.debug = true;
+OrtolangConfig.tests = true;

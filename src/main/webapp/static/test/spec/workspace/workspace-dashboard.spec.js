@@ -4,8 +4,6 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
 
     beforeEach(module('ortolangMarketApp'));
     beforeEach(module('ortolangMarketAppMock'));
-    beforeEach(module('workspace/workspace-dashboard.html'));
-    beforeEach(module('workspace/templates/publish-modal.html'));
 
     var WorkspaceDashboardCtrl,
         Workspace,
@@ -111,13 +109,11 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
             });
             $httpBackend.expect('GET', url.api + '/workspaces?md=true').respond(200, {entries: []});
             $httpBackend.expect('GET', url.api + '/workspaces/alias/foobar?md=true').respond(404, {});
-            $httpBackend.expect('GET', 'common/templates/error-modal.html').respond(200, '<div class="modal foobar"></div>');
-            $httpBackend.expect('GET', 'workspace/workspaces.html').respond(200);
             $httpBackend.flush();
         }));
 
         it('should display an error modal when workspace does not exist', function () {
-            expect(angular.element('.modal.foobar').length).toBe(1);
+            expect(angular.element('.modal.error-modal').length).toBe(1);
             hideModal();
             $rootScope.$apply();
         });

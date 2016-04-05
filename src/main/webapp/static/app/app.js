@@ -154,7 +154,11 @@ angular
             .otherwise({
                 redirectTo: '/404'
             });
-        $locationProvider.html5Mode(true);
+        if (OrtolangConfig.tests) {
+            $locationProvider.html5Mode({enabled: true, requireBase: false, rewriteLinks: true});
+        } else {
+            $locationProvider.html5Mode(true);
+        }
         $locationProvider.hashPrefix('!');
     }])
     .config(['$sceDelegateProvider', function ($sceDelegateProvider) {

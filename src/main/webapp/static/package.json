@@ -42,12 +42,12 @@
     "karma-coverage": "^0.5.2",
     "karma-firefox-launcher": "^0.1.6",
     "karma-jasmine": "^0.3.5",
-    "karma-junit-reporter": "^0.3.4",
+    "karma-junit-reporter": "^0.4.1",
     "karma-ng-html2js-preprocessor": "~0.2.1",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-tapfile-reporter": "0.0.4",
-    "phantomjs-prebuilt": "^2.1.1",
     "load-grunt-tasks": "^3.1.0",
+    "phantomjs-prebuilt": "^2.1.1",
     "time-grunt": "^1.0.0"
   },
   "engines": {
