@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="fragment" content="!">
-    <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex, nofollow">
     <base href="/">
     <title ng-bind="ortolangPageTitle !== undefined ? (ortolangPageTitle + (ortolangPageSubtitle || '') + 'ORTOLANG') : ''"></title>
     <meta description name="description">
@@ -133,19 +133,6 @@
 <!-- build:remove -->
 <script src="ortolang-config.js"></script>
 <!-- endbuild -->
-
-<script type="text/javascript">
-    var microDataElement = angular.element('<script type="application/ld+json">'),
-        microData = {
-            '@context': 'http://schema.org',
-            '@type': 'website',
-            'name': 'ORTOLANG',
-            'alternateName': 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
-            'url': location.origin
-        };
-    microDataElement.text(angular.toJson(microData));
-    angular.element('head').append(microDataElement);
-</script>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>

@@ -199,6 +199,18 @@ angular
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
     }])
+    .config(function () {
+        var microDataElement = angular.element('<script type="application/ld+json">'),
+            microData = {
+                '@context': 'http://schema.org',
+                '@type': 'website',
+                'name': 'ORTOLANG',
+                'alternateName': 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
+                'url': location.origin
+            };
+        microDataElement.text(angular.toJson(microData));
+        angular.element('head').append(microDataElement);
+    })
     .run(['$rootScope', function ($rootScope) {
         if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
             var optOutUrl = '//' + OrtolangConfig.piwikHost + 'index.php?module=CoreAdminHome&action=optOut&language=';
