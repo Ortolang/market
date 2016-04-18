@@ -119,7 +119,7 @@ angular.module('ortolangMarketApp')
                 CORPORA: 'Rechercher un corpus',
                 TOOLS: 'Rechercher un outil',
                 LEXICONS: 'Rechercher un lexique',
-                PRODUCERS: 'Rechercher un laboratoire producteur (nom, acronyme, ville)',
+                PRODUCERS: 'Rechercher un laboratoire producteur (nom, sigle, ville)',
                 ALL: 'Rechercher dans ORTOLANG'
             },
             SHOW_IN: 'Présentation',

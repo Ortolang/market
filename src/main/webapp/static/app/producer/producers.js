@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.models = {
-                viewMode: 'tile',
+                viewMode: 'line',
                 limit: 30
             };
             $scope.producers = [];

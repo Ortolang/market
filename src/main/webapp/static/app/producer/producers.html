@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="producer in producers | filter:models.query | orderBy:'+name' track by producer.key" ng-click="showProducer(producer, $event)">
+                    <tr ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder track by producer.key" ng-click="showProducer(producer, $event)">
                         <td>{{::producer.content.acronym}}</td>
                         <td>{{::producer.content.name}}</td>
                         <td><span class="fa fa-fw fa-map-marker"></span> {{::producer.content.city + ', ' + producer.content.country}}</td>
