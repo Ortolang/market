@@ -60,6 +60,14 @@ angular.module('ortolangVisualizers')
                         scope.type = scope.elements[0].mimeType;
                     }
                     scope.visualizer.content.classes = 'center middle';
+                    scope.$on('modal.hide.before', function () {
+                        var videoElement = angular.element('#simple-html5-video');
+                        if (videoElement.length > 0) {
+                            videoElement[0].pause();
+                            videoElement.prop('src', '');
+                            videoElement.remove();
+                        }
+                    });
                 }
             }
         };
