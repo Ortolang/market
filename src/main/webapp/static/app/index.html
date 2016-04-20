@@ -6,7 +6,7 @@
     <meta name="fragment" content="!">
     <meta name="robots" content="noindex, nofollow">
     <base href="/">
-    <title ng-bind="ortolangPageTitle !== undefined ? (ortolangPageTitle + (ortolangPageSubtitle || '') + 'ORTOLANG') : ''"></title>
+    <title ng-bind="ortolangPageTitle !== undefined ? (ortolangPageTitle + (ortolangPageSubtitle || '') + 'ORTOLANG') : ''">ORTOLANG</title>
     <meta description name="description">
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
                        ng-href="{{:: element.path}}"
                        ng-click="select(element.class)"
                        ng-class="::element.class">
-                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" bs-tooltip></span>
+                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" data-trigger="hover" bs-tooltip></span>
                         <span class="item-description" translate="{{::element.description}}"></span>
                     </a>
                     <span ng-if="::element.class === 'divider'"></span>
