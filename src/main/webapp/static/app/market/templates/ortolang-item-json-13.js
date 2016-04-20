@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson13Ctrl', ['$scope', '$rootScope', '$translate', 'url', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource',
-        function ($scope, $rootScope, $translate, url, Settings, Content, Helper, ReferentialEntityResource) {
+    .controller('OrtolangItemJson13Ctrl', ['$scope', '$rootScope', '$translate', 'url', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
+        function ($scope, $rootScope, $translate, url, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
 
             function loadProducers() {
                 if($scope.content.producers) {
@@ -150,8 +150,21 @@ angular.module('ortolangMarketApp')
                         if($scope.license.text) {
                             $scope.license.effectiveText = Helper.getMultilingualValue($scope.license.text, lang);
                         }
+                    } else {
+                        // Licence made by user
+                        $scope.license = $scope.content.license;
+                        if($scope.license.text) {
+                            var value = Helper.getMultilingualValue($scope.license.text, lang);
+                            if (value && value.path) {
+                                ObjectResource.element({key: $scope.itemKey, path: value.path}).$promise.then(function (oobject) {
+                                    // var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
+
+                                    $scope.textFileKey = oobject.key;
+                                    // scope.previewFiles.push({key: oobject.key, thumbUrl: thumbUrl, mimeType: oobject.object.mimeType, external: visualizers.length===0});
+                                });
+                            }
+                        }
                     }
-                    //TOOD licence made by user ??
                 }
         	}
 
