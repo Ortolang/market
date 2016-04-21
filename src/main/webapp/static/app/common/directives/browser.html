@@ -187,6 +187,12 @@
                     </ul>
                 </div>
 
+                <div ng-show="isMarketBrowserService && !hasOnlyParentSelected() && hasOnlyOneElementSelected()" class="btn-group">
+                    <button class="btn btn-default" ng-click="share()" data-title="{{'SHARE' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.share"></span>
+                    </button>
+                </div>
+
                 <div ng-show="isMarketBrowserService && !hasOnlyParentSelected()" class="btn-group">
                     <button class="btn btn-default" ng-click="download(selectedElements)" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.download"></span>

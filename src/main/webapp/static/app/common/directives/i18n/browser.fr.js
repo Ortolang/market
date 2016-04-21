@@ -91,6 +91,15 @@ angular.module('ortolangMarketApp')
             SEE_ALL: 'Voir tous les fichiers',
             NO_CHILDREN: 'Ce dossier est vide<br/><small>Faites glisser et déposez des fichiers dans cette fenêtre ou cliquez sur le bouton <span class="glyphicon glyphicon-plus"></span></small>',
             NO_CHILDREN_NOT_HEAD: 'Ce dossier est vide',
-            NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants'
+            NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants',
+            PIDS: {
+                PIDS: 'Identifiants pérennes',
+                STATIC: 'Identifiant pérenne statique',
+                STATIC_HELP: 'L\'identifiant pérenne statique pointera vers cette version du {{::type === "object" ? "fichier" : "dossier"}} <strong>{{::name}}</strong>.',
+                DYNAMIC: 'Identifiant pérenne dynamique',
+                DYNAMIC_HELP: 'L\'identifiant pérenne dynamique pointera toujours vers la dernière version du {{::type === "object" ? "fichier" : "dossier"}} <strong>{{::name}}</strong> si une nouvelle version de la resource est publiée.',
+                COPY: 'Copier le lien',
+                OTHERS: 'Autres identifiants pérenne'
+            }
         }
     });

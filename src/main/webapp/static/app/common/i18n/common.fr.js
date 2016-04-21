@@ -41,6 +41,7 @@ angular.module('ortolangMarketApp')
         PENDING_DATA: 'Chargement...',
         CART: 'Sélection',
         SEE_MORE: 'Voir plus',
+        SHARE: 'Partager',
         404: {
             TITLE: 'Page non trouvée',
             BODY: 'Désolé, mais la page que vous recherchez est introuvable. Vous devriez peut être essayé de retourner sur la page d\'accueuil.',

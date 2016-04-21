@@ -89,6 +89,15 @@ angular.module('ortolangMarketApp')
             SEE_ALL: 'See all',
             NO_CHILDREN: 'This folder is empty<br/><small>Drag and drop files here or click on the <span class="glyphicon glyphicon-plus"></span> button</small>',
             NO_CHILDREN_NOT_HEAD: 'This folder is empty',
-            NO_FILTERED_CHILDREN: 'No elements'
+            NO_FILTERED_CHILDREN: 'No elements',
+            PIDS: {
+                PIDS: 'Persistent identifiers',
+                STATIC: 'Static persistent identifier',
+                STATIC_HELP: 'The static persistent identifier reference this version of the {{::type === "object" ? "file" : "folder"}} <strong>{{::name}}</strong>.',
+                DYNAMIC: 'Dynamic persistent identifier',
+                DYNAMIC_HELP: 'The dynamic persistent identifier will always reference the latest version of the {{::type === "file" ? "fichier" : "folder"}} <strong>{{::name}}</strong> if a new version is published.',
+                COPY: 'Copy link',
+                OTHERS: 'Other persistent identifiers'
+            }
         }
     });
