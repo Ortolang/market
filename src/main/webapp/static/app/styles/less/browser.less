@@ -213,7 +213,7 @@
     }
     &.dl-horizontal {
       dt {
-        width: @browser-offset-horizontal - 20;
+        width: @browser-offset-horizontal - 10;
         padding-bottom: @padding-base-vertical;
       }
       dd {
@@ -224,6 +224,16 @@
         }
         .copy-key, .calculate-size {
           cursor: pointer;
+        }
+        button, a {
+          background-color: transparent;
+          border-color: transparent;
+          float: left;
+          position: relative;
+
+          &:hover, &:focus {
+            border: 1px solid @btn-default-border;
+          }
         }
       }
     }
@@ -256,18 +266,6 @@
   .tab-pane {
     padding-top: 2*@padding-large-vertical;
     padding-left: @padding-base-horizontal;
-  }
-
-  #add-metadata {
-    #add-metadata-title {
-      background-color: @side-nav-item-hover-bg;
-      color: white;
-    }
-
-    a > span.glyphicon {
-      margin-right: @padding-base-horizontal;
-    }
-
   }
 
   .list-group-item {
