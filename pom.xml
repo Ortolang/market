@@ -11,7 +11,7 @@
     <parent>
         <groupId>fr.ortolang</groupId>
         <artifactId>ortolang</artifactId>
-        <version>4</version>
+        <version>5</version>
     </parent>
 
     <scm>
