@@ -207,7 +207,7 @@ angular.module('ortolangMarketApp')
                                 org: content.organization,
                                 type: content.type,
                                 label: '<span>' + content.fullname + '</span>'
-                            }
+                            };
                         });
                     // } else {
                     //     loadedContributor = {entity: contributor.entity};
@@ -265,17 +265,16 @@ angular.module('ortolangMarketApp')
                                 org: content,
                                 label: '<span>' + content.fullname + '</span>'
                             });
-                        } else {
-                            $scope.allSponsors.push({
-                                key: entry.key,
-                                value: content.fullname,
-                                fullname: content.fullname,
-                                name: content.name,
-                                img: content.img,
-                                org: content,
-                                label: '<span>' + content.fullname + '</span>'
-                            });
                         }
+                        $scope.allSponsors.push({
+                            key: entry.key,
+                            value: content.fullname,
+                            fullname: content.fullname,
+                            name: content.name,
+                            img: content.img,
+                            org: content,
+                            label: '<span>' + content.fullname + '</span>'
+                        });
                     });
                     if (angular.isDefined($scope.metadata.producers)) {
                         $scope.producers = [];
