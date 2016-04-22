@@ -295,6 +295,21 @@
                         <!--<acl-select data-element="selectedElements[0]" data-readonly="root !== 'head'"></acl-select>-->
                     </dd>
                 </dl>
+                <dl class="dl-horizontal" ng-repeat="metadata in selectedElements[0].metadatas | filter:{name:'ortolang-item-json'}" ng-if="selectedElements[0].metadatas.length > 0">
+                    <hr/>
+                    <dt translate="WORKSPACE.METADATA"></dt>
+                    <dd class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">...</button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li>
+                                <div ng-click="uploadMetadata()"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD' | translate}}</div>
+                            </li>
+                            <li>
+                                <div ng-click="download([metadata])"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
             </div>
             <div ng-if="selectedElements && !hasOnlyOneElementSelected()">
                 <p class="lead">
