@@ -57,6 +57,14 @@ angular.module('ortolangVisualizers')
                         scope.visualizer.header.fileType = scope.elements[0].mimeType;
                     }
                     scope.visualizer.content.classes = 'center middle';
+                    scope.$on('modal.hide.before', function () {
+                        var audioElement = angular.element('#simple-html5-audio');
+                        if (audioElement.length > 0) {
+                            audioElement[0].pause();
+                            audioElement.prop('src', '');
+                            audioElement.remove();
+                        }
+                    });
                 }
             }
         };

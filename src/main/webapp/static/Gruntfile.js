@@ -287,7 +287,8 @@ module.exports = function (grunt) {
                     collapseBooleanAttributes: true,
                     removeComments: true,
                     removeCommentsFromCDATA: true,
-                    removeOptionalTags: false
+                    removeOptionalTags: false,
+                    minifyJS: true
                     //processScripts: ['text/ng-template']
                 },
                 files: [{
@@ -622,6 +623,15 @@ module.exports = function (grunt) {
                     htmlmin:  '<%= htmlmin.dist.options %>',
                     quotes: 'single'
                 }
+            },
+            test: {
+                cwd: '<%= yeoman.app %>',
+                src: ['*/**/*.html'],
+                dest: '.tmp/templates.js',
+                options:  {
+                    module: 'ortolangMarketApp',
+                    quotes: 'single'
+                }
             }
         }
     });
@@ -652,6 +662,7 @@ module.exports = function (grunt) {
         'less:development',
         'concurrent:test',
         'autoprefixer',
+        'ngtemplates:test',
         'connect:test',
         'karma:continuous'
     ]);
@@ -663,7 +674,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
-        'ngtemplates',
+        'ngtemplates:dist',
         'concat',
         'copy:dist',
         'cssmin',

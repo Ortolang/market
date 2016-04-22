@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.removeMember = function (member) {
-            if (User.key === Workspace.active.workspace.owner) {
+            if (User.key === Workspace.active.workspace.owner || User.isRoot()) {
                 GroupResource.removeMember({key: Workspace.active.workspace.members, member: member}, function (data) {
                     Workspace.active.members = data.members;
                 });

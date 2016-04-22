@@ -45,6 +45,7 @@ angular.module('ortolangMarketApp')
             pending: 'fa fa-refresh fa-spin',
             search: 'glyphicon glyphicon-search',
             location: 'fa fa-fw fa-map-marker',
+            share: 'glyphicon glyphicon-share-alt',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

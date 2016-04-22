@@ -59,6 +59,7 @@ module.exports = function (config) {
             'app/**/!(ortolang-config).js',
             'test/mock/**/*.js',
             'test/spec/**/*.js',
+            '.tmp/templates.js',
             'app/**/*.html'
         ],
 

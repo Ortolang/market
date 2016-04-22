@@ -20,7 +20,8 @@ angular.module('ortolangMarketApp')
                 tag: '=',
                 tags: '=',
                 browse: '=',
-                icons: '='
+                icons: '=',
+                preview: '@?'
             },
             template: '<div ng-include="marketItemTemplate"></div>',
             link: {
@@ -28,12 +29,15 @@ angular.module('ortolangMarketApp')
 
                     function loadItem() {
 
-                        $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'Untitled') + ' | ';
+                        if (!scope.preview) {
+                            $rootScope.ortolangPageTitle = getValue(scope.content.title, 'lang', Settings.language, 'Untitled') + ' | ';
+                        }
 
                         if (scope.content.schema) {
 
-                            scope.browse = $location.search().browse;
-                            scope.preview = $location.search().preview;
+                            if ($location.search().path) {
+                                scope.browse = true;
+                            }
 
                             if (scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
                                 scope.marketItemTemplate = 'market/templates/ortolang-item-json-13.html';
@@ -102,22 +106,6 @@ angular.module('ortolangMarketApp')
 
                     scope.browseContent = function () {
                         scope.browse = !scope.browse;
-                        if (scope.browse) {
-                            $location.search('browse', true);
-                        } else {
-                            // Clear search parts by keeping only the path
-                            $location.search({});
-                        }
-                    };
-
-                    scope.previewContent = function () {
-                        scope.preview = !scope.preview;
-                        if (scope.preview) {
-                            $location.search('preview', true);
-                        } else {
-                            // Clear search parts by keeping only the path
-                            $location.search({});
-                        }
                     };
 
                     scope.toggleDescription = function () {
@@ -146,12 +134,6 @@ angular.module('ortolangMarketApp')
                                 return 'tools';
                         }
                     }
-
-                    scope.$on('$routeUpdate', function () {
-                        if ($location.search().browse !== scope.browse) {
-                            scope.browse = $location.search().browse;
-                        }
-                    });
 
                     $rootScope.$on('$translateChangeSuccess', function () {
                         if (scope.content) {
@@ -182,7 +164,6 @@ angular.module('ortolangMarketApp')
                         scope.initilizing = false;
                     }
 
-                    // init();
                 }
             }
         };

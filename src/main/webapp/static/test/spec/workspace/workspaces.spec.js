@@ -4,7 +4,6 @@ describe('Controller: WorkspacesCtrl', function () {
 
     beforeEach(module('ortolangMarketApp'));
     beforeEach(module('ortolangMarketAppMock'));
-    beforeEach(module('workspace/templates/create-workspace-modal.html'));
 
     var WorkspacesCtrl,
         WorkspaceResource,

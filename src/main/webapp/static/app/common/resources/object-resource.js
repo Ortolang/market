@@ -32,6 +32,11 @@ angular.module('ortolangMarketApp')
             isAuthorized: {
                 url: url.api + '/objects/:key/authorized',
                 method: 'GET'
+            },
+            pids: {
+                url: url.api + '/objects/:key/pids',
+                method: 'GET',
+                isArray: true
             }
         });
     }]);

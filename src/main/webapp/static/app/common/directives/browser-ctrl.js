@@ -55,7 +55,8 @@ angular.module('ortolangMarketApp')
         'WorkspaceBrowserService',
         'FileSelectBrowserService',
         'Helper',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper) {
+        'url',
+        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, url) {
 
             var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
@@ -138,6 +139,9 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({divider: true});
                         }
                         if ($scope.browserService.canDownload && !$scope.hasOnlyParentSelected()) {
+                            if ($scope.isMarketBrowserService && $scope.hasOnlyOneElementSelected()) {
+                                $scope.contextMenuItems.push({text: 'SHARE', icon: icons.share, action: 'share'});
+                            }
                             $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
                             //$scope.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
                             $scope.contextMenuItems.push({divider: true});
@@ -362,6 +366,41 @@ angular.module('ortolangMarketApp')
                 } else {
                     Content.downloadWithKeyInWindow(elements[0].key, true);
                 }
+            };
+
+            $scope.share = function () {
+                createModalScope();
+                modalScope.models = {
+                    type: $scope.selectedElements[0].type,
+                    name: $scope.selectedElements[0].name
+                };
+                modalScope.handles = {};
+                ObjectResource.pids({key: $scope.selectedElements[0].key}, function (data) {
+                    modalScope.handles.others = [];
+                    angular.forEach(data, function (handle) {
+                        handle = handle.toLowerCase();
+                        var parts = handle.split('/');
+                        if (parts[0] === url.handlePrefix && parts[1] === $scope.browserService.workspace.alias) {
+                            if (parts[2] === $scope.workspaceHistoryTags[$scope.root]) {
+                                modalScope.handles.static = handle;
+                                modalScope.handles.staticUrl = 'https://hdl.handle.net/' + handle;
+                            } else {
+                                modalScope.handles.dynamic = handle;
+                                modalScope.handles.dynamicUrl = 'https://hdl.handle.net/' + handle;
+                            }
+                        } else {
+                            modalScope.handles.others.push({
+                                handle: handle,
+                                url: 'https://hdl.handle.net/' + handle
+                            });
+                        }
+                    });
+                });
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/directives/share-modal-template.html',
+                    show: true
+                });
             };
 
             $scope.getPreviewUrl = function (element, large) {
@@ -868,6 +907,9 @@ angular.module('ortolangMarketApp')
                     case 'preview':
                         $scope.clickPreview();
                         break;
+                    case 'share':
+                        $scope.share();
+                        break;
                     case 'addToCart':
                         $scope.addToCart();
                         $scope.deactivateContextMenu();
@@ -1026,7 +1068,7 @@ angular.module('ortolangMarketApp')
             $scope.browseToPath = function (path) {
                 path = Helper.normalizePath(path);
                 setPath(path);
-                if ($scope.isFileSelectBrowserService) {
+                if (!$scope.isWorkspaceBrowserService) {
                     getParentData();
                 }
                 clearVisualizers();
@@ -1294,7 +1336,7 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.$on('$routeUpdate', function () {
-                if (($scope.isWorkspaceBrowserService && $location.search().section === 'content') || ($scope.isMarketBrowserService && $location.search().browse)) {
+                if ($scope.isWorkspaceBrowserService && $location.search().section === 'content') {
                     if ($location.search().path !== $scope.path) {
                         setPath($location.search().path);
                     }
@@ -1941,7 +1983,7 @@ angular.module('ortolangMarketApp')
                     }
                     path = Helper.normalizePath(path);
                     $scope.path = path;
-                    if (!$scope.isFileSelectBrowserService) {
+                    if ($scope.isWorkspaceBrowserService) {
                         $location.search('path', path);
                     }
                 }
@@ -1979,6 +2021,10 @@ angular.module('ortolangMarketApp')
                 populateBreadcrumbDropdownMenu();
                 if ($scope.isMarketBrowserService) {
                     initWorkspaceVariables(undefined, $scope.root, $location.search().path);
+                    if ($location.search().path) {
+                        $location.replace();
+                        $location.search({});
+                    }
                 } else {
                     $scope.$on('initWorkspaceVariables', function () {
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);

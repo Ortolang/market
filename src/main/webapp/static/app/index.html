@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="fragment" content="!">
-    <!--<meta name="robots" content="noindex, nofollow">-->
+    <meta name="robots" content="noindex, nofollow">
     <base href="/">
-    <title ng-bind="ortolangPageTitle !== undefined ? (ortolangPageTitle + (ortolangPageSubtitle || '') + 'ORTOLANG') : ''"></title>
+    <title ng-bind="ortolangPageTitle !== undefined ? (ortolangPageTitle + (ortolangPageSubtitle || '') + 'ORTOLANG') : ''">ORTOLANG</title>
     <meta description name="description">
 
     <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
@@ -60,7 +60,7 @@
                        ng-href="{{:: element.path}}"
                        ng-click="select(element.class)"
                        ng-class="::element.class">
-                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" bs-tooltip></span>
+                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" data-trigger="hover" bs-tooltip></span>
                         <span class="item-description" translate="{{::element.description}}"></span>
                     </a>
                     <span ng-if="::element.class === 'divider'"></span>
@@ -133,19 +133,6 @@
 <!-- build:remove -->
 <script src="ortolang-config.js"></script>
 <!-- endbuild -->
-
-<script type="text/javascript">
-    var microDataElement = angular.element('<script type="application/ld+json">'),
-        microData = {
-            '@context': 'http://schema.org',
-            '@type': 'website',
-            'name': 'ORTOLANG',
-            'alternateName': 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
-            'url': location.origin
-        };
-    microDataElement.text(angular.toJson(microData));
-    angular.element('head').append(microDataElement);
-</script>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
