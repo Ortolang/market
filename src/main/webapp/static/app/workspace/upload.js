@@ -100,11 +100,13 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onAfterAddingFile = function (fileItem) {
-                fileItem.wsName = angular.copy($scope.browserService.workspace.name);
+                fileItem.wsName = fileItem.wsName || angular.copy($scope.browserService.workspace.name);
                 fileItem.headers = {
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
-                fileItem.wskey = fileItem.wskey || angular.copy($scope.browserService.workspace.key);
+                if ($scope.browserService) {
+                    fileItem.wskey = angular.copy($scope.browserService.workspace.key);
+                }
                 fileItem.url = url.api + '/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
@@ -114,9 +116,9 @@ angular.module('ortolangMarketApp')
                         break;
 
                     case ortolangType.metadata:
-                        fileItem.file.path = Helper.normalizePath(angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : ''));
-                        fileItem.formData.push({path: fileItem.file.path});
-                        fileItem.formData.push({name: fileItem.file.name});
+                        // fileItem.file.path = Helper.normalizePath(angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : ''));
+                        fileItem.formData.push({path: fileItem.path});
+                        fileItem.formData.push({name: fileItem.name});
                         break;
 
                     case 'zip':
@@ -185,7 +187,12 @@ angular.module('ortolangMarketApp')
                         uploader.zipExtractionQueue.push(zipExtractionQueueItem);
                         break;
                     case ortolangType.metadata:
-                        $rootScope.$emit('metadataUploadCompleted');
+                        // $rootScope.$emit('metadataUploadCompleted');
+                        if (status === 200) {
+                            $rootScope.$emit('uploader.metadata.update', response);
+                        } else if (status === 201) {
+                            $rootScope.$emit('uploader.metadata.create', response);
+                        }
                         break;
                 }
                 clearItem(fileItem);
@@ -208,3 +215,4 @@ angular.module('ortolangMarketApp')
                 }
             };
         }]);
+    
