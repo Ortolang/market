@@ -30,7 +30,7 @@
                             </div>
                         </li>
                     </ul>
-                    <p ng-show="profiles.length > models.limit"><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MORE_RESULTS"></strong></p>
+                    <p ng-show="profiles.length > models.limit" class="alert alert-warning"><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MORE_RESULTS"></strong></p>
                 </div>
                 <hr ng-if="!addFriend" ng-show="profiles.length >= 0" />
                 <div class="my-friends" ng-if="!addFriend">
