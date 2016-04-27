@@ -126,5 +126,9 @@ angular.module('ortolangMarketApp')
         ERROR_MODAL_6: {
             TITLE: 'Erreur',
             BODY: 'Il n\'existe pas d\'espace de travail avec l\'alias <strong>{{alias}}</strong> ou vous n\'êtes pas autorisé à accéder à ce workspace.'
+        },
+        ERROR_MODAL_9: {
+            TITLE: 'Métadonnées invalide',
+            BODY: 'Les métadonnées envoyées au serveur ne sont pas valide.'
         }
     });

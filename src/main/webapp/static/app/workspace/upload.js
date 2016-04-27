@@ -187,7 +187,6 @@ angular.module('ortolangMarketApp')
                         uploader.zipExtractionQueue.push(zipExtractionQueueItem);
                         break;
                     case ortolangType.metadata:
-                        // $rootScope.$emit('metadataUploadCompleted');
                         if (status === 200) {
                             $rootScope.$emit('uploader.metadata.update', response);
                         } else if (status === 201) {
@@ -212,6 +211,14 @@ angular.module('ortolangMarketApp')
                         console.error('Failed to refresh token');
                         AuthService.forceReload();
                     });
+                } else {
+                    switch (fileItem.ortolangType) {
+                    case ortolangType.metadata:
+                        if (status === 400) {
+                            $rootScope.$emit('uploader.metadata.failed', response);
+                        }
+                        break;
+                    }
                 }
             };
         }]);

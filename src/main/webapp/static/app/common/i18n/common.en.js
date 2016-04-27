@@ -126,5 +126,9 @@ angular.module('ortolangMarketApp')
         ERROR_MODAL_6: {
             TITLE: 'Erreur',
             BODY: 'No workspace with alias <strong>{{alias}}</strong> found or you are not authorized to access this workspace.'
+        },
+        ERROR_MODAL_9: {
+            TITLE: 'Invalid metadata',
+            BODY: 'The metadata send to .'
         }
     });

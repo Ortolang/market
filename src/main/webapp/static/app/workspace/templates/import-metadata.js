@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ImportMetadataCtrl', ['$rootScope', '$scope', '$timeout', 'Content', 'Workspace', 'ortolangType', '$location',
-        function ($rootScope, $scope, $timeout, Content, Workspace, ortolangType, $location) {
+    .controller('ImportMetadataCtrl', ['$rootScope', '$scope', '$timeout', 'Content', 'Workspace', 'ortolangType', '$location', '$alert', '$translate',
+        function ($rootScope, $scope, $timeout, Content, Workspace, ortolangType, $location, $alert, $translate) {
 
         	$scope.upload = function () {
         		// Using $timeout to prevent '$apply already in progress' error
@@ -41,6 +41,18 @@ angular.module('ortolangMarketApp')
                         $scope.applying = false;
                         $location.search('section', 'preview');
                     });
+                });
+            });
+
+            $rootScope.$on('uploader.metadata.failed', function (event, response) {
+            	console.log(response);
+                var myAlert = $alert({
+                	// title: $translate.instant('ERROR_MODAL_9.TITLE'),
+                	content: $translate.instant('ERROR_MODAL_9.BODY'),
+                	placement: 'top',
+                	type: 'danger',
+                	duration: 5,
+                	show: true
                 });
             });
 
