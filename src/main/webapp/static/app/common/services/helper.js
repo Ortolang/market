@@ -44,7 +44,7 @@ angular.module('ortolangMarketApp')
             return lowerStr.indexOf(expected.toLowerCase()) === 0;
         };
 
-        this.endsWith = function(str, suffix) {
+        this.endsWith = function (str, suffix) {
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         };
 

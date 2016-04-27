@@ -80,11 +80,6 @@
     window.location = "ie.html";
 </script>
 <![endif]-->
-<!-- build:js(.) scripts/oldieshim.js -->
-<!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<![endif]-->
-<!-- endbuild -->
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
@@ -288,35 +283,8 @@
 <script src="profile/productions.js"></script>
 <script src="profile/friends.js"></script>
 <script src="profile/tasks.js"></script>
+<script src="common/piwik/piwik.js"></script>
 <!-- endbuild -->
 
-<!-- Piwik -->
-<script type="text/javascript">
-    if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
-        var _paq = _paq || [];
-        _paq.push([function() {
-            var self = this;
-            function getOriginalVisitorCookieTimeout() {
-                var now = new Date(),
-                    nowTs = Math.round(now.getTime() / 1000),
-                    visitorInfo = self.getVisitorInfo();
-                var createTs = parseInt(visitorInfo[2]);
-                var cookieTimeout = 33696000; // 13 months in seconds
-                var originalTimeout = createTs + cookieTimeout - nowTs;
-                return originalTimeout;
-            }
-            this.setVisitorCookieTimeout(getOriginalVisitorCookieTimeout());
-        }]);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-            var u="//" + OrtolangConfig.piwikHost;
-            _paq.push(['setTrackerUrl', u+'piwik.php']);
-            _paq.push(['setSiteId', OrtolangConfig.piwikSiteId]);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-        })();
-    }
-</script>
-<!-- End Piwik Code -->
 </body>
 </html>
