@@ -54,7 +54,7 @@
             <strong>HTTP</strong>
             <div ng-if="Workspace.active.workspace.tags.length > 0">
                 <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
-                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}/{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="marketLinkFull"></span></span>
+                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="marketLinkFull"></span></span>
             </div>
             <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
             <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="contentLink"></span></span>
