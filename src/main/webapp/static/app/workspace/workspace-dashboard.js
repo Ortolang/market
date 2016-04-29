@@ -50,7 +50,7 @@ angular.module('ortolangMarketApp')
                 }
                 // Refresh active workspace info
                 if ($scope.dashboardSection === 'information') {
-                    Workspace.refreshActiveWorkspace(['events', 'head']);
+                    Workspace.refreshActiveWorkspaceInfo(true);
                 }
                 // If browsing content
                 if (id === 'content') {
@@ -155,9 +155,13 @@ angular.module('ortolangMarketApp')
                                         'wskey': Workspace.active.workspace.key,
                                         'wstag': 'v' + wstag
                                     }, function () {
-                                        Workspace.refreshActiveWorkspaceInfo();
+                                        Workspace.refreshActiveWorkspaceInfo().finally(function () {
+                                            Workspace.active.workspace.readOnly = true;
+                                            publishModal.hide();
+                                        });
+                                    }, function () {
+                                        Helper.showUnexpectedErrorAlert('.modal', 'center');
                                     });
-                                    publishModal.hide();
                                 }
                             } else {
                                 modalScope.models.pendingSubmit = false;
