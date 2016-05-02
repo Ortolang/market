@@ -126,6 +126,7 @@ angular.module('ortolangMarketApp')
                     config.placement = placement;
                 }
                 $modal(config);
+                return scope;
             }
         };
 
