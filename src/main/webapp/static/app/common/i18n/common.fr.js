@@ -10,11 +10,13 @@
 angular.module('ortolangMarketApp')
     .constant('COMMON_FR', {
         CLOSE: 'Fermer',
+        EXIT_WITHOUT_SAVE: 'Quitter sans sauvegarder',
         SELECT: 'Sélectionner',
         CANCEL: 'Annuler',
         CREATE: 'Créer',
         SUBMIT: 'Valider',
         ADD: 'Ajouter',
+        SAVE: 'Enregistrer',
         DELETE: 'Supprimer',
         NAME: 'Nom',
         RENAME: 'Renommer',

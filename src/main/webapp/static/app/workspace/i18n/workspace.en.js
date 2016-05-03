@@ -190,6 +190,10 @@ angular.module('ortolangMarketApp')
                 BOLD: 'Bold',
                 SUBMIT: 'Create'
             },
+            SAVE_METADATA_MODAL: {
+                TITLE: 'Save metadata',
+                BODY: 'Would you save the modifications ?'
+            },
             METADATA_EDITOR: {
                 MESSAGES: {
                     TITLE_NOT_SET: 'Please fills the title field.',

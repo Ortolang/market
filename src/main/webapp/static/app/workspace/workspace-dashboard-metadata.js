@@ -8,8 +8,19 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardMetadataCtrl', ['$rootScope', '$scope', '$location', '$filter', '$modal', 'ortolangType', 'ObjectResource', 'Workspace', 'WorkspaceElementResource', 'Content',
-        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content) {
+    .controller('WorkspaceDashboardMetadataCtrl', [
+        '$rootScope',
+        '$scope',
+        '$location',
+        '$filter',
+        '$modal',
+        'ortolangType',
+        'ObjectResource',
+        'Workspace',
+        'WorkspaceElementResource',
+        'Content',
+        'WorkspaceMetadataService',
+        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService) {
 
             $scope.applyChange = function () {
                 startSubmit();
@@ -19,68 +30,77 @@ angular.module('ortolangMarketApp')
             $scope.submitForm = function () {
                 console.log('submit form');
 
-                var error = false;
-                if (angular.isUndefined($scope.metadata.type)) {
-                    $scope.errors.type = true;
-                    error = true;
-                } else {
-                    $scope.errors.type = false;
-                }
+                // var error = false;
+                // if (angular.isUndefined($scope.metadata.type)) {
+                //     $scope.errors.type = true;
+                //     error = true;
+                // } else {
+                //     $scope.errors.type = false;
+                // }
 
-                if (angular.isUndefined($scope.metadata.title)) {
-                    $scope.errors.title = true;
-                    error = true;
-                } else {
-                    $scope.errors.title = false;
-                }
+                // if (angular.isUndefined($scope.metadata.title)) {
+                //     $scope.errors.title = true;
+                //     error = true;
+                // } else {
+                //     $scope.errors.title = false;
+                // }
 
-                if (angular.isUndefined($scope.metadata.description)) {
-                    $scope.errors.description = true;
-                    error = true;
-                } else {
-                    $scope.errors.description = false;
-                }
+                // if (angular.isUndefined($scope.metadata.description)) {
+                //     $scope.errors.description = true;
+                //     error = true;
+                // } else {
+                //     $scope.errors.description = false;
+                // }
 
-                if (error) {
-                    abortSubmit();
-                    showErrorMessages();
-                    return;
-                }
+                // if (error) {
+                //     abortSubmit();
+                //     showErrorMessages();
+                //     return;
+                // }
 
-                delete $scope.metadata.imageUrl;
+                // delete $scope.metadata.imageUrl;
 
-                $scope.metadata.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
+                // $scope.metadata.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
 
-                var content = angular.toJson($scope.metadata),
-                    contentType = 'text/json';
+                // var content = angular.toJson($scope.metadata),
+                //     contentType = 'text/json';
 
-                sendForm(content, contentType);
-            };
-
-            function sendForm(content, contentType) {
-
-                var fd = new FormData(),
-                    currentPath = '/';
-
-                fd.append('path', currentPath);
-                fd.append('type', ortolangType.metadata);
-
-                fd.append('name', 'ortolang-item-json');
-
-                var blob = new Blob([content], { type: contentType});
-
-                fd.append('stream', blob);
-
-                WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function () {
-                    Workspace.refreshActiveWorkspaceMetadata().then(function() {
-                        Workspace.getActiveWorkspaceMetadata().then(function() {
-
+                // sendForm(content, contentType);
+                WorkspaceMetadataService.save().then(function () {
+                    // Workspace.refreshActiveWorkspaceMetadata().then(function() {
+                    //     Workspace.getActiveWorkspaceMetadata().then(function() {
                             $scope.applying = false;
                             $location.search('section', 'preview');
-                        });
-                    });
+                    //     });
+                    // });
                 });
-            }
+            };
+
+            // function sendForm(content, contentType) {
+
+            //     var fd = new FormData(),
+            //         currentPath = '/';
+
+            //     fd.append('path', currentPath);
+            //     fd.append('type', ortolangType.metadata);
+
+            //     fd.append('name', 'ortolang-item-json');
+
+            //     var blob = new Blob([content], { type: contentType});
+
+            //     fd.append('stream', blob);
+
+            //     WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function () {
+            //         Workspace.refreshActiveWorkspaceMetadata().then(function() {
+            //             Workspace.getActiveWorkspaceMetadata().then(function() {
+
+            //                 WorkspaceMetadataService.metadataChanged = false;
+            //                 $scope.applying = false;
+            //                 $location.search('section', 'preview');
+            //             });
+            //         });
+            //     });
+            // }
 
             function startSubmit() {
                 $scope.submitButtonText = '<span class="fa fa-refresh fa-spin"></span> Sauvegarde...';
@@ -107,7 +127,7 @@ angular.module('ortolangMarketApp')
                 var modalScope = prepareModalScopeForErrorMessages(),
                     addContributorModal;
 
-                modalScope.errors = $scope.errors;
+                modalScope.errors = WorkspaceMetadataService.metadataErrors;
 
                 modalScope.$on('modal.hide', function () {
                     modalScope.$destroy();
@@ -131,9 +151,20 @@ angular.module('ortolangMarketApp')
                 deregisterFileImageSelectModal();
             });
 
+            $rootScope.$on('workspace.metadata.errors', function () {
+                abortSubmit();
+                showErrorMessages();
+            });
+
+            $scope.$watch('ortolangItemJsonform.$pristine', function () {
+                if ($scope.ortolangItemJsonform.$pristine === false) {
+                    WorkspaceMetadataService.metadataChanged = true;
+                }
+            }, true);
+
             function init() {
                 $scope.submitButtonText = 'Appliquer';
-                $scope.errors = {title: false, type: false, description: false};
+                // $scope.errors = {title: false, type: false, description: false};
                 $scope.activeTab = 0;
                 if (Workspace.active.metadata !== null) {
                     $scope.metadata = angular.copy(Workspace.active.metadata);
@@ -148,6 +179,7 @@ angular.module('ortolangMarketApp')
                         ]
                     };
                 }
+                WorkspaceMetadataService.metadata = $scope.metadata;
 
                 // Sets datasize
                 ObjectResource.size({key: Workspace.active.workspace.head}, function (data) {

@@ -23,8 +23,9 @@ angular.module('ortolangMarketApp')
         'RuntimeResource',
         'WorkspaceResource',
         'WorkspaceBrowserService',
+        'WorkspaceMetadataService',
         'User',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, $filter, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService, User) {
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, $filter, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService, WorkspaceMetadataService, User) {
 
             /**
              * The section selected by default
@@ -35,9 +36,33 @@ angular.module('ortolangMarketApp')
 
             /**
              *
+             * @param {String} url   - the url of the next page; if null or undefined sets default section
+             */
+            function showSavingMetadataModal(newUrl) {
+                var savingMetadataModal;
+                modalScope = Helper.createModalScope(true);
+                modalScope.save = function () {
+                    WorkspaceMetadataService.save().then(function () {
+                        $location.url(newUrl);
+                    });
+                    savingMetadataModal.hide();
+                };
+                modalScope.exit = function () {
+                    savingMetadataModal.hide();
+                    $location.url(newUrl);
+                };
+                savingMetadataModal = $modal({
+                    scope: modalScope,
+                    templateUrl: 'workspace/templates/save-metadata-modal.html',
+                    show: true
+                });
+            }
+
+            /**
+             *
              * @param {String} id   - the section id; if null or undefined sets default section
              */
-            function setDashboardSection(id) {
+            function performSetDashboardSection (id) {
                 $scope.dashboardSection = id || defaultSection;
                 if ($scope.dashboardSection === defaultSection) {
                     $location.search({});
@@ -59,6 +84,18 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            /**
+             *
+             * @param {String} id   - the section id; if null or undefined sets default section
+             */
+            function setDashboardSection(id) {
+                if ($location.search().section === 'metadata' && WorkspaceMetadataService.metadataChanged) {
+                    showSavingMetadataModal('?section='+id);
+                } else {
+                    performSetDashboardSection(id);
+                }
+            }
+
             $scope.selectDashboardSection = function (id) {
                 setDashboardSection(id);
             };
@@ -69,6 +106,13 @@ angular.module('ortolangMarketApp')
                 }
                 if ($scope.dashboardSection !== $location.search().section) {
                     setDashboardSection($location.search().section);
+                }
+            });
+
+            $scope.$on('$routeChangeStart', function (event, next, current) {
+                if (current.params.section === 'metadata' && WorkspaceMetadataService.metadataChanged) {
+                    showSavingMetadataModal($location.$$url);
+                    event.preventDefault();
                 }
             });
 

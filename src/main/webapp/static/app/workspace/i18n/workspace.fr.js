@@ -200,6 +200,10 @@ angular.module('ortolangMarketApp')
                 LOGO_EDITOR_BUTTON: 'Créer un logo',
                 LOGO_EDITOR_HELP: 'Créer facilement un logo à l\'aide du créateur de logo ORTOLANG'
             },
+            SAVE_METADATA_MODAL: {
+                TITLE: 'Enregistrer les métadonnées',
+                BODY: 'Souhaitez-vous enregistrer les changements ?'
+            },
             METADATA_EDITOR: {
                 MESSAGES: {
                     TITLE_NOT_SET: 'Veuillez renseigner le titre.',
