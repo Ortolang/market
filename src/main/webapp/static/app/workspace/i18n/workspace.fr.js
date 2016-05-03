@@ -205,6 +205,7 @@ angular.module('ortolangMarketApp')
                     TITLE_NOT_SET: 'Veuillez renseigner le titre.',
                     TYPE_NOT_SET: 'Veuillez renseigner la catéorie.',
                     DESCRIPTION_NOT_SET: 'Veuillez renseigner la description.',
+                    METADATA_FORMAT_INVALID: 'Format des métadonnées non valide. Veuillez contacter un administrateurs.',
                     NOT_SET: 'Veuillez renseigner ce champs.',
                     NEED_ONE_VALUE: 'Veuillez spécifier au moins une valeur pour ce champs.'
                 },

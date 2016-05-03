@@ -74,7 +74,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="corporaStyles" class="control-label">{{'MARKET.FACET.CORPORA_DATATYPES' | translate}}</label>
-                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaDataTypes" ng-disabled="Workspace.active.workspace.readOnly" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaDataType.id as corporaDataType.label for corporaDataType in allDataTypes" bs-select>{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
+                            <button type="button" class="form-control btn btn-default" ng-model="metadata.corporaDataTypes" ng-disabled="Workspace.active.workspace.readOnly" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CORPORA_FORMATS' | translate}}" bs-options="corporaDataType.id as corporaDataType.label for corporaDataType in allDataTypes | filter:{compatibilities:'CorporaDataType'}" bs-select>{{'MARKET.FACET.CORPORA_DATATYPES' | translate}} <span class="caret"></span>
                             </button>
                         </div>
                     </div>
@@ -263,6 +263,239 @@
                         </div>
                     </div>
                 </div>
+            </section>
+        </div>
+        <div ng-switch-when="Terminologie">
+
+            <section name="termino">
+
+                <fieldset>
+                    <legend>
+                        <h4 translate="ITEM.TERMINO_NATURE_CATEGORY.TITLE"></h4>
+                    </legend>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="terminoType" class="control-label">{{'ITEM.TERMINO_TYPE.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_TYPE.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+
+                            <button name="terminoType" type="button" class="form-control btn btn-default" ng-model="metadata.terminoType" ng-disabled="Workspace.active.workspace.readOnly" data-placeholder="{{'ITEM.TERMINO_TYPE.LABEL' | translate}}" bs-options="terminoType.id as terminoType.label for terminoType in allDataTypes | filter:{compatibilities:'TerminoType'}" bs-select>{{'ITEM.TERMINO_TYPE.LABEL' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="terminoStructureType" class="control-label">{{'ITEM.TERMINO_STRUCTURE_TYPE.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_STRUCTURE_TYPE.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+
+                        <button name="terminoStructureType" type="button" class="form-control btn btn-default" ng-model="metadata.terminoStructureType" ng-disabled="Workspace.active.workspace.readOnly" data-placeholder="{{'ITEM.TERMINO_STRUCTURE_TYPE.LABEL' | translate}}" bs-options="terminoStructureType.id as terminoStructureType.label for terminoStructureType in allStructureTypes" bs-select>{{'ITEM.TERMINO_STRUCTURE_TYPE.LABEL' | translate}} <span class="caret"></span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="terminoDescriptionTypes" class="control-label">{{'ITEM.TERMINO_DESCRIPTION_FIELD.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_DESCRIPTION_FIELD.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+
+                        <button name="terminoDescriptionTypes" type="button" class="form-control btn btn-default" ng-model="metadata.terminoDescriptionTypes" ng-disabled="Workspace.active.workspace.readOnly" data-max-length="2" data-multiple="1" data-placeholder="{{'ITEM.TERMINO_DESCRIPTION_FIELD.LABEL' | translate}}" bs-options="terminoDescriptionTypes.id as terminoDescriptionTypes.label for terminoDescriptionTypes in allDescriptionFields" bs-select>{{'ITEM.TERMINO_DESCRIPTION_FIELD.LABEL' | translate}} <span class="caret"></span>
+                        </button>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        <h4 translate="ITEM.TERMINO_LINGUISTIC_COVERAGE_CATEGORY.TITLE"></h4>
+                    </legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="terminoLanguageType" class="control-label">{{'ITEM.TERMINO_LANGUAGE_TYPE.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_LANGUAGE_TYPE.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                                <button type="button" class="form-control btn btn-default" ng-model="metadata.terminoLanguageType" ng-disabled="Workspace.active.workspace.readOnly" data-placeholder="{{'ITEM.TERMINO_LANGUAGE_TYPE.LABEL' | translate}}" bs-options="terminoLanguageType.id as terminoLanguageType.label for terminoLanguageType in allLanguageType | filter:{compatibilities:'TerminoLanguageType'}" bs-select>{{'ITEM.TERMINO_LANGUAGE_TYPE.LABEL' | translate}} <span class="caret"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="terminoInputLanguages" class="control-label">{{'ITEM.TERMINO_INPUT_LANGUAGE.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_INPUT_LANGUAGE.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                                <tags-input name="terminoInputLanguages" class="language-tags" ng-model="terminoInputLanguages" ng-disabled="Workspace.active.workspace.readOnly" data-display-property="label" data-placeholder="{{'ITEM.TERMINO_INPUT_LANGUAGE.PLACEHOLDER' | translate}}" data-on-tag-added="addLanguage('terminoInputLanguages', $tag)" data-on-tag-removed="removeLanguage('terminoInputLanguages', $tag)">
+                                    <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        <h4 translate="ITEM.TERMINO_FORMATS_MODELS_CATEGORY.TITLE"></h4>
+                    </legend>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="terminoFormat" class="control-label">{{'ITEM.TERMINO_FORMAT.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_FORMAT.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+
+                            <button name="terminoFormat" type="button" class="form-control btn btn-default" ng-model="metadata.terminoFormat" ng-disabled="Workspace.active.workspace.readOnly" data-placeholder="{{'ITEM.TERMINO_FORMAT.LABEL' | translate}}" bs-options="terminoFormat.id as terminoFormat.label for terminoFormat in allFileFormats | filter:{compatibilities:'TerminoFormat'}" bs-select>{{'ITEM.TERMINO_FORMAT.LABEL' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        <h4 translate="ITEM.TERMINO_OTHERS_CATEGORY.TITLE"></h4>
+                    </legend>
+                    <div class="form-group">
+                        <label for="terminoUsage" class="control-label">{{'ITEM.TERMINO_USAGE.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_USAGE.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                        <div class="input-group">
+                            <button type="button" class="btn btn-default" name="terminoUsage-lang" ng-model="selectedTerminoUsageLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeTerminoUsageLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                        </div>
+                        <textarea class="form-control" id="terminoUsage" name="terminoUsage" rows="20" placeholder="{{'ITEM.TERMINO_USAGE.PLACEHOLDER' | translate}}" ng-model="terminoUsage.value" ng-change="updateTerminoUsage()" ng-disabled="Workspace.active.workspace.readOnly"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="terminoOrigin" class="control-label">{{'ITEM.TERMINO_ORIGIN.LABEL' | translate}}</label>
+                        <textarea class="form-control" name="terminoOrigin" rows="5" placeholder="{{'ITEM.TERMINO_ORIGIN.PLACEHOLDER' | translate}}" aria-label="terminoOrigin" ng-model="metadata.terminoOrigin" ng-disabled="Workspace.active.workspace.readOnly"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="terminoInputCount" class="control-label">{{'ITEM.TERMINO_INPUT_COUNT.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_INPUT_COUNT.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+
+                            <button name="terminoInputCount" type="button" class="form-control btn btn-default" ng-model="metadata.terminoInputCount" ng-disabled="Workspace.active.workspace.readOnly" data-placeholder="{{'ITEM.TERMINO_INPUT_COUNT.LABEL' | translate}}" bs-options="terminoInputCount.id as terminoInputCount.label for terminoInputCount in allRanges" bs-select>{{'ITEM.TERMINO_FORMAT.LABEL' | translate}} <span class="caret"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="terminoVersion" class="control-label">{{'ITEM.TERMINO_VERSION.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_VERSION.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                            <input type="text" class="form-control" ng-model="metadata.terminoVersion" ng-disabled="Workspace.active.workspace.readOnly" aria-label="terminoOrigin"></input>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="terminoControled" class="control-label">{{'ITEM.TERMINO_CONTROLED.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_CONTROLED.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                                <div toggle-switch class="switch-primary" ng-model="metadata.terminoControled" on-label="Oui" off-label="Non"></div>
+                            </button>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="terminoValidated" class="control-label">{{'ITEM.TERMINO_VALIDATED.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_VALIDATED.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                            <div toggle-switch class="switch-primary" ng-model="metadata.terminoValidated" on-label="Oui" off-label="Non"></div>
+                            </button>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="terminoApproved" class="control-label">{{'ITEM.TERMINO_APPROVED.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_APPROVED.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                            <div toggle-switch class="switch-primary" ng-model="metadata.terminoApproved" on-label="Oui" off-label="Non"></div>
+                            </button>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="terminoChecked" class="control-label">{{'ITEM.TERMINO_CHECKED.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_CHECKED.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                            <div toggle-switch class="switch-primary" ng-model="metadata.terminoChecked" on-label="Oui" off-label="Non"></div>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        <h4 translate="ITEM.TERMINO_DOMAIN_CATEGORY.TITLE"></h4>
+                    </legend>
+                    <div class="form-group">
+                        <label for="terminoDomain" class="control-label">{{'ITEM.TERMINO_DOMAIN.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_DOMAIN.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+
+                        <div class="domain-selector">
+                            <ul class="row list-discipline">
+                                <li class="col-md-6" ng-repeat="discipline in allDisciplines | filter:{contentId:'st_discipline'}">
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" id="{{discipline.id}}" ng-model="checkboxDomain[discipline.id]" ng-checked="checkboxDomain[discipline.id]" ng-click="checkTerminoDomain(discipline)">
+                                        <label for="{{discipline.id}}">
+                                            {{discipline.label}}
+                                        </label>
+                                    </div>
+                                    <ul class="list-domain">
+                                        <li ng-repeat="domain in allDomains | filter:{'compatibilities':discipline.contentId}">
+                                            <div class="checkbox checkbox-primary">
+                                                <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)">
+                                                <label for="{{domain.id}}">
+                                                    {{domain.label}}
+                                                </label>
+                                            </div>
+                                            <ul class="list-subdomain">
+                                                <li ng-repeat="subdomain in allSubDomains | filter:{'compatibilities':domain.contentId}">
+                                                    <div class="checkbox checkbox-primary">
+                                                        <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)">
+                                                        <label for="{{subdomain.id}}">
+                                                            {{subdomain.label}}
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <ul class="col-md-12 list-discipline">
+                                            <li ng-repeat="discipline in allDisciplines | filter:{contentId:'sve_discipline'}">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input type="checkbox" id="{{discipline.id}}" ng-model="checkboxDomain[discipline.id]" ng-checked="checkboxDomain[discipline.id]" ng-click="checkTerminoDomain(discipline)">
+                                                    <label for="{{discipline.id}}">
+                                                        {{discipline.label}}
+                                                    </label>
+                                                </div>
+                                                <ul class="list-domain">
+                                                    <li ng-repeat="domain in allDomains | filter:{'compatibilities':discipline.contentId}">
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)">
+                                                            <label for="{{domain.id}}">
+                                                                {{domain.label}}
+                                                            </label>
+                                                        </div>
+                                                        <ul class="list-subdomain">
+                                                            <li ng-repeat="subdomain in allSubDomains | filter:{'compatibilities':domain.contentId}">
+                                                                <div class="checkbox checkbox-primary">
+                                                                    <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)">
+                                                                    <label for="{{subdomain.id}}">
+                                                                        {{subdomain.label}}
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+                                        <ul class="col-md-12 list-discipline">
+                                            <li ng-repeat="discipline in allDisciplines | filter:{contentId:'shs_discipline'}">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input type="checkbox" id="{{discipline.id}}" ng-model="checkboxDomain[discipline.id]" ng-checked="checkboxDomain[discipline.id]" ng-click="checkTerminoDomain(discipline)">
+                                                    <label for="{{discipline.id}}">
+                                                        {{discipline.label}}
+                                                    </label>
+                                                </div>
+                                                <ul class="list-domain">
+                                                    <li ng-repeat="domain in allDomains | filter:{'compatibilities':discipline.contentId}">
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)">
+                                                            <label for="{{domain.id}}">
+                                                                {{domain.label}}
+                                                            </label>
+                                                        </div>
+                                                        <ul class="list-subdomain">
+                                                            <li ng-repeat="subdomain in allSubDomains | filter:{'compatibilities':domain.contentId}">
+                                                                <div class="checkbox checkbox-primary">
+                                                                    <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)">
+                                                                    <label for="{{subdomain.id}}">
+                                                                        {{subdomain.label}}
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset>
             </section>
         </div>
     </div>

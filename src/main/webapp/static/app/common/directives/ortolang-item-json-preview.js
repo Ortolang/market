@@ -59,12 +59,32 @@ angular.module('ortolangMarketApp')
                                 if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
                                     scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
                                 }
-                            }  else {
-                                //TODO show message like format metadata unknown
+                            } else if (scope.content.schema === 'http://www.ortolang.fr/schema/014#') {
+                                scope.marketItemTemplate = 'market/templates/ortolang-item-json-14.html';
+
+                                refreshMultilingualValue(scope.content, Settings.language);
+                                scope.itemMarketType = getItemType(scope.content);
+
+                                if (scope.content.image) {
+                                    scope.image = Content.getPreviewUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
+                                } else {
+                                    scope.imgtitle = '';
+                                    scope.imgtheme = 'custom';
+                                    if (scope.title) {
+                                        scope.imgtitle = scope.title.substring(0, 2);
+                                        scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
+                                    }
+                                }
+
+                                if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
+                                    scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
+                                }
+                            } else {
+                                scope.marketItemTemplate = 'market/templates/ortolang-item-json-unknown.html';
                             }
 
                         } else {
-                            //TODO show message like format metadata unknown
+                            scope.marketItemTemplate = 'market/templates/ortolang-item-json-unknown.html';
                         }
                     }
 

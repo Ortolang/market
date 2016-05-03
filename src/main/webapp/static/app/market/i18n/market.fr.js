@@ -70,6 +70,7 @@ angular.module('ortolangMarketApp')
             SEE_DOCUMENTATIONS: 'Voir la documentation',
             SEE_WEBSITE: 'Accéder au site internet',
             ITEM_NOT_FOUND: 'Aucune ressource n\'a été trouvée à cette adresse',
+            METADATA_FORMAT_NOT_FOUND: 'Format des métadonnées illisible.',
             FACET: {
                 CORPORA_TYPE: 'Type de corpus',
                 ALL_CORPORA: 'Tous les corpus',

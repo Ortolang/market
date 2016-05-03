@@ -195,6 +195,7 @@ angular.module('ortolangMarketApp')
                     TITLE_NOT_SET: 'Please fills the title field.',
                     TYPE_NOT_SET: 'Please fills the type field.',
                     DESCRIPTION_NOT_SET: 'Please fills the description field.',
+                    METADATA_FORMAT_INVALID: 'Metadata format invalid. Please contact an administrator.',
                     NOT_SET: 'Please fills this field.',
                     NEED_ONE_VALUE: 'Please specify at least one value for this field.'
                 },

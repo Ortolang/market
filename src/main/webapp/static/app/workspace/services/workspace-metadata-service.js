@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
 
         this.metadataChanged = false;
         this.metadata = {};
+        this.format = null;
         this.metadataErrors = {title: false, type: false, description: false};
 
         function postForm(deferred) {
@@ -27,6 +28,9 @@ angular.module('ortolangMarketApp')
             fd.append('type', ortolangType.metadata);
 
             fd.append('name', 'ortolang-item-json');
+            if (WorkspaceMetadataService.format !== null) {
+                fd.append('format', WorkspaceMetadataService.format.id);
+            }
 
             var blob = new Blob([content], { type: 'text/json'});
 

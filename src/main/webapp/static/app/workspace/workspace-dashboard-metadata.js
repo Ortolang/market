@@ -20,88 +20,10 @@ angular.module('ortolangMarketApp')
         'WorkspaceElementResource',
         'Content',
         'WorkspaceMetadataService',
-        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService) {
-
-            $scope.applyChange = function () {
-                startSubmit();
-                $scope.submitForm();
-            };
-
-            $scope.submitForm = function () {
-                console.log('submit form');
-
-                // var error = false;
-                // if (angular.isUndefined($scope.metadata.type)) {
-                //     $scope.errors.type = true;
-                //     error = true;
-                // } else {
-                //     $scope.errors.type = false;
-                // }
-
-                // if (angular.isUndefined($scope.metadata.title)) {
-                //     $scope.errors.title = true;
-                //     error = true;
-                // } else {
-                //     $scope.errors.title = false;
-                // }
-
-                // if (angular.isUndefined($scope.metadata.description)) {
-                //     $scope.errors.description = true;
-                //     error = true;
-                // } else {
-                //     $scope.errors.description = false;
-                // }
-
-                // if (error) {
-                //     abortSubmit();
-                //     showErrorMessages();
-                //     return;
-                // }
-
-                // delete $scope.metadata.imageUrl;
-
-                // $scope.metadata.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
-
-                // var content = angular.toJson($scope.metadata),
-                //     contentType = 'text/json';
-
-                // sendForm(content, contentType);
-                WorkspaceMetadataService.save().then(function () {
-                    // Workspace.refreshActiveWorkspaceMetadata().then(function() {
-                    //     Workspace.getActiveWorkspaceMetadata().then(function() {
-                            $scope.applying = false;
-                            $location.search('section', 'preview');
-                    //     });
-                    // });
-                });
-            };
-
-            // function sendForm(content, contentType) {
-
-            //     var fd = new FormData(),
-            //         currentPath = '/';
-
-            //     fd.append('path', currentPath);
-            //     fd.append('type', ortolangType.metadata);
-
-            //     fd.append('name', 'ortolang-item-json');
-
-            //     var blob = new Blob([content], { type: contentType});
-
-            //     fd.append('stream', blob);
-
-            //     WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function () {
-            //         Workspace.refreshActiveWorkspaceMetadata().then(function() {
-            //             Workspace.getActiveWorkspaceMetadata().then(function() {
-
-            //                 WorkspaceMetadataService.metadataChanged = false;
-            //                 $scope.applying = false;
-            //                 $location.search('section', 'preview');
-            //             });
-            //         });
-            //     });
-            // }
-
+        'MetadataFormatResource',
+        'OrtolangIitemJsonMigration',
+        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService, MetadataFormatResource, OrtolangIitemJsonMigration) {
+            
             function startSubmit() {
                 $scope.submitButtonText = '<span class="fa fa-refresh fa-spin"></span> Sauvegarde...';
                 $scope.applying = true;
@@ -112,9 +34,17 @@ angular.module('ortolangMarketApp')
                 $scope.applying = false;
             }
 
-            /**
-             * Methods on person
-             **/
+            $scope.applyChange = function () {
+                startSubmit();
+                $scope.submitForm();
+            };
+
+            $scope.submitForm = function () {
+                WorkspaceMetadataService.save().then(function () {
+                    $scope.applying = false;
+                    $location.search('section', 'preview');
+                });
+            };
 
             function prepareModalScopeForErrorMessages() {
                 var modalScope = $rootScope.$new(true);
@@ -138,7 +68,6 @@ angular.module('ortolangMarketApp')
                     templateUrl: 'workspace/templates/error-messages-modal.html'
                 });
             }
-
 
             var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
 
@@ -166,11 +95,23 @@ angular.module('ortolangMarketApp')
                 $scope.submitButtonText = 'Appliquer';
                 // $scope.errors = {title: false, type: false, description: false};
                 $scope.activeTab = 0;
+
+                // Gets last schema
+                MetadataFormatResource.get({name: 'ortolang-item-json'}, function (metadataFormats) {
+                    var entries = metadataFormats.entries;
+                    if(entries.length>0) {
+                        // $scope.format = entries[0];
+                        WorkspaceMetadataService.format = entries[0];
+                    }
+                });
+
                 if (Workspace.active.metadata !== null) {
                     $scope.metadata = angular.copy(Workspace.active.metadata);
+                    OrtolangIitemJsonMigration.migrate($scope.metadata);
                 } else {
+                    //TODO Gets schema url from MetadataFormat
                     $scope.metadata = {
-                        schema: 'http://www.ortolang.fr/schema/013#',
+                        schema: 'http://www.ortolang.fr/schema/014#',
                         title: [
                             {
                                 lang: 'fr',
