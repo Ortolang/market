@@ -37,8 +37,8 @@ angular.module('ortolangMarketApp')
             minus: 'glyphicon glyphicon-minus',
             play: 'fa fa-fw fa-play',
             tag: 'fa fa-fw fa-tag',
-            cart: 'fa fa-fw fa-shopping-cart',
-            cartPlus: 'fa fa-shopping-cart',
+            cart: 'fa fa-fw fa-star',
+            cartPlus: 'fa fa-star',
             edit: 'glyphicon glyphicon-pencil',
             copyToClipboard: 'octicon octicon-clippy',
             cloudUpload: 'glyphicon glyphicon-cloud-upload',
@@ -58,7 +58,8 @@ angular.module('ortolangMarketApp')
                 corpora: 'fa fa-fw fa-book',
                 lexicons: 'fa fa-fw fa-quote-right',
                 applications: 'fa fa-fw fa-briefcase',
-                tools: 'fa fa-fw fa-cubes'
+                tools: 'fa fa-fw fa-cubes',
+                terminologies: 'fa fa-fw fa-font'
             },
             tree: {
                 collection: 'fa fa-folder',
