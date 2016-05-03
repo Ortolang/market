@@ -72,7 +72,7 @@ angular.module('ortolangMarketApp')
             if (error) {
                 deferred.reject();
                 $rootScope.$broadcast('workspace.metadata.errors', [1,2,3]);
-                return deferred;
+                return deferred.promise;
             }
             delete this.metadata.imageUrl;
 

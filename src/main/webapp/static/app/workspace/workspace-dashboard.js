@@ -49,6 +49,7 @@ angular.module('ortolangMarketApp')
                 };
                 modalScope.exit = function () {
                     savingMetadataModal.hide();
+                    WorkspaceMetadataService.metadataChanged = false;
                     $location.url(newUrl);
                 };
                 savingMetadataModal = $modal({
