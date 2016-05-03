@@ -30,7 +30,7 @@
         <div class="workspace-dashboard-section workspace-dashboard-section-events">
             <h4 translate="WORKSPACE.HISTORY"></h4>
             <div class="infinite-list-wrapper">
-                <ul class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreEvents"  ng-style="{height: dashboardModels.EventFeedHeight}">
+                <ul class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreEvents"  ng-style="{height: dashboardModels.eventFeedHeight}">
                     <li ng-repeat="event in Workspace.active.events | eventFeedFilter | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
                         <div class="media-left" avatar data-email-hash="Workspace.authorCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
                         <div class="media-body">
@@ -54,10 +54,10 @@
             <strong>HTTP</strong>
             <div ng-if="Workspace.active.workspace.tags.length > 0">
                 <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
-                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}/{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="marketLinkFull"></span></span>
+                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip data-zeroclip-text="{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}"></span></span>
             </div>
             <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
-            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="contentLink"></span></span>
+            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="dashboardModels.links.content"></span></span>
             <br/>
             <br/>
             <strong>FTP</strong>
@@ -65,23 +65,26 @@
                 <a ng-href="{{::Workspace.active.ftp.url}}">{{::Workspace.active.ftp.url}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.ftp.url"></span></span>
             </div>
         </div>
-        <div class="workspace-dashboard-section">
+        <div class="workspace-dashboard-section workspace-dashboard-section-requests">
             <h4 translate="WORKSPACE.WORKFLOW"></h4>
-            <ul ng-if="Workspace.active.requests.length > 0" class="list-unstyled">
-                <li ng-repeat="request in Workspace.active.requests | filter:{'type': 'publish-workspace'} | orderBy:'-start' track by request.key" class="workspace-event media card-well">
-                    <div class="media-left" avatar data-email-hash="Workspace.authorCards[request.initier].emailHash" data-size="36" data-img-classes="img-circle"></div>
-                    <div class="media-body">
-                        <span>
-                            <!--<pre>{{request | json}}</pre>-->
-                            <span class="workspace-event-author">{{Workspace.authorCards[request.initier].fullName}}</span>
-                            <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase()}}" data-translate-values="event"></span>
-                            <span class="workspace-event-status" translate="{{'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase() + '.' + request.state}}" data-translate-values="event"></span>
-                        </span>
-                        <span class="workspace-event-date">{{request.stop || request.start | amTimeAgo}}</span>
-                    </div>
-                </li>
-            </ul>
-            <p ng-if="Workspace.active.requests.length === 0" translate="WORKSPACE.NO_WORKFLOW"></p>
+            <div class="infinite-list-wrapper">
+                <ul ng-if="Workspace.active.requests.length > 0" class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreRequests"  ng-style="{height: dashboardModels.requestsHeight}">
+                    <li ng-repeat="request in Workspace.active.requests | filter:{'type': 'publish-workspace'} | orderBy:'-start' | limitTo:dashboardModels.requestsLimit track by request.key" class="workspace-event media card-well">
+                        <div class="media-left" avatar data-email-hash="Workspace.authorCards[request.initier].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                        <div class="media-body">
+                            <span>
+                                <!--<pre>{{request | json}}</pre>-->
+                                <span class="workspace-event-author">{{Workspace.authorCards[request.initier].fullName}}</span>
+                                <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase()}}" data-translate-values="event"></span>
+                                <span class="workspace-event-status" translate="{{'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase() + '.' + request.state}}" data-translate-values="event"></span>
+                            </span>
+                            <span class="workspace-event-date">{{request.stop || request.start | amTimeAgo}}</span>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-if="showSeeMoreRequests() && !dashboardModels.requestsSeeMoreOnce" class="workspace-event media card-well see-more-card" ng-click="seeMoreRequests()" translate="SEE_MORE"></div>
+                <p ng-if="Workspace.active.requests.length === 0" translate="WORKSPACE.NO_WORKFLOW"></p>
+            </div>
         </div>
         <div ng-if="User.key === Workspace.active.workspace.owner" class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>

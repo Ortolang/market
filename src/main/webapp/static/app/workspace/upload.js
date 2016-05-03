@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService', 'Helper',
         function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService, Helper) {
 
-            var uploader, queueLimitReached, queueLimitModal;
+            var uploader, queueLimitReached, sizeLimitReached;
 
             if ($rootScope.uploader) {
                 uploader = $rootScope.uploader;
@@ -27,6 +27,12 @@ angular.module('ortolangMarketApp')
                             fn: function (item) {
                                 return !(!item.type && ((!this.isMacOs && item.size % 4096 === 0) ||
                                 (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 5 < item.name.length - 1))));
+                            }
+                        },
+                        {
+                            name: 'sizeLimit',
+                            fn: function (item) {
+                                return item.size < 1000000000; // 1 GB
                             }
                         }
                     ]
@@ -152,17 +158,15 @@ angular.module('ortolangMarketApp')
             };
 
             uploader.onWhenAddingFileFailed = function (item, filter, options) {
-                if (filter.name === 'queueLimit') {
+                if (filter.name === 'queueLimit' && !queueLimitReached) {
                     queueLimitReached = true;
-                    if (!queueLimitModal) {
-                        queueLimitModal = $modal({
-                            templateUrl: 'workspace/templates/queue-limit-modal.html',
-                            show: true
-                        });
-                        queueLimitModal.$promise.then(function () {
-                            queueLimitModal.$scope.$on('modal.hide', function () {
-                                queueLimitModal = undefined;
-                            });
+                    Helper.showErrorModal({code: 'QUEUE_LIMIT'});
+                } else if (filter.name === 'sizeLimit' && !sizeLimitReached) {
+                    sizeLimitReached = true;
+                    var modalScope = Helper.showErrorModal({code: 'UPLOAD_SIZE_LIMIT'});
+                    if (modalScope) {
+                        modalScope.$on('modal.hide', function () {
+                            sizeLimitReached = undefined;
                         });
                     }
                 }
@@ -222,4 +226,3 @@ angular.module('ortolangMarketApp')
                 }
             };
         }]);
-    

@@ -8,11 +8,12 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Runtime', ['$rootScope', '$translate', '$modal', '$alert', 'RuntimeResource', 'FormResource', 'Helper', function ($rootScope, $translate, $modal, $alert, RuntimeResource, FormResource, Helper) {
+    .factory('Runtime', ['$rootScope', '$translate', '$modal', '$alert', '$timeout', 'RuntimeResource', 'FormResource', 'Helper', function ($rootScope, $translate, $modal, $alert, $timeout, RuntimeResource, FormResource, Helper) {
 
         var lastTasksRefresh,
             tasks = [],
-            history = {};
+            history = {},
+            delta = 500;
 
         // *********************** //
         //          Tasks          //
@@ -21,7 +22,7 @@ angular.module('ortolangMarketApp')
         function getTasks(date) {
             if (!date || lastTasksRefresh < date) {
                 lastTasksRefresh = Date.now();
-                RuntimeResource.listTasks().$promise.then(function (data) {
+                RuntimeResource.listTasks(function (data) {
                     tasks = data.entries;
                 });
             }
@@ -77,7 +78,9 @@ angular.module('ortolangMarketApp')
 
         function processTaskEvent(event, message) {
             event.stopPropagation();
-            getTasks(message.date);
+            $timeout(function () {
+                getTasks(message.date);
+            }, delta);
         }
 
         $rootScope.$on('runtime.task.created', function (event, message) {
@@ -87,7 +90,9 @@ angular.module('ortolangMarketApp')
             }
             history['runtime.task.created'] = message;
             processTaskEvent(event, message);
-            $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), type: 'danger'});
+            $timeout(function () {
+                $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), type: 'danger'});
+            }, delta);
         });
 
         $rootScope.$on('runtime.task.assigned', function (event, message) {

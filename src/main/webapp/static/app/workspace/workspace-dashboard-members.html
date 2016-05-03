@@ -13,7 +13,7 @@
                 <button ng-if="(User.key === Workspace.active.workspace.owner || User.isRoot()) && member.key !== Workspace.active.workspace.owner"
                         class="btn btn-default btn-danger btn-xs remove-member-btn" ng-class="::icons.remove" ng-click="removeMember(member.key)" data-title="{{::'WORKSPACE.REMOVE_MEMBER' | translate}}" bs-tooltip></button>
             </li>
-            <li ng-if="User.key === Workspace.active.workspace.owner" class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
+            <li ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
                 <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
                 <div class="media-body" translate="WORKSPACE.ADD_MEMBER"></div>
             </li>

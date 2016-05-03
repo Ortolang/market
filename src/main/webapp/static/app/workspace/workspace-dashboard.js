@@ -75,7 +75,7 @@ angular.module('ortolangMarketApp')
                 }
                 // Refresh active workspace info
                 if ($scope.dashboardSection === 'information') {
-                    Workspace.refreshActiveWorkspace(['events', 'head']);
+                    Workspace.refreshActiveWorkspaceInfo(true);
                 }
                 // If browsing content
                 if (id === 'content') {
@@ -199,9 +199,13 @@ angular.module('ortolangMarketApp')
                                         'wskey': Workspace.active.workspace.key,
                                         'wstag': 'v' + wstag
                                     }, function () {
-                                        Workspace.refreshActiveWorkspaceInfo();
+                                        Workspace.refreshActiveWorkspaceInfo().finally(function () {
+                                            Workspace.active.workspace.readOnly = true;
+                                            publishModal.hide();
+                                        });
+                                    }, function () {
+                                        Helper.showUnexpectedErrorAlert('.modal', 'center');
                                     });
-                                    publishModal.hide();
                                 }
                             } else {
                                 modalScope.models.pendingSubmit = false;
@@ -248,12 +252,16 @@ angular.module('ortolangMarketApp')
                 return ($filter('eventFeedFilter')(Workspace.active.events)).length > $scope.dashboardModels.eventsLimit;
             };
 
+            $scope.showSeeMoreRequests = function () {
+                return Workspace.active.requests && ($filter('filter')(Workspace.active.requests, {'type': 'publish-workspace'})).length > $scope.dashboardModels.requestsLimit;
+            };
+
             $scope.seeMoreEvents = function () {
                 if (!$scope.dashboardModels.eventsInfiniteScrollBusy && !$scope.dashboardModels.eventsEnd) {
                     $scope.dashboardModels.eventsInfiniteScrollBusy = true;
                     if (!$scope.dashboardModels.eventsSeeMoreOnce) {
                         var eventList = angular.element('.workspace-dashboard-section-events').find('ul.list-unstyled');
-                        $scope.dashboardModels.EventFeedHeight = eventList.outerHeight() + 'px';
+                        $scope.dashboardModels.eventFeedHeight = eventList.outerHeight() + 'px';
                         $scope.dashboardModels.eventsSeeMoreOnce = true;
                     }
                     if (Workspace.active.events.length < $scope.dashboardModels.eventsLimit) {
@@ -271,6 +279,21 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.seeMoreRequests = function () {
+                if ($scope.dashboardModels.requestsLimit !== null) {
+                    if (!$scope.dashboardModels.requestsSeeMoreOnce) {
+                        var eventList = angular.element('.workspace-dashboard-section-requests').find('ul.list-unstyled');
+                        $scope.dashboardModels.requestsHeight = eventList.outerHeight() + 'px';
+                        $scope.dashboardModels.requestsSeeMoreOnce = true;
+                    }
+                    if ($scope.dashboardModels.requestsLimit + 3 < Workspace.active.requests.length) {
+                        $scope.dashboardModels.requestsLimit += 3;
+                    } else {
+                        $scope.dashboardModels.requestsLimit = null;
+                    }
+                }
+            };
+
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();
@@ -279,6 +302,7 @@ angular.module('ortolangMarketApp')
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
                     eventsLimit: 4,
+                    requestsLimit: 3,
                     eventsInfiniteScrollBusy: false
                 };
                 Workspace.getWorkspaceList(true).then(function () {

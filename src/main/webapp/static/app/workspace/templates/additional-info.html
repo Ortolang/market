@@ -13,20 +13,18 @@
             <br/>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-bordered table-responsive metadata-editor-table">
                         <tbody>
-                            <tr ng-repeat="publication in metadata.publications">
-                                <td>
-                                    <div style="padding:12px">
-                                        <div class="media-body">
-                                            <p ng-bind-html="publication"></p>
-                                        </div>
-                                        <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removePublication(publication)"></span>
-                                        </div>
+                        <tr ng-repeat="publication in metadata.publications">
+                            <td>
+                                <div class="media">
+                                    <div class="media-body" ng-bind-html="publication"></div>
+                                    <div class="media-right">
+                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removePublication(publication)"></span>
                                     </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -35,7 +33,7 @@
         <hr/>
         <div class="form-group">
             <label for="preview" class="control-label">{{'MARKET.PREVIEW' | translate}}</label>
-            
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="input-group">
@@ -49,20 +47,18 @@
             <br/>
             <div class="row" ng-if="metadata.preview">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-bordered table-responsive metadata-editor-table">
                         <tbody>
-                            <tr ng-repeat="path in metadata.preview">
-                                <td>
-                                    <div style="padding:12px">
-                                        <div class="media-body">
-                                            {{path}}
-                                        </div>
-                                        <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removePath(path)"></span>
-                                        </div>
+                        <tr ng-repeat="path in metadata.preview">
+                            <td>
+                                <div class="media">
+                                    <div class="media-body">{{path}}</div>
+                                    <div class="media-right">
+                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removePath(path)"></span>
                                     </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -71,7 +67,7 @@
         <hr/>
         <div class="form-group">
             <label for="keywords" class="control-label">{{'MARKET.KEYWORDS' | translate}}</label>
-            
+
             <div class="input-group">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default" name="keywords-lang" ng-model="keyword.lang" ng-disabled="Workspace.active.workspace.readOnly" bs-options="lang.key as lang.value for lang in languages" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
@@ -84,28 +80,21 @@
             <br/>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-bordered table-responsive metadata-editor-table">
                         <tbody>
-                            <tr ng-repeat="keyword in metadata.keywords">
-                                <td>
-                                    <div style="padding:12px">
-                                        {{keyword.lang}}
+                        <tr ng-repeat="keyword in metadata.keywords">
+                            <td>
+                                <div class="media">{{keyword.lang}}</div>
+                            </td>
+                            <td>
+                                <div class="media">
+                                    <div class="media-body">{{keyword.value}}</div>
+                                    <div class="media-right">
+                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removeKeyword(keyword)"></span>
                                     </div>
-                                </td>
-                                <td>
-                                    <div style="padding:12px">
-                                        <!-- <div class="media-left">
-                                            <span>{{keyword.lang}}</span>
-                                        </div> -->
-                                        <div class="media-body">
-                                            {{keyword.value}}
-                                        </div>
-                                        <div class="media-right">
-                                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removeKeyword(keyword)"></span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -114,21 +103,21 @@
         <div class="form-group">
             <hr/>
             <label for="website" class="control-label">{{'MARKET.WEBSITE' | translate}}</label>
-            
-              <input type="text" class="form-control" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website" ng-disabled="Workspace.active.workspace.readOnly">
-            
+
+            <input type="text" class="form-control" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website" ng-disabled="Workspace.active.workspace.readOnly">
+
         </div>
         <div class="form-group" ng-if="metadata.creationLocations">
             <hr/>
             <label for="creationLocations" class="control-label">{{'ITEM.CREATION_LOCATIONS.LABEL' | translate}}</label>
-            
-                <div  ng-repeat="creationLocation in metadata.creationLocations">
-                    <input ng-if="creationLocation.name" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.name" ng-disabled="Workspace.active.workspace.readOnly">
-                    <input ng-if="creationLocation.dcmipoint" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIPOINT.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmipoint" ng-disabled="Workspace.active.workspace.readOnly">
-                    <input ng-if="creationLocation.dcmibox" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIBOX.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmibox" ng-disabled="Workspace.active.workspace.readOnly">
-                    <input ng-if="creationLocation.iso3166" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.ISO3166.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.iso3166" ng-disabled="Workspace.active.workspace.readOnly">
-                    <input ng-if="creationLocation.tgn" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.TGN.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.tgn" ng-disabled="Workspace.active.workspace.readOnly">
-                </div>
+
+            <div  ng-repeat="creationLocation in metadata.creationLocations">
+                <input ng-if="creationLocation.name" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.name" ng-disabled="Workspace.active.workspace.readOnly">
+                <input ng-if="creationLocation.dcmipoint" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIPOINT.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmipoint" ng-disabled="Workspace.active.workspace.readOnly">
+                <input ng-if="creationLocation.dcmibox" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIBOX.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmibox" ng-disabled="Workspace.active.workspace.readOnly">
+                <input ng-if="creationLocation.iso3166" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.ISO3166.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.iso3166" ng-disabled="Workspace.active.workspace.readOnly">
+                <input ng-if="creationLocation.tgn" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.TGN.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.tgn" ng-disabled="Workspace.active.workspace.readOnly">
+            </div>
         </div>
         <div ng-if="metadata.originDate" class="form-group">
             <hr/>

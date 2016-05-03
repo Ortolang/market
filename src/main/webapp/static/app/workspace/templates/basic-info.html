@@ -41,14 +41,14 @@
                 </span>
         </div>
         <br/>
-        <table ng-if="documentations" class="table table-bordered table-responsive">
+        <table ng-if="documentations" class="table table-bordered table-responsive metadata-editor-table">
             <tbody>
             <tr ng-repeat="documentation in documentations">
                 <td>
-                    <div style="padding:12px">
+                    <div class="media">
                         <div class="media-body">{{documentation.path}}</div>
                         <div class="media-right">
-                            <span class="glyphicon glyphicon-trash text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removeDocumentation(documentation)"></span>
+                            <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="removeDocumentation(documentation)"></span>
                         </div>
                     </div>
                 </td>

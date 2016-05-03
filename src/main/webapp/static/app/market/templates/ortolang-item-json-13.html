@@ -14,8 +14,7 @@
                 </h1>
 
                 <div ng-hide="browse">
-
-                    <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{publicationDate: content.publicationDate}"></i> :
+                    <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i> :
                         <ul class="list-unstyled">
                             <li ng-repeat="producer in producers track by producer.id">
                                 <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
@@ -39,6 +38,9 @@
                                 </div>
                             </li>
                         </ul>
+                    </div>
+                    <div class="market-item-publication-date">
+                        <p translate="MARKET.PUBLICATION_DATE" data-translate-values="::{publicationDate: content.publicationDate}"></p>
                     </div>
                 </div>
                 <button class="btn btn-default" ng-show="browse" ng-click="browseContent()" translate="MARKET.GO_BACK_INFO"></button>

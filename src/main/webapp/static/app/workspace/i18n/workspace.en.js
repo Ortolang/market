@@ -176,10 +176,6 @@ angular.module('ortolangMarketApp')
             PROCESS_NAMES: {
                 IMPORT_ZIP: 'Import of archive "{{zipName}}" into workspace "{{wsName}}"'
             },
-            QUEUE_LIMIT_MODAL: {
-                TITLE: 'Import limit',
-                BODY: 'You cannot import more than <strong>50 files</strong> at the same time using this method:<ul><li>to import more thant 50 files simultaneously you can <strong>import a zip</strong></li><li>for larger amount of data you are also able to <strong>access your workspace by FTP</strong></li></ul>'
-            },
             EDIT_LOGO: 'Click to edit logo',
             HOLDER_EDITOR_MODAL: {
                 TITLE: 'Logo creator',
@@ -331,5 +327,13 @@ angular.module('ortolangMarketApp')
                 ESR: 'ESR members',
                 RESTRICTED: 'Workspace members'
             }
+        },
+        ERROR_MODAL_QUEUE_LIMIT: {
+            TITLE: 'Import limit',
+            BODY: 'You cannot import more than <strong>50 files</strong> at the same time using this method:<ul><li>to import more thant 50 files simultaneously you can <strong>import a zip</strong></li><li>for larger amount of data you are also able to <strong>access your workspace by FTP</strong>. The FTP address of your workspace can be found in the Information tab.</li></ul>'
+        },
+        ERROR_MODAL_UPLOAD_SIZE_LIMIT: {
+            TITLE: 'File size limit',
+            BODY: '<p>You cannot import files whose size exceeds <strong>1 GB</strong> using this method.</p><p>To import larger amount of data, you can <strong>access your workspace by FTP</strong>. The FTP address of your workspace can be found in the Information tab.</p>'
         }
     });

@@ -172,10 +172,6 @@ angular.module('ortolangMarketApp')
             PROCESS_NAMES: {
                 IMPORT_ZIP: 'Importation de "{{zipName}}" dans l\'espace de travail "{{wsName}}"'
             },
-            QUEUE_LIMIT_MODAL: {
-                TITLE: 'Limite d\'importation',
-                BODY: 'Il n\'est pas possible d\'importer plus de <strong>50 fichiers à la fois</strong> par cette méthode : <ul><li>pour importer simultanément plus de 50 fichiers vous avez la possibilité <strong>d\'importer un zip</strong></li><li>pour importer de grande quantité de données vous avez également la faculté de vous connecter à votre workspace <strong>par FTP</strong></li></ul>'
-            },
             READ_ONLY_MODE: '<strong>Espace de travail en lecture seule:</strong> certaines propriétés tels que le contenu, les métadonnées et les permissions ne sont pas éditables.',
             EDIT_LOGO: 'Cliquez pour modifier votre logo',
             HOLDER_EDITOR_MODAL: {
@@ -392,6 +388,14 @@ angular.module('ortolangMarketApp')
                     }
                 }
             }
+        },
+        ERROR_MODAL_QUEUE_LIMIT: {
+            TITLE: 'Limite d\'importation',
+            BODY: 'Il n\'est pas possible d\'importer plus de <strong>50 fichiers à la fois</strong> par cette méthode : <ul><li>pour importer simultanément plus de 50 fichiers vous avez la possibilité <strong>d\'importer un zip</strong></li><li>pour importer de grandes quantités de données vous pouvez également <strong>vous connecter à votre workspace par FTP</strong>. L\'adresse FTP de votre workspace se trouve dans l\'onglet Informations.</li></ul>'
+        },
+        ERROR_MODAL_UPLOAD_SIZE_LIMIT: {
+            TITLE: 'Fichier trop volumineux',
+            BODY: '<p>Il n\'est pas possible d\'importer des fichiers dont la taille dépasse <strong>1 Go</strong> par cette méthode.</p><p>Pour importer de grandes quantités de données vous pouvez <strong>vous connecter à votre workspace par FTP</strong>. L\'adresse FTP de votre workspace se trouve dans l\'onglet Informations.</p>'
         },
         'ortolang-item-json': 'Fiche de présentation',
         'ortolang-thumb-json': 'Logo',
