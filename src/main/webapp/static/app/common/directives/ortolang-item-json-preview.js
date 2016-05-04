@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('ortolangItemJsonPreview', ['$rootScope', '$filter', '$location', 'Settings', 'Content', '$translate', function ($rootScope, $filter, $location, Settings, Content, $translate) {
+    .directive('ortolangItemJsonPreview', ['$rootScope', '$filter', '$location', '$modal', '$translate', 'Helper', 'Settings', 'Content', 'url', function ($rootScope, $filter, $location, $modal, $translate, Helper, Settings, Content, url) {
         return {
             restrict: 'EA',
             scope: {
@@ -152,6 +152,8 @@ angular.module('ortolangMarketApp')
                                 return 'applications';
                             case 'Outil':
                                 return 'tools';
+                            case 'Terminologie':
+                                return 'terminologies';
                         }
                     }
 
@@ -175,6 +177,8 @@ angular.module('ortolangMarketApp')
                         scope.imgtitle = undefined;
                         scope.currentContent = scope.content;
                         scope.showingDescription = false;
+                        scope.handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + scope.alias + (scope.tag ? '/' + scope.tag.name : '');
+                        scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + scope.alias + (scope.tag ? '/' + scope.tag.name : '');
                     }
 
                     function init() {

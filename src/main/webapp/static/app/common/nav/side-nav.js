@@ -76,6 +76,9 @@ angular.module('ortolangMarketApp')
                         case '/market/lexicons':
                             $scope.select('lexicons');
                             break;
+                        case '/market/terminologies':
+                            $scope.select('terminologies');
+                            break;
                         case '/producers':
                         case '/producers/:producerId':
                         case '/contributors/:contributorId':
