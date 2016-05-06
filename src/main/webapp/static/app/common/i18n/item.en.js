@@ -63,6 +63,7 @@ angular.module('ortolangMarketApp')
             },
             TERMINO_TYPE: {
                 LABEL: 'Terminlogy type',
+                RESETLABEL: 'All terminology type',
                 PLACEHOLDER: 'Terminlogy type'
             },
             TERMINO_STRUCTURE_TYPE: {

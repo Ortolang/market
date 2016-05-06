@@ -121,6 +121,7 @@ angular.module('ortolangMarketApp')
                 CORPORA: 'Search for corpora',
                 TOOLS: 'Search for tools',
                 LEXICONS: 'Search for lexicons',
+                TERMINOLOGIES: 'Search for a terminologies, thésaurus or ontologies',
                 PRODUCERS: 'Search for a producer (name, acronym, city)',
                 ALL: 'Search in ORTOLANG'
             },

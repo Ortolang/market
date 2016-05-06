@@ -162,6 +162,12 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function loadTerminoUsage(lang) {
+                if ($scope.content.terminoUsage !== undefined && $scope.content.terminoUsage !== '') {
+                    $scope.terminoUsage = Helper.getMultilingualValue($scope.content.terminoUsage, 'lang', lang);
+                }
+            }
+
             function loadSponsors() {
                 if ($scope.content.sponsors !== undefined && $scope.content.sponsors.length > 0) {
                     $scope.sponsors = [];
@@ -265,14 +271,7 @@ angular.module('ortolangMarketApp')
                         // String
                     } else if (angular.isString($scope.content[fieldKey])) {
 
-                        if (angular.isDefined($scope.content[fieldKey]['meta_ortolang-referential-json'])) {
-                            // For market
-                            $scope.additionalInformations.push({
-                                key: fieldKey,
-                                value: Helper.getMultilingualValue($scope.content[fieldKey]['meta_ortolang-referential-json'].labels, lang),
-                                name: fieldName
-                            });
-                        } else if (Helper.startsWith($scope.content[fieldKey], '$')) {
+                        if (Helper.startsWith($scope.content[fieldKey], '$')) {
                             // For workspace
                             ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId($scope.content[fieldKey])}, function (entity) {
                                 var content = angular.fromJson(entity.content);
@@ -290,9 +289,17 @@ angular.module('ortolangMarketApp')
                                 name: fieldName
                             });
                         }
-
-                        // Boolean
+                    } else if (angular.isObject($scope.content[fieldKey])) {
+                        if (angular.isDefined($scope.content[fieldKey]['meta_ortolang-referential-json'])) {
+                            // For market
+                            $scope.additionalInformations.push({
+                                key: fieldKey,
+                                value: Helper.getMultilingualValue($scope.content[fieldKey]['meta_ortolang-referential-json'].labels, lang),
+                                name: fieldName
+                            });
+                        }
                     } else {
+                        // Boolean
                         $scope.additionalInformations.push({
                             key: fieldKey,
                             value: $scope.content[fieldKey],
@@ -356,6 +363,7 @@ angular.module('ortolangMarketApp')
 
                 loadFieldValuesInAdditionalInformations('terminoType', 'ITEM.TERMINO_TYPE.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoStructureType', 'ITEM.TERMINO_STRUCTURE_TYPE.LABEL', lang);
+                loadFieldValuesInAdditionalInformations('terminoLanguageType', 'ITEM.TERMINO_LANGUAGE_TYPE.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoDescriptionTypes', 'ITEM.TERMINO_DESCRIPTION_FIELD.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoInputLanguages', 'ITEM.TERMINO_INPUT_LANGUAGE.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoDomains', 'ITEM.TERMINO_DOMAIN.LABEL', lang);
@@ -371,6 +379,7 @@ angular.module('ortolangMarketApp')
             $rootScope.$on('$translateChangeSuccess', function () {
                 loadLicense($translate.use());
                 loadConditionsOfUse($translate.use());
+                loadTerminoUsage($translate.use());
                 loadCommerciaLinks($translate.use());
                 loadSponsors();
                 loadAdditionalInformations($translate.use());
@@ -385,6 +394,7 @@ angular.module('ortolangMarketApp')
                 loadSponsors();
                 loadLicense(Settings.language);
                 loadConditionsOfUse(Settings.language);
+                loadTerminoUsage($translate.use());
                 loadCommerciaLinks(Settings.language);
                 loadRelations();
                 loadAdditionalInformations(Settings.language);

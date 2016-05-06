@@ -73,6 +73,12 @@ angular
                 title: 'LEXICONS',
                 reloadOnSearch: false
             })
+            .when('/market/terminologies', {
+                templateUrl: 'market/terminologies.html',
+                controller: 'TerminologiesCtrl',
+                title: 'TERMINOLGIES',
+                reloadOnSearch: false
+            })
             .when('/market/applications', {
                 templateUrl: 'market/applications.html',
                 // controller: 'ApplicationsCtrl',
