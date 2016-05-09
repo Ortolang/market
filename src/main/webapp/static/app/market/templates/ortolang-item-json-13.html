@@ -2,16 +2,13 @@
     <header>
         <div class="media">
             <div class="media-left">
-                <div class="item-logo">
+                <div class="item-logo" ng-class="{browse: browse}">
                     <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}&size=63"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                     <img ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 </div>
             </div>
             <div class="media-body">
-                <h1 class="market-item-title" ng-class="root === 'head' ? 'text-danger' : ''">
-                    <span ng-if="root === 'head'" translate="MARKET.PREVIEW_OF"></span>
-                    <span ng-bind="title"></span>
-                </h1>
+                <h1 class="market-item-title" ng-bind="title"></h1>
 
                 <div ng-hide="browse">
                     <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i> :
@@ -39,9 +36,6 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="market-item-publication-date">
-                        <p translate="MARKET.PUBLICATION_DATE" data-translate-values="::{publicationDate: content.publicationDate}"></p>
-                    </div>
                 </div>
                 <button class="btn btn-default" ng-show="browse" ng-click="browseContent()" translate="MARKET.GO_BACK_INFO"></button>
             </div>
@@ -55,6 +49,14 @@
         </div>
 
         <div ng-show="!browse" class="col-md-8 market-item-presentation-metadata">
+
+            <div class="alert alert-info citatation-alert" ng-click="howToCite(this, $event)">
+                <span class="fa fa-2x fa-quote-left pull-left"></span>
+                <button class="btn btn-primary btn-xs pull-right" translate="COPY"></button>
+                <span class="citatation-alert-title" translate="MARKET.BIBLIOGRAPHIC_CITATION"></span>
+                <div data-target-blank ng-bind-html="getCitation()"></div>
+            </div>
+
             <section id="description">
                 <h4>{{'DESCRIPTION' | translate}}</h4>
                 <article data-content="description" data-target-blank>
@@ -62,12 +64,11 @@
                     <br/>
                     <div ng-if="keywords && keywords.length>0">
                         <dl class="keywords">
-                            <dt data-translate="MARKET.KEYWORDS"> : </dt>
+                            <dt data-translate="MARKET.KEYWORDS"></dt>
                             <dd>
-                                <span ng-repeat="keyword in keywords"><span ng-if="!$first">, </span>{{keyword}}</span>
+                                <span ng-repeat="keyword in keywords">{{::keyword}}</span>
                             </dd>
                         </dl>
-                        <br/>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -77,9 +78,7 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-left" role="menu">
                                     <li ng-repeat="relation in documentations">
-                                        <a target="_BLANK" ng-href="{{relation.url}}">
-                                            {{relation.name}}
-                                        </a>
+                                        <a target="_BLANK" ng-href="{{relation.url}}">{{relation.name}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -121,25 +120,20 @@
                 </article>
             </section>
 
-            <section class="keywords" ng-if="additionalInformations.length>0">
+            <section class="additional-informations" ng-if="additionalInformations.length > 0">
                 <h4>{{'MARKET.ADDITIONAL_INFORMATION' | translate}}</h4>
                 <article>
-                    <div class="row">
-                        <div ng-repeat="additionalInformation in additionalInformations" class="col-md-3">
-                            <dl ng-if="!isArray(additionalInformation.value)">
-                                <dt translate="{{additionalInformation.name}}"></dt>
-                                <dd>
-                                    {{additionalInformation.value}}
-                                </dd>
-                            </dl>
-                            <dl ng-if="isArray(additionalInformation.value)">
-                                <dt translate="{{additionalInformation.name}}"></dt>
-                                <dd ng-repeat="valueItem in additionalInformation.value">
-                                    {{valueItem}}
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
+                    <dl class="dl-horizontal">
+                        <dt translate="MARKET.PUBLICATION_DATE"></dt>
+                        <dd>{{::content.publicationDate | date:"longDate"}}</dd>
+                        <dt translate="MARKET.PID"></dt>
+                        <dd><a ng-href="{{::handle}}">{{::handle}}</a></dd>
+                        <dt ng-repeat-start="additionalInformation in additionalInformations track by additionalInformation.name" translate="{{additionalInformation.name}}"></dt>
+                        <dd ng-repeat-end>
+                            <span ng-if="isArray(additionalInformation.value)"><span ng-repeat="valueItem in additionalInformation.value">{{::valueItem}}</span></span>
+                            <span ng-if="!isArray(additionalInformation.value)">{{::additionalInformation.value}}</span>
+                        </dd>
+                    </dl>
                 </article>
             </section>
 
@@ -157,10 +151,9 @@
 
         <aside ng-show="!browse" class="col-md-4">
 
-        <div class="panel panel-default" ng-show="commercialLinks">
-                <div class="panel-heading"> {{'MARKET.COMMERCIAL_LINKS' | translate}}</div>
-                <div class="panel-body">
-
+            <div class="card-well card-well-market card-well-license" ng-if="commercialLinks">
+                <p class="lead" translate="MARKET.COMMERCIAL_LINKS"></p>
+                <div>
                     <div class="media" ng-repeat="commercialLink in commercialLinks">
                         <div class="media-left">
                             <img ng-src="{{commercialLink.img}}">
@@ -174,9 +167,9 @@
                 </div>
             </div>
 
-            <div class="panel panel-default license-panel" ng-show="content.type !== 'Application'">
-                <div class="panel-heading"><span class="fa fa-download fa-fw"></span> {{'MARKET.DOWNLOAD' | translate}}</div>
-                <div class="panel-body">
+            <div class="card-well card-well-market card-well-license" ng-if="content.type !== 'Application'">
+                <p class="lead" translate="MARKET.DOWNLOAD"></p>
+                <div>
                     <dl ng-if="license">
                         <dt>
                             {{license.label}} <a target="_BLANK" ng-if="(!license.description || conditionsOfUse) && license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
@@ -204,7 +197,7 @@
                 </div>
             </div>
 
-            <div class="panel panel-default" ng-show="content.type === 'Application'">
+            <div class="panel panel-default" ng-if="content.type === 'Application'">
                 <div class="panel-heading"><span class="fa fa-link fa-fw"></span> {{'MARKET.LINK' | translate}}</div>
                 <div class="panel-body">
 
@@ -214,57 +207,35 @@
                 </div>
             </div>
 
-            <div class="panel panel-default derogation-panel" ng-show="content.derogation">
-                <div class="panel-heading" translate="MARKET.DEROGATION"></div>
-                <div class="panel-body">
-
-                    <p>
-                        <a href="http://www.archivesdefrance.culture.gouv.fr/seda/api/seda_v1-0_accessrestriction_code_xsd_Simple_Type_AccessRestrictionCodeType.htm#AccessRestrictionCodeType" target="_BLANK">{{content.derogation}}</a>
-                        <span ng-if="content.derogation==='AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
-                        <span ng-if="content.derogation==='AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>
-                        <span ng-if="content.derogation==='AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>
-                    </p>
-
-                </div>
+            <div class="card-well card-well-market card-well-share">
+                <p class="lead">
+                    {{'SHARE' | translate}}
+                    <span class="fa fa-lg fa-fw fa-facebook"></span>
+                    <span class="fa fa-lg fa-fw fa-twitter"></span>
+                    <span class="fa fa-lg fa-fw fa-linkedin"></span>
+                </p>
             </div>
 
-            <div class="panel panel-default" ng-show="bibliographicCitation">
-                <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
-                <div data-target-blank data-content="bibliographicCitation" class="panel-body">
-                    <p ng-bind-html="bibliographicCitation"></p>
-                </div>
+            <div class="card-well card-well-market" ng-if="content.derogation">
+                <p class="lead" translate="MARKET.DEROGATION"></p>
+                <p>
+                    <a href="http://www.archivesdefrance.culture.gouv.fr/seda/api/seda_v1-0_accessrestriction_code_xsd_Simple_Type_AccessRestrictionCodeType.htm#AccessRestrictionCodeType" target="_BLANK">{{content.derogation}}</a>
+                    <span ng-if="content.derogation === 'AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>
+                    <span ng-if="content.derogation === 'AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>
+                    <span ng-if="content.derogation === 'AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>
+                </p>
             </div>
 
-            <div class="panel panel-default" ng-hide="bibliographicCitation">
-                <div class="panel-heading" translate="MARKET.BIBLIOGRAPHIC_CITATION"></div>
-                <div data-target-blank data-content="bibliographicCitation" class="panel-body">
-                    <p ng-if="content.publications && content.publications.length>0" ng-bind-html="content.publications[0]">
-                    </p>
-                    <p>
-                        <span ng-repeat="producer in producers" ng-if="producers">
-                            <span ng-if="!$first">, </span>{{producer.fullname}}
-                        </span>
-                        <span ng-repeat="author in authors" ng-if="!producers">
-                            <span ng-if="!$first">, </span>{{author.entity.fullname}}
-                        </span>.
-                        ({{content.publicationDate | date:'yyyy'}}).
-                        <i>{{title}}</i> [{{content.type}}].
-                        Disponible sur <a target="_BLANK" href="http://www.ortolang.fr">www.ortolang.fr</a> :
-                        <a target="_BLANK" ng-href="{{handle}}">{{handle}}</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="panel panel-default preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
-                <div class="panel-heading"><span class="glyphicon glyphicon-eye-open fa-fw"></span> {{'MARKET.PREVIEW' | translate}}</div>
-                <div class="panel-body">
+            <div class="card-well card-well-market preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
+                <p class="lead" translate="MARKET.PREVIEW"></p>
+                <div>
                     <div ng-show="itemKey" preview-list collection="itemKey" paths="content.preview"></div>
                 </div>
             </div>
 
-            <div class="panel panel-default" ng-if="content.copyright">
-                <div class="panel-heading">{{'MARKET.COPYRIGHT' | translate}}</div>
-                <div class="panel-body">
+            <div class="card-well card-well-market" ng-if="content.copyright">
+                <p class="lead" translate="MARKET.COPYRIGHT"></p>
+                <div>
                     <p ng-bind="content.copyright"></p>
                 </div>
             </div>

@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
         CREATE: 'Créer',
         SUBMIT: 'Valider',
         ADD: 'Ajouter',
+        COPY: 'Copier',
         SAVE: 'Enregistrer',
         DELETE: 'Supprimer',
         CLEAR: 'Réinitialiser',
@@ -46,6 +47,8 @@ angular.module('ortolangMarketApp')
         CART: 'Sélection',
         SEE_MORE: 'Voir plus',
         SHARE: 'Partager',
+        YES: 'Oui',
+        NO: 'Non',
         404: {
             TITLE: 'Page non trouvée',
             BODY: 'Désolé, mais la page que vous recherchez est introuvable. Vous devriez peut être essayé de retourner sur la page d\'accueuil.',

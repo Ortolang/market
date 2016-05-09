@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
             LANGUAGE: 'Langues concernés par cet objet',
             PRODUCER: 'Laboratoire{{::producerNumber > 1 ? "s" : ""}} producteur{{::producerNumber > 1 ? "s" : ""}}',
             SPONSORS: 'Soutien institutionnel',
-            PUBLICATION_DATE: '<strong>Date de publication :</strong> {{::publicationDate | date:"longDate"}}',
+            PUBLICATION_DATE: 'Date de publication',
             RESEARCHER: 'Responsable{{value > 1 ? "s" : ""}} scientifique{{value > 1 ? "s" : ""}}',
             MANAGER: 'Responsable{{value > 1 ? "s" : ""}} informatique{{value > 1 ? "s" : ""}}',
             DESIGNER: 'Concepteur{{value > 1 ? "s" : ""}}',
@@ -58,6 +58,7 @@ angular.module('ortolangMarketApp')
             LICENCE_DETAIL: 'Détails sur la licence',
             DEROGATION: 'Code du patrimoine',
             BIBLIOGRAPHIC_CITATION: 'Référence à citer',
+            SHARE: 'Partager',
             RESULTS_LABEL: 'Environ {{value}} résultat{{value > 1 ? "s" : ""}}',
             LINK: 'Lien',
             COMMERCIAL_LINKS: 'Distribution payante',
@@ -138,11 +139,16 @@ angular.module('ortolangMarketApp')
             NO_ITEM: 'Aucune ressource disponible',
             NO_PRODUCER: 'Aucune institution productrice trouvées',
             PUBLISHED_ON: 'Publié le',
+            PID: 'Identifiant pérenne',
             ITEM_TYPE: {
                 CORPORA: 'Corpus',
                 LEXICON: 'Lexiques',
                 TOOL: 'Outils',
                 INTEGRATED_PROJECT: 'Projets Intégrés'
+            },
+            CITATION_MODAL: {
+                TITLE: 'Comment citer cette ressource',
+                TEXT: 'Texte'
             }
         }
     });

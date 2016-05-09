@@ -153,7 +153,7 @@ angular.module('ortolangMarketApp')
 
         function generateOpenGraphTags(microdata) {
             angular.element('<meta property="og:url" content="' + window.location.href + '">').appendTo('head');
-            angular.element('<meta property="og:title" content="' + microdata.name + '">').appendTo('head');
+            angular.element('<meta property="og:title" content="' + microdata.name + ' | ORTOLANG">').appendTo('head');
             angular.element('<meta property="og:site_name" content="ORTOLANG">').appendTo('head');
             angular.element('<meta property="og:description" content="' + microdata.description + '">').appendTo('head');
             if (microdata.image) {

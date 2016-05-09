@@ -355,6 +355,14 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('linguisticSubjects', 'ITEM.LINGUISTIC_SUBJECT.LABEL', lang);
             }
 
+            $scope.getCitation = function () {
+                return $scope.computeTextCitation($scope);
+            };
+
+            $scope.getBibTeX = function () {
+                return $scope.computeBibtexCitation($scope);
+            };
+
             $rootScope.$on('$translateChangeSuccess', function () {
                 loadLicense($translate.use());
                 loadConditionsOfUse($translate.use());

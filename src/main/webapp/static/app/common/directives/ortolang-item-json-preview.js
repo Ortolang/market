@@ -170,6 +170,71 @@ angular.module('ortolangMarketApp')
                         }
                     });
 
+                    scope.computeTextCitation = function ($scope) {
+                        if ($scope.bibliographicCitation) {
+                            return $scope.bibliographicCitation;
+                        }
+                        var citation = '', i;
+                        if ($scope.content.publications && $scope.content.publications.length > 0) {
+                            angular.forEach($scope.content.publications, function (publication) {
+                                citation += '<p>' + publication + '</p>';
+                            });
+                        }
+                        if ($scope.producers && $scope.producers.length > 0) {
+                            for (i = 0; i < $scope.producers.length; i++) {
+                                if (i !== 0) {
+                                    citation += ', ';
+                                }
+                                citation += $scope.producers[i].fullname;
+                            }
+                        } else if ($scope.authors && $scope.authors.length > 0) {
+                            for (i = 0; i < $scope.authors.length; i++) {
+                                if ($scope.authors[i].entity) {
+                                    if (i !== 0) {
+                                        citation += ', ';
+                                    }
+                                    citation += $scope.authors[i].entity.fullname;
+                                }
+                            }
+                        }
+                        citation += '. (' + $filter('date')($scope.content.publicationDate, 'yyyy') + ').';
+                        citation += ' <i>' + $scope.title + '</i> [' + $scope.content.type + '].';
+                        citation += ' Disponible sur <a target="_BLANK" href="https://www.ortolang.fr">www.ortolang.fr</a> :';
+                        citation += ' <a target="_BLANK" href="' + $scope.handle + '">' + $scope.handle + '</a>';
+                        return citation;
+                    };
+
+                    scope.computeBibtexCitation = function ($scope) {
+                        if ($scope.bibliographicCitation) {
+                            return undefined;
+                        }
+                        var i,
+                            bibTeX = '@misc{' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.name : '') + ',\n';
+                        bibTeX += '    title = {' + $scope.title + '},\n';
+                        bibTeX += '    author = {';
+                        if ($scope.producers && $scope.producers.length > 0) {
+                            for (i = 0; i < $scope.producers.length; i++) {
+                                if (i !== 0) {
+                                    bibTeX += ', ';
+                                }
+                                bibTeX += $scope.producers[i].fullname;
+                            }
+                        } else if ($scope.authors && $scope.authors.length > 0) {
+                            for (i = 0; i < $scope.authors.length; i++) {
+                                if ($scope.authors[i].entity) {
+                                    if (i !== 0) {
+                                        bibTeX += ', ';
+                                    }
+                                    bibTeX += $scope.authors[i].entity.fullname;
+                                }
+                            }
+                        }
+                        bibTeX += '},\n';
+                        bibTeX += '    url = {' + $scope.handle + '},\n';
+                        bibTeX += '    year = {' + $filter('date')($scope.content.publicationDate, 'yyyy') + '}\n}';
+                        return bibTeX;
+                    };
+
                     function initScopeVariables() {
                         // Show info, browse, ...
                         scope.marketItemTemplate = undefined;
@@ -180,6 +245,40 @@ angular.module('ortolangMarketApp')
                         scope.handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + scope.alias + (scope.tag ? '/' + scope.tag.name : '');
                         scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + scope.alias + (scope.tag ? '/' + scope.tag.name : '');
                     }
+
+                    scope.howToCite = function ($scope, $event) {
+                        $event.preventDefault();
+                        var modalScope = Helper.createModalScope();
+                        modalScope.models = {
+                            citation: scope.computeTextCitation($scope),
+                            bibTeX: scope.computeBibtexCitation($scope)
+                        };
+                        modalScope.select = function (target) {
+                            if (target === 'bibtext') {
+                                document.getElementById('citation-bibtex').select();
+                            } else {
+                                var text = document.getElementById('citation-text'),
+                                    range,
+                                    selection;
+                                if (document.body.createTextRange) {
+                                    range = document.body.createTextRange();
+                                    range.moveToElementText(text);
+                                    range.select();
+                                } else if (window.getSelection) {
+                                    selection = window.getSelection();
+                                    range = document.createRange();
+                                    range.selectNodeContents(text);
+                                    selection.removeAllRanges();
+                                    selection.addRange(range);
+                                }
+                            }
+                        };
+                        $modal({
+                            scope: modalScope,
+                            templateUrl: 'common/directives/citation-modal-template.html',
+                            show: true
+                        });
+                    };
 
                     function init() {
                         scope.initilizing = true;

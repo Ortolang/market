@@ -1,7 +1,15 @@
 .preview-box-list-wrapper {
-  .panel-body {
-    padding: 0;
+  p.lead {
+    padding-top: 15px;
+    padding-left: 19px;
+    padding-right: 19px;
+    padding-bottom: 13px;
+    margin: 0;
+    font-size: 16px !important;
   }
+  //.panel-body {
+    padding: 0;
+  //}
   .list-group {
     margin-bottom: 0;
     .list-group-item {
@@ -11,9 +19,12 @@
       padding-top: 12px;
       padding-bottom: 12px;
       cursor: pointer;
-      &:first-child {
-        border-top: none;
+      &:hover {
+        background-color: @default-bg;
       }
+      //&:first-child {
+      //  border-top: none;
+      //}
       &:last-child {
         border-bottom: none;
       }

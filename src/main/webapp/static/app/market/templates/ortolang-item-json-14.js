@@ -376,6 +376,14 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('terminoChecked', 'ITEM.TERMINO_CHECKED.LABEL', lang);
             }
 
+            $scope.getCitation = function () {
+                return $scope.computeTextCitation($scope);
+            };
+
+            $scope.getBibTeX = function () {
+                return $scope.computeBibtexCitation($scope);
+            };
+
             $rootScope.$on('$translateChangeSuccess', function () {
                 loadLicense($translate.use());
                 loadConditionsOfUse($translate.use());

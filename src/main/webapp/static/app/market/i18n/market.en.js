@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp')
             DOWNLOAD_AGREEMENT: 'Download implies the acceptance of the licence',
             LICENCE_DETAIL: 'License information',
             DEROGATION: 'Code du patrimoine',
-            BIBLIOGRAPHIC_CITATION: 'Bibliographic reference',
+            BIBLIOGRAPHIC_CITATION: 'Bibliographical citation',
             RESULTS_LABEL: '{{value}} result{{value > 1 ? "s" : ""}}',
             SITE: 'Go to website',
             LINK: 'Link',
@@ -110,7 +110,7 @@ angular.module('ortolangMarketApp')
                 ALL_LEXICON_FORMAT: 'All format',
                 LEXICON_LANGUAGE_TYPE: 'Language type',
                 ALL_LEXICON_LANGUAGE_TYPE: 'All language types',
-                PRODUCERS: 'Producter',
+                PRODUCERS: 'Producer',
                 ALL_PRODUCERS: 'All producers'
             },
             SORT: {
@@ -143,6 +143,10 @@ angular.module('ortolangMarketApp')
                 LEXICON: 'Lexicon',
                 TOOL: 'Tool',
                 INTEGRATED_PROJECT: 'Integrated Project'
+            },
+            CITATION_MODAL: {
+                TITLE: 'How to cite this item',
+                TEXT: 'Text'
             }
         }
     });

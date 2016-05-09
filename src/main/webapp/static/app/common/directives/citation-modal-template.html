@@ -1,0 +1,27 @@
+<div class="modal citation-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <strong class="modal-title" translate="MARKET.CITATION_MODAL.TITLE"></strong>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <span class="label label-primary" translate="MARKET.CITATION_MODAL.TEXT"></span>
+                </p>
+                <div class="card-well" ng-click="select()">
+                    <div id="citation-text" ng-bind-html="models.citation"></div>
+                </div>
+                <div ng-if="models.bibTeX">
+                    <p>
+                        <span class="label label-primary">BibTeX</span>
+                    </p>
+                    <textarea id="citation-bibtex" ng-model="models.bibTeX" class="form-control" rows="8" readonly ng-focus="select('bibtext')"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            </div>
+        </div>
+    </div>
+</div>

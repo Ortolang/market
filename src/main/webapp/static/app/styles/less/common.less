@@ -184,8 +184,11 @@ button.no-border {
   border: 1px solid @well-border;
   border-radius: @border-radius-base;
   .card-border();
-  hr {
-    border-color: @well-border;
+  &.card-well-inverse {
+    .card-border-inverse();
+  }
+  &.padding-sm {
+    padding: 10px 12px 12px;
   }
   &.card-news-well {
     img {
@@ -205,6 +208,9 @@ button.no-border {
     background-color: @alternate-light-bg;
     border-bottom-color: darken(@alternate-light-border-color, 5%);
     transition: all 0.3s;
+  }
+  hr {
+    border-color: @well-border;
   }
 }
 
