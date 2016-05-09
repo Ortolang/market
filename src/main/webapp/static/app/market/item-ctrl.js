@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
                     $scope.itemKey = collection.key;
                     $scope.item = collection['meta_ortolang-item-json'];
 
-                    if (!/^(corpora|lexicons|applications|tools)$/.test($routeParams.section)) {
+                    if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
                         switch ($scope.item.type) {
                             case 'Corpus':
                                 $route.updateParams({section: 'corpora'});
@@ -49,10 +49,14 @@ angular.module('ortolangMarketApp')
                             case 'Outil':
                                 $route.updateParams({section: 'tools'});
                                 break;
+                            case 'Terminologie':
+                                $route.updateParams({section: 'terminologies'});
+                                break;
                         }
                         $location.replace();
                     } else {
-                        generateMicroData();
+                        var microdata = generateMicroData();
+                        generateOpenGraphTags(microdata);
                         $scope.ready = true;
                     }
                 });
@@ -121,8 +125,8 @@ angular.module('ortolangMarketApp')
             microDataElement = angular.element('<script type="application/ld+json">');
             microDataElement.text(angular.toJson(microData));
             angular.element('head').append(microDataElement);
-            //console.log(jsonMetadata);
-            //console.log(microData);
+
+            return microData;
         }
 
         function generateProducerMicroData(producerWrapper) {
@@ -144,6 +148,16 @@ angular.module('ortolangMarketApp')
                     }
                 }
                 return microDataProducer;
+            }
+        }
+
+        function generateOpenGraphTags(microdata) {
+            angular.element('<meta property="og:url" content="' + window.location.href + '">').appendTo('head');
+            angular.element('<meta property="og:title" content="' + microdata.name + '">').appendTo('head');
+            angular.element('<meta property="og:site_name" content="ORTOLANG">').appendTo('head');
+            angular.element('<meta property="og:description" content="' + microdata.description + '">').appendTo('head');
+            if (microdata.image) {
+                angular.element('<meta property="og:image" content="' + microdata.image + '">').appendTo('head');
             }
         }
 

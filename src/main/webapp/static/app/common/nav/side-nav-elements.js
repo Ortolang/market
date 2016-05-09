@@ -60,6 +60,16 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'terminologies',
+            class: 'terminologies',
+            path: '/market/terminologies',
+            description: 'TERMINOLOGIES',
+            iconCss: 'fa fa-fw fa-font fa-2x',
+            hiddenSideNav: false,
+            hiddenTopNav: false,
+            authenticated: false
+        },
+        {
             id: 'divider',
             class: 'divider',
             authenticated: false

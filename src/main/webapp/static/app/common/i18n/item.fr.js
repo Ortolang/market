@@ -63,6 +63,7 @@ angular.module('ortolangMarketApp')
             },
             TERMINO_TYPE: {
                 LABEL: 'Type de la ressource terminologique',
+                RESETLABEL: 'Toutes les terminologies',
                 PLACEHOLDER: 'Type de ressource terminologique au regard de la nature des données qu\'il contient et de son organisation'
             },
             TERMINO_STRUCTURE_TYPE: {

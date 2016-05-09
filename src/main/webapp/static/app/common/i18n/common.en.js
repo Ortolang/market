@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
         ORTOLANG: 'Open Resources and TOols for LANGuage',
         CORPORA: 'Corpora',
         LEXICONS: 'Lexicons',
+        TERMINOLOGIES: 'Terminologies',
         TOOLS: 'Tools',
         INTEGRATED_PROJECTS: 'Integrated Projects',
         PRODUCERS: 'Producers',

@@ -8,19 +8,18 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson13Ctrl', ['$scope', '$rootScope', '$translate', 'url', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
-        function ($scope, $rootScope, $translate, url, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
+    .controller('OrtolangItemJson13Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
+        function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
 
             function loadProducers() {
                 if ($scope.content.producers) {
                     $scope.producers = [];
 
                     angular.forEach($scope.content.producers, function (producer) {
-                        if (startsWith(producer, '$')) {
+                        if (Helper.startsWith(producer, '$')) {
                             ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(producer)}, function (entity) {
                                 var contentOrganization = angular.fromJson(entity.content);
                                 $scope.producers.push(contentOrganization);
-
                             });
                         } else if (angular.isDefined(producer['meta_ortolang-referential-json'])) {
                             // From Market
@@ -40,7 +39,7 @@ angular.module('ortolangMarketApp')
 
                     angular.forEach($scope.content.contributors, function (contributor) {
                         var loadedContributor = {};
-                        if (startsWith(contributor.entity, '$')) {
+                        if (Helper.startsWith(contributor.entity, '$')) {
                             // From Workspace preview with contributor inside the referential
                             ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
                                 loadedContributor.entity = angular.fromJson(entity.content);
@@ -90,7 +89,7 @@ angular.module('ortolangMarketApp')
                             loadedContributor.entity = contributor.entity;
 
                             if (contributor.organization) {
-                                if (startsWith(contributor.organization, '$')) {
+                                if (Helper.startsWith(contributor.organization, '$')) {
                                     ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
                                         var contentOrganization = angular.fromJson(entity.content);
                                         loadedContributor.organization = contentOrganization;
@@ -104,7 +103,7 @@ angular.module('ortolangMarketApp')
 
                                 loadedContributor.roles = [];
                                 angular.forEach(contributor.roles, function (role) {
-                                    if (startsWith(role, '$')) {
+                                    if (Helper.startsWith(role, '$')) {
                                         ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
                                             var contentRole = angular.fromJson(entity.content);
                                             loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
@@ -130,7 +129,7 @@ angular.module('ortolangMarketApp')
 
             function loadLicense(lang) {
                 if ($scope.content.license) {
-                    if (startsWith($scope.content.license, '$')) {
+                    if (Helper.startsWith($scope.content.license, '$')) {
                         // From Workspace
                         ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId($scope.content.license)}, function (entity) {
                             $scope.license = angular.fromJson(entity.content);
@@ -156,7 +155,10 @@ angular.module('ortolangMarketApp')
                         if ($scope.license.text) {
                             var value = Helper.getMultilingualValue($scope.license.text, lang);
                             if (value && value.path) {
-                                ObjectResource.element({key: $scope.itemKey, path: value.path}).$promise.then(function (oobject) {
+                                ObjectResource.element({
+                                    key: $scope.itemKey,
+                                    path: value.path
+                                }).$promise.then(function (oobject) {
                                     // var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
 
                                     $scope.textFileKey = oobject.key;
@@ -174,12 +176,12 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function loadSponsors(lang) {
+            function loadSponsors() {
                 if ($scope.content.sponsors !== undefined && $scope.content.sponsors.length > 0) {
                     $scope.sponsors = [];
 
-                    angular.forEach($scope.content.sponsors, function(sponsor) {
-                        if (startsWith(sponsor, '$')) {
+                    angular.forEach($scope.content.sponsors, function (sponsor) {
+                        if (Helper.startsWith(sponsor, '$')) {
                             // From Workspace
                             ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(sponsor)}, function (entity) {
                                 var content = angular.fromJson(entity.content);
@@ -187,7 +189,10 @@ angular.module('ortolangMarketApp')
                             });
                         } else if (angular.isDefined(sponsor['meta_ortolang-referential-json'])) {
                             // For Market
-                            $scope.sponsors.push({fullname: sponsor['meta_ortolang-referential-json'].fullname, 'homepage': sponsor['meta_ortolang-referential-json'].homepage});
+                            $scope.sponsors.push({
+                                fullname: sponsor['meta_ortolang-referential-json'].fullname,
+                                'homepage': sponsor['meta_ortolang-referential-json'].homepage
+                            });
                         } else {
                             // From Workspace with sponsor created by a user
                             $scope.sponsors.push(sponsor);
@@ -196,14 +201,14 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function loadRelation(relation, lang) {
+            function loadRelation(relation) {
                 var url = null, name = 'unknown';
                 if (relation.type === 'hasPart') {
                     url = relation.path;
                 } else {
                     name = relation.path.split('/').pop();
                     url = Content.getContentUrlWithPath(relation.path, $scope.alias, $scope.root);
-                    if (startsWith(relation.url, 'http')) {
+                    if (Helper.startsWith(relation.url, 'http')) {
                         url = relation.url;
                     }
                 }
@@ -244,15 +249,17 @@ angular.module('ortolangMarketApp')
             }
 
             function loadFieldValuesInAdditionalInformations(fieldKey, fieldName, lang) {
-                if ($scope.content[fieldKey]) {
+                if (angular.isDefined($scope.content[fieldKey])) {
                     var fieldValues = [];
+
+                    // Array
                     if (angular.isArray($scope.content[fieldKey])) {
                         angular.forEach($scope.content[fieldKey], function (ridOfValue) {
 
                             if (angular.isDefined(ridOfValue['meta_ortolang-referential-json'])) {
                                 // For market
                                 fieldValues.push(Helper.getMultilingualValue(ridOfValue['meta_ortolang-referential-json'].labels, lang));
-                            } else if (startsWith(ridOfValue, '$')) {
+                            } else if (Helper.startsWith(ridOfValue, '$')) {
                                 // For workspace
                                 ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(ridOfValue)}, function (entity) {
                                     var content = angular.fromJson(entity.content);
@@ -273,7 +280,7 @@ angular.module('ortolangMarketApp')
                                 value: Helper.getMultilingualValue($scope.content[fieldKey]['meta_ortolang-referential-json'].labels, lang),
                                 name: fieldName
                             });
-                        } else if (startsWith($scope.content[fieldKey], '$')) {
+                        } else if (Helper.startsWith($scope.content[fieldKey], '$')) {
                             // For workspace
                             ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId($scope.content[fieldKey])}, function (entity) {
                                 var content = angular.fromJson(entity.content);
@@ -285,7 +292,11 @@ angular.module('ortolangMarketApp')
                             });
                         } else {
                             // Not checked
-                            $scope.additionalInformations.push({key: fieldKey, value: $scope.content[fieldKey], name: fieldName});
+                            $scope.additionalInformations.push({
+                                key: fieldKey,
+                                value: $scope.content[fieldKey],
+                                name: fieldName
+                            });
                         }
                     }
                 }
@@ -325,10 +336,14 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('navigationLanguages', 'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES', lang);
                 loadFieldValuesInAdditionalInformations('toolSupport', 'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT', lang);
 
-                if (angular.isDefined($scope.content['creationLocations'])) {
-                    angular.forEach($scope.content['creationLocations'], function (creationLocation) {
+                if (angular.isDefined($scope.content.creationLocations)) {
+                    angular.forEach($scope.content.creationLocations, function (creationLocation) {
                         if (creationLocation.name) {
-                            $scope.additionalInformations.push({key: 'creationLocations', value: creationLocation.name, name: 'ITEM.CREATION_LOCATIONS.LABEL'});
+                            $scope.additionalInformations.push({
+                                key: 'creationLocations',
+                                value: creationLocation.name,
+                                name: 'ITEM.CREATION_LOCATIONS.LABEL'
+                            });
                         }
                     });
                 }
@@ -340,31 +355,26 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('linguisticSubjects', 'ITEM.LINGUISTIC_SUBJECT.LABEL', lang);
             }
 
-            function startsWith(actual, expected) {
-                var lowerStr = (actual + '').toLowerCase();
-                return lowerStr.indexOf(expected.toLowerCase()) === 0;
-            }
-
             $rootScope.$on('$translateChangeSuccess', function () {
                 loadLicense($translate.use());
                 loadConditionsOfUse($translate.use());
                 loadCommerciaLinks($translate.use());
-                loadSponsors($translate.use());
+                loadSponsors();
                 loadAdditionalInformations($translate.use());
             });
 
             function init() {
                 $scope.isArray = angular.isArray;
-                $scope.handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias;
 
                 loadProducers();
                 loadContributors();
-                loadSponsors(Settings.language);
+                loadSponsors();
                 loadLicense(Settings.language);
                 loadConditionsOfUse(Settings.language);
                 loadCommerciaLinks(Settings.language);
                 loadRelations();
                 loadAdditionalInformations(Settings.language);
             }
+
             init();
         }]);

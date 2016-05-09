@@ -29,6 +29,8 @@ angular.module('ortolangMarketApp')
                             type = 'tools';
                         } else if (scope.entry['meta_ortolang-item-json'].type === 'Application') {
                             type = 'applications';
+                        } else if (scope.entry['meta_ortolang-item-json'].type === 'Terminologie') {
+                            type = 'terminologies';
                         }
                         scope.itemUrl = '/market/' + type + '/' + scope.entry['meta_ortolang-workspace-json'].wsalias;
 

@@ -150,6 +150,13 @@
                 </article>
             </section>
 
+            <section id="terminoUsage" ng-if="terminoUsage">
+                <h4>{{'ITEM.TERMINO_USAGE.LABEL' | translate}}</h4>
+                <article data-content="terminoUsage" data-target-blank>
+                    <div ng-bind-html="terminoUsage"></div>
+                </article>
+            </section>
+
             <section id="terminoOrigin" ng-if="content.terminoOrigin">
                 <h4>{{'ITEM.TERMINO_ORIGIN.LABEL' | translate}}</h4>
                 <article data-content="content.terminoOrigin" data-target-blank>
