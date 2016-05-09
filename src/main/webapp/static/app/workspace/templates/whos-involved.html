@@ -3,7 +3,7 @@
         <label for="search-producer" class="control-label">Laboratoire(s) producteur(s)</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchProducer" ng-disabled="Workspace.active.workspace.readOnly" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in allOrganizations" data-html="true" data-container="body" bs-typeahead>
+            <input ng-model="searchProducer" ng-disabled="Workspace.active.workspace.readOnly" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in suggestOrganization($viewValue)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
             Vous ne trouvez pas votre laboratoire ?
@@ -36,7 +36,7 @@
         <label for="search-sponsor" class="control-label">{{'ITEM.SPONSORS.LABEL' | translate}}</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchSponsor" ng-disabled="Workspace.active.workspace.readOnly" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.label for sponsor in allSponsors" data-html="true" data-container="body" bs-typeahead>
+            <input ng-model="searchSponsor" ng-disabled="Workspace.active.workspace.readOnly" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.label for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
             {{'WORKSPACE.METADATA_EDITOR.NO_ORGANIZATION_FOUND' | translate}}
@@ -74,7 +74,7 @@
                 <div class="media">
                     <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
                     <div class="media-body">
-                        <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span>
+                        <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organizationEntity.acronym">({{contributor.organizationEntity.acronym}})</span>
                         <div class="small roles">
                             <span ng-repeat="role in contributor.roles">{{role.label}}<span ng-if="!$last">, </span></span>
                         </div>
