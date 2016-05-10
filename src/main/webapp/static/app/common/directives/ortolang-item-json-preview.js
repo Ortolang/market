@@ -199,8 +199,8 @@ angular.module('ortolangMarketApp')
                         }
                         citation += '. (' + $filter('date')($scope.content.publicationDate, 'yyyy') + ').';
                         citation += ' <i>' + $scope.title + '</i> [' + $scope.content.type + '].';
-                        citation += ' Disponible sur <a target="_BLANK" href="https://www.ortolang.fr">www.ortolang.fr</a> :';
-                        citation += ' <a target="_BLANK" href="' + $scope.handle + '">' + $scope.handle + '</a>';
+                        citation += ' ORTOLANG (Open Resources and TOols for LANGuage) - <a target="_BLANK" href="https://www.ortolang.fr">www.ortolang.fr</a>,';
+                        citation += ' <a target="_BLANK" href="' + $scope.handle + '">' + $scope.handle + '</a>.';
                         return citation;
                     };
 
@@ -231,6 +231,7 @@ angular.module('ortolangMarketApp')
                         }
                         bibTeX += '},\n';
                         bibTeX += '    url = {' + $scope.handle + '},\n';
+                        bibTeX += '    note = {ORTOLANG (Open Resources and TOols for LANGuage) - www.ortolang.fr},\n';
                         bibTeX += '    year = {' + $filter('date')($scope.content.publicationDate, 'yyyy') + '}\n}';
                         return bibTeX;
                     };

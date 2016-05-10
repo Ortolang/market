@@ -147,8 +147,7 @@ angular.module('ortolangMarketApp')
                 INTEGRATED_PROJECT: 'Projets Intégrés'
             },
             CITATION_MODAL: {
-                TITLE: 'Comment citer cette ressource',
-                TEXT: 'Texte'
+                TITLE: 'Comment citer cette ressource'
             }
         }
     });

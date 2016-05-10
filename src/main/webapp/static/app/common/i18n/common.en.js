@@ -49,6 +49,7 @@ angular.module('ortolangMarketApp')
         SHARE: 'Share',
         YES: 'Yes',
         NO: 'No',
+        TEXT: 'Text',
         404: {
             TITLE: 'Page not found',
             BODY: 'Sorry, but we can\'t find the page you are looking for. Maybe you should try heading home.',

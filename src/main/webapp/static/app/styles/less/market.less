@@ -355,6 +355,7 @@
     }
 
     .citatation-alert {
+      .user-select-mixin();
       border-color: transparent;
       border-left: 4px solid lighten(@alert-info-text, 10%);;
       border-top-left-radius: 5px;
@@ -545,6 +546,9 @@
 }
 
 .citation-modal {
+  .label {
+    cursor: pointer;
+  }
   textarea {
     background-color: lighten(@default-bg, 1%) !important;
     border-color: @alternate-border-color;

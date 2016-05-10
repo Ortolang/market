@@ -6,17 +6,17 @@
                 <strong class="modal-title" translate="MARKET.CITATION_MODAL.TITLE"></strong>
             </div>
             <div class="modal-body">
-                <p>
-                    <span class="label label-primary" translate="MARKET.CITATION_MODAL.TEXT"></span>
+                <p ng-click="select()">
+                    <span class="label label-primary" translate="TEXT"></span>
                 </p>
                 <div class="card-well" ng-click="select()">
                     <div id="citation-text" ng-bind-html="models.citation"></div>
                 </div>
                 <div ng-if="models.bibTeX">
                     <p>
-                        <span class="label label-primary">BibTeX</span>
+                        <label for="citation-bibtex" class="label label-primary" ng-click="select('bibtext')">BibTeX</label>
                     </p>
-                    <textarea id="citation-bibtex" ng-model="models.bibTeX" class="form-control" rows="8" readonly ng-focus="select('bibtext')"></textarea>
+                    <textarea id="citation-bibtex" ng-model="models.bibTeX" class="form-control" rows="8" readonly ng-click="select('bibtext')"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
