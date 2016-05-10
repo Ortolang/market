@@ -82,7 +82,6 @@ angular.module('ortolangMarketApp')
                             } else {
                                 scope.marketItemTemplate = 'market/templates/ortolang-item-json-unknown.html';
                             }
-
                         } else {
                             scope.marketItemTemplate = 'market/templates/ortolang-item-json-unknown.html';
                         }
@@ -352,6 +351,9 @@ angular.module('ortolangMarketApp')
                     };
 
                     function init() {
+                        if (scope.preview) {
+                            scope.content.social = {};
+                        }
                         scope.initilizing = true;
                         initScopeVariables();
                         loadItem();

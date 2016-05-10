@@ -57,6 +57,7 @@ angular.module('ortolangMarketApp')
                     } else {
                         var microdata = generateMicroData();
                         generateOpenGraphTags(microdata);
+                        generateSocialLinks(microdata);
                         $scope.ready = true;
                     }
                 });
@@ -152,13 +153,26 @@ angular.module('ortolangMarketApp')
         }
 
         function generateOpenGraphTags(microdata) {
-            angular.element('<meta property="og:url" content="' + window.location.href + '">').appendTo('head');
+            angular.element('<meta property="og:url" content="' + window.location.origin + window.location.pathname + '">').appendTo('head');
             angular.element('<meta property="og:title" content="' + microdata.name + ' | ORTOLANG">').appendTo('head');
             angular.element('<meta property="og:site_name" content="ORTOLANG">').appendTo('head');
             angular.element('<meta property="og:description" content="' + microdata.description + '">').appendTo('head');
             if (microdata.image) {
                 angular.element('<meta property="og:image" content="' + microdata.image + '">').appendTo('head');
             }
+        }
+
+        function generateSocialLinks(microdata) {
+            $scope.item.social = {};
+            var url = encodeURIComponent(window.location.origin) + encodeURIComponent(window.location.pathname);
+            // Facebook
+            $scope.item.social.facebook = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+            // Twitter
+            $scope.item.social.twitter = 'https://twitter.com/intent/tweet';
+            // LinkedIn
+            $scope.item.social.linkedin = 'https://www.linkedin.com/shareArticle?url=' + url;
+            $scope.item.social.linkedin += '&title=' + encodeURIComponent(microdata.title);
+            $scope.item.social.linkedin += '&summary=' + encodeURIComponent(microdata.description);
         }
 
         function init() {
