@@ -204,20 +204,75 @@ angular.module('ortolangMarketApp')
                         return citation;
                     };
 
+                    // https://en.wikibooks.org/wiki/LaTeX/Special_Characters
+                    var bibtexSpecialChars = {
+                        '%': '\\%',
+                        '$': '\\$',
+                        '{': '\\{',
+                        '_': '\\_',
+                        '¶': '\\P',
+                        '‡': '\\ddag',
+                        '|': '\\textbar',
+                        '>': '\\textgreater',
+                        '–': '\\textendash',
+                        '™': '\\texttrademark',
+                        '¡': '\\textexclamdown',
+                        '£': '\\pounds',
+                        '#': '\\#',
+                        '&': '\\&',
+                        '}': '\\}',
+                        '§': '\\S',
+                        '†': '\\dag',
+                        '\\': '\\textbackslash{}',
+                        '<': '\\textless',
+                        '—': '\\textemdash',
+                        '®': '\\textregistered',
+                        'ⓐ': '\\textcircled{a}',
+                        '©': '\\copyright',
+                        '¿': '\\textquestiondown',
+                        'ò': '\\`{o}',
+                        'ó': '\\\'{o}',
+                        'ô': '\\^{o}',
+                        'ö': '\\"{o}',
+                        'ő': '\\H{o}',
+                        'õ': '\\~{o}',
+                        'ç': '\\c{c}',
+                        'ą': '\\k{a}',
+                        'ł': '\\l{}',
+                        'ō': '\\={o}',
+                        // o_
+                        'ȯ': '\\.{o}',
+                        'ụ': '\\d{u}',
+                        'å': '\\r{a}',
+                        'ŏ': '\\u{o}',
+                        'š': '\\v{s}',
+                        'ø': '\\o',
+                        'î': '\\^{\\i}',
+                        'ï': '\\"{\\i}',
+                        '^': '\\textasciicircum{}',
+                        '~': '\\textasciitilde{}'
+                    };
+
+                    function replaceSpecialChars(str) {
+                        return str.replace(/[\D]/g, function (a) {
+                            return bibtexSpecialChars[a] || a;
+                        });
+                    }
+
                     scope.computeBibtexCitation = function ($scope) {
                         if ($scope.bibliographicCitation) {
                             return undefined;
                         }
                         var i,
                             bibTeX = '@misc{' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.name : '') + ',\n';
-                        bibTeX += '    title = {' + $scope.title + '},\n';
+                        bibTeX += '    title = {' + replaceSpecialChars($scope.title) + '},\n';
                         bibTeX += '    author = {';
                         if ($scope.producers && $scope.producers.length > 0) {
                             for (i = 0; i < $scope.producers.length; i++) {
                                 if (i !== 0) {
                                     bibTeX += ', ';
                                 }
-                                bibTeX += $scope.producers[i].fullname;
+                                bibTeX += replaceSpecialChars($scope.producers[i].fullname);
                             }
                         } else if ($scope.authors && $scope.authors.length > 0) {
                             for (i = 0; i < $scope.authors.length; i++) {
@@ -225,15 +280,15 @@ angular.module('ortolangMarketApp')
                                     if (i !== 0) {
                                         bibTeX += ', ';
                                     }
-                                    bibTeX += $scope.authors[i].entity.fullname;
+                                    bibTeX += replaceSpecialChars($scope.authors[i].entity.fullname);
                                 }
                             }
                         }
                         bibTeX += '},\n';
-                        bibTeX += '    url = {' + $scope.handle + '},\n';
-                        bibTeX += '    note = {{ORTOLANG (Open Resources and TOols for LANGuage)} - www.ortolang.fr},\n';
+                        bibTeX += '    url = {' + replaceSpecialChars($scope.handle) + '},\n';
+                        bibTeX += '    note = {{ORTOLANG} ({Open} {Resources} {and} {TOols} {for} {LANGuage}) \\textendash www.ortolang.fr},\n';
                         if ($scope.license && $scope.license.label) {
-                            bibTeX += '    copyright = {' + $scope.license.label + '},\n';
+                            bibTeX += '    copyright = {' + replaceSpecialChars($scope.license.label) + '},\n';
                         }
                         bibTeX += '    year = {' + $filter('date')($scope.content.publicationDate, 'yyyy') + '}\n}';
                         return bibTeX;
