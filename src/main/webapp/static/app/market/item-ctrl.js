@@ -168,14 +168,12 @@ angular.module('ortolangMarketApp')
 
         function generateSocialLinks(microdata) {
             $scope.item.social = {};
-            console.log($scope.itemAlias);
             // Facebook
             $scope.item.social.facebook = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(handle);
             // Twitter
             $scope.item.social.twitter = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(handle);
             // LinkedIn
             $scope.item.social.linkedin = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent(handle);
-            console.log(microdata);
             $scope.item.social.linkedin += '&title=' + encodeURIComponent(microdata.name);
             $scope.item.social.linkedin += '&summary=' + encodeURIComponent(microdata.description);
         }
