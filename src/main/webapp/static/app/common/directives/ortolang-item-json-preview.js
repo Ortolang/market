@@ -232,7 +232,7 @@ angular.module('ortolangMarketApp')
                         bibTeX += '},\n';
                         bibTeX += '    url = {' + $scope.handle + '},\n';
                         bibTeX += '    note = {{ORTOLANG (Open Resources and TOols for LANGuage)} - www.ortolang.fr},\n';
-                        bibTeX += '    copyright = {' + $scope.license.label + '},\n}';
+                        bibTeX += '    copyright = {' + $scope.license.label + '},\n';
                         bibTeX += '    year = {' + $filter('date')($scope.content.publicationDate, 'yyyy') + '}\n}';
                         return bibTeX;
                     };
@@ -253,7 +253,8 @@ angular.module('ortolangMarketApp')
                         var modalScope = Helper.createModalScope();
                         modalScope.models = {
                             citation: scope.computeTextCitation($scope),
-                            bibTeX: scope.computeBibtexCitation($scope)
+                            bibTeX: scope.computeBibtexCitation($scope),
+                            isMac: window.navigator.appVersion.indexOf('Mac') !== -1
                         };
                         modalScope.select = function (target) {
                             if (target === 'bibtext') {
@@ -274,6 +275,7 @@ angular.module('ortolangMarketApp')
                                     selection.addRange(range);
                                 }
                             }
+                            modalScope.models.showCommands = true;
                         };
                         modalScope.$on('modal.show', function () {
                             var target = angular.element($event.target);

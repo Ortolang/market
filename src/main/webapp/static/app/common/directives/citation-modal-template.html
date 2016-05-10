@@ -18,6 +18,7 @@
                     </p>
                     <textarea id="citation-bibtex" ng-model="models.bibTeX" class="form-control" rows="10" readonly ng-click="select('bibtext')"></textarea>
                 </div>
+                <div class="commands" ng-show="models.showCommands" translate="MARKET.CITATION_MODAL.COMMANDS" data-translate-values="{isMac: models.isMac}"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>

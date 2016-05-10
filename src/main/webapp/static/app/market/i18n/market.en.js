@@ -145,7 +145,8 @@ angular.module('ortolangMarketApp')
                 INTEGRATED_PROJECT: 'Integrated Project'
             },
             CITATION_MODAL: {
-                TITLE: 'How to cite this item'
+                TITLE: 'How to cite this item',
+                COMMANDS: 'Press <kbd><kbd>{{isMac ? "cmd" : "ctrl"}}</kbd> + <kbd>c</kbd></kbd> to copy'
             }
         }
     });
