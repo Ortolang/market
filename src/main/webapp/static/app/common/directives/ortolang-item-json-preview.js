@@ -232,7 +232,9 @@ angular.module('ortolangMarketApp')
                         bibTeX += '},\n';
                         bibTeX += '    url = {' + $scope.handle + '},\n';
                         bibTeX += '    note = {{ORTOLANG (Open Resources and TOols for LANGuage)} - www.ortolang.fr},\n';
-                        bibTeX += '    copyright = {' + $scope.license.label + '},\n';
+                        if ($scope.license && $scope.license.label) {
+                            bibTeX += '    copyright = {' + $scope.license.label + '},\n';
+                        }
                         bibTeX += '    year = {' + $filter('date')($scope.content.publicationDate, 'yyyy') + '}\n}';
                         return bibTeX;
                     };
