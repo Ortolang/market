@@ -173,6 +173,8 @@ angular.module('ortolangMarketApp')
             // Twitter
             $scope.item.social.twitter = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(handle);
             $scope.item.social.twitter += '&text=' + encodeURIComponent(microdata.name);
+            // Google Plus
+            $scope.item.social.google = 'https://plus.google.com/share?url=' + encodeURIComponent(handle);
             // LinkedIn
             $scope.item.social.linkedin = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent(handle);
             $scope.item.social.linkedin += '&mini=true';

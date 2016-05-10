@@ -576,9 +576,11 @@
     &.card-well-share {
       p.lead {
         margin-bottom: 0;
+        a {
+          margin-left: 5px;
+        }
         .fa {
           color: lighten(@gray, 20%);
-          margin-left: @padding-base-horizontal;
           &:hover {
             &.fa-facebook {
               color: #3b5998;
@@ -588,6 +590,9 @@
             }
             &.fa-linkedin {
               color: #007bb5;
+            }
+            &.fa-google-plus {
+              color: #dd4b39;
             }
             color: inherit;
           }
