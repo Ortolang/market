@@ -8,7 +8,9 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'MarketBrowserService', 'Helper', function ($rootScope, $scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, MarketBrowserService, Helper) {
+    .controller('ItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'MarketBrowserService', 'Helper', 'url', function ($rootScope, $scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, MarketBrowserService, Helper, url) {
+
+        var handle;
 
         function loadItem() {
             SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
@@ -123,8 +125,9 @@ angular.module('ortolangMarketApp')
                 microData.contributor = contributors.length === 1 ? contributors[0] : contributors;
             }
             // **************
-            microDataElement = angular.element('<script type="application/ld+json">');
+            microDataElement = angular.element('<script class="microdata" type="application/ld+json">');
             microDataElement.text(angular.toJson(microData));
+            angular.element('script.microdata').remove();
             angular.element('head').append(microDataElement);
 
             return microData;
@@ -153,7 +156,8 @@ angular.module('ortolangMarketApp')
         }
 
         function generateOpenGraphTags(microdata) {
-            angular.element('<meta property="og:url" content="' + window.location.origin + window.location.pathname + '">').appendTo('head');
+            angular.element('meta[property^="og"]').remove();
+            angular.element('<meta property="og:url" content="' + handle + '">').appendTo('head');
             angular.element('<meta property="og:title" content="' + microdata.name + ' | ORTOLANG">').appendTo('head');
             angular.element('<meta property="og:site_name" content="ORTOLANG">').appendTo('head');
             angular.element('<meta property="og:description" content="' + microdata.description + '">').appendTo('head');
@@ -164,13 +168,13 @@ angular.module('ortolangMarketApp')
 
         function generateSocialLinks(microdata) {
             $scope.item.social = {};
-            var url = encodeURIComponent(window.location.origin) + encodeURIComponent(window.location.pathname);
+            console.log($scope.itemAlias);
             // Facebook
-            $scope.item.social.facebook = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+            $scope.item.social.facebook = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(handle);
             // Twitter
-            $scope.item.social.twitter = 'https://twitter.com/intent/tweet?url=' + url;
+            $scope.item.social.twitter = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(handle);
             // LinkedIn
-            $scope.item.social.linkedin = 'https://www.linkedin.com/shareArticle?url=' + url;
+            $scope.item.social.linkedin = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent(handle);
             console.log(microdata);
             $scope.item.social.linkedin += '&title=' + encodeURIComponent(microdata.name);
             $scope.item.social.linkedin += '&summary=' + encodeURIComponent(microdata.description);
@@ -181,6 +185,7 @@ angular.module('ortolangMarketApp')
             $scope.browse = $location.search().browse;
             $scope.ready = false;
             $scope.item = {};
+            handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.itemAlias + ($scope.tag ? '/' + $scope.tag.name : '');
             loadItem();
         }
 
