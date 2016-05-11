@@ -76,7 +76,10 @@
                                 <!--<pre>{{request | json}}</pre>-->
                                 <span class="workspace-event-author">{{Workspace.authorCards[request.initier].fullName}}</span>
                                 <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase()}}" data-translate-values="event"></span>
-                                <span class="workspace-event-status" translate="{{'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase() + '.' + request.state}}" data-translate-values="event"></span>
+                                <span class="workspace-event-status">
+                                    <span translate="{{'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase() + '.' + (request.status ? request.status.toUpperCase() : request.state)}}" data-translate-values="event"></span>
+                                    <span ng-if="request.explanation" ng-class="::icons.question" data-title="{{request.explanation}}" data-placement="bottom" bs-tooltip></span>
+                                </span>
                             </span>
                             <span class="workspace-event-date">{{request.stop || request.start | amTimeAgo}}</span>
                         </div>
