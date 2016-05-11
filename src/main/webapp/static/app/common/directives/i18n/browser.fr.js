@@ -96,10 +96,18 @@ angular.module('ortolangMarketApp')
                 PIDS: 'Identifiants pérennes',
                 STATIC: 'Identifiant pérenne statique',
                 STATIC_HELP: 'L\'identifiant pérenne statique pointera vers cette version du {{::type === "object" ? "fichier" : "dossier"}} <strong>{{::name}}</strong>.',
+                STATIC_ITEM_HELP: 'Identifiant pérenne statique (pointera vers cette version de la resource)',
                 DYNAMIC: 'Identifiant pérenne dynamique',
                 DYNAMIC_HELP: 'L\'identifiant pérenne dynamique pointera toujours vers la dernière version du {{::type === "object" ? "fichier" : "dossier"}} <strong>{{::name}}</strong> si une nouvelle version de la resource est publiée.',
+                DYNAMIC_ITEM_HELP: 'Identifiant pérenne dynamique (pointera toujours vers la dernière version publiée de la resource)',
                 COPY: 'Copier le lien',
                 OTHERS: 'Autres identifiants pérenne'
+            },
+            CART: {
+                REMOVED_ELEMENT_ALERT: '<strong>Un élément</strong> de votre sélection a été remplacé par le dossier <strong>{{collection}}</strong> qui inclus cet élément',
+                REMOVED_ELEMENTS_ALERT: '<strong>{{delta}} éléments</strong> de votre sélection ont été remplacés par le dossier <strong>{{collection}}</strong> qui inclus ces éléments',
+                ALREADY_SELECTED_ALERT: 'Le {{type === "collection" ? "dossier" : "fichier"}} <strong>{{name}}</strong> fait déjà parti de votre sélection',
+                ALREADY_INCLUDED_ALERT: 'Le {{type === "collection" ? "dossier" : "fichier"}} <strong>{{name}}</strong> fait déjà parti de votre sélection car il est inclus dans le dossier <strong>{{collection}}</strong>'
             }
         }
     });

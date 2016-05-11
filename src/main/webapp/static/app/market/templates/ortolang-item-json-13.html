@@ -130,7 +130,16 @@
                         <dt translate="MARKET.PUBLICATION_DATE"></dt>
                         <dd>{{::content.publicationDate | date:"longDate"}}</dd>
                         <dt translate="MARKET.PID"></dt>
-                        <dd><a ng-href="{{::handle}}">{{::handle}}</a></dd>
+                        <dd>
+                            <p>
+                                <a ng-href="{{::handle}}">{{::handle}}</a>
+                                &nbsp;<span ng-class="::icons.info" data-title="{{'BROWSER.PIDS.STATIC_ITEM_HELP' | translate}}" data-placement="right" bs-tooltip></span>
+                            </p>
+                            <p>
+                                <a ng-href="{{::dynamicHandle}}">{{::dynamicHandle}}</a>
+                                &nbsp;<span ng-class="::icons.info" data-title="{{'BROWSER.PIDS.DYNAMIC_ITEM_HELP' | translate}}" data-placement="right" bs-tooltip></span>
+                            </p>
+                        </dd>
                         <dt ng-repeat-start="additionalInformation in additionalInformations track by additionalInformation.name" translate="{{additionalInformation.name}}"></dt>
                         <dd ng-repeat-end>
                             <span ng-if="isArray(additionalInformation.value)"><span ng-repeat="valueItem in additionalInformation.value">{{::valueItem}}</span></span>
@@ -213,10 +222,10 @@
             <div class="card-well card-well-market card-well-share">
                 <p class="lead">
                     {{'SHARE' | translate}}
-                    <a ng-href="{{content.social.facebook}}" target="_blank"><span class="fa fa-lg fa-facebook"></span></a>
-                    <a ng-href="{{content.social.twitter}}" target="_blank"><span class="fa fa-lg fa-twitter"></span></a>
-                    <a ng-href="{{content.social.google}}" target="_blank"><span class="fa fa-lg fa-google-plus"></span></a>
-                    <a ng-href="{{content.social.linkedin}}" target="_blank"><span class="fa fa-lg fa-linkedin"></span></a>
+                    <a ng-href="{{content.social.facebook}}" target="_blank" data-title="Facebook" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-facebook"></span></a>
+                    <a ng-href="{{content.social.twitter}}" target="_blank" data-title="Twitter" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-twitter"></span></a>
+                    <a ng-href="{{content.social.linkedin}}" target="_blank" data-title="LinkedIn" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-linkedin"></span></a>
+                    <a ng-href="{{content.social.viadeo}}" target="_blank" data-title="Viadeo" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-viadeo"></span></a>
                 </p>
             </div>
 

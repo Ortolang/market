@@ -94,8 +94,10 @@ angular.module('ortolangMarketApp')
                 PIDS: 'Persistent identifiers',
                 STATIC: 'Static persistent identifier',
                 STATIC_HELP: 'The static persistent identifier reference this version of the {{::type === "object" ? "file" : "folder"}} <strong>{{::name}}</strong>.',
+                STATIC_ITEM_HELP: 'Static persistent identifier (reference this version of this item)',
                 DYNAMIC: 'Dynamic persistent identifier',
                 DYNAMIC_HELP: 'The dynamic persistent identifier will always reference the latest version of the {{::type === "file" ? "fichier" : "folder"}} <strong>{{::name}}</strong> if a new version is published.',
+                DYNAMIC_ITEM_HELP: 'Dynamic persistent identifier (will always reference the latest published version of this item)',
                 COPY: 'Copy link',
                 OTHERS: 'Other persistent identifiers'
             }

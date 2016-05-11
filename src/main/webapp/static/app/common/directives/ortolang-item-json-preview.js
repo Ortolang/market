@@ -301,6 +301,7 @@ angular.module('ortolangMarketApp')
                         scope.currentContent = scope.content;
                         scope.showingDescription = false;
                         scope.handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + scope.alias + (scope.tag ? '/' + scope.tag.name : '');
+                        scope.dynamicHandle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + scope.alias;
                         scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + scope.alias + (scope.tag ? '/' + scope.tag.name : '');
                     }
 
