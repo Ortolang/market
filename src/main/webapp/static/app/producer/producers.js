@@ -31,7 +31,11 @@ angular.module('ortolangMarketApp')
 
         $scope.showProducer = function (producer, $event) {
             if (!angular.element($event.target).is('a')) {
-                $location.url('producers/' + producer.content.id);
+                if (angular.element($event.target).hasClass('city')) {
+                    $scope.models.query = producer.content.city;
+                } else {
+                    $location.url('producers/' + producer.content.id);
+                }
             }
         };
 
