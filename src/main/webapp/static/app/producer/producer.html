@@ -5,7 +5,7 @@
                 <div class="media">
                     <div class="media-left">
                         <div class="item-logo">
-                            <img ng-if="!producer.img" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{::title.toLowerCase()}}&text={{::title}}&size=64"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                            <img ng-if="::!producer.img && title" class="logo" ng-src="" holder-js="holder.js/160x160?theme={{::title.toLowerCase()}}&text={{::title}}&size=64"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                             <div ng-if="::producer.img" class="organization-logo-wrapper" style="background-image: url({{::producer.img}})"></div>
                         </div>
                     </div>
