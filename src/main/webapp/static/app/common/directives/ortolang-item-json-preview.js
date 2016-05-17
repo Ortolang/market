@@ -184,7 +184,7 @@ angular.module('ortolangMarketApp')
                                 if (i !== 0) {
                                     citation += ', ';
                                 }
-                                citation += $scope.producers[i].fullname;
+                                citation += $scope.producers[i].name + ($scope.producers[i].acronym ? ' (' + $scope.producers[i].acronym + ')' : '');
                             }
                         } else if ($scope.authors && $scope.authors.length > 0) {
                             for (i = 0; i < $scope.authors.length; i++) {
@@ -196,7 +196,7 @@ angular.module('ortolangMarketApp')
                                 }
                             }
                         }
-                        citation += '. (' + $filter('date')($scope.content.publicationDate, 'yyyy') + ').';
+                        citation += ' (' + $filter('date')($scope.content.publicationDate, 'yyyy') + ').';
                         citation += ' <i>' + $scope.title + '</i> [' + $scope.content.type + '].';
                         citation += ' ORTOLANG (Open Resources and TOols for LANGuage) - <a target="_BLANK" href="https://www.ortolang.fr">www.ortolang.fr</a>,';
                         citation += ' <a target="_BLANK" href="' + $scope.handle + '">' + $scope.handle + '</a>.';
@@ -269,9 +269,13 @@ angular.module('ortolangMarketApp')
                         if ($scope.producers && $scope.producers.length > 0) {
                             for (i = 0; i < $scope.producers.length; i++) {
                                 if (i !== 0) {
-                                    bibTeX += ', ';
+                                    bibTeX += ' and ';
                                 }
-                                bibTeX += replaceSpecialChars($scope.producers[i].fullname);
+                                if ($scope.producers[i].acronym) {
+                                    bibTeX += replaceSpecialChars($scope.producers[i].acronym);
+                                } else {
+                                    bibTeX += '{' + replaceSpecialChars($scope.producers[i].name) + '}';
+                                }
                             }
                         } else if ($scope.authors && $scope.authors.length > 0) {
                             for (i = 0; i < $scope.authors.length; i++) {

@@ -32,6 +32,7 @@ angular.module('ortolangVisualizers')
                 'text/javascript': true,
                 'application/javascript': true,
                 'application/json': true,
+                'application/x-bibtex-text-file': true,
                 'text/csv': true
             }
         });
