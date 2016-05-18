@@ -1,4 +1,6 @@
-<div class="container-main contributor-wrapper">
+<div class="view-wrapper-flex">
+    <div class="container-main container-main-no-toolbar">
+
     <section ng-controller="ContributorCtrl" class="market-item">
         <header>
             <div class="media">
@@ -8,11 +10,45 @@
                     </div>
                 </div>
                 <div class="media-body">
-                    <h2>{{contributor.fullname}}</h2>
+                    <h1 class="market-item-title" ng-bind="contributor.fullname"></h1>
+                    <div ng-if="contributor.organizationEntity" class="market-item-producers">
+                        <i translate="CONTRIBUTOR.LABORATORY"></i> :
+                        <ul class="list-unstyled">
+                            <li>
+                                <a ng-href='/producers/{{contributor.organizationEntity.id}}' ng-bind="contributor.organizationEntity.fullname"></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <div items data-params="params" data-title="'CONTRIBUTOR.LIST_OF_RESOURCES'"></div>
+        <div class="row">
+            <div class="col-md-8 market-item-presentation-metadata">
+                <section ng-if="presentation" name="about-me">
+                    <h4>{{'CONTRIBUTOR.ABOUT_ME' | translate}}</h4>
+                    <article data-content="presentation" data-target-blank>
+                        <div ng-bind-html="presentation"></div>
+                    </article>
+                </section>
+
+                <section name="contributions">
+                    <h4>{{'CONTRIBUTOR.MY_RESOURCES' | translate}}</h4>
+                    <article>
+                        <div items data-params="params"></div>
+                    </article>
+                </section>
+
+                <section id="publications" ng-if="contributor.firstname">
+                    <h4>{{'CONTRIBUTOR.MY_PUBLICATIONS' | translate}}</h4>
+                    <div class="section-body-wrapper">
+                        <div publications-hal given-name="contributor.firstname" family-name="contributor.lastname"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </section>
+
+    </div>
 </div>
+

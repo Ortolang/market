@@ -1,0 +1,11 @@
+<div id="publications-result">
+    <p>
+         {{publications.length}} résultats trouvés sur <a href="https://hal.archives-ouvertes.fr" target="_blank">HAL</a>.
+    </p>
+    <div id="publications-list" ng-if="publications.length>0">
+         <div ng-repeat="publication in publications track by $index" class="text-justify">
+            <p><span class="label label-{{ doctype[publication[3]].color }}"> {{doctype[publication[3]].value}}</span>
+            <span ng-bind-html="publication[4]" class="small"></span></p>
+        </div>
+    </div>
+</div>

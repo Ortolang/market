@@ -10,6 +10,9 @@
 angular.module('ortolangMarketApp')
     .constant('CONTRIBUTOR_EN', {
         CONTRIBUTOR: {
-            LIST_OF_RESOURCES: 'Resources made by the user'
+            ABOUT_ME: 'About me',
+            MY_RESOURCES: 'My productions',
+            MY_PUBLICATIONS: 'My publications',
+            LABORATORY: 'My laboratory'
         }
     });
