@@ -8,23 +8,18 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'ReferentialEntityResource', 'SearchResource', 'Helper', function ($rootScope, $scope, $routeParams, ReferentialEntityResource, SearchResource, Helper) {
+    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'ReferentialEntityResource', 'SearchResource', function ($rootScope, $scope, $routeParams, ReferentialEntityResource, SearchResource) {
 
         function loadItem(id) {
-            ReferentialEntityResource.get({name: id}, function (refEntity) {
-                $scope.contributor = angular.fromJson(refEntity.content);
+            SearchResource.getEntity({id: id}, function (entity) {
+                $scope.contributor = entity['meta_ortolang-referential-json'];
                 if ($scope.contributor.username) {
-                    SearchResource.findProfiles({content:$scope.contributor.username, field: 'key'}, function (profile) {
-                        if (profile.length>0 && profile[0].meta_profile && profile[0].meta_profile.infos) {
-                            $scope.presentation = profile[0].meta_profile.infos.presentation;
-                        }
-                    });
+                    $scope.presentation = $scope.contributor.username.meta_profile.infos.presentation;
                 }
                 if ($scope.contributor.organization) {
-                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId($scope.contributor.organization)}, function (refEntity) {
-                        $scope.contributor.organizationEntity = angular.fromJson(refEntity.content);
-                    });
+                    $scope.contributor.organizationEntity = $scope.contributor.organization['meta_ortolang-referential-json'];
                 }
+
                 $rootScope.ortolangPageTitle = $scope.contributor.fullname + ' | ';
             });
         }

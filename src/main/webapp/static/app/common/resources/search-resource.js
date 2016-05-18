@@ -49,6 +49,10 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/workspaces/:alias',
                 method: 'GET'
             },
+            getEntity: {
+                url: url.api + '/search/entities/:id',
+                method: 'GET'
+            },
 
             index: {
                 url: url.api + '/search/index',
