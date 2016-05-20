@@ -143,7 +143,7 @@ angular.module('ortolangMarketApp')
                                 $scope.contextMenuItems.push({text: 'SHARE', icon: icons.share, action: 'share'});
                             }
                             $scope.contextMenuItems.push({text: 'DOWNLOAD', icon: icons.browser.download, action: 'download'});
-                            //$scope.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
+                            $scope.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
                             $scope.contextMenuItems.push({divider: true});
                         }
                         $scope.contextMenuItems.push({text: $scope.viewMode[$scope.browserSettings.viewMode].text, icon: $scope.viewMode[$scope.browserSettings.viewMode].icon, action: 'switchViewMode'});
@@ -264,6 +264,59 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function checkMetadata(object) {
+                if (object.type === ortolangType.object) {
+                    angular.forEach(object.metadatas, function (metadata) {
+                        var key;
+                        if (metadata.name === 'ortolang-audio-json') {
+                            key = 'audio';
+                        } else if (metadata.name === 'ortolang-video-json') {
+                            key = 'video';
+                        } else if (metadata.name === 'ortolang-image-json') {
+                            key = 'image';
+                        } else if (metadata.name === 'ortolang-xml-json') {
+                            key = 'xml';
+                        } else if (metadata.name === 'ortolang-pdf-json') {
+                            key = 'pdf';
+                        } else if (metadata.name === 'ortolang-text-json') {
+                            key = 'text';
+                        } else if (metadata.name === 'ortolang-office-json') {
+                            key = 'office';
+                        }
+
+                        if (key) {
+                            Content.downloadWithKey(metadata.key).promise.then(function (data) {
+                                var md = angular.fromJson(data.data);
+                                if (md['X-Parsed-By'] !== 'org.apache.tika.parser.EmptyParser') {
+                                    object[key] = md;
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+            $scope.showAllMetadata = function () {
+                modalScope = Helper.createModalScope();
+                modalScope.metadata = $scope.selectedElements[0].audio || $scope.selectedElements[0].video ||
+                    $scope.selectedElements[0].image || $scope.selectedElements[0].xml  || $scope.selectedElements[0].pdf ||
+                    $scope.selectedElements[0].text || $scope.selectedElements[0].office;
+                var tmp = [];
+                angular.forEach(modalScope.metadata, function (v, k) {
+                    tmp.push({
+                        name: k,
+                        value: v
+                    });
+                });
+                modalScope.metadata = tmp;
+                modalScope.isArray = angular.isArray;
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/directives/metadata-modal-template.html',
+                    show: true
+                });
+            };
+
             function selectChild(child, push, clickEvent, refresh) {
                 clickEvent = clickEvent || null;
                 var deferred, promise;
@@ -290,6 +343,7 @@ angular.module('ortolangMarketApp')
                     } else {
                         newSelectedElement(data);
                         lastSelectedElement = data;
+                        checkMetadata(data);
                     }
                     checkCompatibleVisualizers();
                     if (!refresh) {
@@ -1150,14 +1204,14 @@ angular.module('ortolangMarketApp')
                 if ($scope.isFileSelectBrowserService) {
                     var elements = getSelectedElementsCopy();
                     if (elements && elements.length > 0) {
-                        console.log('%s emit "browserSelectedElements-%s" event', $scope.browserService.id, $scope.fileSelectId);
+                        //console.log('%s emit "browserSelectedElements-%s" event', $scope.browserService.id, $scope.fileSelectId);
                         $scope.$emit('browserSelectedElements-' + $scope.fileSelectId, elements);
                     }
                 }
             });
 
             $rootScope.$on('browserAskChangeWorkspace', function ($event, workspace) {
-                console.log('%s caught event "browserAskChangeWorkspace"', $scope.browserService.id);
+                //console.log('%s caught event "browserAskChangeWorkspace"', $scope.browserService.id);
                 $scope.changeWorkspace(workspace);
                 $event.stopPropagation();
             });
@@ -1903,10 +1957,11 @@ angular.module('ortolangMarketApp')
             $scope.addToCart = function () {
                 var path, items = [];
                 angular.forEach($scope.selectedElements, function (element) {
-                    path = $scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : element.name);
+                    path = Helper.normalizePath($scope.path + '/' + ($scope.hasOnlyParentSelected() ? '' : element.name));
                     items.push({
                         wsalias: $scope.browserService.workspace.alias,
                         root: $scope.root,
+                        //tag: getTagName($scope.root),
                         name: $scope.hasOnlyParentSelected() ? $scope.parent.name : element.name,
                         type: element.type,
                         mimeType: element.mimeType,
