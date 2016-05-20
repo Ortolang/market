@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TerminologiesCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', '$translate', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, $translate) {
+    .controller('TerminologiesCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', '$translate', 'SearchProvider', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, $translate, SearchProvider) {
 
         function addAvailableFilters() {
             $scope.typeFilter = FacetedFilter.make({
@@ -54,6 +54,7 @@ angular.module('ortolangMarketApp')
         function init() {
             $scope.filtersManager = FacetedFilterManager.make();
             addAvailableFilters();
+            $scope.search = SearchProvider.make();
         }
 
         init();

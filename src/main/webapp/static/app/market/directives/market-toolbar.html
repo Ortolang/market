@@ -10,18 +10,18 @@
         </div>
         <div class="col-sm-6">
             <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button" data-title="{{'MARKET.SHOW_IN' | translate}}" bs-tooltip><span ng-class="Search.activeViewMode.icon"></span></button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button" data-title="{{'MARKET.SHOW_IN' | translate}}" bs-tooltip><span ng-class="search.activeViewMode.icon"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li role="menuitem" ng-repeat="vm in ::Search.viewModes"><a ng-click="Search.setActiveViewMode(vm.id)"><span ng-class="::vm.icon"></span> {{::vm.text | translate}}</a></li>
+                    <li role="menuitem" ng-repeat="vm in ::search.viewModes"><a ng-click="search.setActiveViewMode(vm.id)"><span ng-class="::vm.icon"></span> {{::vm.text | translate}}</a></li>
                 </ul>
             </div>
             <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" role="button" data-title="{{'BROWSER.SORT_BY' | translate}}" bs-tooltip><span ng-class="::icons.browser.sort"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="orderProp in ::Search.orderProps">
+                    <li ng-repeat="orderProp in ::search.orderProps">
                         <div ng-click="toggleOrderBy(orderProp)">
                             <span>{{::orderProp.text | translate}}</span>
-                            <span order-indicator data-name="{{Search.activeOrderProp.id}}" data-array="id" data-order-prop="orderProp" data-order-reverse="Search.orderReverse"></span>
+                            <span order-indicator data-name="{{search.activeOrderProp.id}}" data-array="id" data-order-prop="orderProp" data-order-reverse="search.orderReverse"></span>
                         </div>
                     </li>
                 </ul>

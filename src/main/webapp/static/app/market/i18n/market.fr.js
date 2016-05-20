@@ -12,6 +12,10 @@ angular.module('ortolangMarketApp')
         MARKET: {
             ALL_TYPE: 'Tous',
             NEW_RESOURCES: 'Publications récentes',
+            NEW_CORPUS: 'Nouveaux corpus',
+            FREE_CORPUS: 'Corpus libre de droits',
+            WRITTEN_CORPUS: 'Corpus écrits',
+            SPEECH_CORPUS: 'Corpus oraux',
             WEBSITES: 'Sites web',
             WEBSITE: 'Site web',
             SEARCH_PAGE: 'Rechercher dans le contenu',

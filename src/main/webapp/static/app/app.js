@@ -81,8 +81,14 @@ angular
             })
             .when('/market/applications', {
                 templateUrl: 'market/applications.html',
-                // controller: 'ApplicationsCtrl',
+                controller: 'ApplicationsCtrl',
                 title: 'INTEGRATED_PROJECTS'
+            })
+            .when('/market/search/corpora', {
+                templateUrl: 'market/search/corpora.html',
+                controller: 'SearchCorporaCtrl',
+                title: 'SEARCH',
+                reloadOnSearch: false
             })
             .when('/market/:section/:alias/:version?', {
                 templateUrl: 'market/item.html',

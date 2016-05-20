@@ -8,26 +8,25 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['Search', 'OptionFacetedFilter', 'Settings', 'Helper', function (Search, OptionFacetedFilter, Settings, Helper) {
+    .directive('items', ['SearchProvider', 'OptionFacetedFilter', 'Settings', 'Helper', function (SearchProvider, OptionFacetedFilter, Settings, Helper) {
         return {
             restrict: 'A',
             scope: {
                 title: '=',
-                params: '='
+                params: '=',
+                search: '='
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
 
-                scope.Search = Search;
-
                 scope.$on('$destroy', function () {
-                    Search.clearResults();
+                    scope.search.clearResults();
                 });
 
                 function load() {
                     var param = angular.fromJson(scope.newParams);
-                    Search.search(param).$promise.then(function (results) {
-                        Search.pack();
+                    scope.search.search(param).$promise.then(function (results) {
+                        scope.search.pack();
 
                         angular.forEach(results, function (result) {
                             if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
@@ -39,7 +38,7 @@ angular.module('ortolangMarketApp')
                             }
                         });
 
-                        Search.endProcessing();
+                        scope.search.endProcessing();
                     });
                 }
 
@@ -54,6 +53,9 @@ angular.module('ortolangMarketApp')
                 function initScopeVariables() {
                     scope.newContent = undefined;
                     scope.newParams = undefined;
+                    if (!scope.search) {
+                        scope.search = SearchProvider.make();
+                    }
                 }
                 initScopeVariables();
             }

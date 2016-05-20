@@ -1,8 +1,24 @@
 <div class="view-wrapper-flex">
-    <div class="toolbar-wrapper market-toolbar-wrapper" market-toolbar data-params="params" data-search-place-holder="MARKET.SEARCH.CORPORA" data-filters-manager="filtersManager" data-pre-selected-filter="typeFilter" data-icons="icons"></div>
+    <div class="toolbar-wrapper market-toolbar-wrapper">
+    	<div class="toolbar">
+		    <div class="row">
+		        <div class="col-sm-6 col-lg-6">
+		            <div class="input-group">
+		                <input ng-model="content" ng-keyup="$event.keyCode == 13 && search()" class="form-control" type="text" placeholder="{{'MARKET.SEARCH.CORPORA' | translate}}">
+		                    <span class="input-group-btn">
+		                        <button ng-click="search()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+		                    </span>
+		            </div>
+		        </div>
+			</div>
+    	</div>
+    </div>
     <div class="container-main">
         <div class="container-main-inner">
-            <div items data-params="params"></div>
+            <div items data-search="searchRecents" data-title="'MARKET.NEW_CORPUS'" data-params="paramsRecents"></div>
+            <div items data-search="searchFreeCorpora" data-title="'MARKET.FREE_CORPUS'" data-params="paramsFreeCorpora"></div>
+            <div items data-search="searchWrittenCorpora" data-title="'MARKET.WRITTEN_CORPUS'" data-params="paramsWrittenCorpora"></div>
+            <div items data-search="searchSpeechCorpora" data-title="'MARKET.SPEECH_CORPUS'" data-params="paramsSpeechCorpora"></div>
         </div>
     </div>
 </div>

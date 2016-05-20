@@ -8,21 +8,19 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('HomeCtrl', ['$scope', 'Search', 'FacetedFilterManager', 'StaticWebsite',
-        function ($scope, Search, FacetedFilterManager, StaticWebsite) {
+    .controller('HomeCtrl', ['$scope', 'SearchProvider', 'FacetedFilterManager', 'StaticWebsite',
+        function ($scope, SearchProvider, FacetedFilterManager, StaticWebsite) {
 
             function initScopeVariables() {
                 $scope.StaticWebsite = StaticWebsite;
                 $scope.staticWebsiteBase = StaticWebsite.getStaticWebsiteBase();
-
-                $scope.filtersManager = FacetedFilterManager.make();
-
-                Search.setActiveOrderProp('publicationDate', true);
             }
 
             function init() {
                 initScopeVariables();
-                $scope.params = '{"title":"", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+                $scope.searchRecents = SearchProvider.make();
+                $scope.searchRecents.setActiveOrderProp('publicationDate', true);
+                $scope.paramsRecents = '{"title":"", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             }
             init();
 
