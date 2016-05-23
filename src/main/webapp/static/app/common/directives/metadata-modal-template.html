@@ -1,0 +1,24 @@
+<div class="modal metadata-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" translate="BROWSER.METADATA_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+                <dl>
+                    <dt ng-repeat-start="md in ::metadata | orderBy:'+name' track by md.name">{{::md.name}}</dt>
+                    <dd ng-repeat-end>
+                        <span ng-if="::!isArray(md.value)">{{::md.value}}</span>
+                        <ul ng-if="::isArray(md.value)">
+                            <li ng-repeat="sub in ::md.value track by $index">{{::sub}}</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            </div>
+        </div>
+    </div>
+</div>

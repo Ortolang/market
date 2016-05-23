@@ -48,6 +48,7 @@ angular.module('ortolangMarketApp')
             share: 'glyphicon glyphicon-share-alt',
             info: 'fa fa-info-circle',
             question: 'fa fa-question-circle',
+            more: 'fa fa-ellipsis-h',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',
