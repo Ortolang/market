@@ -13,7 +13,7 @@
  * @property {object}   activeOrderProp - the active way of ordering the results
  * @property {boolean}  orderReverse    - if reverse ordering
  */
-angular.module('ortolangMarketApp').factory('SearchProvider', [ 'SearchResource', 'icons', 'Helper', function ( SearchResource, icons, Helper) {
+angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'SearchResource', 'icons', 'Helper', function ($filter, SearchResource, icons, Helper) {
 
     var tmpResults; // a temporary array holding the results while they are being processed
 
@@ -80,12 +80,12 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ 'SearchResource'
         removeResult: function (resultId) {
             var array = tmpResults || this.results,
                 filteredResults;
-            // filteredResults = $filter('filter')(array, {'key': '!' + resultId}, true);
-            // if (tmpResults) {
-            //     tmpResults = filteredResults;
-            // } else {
-            //     this.results = filteredResults;
-            // }
+            filteredResults = $filter('filter')(array, {'key': '!' + resultId}, true);
+            if (tmpResults) {
+                tmpResults = filteredResults;
+            } else {
+                this.results = filteredResults;
+            }
         },
 
         search: function (param, noProcessing) {
@@ -115,24 +115,6 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ 'SearchResource'
             }
         }
     };
-
-    // this.make = function (config) {
-    //     if (!config.id || !config.compatibleTypes || !config.name  || !config.name.fr) {
-    //         console.error('id, name and compatiblesTypes are mandatory', config);
-    //         return {};
-    //     }
-    //     if (!/^[A-Z]/.test(config.id)) {
-    //         console.error('id must start with an upper-case letter', config.id);
-    //         return {};
-    //     }
-    //     return new SearchProvider(config);
-    // };
-
-    // this.$get = function () {
-    //     return {
-    //         make: this.make
-    //     };
-    // };
 
     return {
         make: function (config) {
