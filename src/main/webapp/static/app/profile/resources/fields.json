@@ -14,6 +14,7 @@
     "tel": {"type": "TEL"},
     "fax": {"type": "TEL"},
     "language": {"type": "ENUM", "forceVisibilities": "300"},
+    "idhal": {"type": "STRING", "helper":true, "forceVisibilities": "333"},
     "orcid": {"type": "STRING", "helper":true},
     "viaf": {"type": "STRING", "helper":true},
     "myidref": {"type": "STRING", "helper":true},
