@@ -8,10 +8,9 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducerCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', 'ReferentialEntityResource', function ($rootScope, $scope, $routeParams, $translate, ReferentialEntityResource) {
+    .controller('ProducerCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', 'ReferentialEntityResource', 'SearchProvider', function ($rootScope, $scope, $routeParams, $translate, ReferentialEntityResource, SearchProvider) {
 
         function loadItem(id) {
-
             ReferentialEntityResource.get({name: id}, function (refEntity) {
                 $scope.producer = angular.fromJson(refEntity.content);
                 $rootScope.ortolangPageTitle = $scope.producer.name + ' | ';
@@ -26,6 +25,9 @@ angular.module('ortolangMarketApp')
         function init() {
             $scope.producer = undefined;
             loadItem($routeParams.producerId);
+
+            $scope.search = SearchProvider.make();
+            $scope.search.setActiveOrderProp('publicationDate', true);
             $scope.params = '{"producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '"}';
         }
         init();

@@ -15,7 +15,8 @@ angular.module('ortolangMarketApp')
                 title: '=',
                 params: '=',
                 search: '=',
-                inline: '='
+                inline: '=',
+                hideSeeMoreButton: '='
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
