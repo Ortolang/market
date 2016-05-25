@@ -30,26 +30,6 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
-            id: 'applications',
-            class: 'applications',
-            path: '/market/applications',
-            description: 'INTEGRATED_PROJECTS',
-            iconCss: 'fa fa-fw fa-briefcase fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
-            authenticated: false
-        },
-        {
-            id: 'tools',
-            class: 'tools',
-            path: '/market/tools',
-            description: 'TOOLS',
-            iconCss: 'fa fa-fw fa-cubes fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
-            authenticated: false
-        },
-        {
             id: 'lexicons',
             class: 'lexicons',
             path: '/market/lexicons',
@@ -65,6 +45,26 @@ angular.module('ortolangMarketApp')
             path: '/market/terminologies',
             description: 'TERMINOLOGIES',
             iconCss: 'fa fa-fw fa-font fa-2x',
+            hiddenSideNav: false,
+            hiddenTopNav: false,
+            authenticated: false
+        },
+        {
+            id: 'tools',
+            class: 'tools',
+            path: '/market/tools',
+            description: 'TOOLS',
+            iconCss: 'fa fa-fw fa-cubes fa-2x',
+            hiddenSideNav: false,
+            hiddenTopNav: false,
+            authenticated: false
+        },
+        {
+            id: 'applications',
+            class: 'applications',
+            path: '/market/applications',
+            description: 'INTEGRATED_PROJECTS',
+            iconCss: 'fa fa-fw fa-briefcase fa-2x',
             hiddenSideNav: false,
             hiddenTopNav: false,
             authenticated: false

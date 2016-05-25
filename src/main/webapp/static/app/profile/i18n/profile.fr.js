@@ -50,6 +50,7 @@ angular.module('ortolangMarketApp')
                 TEL: 'Téléphone personnel',
                 FAX: 'Fax',
                 PRESENTATION: 'Décrivez-vous en quelques mots',
+                IDHAL: 'Identifiant IdHAL',
                 ORCID: 'Identifiant ORCID',
                 VIAF: 'Identifiant VIAF',
                 MYIDREF: 'IdRef',
@@ -59,6 +60,7 @@ angular.module('ortolangMarketApp')
             },
             HELPER: {
                 TITLE: 'Titre professionnel : Dr., Prof. etc.',
+                IDHAL: 'Identifiant unique géré dans HAL : <a href="https://hal.archives-ouvertes.fr/page/mon-idhal" target="_blank">https://hal.archives-ouvertes.fr/</a>',
                 ORCID: 'Identifiant personnel pérenne : <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>',
                 VIAF: 'Identifiant personnel pérenne : <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>',
                 MYIDREF: 'Identifiant personnel pérenne : <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
