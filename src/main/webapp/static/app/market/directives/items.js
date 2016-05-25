@@ -25,34 +25,31 @@ angular.module('ortolangMarketApp')
                     scope.search.clearResults();
                 });
 
-                scope.seeMore = function () {
-                    if (scope.params) {
-                        var searchParams = {};
-                        var copyParams = angular.fromJson(scope.params);
-                        if (copyParams.viewMode) {
-                            searchParams.viewMode = copyParams.viewMode;
-                            delete copyParams.viewMode;
-                        }
-                        if (copyParams.orderProp) {
-                            searchParams.orderProp = copyParams.orderProp;
-                            delete copyParams.orderProp;
-                        }
-                        if (copyParams.orderDir) {
-                            searchParams.orderDir = copyParams.orderDir;
-                            delete copyParams.orderDir;
-                        }
-                        if (copyParams.content) {
-                            searchParams.content = copyParams.content;
-                            delete copyParams.content;
-                        }
-                        if (copyParams.limit) {
-                            delete copyParams.limit;
-                        }
-                        searchParams.filters = angular.toJson(copyParams);
-
-                        $location.url('/market/search/corpora').search(searchParams);
+                function urlParam (params) {
+                    var searchParams = {};
+                    var copyParams = angular.fromJson(params);
+                    if (copyParams.viewMode) {
+                        searchParams.viewMode = copyParams.viewMode;
+                        delete copyParams.viewMode;
                     }
-                };
+                    if (copyParams.orderProp) {
+                        searchParams.orderProp = copyParams.orderProp;
+                        delete copyParams.orderProp;
+                    }
+                    if (copyParams.orderDir) {
+                        searchParams.orderDir = copyParams.orderDir;
+                        delete copyParams.orderDir;
+                    }
+                    if (copyParams.content) {
+                        searchParams.content = copyParams.content;
+                        delete copyParams.content;
+                    }
+                    if (copyParams.limit) {
+                        delete copyParams.limit;
+                    }
+                    searchParams.filters = angular.toJson(copyParams);
+                    return searchParams;
+                }
 
                 function load() {
                     var param = angular.fromJson(scope.newParams);
@@ -72,6 +69,12 @@ angular.module('ortolangMarketApp')
                         scope.search.endProcessing();
                     });
                 }
+
+                scope.seeMore = function () {
+                    if (scope.params) {
+                        $location.url('/market/search/corpora').search(urlParam(scope.params));
+                    }
+                };
 
                 scope.$watch('params', function () {
                     if (scope.params !== undefined && scope.params !== scope.newParams) {

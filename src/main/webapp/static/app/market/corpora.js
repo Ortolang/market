@@ -15,18 +15,21 @@ angular.module('ortolangMarketApp')
         };
 
         function init() {
-            $scope.searchRecents = SearchProvider.make();
-            $scope.searchRecents.setActiveOrderProp('publicationDate', true);
-            $scope.paramsRecents = '{"title":"", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
-            $scope.searchFreeCorpora = SearchProvider.make();
-            $scope.searchFreeCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsFreeCorpora = '{"title":"", "statusOfUse.key":"referential:free_use", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            // $scope.searchRecents = SearchProvider.make();
+            // $scope.searchRecents.setActiveOrderProp('publicationDate', true);
+            // $scope.paramsRecents = '{"title":"", "type": "Corpus", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            // $scope.searchFreeCorpora = SearchProvider.make();
+            // $scope.searchFreeCorpora.setActiveOrderProp('publicationDate', true);
+            // $scope.paramsFreeCorpora = '{"title":"", "type": "Corpus", "statusOfUse.key":"referential:free_use", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             $scope.searchWrittenCorpora = SearchProvider.make();
             $scope.searchWrittenCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsWrittenCorpora = '{"title":"", "corporaType.key":"referential:written_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.paramsWrittenCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:written_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             $scope.searchSpeechCorpora = SearchProvider.make();
             $scope.searchSpeechCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsSpeechCorpora = '{"title":"", "corporaType.key":"referential:speech_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.paramsSpeechCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:speech_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.searchMultimodalCorpora = SearchProvider.make();
+            $scope.searchMultimodalCorpora.setActiveOrderProp('publicationDate', true);
+            $scope.paramsMultimodalCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:multimodal_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
         }
 
         init();

@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
             FREE_CORPUS: 'Free to use',
             WRITTEN_CORPUS: 'Written corpus',
             SPEECH_CORPUS: 'Speeches corpus',
+            MULTIMODAL_CORPUS: 'Multimodals corpus',
             SEE_MORE: 'See more',
             WEBSITES: 'Websites',
             WEBSITE: 'Website',
