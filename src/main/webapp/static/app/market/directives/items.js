@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                     scope.search.search(param).$promise.then(function (results) {
                         scope.search.pack();
 
-                        angular.forEach(results, function (result) {
+                        angular.forEach(results.entries, function (result) {
                             if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
                                 var title = result['meta_ortolang-item-json'].title;
                                 result.effectiveTitle = Helper.getMultilingualValue(title);

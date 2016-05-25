@@ -260,7 +260,7 @@ angular.module('ortolangMarketApp')
                         params.group = alias;
 
                         SearchResource.findCollections(params, function(results) {
-                            angular.forEach(results, function(result) {
+                            angular.forEach(results.entries, function(result) {
                                 if(angular.isDefined(result[alias])) {
                                     if(angular.isArray(result[alias])) {
                                         angular.forEach(result[alias], function (field) {

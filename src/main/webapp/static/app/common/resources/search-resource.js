@@ -16,15 +16,14 @@ angular.module('ortolangMarketApp')
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    if (angular.isArray(data)) {
+                    if (angular.isArray(data.entries)) {
                         var i = 0;
-                        for (i; i < data.length; i++) {
-                            data[i] = angular.fromJson(data[i]);
+                        for (i; i < data.entries.length; i++) {
+                            data.entries[i] = angular.fromJson(data.entries[i]);
                         }
                     }
                     return data;
-                },
-                isArray: true
+                }
             },
             findProfiles: {
                 url: url.api + '/search/profiles',

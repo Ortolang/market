@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
     // Constructor
     function SearchProvider(config) {
         this.results = null;
+        this.countResults = 0;
         this.viewModes = {
             line: {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'},
             tile: {id: 'tile', icon: icons.browser.viewModeTile, text: 'MARKET.VIEW_MODE.GRID'}
@@ -93,9 +94,11 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
             var Search = this;
             return SearchResource.findCollections(param, function (data) {
                 if (noProcessing) {
-                    Search.results = data;
+                    Search.results = data.entries;
+                    Search.countResults = data.size;
                 } else {
-                    tmpResults = data;
+                    tmpResults = data.entries;
+                    Search.countResults = data.size;
                 }
             });
         },
