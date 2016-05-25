@@ -36,7 +36,8 @@
     "angular-moment": "0.10.3",
     "angulartics": "1.0.3",
     "angular-markdown-directive": "0.3.1",
-    "lrInfiniteScroll": "1.0.0"
+    "lrInfiniteScroll": "1.0.0",
+    "angular-duration-format": "1.0.1"
   },
   "devDependencies": {
     "angular-mocks": "1.5.5",

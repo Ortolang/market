@@ -45,7 +45,8 @@ angular
         'angulartics',
         'angulartics.piwik',
         'btford.markdown',
-        'lrInfiniteScroll'
+        'lrInfiniteScroll',
+        'angular-duration-format'
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider

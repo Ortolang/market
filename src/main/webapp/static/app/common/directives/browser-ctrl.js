@@ -267,28 +267,17 @@ angular.module('ortolangMarketApp')
             function checkMetadata(object) {
                 if (object.type === ortolangType.object) {
                     angular.forEach(object.metadatas, function (metadata) {
-                        var key;
-                        if (metadata.name === 'ortolang-audio-json') {
-                            key = 'audio';
-                        } else if (metadata.name === 'ortolang-video-json') {
-                            key = 'video';
-                        } else if (metadata.name === 'ortolang-image-json') {
-                            key = 'image';
-                        } else if (metadata.name === 'ortolang-xml-json') {
-                            key = 'xml';
-                        } else if (metadata.name === 'ortolang-pdf-json') {
-                            key = 'pdf';
-                        } else if (metadata.name === 'ortolang-text-json') {
-                            key = 'text';
-                        } else if (metadata.name === 'ortolang-office-json') {
-                            key = 'office';
+                        var type;
+                        var test = /^system-x-(\w+)-json$/.exec(metadata.name);
+                        if (test) {
+                            type = test[1];
                         }
-
-                        if (key) {
+                        if (type) {
                             Content.downloadWithKey(metadata.key).promise.then(function (data) {
                                 var md = angular.fromJson(data.data);
                                 if (md['X-Parsed-By'] !== 'org.apache.tika.parser.EmptyParser') {
-                                    object[key] = md;
+                                    object.x = md;
+                                    object['X-Type'] = type;
                                 }
                             });
                         }
@@ -298,9 +287,7 @@ angular.module('ortolangMarketApp')
 
             $scope.showAllMetadata = function () {
                 modalScope = Helper.createModalScope();
-                modalScope.metadata = $scope.selectedElements[0].audio || $scope.selectedElements[0].video ||
-                    $scope.selectedElements[0].image || $scope.selectedElements[0].xml  || $scope.selectedElements[0].pdf ||
-                    $scope.selectedElements[0].text || $scope.selectedElements[0].office;
+                modalScope.metadata = $scope.selectedElements[0].x;
                 var tmp = [];
                 angular.forEach(modalScope.metadata, function (v, k) {
                     tmp.push({

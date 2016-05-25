@@ -293,59 +293,68 @@
                     <dt ng-if="!isCollection(selectedElements[0])" translate="SIZE"></dt>
                     <dd ng-if="!isCollection(selectedElements[0])">{{selectedElements[0].size | bytes}}</dd>
                 </dl>
-                <hr ng-if="selectedElements[0].audio" />
-                <dl class="dl-horizontal" ng-if="selectedElements[0].audio">
+                <hr ng-if="selectedElements[0].x" />
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'audio'">
                     <dt translate="BROWSER.AUDIO.DURATION"></dt>
-                    <dd>{{selectedElements[0].audio['xmpDM:duration'] * 1 | amDurationFormat:'ms'}}</dd>
+                    <dd>{{selectedElements[0].x['xmpDM:duration'] | duration:'hh:mm:ss'}}</dd>
                     <dt translate="BROWSER.AUDIO.SAMPLE_RATE"></dt>
-                    <dd>{{selectedElements[0].audio['xmpDM:audioSampleRate'] | hz}}</dd>
+                    <dd>{{selectedElements[0].x['xmpDM:audioSampleRate'] | hz}}</dd>
                     <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
                 </dl>
-                <hr ng-if="selectedElements[0].image" />
-                <dl class="dl-horizontal" ng-if="selectedElements[0].image">
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'image'">
                     <dt translate="BROWSER.IMAGE.SIZE"></dt>
-                    <dd>{{selectedElements[0].image['tiff:ImageWidth']}} x {{selectedElements[0].image['tiff:ImageLength']}} px</dd>
+                    <dd>{{selectedElements[0].x['tiff:ImageWidth']}} x {{selectedElements[0].x['tiff:ImageLength']}} px</dd>
                     <dt></dt>
                     <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
                 </dl>
-                <hr ng-if="selectedElements[0].video" />
-                <dl class="dl-horizontal" ng-if="selectedElements[0].video">
-                    <dt ng-show="selectedElements[0].video['tiff:ImageWidth']" translate="BROWSER.VIDEO.SIZE"></dt>
-                    <dd ng-show="selectedElements[0].video['tiff:ImageWidth']">{{selectedElements[0].video['tiff:ImageWidth']}} x {{selectedElements[0].video['tiff:ImageLength']}} px</dd>
-                    <dt ng-show="selectedElements[0].video['xmpDM:duration']" translate="BROWSER.VIDEO.DURATION"></dt>
-                    <dd ng-show="selectedElements[0].video['xmpDM:duration']">{{selectedElements[0].video['xmpDM:duration'] * 1 | amDurationFormat:'ms'}}</dd>
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'video'">
+                    <dt ng-show="selectedElements[0].x['tiff:ImageWidth']" translate="BROWSER.VIDEO.SIZE"></dt>
+                    <dd ng-show="selectedElements[0].x['tiff:ImageWidth']">{{selectedElements[0].x['tiff:ImageWidth']}} x {{selectedElements[0].x['tiff:ImageLength']}} px</dd>
+                    <dt ng-show="selectedElements[0].x['xmpDM:duration']" translate="BROWSER.VIDEO.DURATION"></dt>
+                    <dd ng-show="selectedElements[0].x['xmpDM:duration']">{{selectedElements[0].x['xmpDM:duration'] * 1000 | duration:'hh:mm:ss'}}</dd>
                     <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
                 </dl>
-                <hr ng-if="selectedElements[0].xml" />
-                <dl class="dl-horizontal" ng-if="selectedElements[0].xml">
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'xml' && selectedElements[0].x['XML-Type'] === 'TEI'">
                     <dt translate="FORMAT"></dt>
-                    <dd>{{selectedElements[0].xml['XML-Type']}}</dd>
-                    <dt translate="TITLE"></dt>
-                    <dd>{{selectedElements[0].xml['tei:title']}}</dd>
-                    <dt translate="AUTHOR"></dt>
-                    <dd>{{selectedElements[0].xml['tei:author']}}</dd>
-                    <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
-                </dl>
-                <hr ng-if="selectedElements[0].pdf" />
-                <dl class="dl-horizontal" ng-if="selectedElements[0].pdf">
-                    <dt translate="TITLE"></dt>
-                    <dd>{{selectedElements[0].pdf['title']}}</dd>
-                    <dt translate="PDF_VERSION"></dt>
-                    <dd>{{selectedElements[0].pdf['pdf:PDFVersion']}}</dd>
-                    <dt translate="NPAGES"></dt>
-                    <dd>{{selectedElements[0].pdf['xmpTPg:NPages']}}</dd>
-                    <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
-                </dl>
-                <hr ng-if="selectedElements[0].text" />
-                <dl class="dl-horizontal" ng-if="selectedElements[0].text">
+                    <dd>{{selectedElements[0].x['XML-Type']}}</dd>
                     <dt translate="ENCODING"></dt>
-                    <dd>{{selectedElements[0].text['Content-Encoding']}}</dd>
+                    <dd>{{selectedElements[0].x['Content-Encoding']}}</dd>
+                    <dt translate="TITLE"></dt>
+                    <dd>{{selectedElements[0].x['tei:title']}}</dd>
+                    <dt translate="AUTHOR"></dt>
+                    <dd>{{selectedElements[0].x['tei:author']}}</dd>
                     <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
                 </dl>
-                <hr ng-if="selectedElements[0].office" />
-                <dl class="dl-horizontal" ng-if="selectedElements[0].office">
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'xml' && selectedElements[0].x['XML-Type'] === 'Trans'">
+                    <dt translate="FORMAT"></dt>
+                    <dd>{{selectedElements[0].x['XML-Type']}}</dd>
+                    <dt translate="ENCODING"></dt>
+                    <dd>{{selectedElements[0].x['Content-Encoding']}}</dd>
+                    <dt translate="SPEAKER_NUMBER"></dt>
+                    <dd>{{selectedElements[0].x['trans:speakerNumber']}}</dd>
+                    <dt translate="SPEECH_TIME"></dt>
+                    <dd>{{selectedElements[0].x['trans:speechTime'] * 1000 | duration:'hh:mm:ss'}}</dd>
+                    <dt translate="WORDS"></dt>
+                    <dd>{{selectedElements[0].x['trans:words']}}</dd>
+                    <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
+                </dl>
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'pdf'">
+                    <dt translate="TITLE"></dt>
+                    <dd>{{selectedElements[0].x['title']}}</dd>
+                    <dt translate="PDF_VERSION"></dt>
+                    <dd>{{selectedElements[0].x['pdf:PDFVersion']}}</dd>
+                    <dt translate="NPAGES"></dt>
+                    <dd>{{selectedElements[0].x['xmpTPg:NPages']}}</dd>
+                    <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
+                </dl>
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'text'">
+                    <dt translate="ENCODING"></dt>
+                    <dd>{{selectedElements[0].x['Content-Encoding']}}</dd>
+                    <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
+                </dl>
+                <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'office'">
                     <dt translate="WORD_COUNT"></dt>
-                    <dd>{{selectedElements[0].office['meta:word-count']}}</dd>
+                    <dd>{{selectedElements[0].x['meta:word-count']}}</dd>
                     <dd><span class="more-md" ng-class="::icons.more"  ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip></span></dd>
                 </dl>
                 <hr/>
