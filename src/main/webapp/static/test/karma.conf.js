@@ -55,6 +55,7 @@ module.exports = function (config) {
             'bower_components/lrInfiniteScroll/lrInfiniteScroll.js',
             'bower_components/showdown/src/showdown.js',
             'bower_components/angular-markdown-directive/markdown.js',
+            'bower_components/angular-duration-format/dist/angular-duration-format.js',
             'test/mock/global.js',
             'app/**/!(ortolang-config).js',
             'test/mock/**/*.js',
