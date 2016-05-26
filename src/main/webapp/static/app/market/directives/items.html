@@ -1,5 +1,5 @@
 <section class="items" ng-if="search.countResults>0">
-    <h3 ng-if="::title">{{::title | translate}} <small>({{search.countResults}} corpus)</small> <a href="#" ng-if="!hideSeeMoreButton" ng-click="seeMore()" class="pull-right btn btn-primary" translate="MARKET.SEE_MORE"></a></h3>
+    <h3 ng-if="::title">{{::title | translate}} <small>({{search.countResults}} {{'MARKET.RESOURCES' | translate}})</small> <a href="#" ng-if="!hideSeeMoreButton" ng-click="seeMore()" class="pull-right btn btn-primary" translate="MARKET.SEE_MORE"></a></h3>
    
     <div ng-hide="search.isProcessing()" ng-if="search.results">
         <div ng-if="search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper" ng-class="inline?'flex-row-inline':''">

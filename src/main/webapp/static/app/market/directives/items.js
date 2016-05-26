@@ -57,13 +57,11 @@ angular.module('ortolangMarketApp')
                         scope.search.pack();
 
                         angular.forEach(results.entries, function (result) {
-                            if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
-                                var title = result['meta_ortolang-item-json'].title;
-                                result.effectiveTitle = Helper.getMultilingualValue(title);
+                            var title = result.title;
+                            result.effectiveTitle = Helper.getMultilingualValue(title);
 
-                                var publicationDate = result['meta_ortolang-item-json'].publicationDate;
-                                result.publicationDate = publicationDate;
-                            }
+                            var publicationDate = result.publicationDate;
+                            result.publicationDate = publicationDate;
                         });
 
                         scope.search.endProcessing();

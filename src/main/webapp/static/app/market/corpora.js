@@ -23,13 +23,13 @@ angular.module('ortolangMarketApp')
             // $scope.paramsFreeCorpora = '{"title":"", "type": "Corpus", "statusOfUse.key":"referential:free_use", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             $scope.searchWrittenCorpora = SearchProvider.make();
             $scope.searchWrittenCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsWrittenCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:written_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.paramsWrittenCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:written_corpora", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             $scope.searchSpeechCorpora = SearchProvider.make();
             $scope.searchSpeechCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsSpeechCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:speech_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.paramsSpeechCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:speech_corpora", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             $scope.searchMultimodalCorpora = SearchProvider.make();
             $scope.searchMultimodalCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsMultimodalCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:multimodal_corpora", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.paramsMultimodalCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:multimodal_corpora", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
         }
 
         init();

@@ -71,7 +71,7 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
         getResult: function (wskey) {
             var i = 0, array = tmpResults || this.results;
             for (i; i < array.length; i++) {
-                if (array[i]['meta_ortolang-workspace-json'].wskey === wskey) {
+                if (array[i].wskey === wskey) {
                     return array[i];
                 }
             }

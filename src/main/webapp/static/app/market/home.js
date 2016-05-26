@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
                 initScopeVariables();
                 $scope.searchRecents = SearchProvider.make();
                 $scope.searchRecents.setActiveOrderProp('publicationDate', true);
-                $scope.paramsRecents = '{"title":"", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
+                $scope.paramsRecents = '{"title":"", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,item.producers,workspace.wskey,workspace.wsalias,workspace.snapshotName", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             }
             init();
 

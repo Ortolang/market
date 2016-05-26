@@ -56,9 +56,8 @@ angular.module('ortolangMarketApp')
             var register = {};
             var results = [];
             angular.forEach(list, function (result) {
-                if (result.key && result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
-                    var key = result.key;
-                    var wskey = result['meta_ortolang-workspace-json'].wskey;
+                if (result.wskey) {
+                    var wskey = result.wskey;
                     if (angular.isUndefined(register[wskey])) {
                         register[wskey] = result;
                         results.push(result);

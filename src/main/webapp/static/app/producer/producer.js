@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
 
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('publicationDate', true);
-            $scope.params = '{"producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '"}';
+            $scope.params = '{"producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,item.producers,workspace.wskey,workspace.wsalias,workspace.snapshotName"}';
         }
         init();
     }]);

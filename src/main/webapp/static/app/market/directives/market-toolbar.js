@@ -133,7 +133,7 @@ angular.module('ortolangMarketApp')
                             params[scope.preSelectedFilter.getAlias()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
                         }
                         params.content = scope.content || undefined;
-
+                        params.fields = 'key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName';
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
