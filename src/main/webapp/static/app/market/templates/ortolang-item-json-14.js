@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson14Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource',
-        function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialEntityResource) {
+    .controller('OrtolangItemJson14Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
+        function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
 
             function loadProducers() {
                 if ($scope.content.producers) {
@@ -150,8 +150,18 @@ angular.module('ortolangMarketApp')
                             $scope.license.effectiveText = Helper.getMultilingualValue($scope.license.text, lang);
                         }
                     } else {
-                        //TOOD licence made by user ??
                         $scope.license = $scope.content.license;
+                        if ($scope.license.text) {
+                            var value = Helper.getMultilingualValue($scope.license.text, lang);
+                            if (value && value.path) {
+                                ObjectResource.element({
+                                    key: $scope.itemKey,
+                                    path: value.path
+                                }).$promise.then(function (oobject) {
+                                    $scope.textFileKey = oobject.key;
+                                });
+                            }
+                        }
                     }
                 }
             }
