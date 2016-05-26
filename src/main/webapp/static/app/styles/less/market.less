@@ -1,11 +1,3 @@
-.license-panel, .metadata-panel {
-  background-color: @main-bg;
-  .panel-heading {
-    font-size: @font-size-h4;
-    font-weight: 300;
-  }
-}
-
 .flex-row {
   //display: flex;
   //flex-direction: row;
@@ -43,6 +35,10 @@
   margin-left: -5px;
   margin-right: -5px;
 }
+
+/***********************************************
+ * Medium item : market/template/medium-item.html
+ ***********************************************/
 
 .medium-item {
   margin: 5px;
@@ -122,6 +118,10 @@
   }
 }
 
+/***********************************************
+ * Full item : market/template/full-item.html
+ ***********************************************/
+
 .full-item {
   border-top: @default-border;
   margin-bottom: 3 * @padding-large-vertical;
@@ -153,35 +153,40 @@
       font-weight: 300;
     }
   }
-}
-
-.text-pane {
-  overflow: hidden;
-}
-
-.text-pane-small {
-  max-height: 144px;
-  margin-bottom: @line-height-computed;
-}
-
-.description-wrapper {
-  position: relative;
-  .show-more-end {
-    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
-    background-image: -webkit-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background-image: -moz-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background-image: -ms-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background-image: -o-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background: linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#00ffffff',EndColorStr='#ffffff');
-    bottom: 0;
-    cursor: pointer;
-    height: 30px;
-    left: 0;
-    position: absolute;
-    width: 100%;
+  .description-wrapper {
+    position: relative;
+    .show-more-end {
+      background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
+      background-image: -webkit-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background-image: -moz-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background-image: -ms-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background-image: -o-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background: linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#00ffffff',EndColorStr='#ffffff');
+      bottom: 0;
+      cursor: pointer;
+      height: 30px;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+  }
+  .text-pane {
+    overflow: hidden;
+  }
+  .text-pane-small {
+    max-height: 144px;
+    margin-bottom: @line-height-computed;
   }
 }
+
+/***********************************************
+ * Market metadata item : 
+ * . market/templates/ortolang-item-json-13.html
+ * . market/templates/ortolang-item-json-14.html
+ * . contributor/contributor.html
+ * . producer/producer.html
+ ***********************************************/
 
 .market-item {
   > header {
@@ -232,18 +237,6 @@
       a {
         font-style: italic;
       }
-    }
-  }
-
-  aside {
-    .license-panel {
-      dt {
-        margin-bottom: @padding-base-vertical;
-      }
-    }
-
-    #preview-license {
-      cursor: pointer;
     }
   }
 
@@ -378,6 +371,12 @@
         color: lighten(@alert-info-text, 10%);
         font-weight: 600;
       }
+    }
+  }
+
+  .commercialLink {
+    img {
+      max-width: 75px;
     }
   }
 }
