@@ -119,9 +119,9 @@ angular.module('ortolangMarketApp')
                             delete $routeParams.viewMode;
                         }
                         if ($routeParams.orderProp) {
-                            scope.search.setActiveOrderProp($routeParams.orderProp, $routeParams.orderDirection);
-                            delete $routeParams.orderProp;
-                            delete $routeParams.orderDirection;
+                            scope.search.setActiveOrderProp($routeParams.orderProp, $routeParams.orderDir);
+                            // delete $routeParams.orderProp;
+                            // delete $routeParams.orderDir;
                         }
                         scope.content = $routeParams.content || undefined;
                         delete $routeParams.content;
@@ -134,6 +134,8 @@ angular.module('ortolangMarketApp')
                         }
                         params.content = scope.content || undefined;
                         params.fields = 'key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName';
+                        params.orderProp = $routeParams.orderProp;
+                        params.orderDir = $routeParams.orderDir;
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
