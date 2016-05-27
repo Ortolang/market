@@ -1985,7 +1985,6 @@ angular.module('ortolangMarketApp')
                     $scope.browserService = MarketBrowserService;
                     $scope.isMarketBrowserService = true;
                 }
-                console.log('Initializing browser using %s', $scope.browserService.id);
                 // Settings
                 $scope.browserSettings = Settings[$scope.browserService.id];
                 if (!$scope.browserSettings.viewMode) {
@@ -2054,7 +2053,6 @@ angular.module('ortolangMarketApp')
                 setPath(path || '/');
                 getSnapshotsHistory();
                 getParentData();
-                console.log('Browsing workspace "%s"', $scope.browserService.workspace.name || $scope.browserService.workspace.alias);
             }
 
             function init() {
