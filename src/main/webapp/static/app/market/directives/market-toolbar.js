@@ -195,7 +195,7 @@ angular.module('ortolangMarketApp')
 
                         params.viewMode = viewMode.id;
                         params.orderProp = orderProp.id;
-                        params.orderDirection = orderDirection;
+                        params.orderDir = orderDirection;
 
                         return params;
                     }

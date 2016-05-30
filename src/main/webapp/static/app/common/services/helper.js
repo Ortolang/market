@@ -55,22 +55,22 @@ angular.module('ortolangMarketApp')
         this.pack = function (list) {
             var register = {};
             var results = [];
-            angular.forEach(list, function (result) {
-                if (result.wskey) {
-                    var wskey = result.wskey;
+            for (var i = list.length - 1; i >= 0; i--) {
+                
+                if (list[i].wskey) {
+                    var wskey = list[i].wskey;
                     if (angular.isUndefined(register[wskey])) {
-                        register[wskey] = result;
-                        results.push(result);
+                        register[wskey] = list[i];
+                        results.push(list[i]);
                     } else {
-                        if (register[wskey].lastModificationDate < result.lastModificationDate) {
+                        if (register[wskey].lastModificationDate < list[i].lastModificationDate) {
                             var index = results.indexOf(register[wskey]);
-                            results.splice(index, 1, result);
-                            // results.push(result);
-                            register[wskey] = result;
+                            results.splice(index, 1, list[i]);
+                            register[wskey] = list[i];
                         }
                     }
                 }
-            });
+            }
             return results;
         };
 
