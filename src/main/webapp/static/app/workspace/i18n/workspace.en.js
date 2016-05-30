@@ -327,6 +327,19 @@ angular.module('ortolangMarketApp')
                 AUTHENTIFIED: 'Connected user',
                 ESR: 'ESR members',
                 RESTRICTED: 'Workspace members'
+            },
+            THREADS: {
+                TAB_TITLE: 'Discussion',
+                EMPTY: '<strong>This workspace does not hold any discussion.</strong><br/>Discussions allows to exchange informations between workspace members but also with ORTOLANG\'s moderators.',
+                START: 'Start a new discussion',
+                BACK: 'Go back to discussion\'s list',
+                POST: 'Post a new message',
+                CREATE_THREAD_MODAL: {
+                    TITLE: 'Create a new discussion',
+                    SUBMIT: 'Create',
+                    VISIBILITY: 'Implyr moderators into the discussion'
+                },
+                CREATED_BY: 'created by'
             }
         },
         ERROR_MODAL_QUEUE_LIMIT: {

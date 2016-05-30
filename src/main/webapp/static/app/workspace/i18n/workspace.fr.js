@@ -390,7 +390,26 @@ angular.module('ortolangMarketApp')
                         REJECTED: 'Publication rejetée',
                         REVIEW: 'En attente de modération'
                     }
+                },
+                MESSAGE: {
+                    THREAD: {
+                        CREATE: 'a créé une nouvelle discussion <span class="description">{{::arguments.name}}</span>',
+                        POST: 'a posté un message dans la discussion <span class="description">{{::arguments.threadname}}</span>'
+                    }
                 }
+            },
+            THREADS: {
+                TAB_TITLE: 'Discussion',
+                EMPTY: '<strong>Cet espace de travail ne contient aucune discussion.</strong><br/> Les discussions vous permettent de poser des questions ou d\'échanger des informations entre membres du projet ou avec les modérateurs ORTOLANG.',
+                START: 'Démarrer une nouvelle discussion',
+                BACK: 'Revenir à la liste des discussions',
+                POST: 'Poster un nouveau message',
+                CREATE_THREAD_MODAL: {
+                    TITLE: 'Création d\'une nouvelle discussion',
+                    SUBMIT: 'Créer',
+                    VISIBILITY: 'Impliquer les modérateurs dans la discussion'
+                },
+                CREATED_BY: 'créé par'
             }
         },
         ERROR_MODAL_QUEUE_LIMIT: {

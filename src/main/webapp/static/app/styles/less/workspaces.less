@@ -247,6 +247,25 @@
       font-size: @font-size-small;
     }
   }
+
+  &.threads {
+    .thread {
+      cursor: pointer;
+    }
+    .thread-name {
+      color: @ortolang-blue;
+      font-weight: bold;
+    }
+    .thread-author {
+      font-size: @font-size-small;
+      font-style: italic;
+    }
+    .thread-activity {
+      font-weight: 300;
+      font-style: italic;
+      font-size: @font-size-small;
+    }
+  }
 }
 
 .workspace-dashboard {
@@ -280,5 +299,12 @@
   }
   .media-body {
     vertical-align: middle;
+  }
+}
+
+.create-thread-modal {
+  textarea {
+    resize: none;
+    height: 10em;
   }
 }

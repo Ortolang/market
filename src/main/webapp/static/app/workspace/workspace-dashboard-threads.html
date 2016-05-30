@@ -1,0 +1,56 @@
+<div ng-controller="WorkspaceDashboardThreadsCtrl">
+    <div class="workspace-dashboard-section workspace-dashboard-threads" ng-if="!models.activeThread">
+        <ul class="list-unstyled">
+            <li ng-if="models.threads.entries.length === 0" class="thread media card-well">
+                <div class="media-body">
+                    <span class="thread-description" translate="WORKSPACE.THREADS.EMPTY"></span>
+                </div>
+            </li>
+            <li ng-repeat="thread in models.threads.entries" class="thread card-well card-well-hover" ng-click="openThread(thread)">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="thread-name">{{thread.name}}</h5>
+                        <span class="thread-description">{{thread.description}}</span>
+                        <span class="pull-right" avatar data-email-hash="Workspace.authorCards[thread.author].emailHash" data-size="24" data-img-classes="img-circle"></span>
+                        <span class="thread-author pull-right">{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a href="">{{Workspace.authorCards[thread.author].fullName}}</a> </span>
+                    </div>
+                    <div class="media-foot">
+                        <span class="thread-activity">{{thread.lastActivity | amTimeAgo}}</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <button class="btn btn-default btn-primary" ng-click="createThread()">{{'WORKSPACE.THREADS.START' | translate}}</button>
+    </div>
+    <div class="workspace-dashboard-section workspace-dashboard-threads" ng-if="models.activeThread">
+        <div>
+            <button class="btn btn-default btn-primary" ng-click="listThreads()">{{'WORKSPACE.THREADS.BACK' | translate}}</button>
+        </div>
+        <ul class="list-unstyled">
+            <li class="thread card-well">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="thread-name">{{models.activeThread.name}}</h5>
+                        <span class="thread-description">{{models.activeThread.description}}</span>
+                        <span class="pull-right" avatar data-email-hash="Workspace.authorCards[models.activeThread.author].emailHash" data-size="24" data-img-classes="img-circle"></span>
+                        <span class="thread-author pull-right">{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a href="">{{Workspace.authorCards[models.activeThread.author].fullName}}</a> </span>
+                    </div>
+                </div>
+            </li>
+            <li ng-repeat="message in models.messages.entries" class="thread card-well">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="thread-name">{{message.title}}</h5>
+                        <span class="thread-description">{{message.body}}</span>
+                        <span class="pull-right" avatar data-email-hash="Workspace.authorCards[message.author].emailHash" data-size="24" data-img-classes="img-circle"></span>
+                        <span class="thread-author pull-right">{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a href="">{{Workspace.authorCards[message.author].fullName}}</a> </span>
+                    </div>
+                    <div class="media-foot">
+                        <span class="thread-activity">{{message.date | amTimeAgo}}</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <button class="btn btn-default btn-primary" ng-click="postMessage()">{{'WORKSPACE.THREADS.POST' | translate}}</button>
+    </div>
+</div>
