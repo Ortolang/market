@@ -79,6 +79,7 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             }
             delete this.metadata.imageUrl;
+            delete this.metadata.social;
 
             this.metadata.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
             return postForm(deferred);

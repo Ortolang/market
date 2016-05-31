@@ -34,18 +34,6 @@ angular.module('ortolangMarketApp')
                 $scope.applying = false;
             }
 
-            $scope.applyChange = function () {
-                startSubmit();
-                $scope.submitForm();
-            };
-
-            $scope.submitForm = function () {
-                WorkspaceMetadataService.save().then(function () {
-                    $scope.applying = false;
-                    $location.search('section', 'preview');
-                });
-            };
-
             function prepareModalScopeForErrorMessages() {
                 var modalScope = $rootScope.$new(true);
 
@@ -75,6 +63,22 @@ angular.module('ortolangMarketApp')
                 $scope.image = Content.getPreviewUrlWithKey(elements[0].key, 180);
                 $scope.fileImageSelectModal.hide();
             });
+
+            $scope.applyChange = function () {
+                startSubmit();
+                $scope.submitForm();
+            };
+
+            $scope.submitForm = function () {
+                WorkspaceMetadataService.save().then(function () {
+                    $scope.applying = false;
+                    $location.search('section', 'preview');
+                }, function () {
+                    abortSubmit();
+                    WorkspaceMetadataService.metadataErrors.metadataFormat = true;
+                    showErrorMessages();
+                });
+            };
 
             $scope.$on('$destroy', function () {
                 deregisterFileImageSelectModal();
