@@ -205,10 +205,7 @@ angular.module('ortolangMarketApp')
 
             function loadRelation(relation) {
                 var loadedRelation = {name: 'unknown', type: relation.type};
-                if (relation.type === 'hasPart') {
-                    loadedRelation.url = relation.path;
-                    loadedRelation.extension = relation.path.split('.').pop();
-                } else if (relation.type === 'isPartOf') {
+                if (relation.type === 'hasPart' || relation.type === 'isPartOf' || relation.type === 'requires' || relation.type === 'isRequiredBy') {
                     loadedRelation.name = relation.alias;
                     loadedRelation.url = 'market/item/' + relation.alias;
                 } else {
@@ -229,7 +226,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach($scope.content.relations, function (relation) {
                         if (relation.type === 'documentation') {
                             $scope.documentations.push(loadRelation(relation));
-                        } else if (relation.type === 'isPartOf') {
+                        } else if (relation.type === 'hasPart' || relation.type === 'isPartOf' || relation.type === 'requires' || relation.type === 'isRequiredBy') {
                             $scope.externalRelations.push(loadRelation(relation));
                         }
                     });
