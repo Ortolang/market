@@ -34,6 +34,7 @@ angular.module('ortolangMarketApp')
             PUBLICATIONS: 'Publications',
             PRIMARY_PUBLICATIONS: 'Reference publications',
             SECONDARY_PUBLICATIONS: 'Publications based on this item',
+            EXTERNAL_RELATIONS: 'Relations with others resources',
             ALL_VERSIONS: 'All versions',
             PRIMARY_LANGUAGE: 'Primary language',
             DISCOURSE_TYPE: 'Discourse type',

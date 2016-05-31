@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson14Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
-        function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
+    .controller('OrtolangItemJson14Ctrl', ['$scope', '$rootScope', '$location', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
+        function ($scope, $rootScope, $location, $translate, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
 
             function loadProducers() {
                 if ($scope.content.producers) {
@@ -204,31 +204,33 @@ angular.module('ortolangMarketApp')
             }
 
             function loadRelation(relation) {
-                var url = null, name = 'unknown';
+                var loadedRelation = {name: 'unknown', type: relation.type};
                 if (relation.type === 'hasPart') {
-                    url = relation.path;
+                    loadedRelation.url = relation.path;
+                    loadedRelation.extension = relation.path.split('.').pop();
+                } else if (relation.type === 'isPartOf') {
+                    loadedRelation.name = relation.alias;
+                    loadedRelation.url = 'market/item/' + relation.alias;
                 } else {
-                    name = relation.path.split('/').pop();
-                    url = Content.getContentUrlWithPath(relation.path, $scope.alias, $scope.root);
+                    loadedRelation.name = relation.path.split('/').pop();
+                    loadedRelation.url = Content.getContentUrlWithPath(relation.path, $scope.alias, $scope.root);
                     if (Helper.startsWith(relation.url, 'http')) {
-                        url = relation.url;
+                        loadedRelation.url = relation.url;
                     }
+                    loadedRelation.extension = relation.path.split('.').pop();
                 }
-
-                return {
-                    name: name,
-                    type: relation.type,
-                    url: url,
-                    extension: relation.path.split('.').pop()
-                };
+                return loadedRelation;
             }
 
             function loadRelations() {
                 $scope.documentations = [];
+                $scope.externalRelations = [];
                 if ($scope.content.relations) {
                     angular.forEach($scope.content.relations, function (relation) {
                         if (relation.type === 'documentation') {
                             $scope.documentations.push(loadRelation(relation));
+                        } else if (relation.type === 'isPartOf') {
+                            $scope.externalRelations.push(loadRelation(relation));
                         }
                     });
                 }
@@ -385,6 +387,10 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('terminoApproved', 'ITEM.TERMINO_APPROVED.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoChecked', 'ITEM.TERMINO_CHECKED.LABEL', lang);
             }
+
+            $scope.goToItem = function (url) {
+                $location.url(url);
+            };
 
             $scope.getCitation = function () {
                 return $scope.computeTextCitation($scope);

@@ -63,7 +63,7 @@ angular.module('ortolangMarketApp')
                         $scope.ready = true;
                     }
                 });
-            }, function (reason) {
+            }, function () {
                 $scope.ready = true;
             });
         }
