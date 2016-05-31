@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Content', ['url', '$http', '$window', '$q', function (url, $http, $window, $q) {
+    .service('Content', ['url', '$http', '$window', '$q', 'AuthService', function (url, $http, $window, $q, AuthService) {
 
         var forceDownloadQueryParam = '?fd=true';
 
@@ -68,7 +68,8 @@ angular.module('ortolangMarketApp')
         };
 
         this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {
-            var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?';
+            var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?',
+                scope = AuthService.getScope();
             angular.forEach(paths, function (path) {
                 exportUrl += '&path=/' + path;
             });
@@ -80,6 +81,9 @@ angular.module('ortolangMarketApp')
             }
             if (followsymlink) {
                 exportUrl += '&followsymlink=' + followsymlink;
+            }
+            if (scope) {
+                exportUrl += '&scope=' + scope;
             }
             return exportUrl;
         };

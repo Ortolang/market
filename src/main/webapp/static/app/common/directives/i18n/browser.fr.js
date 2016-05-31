@@ -123,6 +123,16 @@ angular.module('ortolangMarketApp')
             VIDEO: {
                 SIZE: 'Résolution',
                 DURATION: 'Durée'
+            },
+            XML: {
+                FORMAT: 'Format',
+                SPEAKER_NUMBER: 'Locuteurs',
+                SPEECH_TIME: 'Temps de parole'
+            },
+            COMMON: {
+                ENCODING: 'Encodage',
+                TITLE: 'Titre',
+                WORDS: 'Mots'
             }
         }
     });
