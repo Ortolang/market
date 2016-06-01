@@ -22,12 +22,12 @@
                     <span class="hidden-description" translate="TASKS"></span>
                 </a>
             </li>
-            <li ng-if="Cart.size() > 0 && !navbarCollapsed">
-                <a data-title="{{'CART' | translate}}" data-auto-close="true" data-template-url="common/directives/cart-popover-template.html" data-placement="bottom" bs-popover>
-                    <span ng-class="::icons.cart"></span><span class="badge cart">{{Cart.size() === 0 ? '' : Cart.size()}}</span>
-                    <span class="hidden-description" translate="CART"></span>
-                </a>
-            </li>
+            <!--<li ng-if="Cart.size() > 0 && !navbarCollapsed">-->
+                <!--<a data-title="{{'CART' | translate}}" data-auto-close="true" data-template-url="common/directives/cart-popover-template.html" data-placement="bottom" bs-popover>-->
+                    <!--<span ng-class="::icons.cart"></span><span class="badge cart">{{Cart.size() === 0 ? '' : Cart.size()}}</span>-->
+                    <!--<span class="hidden-description" translate="CART"></span>-->
+                <!--</a>-->
+            <!--</li>-->
             <li class="dropdown" ng-if="!navbarCollapsed">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fa fa-fw fa-info-circle"></span> {{'NAV.INFORMATION' | translate}}
