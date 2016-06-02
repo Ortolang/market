@@ -135,7 +135,7 @@ angular.module('ortolangMarketApp')
                         params.content = scope.content || undefined;
                         params.fields = 'key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName';
                         params.orderProp = $routeParams.orderProp;
-                        params.orderDir = $routeParams.orderDir;
+                        // params.orderDir = $routeParams.orderDir;
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
@@ -259,7 +259,7 @@ angular.module('ortolangMarketApp')
                         var alias = filter.getAlias();
                         var params = scope.params !== undefined ? angular.fromJson(scope.params) : {};
                         params.fields = filter.getAlias() + ':' + alias;
-                        params.group = alias;
+                        params.group = 'ortolang-item-json.'+alias;
 
                         SearchResource.findCollections(params, function(results) {
                             angular.forEach(results.entries, function(result) {

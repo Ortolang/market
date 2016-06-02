@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['$location', 'SearchProvider', 'OptionFacetedFilter', 'Settings', 'Helper', function ($location, SearchProvider, OptionFacetedFilter, Settings, Helper) {
+    .directive('items', ['$location', 'SearchProvider', 'SearchResource', 'OptionFacetedFilter', 'Settings', 'Helper', function ($location, SearchProvider, SearchResource, OptionFacetedFilter, Settings, Helper) {
         return {
             restrict: 'A',
             scope: {
@@ -51,9 +51,22 @@ angular.module('ortolangMarketApp')
                     return searchParams;
                 }
 
+                function countWorkspace (params) {
+                    var param = angular.copy(params);
+                    delete param.limit;
+                    delete param.orderProp;
+                    delete param.orderDir;
+                    param.fields = 'workspace.wsalias';
+                    param.group = 'ortolang-workspace-json.wsalias';
+                    SearchResource.findCollections(param, function (data) {
+                        scope.count = data.entries.length;
+                    });
+                }
+
                 function load() {
                     var param = angular.fromJson(scope.newParams);
                     scope.search.search(param).$promise.then(function (results) {
+                        countWorkspace(param);
                         scope.search.pack();
 
                         angular.forEach(results.entries, function (result) {
@@ -85,6 +98,7 @@ angular.module('ortolangMarketApp')
                 function initScopeVariables() {
                     scope.newContent = undefined;
                     scope.newParams = undefined;
+                    scope.count = 0;
                     if (!scope.search) {
                         scope.search = SearchProvider.make();
                     }

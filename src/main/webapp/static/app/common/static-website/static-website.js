@@ -65,12 +65,12 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            $rootScope.$on('languageInitialized', function () {
-                populateHomePage(Settings.language);
-                populateInformationPage(Settings.language);
+            $rootScope.$on('languageInitialized', function ($event, language) {
+                populateHomePage(language);
+                populateInformationPage(language);
             });
 
-            $rootScope.$on('$translateChangeSuccess', function (event, language) {
+            $rootScope.$on('$translateChangeSuccess', function ($event, language) {
                 console.log('Loading static content');
                 populateHomePage(language.language);
                 populateInformationPage(language.language);

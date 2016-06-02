@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
         function init() {
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('publicationDate', true);
-            $scope.params = '{"type": "Application"}';
+            $scope.params = '{"type": "Application", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName"}';
         }
         init();
     }]);
