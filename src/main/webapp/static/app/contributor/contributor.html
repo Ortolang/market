@@ -23,27 +23,29 @@
             </div>
         </header>
 
-        <div class="market-item-presentation-metadata">
-            <section ng-if="presentation" name="about-me">
-                <h4>{{'CONTRIBUTOR.ABOUT_ME' | translate}}</h4>
-                <article data-content="presentation" data-target-blank>
-                    <div ng-bind-html="presentation"></div>
-                </article>
-            </section>
+        <div class="row">
+            <div class="col-md-8 market-item-presentation-metadata">
+                <section ng-if="presentation" name="about-me">
+                    <h4>{{'CONTRIBUTOR.ABOUT_ME' | translate}}</h4>
+                    <article data-content="presentation" data-target-blank>
+                        <div ng-bind-html="presentation"></div>
+                    </article>
+                </section>
 
-            <section name="contributions">
-                <h4>{{'CONTRIBUTOR.MY_RESOURCES' | translate}}</h4>
-                <article>
-                    <div items data-search="search" data-params="params"></div>
-                </article>
-            </section>
+                <section name="contributions">
+                    <h4>{{'CONTRIBUTOR.RESOURCES' | translate}}</h4>
+                    <article>
+                        <div items data-search="search" data-params="params"></div>
+                    </article>
+                </section>
 
-            <section id="publications" ng-if="contributor.firstname">
-                <h4>{{'CONTRIBUTOR.MY_PUBLICATIONS' | translate}}</h4>
-                <div class="section-body-wrapper">
-                    <div publications-hal given-name="contributor.firstname" family-name="contributor.lastname"></div>
-                </div>
-            </section>
+                <section id="publications" ng-if="contributor.firstname">
+                    <h4>{{'CONTRIBUTOR.PUBLICATIONS' | translate}}</h4>
+                    <div class="section-body-wrapper">
+                        <div publications-hal given-name="contributor.firstname" family-name="contributor.lastname"></div>
+                    </div>
+                </section>
+            </div>
         </div>
     </section>
 
