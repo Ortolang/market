@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
                 params: '=',
                 search: '=',
                 inline: '=',
+                subtitleValue: '=',
                 hideSeeMoreButton: '='
             },
             templateUrl: 'market/directives/items.html',
@@ -99,6 +100,7 @@ angular.module('ortolangMarketApp')
                     scope.newContent = undefined;
                     scope.newParams = undefined;
                     scope.count = 0;
+                    scope.subtitle = scope.subtitleValue ? scope.subtitleValue : 'MARKET.RESOURCES';
                     if (!scope.search) {
                         scope.search = SearchProvider.make();
                     }
