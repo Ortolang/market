@@ -1,5 +1,5 @@
 <section class="items" ng-if="search.results.length>0">
-    <h3 ng-if="::title">{{::title | translate}} <small ng-if="hideSeeMoreButton" data-translate="{{subtitle}}" data-translate-values="{value: count}"></small> <small ng-if="!hideSeeMoreButton"><a ng-if="!hideSeeMoreButton" href="#" ng-click="seeMore()" data-translate="{{subtitle}}" data-translate-values="{value: count}"></a></small></h3>
+    <h3 ng-if="::title">{{title | translate}} <small ng-if="hideSeeMoreButton" data-translate="{{subtitle}}" data-translate-values="{value: count}"></small> <small ng-if="!hideSeeMoreButton"><a ng-if="!hideSeeMoreButton" href="#" ng-click="seeMore()" data-translate="{{subtitle}}" data-translate-values="{value: count}"></a></small></h3>
    
     <div ng-hide="search.isProcessing()" ng-if="search.results">
         <div ng-if="search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper" ng-class="inline?'flex-row-inline':''">
