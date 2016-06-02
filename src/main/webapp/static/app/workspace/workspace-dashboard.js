@@ -39,6 +39,10 @@ angular.module('ortolangMarketApp')
              * @param {String} url   - the url of the next page; if null or undefined sets default section
              */
             function showSavingMetadataModal(newUrl) {
+                if (Workspace.active.workspace.readOnly) {
+                    $location.url(newUrl);
+                    return;
+                }
                 var savingMetadataModal;
                 modalScope = Helper.createModalScope(true);
                 modalScope.save = function () {
