@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', ['$rootScope', '$scope', '$translate', 'AuthService', 'User', 'sideNavElements', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart',
-        function ($rootScope, $scope, $translate, AuthService, User, sideNavElements, Settings, Runtime, amMoment, StaticWebsite, Cart) {
+    .controller('TopNavCtrl', ['$rootScope', '$scope', '$location', '$translate', 'AuthService', 'User', 'sideNavElements', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart',
+        function ($rootScope, $scope, $location, $translate, AuthService, User, sideNavElements, Settings, Runtime, amMoment, StaticWebsite, Cart) {
 
             $scope.sideNavElements = sideNavElements;
             $scope.navbarCollapsed = false;
@@ -49,6 +49,10 @@ angular.module('ortolangMarketApp')
                 if (AuthService.isAuthenticated()) {
                     favoriteLanguage = User.getProfileData('language');
                 }
+                if (!favoriteLanguage && $location.search().lang && ($location.search().lang === 'fr' || $location.search().lang === 'en')) {
+                    favoriteLanguage = {value: $location.search().lang};
+                    $location.search('lang', undefined);
+                }
                 if (Settings.language && Settings.language !== 'fr' && Settings.language !== 'en') {
                     Settings.language = undefined;
                 }
@@ -63,7 +67,7 @@ angular.module('ortolangMarketApp')
                     Settings.language = $translate.use();
                 }
                 amMoment.changeLocale(Settings.language);
-                $rootScope.$emit('languageInitialized', Settings.language);
+                $rootScope.$emit('languageInitialized', favoriteLanguage || Settings.language);
             }
 
             if (AuthService.isAuthenticated()) {
