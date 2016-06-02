@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .constant('MARKET_EN', {
         MARKET: {
             ALL_TYPE: 'All',
-            RESOURCES: '({{value && value !=="" ? value : ""}} resources)',
+            RESOURCES: '({{value && value !=="" ? value : ""}} resource{{value > 1 ? "s" : ""}})',
             NEW_RESOURCES: 'Recent publications',
             NEW_CORPUS: 'New',
             FREE_CORPUS: 'Free to use',

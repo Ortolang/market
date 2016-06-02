@@ -1,30 +1,29 @@
 <div class="view-wrapper-flex">
     <div class="container-main container-main-no-toolbar">
 
-    <section ng-controller="ContributorCtrl" class="market-item">
-        <header>
-            <div class="media">
-                <div class="media-left">
-                    <div class="item-logo">
-                        <span avatar data-email-hash="contributor.emailhash" data-size="120" data-img-classes="user-avatar img-responsive"></span>
+        <section ng-controller="ContributorCtrl" class="market-item">
+            <header>
+                <div class="media">
+                    <div class="media-left">
+                        <div class="item-logo">
+                            <span avatar data-email-hash="contributor.emailhash" data-size="120" data-img-classes="user-avatar img-responsive"></span>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h1 class="market-item-title" ng-bind="contributor.fullname"></h1>
+                        <div ng-if="contributor.organizationEntity" class="market-item-producers">
+                            <i translate="CONTRIBUTOR.LABORATORY"></i> :
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a ng-href='/producers/{{::contributor.organizationEntity.id}}' ng-bind="contributor.organizationEntity.fullname"></a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="media-body">
-                    <h1 class="market-item-title" ng-bind="contributor.fullname"></h1>
-                    <div ng-if="contributor.organizationEntity" class="market-item-producers">
-                        <i translate="CONTRIBUTOR.LABORATORY"></i> :
-                        <ul class="list-unstyled">
-                            <li>
-                                <a ng-href='/producers/{{::contributor.organizationEntity.id}}' ng-bind="contributor.organizationEntity.fullname"></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
+            </header>
 
-        <div class="row">
-            <div class="col-md-8 market-item-presentation-metadata">
+            <div class="market-item-presentation-metadata">
                 <section ng-if="presentation" name="about-me">
                     <h4>{{'CONTRIBUTOR.ABOUT_ME' | translate}}</h4>
                     <article data-content="presentation" data-target-blank>
@@ -46,8 +45,7 @@
                     </div>
                 </section>
             </div>
-        </div>
-    </section>
+        </section>
 
     </div>
 </div>
