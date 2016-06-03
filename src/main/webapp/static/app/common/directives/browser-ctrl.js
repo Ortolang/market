@@ -125,10 +125,18 @@ angular.module('ortolangMarketApp')
                             $scope.contextMenuItems.push({text: 'BROWSER.UPLOAD_ZIP', icon: icons.browser.uploadZip, action: 'uploadZip'});
                             $scope.contextMenuItems.push({divider: true});
                         }
-                        if ($scope.browserService.canPreview && $scope.visualizers) {
+                        if ($scope.browserService.canPreview) {
                             // TODO Display all compatible visualizers when multiple
-                            $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
-                            $scope.contextMenuItems.push({divider: true});
+                            if ($scope.visualizers) {
+                                $scope.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
+                            }
+                            var hasMD = $scope.hasOnlyOneElementSelected() && hasXMd($scope.selectedElements[0]);
+                            if (hasMD) {
+                                $scope.contextMenuItems.push({text: 'BROWSER.SEE_MD', icon: icons.browser.metadata, action: 'showMetadata'});
+                            }
+                            if ($scope.visualizers || hasMD) {
+                                $scope.contextMenuItems.push({divider: true});
+                            }
                         }
                         if ($scope.browserService.canEdit && $scope.isHead && !$scope.hasOnlyParentSelected()) {
                             if ($scope.selectedElements.length === 1) {
@@ -264,13 +272,23 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function hasXMd(object) {
+                var i;
+                for (i = 0; i < object.metadatas.length; i++) {
+                    if (/^system-x-(\w+)-json$/.test(object.metadatas[i].name)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
             function checkMetadata(object) {
                 if (object.type === ortolangType.object) {
                     angular.forEach(object.metadatas, function (metadata) {
                         var type;
-                        var test = /^system-x-(\w+)-json$/.exec(metadata.name);
-                        if (test) {
-                            type = test[1];
+                        var exec = /^system-x-(\w+)-json$/.exec(metadata.name);
+                        if (exec) {
+                            type = exec[1];
                         }
                         if (type) {
                             Content.downloadWithKey(metadata.key).promise.then(function (data) {
@@ -947,6 +965,10 @@ angular.module('ortolangMarketApp')
                         break;
                     case 'preview':
                         $scope.clickPreview();
+                        break;
+                    case 'showMetadata':
+                        $scope.showAllMetadata();
+                        $scope.deactivateContextMenu();
                         break;
                     case 'share':
                         $scope.share();
