@@ -32,8 +32,8 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
             rank: {id: 'rank', sort: ['rank', '-publicationDate'], label: 'MARKET.SORT.RANK', text: 'MARKET.SORT.RANK'},
             publicationDate: {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'}
         };
-        this.activeOrderProp = this.orderProps.publicationDate;
-        this.orderReverse = true;
+        this.activeOrderProp = this.orderProps.rank;
+        this.orderReverse = false;
 
         angular.forEach(config, function (value, key) {
             if (this.hasOwnProperty(key)) {
@@ -113,7 +113,7 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
         },
 
         setActiveOrderProp: function (orderPropId, orderReverse) {
-            this.activeOrderProp = this.orderProps[orderPropId] || this.orderProps.publicationDate;
+            this.activeOrderProp = this.orderProps[orderPropId] || this.orderProps.rank;
             if (orderReverse !== undefined) {
                 this.orderReverse = orderReverse;
             }
