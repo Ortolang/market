@@ -124,6 +124,7 @@ angular.module('ortolangMarketApp')
             },
             SORT: {
                 TITLE: 'Titre',
+                RANK: 'Rang',
                 PUBLICATION_DATE: 'Date de publication'
             },
             SEARCH: {

@@ -119,7 +119,7 @@ angular.module('ortolangMarketApp')
                             delete $routeParams.viewMode;
                         }
                         if ($routeParams.orderProp) {
-                            scope.search.setActiveOrderProp($routeParams.orderProp, $routeParams.orderDir);
+                            scope.search.setActiveOrderProp($routeParams.orderProp, ($routeParams.orderDir === 'desc' ? false : true));
                             // delete $routeParams.orderProp;
                             // delete $routeParams.orderDir;
                         }
@@ -133,9 +133,9 @@ angular.module('ortolangMarketApp')
                             params[scope.preSelectedFilter.getAlias()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
                         }
                         params.content = scope.content || undefined;
-                        params.fields = 'key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName';
+                        params.fields = 'key,system-trustrank-json.rank:rank,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.description,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName';
                         params.orderProp = $routeParams.orderProp;
-                        // params.orderDir = $routeParams.orderDir;
+                        // params.orderDir = 'desc';
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
@@ -258,7 +258,7 @@ angular.module('ortolangMarketApp')
                     function setOptionsFilter(filter) {
                         var alias = filter.getAlias();
                         var params = scope.params !== undefined ? angular.fromJson(scope.params) : {};
-                        params.fields = filter.getAlias() + ':' + alias;
+                        params.fields = 'ortolang-item-json.'+filter.getAlias() + ':' + alias;
                         params.group = 'ortolang-item-json.'+alias;
 
                         SearchResource.findCollections(params, function(results) {
