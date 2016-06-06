@@ -42,8 +42,9 @@ angular.element(document).ready(function () {
 
                 function getScope() {
                     if (keycloakAuth.authenticated) {
-                        return window.btoa(keycloakAuth.idTokenParsed.preferred_username);
+                        return window.btoa(keycloakAuth.idTokenParsed.preferred_username) + OrtolangConfig.cacheVersion;
                     }
+                    return OrtolangConfig.cacheVersion;
                 }
 
                 function login() {

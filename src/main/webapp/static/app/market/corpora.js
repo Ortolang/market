@@ -22,14 +22,14 @@ angular.module('ortolangMarketApp')
             // $scope.searchFreeCorpora.setActiveOrderProp('publicationDate', true);
             // $scope.paramsFreeCorpora = '{"title":"", "type": "Corpus", "statusOfUse.key":"referential:free_use", "limit":"10", "orderProp":"publicationDate", "orderDir":"desc"}';
             $scope.searchWrittenCorpora = SearchProvider.make();
-            $scope.searchWrittenCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsWrittenCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:written_corpora", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName", "limit":"15", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.searchWrittenCorpora.setActiveOrderProp('rank', false);
+            $scope.paramsWrittenCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:written_corpora", "fields":"key,system-trustrank-json.rank,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
             $scope.searchSpeechCorpora = SearchProvider.make();
-            $scope.searchSpeechCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsSpeechCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:speech_corpora", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName", "limit":"15", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.searchSpeechCorpora.setActiveOrderProp('rank', false);
+            $scope.paramsSpeechCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:speech_corpora", "fields":"key,system-trustrank-json.rank,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
             $scope.searchMultimodalCorpora = SearchProvider.make();
-            $scope.searchMultimodalCorpora.setActiveOrderProp('publicationDate', true);
-            $scope.paramsMultimodalCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:multimodal_corpora", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,workspace.wskey,workspace.wsalias,workspace.snapshotName", "limit":"15", "orderProp":"publicationDate", "orderDir":"desc"}';
+            $scope.searchMultimodalCorpora.setActiveOrderProp('rank', false);
+            $scope.paramsMultimodalCorpora = '{"title":"", "type": "Corpus", "corporaType.key":"referential:multimodal_corpora", "fields":"key,system-trustrank-json.rank,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
         }
 
         init();

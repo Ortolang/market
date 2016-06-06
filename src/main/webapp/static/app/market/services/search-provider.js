@@ -29,6 +29,7 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
 
         this.orderProps = {
             title: {id: 'title', sort: 'effectiveTitle', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'},
+            rank: {id: 'rank', sort: 'rank', label: 'MARKET.SORT.RANK', text: 'MARKET.SORT.RANK'},
             publicationDate: {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'}
         };
         this.activeOrderProp = this.orderProps.publicationDate;

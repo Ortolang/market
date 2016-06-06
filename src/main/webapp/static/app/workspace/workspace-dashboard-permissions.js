@@ -79,6 +79,9 @@ angular.module('ortolangMarketApp')
 
         $scope.removeAcl = function (element, $event) {
             $event.stopPropagation();
+            if (Workspace.active.workspace.readOnly) {
+                return;
+            }
             WorkspaceElementResource.delete({wskey: Workspace.active.workspace.key, path: element.path, metadataname: 'ortolang-acl-json'}, function () {
                 refreshElement(element);
             });
@@ -94,6 +97,9 @@ angular.module('ortolangMarketApp')
 
         $scope.setAcl = function (element, template, $event) {
             $event.stopPropagation();
+            if (Workspace.active.workspace.readOnly) {
+                return;
+            }
             if (element.type === ortolangType.collection) {
                 var permissionsModal,
                     modalScope = Helper.createModalScope(true);
