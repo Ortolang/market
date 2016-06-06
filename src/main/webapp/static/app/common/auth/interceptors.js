@@ -12,6 +12,15 @@ angular.module('ortolangMarketApp')
 
         var scope = AuthService.getScope();
 
+        function injectScope(config) {
+            if (config.url.indexOf(url.api) === 0) {
+                if (!config.params) {
+                    config.params = {};
+                }
+                config.params.scope = scope;
+            }
+        }
+
         return {
             request: function (config) {
                 var deferred = $q.defer();
@@ -26,14 +35,10 @@ angular.module('ortolangMarketApp')
                             AuthService.forceReload();
                         });
                     }
-                    if (config.url.indexOf(url.api) === 0) {
-                        if (!config.params) {
-                            config.params = {};
-                        }
-                        config.params.scope = scope;
-                    }
+                    injectScope(config);
                     return deferred.promise;
                 }
+                injectScope(config);
                 return config;
             },
             responseError: function (rejection) {
