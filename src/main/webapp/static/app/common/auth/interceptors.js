@@ -13,16 +13,17 @@ angular.module('ortolangMarketApp')
         var scope = AuthService.getScope();
 
         function injectScope(config) {
-            if (config.url.indexOf(url.api) === 0) {
-                if (!config.params) {
-                    config.params = {};
-                }
-                config.params.scope = scope;
+            if (!config.params) {
+                config.params = {};
             }
+            config.params.scope = scope;
         }
 
         return {
             request: function (config) {
+                if (config.url.indexOf(url.api) !== 0) {
+                    return config;
+                }
                 var deferred = $q.defer();
                 if (AuthService.isAuthenticated()) {
                     if (AuthService.getToken()) {
