@@ -136,9 +136,9 @@ angular
                 templateUrl: 'common/static-website/legal-notices.html',
                 title: 'NAV.LEGAL_NOTICES'
             })
-            .when('/profile/information', {
-                templateUrl: 'profile/profile.html',
-                controller: 'ProfileCtrl',
+            .when('/profiles/me/edition', {
+                templateUrl: 'profile/profile-me.html',
+                controller: 'ProfileMeCtrl',
                 requiresAuthentication: true,
                 resolve: {
                     func: ['AuthService', function (AuthService) {
@@ -147,11 +147,16 @@ angular
                 },
                 title: 'NAV.PROFILE'
             })
-            .when('/profile/tasks', {
+            .when('/profiles/me/tasks', {
                 templateUrl: 'profile/tasks.html',
                 controller: 'TasksCtrl',
                 requiresAuthentication: true,
                 title: 'NAV.TASKS'
+            })
+            .when('/profiles/:key', {
+                templateUrl: 'profile/profile.html',
+                controller: 'ProfileCtrl',
+                requiresAuthentication: true
             })
             .when('/404', {
                 templateUrl: '404.html',

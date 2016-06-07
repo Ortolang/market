@@ -146,6 +146,7 @@ angular.module('ortolangMarketApp')
             ACTIVATED_FILTERS: 'Filtres actifs',
             RESET_FILTERS: 'Tout supprimer',
             NO_ITEM: 'Aucune ressource disponible',
+            NO_CONTRIBUTOR_ITEMS: 'Aucune ressources',
             NO_PRODUCER: 'Aucune institution productrice trouvées',
             PUBLISHED_ON: 'Publié le',
             PID: 'Identifiant pérenne',

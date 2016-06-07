@@ -13,14 +13,16 @@ angular.module('ortolangMarketApp')
         var modalScope, modal;
 
         this.getMultilingualValue = function (multilingualProperty, language) {
-            var i;
-            language = language || Settings.language;
-            for (i = 0; i < multilingualProperty.length; i++) {
-                if (multilingualProperty[i].lang === language) {
-                    return multilingualProperty[i].value;
+            if (multilingualProperty) {
+                var i;
+                language = language || Settings.language;
+                for (i = 0; i < multilingualProperty.length; i++) {
+                    if (multilingualProperty[i].lang === language) {
+                        return multilingualProperty[i].value;
+                    }
                 }
+                return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
             }
-            return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
         };
 
         this.extractKeyFromReferentialId = function (key) {
@@ -56,7 +58,7 @@ angular.module('ortolangMarketApp')
             var register = {};
             var results = [];
             for (var i = list.length - 1; i >= 0; i--) {
-                
+
                 if (list[i].wskey) {
                     var wskey = list[i].wskey;
                     if (angular.isUndefined(register[wskey])) {

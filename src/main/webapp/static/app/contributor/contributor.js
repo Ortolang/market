@@ -8,13 +8,15 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', 'ReferentialEntityResource', 'SearchResource', 'SearchProvider', 'Helper', function ($rootScope, $scope, $routeParams, ReferentialEntityResource, SearchResource, SearchProvider, Helper) {
+    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', 'ReferentialEntityResource', 'SearchResource', 'SearchProvider', 'Helper', function ($rootScope, $scope, $routeParams, $filter, ReferentialEntityResource, SearchResource, SearchProvider, Helper) {
 
         function loadItem(id) {
             SearchResource.getEntity({id: id}, function (entity) {
                 $scope.contributor = entity['meta_ortolang-referential-json'];
                 if ($scope.contributor.username) {
                     $scope.presentation = $scope.contributor.username.meta_profile.infos.presentation;
+                    $scope.emailHash = $scope.contributor.username.meta_profile.emailhash;
+                    $scope.idHal = $scope.contributor.username.meta_profile.infos.idhal;
                 }
                 if ($scope.contributor.organization) {
                     $scope.contributor.organizationEntity = $scope.contributor.organization['meta_ortolang-referential-json'];

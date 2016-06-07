@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('User', ['AuthService', function (AuthService) {
+    .service('User', ['$q', '$filter', 'AuthService', 'GroupResource', function ($q, $filter, AuthService, GroupResource) {
 
         this.profileDatas = {};
 
@@ -42,8 +42,30 @@ angular.module('ortolangMarketApp')
             this.profileDatas = profile.profileDatas;
             this.isLocked = profile.isLocked;
             this.friends = profile.friends;
+            this.friendList = undefined;
             this.isModerator = this.groups.indexOf('moderators') >= 0;
             return this;
+        };
+
+        this.fetchFriendList = function (refresh) {
+            if (!refresh && this.friendList) {
+                return;
+            }
+            var deferred = $q.defer(),
+                User = this;
+            this.sessionInitialized().then(function () {
+                GroupResource.get({key: User.friends}, function (data) {
+                    User.friendList = data.members;
+                    deferred.resolve(User.friendList);
+                });
+            });
+            return deferred.promise;
+        };
+
+        this.isFriend = function (key) {
+            if (this.friendList) {
+                return $filter('filter')(this.friendList, {key: key}, true).length === 1;
+            }
         };
 
         this.sessionInitialized = AuthService.sessionInitialized;

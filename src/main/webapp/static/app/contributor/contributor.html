@@ -1,12 +1,12 @@
 <div class="view-wrapper-flex">
     <div class="container-main container-main-no-toolbar">
 
-        <section ng-controller="ContributorCtrl" class="market-item">
+        <section ng-controller="ContributorCtrl" class="market-item contributor-wrapper">
             <header>
                 <div class="media">
                     <div class="media-left">
-                        <div class="item-logo">
-                            <span avatar data-email-hash="contributor.emailhash" data-size="120" data-img-classes="user-avatar img-responsive"></span>
+                        <div class="item-logo contributor-logo">
+                            <span avatar data-email-hash="emailHash || contributor.emailhash" data-size="120" data-img-classes="user-avatar img-circle img-responsive"></span>
                         </div>
                     </div>
                     <div class="media-body">
@@ -24,24 +24,24 @@
             </header>
 
             <div class="market-item-presentation-metadata">
-                <section ng-if="presentation" name="about-me">
-                    <h4>{{'CONTRIBUTOR.ABOUT_ME' | translate}}</h4>
+                <section ng-if="presentation" class="about-me">
+                    <h4 translate="CONTRIBUTOR.ABOUT_ME"></h4>
                     <article data-content="presentation" data-target-blank>
                         <div ng-bind-html="presentation"></div>
                     </article>
                 </section>
 
-                <section name="contributions">
-                    <h4>{{'CONTRIBUTOR.RESOURCES' | translate}}</h4>
+                <section class="contributions">
+                    <h4 translate="CONTRIBUTOR.RESOURCES"></h4>
                     <article>
-                        <div items data-search="search" data-params="params"></div>
+                        <div items data-search="search" data-params="params" data-empty-label="MARKET.NO_CONTRIBUTOR_ITEMS"></div>
                     </article>
                 </section>
 
-                <section id="publications" ng-if="contributor.firstname">
-                    <h4>{{'CONTRIBUTOR.PUBLICATIONS' | translate}}</h4>
+                <section class="publications" ng-if="idHal">
+                    <h4 translate="CONTRIBUTOR.PUBLICATIONS"></h4>
                     <div class="section-body-wrapper">
-                        <div publications-hal given-name="contributor.firstname" family-name="contributor.lastname"></div>
+                        <div publications-hal data-id-hal="idHal"></div>
                     </div>
                 </section>
             </div>

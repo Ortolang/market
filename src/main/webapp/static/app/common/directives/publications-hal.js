@@ -8,101 +8,68 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('publicationsHal', function () {
+    .directive('publicationsHal', ['$http', function ($http) {
         return {
             restrict: 'A',
             scope: {
-                givenName: '=',
-                familyName: '='
+                idHal: '=',
+                profileEdition: '@?'
             },
             templateUrl: 'common/directives/publications-hal-template.html',
             link: {
                 post: function (scope, element, attrs) {
 
-                function createCORSRequest(method, url) {
-                    var xhr = new XMLHttpRequest();
-                    if ('withCredentials' in xhr) {
-                        xhr.open(method, url, true);
-                    } else if (XDomainRequest !== undefined) {
-                        xhr = new XDomainRequest();
-                        xhr.open(method, url);
-                    } else {
-                        xhr = null;
+                    function getPublications() {
+                        var url = 'https://api.archives-ouvertes.fr/search/?q=' + scope.idType + ':' + scope.idHal + '&wt=json&fl=docType_s,citationFull_s,halId_s,producedDate_tdate&sort=producedDate_tdate desc';
+                        $http.get(url).then(function (response) {
+                            if (response.data && response.data.response) {
+                                scope.publicationNumber = response.data.response.numFound;
+                                scope.publications = response.data.response.docs;
+                            }
+                        });
                     }
-                    return xhr;
-                }
 
-                function csvToArray(strData, strDelimiter) {
-                    strDelimiter = (strDelimiter || ',');
-                    var objPattern = new RegExp(
-                        ('(\\' + strDelimiter + '|\\r?\\n|\\r|^)' + // Delimiters
-                        '(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|' + // Quoted fields.
-                        '([^\"\\' + strDelimiter + '\\r\\n]*))'), // Standard fields.
-                        'gi'
-                    );
-                    var arrData = [[]],
-                        arrMatches = null;
-                    arrMatches = objPattern.exec(strData);
-                    while (arrMatches) {
-                        var strMatchedDelimiter = arrMatches[1];
-                        if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
-                            arrData.push([]);
+                    scope.$watch('idHal', function (newValue) {
+                        if (newValue) {
+                            if (isNaN(parseInt(scope.idHal, 10))) {
+                                scope.idType = 'authIdHal_s';
+                            } else {
+                                scope.idType = 'authIdHal_i';
+                            }
+                            scope.morePublicationsUrl = 'https://hal.archives-ouvertes.fr/search/index/q/*/' + scope.idType + '/' + scope.idHal;
+                            getPublications();
+                        } else if (newValue === '') {
+                            scope.publicationNumber = 0;
+                            scope.publications = [];
                         }
-                        var strMatchedValue;
-                        if (arrMatches[2]) {
-                            strMatchedValue = arrMatches[ 2 ].replace(new RegExp( '\"\"', 'g' ),'\"');
-                        } else {
-                            strMatchedValue = arrMatches[ 3 ];
-                        }
-                        arrData[ arrData.length - 1 ].push( strMatchedValue );
-                        arrMatches = objPattern.exec( strData );
-                    }
-                    return (arrData);
+                    });
+
+                    scope.doctype = {
+                        'ART': {'value': 'Article dans des revues', 'color': 'danger'},
+                        'COMM': {'value': 'Communication dans un congrès', 'color': 'danger'},
+                        'POSTER': {'value': 'Poster', 'color': 'danger'},
+                        'PRESCONF': {'value': 'Document associé à des manifestations scientifiques', 'color': 'danger'},
+                        'OUV': {'value': 'Ouvrage (y compris édition critique et traduction)', 'color': 'danger'},
+                        'COUV': {'value': 'Chapitre d\'ouvrage', 'color': 'danger'},
+                        'DOUV': {'value': 'Direction d\'ouvrage, Proceedings', 'color': 'danger'},
+                        'PATENT': {'value': 'Brevet', 'color': 'danger'},
+                        'OTHER': {'value': 'Autre publication', 'color': 'warning'},
+                        'UNDEFINED': {'value': 'Pré-publication, Document de travail', 'color': 'warning'},
+                        'REPORT': {'value': 'Rapport', 'color': 'warning'},
+                        'THESE': {'value': 'Thèse', 'color': 'info'},
+                        'HDR': {'value': 'HDR', 'color': 'info'},
+                        'MEM': {'value': 'Mémoire d\'étudiant', 'color': 'info'},
+                        'LECTURE': {'value': 'Cours', 'color': 'info'},
+                        'IMG': {'value': 'Image', 'color': 'success'},
+                        'VIDEO': {'value': 'Vidéo', 'color': 'success'},
+                        'SON': {'value': 'Son', 'color': 'success'},
+                        'MAP': {'value': 'Carte', 'color': 'success'},
+                        'MINUTES': {'value': 'Compte rendu de table ronde', 'color': 'warning'},
+                        'NOTE': {'value': 'Note de lecture', 'color': 'warning'},
+                        'OTHERREPORT': {'value': 'Autre rapport, séminaire, workshop', 'color': 'warning'}
+                    };
+
                 }
-
-                scope.publications = undefined;
-                scope.doctype = {
-                    'ART': {'value': 'Article dans des revues', 'color': 'danger'},
-                    'COMM': {'value': 'Communication dans un congrès', 'color': 'danger'},
-                    'POSTER': {'value': 'Poster', 'color': 'danger'},
-                    'PRESCONF': {'value': 'Document associé à des manifestations scientifiques', 'color': 'danger'},
-                    'OUV': {'value': 'Ouvrage (y compris édition critique et traduction)', 'color': 'danger'},
-                    'COUV': {'value': 'Chapitre d\'ouvrage', 'color': 'danger'},
-                    'DOUV': {'value': 'Direction d\'ouvrage, Proceedings', 'color': 'danger'},
-                    'PATENT': {'value': 'Brevet', 'color': 'danger'},
-                    'OTHER': {'value': 'Autre publication', 'color': 'warning'},
-                    'UNDEFINED': {'value': 'Pré-publication, Document de travail', 'color': 'warning'},
-                    'REPORT': {'value': 'Rapport', 'color': 'warning'},
-                    'THESE': {'value': 'Thèse', 'color': 'info'},
-                    'HDR': {'value': 'HDR', 'color': 'info'},
-                    'MEM': {'value': 'Mémoire d\'étudiant', 'color': 'info'},
-                    'LECTURE': {'value': 'Cours', 'color': 'info'},
-                    'IMG': {'value': 'Image', 'color': 'success'},
-                    'VIDEO': {'value': 'Vidéo', 'color': 'success'},
-                    'SON': {'value': 'Son', 'color': 'success'},
-                    'MAP': {'value': 'Carte', 'color': 'success'},
-                    'MINUTES': {'value': 'Compte rendu de table ronde', 'color': 'warning'},
-                    'NOTE': {'value': 'Note de lecture', 'color': 'warning'},
-                    'OTHERREPORT': {'value': 'Autre rapport, séminaire, workshop', 'color': 'warning'}
-                };
-
-                function getPublications () {
-                    var name = scope.givenName + '+' + scope.familyName,
-                        url = 'https://api.archives-ouvertes.fr/search/?q=authFullName_t:' + name.toLowerCase() + '&wt=csv&sort=producedDate_tdate desc&indent=true',
-                        request = createCORSRequest('get', url);
-                    scope.publications = [];
-                    if (request) {
-                        request.onload = function () {
-                            scope.publications = csvToArray(request.responseText.trim(), ',');
-                            scope.publications.shift();
-                            scope.$apply();
-
-                        };
-                        request.send();
-                    }
-                }
-                getPublications();
             }
-        }
-    };
-    });
+        };
+    }]);

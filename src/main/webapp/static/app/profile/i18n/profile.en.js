@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
             EMPTY: 'empty',
             ADD_FRIEND: 'Add a co-worker',
             REMOVE_FRIEND: 'Remove from co-workers',
+            SEE_PUBLIC_PROFILE: 'See my public profile',
             NAV: {
                 PERSONAL_INFOS: 'Personal informations',
                 SETTINGS: 'Settings',

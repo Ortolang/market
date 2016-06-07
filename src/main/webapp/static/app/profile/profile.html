@@ -1,30 +1,43 @@
-<div class="view-wrapper-flex">
-    <div class="toolbar-wrapper" ng-include="'profile/templates/profile-tabs-template.html'" ng-init="activeProfileTab = 'information'"></div>
-    <div ng-cloak class="container-main">
-        <div class="container-main-inner">
-            <div class="row profile" bs-active-pane="activeTab" data-template="profile/templates/profile-information-tabs-template.html" bs-tabs>
-                <div data-title="<span class='fa fa-user fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.PERSONAL_INFOS' | translate}}" bs-pane>
-                    <div class="row" ng-include="'profile/personal-infos.html'"></div>
+<div class="view-wrapper">
+    <div class="view-wrapper-flex">
+        <div class="container-main container-main-no-toolbar profile-container">
+            <section>
+                <header>
+                    <div class="text-center">
+                        <div class="avatar-wrapper">
+                            <img ng-if="profile" width="100px" ng-src="https://www.gravatar.com/avatar/{{profile.emailHash ? profile.emailHash + '?d=retro' : '00000000000000000000000000000000?d=mm'}}&s=100" ng-class="::imgClasses"/>
+                        </div>
+                        <h3>{{::fullName()}}</h3>
+                        <p>{{::infos.job}} {{infos.job && infos.organisation ? ' | ' + infos.organisation : ''}}</p>
+                        <div>
+                            <button ng-if="isFriend && !isFriend()" ng-click="addToFriends()" class="btn btn-sm btn-default"><span ng-class="::icons.plus"></span> {{'PROFILE.ADD_TO_FRIENDS' | translate}}</button>
+                            <button ng-if="isFriend()" disabled class="btn btn-sm btn-default"><span ng-class="::icons.check"></span> {{'PROFILE.ADDED_TO_FRIENDS' | translate}}</button>
+                        </div>
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-md-6">
+                        <!--<div class="card-well">-->
+                        <h4>Basic info</h4>
+                        <dl>
+                            <p ng-bind="infos.presentation" class="profile-presentation"></p>
+                            <dt>Email</dt>
+                            <dd>{{::profile.email.replace('@', ' [ AT ] ')}}</dd>
+                            <dt>Site internet</dt>
+                            <dd><a ng-href="{{::infos.website}}" target="_blank">{{::infos.website || '-'}}</a></dd>
+                        </dl>
+                        <!--</div>-->
+                    </div>
+                    <!--<ul class="list-unstyled">-->
+                    <!--<li ng-show="::infos.website">-->
+                    <!--<span class="description">Site internet</span>-->
+                    <!--<span ng-class="::icons.website"></span> <a ng-href="{{::infos.website}}" target="_blank">{{::infos.website}}</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
                 </div>
-                <div data-title="<span class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.ABOUT_ME' | translate}}" bs-pane>
-                    <div ng-include="'profile/about-me.html'"></div>
-                </div>
-                <div data-title="<span class='fa fa-users fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.FRIENDS' | translate}}" bs-pane>
-                    <div ng-include="'profile/friends.html'"></div>
-                </div>
-                <div data-title="<span class='fa fa-puzzle-piece fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.IDENTIFIERS' | translate}}" bs-pane>
-                    <div ng-include="'profile/identifiers.html'"></div>
-                </div>
-                <div data-title="<span class='fa fa-gears fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.SETTINGS' | translate}}" bs-pane>
-                    <div ng-include="'profile/settings.html'"></div>
-                </div>
-                <div data-title="<span class='fa fa-book fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.PUBLICATIONS' | translate}}" bs-pane>
-                    <div ng-include="'profile/publications.html'"></div>
-                </div>
-                <div data-title="<span class='fa fa-cube fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.CONTRIBUTIONS' | translate}}" bs-pane>
-                    <div ng-include="'profile/productions.html'"></div>
-                </div>
-            </div>
+            </section>
+            <!--<pre>{{profile | json}}</pre>-->
+            <!--<pre>{{profileInfos | json}}</pre>-->
         </div>
     </div>
 </div>

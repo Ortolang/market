@@ -145,6 +145,7 @@ angular.module('ortolangMarketApp')
             ACTIVATED_FILTERS: 'Activated filters',
             RESET_FILTERS: 'Clear filters',
             NO_ITEM: 'No resource available',
+            NO_CONTRIBUTOR_ITEMS: 'No resource',
             NO_PRODUCER: 'No producer available',
             PUBLISHED_ON: 'Published on',
             ITEM_TYPE: {

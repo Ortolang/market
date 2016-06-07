@@ -14,19 +14,12 @@ angular.module('ortolangMarketApp')
             limit: 25
         };
 
-        if (!$scope.addFriend) {
-            User.sessionInitialized().then(function () {
-                GroupResource.get({key: User.friends}, function (data) {
-                    $scope.friends = [];
-                    angular.forEach(data.members, function (friend) {
-                        if ($scope.members && $filter('filter')($scope.members, {key: friend.key}, true).length === 1) {
-                            friend.alreadyMember = true;
-                        }
-                        $scope.friends.push(friend);
-                    });
-                });
-            });
-        }
+        User.fetchFriendList();
+        $scope.User = User;
+
+        $scope.isMember = function (key) {
+            return $scope.members && $filter('filter')($scope.members, {key: key}, true).length === 1;
+        };
 
         $scope.search = function () {
             if ($scope.searchQuery && $scope.searchQuery.length > 2) {
@@ -36,9 +29,6 @@ angular.module('ortolangMarketApp')
                     angular.forEach(profiles, function (profile) {
                         if (profile.key !== User.key) {
                             ProfileResource.getCard({key: profile.key}, function (card) {
-                                if ($scope.members && $filter('filter')($scope.members, {key: profile.key}, true).length === 1) {
-                                    card.alreadyMember = true;
-                                }
                                 $scope.profiles.push(card);
                             });
                         }

@@ -1,7 +1,7 @@
-<section class="items" ng-if="search.results.length>0">
-    <h3 ng-if="::title">{{title | translate}} <small ng-if="hideSeeMoreButton" data-translate="{{subtitle}}" data-translate-values="{value: count}"></small> <small ng-if="!hideSeeMoreButton"><a ng-if="!hideSeeMoreButton" href="#" ng-click="seeMore()" data-translate="{{subtitle}}" data-translate-values="{value: count}"></a></small></h3>
-   
-    <div ng-hide="search.isProcessing()" ng-if="search.results">
+<section>
+    <h3 ng-if="::title">{{title | translate}} <small ng-if="search.results.length > 0 && hideSeeMoreButton" data-translate="{{subtitle}}" data-translate-values="{value: count}"></small> <small ng-if="!hideSeeMoreButton"><a ng-if="!hideSeeMoreButton && search.results.length > 0" href="#" ng-click="seeMore()" data-translate="{{subtitle}}" data-translate-values="{value: count}"></a></small></h3>
+
+    <div ng-hide="search.isProcessing()" ng-if="search.results.length > 0">
         <div ng-if="search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper" ng-class="inline?'flex-row-inline':''">
             <item class="flex-column" ng-repeat="item in search.results | orderBy:search.activeOrderProp.sort:search.orderReverse track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
         </div>
@@ -9,8 +9,9 @@
         <div ng-if="search.activeViewMode.id === 'line'" class="full-item-wrapper">
             <item ng-repeat="item in search.results | orderBy:search.activeOrderProp.sort:search.orderReverse track by item.key" data-entry="item" data-template="market/templates/full-item.html"></item>
         </div>
-        
+
     </div>
+
+    <p ng-show="search.isProcessing()"><span class="fa fa-refresh fa-spin"></span> {{'PENDING_DATA' | translate}}</p>
+    <p ng-if="search.results.length===0"><em>{{(emptyLabel || MARKET.NO_ITEM) | translate}}</em></p>
 </section>
-<p ng-show="search.isProcessing()"><span class="fa fa-refresh fa-spin"></span> Chargement...</p>
-<p ng-if="search.results.length===0" class="text-center"><em translate="MARKET.NO_ITEM"></em></p>

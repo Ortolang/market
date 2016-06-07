@@ -12,7 +12,10 @@ angular.module('ortolangMarketApp')
         PROFILE: {
             EMPTY: 'non renseigné',
             ADD_FRIEND: 'Ajouter un collaborateur',
+            ADD_TO_FRIENDS: 'Ajouter à mes collaborateurs',
+            ADDED_TO_FRIENDS: 'Ajouté à mes collaborateurs',
             REMOVE_FRIEND: 'Retirer des collaborateurs',
+            SEE_PUBLIC_PROFILE: 'Voir mon profil public',
             NAV: {
                 PERSONAL_INFOS: 'Informations personnelles',
                 SETTINGS: 'Préférences',
@@ -66,6 +69,11 @@ angular.module('ortolangMarketApp')
                 MYIDREF: 'Identifiant personnel pérenne : <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
                 LINKEDIN: 'Identifiant personnel pérenne : <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>',
                 VIADEO: 'Identifiant personnel pérenne : <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>'
+            },
+            HAL: {
+                RESULT_NUMBER: '<strong>{{number}} résultat{{number > 1 ? "s" : ""}}</strong> trouvé{{number > 1 ? "s" : ""}} sur',
+                MORE_RESULT: 'Voir les {{number}} résultats',
+                NO_ID: 'Pour afficher la liste de vos publications veuillez renseigner votre IdHal dans la rubrique "Identifiants externes".'
             },
             EDIT_AVATAR_MODAL: {
                 TITLE: 'Comment changer son avatar ?',
