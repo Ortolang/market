@@ -123,7 +123,7 @@ angular.module('ortolangMarketApp')
             },
             SORT: {
                 TITLE: 'Title',
-                RANK: 'Rank',
+                RANK: 'Availability',
                 PUBLICATION_DATE: 'Publication date'
             },
             SEARCH: {

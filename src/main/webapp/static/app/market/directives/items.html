@@ -9,8 +9,8 @@
         <div ng-if="search.activeViewMode.id === 'line'" class="full-item-wrapper">
             <item ng-repeat="item in search.results | orderBy:search.activeOrderProp.sort:search.orderReverse track by item.key" data-entry="item" data-template="market/templates/full-item.html"></item>
         </div>
-        <p ng-if="!search.hasResults()" class="text-center"><em translate="MARKET.NO_ITEM"></em></p>
+        
     </div>
-    <p ng-show="search.isProcessing()"><span class="fa fa-refresh fa-spin"></span> Chargement...</p>
-
 </section>
+<p ng-show="search.isProcessing()"><span class="fa fa-refresh fa-spin"></span> Chargement...</p>
+<p ng-if="search.results.length===0" class="text-center"><em translate="MARKET.NO_ITEM"></em></p>
