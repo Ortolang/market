@@ -340,9 +340,9 @@
                 <dl class="dl-horizontal" ng-if="selectedElements[0]['X-Type'] === 'pdf'">
                     <dt translate="BROWSER.COMMON.TITLE"></dt>
                     <dd>{{selectedElements[0].x['title']}}</dd>
-                    <dt translate="PDF_VERSION"></dt>
+                    <dt translate="BROWSER.PDF.VERSION"></dt>
                     <dd>{{selectedElements[0].x['pdf:PDFVersion']}}</dd>
-                    <dt translate="NPAGES"></dt>
+                    <dt translate="BROWSER.PDF.PAGES"></dt>
                     <dd>{{selectedElements[0].x['xmpTPg:NPages']}}</dd>
                     <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="showAllMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
                 </dl>
