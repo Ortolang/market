@@ -71,7 +71,6 @@ angular.module('ortolangMarketApp')
             });
 
             $rootScope.$on('$translateChangeSuccess', function ($event, language) {
-                console.log('Loading static content');
                 populateHomePage(language.language);
                 populateInformationPage(language.language);
             });
