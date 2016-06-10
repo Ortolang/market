@@ -6,13 +6,14 @@ describe('Service: Content', function () {
     beforeEach(module('ortolangMarketApp'));
 
     // instantiate service
-    var Content, httpBackend, url,
+    var Content, httpBackend, url, AuthService,
         forceDownloadQueryParam = '\\?fd=true',
         thumbSizeQueryParam = '?size=',
         scopeQueryParam = '&scope=1';
 
-    beforeEach(inject(function (_Content_, _$httpBackend_, _url_) {
+    beforeEach(inject(function (_Content_, _$httpBackend_, _url_, _AuthService_) {
         Content = _Content_;
+        AuthService = _AuthService_;
         httpBackend = _$httpBackend_;
         url = _url_;
     }));
