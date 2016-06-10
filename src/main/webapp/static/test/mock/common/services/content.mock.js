@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketAppMock.
  */
 angular.module('ortolangMarketAppMock')
-    .factory('Content', ['$q', 'sample', function ($q, sample) {
+    .factory('Content', ['$q', 'sample', 'AuthService', function ($q, sample, AuthService) {
 
         function getDownloadUrlWithKey(key, noSSL) {
             return 'url';
@@ -18,10 +18,10 @@ angular.module('ortolangMarketAppMock')
             return 'url';
         }
 
-        function downloadWithKey (key, noSSL, config) {
+        function downloadWithKey(key, noSSL, config) {
             var defer = $q.defer(), data = sample().sampleCode, success;
 
-            if(key === sample().metadataObjectKey) {
+            if (key === sample().metadataObjectKey) {
                 defer.resolve(data);
                 success = true;
             } else {
