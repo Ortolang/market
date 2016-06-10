@@ -8,11 +8,11 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('cookiesConsent', ['$rootScope', '$cookies', '$alert', function ($rootScope, $cookies, $alert) {
+    .directive('cookiesConsent', ['$rootScope', '$cookies', '$alert', 'AuthService', function ($rootScope, $cookies, $alert, AuthService) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
-                function cookieAlert() {
+            link: function () {
+                function showCookieAlert() {
                     var cookieAlert = $alert({
                         templateUrl: 'cookies-consent.html',
                         placement: 'bottom',
@@ -33,14 +33,14 @@ angular.module('ortolangMarketApp')
                         cookieAlert.hide();
                     };
                 }
-                if (!/Prerender/.test(navigator.userAgent)) {
+                if (!/Prerender/.test(navigator.userAgent) && !AuthService.isAuthenticated()) {
                     if (localStorage !== undefined) {
                         if (!localStorage.getItem('ortolang.cookies.consent')) {
-                            cookieAlert();
+                            showCookieAlert();
                         }
                     } else {
                         if (!$cookies.get('ortolang.cookies.consent')) {
-                            cookieAlert();
+                            showCookieAlert();
                         }
                     }
                 }
