@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             findCollections: {
                 url: url.api + '/search/collections',
                 method: 'GET',
+                isArray: true,
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
                     if (angular.isArray(data)) {
