@@ -95,10 +95,10 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
             var Search = this;
             return SearchResource.findCollections(param, function (data) {
                 if (noProcessing) {
-                    Search.results = data.entries;
+                    Search.results = data;
                     Search.countResults = data.size;
                 } else {
-                    tmpResults = data.entries;
+                    tmpResults = data;
                     Search.countResults = data.size;
                 }
             });

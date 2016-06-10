@@ -61,7 +61,7 @@ angular.module('ortolangMarketApp')
                     param.fields = 'workspace.wsalias';
                     param.group = 'ortolang-workspace-json.wsalias';
                     SearchResource.findCollections(param, function (data) {
-                        scope.count = data.entries.length;
+                        scope.count = data.length;
                     });
                 }
 
