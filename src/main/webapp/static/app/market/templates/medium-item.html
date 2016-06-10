@@ -9,6 +9,6 @@
             </div>
         </div>
         <h3 class="title" ng-bind="::title"></h3>
-        <div ng-if="::publicationDate" class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{::publicationDate | date:'mediumDate'}}</span></div>
+        <div ng-if="::publicationDate" class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{::publicationDate | date:'mediumDate'}}</span><span ng-if="::esrAccessibility" class="pull-right" ng-class="::icons.acl.esr" title="{{'MARKET.ESR_ACCESSIBLE' | translate}}"></span></div>
     </a>
 </div>

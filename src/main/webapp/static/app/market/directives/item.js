@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', ['Content', 'Helper',  function (Content, Helper) {
+    .directive('item', ['Content', 'Helper', 'icons',  function (Content, Helper, icons) {
         return {
             restrict: 'EA',
             scope: {
@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
             },
             link: {
                 pre : function (scope) {
-
+                    scope.icons = icons;
                     var type;
                     if (scope.entry.type === 'Corpus') {
                         type = 'corpora';
@@ -53,6 +53,8 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
+                    scope.rank = scope.entry.rank;
+                    scope.esrAccessibility = scope.entry.esrAccessibility;
                     scope.publicationDate = scope.entry.publicationDate;
                     // scope.producers = scope.entry.producers;
                 }

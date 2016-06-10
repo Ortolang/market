@@ -18,7 +18,8 @@ angular.module('ortolangMarketApp')
                 inline: '=',
                 subtitleValue: '=',
                 hideSeeMoreButton: '=',
-                emptyLabel: '@?'
+                emptyLabel: '@?',
+                noEmptyLabel: '='
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
@@ -69,14 +70,11 @@ angular.module('ortolangMarketApp')
                     var param = angular.fromJson(scope.newParams);
                     scope.search.search(param).$promise.then(function (results) {
                         countWorkspace(param);
-                        scope.search.pack();
+                        // scope.search.pack();
 
                         angular.forEach(results.entries, function (result) {
                             var title = result.title;
                             result.effectiveTitle = Helper.getMultilingualValue(title);
-
-                            var publicationDate = result.publicationDate;
-                            result.publicationDate = publicationDate;
                         });
 
                         scope.search.endProcessing();

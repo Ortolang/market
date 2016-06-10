@@ -80,6 +80,8 @@ angular.module('ortolangMarketApp')
             SEE_WEBSITE: 'Accéder au site internet',
             ITEM_NOT_FOUND: 'Aucune ressource n\'a été trouvée à cette adresse',
             METADATA_FORMAT_NOT_FOUND: 'Format des métadonnées illisible.',
+            NO_RESULT: 'Aucun résultat ne correspond à votre recherche',
+            ESR_ACCESSIBLE: 'Accessible aux membres de l\'ESR',
             FACET: {
                 CORPORA_TYPE: 'Type de corpus',
                 ALL_CORPORA: 'Tous les corpus',
@@ -120,7 +122,9 @@ angular.module('ortolangMarketApp')
                 LEXICON_LANGUAGE_TYPE: 'Type de langue',
                 ALL_LEXICON_LANGUAGE_TYPE: 'Tout type de langue',
                 PRODUCERS: 'Laboratoire producteur',
-                ALL_PRODUCERS: 'Tout laboratoire producteur'
+                ALL_PRODUCERS: 'Tout laboratoire producteur',
+                RANKS: 'Disponibilités',
+                ALL_RANKS: 'Toutes les disponibilités'
             },
             SORT: {
                 TITLE: 'Titre',

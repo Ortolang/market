@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var annotationLevelsFilter = FacetedFilter.make({
-                id: 'annotationLevels.key',
+                id: 'ortolang-item-json.annotationLevels.key',
                 alias: 'annotationLevels',
                 type: 'array',
                 label: 'MARKET.FACET.ANNOTATION_LEVEL',
@@ -55,7 +55,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(annotationLevelsFilter);
 
             var corporaFormatsFilter = FacetedFilter.make({
-                id: 'corporaFormats.key',
+                id: 'ortolang-item-json.corporaFormats.key',
                 alias: 'corporaFormats',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_FORMAT',
@@ -64,7 +64,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaFormatsFilter);
 
             var corporaDataTypesFilter = FacetedFilter.make({
-                id: 'corporaDataTypes.key',
+                id: 'ortolang-item-json.corporaDataTypes.key',
                 alias: 'corporaDataTypes',
                 type: 'array',
                 label: 'MARKET.FACET.CORPORA_DATATYPES',
@@ -73,7 +73,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaDataTypesFilter);
 
             var corporaLanguageTypeFilter = FacetedFilter.make({
-                id: 'corporaLanguageType.key',
+                id: 'ortolang-item-json.corporaLanguageType.key',
                 alias: 'corporaLanguageType',
                 label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
@@ -81,7 +81,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaLanguageTypeFilter);
 
             var corporaFileEncodingsFilter = FacetedFilter.make({
-                id: 'corporaFileEncodings.key',
+                id: 'ortolang-item-json.corporaFileEncodings.key',
                 alias: 'corporaFileEncodings',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_ENCODING',
@@ -90,7 +90,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaFileEncodingsFilter);
 
             var corporaTypeFilter = FacetedFilter.make({
-                id: 'corporaType.key',
+                id: 'ortolang-item-json.corporaType.key',
                 alias: 'corporaType',
                 label: 'MARKET.FACET.CORPORA_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA',
@@ -100,7 +100,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaTypeFilter);
 
             var corporaLanguagesFilter = FacetedFilter.make({
-                id: 'corporaLanguages.key',
+                id: 'ortolang-item-json.corporaLanguages.key',
                 alias: 'corporaLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.CORPORA_LANG',
@@ -111,7 +111,7 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaLanguagesFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
-                id: 'statusOfUse.key',
+                id: 'ortolang-item-json.statusOfUse.key',
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',
                 resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
@@ -119,6 +119,39 @@ angular.module('ortolangMarketApp')
                 view: 'dropdown-faceted-filter'
             });
             $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
+
+            $scope.rankFilter = FacetedFilter.make({
+                id: 'system-rating-json.grade',
+                alias: 'rank',
+                label: 'MARKET.FACET.RANKS',
+                resetLabel: 'MARKET.FACET.ALL_RANKS',
+                options: [
+                    OptionFacetedFilter.make({
+                        label: 'Ressources complètes, accessibles à l’ensemble de l’ESR',
+                        value: 'A',
+                        length: 1
+                    }),
+                    OptionFacetedFilter.make({
+                        label: 'Ressources complètes, mais non accessibles à tous les membres de l’ESR',
+                        value: 'B',
+                        length: 1
+                    }),
+                    OptionFacetedFilter.make({
+                        label: 'Ressources non encore finalisées',
+                        value: 'C',
+                        length: 1
+                    }),
+                    OptionFacetedFilter.make({
+                        label: 'Informations sur des ressources externes',
+                        value: 'D',
+                        length: 1
+                    })
+                ],
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
+            });
+            // $scope.rankFilter.putSelectedOption($scope.rankFilter.getOption('A'));
+            $scope.filtersManager.addAvailableFilter($scope.rankFilter);
         }
 
         function init() {

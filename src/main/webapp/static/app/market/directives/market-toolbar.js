@@ -60,7 +60,7 @@ angular.module('ortolangMarketApp')
 
                     scope.applyFilters = function () {
                         scope.hideLowFacets();
-                        $location.search(urlParam(scope.content, scope.search.activeViewMode, scope.search.activeOrderProp, scope.search.orderReverse));
+                        $location.search(urlParam(scope.content, scope.search.activeViewMode, scope.search.activeOrderProp, (scope.search.orderReverse ? 'desc' : 'asc')));
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
@@ -119,7 +119,7 @@ angular.module('ortolangMarketApp')
                             delete $routeParams.viewMode;
                         }
                         if ($routeParams.orderProp) {
-                            scope.search.setActiveOrderProp($routeParams.orderProp, ($routeParams.orderDir === 'desc' ? false : true));
+                            scope.search.setActiveOrderProp($routeParams.orderProp, ($routeParams.orderDir === 'asc' ? false : true));
                             // delete $routeParams.orderProp;
                             // delete $routeParams.orderDir;
                         }
@@ -133,9 +133,9 @@ angular.module('ortolangMarketApp')
                             params[scope.preSelectedFilter.getAlias()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
                         }
                         params.content = scope.content || undefined;
-                        params.fields = 'key,system-trustrank-json.rank:rank,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.description,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName';
+                        params.fields = 'key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.description,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName';
                         params.orderProp = $routeParams.orderProp;
-                        // params.orderDir = 'desc';
+                        params.orderDir = $routeParams.orderDir;
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
@@ -175,7 +175,6 @@ angular.module('ortolangMarketApp')
                      **/
                     function urlParam (content, viewMode, orderProp, orderDirection) {
                         var filters = {}, params = {};
-                        var url = '';
                         angular.forEach(scope.filtersManager.enabledFilters, function (filter) {
 
                             if(!filter.isLocked()) {

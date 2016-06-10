@@ -127,7 +127,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
         getSelectedLabel: function () {
             var label = '';
             angular.forEach(this.selectedOptions, function (opt) {
-                label += (label === '' ? '' : ',') + opt.label;
+                label += (label === '' ? '' : ', ') + opt.label;
             });
             return label === '' ? this.resetLabel : label;
         },

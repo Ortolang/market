@@ -79,6 +79,8 @@ angular.module('ortolangMarketApp')
             SEE_WEBSITE: 'Go to the website',
             ITEM_NOT_FOUND: 'Any resource has been found at this page',
             METADATA_FORMAT_NOT_FOUND: 'Metadata format unreadable.',
+            NO_RESULT: 'No result found',
+            ESR_ACCESSIBLE: 'Accessible to ESR members',
             FACET: {
                 CORPORA_TYPE: 'Type of corpora',
                 ALL_CORPORA: 'All corpus',
@@ -119,7 +121,9 @@ angular.module('ortolangMarketApp')
                 LEXICON_LANGUAGE_TYPE: 'Language type',
                 ALL_LEXICON_LANGUAGE_TYPE: 'All language types',
                 PRODUCERS: 'Producer',
-                ALL_PRODUCERS: 'All producers'
+                ALL_PRODUCERS: 'All producers',
+                RANKS: 'Availabilities',
+                ALL_RANKS: 'All Availabilities'
             },
             SORT: {
                 TITLE: 'Title',
