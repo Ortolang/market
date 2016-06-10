@@ -130,6 +130,10 @@ angular.module('ortolangMarketApp')
                 SPEAKER_NUMBER: 'Locuteurs',
                 SPEECH_TIME: 'Temps de parole'
             },
+            PDF: {
+                VERSION: 'Version PDF',
+                PAGES: 'Page(s)'
+            },
             COMMON: {
                 ENCODING: 'Encodage',
                 TITLE: 'Titre',
