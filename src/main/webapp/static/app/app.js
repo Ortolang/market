@@ -245,7 +245,8 @@ angular
         copy.formTpl = '<form class="" role="form"></form>';
         copy.controlsTpl = '<div class="editable-controls input-group" ng-class="{\'has-error\': $error, \'input-group-lg\': largeInput}"></div>';
         copy.buttonsTpl = '<span class="input-group-btn"></span>';
-        copy.submitTpl = '<button type="submit" class="btn btn-default"><span></span></button>';
+        copy.inputClass = 'editable-custom-inputs';
+        copy.errorTpl = '<div class="editable-error editable-custom-error help-block" ng-show="$error" translate="{{$error}}"></div>';
         editableThemes.bs3 = copy;
         editableOptions.theme = 'bs3';
     }])

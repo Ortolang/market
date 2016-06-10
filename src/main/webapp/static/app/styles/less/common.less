@@ -240,3 +240,18 @@ button.no-border {
 .small-caps {
   font-variant: small-caps;
 }
+
+.editable-custom-inputs {
+  .border-right-radius(0) !important;
+  + .input-group-btn {
+    > .btn {
+      .border-left-radius(0);
+      &:not(:last-of-type) {
+        .border-right-radius(0);
+      }
+    }
+  }
+}
+.editable-custom-error {
+  display: table-row;
+}

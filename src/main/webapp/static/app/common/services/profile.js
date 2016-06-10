@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
         function checkAddress(item, $data) {
             $data = sanitizeData($data);
             if ($data !== '' && item.value !== $data && !$data.formatted_address) {
-                return $translate.instant('PROFILE.INFOS.ADDRESS_ERROR');
+                return $translate.instant('PROFILE.FIELDS.ADDRESS_ERROR');
             }
         }
 
