@@ -26,6 +26,21 @@ angular.module('ortolangMarketApp')
                     return data;
                 }
             },
+            findWorkspaces: {
+                url: url.api + '/search/workspaces',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
             findProfiles: {
                 url: url.api + '/search/profiles',
                 method: 'GET',
@@ -47,6 +62,10 @@ angular.module('ortolangMarketApp')
             },
             findWorkspace: {
                 url: url.api + '/search/workspaces/:alias',
+                method: 'GET'
+            },
+            countWorkspaces: {
+                url: url.api + '/search/count/workspaces',
                 method: 'GET'
             },
             getEntity: {

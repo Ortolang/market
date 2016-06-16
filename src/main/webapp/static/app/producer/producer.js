@@ -26,9 +26,13 @@ angular.module('ortolangMarketApp')
             $scope.producer = undefined;
             loadItem($routeParams.producerId);
 
+            var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
+            var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
+            var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
+            var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
             $scope.search = SearchProvider.make();
-            $scope.search.setActiveOrderProp('publicationDate', true);
-            $scope.params = '{"producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '", "fields":"key,item.title,item.type,item.description,item.image,item.publicationDate,item.producers,workspace.wskey,workspace.wsalias,workspace.snapshotName"}';
+            $scope.search.setActiveOrderProp('rank', false);
+            $scope.params = '{"'+metaItemPrefix+'producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName"}';
         }
         init();
     }]);

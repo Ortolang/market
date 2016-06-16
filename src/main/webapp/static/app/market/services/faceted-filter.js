@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
     // Constructor
     function FacetedFilter(config) {
         this.id = undefined;
+        this.path = undefined;
         this.alias = undefined;
         this.label = undefined;
         this.type = 'string';
@@ -36,6 +37,10 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
 
         getId: function () {
             return this.id;
+        },
+
+        getPath: function () {
+            return this.path;
         },
 
         getAlias: function () {

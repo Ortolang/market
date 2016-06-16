@@ -20,7 +20,12 @@ angular.module('ortolangMarketApp')
                 initScopeVariables();
                 $scope.searchRecents = SearchProvider.make();
                 $scope.searchRecents.setActiveOrderProp('rank', false);
-                $scope.paramsRecents = '{"title":"", "system-rating-json.score":"4", "fields":"key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
+                // $scope.paramsRecents = '{"title":"", "system-rating-json.score":"4", "fields":"key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
+                var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
+                var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
+                var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
+                var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
+                $scope.paramsRecents = '{"'+metaItemPrefix+'title":"", "'+metaRatingPrefix+'score":"4", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
             }
             init();
 

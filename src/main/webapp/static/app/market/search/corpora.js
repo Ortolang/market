@@ -13,7 +13,8 @@ angular.module('ortolangMarketApp')
         function addAvailableFilters() {
 
             $scope.typeFilter = FacetedFilter.make({
-                id: 'type',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type',
                 alias: 'type',
                 label: 'MARKET.RESOURCE_TYPE',
                 resetLabel: 'MARKET.ALL_RESOURCE',
@@ -46,7 +47,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var annotationLevelsFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.annotationLevels.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.annotationLevels.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.annotationLevels',
                 alias: 'annotationLevels',
                 type: 'array',
                 label: 'MARKET.FACET.ANNOTATION_LEVEL',
@@ -55,7 +57,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(annotationLevelsFilter);
 
             var corporaFormatsFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.corporaFormats.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaFormats.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaFormats',
                 alias: 'corporaFormats',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_FORMAT',
@@ -64,7 +67,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaFormatsFilter);
 
             var corporaDataTypesFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.corporaDataTypes.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaDataTypes.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaDataTypes',
                 alias: 'corporaDataTypes',
                 type: 'array',
                 label: 'MARKET.FACET.CORPORA_DATATYPES',
@@ -73,7 +77,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaDataTypesFilter);
 
             var corporaLanguageTypeFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.corporaLanguageType.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaLanguageType.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaLanguageType',
                 alias: 'corporaLanguageType',
                 label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
@@ -81,7 +86,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaLanguageTypeFilter);
 
             var corporaFileEncodingsFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.corporaFileEncodings.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaFileEncodings.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaFileEncodings',
                 alias: 'corporaFileEncodings',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_ENCODING',
@@ -90,7 +96,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaFileEncodingsFilter);
 
             var corporaTypeFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.corporaType.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaType.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaType',
                 alias: 'corporaType',
                 label: 'MARKET.FACET.CORPORA_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA',
@@ -100,7 +107,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaTypeFilter);
 
             var corporaLanguagesFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.corporaLanguages.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaLanguages.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.corporaLanguages',
                 alias: 'corporaLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.CORPORA_LANG',
@@ -111,7 +119,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(corporaLanguagesFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
-                id: 'ortolang-item-json.statusOfUse.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',
                 resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
@@ -121,7 +130,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
             $scope.rankFilter = FacetedFilter.make({
-                id: 'system-rating-json.grade',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.grade',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.grade',
                 alias: 'rank',
                 label: 'MARKET.FACET.RANKS',
                 resetLabel: 'MARKET.FACET.ALL_RANKS',
