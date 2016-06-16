@@ -41,6 +41,13 @@ angular.module('ortolangMarketApp')
                     return data;
                 }
             },
+            getProfile: {
+                url: url.api + '/search/profiles/:key',
+                method: 'GET',
+                transformResponse: function (data) {
+                    return angular.fromJson(data);
+                }
+            },
             findProfiles: {
                 url: url.api + '/search/profiles',
                 method: 'GET',

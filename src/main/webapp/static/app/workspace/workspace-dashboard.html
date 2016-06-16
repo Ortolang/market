@@ -1,26 +1,26 @@
 <div class="view-wrapper-flex">
     <div class="toolbar-wrapper">
-        <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="dashboardSection === 'content' ? 'faded' : ''">
+        <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="{faded: dashboardSection === 'content'}">
             <ul class="nav nav-pills">
                 <li class="workspace-alias-tab">
                     <a><strong>{{::Workspace.active.workspace.alias}}</strong></a>
                 </li>
-                <li ng-class="dashboardSection === 'information'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'information'}" role="tab">
                     <a ng-click="selectDashboardSection('information')" translate="INFORMATION"></a>
                 </li>
-                <li ng-class="dashboardSection === 'content'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'content'}" role="tab">
                     <a ng-click="selectDashboardSection('content')" translate="WORKSPACE.CONTENT"></a>
                 </li>
-                <li ng-class="dashboardSection === 'members'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'members'}" role="tab">
                     <a ng-click="selectDashboardSection('members')" translate="WORKSPACE.MEMBERS"></a>
                 </li>
-                <li ng-class="dashboardSection === 'metadata'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'metadata'}" role="tab">
                     <a ng-click="selectDashboardSection('metadata')" translate="WORKSPACE.METADATA"></a>
                 </li>
-                <li ng-class="dashboardSection === 'permissions'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'permissions'}" role="tab">
                     <a ng-click="selectDashboardSection('permissions')" translate="WORKSPACE.PERMISSIONS"></a>
                 </li>
-                <li ng-class="dashboardSection === 'preview'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'preview'}" role="tab">
                     <a ng-click="selectDashboardSection('preview')" translate="WORKSPACE.PREVIEW"></a>
                 </li>
             </ul>

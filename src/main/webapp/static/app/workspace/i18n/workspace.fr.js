@@ -334,9 +334,11 @@ angular.module('ortolangMarketApp')
             },
             ACL: {
                 FORALL: 'Pour tous',
-                AUTHENTIFIED: 'Utilisateur connecté',
+                AUTHENTIFIED: 'Utilisateurs connectés',
                 ESR: 'Membres de l\'ESR',
-                RESTRICTED: 'Membres de l\'espace de travail'
+                RESTRICTED: 'Membres de l\'espace de travail',
+                LEGEND: '<strong>Légende</strong>',
+                HELP: 'Certains éléments contenu dans cette resource peuvent avoir un accès restreint aux :'
             },
             EVENTS: {
                 CORE: {

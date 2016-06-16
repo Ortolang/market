@@ -324,9 +324,11 @@ angular.module('ortolangMarketApp')
             },
             ACL: {
                 FORALL: 'For all',
-                AUTHENTIFIED: 'Connected user',
+                AUTHENTIFIED: 'Connected users',
                 ESR: 'ESR members',
-                RESTRICTED: 'Workspace members'
+                RESTRICTED: 'Workspace members',
+                LEGEND: '<strong>Legend</strong>',
+                HELP: 'Some of the content of this resource may have a restricted access to:'
             }
         },
         ERROR_MODAL_QUEUE_LIMIT: {

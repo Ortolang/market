@@ -358,7 +358,7 @@
           color: @inverse-text-color;
         }
         .thumb-wrapper > div .thumb-overlay {
-            background-color: transparent;
+          background-color: transparent;
         }
         .thumb-icon {
           color: @active-element-bg-color;
@@ -453,6 +453,9 @@ table.table-workspace-elements {
     &.type {
       width: 150px;
     }
+    &.acl {
+      width: 36px;
+    }
   }
   > tbody > tr {
     &.see-all-wrapper:hover, &.no-children-wrapper {
@@ -461,6 +464,32 @@ table.table-workspace-elements {
     > td {
       padding-top: @padding-large-vertical + 1px;
       padding-bottom: @padding-large-vertical + 1px;
+      &.acl {
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
+        cursor: help;
+        .label {
+          &.forall {
+            display: none;
+          }
+          &.authentified {
+            background-color: @label-primary-bg;
+          }
+          &.esr {
+            background-color: @label-warning-bg;
+          }
+          &.restricted {
+            background-color: @label-danger-bg;
+          }
+        }
+      }
+    }
+    &.active {
+      > td.acl .label {
+        background-color: @white;
+        color: @text-color;
+      }
     }
   }
   tr.active {

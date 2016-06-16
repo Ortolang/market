@@ -191,7 +191,7 @@ angular.module('ortolangMarketApp')
                 if (refresh === undefined) {
                     refresh = false;
                 }
-                parentDataPromise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root, policy: $scope.isWorkspaceBrowserService}).$promise;
+                parentDataPromise = WorkspaceElementResource.get({wskey: $scope.browserService.workspace.key, path: $scope.path, root: $scope.root, policy: !$scope.isFileSelectBrowserService}).$promise;
                 parentDataPromise.then(function (element) {
                     resetDisplayedItemLimit();
                     $scope.parent = element;
@@ -318,6 +318,17 @@ angular.module('ortolangMarketApp')
                 $modal({
                     scope: modalScope,
                     templateUrl: 'common/directives/metadata-modal-template.html',
+                    show: true
+                });
+            };
+
+            $scope.showAclLegend = function ($event) {
+                modalScope = Helper.createModalScope();
+                modalScope.AuthService = AuthService;
+                $event.stopPropagation();
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/directives/acl-legend-modal-template.html',
                     show: true
                 });
             };

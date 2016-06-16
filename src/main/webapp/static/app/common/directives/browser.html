@@ -40,7 +40,7 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="::doAction(item.action)" class="{{::item.divider ? 'divider' : ''}}"><div><span ng-class="::item.icon"></span> {{item.text | translate}}</div></li>
+                            <li ng-repeat="item in breadcrumbDropdownItems" ng-click="::doAction(item.action)" ng-class="::{divider: item.divider}"><div><span ng-class="::item.icon"></span> {{item.text | translate}}</div></li>
                         </ul>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                                 <span ng-if="::workspaceSnapshot.tag">
                                     <span ng-class="::icons.tag"></span> <strong translate="BROWSER.TAG" data-translate-values="workspaceSnapshot"></strong>
                                 </span>
-                                <span ng-class="::workspaceSnapshot.tag ? 'small' : ''" translate="BROWSER.SNAPSHOT" data-translate-values="workspaceSnapshot"></span>
+                                <span ng-class="::{small: workspaceSnapshot.tag}" translate="BROWSER.SNAPSHOT" data-translate-values="workspaceSnapshot"></span>
                             </div>
                         </li>
                     </ul>
@@ -376,7 +376,7 @@
 
     <div ng-show="isContextMenuActive && contextMenuItems.length > 0" ng-style="contextMenuStyle" ng-right-click="preventRightClick()" class="browser-context-menu dropdown clearfix open ng-hide">
         <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="item in contextMenuItems" ng-class="::item.divider ? 'divider' : ''">
+            <li ng-repeat="item in contextMenuItems" ng-class="::{divider: item.divider}">
                 <div ng-click="::doAction(item.action)"><span ng-class="::item.icon"></span> {{item.text | translate}}</div>
             </li>
         </ul>

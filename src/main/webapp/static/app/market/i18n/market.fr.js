@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
             SEARCH_PAGE: 'Rechercher dans le contenu',
             REDACTOR_CHOICES: 'Choix de l\'équipe',
             CONDITIONS_OF_USE: 'Conditions d\'utilisation',
-            BROWSE: 'Voir le contenu',
+            BROWSE: 'Parcourir',
             GO_BACK_INFO: 'Retourner à la fiche',
             ADD_TO_FAVOURITES: 'Ajouter à mes favoris',
             USE_IN_MY_PROJECT: 'Utiliser dans mon projet',

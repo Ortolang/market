@@ -155,8 +155,7 @@ angular
             })
             .when('/profiles/:key', {
                 templateUrl: 'profile/profile.html',
-                controller: 'ProfileCtrl',
-                requiresAuthentication: true
+                controller: 'ProfileCtrl'
             })
             .when('/404', {
                 templateUrl: '404.html',
