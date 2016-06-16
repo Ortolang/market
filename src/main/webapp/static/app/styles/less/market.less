@@ -497,12 +497,15 @@
     }
   }
   .dropdown-faceted-filter {
-    ul > li.active {
-      div {
-        color: @brand-primary;
-        font-weight: 600;
-        &:hover {
-          cursor: default;
+    ul {
+      max-height: 450px;
+      > li.active {
+        div {
+          color: @brand-primary;
+          font-weight: 600;
+          &:hover {
+            cursor: default;
+          }
         }
       }
     }
