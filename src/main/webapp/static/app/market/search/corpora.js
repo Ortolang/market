@@ -118,50 +118,67 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter(corporaLanguagesFilter);
 
-            var statusOfUseFilter = FacetedFilter.make({
-                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse.key',
-                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse',
-                alias: 'statusOfUse',
-                label: 'MARKET.FACET.STATUS_OF_USE',
-                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
+            // var statusOfUseFilter = FacetedFilter.make({
+            //     id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse.key',
+            //     path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse',
+            //     alias: 'statusOfUse',
+            //     label: 'MARKET.FACET.STATUS_OF_USE',
+            //     resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
+            //     priority: 'high',
+            //     view: 'dropdown-faceted-filter'
+            // });
+            // $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
-            $scope.rankFilter = FacetedFilter.make({
-                id: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.grade',
-                path: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.grade',
+            // $scope.rankFilter = FacetedFilter.make({
+            //     id: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.grade',
+            //     path: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.grade',
+            //     alias: 'rank',
+            //     label: 'MARKET.FACET.RANKS',
+            //     resetLabel: 'MARKET.FACET.ALL_RANKS',
+            //     options: [
+            //         OptionFacetedFilter.make({
+            //             label: 'Ressources complètes, accessibles à l’ensemble de l’ESR',
+            //             value: 'A',
+            //             length: 1
+            //         }),
+            //         OptionFacetedFilter.make({
+            //             label: 'Ressources complètes, mais non accessibles à tous les membres de l’ESR',
+            //             value: 'B',
+            //             length: 1
+            //         }),
+            //         OptionFacetedFilter.make({
+            //             label: 'Ressources non encore finalisées',
+            //             value: 'C',
+            //             length: 1
+            //         }),
+            //         OptionFacetedFilter.make({
+            //             label: 'Informations sur des ressources externes',
+            //             value: 'D',
+            //             length: 1
+            //         })
+            //     ],
+            //     priority: 'high',
+            //     view: 'dropdown-faceted-filter'
+            // });
+            // $scope.filtersManager.addAvailableFilter($scope.rankFilter);
+
+            $scope.esrAccessibilityFilter = FacetedFilter.make({
+                id: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.esrAccessibility',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.esrAccessibility',
                 alias: 'rank',
                 label: 'MARKET.FACET.RANKS',
                 resetLabel: 'MARKET.FACET.ALL_RANKS',
                 options: [
                     OptionFacetedFilter.make({
-                        label: 'Ressources complètes, accessibles à l’ensemble de l’ESR',
-                        value: 'A',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Ressources complètes, mais non accessibles à tous les membres de l’ESR',
-                        value: 'B',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Ressources non encore finalisées',
-                        value: 'C',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Informations sur des ressources externes',
-                        value: 'D',
+                        label: 'Accessibles à̀ l\'ensemble de l\'ESR',
+                        value: true,
                         length: 1
                     })
                 ],
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             });
-            // $scope.rankFilter.putSelectedOption($scope.rankFilter.getOption('A'));
-            $scope.filtersManager.addAvailableFilter($scope.rankFilter);
+            $scope.filtersManager.addAvailableFilter($scope.esrAccessibilityFilter);
         }
 
         function init() {
