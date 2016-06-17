@@ -1,12 +1,11 @@
-/npm-debug.log
-src/main/webapp/static/node_modules/
+npm-debug.log
 .idea/
-src/main/webapp/static/.tmp/
-src/main/webapp/static/bower_components
-src/main/webapp/static/dist/
+node_modules/
+bower_components/
 src/main/webapp/static/test/reports/
 src/main/webapp/static/app/styles/app.css
 src/main/webapp/static/app/styles/custom-bootstrap.css
 target-grunt
 target
-
+dist
+.tmp

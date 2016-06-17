@@ -22,7 +22,8 @@
     </scm>
 
     <properties>
-        <version.grunt.maven.plugin>1.5.0</version.grunt.maven.plugin>
+        <version.frontend.maven.plugin>1.0</version.frontend.maven.plugin>
+        <version.resources.maven.plugin>3.0.1</version.resources.maven.plugin>
         <version.clean.maven.plugin>2.6.1</version.clean.maven.plugin>
         <version.sonar.maven.plugin>2.5</version.sonar.maven.plugin>
         <sonar.language>js</sonar.language>
@@ -60,40 +61,80 @@
         <finalName>ortolang-market</finalName>
         <plugins>
             <plugin>
-                <groupId>pl.allegro</groupId>
-                <artifactId>grunt-maven-plugin</artifactId>
-                <version>${version.grunt.maven.plugin}</version>
-                <configuration>
-                    <!-- relative to src/main/webapp/, default: static -->
-                    <jsSourceDirectory>static</jsSourceDirectory>
-
-                    <!-- example options usage to get verbose output in logs -->
-                    <gruntOptions>
-                        <gruntOption>--verbose</gruntOption>
-                    </gruntOptions>
-
-                    <!-- example npm install env variable -->
-                    <!--
-                    <npmEnvironmentVar>
-                        <PHANTOMJS_CDNURL>http://cnpmjs.org/downloads</PHANTOMJS_CDNURL>
-                    </npmEnvironmentVar>
-                    -->
-
-                    <!-- example options usage to filter variables in given resource -->
-                    <!--
-                    <filteredResources>
-                        <filteredResource>maven-properties.json</filteredResource>
-                    </filteredResources>
-                    -->
-                </configuration>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${version.resources.maven.plugin}</version>
                 <executions>
                     <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
                         <goals>
-                            <goal>create-resources</goal>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target-grunt</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}</directory>
+                                    <excludes>
+                                        <exclude>bower_components/**</exclude>
+                                        <exclude>node_modules/**</exclude>
+                                        <exclude>.idea/**</exclude>
+                                        <exclude>.tmp/**</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${version.frontend.maven.plugin}</version>
+
+                <configuration>
+                    <workingDirectory>target-grunt</workingDirectory>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v6.2.1</nodeVersion>
+                            <npmVersion>3.9.6</npmVersion>
+                            <installDirectory>target-grunt</installDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
                             <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <installDirectory>target-grunt</installDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bower install</id>
+                        <goals>
                             <goal>bower</goal>
+                        </goals>
+                        <configuration>
+                            <installDirectory>target-grunt</installDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt build</id>
+                        <goals>
                             <goal>grunt</goal>
                         </goals>
+                        <configuration>
+                            <installDirectory>target-grunt</installDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -101,10 +142,8 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
-                    <warSourceExcludes>static/**</warSourceExcludes>
                     <webResources>
                         <resource>
-                            <!-- this is relative to the pom.xml directory -->
                             <directory>target-grunt/dist</directory>
                         </resource>
                     </webResources>
@@ -120,23 +159,23 @@
                 </configuration>
             </plugin>
             <plugin>
-		<artifactId>maven-assembly-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
                     <descriptors>
                         <descriptor>src/main/assembly/static.xml</descriptor>
                     </descriptors>
                 </configuration>
-		<executions>
-	            <execution>
-          	        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-	                <phase>package</phase> <!-- bind to the packaging phase -->
-	                <goals>
-		           <goal>single</goal>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
- 	    </plugin>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>

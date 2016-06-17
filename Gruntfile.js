@@ -17,7 +17,11 @@ module.exports = function (grunt) {
 
     // Configurable paths for the application
     var appConfig = {
-        app: require('./bower.json').appPath || 'app',
+        base: require('./bower.json').basePath,
+        app: require('./bower.json').basePath + '/app',
+        test: require('./bower.json').basePath + '/test',
+        tmp: '.tmp',
+        components: 'bower_components',
         dist: 'dist'
     };
 
@@ -41,7 +45,7 @@ module.exports = function (grunt) {
                 }
             },
             jsTest: {
-                files: ['test/spec/{,*/}*.js'],
+                files: ['<%= yeoman.test %>/spec/{,*/}*.js'],
                 tasks: ['newer:jshint:test', 'karma:continuous']
             },
             styles: {
@@ -61,7 +65,7 @@ module.exports = function (grunt) {
                 },
                 files: [
                     '<%= yeoman.app %>/**/*.html',
-                    '.tmp/styles/{,*/}*.css',
+                    '<%= yeoman.tmp %>/styles/{,*/}*.css',
                     '<%= yeoman.app %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             }
@@ -72,8 +76,6 @@ module.exports = function (grunt) {
             options: {
                 port: 9000,
                 protocol: 'http',
-                key: grunt.file.read('server.key').toString(),
-                cert: grunt.file.read('server.crt').toString(),
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost',
                 livereload: 35729
@@ -81,15 +83,13 @@ module.exports = function (grunt) {
             livereload: {
                 options: {
                     protocol: 'http',
-                    key: grunt.file.read('server.key').toString(),
-                    cert: grunt.file.read('server.crt').toString(),
                     open: true,
                     middleware: function (connect) {
                         return [
-                            connect.static('.tmp'),
+                            connect.static(appConfig.tmp),
                             connect().use(
                                 '/bower_components',
-                                connect.static('./bower_components')
+                                connect.static(appConfig.components)
                             ),
                             connect.static(appConfig.app),
                             connect().use(function (req, res, next) {
@@ -104,11 +104,11 @@ module.exports = function (grunt) {
                     port: 9001,
                     middleware: function (connect) {
                         return [
-                            connect.static('.tmp'),
-                            connect.static('test'),
+                            connect.static(appConfig.tmp),
+                            connect.static(appConfig.test),
                             connect().use(
                                 '/bower_components',
-                                connect.static('./bower_components')
+                                connect.static(appConfig.components)
                             ),
                             connect.static(appConfig.app)
                         ];
@@ -153,13 +153,12 @@ module.exports = function (grunt) {
                 files: [{
                     dot: true,
                     src: [
-                        '.tmp',
-                        '<%= yeoman.dist %>/{,*/}*',
-                        '!<%= yeoman.dist %>/.git*'
+                        '<%= yeoman.tmp %>',
+                        '<%= yeoman.dist %>/{,*/}*'
                     ]
                 }]
             },
-            server: '.tmp'
+            server: '<%= yeoman.tmp %>'
         },
 
         // Add vendor prefixed styles
@@ -170,9 +169,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '.tmp/styles/',
+                    cwd: '<%= yeoman.tmp %>/styles/',
                     src: '{,*/}*.css',
-                    dest: '.tmp/styles/'
+                    dest: '<%= yeoman.tmp %>/styles/'
                 }]
             }
         },
@@ -239,7 +238,7 @@ module.exports = function (grunt) {
         //   dist: {
         //     files: {
         //       '<%= yeoman.dist %>/styles/main.css': [
-        //         '.tmp/styles/{,*/}*.css'
+        //         '<%= yeoman.tmp %>/styles/{,*/}*.css'
         //       ]
         //     }
         //   }
@@ -320,22 +319,22 @@ module.exports = function (grunt) {
                     ]
                 }, {
                     expand: true,
-                    cwd: '.tmp/images',
+                    cwd: '<%= yeoman.tmp %>/images',
                     dest: '<%= yeoman.dist %>/assets/images',
                     src: ['generated/*']
                 }, {
                     expand: true,
-                    cwd: 'bower_components/bootstrap/dist',
+                    cwd: '<%= yeoman.components %>/bootstrap/dist',
                     src: 'fonts/*',
                     dest: '<%= yeoman.dist %>'
                 }, {
                     expand: true,
-                    cwd: 'bower_components/font-awesome',
+                    cwd: '<%= yeoman.components %>/font-awesome',
                     src: 'fonts/*',
                     dest: '<%= yeoman.dist %>'
                 }, {
                     expand: true,
-                    cwd: 'bower_components/octicons/octicons',
+                    cwd: '<%= yeoman.components %>/octicons/octicons',
                     src: [
                         '*',
                         '!*.{css,scss,md}'
@@ -343,7 +342,7 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.dist %>/fonts'
                 }, {
                     expand: true,
-                    cwd: 'bower_components/zeroclipboard/dist',
+                    cwd: '<%= yeoman.components %>/zeroclipboard/dist',
                     src: [
                         '*.swf'
                     ],
@@ -359,11 +358,13 @@ module.exports = function (grunt) {
                     src: [
                         '**/*.js',
                         'fonts/**/*',
-                        'resources/**/*'
+                        'resources/**/*',
+                        'vendor/player_flv_maxi.swf'
                     ]
                 }, {
                     expand: true,
                     cwd: '.',
+                    dest: '<%= yeoman.dist %>',
                     src: [
                         'bower_components/**/*.js',
                         'bower_components/**/*.css',
@@ -372,30 +373,15 @@ module.exports = function (grunt) {
                         'bower_components/font-awesome/fonts/*',
                         'bower_components/octicons/octicons/*',
                         'bower_components/zeroclipboard/dist/*.swf',
-                        'vendor/player_flv_maxi.swf',
+                        'bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js',
                         '!bower_components/*/{src,src/**,test,test/**}'
-                    ],
-                    dest: '<%= yeoman.dist %>'
-                }, {
-                    expand: true,
-                    cwd: '.',
-                    src: [
-                        'bower_components/angular-bootstrap-show-errors/**/*.js'
-                    ],
-                    dest: '<%= yeoman.dist %>'
-                }, {
-                    expand: true,
-                    cwd: '.',
-                    src: [
-                        'bower_components/angular-zeroclipboard/src/angular-zeroclipboard.js'
-                    ],
-                    dest: '<%= yeoman.dist %>'
+                    ]
                 }]
             },
             styles: {
                 expand: true,
                 cwd: '<%= yeoman.app %>/styles',
-                dest: '.tmp/styles/',
+                dest: '<%= yeoman.tmp %>/styles/',
                 src: [
                     '{,*/}*.css',
                     '{,*/}*.less'
@@ -403,7 +389,7 @@ module.exports = function (grunt) {
             },
             swf: {
                 expand: true,
-                cwd: 'bower_components/zeroclipboard/dist',
+                cwd: '<%= yeoman.components %>/zeroclipboard/dist',
                 src: 'ZeroClipboard.swf',
                 dest: '<%= yeoman.app %>/vendor/'
             }
@@ -429,7 +415,7 @@ module.exports = function (grunt) {
         // Test settings
         karma: {
             options: {
-                configFile: 'test/karma.conf.js'
+                configFile: '<%= yeoman.test %>/karma.conf.js'
             },
             continuous: {
                 singleRun: true,
@@ -450,13 +436,13 @@ module.exports = function (grunt) {
                     sourceMap: true,
                     outputSourceFiles: true,
                     modifyVars: {
-                        'octicons-font-path': '"/bower_components/octicons/octicons"'
+                        'octicons-font-path': '"/<%= yeoman.components %>/octicons/octicons"'
                     }
                 },
                 files: {
-                    'bower_components/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.components %>/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
-                    'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
+                    '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
                 }
             },
             production: {
@@ -469,9 +455,9 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'bower_components/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.components %>/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
-                    'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
+                    '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
                 }
             },
             'dev-production': {
@@ -483,9 +469,9 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'bower_components/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.components %>/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
-                    'bower_components/octicons/octicons/octicons.css': 'bower_components/octicons/octicons/octicons.less'
+                    '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
                 }
             }
         },
@@ -612,7 +598,7 @@ module.exports = function (grunt) {
             dist: {
                 cwd: '<%= yeoman.app %>',
                 src: ['*/**/*.html'],
-                dest: '.tmp/templates.js',
+                dest: '<%= yeoman.tmp %>/templates.js',
                 options:  {
                     module: 'ortolangMarketApp',
                     usemin: '<%= yeoman.dist %>/scripts/scripts.js', // <~~ This came from the <!-- build:js --> block
@@ -623,7 +609,7 @@ module.exports = function (grunt) {
             test: {
                 cwd: '<%= yeoman.app %>',
                 src: ['*/**/*.html'],
-                dest: '.tmp/templates.js',
+                dest: '<%= yeoman.tmp %>/templates.js',
                 options:  {
                     module: 'ortolangMarketApp',
                     quotes: 'single'

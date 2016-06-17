@@ -84,8 +84,7 @@
       ]
     }
   },
-  "appPath": "app",
-  "private": "true",
+  "basePath": "src/main/webapp/static",
   "resolutions": {
     "angular": "1.5.7"
   }
