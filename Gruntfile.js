@@ -449,6 +449,7 @@ module.exports = function (grunt) {
             },
             production: {
                 options: {
+                    paths: ['.'],
                     compress: false,
                     sourceMap: false,
                     modifyVars: {
@@ -464,6 +465,7 @@ module.exports = function (grunt) {
             },
             'dev-production': {
                 options: {
+                    paths: ['.'],
                     compress: false,
                     sourceMap: false,
                     modifyVars: {
