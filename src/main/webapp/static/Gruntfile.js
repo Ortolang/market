@@ -505,11 +505,7 @@ module.exports = function (grunt) {
                         },
                         {
                             match: 'version',
-                            replacement: require('./bower.json').version
-                        },
-                        {
-                            match: /\{\{ORTOLANG_MARKET_VERSION\}\}/,
-                            replacement: require('./bower.json').version
+                            replacement: require('./package.json').version
                         }
                     ]
                 },

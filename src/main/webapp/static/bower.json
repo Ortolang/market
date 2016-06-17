@@ -1,16 +1,22 @@
 {
   "name": "ortolang-market",
-  "version": "4.6.0-SNAPSHOT",
+  "description": "ORTOLANG Marketplace AngularJS App",
+  "license": "https://www.gnu.org/licenses/lgpl-3.0.en.html",
+  "homepage": "https://www.ortolang.fr",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Ortolang/market.git"
+  },
   "dependencies": {
-    "angular": "1.5.6",
-    "angular-animate": "1.5.6",
-    "angular-route": "1.5.6",
-    "angular-resource": "1.5.6",
-    "angular-sanitize": "1.5.6",
-    "angular-messages": "1.5.6",
-    "angular-touch": "1.5.6",
-    "angular-cookies": "1.5.6",
-    "angular-i18n": "1.5.6",
+    "angular": "1.5.7",
+    "angular-animate": "1.5.7",
+    "angular-route": "1.5.7",
+    "angular-resource": "1.5.7",
+    "angular-sanitize": "1.5.7",
+    "angular-messages": "1.5.7",
+    "angular-touch": "1.5.7",
+    "angular-cookies": "1.5.7",
+    "angular-i18n": "1.5.7",
     "font-awesome": "4.6.3",
     "octicons": "3.5.0",
     "angular-file-upload": "2.3.4",
@@ -40,8 +46,8 @@
     "angular-duration-format": "1.0.1"
   },
   "devDependencies": {
-    "angular-mocks": "1.5.6",
-    "angular-scenario": "1.5.6"
+    "angular-mocks": "1.5.7",
+    "angular-scenario": "1.5.7"
   },
   "overrides": {
     "angular-i18n": {
@@ -79,7 +85,8 @@
     }
   },
   "appPath": "app",
+  "private": "true",
   "resolutions": {
-    "angular": "1.5.6"
+    "angular": "1.5.7"
   }
 }
