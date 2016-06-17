@@ -1,11 +1,6 @@
-node_modules/
-bower_components/
 src/main/webapp/static/test/reports/
-src/main/webapp/static/app/styles/app.css
-src/main/webapp/static/app/styles/custom-bootstrap.css
+src/main/webapp/static/app/styles/*.css
 target-grunt
-target
-dist
 .tmp
 
 ### OSX template
@@ -81,4 +76,23 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+### Yeoman template
+node_modules/
+bower_components/
+*.log
+
+build/
+dist/
+
+### Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 

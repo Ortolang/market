@@ -8,6 +8,8 @@ Package a production-ready version of the app with maven:
 
 ## Development
 
+Requires Node.js
+
 ### Install
 
 Get the app dev dependencies:
