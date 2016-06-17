@@ -223,8 +223,8 @@ angular.module('ortolangMarketApp')
                     }
                 }, function (response) {
                     if (response.status === 401) {
-                        if ($scope.isMarketBrowserService && $scope.path === '/') {
-                            $location.search({});
+                        if ($scope.isMarketBrowserService && $scope.path === '/' && $scope.browseContent) {
+                            $scope.browseContent();
                         }
                     } else {
                         Helper.showErrorModal(response.data);

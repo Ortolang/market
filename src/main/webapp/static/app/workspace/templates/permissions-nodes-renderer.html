@@ -1,9 +1,9 @@
 <div ng-click="nodeToggle(element)" class="tree-node"
-     ng-class="element.type + ' ' + models.tree[element.key].publicationPolicy">
+     ng-class="[element.type, models.tree[element.key].publicationPolicy, {'root-collection': element.path === '/'}]">
     <div class="node-body">
                 <span class="icon"
                       ng-class="models.tree[element.key].expanded ? icons.tree.collectionOpen : icons.tree[element.type]"></span>
-        {{element.name}}
+        {{::element.name}}
     </div>
     <div class="node-actions">
         <div class="btn-group">

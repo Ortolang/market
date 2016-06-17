@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.nodeToggle = function (element) {
-            if (element.type === ortolangType.collection) {
+            if (element.path !== '/' && element.type === ortolangType.collection) {
                 $scope.models.tree[element.key].expanded = !$scope.models.tree[element.key].expanded;
                 $scope.models.expanded[element.key] = !$scope.models.expanded[element.key];
                 var children = $scope.models.tree[element.key].elements;
