@@ -432,8 +432,10 @@ module.exports = function (grunt) {
         less: {
             development: {
                 options: {
+                    paths: ['.'],
                     compress: false,
                     sourceMap: true,
+                    sourceMapFileInline: true,
                     outputSourceFiles: true,
                     modifyVars: {
                         'octicons-font-path': '"/<%= yeoman.components %>/octicons/octicons"'
