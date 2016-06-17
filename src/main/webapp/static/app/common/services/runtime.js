@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                     title: form.name,
                     html: true,
                     scope: modalScope,
-                    template: 'profile/templates/runtime-form-modal-template.html',
+                    templateUrl: 'profile/templates/runtime-form-modal-template.html',
                     show: true
                 });
             });

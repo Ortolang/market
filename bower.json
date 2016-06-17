@@ -25,8 +25,8 @@
     "highlightjs": "highlightjs/cdn-release#9.4.0",
     "angular-highlightjs": "0.6.1",
     "angular-motion": "0.4.4",
-    "angular-formly": "7.3.9",
-    "angular-formly-templates-bootstrap": "6.2.0",
+    "angular-formly": "8.2.1",
+    "angular-formly-templates-bootstrap": "6.3.2",
     "angular-translate": "2.11.0",
     "angular-zeroclipboard": "0.8.0",
     "angular-bootstrap-toggle-switch": "0.5.6",
@@ -41,9 +41,9 @@
     "awesome-bootstrap-checkbox": "0.3.5",
     "angular-moment": "0.10.3",
     "angulartics": "1.0.3",
-    "angular-markdown-directive": "0.3.1",
     "lrInfiniteScroll": "1.0.0",
-    "angular-duration-format": "1.0.1"
+    "angular-duration-format": "1.0.1",
+    "ng-showdown": "^1.1.0"
   },
   "devDependencies": {
     "angular-mocks": "1.5.7",

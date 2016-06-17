@@ -44,7 +44,7 @@ angular
         'angularMoment',
         'angulartics',
         'angulartics.piwik',
-        'btford.markdown',
+        'ng-showdown',
         'lrInfiniteScroll',
         'angular-duration-format'
     ])
