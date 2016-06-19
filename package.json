@@ -19,7 +19,7 @@
     "grunt-concurrent": "^2.0.3",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-connect": "^0.10.1",
+    "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "^1.0.1",
     "grunt-contrib-htmlmin": "^1.4.0",
@@ -52,12 +52,14 @@
     "karma-tapfile-reporter": "0.0.4",
     "load-grunt-tasks": "^3.1.0",
     "phantomjs-prebuilt": "^2.1.1",
+    "serve-static": "^1.11.1",
     "time-grunt": "^1.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
+    "start": "grunt serve",
     "test": "grunt test"
   }
 }
