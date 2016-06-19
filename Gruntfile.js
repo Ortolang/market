@@ -85,13 +85,14 @@ module.exports = function (grunt) {
                     protocol: 'http',
                     open: true,
                     middleware: function (connect) {
+                        var serveStatic = require('serve-static');
                         return [
-                            connect.static(appConfig.tmp),
+                            serveStatic(appConfig.tmp),
                             connect().use(
                                 '/bower_components',
-                                connect.static(appConfig.components)
+                                serveStatic(appConfig.components)
                             ),
-                            connect.static(appConfig.app),
+                            serveStatic(appConfig.app),
                             connect().use(function (req, res, next) {
                                 res.end(grunt.file.read(appConfig.app + '/index.html'));
                             })
@@ -103,14 +104,15 @@ module.exports = function (grunt) {
                 options: {
                     port: 9001,
                     middleware: function (connect) {
+                        var serveStatic = require('serve-static');
                         return [
-                            connect.static(appConfig.tmp),
-                            connect.static(appConfig.test),
+                            serveStatic(appConfig.tmp),
+                            serveStatic(appConfig.test),
                             connect().use(
                                 '/bower_components',
-                                connect.static(appConfig.components)
+                                serveStatic(appConfig.components)
                             ),
-                            connect.static(appConfig.app)
+                            serveStatic(appConfig.app)
                         ];
                     }
                 }
