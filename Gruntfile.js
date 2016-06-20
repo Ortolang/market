@@ -175,6 +175,17 @@ module.exports = function (grunt) {
                     src: '{,*/}*.css',
                     dest: '<%= yeoman.tmp %>/styles/'
                 }]
+            },
+            dev: {
+                options: {
+                    map: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.tmp %>/styles/',
+                    src: '{,*/}*.css',
+                    dest: '<%= yeoman.tmp %>/styles/'
+                }]
             }
         },
 
@@ -182,13 +193,8 @@ module.exports = function (grunt) {
         wiredep: {
             app: {
                 src: ['<%= yeoman.app %>/index.html'],
-                options: {
-                    exclude: [
-                        'bower_components/bootstrap/dist/css/bootstrap.css',
-                        'bower_components/bootstrap-css-only/css/bootstrap.css'
-                    ],
-                    ignorePath:  /\.\.\//
-                }
+                exclude: [],
+                ignorePath:  /\.\.\/\.\.\/\.\.\/\.\.\/\.\.\//
             }
         },
 
@@ -386,6 +392,7 @@ module.exports = function (grunt) {
                 dest: '<%= yeoman.tmp %>/styles/',
                 src: [
                     '{,*/}*.css',
+                    '{,*/}*.css.map',
                     '{,*/}*.less'
                 ]
             },
@@ -439,12 +446,13 @@ module.exports = function (grunt) {
                     sourceMap: true,
                     sourceMapFileInline: true,
                     outputSourceFiles: true,
+                    strictImports: true,
                     modifyVars: {
                         'octicons-font-path': '"/<%= yeoman.components %>/octicons/octicons"'
                     }
                 },
                 files: {
-                    '<%= yeoman.components %>/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.app %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
                 }
@@ -454,6 +462,7 @@ module.exports = function (grunt) {
                     paths: ['.'],
                     compress: false,
                     sourceMap: false,
+                    strictImports: true,
                     modifyVars: {
                         'icon-font-path': '"../fonts/"',
                         'octicons-font-path': '"../fonts"'
@@ -470,8 +479,10 @@ module.exports = function (grunt) {
                     paths: ['.'],
                     compress: false,
                     sourceMap: false,
+                    strictImports: true,
                     modifyVars: {
-                        'icon-font-path': '"../fonts/"'
+                        'icon-font-path': '"../fonts/"',
+                        'octicons-font-path': '"../fonts"'
                     }
                 },
                 files: {
@@ -634,7 +645,7 @@ module.exports = function (grunt) {
             'less:development',
             'wiredep',
             'concurrent:server',
-            'autoprefixer',
+            'autoprefixer:dev',
             'connect:livereload',
             'watch'
         ]);
@@ -649,7 +660,7 @@ module.exports = function (grunt) {
         'clean:server',
         'less:development',
         'concurrent:test',
-        'autoprefixer',
+        'autoprefixer:dist',
         'ngtemplates:test',
         'connect:test',
         'karma:continuous'
@@ -661,7 +672,7 @@ module.exports = function (grunt) {
         'wiredep',
         'useminPrepare',
         'concurrent:dist',
-        'autoprefixer',
+        'autoprefixer:dist',
         'ngtemplates:dist',
         'concat',
         'copy:dist',

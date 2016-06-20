@@ -1,5 +1,5 @@
 src/main/webapp/static/test/reports/
-src/main/webapp/static/app/styles/*.css
+src/main/webapp/static/app/styles/*.css*
 target-grunt
 .tmp
 
@@ -95,4 +95,3 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-
