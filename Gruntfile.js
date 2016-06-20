@@ -469,25 +469,8 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
-                    '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
-                    '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
-                }
-            },
-            'dev-production': {
-                options: {
-                    paths: ['.'],
-                    compress: false,
-                    sourceMap: false,
-                    strictImports: true,
-                    modifyVars: {
-                        'icon-font-path': '"../fonts/"',
-                        'octicons-font-path': '"../fonts"'
-                    }
-                },
-                files: {
-                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
-                    '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
+                    '<%= yeoman.app %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.app %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
                 }
             }
@@ -686,7 +669,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev-build', [
         'clean:dist',
-        'less:dev-production',
+        'less:production',
         'wiredep',
         'concurrent:dist',
         'copy:dist',
