@@ -67,27 +67,45 @@
     <hr/>
     <div class="form-group">
         <label class="control-label">Personne(s) contributrice(s)</label>
-        <ul class="row list-unstyled auto-clear">
-            <li ng-repeat="contributor in contributors"
-                ng-class="{'contributor-link': contributor.entity.id}"
-                class="profile-card contributor-card col-md-6 col-lg-4">
-                <div class="media">
-                    <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
-                    <div class="media-body">
-                        <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organizationEntity.acronym">({{contributor.organizationEntity.acronym}})</span>
-                        <div class="small roles">
-                            <span ng-repeat="role in contributor.roles">{{role.label}}<span ng-if="!$last">, </span></span>
-                        </div>
-                    </div>
-                    <div class="media-right">
-                        <button type="button" class="close delete-contributor" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteContributor(contributor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>&times;</button>
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+            <input ng-model="searchConributor" ng-disabled="Workspace.active.workspace.readOnly" data-prefix-event="tacontributor" type="text" class="form-control" id="search-contributor" name="searchContributor" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}" bs-options="person as person.label for person in suggestPerson($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <div class="input-group-btn">
+                <div class="btn-group">
+                    <button id="add-contributor-role" type="button" class="btn btn-default" name="selectedRole" ng-model="selectedRole" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" bs-options="role as role.label for role in allRoles track by role.id" bs-select>{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span></button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
+                </div>
+            </div>
+        </div>
+        <p class="help-block">
+            {{'WORKSPACE.METADATA_EDITOR.NO_PERSON_FOUND' | translate}}
+            <a href="" class="btn btn-link" ng-disabled="Workspace.active.workspace.readOnly" ng-click="createPerson()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_PERSON' | translate}}</a>
+        </p>
+    </div>
+    <ul class="row list-unstyled auto-clear">
+        <li ng-repeat="contributor in contributors"
+            ng-class="{'contributor-link': contributor.entity.id}"
+            class="profile-card contributor-card col-md-6 col-lg-4 add-member-btn-wrapper"
+            ng-disabled="Workspace.active.workspace.readOnly"
+            ng-click="editPerson(contributor)">
+            <div class="media">
+                <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded"></div>
+                <div class="media-body">
+                    <span class="name">{{contributor.entity.fullname}}</span> <span class="organization" ng-if="contributor.organizationEntity.acronym">({{contributor.organizationEntity.acronym}})</span>
+                    <div class="small roles">
+                        <span ng-repeat="role in contributor.roles">{{role.label}}<span ng-if="!$last">, </span></span>
                     </div>
                 </div>
-            </li>
-            <li class="col-lg-4 col-md-6 add-member-btn-wrapper" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addPerson()">
-                <div class="media-left"><button type="button" ng-disabled="Workspace.active.workspace.readOnly" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
-                <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
-            </li>
-        </ul>
-    </div>
+                <div class="media-right">
+                    <button type="button" class="close delete-contributor" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteContributor(contributor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>&times;</button>
+                </div>
+            </div>
+        </li>
+        <li class="col-lg-4 col-md-6 add-member-btn-wrapper" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addPerson()">
+            <div class="media-left"><button type="button" ng-disabled="Workspace.active.workspace.readOnly" class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
+            <div class="media-body" translate="WORKSPACE.METADATA_EDITOR.ADD_PERSON"></div>
+        </li>
+    </ul>
 </div>

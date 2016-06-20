@@ -248,8 +248,8 @@ angular.module('ortolangMarketApp')
                 OPERATING_SYSTEMS: 'Systèmes d\'exploitation',
                 TOOL_SUPPORT: 'Type de support',
                 LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
-                NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
-                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
+                NO_PERSON_FOUND: 'Vous ne trouvez pas la personne ?',
+                ADD_NEW_PERSON: 'Demander l\'ajouter d\'une personne',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
@@ -265,6 +265,8 @@ angular.module('ortolangMarketApp')
                         ROLE: 'Veuillez spécifier le rôle de cette personne.'
                     }
                 },
+                NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
+                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
                 ADD_ORGANIZATION_MODAL: {
                     TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire producteur',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',

@@ -35,6 +35,11 @@ angular.module('ortolangMarketApp')
             return '${' + id + '}';
         };
 
+        this.createKeyFromReferentialName = function (name) {
+            // Pattern : ${key}
+            return '${referential:' + name + '}';
+        };
+
         this.extractNameFromReferentialId = function (id) {
             // Pattern : ${referential:name}
             var key = this.extractKeyFromReferentialId(id);
