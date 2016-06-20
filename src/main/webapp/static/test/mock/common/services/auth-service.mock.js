@@ -50,6 +50,10 @@ angular.module('ortolangMarketAppMock')
             return deferred.promise;
         }
 
+        function resolveSessionInitialized() {
+            deferred.resolve();
+        }
+
         return {
             login: login,
             logout: logout,
@@ -58,6 +62,7 @@ angular.module('ortolangMarketAppMock')
             getScope: getScope,
             getKeycloak: function () { return keycloakAuth; },
             isAuthenticated: isAuthenticated,
-            sessionInitialized: sessionInitialized
+            sessionInitialized: sessionInitialized,
+            resolveSessionInitialized: resolveSessionInitialized
         };
     }]);

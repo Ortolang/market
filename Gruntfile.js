@@ -469,7 +469,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.components %>/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
                 }
@@ -486,7 +486,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.components %>/bootstrap/dist/css/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
+                    '<%= yeoman.dist %>/styles/custom-bootstrap.css': '<%= yeoman.app %>/styles/less/custom-bootstrap.less',
                     '<%= yeoman.dist %>/styles/app.css': '<%= yeoman.app %>/styles/less/app.less',
                     '<%= yeoman.components %>/octicons/octicons/octicons.css': '<%= yeoman.components %>/octicons/octicons/octicons.less'
                 }
