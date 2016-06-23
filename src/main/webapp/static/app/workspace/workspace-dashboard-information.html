@@ -21,7 +21,7 @@
                         <span translate="BROWSER.VERSION" data-translate-values="{tag: tag.name}"></span>
                     </div>
                 </li>
-                <li class="tag-wrapper tag-diff-wrapper"  ng-click="showDiff()">
+                <li class="tag-wrapper tag-diff-wrapper" ng-if="Workspace.active.workspace.snapshots.length > 1" ng-click="showDiff()">
                     <div class="label tag label-primary">
                         <span ng-class="::icons.diff.diff"></span>
                         <span translate="WORKSPACE.DIFF"></span>
