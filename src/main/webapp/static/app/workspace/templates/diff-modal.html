@@ -1,0 +1,51 @@
+<div class="modal diff-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" translate="WORKSPACE.DIFF_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <strong translate="WORKSPACE.DIFF_MODAL.HELP"></strong>
+                    <a href="#" ng-click="compareCurrentToLast()" translate="WORKSPACE.DIFF_MODAL.COMPARE_LAST"></a>
+                </p>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <select class="form-control" ng-model="models.lsnapshot" ng-change="selectSnapshot()">
+                            <option></option>
+                            <option ng-repeat="snapshot in snapshots | orderBy:'name' | filter:{name: models.rsnapshot ? '!' + models.rsnapshot : ''}" value="{{::snapshot.name}}">{{::snapshot.name}} {{::snapshot.tag ? ' (' + snapshot.tag + ')' : ''}}</option>
+                            <option value="head" ng-if="models.rsnapshot !== 'head'" translate="WORKSPACE.HEAD"></option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6">
+                        <select class="form-control" ng-model="models.rsnapshot" ng-change="selectSnapshot()">
+                            <option></option>
+                            <option ng-repeat="snapshot in snapshots | orderBy:'name' | filter:{name: models.lsnapshot ? '!' + models.lsnapshot : ''}" value="{{::snapshot.name}}">{{::snapshot.name}} {{::snapshot.tag ? ' (' + snapshot.tag + ')' : ''}}</option>
+                            <option value="head" ng-if="models.lsnapshot !== 'head'" translate="WORKSPACE.HEAD"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-well">
+                    <ul class="list-inline">
+                        <li><strong translate="LEGEND"></strong></li>
+                        <li><span ng-class="::icons.diff.new"></span> <span translate="WORKSPACE.DIFF_MODAL.NEW"></span></li>
+                        <li><span ng-class="::icons.diff.removed"></span> <span translate="WORKSPACE.DIFF_MODAL.REMOVED"></span></li>
+                        <li><span ng-class="::icons.diff.renamed"></span> <span translate="WORKSPACE.DIFF_MODAL.RENAMED"></span></li>
+                        <li><span ng-class="::icons.diff.metadatas"></span> <span translate="WORKSPACE.DIFF_MODAL.METADATAS"></span></li>
+                    </ul>
+                </div>
+                <ul class="list-group change-list">
+                    <li ng-repeat="change in diff | orderBy:['order','object.path'] | filter:{type:'!ListChange'}" class="list-group-item" ng-class="::{'list-group-item-info': change.type === 'ValueChange' || change.type === 'MapChange', 'list-group-item-success': change.type === 'NewObject', 'list-group-item-danger': change.type === 'ObjectRemoved'}">
+                        <span ng-class="::change | diffIconCss"></span>
+                        <strong>{{::change.object.path}}</strong>
+                        <span class="change-description" ng-bind="::change | diffDescription"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            </div>
+        </div>
+    </div>
+</div>

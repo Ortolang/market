@@ -75,6 +75,14 @@ angular.module('ortolangMarketApp')
                 esr: 'fa fa-fw fa-graduation-cap',
                 restricted: 'fa fa-fw fa-ban'
             },
+            diff: {
+                diff: 'fa fa-fw fa-history',
+                new: 'fa fa-fw fa-plus',
+                removed: 'fa fa-fw fa-minus',
+                renamed: 'fa fa-fw fa-arrow-right',
+                binary: 'fa fa-fw fa-file',
+                metadatas: 'fa fa-fw fa-list'
+            },
             // Visibility
             everybody: 'fa fa-fw fa-globe',
             friends: 'fa fa-fw fa-users',

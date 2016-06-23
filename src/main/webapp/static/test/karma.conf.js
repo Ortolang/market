@@ -50,7 +50,7 @@ module.exports = function (config) {
             projectBase + 'bower_components/moment/moment.js',
             projectBase + 'bower_components/moment/locale/fr.js',
             projectBase + 'bower_components/angulartics/src/angulartics.js',
-            projectBase + 'bower_components/angulartics/src/angulartics-piwik.js',
+            projectBase + 'bower_components/angulartics-piwik/src/angulartics-piwik.js',
             projectBase + 'bower_components/holderjs/holder.js',
             projectBase + 'bower_components/lrInfiniteScroll/lrInfiniteScroll.js',
             projectBase + 'bower_components/showdown/dist/showdown.js',

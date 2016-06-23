@@ -21,6 +21,12 @@
                         <span translate="BROWSER.VERSION" data-translate-values="{tag: tag.name}"></span>
                     </div>
                 </li>
+                <li class="tag-wrapper tag-diff-wrapper"  ng-click="showDiff()">
+                    <div class="label tag label-primary">
+                        <span ng-class="::icons.diff.diff"></span>
+                        <span translate="WORKSPACE.DIFF"></span>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -91,7 +97,6 @@
         </div>
         <div ng-if="User.key === Workspace.active.workspace.owner" class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>
-            <!--<button class="btn btn-default" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>-->
             <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
             <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>

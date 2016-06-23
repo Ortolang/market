@@ -210,7 +210,7 @@
   }
 
   .tag.label.label-workspace {
-    background-color: darken(@workspace-primary, 3%);
+    background-color: darken(@workspace-primary, 4%);
   }
 
   .workspace-event {
@@ -281,4 +281,32 @@
   .media-body {
     vertical-align: middle;
   }
+}
+
+.diff-modal {
+  .change-list {
+    margin-top: @line-height-computed;
+  }
+  .change-description {
+    font-weight: 300;
+    margin-left: @padding-xs-horizontal;
+    &:not(:empty) {
+      &:before {
+        content: "(";
+      }
+      &:after {
+        content: ")";
+      }
+    }
+  }
+  .card-well {
+    margin-top: @line-height-computed;
+    .list-inline {
+      margin: 0;
+    }
+  }
+}
+
+.tag-wrapper.tag-diff-wrapper {
+  cursor: pointer;
 }

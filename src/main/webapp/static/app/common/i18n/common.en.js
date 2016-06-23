@@ -50,6 +50,7 @@ angular.module('ortolangMarketApp')
         YES: 'Yes',
         NO: 'No',
         TEXT: 'Text',
+        LEGEND: 'Legend',
         404: {
             TITLE: 'Page not found',
             BODY: 'Sorry, but we can\'t find the page you are looking for. Maybe you should try heading home.',

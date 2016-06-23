@@ -299,6 +299,75 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.showDiff = function () {
+                if (Workspace.active.workspace.snapshots.length > 1) {
+                    modalScope = Helper.createModalScope(true);
+                    modalScope.models = {};
+                    modalScope.icons = $rootScope.icons;
+                    var tmp = {},
+                        lastTag = null;
+                    angular.forEach(Workspace.active.workspace.snapshots, function (snapshot) {
+                        tmp[snapshot.name] = snapshot;
+                    });
+                    angular.forEach(Workspace.active.workspace.tags, function (tag) {
+                        tmp[tag.snapshot].tag = tag.name;
+                        if (!lastTag || tag.snapshot > lastTag.tag) {
+                            lastTag = tag;
+                        }
+                    });
+                    modalScope.snapshots = [];
+                    angular.forEach(tmp, function (snapshot) {
+                        modalScope.snapshots.push(snapshot);
+                    });
+                    modalScope.tags = Workspace.active.workspace.tags;
+
+                    modalScope.compareCurrentToLast = function () {
+                        if (lastTag) {
+                            modalScope.models.lsnapshot = lastTag.snapshot;
+                            modalScope.models.rsnapshot = 'head';
+                            modalScope.selectSnapshot();
+                        }
+                    };
+
+                    modalScope.selectSnapshot = function () {
+                        if (modalScope.models.lsnapshot && modalScope.models.rsnapshot) {
+                            WorkspaceResource.diffWorkspaceContent({wskey: Workspace.active.workspace.key, lsnapshot: modalScope.models.lsnapshot, rsnapshot: modalScope.models.rsnapshot}, function (data) {
+                                var i;
+                                for (i = 0; i < data.length; i++) {
+                                    var change = data[i];
+                                    switch (change.type) {
+                                        case 'ValueChange':
+                                            change.order = 1;
+                                            break;
+                                        case 'MapChange':
+                                            change.order = 2;
+                                            break;
+                                        case 'NewObject':
+                                            change.order = 3;
+                                            break;
+                                        case 'ObjectRemoved':
+                                            change.order = 4;
+                                            break;
+                                    }
+                                }
+                                modalScope.diff = data;
+                            });
+                        } else {
+                            modalScope.diff = null;
+                        }
+                    };
+                    $modal({
+                        scope: modalScope,
+                        templateUrl: 'workspace/templates/diff-modal.html',
+                        show: true
+                    });
+                }
+            };
+
+            $scope.orderDiff = function () {
+
+            };
+
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();

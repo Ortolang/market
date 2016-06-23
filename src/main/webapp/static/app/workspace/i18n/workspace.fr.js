@@ -60,6 +60,7 @@ angular.module('ortolangMarketApp')
             CREATE_WORKSPACE: 'Créer un espace de travail',
             NO_METATDATA: 'Les métadonnées ne sont pas encore renseignées.',
             GO_TO_METATDATA: 'Allez à la page des métadonnées.',
+            HEAD: 'Version actuelle',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Création d\'un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'alias',
@@ -195,6 +196,16 @@ angular.module('ortolangMarketApp')
                 LOGO_EDITOR: 'Utiliser le créateur de logo',
                 LOGO_EDITOR_BUTTON: 'Créer un logo',
                 LOGO_EDITOR_HELP: 'Créer facilement un logo à l\'aide du créateur de logo ORTOLANG'
+            },
+            DIFF: 'Voir les modifications',
+            DIFF_MODAL: {
+                TITLE: 'Liste des modifications',
+                HELP: 'Choisissez deux snapshots à comparer',
+                COMPARE_LAST: '<em>(comparer la version actuelle à la dernière publiée)</em>',
+                NEW: 'Nouvel élément',
+                REMOVED: 'Element supprimé',
+                RENAMED: 'Element déplacé',
+                METADATAS: 'Métadonnées modifiées'
             },
             SAVE_METADATA_MODAL: {
                 TITLE: 'Enregistrer les métadonnées',
@@ -337,7 +348,6 @@ angular.module('ortolangMarketApp')
                 AUTHENTIFIED: 'Utilisateurs connectés',
                 ESR: 'Membres de l\'ESR',
                 RESTRICTED: 'Membres de l\'espace de travail',
-                LEGEND: '<strong>Légende</strong>',
                 HELP: 'Certains éléments contenu dans cette resource peuvent avoir un accès restreint aux :'
             },
             EVENTS: {

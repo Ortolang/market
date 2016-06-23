@@ -60,6 +60,7 @@ angular.module('ortolangMarketApp')
             CREATE_WORKSPACE: 'Create a new workspace',
             NO_METATDATA: 'Metadata is not filled.',
             GO_TO_METATDATA: 'Go to metadata page.',
+            HEAD: 'Current version',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
                 AUTO_GENERATED: 'Auto-generated alias',
@@ -185,6 +186,16 @@ angular.module('ortolangMarketApp')
                 BACKGROUND: 'Background colour',
                 BOLD: 'Bold',
                 SUBMIT: 'Create'
+            },
+            DIFF: 'Changes',
+            DIFF_MODAL: {
+                TITLE: 'Changes',
+                HELP: 'Choose two snapshots to compare',
+                COMPARE_LAST: '<em>(compare current to last publish version)</em>',
+                NEW: 'New element',
+                REMOVED: 'Removed element',
+                RENAMED: 'Moved element',
+                METADATAS: 'Updated metadata'
             },
             SAVE_METADATA_MODAL: {
                 TITLE: 'Save metadata',
@@ -327,7 +338,6 @@ angular.module('ortolangMarketApp')
                 AUTHENTIFIED: 'Connected users',
                 ESR: 'ESR members',
                 RESTRICTED: 'Workspace members',
-                LEGEND: '<strong>Legend</strong>',
                 HELP: 'Some of the content of this resource may have a restricted access to:'
             }
         },
