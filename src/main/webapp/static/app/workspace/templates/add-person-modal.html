@@ -3,62 +3,61 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <span class="modal-title" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.TITLE"></span>
+                <span class="modal-title" data-translate-values="{editing: contributor!==undefined}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.TITLE"></span>
             </div>
             <div class="modal-body">
-                <form role="form" id="add-contributor-form" name="addContributor" class="form-horizontal" ng-submit="submit(addContributor)" novalidate autocomplete="off">
+                <form role="form" id="add-contributor-form" name="addContributor" class="form-horizontal" ng-submit="addContributorFromScratch(addContributor)" novalidate autocomplete="off">
                     <div>
-                        <div class="form-group has-feedback">
-                            <label for="add-contributor-search-person" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH_LABEL"></label>
-                            <div class="col-sm-10">
-                                <input ng-model="searchPerson" type="text" class="form-control" id="add-contributor-search-person" name="search-person" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}" data-prefix-event="ta-search-person" bs-options="person as person.label for person in suggestPerson($viewValue)" data-html="true" data-container=".modal" data-min-length="2" bs-typeahead>
-                                <span ng-show="models.key" ng-click="clearSearch()" class="glyphicon glyphicon-remove form-control-feedback form-control-feedback-button"></span>
-                            </div>
-                        </div>
-                        <hr />
                         <div class="form-group has-feedback" ng-class="{'has-error': (addContributor.$submitted || addContributor.firstname.$dirty) && addContributor.firstname.$invalid}">
                             <label for="add-contributor-firstname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME"></label>
                             <div class="col-sm-10">
-                                <input ng-disabled="models.key" ng-model="models.firstname" type="text" class="form-control" id="add-contributor-firstname" name="firstname" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}">
+                                <input ng-disabled="::disabled" ng-model="models.entityContent.firstname" ng-change="generateId(models.entityContent)" type="text" class="form-control" id="add-contributor-firstname" name="firstname" required  placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.FIRSTNAME' | translate}}">
                             </div>
                         </div>
                         <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.midname.$dirty) && addContributor.midname.$invalid}">
                             <label for="add-contributor-midname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MIDNAME"></label>
                             <div class="col-sm-10">
-                                <input ng-disabled="models.key" ng-model="models.midname" type="text" class="form-control" id="add-contributor-midname" name="midname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MIDNAME' | translate}}">
+                                <input ng-disabled="::disabled" ng-model="models.entityContent.midname" ng-change="generateId(models.entityContent)" type="text" class="form-control" id="add-contributor-midname" name="midname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MIDNAME' | translate}}">
                             </div>
                         </div>
                         <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.lastname.$dirty) && addContributor.lastname.$invalid}">
                             <label for="add-contributor-lastname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.LASTNAME"></label>
                             <div class="col-sm-10">
-                                <input ng-disabled="models.key" ng-model="models.lastname" type="text" class="form-control" id="add-contributor-lastname" name="lastname" required placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.LASTNAME' | translate}}">
+                                <input ng-disabled="::disabled" ng-model="models.entityContent.lastname" ng-change="generateId(models.entityContent)" type="text" class="form-control" id="add-contributor-lastname" name="lastname" required placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.LASTNAME' | translate}}">
                             </div>
                         </div>
                         <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.organizationFullname.$dirty) && addContributor.organizationFullname.$invalid}">
                             <label for="add-contributor-organizationFullname" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION"></label>
                             <div class="col-sm-10">
-                                <input ng-disabled="models.key" ng-model="models.organizationFullname" data-prefix-event="taorg" type="text" class="form-control" id="add-contributor-organizationFullname" name="organizationFullname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION' | translate}}" bs-options="org as org.label for org in suggestOrganization($viewValue)" data-html="true" data-min-length="2" data-container=".modal" bs-typeahead>
+                                <input ng-disabled="::disabled" ng-model="organizationFullname" data-prefix-event="taorg" type="text" class="form-control" id="add-contributor-organizationFullname" name="organizationFullname" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ORGANIZATION' | translate}}" bs-options="org as org.label for org in suggestOrganization($viewValue)" data-html="true" data-min-length="2" data-container=".modal" bs-typeahead>
                             </div>
                         </div>
-                        <input ng-model="models.fullname" type="hidden" name="fullname" id="add-contributor-fullname">
+                        <input ng-model="models.entityContent.fullname" type="hidden" name="fullname" id="add-contributor-fullname">
+                        <div class="form-group has-feedback" ng-class="{'has-error': (addContributor.$submitted || addContributor.id.$dirty) && addContributor.id.$invalid}" ng-if="User.isRoot()">
+                            <label for="add-contributor-id" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ID"></label>
+                            <div class="col-sm-10">
+                                <input disabled="disabled" ng-model="models.entityContent.id" type="text" class="form-control" id="add-contributor-id" name="id" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ID' | translate}}">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.roleTag.$dirty) && addContributor.roleTag.$invalid}">
+                    <div class="form-group" ng-class="{'has-error': (addContributor.$submitted || addContributor.roles.$dirty) && addContributor.roles.$invalid}">
                         <label for="add-contributor-role" class="col-sm-2 control-label" translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE"></label>
                         <div class="col-sm-10">
-                            <button id="add-contributor-role" type="button" class="btn btn-default" name="roleTag" ng-model="models.roleTag" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" bs-options="role as role.label for role in allRoles track by role.id" bs-select>{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span></button>
+                            <button id="add-contributor-role" type="button" class="btn btn-default" name="roles" ng-model="models.rolesEntity" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" bs-options="role as role.label for role in allRoles track by role.id" bs-select>{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span></button>
                         </div>
                     </div>
                     <hr/>
                     <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(addContributor.$submitted || addContributor.fullname.$dirty) && addContributor.fullname.$invalid' ng-messages="addContributor.fullname.$error">
                         <div class="text-danger col-sm-offset-2" ng-message="exists">{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MESSAGES.EXISTS' | translate}}</div>
                     </div>
-                    <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(addContributor.$submitted || addContributor.roleTag.$dirty) && addContributor.roleTag.$invalid' ng-messages="addContributor.roleTag.$error">
+                    <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(addContributor.$submitted || addContributor.roles.$dirty) && addContributor.roles.$invalid' ng-messages="addContributor.roles.$error">
                         <div class="text-danger col-sm-offset-2">{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MESSAGES.ROLE' | translate}}</div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" ng-hide="id && editing" class="btn btn-primary" data-translate-values="{editing: editing}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
-                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL"></button>
+                            <button type="submit" ng-show="!disabled && !User.isRoot()" class="btn btn-primary" data-translate-values="{editing: contributor!==undefined}" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SUBMIT"></button>
+                            <button type="button" ng-show="!disabled && User.isRoot()" class="btn btn-success" data-translate="WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.CREATE_ENTITY" ng-click="setContributorFromNewEntity(addContributor)"></button>
+                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
                         </div>
                     </div>
                 </form>

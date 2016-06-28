@@ -241,10 +241,12 @@ angular.module('ortolangMarketApp')
                 NO_PERSON_FOUND: 'You do not find a person ?',
                 ADD_NEW_PERSON: 'Ask for adding a new person',
                 ADD_CONTRIBUTOR_MODAL: {
-                    TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
+                    TITLE: 'Contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    CREATE_ENTITY: 'Create this entity',
                     SEARCH: 'Looking for someone ?',
                     SEARCH_LABEL: 'Search',
+                    ID: 'Identifier',
                     FIRSTNAME: 'First name',
                     MIDNAME: 'Middle name',
                     LASTNAME: 'Last name',

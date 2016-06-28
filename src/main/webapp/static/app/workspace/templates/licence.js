@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace',
-        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper, Workspace) {
+    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace', 'WorkspaceMetadataService',
+        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper, Workspace, WorkspaceMetadataService) {
 
             /**
              * Updates the license property.
@@ -34,18 +34,18 @@ angular.module('ortolangMarketApp')
              * Deletes the licence.
              **/
             $scope.deleteLicense = function () {
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 delete $scope.metadata.license;
                 delete $scope.selectedLicense;
-            }
+            };
 
             /**
              * Edit the licence.
              **/
             $scope.editLicense = function (license) {
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 if (license.id) {
@@ -69,7 +69,7 @@ angular.module('ortolangMarketApp')
 
             $scope.chooseLicence = function (license) {
 
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
 
@@ -160,7 +160,7 @@ angular.module('ortolangMarketApp')
 
             $scope.addLicence = function (license) {
 
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
 
@@ -315,6 +315,7 @@ angular.module('ortolangMarketApp')
             }
 
         	function init() {
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
                 $scope.languages = [
                     {key:'fr',value: $translate.instant('LANGUAGES.FR')},
                     {key:'en', value: $translate.instant('LANGUAGES.EN')},

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ImportMetadataCtrl', ['$rootScope', '$scope', '$timeout', 'Content', 'Workspace', 'ortolangType', '$location', '$alert', '$translate',
-        function ($rootScope, $scope, $timeout, Content, Workspace, ortolangType, $location, $alert, $translate) {
+    .controller('ImportMetadataCtrl', ['$rootScope', '$scope', '$timeout', 'Content', 'Workspace', 'ortolangType', '$location', '$alert', '$translate', 'WorkspaceMetadataService',
+        function ($rootScope, $scope, $timeout, Content, Workspace, ortolangType, $location, $alert, $translate, WorkspaceMetadataService) {
 
         	$scope.upload = function () {
         		// Using $timeout to prevent '$apply already in progress' error
@@ -65,6 +65,7 @@ angular.module('ortolangMarketApp')
         	function init () {
         		setContent($scope.metadata);
         		$scope.ortolangType = ortolangType;
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
         	}
         	init();
     	}]

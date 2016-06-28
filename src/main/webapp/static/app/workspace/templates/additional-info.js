@@ -8,15 +8,15 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AdditionalInfoCtrl', ['$rootScope', '$scope', '$modal', '$translate', 'Workspace',
-        function ($rootScope, $scope, $modal, $translate, Workspace) {
+    .controller('AdditionalInfoCtrl', ['$rootScope', '$scope', '$modal', '$translate', 'Workspace', 'WorkspaceMetadataService',
+        function ($rootScope, $scope, $modal, $translate, Workspace, WorkspaceMetadataService) {
 
             /**
              * Methods on publications
              **/
 
         	$scope.removePublication = function(publication) {
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
         		var index = $scope.metadata.publications.indexOf(publication);
@@ -43,7 +43,7 @@ angular.module('ortolangMarketApp')
              **/
 
             $scope.removePath = function(path) {
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
         		var index = $scope.metadata.preview.indexOf(path);
@@ -60,7 +60,7 @@ angular.module('ortolangMarketApp')
              **/
 
         	$scope.removeKeyword = function(keyword) {
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
         		var index = $scope.metadata.keywords.indexOf(keyword);
@@ -97,6 +97,7 @@ angular.module('ortolangMarketApp')
             });
 
         	function init() {
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
 
                 var filePreviewPathSelectorModalScope = $rootScope.$new();
                 filePreviewPathSelectorModalScope.acceptMultiple = false;

@@ -251,10 +251,12 @@ angular.module('ortolangMarketApp')
                 NO_PERSON_FOUND: 'Vous ne trouvez pas la personne ?',
                 ADD_NEW_PERSON: 'Demander l\'ajouter d\'une personne',
                 ADD_CONTRIBUTOR_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
+                    TITLE: 'Personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    CREATE_ENTITY: 'Créer cette entité',
                     SEARCH: 'Rechercher une personne dans le référentiel ORTOLANG',
                     SEARCH_LABEL: 'Rechercher',
+                    ID: 'Identifiant',
                     FIRSTNAME: 'Prénom',
                     MIDNAME: 'Deuxième prénom',
                     LASTNAME: 'Nom',

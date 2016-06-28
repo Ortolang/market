@@ -9,7 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .factory('ReferentialEntityResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/referentialentities/:name', {name: '@name'}, {
+        return $resource(url.api + '/referentialentities/:name', {}, {
         	 put: {
                 method: 'PUT'
             },

@@ -22,7 +22,8 @@ angular.module('ortolangMarketApp')
         'WorkspaceMetadataService',
         'MetadataFormatResource',
         'OrtolangIitemJsonMigration',
-        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService, MetadataFormatResource, OrtolangIitemJsonMigration) {
+        'User',
+        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService, MetadataFormatResource, OrtolangIitemJsonMigration, User) {
             
             function startSubmit() {
                 $scope.submitButtonText = '<span class="fa fa-refresh fa-spin"></span> Sauvegarde...';
@@ -99,6 +100,7 @@ angular.module('ortolangMarketApp')
                 $scope.submitButtonText = 'Appliquer';
                 // $scope.errors = {title: false, type: false, description: false};
                 $scope.activeTab = 0;
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
 
                 // Gets last schema
                 MetadataFormatResource.get({name: 'ortolang-item-json'}, function (metadataFormats) {
@@ -125,6 +127,7 @@ angular.module('ortolangMarketApp')
                     };
                 }
                 WorkspaceMetadataService.metadata = $scope.metadata;
+                WorkspaceMetadataService.canEdit = Workspace.active.workspace.readOnly && !User.isRoot();
 
                 // Sets datasize
                 ObjectResource.size({key: Workspace.active.workspace.head}, function (data) {

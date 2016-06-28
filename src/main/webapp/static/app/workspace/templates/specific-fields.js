@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', '$translate', 'Settings', 'Helper', '$q', 'ReferentialEntityResource',
-        function ($rootScope, $scope, $filter, $translate, Settings, Helper, $q, ReferentialEntityResource) {
+    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', '$translate', 'Settings', 'Helper', '$q', 'ReferentialEntityResource', 'WorkspaceMetadataService',
+        function ($rootScope, $scope, $filter, $translate, Settings, Helper, $q, ReferentialEntityResource, WorkspaceMetadataService) {
 
             $scope.suggestLanguages = function (term) {
                 if(term.length<2) {
@@ -202,6 +202,7 @@ angular.module('ortolangMarketApp')
              **/
 
         	function init() {
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
                 $scope.languages = [
                     {key: 'fr', value: $translate.instant('LANGUAGES.FR')},
                     {key: 'en', value: $translate.instant('LANGUAGES.EN')},

@@ -8,7 +8,8 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('WorkspaceMetadataService', ['$rootScope', '$q', '$filter', 'WorkspaceElementResource', 'Workspace', 'ortolangType', function ($rootScope, $q, $filter, WorkspaceElementResource, Workspace, ortolangType) {
+    .service('WorkspaceMetadataService', ['$rootScope', '$q', '$filter', 'WorkspaceElementResource', 'Workspace', 'ortolangType', 
+        function ($rootScope, $q, $filter, WorkspaceElementResource, Workspace, ortolangType) {
 
     var WorkspaceMetadataService = this;
 
@@ -16,11 +17,12 @@ angular.module('ortolangMarketApp')
         this.metadata = {};
         this.format = null;
         this.metadataErrors = {title: false, type: false, description: false};
+        this.canEdit = true;
 
-        function postForm(deferred) {
+        function postForm(metadata, deferred) {
 
             // var deferred = $q.defer();
-            var content = angular.toJson(WorkspaceMetadataService.metadata);
+            var content = angular.toJson(metadata);
             var fd = new FormData(),
                 currentPath = '/';
 
@@ -78,11 +80,19 @@ angular.module('ortolangMarketApp')
                 $rootScope.$broadcast('workspace.metadata.errors', [1,2,3]);
                 return deferred.promise;
             }
-            delete this.metadata.imageUrl;
-            delete this.metadata.social;
 
-            this.metadata.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
-            return postForm(deferred);
+            var metadataCopy = angular.copy(this.metadata);
+            delete metadataCopy.imageUrl;
+            delete metadataCopy.social;
+
+            angular.forEach(metadataCopy.contributors, function (contributor) {
+                delete contributor.entityContent;
+                delete contributor.rolesEntity;
+                delete contributor.organizationEntity;
+            });
+
+            metadataCopy.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
+            return postForm(metadataCopy, deferred);
         };
 
         return this;

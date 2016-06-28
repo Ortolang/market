@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BasicInfoCtrl', ['$rootScope', '$scope', '$filter', '$translate', '$modal', 'Workspace',
-        function ($rootScope, $scope, $filter, $translate, $modal, Workspace) {
+    .controller('BasicInfoCtrl', ['$rootScope', '$scope', '$filter', '$translate', '$modal', 'Workspace', 'WorkspaceMetadataService',
+        function ($rootScope, $scope, $filter, $translate, $modal, Workspace, WorkspaceMetadataService) {
 
             //TODO put this method to a service
             function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {
@@ -82,7 +82,7 @@ angular.module('ortolangMarketApp')
              **/
 
             $scope.removeDocumentation = function (documentation) {
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var index = $scope.metadata.relations.indexOf(documentation);
@@ -120,6 +120,7 @@ angular.module('ortolangMarketApp')
             });
 
             function init() {
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
                 $scope.languages = [
                     {key: 'fr', value: $translate.instant('LANGUAGES.FR')},
                     {key: 'en', value: $translate.instant('LANGUAGES.EN')},
