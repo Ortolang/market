@@ -12,7 +12,8 @@ angular.module('ortolangMarketApp')
 
         function addAvailableFilters() {
             $scope.typeFilter = FacetedFilter.make({
-                id: 'type',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type',
                 alias: 'type',
                 label: 'MARKET.RESOURCE_TYPE',
                 resetLabel: 'MARKET.ALL_RESOURCE',
@@ -30,7 +31,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var terminoTypeFilter = FacetedFilter.make({
-                id: 'terminoType.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.terminoType.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.terminoType',
                 alias: 'terminoType',
                 label: 'ITEM.TERMINO_TYPE.LABEL',
                 resetLabel: 'ITEM.TERMINO_TYPE.RESETLABEL',
@@ -40,7 +42,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(terminoTypeFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
-                id: 'statusOfUse.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',
                 resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
