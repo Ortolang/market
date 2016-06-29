@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddOrganizationCtrl', ['$scope', '$filter', 'Helper', 'ReferentialEntityResource', '$q', 
-    	function ($scope, $filter, Helper) {
+    .controller('AddOrganizationCtrl', ['$scope', 'Helper', 'WorkspaceMetadataService', 
+    	function ($scope, Helper, WorkspaceMetadataService) {
 
             function getFullnameOfOrganization(org) {
                 var fullname = org.name,
@@ -116,6 +116,7 @@ angular.module('ortolangMarketApp')
                         $scope.producers.push(organization);
                     }
 
+                    WorkspaceMetadataService.metadataChanged = true;
                     Helper.hideModal();
                 }
             };

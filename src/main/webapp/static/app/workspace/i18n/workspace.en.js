@@ -255,12 +255,13 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'This person is already in the list.',
                         ROLE: 'You need to specify the role of this person.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new person in the referential.',
                 },
                 NO_ORGANIZATION_FOUND: 'You do not find your organization ?',
                 ADD_NEW_ORGANIZATION: 'Add a new organization',
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Editing" : "Adding"}} new organization which contributes',
+                    TITLE: '{{editing ? "Editing" : "Adding"}} a new organization',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
                     SEARCH: 'Looking for an organization ?',
                     SEARCH_LABEL: 'Search',

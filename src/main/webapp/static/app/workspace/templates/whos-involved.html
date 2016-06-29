@@ -86,14 +86,14 @@
     </div>
     <ul class="row list-unstyled auto-clear">
         <li ng-repeat="contributor in metadata.contributors"
-            ng-class="{'contributor-link': contributor.entityContent.id, 'card-danger': !contributor.entityContent.id}"
+            ng-class="{'contributor-link': contributor.entityContent.id}"
             class="profile-card contributor-card col-md-6 col-lg-4 add-member-btn-wrapper"
             ng-disabled="WorkspaceMetadataService.canEdit"
             ng-click="showAddPersonModal(contributor)">
             <div class="media">
                 <div class="media-left" avatar data-email-hash="contributor.entityContent.emailhash" data-size="60" data-img-classes="img-rounded"></div>
                 <div class="media-body">
-                    <span class="name">{{contributor.entityContent.fullname}}</span> <span class="organization" ng-if="contributor.organizationEntity && contributor.organizationEntity.acronym">({{contributor.organizationEntity.acronym}})</span>
+                    <span class="name">{{contributor.entityContent.fullname}}</span> <span class="organization" ng-if="contributor.organizationEntity && contributor.organizationEntity.acronym">({{contributor.organizationEntity.acronym}})</span> <i ng-if="!contributor.entityContent.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de la personne dans le référentiel." data-placement="right" bs-tooltip></i>
                     <div class="small roles">
                         <span ng-repeat="role in contributor.rolesEntity">{{role.label}}<span ng-if="!$last">, </span></span>
                     </div>

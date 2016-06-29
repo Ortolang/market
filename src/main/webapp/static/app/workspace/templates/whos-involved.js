@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
 
             /**
              * Utils
+             * TODO : move this to WorkspaceMetadataService or Helper
              **/
             function producerExists(producer, producers) {
                 if (angular.isDefined(producer.name) && angular.isDefined(producers)) {
@@ -105,9 +106,8 @@ angular.module('ortolangMarketApp')
                 ReferentialEntityResource.get({type: 'PERSON', lang:'FR', term: term}, function(results) {
                     var suggestedPersons = [];
                     angular.forEach(results.entries, function(refentity) {
-                        var content = angular.fromJson(refentity.content);
-                        
-                        suggestedPersons.push(content);
+                        //TODO convert to JSON in ReferentialEntityResource
+                        suggestedPersons.push(angular.fromJson(refentity.content));
                     });
                     deferred.resolve(suggestedPersons);
                 }, function () {

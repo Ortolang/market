@@ -265,12 +265,13 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Cette personne est déjà dans la liste.',
                         ROLE: 'Veuillez spécifier le rôle de cette personne.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la personne dans le référentiel.',
                 },
                 NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
                 ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire producteur',
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un organisme',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     SEARCH: 'Rechercher un organisme ?',
                     SEARCH_LABEL: 'Rechercher',

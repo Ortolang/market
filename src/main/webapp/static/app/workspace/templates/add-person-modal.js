@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                     addContributorForm.firstname.$setValidity('exists', false);
                 }
 
-                if ($scope.models.rolesEntity.length > 0) {
+                if ($scope.models.rolesEntity && $scope.models.rolesEntity.length > 0) {
                     addContributorForm.roles.$setValidity('role', true);
                 } else {
                     addContributorForm.roles.$setValidity('role', false);
@@ -102,6 +102,7 @@ angular.module('ortolangMarketApp')
                         $scope.contributor.organization = angular.copy($scope.models.organization);
                     }
 
+                    WorkspaceMetadataService.metadataChanged = true;
             		Helper.hideModal();
                 }
             };
@@ -145,6 +146,8 @@ angular.module('ortolangMarketApp')
                             $scope.contributor.rolesEntity = angular.copy($scope.models.rolesEntity);
                             $scope.contributor.organizationEntity = angular.copy($scope.models.organizationEntity);
                             $scope.contributor.organization = angular.copy($scope.models.organization);
+
+                            WorkspaceMetadataService.metadataChanged = true;
                         }, function (reason) {
                             //TODO notify
                             console.log(reason);
