@@ -58,7 +58,7 @@ angular.module('ortolangMarketApp')
         'url',
         function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, url) {
 
-            var isMacOs, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
+            var isMacOs, isMobile, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, browserToolbarHeight, initialDisplayedItemLimit, lastSelectedElement,
                 lastShiftSelectedElement, modalScope, clickedChildSelectionDeferred, eventRefreshTimeoutPromise,
                 uploadRefreshTimeoutPromise, parentDataPromise, subTimeout, crudTimeout;
@@ -562,6 +562,14 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.clickChild = function (child, $event) {
+                if (isMobile) {
+                    clickedChildSelectionDeferred = $q.defer();
+                    selectChild(child, false, $event).then(function () {
+                        clickedChildSelectionDeferred.resolve();
+                    });
+                    $scope.doubleClickChild(child);
+                    return;
+                }
                 var modKey = isMacOs ? $event.metaKey : $event.ctrlKey;
                 if ($scope.isSelected(child) && !$event.shiftKey) {
                     if (modKey) {
@@ -1997,6 +2005,7 @@ angular.module('ortolangMarketApp')
 
             function initLocalVariables() {
                 isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                isMobile = $window.navigator.userAgent.indexOf('Mobi') !== -1;
                 isClickedOnce = false;
                 clearPreviousFilteringQueries();
                 initialDisplayedItemLimit = 50;
