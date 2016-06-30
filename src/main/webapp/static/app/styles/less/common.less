@@ -181,7 +181,7 @@ button.no-border {
 
 .card-well {
   min-height: 20px;
-  padding: 17px 19px 19px;
+  padding: @card-well-padding;
   margin-bottom: 20px;
   background-color: lighten(@default-bg, 1%);
   border: 1px solid @well-border;
@@ -194,6 +194,7 @@ button.no-border {
     padding: 10px 12px 12px;
   }
   &.card-news-well {
+    padding-top: @card-well-news-padding-top;
     img {
       max-width: 100%;
       padding-bottom: @padding-large-vertical;
