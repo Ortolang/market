@@ -9,7 +9,6 @@
         <div ng-if="search.activeViewMode.id === 'line'" class="full-item-wrapper">
             <item ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/full-item.html"></item>
         </div>
-
     </div>
 
     <p ng-show="search.isProcessing()"><span class="fa fa-refresh fa-spin"></span> {{'PENDING_DATA' | translate}}</p>

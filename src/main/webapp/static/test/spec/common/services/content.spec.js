@@ -34,10 +34,13 @@ describe('Service: Content', function () {
 
     it('should return the thumb url', function () {
         var expectedUrl = url.api + '/thumbs/k1';
-        expect(Content.getThumbUrlWithKey('k1')).toMatch(expectedUrl);
-        expect(Content.getThumbUrlWithKey('k1', '<size>')).toMatch(expectedUrl);
+        expect(Content.getThumbUrlWithKey('k1')).toBe(expectedUrl);
+        expectedUrl += '?size=<size>';
+        expect(Content.getThumbUrlWithKey('k1', '<size>')).toBe(expectedUrl);
         expectedUrl = expectedUrl.replace(url.api, url.apiNoSSL);
-        expect(Content.getThumbUrlWithKey('k1', '<size>', true)).toMatch(expectedUrl);
+        expect(Content.getThumbUrlWithKey('k1', '<size>', undefined, true)).toBe(expectedUrl);
+        expectedUrl += '&min=true';
+        expect(Content.getThumbUrlWithKey('k1', '<size>', true, true)).toBe(expectedUrl);
     });
 
     it('should return the download url', function () {
