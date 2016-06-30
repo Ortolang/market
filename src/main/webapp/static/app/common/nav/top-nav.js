@@ -12,16 +12,11 @@ angular.module('ortolangMarketApp')
         function ($rootScope, $scope, $location, $translate, AuthService, User, sideNavElements, Settings, Runtime, amMoment, StaticWebsite, Cart) {
 
             $scope.sideNavElements = sideNavElements;
-            $scope.navbarCollapsed = false;
             $scope.User = User;
             $scope.Settings = Settings;
             $scope.Runtime = Runtime;
             $scope.Cart = Cart;
             $scope.StaticWebsite = StaticWebsite;
-
-            $scope.toggleNavbar = function () {
-                $scope.navbarCollapsed = !$scope.navbarCollapsed;
-            };
 
             $scope.login = function () {
                 AuthService.login();

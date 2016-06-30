@@ -49,6 +49,8 @@ angular.module('ortolangMarketApp')
             info: 'fa fa-info-circle',
             question: 'fa fa-question-circle',
             more: 'fa fa-ellipsis-h',
+            news: 'glyphicon glyphicon-bullhorn',
+            statistics: 'fa fa-line-chart',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

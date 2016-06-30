@@ -46,6 +46,7 @@
           text-align: center;
           z-index: 5;
           width: @side-nav-item-icon-width;
+          padding-left: @side-nav-item-icon-padding-left;
           color: @side-nav-item-icon-color;
           line-height: @side-nav-item-height;
         }
@@ -53,6 +54,15 @@
         .item-description {
           position: relative;
           bottom: 3px;
+        }
+
+        &.news {
+          .icon-container {
+            font-size: 180%;
+          }
+          .item-description {
+            bottom: 5px;
+          }
         }
       }
 
@@ -92,7 +102,7 @@
           .item-description, .icon-container {
             color: @inverse-text-color;
           }
-          &.information, &.producers {
+          &.information, &.news, &.producers {
             background-color: @information-primary;
           }
           &.workspaces {

@@ -13,7 +13,10 @@ angular.module('ortolangMarketApp')
             PATH: {
                 LEGAL_NOTICES: 'common/static-website/fr/legal-notices.html'
             },
-            NEWS: 'Actualités',
+            ALL_THE_NEWS: 'Toutes les actualités...',
+            USERS: '{{::profileNumber}} utilisateurs',
+            WORKSPACES: '{{::workspaceNumber}} resources',
+            DATA: '{{::binaryStoreSize | bytes}} de données',
             LEGAL_NOTICES: {
                 TITLE: 'Mentions Légales',
                 INFO_PUBLICATION: 'Informations de publication',

@@ -75,6 +75,16 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'news',
+            class: 'news',
+            path: '/news',
+            description: 'NEWS',
+            iconCss: 'glyphicon glyphicon-bullhorn',
+            hiddenSideNav: false,
+            hiddenTopNav: false,
+            authenticated: false
+        },
+        {
             id: 'information',
             class: 'information',
             path: '/information',

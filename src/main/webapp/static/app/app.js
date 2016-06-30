@@ -55,6 +55,11 @@ angular
                 controller: 'HomeCtrl',
                 description: 'default'
             })
+            .when('/news', {
+                templateUrl: 'market/news.html',
+                controller: 'NewsCtrl',
+                description: 'default'
+            })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
                 controller: 'CorporaCtrl',

@@ -26,8 +26,10 @@
   }
 
   ul.navbar-nav {
-    &.navbar-collapse.collapse {
-      &.in {
+    &.navbar-collapse {
+      border: none;
+      &.in.collapse, &.collapsing {
+        margin-top: @padding-small-vertical;
         .open .dropdown-menu > li {
           > a, > div {
             color: @top-navbar-color;
@@ -37,9 +39,6 @@
             background: none;
           }
         }
-      }
-      &:not(.in) {
-        border: none;
       }
     }
     > li {

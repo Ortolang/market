@@ -25,6 +25,10 @@ angular.module('ortolangMarketApp')
                 return informationContent;
             };
 
+            this.getNewsLimit = function () {
+                return 1;
+            };
+
             this.getInformationPageTitle = function (page) {
                 return page.title[(Settings.language || 'fr')] || page.title;
             };

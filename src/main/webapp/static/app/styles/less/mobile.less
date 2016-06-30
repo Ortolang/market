@@ -8,15 +8,20 @@
       margin-right: @padding-small-horizontal;
     }
   }
+  .toolbar.toolbar-empty {
+    display: none;
+  }
+
+  .navbar.top-nav {
+    ul.navbar-nav.navbar-collapse {
+      .in.collapse, .collapsing {
+        border-top: 1px solid darken(@navbar-default-border, 20%);
+      }
+    }
+  }
 }
 
 @media(min-width: @grid-float-breakpoint) {
-  //#side-nav-wrapper {
-    //display: block !important;
-    //position: absolute;
-    //width: @side-nav-width;
-  //}
-
   #top-nav-wrapper {
     .hidden-description {
       display: none;

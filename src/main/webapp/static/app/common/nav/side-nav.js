@@ -52,6 +52,9 @@ angular.module('ortolangMarketApp')
                         case '/':
                             $scope.select('home');
                             break;
+                        case 'news':
+                            $scope.select('news');
+                            break;
                         case '/profiles/me/edition':
                         case '/profiles/me/tasks':
                         case 'profiles/:key':
@@ -93,6 +96,8 @@ angular.module('ortolangMarketApp')
                     var regExp, i, currentPath;
                     if ($route.current.originalPath === '/') {
                         $scope.select('home');
+                    } else if ($route.current.originalPath === '/news') {
+                        $scope.select('news');
                     } else {
                         for (i = 1; i < sideNavElements.length; i++) {
                             regExp = new RegExp('^' + sideNavElements[i].path);

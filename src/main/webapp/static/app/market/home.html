@@ -1,6 +1,6 @@
 <div class="view-wrapper-flex">
     <div class="toolbar-wrapper">
-        <div class="toolbar"></div>
+        <div class="toolbar toolbar-empty"></div>
     </div>
     <div class="container-main container-main-home">
         <div class="container-main-inner">
@@ -9,7 +9,7 @@
                     <h3 class="ortolang-title" translate="ORTOLANG"></h3>
                     <hr/>
                     <div ng-include="StaticWebsite.getHomePage()"></div>
-                    <hr />
+                    <hr/>
                     <div class="media small marianne" >
                         <div class="media-left">
                             <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
@@ -22,10 +22,19 @@
                 </div>
                 <div class="col-md-4" >
                     <div class="card-well card-news-well">
-                        <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATIC_WEBSITE.NEWS' | translate}}</p>
-                        <div ng-repeat="news in StaticWebsite.getNews() track by news">
-                            <hr/>
+                        <p class="lead"><span ng-class="::icons.news"></span> {{'NEWS' | translate}}</p>
+                        <div ng-repeat="news in StaticWebsite.getNews() | limitTo:StaticWebsite.getNewsLimit() track by news">
                             <div ng-include="::news"></div>
+                            <hr/>
+                        </div>
+                        <a class="btn btn-inverse btn-block" href="/news" translate="STATIC_WEBSITE.ALL_THE_NEWS"></a>
+                    </div>
+                    <div class="card-well card-news-well statistics-wrapper">
+                        <p class="lead"><span ng-class="::icons.statistics"></span> {{'STATISTICS' | translate}}</p>
+                        <div>
+                            <p translate="STATIC_WEBSITE.USERS" data-translate-values="statistics"></p>
+                            <p translate="STATIC_WEBSITE.WORKSPACES" data-translate-values="statistics"></p>
+                            <p translate="STATIC_WEBSITE.DATA" data-translate-values="statistics"></p>
                         </div>
                     </div>
                 </div>
