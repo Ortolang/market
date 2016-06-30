@@ -42,8 +42,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     if (scope.entry.image) {
-                        // 160 - 2 * 14 (padding) = 132
-                        scope.image = Content.getPreviewUrlWithPath(scope.entry.image, scope.entry.wsalias, scope.entry.snapshotName, 132);
+                        scope.image = Content.getThumbUrlWithPath(scope.entry.image, scope.entry.wsalias, scope.entry.snapshotName, 160, true);
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';

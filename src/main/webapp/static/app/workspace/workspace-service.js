@@ -49,7 +49,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             Content.downloadWithKey(workspace.metadatas['ortolang-item-json']).promise.then(function (data) {
                 var metadata = angular.fromJson(data.data);
                 if (metadata.image) {
-                    metadata.imageUrl = Content.getPreviewUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName, 100);
+                    metadata.imageUrl = Content.getThumbUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName, 100, true);
                 } else {
                     metadata.imageUrl = null;
                 }

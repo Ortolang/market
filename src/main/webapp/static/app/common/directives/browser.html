@@ -264,7 +264,7 @@
                     <span>{{hasOnlyRootCollectionSelected() ? '/' : selectedElements[0].name}}</span>
                 </p>
                 <div ng-if="selectedElements[0].type === ortolangType.object" thumb class="ng-hide info-thumb-wrapper">
-                    <img class="thumb" ng-src="{{Content.getPreviewUrlWithKey(selectedElements[0].key)}}"/>
+                    <img class="thumb" ng-src="{{Content.getThumbUrlWithKey(selectedElements[0].key)}}"/>
                     <hr/>
                 </div>
                 <dl class="dl-horizontal">

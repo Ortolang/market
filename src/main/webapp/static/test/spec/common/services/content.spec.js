@@ -32,12 +32,12 @@ describe('Service: Content', function () {
         expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true)).toMatch(url.contentNoSSL + '/<alias>/<root>/<path>');
     });
 
-    it('should return the preview url', function () {
+    it('should return the thumb url', function () {
         var expectedUrl = url.api + '/thumbs/k1';
-        expect(Content.getPreviewUrlWithKey('k1')).toMatch(expectedUrl);
-        expect(Content.getPreviewUrlWithKey('k1', '<size>')).toMatch(expectedUrl);
+        expect(Content.getThumbUrlWithKey('k1')).toMatch(expectedUrl);
+        expect(Content.getThumbUrlWithKey('k1', '<size>')).toMatch(expectedUrl);
         expectedUrl = expectedUrl.replace(url.api, url.apiNoSSL);
-        expect(Content.getPreviewUrlWithKey('k1', '<size>', true)).toMatch(expectedUrl);
+        expect(Content.getThumbUrlWithKey('k1', '<size>', true)).toMatch(expectedUrl);
     });
 
     it('should return the download url', function () {

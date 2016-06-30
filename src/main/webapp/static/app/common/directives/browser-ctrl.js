@@ -474,7 +474,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.getPreviewUrl = function (element, large) {
-                return Content.getPreviewUrlWithKey(element.key, large);
+                return Content.getThumbUrlWithKey(element.key, large);
             };
 
             function createModalScope() {

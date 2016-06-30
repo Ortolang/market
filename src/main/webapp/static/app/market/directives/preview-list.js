@@ -30,7 +30,7 @@ angular.module('ortolangMarketApp')
                         angular.forEach(scope.paths, function (path) {
                             ObjectResource.element({key: scope.collection, path: path}).$promise.then(function (oobject) {
                                 var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
-                                var thumbUrl = Content.getPreviewUrlWithKey(oobject.key);
+                                var thumbUrl = Content.getThumbUrlWithKey(oobject.key);
                                 scope.previewFiles.push({key: oobject.key, thumbUrl: thumbUrl, mimeType: oobject.object.mimeType, external: visualizers.length === 0, name: oobject.object.name});
                             });
                         });
