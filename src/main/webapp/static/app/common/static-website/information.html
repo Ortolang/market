@@ -1,11 +1,15 @@
 <div class="view-wrapper-flex">
     <div class="toolbar-wrapper">
         <div class="toolbar nav-pills-toolbar information-toolbar">
-            <select class="form-control visible-xs" ng-model="section">
-                <option value="{{::page.id}}" ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id">
-                    {{StaticWebsite.getInformationPageTitle(page)}}
-                </option>
-            </select>
+            <div class="select-menu-wrapper">
+                <div class="col-xs-8">
+                    <select class="form-control visible-xs" ng-model="section">
+                        <option value="{{::page.id}}" ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id">
+                            {{StaticWebsite.getInformationPageTitle(page)}}
+                        </option>
+                    </select>
+                </div>
+            </div>
             <ul ng-if="section !== 'legal-notices'" class="nav nav-pills hidden-xs">
                 <li ng-class="{active: section === page.id}" ng-repeat="page in ::StaticWebsite.getInformationContent() track by page.id">
                     <a ng-href="/information/{{::page.id}}">{{StaticWebsite.getInformationPageTitle(page)}}</a>

@@ -22,6 +22,33 @@
       }
     }
   }
+
+  .market-item {
+    > header {
+      .media-left {
+        display: block;
+        .item-logo {
+          height: auto;
+        }
+      }
+      .media-body {
+        display: block;
+        width: auto;
+      }
+    }
+    &.browse {
+      > header {
+        padding-top: @padding-base-vertical;
+        padding-bottom: @padding-base-vertical;
+        button {
+          margin-top: 0;
+        }
+        .item-logo, .market-item-title {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 @media(min-width: @grid-float-breakpoint) {

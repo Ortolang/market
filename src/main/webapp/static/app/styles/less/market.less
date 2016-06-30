@@ -194,6 +194,16 @@
  ***********************************************/
 
 .market-item {
+  &.browse {
+    > header .item-logo {
+      height: 120px;
+      width: 120px;
+      img {
+        max-height: 120px;
+        max-width: 120px;
+      }
+    }
+  }
   > header {
     margin-left: -@container-main-padding;
     margin-right: -@container-main-padding;
@@ -208,14 +218,6 @@
       width: 180px;
       height: 180px;
       display: block;
-      &.browse {
-        height: 120px;
-        width: 120px;
-        img {
-          max-height: 120px;
-          max-width: 120px;
-        }
-      }
     }
     button {
       margin-top: @padding-large-vertical;

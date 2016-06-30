@@ -1,8 +1,8 @@
-<section class="market-item" ng-controller="OrtolangItemJson14Ctrl">
+<section class="market-item" ng-controller="OrtolangItemJson14Ctrl" ng-class="{browse: browse}">
     <header>
         <div class="media">
             <div class="media-left">
-                <div class="item-logo" ng-class="{browse: browse}">
+                <div class="item-logo">
                     <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}&size=63"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                     <img ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 </div>
