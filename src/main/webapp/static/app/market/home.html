@@ -5,7 +5,7 @@
     <div class="container-main container-main-home">
         <div class="container-main-inner">
             <section class="row">
-                <div class="col-md-8">
+                <div class="col-md-8 col-lg-7">
                     <h3 class="ortolang-title" translate="ORTOLANG"></h3>
                     <hr/>
                     <div ng-include="StaticWebsite.getHomePage()"></div>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4" >
+                <div class="col-md-4 col-lg-5" >
                     <div class="card-well card-news-well">
                         <p class="lead"><span ng-class="::icons.news"></span> {{'NEWS' | translate}}</p>
                         <div ng-repeat="news in StaticWebsite.getNews() | limitTo:StaticWebsite.getNewsLimit() track by news">
