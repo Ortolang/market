@@ -3,7 +3,7 @@
         <label for="search-producer" class="control-label">Laboratoire(s) producteur(s)</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchProducer" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.label for organization in suggestOrganization($viewValue)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <input ng-model="searchProducer" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.fullname for organization in suggestOrganization($viewValue)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
             Vous ne trouvez pas votre laboratoire ?
@@ -12,14 +12,14 @@
     </div>
     <table class="table table-bordered table-responsive card-well metadata-editor-table">
         <tbody>
-        <tr ng-repeat="producer in producers">
+        <tr ng-repeat="producer in metadata.producersEntity">
             <td>
                 <div class="media">
                     <div class="media-left">
                         <img width="60px" class="img-rounded" ng-src="{{producer.img}}">
                     </div>
-                    <div class="media-body">
-                        <span  ng-bind="producer.fullname"></span>
+                    <div class="media-body clickable" ng-click="showAddOrganizationModal(producer)">
+                        <span  ng-bind="producer.fullname"></span> <i ng-if="!producer.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de l'organisme dans le référentiel." data-placement="right" bs-tooltip></i>
                     </div>
                     <div class="media-right actions">
                         <button class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteProducer(producer)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
@@ -36,23 +36,23 @@
         <label for="search-sponsor" class="control-label">{{'ITEM.SPONSORS.LABEL' | translate}}</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.label for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.fullname for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
             {{'WORKSPACE.METADATA_EDITOR.NO_ORGANIZATION_FOUND' | translate}}
-            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddOrganizationModal('sponsor')">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_ORGANIZATION' | translate}}</a>
+            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddSponsorModal()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_ORGANIZATION' | translate}}</a>
         </p>
     </div>
     <table class="table table-bordered table-responsive card-well metadata-editor-table">
         <tbody>
-        <tr ng-repeat="sponsor in sponsors">
+        <tr ng-repeat="sponsor in metadata.sponsorsEntity">
             <td>
                 <div class="media">
                     <div class="media-left">
                         <img width="60px" class="img-rounded" ng-src="{{sponsor.img}}">
                     </div>
-                    <div class="media-body">
-                        <span  ng-bind="sponsor.fullname"></span>
+                    <div class="media-body clickable" ng-click="showAddSponsorModal(sponsor)">
+                        <span  ng-bind="sponsor.fullname"></span> <i ng-if="!sponsor.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de l'organisme dans le référentiel." data-placement="right" bs-tooltip></i>
                     </div>
                     <div class="media-right actions">
                         <button class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteSponsor(sponsor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>

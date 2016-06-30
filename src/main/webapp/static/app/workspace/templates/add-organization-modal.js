@@ -1,4 +1,4 @@
-'use strict';
+    'use strict';
 
 /**
  * @ngdoc function
@@ -8,8 +8,19 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddOrganizationCtrl', ['$scope', 'Helper', 'WorkspaceMetadataService', 
-    	function ($scope, Helper, WorkspaceMetadataService) {
+    .controller('AddOrganizationCtrl', ['$scope', '$filter', 'Helper', 'WorkspaceMetadataService', 'User', 'ReferentialEntityResource', 
+    	function ($scope, $filter, Helper, WorkspaceMetadataService, User, ReferentialEntityResource) {
+
+            var regExp = new RegExp(' +', 'g');
+
+            function normalizeId(id) {
+                id = $filter('diacritics')(id);
+                $scope.models.id = id ? id.replace(/[^\w\s]/g, '').replace(regExp, '_').toLowerCase() : id;
+            }
+
+            $scope.generateId = function () {
+                normalizeId($scope.models.name);
+            };
 
             function getFullnameOfOrganization(org) {
                 var fullname = org.name,
@@ -22,19 +33,6 @@ angular.module('ortolangMarketApp')
                     fullname += ' (' + details + ')';
                 }
                 return fullname;
-            }
-
-            function setOrganization(organization, modalScope) {
-                // organization.type = modalScope.type;
-                // organization.id = modalScope.id;
-                organization.key = modalScope.models.key;
-                organization.name = modalScope.models.name;
-                organization.fullname = getFullnameOfOrganization(modalScope.models);
-                organization.acronym = modalScope.models.acronym;
-                organization.city = modalScope.models.city;
-                organization.country = modalScope.models.country;
-                organization.homepage = modalScope.models.homepage;
-                organization.img = modalScope.models.img;
             }
 
             function producerExists(producer, producers) {
@@ -75,7 +73,7 @@ angular.module('ortolangMarketApp')
                 return false;
             }
 
-            $scope.submit = function (addOrganizationForm) {
+            $scope.addOrganizationFromScratch = function (addOrganizationForm) {
 
                 if (angular.isUndefined($scope.models.name)) {
                     addOrganizationForm.name.$setValidity('undefined', false);
@@ -83,7 +81,7 @@ angular.module('ortolangMarketApp')
                     addOrganizationForm.name.$setValidity('undefined', true);
                 }
 
-                if (angular.isDefined($scope.sponsor)) {
+                if ($scope.isSponsor) {
 	                if (!sponsorExists($scope, $scope.metadata.sponsors)) {
 	                    addOrganizationForm.name.$setValidity('exists', true);
 	                } else {
@@ -98,26 +96,69 @@ angular.module('ortolangMarketApp')
                 }
 
                 if (addOrganizationForm.$valid) {
-                    var organization = {};
+                    delete $scope.models.id;
+                    $scope.models.fullname = getFullnameOfOrganization($scope.models);
 
-                    setOrganization(organization, $scope);
-
-                    if(angular.isDefined($scope.sponsor)) {
-                        if ($scope.metadata.sponsors === undefined) {
-                            $scope.metadata.sponsors = [];
+                    if($scope.isSponsor) {
+                        if ($scope.organization) {
+                            WorkspaceMetadataService.setOrganization($scope.organization, $scope.models);
+                        } else {
+                            WorkspaceMetadataService.addSponsor($scope.models);
                         }
-                        $scope.metadata.sponsors.push(organization);
-                        $scope.sponsors.push(organization);
                     } else {
-                        if ($scope.metadata.producers === undefined) {
-                            $scope.metadata.producers = [];
+                        if ($scope.organization) {
+                            WorkspaceMetadataService.setOrganization($scope.organization, $scope.models);
+                        } else {
+                            WorkspaceMetadataService.addProducer($scope.models);
                         }
-                        $scope.metadata.producers.push(organization);
-                        $scope.producers.push(organization);
                     }
 
                     WorkspaceMetadataService.metadataChanged = true;
                     Helper.hideModal();
                 }
             };
+
+            $scope.setOrganizationFromNewEntity = function (addOrganizationForm) {
+
+                if (angular.isUndefined($scope.models.name)) {
+                    addOrganizationForm.name.$setValidity('undefined', false);
+                } else {
+                    addOrganizationForm.name.$setValidity('undefined', true);
+                }
+
+                if (addOrganizationForm.$valid) {
+                    $scope.models.fullname = getFullnameOfOrganization($scope.models);
+                    if($scope.isSponsor) {
+                        WorkspaceMetadataService.replaceSponsor($scope.organization, $scope.models).then(function () {
+                            // Notify entity created
+                        }, function () {
+                            // Notify entity not created
+                        });
+                    } else {
+                        WorkspaceMetadataService.replaceProducer($scope.organization, $scope.models).then(function () {
+                            // Notify entity created
+                        }, function () {
+                            // Notify entity not created
+                        });
+                    }
+
+                    Helper.hideModal();
+                }
+            };
+
+            function init() {
+                $scope.User = User;
+                $scope.disabled = false;
+
+                if ($scope.organization) {
+                    $scope.models = angular.copy($scope.organization);
+                    $scope.disabled = angular.isDefined($scope.models.id);
+                    if (angular.isUndefined($scope.models.id)) {
+                        normalizeId($scope.models.name);
+                    }
+                } else {
+                    $scope.models = {};
+                }
+            }
+            init();
     }]);

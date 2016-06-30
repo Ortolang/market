@@ -15,43 +15,6 @@ angular.module('ortolangMarketApp')
              * Utils
              * TODO : move this to WorkspaceMetadataService or Helper
              **/
-            function producerExists(producer, producers) {
-                if (angular.isDefined(producer.name) && angular.isDefined(producers)) {
-                    //TODO with $filter (slower?)
-                    var indexProducer;
-                    for (indexProducer = 0; indexProducer < producers.length; indexProducer++) {
-                        if (angular.isDefined(producers[indexProducer].id) && angular.isDefined(producer.id)) {
-                            if (producers[indexProducer].id === producer.id) {
-                                return true;
-                            }
-                        } else {
-                            if (producers[indexProducer].name === producer.name) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
-            }
-
-            function sponsorExists(sponsor, sponsors) {
-                if (angular.isDefined(sponsor.name) && angular.isDefined(sponsors)) {
-                    //TODO with $filter (slower?)
-                    var indexSponsor;
-                    for (indexSponsor = 0; indexSponsor < sponsors.length; indexSponsor++) {
-                        if (angular.isDefined(sponsors[indexSponsor].id) && angular.isDefined(sponsor.id)) {
-                            if (sponsors[indexSponsor].id === sponsor.id) {
-                                return true;
-                            }
-                        } else {
-                            if (sponsors[indexSponsor].name === sponsor.name) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
-            }
 
             function personExists(contributor, contributors) {
                 if (angular.isDefined(contributor.fullname) && angular.isDefined(contributors)) {
@@ -189,153 +152,6 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            /**
-             * Methods on organizations (producers and sponsors)
-             **/
-
-            $scope.deleteProducer = function (producer) {
-                var index = $scope.producers.indexOf(producer);
-                if (index > -1) {
-                    $scope.metadata.producers.splice(index, 1);
-                    $scope.producers.splice(index, 1);
-                }
-            };
-
-            $scope.deleteSponsor = function (sponsor) {
-                var index = $scope.sponsors.indexOf(sponsor);
-                if (index > -1) {
-                    $scope.metadata.sponsors.splice(index, 1);
-                    $scope.sponsors.splice(index, 1);
-                }
-            };
-
-            $scope.suggestOrganization = function (term, sponsor) {
-                if(term.length<2 || angular.isObject(term)) {
-                    return [];
-                }
-                var deferred = $q.defer();
-                ReferentialEntityResource.get({type: 'ORGANIZATION', lang:'FR', term: term}, function(results) {
-                    var suggestedOrganizations = [];
-                    angular.forEach(results.entries, function(refentity) {
-                        var content = angular.fromJson(refentity.content);
-
-                        if (angular.isUndefined(sponsor)) {
-                            if(angular.isUndefined(content.compatibilities)) {
-                                suggestedOrganizations.push({
-                                    key: refentity.key,
-                                    value: content.fullname,
-                                    fullname: content.fullname,
-                                    name: content.name,
-                                    img: content.img,
-                                    org: content,
-                                    label: '<span>' + content.fullname + '</span>'
-                                });
-                            }
-                        } else {
-                            suggestedOrganizations.push({
-                                key: refentity.key,
-                                value: content.fullname,
-                                fullname: content.fullname,
-                                name: content.name,
-                                img: content.img,
-                                org: content,
-                                label: '<span>' + content.fullname + '</span>'
-                            });
-                        }
-                    });
-                    deferred.resolve(suggestedOrganizations);
-                }, function () {
-                    deferred.reject([]);
-                });
-                return deferred.promise;
-            };
-
-            $scope.showAddOrganizationModal = function (sponsor) {
-                if (WorkspaceMetadataService.canEdit) {
-                    return;
-                }
-                var modalScope = Helper.createModalScope(true),
-                    addOrganizationModal;
-                modalScope.sponsor = sponsor;
-                modalScope.metadata = $scope.metadata;
-                modalScope.sponsors = $scope.sponsors;
-                modalScope.producers = $scope.producers;
-
-                addOrganizationModal = $modal({
-                    scope: modalScope,
-                    templateUrl: 'workspace/templates/add-organization-modal.html'
-                });
-            };
-
-            /**
-             * Adds sponsor listener.
-             **/
-            $scope.$on('taorg.select', function (v, i) {
-                var organization = {};
-                organization.type = 'Organization';
-                organization.id = i.org.id;
-                organization.name = i.org.name;
-                organization.acronym = i.org.acronym;
-                organization.city = i.org.city;
-                organization.country = i.org.country;
-                organization.homepage = i.org.homepage;
-                organization.img = i.org.img;
-                organization.fullname = i.org.fullname;
-
-                organization.key = i.key;
-
-                if (!producerExists(organization, $scope.producers)) {
-                    if ($scope.metadata.producers === undefined) {
-                        $scope.metadata.producers = [];
-                    }
-                    $scope.producers.push(organization);
-                    $scope.metadata.producers.push(Helper.createKeyFromReferentialId(organization.key));
-                } else {
-                    console.log('Le laboratoire est déjà présent dans la liste des producteurs de la ressource.');
-                }
-
-                clearSearchProducer();
-
-                $scope.$apply();
-            });
-
-            /**
-             * Adds sponsor listener.
-             **/
-            $scope.$on('tasponsor.select', function (v, i) {
-                var organization = {};
-                organization.type = 'Organization';
-                organization.id = i.org.id;
-                organization.name = i.org.name;
-                organization.acronym = i.org.acronym;
-                organization.city = i.org.city;
-                organization.country = i.org.country;
-                organization.homepage = i.org.homepage;
-                organization.img = i.org.img;
-                organization.fullname = i.org.fullname;
-                organization.compatibilities = ['Sponsor'];
-
-                organization.key = i.key;
-
-                if ($scope.sponsors === undefined || ($scope.sponsors !== undefined && !sponsorExists(organization, $scope.sponsors))) {
-                    if ($scope.metadata.sponsors === undefined) {
-                        $scope.metadata.sponsors = [];
-                    }
-                    $scope.sponsors.push(organization);
-                    $scope.metadata.sponsors.push(Helper.createKeyFromReferentialId(organization.key));
-                } else {
-                    console.log('Le sponsor est déjà présent dans la liste des sponsors de la ressource.');
-                }
-
-                clearSearchSponsor();
-
-                $scope.$apply();
-            });
-
-            /**
-             * Methods for loadings entities
-             **/
-
             function loadContributor(contributor) {
                 if (typeof contributor.entity  === 'string') {
                     ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function(entity) {
@@ -373,41 +189,172 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function loadOrganization (organizationId, array) {
-                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(organizationId)}, function(orgEntities) {
-                    var content = angular.fromJson(orgEntities.content);
-                    array.push({
-                        key: orgEntities.key,
-                        value: content.fullname,
-                        fullname: content.fullname,
-                        name: content.name,
-                        img: content.img,
-                        org: content,
-                        label: '<span>' + content.fullname + '</span>'
+            /**
+             * Methods on organizations (producers and sponsors)
+             **/
+
+            $scope.deleteProducer = function (producer) {
+                var index = $scope.metadata.producersEntity.indexOf(producer);
+                if (index > -1) {
+                    $scope.metadata.producers.splice(index, 1);
+                    $scope.metadata.producersEntity.splice(index, 1);
+                }
+            };
+
+            $scope.deleteSponsor = function (sponsor) {
+                var index = $scope.metadata.sponsorsEntity.indexOf(sponsor);
+                if (index > -1) {
+                    $scope.metadata.sponsors.splice(index, 1);
+                    $scope.metadata.sponsorsEntity.splice(index, 1);
+                }
+            };
+
+            $scope.suggestOrganization = function (term, sponsor) {
+                if(term.length<2 || angular.isObject(term)) {
+                    return [];
+                }
+                var deferred = $q.defer();
+                ReferentialEntityResource.get({type: 'ORGANIZATION', lang:'FR', term: term}, function(results) {
+                    var suggestedOrganizations = [];
+                    angular.forEach(results.entries, function(refentity) {
+                        var content = angular.fromJson(refentity.content);
+
+                        if (angular.isUndefined(sponsor)) {
+                            if(angular.isUndefined(content.compatibilities)) {
+                                suggestedOrganizations.push(content);
+                            }
+                        } else {
+                            suggestedOrganizations.push(content);
+                            // suggestedOrganizations.push({
+                            //     key: refentity.key,
+                            //     value: content.fullname,
+                            //     fullname: content.fullname,
+                            //     name: content.name,
+                            //     img: content.img,
+                            //     org: content,
+                            //     label: '<span>' + content.fullname + '</span>'
+                            // });
+                        }
                     });
+                    deferred.resolve(suggestedOrganizations);
+                }, function () {
+                    deferred.reject([]);
+                });
+                return deferred.promise;
+            };
+
+            $scope.showAddOrganizationModal = function (organization) {
+                if (WorkspaceMetadataService.canEdit) {
+                    return;
+                }
+                var modalScope = Helper.createModalScope(true),
+                    addOrganizationModal;
+                modalScope.metadata = $scope.metadata;
+                modalScope.sponsors = $scope.sponsors;
+                if (organization) {
+                    modalScope.organization = organization;
+                }
+                addOrganizationModal = $modal({
+                    scope: modalScope,
+                    templateUrl: 'workspace/templates/add-organization-modal.html'
+                });
+            };
+
+            $scope.showAddSponsorModal = function (organization) {
+                if (WorkspaceMetadataService.canEdit) {
+                    return;
+                }
+                var modalScope = Helper.createModalScope(true),
+                    addOrganizationModal;
+                modalScope.isSponsor = true;
+                modalScope.metadata = $scope.metadata;
+                modalScope.sponsors = $scope.sponsors;
+                if (organization) {
+                    modalScope.organization = organization;
+                }
+                addOrganizationModal = $modal({
+                    scope: modalScope,
+                    templateUrl: 'workspace/templates/add-organization-modal.html'
+                });
+            };
+
+            /**
+             * Adds sponsor listener.
+             **/
+            $scope.$on('taorg.select', function (v, i) {
+                WorkspaceMetadataService.addProducer(i);
+
+                clearSearchProducer();
+
+                $scope.$apply();
+            });
+
+            /**
+             * Adds sponsor listener.
+             **/
+            $scope.$on('tasponsor.select', function (v, i) {
+                // var organization = {};
+                // organization.type = 'Organization';
+                // organization.id = i.org.id;
+                // organization.name = i.org.name;
+                // organization.acronym = i.org.acronym;
+                // organization.city = i.org.city;
+                // organization.country = i.org.country;
+                // organization.homepage = i.org.homepage;
+                // organization.img = i.org.img;
+                // organization.fullname = i.org.fullname;
+                // organization.compatibilities = ['Sponsor'];
+
+                // organization.key = i.key;
+
+                // if ($scope.sponsors === undefined || ($scope.sponsors !== undefined && !sponsorExists(organization, $scope.sponsors))) {
+                //     if ($scope.metadata.sponsors === undefined) {
+                //         $scope.metadata.sponsors = [];
+                //     }
+                //     $scope.sponsors.push(organization);
+                //     $scope.metadata.sponsors.push(Helper.createKeyFromReferentialId(organization.key));
+                // } else {
+                //     console.log('Le sponsor est déjà présent dans la liste des sponsors de la ressource.');
+                // }
+                WorkspaceMetadataService.addSponsor(i);
+
+                clearSearchSponsor();
+
+                $scope.$apply();
+            });
+
+            /**
+             * Methods for loadings entities
+             **/
+
+            function loadOrganization (organization) {
+                ReferentialEntityResource.get({name: organization.id}, function(orgEntities) {
+                    WorkspaceMetadataService.setOrganization(organization, angular.fromJson(orgEntities.content));
                 });
             }
 
             function loadOrganizations () {
-                if (angular.isDefined($scope.metadata.producers)) {
-                    $scope.producers = [];
+                if (angular.isDefined($scope.metadata.producers) && $scope.metadata.producers.length>0) {
+                    $scope.metadata.producersEntity = [];
                     angular.forEach($scope.metadata.producers, function(producer) {
-
                         if (typeof producer  === 'string') {
-                            loadOrganization(producer, $scope.producers);
+                            var producerEntity = {id: Helper.extractNameFromReferentialId(producer)};
+                            $scope.metadata.producersEntity.push(producerEntity);
+                            loadOrganization(producerEntity);
                         } else {
-                            $scope.producers.push(producer);
+                            $scope.metadata.producersEntity.push(producer);
                         }
                     });
                 }
-                if (angular.isDefined($scope.metadata.sponsors)) {
-                    $scope.sponsors = [];
+                if (angular.isDefined($scope.metadata.sponsors) && $scope.metadata.sponsors.length>0) {
+                    $scope.metadata.sponsorsEntity = [];
                     angular.forEach($scope.metadata.sponsors, function(sponsor) {
-
                         if (typeof sponsor  === 'string') {
-                            loadOrganization(sponsor, $scope.sponsors);
+                            var sponsorEntity = {id: Helper.extractNameFromReferentialId(sponsor)};
+                            $scope.metadata.sponsorsEntity.push(sponsorEntity);
+                            loadOrganization(sponsorEntity);
                         } else {
-                            $scope.sponsors.push(sponsor);
+                            $scope.metadata.sponsorsEntity.push(sponsor);
                         }
                     });
                 }
@@ -431,8 +378,6 @@ angular.module('ortolangMarketApp')
              **/
             function init() {
                 $scope.WorkspaceMetadataService = WorkspaceMetadataService;
-                $scope.producers = [];
-                $scope.sponsors = [];
 
                 $scope.allRoles = [];
                 $scope.searchOrganization = '';                

@@ -275,6 +275,7 @@ angular.module('ortolangMarketApp')
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     SEARCH: 'Rechercher un organisme ?',
                     SEARCH_LABEL: 'Rechercher',
+                    IDENTIFIER: 'Identifiant',
                     NAME: 'Nom',
                     CITY: 'Ville',
                     COUNTRY: 'Pays',
