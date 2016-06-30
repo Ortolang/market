@@ -79,7 +79,7 @@ angular.module('ortolangMarketApp')
             class: 'news',
             path: '/news',
             description: 'NEWS',
-            iconCss: 'glyphicon glyphicon-bullhorn',
+            iconCss: 'fa-fw glyphicon glyphicon-bullhorn',
             hiddenSideNav: false,
             hiddenTopNav: false,
             authenticated: false
