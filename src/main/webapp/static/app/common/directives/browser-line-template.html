@@ -1,5 +1,5 @@
 <div class="table-wrapper table-workspace-elements-wrapper">
-    <table ng-init="resizeBrowser()" ng-if="parent.elements" ng-class="{'no-children': parent.elements.length === 0 && browserService.canEdit && isHead}" class="table table-hover table-responsive table-workspace-elements">
+    <table ng-if="parent.elements" ng-class="{'no-children': parent.elements.length === 0 && browserService.canEdit && isHead}" class="table table-hover table-responsive table-workspace-elements">
         <colgroup>
             <col/>
             <col ng-class="{type: isScreenMd}"/>

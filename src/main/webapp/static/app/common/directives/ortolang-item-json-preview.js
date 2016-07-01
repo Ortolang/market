@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
                 icons: '=',
                 preview: '@?'
             },
-            template: '<div ng-include="marketItemTemplate"></div>',
+            template: '<div class="market-item-wrapper" ng-include="marketItemTemplate"></div>',
             link: {
                 pre: function (scope) {
 

@@ -379,7 +379,7 @@ angular.module('ortolangMarketApp')
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
                     eventsLimit: 4,
-                    requestsLimit: 3,
+                    requestsLimit: 2,
                     eventsInfiniteScrollBusy: false
                 };
                 Workspace.getWorkspaceList(true).then(function () {

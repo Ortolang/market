@@ -1223,7 +1223,6 @@ angular.module('ortolangMarketApp')
                     $rootScope.ortolangPageSubtitle = undefined;
                 }
                 // Unbind listeners
-                angular.element($window).unbind('resize.' + $scope.$id);
                 angular.element($window).unbind('hide.bs.dropdown.' + $scope.$id);
             });
 
@@ -1867,49 +1866,6 @@ angular.module('ortolangMarketApp')
             $scope.showCheatsheet = function ($event) {
                 hotkeys.get('?').callback($event);
             };
-
-            // *********************** //
-            //          Resize         //
-            // *********************** //
-
-            $scope.resizeBrowser = function () {
-                if ($scope.isMarketBrowserService) {
-                    console.log('resize');
-                    var topOffset = angular.element('.browser-wrapper').offset().top,
-                        height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-                    browserToolbarHeight = angular.element('.browser-toolbar').innerHeight();
-                    height = height - topOffset;
-                    if (height < 1) {
-                        height = 1;
-                    }
-                    if (height > topOffset) {
-                        height -= 1;
-                        if ($rootScope.uploader && $rootScope.uploader.uploadQueueStatus === 'active') {
-                            height -= angular.element('.upload-queue').innerHeight();
-                        }
-                        var browserWrapper = angular.element('.browser-wrapper'),
-                            browserAside = browserWrapper.find('.browser-aside');
-                        browserAside.css('min-height', (height - browserToolbarHeight) + 'px');
-                        browserAside.find('.my-workspaces').css('height', (height - browserToolbarHeight - 80) + 'px');
-                        browserWrapper.find('.table-wrapper.table-workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
-                        browserWrapper.find('.tile-workspace-elements-wrapper').css('height', (height - browserToolbarHeight) + 'px');
-                        browserWrapper.find('.browser-aside-left-collapsed').css('height', (height - browserToolbarHeight) + 'px');
-                    }
-                    $scope.isScreenMd = window.innerWidth < 992;
-                    $scope.browserSettings.hideWorkspaceListMdScreen = $scope.isScreenMd;
-                    $scope.$applyAsync();
-                }
-            };
-
-            angular.element($window).bind('resize.' + $scope.$id, function () {
-                $scope.resizeBrowser();
-            });
-
-            $rootScope.$watch('uploader.uploadQueueStatus', function (newValue, oldValue) {
-                if (newValue !== oldValue) {
-                    $scope.resizeBrowser();
-                }
-            });
 
             // *********************** //
             //        View mode        //
