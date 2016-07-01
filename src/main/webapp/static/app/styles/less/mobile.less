@@ -1,4 +1,16 @@
 @media (max-width: @grid-float-breakpoint-max) {
+  .ortolang-title {
+    margin-top: 0;
+  }
+
+  .main-footer {
+    margin-bottom: @line-height-computed;
+    p {
+      display: inline;
+      float: none !important;
+    }
+  }
+
   #side-nav-wrapper {
     display: none !important;
   }
@@ -36,6 +48,9 @@
         width: auto;
       }
     }
+    aside {
+      margin-top: 0;
+    }
     &.browse {
       > header {
         margin-left: -@container-main-mobile-padding;
@@ -59,9 +74,15 @@
     .table-workspace-elements-wrapper, .tile-workspace-elements-wrapper {
       padding-left: @padding-small-horizontal;
       padding-right: @padding-small-horizontal;
-      > table {
-        margin-top: @padding-base-vertical;
-      }
+    }
+
+  }
+  .table.table-workspace-elements {
+    margin-top: @padding-base-vertical;
+    th {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .toolbar.browser-toolbar.market-browser-toolbar, .toolbar.visualizer-toolbar {
@@ -81,6 +102,7 @@
         max-width: 200px;
         text-overflow: ellipsis;
         white-space: nowrap;
+        overflow: hidden;
       }
     }
     .browser-breadcrumb.aside-left-collapsed {

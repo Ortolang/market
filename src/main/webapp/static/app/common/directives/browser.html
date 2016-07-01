@@ -163,7 +163,7 @@
 
                 <span class="divider"></span>
 
-                <div ng-if="isWorkspaceBrowserService" class="btn-group">
+                <div ng-if="isWorkspaceBrowserService" class="btn-group hidden-xs">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.OTHERS' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.others"></span>
                     </button>
@@ -216,7 +216,7 @@
                     </button>
                 </div>
 
-                <div ng-show="!hasOnlyParentSelected()" class="btn-group">
+                <div ng-show="!hasOnlyParentSelected()" class="btn-group hidden-xs">
                     <button ng-if="browserService.canEdit && isHead" class="btn btn-default" ng-click="deleteSelectedElements()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{isMarketBrowserService ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.delete"></span>
                     </button>
