@@ -38,8 +38,9 @@
     }
     &.browse {
       > header {
-        padding-top: @padding-base-vertical;
-        padding-bottom: @padding-base-vertical;
+        margin-left: -@container-main-mobile-padding;
+        margin-right: -@container-main-mobile-padding;
+        padding: @padding-base-vertical 25px;
         button {
           margin-top: 0;
         }
@@ -47,6 +48,43 @@
           display: none;
         }
       }
+    }
+  }
+
+  .browser-wrapper.market-browser-wrapper {
+    margin-left: -@container-main-mobile-padding;
+    margin-right: -@container-main-mobile-padding;
+
+
+    .table-workspace-elements-wrapper, .tile-workspace-elements-wrapper {
+      padding-left: @padding-small-horizontal;
+      padding-right: @padding-small-horizontal;
+      > table {
+        margin-top: @padding-base-vertical;
+      }
+    }
+  }
+  .toolbar.browser-toolbar.market-browser-toolbar, .toolbar.visualizer-toolbar {
+    padding-left: @padding-small-horizontal;
+    padding-right: @padding-small-horizontal;
+  }
+  .toolbar.browser-toolbar {
+    .browser-breadcrumb .breadcrumb-part {
+      &:after {
+        content: '';
+      }
+      button, a {
+        padding-left: @padding-large-horizontal !important;
+        padding-right: @padding-large-horizontal !important;
+        border-color: @btn-default-border;
+        background-color: @btn-default-bg;
+        max-width: 200px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .browser-breadcrumb.aside-left-collapsed {
+      padding: 0;
     }
   }
 }

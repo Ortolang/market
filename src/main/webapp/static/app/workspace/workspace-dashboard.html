@@ -1,12 +1,21 @@
 <div class="view-wrapper-flex">
     <div class="toolbar-wrapper">
         <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="{faded: dashboardSection === 'content'}">
-            <ul class="nav nav-pills">
+            <div class="select-menu-wrapper visible-xs">
+                <div class="col-xs-8">
+                    <select class="form-control" ng-model="dashboardSectionSelect" ng-change="selectDashboardSection(dashboardSectionSelect)">
+                        <option value="{{::section}}" ng-repeat="section in ::dashboardSections track by section">
+                            {{::'WORKSPACE.' + section.toUpperCase() | translate}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <ul class="nav nav-pills hidden-xs">
                 <li class="workspace-alias-tab">
                     <a><strong>{{::Workspace.active.workspace.alias}}</strong></a>
                 </li>
                 <li ng-class="{active: dashboardSection === 'information'}" role="tab">
-                    <a ng-click="selectDashboardSection('information')" translate="INFORMATION"></a>
+                    <a ng-click="selectDashboardSection('information')" translate="WORKSPACE.INFORMATION"></a>
                 </li>
                 <li ng-class="{active: dashboardSection === 'content'}" role="tab">
                     <a ng-click="selectDashboardSection('content')" translate="WORKSPACE.CONTENT"></a>

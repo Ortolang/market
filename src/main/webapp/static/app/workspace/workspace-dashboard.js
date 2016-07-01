@@ -69,6 +69,7 @@ angular.module('ortolangMarketApp')
              */
             function performSetDashboardSection (id) {
                 $scope.dashboardSection = id || defaultSection;
+                $scope.dashboardSectionSelect = $scope.dashboardSection;
                 if ($scope.dashboardSection === defaultSection) {
                     $location.search({});
                 } else {
@@ -95,7 +96,7 @@ angular.module('ortolangMarketApp')
              */
             function setDashboardSection(id) {
                 if ($location.search().section === 'metadata' && WorkspaceMetadataService.metadataChanged) {
-                    showSavingMetadataModal('?section='+id);
+                    showSavingMetadataModal('?section=' + id);
                 } else {
                     performSetDashboardSection(id);
                 }
@@ -104,6 +105,8 @@ angular.module('ortolangMarketApp')
             $scope.selectDashboardSection = function (id) {
                 setDashboardSection(id);
             };
+
+            $scope.dashboardSections = ['information', 'content', 'members', 'metadata', 'permissions', 'preview'];
 
             $scope.$on('$routeUpdate', function () {
                 if ($scope.dashboardSection === 'information' && !$location.search().section) {

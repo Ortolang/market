@@ -562,7 +562,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.clickChild = function (child, $event) {
-                if (isMobile) {
+                if (isMobile &&  $event && $event.button !== 2) {
                     clickedChildSelectionDeferred = $q.defer();
                     selectChild(child, false, $event).then(function () {
                         clickedChildSelectionDeferred.resolve();
@@ -1160,13 +1160,13 @@ angular.module('ortolangMarketApp')
                 $scope.browseToPath($scope.parent.path + '/' + child.name);
             }
 
-            function browseToParent() {
+            $scope.browseToParent = function () {
                 if ($scope.path !== '/') {
                     var pathPartsCopy = angular.copy($scope.parent.pathParts);
                     pathPartsCopy.pop();
                     $scope.browseToPath('/' + pathPartsCopy.join('/'));
                 }
-            }
+            };
 
             function getSelectedElementsCopy() {
                 var selectedElementsCopy = angular.copy($scope.selectedElements),
@@ -1731,7 +1731,7 @@ angular.module('ortolangMarketApp')
                         callback: function (event) {
                             if (!hasOpenedModal() || $scope.isFileSelectBrowserService) {
                                 preventDefault(event);
-                                browseToParent();
+                                $scope.browseToParent();
                             }
                         }
                     });
@@ -1957,7 +1957,7 @@ angular.module('ortolangMarketApp')
                         columnNumber -= 2;
                     }
                 }
-                return 'col-sm-' + columnNumber + ($scope.browserSettings.hideWorkspaceList || $scope.browserSettings.hideWorkspaceListMdScreen ? ' browser-middle-collapsed' : '');
+                return 'col-sm-' + columnNumber + ($scope.displayAsideWorkspaceList() && ($scope.browserSettings.hideWorkspaceList || $scope.browserSettings.hideWorkspaceListMdScreen) ? ' browser-middle-collapsed' : '');
             };
 
             $scope.toggleAsideInfo = function () {

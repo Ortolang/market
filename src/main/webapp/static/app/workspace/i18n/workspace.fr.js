@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         WORKSPACE: {
             WORKSPACE: 'Workspace',
             ALIAS: 'Alias',
+            INFORMATION: 'Informations',
             CONTENT: 'Contenu',
             METADATA: 'Métadonnées',
             PERMISSIONS: 'Visibilité',
