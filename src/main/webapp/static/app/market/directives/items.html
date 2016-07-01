@@ -4,6 +4,12 @@
     <div ng-hide="search.isProcessing()" ng-if="search.results.length > 0">
         <div ng-if="search.activeViewMode.id === 'tile'" class="flex-row medium-item-wrapper" ng-class="inline?'flex-row-inline':''">
             <item class="flex-column" ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
+            <item class="flex-column" ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
+            <item class="flex-column" ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
+            <item class="flex-column" ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
+            <item class="flex-column" ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
+            <item class="flex-column" ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
+            <item class="flex-column" ng-repeat="item in search.results track by item.key" data-entry="item" data-template="market/templates/medium-item.html"></item>
         </div>
 
         <div ng-if="search.activeViewMode.id === 'line'" class="full-item-wrapper">
