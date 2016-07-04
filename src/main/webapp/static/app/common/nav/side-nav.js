@@ -28,10 +28,12 @@ angular.module('ortolangMarketApp')
             if (modal.length > 0) {
                 Helper.hideModal();
             }
+            Helper.hideAsideMobileNav();
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             if (current.$$route) {
+                Helper.hideAsideMobileNav();
                 if (current.$$route.title) {
                     $rootScope.ortolangPageTitle = $translate.instant(current.$$route.title) + ' | ';
                 } else if (previous || current.$$route.originalPath === '/') {

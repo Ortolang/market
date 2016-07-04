@@ -1,0 +1,60 @@
+<div class="aside aside-mobile-nav" tabindex="-1" role="dialog">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <nav ng-controller="MobileNavCtrl" class="side-nav" role="navigation" ng-cloak>
+                <ul class="side-nav-list">
+                    <li ng-if="authenticated && User.isModerator && Runtime.getTasks().length > 0" class="side-nav-list-item tasks">
+                        <a href="/profiles/me/tasks">
+                            <span class="icon-container fa fa-fw fa-bell fa-2x"></span>
+                            <span class="item-description">
+                                <span translate="TASKS"></span>
+                                <span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li ng-repeat="element in ::sideNavElements track by element.id" ng-if="!element.authenticated || authenticated" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', active: element.class === sideNavActiveClass}">
+                        <a ng-if="::element.class !== 'divider'"
+                           ng-href="{{:: element.path}}"
+                           ng-click="select(element.class)"
+                           ng-class="::element.class">
+                            <span class="icon-container" ng-class="::element.iconCss"></span>
+                            <span class="item-description" translate="{{::element.description}}"></span>
+                        </a>
+                        <span ng-if="::element.class === 'divider'"></span>
+                    </li>
+                    <li class="side-nav-list-item divider">
+                        <span></span>
+                    </li>
+                    <li class="side-nav-list-item language">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="icon-container fa fa-fw fa-globe fa-2x"></span>
+                            <span class="item-description" translate="NAV.LANGUAGE"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li ng-click="changeLanguage('en')" class="language" ng-class="{active: language === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
+                            <li ng-click="changeLanguage('fr')" class="language" ng-class="{active: language === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
+                        </ul>
+                    </li>
+                    <li ng-if="::authenticated" class="side-nav-list-item">
+                        <a href="/profiles/me/edition">
+                            <span class="icon-container fa fa-fw fa-user fa-2x"></span>
+                            <span class="item-description" translate="NAV.PROFILE"></span>
+                        </a>
+                    </li>
+                    <li ng-if="::authenticated" class="side-nav-list-item">
+                        <a ng-click="logout()">
+                            <span class="icon-container fa fa-fw fa-sign-out fa-2x"></span>
+                            <span class="item-description" translate="NAV.LOG_OUT"></span>
+                        </a>
+                    </li>
+                    <li ng-if="::!authenticated" class="side-nav-list-item">
+                        <a ng-click="login()">
+                            <span class="icon-container fa fa-fw fa-user fa-2x"></span>
+                            <span class="item-description" translate="LOG_IN"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

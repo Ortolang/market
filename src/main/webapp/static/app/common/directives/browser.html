@@ -14,7 +14,7 @@
                     </div>
                     <div ng-if="breadcrumbDropdownItems.length !== 0" class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle mobile-add-file" data-toggle="dropdown">
-                            {{parent.name}}
+                            {{breadcrumbParts.length === 0 ? '/' : parent.name}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">

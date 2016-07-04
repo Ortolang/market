@@ -8,10 +8,9 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', ['$rootScope', '$scope', '$location', '$translate', 'AuthService', 'User', 'sideNavElements', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart',
-        function ($rootScope, $scope, $location, $translate, AuthService, User, sideNavElements, Settings, Runtime, amMoment, StaticWebsite, Cart) {
+    .controller('TopNavCtrl', ['$rootScope', '$scope', '$location', '$translate', 'AuthService', 'User', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart', 'Helper',
+        function ($rootScope, $scope, $location, $translate, AuthService, User, Settings, Runtime, amMoment, StaticWebsite, Cart, Helper) {
 
-            $scope.sideNavElements = sideNavElements;
             $scope.User = User;
             $scope.Settings = Settings;
             $scope.Runtime = Runtime;
@@ -32,6 +31,10 @@ angular.module('ortolangMarketApp')
 
             $scope.logout = function () {
                 AuthService.logout();
+            };
+
+            $scope.showMobileNav = function () {
+                Helper.showAsideMobileNav();
             };
 
             // *********************** //

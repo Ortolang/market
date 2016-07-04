@@ -8,9 +8,9 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', 'Settings', function ($rootScope, $translate, $alert, $modal, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', 'Settings', function ($rootScope, $translate, $alert, $modal, $aside, Settings) {
 
-        var modalScope, modal;
+        var modalScope, modal, asideMobileNav;
 
         this.getMultilingualValue = function (multilingualProperty, language) {
             if (multilingualProperty) {
@@ -128,6 +128,25 @@ angular.module('ortolangMarketApp')
                 }
                 $modal(config);
                 return scope;
+            }
+        };
+
+        this.hideAsideMobileNav = function () {
+            if (asideMobileNav) {
+                asideMobileNav.hide();
+            }
+        };
+
+        this.showAsideMobileNav = function () {
+            if (asideMobileNav) {
+                asideMobileNav.show();
+            } else {
+                asideMobileNav = $aside({
+                    templateUrl: 'common/nav/mobile-nav.html',
+                    placement: 'left',
+                    animation: 'am-slide-left',
+                    container: 'body'
+                });
             }
         };
 
