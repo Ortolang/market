@@ -259,24 +259,29 @@ angular.module('ortolangMarketApp')
                     var fieldValues = [];
 
                     // Array
-                    if (angular.isArray($scope.content[fieldKey])) {
-                        angular.forEach($scope.content[fieldKey], function (ridOfValue) {
-
-                            if (angular.isDefined(ridOfValue['meta_ortolang-referential-json'])) {
+                    if (angular.isArray($scope.content[fieldKey]) && $scope.content[fieldKey].length>0) {
+                        angular.forEach($scope.content[fieldKey], function (fieldValue) {
+                            var value = {label:''};
+                            if (angular.isDefined(fieldValue['meta_ortolang-referential-json'])) {
                                 // For market
-                                fieldValues.push(Helper.getMultilingualValue(ridOfValue['meta_ortolang-referential-json'].labels, lang));
-                            } else if (Helper.startsWith(ridOfValue, '$')) {
+                                // fieldValues.push(Helper.getMultilingualValue(fieldValue['meta_ortolang-referential-json'].labels, lang));
+                                value.label = Helper.getMultilingualValue(fieldValue['meta_ortolang-referential-json'].labels, lang);
+                            } else if (Helper.startsWith(fieldValue, '$')) {
                                 // For workspace
-                                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(ridOfValue)}, function (entity) {
+                                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(fieldValue)}, function (entity) {
                                     var content = angular.fromJson(entity.content);
-                                    fieldValues.push(Helper.getMultilingualValue(content.labels, lang));
+                                    // fieldValues.push(Helper.getMultilingualValue(content.labels, lang));
+                                    value.label = Helper.getMultilingualValue(content.labels, lang);
                                 });
-                            } else if (angular.isDefined(ridOfValue.labels)) {
-                                fieldValues.push(Helper.getMultilingualValue(ridOfValue.labels, lang));
+                            } else if (angular.isDefined(fieldValue.labels)) {
+                                // fieldValues.push(Helper.getMultilingualValue(fieldValue.labels, lang));
+                                value.label = Helper.getMultilingualValue(fieldValue.labels, lang);
                             } else {
                                 // Not checked
-                                fieldValues.push(ridOfValue);
+                                // fieldValues.push(fieldValue);
+                                value.label = fieldValue;
                             }
+                            fieldValues.push(value);
                         });
                         $scope.additionalInformations.push({key: fieldKey, value: fieldValues, name: fieldName});
 

@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
 
             $rootScope.$on('uploader.metadata.failed', function (event, response) {
             	console.log(response);
-                var myAlert = $alert({
+                $alert({
                 	// title: $translate.instant('ERROR_MODAL_9.TITLE'),
                 	content: $translate.instant('ERROR_MODAL_9.BODY'),
                 	placement: 'top',
@@ -56,14 +56,16 @@ angular.module('ortolangMarketApp')
                 });
             });
 
-        	function setContent(metadata) {
-        		var metadata = angular.copy(metadata);
-        		delete metadata.imageUrl;
+        	function setContent() {
+        		// var metadata = angular.copy(metadata);
+        		// delete metadata.imageUrl;
+                var metadata = WorkspaceMetadataService.getMetadata();
         		$scope.content = angular.toJson(metadata, true);
         	}
 
         	function init () {
-        		setContent($scope.metadata);
+                // setContent($scope.metadata);
+        		setContent();
         		$scope.ortolangType = ortolangType;
                 $scope.WorkspaceMetadataService = WorkspaceMetadataService;
         	}

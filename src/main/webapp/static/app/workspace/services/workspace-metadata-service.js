@@ -224,6 +224,38 @@ angular.module('ortolangMarketApp')
             return deferred.promise;
         }
 
+        this.getMetadata = function () {
+            var metadataCopy = angular.copy(this.metadata);
+            delete metadataCopy.imageUrl;
+            delete metadataCopy.social;
+
+            delete metadataCopy.producersEntity;
+            delete metadataCopy.sponsorsEntity;
+            delete metadataCopy.corporaLanguagesEntity;
+            delete metadataCopy.corporaStudyLanguagesEntity;
+            delete metadataCopy.navigationLanguagesEntity;
+
+            delete metadataCopy.toolLanguagesEntity;
+            delete metadataCopy.lexiconInputLanguagesEntity;
+            delete metadataCopy.lexiconDescriptionLanguagesEntity;
+            delete metadataCopy.terminoInputLanguagesEntity;
+
+            angular.forEach(metadataCopy.contributors, function (contributor) {
+                delete contributor.entityContent;
+                delete contributor.rolesEntity;
+                delete contributor.organizationEntity;
+            });
+
+            metadataCopy.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+            for(var key in metadataCopy) {
+                if (angular.isArray(metadataCopy[key]) && metadataCopy[key].length === 0) {
+                    delete metadataCopy[key];
+                }
+            }
+            return metadataCopy;
+        };
+
         this.save = function () {
 
             var deferred = $q.defer();
@@ -254,23 +286,7 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             }
 
-            var metadataCopy = angular.copy(this.metadata);
-            delete metadataCopy.imageUrl;
-            delete metadataCopy.social;
-
-            delete metadataCopy.producersEntity;
-            delete metadataCopy.sponsorsEntity;
-            //TODO delete the other languages list
-            delete metadataCopy.corporaLanguagesEntity;
-            delete metadataCopy.corporaStudyLanguagesEntity;
-
-            angular.forEach(metadataCopy.contributors, function (contributor) {
-                delete contributor.entityContent;
-                delete contributor.rolesEntity;
-                delete contributor.organizationEntity;
-            });
-
-            metadataCopy.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
+            var metadataCopy = this.getMetadata();
             return postForm(metadataCopy, deferred);
         };
 

@@ -50,7 +50,7 @@ angular.module('ortolangMarketApp')
                 // var value = tag.id ? tag.id : tag.label;
                 var index = $scope.metadata[name+'Entity'].indexOf(tag);
                 if (index > -1) {
-                    $scope.metadata[name+'Entity'].splice(index, 1);
+                    // $scope.metadata[name+'Entity'].splice(index, 1);
                     $scope.metadata[name].splice(index, 1);
                 }
             };
@@ -61,9 +61,7 @@ angular.module('ortolangMarketApp')
                 }
                 var modalScope = Helper.createModalScope(true),
                     addContributorModal;
-                // modalScope.metadataLanguages = languages;
                 modalScope.metadataLanguagesId = languagesId;
-                modalScope.metadataLanguagesTags = $scope.corporaLanguages;
                 if (language) {
                     modalScope.language = language;
                 }
@@ -77,27 +75,23 @@ angular.module('ortolangMarketApp')
 
             function loadLanguage(name) {
                 // Array of the selected language
+                $scope.metadata[name+'Entity'] = [];
                 if(angular.isDefined($scope.metadata[name])) {
-                    $scope.metadata[name+'Entity'] = [];
                     angular.forEach($scope.metadata[name], function(lang) {
                         var language = {label: lang};
                         if (typeof lang  === 'string') {
                             ReferentialEntityResource.get({name:Helper.extractNameFromReferentialId(lang)}, function (entity) {
                                 var content = angular.fromJson(entity.content);
-                                // $scope[name].push({id: Helper.createKeyFromReferentialId(entity.key), label: Helper.getMultilingualValue(content.labels), content: content});
-                                // $scope.metadata[name+'Entity'].push({id: Helper.createKeyFromReferentialId(entity.key), label: Helper.getMultilingualValue(content.labels), content: content});
                                 language.id = Helper.createKeyFromReferentialId(entity.key);
                                 language.label = Helper.getMultilingualValue(content.labels);
                                 language.content = content;
                             },
                             function () {
-                                // $scope.metadata[name+'Entity'].push({id:lang,label:lang});
                                 language.id = lang;
                                 language.label = lang;
                             });
                         } else {
                             // lang is an object
-                            // $scope.metadata[name+'Entity'].push({label: Helper.getMultilingualValue(lang.labels), content: lang});
                             language.label = Helper.getMultilingualValue(lang.labels);
                             language.content = lang;
                         }
@@ -218,6 +212,13 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            function createTagsInputTemplateScope(languagesId) {
+                $scope['tagsInputTemplate'+languagesId+'Scope'] = Helper.createModalScope(true);
+                $scope['tagsInputTemplate'+languagesId+'Scope'].showAddLanguageModal = $scope.showAddLanguageModal;
+                $scope['tagsInputTemplate'+languagesId+'Scope'].metadataLanguagesId = languagesId;
+                $scope['tagsInputTemplate'+languagesId+'Scope'].icons = icons;
+            }
+
             /**
              * Initialize the scope
              **/
@@ -263,12 +264,13 @@ angular.module('ortolangMarketApp')
                 addTerms('Domain', 'allDomains');
                 addTerms('SubDomain', 'allSubDomains');
 
-                $scope.tagsInputTemplateCorporaLanguageScope = Helper.createModalScope(true);
-                $scope.tagsInputTemplateCorporaLanguageScope.showAddLanguageModal = $scope.showAddLanguageModal;
-                // $scope.tagsInputTemplateCorporaLanguageScope.metadataLanguages = $scope.metadata.corporaLanguages;
-                $scope.tagsInputTemplateCorporaLanguageScope.metadataLanguagesId = 'corporaLanguages';
-                $scope.tagsInputTemplateCorporaLanguageScope.metadataLanguagesTags = $scope.corporaLanguages;
-                $scope.tagsInputTemplateCorporaLanguageScope.icons = icons;
+                createTagsInputTemplateScope('corporaLanguages');
+                createTagsInputTemplateScope('corporaStudyLanguages');
+                createTagsInputTemplateScope('navigationLanguages');
+                createTagsInputTemplateScope('toolLanguages');
+                createTagsInputTemplateScope('lexiconInputLanguages');
+                createTagsInputTemplateScope('lexiconDescriptionLanguages');
+                createTagsInputTemplateScope('terminoInputLanguages');
 
                 $scope.checkboxDomain = [];
                 angular.forEach($scope.metadata.terminoDomains, function(domainId) {

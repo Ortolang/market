@@ -31,11 +31,6 @@ angular.module('ortolangMarketApp')
                 if ($scope.label.value !== '') {
                     var label = Helper.findObjectOfArray($scope.models.labels, 'lang', $scope.selectedLabelLanguage);
                     if (label === null) {
-                        // label = {lang: $scope.selectedLabelLanguage, value: $scope.label.value};
-                        // if (angular.isUndefined($scope.metadata.title)) {
-                        //     $scope.metadata.title = [];
-                        // }
-                        // $scope.metadata.title.push(label);
                         $scope.models.labels.push({lang: $scope.selectedLabelLanguage, value: $scope.label.value});
                     } else {
                         label.value = $scope.label.value;
@@ -45,21 +40,14 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.addLanguageFromScratch = function (form) {
-
                 if (form.$valid) {
                     delete $scope.models.id;
-                    // $scope.models.fullname = getFullnameOfOrganization($scope.models);
 
-                        // $scope.metadataLanguages.push($scope.label.value);
-                        // $scope.metadataLanguagesTags.push({label: $scope.label.value, content: $scope.models});
                     if ($scope.language) {
                         // Sets infos of the language
-                        // $scope.language.labels = angular.copy($scope.models.labels);
                         WorkspaceMetadataService.setLanguage($scope.language, $scope.models, $scope.metadataLanguagesId);
                     } else {
                         // Adding a new language
-                        // $scope.metadataLanguages.push($scope.models);
-                        // $scope.metadataLanguagesTags.push({label: Helper.getMultilingualValue($scope.models.labels), content: $scope.models});
                         WorkspaceMetadataService.addLanguage($scope.models, $scope.metadataLanguagesId);
                     }
                     WorkspaceMetadataService.metadataChanged = true;

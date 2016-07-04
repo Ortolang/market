@@ -23,8 +23,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="corporaLanguages" class="control-label">{{'MARKET.FACET.CORPORA_LANG' | translate}}</label>
-                        <tags-input name="corporaLanguages" class="language-tags" ng-model="metadata.corporaLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_LANG' | translate}}" data-on-tag-added="addLanguage('corporaLanguages', $tag)" data-on-tag-removed="removeLanguage('corporaLanguages', $tag)" data-add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplateCorporaLanguageScope'>
-                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false" highlight-matched-text="true"></auto-complete>
+                        <tags-input name="corporaLanguages" class="language-tags" ng-model="metadata.corporaLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_LANG' | translate}}" data-on-tag-added="addLanguage('corporaLanguages', $tag)" data-on-tag-removing="removeLanguage('corporaLanguages', $tag)" data-add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplatecorporaLanguagesScope'>
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false" data-highlight-matched-text="true"></auto-complete>
                         </tags-input>
                         <p class="help-block">
                             Vous ne trouvez pas une langue ?
@@ -35,12 +35,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="corporaStudyLanguages" class="control-label">{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}</label>
-                        <tags-input name="corporaStudyLanguages" class="language-tags" ng-model="corporaStudyLanguages" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}" data-on-tag-added="addLanguage('corporaStudyLanguages', $tag)" data-on-tag-removed="removeLanguage('corporaStudyLanguages', $tag)" add-from-autocomplete-only="true">
+                        <tags-input name="corporaStudyLanguages" class="language-tags" ng-model="metadata.corporaStudyLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.CORPORA_STUDY_LANG' | translate}}" data-on-tag-added="addLanguage('corporaStudyLanguages', $tag)" data-on-tag-removing="removeLanguage('corporaStudyLanguages', $tag)" add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplatecorporaStudyLanguagesScope'>
                             <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
                         </tags-input>
                         <p class="help-block">
                             Vous ne trouvez pas une langue ?
-                            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddLanguageModal()">Ajouter une nouvelle langue</a>
+                            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddLanguageModal('corporaStudyLanguages')">Ajouter une nouvelle langue</a>
                         </p>
                     </div>
                 </div>
@@ -124,12 +124,14 @@
                 </div>
                 <div class="row">
                     <div class=" col-md-12">
-                        <div class="form-group">
-                            <label for="lexiconInputLanguages" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</label>
-                            <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="lexiconInputLanguages" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('lexiconInputLanguages', $tag)" data-on-tag-removed="removeLanguage('lexiconInputLanguages', $tag)">
-                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
-                            </tags-input>
-                        </div>
+                        <label for="lexiconInputLanguages" class="control-label">{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}</label>
+                        <tags-input name="lexiconInputLanguages" class="language-tags" ng-model="metadata.lexiconInputLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_INPUT_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('lexiconInputLanguages', $tag)" data-on-tag-removing="removeLanguage('lexiconInputLanguages', $tag)" data-add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplatelexiconInputLanguagesScope'>
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+                        <p class="help-block">
+                            Vous ne trouvez pas une langue ?
+                            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddLanguageModal('lexiconInputLanguages')">Ajouter une nouvelle langue</a>
+                        </p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -155,12 +157,14 @@
                 </div>
                 <div class="row">
                     <div class=" col-md-12">
-                        <div class="form-group">
-                            <label for="lexiconDescriptionLanguages" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</label>
-                            <tags-input name="lexiconDescriptionLanguages" class="language-tags" ng-model="lexiconDescriptionLanguages" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('lexiconDescriptionLanguages', $tag)" data-on-tag-removed="removeLanguage('lexiconDescriptionLanguages', $tag)">
-                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
-                            </tags-input>
-                        </div>
+                        <label for="lexiconDescriptionLanguages" class="control-label">{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}</label>
+                        <tags-input name="lexiconDescriptionLanguages" class="language-tags" ng-model="metadata.lexiconDescriptionLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('lexiconDescriptionLanguages', $tag)" data-on-tag-removing="removeLanguage('lexiconDescriptionLanguages', $tag)" data-add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplatelexiconDescriptionLanguagesScope'>
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+                        <p class="help-block">
+                            Vous ne trouvez pas une langue ?
+                            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddLanguageModal('lexiconDescriptionLanguages')">Ajouter une nouvelle langue</a>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -241,22 +245,26 @@
             <section name="tool-language">
                 <div class="row">
                     <div class=" col-md-12">
-                        <div class="form-group">
-                            <label for="toolLanguages" class="control-label">{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}</label>
-                            <tags-input name="toolLanguages" class="language-tags" ng-model="toolLanguages" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('toolLanguages', $tag)" data-on-tag-removed="removeLanguage('toolLanguages', $tag)">
-                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
-                            </tags-input>
-                        </div>
+                        <label for="toolLanguages" class="control-label">{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}</label>
+                        <tags-input name="toolLanguages" class="language-tags" ng-model="metadata.toolLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'MARKET.FACET.TOOL_LANGUAGE' | translate}}" data-on-tag-added="addLanguage('toolLanguages', $tag)" data-on-tag-removing="removeLanguage('toolLanguages', $tag)" data-add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplatetoolLanguagesScope'>
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+                        <p class="help-block">
+                            Vous ne trouvez pas une langue ?
+                            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddLanguageModal('toolLanguages')">Ajouter une nouvelle langue</a>
+                        </p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class=" col-md-12">
-                        <div class="form-group">
-                            <label for="navigationLanguages" class="control-label">{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}</label>
-                            <tags-input name="navigationLanguages" class="language-tags" ng-model="navigationLanguages" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}" data-on-tag-added="addLanguage('navigationLanguages', $tag)" data-on-tag-removed="removeLanguage('navigationLanguages', $tag)">
-                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
-                            </tags-input>
-                        </div>
+                    <div class="col-md-12">
+                        <label for="navigationLanguages" class="control-label">{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}</label>
+                        <tags-input name="navigationLanguages" class="language-tags" ng-model="metadata.navigationLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES' | translate}}" data-on-tag-added="addLanguage('navigationLanguages', $tag)" data-on-tag-removing="removeLanguage('navigationLanguages', $tag)" data-add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplatenavigationLanguagesScope'>
+                            <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                        </tags-input>
+                        <p class="help-block">
+                            Vous ne trouvez pas une langue ?
+                            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddLanguageModal('navigationLanguages')">Ajouter une nouvelle langue</a>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -319,12 +327,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="terminoInputLanguages" class="control-label">{{'ITEM.TERMINO_INPUT_LANGUAGE.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_INPUT_LANGUAGE.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
-                                <tags-input name="terminoInputLanguages" class="language-tags" ng-model="terminoInputLanguages" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'ITEM.TERMINO_INPUT_LANGUAGE.PLACEHOLDER' | translate}}" data-on-tag-added="addLanguage('terminoInputLanguages', $tag)" data-on-tag-removed="removeLanguage('terminoInputLanguages', $tag)">
-                                    <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
-                                </tags-input>
-                            </div>
+                            <label for="terminoInputLanguages" class="control-label">{{'ITEM.TERMINO_INPUT_LANGUAGE.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_INPUT_LANGUAGE.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                            <tags-input name="terminoInputLanguages" class="language-tags" ng-model="metadata.terminoInputLanguagesEntity" ng-disabled="WorkspaceMetadataService.canEdit" data-display-property="label" data-placeholder="{{'ITEM.TERMINO_INPUT_LANGUAGE.PLACEHOLDER' | translate}}" data-on-tag-added="addLanguage('terminoInputLanguages', $tag)" data-on-tag-removing="removeLanguage('terminoInputLanguages', $tag)" data-add-from-autocomplete-only="true" data-template="workspace/templates/tags-input-template.html" data-template-scope='tagsInputTemplateterminoInputLanguagesScope'>
+                                <auto-complete source="suggestLanguages($query)" min-length="0" load-on-focus="false"></auto-complete>
+                            </tags-input>
+                            <p class="help-block">
+                                Vous ne trouvez pas une langue ?
+                                <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddLanguageModal('terminoInputLanguages')">Ajouter une nouvelle langue</a>
+                            </p>
                         </div>
                     </div>
                 </fieldset>
