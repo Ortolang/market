@@ -130,6 +130,68 @@ angular.module('ortolangMarketApp')
             producer.img = newProducer.img;
         };
 
+        this.addLanguage = function (language, languagesId) {
+            // if (!organizationExists(language, this.metadata.sponsorsEntity)) {
+                if (this.metadata[languagesId] === undefined) {
+                    this.metadata[languagesId] = [];
+                }
+                if (this.metadata[languagesId+'Entity'] === undefined) {
+                    this.metadata[languagesId+'Entity'] = [];
+                }
+                if (language.id) {
+                    // Adds language from the referential
+                    this.metadata[languagesId].push(language.id);
+                    // The tags-input module push the language in entity array
+                } else {
+                    // Adds language from scatch (not in the referential)
+                    this.metadata[languagesId].push(language);
+                    this.metadata[languagesId+'Entity'].push({label: Helper.getMultilingualValue(language.labels), content: language});
+                }
+            // } else {
+            //     console.log('L\'organisme est déjà présent dans la liste des sponsors de la ressource.');
+            // }
+        };
+
+        this.setLanguage = function (language, newLanguage, languagesId) {
+            language.label = Helper.getMultilingualValue(newLanguage.labels);
+            language.content = angular.copy(newLanguage);
+            language.id = angular.copy(newLanguage.id);
+
+            if (angular.isUndefined(language.id)) {
+                var indexLanguage = this.metadata[languagesId+'Entity'].indexOf(language);
+                this.metadata[languagesId][indexLanguage] = newLanguage;
+            }
+        };
+
+        this.replaceLanguage = function (language, newLanguage, languagesId) {
+            var deferred = $q.defer();
+            var indexLanguage = this.metadata[languagesId+'Entity'].indexOf(language);
+
+            ReferentialEntityResource.get({name: newLanguage.id}, function(reason) {
+                //TODO notify and ask to choose one of the result or create a new one
+                console.log('language exists');
+                deferred.reject(reason);
+            }, function () {
+                var entity = angular.copy(newLanguage);
+                entity.type = 'Language';
+                var content = angular.toJson(entity);
+                ReferentialEntityResource.post({}, {name: entity.id, type: 'LANGUAGE', content: content}, function () {
+                // createEntity(entity.id, entity).then(function () {
+                    console.log('language created');
+                    WorkspaceMetadataService.metadata[languagesId][indexLanguage] = Helper.createKeyFromReferentialName(newLanguage.id);
+                    WorkspaceMetadataService.setLanguage(language, newLanguage, languagesId);
+
+
+                    WorkspaceMetadataService.metadataChanged = true;
+                    deferred.resolve();
+                }, function (reason) {
+                    console.log(reason);
+                    deferred.reject(reason);
+                });    
+            });
+            return deferred.promise;
+        };
+
         function postForm(metadata, deferred) {
 
             // var deferred = $q.defer();
@@ -198,6 +260,9 @@ angular.module('ortolangMarketApp')
 
             delete metadataCopy.producersEntity;
             delete metadataCopy.sponsorsEntity;
+            //TODO delete the other languages list
+            delete metadataCopy.corporaLanguagesEntity;
+            delete metadataCopy.corporaStudyLanguagesEntity;
 
             angular.forEach(metadataCopy.contributors, function (contributor) {
                 delete contributor.entityContent;

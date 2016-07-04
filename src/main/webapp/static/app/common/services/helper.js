@@ -24,6 +24,21 @@ angular.module('ortolangMarketApp')
                 return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
             }
         };
+        
+        this.findObjectOfArray = function (arr, propertyName, propertyValue, defaultValue) {
+            if (arr) {
+                var iObject;
+                for (iObject = 0; iObject < arr.length; iObject++) {
+                    if (arr[iObject][propertyName] === propertyValue) {
+                        return arr[iObject];
+                    }
+                }
+            }
+            if (defaultValue) {
+                return defaultValue;
+            }
+            return null;
+        };
 
         this.extractKeyFromReferentialId = function (key) {
             // Pattern : ${key}

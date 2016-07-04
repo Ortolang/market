@@ -275,7 +275,22 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'This organization is already in the list.',
                         UNDEFINED: 'The name must be specify.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new organization in the referential.',
+                },
+                ADD_LANGUAGE_MODAL: {
+                    TITLE: '{{editing ? "Editing" : "Adding"}} a language in the referential',
+                    SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    IDENTIFIER: 'Identifier',
+                    LABEL: {
+                        LABEL: 'Label',
+                        PLACEHOLDER: 'Label of the language'
+                    },
+                    MESSAGES: {
+                        EXISTS: 'This language is already in the list.',
+                        UNDEFINED: 'The label is not defined.'
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new language in the referential.',
                 },
                 ADD_LICENCE_MODAL: {
                     TITLE: 'Add a new license',

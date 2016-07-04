@@ -1,0 +1,285 @@
+<section class="market-item" ng-controller="OrtolangItemJson15Ctrl">
+    <header>
+        <div class="media">
+            <div class="media-left">
+                <div class="item-logo" ng-class="{browse: browse}">
+                    <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}&size=63"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                    <img ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
+                </div>
+            </div>
+            <div class="media-body">
+                <h1 class="market-item-title" ng-bind="title"></h1>
+
+                <div ng-hide="browse">
+                    <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i> :
+                        <ul class="list-unstyled">
+                            <li ng-repeat="producer in producers track by producer.fullname">
+                                <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-if="sponsors" class="market-item-producers"><i>{{'MARKET.SPONSORS' | translate}}</i> :
+                        <ul class="list-unstyled">
+                            <li class="sponsor" ng-repeat="sponsor in sponsors">
+                                {{sponsor.fullname}} <a target="_BLANK" ng-if="sponsor.homepage" ng-href="{{sponsor.homepage}}"><span class="fa fa-fw fa-external-link"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-if="tags.length > 1"><span translate="MARKET.ALL_VERSIONS"></span> :
+                        <ul class="list-inline all-versions">
+                            <li ng-repeat="t in ::tags">
+                                <div class="label tag" ng-class="::{'label-primary': tag.name === t.name}">
+                                    <span ng-class="::icons.tag"></span>
+                                    <a ng-if="::tag.name !== t.name" ng-href="/market/{{::itemMarketType}}/{{::alias}}/{{::t.name}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></a>
+                                    <span ng-if="::tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-default" ng-show="browse" ng-click="browseContent()" translate="MARKET.GO_BACK_INFO"></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="row">
+
+        <div ng-if="browse" class="col-md-12">
+            <div browser></div>
+        </div>
+
+        <div ng-show="!browse" class="col-md-8 market-item-presentation-metadata">
+
+            <div class="alert alert-info citatation-alert" ng-click="howToCite(this, $event)">
+                <span class="fa fa-2x fa-quote-left pull-left"></span>
+                <div class="pull-right">
+                    <span class="label label-primary" translate="TEXT"></span>
+                    <span class="label label-primary bibtex">BibTeX</span>
+                </div>
+                <span class="citatation-alert-title" translate="MARKET.BIBLIOGRAPHIC_CITATION"></span>
+                <div data-target-blank ng-bind-html="getCitation()"></div>
+            </div>
+
+            <section id="description">
+                <h4>{{'DESCRIPTION' | translate}}</h4>
+                <article data-content="description" data-target-blank>
+                    <div ng-bind-html="description"></div>
+                    <br/>
+                    <div ng-if="keywords && keywords.length>0">
+                        <dl class="keywords">
+                            <dt data-translate="MARKET.KEYWORDS"></dt>
+                            <dd>
+                                <span ng-repeat="keyword in keywords track by $index">{{::keyword}}</span>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div ng-if="documentations && documentations.length>1" class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    {{'MARKET.SEE_DOCUMENTATIONS' | translate}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                                    <li ng-repeat="relation in documentations">
+                                        <a target="_BLANK" ng-href="{{relation.url}}">{{relation.name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div ng-if="documentations && documentations.length===1">
+                                <a target="_BLANK" class="btn btn-default" ng-href="{{documentations[0].url}}">
+                                    <span class="fa fa-fw fa-info-circle"></span> {{'MARKET.SEE_DOCUMENTATIONS' | translate}}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pull-right" ng-if="content.website">
+                                <a target="_BLANK" class="btn btn-primary" ng-href="{{content.website}}">
+                                    <span class="fa fa-fw fa-external-link"></span> {{'MARKET.SEE_WEBSITE' | translate}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="contributors" ng-if="contributors">
+                <h4>{{'MARKET.CONTRIBUTOR' | translate}}</h4>
+
+                <article>
+                    <div class="row auto-clear">
+                        <div ng-repeat="contributor in contributors" ng-click="seeContributorPage(contributor)"
+                             class="media profile-card contributor-card col-md-6 col-lg-4"
+                             ng-class="{'contributor-link': contributor.entity.id}">
+                            <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
+                            </div>
+                            <div class="media-body">
+                                <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span></span>
+                                <div class="small roles">
+                                    <span ng-repeat="role in contributor.roles">{{role}}<span ng-if="!$last">, </span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="additional-informations" ng-if="additionalInformations.length > 0">
+                <h4>{{'MARKET.ADDITIONAL_INFORMATION' | translate}}</h4>
+                <article>
+                    <dl class="dl-horizontal">
+                        <dt translate="MARKET.PUBLICATION_DATE"></dt>
+                        <dd>{{::content.publicationDate | date:"longDate"}}</dd>
+                        <dt translate="MARKET.PID"></dt>
+                        <dd>
+                            <p>
+                                <a ng-href="{{::handle}}">{{::handle}}</a>
+                                &nbsp;<span ng-class="::icons.info" data-title="{{'BROWSER.PIDS.STATIC_ITEM_HELP' | translate}}" data-placement="right" bs-tooltip></span>
+                            </p>
+                            <p>
+                                <a ng-href="{{::dynamicHandle}}">{{::dynamicHandle}}</a>
+                                &nbsp;<span ng-class="::icons.info" data-title="{{'BROWSER.PIDS.DYNAMIC_ITEM_HELP' | translate}}" data-placement="right" bs-tooltip></span>
+                            </p>
+                        </dd>
+                        <dt ng-repeat-start="additionalInformation in additionalInformations track by additionalInformation.name" translate="{{additionalInformation.name}}"></dt>
+                        <dd ng-repeat-end>
+                            <span ng-if="isArray(additionalInformation.value)"><span ng-repeat="valueItem in additionalInformation.value">{{::valueItem}}</span></span>
+                            <span ng-if="isString(additionalInformation.value)">{{::additionalInformation.value}}</span>
+                            <span ng-if="isBoolean(additionalInformation.value)">{{::additionalInformation.value ? ('YES' | translate) : ('NO' | translate)}}</span>
+                        </dd>
+                    </dl>
+                </article>
+            </section>
+
+            <section id="terminoUsage" ng-if="terminoUsage">
+                <h4>{{'ITEM.TERMINO_USAGE.LABEL' | translate}}</h4>
+                <article data-content="terminoUsage" data-target-blank>
+                    <div ng-bind-html="terminoUsage"></div>
+                </article>
+            </section>
+
+            <section id="terminoOrigin" ng-if="content.terminoOrigin">
+                <h4>{{'ITEM.TERMINO_ORIGIN.LABEL' | translate}}</h4>
+                <article data-content="content.terminoOrigin" data-target-blank>
+                    <div ng-bind-html="content.terminoOrigin"></div>
+                </article>
+            </section>
+
+            <section id="publications" ng-if="content.publications.length>0">
+                <h4>{{'MARKET.PUBLICATIONS' | translate}}</h4>
+                <div class="section-body-wrapper">
+                    <dl>
+                        <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>
+                        <dd ng-repeat="pub in content.publications" ng-bind-html="pub">
+                        </dd>
+                    </dl>
+                </div>
+            </section>
+        </div>
+
+        <aside ng-show="!browse" class="col-md-4">
+
+            <div class="card-well card-well-market card-well-license" ng-if="commercialLinks">
+                <p class="lead" translate="MARKET.COMMERCIAL_LINKS"></p>
+                <div>
+                    <div class="media commercialLink" ng-repeat="commercialLink in commercialLinks">
+                        <div class="media-left">
+                            <img ng-src="{{commercialLink.img}}">
+                        </div>
+                        <div class="media-body">
+                            <p>
+                                {{commercialLink.description}}<a target="_BLANK" ng-href="{{commercialLink.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-well card-well-market card-well-license" ng-if="content.type !== 'Application'">
+                <p class="lead" translate="MARKET.DOWNLOAD"></p>
+                <div>
+                    <dl ng-if="license">
+                        <dt>
+                            {{license.label}} <a target="_BLANK" ng-if="(!license.description || conditionsOfUse) && license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                            <!-- <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p> -->
+                        </dt>
+                        <dd ng-if="textFileKey">
+                            <a data-visualizer ng-click="showPreview(textFileKey)" class="clickable">{{'MARKET.LICENCE_DETAIL' | translate}}</a>
+                        </dd>
+                        <dd ng-show="!conditionsOfUse && license.description">
+                            <span ng-if="license.effectiveDescription">{{license.effectiveDescription}}</span><a target="_BLANK" ng-if="license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
+                        </dd>
+                        <dd ng-show="conditionsOfUse">
+                            <span ng-bind-html="conditionsOfUse"></span>
+                        </dd>
+                    </dl>
+                    <p ng-if="!license && conditionsOfUse" ng-bind-html="conditionsOfUse"></p>
+                    <!-- <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p> -->
+                    <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-success" data-ng-disabled="root === 'head'" ng-click="exportItem()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-default" data-ng-disabled="root === 'head'" ng-click="browseContent()" translate="MARKET.BROWSE"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default" ng-if="content.type === 'Application'">
+                <div class="panel-heading"><span class="fa fa-link fa-fw"></span> {{'MARKET.LINK' | translate}}</div>
+                <div class="panel-body">
+
+                    <div class="btn-group btn-group-justified">
+                        <a ng-href="{{content.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-well card-well-market card-well-share">
+                <p class="lead">
+                    {{'SHARE' | translate}}
+                    <a ng-href="{{content.social.facebook}}" target="_blank" data-title="Facebook" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-facebook"></span></a>
+                    <a ng-href="{{content.social.twitter}}" target="_blank" data-title="Twitter" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-twitter"></span></a>
+                    <a ng-href="{{content.social.linkedin}}" target="_blank" data-title="LinkedIn" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-linkedin"></span></a>
+                    <a ng-href="{{content.social.viadeo}}" target="_blank" data-title="Viadeo" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-viadeo"></span></a>
+                </p>
+            </div>
+
+            <!--<div class="card-well card-well-market" ng-if="content.derogation">-->
+                <!--<p class="lead" translate="MARKET.DEROGATION"></p>-->
+                <!--<p>-->
+                    <!--<a href="http://www.archivesdefrance.culture.gouv.fr/seda/api/seda_v1-0_accessrestriction_code_xsd_Simple_Type_AccessRestrictionCodeType.htm#AccessRestrictionCodeType" target="_BLANK">{{content.derogation}}</a>-->
+                    <!--<span ng-if="content.derogation === 'AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>-->
+                    <!--<span ng-if="content.derogation === 'AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>-->
+                    <!--<span ng-if="content.derogation === 'AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>-->
+                <!--</p>-->
+            <!--</div>-->
+
+            <div class="card-well card-well-market preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
+                <p class="lead" translate="MARKET.PREVIEW"></p>
+                <div>
+                    <div ng-show="itemKey" preview-list collection="itemKey" paths="content.preview"></div>
+                </div>
+            </div>
+
+            <div class="card-well card-well-market preview-box-list-wrapper" ng-if="externalRelations.length>0">
+                <p class="lead" translate="MARKET.EXTERNAL_RELATIONS"></p>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="relation in externalRelations" ng-click="goToItem(relation.url)">
+                            <span ng-class="::icons.link"></span> {{relation.name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card-well card-well-market" ng-if="content.copyright">
+                <p class="lead" translate="MARKET.COPYRIGHT"></p>
+                <div>
+                    <p ng-bind="content.copyright"></p>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+</section>

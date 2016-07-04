@@ -266,7 +266,7 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'Cette personne est déjà dans la liste.',
                         ROLE: 'Veuillez spécifier le rôle de cette personne.'
                     },
-                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la personne dans le référentiel.',
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la personne dans le référentiel.'
                 },
                 NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
                 ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
@@ -285,7 +285,22 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Ce laboratoire est déjà dans la liste.',
                         UNDEFINED: 'Le nom du laboratoire n\'est pas spécifié.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de l\'organisation dans le référentiel.'
+                },
+                ADD_LANGUAGE_MODAL: {
+                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} une langue dans le référentiel',
+                    SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    IDENTIFIER: 'Identifiant',
+                    LABEL: {
+                        LABEL: 'Label',
+                        PLACEHOLDER: 'Label de la langue'
+                    },
+                    MESSAGES: {
+                        EXISTS: 'Cette langue est déjà dans la liste.',
+                        UNDEFINED: 'Le label de la langue n\'est pas spécifié.'
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la langue dans le référentiel.'
                 },
                 ADD_LICENCE_MODAL: {
                     TITLE: 'Ajouter une licence particulière',

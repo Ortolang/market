@@ -143,21 +143,6 @@ angular.module('ortolangMarketApp')
                 return modalScope;
             }
 
-            function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {
-                if(arr) {
-                    var iObject;
-                    for (iObject = 0; iObject < arr.length; iObject++) {
-                        if (arr[iObject][propertyName] === propertyValue) {
-                            return arr[iObject];
-                        }
-                    }
-                }
-                if(defaultValue) {
-                    return defaultValue;
-                }
-                return null;
-            }
-
             $scope.addLicence = function (license) {
 
                 if (WorkspaceMetadataService.canEdit) {
@@ -172,7 +157,7 @@ angular.module('ortolangMarketApp')
                 });
 
                 modalScope.changeDescriptionLanguage = function () {
-                    var description = findObjectOfArray(modalScope.model.description, 'lang', modalScope.model.selectedDescriptionLanguage);
+                    var description = Helper.findObjectOfArray(modalScope.model.description, 'lang', modalScope.model.selectedDescriptionLanguage);
                     if (description !== null) {
                         modalScope.model.selectedDescription = description;
                     } else {
@@ -183,7 +168,7 @@ angular.module('ortolangMarketApp')
 
                 modalScope.updateDescription = function() {
                     if (modalScope.model.selectedDescription.value !== '') {
-                        var description = findObjectOfArray(modalScope.model.description, 'lang', modalScope.model.selectedDescriptionLanguage);
+                        var description = Helper.findObjectOfArray(modalScope.model.description, 'lang', modalScope.model.selectedDescriptionLanguage);
                         if (description === null) {
                             description = {
                                 lang: modalScope.model.selectedDescriptionLanguage,
@@ -242,7 +227,7 @@ angular.module('ortolangMarketApp')
              * Sets the language applies to conditions of use property.
              **/
             $scope.changeConditionsOfUseLanguage = function () {
-                var conditionsOfUse = findObjectOfArray($scope.metadata.conditionsOfUse, 'lang', $scope.selectedConditionsOfUseLanguage);
+                var conditionsOfUse = Helper.findObjectOfArray($scope.metadata.conditionsOfUse, 'lang', $scope.selectedConditionsOfUseLanguage);
                 if(conditionsOfUse!==null) {
                     $scope.conditionsOfUse = conditionsOfUse;
                 } else {
@@ -256,7 +241,7 @@ angular.module('ortolangMarketApp')
              **/
             $scope.updateConditionsOfUse = function() {
                 if($scope.conditionsOfUse.value!=='') {
-                    var conditionsOfUse = findObjectOfArray($scope.metadata.conditionsOfUse, 'lang', $scope.selectedConditionsOfUseLanguage);
+                    var conditionsOfUse = Helper.findObjectOfArray($scope.metadata.conditionsOfUse, 'lang', $scope.selectedConditionsOfUseLanguage);
                     if(conditionsOfUse===null) {
                         conditionsOfUse = {lang:$scope.selectedConditionsOfUseLanguage, value:$scope.conditionsOfUse.value};
                         if(angular.isUndefined($scope.metadata.conditionsOfUse)) {

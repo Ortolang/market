@@ -117,7 +117,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     //TODO Gets schema url from MetadataFormat
                     $scope.metadata = {
-                        schema: 'http://www.ortolang.fr/schema/014#',
+                        schema: 'http://www.ortolang.fr/schema/015#',
                         title: [
                             {
                                 lang: 'fr',
