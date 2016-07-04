@@ -42,6 +42,8 @@
 
   .market-item {
     > header {
+      padding-left: @container-main-mobile-padding;
+      padding-right: @container-main-mobile-padding;
       .media-left {
         display: block;
         .item-logo {
@@ -53,12 +55,16 @@
         width: auto;
       }
     }
+    > .row {
+      padding-left: @container-main-mobile-padding;
+      padding-right: @container-main-mobile-padding;
+    }
     aside {
       margin-top: 0;
     }
     &.browse {
       > header {
-        padding: @padding-base-vertical 25px;
+        padding: @padding-base-vertical floor(@grid-gutter-width/2);
         button {
           margin-top: 0;
         }
@@ -71,22 +77,36 @@
 
   .browser-wrapper.market-browser-wrapper {
     .table-workspace-elements-wrapper, .tile-workspace-elements-wrapper {
-      padding-left: @padding-small-horizontal;
-      padding-right: @padding-small-horizontal;
+      padding-left: 0;
+      padding-right: 0;
     }
 
   }
+
+  .table-workspace-elements-wrapper {
+    margin-left: -(floor(@grid-gutter-width/2));
+    margin-right: -(floor(@grid-gutter-width/2));
+    border-left: none;
+  }
+
   .table.table-workspace-elements {
-    margin-top: @padding-base-vertical;
+    border-left: none;
+    border-right: none;
+    border-top: none;
     th {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    tr {
+      th:first-child, td:first-child {
+        padding-left: floor(@grid-gutter-width/2) + @table-cell-padding;
+      }
+    }
   }
   .toolbar.browser-toolbar.market-browser-toolbar, .toolbar.visualizer-toolbar {
-    padding-left: @padding-small-horizontal;
-    padding-right: @padding-small-horizontal;
+    padding-left: 0;
+    padding-right: 0;
   }
   .toolbar.browser-toolbar {
     .browser-breadcrumb .breadcrumb-part {

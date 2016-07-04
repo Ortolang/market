@@ -198,7 +198,6 @@
   height: 100%;
   width: 100%;
   overflow: auto;
-  padding: 0 @container-main-padding;
 }
 .market-item {
   &.browse {
@@ -219,7 +218,6 @@
     }
     .container-main.container-market-content {
       padding: 0;
-      margin: 0 -@container-main-padding;
       position: relative;
       flex: 1 1 auto;
       overflow-x: hidden;
@@ -229,7 +227,6 @@
       }
       .market-item-content > [browser] {
         // Also used in workspaces.less
-        padding: 0 @container-main-padding;
         position: absolute;
         height: 100%;
         width: 100%;
@@ -240,9 +237,11 @@
           align-content: stretch;
           height: 100%;
           > .browser-toolbar {
+            margin: 0;
             flex: 0 0 auto;
           }
           > .browser-content-wrapper {
+            margin: 0;
             flex: 1 1 auto;
             overflow-x: hidden;
             overflow-y: auto;
@@ -259,8 +258,6 @@
     }
   }
   > header {
-    margin-left: -@container-main-padding;
-    margin-right: -@container-main-padding;
     padding: 15px @container-main-padding @line-height-computed;
     background-color: @default-bg;
     border-bottom: @default-border;
@@ -299,6 +296,10 @@
         font-style: italic;
       }
     }
+  }
+  > .row {
+    padding-left: @container-main-padding;
+    padding-right: @container-main-padding;
   }
 
   .market-item-presentation-metadata, aside {
