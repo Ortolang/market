@@ -304,6 +304,7 @@ angular.module('ortolangMarketApp')
                 },
                 ADD_LICENCE_MODAL: {
                     TITLE: 'Ajouter une licence particulière',
+                    IDENTIFIER: 'Identifiant',
                     LABEL: 'Donnez un nom à cette licence',
                     LABEL_FIELD: {
                         LABEL: 'Nom'
@@ -315,11 +316,16 @@ angular.module('ortolangMarketApp')
                     WEBSITE_FIELD: {
                         LABEL: 'Page web',
                         PLACEHOLDER: 'Adresse HTTP du site web contenant des informations sur la licence.'
-                    }
+                    },
+                    MESSAGES: {
+                        EXISTS: 'Cette licence est déjà dans la liste.',
+                        UNDEFINED: 'Le nom de la licence n\'est pas spécifié.'
+                    },
                 },
                 CHOOSE_LICENCE_MODAL: {
                     TITLE: 'Choisir une licence'
                 },
+                NEW_LICENCE: 'Licence non enregistrée.',
                 ERROR_MESSAGES_MODAL: {
                     TITLE: 'Erreur dans les métadonnées'
                 },

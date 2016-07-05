@@ -17,7 +17,6 @@ angular.module('ortolangMarketApp')
                 }
                 var lang = Settings.language;
                 var deferred = $q.defer();
-                // allLanguages : {id: XX, label: YY}
                 ReferentialEntityResource.get({type: 'LANGUAGE', lang:lang.toUpperCase(),term: term}, function(results) {
                     var suggestedLanguages = [];
                     angular.forEach(results.entries, function(refentity) {
@@ -35,22 +34,12 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.addLanguage = function(name, tag) {
-                // if(angular.isUndefined($scope.metadata[name])) {
-                //     $scope.metadata[name] = [];
-                // }
-                // if(angular.isDefined(tag.id)) {
-                //    $scope.metadata[name].push(tag.id);
-                // } else {
-                //     $scope.metadata[name].push(tag.label);
-                // }
                 WorkspaceMetadataService.addLanguage(tag, name);
             };
 
             $scope.removeLanguage = function(name, tag) {
-                // var value = tag.id ? tag.id : tag.label;
                 var index = $scope.metadata[name+'Entity'].indexOf(tag);
                 if (index > -1) {
-                    // $scope.metadata[name+'Entity'].splice(index, 1);
                     $scope.metadata[name].splice(index, 1);
                 }
             };

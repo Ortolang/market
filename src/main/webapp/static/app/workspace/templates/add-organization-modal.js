@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddOrganizationCtrl', ['$scope', '$filter', 'Helper', 'WorkspaceMetadataService', 'User', 'ReferentialEntityResource', 
-    	function ($scope, $filter, Helper, WorkspaceMetadataService, User, ReferentialEntityResource) {
+    .controller('AddOrganizationCtrl', ['$scope', '$filter', 'Helper', 'WorkspaceMetadataService', 'User', 
+    	function ($scope, $filter, Helper, WorkspaceMetadataService, User) {
 
             var regExp = new RegExp(' +', 'g');
 

@@ -8,16 +8,19 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace', 'WorkspaceMetadataService',
-        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper, Workspace, WorkspaceMetadataService) {
+    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace', 'WorkspaceMetadataService', 'User',
+        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper, Workspace, WorkspaceMetadataService, User) {
 
             /**
              * Updates the license property.
              **/
             $scope.updateLicense = function(license) {
-                $scope.metadata.license = license.id;
-                $scope.selectedLicense = license;
+                // $scope.metadata.license = license.id;
+                // $scope.metadata.licenseEntity = license;
+                WorkspaceMetadataService.addLicense(license);
                 $scope.updateStatusOfUse(license.id);
+
+                WorkspaceMetadataService.metadataChanged = true;
             };
 
             /**
@@ -38,7 +41,7 @@ angular.module('ortolangMarketApp')
                     return;
                 }
                 delete $scope.metadata.license;
-                delete $scope.selectedLicense;
+                delete $scope.metadata.licenseEntity;
             };
 
             /**
@@ -49,9 +52,9 @@ angular.module('ortolangMarketApp')
                     return;
                 }
                 if (license.id) {
-                    $scope.chooseLicence(license);
+                    $scope.chooseLicence();
                 } else {
-                    $scope.addLicence(license);
+                    $scope.addLicenceFromScratch(license);
                 }
             };
 
@@ -59,7 +62,7 @@ angular.module('ortolangMarketApp')
              * All methods on license modal for choosing a licence
              **/
 
-            function prepareModalScopeChooseLicence(license) {
+            function prepareModalScopeChooseLicence() {
                 var modalScope = $rootScope.$new(true);
                 modalScope.allLicences = $scope.allLicences;
                 modalScope.model = {};
@@ -67,13 +70,13 @@ angular.module('ortolangMarketApp')
                 return modalScope;
             }
 
-            $scope.chooseLicence = function (license) {
+            $scope.chooseLicence = function () {
 
                 if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
 
-                var modalScope = prepareModalScopeChooseLicence(license),
+                var modalScope = prepareModalScopeChooseLicence(),
                     chooseLicenceModal;
 
                 modalScope.$on('modal.hide', function () {
@@ -98,25 +101,40 @@ angular.module('ortolangMarketApp')
             function prepareModalScopeNewLicence(license) {
                 var modalScope = $rootScope.$new(true);
 
+                modalScope.User = User;
+                modalScope.disabled = false;
+
                 modalScope.model = {};
-                modalScope.model.selectedDescriptionLanguage = 'fr';
+                modalScope.description = {selectedDescriptionLanguage : 'fr'};
+
+                var regExp = new RegExp(' +', 'g');
+
+                function normalizeId(id) {
+                    id = $filter('diacritics')(id);
+                    modalScope.model.id = id ? id.replace(/[^\w\s]/g, '').replace(regExp, '_').toLowerCase() : id;
+                }
+                modalScope.generateId = function () {
+                    normalizeId(modalScope.model.label);
+                };
+
                 if (license) {
                     modalScope.editing = true;
                     modalScope.model.label = angular.copy(license.label);
+                    modalScope.model.status = license.status;
                     var status = $filter('filter')($scope.allStatusOfUse, {id: license.status}, true);
                     if (status.length>0) {
-                        modalScope.model.status = status[0];
+                        modalScope.status = {value: status[0]};
                     }
                     if (license.description) {
                         modalScope.model.description = angular.copy(license.description);
-                        var description = $filter('filter')(modalScope.model.description, {lang: modalScope.model.selectedDescriptionLanguage}, true);
+                        var description = $filter('filter')(modalScope.model.description, {lang: modalScope.description.selectedDescriptionLanguage}, true);
                         if (description.length>0) {
-                            modalScope.model.selectedDescription = description[0];
+                            modalScope.selectedDescription = description[0];
                         } else if (modalScope.model.description.length>0) {
-                            modalScope.model.selectedDescription = modalScope.model.description[0];
+                            modalScope.selectedDescription = modalScope.model.description[0];
                         }
                     } else {
-                        modalScope.model.selectedDescription = {value: ''};    
+                        modalScope.selectedDescription = {value: ''};    
                     }
                     modalScope.model.text = angular.copy(license.text);
                     if (modalScope.model.text) {
@@ -126,13 +144,15 @@ angular.module('ortolangMarketApp')
                             }
                         });
                     }
+                    modalScope.generateId();
                 } else {
                     modalScope.editing = false;
-                    modalScope.model.selectedDescription = {value: ''};
+                    modalScope.selectedDescription = {value: ''};
 
+                    modalScope.model.status = '${referential:free_use}';
                     var free_status = $filter('filter')($scope.allStatusOfUse, {id: '${referential:free_use}'}, true);
                     if (free_status.length>0) {
-                        modalScope.model.status = free_status[0];
+                        modalScope.status = {value: free_status[0]};
                     }
                     modalScope.model.licenseWebsite = '';
                 }
@@ -143,7 +163,7 @@ angular.module('ortolangMarketApp')
                 return modalScope;
             }
 
-            $scope.addLicence = function (license) {
+            $scope.addLicenceFromScratch = function (license) {
 
                 if (WorkspaceMetadataService.canEdit) {
                     return;
@@ -157,61 +177,88 @@ angular.module('ortolangMarketApp')
                 });
 
                 modalScope.changeDescriptionLanguage = function () {
-                    var description = Helper.findObjectOfArray(modalScope.model.description, 'lang', modalScope.model.selectedDescriptionLanguage);
+                    var description = Helper.findObjectOfArray(modalScope.model.description, 'lang', modalScope.description.selectedDescriptionLanguage);
                     if (description !== null) {
-                        modalScope.model.selectedDescription = description;
+                        modalScope.selectedDescription = description;
                     } else {
-                        description = {lang: modalScope.model.selectedDescriptionLanguage, value: ''};
-                        modalScope.model.selectedDescription = description;
+                        description = {lang: modalScope.description.selectedDescriptionLanguage, value: ''};
+                        modalScope.selectedDescription = description;
                     }
-                }
+                };
 
                 modalScope.updateDescription = function() {
-                    if (modalScope.model.selectedDescription.value !== '') {
-                        var description = Helper.findObjectOfArray(modalScope.model.description, 'lang', modalScope.model.selectedDescriptionLanguage);
+                    if (modalScope.selectedDescription.value !== '') {
+                        var description = Helper.findObjectOfArray(modalScope.model.description, 'lang', modalScope.description.selectedDescriptionLanguage);
                         if (description === null) {
                             description = {
-                                lang: modalScope.model.selectedDescriptionLanguage,
-                                value: modalScope.model.selectedDescription.value
+                                lang: modalScope.description.selectedDescriptionLanguage,
+                                value: modalScope.selectedDescription.value
                             };
                             if (angular.isUndefined(modalScope.model.description)) {
                                 modalScope.model.description = [];
                             }
                             modalScope.model.description.push(description);
                         } else {
-                            description.value = modalScope.model.selectedDescription.value;
+                            description.value = modalScope.selectedDescription.value;
                         }
                     }
                 };
 
+                function createLicense() {
+                    var license = {};
+                    license.label = modalScope.model.label;
+                    license.status = modalScope.status.value.id;
+                    if(modalScope.model.description) {
+                        license.description = angular.copy(modalScope.model.description);
+                    }
+                    if(modalScope.model.licenseWebsite) {
+                        if (modalScope.model.text) {
+                            var licenseTextFr = $filter('filter')(modalScope.model.text, {lang: 'fr'}, true);
+                            if (licenseTextFr.length>0) {
+                                licenseTextFr[0].value = {url: modalScope.model.licenseWebsite};
+                            }
+                            license.text = angular.copy(modalScope.model.text);
+                        } else {
+                            license.text = [{lang:'fr', value:{url: modalScope.model.licenseWebsite}}];
+                        }
+                    }
+                    return license;
+                }
+
                 modalScope.submit = function (addLicenceForm) {
 
+                    if (angular.isUndefined(modalScope.model.label)) {
+                        addLicenceForm.label.$setValidity('undefined', false);
+                    } else {
+                        addLicenceForm.label.$setValidity('undefined', true);
+                    }
+
                     if (addLicenceForm.$valid) {
-                        if($scope.metadata.license===undefined) {
-                            $scope.metadata.license = {};
-                        }
+                        var license = createLicense();
+                        WorkspaceMetadataService.addLicense(license);
 
-                        $scope.metadata.license.label = modalScope.model.label;
-                    	$scope.metadata.license.status = modalScope.model.status.id;
-                        if(modalScope.model.description) {
-                            $scope.metadata.license.description = angular.copy(modalScope.model.description);
-                        }
-                        if(modalScope.model.licenseWebsite) {
-                            if ($scope.metadata.license.text) {
-                                var licenseTextFr = $filter('filter')($scope.metadata.license.text, {lang: 'fr'}, true);
-                                if (licenseTextFr.length>0) {
-                                    licenseTextFr[0].value = {url: modalScope.model.licenseWebsite};
-                                }
-                            } else {
-                                $scope.metadata.license.text = [{lang:'fr', value:{url: modalScope.model.licenseWebsite}}];
-                            }
-                        }
-
-                        $scope.selectedLicense = $scope.metadata.license;
                         // Override status of use
-                        $scope.metadata.statusOfUse = modalScope.model.status.id;
+                        $scope.metadata.statusOfUse = modalScope.status.value.id;
 
+                        WorkspaceMetadataService.metadataChanged = true;
                         addLicenceModal.hide();
+                    }
+                };
+
+                modalScope.setLicenceFromNewEntity = function (addLicenceForm) {
+
+                    if (angular.isUndefined(modalScope.model.label)) {
+                        addLicenceForm.label.$setValidity('undefined', false);
+                    } else {
+                        addLicenceForm.label.$setValidity('undefined', true);
+                    }
+
+                    if (addLicenceForm.$valid) {
+                        var license = createLicense();
+                        WorkspaceMetadataService.replaceLicense($scope.metadata.license, license);
+
+                        WorkspaceMetadataService.metadataChanged = true;
+                        Helper.hideModal();
                     }
                 };
 
@@ -293,13 +340,14 @@ angular.module('ortolangMarketApp')
                         $scope.allLicences.push(license);
 
                         if ($scope.metadata.license && $scope.metadata.license === id) {
-                            $scope.selectedLicense = license;
+                            $scope.metadata.licenseEntity = license;
                         }
                     });
                 });
             }
 
         	function init() {
+                $scope.User = User;
                 $scope.WorkspaceMetadataService = WorkspaceMetadataService;
                 $scope.languages = [
                     {key:'fr',value: $translate.instant('LANGUAGES.FR')},
@@ -312,7 +360,8 @@ angular.module('ortolangMarketApp')
                 loadAllLicense();
 
                 if (angular.isObject($scope.metadata.license)) {
-                    $scope.selectedLicense = $scope.metadata.license;
+                    // $scope.selectedLicense = angular.copy($scope.metadata.license);
+                    $scope.metadata.licenseEntity = angular.copy($scope.metadata.license);
                 }
 
                 $scope.selectedConditionsOfUseLanguage = 'fr';

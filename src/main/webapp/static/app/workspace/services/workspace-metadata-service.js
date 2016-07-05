@@ -192,6 +192,53 @@ angular.module('ortolangMarketApp')
             return deferred.promise;
         };
 
+        this.addLicense = function (license) {
+            if (license.id) {
+                // Adds license from the referential
+                this.metadata.license = license.id;
+                this.metadata.licenseEntity = license;
+            } else {
+                // Adds license from scatch (not in the referential)
+                this.metadata.license = license;
+                this.metadata.licenseEntity = license;
+            }
+        };
+
+        this.setLicense = function (license, newLicense) {
+            license.id = newLicense.id;
+            license.label = angular.copy(newLicense.label);
+            license.description = angular.copy(newLicense.description);
+            license.status = newLicense.status;
+            license.text = angular.copy(newLicense.text);
+        };
+
+        this.replaceLicense = function (licence, newLicence) {
+            var deferred = $q.defer();
+
+            ReferentialEntityResource.get({name: newLicence.id}, function(reason) {
+                //TODO notify and ask to choose one of the result or create a new one
+                console.log('licence exists');
+                deferred.reject(reason);
+            }, function () {
+                var entity = angular.copy(newLicence);
+                entity.type = 'Licence';
+                entity.schema = 'http://www.ortolang.fr/schema/license/01#';
+                var content = angular.toJson(entity);
+                ReferentialEntityResource.post({}, {name: entity.id, type: 'LICENSE', content: content}, function () {
+                    console.log('licence created');
+                    WorkspaceMetadataService.metadata.license = Helper.createKeyFromReferentialName(newLicence.id);
+                    WorkspaceMetadataService.setLicense(licence, newLicence);
+
+                    WorkspaceMetadataService.metadataChanged = true;
+                    deferred.resolve();
+                }, function (reason) {
+                    console.log(reason);
+                    deferred.reject(reason);
+                });    
+            });
+            return deferred.promise;
+        };
+
         function postForm(metadata, deferred) {
 
             // var deferred = $q.defer();
@@ -229,6 +276,7 @@ angular.module('ortolangMarketApp')
             delete metadataCopy.imageUrl;
             delete metadataCopy.social;
 
+            delete metadataCopy.licenseEntity;
             delete metadataCopy.producersEntity;
             delete metadataCopy.sponsorsEntity;
             delete metadataCopy.corporaLanguagesEntity;
