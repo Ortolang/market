@@ -1,4 +1,4 @@
-<div ng-init="resizeBrowser()" class="tile-workspace-elements-wrapper">
+<div class="tile-workspace-elements-wrapper">
     <div ng-if="!isHead || parent.elements.length > 0 || !browserService.canEdit" ng-repeat="type in [ortolangType.collection, ortolangType.object]" class="row">
         <div ng-repeat="child in filteredChildren(type) | limitTo:(type === ortolangType.object ? displayedItemLimit : undefined) | orderBy:orderProp:orderReverse track by child.key"
              ng-class="tileCssClasses()" class="workspace-element-wrapper" on-finish-render>
@@ -10,7 +10,7 @@
                 <div ng-if="::type === ortolangType.object" class="thumb-wrapper">
                     <div>
                         <span class="thumb-icon fa-4x" ng-class="::child.mimeType | mimeTypeIconCss"></span>
-                        <div class="thumb" style="background-image: url({{::Content.getPreviewUrlWithKey(child.key)}})"></div>
+                        <div class="thumb" style="background-image: url({{::Content.getThumbUrlWithKey(child.key)}})"></div>
                         <div ng-if="::(child.mimeType | mimeTypeIconCss) === icons.videoFile" class="thumb-overlay">
                             <span class="fa-2x" ng-class="::icons.play"></span>
                         </div>
@@ -23,21 +23,22 @@
                 </p>
             </div>
         </div>
-        <div ng-if="type === ortolangType.object && displayedItemLimit < parent.elements.length" class="clearfix col-md-12 see-all-wrapper">
-            <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
-                <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
-                <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
-            </button>
-        </div>
-        <div ng-if="type === ortolangType.object && parent.elements.length === 0" class="clearfix text-center col-md-12 no-children-wrapper">
-            <span ng-if="!browserService.canEdit || !isHead" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
-        </div>
+    </div>
+    <div ng-if="displayedItemLimit && displayedItemLimit < parent.elements.length" class="clearfix see-all-wrapper">
+        <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
+            <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
+            <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
+        </button>
+    </div>
+    <div ng-if="parent.elements.length === 0" class="clearfix no-children-wrapper">
+        <span ng-if="!browserService.canEdit || !isHead" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
     </div>
     <div ng-if="isHead && parent.elements.length === 0 && browserService.canEdit" class="no-children-wrapper-head text-center">
         <div class="no-children">
             <span class="icon" ng-class="::icons.cloudUpload"></span>
-            <br/>
-            <span translate="BROWSER.NO_CHILDREN" class="file-not-hover"></span>
+            <span translate="BROWSER.NO_CHILDREN" class="hidden-xs file-not-hover"></span>
+            <span translate="BROWSER.NO_CHILDREN_MOBILE" class="visible-xs"></span>
+            <button translate="BROWSER.NO_CHILDREN_MOBILE_BUTTON" class="btn btn-default visible-xs" ng-click="doAction('addFileMobile')"></button>
         </div>
     </div>
 </div>

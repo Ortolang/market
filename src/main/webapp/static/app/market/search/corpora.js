@@ -118,16 +118,16 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter(corporaLanguagesFilter);
 
-            // var statusOfUseFilter = FacetedFilter.make({
-            //     id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse.key',
-            //     path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse',
-            //     alias: 'statusOfUse',
-            //     label: 'MARKET.FACET.STATUS_OF_USE',
-            //     resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
-            //     priority: 'high',
-            //     view: 'dropdown-faceted-filter'
-            // });
-            // $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
+            var statusOfUseFilter = FacetedFilter.make({
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse',
+                alias: 'statusOfUse',
+                label: 'MARKET.FACET.STATUS_OF_USE',
+                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
+            });
+            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
             // $scope.rankFilter = FacetedFilter.make({
             //     id: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.grade',
@@ -162,23 +162,23 @@ angular.module('ortolangMarketApp')
             // });
             // $scope.filtersManager.addAvailableFilter($scope.rankFilter);
 
-            $scope.esrAccessibilityFilter = FacetedFilter.make({
-                id: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.esrAccessibility',
-                path: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.esrAccessibility',
-                alias: 'rank',
-                label: 'MARKET.FACET.RANKS',
-                resetLabel: 'MARKET.FACET.ALL_RANKS',
-                options: [
-                    OptionFacetedFilter.make({
-                        label: 'Accessibles à̀ l\'ensemble de l\'ESR',
-                        value: true,
-                        length: 1
-                    })
-                ],
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter($scope.esrAccessibilityFilter);
+            // $scope.esrAccessibilityFilter = FacetedFilter.make({
+            //     id: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.esrAccessibility',
+            //     path: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.esrAccessibility',
+            //     alias: 'rank',
+            //     label: 'MARKET.FACET.RANKS',
+            //     resetLabel: 'MARKET.FACET.ALL_RANKS',
+            //     options: [
+            //         OptionFacetedFilter.make({
+            //             label: 'Accessibles à̀ l\'ensemble de l\'ESR',
+            //             value: true,
+            //             length: 1
+            //         })
+            //     ],
+            //     priority: 'high',
+            //     view: 'dropdown-faceted-filter'
+            // });
+            // $scope.filtersManager.addAvailableFilter($scope.esrAccessibilityFilter);
         }
 
         function init() {

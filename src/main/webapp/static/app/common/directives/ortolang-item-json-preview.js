@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
                 icons: '=',
                 preview: '@?'
             },
-            template: '<div ng-include="marketItemTemplate"></div>',
+            template: '<div class="market-item-wrapper" ng-include="marketItemTemplate"></div>',
             link: {
                 pre: function (scope) {
 
@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
                                 scope.itemMarketType = getItemType(scope.content);
 
                                 if (scope.content.image) {
-                                    scope.image = Content.getPreviewUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
+                                    scope.image = Content.getThumbUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
                                 } else {
                                     scope.imgtitle = '';
                                     scope.imgtheme = 'custom';
@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                                 scope.itemMarketType = getItemType(scope.content);
 
                                 if (scope.content.image) {
-                                    scope.image = Content.getPreviewUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
+                                    scope.image = Content.getThumbUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
                                 } else {
                                     scope.imgtitle = '';
                                     scope.imgtheme = 'custom';

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-static-top top-nav" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button ng-click="toggleNavbar()" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsed">
+            <button type="button" class="navbar-toggle" ng-click="showMobileNav()">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -12,23 +12,20 @@
             </a>
         </div>
 
-        <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse" ng-cloak>
-            <li ng-if="navbarCollapsed" ng-repeat="element in ::sideNavElements | filter:{hiddenTopNav : false}:true track by element.class">
-                <a ng-href="#{{::element.path}}" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed"><span class="fa-fw" ng-class="::element.iconCss"></span> {{::element.description | translate}}</a>
-            </li>
-            <li ng-if="authenticated && User.isModerator && Runtime.getTasks().length > 0 && !navbarCollapsed">
+        <ul id="navbar-collapsed" class="nav navbar-nav navbar-right collapse navbar-collapse hidden-xs" ng-cloak>
+            <li ng-if="authenticated && User.isModerator && Runtime.getTasks().length > 0">
                 <a href="/profiles/me/tasks" data-title="{{'TASKS' | translate}}" data-trigger="hover" data-placement="bottom" bs-tooltip>
                     <span class="fa fa-fw fa-bell"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
                     <span class="hidden-description" translate="TASKS"></span>
                 </a>
             </li>
-            <!--<li ng-if="Cart.size() > 0 && !navbarCollapsed">-->
+            <!--<li ng-if="Cart.size() > 0">-->
                 <!--<a data-title="{{'CART' | translate}}" data-auto-close="true" data-template-url="common/directives/cart-popover-template.html" data-placement="bottom" bs-popover>-->
                     <!--<span ng-class="::icons.cart"></span><span class="badge cart">{{Cart.size() === 0 ? '' : Cart.size()}}</span>-->
                     <!--<span class="hidden-description" translate="CART"></span>-->
                 <!--</a>-->
             <!--</li>-->
-            <li class="dropdown" ng-if="!navbarCollapsed">
+            <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fa fa-fw fa-info-circle"></span>
                     <span translate="NAV.INFORMATION"></span>
@@ -44,11 +41,7 @@
                     <span class="fa fa-fw fa-globe"></span>
                     <span translate="NAV.LANGUAGE"></span>
                 </a>
-                <ul ng-if="navbarCollapsed" class="dropdown-menu">
-                    <li ng-click="changeLanguage('en'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
-                    <li ng-click="changeLanguage('fr'); toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" class="language" ng-class="{active: currentLanguage === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
-                </ul>
-                <ul ng-if="!navbarCollapsed" class="dropdown-menu">
+                <ul class="dropdown-menu">
                     <li ng-click="changeLanguage('en')" class="language" ng-class="{active: Settings.language === 'en'}"><div translate="NAV.LANGUAGE.ENGLISH"></div></li>
                     <li ng-click="changeLanguage('fr')" class="language" ng-class="{active: Settings.language === 'fr'}"><div translate="NAV.LANGUAGE.FRENCH"></div></li>
                 </ul>
@@ -59,10 +52,8 @@
                     <span ng-bind="User.fullName()"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li ng-if="navbarCollapsed" ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/profiles/me/edition" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
-                    <li ng-if="!navbarCollapsed"><a href="/profiles/me/edition" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
+                    <li ng-click="toggleNavbar()" data-toggle="collapse" data-target="#navbar-collapsed" ><a href="/profiles/me/edition" ><span class="fa fa-user fa-fw"></span> {{'NAV.PROFILE' | translate}}</a></li>
                     <li ng-click="logout()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.LOG_OUT' | translate}}</div></li>
-                    <!--<li ng-click="account()"><div><span class="fa fa-sign-out fa-fw"></span> {{'NAV.ACCOUNT' | translate}}</div></li>-->
                 </ul>
             </li>
             <li ng-if="!authenticated"><a ng-click="login()"><span class="fa fa-user fa-fw"></span> <span translate="LOG_IN"></span></a></li>

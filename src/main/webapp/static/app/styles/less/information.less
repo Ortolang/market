@@ -1,5 +1,43 @@
+.select-menu-wrapper {
+  height: @top-navbar-height;
+  position: relative;
+  > div {
+    height: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  select {
+    height: 100%;
+  }
+}
+
 .information-wrapper {
   max-width: 900px;
+  .news-wrapper {
+    border-bottom: @default-border;
+    margin-bottom: @line-height-computed;
+    padding-bottom: @line-height-computed;
+    margin-top: @line-height-computed;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .news-content {
+      img {
+        margin-bottom: @line-height-computed;
+        max-height: 250px;
+      }
+      > :last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+  .news-date {
+    font-style: italic;
+    margin-bottom: @padding-large-vertical;
+    display: block;
+    color: @text-muted;
+  }
 }
 
 .policy-wrapper {

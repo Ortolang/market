@@ -23,12 +23,12 @@ angular.module('ortolangMarketApp')
             return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + (path.charAt(0) === '/' ? '' : '/') + path;
         };
 
-        this.getPreviewUrlWithKey = function (key, size, noSSL) {
-            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + key + (angular.isDefined(size) ? '?size=' + size : '');
+        this.getThumbUrlWithKey = function (key, size, min, noSSL) {
+            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + key + (angular.isDefined(size) ? '?size=' + size : '') + (angular.isDefined(min) ? '&min=' + min : '');
         };
 
-        this.getPreviewUrlWithPath = function (path, alias, root, size, noSSL) {
-            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + alias + '/' + (root || 'head') + (path.charAt(0) === '/' ? '' : '/') + path + (angular.isDefined(size) ? '?size=' + size : '');
+        this.getThumbUrlWithPath = function (path, alias, root, size, min, noSSL) {
+            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + alias + '/' + (root || 'head') + (path.charAt(0) === '/' ? '' : '/') + path + (angular.isDefined(size) ? '?size=' + size : '') + (angular.isDefined(min) ? '&min=' + min : '');
         };
 
         this.getDownloadUrlWithKey = function (key, noSSL) {

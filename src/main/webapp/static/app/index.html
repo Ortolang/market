@@ -23,10 +23,12 @@
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="android-chrome-192x192.png" sizes="192x192">
     <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+
     <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#475b6e">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="mstile-144x144.png">
-    <meta name="theme-color" content="#ffffff">
 
     <!-- build:css({.,.tmp}) styles/vendor.css -->
     <link rel="stylesheet" href="styles/custom-bootstrap.css" />
@@ -55,7 +57,7 @@
     <div class="container-flex">
         <nav id="side-nav-wrapper" ng-controller="SideNavCtrl" ng-class="{'reduced-side-nav': reducedSideNav}" class="side-nav" role="navigation" ng-cloak>
             <ul class="side-nav-list">
-                <li ng-repeat="element in ::sideNavElements track by element.id" ng-if="!element.hiddenSideNav && (!element.authenticated || authenticated)" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', active: element.class === sideNavActiveClass}">
+                <li ng-repeat="element in ::sideNavElements track by element.id" ng-if="!element.authenticated || authenticated" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', active: element.class === sideNavActiveClass}">
                     <a ng-if="::element.class !== 'divider'"
                        ng-href="{{:: element.path}}"
                        ng-click="select(element.class)"
@@ -219,6 +221,7 @@
 <script src="common/visualizers/pdf-visualizer/pdf-visualizer.js"></script>
 <script src="common/nav/side-nav-elements.js"></script>
 <script src="common/nav/side-nav.js"></script>
+<script src="common/nav/mobile-nav.js"></script>
 <script src="common/nav/top-nav.js"></script>
 <script src="common/nav/footer.js"></script>
 <script src="common/nav/i18n/nav.fr.js"></script>
@@ -279,6 +282,7 @@
 <script src="market/terminologies.js"></script>
 <script src="market/search.js"></script>
 <script src="market/search/corpora.js"></script>
+<script src="market/news.js"></script>
 <script src="market/i18n/market.fr.js"></script>
 <script src="market/i18n/market.en.js"></script>
 <script src="producer/i18n/producer.fr.js"></script>

@@ -181,7 +181,7 @@ button.no-border {
 
 .card-well {
   min-height: 20px;
-  padding: 17px 19px 19px;
+  padding: @card-well-padding;
   margin-bottom: 20px;
   background-color: lighten(@default-bg, 1%);
   border: 1px solid @well-border;
@@ -194,8 +194,10 @@ button.no-border {
     padding: 10px 12px 12px;
   }
   &.card-news-well {
+    padding-top: @card-well-news-padding-top;
     img {
       max-width: 100%;
+      max-height: 200px;
       padding-bottom: @padding-large-vertical;
     }
   }
@@ -214,6 +216,11 @@ button.no-border {
   }
   hr {
     border-color: @well-border;
+  }
+  p.lead {
+    span.fa, span.glyphicon {
+      margin-right: 8px;
+    }
   }
 }
 

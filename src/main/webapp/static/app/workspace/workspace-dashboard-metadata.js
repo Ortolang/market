@@ -23,7 +23,7 @@ angular.module('ortolangMarketApp')
         'MetadataFormatResource',
         'OrtolangIitemJsonMigration',
         function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService, MetadataFormatResource, OrtolangIitemJsonMigration) {
-            
+
             function startSubmit() {
                 $scope.submitButtonText = '<span class="fa fa-refresh fa-spin"></span> Sauvegarde...';
                 $scope.applying = true;
@@ -60,7 +60,7 @@ angular.module('ortolangMarketApp')
             var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
 
                 $scope.metadata.image = elements[0].path;
-                $scope.image = Content.getPreviewUrlWithKey(elements[0].key, 180);
+                $scope.image = Content.getThumbUrlWithKey(elements[0].key, 180, true);
                 $scope.fileImageSelectModal.hide();
             });
 
@@ -148,7 +148,7 @@ angular.module('ortolangMarketApp')
                 // Sets image
                 if ($scope.metadata.image) {
                     ObjectResource.element({key: Workspace.active.workspace.head, path: $scope.metadata.image}).$promise.then(function (oobject) {
-                        $scope.image = Content.getPreviewUrlWithKey(oobject.key, 180);
+                        $scope.image = Content.getThumbUrlWithKey(oobject.key, 180, true);
                     });
                 } else {
                     $scope.imgtitle = 'Cliquez pour ajouter votre logo';

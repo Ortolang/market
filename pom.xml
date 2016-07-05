@@ -34,7 +34,7 @@
     <repositories>
         <repository>
             <id>ortolang-maven-repository</id>
-            <url>http://maven.ortolang.fr/public/</url>
+            <url>https://maven.ortolang.fr/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

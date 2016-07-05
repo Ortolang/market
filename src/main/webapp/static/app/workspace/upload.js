@@ -92,7 +92,6 @@ angular.module('ortolangMarketApp')
 
             $scope.clearItem = function (item) {
                 item.remove();
-                $scope.resizeBrowser();
             };
 
             $scope.isZipExtractionQueueEmpty = function () {

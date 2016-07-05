@@ -90,6 +90,8 @@ angular.module('ortolangMarketApp')
             BEARER_TOKEN: 'Copier le token',
             SEE_ALL: 'Voir tous les fichiers',
             NO_CHILDREN: 'Ce dossier est vide<br/><small>Faites glisser et déposez des fichiers dans cette fenêtre ou cliquez sur le bouton <span class="glyphicon glyphicon-plus"></span></small>',
+            NO_CHILDREN_MOBILE: 'Ce dossier est vide',
+            NO_CHILDREN_MOBILE_BUTTON: '<span class="glyphicon glyphicon-plus"></span> Ajouter des fichiers',
             NO_CHILDREN_NOT_HEAD: 'Ce dossier est vide',
             NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants',
             MORE_MD: 'Voir toutes les métadonnées',

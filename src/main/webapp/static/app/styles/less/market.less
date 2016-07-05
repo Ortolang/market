@@ -36,6 +36,10 @@
   margin-right: -5px;
 }
 
+.items-title {
+  margin-bottom: @line-height-computed;
+}
+
 /***********************************************
  * Medium item : market/template/medium-item.html
  ***********************************************/
@@ -46,13 +50,12 @@
   border-radius: @border-radius-base;
   line-height: 1.42857143;
   background-color: @default-bg;
-  width: 163px;
+  width: 160px;
   overflow: hidden;
   cursor: pointer;
   .thumb-wrapper {
     height: 160px;
     width: 160px;
-    padding: 14px;
     background-color: @white;
     text-align: center;
     > div {
@@ -116,7 +119,6 @@
     height: 160px;
     width: 160px;
     background-color: @white;
-    padding: 14px;
     border-bottom: @default-border;
   }
 }
@@ -191,13 +193,77 @@
  * . producer/producer.html
  ***********************************************/
 
+.market-item-wrapper {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
 .market-item {
+  &.browse {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    height: 100%;
+    > header {
+      flex: 0 0 auto;
+      .item-logo {
+        height: 120px;
+        width: 120px;
+        img {
+          max-height: 120px;
+          max-width: 120px;
+        }
+      }
+    }
+    .container-main.container-market-content {
+      padding: 0;
+      position: relative;
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+      > .container-main-inner {
+        padding: 0;
+      }
+      .market-item-content > [browser] {
+        // Also used in workspaces.less
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        .browser-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-content: stretch;
+          height: 100%;
+          > .browser-toolbar {
+            margin: 0;
+            flex: 0 0 auto;
+          }
+          > .browser-content-wrapper {
+            margin: 0;
+            flex: 1 1 auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: row;
+            align-content: stretch;
+            height: 100%;
+            > div {
+              overflow-y: auto;
+            }
+          }
+        }
+      }
+    }
+  }
   > header {
-    margin-left: -@container-main-padding;
-    margin-right: -@container-main-padding;
     padding: 15px @container-main-padding @line-height-computed;
     background-color: @default-bg;
     border-bottom: @default-border;
+    .media {
+      max-width: @market-item-max-width;
+    }
     .media-left {
       padding-right: 2 * @padding-large-horizontal;
     }
@@ -206,14 +272,6 @@
       width: 180px;
       height: 180px;
       display: block;
-      &.browse {
-        height: 120px;
-        width: 120px;
-        img {
-          max-height: 120px;
-          max-width: 120px;
-        }
-      }
     }
     button {
       margin-top: @padding-large-vertical;
@@ -241,6 +299,14 @@
         font-style: italic;
       }
     }
+  }
+  > .row {
+    padding-left: @container-main-padding;
+    padding-right: @container-main-padding;
+  }
+
+  .market-item-metadata-wrapper {
+    max-width: @market-item-max-width + @container-main-padding;
   }
 
   .market-item-presentation-metadata, aside {
@@ -529,7 +595,7 @@
 }
 
 .ortolang-title {
-  margin-bottom: 0;
+  margin-top: @card-well-news-padding-top;
 }
 
 .marianne {
@@ -617,5 +683,12 @@
     p.lead {
       font-size: @font-size-h4;
     }
+  }
+}
+
+.statistics-wrapper {
+  > div {
+    font-weight: 300;
+    font-size: @font-size-large;
   }
 }

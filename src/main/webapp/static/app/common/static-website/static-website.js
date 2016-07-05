@@ -25,6 +25,10 @@ angular.module('ortolangMarketApp')
                 return informationContent;
             };
 
+            this.getNewsLimit = function () {
+                return 1;
+            };
+
             this.getInformationPageTitle = function (page) {
                 return page.title[(Settings.language || 'fr')] || page.title;
             };
@@ -59,8 +63,9 @@ angular.module('ortolangMarketApp')
                 homePage = staticWebsiteBase + '/' + homePageId + '/' + homePageId + '.' + (language || 'fr') + '.html';
                 Content.downloadWithPath(newsId + '/' + newsId + '.json', staticWebsiteAlias, OrtolangConfig.staticSiteVersion, 'default').promise.then(function (response) {
                     news = [];
-                    angular.forEach(response.data.news, function (id) {
-                        news.push(staticWebsiteBase + '/' + newsId + '/' + id + '/' + id + '.' + (language || 'fr') + '.html');
+                    angular.forEach(response.data.news, function (n) {
+                        n.url = staticWebsiteBase + '/' + newsId + '/' + n.id + '/' + n.id + '.' + (language || 'fr') + '.html';
+                        news.push(n);
                     });
                 });
             }

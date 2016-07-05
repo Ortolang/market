@@ -11,6 +11,7 @@
   height: 100%;
   background-color: @main-bg;
   flex: 1 1 0%;
+  position: relative;
 }
 
 .container-flex {
@@ -57,9 +58,13 @@
         display: flex;
         flex-direction: column;
         align-content: stretch;
+        padding-top: 24px;
         > .container-main-inner {
           flex: 1 0 auto;
           padding-bottom: 0;
+          .row, .home-items {
+            max-width: 1150px;
+          }
         }
         > footer {
           flex: 0 0 auto;

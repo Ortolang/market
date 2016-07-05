@@ -14,8 +14,7 @@ angular.module('ortolangMarketApp')
 
         this.WorkspaceBrowserService = {
             hideInfo: false,
-            hideWorkspaceList: false,
-            hideWorkspaceListMdScreen: false
+            hideWorkspaceList: false
         };
 
         this.MarketBrowserService  = {
