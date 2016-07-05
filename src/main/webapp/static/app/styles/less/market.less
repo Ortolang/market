@@ -261,6 +261,9 @@
     padding: 15px @container-main-padding @line-height-computed;
     background-color: @default-bg;
     border-bottom: @default-border;
+    .media {
+      max-width: @market-item-max-width;
+    }
     .media-left {
       padding-right: 2 * @padding-large-horizontal;
     }
@@ -300,6 +303,10 @@
   > .row {
     padding-left: @container-main-padding;
     padding-right: @container-main-padding;
+  }
+
+  .market-item-metadata-wrapper {
+    max-width: @market-item-max-width + @container-main-padding;
   }
 
   .market-item-presentation-metadata, aside {

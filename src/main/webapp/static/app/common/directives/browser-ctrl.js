@@ -653,10 +653,6 @@ angular.module('ortolangMarketApp')
                         });
                     }
                 }
-                if ($event.type === 'touchend') {
-                    $scope.doubleClickChild(child);
-                    $event.preventDefault();
-                }
             };
 
             function pushSelectedElement(element) {

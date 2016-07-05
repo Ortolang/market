@@ -89,11 +89,13 @@ angular.module('ortolangMarketApp')
         {
             id: 'divider2',
             class: 'divider',
+            mobileHidden: true,
             authenticated: true
         },
         {
             id: 'workspaces',
             class: 'workspaces',
+            mobileHidden: true,
             path: '/workspaces',
             description: 'NAV.WORKSPACES',
             iconCss: 'fa fa-fw fa-cloud fa-2x',

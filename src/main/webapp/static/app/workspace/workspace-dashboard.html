@@ -1,7 +1,7 @@
 <div class="view-wrapper-flex">
     <div class="toolbar-wrapper">
         <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="{faded: dashboardSection === 'content'}">
-            <div class="select-menu-wrapper visible-xs">
+            <div class="select-menu-wrapper visible-xs row">
                 <div class="col-xs-8">
                     <select class="form-control" ng-model="dashboardSectionSelect" ng-change="selectDashboardSection(dashboardSectionSelect)">
                         <option value="{{::section}}" ng-repeat="section in ::dashboardSections track by section">
