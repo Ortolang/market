@@ -249,7 +249,7 @@ angular.module('ortolangMarketApp')
                 TOOL_SUPPORT: 'Type de support',
                 LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
                 NO_PERSON_FOUND: 'Vous ne trouvez pas la personne ?',
-                ADD_NEW_PERSON: 'Demander l\'ajouter d\'une personne',
+                ADD_NEW_PERSON: 'Ajouter une personne',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: 'Personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
@@ -268,10 +268,12 @@ angular.module('ortolangMarketApp')
                     },
                     CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la personne dans le référentiel.'
                 },
+                NO_PRODUCER_FOUND: 'Vous ne trouvez pas votre laboratoire ?',
+                ADD_NEW_PRODCUER: 'Ajouter un laboratoire',
                 NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
                 ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un organisme',
+                    TITLE: 'Organisme',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     SEARCH: 'Rechercher un organisme ?',
                     SEARCH_LABEL: 'Rechercher',
@@ -288,8 +290,10 @@ angular.module('ortolangMarketApp')
                     },
                     CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de l\'organisation dans le référentiel.'
                 },
+                NO_LANGUAGE_FOUND: 'Vous ne trouvez pas une languge ?',
+                ADD_NEW_LANGUAGE: 'Ajouter une langue',
                 ADD_LANGUAGE_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} une langue dans le référentiel',
+                    TITLE: 'Langue',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     IDENTIFIER: 'Identifiant',
                     LABEL: {
@@ -302,8 +306,10 @@ angular.module('ortolangMarketApp')
                     },
                     CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la langue dans le référentiel.'
                 },
+                NO_LICENCE_FOUND: 'Vous ne trouvez pas votre licence ?',
+                ADD_NEW_LICENCE: 'Ajouter une licence particulière',
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Ajouter une licence particulière',
+                    TITLE: 'Licence',
                     IDENTIFIER: 'Identifiant',
                     LABEL: 'Donnez un nom à cette licence',
                     LABEL_FIELD: {

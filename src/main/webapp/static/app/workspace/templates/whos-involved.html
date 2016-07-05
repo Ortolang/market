@@ -6,8 +6,8 @@
             <input ng-model="searchProducer" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="taorg" type="text" class="form-control" id="search-producer" name="searchProducer" placeholder="Rechercher dans le référentiel des laboratoires répertoriés sur ORTOLANG" bs-options="organization as organization.fullname for organization in suggestOrganization($viewValue)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
-            Vous ne trouvez pas votre laboratoire ?
-            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddOrganizationModal()">Ajouter un nouveau laboratoire</a>
+            {{'WORKSPACE.METADATA_EDITOR.NO_PRODUCER_FOUND' | translate}}
+            <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddOrganizationModal()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_PRODCUER' | translate}}</a>
         </p>
     </div>
     <table class="table table-bordered table-responsive card-well metadata-editor-table">

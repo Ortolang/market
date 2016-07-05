@@ -258,10 +258,12 @@ angular.module('ortolangMarketApp')
                     },
                     CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new person in the referential.',
                 },
+                NO_PRODUCER_FOUND: 'You do not find your laboratory ?',
+                ADD_NEW_PRODCUER: 'Add a new laboratory',
                 NO_ORGANIZATION_FOUND: 'You do not find your organization ?',
                 ADD_NEW_ORGANIZATION: 'Add a new organization',
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Editing" : "Adding"}} a new organization',
+                    TITLE: 'Organization',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
                     SEARCH: 'Looking for an organization ?',
                     SEARCH_LABEL: 'Search',
@@ -278,8 +280,10 @@ angular.module('ortolangMarketApp')
                     },
                     CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new organization in the referential.',
                 },
+                NO_LANGUAGE_FOUND: 'You do not find a language ?',
+                ADD_NEW_LANGUAGE: 'Add a new language',
                 ADD_LANGUAGE_MODAL: {
-                    TITLE: '{{editing ? "Editing" : "Adding"}} a language in the referential',
+                    TITLE: 'Language',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
                     IDENTIFIER: 'Identifier',
                     LABEL: {
@@ -292,10 +296,12 @@ angular.module('ortolangMarketApp')
                     },
                     CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new language in the referential.',
                 },
+                NO_LICENCE_FOUND: 'You do not find your license ?',
+                ADD_NEW_LICENCE: 'Add your license',
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Add a new license',
+                    TITLE: 'License',
                     IDENTIFIER: 'Identifier',
-                    LABEL: 'Give a name for this licnse',
+                    LABEL: 'Give a name for this license',
                     LABEL_FIELD: {
                         LABEL: 'Name'
                     },
