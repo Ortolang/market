@@ -5,10 +5,11 @@
     <div class="container-main container-main-home">
         <div class="container-main-inner">
             <div class="information-wrapper">
-                <h3 class="ortolang-title"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'NEWS' | translate}}</h3>
-                <div ng-repeat="news in StaticWebsite.getNews() track by news">
-                    <hr/>
-                    <div ng-include="::news"></div>
+                <h3 class="ortolang-title" translate="NEWS"></h3>
+                <hr>
+                <div ng-repeat="news in StaticWebsite.getNews() track by news.url" class="news-wrapper">
+                    <!--<span class="news-date">{{::news.date | date:'longDate'}}</span>-->
+                    <div ng-include="::news.url" class="news-content"></div>
                 </div>
             </div>
         </div>

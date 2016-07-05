@@ -58,6 +58,7 @@ angular
             .when('/news', {
                 templateUrl: 'market/news.html',
                 controller: 'NewsCtrl',
+                title: 'NEWS',
                 description: 'default'
             })
             .when('/market/corpora', {
