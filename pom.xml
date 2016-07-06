@@ -15,9 +15,9 @@
     </parent>
 
     <scm>
-        <connection>scm:git:git@gitlab.ortolang.fr:/ortolang/ortolang-market.git</connection>
-        <developerConnection>scm:git:git@gitlab.ortolang.fr:/ortolang/ortolang-market.git</developerConnection>
-        <url>http://gitlab.ortolang.fr/ortolang/ortolang-market.git/</url>
+        <connection>scm:git:git@gitlab.ortolang.fr:ortolang/ortolang-market.git</connection>
+        <developerConnection>scm:git:git@gitlab.ortolang.fr:ortolang/ortolang-market.git</developerConnection>
+        <url>https://gitlab.ortolang.fr/ortolang/ortolang-market.git/</url>
         <tag>HEAD</tag>
     </scm>
 
