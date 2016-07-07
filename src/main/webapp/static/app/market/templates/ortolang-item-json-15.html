@@ -1,8 +1,8 @@
-<section class="market-item" ng-controller="OrtolangItemJson14Ctrl" ng-class="{browse: browse}">
+<section class="market-item" ng-controller="OrtolangItemJson15Ctrl">
     <header>
         <div class="media">
             <div class="media-left">
-                <div class="item-logo">
+                <div class="item-logo" ng-class="{browse: browse}">
                     <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}&size=63"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                     <img ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 </div>
@@ -42,17 +42,13 @@
         </div>
     </header>
 
-    <div ng-if="browse" class="container-main container-market-content">
-        <div class="container-main-inner">
-            <div class="market-item-content">
-                <div browser></div>
-            </div>
+    <div class="row">
+
+        <div ng-if="browse" class="col-md-12">
+            <div browser></div>
         </div>
-    </div>
 
-    <div ng-if="!browse" class="row market-item-metadata-wrapper">
-
-        <div class="col-md-8 market-item-presentation-metadata">
+        <div ng-show="!browse" class="col-md-8 market-item-presentation-metadata">
 
             <div class="alert alert-info citatation-alert" ng-click="howToCite(this, $event)">
                 <span class="fa fa-2x fa-quote-left pull-left"></span>
@@ -146,7 +142,7 @@
                         </dd>
                         <dt ng-repeat-start="additionalInformation in additionalInformations track by additionalInformation.name" translate="{{additionalInformation.name}}"></dt>
                         <dd ng-repeat-end>
-                            <span ng-if="isArray(additionalInformation.value)"><span ng-repeat="valueItem in additionalInformation.value">{{::valueItem}}</span></span>
+                            <span ng-if="isArray(additionalInformation.value)"><span ng-repeat="valueItem in additionalInformation.value">{{valueItem.label}}</span></span>
                             <span ng-if="isString(additionalInformation.value)">{{::additionalInformation.value}}</span>
                             <span ng-if="isBoolean(additionalInformation.value)">{{::additionalInformation.value ? ('YES' | translate) : ('NO' | translate)}}</span>
                         </dd>
@@ -180,7 +176,7 @@
             </section>
         </div>
 
-        <aside class="col-md-4">
+        <aside ng-show="!browse" class="col-md-4">
 
             <div class="card-well card-well-market card-well-license" ng-if="commercialLinks">
                 <p class="lead" translate="MARKET.COMMERCIAL_LINKS"></p>
@@ -248,6 +244,16 @@
                     <a ng-href="{{content.social.viadeo}}" target="_blank" data-title="Viadeo" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-viadeo"></span></a>
                 </p>
             </div>
+
+            <!--<div class="card-well card-well-market" ng-if="content.derogation">-->
+                <!--<p class="lead" translate="MARKET.DEROGATION"></p>-->
+                <!--<p>-->
+                    <!--<a href="http://www.archivesdefrance.culture.gouv.fr/seda/api/seda_v1-0_accessrestriction_code_xsd_Simple_Type_AccessRestrictionCodeType.htm#AccessRestrictionCodeType" target="_BLANK">{{content.derogation}}</a>-->
+                    <!--<span ng-if="content.derogation === 'AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>-->
+                    <!--<span ng-if="content.derogation === 'AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>-->
+                    <!--<span ng-if="content.derogation === 'AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>-->
+                <!--</p>-->
+            <!--</div>-->
 
             <div class="card-well card-well-market preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
                 <p class="lead" translate="MARKET.PREVIEW"></p>

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ImportMetadataCtrl', ['$rootScope', '$scope', '$timeout', 'Content', 'Workspace', 'ortolangType', '$location', '$alert', '$translate',
-        function ($rootScope, $scope, $timeout, Content, Workspace, ortolangType, $location, $alert, $translate) {
+    .controller('ImportMetadataCtrl', ['$rootScope', '$scope', '$timeout', 'Content', 'Workspace', 'ortolangType', '$location', '$alert', '$translate', 'WorkspaceMetadataService',
+        function ($rootScope, $scope, $timeout, Content, Workspace, ortolangType, $location, $alert, $translate, WorkspaceMetadataService) {
 
         	$scope.upload = function () {
         		// Using $timeout to prevent '$apply already in progress' error
@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
 
             $rootScope.$on('uploader.metadata.failed', function (event, response) {
             	console.log(response);
-                var myAlert = $alert({
+                $alert({
                 	// title: $translate.instant('ERROR_MODAL_9.TITLE'),
                 	content: $translate.instant('ERROR_MODAL_9.BODY'),
                 	placement: 'top',
@@ -56,15 +56,18 @@ angular.module('ortolangMarketApp')
                 });
             });
 
-        	function setContent(metadata) {
-        		var metadata = angular.copy(metadata);
-        		delete metadata.imageUrl;
+        	function setContent() {
+        		// var metadata = angular.copy(metadata);
+        		// delete metadata.imageUrl;
+                var metadata = WorkspaceMetadataService.getMetadata();
         		$scope.content = angular.toJson(metadata, true);
         	}
 
         	function init () {
-        		setContent($scope.metadata);
+                // setContent($scope.metadata);
+        		setContent();
         		$scope.ortolangType = ortolangType;
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
         	}
         	init();
     	}]

@@ -5,30 +5,30 @@
 
             <table class="table table-bordered table-responsive card-well metadata-editor-table">
                 <tbody>
-                    <tr ng-if="selectedLicense">
+                    <tr ng-if="metadata.licenseEntity">
                         <td>
                             <div class="media">
                                 <div class="media-body">
-                                    <span class="clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="editLicense(selectedLicense)" ng-bind="selectedLicense.label"></span>
+                                    <span class="clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="editLicense(metadata.licenseEntity)" ng-bind="metadata.licenseEntity.label"></span> <i ng-if="!metadata.licenseEntity.id && User.isRoot()" ng-class="::icons.info" data-title="{{'WORKSPACE.METADATA_EDITOR.NEW_LICENCE' | translate}}" data-placement="right" bs-tooltip></i>
                                 </div>
                                 <div class="media-right actions">
-                                    <span class="clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="deleteLicense()" data-title="{{::'DELETE' | translate}}" bs-tooltip>
+                                    <span class="clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteLicense()" data-title="{{::'DELETE' | translate}}" bs-tooltip>
                                         <span ng-class="::icons.remove"></span>
                                     </span>
                                 </div>
                             </div>
                         </td>
                     </tr>
-                    <tr ng-if="!selectedLicense" class="clickable" ng-disabled="Workspace.active.workspace.readOnly" ng-click="chooseLicence()">
+                    <tr ng-if="!metadata.licenseEntity" class="clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="chooseLicence()">
                         <td>
                             <span class="fa fa-search"></span>  <span>  Sélectionnez une licence...</span>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <p ng-if="!selectedLicense" class="help-block">
-                Vous ne trouvez pas votre licence ?
-                <a href="" class="btn btn-link" ng-disabled="Workspace.active.workspace.readOnly" ng-click="addLicence()" translate="WORKSPACE.METADATA_EDITOR.ADD_LICENCE_MODAL.TITLE"></a>
+            <p ng-if="!metadata.licenseEntity" class="help-block">
+                {{'WORKSPACE.METADATA_EDITOR.NO_LICENCE_FOUND' | translate}}
+                <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="addLicenceFromScratch()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_LICENCE' | translate}}</a>
             </p>
     	</div>
         <hr/>
@@ -39,14 +39,14 @@
                 <button type="button" class="btn btn-default" name="conditionsOfUse-lang" ng-model="selectedConditionsOfUseLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeConditionsOfUseLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
             </div>
             
-            <textarea class="form-control" name="conditionsOfUse" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse.value" ng-disabled="Workspace.active.workspace.readOnly" ng-change="updateConditionsOfUse()"></textarea>
+            <textarea class="form-control" name="conditionsOfUse" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse.value" ng-disabled="WorkspaceMetadataService.canEdit" ng-change="updateConditionsOfUse()"></textarea>
                 
         </div>
         <hr/>
         <div class="form-group">
             <label for="copyright" class="control-label">{{'MARKET.COPYRIGHT' | translate}}</label>
             
-              <input type="text" class="form-control" name="copyright" placeholder="Copyright ..." aria-label="copyright" ng-model="metadata.copyright" ng-disabled="Workspace.active.workspace.readOnly">
+              <input type="text" class="form-control" name="copyright" placeholder="Copyright ..." aria-label="copyright" ng-model="metadata.copyright" ng-disabled="WorkspaceMetadataService.canEdit">
             
         </div>
 	</div>

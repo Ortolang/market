@@ -239,13 +239,15 @@ angular.module('ortolangMarketApp')
                 OPERATING_SYSTEMS: 'Operating systems',
                 TOOL_SUPPORT: 'Tool support',
                 LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
-                NO_ORGANIZATION_FOUND: 'You do not find your organization ?',
-                ADD_NEW_ORGANIZATION: 'Add a new organization',
+                NO_PERSON_FOUND: 'You do not find a person ?',
+                ADD_NEW_PERSON: 'Ask for adding a new person',
                 ADD_CONTRIBUTOR_MODAL: {
-                    TITLE: '{{editing ? "Editing" : "Adding"}} new contributor',
+                    TITLE: 'Contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    CREATE_ENTITY: 'Create this entity',
                     SEARCH: 'Looking for someone ?',
                     SEARCH_LABEL: 'Search',
+                    ID: 'Identifier',
                     FIRSTNAME: 'First name',
                     MIDNAME: 'Middle name',
                     LASTNAME: 'Last name',
@@ -254,13 +256,19 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'This person is already in the list.',
                         ROLE: 'You need to specify the role of this person.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new person in the referential.',
                 },
+                NO_PRODUCER_FOUND: 'You do not find your laboratory ?',
+                ADD_NEW_PRODCUER: 'Add a new laboratory',
+                NO_ORGANIZATION_FOUND: 'You do not find your organization ?',
+                ADD_NEW_ORGANIZATION: 'Add a new organization',
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Editing" : "Adding"}} new organization which contributes',
+                    TITLE: 'Organization',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',
                     SEARCH: 'Looking for an organization ?',
                     SEARCH_LABEL: 'Search',
+                    IDENTIFIER: 'Identifier',
                     NAME: 'Name',
                     CITY: 'City',
                     COUNTRY: 'Country',
@@ -270,11 +278,31 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'This organization is already in the list.',
                         UNDEFINED: 'The name must be specify.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new organization in the referential.',
                 },
+                NO_LANGUAGE_FOUND: 'You do not find a language ?',
+                ADD_NEW_LANGUAGE: 'Add a new language',
+                ADD_LANGUAGE_MODAL: {
+                    TITLE: 'Language',
+                    SUBMIT: '{{editing ? "Edit" : "Add"}}',
+                    IDENTIFIER: 'Identifier',
+                    LABEL: {
+                        LABEL: 'Label',
+                        PLACEHOLDER: 'Label of the language'
+                    },
+                    MESSAGES: {
+                        EXISTS: 'This language is already in the list.',
+                        UNDEFINED: 'The label is not defined.'
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new language in the referential.',
+                },
+                NO_LICENCE_FOUND: 'You do not find your license ?',
+                ADD_NEW_LICENCE: 'Add your license',
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Add a new license',
-                    LABEL: 'Give a name for this licnse',
+                    TITLE: 'License',
+                    IDENTIFIER: 'Identifier',
+                    LABEL: 'Give a name for this license',
                     LABEL_FIELD: {
                         LABEL: 'Name'
                     },
@@ -285,11 +313,16 @@ angular.module('ortolangMarketApp')
                     WEBSITE_FIELD: {
                         LABEL: 'Web page',
                         PLACEHOLDER: 'HTTP address of the web site which contains informations about the license.'
+                    },
+                    MESSAGES: {
+                        EXISTS: 'This license is already in the list.',
+                        UNDEFINED: 'The label is not defined.'
                     }
                 },
                 CHOOSE_LICENCE_MODAL: {
                     TITLE: 'Choose a licence'
                 },
+                NEW_LICENCE: 'Unregistered license.',
                 ERROR_MESSAGES_MODAL: {
                     TITLE: 'Error in metadata'
                 },

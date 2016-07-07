@@ -249,13 +249,15 @@ angular.module('ortolangMarketApp')
                 OPERATING_SYSTEMS: 'Systèmes d\'exploitation',
                 TOOL_SUPPORT: 'Type de support',
                 LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
-                NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
-                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
+                NO_PERSON_FOUND: 'Vous ne trouvez pas la personne ?',
+                ADD_NEW_PERSON: 'Ajouter une personne',
                 ADD_CONTRIBUTOR_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
+                    TITLE: 'Personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    CREATE_ENTITY: 'Créer cette entité',
                     SEARCH: 'Rechercher une personne dans le référentiel ORTOLANG',
                     SEARCH_LABEL: 'Rechercher',
+                    ID: 'Identifiant',
                     FIRSTNAME: 'Prénom',
                     MIDNAME: 'Deuxième prénom',
                     LASTNAME: 'Nom',
@@ -264,13 +266,19 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Cette personne est déjà dans la liste.',
                         ROLE: 'Veuillez spécifier le rôle de cette personne.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la personne dans le référentiel.'
                 },
+                NO_PRODUCER_FOUND: 'Vous ne trouvez pas votre laboratoire ?',
+                ADD_NEW_PRODCUER: 'Ajouter un laboratoire',
+                NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
+                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire producteur',
+                    TITLE: 'Organisme',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     SEARCH: 'Rechercher un organisme ?',
                     SEARCH_LABEL: 'Rechercher',
+                    IDENTIFIER: 'Identifiant',
                     NAME: 'Nom',
                     CITY: 'Ville',
                     COUNTRY: 'Pays',
@@ -280,10 +288,30 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Ce laboratoire est déjà dans la liste.',
                         UNDEFINED: 'Le nom du laboratoire n\'est pas spécifié.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de l\'organisation dans le référentiel.'
                 },
+                NO_LANGUAGE_FOUND: 'Vous ne trouvez pas une languge ?',
+                ADD_NEW_LANGUAGE: 'Ajouter une langue',
+                ADD_LANGUAGE_MODAL: {
+                    TITLE: 'Langue',
+                    SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    IDENTIFIER: 'Identifiant',
+                    LABEL: {
+                        LABEL: 'Label',
+                        PLACEHOLDER: 'Label de la langue'
+                    },
+                    MESSAGES: {
+                        EXISTS: 'Cette langue est déjà dans la liste.',
+                        UNDEFINED: 'Le label de la langue n\'est pas spécifié.'
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la langue dans le référentiel.'
+                },
+                NO_LICENCE_FOUND: 'Vous ne trouvez pas votre licence ?',
+                ADD_NEW_LICENCE: 'Ajouter une licence particulière',
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Ajouter une licence particulière',
+                    TITLE: 'Licence',
+                    IDENTIFIER: 'Identifiant',
                     LABEL: 'Donnez un nom à cette licence',
                     LABEL_FIELD: {
                         LABEL: 'Nom'
@@ -295,11 +323,16 @@ angular.module('ortolangMarketApp')
                     WEBSITE_FIELD: {
                         LABEL: 'Page web',
                         PLACEHOLDER: 'Adresse HTTP du site web contenant des informations sur la licence.'
-                    }
+                    },
+                    MESSAGES: {
+                        EXISTS: 'Cette licence est déjà dans la liste.',
+                        UNDEFINED: 'Le nom de la licence n\'est pas spécifié.'
+                    },
                 },
                 CHOOSE_LICENCE_MODAL: {
                     TITLE: 'Choisir une licence'
                 },
+                NEW_LICENCE: 'Licence non enregistrée.',
                 ERROR_MESSAGES_MODAL: {
                     TITLE: 'Erreur dans les métadonnées'
                 },

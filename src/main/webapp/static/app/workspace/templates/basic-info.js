@@ -8,27 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('BasicInfoCtrl', ['$rootScope', '$scope', '$filter', '$translate', '$modal', 'Workspace',
-        function ($rootScope, $scope, $filter, $translate, $modal, Workspace) {
-
-            //TODO put this method to a service
-            function findObjectOfArray(arr, propertyName, propertyValue, defaultValue) {
-                if (arr) {
-                    var iObject;
-                    for (iObject = 0; iObject < arr.length; iObject++) {
-                        if (arr[iObject][propertyName] === propertyValue) {
-                            return arr[iObject];
-                        }
-                    }
-                }
-                if (defaultValue) {
-                    return defaultValue;
-                }
-                return null;
-            }
+    .controller('BasicInfoCtrl', ['$rootScope', '$scope', '$filter', '$translate', '$modal', 'Workspace', 'WorkspaceMetadataService', 'Helper',
+        function ($rootScope, $scope, $filter, $translate, $modal, Workspace, WorkspaceMetadataService, Helper) {
 
             $scope.changeTitleLanguage = function () {
-                var title = findObjectOfArray($scope.metadata.title, 'lang', $scope.selectedTitleLanguage);
+                var title = Helper.findObjectOfArray($scope.metadata.title, 'lang', $scope.selectedTitleLanguage);
                 if (title !== null) {
                     $scope.title = title;
                 } else {
@@ -38,7 +22,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.changeDescriptionLanguage = function () {
-                var description = findObjectOfArray($scope.metadata.description, 'lang', $scope.selectedDescriptionLanguage);
+                var description = Helper.findObjectOfArray($scope.metadata.description, 'lang', $scope.selectedDescriptionLanguage);
                 if (description !== null) {
                     $scope.description = description;
                 } else {
@@ -49,7 +33,7 @@ angular.module('ortolangMarketApp')
 
             $scope.updateTitle = function () {
                 if ($scope.title.value !== '') {
-                    var title = findObjectOfArray($scope.metadata.title, 'lang', $scope.selectedTitleLanguage);
+                    var title = Helper.findObjectOfArray($scope.metadata.title, 'lang', $scope.selectedTitleLanguage);
                     if (title === null) {
                         title = {lang: $scope.selectedTitleLanguage, value: $scope.title.value};
                         if (angular.isUndefined($scope.metadata.title)) {
@@ -64,7 +48,7 @@ angular.module('ortolangMarketApp')
 
             $scope.updateDescription = function () {
                 if ($scope.description.value !== '') {
-                    var description = findObjectOfArray($scope.metadata.description, 'lang', $scope.selectedDescriptionLanguage);
+                    var description = Helper.findObjectOfArray($scope.metadata.description, 'lang', $scope.selectedDescriptionLanguage);
                     if (description === null) {
                         description = {lang: $scope.selectedDescriptionLanguage, value: $scope.description.value};
                         if (angular.isUndefined($scope.metadata.description)) {
@@ -82,7 +66,7 @@ angular.module('ortolangMarketApp')
              **/
 
             $scope.removeDocumentation = function (documentation) {
-                if (Workspace.active.workspace.readOnly) {
+                if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var index = $scope.metadata.relations.indexOf(documentation);
@@ -120,6 +104,7 @@ angular.module('ortolangMarketApp')
             });
 
             function init() {
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
                 $scope.languages = [
                     {key: 'fr', value: $translate.instant('LANGUAGES.FR')},
                     {key: 'en', value: $translate.instant('LANGUAGES.EN')},
