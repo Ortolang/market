@@ -36,7 +36,7 @@
         <div class="workspace-dashboard-section workspace-dashboard-section-events">
             <h4 translate="WORKSPACE.HISTORY"></h4>
             <div class="infinite-list-wrapper">
-                <ul class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreEvents"  ng-style="{height: dashboardModels.eventFeedHeight}">
+                <ul class="list-unstyled overflow-list" z-infinite-scroll="seeMoreEvents"  ng-style="{height: dashboardModels.eventFeedHeight}">
                     <li ng-repeat="event in Workspace.active.events | eventFeedFilter | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
                         <div class="media-left" avatar data-email-hash="Workspace.authorCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
                         <div class="media-body">
@@ -74,7 +74,7 @@
         <div class="workspace-dashboard-section workspace-dashboard-section-requests">
             <h4 translate="WORKSPACE.WORKFLOW"></h4>
             <div class="infinite-list-wrapper">
-                <ul ng-if="Workspace.active.requests.length > 0" class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreRequests"  ng-style="{height: dashboardModels.requestsHeight}">
+                <ul ng-if="Workspace.active.requests.length > 0" class="list-unstyled overflow-list" z-infinite-scroll="seeMoreRequests"  ng-style="{height: dashboardModels.requestsHeight}">
                     <li ng-repeat="request in Workspace.active.requests | filter:{'type': 'publish-workspace'} | orderBy:'-start' | limitTo:dashboardModels.requestsLimit track by request.key" class="workspace-event media card-well">
                         <div class="media-left" avatar data-email-hash="Workspace.authorCards[request.initier].emailHash" data-size="36" data-img-classes="img-circle"></div>
                         <div class="media-body">

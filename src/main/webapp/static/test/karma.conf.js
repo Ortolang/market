@@ -52,7 +52,7 @@ module.exports = function (config) {
             projectBase + 'bower_components/angulartics/src/angulartics.js',
             projectBase + 'bower_components/angulartics-piwik/src/angulartics-piwik.js',
             projectBase + 'bower_components/holderjs/holder.js',
-            projectBase + 'bower_components/lrInfiniteScroll/lrInfiniteScroll.js',
+            projectBase + 'bower_components/zInfiniteScroll/zInfiniteScroll.js',
             projectBase + 'bower_components/showdown/dist/showdown.js',
             projectBase + 'bower_components/ng-showdown/dist/ng-showdown.js',
             projectBase + 'bower_components/angular-duration-format/dist/angular-duration-format.js',
