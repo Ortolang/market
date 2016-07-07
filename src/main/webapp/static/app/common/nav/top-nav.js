@@ -82,22 +82,25 @@ angular.module('ortolangMarketApp')
 
             var touchStart;
 
-            $swipe.bind(angular.element('body'), {
-                start:  function (coordinates) {
-                    if (coordinates.x < 20) {
+            if (Helper.isMobile()) {
+                $swipe.bind(angular.element('body'), {
+                    start:  function (coordinates) {
                         touchStart = coordinates;
-                    }
-                },
-                move: function (coordinates) {
-                    if (touchStart && coordinates.x > touchStart.x + 100 && Math.abs(coordinates.y - touchStart.y) < 50) {
-                        Helper.showAsideMobileNav();
+                    },
+                    move: function (coordinates) {
+                        if (touchStart && touchStart.x < 20 && coordinates.x > touchStart.x + 100 && Math.abs(coordinates.y - touchStart.y) < 50) {
+                            Helper.showAsideMobileNav();
+                            touchStart = undefined;
+                        } else if (touchStart && coordinates.x + 100 < touchStart.x && Math.abs(coordinates.y - touchStart.y) < 50) {
+                            Helper.hideAsideMobileNav();
+                            touchStart = undefined;
+                        }
+                    },
+                    end: function () {
                         touchStart = undefined;
                     }
-                },
-                end: function () {
-                    touchStart = undefined;
-                }
-            });
+                });
+            }
 
             $scope.changeLanguage = function (langKey) {
                 $translate.use(langKey).then(function (langKey) {

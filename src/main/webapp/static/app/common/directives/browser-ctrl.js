@@ -1940,8 +1940,8 @@ angular.module('ortolangMarketApp')
             // *********************** //
 
             function initLocalVariables() {
-                isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
-                isMobile = $window.navigator.userAgent.indexOf('Mobi') !== -1;
+                isMacOs = Helper.isMac();
+                isMobile = Helper.isMobile();
                 isClickedOnce = false;
                 clearPreviousFilteringQueries();
                 initialDisplayedItemLimit = 50;

@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', 'Settings', function ($rootScope, $translate, $alert, $modal, $aside, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'Settings', function ($rootScope, $translate, $alert, $modal, $aside, $window, Settings) {
 
         var modalScope, modal, asideMobileNav;
 
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
                 return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
             }
         };
-        
+
         this.findObjectOfArray = function (arr, propertyName, propertyValue, defaultValue) {
             if (arr) {
                 var iObject;
@@ -168,6 +168,14 @@ angular.module('ortolangMarketApp')
                     container: 'body'
                 });
             }
+        };
+
+        this.isMobile = function () {
+            return $window.navigator.userAgent.indexOf('Mobi') !== -1;
+        };
+
+        this.isMac = function () {
+            return $window.navigator.appVersion.indexOf('Mac') !== -1;
         };
 
         return this;
