@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', ['$rootScope', '$scope', '$location', '$translate', 'AuthService', 'User', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart', 'Helper',
-        function ($rootScope, $scope, $location, $translate, AuthService, User, Settings, Runtime, amMoment, StaticWebsite, Cart, Helper) {
+    .controller('TopNavCtrl', ['$rootScope', '$scope', '$location', '$translate', '$swipe', 'AuthService', 'User', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart', 'Helper',
+        function ($rootScope, $scope, $location, $translate, $swipe, AuthService, User, Settings, Runtime, amMoment, StaticWebsite, Cart, Helper) {
 
             $scope.User = User;
             $scope.Settings = Settings;
@@ -78,6 +78,25 @@ angular.module('ortolangMarketApp')
 
             $scope.$on('askLanguageChange', function (event, langKey) {
                 $scope.changeLanguage(langKey);
+            });
+
+            var touchStart;
+
+            $swipe.bind(angular.element('body'), {
+                start:  function (coordinates) {
+                    if (coordinates.x < 20) {
+                        touchStart = coordinates;
+                    }
+                },
+                move: function (coordinates) {
+                    if (touchStart && coordinates.x > touchStart.x + 100 && Math.abs(coordinates.y - touchStart.y) < 50) {
+                        Helper.showAsideMobileNav();
+                        touchStart = undefined;
+                    }
+                },
+                end: function () {
+                    touchStart = undefined;
+                }
             });
 
             $scope.changeLanguage = function (langKey) {
