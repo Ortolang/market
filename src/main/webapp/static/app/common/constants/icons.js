@@ -51,6 +51,14 @@ angular.module('ortolangMarketApp')
             more: 'fa fa-ellipsis-h',
             news: 'glyphicon glyphicon-bullhorn',
             statistics: 'fa fa-line-chart',
+            language: 'fa fa-fw fa-globe',
+            user: 'fa fa-user fa-fw',
+            signOut: 'fa fa-sign-out fa-fw',
+            tasks: 'fa fa-fw fa-bell',
+            facebook: 'fa fa-facebook',
+            twitter: 'fa fa-twitter',
+            linkedin: 'fa fa-linkedin',
+            viadeo: 'fa fa-viadeo',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

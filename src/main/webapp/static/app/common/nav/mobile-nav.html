@@ -5,7 +5,7 @@
                 <ul class="side-nav-list">
                     <li ng-if="::authenticated" class="side-nav-list-item top-item">
                         <a href="/profiles/me/edition">
-                            <span class="icon-container fa fa-fw fa-user fa-2x"></span>
+                            <span ng-class="::icons.user" class="icon-container fa-2x"></span>
                             <span class="item-description" translate="NAV.PROFILE"></span>
                         </a>
                     </li>
@@ -17,13 +17,13 @@
                     </li>
                     <li ng-if="::!authenticated" class="side-nav-list-item top-item">
                         <a ng-click="login()">
-                            <span class="icon-container fa fa-fw fa-user fa-2x"></span>
+                            <span ng-class="::icons.user" class="icon-container fa-2x"></span>
                             <span class="item-description" translate="LOG_IN"></span>
                         </a>
                     </li>
                     <li class="side-nav-list-item language top-item">
                         <a class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="icon-container fa fa-fw fa-globe fa-2x"></span>
+                            <span ng-class="::icons.language" class="icon-container fa-2x"></span>
                             <span class="item-description" translate="NAV.LANGUAGE"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -33,14 +33,14 @@
                     </li>
                     <li ng-if="::authenticated" class="side-nav-list-item top-item">
                         <a ng-click="logout()">
-                            <span class="icon-container fa fa-fw fa-sign-out fa-2x"></span>
+                            <span ng-class="::icons.signOut" class="icon-container fa-2x"></span>
                             <span class="item-description" translate="NAV.LOG_OUT"></span>
                         </a>
                     </li>
                     <li class="side-nav-list-item top-item-divider"><span></span></li>
                     <li ng-if="authenticated && User.isModerator && Runtime.getTasks().length > 0" class="side-nav-list-item top-item tasks">
                         <a href="/profiles/me/tasks">
-                            <span class="icon-container fa fa-fw fa-bell fa-2x"></span>
+                            <span ng-class="::icons.tasks" class="icon-container fa-2x"></span>
                             <span class="item-description">
                                 <span translate="TASKS"></span>
                                 <span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>

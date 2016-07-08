@@ -29,7 +29,7 @@
                     <tr ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder track by producer.key" ng-click="showProducer(producer, $event)">
                         <td>{{::producer.content.acronym}}</td>
                         <td>{{::producer.content.name}}</td>
-                        <td><span ng-show="::producer.content.city || producer.content.country"><span class="fa fa-fw fa-map-marker"></span> <span class="city">{{::(producer.content.city ? producer.content.city + ', ' : '') }}</span><span class="country">{{::producer.content.country}}</span></span></td>
+                        <td><span ng-show="::producer.content.city || producer.content.country"><span ng-class="::icons.location"></span> <span class="city">{{::(producer.content.city ? producer.content.city + ', ' : '') }}</span><span class="country">{{::producer.content.country}}</span></span></td>
                         <td><span ng-show="::producer.content.homepage"><a ng-href="{{::producer.content.homepage}}" target="_blank"  translate="PRODUCER.HOMEPAGE"></a></span></td>
                     </tr>
                 </tbody>
