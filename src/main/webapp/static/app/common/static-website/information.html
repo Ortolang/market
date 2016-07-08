@@ -18,8 +18,7 @@
         </div>
     </div>
     <div class="container-main">
-        <div class="container-main-inner">
-            <div class="information-wrapper" ng-include="StaticWebsite.getInformationPage(section)"></div>
+        <div class="container-main-inner information-wrapper" ng-class="section" ng-include="StaticWebsite.getInformationPage(section)">
         </div>
     </div>
 </div>
