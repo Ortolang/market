@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>fr.ortolang</groupId>
     <artifactId>market</artifactId>
     <name>Ortolang Diffusion Marketplace Application</name>
     <version>4.6.0-SNAPSHOT</version>
@@ -11,7 +10,7 @@
     <parent>
         <groupId>fr.ortolang</groupId>
         <artifactId>ortolang</artifactId>
-        <version>7</version>
+        <version>8-SNAPSHOT</version>
     </parent>
 
     <scm>
@@ -24,8 +23,8 @@
     <properties>
         <version.frontend.maven.plugin>1.0</version.frontend.maven.plugin>
         <version.resources.maven.plugin>3.0.1</version.resources.maven.plugin>
-        <version.clean.maven.plugin>2.6.1</version.clean.maven.plugin>
-        <version.sonar.maven.plugin>2.5</version.sonar.maven.plugin>
+        <version.clean.maven.plugin>3.0.0</version.clean.maven.plugin>
+        <version.sonar.maven.plugin>3.0.2</version.sonar.maven.plugin>
         <sonar.language>js</sonar.language>
         <sonar.sources>src/main/webapp/static/app</sonar.sources>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -140,7 +139,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
+                <version>${version.war.plugin}</version>
                 <configuration>
                     <webResources>
                         <resource>
@@ -160,7 +159,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
+                <version>${version.assembly.plugin}</version>
                 <configuration>
                     <descriptors>
                         <descriptor>src/main/assembly/static.xml</descriptor>
@@ -200,21 +199,11 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>1.8</version>
                 <configuration>
                     <licenseName>lgpl_v3</licenseName>
-                    <strictChecking>true</strictChecking>
                     <encoding>UTF-8</encoding>
                     <offline>true</offline>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>download-licenses</id>
-                        <goals>
-                            <goal>download-licenses</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

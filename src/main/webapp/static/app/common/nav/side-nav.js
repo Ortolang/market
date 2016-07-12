@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
                         case '/':
                             $scope.select('home');
                             break;
-                        case 'news':
+                        case '/news':
                             $scope.select('news');
                             break;
                         case '/profiles/me/edition':

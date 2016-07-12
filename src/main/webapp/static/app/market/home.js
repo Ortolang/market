@@ -12,18 +12,24 @@ angular.module('ortolangMarketApp')
         function ($scope, SearchProvider, StaticWebsite, StatisticsResource) {
 
             StatisticsResource.get({name: 'core.workspaces.all'}, function (data) {
-                var last = data.values.pop();
-                $scope.statistics.workspaceNumber = last[1];
+                if (data.values.length > 0) {
+                    var last = data.values.pop();
+                    $scope.statistics.workspaceNumber = last[1];
+                }
             });
 
             StatisticsResource.get({name: 'membership.profiles.all'}, function (data) {
-                var last = data.values.pop();
-                $scope.statistics.profileNumber = last[1];
+                if (data.values.length > 0) {
+                    var last = data.values.pop();
+                    $scope.statistics.profileNumber = last[1];
+                }
             });
 
             StatisticsResource.get({name: 'binary-store.size'}, function (data) {
-                var last = data.values.pop();
-                $scope.statistics.binaryStoreSize = last[1];
+                if (data.values.length > 0) {
+                    var last = data.values.pop();
+                    $scope.statistics.binaryStoreSize = last[1];
+                }
             });
 
             function initScopeVariables() {

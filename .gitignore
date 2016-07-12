@@ -3,6 +3,8 @@ src/main/webapp/static/app/styles/*.css*
 target-grunt
 .tmp
 
+*.iml
+
 ### OSX template
 *.DS_Store
 .AppleDouble
