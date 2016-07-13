@@ -19,8 +19,9 @@ angular.module('ortolangMarketApp')
             return (noSSL ? url.contentNoSSL : url.content) + '/key/' + key + (angular.isDefined(login) ? '?l=' + login : '');
         };
 
-        this.getContentUrlWithPath = function (path, alias, root, noSSL) {
-            return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + '/' + encodeURIComponent(path.charAt(0) === '/' ? path.substr(1) : path);
+        this.getContentUrlWithPath = function (path, alias, root, encode, noSSL) {
+            path = path.charAt(0) === '/' ? path.substr(1) : path;
+            return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + '/' + (encode ? encodeURIComponent(path) : path);
         };
 
         this.getThumbUrlWithKey = function (key, size, min, noSSL) {
@@ -28,7 +29,8 @@ angular.module('ortolangMarketApp')
         };
 
         this.getThumbUrlWithPath = function (path, alias, root, size, min, noSSL) {
-            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + alias + '/' + (root || 'head') + '/' + encodeURIComponent(path.charAt(0) === '/' ? path.substr(1) : path) + (angular.isDefined(size) ? '?size=' + size : '') + (angular.isDefined(min) ? '&min=' + min : '');
+            path = path.charAt(0) === '/' ? path.substr(1) : path;
+            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + alias + '/' + (root || 'head') + '/' + encodeURIComponent(path) + (angular.isDefined(size) ? '?size=' + size : '') + (angular.isDefined(min) ? '&min=' + min : '');
         };
 
         this.getDownloadUrlWithKey = function (key, noSSL) {
@@ -36,7 +38,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.getDownloadUrlWithPath = function (path, alias, root, noSSL) {
-            return this.getContentUrlWithPath(path, alias, root, noSSL) + forceDownloadQueryParam;
+            return this.getContentUrlWithPath(path, alias, root, false, noSSL) + forceDownloadQueryParam;
         };
 
         this.downloadWithKeyInWindow = function (key, newWindow, noSSL) {
@@ -63,7 +65,7 @@ angular.module('ortolangMarketApp')
         }
 
         this.downloadWithPath = function (path, alias, root, config, noSSL) {
-            return downloadWith(this.getContentUrlWithPath(path, alias, root, noSSL), config);
+            return downloadWith(this.getContentUrlWithPath(path, alias, root, false, noSSL), config);
         };
 
         this.downloadWithKey = function (key, config, noSSL) {
