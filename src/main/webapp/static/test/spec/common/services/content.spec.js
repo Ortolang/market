@@ -27,9 +27,10 @@ describe('Service: Content', function () {
     it('should return the content url', function () {
         expect(!!Content).toBe(true);
         expect(Content.getContentUrlWithKey('k1')).toMatch(url.content + '/key/k1');
-        expect(Content.getContentUrlWithPath('<path>', '<alias>', undefined)).toMatch(url.content + '/<alias>/head/' + encodeURIComponent('<path>'));
-        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>')).toMatch(url.content + '/<alias>/<root>/' + encodeURIComponent('<path>'));
-        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true)).toMatch(url.contentNoSSL + '/<alias>/<root>/' + encodeURIComponent('<path>'));
+        expect(Content.getContentUrlWithPath('<path>', '<alias>')).toMatch(url.content + '/<alias>/head/<path>');
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>')).toMatch(url.content + '/<alias>/<root>/<path>');
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true)).toMatch(url.content + '/<alias>/<root>/' + encodeURIComponent('<path>'));
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true, true)).toMatch(url.contentNoSSL + '/<alias>/<root>/' + encodeURIComponent('<path>'));
     });
 
     it('should return the preview url', function () {
