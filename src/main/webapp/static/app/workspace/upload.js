@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService', 'Helper',
-        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService, Helper) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService', 'Helper',
+        function ($scope, $rootScope, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService, Helper) {
 
             var uploader, queueLimitReached, sizeLimitReached;
 
@@ -38,7 +38,7 @@ angular.module('ortolangMarketApp')
                     ]
                 });
                 uploader.uploadQueueStatus = undefined;
-                uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                uploader.isMacOs = Helper.isMac();
                 uploader.tokenJustRefreshed = false;
                 uploader.zipExtractionQueue = [];
 
