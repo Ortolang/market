@@ -426,7 +426,7 @@
                                     <ul class="list-domain">
                                         <li ng-repeat="domain in allDomains | filter:{'compatibilities':discipline.contentId}">
                                             <div class="checkbox checkbox-primary">
-                                                <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)">
+                                                <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)" ng-disabled="checkboxDomain[discipline.id]">
                                                 <label for="{{domain.id}}">
                                                     {{domain.label}}
                                                 </label>
@@ -434,7 +434,7 @@
                                             <ul class="list-subdomain">
                                                 <li ng-repeat="subdomain in allSubDomains | filter:{'compatibilities':domain.contentId}">
                                                     <div class="checkbox checkbox-primary">
-                                                        <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)">
+                                                        <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-disabled="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(subdomain)">
                                                         <label for="{{subdomain.id}}">
                                                             {{subdomain.label}}
                                                         </label>
@@ -457,7 +457,7 @@
                                                 <ul class="list-domain">
                                                     <li ng-repeat="domain in allDomains | filter:{'compatibilities':discipline.contentId}">
                                                         <div class="checkbox checkbox-primary">
-                                                            <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)">
+                                                            <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)" ng-disabled="checkboxDomain[discipline.id]">
                                                             <label for="{{domain.id}}">
                                                                 {{domain.label}}
                                                             </label>
@@ -465,7 +465,7 @@
                                                         <ul class="list-subdomain">
                                                             <li ng-repeat="subdomain in allSubDomains | filter:{'compatibilities':domain.contentId}">
                                                                 <div class="checkbox checkbox-primary">
-                                                                    <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)">
+                                                                    <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)" ng-disabled="checkboxDomain[domain.id]">
                                                                     <label for="{{subdomain.id}}">
                                                                         {{subdomain.label}}
                                                                     </label>
@@ -489,7 +489,7 @@
                                                 <ul class="list-domain">
                                                     <li ng-repeat="domain in allDomains | filter:{'compatibilities':discipline.contentId}">
                                                         <div class="checkbox checkbox-primary">
-                                                            <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)">
+                                                            <input type="checkbox" id="{{domain.id}}" ng-model="checkboxDomain[domain.id]" ng-checked="checkboxDomain[domain.id]" ng-click="checkTerminoDomain(domain)" ng-disabled="checkboxDomain[discipline.id]">
                                                             <label for="{{domain.id}}">
                                                                 {{domain.label}}
                                                             </label>
@@ -497,7 +497,7 @@
                                                         <ul class="list-subdomain">
                                                             <li ng-repeat="subdomain in allSubDomains | filter:{'compatibilities':domain.contentId}">
                                                                 <div class="checkbox checkbox-primary">
-                                                                    <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)">
+                                                                    <input type="checkbox" id="{{subdomain.id}}" ng-model="checkboxDomain[subdomain.id]" ng-checked="checkboxDomain[subdomain.id]" ng-click="checkTerminoDomain(subdomain)" ng-disabled="checkboxDomain[domain.id]">
                                                                     <label for="{{subdomain.id}}">
                                                                         {{subdomain.label}}
                                                                     </label>
