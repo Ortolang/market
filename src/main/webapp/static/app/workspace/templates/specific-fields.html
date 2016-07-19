@@ -365,8 +365,8 @@
                         <textarea class="form-control" id="terminoUsage" name="terminoUsage" rows="20" placeholder="{{'ITEM.TERMINO_USAGE.PLACEHOLDER' | translate}}" ng-model="terminoUsage.value" ng-change="updateTerminoUsage()" ng-disabled="WorkspaceMetadataService.canEdit"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="terminoOrigin" class="control-label">{{'ITEM.TERMINO_ORIGIN.LABEL' | translate}}</label>
-                        <textarea class="form-control" name="terminoOrigin" rows="5" placeholder="{{'ITEM.TERMINO_ORIGIN.PLACEHOLDER' | translate}}" aria-label="terminoOrigin" ng-model="metadata.terminoOrigin" ng-disabled="WorkspaceMetadataService.canEdit"></textarea>
+                        <label for="terminoOrigin" class="control-label">{{'ITEM.TERMINO_ORIGIN.LABEL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="{{'ITEM.TERMINO_ORIGIN.PLACEHOLDER' | translate}}" data-placement="right" bs-tooltip></i></label>
+                        <textarea class="form-control" name="terminoOrigin" rows="1" aria-label="terminoOrigin" ng-model="metadata.terminoOrigin" ng-disabled="WorkspaceMetadataService.canEdit"></textarea>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
