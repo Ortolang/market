@@ -52,6 +52,15 @@ angular.module('ortolangMarketApp')
             });
             $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
+            var structureTypesFilter = FacetedFilter.make({
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.terminoStructureType.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.terminoStructureType',
+                alias: 'terminoStructureType',
+                type: 'array',
+                label: 'ITEM.TERMINO_STRUCTURE_TYPE.LABEL'
+            });
+            $scope.filtersManager.addAvailableFilter(structureTypesFilter);
+
         }
 
         function init() {
