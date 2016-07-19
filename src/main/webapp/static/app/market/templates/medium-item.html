@@ -12,7 +12,6 @@
         <div ng-if="::publicationDate" class="publication-date">
             <span translate="MARKET.PUBLISHED_ON"></span>
             <span class="text-muted" >{{::publicationDate | date:'mediumDate'}}</span>
-            <span ng-if="::esrAccessibility" class="pull-right text-muted esr-icon" ng-class="::icons.acl.esr" title="{{'MARKET.ESR_ACCESSIBLE' | translate}}"></span>
         </div>
     </a>
 </div>
