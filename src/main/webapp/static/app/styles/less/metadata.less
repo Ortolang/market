@@ -193,6 +193,19 @@
       max-height: 220px;
       overflow-y: scroll;
     }
+
+    fieldset {
+      margin-top: @padding-base-vertical*3;
+      padding-bottom: @padding-base-vertical*5;
+      border-bottom: 1px solid #eeeeee;
+      &:first-child {
+        padding-top: 0;
+        margin-top: 0;
+      }
+      legend {
+        border: 0;
+      }
+    }
   }
 
   .language-tags {
