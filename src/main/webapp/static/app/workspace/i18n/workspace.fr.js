@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans ce projet',
             MEMBERS_LIST: 'Membres de l\'espace de travail',
             OWNER: 'Propriétaire de l\'espace de travail',
-            PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}</strong>',
+            PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}{{number !== snapshots ? " | " + snapshots + " versions mémorisée" + (snapshots > 1 ? "s" : "") : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'Pas de version publiée',
             CREATED: 'Créé le {{creationDate | date}}',
@@ -198,7 +198,7 @@ angular.module('ortolangMarketApp')
                 LOGO_EDITOR_BUTTON: 'Créer un logo',
                 LOGO_EDITOR_HELP: 'Créer facilement un logo à l\'aide du créateur de logo ORTOLANG'
             },
-            DIFF: 'Voir les modifications',
+            DIFF: 'Comparer les versions',
             DIFF_MODAL: {
                 TITLE: 'Liste des modifications',
                 HELP: 'Choisissez deux snapshots à comparer',

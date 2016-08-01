@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} member{{number > 1 ? "s" : ""}}</strong> in the project',
             MEMBERS_LIST: 'Workspace members',
             OWNER: 'Workspace owner',
-            PUBLISHED_VERSIONS: '<strong>{{number}} published version{{number > 1 ? "s" : ""}}</strong>',
+            PUBLISHED_VERSIONS: '<strong>{{number}} published version{{number > 1 ? "s" : ""}}{{number !== snapshots ? " | " + snapshots + " saved version" + (snapshots > 1 ? "s" : "") : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'No published version',
             CREATED: 'Created on {{creationDate | date}}',
@@ -188,7 +188,7 @@ angular.module('ortolangMarketApp')
                 BOLD: 'Bold',
                 SUBMIT: 'Create'
             },
-            DIFF: 'Changes',
+            DIFF: 'Compare',
             DIFF_MODAL: {
                 TITLE: 'Changes',
                 HELP: 'Choose two snapshots to compare',
