@@ -43,7 +43,7 @@ angular.module('ortolangMarketApp')
             this.isLocked = profile.isLocked;
             this.friends = profile.friends;
             this.friendList = undefined;
-            this.isModerator = this.groups.indexOf('moderators') >= 0;
+            this.isModerator = this.groups.indexOf('moderators') >= 0 || this.groups.indexOf('publishers') >= 0 || this.groups.indexOf('reviewers') >= 0;
             return this;
         };
 

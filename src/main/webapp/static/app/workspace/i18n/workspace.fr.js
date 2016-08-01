@@ -434,7 +434,10 @@ angular.module('ortolangMarketApp')
                         ABORTED: 'Publication annulée',
                         ACCEPTED: 'Publication effectuée',
                         REJECTED: 'Publication rejetée',
-                        REVIEW: 'En attente de modération'
+                        REVIEW: 'En attente de modération',
+                        MODERATION: {
+                            WAITING: 'En attente de vérification'
+                        }
                     }
                 }
             }
