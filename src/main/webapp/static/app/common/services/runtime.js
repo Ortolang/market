@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .factory('Runtime', ['$rootScope', '$translate', '$modal', '$alert', '$timeout', 'RuntimeResource', 'FormResource', 'Helper', function ($rootScope, $translate, $modal, $alert, $timeout, RuntimeResource, FormResource, Helper) {
 
         var lastTasksRefresh,
-            tasks = [],
+            tasks = null,
             history = {},
             delta = 500;
 
@@ -23,6 +23,14 @@ angular.module('ortolangMarketApp')
             if (!date || lastTasksRefresh < date) {
                 lastTasksRefresh = Date.now();
                 RuntimeResource.listTasks(function (data) {
+                    angular.forEach(data.entries, function (task) {
+                        if (task.processVariables && task.processVariables.reviewresults) {
+                            task.processVariables.reviewresults = angular.fromJson(task.processVariables.reviewresults);
+                            angular.forEach(task.processVariables.reviewresults, function (review) {
+                                Helper.getCard(review.reviewer);
+                            });
+                        }
+                    });
                     tasks = data.entries;
                 });
             }

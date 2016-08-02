@@ -40,7 +40,7 @@
                     <li class="side-nav-list-item top-item-divider"><span></span></li>
                     <li ng-if="authenticated && User.isModerator && Runtime.getTasks().length > 0" class="side-nav-list-item top-item tasks">
                         <a href="/profiles/me/tasks">
-                            <span ng-class="::icons.tasks" class="icon-container fa-2x"></span>
+                            <span ng-class="::icons.notifications" class="icon-container fa-2x"></span>
                             <span class="item-description">
                                 <span translate="TASKS"></span>
                                 <span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>

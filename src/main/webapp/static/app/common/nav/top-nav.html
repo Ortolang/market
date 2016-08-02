@@ -14,8 +14,8 @@
 
         <ul class="nav navbar-nav navbar-right collapse navbar-collapse hidden-xs" ng-cloak>
             <li ng-if="authenticated && User.isModerator && Runtime.getTasks().length > 0">
-                <a href="/profiles/me/tasks" data-title="{{'TASKS' | translate}}" data-trigger="hover" data-placement="bottom" bs-tooltip>
-                    <span ng-class="::icons.tasks"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
+                <a href="/profiles/me/tasks" data-title="{{'TASKS' | translate}}" data-placement="bottom" bs-tooltip>
+                    <span ng-class="::icons.notifications"></span><span class="badge tasks">{{Runtime.getTasks().length > 0 ? Runtime.getTasks().length : ''}}</span>
                     <span class="hidden-description" translate="TASKS"></span>
                 </a>
             </li>

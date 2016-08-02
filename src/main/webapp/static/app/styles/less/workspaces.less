@@ -1,15 +1,5 @@
 .workspaces {
-  .card-workspace, .card-new {
-    cursor: pointer;
-    background-color: lighten(@default-bg, 2%);
-  }
   .card-workspace {
-    &:hover {
-      .alias, .actions {
-        transition: all 0.5s;
-        opacity: 1;
-      }
-    }
     &.deleted {
       background-color: darken(@default-bg, 10%);
       cursor: not-allowed;
@@ -20,26 +10,6 @@
     .logo {
       height: 100px;
       width: 100px;
-    }
-    .media-left, .media-body {
-      vertical-align: middle;
-    }
-    .media-body {
-      padding-left: @padding-base-horizontal;
-    }
-    .alias, .actions {
-      opacity: 0;
-    }
-    .alias {
-      font-style: italic;
-    }
-    .actions {
-      .btn:hover {
-        background-color: @white;
-      }
-    }
-    h4 {
-      font-weight: 600;
     }
     .date {
       font-style: italic;

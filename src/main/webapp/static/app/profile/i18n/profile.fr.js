@@ -96,6 +96,16 @@ angular.module('ortolangMarketApp')
             CLAIM: 'Prendre en charge',
             UNCLAIM: 'Ne plus prendre en charge',
             COMPLETE_TASK: 'Compléter la tâche',
-            TASK_CREATED: 'une nouvelle tâche vient d\'être ajoutée'
+            TASK_CREATED: 'une nouvelle tâche vient d\'être ajoutée',
+            PUBLICATION: 'Espace de travail "{{wsalias}}"',
+            MODERATE: 'Modération',
+            REVIEW: 'Évaluation',
+            REVIEWS: 'Évaluations',
+            PUBLISH: 'Publication',
+            REMAINING_DAYS: 'jours restants',
+            SEE_WORKSPACE: 'Voir l\'espace de travail',
+            WS_TAG: 'Tag :',
+            SNAPSHOT: 'Snapshot :',
+            INITIER: 'Initiateur :'
         }
     });

@@ -8,9 +8,21 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'Settings', function ($rootScope, $translate, $alert, $modal, $aside, $window, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'Settings', function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, Settings) {
 
-        var modalScope, modal, asideMobileNav;
+        var modalScope, modal, asideMobileNav, Helper = this;
+
+        this.profileCards = {};
+
+
+        this.getCard = function (username) {
+            if (username && this.profileCards[username] === undefined) {
+                this.profileCards[username] = null;
+                ProfileResource.getCard({key: username}, function (data) {
+                    Helper.profileCards[username] = data;
+                });
+            }
+        };
 
         this.getMultilingualValue = function (multilingualProperty, language) {
             if (multilingualProperty) {

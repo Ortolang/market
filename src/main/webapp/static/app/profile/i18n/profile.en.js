@@ -12,6 +12,8 @@ angular.module('ortolangMarketApp')
         PROFILE: {
             EMPTY: 'empty',
             ADD_FRIEND: 'Add a co-worker',
+            ADD_TO_FRIENDS: 'Add to my co-workers',
+            ADDED_TO_FRIENDS: 'Added to my co-workers',
             REMOVE_FRIEND: 'Remove from co-workers',
             SEE_PUBLIC_PROFILE: 'See my public profile',
             NAV: {
@@ -68,6 +70,11 @@ angular.module('ortolangMarketApp')
                 LINKEDIN: 'Persistent digital identifiers:  <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>.',
                 VIADEO: 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>.'
             },
+            HAL: {
+                RESULT_NUMBER: '<strong>{{number}} result{{number > 1 ? "s" : ""}}</strong> found out of',
+                MORE_RESULT: 'See the {{number}} results',
+                NO_ID: 'To display your publication list, please add your IdHal in "External identifiers".'
+            },
             EDIT_AVATAR_MODAL: {
                 TITLE: 'How to change your avatar?',
                 BODY_START: 'ORTOLANG uses your Gravatar as your profile picture:',
@@ -89,6 +96,16 @@ angular.module('ortolangMarketApp')
             CLAIM: 'Claim',
             UNCLAIM: 'Un-claim',
             COMPLETE_TASK: 'Complete task',
-            TASK_CREATED: 'a new task has been added'
+            TASK_CREATED: 'a new task has been added',
+            PUBLICATION: 'Publication of workspace "{{wsalias}}"',
+            MODERATE: 'Moderate',
+            REVIEW: 'Evaluate',
+            REVIEWS: 'Evaluations',
+            PUBLISH: 'Publication',
+            REMAINING_DAYS: 'days remaining',
+            SEE_WORKSPACE: 'See workspace',
+            WS_TAG: 'Tag:',
+            SNAPSHOT: 'Snapshot:',
+            INITIER: 'Initiator:'
         }
     });

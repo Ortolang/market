@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
             language: 'fa fa-fw fa-globe',
             user: 'fa fa-user fa-fw',
             signOut: 'fa fa-sign-out fa-fw',
-            tasks: 'fa fa-fw fa-bell',
+            notifications: 'fa fa-fw fa-bell',
             facebook: 'fa fa-facebook',
             twitter: 'fa fa-twitter',
             linkedin: 'fa fa-linkedin',
@@ -133,5 +133,10 @@ angular.module('ortolangMarketApp')
             slideshow: {
                 arrowLeft: 'fa fa-arrow-circle-left',
                 arrowRight: 'fa fa-arrow-circle-right'
+            },
+            tasks: {
+                claim: 'fa fa-fw fa-reply',
+                unclaim: 'fa fa-fw fa-share',
+                workspace: 'fa fa-fw fa-search'
             }
         });

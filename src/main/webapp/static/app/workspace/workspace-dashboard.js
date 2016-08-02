@@ -335,9 +335,9 @@ angular.module('ortolangMarketApp')
                     modalScope.selectSnapshot = function () {
                         if (modalScope.models.lsnapshot && modalScope.models.rsnapshot) {
                             WorkspaceResource.diffWorkspaceContent({wskey: Workspace.active.workspace.key, lsnapshot: modalScope.models.lsnapshot, rsnapshot: modalScope.models.rsnapshot}, function (data) {
-                                var i;
+                                var i, change;
                                 for (i = 0; i < data.length; i++) {
-                                    var change = data[i];
+                                    change = data[i];
                                     switch (change.type) {
                                         case 'ValueChange':
                                             change.order = 1;
@@ -367,15 +367,12 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.orderDiff = function () {
-
-            };
-
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();
                 }
                 $scope.User = User;
+                $scope.Helper = Helper;
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
                     eventsLimit: 4,

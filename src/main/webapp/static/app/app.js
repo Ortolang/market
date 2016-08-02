@@ -197,7 +197,7 @@ angular
     .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body',
-            trigger: 'hover click'
+            trigger: 'hover'
         });
         angular.extend($alertProvider.defaults, {
             container: '.alerts-wrapper',

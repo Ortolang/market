@@ -296,7 +296,7 @@
                     <dt ng-if="isLink(selectedElements[0])" translate="BROWSER.TARGET"></dt>
                     <dd ng-if="isLink(selectedElements[0])">{{selectedElements[0].target}}</dd>
                     <dt translate="BROWSER.KEY"></dt>
-                    <dd>{{selectedElements[0].key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" data-trigger="hover" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="selectedElements[0].key"></span></span></dd>
+                    <dd>{{selectedElements[0].key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top"><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="selectedElements[0].key"></span></span></dd>
                     <dt ng-if="isCollection(selectedElements[0])" translate="SIZE"></dt>
                     <dd ng-if="isCollection(selectedElements[0])">
                                     <span ng-hide="selectedElements[0].realSize || selectedElements[0].size === 0">

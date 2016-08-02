@@ -112,8 +112,6 @@ button.no-border {
 }
 
 .organization-card {
-  background-color: lighten(@default-bg, 2%);
-  cursor: pointer;
   margin-bottom: @line-height-computed;
   &.card-well {
     padding: 10px 12px 12px;
@@ -213,6 +211,85 @@ button.no-border {
     background-color: @alternate-light-bg;
     border-bottom-color: darken(@alternate-light-border-color, 5%);
     transition: all 0.3s;
+  }
+  &.card-well-actions {
+    background-color: lighten(@default-bg, 2%);
+    cursor: pointer;
+    .detail, .actions {
+      opacity: 0;
+    }
+    .detail {
+      font-style: italic;
+    }
+    h4, h5 {
+      font-weight: 600;
+    }
+    .actions {
+      .btn-default:hover {
+        background-color: @white;
+      }
+    }
+    .media-left, .media-body {
+      vertical-align: middle;
+    }
+    .media-body {
+      padding-left: @padding-base-horizontal;
+    }
+    &:hover {
+      .detail, .actions {
+        transition: all 0.5s;
+        opacity: 1;
+      }
+    }
+  }
+  &.card-well-task {
+    cursor: default;
+    max-width: 900px;
+    .progress-wrapper {
+      margin-top: @padding-base-vertical;
+      margin-bottom: @padding-base-horizontal;
+    }
+    .progress {
+      margin-top: @padding-small-vertical;
+      margin-bottom: 0;
+      height: 4px;
+    }
+    .reviews-wrapper {
+      margin-top: @line-height-computed;
+      margin-bottom: @line-height-computed;
+      .reviews {
+        margin-top: @padding-large-vertical;
+        margin-bottom: 0;
+        padding-left: @padding-base-horizontal;
+      }
+    }
+    .actions-wrapper {
+      margin-top: @line-height-computed;
+    }
+    .variables-list {
+      font-style: italic;
+    }
+    .author {
+      font-weight: 600;
+    }
+    .badge {
+      vertical-align: text-bottom;
+      &.badge-A {
+        background-color: @brand-success;
+      }
+      &.badge-B {
+        background-color: @brand-success;
+      }
+      &.badge-C {
+        background-color: @brand-warning;
+      }
+      &.badge-D {
+        background-color: @brand-warning;
+      }
+      &.badge-E {
+        background-color: @brand-danger;
+      }
+    }
   }
   hr {
     border-color: @well-border;
