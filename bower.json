@@ -1,27 +1,34 @@
 {
   "name": "ortolang-market",
-  "version": "4.5.0-SNAPSHOT",
+  "description": "ORTOLANG Marketplace AngularJS App",
+  "license": "https://www.gnu.org/licenses/lgpl-3.0.en.html",
+  "homepage": "https://www.ortolang.fr",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Ortolang/market.git"
+  },
   "dependencies": {
-    "angular": "1.5.5",
-    "angular-animate": "1.5.5",
-    "angular-route": "1.5.5",
-    "angular-resource": "1.5.5",
-    "angular-sanitize": "1.5.5",
-    "angular-messages": "1.5.5",
-    "angular-touch": "1.5.5",
-    "angular-cookies": "1.5.5",
-    "angular-i18n": "1.5.5",
-    "font-awesome": "4.6.1",
+    "jquery": "3.1.0",
+    "angular": "1.5.8",
+    "angular-animate": "1.5.8",
+    "angular-route": "1.5.8",
+    "angular-resource": "1.5.8",
+    "angular-sanitize": "1.5.8",
+    "angular-messages": "1.5.8",
+    "angular-touch": "1.5.8",
+    "angular-cookies": "1.5.8",
+    "angular-i18n": "1.5.8",
+    "font-awesome": "4.6.3",
     "octicons": "3.5.0",
-    "angular-file-upload": "2.2.0",
-    "angular-strap": "2.3.8",
+    "angular-file-upload": "2.3.4",
+    "angular-strap": "2.3.9",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#1.7.0",
-    "highlightjs": "highlightjs/cdn-release#9.2.0",
+    "highlightjs": "highlightjs/cdn-release#9.5.0",
     "angular-highlightjs": "0.6.1",
     "angular-motion": "0.4.4",
-    "angular-formly": "7.3.9",
-    "angular-formly-templates-bootstrap": "6.2.0",
-    "angular-translate": "2.11.0",
+    "angular-formly": "8.3.0",
+    "angular-formly-templates-bootstrap": "6.3.2",
+    "angular-translate": "2.11.1",
     "angular-zeroclipboard": "0.8.0",
     "angular-bootstrap-toggle-switch": "0.5.6",
     "bootstrap": "3.3.5",
@@ -29,18 +36,20 @@
     "zeroclipboard": "2.2.0",
     "holderjs": "2.9.3",
     "keycloak": "1.7.0",
-    "angular-xeditable": "prismsoundzero/angular-xeditable#0.1.9",
-    "ng-tags-input": "3.0.0",
-    "atmosphere": "2.3.1",
+    "angular-xeditable": "0.2.0",
+    "ng-tags-input": "3.1.1",
+    "atmosphere": "2.3.2",
     "awesome-bootstrap-checkbox": "0.3.5",
     "angular-moment": "0.10.3",
-    "angulartics": "1.0.3",
-    "angular-markdown-directive": "0.3.1",
-    "lrInfiniteScroll": "1.0.0"
+    "angulartics": "1.1.2",
+    "angulartics-piwik": "1.0.4",
+    "angular-duration-format": "1.0.1",
+    "ng-showdown": "1.1.0",
+    "zInfiniteScroll": "1.1.4"
   },
   "devDependencies": {
-    "angular-mocks": "1.5.5",
-    "angular-scenario": "1.5.5"
+    "angular-mocks": "1.5.8",
+    "angular-scenario": "1.5.8"
   },
   "overrides": {
     "angular-i18n": {
@@ -77,8 +86,8 @@
       ]
     }
   },
-  "appPath": "app",
+  "basePath": "src/main/webapp/static",
   "resolutions": {
-    "angular": "1.5.5"
+    "angular": "1.5.8"
   }
 }

@@ -15,8 +15,6 @@ angular.module('ortolangMarketApp')
             path: '/',
             description: 'NAV.HOME',
             iconCss: 'fa fa-fw fa-home fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
             authenticated: false
         },
         {
@@ -25,28 +23,6 @@ angular.module('ortolangMarketApp')
             path: '/market/corpora',
             description: 'CORPORA',
             iconCss: 'fa fa-fw fa-book fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
-            authenticated: false
-        },
-        {
-            id: 'applications',
-            class: 'applications',
-            path: '/market/applications',
-            description: 'INTEGRATED_PROJECTS',
-            iconCss: 'fa fa-fw fa-briefcase fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
-            authenticated: false
-        },
-        {
-            id: 'tools',
-            class: 'tools',
-            path: '/market/tools',
-            description: 'TOOLS',
-            iconCss: 'fa fa-fw fa-cubes fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
             authenticated: false
         },
         {
@@ -55,8 +31,6 @@ angular.module('ortolangMarketApp')
             path: '/market/lexicons',
             description: 'LEXICONS',
             iconCss: 'fa fa-fw fa-quote-right fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
             authenticated: false
         },
         {
@@ -65,8 +39,22 @@ angular.module('ortolangMarketApp')
             path: '/market/terminologies',
             description: 'TERMINOLOGIES',
             iconCss: 'fa fa-fw fa-font fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
+            authenticated: false
+        },
+        {
+            id: 'tools',
+            class: 'tools',
+            path: '/market/tools',
+            description: 'TOOLS',
+            iconCss: 'fa fa-fw fa-cubes fa-2x',
+            authenticated: false
+        },
+        {
+            id: 'applications',
+            class: 'applications',
+            path: '/market/applications',
+            description: 'INTEGRATED_PROJECTS',
+            iconCss: 'fa fa-fw fa-briefcase fa-2x',
             authenticated: false
         },
         {
@@ -75,13 +63,19 @@ angular.module('ortolangMarketApp')
             authenticated: false
         },
         {
+            id: 'news',
+            class: 'news',
+            path: '/news',
+            description: 'NEWS',
+            iconCss: 'fa-fw glyphicon glyphicon-bullhorn',
+            authenticated: false
+        },
+        {
             id: 'information',
             class: 'information',
             path: '/information',
             description: 'NAV.INFORMATION',
             iconCss: 'fa fa-fw fa-info fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
             authenticated: false
         },
         {
@@ -90,23 +84,21 @@ angular.module('ortolangMarketApp')
             path: '/producers',
             description: 'NAV.PRODUCERS',
             iconCss: 'fa fa-fw fa-graduation-cap fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
             authenticated: false
         },
         {
             id: 'divider2',
             class: 'divider',
+            mobileHidden: true,
             authenticated: true
         },
         {
             id: 'workspaces',
             class: 'workspaces',
+            mobileHidden: true,
             path: '/workspaces',
             description: 'NAV.WORKSPACES',
             iconCss: 'fa fa-fw fa-cloud fa-2x',
-            hiddenSideNav: false,
-            hiddenTopNav: false,
             authenticated: true
         }
     ]);

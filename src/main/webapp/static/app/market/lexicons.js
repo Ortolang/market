@@ -8,12 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LexiconsCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('LexiconsCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', 'SearchProvider', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter, SearchProvider) {
 
         function addAvailableFilters() {
 
             $scope.typeFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.type',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type',
                 alias: 'type',
                 label: 'MARKET.RESOURCE_TYPE',
                 resetLabel: 'MARKET.ALL_RESOURCE',
@@ -46,7 +47,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
             
             var lexiconInputTypeFilter = FacetedFilter.make({
-                id: 'lexiconInputType.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconInputType.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconInputType',
                 alias: 'lexiconInputType',
                 label: 'MARKET.FACET.LEXICON_INPUT_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_INPUT_TYPE',
@@ -56,7 +58,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(lexiconInputTypeFilter);
 
             var lexiconDescriptionTypesFilter = FacetedFilter.make({
-                id: 'lexiconDescriptionTypes.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconDescriptionTypes.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconDescriptionTypes',
                 alias: 'lexiconDescriptionTypes',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_DESCRIPTION_TYPE',
@@ -67,7 +70,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(lexiconDescriptionTypesFilter);
 
             var statusOfUseFilter = FacetedFilter.make({
-                id: 'statusOfUse.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.statusOfUse',
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',
                 resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
@@ -77,7 +81,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
 
             var lexiconInputLanguagesFilter = FacetedFilter.make({
-                id: 'lexiconInputLanguages.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconInputLanguages.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconInputLanguages',
                 alias: 'lexiconInputLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_INPUT_LANGUAGE',
@@ -86,7 +91,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(lexiconInputLanguagesFilter);
 
             var lexiconDescriptionLanguagesFilter = FacetedFilter.make({
-                id: 'lexiconDescriptionLanguages.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconDescriptionLanguages.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconDescriptionLanguages',
                 alias: 'lexiconDescriptionLanguages',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE',
@@ -95,7 +101,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(lexiconDescriptionLanguagesFilter);
 
             var lexiconFormatsLanguagesFilter = FacetedFilter.make({
-                id: 'lexiconFormats.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconFormats.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconFormats',
                 alias: 'lexiconFormats',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_FORMAT',
@@ -104,7 +111,8 @@ angular.module('ortolangMarketApp')
             $scope.filtersManager.addAvailableFilter(lexiconFormatsLanguagesFilter);
 
             var lexiconLanguageTypeFilter = FacetedFilter.make({
-                id: 'lexiconLanguageType.key',
+                id: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconLanguageType.key',
+                path: 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.lexiconLanguageType',
                 alias: 'lexiconLanguageType',
                 label: 'MARKET.FACET.LEXICON_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_LANGUAGE_TYPE'
@@ -115,6 +123,7 @@ angular.module('ortolangMarketApp')
         function init() {
             $scope.filtersManager = FacetedFilterManager.make();
             addAvailableFilters();
+            $scope.search = SearchProvider.make();
         }
 
         init();

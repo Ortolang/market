@@ -48,6 +48,17 @@ angular.module('ortolangMarketApp')
             share: 'glyphicon glyphicon-share-alt',
             info: 'fa fa-info-circle',
             question: 'fa fa-question-circle',
+            more: 'fa fa-ellipsis-h',
+            news: 'glyphicon glyphicon-bullhorn',
+            statistics: 'fa fa-line-chart',
+            language: 'fa fa-fw fa-globe',
+            user: 'fa fa-user fa-fw',
+            signOut: 'fa fa-sign-out fa-fw',
+            notifications: 'fa fa-fw fa-bell',
+            facebook: 'fa fa-facebook',
+            twitter: 'fa fa-twitter',
+            linkedin: 'fa fa-linkedin',
+            viadeo: 'fa fa-viadeo',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',
@@ -73,6 +84,14 @@ angular.module('ortolangMarketApp')
                 authentified: 'fa fa-fw fa-user',
                 esr: 'fa fa-fw fa-graduation-cap',
                 restricted: 'fa fa-fw fa-ban'
+            },
+            diff: {
+                diff: 'fa fa-fw fa-history',
+                new: 'fa fa-fw fa-plus',
+                removed: 'fa fa-fw fa-minus',
+                renamed: 'fa fa-fw fa-arrow-right',
+                binary: 'fa fa-fw fa-file',
+                metadatas: 'fa fa-fw fa-list'
             },
             // Visibility
             everybody: 'fa fa-fw fa-globe',
@@ -114,5 +133,10 @@ angular.module('ortolangMarketApp')
             slideshow: {
                 arrowLeft: 'fa fa-arrow-circle-left',
                 arrowRight: 'fa fa-arrow-circle-right'
+            },
+            tasks: {
+                claim: 'fa fa-fw fa-reply',
+                unclaim: 'fa fa-fw fa-share',
+                workspace: 'fa fa-fw fa-search'
             }
         });

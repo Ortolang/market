@@ -9,9 +9,9 @@
                 <thead>
                 <tr>
                     <th translate="NAME"></th>
-                    <th translate="WORKSPACE"></th>
-                    <th translate="WORKSPACE.PATH"></th>
-                    <th ng-show="::uploader.isHTML5" translate="SIZE"></th>
+                    <th class="hidden-xs" translate="WORKSPACE"></th>
+                    <th class="hidden-xs" translate="WORKSPACE.PATH"></th>
+                    <th class="hidden-xs" ng-show="::uploader.isHTML5" translate="SIZE"></th>
                     <th translate="WORKSPACE.PROGRESS"></th>
                     <th translate="WORKSPACE.STATUS"></th>
                 </tr>
@@ -20,9 +20,9 @@
                 <tr ng-repeat="item in uploader.queue">
                     <td ng-if="::uploader.isHTML5"><span ng-class="item.file.type | mimeTypeIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
                     <td ng-if="::!uploader.isHTML5"><span ng-class="item.type | ortolangElementIconCss" class="type"></span> <strong>{{::item.file.name}}</strong></td>
-                    <td>{{::item.wsName}}</td>
-                    <td>{{::item.file.path}}</td>
-                    <td class="text-nowrap" ng-show="::uploader.isHTML5">{{::item.file.size | bytes}}</td>
+                    <td class="hidden-xs">{{::item.wsName}}</td>
+                    <td class="hidden-xs">{{::item.file.path}}</td>
+                    <td class="hidden-xs text-nowrap" ng-show="::uploader.isHTML5">{{::item.file.size | bytes}}</td>
                     <td ng-show="::uploader.isHTML5">
                         <div class="progress">
                             <div ng-if="item.extracting" class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>

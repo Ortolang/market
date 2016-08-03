@@ -9,17 +9,14 @@
  * @property {Array}    list        - the workspace list of the connected user
  * @property {Object}   metadatas   - the metadata of all the workspaces in the list
  * @property {Object}   active      - the workspace being managed
- * @property {Object}   authorCards - the cards of all the authors related to the active workspace
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'ProfileResource', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $q, ProfileResource, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User, Helper) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $q, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User, Helper) {
 
     var listDeferred,
         activeWorkspaceInfoDeferred,
         Workspace = this;
 
     this.active = {};
-
-    this.authorCards = {};
 
     this.metadatas = {};
 
@@ -49,7 +46,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             Content.downloadWithKey(workspace.metadatas['ortolang-item-json']).promise.then(function (data) {
                 var metadata = angular.fromJson(data.data);
                 if (metadata.image) {
-                    metadata.imageUrl = Content.getPreviewUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName, 100);
+                    metadata.imageUrl = Content.getThumbUrlWithPath(metadata.image, workspace.alias, metadata.snapshotName, 100, true);
                 } else {
                     metadata.imageUrl = null;
                 }
@@ -65,18 +62,9 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         return deferred.promise;
     }
 
-    function getCard(username) {
-        if (username && Workspace.authorCards[username] === undefined) {
-            Workspace.authorCards[username] = null;
-            ProfileResource.getCard({key: username}, function (data) {
-                Workspace.authorCards[username] = data;
-            });
-        }
-    }
-
     this.getWorkspacesMetadata = function () {
         angular.forEach(Workspace.list, function (workspace) {
-            getCard(workspace.author);
+            Helper.getCard(workspace.author);
             getWorkspaceMetadata(workspace);
         });
     };
@@ -106,8 +94,8 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
     function getActiveWorkspaceInfo(partial) {
         var promises = [];
         activeWorkspaceInfoDeferred = $q.defer();
-        getCard(Workspace.active.workspace.author);
-        getCard(Workspace.active.workspace.owner);
+        Helper.getCard(Workspace.active.workspace.author);
+        Helper.getCard(Workspace.active.workspace.owner);
         if (!partial || Workspace.refresh.events) {
             promises.push(Workspace.getActiveWorkspaceEvents());
         }
@@ -233,7 +221,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         }
         WorkspaceResource.listEvents(params, function (data) {
             angular.forEach(data.entries, function (event) {
-                getCard(event.throwedBy);
+                Helper.getCard(event.throwedBy);
             });
             Workspace.active.eventsOffset = data.offset;
             if (next) {
@@ -257,7 +245,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         RuntimeResource.listProcesses({wskey: Workspace.active.workspace.key}, function (data) {
             Workspace.active.requests = $filter('filter')(data.entries, {'type': 'publish-workspace'}, true);
             angular.forEach(Workspace.active.requests, function (request) {
-                getCard(request.initier);
+                Helper.getCard(request.initier);
             });
             deferred.resolve();
         }, function () {

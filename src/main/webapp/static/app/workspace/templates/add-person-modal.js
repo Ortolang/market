@@ -8,50 +8,28 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddPersonCtrl', ['$scope', '$filter', 'Helper', 'ReferentialEntityResource', '$q', 
-    	function ($scope, $filter, Helper, ReferentialEntityResource, $q) {
+    .controller('AddPersonCtrl', ['$scope', '$filter', 'Helper', 'ReferentialEntityResource', '$q', 'WorkspaceMetadataService', 'User', 
+    	function ($scope, $filter, Helper, ReferentialEntityResource, $q, WorkspaceMetadataService, User) {
 
-            function init() {
-                $scope.searchPerson = '';
-                $scope.searchRole = '';
-
-                $scope.models = {};
-                $scope.models.roleTag = [];
-
-                $scope.models.organizationFullname = '';
-            }
-            init();
+            var regExp = new RegExp(' +', 'g');
 
             function getFullnameOfPerson(person) {
-                var fullname = person.firstname;
+                var fullname = '';
+                fullname += angular.isDefined(person.firstname) ? person.firstname : '';
                 fullname += angular.isDefined(person.midname) ? ' ' + person.midname : '';
-                fullname += ' ' + person.lastname;
+                fullname += angular.isDefined(person.lastname) ? ' ' + person.lastname : '';
                 return fullname;
             }
 
-            function setPerson(contributor, modalScope) {
-                contributor.entity.lastname = modalScope.models.lastname;
-                contributor.entity.rid = modalScope.models.rid;
-                contributor.entity.key = modalScope.models.key;
-                contributor.entity.firstname = modalScope.models.firstname;
-                contributor.entity.midname = modalScope.models.midname;
-
-                // if (angular.isDefined(modalScope.organization) && modalScope.organization.originOrganizationFullname === modalScope.models.organizationFullname) {
-                    // contributor.entity.organization = modalScope.organization;
-                    // contributor.entity.organization = '${' + modalScope.organization.key + '}';
-                    contributor.entity.organization = modalScope.organization;
-                    contributor.organizationEntity = modalScope.organizationEntity;
-                // }
-
-                contributor.entity.fullname = getFullnameOfPerson(contributor.entity);
+            function normalizeId(id) {
+                id = $filter('diacritics')(id);
+                $scope.models.entityContent.id = id ? id.replace(/[^\w\s]/g, '').replace(regExp, '_').toLowerCase() : id;
             }
 
-            function setRoles(contributor, myScope) {
-                contributor.roles = [];
-                angular.forEach(myScope.models.roleTag, function (tag) {
-                    contributor.roles.push(tag);
-                });
-            }
+            $scope.generateId = function (person) {
+                $scope.models.entityContent.fullname = getFullnameOfPerson(person);
+                normalizeId($scope.models.entityContent.fullname);
+            };
 
             function personExists(contributor, contributors) {
                 if (angular.isDefined(contributor.fullname) && angular.isDefined(contributors)) {
@@ -71,85 +49,128 @@ angular.module('ortolangMarketApp')
                 return false;
             }
 
-            $scope.submit = function (addContributorForm) {
-            	
-                if ($scope.models.firstname) { //TODO not set
+            function checkForm (addContributorForm) {
+
+                if ($scope.models.entityContent.firstname) {
                     addContributorForm.firstname.$setValidity('exists', true);
                 } else {
                     addContributorForm.firstname.$setValidity('exists', false);
                 }
 
-                if (!personExists($scope.models, $scope.contributors)) {
-                    addContributorForm.fullname.$setValidity('exists', true);
+                if ($scope.models.rolesEntity && $scope.models.rolesEntity.length > 0) {
+                    addContributorForm.roles.$setValidity('role', true);
                 } else {
-                    addContributorForm.fullname.$setValidity('exists', false);
+                    addContributorForm.roles.$setValidity('role', false);
                 }
 
-                if ($scope.models.roleTag.length > 0) {
-                    addContributorForm.roleTag.$setValidity('role', true);
-                } else {
-                    addContributorForm.roleTag.$setValidity('role', false);
+                //TODO Check organization is a ref entity
+            }
+
+            $scope.addContributorFromScratch = function (addContributorForm) {
+            	
+                checkForm(addContributorForm);
+
+                if (angular.isUndefined($scope.contributor)) {
+                    if (!personExists($scope.models.entityContent, $scope.contributors)) {
+                        addContributorForm.fullname.$setValidity('exists', true);
+                    } else {
+                        addContributorForm.fullname.$setValidity('exists', false);
+                    }
                 }
 
                 if (addContributorForm.$valid) {
-                    var contributor = {entity: {}, roles: []};
-
-                    setPerson(contributor, $scope);
-
-                    setRoles(contributor, $scope);
-
-                    if ($scope.metadata.contributors === undefined) {
-                        $scope.metadata.contributors = [];
+                    if (typeof $scope.models.entity  !== 'string') {
+                        delete $scope.models.entityContent.id;
+                        $scope.models.entity = angular.copy($scope.models.entityContent);
                     }
 
-                    $scope.contributors.push(contributor);
-
-                    var roles = [];
-                    angular.forEach(contributor.roles, function (role) {
-                        roles.push(Helper.createKeyFromReferentialId(role.id));
+                    $scope.models.roles = [];
+                    angular.forEach($scope.models.rolesEntity, function (role) {
+                        $scope.models.roles.push(Helper.createKeyFromReferentialName(role.id));
                     });
-                    
-                    if (angular.isDefined(contributor.entity.key)) {
-                        $scope.metadata.contributors.push({entity: Helper.createKeyFromReferentialId(contributor.entity.key), roles: roles, organization: contributor.entity.organization});
+
+                    if (angular.isUndefined($scope.contributor)) {
+                        if ($scope.metadata.contributors === undefined) {
+                            $scope.metadata.contributors = [];
+                        }
+                        $scope.metadata.contributors.push($scope.models);
                     } else {
-                        $scope.metadata.contributors.push({entity: contributor.entity, roles: roles, organization: contributor.entity.organization});
+                        $scope.contributor.entity = angular.copy($scope.models.entity);
+                        $scope.contributor.entityContent = angular.copy($scope.models.entityContent);
+                        $scope.contributor.roles = angular.copy($scope.models.roles);
+                        $scope.contributor.rolesEntity = angular.copy($scope.models.rolesEntity);
+                        $scope.contributor.organizationEntity = angular.copy($scope.models.organizationEntity);
+                        $scope.contributor.organization = angular.copy($scope.models.organization);
                     }
 
+                    WorkspaceMetadataService.metadataChanged = true;
             		Helper.hideModal();
                 }
             };
 
-            $scope.suggestPerson = function (term) {
-            	if(term.length<2 || angular.isObject(term)) {
-                    return [];
-                }
+            function createEntity(name, metadata) {
                 var deferred = $q.defer();
-                ReferentialEntityResource.get({type: 'PERSON', lang:'FR', term: term}, function(results) {
-                    var suggestedPersons = [];
-                    angular.forEach(results.entries, function(refentity) {
-                        var content = angular.fromJson(refentity.content);
-                        
-                        suggestedPersons.push({
-                            key: refentity.key,
-                            value: content.fullname,
-                            id: content.id,
-                            fullname: content.fullname,
-                            lastname: content.lastname,
-                            firstname: content.firstname,
-                            midname: content.midname,
-                            org: content.organization,
-                            type: content.type,
-                            label: '<span>' + content.fullname + '</span>'
-                        });
-                    });
-                    deferred.resolve(suggestedPersons);
-                }, function () {
-                    deferred.reject([]);
+                var content = angular.toJson(metadata);
+                ReferentialEntityResource.post({}, {name: name, type: 'PERSON', content: content}, function () {
+                    deferred.resolve();
+                }, function (errors) {
+                    deferred.reject(errors);
                 });
-
                 return deferred.promise;
+            }
+
+            $scope.setContributorFromNewEntity = function (form) {
+
+                checkForm(form);
+
+                if (form.$valid) {
+                    ReferentialEntityResource.get({name: $scope.models.entityContent.id}, function() {
+                        //TODO notify and ask to choose one of the result or create a new one
+                        console.log('Person exists');
+                    }, function () {
+                        var entity = angular.copy($scope.models.entityContent);
+                        entity.schema = 'http://www.ortolang.fr/schema/person/02#';
+                        entity.type = 'Person';
+                        createEntity(entity.id, entity).then(function () {
+                            //TODO notify by toast
+                            console.log('person created');
+                            $scope.models.entity = Helper.createKeyFromReferentialName(entity.id);
+
+                            $scope.models.roles = [];
+                            angular.forEach($scope.models.rolesEntity, function (role) {
+                                $scope.models.roles.push(Helper.createKeyFromReferentialName(role.id));
+                            });
+                            
+                            if (angular.isUndefined($scope.contributor)) {
+                                if ($scope.metadata.contributors === undefined) {
+                                    $scope.metadata.contributors = [];
+                                }
+                                $scope.metadata.contributors.push($scope.models);
+                            } else {
+                                $scope.contributor.entity = angular.copy($scope.models.entity);
+                                $scope.contributor.entityContent = angular.copy($scope.models.entityContent);
+                                $scope.contributor.roles = angular.copy($scope.models.roles);
+                                $scope.contributor.rolesEntity = angular.copy($scope.models.rolesEntity);
+                                $scope.contributor.organizationEntity = angular.copy($scope.models.organizationEntity);
+                                $scope.contributor.organization = angular.copy($scope.models.organization);
+                            }
+
+                            WorkspaceMetadataService.metadataChanged = true;
+                        }, function (reason) {
+                            //TODO notify
+                            console.log(reason);
+                        });    
+                    });
+
+                    Helper.hideModal();
+                } else {
+                    console.log('form not valid');
+                }
             };
 
+            /**
+             * Suggest an organization.
+             **/
             $scope.suggestOrganization = function (term, sponsor) {
                 if(term.length<2 || angular.isObject(term)) {
                     return [];
@@ -194,41 +215,45 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             };
 
-            $scope.$on('ta-search-person.select', function (v, i) {
-                $scope.models.rid = i.rid;
-                $scope.models.key = i.key;
-                $scope.models.lastname = i.lastname;
-                $scope.models.firstname = i.firstname;
-                $scope.models.midname = i.midname;
-                if (angular.isDefined(i.org)) {
-                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(i.org)}, function(entity) {
-                        var content = angular.fromJson(entity.content);
-                        $scope.organizationEntity = content;
-                        $scope.models.organizationFullname = content.fullname;
-                        $scope.models.originOrganizationFullname = content.fullname;
-                    });
-                    $scope.organization = i.org;
-                } else {
-                    $scope.models.organizationFullname = '';
-                    $scope.organization = {};
-                }
-                $scope.models.fullname = i.fullname;
-
-                $scope.$apply();
-            });
-
+            /**
+             * Sets organization listener.
+             **/
             $scope.$on('taorg.select', function (v, i) {
-                $scope.organization = Helper.createKeyFromReferentialId(i.key);
-                $scope.models.organizationFullname = i.org.fullname;
-                $scope.models.originOrganizationFullname = i.org.fullname;
-                $scope.organizationEntity = i.org;
+                $scope.models.organization = Helper.createKeyFromReferentialId(i.key);
+                $scope.models.entityContent.organization = Helper.createKeyFromReferentialId(i.key);
+                $scope.models.organizationEntity = i.org;
+
+                $scope.organizationFullname = i.org.fullname;
+                $scope.originOrganizationFullname = i.org.fullname;
                 $scope.$apply();
             });
 
-            $scope.clearSearch = function () {
-                $scope.models = {};
-                $scope.models.roleTag = [];
+            function init() {
                 $scope.searchPerson = '';
-            };
+                $scope.User = User;
+                $scope.identifier = {autoGenerated: true};
+
+                if (angular.isUndefined($scope.contributor)) {
+                    $scope.models = {entity: {}, roles: []};
+                    $scope.organizationFullname = '';
+                    $scope.disabled = false;
+                } else {
+                    $scope.models = {};
+                    $scope.models.entity = angular.copy($scope.contributor.entity);
+                    $scope.models.entityContent = angular.copy($scope.contributor.entityContent);
+                    $scope.models.roles = angular.copy($scope.contributor.roles);
+                    $scope.models.rolesEntity = angular.copy($scope.contributor.rolesEntity);
+                    $scope.models.organization = angular.copy($scope.contributor.organization);
+                    $scope.models.organizationEntity = angular.copy($scope.contributor.organizationEntity);
+                    if ($scope.contributor.organizationEntity) {
+                        $scope.organizationFullname = $scope.contributor.organizationEntity.fullname;
+                    }
+                    $scope.disabled = angular.isDefined($scope.models.entityContent.id);
+                    if (angular.isUndefined($scope.models.entityContent.id)) {
+                        normalizeId($scope.models.entityContent.fullname);
+                    }
+                }
+            }
+            init();
 
     }]);

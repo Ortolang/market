@@ -88,8 +88,12 @@ angular.module('ortolangMarketApp')
             BEARER_TOKEN: 'Copy token',
             SEE_ALL: 'See all',
             NO_CHILDREN: 'This folder is empty<br/><small>Drag and drop files here or click on the <span class="glyphicon glyphicon-plus"></span> button</small>',
+            NO_CHILDREN_MOBILE: 'This folder is empty',
+            NO_CHILDREN_MOBILE_BUTTON: '<span class="glyphicon glyphicon-plus"></span> Add some files',
             NO_CHILDREN_NOT_HEAD: 'This folder is empty',
             NO_FILTERED_CHILDREN: 'No elements',
+            MORE_MD: 'Show all metadata',
+            SEE_MD: 'Show metadata',
             PIDS: {
                 PIDS: 'Persistent identifiers',
                 STATIC: 'Static persistent identifier',

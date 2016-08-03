@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService', 'Helper',
-        function ($scope, $rootScope, $window, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService, Helper) {
+    .controller('UploadCtrl', ['$scope', '$rootScope', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService', 'Helper',
+        function ($scope, $rootScope, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService, Helper) {
 
             var uploader, queueLimitReached, sizeLimitReached;
 
@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
                             name: 'noFolder',
                             fn: function (item) {
                                 return !(!item.type && ((!this.isMacOs && item.size % 4096 === 0) ||
-                                (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 5 < item.name.length - 1))));
+                                (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 8 < item.name.length - 1))));
                             }
                         },
                         {
@@ -38,7 +38,7 @@ angular.module('ortolangMarketApp')
                     ]
                 });
                 uploader.uploadQueueStatus = undefined;
-                uploader.isMacOs = $window.navigator.appVersion.indexOf('Mac') !== -1;
+                uploader.isMacOs = Helper.isMac();
                 uploader.tokenJustRefreshed = false;
                 uploader.zipExtractionQueue = [];
 
@@ -92,7 +92,6 @@ angular.module('ortolangMarketApp')
 
             $scope.clearItem = function (item) {
                 item.remove();
-                $scope.resizeBrowser();
             };
 
             $scope.isZipExtractionQueueEmpty = function () {

@@ -12,7 +12,10 @@ angular.module('ortolangMarketApp')
         PROFILE: {
             EMPTY: 'non renseigné',
             ADD_FRIEND: 'Ajouter un collaborateur',
+            ADD_TO_FRIENDS: 'Ajouter à mes collaborateurs',
+            ADDED_TO_FRIENDS: 'Ajouté à mes collaborateurs',
             REMOVE_FRIEND: 'Retirer des collaborateurs',
+            SEE_PUBLIC_PROFILE: 'Voir mon profil public',
             NAV: {
                 PERSONAL_INFOS: 'Informations personnelles',
                 SETTINGS: 'Préférences',
@@ -50,6 +53,7 @@ angular.module('ortolangMarketApp')
                 TEL: 'Téléphone personnel',
                 FAX: 'Fax',
                 PRESENTATION: 'Décrivez-vous en quelques mots',
+                IDHAL: 'Identifiant IdHAL',
                 ORCID: 'Identifiant ORCID',
                 VIAF: 'Identifiant VIAF',
                 MYIDREF: 'IdRef',
@@ -59,11 +63,17 @@ angular.module('ortolangMarketApp')
             },
             HELPER: {
                 TITLE: 'Titre professionnel : Dr., Prof. etc.',
+                IDHAL: 'Identifiant unique géré dans HAL : <a href="https://hal.archives-ouvertes.fr/page/mon-idhal" target="_blank">https://hal.archives-ouvertes.fr/</a>',
                 ORCID: 'Identifiant personnel pérenne : <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>',
                 VIAF: 'Identifiant personnel pérenne : <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>',
                 MYIDREF: 'Identifiant personnel pérenne : <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
                 LINKEDIN: 'Identifiant personnel pérenne : <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>',
                 VIADEO: 'Identifiant personnel pérenne : <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>'
+            },
+            HAL: {
+                RESULT_NUMBER: '<strong>{{number}} résultat{{number > 1 ? "s" : ""}}</strong> trouvé{{number > 1 ? "s" : ""}} sur',
+                MORE_RESULT: 'Voir les {{number}} résultats',
+                NO_ID: 'Pour afficher la liste de vos publications veuillez renseigner votre IdHal dans la rubrique "Identifiants externes".'
             },
             EDIT_AVATAR_MODAL: {
                 TITLE: 'Comment changer son avatar ?',
@@ -86,6 +96,16 @@ angular.module('ortolangMarketApp')
             CLAIM: 'Prendre en charge',
             UNCLAIM: 'Ne plus prendre en charge',
             COMPLETE_TASK: 'Compléter la tâche',
-            TASK_CREATED: 'une nouvelle tâche vient d\'être ajoutée'
+            TASK_CREATED: 'une nouvelle tâche vient d\'être ajoutée',
+            PUBLICATION: 'Espace de travail "{{wsalias}}"',
+            MODERATE: 'Modération',
+            REVIEW: 'Évaluation',
+            REVIEWS: 'Évaluations',
+            PUBLISH: 'Publication',
+            REMAINING_DAYS: 'jours restants',
+            SEE_WORKSPACE: 'Voir l\'espace de travail',
+            WS_TAG: 'Tag :',
+            SNAPSHOT: 'Snapshot :',
+            INITIER: 'Initiateur :'
         }
     });

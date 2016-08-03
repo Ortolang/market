@@ -28,10 +28,12 @@ angular.module('ortolangMarketApp')
             if (modal.length > 0) {
                 Helper.hideModal();
             }
+            Helper.hideAsideMobileNav();
         });
 
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             if (current.$$route) {
+                Helper.hideAsideMobileNav();
                 if (current.$$route.title) {
                     $rootScope.ortolangPageTitle = $translate.instant(current.$$route.title) + ' | ';
                 } else if (previous || current.$$route.originalPath === '/') {
@@ -52,10 +54,12 @@ angular.module('ortolangMarketApp')
                         case '/':
                             $scope.select('home');
                             break;
-                        case '/profile/information':
-                            $scope.select('profile');
+                        case '/news':
+                            $scope.select('news');
                             break;
-                        case '/profile/tasks':
+                        case '/profiles/me/edition':
+                        case '/profiles/me/tasks':
+                        case 'profiles/:key':
                             $scope.select('profile');
                             break;
                         case '/search':
@@ -94,6 +98,8 @@ angular.module('ortolangMarketApp')
                     var regExp, i, currentPath;
                     if ($route.current.originalPath === '/') {
                         $scope.select('home');
+                    } else if ($route.current.originalPath === '/news') {
+                        $scope.select('news');
                     } else {
                         for (i = 1; i < sideNavElements.length; i++) {
                             regExp = new RegExp('^' + sideNavElements[i].path);

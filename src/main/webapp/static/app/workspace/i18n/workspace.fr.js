@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         WORKSPACE: {
             WORKSPACE: 'Workspace',
             ALIAS: 'Alias',
+            INFORMATION: 'Informations',
             CONTENT: 'Contenu',
             METADATA: 'Métadonnées',
             PERMISSIONS: 'Visibilité',
@@ -36,7 +37,7 @@ angular.module('ortolangMarketApp')
             MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans ce projet',
             MEMBERS_LIST: 'Membres de l\'espace de travail',
             OWNER: 'Propriétaire de l\'espace de travail',
-            PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}</strong>',
+            PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}{{number !== snapshots ? " | " + snapshots + " versions mémorisée" + (snapshots > 1 ? "s" : "") : ""}}</strong>',
             TAGS: 'Versions',
             NO_TAGS: 'Pas de version publiée',
             CREATED: 'Créé le {{creationDate | date}}',
@@ -60,6 +61,7 @@ angular.module('ortolangMarketApp')
             CREATE_WORKSPACE: 'Créer un espace de travail',
             NO_METATDATA: 'Les métadonnées ne sont pas encore renseignées.',
             GO_TO_METATDATA: 'Allez à la page des métadonnées.',
+            HEAD: 'Version actuelle',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Création d\'un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'alias',
@@ -196,6 +198,16 @@ angular.module('ortolangMarketApp')
                 LOGO_EDITOR_BUTTON: 'Créer un logo',
                 LOGO_EDITOR_HELP: 'Créer facilement un logo à l\'aide du créateur de logo ORTOLANG'
             },
+            DIFF: 'Comparer les versions',
+            DIFF_MODAL: {
+                TITLE: 'Liste des modifications',
+                HELP: 'Choisissez deux snapshots à comparer',
+                COMPARE_LAST: '<em>(comparer la version actuelle à la dernière publiée)</em>',
+                NEW: 'Nouvel élément',
+                REMOVED: 'Element supprimé',
+                RENAMED: 'Element déplacé',
+                METADATAS: 'Métadonnées modifiées'
+            },
             SAVE_METADATA_MODAL: {
                 TITLE: 'Enregistrer les métadonnées',
                 BODY: 'Souhaitez-vous enregistrer les changements ?'
@@ -237,13 +249,15 @@ angular.module('ortolangMarketApp')
                 OPERATING_SYSTEMS: 'Systèmes d\'exploitation',
                 TOOL_SUPPORT: 'Type de support',
                 LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
-                NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
-                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
+                NO_PERSON_FOUND: 'Vous ne trouvez pas la personne ?',
+                ADD_NEW_PERSON: 'Ajouter une personne',
                 ADD_CONTRIBUTOR_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} une personne contributrice',
+                    TITLE: 'Personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    CREATE_ENTITY: 'Créer cette entité',
                     SEARCH: 'Rechercher une personne dans le référentiel ORTOLANG',
                     SEARCH_LABEL: 'Rechercher',
+                    ID: 'Identifiant',
                     FIRSTNAME: 'Prénom',
                     MIDNAME: 'Deuxième prénom',
                     LASTNAME: 'Nom',
@@ -252,13 +266,19 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Cette personne est déjà dans la liste.',
                         ROLE: 'Veuillez spécifier le rôle de cette personne.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la personne dans le référentiel.'
                 },
+                NO_PRODUCER_FOUND: 'Vous ne trouvez pas votre laboratoire ?',
+                ADD_NEW_PRODCUER: 'Ajouter un laboratoire',
+                NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
+                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
                 ADD_ORGANIZATION_MODAL: {
-                    TITLE: '{{editing ? "Modifier" : "Ajouter"}} un laboratoire producteur',
+                    TITLE: 'Organisme',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
                     SEARCH: 'Rechercher un organisme ?',
                     SEARCH_LABEL: 'Rechercher',
+                    IDENTIFIER: 'Identifiant',
                     NAME: 'Nom',
                     CITY: 'Ville',
                     COUNTRY: 'Pays',
@@ -268,10 +288,30 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Ce laboratoire est déjà dans la liste.',
                         UNDEFINED: 'Le nom du laboratoire n\'est pas spécifié.'
-                    }
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de l\'organisation dans le référentiel.'
                 },
+                NO_LANGUAGE_FOUND: 'Vous ne trouvez pas une languge ?',
+                ADD_NEW_LANGUAGE: 'Ajouter une langue',
+                ADD_LANGUAGE_MODAL: {
+                    TITLE: 'Langue',
+                    SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
+                    IDENTIFIER: 'Identifiant',
+                    LABEL: {
+                        LABEL: 'Label',
+                        PLACEHOLDER: 'Label de la langue'
+                    },
+                    MESSAGES: {
+                        EXISTS: 'Cette langue est déjà dans la liste.',
+                        UNDEFINED: 'Le label de la langue n\'est pas spécifié.'
+                    },
+                    CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de la langue dans le référentiel.'
+                },
+                NO_LICENCE_FOUND: 'Vous ne trouvez pas votre licence ?',
+                ADD_NEW_LICENCE: 'Ajouter une licence particulière',
                 ADD_LICENCE_MODAL: {
-                    TITLE: 'Ajouter une licence particulière',
+                    TITLE: 'Licence',
+                    IDENTIFIER: 'Identifiant',
                     LABEL: 'Donnez un nom à cette licence',
                     LABEL_FIELD: {
                         LABEL: 'Nom'
@@ -283,11 +323,16 @@ angular.module('ortolangMarketApp')
                     WEBSITE_FIELD: {
                         LABEL: 'Page web',
                         PLACEHOLDER: 'Adresse HTTP du site web contenant des informations sur la licence.'
-                    }
+                    },
+                    MESSAGES: {
+                        EXISTS: 'Cette licence est déjà dans la liste.',
+                        UNDEFINED: 'Le nom de la licence n\'est pas spécifié.'
+                    },
                 },
                 CHOOSE_LICENCE_MODAL: {
                     TITLE: 'Choisir une licence'
                 },
+                NEW_LICENCE: 'Licence non enregistrée.',
                 ERROR_MESSAGES_MODAL: {
                     TITLE: 'Erreur dans les métadonnées'
                 },
@@ -334,9 +379,10 @@ angular.module('ortolangMarketApp')
             },
             ACL: {
                 FORALL: 'Pour tous',
-                AUTHENTIFIED: 'Utilisateur connecté',
+                AUTHENTIFIED: 'Utilisateurs connectés',
                 ESR: 'Membres de l\'ESR',
-                RESTRICTED: 'Membres de l\'espace de travail'
+                RESTRICTED: 'Membres de l\'espace de travail',
+                HELP: 'Certains éléments contenu dans cette resource peuvent avoir un accès restreint aux :'
             },
             EVENTS: {
                 CORE: {
@@ -388,7 +434,10 @@ angular.module('ortolangMarketApp')
                         ABORTED: 'Publication annulée',
                         ACCEPTED: 'Publication effectuée',
                         REJECTED: 'Publication rejetée',
-                        REVIEW: 'En attente de modération'
+                        REVIEW: 'En attente de modération',
+                        MODERATION: {
+                            WAITING: 'En attente de vérification'
+                        }
                     }
                 },
                 MESSAGE: {

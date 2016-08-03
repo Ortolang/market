@@ -8,5 +8,6 @@ OrtolangConfig.keycloakConfigLocation = 'keycloak.json';
 OrtolangConfig.piwikHost = '';
 OrtolangConfig.piwikSiteId = '';
 OrtolangConfig.marketServerUrl = 'http://localhost:9000/';
+OrtolangConfig.cacheVersion = '1';
 OrtolangConfig.debug = true;
 OrtolangConfig.tests = true;

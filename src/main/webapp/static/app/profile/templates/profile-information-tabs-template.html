@@ -13,6 +13,7 @@
             data-index="{{$index}}"
             ng-bind-html="$pane.title"></a>
     </div>
+    <a ng-href="/profiles/{{::User.key}}?see-as" class="btn btn-default" translate="PROFILE.SEE_PUBLIC_PROFILE"></a>
 </div>
 <div class="col-sm-9 tab-content" ng-transclude>
 </div>

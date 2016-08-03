@@ -2,23 +2,29 @@
     <div class="col-md-12">
         <div ng-if="Workspace.active.workspace.readOnly" class="alert alert-warning" role="alert" translate="WORKSPACE.READ_ONLY_MODE"></div>
         <h2>{{::Workspace.getActiveWorkspaceTitle()}}</h2>
-        <p><i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: Workspace.active.workspace.creationDate, author: Workspace.authorCards[Workspace.active.workspace.author].fullName}"></i></p>
+        <p><i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: Workspace.active.workspace.creationDate, author: Helper.profileCards[Workspace.active.workspace.author].fullName}"></i></p>
         <ul class="list-inline">
             <li>
                 <strong translate="WORKSPACE.ALIAS"></strong> {{Workspace.active.workspace.alias}}
             </li>
             <li>
-                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-trigger="hover" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.workspace.key"></span></span>
+                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.workspace.key"></span></span>
             </li>
         </ul>
         <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: Workspace.active.members.length}"></p>
         <div>
-            <strong translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: Workspace.active.workspace.tags.length}"></strong>
+            <strong translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: Workspace.active.workspace.tags.length, snapshots: Workspace.active.workspace.snapshots.length}"></strong>
             <ul class="list-inline">
                 <li ng-repeat="tag in Workspace.active.workspace.tags track by tag.snapshot" class="tag-wrapper">
                     <div class="label tag label-workspace">
                         <span ng-class="::icons.tag"></span>
                         <span translate="BROWSER.VERSION" data-translate-values="{tag: tag.name}"></span>
+                    </div>
+                </li>
+                <li class="tag-wrapper tag-diff-wrapper" ng-if="Workspace.active.workspace.snapshots.length > 1" ng-click="showDiff()">
+                    <div class="label tag label-primary">
+                        <span ng-class="::icons.diff.diff"></span>
+                        <span translate="WORKSPACE.DIFF"></span>
                     </div>
                 </li>
             </ul>
@@ -30,13 +36,13 @@
         <div class="workspace-dashboard-section workspace-dashboard-section-events">
             <h4 translate="WORKSPACE.HISTORY"></h4>
             <div class="infinite-list-wrapper">
-                <ul class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreEvents"  ng-style="{height: dashboardModels.eventFeedHeight}">
+                <ul class="list-unstyled overflow-list" z-infinite-scroll="seeMoreEvents"  ng-style="{height: dashboardModels.eventFeedHeight}">
                     <li ng-repeat="event in Workspace.active.events | eventFeedFilter | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
-                        <div class="media-left" avatar data-email-hash="Workspace.authorCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                        <div class="media-left" avatar data-email-hash="Helper.profileCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
                         <div class="media-body">
                             <!--<pre>{{event | json}}</pre>-->
                             <span>
-                                <span class="workspace-event-author">{{Workspace.authorCards[event.throwedBy].fullName}}</span>
+                                <span class="workspace-event-author">{{::Helper.profileCards[event.throwedBy].fullName}}</span>
                                 <span class="workspace-event-type" translate="{{::event | eventFeedDescription}}" data-translate-values="event"></span>
                             </span>
                             <span class="workspace-event-date">{{event.date | amTimeAgo}}</span>
@@ -68,13 +74,13 @@
         <div class="workspace-dashboard-section workspace-dashboard-section-requests">
             <h4 translate="WORKSPACE.WORKFLOW"></h4>
             <div class="infinite-list-wrapper">
-                <ul ng-if="Workspace.active.requests.length > 0" class="list-unstyled overflow-list" lr-infinite-scroll="seeMoreRequests"  ng-style="{height: dashboardModels.requestsHeight}">
+                <ul ng-if="Workspace.active.requests.length > 0" class="list-unstyled overflow-list" z-infinite-scroll="seeMoreRequests"  ng-style="{height: dashboardModels.requestsHeight}">
                     <li ng-repeat="request in Workspace.active.requests | filter:{'type': 'publish-workspace'} | orderBy:'-start' | limitTo:dashboardModels.requestsLimit track by request.key" class="workspace-event media card-well">
-                        <div class="media-left" avatar data-email-hash="Workspace.authorCards[request.initier].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                        <div class="media-left" avatar data-email-hash="Helper.profileCards[request.initier].emailHash" data-size="36" data-img-classes="img-circle"></div>
                         <div class="media-body">
                             <span>
                                 <!--<pre>{{request | json}}</pre>-->
-                                <span class="workspace-event-author">{{Workspace.authorCards[request.initier].fullName}}</span>
+                                <span class="workspace-event-author">{{::Helper.profileCards[request.initier].fullName}}</span>
                                 <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase()}}" data-translate-values="event"></span>
                                 <span class="workspace-event-status">
                                     <span translate="{{'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase() + '.' + (request.status ? request.status.toUpperCase() : request.state)}}" data-translate-values="event"></span>
@@ -89,9 +95,8 @@
                 <p ng-if="Workspace.active.requests.length === 0" translate="WORKSPACE.NO_WORKFLOW"></p>
             </div>
         </div>
-        <div ng-if="User.key === Workspace.active.workspace.owner" class="workspace-dashboard-section">
+        <div ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>
-            <!--<button class="btn btn-default" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>-->
             <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
             <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>

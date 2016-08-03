@@ -39,6 +39,10 @@ angular.module('ortolangMarketApp')
              * @param {String} url   - the url of the next page; if null or undefined sets default section
              */
             function showSavingMetadataModal(newUrl) {
+                if (Workspace.active.workspace.readOnly) {
+                    $location.url(newUrl);
+                    return;
+                }
                 var savingMetadataModal;
                 modalScope = Helper.createModalScope(true);
                 modalScope.save = function () {
@@ -65,6 +69,7 @@ angular.module('ortolangMarketApp')
              */
             function performSetDashboardSection (id) {
                 $scope.dashboardSection = id || defaultSection;
+                $scope.dashboardSectionSelect = $scope.dashboardSection;
                 if ($scope.dashboardSection === defaultSection) {
                     $location.search({});
                 } else {
@@ -91,7 +96,7 @@ angular.module('ortolangMarketApp')
              */
             function setDashboardSection(id) {
                 if ($location.search().section === 'metadata' && WorkspaceMetadataService.metadataChanged) {
-                    showSavingMetadataModal('?section='+id);
+                    showSavingMetadataModal('?section=' + id);
                 } else {
                     performSetDashboardSection(id);
                 }
@@ -100,6 +105,8 @@ angular.module('ortolangMarketApp')
             $scope.selectDashboardSection = function (id) {
                 setDashboardSection(id);
             };
+
+            $scope.dashboardSections = ['information', 'content', 'members', 'metadata', 'permissions', 'preview'];
 
             $scope.$on('$routeUpdate', function () {
                 if ($scope.dashboardSection === 'information' && !$location.search().section) {
@@ -295,15 +302,81 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.showDiff = function () {
+                if (Workspace.active.workspace.snapshots.length > 1) {
+                    modalScope = Helper.createModalScope(true);
+                    modalScope.models = {};
+                    modalScope.icons = $rootScope.icons;
+                    var tmp = {},
+                        lastTag = null;
+                    angular.forEach(Workspace.active.workspace.snapshots, function (snapshot) {
+                        tmp[snapshot.name] = snapshot;
+                    });
+                    angular.forEach(Workspace.active.workspace.tags, function (tag) {
+                        tmp[tag.snapshot].tag = tag.name;
+                        if (!lastTag || tag.snapshot > lastTag.tag) {
+                            lastTag = tag;
+                        }
+                    });
+                    modalScope.snapshots = [];
+                    angular.forEach(tmp, function (snapshot) {
+                        modalScope.snapshots.push(snapshot);
+                    });
+                    modalScope.tags = Workspace.active.workspace.tags;
+
+                    modalScope.compareCurrentToLast = function () {
+                        if (lastTag) {
+                            modalScope.models.lsnapshot = lastTag.snapshot;
+                            modalScope.models.rsnapshot = 'head';
+                            modalScope.selectSnapshot();
+                        }
+                    };
+
+                    modalScope.selectSnapshot = function () {
+                        if (modalScope.models.lsnapshot && modalScope.models.rsnapshot) {
+                            WorkspaceResource.diffWorkspaceContent({wskey: Workspace.active.workspace.key, lsnapshot: modalScope.models.lsnapshot, rsnapshot: modalScope.models.rsnapshot}, function (data) {
+                                var i, change;
+                                for (i = 0; i < data.length; i++) {
+                                    change = data[i];
+                                    switch (change.type) {
+                                        case 'ValueChange':
+                                            change.order = 1;
+                                            break;
+                                        case 'MapChange':
+                                            change.order = 2;
+                                            break;
+                                        case 'NewObject':
+                                            change.order = 3;
+                                            break;
+                                        case 'ObjectRemoved':
+                                            change.order = 4;
+                                            break;
+                                    }
+                                }
+                                modalScope.diff = data;
+                            });
+                        } else {
+                            modalScope.diff = null;
+                        }
+                    };
+                    $modal({
+                        scope: modalScope,
+                        templateUrl: 'workspace/templates/diff-modal.html',
+                        show: true
+                    });
+                }
+            };
+
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();
                 }
                 $scope.User = User;
+                $scope.Helper = Helper;
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
                     eventsLimit: 4,
-                    requestsLimit: 3,
+                    requestsLimit: 2,
                     eventsInfiniteScrollBusy: false
                 };
                 Workspace.getWorkspaceList(true).then(function () {

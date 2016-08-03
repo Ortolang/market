@@ -22,10 +22,10 @@
                     <p ng-show="profiles.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_RESULT"></p>
                     <ul class="list-unstyled">
                         <li ng-repeat="profile in profiles | limitTo:models.limit track by profile.key" profile-card data-profile="profile" data-img-classes="img-circle" data-size="50">
-                            <div class="btn-group" ng-hide="profile.alreadyMember">
+                            <div class="btn-group" ng-if="::!User.isFriend(profile.key)">
                                 <button ng-click="add(profile)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
                             </div>
-                            <div class="btn-group" ng-show="profile.alreadyMember">
+                            <div class="btn-group" ng-if="::User.isFriend(profile.key)">
                                 <button disabled class="btn btn-default"><span ng-class="::icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
                             </div>
                         </li>
@@ -37,11 +37,11 @@
                     <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MY_FRIENDS"></strong></p>
                     <p ng-show="friends.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_FRIENDS"></p>
                     <ul class="list-unstyled">
-                        <li ng-repeat="friend in ::friends track by friend.key" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
-                            <div class="btn-group" ng-hide="friend.alreadyMember">
+                        <li ng-repeat="friend in ::User.friendList track by friend.key" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
+                            <div class="btn-group" ng-if="::!isMember(friend.key)">
                                 <button ng-click="add(friend)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
                             </div>
-                            <div class="btn-group" ng-show="friend.alreadyMember">
+                            <div class="btn-group" ng-if="::isMember(friend.key)">
                                 <button disabled class="btn btn-default"><span ng-class="::icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
                             </div>
                         </li>

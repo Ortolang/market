@@ -9,4 +9,5 @@ OrtolangConfig.piwikSiteId = '';
 OrtolangConfig.staticSiteVersion = 'latest';
 OrtolangConfig.handlePrefix = '11402';
 OrtolangConfig.marketServerUrl = 'http://localhost:9000/';
+OrtolangConfig.cacheVersion = '1';
 OrtolangConfig.debug = true;

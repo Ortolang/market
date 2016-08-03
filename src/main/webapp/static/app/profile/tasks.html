@@ -2,36 +2,56 @@
     <div class="toolbar-wrapper" ng-include="'profile/templates/profile-tabs-template.html'" ng-init="activeProfileTab = 'tasks'"></div>
     <div class="container-main">
         <div class="container-main-inner">
-            <div class="panel panel-default">
-                <div ng-if="Runtime.getTasks().length == 0" class="panel-body">
-                    <p translate="TASKS.NO_TASK"></p>
+            <div ng-if="Runtime.getTasks() && Runtime.getTasks().length == 0" class="card-well card-well-task">
+                <p translate="TASKS.NO_TASK"></p>
+            </div>
+            <div class="card-well card-well-actions card-well-task clearfix" ng-repeat="task in Runtime.getTasks() | orderBy:'dueDate' track by task.id">
+                <h5>
+                    <span>{{'TASKS.' + task.name.toUpperCase() | translate}} |</span>
+                    {{'TASKS.PUBLICATION' | translate:task.processVariables}}
+                    <span class="small detail">#{{::task.id}}</span>
+                </h5>
+                <div class="progress-wrapper">
+                    {{::task.dueDate | amDifference:null:'days'}} <span translate="TASKS.REMAINING_DAYS"></span>
+                    <div class="progress">
+                        <div class="progress-bar" ng-class="::'progress-bar-' + progressColor(task)" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-style="::{width: computePercentage(task) + '%'}">
+                        </div>
+                    </div>
                 </div>
-                <table ng-if="Runtime.getTasks().length !== 0" class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th translate="NAME"></th>
-                        <th translate="DESCRIPTION"></th>
-                        <th translate="TASKS.ASSIGNEE"></th>
-                        <th translate="WORKSPACE"></th>
-                        <th translate="ACTIONS"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="task in Runtime.getTasks()">
-                        <td>{{::task.id}}</td>
-                        <td>{{::task.name}}</td>
-                        <td>{{::task.description}}</td>
-                        <td>{{task.assignee}}</td>
-                        <td><a ng-if="task.processVariables.wsalias" ng-href="/workspaces/{{task.processVariables.wsalias}}">{{task.processVariables.wsalias}}</a></td>
-                        <td>
-                            <button class="btn btn-sm btn-success" ng-click="Runtime.completeTask(task)" translate="TASKS.COMPLETE_TASK"></button>
-                            <button class="btn btn-sm btn-default" ng-if="task.assignee !== User.key" ng-click="Runtime.claimTask(task)" translate="TASKS.CLAIM"></button>
-                            <button class="btn btn-sm btn-danger" ng-if="task.assignee === User.key" ng-click="Runtime.unclaimTask(task)" translate="TASKS.UNCLAIM"></button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <p ng-if="::task.description">{{::task.description}}</p>
+                <ul class="list-inline variables-list small">
+                    <li ng-if="::task.processVariables.initier">
+                        <span translate="TASKS.INITIER"></span>
+                        <a ng-href="/profiles/{{::task.processVariables.initier}}">{{::task.processVariables.initier}}</a>
+                    </li>
+                    <li ng-if="::task.processVariables.wstag">
+                        <span translate="TASKS.WS_TAG"></span> {{::task.processVariables.wstag}}
+                    </li>
+                    <li ng-if="::task.processVariables.snapshot">
+                        <span translate="TASKS.SNAPSHOT"></span> {{::task.processVariables.snapshot}}
+                    </li>
+                </ul>
+                <div class="reviews-wrapper" ng-if="task.processVariables.reviewresults.length > 0">
+                    <h5 class="reviews-title">{{'TASKS.REVIEWS' | translate}} <small>{{task.processVariables.reviewresults.length + '/' + task.processVariables.reviewers.length}}</small></h5>
+                    <ul class="list-unstyled reviews">
+                        <li ng-repeat="review in task.processVariables.reviewresults | orderBy:'grade' track by review.reviewer" class="media">
+                            <div class="media-left" avatar data-email-hash="Helper.profileCards[review.reviewer].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                            <div class="media-body">
+                                <span class="author">{{::Helper.profileCards[review.reviewer].fullName}}</span>
+                                <span class="badge" ng-class="::'badge-'+ review.grade">{{::review.grade}}</span>
+                                <span class="clearfix">{{::review.reason}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="actions-wrapper">
+                    <span class="btn-group">
+                                <button class="btn btn-sm btn-success" ng-if="task.assignee === User.key || User.isRoot()" ng-click="Runtime.completeTask(task)" data-title="{{'TASKS.COMPLETE_TASK' | translate}}" bs-tooltip><span ng-class="::icons.check"></span></button>
+                                <button class="btn btn-sm btn-success" ng-if="task.assignee !== User.key && !User.isRoot()" ng-click="Runtime.claimTask(task)" data-title="{{'TASKS.CLAIM' | translate}}" bs-tooltip><span ng-class="::icons.tasks.claim"></span></button>
+                                <button class="btn btn-sm btn-default" ng-if="task.assignee === User.key && !User.isRoot()" ng-click="Runtime.unclaimTask(task)" data-title="{{'TASKS.UNCLAIM' | translate}}" bs-tooltip><span ng-class="::icons.tasks.unclaim"></span></button>
+                            </span>
+                    <a class="btn btn-default btn-sm" ng-if="::task.processVariables.wsalias" ng-href="/workspaces/{{::task.processVariables.wsalias}}" data-title="{{'TASKS.SEE_WORKSPACE' | translate}}" bs-tooltip><span ng-class="::icons.tasks.workspace"></span></a>
+                </div>
             </div>
         </div>
     </div>

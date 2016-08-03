@@ -18,7 +18,7 @@
                     <div ng-click="createWorkspace()" class="card-well card-well-hover card-new clearfix">
                         <span ng-class="::icons.plus"></span>{{'WORKSPACE.CREATE_WORKSPACE' | translate}}
                     </div>
-                    <div class="card-well card-well-hover card-workspace clearfix"
+                    <div class="card-well card-well-hover card-well-actions card-workspace clearfix"
                          ng-repeat="workspace in Workspace.list | filter:models.query | orderBy:'-lastModificationDate' track by workspace.alias"
                          ng-click="manageWorkspace($event, workspace)" ng-class="{'deleted': workspace.key === Workspace.deleted}">
                         <div class="media">
@@ -32,7 +32,7 @@
                                 <!--<img ng-if="::Workspace.metadatas[workspace.alias].imageUrl" class="logo" ng-src="{{::Workspace.metadatas[workspace.alias].imageUrl}}" alt="{{::workspace.alias}}"/>-->
                             </div>
                             <div class="media-body">
-                                <h4>{{::Workspace.getWorkspaceTitle(workspace)}} <span class="small alias">{{::workspace.alias}}</span></h4>
+                                <h4>{{::Workspace.getWorkspaceTitle(workspace)}} <span class="small detail">{{::workspace.alias}}</span></h4>
                                 <div class="date">{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} {{::workspace.lastModificationDate | amTimeAgo}}</div>
                             </div>
                             <div class="media-right">

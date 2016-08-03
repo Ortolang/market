@@ -11,6 +11,9 @@
 angular.module('ortolangMarketApp')
     .filter('bytes', function () {
         return function (bytes, precision) {
+            if (angular.isUndefined(bytes)) {
+                return undefined;
+            }
             if (bytes === 0 || isNaN(parseFloat(bytes)) || !isFinite(bytes)) {
                 return '-';
             }

@@ -8,19 +8,48 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', 'Settings', function ($rootScope, $translate, $alert, $modal, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'Settings', function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, Settings) {
 
-        var modalScope, modal;
+        var modalScope, modal, asideMobileNav, Helper = this;
+
+        this.profileCards = {};
+
+
+        this.getCard = function (username) {
+            if (username && this.profileCards[username] === undefined) {
+                this.profileCards[username] = null;
+                ProfileResource.getCard({key: username}, function (data) {
+                    Helper.profileCards[username] = data;
+                });
+            }
+        };
 
         this.getMultilingualValue = function (multilingualProperty, language) {
-            var i;
-            language = language || Settings.language;
-            for (i = 0; i < multilingualProperty.length; i++) {
-                if (multilingualProperty[i].lang === language) {
-                    return multilingualProperty[i].value;
+            if (multilingualProperty) {
+                var i;
+                language = language || Settings.language;
+                for (i = 0; i < multilingualProperty.length; i++) {
+                    if (multilingualProperty[i].lang === language) {
+                        return multilingualProperty[i].value;
+                    }
+                }
+                return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
+            }
+        };
+
+        this.findObjectOfArray = function (arr, propertyName, propertyValue, defaultValue) {
+            if (arr) {
+                var iObject;
+                for (iObject = 0; iObject < arr.length; iObject++) {
+                    if (arr[iObject][propertyName] === propertyValue) {
+                        return arr[iObject];
+                    }
                 }
             }
-            return multilingualProperty.length > 0 ? multilingualProperty[0].value : undefined;
+            if (defaultValue) {
+                return defaultValue;
+            }
+            return null;
         };
 
         this.extractKeyFromReferentialId = function (key) {
@@ -31,6 +60,11 @@ angular.module('ortolangMarketApp')
         this.createKeyFromReferentialId = function (id) {
             // Pattern : ${key}
             return '${' + id + '}';
+        };
+
+        this.createKeyFromReferentialName = function (name) {
+            // Pattern : ${key}
+            return '${referential:' + name + '}';
         };
 
         this.extractNameFromReferentialId = function (id) {
@@ -55,23 +89,22 @@ angular.module('ortolangMarketApp')
         this.pack = function (list) {
             var register = {};
             var results = [];
-            angular.forEach(list, function (result) {
-                if (result.key && result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
-                    var key = result.key;
-                    var wskey = result['meta_ortolang-workspace-json'].wskey;
+            for (var i = list.length - 1; i >= 0; i--) {
+
+                if (list[i].wskey) {
+                    var wskey = list[i].wskey;
                     if (angular.isUndefined(register[wskey])) {
-                        register[wskey] = result;
-                        results.push(result);
+                        register[wskey] = list[i];
+                        results.push(list[i]);
                     } else {
-                        if (register[wskey].lastModificationDate < result.lastModificationDate) {
+                        if (register[wskey].lastModificationDate < list[i].lastModificationDate) {
                             var index = results.indexOf(register[wskey]);
-                            results.splice(index, 1, result);
-                            // results.push(result);
-                            register[wskey] = result;
+                            results.splice(index, 1, list[i]);
+                            register[wskey] = list[i];
                         }
                     }
                 }
-            });
+            }
             return results;
         };
 
@@ -128,6 +161,33 @@ angular.module('ortolangMarketApp')
                 $modal(config);
                 return scope;
             }
+        };
+
+        this.hideAsideMobileNav = function () {
+            if (asideMobileNav) {
+                asideMobileNav.hide();
+            }
+        };
+
+        this.showAsideMobileNav = function () {
+            if (asideMobileNav) {
+                asideMobileNav.show();
+            } else {
+                asideMobileNav = $aside({
+                    templateUrl: 'common/nav/mobile-nav.html',
+                    placement: 'left',
+                    animation: 'am-slide-left',
+                    container: 'body'
+                });
+            }
+        };
+
+        this.isMobile = function () {
+            return $window.navigator.userAgent.indexOf('Mobi') !== -1;
+        };
+
+        this.isMac = function () {
+            return $window.navigator.appVersion.indexOf('Mac') !== -1;
         };
 
         return this;

@@ -8,24 +8,29 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Content', ['url', '$http', '$window', '$q', function (url, $http, $window, $q) {
+    .service('Content', ['url', '$http', '$window', '$q', 'AuthService', function (url, $http, $window, $q, AuthService) {
 
         var forceDownloadQueryParam = '?fd=true';
 
         this.getContentUrlWithKey = function (key, login, noSSL) {
+            if (login === false && AuthService.isAuthenticated()) {
+                login = true;
+            }
             return (noSSL ? url.contentNoSSL : url.content) + '/key/' + key + (angular.isDefined(login) ? '?l=' + login : '');
         };
 
-        this.getContentUrlWithPath = function (path, alias, root, noSSL) {
-            return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + (path.charAt(0) === '/' ? '' : '/') + path;
+        this.getContentUrlWithPath = function (path, alias, root, encode, noSSL) {
+            path = path.charAt(0) === '/' ? path.substr(1) : path;
+            return (noSSL ? url.contentNoSSL : url.content) + '/' + alias + '/' + (root || 'head') + '/' + (encode ? encodeURIComponent(path) : path);
         };
 
-        this.getPreviewUrlWithKey = function (key, size, noSSL) {
-            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + key + (angular.isDefined(size) ? '?size=' + size : '');
+        this.getThumbUrlWithKey = function (key, size, min, noSSL) {
+            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + key + (angular.isDefined(size) ? '?size=' + size : '') + (angular.isDefined(min) ? '&min=' + min : '');
         };
 
-        this.getPreviewUrlWithPath = function (path, alias, root, size, noSSL) {
-            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + alias + '/' + (root || 'head') + (path.charAt(0) === '/' ? '' : '/') + path + (angular.isDefined(size) ? '?size=' + size : '');
+        this.getThumbUrlWithPath = function (path, alias, root, size, min, noSSL) {
+            path = path.charAt(0) === '/' ? path.substr(1) : path;
+            return (noSSL ? url.apiNoSSL : url.api) + '/thumbs/' + alias + '/' + (root || 'head') + '/' + encodeURIComponent(path) + (angular.isDefined(size) ? '?size=' + size : '') + (angular.isDefined(min) ? '&min=' + min : '');
         };
 
         this.getDownloadUrlWithKey = function (key, noSSL) {
@@ -33,7 +38,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.getDownloadUrlWithPath = function (path, alias, root, noSSL) {
-            return this.getContentUrlWithPath(path, alias, root, noSSL) + forceDownloadQueryParam;
+            return this.getContentUrlWithPath(path, alias, root, false, noSSL) + forceDownloadQueryParam;
         };
 
         this.downloadWithKeyInWindow = function (key, newWindow, noSSL) {
@@ -60,7 +65,7 @@ angular.module('ortolangMarketApp')
         }
 
         this.downloadWithPath = function (path, alias, root, config, noSSL) {
-            return downloadWith(this.getContentUrlWithPath(path, alias, root, noSSL), config);
+            return downloadWith(this.getContentUrlWithPath(path, alias, root, false, noSSL), config);
         };
 
         this.downloadWithKey = function (key, config, noSSL) {
@@ -68,7 +73,8 @@ angular.module('ortolangMarketApp')
         };
 
         this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {
-            var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?';
+            var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?',
+                scope = AuthService.getScope();
             angular.forEach(paths, function (path) {
                 exportUrl += '&path=/' + path;
             });
@@ -80,6 +86,9 @@ angular.module('ortolangMarketApp')
             }
             if (followsymlink) {
                 exportUrl += '&followsymlink=' + followsymlink;
+            }
+            if (scope) {
+                exportUrl += '&scope=' + scope;
             }
             return exportUrl;
         };

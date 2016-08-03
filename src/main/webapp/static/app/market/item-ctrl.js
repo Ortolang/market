@@ -63,7 +63,7 @@ angular.module('ortolangMarketApp')
                         $scope.ready = true;
                     }
                 });
-            }, function (reason) {
+            }, function () {
                 $scope.ready = true;
             });
         }
@@ -88,7 +88,7 @@ angular.module('ortolangMarketApp')
             // **************
             // Image
             if (jsonMetadata.image) {
-                microData.image = Content.getPreviewUrlWithPath(jsonMetadata.image, $scope.itemAlias, $scope.tag.snapshot);
+                microData.image = Content.getThumbUrlWithPath(jsonMetadata.image, $scope.itemAlias, $scope.tag.snapshot);
             }
             // **************
             microData.datePublished = jsonMetadata.publicationDate;

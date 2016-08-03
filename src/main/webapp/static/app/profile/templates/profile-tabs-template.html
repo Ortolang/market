@@ -1,6 +1,6 @@
 <div class="toolbar nav-pills-toolbar profile-toolbar">
     <ul class="nav nav-pills" role="tablist">
-        <li ng-class="{active: activeProfileTab === 'information'}"><a href="/profile/information" translate="NAV.PROFILE"></a></li>
-        <li ng-show="User.isModerator" ng-class="{active: activeProfileTab === 'tasks'}"><a href="/profile/tasks">{{'NAV.TASKS' | translate}} <span class='badge'>{{Runtime.getTasks().length}}</span></a></li>
+        <li ng-class="{active: activeProfileTab === 'information'}"><a href="/profiles/me/edition" translate="NAV.PROFILE"></a></li>
+        <li ng-show="User.isModerator" ng-class="{active: activeProfileTab === 'tasks'}"><a href="/profiles/me/tasks">{{'NAV.TASKS' | translate}} <span class='badge'>{{Runtime.getTasks().length}}</span></a></li>
     </ul>
 </div>

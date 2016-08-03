@@ -112,8 +112,6 @@ button.no-border {
 }
 
 .organization-card {
-  background-color: lighten(@default-bg, 2%);
-  cursor: pointer;
   margin-bottom: @line-height-computed;
   &.card-well {
     padding: 10px 12px 12px;
@@ -170,6 +168,9 @@ button.no-border {
   &.label-primary {
     background-color: @brand-primary;
   }
+  &.label-gray {
+    background-color: @label-default-bg;
+  }
   a {
     text-decoration: none;
     color: inherit;
@@ -178,7 +179,7 @@ button.no-border {
 
 .card-well {
   min-height: 20px;
-  padding: 17px 19px 19px;
+  padding: @card-well-padding;
   margin-bottom: 20px;
   background-color: lighten(@default-bg, 1%);
   border: 1px solid @well-border;
@@ -191,8 +192,10 @@ button.no-border {
     padding: 10px 12px 12px;
   }
   &.card-news-well {
+    padding-top: @card-well-news-padding-top;
     img {
       max-width: 100%;
+      max-height: 200px;
       padding-bottom: @padding-large-vertical;
     }
   }
@@ -209,18 +212,93 @@ button.no-border {
     border-bottom-color: darken(@alternate-light-border-color, 5%);
     transition: all 0.3s;
   }
+  &.card-well-actions {
+    background-color: lighten(@default-bg, 2%);
+    cursor: pointer;
+    .detail, .actions {
+      opacity: 0;
+    }
+    .detail {
+      font-style: italic;
+    }
+    h4, h5 {
+      font-weight: 600;
+    }
+    .actions {
+      .btn-default:hover {
+        background-color: @white;
+      }
+    }
+    .media-left, .media-body {
+      vertical-align: middle;
+    }
+    .media-body {
+      padding-left: @padding-base-horizontal;
+    }
+    &:hover {
+      .detail, .actions {
+        transition: all 0.5s;
+        opacity: 1;
+      }
+    }
+  }
+  &.card-well-task {
+    cursor: default;
+    max-width: 900px;
+    .progress-wrapper {
+      margin-top: @padding-base-vertical;
+      margin-bottom: @padding-base-horizontal;
+    }
+    .progress {
+      margin-top: @padding-small-vertical;
+      margin-bottom: 0;
+      height: 4px;
+    }
+    .reviews-wrapper {
+      margin-top: @line-height-computed;
+      margin-bottom: @line-height-computed;
+      .reviews {
+        margin-top: @padding-large-vertical;
+        margin-bottom: 0;
+        padding-left: @padding-base-horizontal;
+      }
+    }
+    .actions-wrapper {
+      margin-top: @line-height-computed;
+    }
+    .variables-list {
+      font-style: italic;
+    }
+    .author {
+      font-weight: 600;
+    }
+    .badge {
+      vertical-align: text-bottom;
+      &.badge-A {
+        background-color: @brand-success;
+      }
+      &.badge-B {
+        background-color: @brand-success;
+      }
+      &.badge-C {
+        background-color: @brand-warning;
+      }
+      &.badge-D {
+        background-color: @brand-warning;
+      }
+      &.badge-E {
+        background-color: @brand-danger;
+      }
+    }
+  }
   hr {
     border-color: @well-border;
   }
-}
-
-.hyphenate {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
+  p.lead {
+    span.fa, span.glyphicon {
+      margin-right: 8px;
+    }
+  }
 }
 
 .btn.btn-cookies-consent {
@@ -248,4 +326,44 @@ button.no-border {
 
 .small-caps {
   font-variant: small-caps;
+}
+
+.editable-custom-inputs {
+  .border-right-radius(0) !important;
+  + .input-group-btn {
+    > .btn {
+      .border-left-radius(0);
+      &:not(:last-of-type) {
+        .border-right-radius(0);
+      }
+    }
+  }
+}
+.editable-custom-error {
+  display: table-row;
+}
+
+.btn-group-justified > .btn-group .btn {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.label.label-for-all {
+  background-color: @acl-for-all;
+}
+
+.label.label-authentified {
+  background-color: @acl-authentified;
+}
+
+.label.label-esr {
+  background-color: @acl-esr;
+}
+
+.label.label-restricted {
+  background-color: @acl-restricted;
+}
+
+.modal-full {
+  width: 90%;
 }

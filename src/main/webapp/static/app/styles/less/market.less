@@ -1,11 +1,3 @@
-.license-panel, .metadata-panel {
-  background-color: @main-bg;
-  .panel-heading {
-    font-size: @font-size-h4;
-    font-weight: 300;
-  }
-}
-
 .flex-row {
   //display: flex;
   //flex-direction: row;
@@ -13,6 +5,10 @@
   //justify-content: flex-start;
   //align-content: stretch;
   overflow: hidden;
+}
+
+.flex-row-inline {
+  height: 298px;
 }
 
 .flex-column {
@@ -40,19 +36,26 @@
   margin-right: -5px;
 }
 
+.items-title {
+  margin-bottom: @line-height-computed;
+}
+
+/***********************************************
+ * Medium item : market/template/medium-item.html
+ ***********************************************/
+
 .medium-item {
   margin: 5px;
   .card-border();
   border-radius: @border-radius-base;
   line-height: 1.42857143;
   background-color: @default-bg;
-  width: 162px;
+  width: 160px;
   overflow: hidden;
   cursor: pointer;
   .thumb-wrapper {
     height: 160px;
     width: 160px;
-    padding: 14px;
     background-color: @white;
     text-align: center;
     > div {
@@ -107,16 +110,22 @@
     font-size: @font-size-small;
     font-style: italic;
     margin: @padding-base-vertical 8px (@padding-large-vertical + @padding-base-vertical);
+    .esr-icon {
+      margin-top: 3px;
+    }
   }
 
   .item-logo {
     height: 160px;
     width: 160px;
     background-color: @white;
-    padding: 14px;
     border-bottom: @default-border;
   }
 }
+
+/***********************************************
+ * Full item : market/template/full-item.html
+ ***********************************************/
 
 .full-item {
   border-top: @default-border;
@@ -149,43 +158,113 @@
       font-weight: 300;
     }
   }
-}
-
-.text-pane {
-  overflow: hidden;
-}
-
-.text-pane-small {
-  max-height: 144px;
-  margin-bottom: @line-height-computed;
-}
-
-.description-wrapper {
-  position: relative;
-  .show-more-end {
-    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
-    background-image: -webkit-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background-image: -moz-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background-image: -ms-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background-image: -o-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
-    background: linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#00ffffff',EndColorStr='#ffffff');
-    bottom: 0;
-    cursor: pointer;
-    height: 30px;
-    left: 0;
-    position: absolute;
-    width: 100%;
+  .description-wrapper {
+    position: relative;
+    .show-more-end {
+      background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
+      background-image: -webkit-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background-image: -moz-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background-image: -ms-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background-image: -o-linear-gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+      background: linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#00ffffff',EndColorStr='#ffffff');
+      bottom: 0;
+      cursor: pointer;
+      height: 30px;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+  }
+  .text-pane {
+    overflow: hidden;
+  }
+  .text-pane-small {
+    max-height: 144px;
+    margin-bottom: @line-height-computed;
   }
 }
 
+/***********************************************
+ * Market metadata item :
+ * . market/templates/ortolang-item-json-13.html
+ * . market/templates/ortolang-item-json-14.html
+ * . contributor/contributor.html
+ * . producer/producer.html
+ ***********************************************/
+
+.market-item-wrapper {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 .market-item {
+  &.browse {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    height: 100%;
+    > header {
+      flex: 0 0 auto;
+      .item-logo {
+        height: 120px;
+        width: 120px;
+        img {
+          max-height: 120px;
+          max-width: 120px;
+        }
+      }
+    }
+    .container-main.container-market-content {
+      padding: 0;
+      position: relative;
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+      > .container-main-inner {
+        padding: 0;
+      }
+      .market-item-content > [browser] {
+        // Also used in workspaces.less
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        .browser-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-content: stretch;
+          height: 100%;
+          > .browser-toolbar {
+            margin: 0;
+            flex: 0 0 auto;
+          }
+          > .browser-content-wrapper {
+            margin: 0;
+            flex: 1 1 auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: row;
+            align-content: stretch;
+            height: 100%;
+            > div {
+              overflow-y: auto;
+            }
+          }
+        }
+      }
+    }
+  }
   > header {
-    margin-left: -@container-main-padding;
-    margin-right: -@container-main-padding;
     padding: 15px @container-main-padding @line-height-computed;
     background-color: @default-bg;
     border-bottom: @default-border;
+    .media {
+      max-width: @market-item-max-width;
+    }
     .media-left {
       padding-right: 2 * @padding-large-horizontal;
     }
@@ -194,14 +273,6 @@
       width: 180px;
       height: 180px;
       display: block;
-      &.browse {
-        height: 120px;
-        width: 120px;
-        img {
-          max-height: 120px;
-          max-width: 120px;
-        }
-      }
     }
     button {
       margin-top: @padding-large-vertical;
@@ -230,17 +301,13 @@
       }
     }
   }
+  > .row {
+    padding-left: @container-main-padding;
+    padding-right: @container-main-padding;
+  }
 
-  aside {
-    .license-panel {
-      dt {
-        margin-bottom: @padding-base-vertical;
-      }
-    }
-
-    #preview-license {
-      cursor: pointer;
-    }
+  .market-item-metadata-wrapper {
+    max-width: @market-item-max-width + @container-main-padding;
   }
 
   .market-item-presentation-metadata, aside {
@@ -376,6 +443,12 @@
       }
     }
   }
+
+  .commercialLink {
+    img {
+      max-width: 75px;
+    }
+  }
 }
 
 .market-toolbar-wrapper {
@@ -494,12 +567,16 @@
     }
   }
   .dropdown-faceted-filter {
-    ul > li.active {
-      div {
-        color: @brand-primary;
-        font-weight: 600;
-        &:hover {
-          cursor: default;
+    ul {
+      max-height: 450px;
+      overflow-y: scroll;
+      > li.active {
+        div {
+          color: @brand-primary;
+          font-weight: 600;
+          &:hover {
+            cursor: default;
+          }
         }
       }
     }
@@ -520,7 +597,7 @@
 }
 
 .ortolang-title {
-  margin-bottom: 0;
+  margin-top: @card-well-news-padding-top;
 }
 
 .marianne {
@@ -608,5 +685,12 @@
     p.lead {
       font-size: @font-size-h4;
     }
+  }
+}
+
+.statistics-wrapper {
+  > div {
+    font-weight: 300;
+    font-size: @font-size-large;
   }
 }

@@ -8,11 +8,12 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'Search', 'SearchResource', 'Helper',  function ($routeParams, $location, $analytics, OptionFacetedFilter, Search, SearchResource, Helper) {
+    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'SearchResource', 'Helper',  function ($routeParams, $location, $analytics, OptionFacetedFilter, SearchResource, Helper) {
         return {
             restrict: 'EA',
             scope: {
                 params: '=',
+                search: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
                 searchPlaceHolder: '@',
@@ -22,7 +23,7 @@ angular.module('ortolangMarketApp')
             link: {
                 post : function (scope) {
 
-                    scope.Search = Search;
+                    // scope.Search = Search;
 
                     scope.setFilter = function (filter, opt) {
                         addSelectedOptionFilter(filter, opt.getValue());
@@ -59,14 +60,14 @@ angular.module('ortolangMarketApp')
 
                     scope.applyFilters = function () {
                         scope.hideLowFacets();
-                        $location.search(urlParam(scope.content, Search.activeViewMode, Search.activeOrderProp, Search.orderReverse));
+                        $location.search(urlParam(scope.content, scope.search.activeViewMode, scope.search.activeOrderProp, (scope.search.orderReverse ? 'desc' : 'asc')));
                     };
 
                     scope.toggleOrderBy = function (orderProp) {
-                        if (Search.activeOrderProp.id !== orderProp.id) {
-                            Search.setActiveOrderProp(orderProp.id, false);
+                        if (scope.search.activeOrderProp.id !== orderProp.id) {
+                            scope.search.setActiveOrderProp(orderProp.id, false);
                         } else {
-                            Search.setActiveOrderProp(orderProp.id, !Search.orderReverse);
+                            scope.search.setActiveOrderProp(orderProp.id, !scope.search.orderReverse);
                         }
                     };
 
@@ -114,13 +115,13 @@ angular.module('ortolangMarketApp')
                     function applyParams() {
 
                         if ($routeParams.viewMode) {
-                            Search.setActiveViewMode($routeParams.viewMode);
+                            scope.search.setActiveViewMode($routeParams.viewMode);
                             delete $routeParams.viewMode;
                         }
                         if ($routeParams.orderProp) {
-                            Search.setActiveOrderProp($routeParams.orderProp, $routeParams.orderDirection);
-                            delete $routeParams.orderProp;
-                            delete $routeParams.orderDirection;
+                            scope.search.setActiveOrderProp($routeParams.orderProp, ($routeParams.orderDir === 'asc' ? false : true));
+                            // delete $routeParams.orderProp;
+                            // delete $routeParams.orderDir;
                         }
                         scope.content = $routeParams.content || undefined;
                         delete $routeParams.content;
@@ -129,10 +130,17 @@ angular.module('ortolangMarketApp')
                             angular.copy(angular.fromJson($routeParams.filters), params);
                         }
                         if (scope.preSelectedFilter) {
-                            params[scope.preSelectedFilter.getAlias()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
+                            params[scope.preSelectedFilter.getId()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
                         }
                         params.content = scope.content || undefined;
-
+                        var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
+                        var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
+                        var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
+                        var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
+                        params.fields = metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'description,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName';
+                        // params.fields = 'key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.description,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName';
+                        params.orderProp = $routeParams.orderProp;
+                        params.orderDir = $routeParams.orderDir;
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
@@ -143,7 +151,7 @@ angular.module('ortolangMarketApp')
                         // Clears selection and remove all filters enabled
                         scope.filtersManager.resetFilter();
                         if (scope.preSelectedFilter) {
-                            addSelectedOptionFilter(scope.preSelectedFilter, params[scope.preSelectedFilter.getAlias()]);
+                            addSelectedOptionFilter(scope.preSelectedFilter, params[scope.preSelectedFilter.getId()]);
                             scope.filtersManager.addFilter(scope.preSelectedFilter);
                         }
                         var facetedFilters = scope.filtersManager.availabledFilters;
@@ -172,7 +180,6 @@ angular.module('ortolangMarketApp')
                      **/
                     function urlParam (content, viewMode, orderProp, orderDirection) {
                         var filters = {}, params = {};
-                        var url = '';
                         angular.forEach(scope.filtersManager.enabledFilters, function (filter) {
 
                             if(!filter.isLocked()) {
@@ -192,7 +199,7 @@ angular.module('ortolangMarketApp')
 
                         params.viewMode = viewMode.id;
                         params.orderProp = orderProp.id;
-                        params.orderDirection = orderDirection;
+                        params.orderDir = orderDirection;
 
                         return params;
                     }
@@ -255,30 +262,40 @@ angular.module('ortolangMarketApp')
                     function setOptionsFilter(filter) {
                         var alias = filter.getAlias();
                         var params = scope.params !== undefined ? angular.fromJson(scope.params) : {};
-                        params.fields = filter.getAlias() + ':' + alias;
-                        params.group = alias;
+                        // params.fields = 'ortolang-item-json.'+filter.getAlias() + ':' + alias;
+                        params.fields = filter.getPath() + ':' + alias;
+                        params.group = filter.getPath();
+                        delete params.orderProp;
+                        delete params.orderDir;
 
-                        SearchResource.findCollections(params, function(results) {
+                        SearchResource.findWorkspaces(params, function(results) {
                             angular.forEach(results, function(result) {
                                 if(angular.isDefined(result[alias])) {
+                                    var count = angular.isDefined(result[alias].count) ? result[alias].count : 1;
                                     if(angular.isArray(result[alias])) {
                                         angular.forEach(result[alias], function (field) {
-                                            var label = Helper.getMultilingualValue(field['meta_ortolang-referential-json'].labels);
+                                            var label = field;
+                                            if (angular.isDefined(field['meta_ortolang-referential-json'].labels)) {
+                                                label = Helper.getMultilingualValue(field['meta_ortolang-referential-json'].labels);
+                                            }
                                             if(!filter.getOption(label)) {
                                                 filter.putOption(OptionFacetedFilter.make({
                                                     label: label,
                                                     value: field.key,
-                                                    length: 1
+                                                    length: count
                                                 }));
                                             }
                                         });
                                     } else {
-                                        var label = Helper.getMultilingualValue(result[alias]['meta_ortolang-referential-json'].labels);
+                                        var label = result[alias];
+                                        if (angular.isDefined(result[alias]['meta_ortolang-referential-json'])) {
+                                            label = Helper.getMultilingualValue(result[alias]['meta_ortolang-referential-json'].labels);
+                                        }
                                         if(!filter.getOption(label)) {
                                             filter.putOption(OptionFacetedFilter.make({
                                                 label: label,
                                                 value: result[alias].key,
-                                                length: 1
+                                                length: count
                                             }));
                                         }
                                     }
@@ -290,8 +307,8 @@ angular.module('ortolangMarketApp')
                     /**
                      * Each time the results change, the option values of each filters are updated.
                      **/
-                    scope.$watch('Search.results', function () {
-                        if(Search.results !== null) {
+                    scope.$watch('search.results', function () {
+                        if(scope.search && scope.search.results !== null) {
                             setOptionsFilters();
                         }
                     });

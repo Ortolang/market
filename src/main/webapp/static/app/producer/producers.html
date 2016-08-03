@@ -7,14 +7,14 @@
                         <div class="input-group-addon"><span ng-class="::icons.search"></span></div>
                         <input ng-model="models.query" class="form-control" type="text" placeholder="{{('MARKET.SEARCH.PRODUCERS') | translate}}">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="toggleViewMode()" data-trigger="hover" data-title="{{(models.viewMode === 'line' ? 'BROWSER.VIEW_MODE_TILE' : 'BROWSER.VIEW_MODE_LINE') | translate}}" bs-tooltip><span ng-class="models.viewMode === 'line' ? icons.browser.viewModeTile : icons.browser.viewModeLine"></span></button>
+                            <button class="btn btn-default" type="button" ng-click="toggleViewMode()" data-title="{{(models.viewMode === 'line' ? 'BROWSER.VIEW_MODE_TILE' : 'BROWSER.VIEW_MODE_LINE') | translate}}" bs-tooltip><span ng-class="models.viewMode === 'line' ? icons.browser.viewModeTile : icons.browser.viewModeLine"></span></button>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-main" lr-infinite-scroll="seeMoreProducers" scroll-threshold="500" time-threshold="20">
+    <div class="container-main" z-infinite-scroll="seeMoreProducers" scroll-threshold="500" time-threshold="20">
         <div class="container-main-inner">
             <table ng-if="producers && models.viewMode === 'line'" class="table table-hover producers-table">
                 <thead>
@@ -29,7 +29,7 @@
                     <tr ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder track by producer.key" ng-click="showProducer(producer, $event)">
                         <td>{{::producer.content.acronym}}</td>
                         <td>{{::producer.content.name}}</td>
-                        <td><span ng-show="::producer.content.city || producer.content.country"><span class="fa fa-fw fa-map-marker"></span> <span class="city">{{::(producer.content.city ? producer.content.city + ', ' : '') }}</span><span class="country">{{::producer.content.country}}</span></span></td>
+                        <td><span ng-show="::producer.content.city || producer.content.country"><span ng-class="::icons.location"></span> <span class="city">{{::(producer.content.city ? producer.content.city + ', ' : '') }}</span><span class="country">{{::producer.content.country}}</span></span></td>
                         <td><span ng-show="::producer.content.homepage"><a ng-href="{{::producer.content.homepage}}" target="_blank"  translate="PRODUCER.HOMEPAGE"></a></span></td>
                     </tr>
                 </tbody>

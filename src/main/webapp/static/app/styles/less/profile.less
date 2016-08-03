@@ -1,4 +1,4 @@
-.profile {
+.profile-me {
   .list-group-item {
     border: none;
     cursor: pointer;
@@ -80,6 +80,11 @@
     }
   }
 
+  .btn.disabled {
+    cursor: not-allowed;
+    pointer-events: all;
+  }
+
   .editable-error {
     .text-emphasis-variant(@state-danger-text);
     font-weight: bold;
@@ -93,6 +98,18 @@
       width: 100%;
     }
   }
+  .about-me-well {
+    .profile-data-visibility-wrapper {
+      display: inline-block;
+      .profile-data-visibility {
+        margin: 0;
+        display: block;
+      }
+    }
+    textarea {
+      resize: vertical;
+    }
+  }
   .profile-data-visibility {
     margin-left: -(@grid-gutter-width / 2);
     margin-right: @grid-gutter-width / 2;
@@ -101,6 +118,7 @@
   .well {
     border: none;
     background-color: @default-bg;
+    overflow: auto;
 
     box-shadow: none;
   }
@@ -133,6 +151,49 @@
   }
 }
 
+.profile-container {
+  section {
+    > header {
+      margin-left: -@container-main-padding;
+      margin-right: -@container-main-padding;
+      padding: (3 * @padding-large-vertical) @container-main-padding @line-height-computed;
+      background-color: @alternate-light-bg;
+      border-bottom: @default-border;
+      .profile-presentation {
+        color: @text-muted;
+        white-space: pre-line;
+      }
+      .avatar-wrapper {
+        height: 100px;
+      }
+      > div, + div {
+        max-width: 900px;
+      }
+    }
+    > header + div {
+      padding-top: 3 * @padding-large-vertical;
+      dt {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.publication-list {
+  margin-top: @line-height-computed;
+  margin-bottom: @line-height-computed;
+  .publication-result {
+    border-bottom: @light-border;
+    padding-bottom: @padding-large-vertical;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .date {
+      font-weight: 600;
+    }
+  }
+}
+
 .xeditable-placeholder {
   padding-top: (@padding-base-vertical + 1);
   display: inline-block;
@@ -149,4 +210,11 @@
 .profile-image {
   max-height: 30px;
   margin-right: 5px;
+}
+
+.contributor-wrapper {
+  .item-logo.contributor-logo {
+    width: 120px;
+    height: 120px;
+  }
 }

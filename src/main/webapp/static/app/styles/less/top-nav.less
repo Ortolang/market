@@ -23,16 +23,13 @@
       margin-right: 6px;
       display: inline;
     }
-    .beta-version {
-      font-weight: 300;
-      font-style: italic;
-      font-size: 75%;
-    }
   }
 
   ul.navbar-nav {
-    &.navbar-collapse.collapse {
-      &.in {
+    &.navbar-collapse {
+      border: none;
+      &.in.collapse, &.collapsing {
+        margin-top: @padding-small-vertical;
         .open .dropdown-menu > li {
           > a, > div {
             color: @top-navbar-color;
@@ -42,9 +39,6 @@
             background: none;
           }
         }
-      }
-      &:not(.in) {
-        border: none;
       }
     }
     > li {
@@ -103,19 +97,12 @@
 
   .navbar-toggle {
     border: none;
-    background-color: @top-navbar-color;
+    background: none;
+    float: left;
+    margin-right: 0;
+    margin-left: @navbar-padding-horizontal + 2;
     .icon-bar {
-      background-color: @top-navbar-bg-color;
-    }
-  }
-  .beta-version.tooltip {
-    .tooltip-inner {
-      max-width: 400px;
-      background-color: @main-bg;
-      color: @top-navbar-bg-color;
-    }
-    .tooltip-arrow {
-      border-right-color: @main-bg;
+      background-color: @top-navbar-color;
     }
   }
 }

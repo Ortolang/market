@@ -1,6 +1,6 @@
 <div class="medium-item">
     <a ng-href="{{::itemUrl}}">
-        <img ng-if="::imgtitle !== undefined" class="item-logo" holder-js="holder.js/160x160?theme={{imgtheme}}&text={{imgtitle}}&size=56" alt="{{imgtitle}}"/>
+        <img ng-if="::imgtitle !== undefined" class="item-logo" holder-js="holder.js/160x160?theme={{::imgtheme}}&text={{::imgtitle}}&size=56" alt="{{::imgtitle}}"/>
         <div ng-if="::image" class="thumb-wrapper">
             <div>
                 <div>
@@ -8,7 +8,10 @@
                 </div>
             </div>
         </div>
-        <h4 class="title" ng-bind="::title"></h4>
-        <div ng-if="::publicationDate" class="publication-date"><span translate="MARKET.PUBLISHED_ON"></span> <span class="text-muted" >{{::publicationDate | date:'mediumDate'}}</span></div>
+        <h3 class="title" ng-bind="::title"></h3>
+        <div ng-if="::publicationDate" class="publication-date">
+            <!-- <span translate="MARKET.PUBLISHED_ON"></span> -->
+            <span class="text-muted" >{{::publicationDate | date:'mediumDate'}}</span>
+        </div>
     </a>
 </div>

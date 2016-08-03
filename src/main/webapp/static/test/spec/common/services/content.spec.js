@@ -4,14 +4,15 @@ describe('Service: Content', function () {
 
     // load the service's module
     beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
 
     // instantiate service
-    var Content, httpBackend, url,
-        forceDownloadQueryParam = '?fd=true',
-        thumbSizeQueryParam = '?size=';
+    var Content, httpBackend, url, AuthService,
+        forceDownloadQueryParam = '\\?fd=true';
 
-    beforeEach(inject(function (_Content_, _$httpBackend_, _url_) {
+    beforeEach(inject(function (_Content_, _$httpBackend_, _url_, _AuthService_) {
         Content = _Content_;
+        AuthService = _AuthService_;
         httpBackend = _$httpBackend_;
         url = _url_;
     }));
@@ -23,40 +24,44 @@ describe('Service: Content', function () {
 
     it('should return the content url', function () {
         expect(!!Content).toBe(true);
-        expect(Content.getContentUrlWithKey('k1')).toBe(url.content + '/key/k1');
-        expect(Content.getContentUrlWithPath('<path>', '<alias>', undefined)).toBe(url.content + '/<alias>/head/<path>');
-        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>')).toBe(url.content + '/<alias>/<root>/<path>');
-        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true)).toBe(url.contentNoSSL + '/<alias>/<root>/<path>');
+        expect(Content.getContentUrlWithKey('k1')).toMatch(url.content + '/key/k1');
+        expect(Content.getContentUrlWithPath('<path>', '<alias>')).toMatch(url.content + '/<alias>/head/<path>');
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>')).toMatch(url.content + '/<alias>/<root>/<path>');
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true)).toMatch(url.content + '/<alias>/<root>/' + encodeURIComponent('<path>'));
+        expect(Content.getContentUrlWithPath('<path>', '<alias>', '<root>', true, true)).toMatch(url.contentNoSSL + '/<alias>/<root>/' + encodeURIComponent('<path>'));
     });
 
-    it('should return the preview url', function () {
+    it('should return the thumb url', function () {
         var expectedUrl = url.api + '/thumbs/k1';
-        expect(Content.getPreviewUrlWithKey('k1')).toBe(expectedUrl);
-        expect(Content.getPreviewUrlWithKey('k1', '<size>')).toBe(expectedUrl + thumbSizeQueryParam + '<size>');
+        expect(Content.getThumbUrlWithKey('k1')).toBe(expectedUrl);
+        expectedUrl += '?size=<size>';
+        expect(Content.getThumbUrlWithKey('k1', '<size>')).toBe(expectedUrl);
         expectedUrl = expectedUrl.replace(url.api, url.apiNoSSL);
-        expect(Content.getPreviewUrlWithKey('k1', '<size>', true)).toBe(expectedUrl + thumbSizeQueryParam + '<size>');
+        expect(Content.getThumbUrlWithKey('k1', '<size>', undefined, true)).toBe(expectedUrl);
+        expectedUrl += '&min=true';
+        expect(Content.getThumbUrlWithKey('k1', '<size>', true, true)).toBe(expectedUrl);
     });
 
     it('should return the download url', function () {
         var expectedUrl = Content.getContentUrlWithKey('k1') + forceDownloadQueryParam;
-        expect(Content.getDownloadUrlWithKey('k1')).toBe(expectedUrl);
+        expect(Content.getDownloadUrlWithKey('k1')).toMatch(expectedUrl);
         expectedUrl = Content.getContentUrlWithPath('<path>', '<alias>', '<root>') + forceDownloadQueryParam;
-        expect(Content.getDownloadUrlWithPath('<path>', '<alias>', '<root>')).toBe(expectedUrl);
+        expect(Content.getDownloadUrlWithPath('<path>', '<alias>', '<root>')).toMatch(expectedUrl);
         expectedUrl = expectedUrl.replace(url.content, url.contentNoSSL);
-        expect(Content.getDownloadUrlWithPath('<path>', '<alias>', '<root>', true)).toBe(expectedUrl);
+        expect(Content.getDownloadUrlWithPath('<path>', '<alias>', '<root>', true)).toMatch(expectedUrl);
     });
 
     it('should return the export url', function () {
-        var expectedUrl = url.content + '/export?&path=/<path>&path=/<path2>';
-        expect(Content.getExportUrl(['<path>', '<path2>'])).toBe(expectedUrl);
+        var expectedUrl = url.content + '/export\\?&path=/<path>&path=/<path2>';
+        expect(Content.getExportUrl(['<path>', '<path2>'])).toMatch(expectedUrl);
         expectedUrl += '&filename=<filename>';
-        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>')).toBe(expectedUrl);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>')).toMatch(expectedUrl);
         expectedUrl += '&format=<format>';
-        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>')).toBe(expectedUrl);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>')).toMatch(expectedUrl);
         expectedUrl += '&followsymlink=<followsymlink>';
-        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>')).toBe(expectedUrl);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>')).toMatch(expectedUrl);
         expectedUrl = expectedUrl.replace(url.content, url.contentNoSSL);
-        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>', true)).toBe(expectedUrl);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>', true)).toMatch(expectedUrl);
     });
 
     it('should download data', function () {

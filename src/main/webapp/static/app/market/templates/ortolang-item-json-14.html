@@ -1,8 +1,8 @@
-<section class="market-item" ng-controller="OrtolangItemJson14Ctrl">
+<section class="market-item" ng-controller="OrtolangItemJson14Ctrl" ng-class="{browse: browse}">
     <header>
         <div class="media">
             <div class="media-left">
-                <div class="item-logo" ng-class="{browse: browse}">
+                <div class="item-logo">
                     <img ng-if="imgtitle !== undefined" class="image loaded-image" ng-src="" holder-js="holder.js/180x180?theme={{imgtheme}}&text={{imgtitle}}&size=63"  alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                     <img ng-show="image" ng-src="{{image}}" class="image loaded-image" alt="{{'MARKET.THUMBNAIL' | translate}}"/>
                 </div>
@@ -13,7 +13,7 @@
                 <div ng-hide="browse">
                     <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i> :
                         <ul class="list-unstyled">
-                            <li ng-repeat="producer in producers track by producer.id">
+                            <li ng-repeat="producer in producers track by producer.fullname">
                                 <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
                             </li>
                         </ul>
@@ -28,7 +28,7 @@
                     <div ng-if="tags.length > 1"><span translate="MARKET.ALL_VERSIONS"></span> :
                         <ul class="list-inline all-versions">
                             <li ng-repeat="t in ::tags">
-                                <div class="label tag" ng-class="::tag.name === t.name ? 'label-primary' : ''">
+                                <div class="label tag" ng-class="::{'label-primary': tag.name === t.name}">
                                     <span ng-class="::icons.tag"></span>
                                     <a ng-if="::tag.name !== t.name" ng-href="/market/{{::itemMarketType}}/{{::alias}}/{{::t.name}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></a>
                                     <span ng-if="::tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></span>
@@ -42,13 +42,17 @@
         </div>
     </header>
 
-    <div class="row">
-
-        <div ng-if="browse" class="col-md-12">
-            <div browser></div>
+    <div ng-if="browse" class="container-main container-market-content">
+        <div class="container-main-inner">
+            <div class="market-item-content">
+                <div browser></div>
+            </div>
         </div>
+    </div>
 
-        <div ng-show="!browse" class="col-md-8 market-item-presentation-metadata">
+    <div ng-if="!browse" class="row market-item-metadata-wrapper">
+
+        <div class="col-md-8 market-item-presentation-metadata">
 
             <div class="alert alert-info citatation-alert" ng-click="howToCite(this, $event)">
                 <span class="fa fa-2x fa-quote-left pull-left"></span>
@@ -69,7 +73,7 @@
                         <dl class="keywords">
                             <dt data-translate="MARKET.KEYWORDS"></dt>
                             <dd>
-                                <span ng-repeat="keyword in keywords">{{::keyword}}</span>
+                                <span ng-repeat="keyword in keywords track by $index">{{::keyword}}</span>
                             </dd>
                         </dl>
                     </div>
@@ -176,12 +180,12 @@
             </section>
         </div>
 
-        <aside ng-show="!browse" class="col-md-4">
+        <aside class="col-md-4">
 
             <div class="card-well card-well-market card-well-license" ng-if="commercialLinks">
                 <p class="lead" translate="MARKET.COMMERCIAL_LINKS"></p>
                 <div>
-                    <div class="media" ng-repeat="commercialLink in commercialLinks">
+                    <div class="media commercialLink" ng-repeat="commercialLink in commercialLinks">
                         <div class="media-left">
                             <img ng-src="{{commercialLink.img}}">
                         </div>
@@ -202,6 +206,9 @@
                             {{license.label}} <a target="_BLANK" ng-if="(!license.description || conditionsOfUse) && license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                             <!-- <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p> -->
                         </dt>
+                        <dd ng-if="textFileKey">
+                            <a data-visualizer ng-click="showPreview(textFileKey)" class="clickable">{{'MARKET.LICENCE_DETAIL' | translate}}</a>
+                        </dd>
                         <dd ng-show="!conditionsOfUse && license.description">
                             <span ng-if="license.effectiveDescription">{{license.effectiveDescription}}</span><a target="_BLANK" ng-if="license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dd>
@@ -235,27 +242,28 @@
             <div class="card-well card-well-market card-well-share">
                 <p class="lead">
                     {{'SHARE' | translate}}
-                    <a ng-href="{{content.social.facebook}}" target="_blank" data-title="Facebook" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-facebook"></span></a>
-                    <a ng-href="{{content.social.twitter}}" target="_blank" data-title="Twitter" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-twitter"></span></a>
-                    <a ng-href="{{content.social.linkedin}}" target="_blank" data-title="LinkedIn" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-linkedin"></span></a>
-                    <a ng-href="{{content.social.viadeo}}" target="_blank" data-title="Viadeo" data-trigger="hover" bs-tooltip><span class="fa fa-lg fa-viadeo"></span></a>
+                    <a ng-href="{{content.social.facebook}}" target="_blank" data-title="Facebook" bs-tooltip><span ng-class="::icons.facebook" class="fa-lg"></span></a>
+                    <a ng-href="{{content.social.twitter}}" target="_blank" data-title="Twitter" bs-tooltip><span ng-class="::icons.twitter" class="fa-lg"></span></a>
+                    <a ng-href="{{content.social.linkedin}}" target="_blank" data-title="LinkedIn" bs-tooltip><span ng-class="::icons.linkedin" class="fa-lg"></span></a>
+                    <a ng-href="{{content.social.viadeo}}" target="_blank" data-title="Viadeo" bs-tooltip><span ng-class="::icons.viadeo" class="fa-lg"></span></a>
                 </p>
             </div>
-
-            <!--<div class="card-well card-well-market" ng-if="content.derogation">-->
-                <!--<p class="lead" translate="MARKET.DEROGATION"></p>-->
-                <!--<p>-->
-                    <!--<a href="http://www.archivesdefrance.culture.gouv.fr/seda/api/seda_v1-0_accessrestriction_code_xsd_Simple_Type_AccessRestrictionCodeType.htm#AccessRestrictionCodeType" target="_BLANK">{{content.derogation}}</a>-->
-                    <!--<span ng-if="content.derogation === 'AR038'"> - Documents librement communicables. (Code du Patrimoine, art. L. 211-1, L. 211-4, L. 213-1)</span>-->
-                    <!--<span ng-if="content.derogation === 'AR048'"> - Documents dont la communication porte atteinte à la protection de la vie privée ou portant appréciation ou jugement de valeur sur une personne physique nommément désignée, ou facilement identifiable, ou qui font apparaître le comportement d'une personne dans des conditions susceptibles de lui porter préjudice. (Code du Patrimoine, art. L. 213-2, I, 3)</span>-->
-                    <!--<span ng-if="content.derogation === 'AR042'"> - Documents élaborés dans le cadre d'un contrat de prestation de services exécuté pour le compte d'une ou de plusieurs personnes déterminées. (Code du Patrimoine, art. L. 213-2, I, 1, b)</span>-->
-                <!--</p>-->
-            <!--</div>-->
 
             <div class="card-well card-well-market preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
                 <p class="lead" translate="MARKET.PREVIEW"></p>
                 <div>
                     <div ng-show="itemKey" preview-list collection="itemKey" paths="content.preview"></div>
+                </div>
+            </div>
+
+            <div class="card-well card-well-market preview-box-list-wrapper" ng-if="externalRelations.length>0">
+                <p class="lead" translate="MARKET.EXTERNAL_RELATIONS"></p>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="relation in externalRelations" ng-click="goToItem(relation.url)">
+                            <span ng-class="::icons.link"></span> {{relation.name}}
+                        </li>
+                    </ul>
                 </div>
             </div>
 

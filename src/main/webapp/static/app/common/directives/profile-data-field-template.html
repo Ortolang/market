@@ -3,9 +3,9 @@
 
     <div ng-class="inputClass">
 
-        <div ng-switch="::profileData.forceVisibilities">
-            <button ng-switch-when="333" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="::icons.everybody"></span></button>
-            <button ng-switch-when="300" class="pull-left btn btn-default profile-data-visibility" disabled><span ng-class="::icons.nobody"></span></button>
+        <div class="profile-data-visibility-wrapper" ng-switch="::profileData.forceVisibilities">
+            <a ng-switch-when="333" class="pull-left btn btn-default disabled profile-data-visibility" bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{'PROFILE.VISIBILITY.EVERYBODY' | translate}}"><span ng-class="::icons.everybody"></span></a>
+            <a ng-switch-when="300" class="pull-left btn btn-default disabled profile-data-visibility" bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{'PROFILE.VISIBILITY.NOBODY' | translate}}"><span ng-class="::icons.nobody"></span></a>
             <div ng-switch-default toggle-visibility class="pull-left" data-options="::Profile.getVisibilityOptions(profileData.forceVisibilities)" data-profile-data="profileData"
                  data-onaftersave="Profile.updateUserProfileData(profileData)"></div>
         </div>
@@ -16,7 +16,8 @@
         </span>
 
         <span ng-if="profileData.type==='TEXT'" class="xeditable-placeholder" editable-textarea="profileData.value" data-e-name="{{::profileData.name}}" data-e-placeholder="{{'PROFILE.FIELDS.' + profileData.name.toUpperCase() | translate}}" data-e-value="{{profileData.value}}"
-              data-onaftersave="Profile.updateUserProfileData(profileData)">
+              data-onaftersave="Profile.updateUserProfileData(profileData)"
+              e-rows="10">
             {{profileData.value || emptyText}}
         </span>
 

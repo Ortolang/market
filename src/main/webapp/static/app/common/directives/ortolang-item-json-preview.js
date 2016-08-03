@@ -23,9 +23,30 @@ angular.module('ortolangMarketApp')
                 icons: '=',
                 preview: '@?'
             },
-            template: '<div ng-include="marketItemTemplate"></div>',
+            template: '<div class="market-item-wrapper" ng-include="marketItemTemplate"></div>',
             link: {
                 pre: function (scope) {
+
+                    function loadCommonFields () {
+
+                        refreshMultilingualValue(scope.content, Settings.language);
+                        scope.itemMarketType = getItemType(scope.content);
+
+                        if (scope.content.image) {
+                            scope.image = Content.getThumbUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
+                        } else {
+                            scope.imgtitle = '';
+                            scope.imgtheme = 'custom';
+                            if (scope.title) {
+                                scope.imgtitle = scope.title.substring(0, 2);
+                                scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
+                            }
+                        }
+
+                        if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
+                            scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
+                        }
+                    }
 
                     function loadItem() {
 
@@ -41,44 +62,13 @@ angular.module('ortolangMarketApp')
 
                             if (scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
                                 scope.marketItemTemplate = 'market/templates/ortolang-item-json-13.html';
-
-                                refreshMultilingualValue(scope.content, Settings.language);
-                                scope.itemMarketType = getItemType(scope.content);
-
-                                if (scope.content.image) {
-                                    scope.image = Content.getPreviewUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
-                                } else {
-                                    scope.imgtitle = '';
-                                    scope.imgtheme = 'custom';
-                                    if (scope.title) {
-                                        scope.imgtitle = scope.title.substring(0, 2);
-                                        scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
-                                    }
-                                }
-
-                                if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
-                                    scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
-                                }
+                                loadCommonFields();
                             } else if (scope.content.schema === 'http://www.ortolang.fr/schema/014#') {
                                 scope.marketItemTemplate = 'market/templates/ortolang-item-json-14.html';
-
-                                refreshMultilingualValue(scope.content, Settings.language);
-                                scope.itemMarketType = getItemType(scope.content);
-
-                                if (scope.content.image) {
-                                    scope.image = Content.getPreviewUrlWithPath(scope.content.image, scope.alias, scope.root, 180);
-                                } else {
-                                    scope.imgtitle = '';
-                                    scope.imgtheme = 'custom';
-                                    if (scope.title) {
-                                        scope.imgtitle = scope.title.substring(0, 2);
-                                        scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
-                                    }
-                                }
-
-                                if (scope.content.datasize !== undefined && scope.content.datasize !== '') {
-                                    scope.datasizeToPrint = {'value': $filter('bytes')(scope.content.datasize)};
-                                }
+                                loadCommonFields();
+                            } else if (scope.content.schema === 'http://www.ortolang.fr/schema/015#') {
+                                scope.marketItemTemplate = 'market/templates/ortolang-item-json-15.html';
+                                loadCommonFields();
                             } else {
                                 scope.marketItemTemplate = 'market/templates/ortolang-item-json-unknown.html';
                             }

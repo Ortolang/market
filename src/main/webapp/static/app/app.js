@@ -44,14 +44,21 @@ angular
         'angularMoment',
         'angulartics',
         'angulartics.piwik',
-        'btford.markdown',
-        'lrInfiniteScroll'
+        'ng-showdown',
+        'zInfiniteScroll',
+        'angular-duration-format'
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'market/home.html',
                 controller: 'HomeCtrl',
+                description: 'default'
+            })
+            .when('/news', {
+                templateUrl: 'market/news.html',
+                controller: 'NewsCtrl',
+                title: 'NEWS',
                 description: 'default'
             })
             .when('/market/corpora', {
@@ -81,8 +88,14 @@ angular
             })
             .when('/market/applications', {
                 templateUrl: 'market/applications.html',
-                // controller: 'ApplicationsCtrl',
+                controller: 'ApplicationsCtrl',
                 title: 'INTEGRATED_PROJECTS'
+            })
+            .when('/market/search/corpora', {
+                templateUrl: 'market/search/corpora.html',
+                controller: 'SearchCorporaCtrl',
+                title: 'SEARCH',
+                reloadOnSearch: false
             })
             .when('/market/:section/:alias/:version?', {
                 templateUrl: 'market/item.html',
@@ -129,9 +142,9 @@ angular
                 templateUrl: 'common/static-website/legal-notices.html',
                 title: 'NAV.LEGAL_NOTICES'
             })
-            .when('/profile/information', {
-                templateUrl: 'profile/profile.html',
-                controller: 'ProfileCtrl',
+            .when('/profiles/me/edition', {
+                templateUrl: 'profile/profile-me.html',
+                controller: 'ProfileMeCtrl',
                 requiresAuthentication: true,
                 resolve: {
                     func: ['AuthService', function (AuthService) {
@@ -140,11 +153,15 @@ angular
                 },
                 title: 'NAV.PROFILE'
             })
-            .when('/profile/tasks', {
+            .when('/profiles/me/tasks', {
                 templateUrl: 'profile/tasks.html',
                 controller: 'TasksCtrl',
                 requiresAuthentication: true,
                 title: 'NAV.TASKS'
+            })
+            .when('/profiles/:key', {
+                templateUrl: 'profile/profile.html',
+                controller: 'ProfileCtrl'
             })
             .when('/404', {
                 templateUrl: '404.html',
@@ -180,7 +197,7 @@ angular
     .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body',
-            trigger: 'hover click'
+            trigger: 'hover'
         });
         angular.extend($alertProvider.defaults, {
             container: '.alerts-wrapper',
@@ -233,7 +250,8 @@ angular
         copy.formTpl = '<form class="" role="form"></form>';
         copy.controlsTpl = '<div class="editable-controls input-group" ng-class="{\'has-error\': $error, \'input-group-lg\': largeInput}"></div>';
         copy.buttonsTpl = '<span class="input-group-btn"></span>';
-        copy.submitTpl = '<button type="submit" class="btn btn-default"><span></span></button>';
+        copy.inputClass = 'editable-custom-inputs';
+        copy.errorTpl = '<div class="editable-error editable-custom-error help-block" ng-show="$error" translate="{{$error}}"></div>';
         editableThemes.bs3 = copy;
         editableOptions.theme = 'bs3';
     }])

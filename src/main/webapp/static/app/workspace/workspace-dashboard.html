@@ -1,26 +1,35 @@
 <div class="view-wrapper-flex">
     <div class="toolbar-wrapper">
-        <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="dashboardSection === 'content' ? 'faded' : ''">
-            <ul class="nav nav-pills">
+        <div class="toolbar nav-pills-toolbar workspace-toolbar" ng-class="{faded: dashboardSection === 'content'}">
+            <div class="select-menu-wrapper visible-xs row">
+                <div class="col-xs-8">
+                    <select class="form-control" ng-model="dashboardSectionSelect" ng-change="selectDashboardSection(dashboardSectionSelect)">
+                        <option value="{{::section}}" ng-repeat="section in ::dashboardSections track by section">
+                            {{::'WORKSPACE.' + section.toUpperCase() | translate}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <ul class="nav nav-pills hidden-xs">
                 <li class="workspace-alias-tab">
                     <a><strong>{{::Workspace.active.workspace.alias}}</strong></a>
                 </li>
-                <li ng-class="dashboardSection === 'information'  ? 'active' : ''" role="tab">
-                    <a ng-click="selectDashboardSection('information')" translate="INFORMATION"></a>
+                <li ng-class="{active: dashboardSection === 'information'}" role="tab">
+                    <a ng-click="selectDashboardSection('information')" translate="WORKSPACE.INFORMATION"></a>
                 </li>
-                <li ng-class="dashboardSection === 'content'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'content'}" role="tab">
                     <a ng-click="selectDashboardSection('content')" translate="WORKSPACE.CONTENT"></a>
                 </li>
-                <li ng-class="dashboardSection === 'members'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'members'}" role="tab">
                     <a ng-click="selectDashboardSection('members')" translate="WORKSPACE.MEMBERS"></a>
                 </li>
-                <li ng-class="dashboardSection === 'metadata'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'metadata'}" role="tab">
                     <a ng-click="selectDashboardSection('metadata')" translate="WORKSPACE.METADATA"></a>
                 </li>
-                <li ng-class="dashboardSection === 'permissions'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'permissions'}" role="tab">
                     <a ng-click="selectDashboardSection('permissions')" translate="WORKSPACE.PERMISSIONS"></a>
                 </li>
-                <li ng-class="dashboardSection === 'preview'  ? 'active' : ''" role="tab">
+                <li ng-class="{active: dashboardSection === 'preview'}" role="tab">
                     <a ng-click="selectDashboardSection('preview')" translate="WORKSPACE.PREVIEW"></a>
                 </li>
                 <li ng-class="dashboardSection === 'threads'  ? 'active' : ''" role="tab">
@@ -29,34 +38,32 @@
             </ul>
         </div>
     </div>
-    <div class="container-main workspace-dashboard" ng-class="dashboardSection">
-        <div class="container-main-inner" ng-switch="dashboardSection">
-            <div ng-switch-when="information">
-                <div ng-include="'workspace/workspace-dashboard-information.html'"></div>
-            </div>
-            <div class="workspace-dashboard-content" ng-switch-when="content">
-                <div ng-class="{'read-only': Workspace.active.workspace.readOnly}" browser></div>
-            </div>
-            <div ng-switch-when="members">
-                <div ng-include="'workspace/workspace-dashboard-members.html'"></div>
-            </div>
-            <div ng-switch-when="metadata">
-                <div ng-if="Workspace.active.metadata!==undefined" ng-include="'workspace/workspace-dashboard-metadata.html'"></div>
-            </div>
-            <div ng-switch-when="permissions">
-                <div ng-include="'workspace/workspace-dashboard-permissions.html'"></div>
-            </div>
-            <div ng-switch-when="preview">
-                <div ng-if="Workspace.active.metadata !== null" ortolang-item-json-preview content="Workspace.active.metadata" alias="Workspace.active.workspace.alias" ortolang-object="Workspace.active.workspace" item-key="Workspace.active.workspace.head"  root="'head'" preview="true" ></div>
-                <div ng-if="Workspace.active.metadata === null" class="no_metadata">
-                    <i class="fa fa-eye fa-4x"></i>
+    <div class="container-main workspace-dashboard" ng-class="dashboardSection" ng-switch="dashboardSection">
+        <div ng-switch-when="information" class="container-main-inner">
+            <div ng-include="'workspace/workspace-dashboard-information.html'"></div>
+        </div>
+        <div ng-switch-when="content" class="workspace-dashboard-content">
+            <div ng-class="{'read-only': Workspace.active.workspace.readOnly}" browser></div>
+        </div>
+        <div ng-switch-when="members" class="container-main-inner">
+            <div ng-include="'workspace/workspace-dashboard-members.html'"></div>
+        </div>
+        <div ng-switch-when="metadata" class="container-main-inner">
+            <div ng-if="Workspace.active.metadata!==undefined" ng-include="'workspace/workspace-dashboard-metadata.html'"></div>
+        </div>
+        <div ng-switch-when="permissions" class="container-main-inner">
+            <div ng-include="'workspace/workspace-dashboard-permissions.html'"></div>
+        </div>
+        <div ng-switch-when="preview" class="container-main-inner">
+            <div ng-if="Workspace.active.metadata !== null" ortolang-item-json-preview content="Workspace.active.metadata" alias="Workspace.active.workspace.alias" ortolang-object="Workspace.active.workspace" item-key="Workspace.active.workspace.head"  root="'head'" preview="true" ></div>
+            <div ng-if="Workspace.active.metadata === null" class="no_metadata">
+                <i class="fa fa-eye fa-4x"></i>
+                <br/>
+                <p>
+                    <strong translate="WORKSPACE.NO_METATDATA"></strong>
                     <br/>
-                    <p>
-                        <strong translate="WORKSPACE.NO_METATDATA"></strong>
-                        <br/>
-                        <small><a ng-href="/workspaces/{{Workspace.active.workspace.alias}}?section=metadata" translate="WORKSPACE.GO_TO_METATDATA"></a></small>
-                    </p>
-                </div>
+                    <small><a ng-href="/workspaces/{{Workspace.active.workspace.alias}}?section=metadata" translate="WORKSPACE.GO_TO_METATDATA"></a></small>
+                </p>
             </div>
             <div ng-switch-when="threads">
                 <div ng-include="'workspace/workspace-dashboard-threads.html'"></div>

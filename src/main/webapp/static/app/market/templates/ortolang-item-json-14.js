@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson14Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource',
-        function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialEntityResource) {
+    .controller('OrtolangItemJson14Ctrl', ['$scope', '$rootScope', '$location', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
+        function ($scope, $rootScope, $location, $translate, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
 
             function loadProducers() {
                 if ($scope.content.producers) {
@@ -150,8 +150,18 @@ angular.module('ortolangMarketApp')
                             $scope.license.effectiveText = Helper.getMultilingualValue($scope.license.text, lang);
                         }
                     } else {
-                        //TOOD licence made by user ??
                         $scope.license = $scope.content.license;
+                        if ($scope.license.text) {
+                            var value = Helper.getMultilingualValue($scope.license.text, lang);
+                            if (value && value.path) {
+                                ObjectResource.element({
+                                    key: $scope.itemKey,
+                                    path: value.path
+                                }).$promise.then(function (oobject) {
+                                    $scope.textFileKey = oobject.key;
+                                });
+                            }
+                        }
                     }
                 }
             }
@@ -194,31 +204,30 @@ angular.module('ortolangMarketApp')
             }
 
             function loadRelation(relation) {
-                var url = null, name = 'unknown';
-                if (relation.type === 'hasPart') {
-                    url = relation.path;
+                var loadedRelation = {name: 'unknown', type: relation.type};
+                if (relation.type === 'hasPart' || relation.type === 'isPartOf' || relation.type === 'requires' || relation.type === 'isRequiredBy') {
+                    loadedRelation.name = relation.alias;
+                    loadedRelation.url = 'market/item/' + relation.alias;
                 } else {
-                    name = relation.path.split('/').pop();
-                    url = Content.getContentUrlWithPath(relation.path, $scope.alias, $scope.root);
+                    loadedRelation.name = relation.path.split('/').pop();
+                    loadedRelation.url = Content.getContentUrlWithPath(relation.path, $scope.alias, $scope.root);
                     if (Helper.startsWith(relation.url, 'http')) {
-                        url = relation.url;
+                        loadedRelation.url = relation.url;
                     }
+                    loadedRelation.extension = relation.path.split('.').pop();
                 }
-
-                return {
-                    name: name,
-                    type: relation.type,
-                    url: url,
-                    extension: relation.path.split('.').pop()
-                };
+                return loadedRelation;
             }
 
             function loadRelations() {
                 $scope.documentations = [];
+                $scope.externalRelations = [];
                 if ($scope.content.relations) {
                     angular.forEach($scope.content.relations, function (relation) {
                         if (relation.type === 'documentation') {
                             $scope.documentations.push(loadRelation(relation));
+                        } else if (relation.type === 'hasPart' || relation.type === 'isPartOf' || relation.type === 'requires' || relation.type === 'isRequiredBy') {
+                            $scope.externalRelations.push(loadRelation(relation));
                         }
                     });
                 }
@@ -375,6 +384,10 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('terminoApproved', 'ITEM.TERMINO_APPROVED.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoChecked', 'ITEM.TERMINO_CHECKED.LABEL', lang);
             }
+
+            $scope.goToItem = function (url) {
+                $location.url(url);
+            };
 
             $scope.getCitation = function () {
                 return $scope.computeTextCitation($scope);

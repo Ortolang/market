@@ -8,122 +8,32 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('CorporaCtrl', ['$scope', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('CorporaCtrl', ['$scope', '$location', 'SearchProvider', function ($scope, $location, SearchProvider) {
 
-        function addAvailableFilters() {
-
-            $scope.typeFilter = FacetedFilter.make({
-                id: 'type',
-                alias: 'type',
-                label: 'MARKET.RESOURCE_TYPE',
-                resetLabel: 'MARKET.ALL_RESOURCE',
-                options: [
-                    OptionFacetedFilter.make({
-                        label: 'Corpus',
-                        value: 'Corpus',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Lexique',
-                        value: 'Lexique',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Outil',
-                        value: 'Outil',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Projet intégré',
-                        value: 'Application',
-                        length: 1
-                    })
-                ],
-                lockOptions: true,
-                lock: true
-            });
-            $scope.typeFilter.putSelectedOption($scope.typeFilter.getOption('Corpus'));
-            $scope.filtersManager.addAvailableFilter($scope.typeFilter);
-
-            var annotationLevelsFilter = FacetedFilter.make({
-                id: 'annotationLevels.key',
-                alias: 'annotationLevels',
-                type: 'array',
-                label: 'MARKET.FACET.ANNOTATION_LEVEL',
-                resetLabel: 'MARKET.FACET.ALL_ANNOTATION_LEVEL'
-            });
-            $scope.filtersManager.addAvailableFilter(annotationLevelsFilter);
-
-            var corporaFormatsFilter = FacetedFilter.make({
-                id: 'corporaFormats.key',
-                alias: 'corporaFormats',
-                type: 'array',
-                label: 'MARKET.FACET.TEXT_FORMAT',
-                resetLabel: 'MARKET.FACET.ALL_TEXT_FORMAT'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaFormatsFilter);
-
-            var corporaDataTypesFilter = FacetedFilter.make({
-                id: 'corporaDataTypes.key',
-                alias: 'corporaDataTypes',
-                type: 'array',
-                label: 'MARKET.FACET.CORPORA_DATATYPES',
-                resetLabel: 'MARKET.FACET.ALL_CORPORA_DATATYPES'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaDataTypesFilter);
-
-            var corporaLanguageTypeFilter = FacetedFilter.make({
-                id: 'corporaLanguageType.key',
-                alias: 'corporaLanguageType',
-                label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
-                resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaLanguageTypeFilter);
-
-            var corporaFileEncodingsFilter = FacetedFilter.make({
-                id: 'corporaFileEncodings.key',
-                alias: 'corporaFileEncodings',
-                type: 'array',
-                label: 'MARKET.FACET.TEXT_ENCODING',
-                resetLabel: 'MARKET.FACET.ALL_TEXT_ENCODING'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaFileEncodingsFilter);
-
-            var corporaTypeFilter = FacetedFilter.make({
-                id: 'corporaType.key',
-                alias: 'corporaType',
-                label: 'MARKET.FACET.CORPORA_TYPE',
-                resetLabel: 'MARKET.FACET.ALL_CORPORA',
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaTypeFilter);
-
-            var corporaLanguagesFilter = FacetedFilter.make({
-                id: 'corporaLanguages.key',
-                alias: 'corporaLanguages',
-                type: 'array',
-                label: 'MARKET.FACET.CORPORA_LANG',
-                resetLabel: 'MARKET.FACET.ALL_LANG',
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(corporaLanguagesFilter);
-
-            var statusOfUseFilter = FacetedFilter.make({
-                id: 'statusOfUse.key',
-                alias: 'statusOfUse',
-                label: 'MARKET.FACET.STATUS_OF_USE',
-                resetLabel: 'MARKET.FACET.ALL_STATUS_OF_USE',
-                priority: 'high',
-                view: 'dropdown-faceted-filter'
-            });
-            $scope.filtersManager.addAvailableFilter(statusOfUseFilter);
-        }
+        $scope.search = function () {
+            $location.url('market/search/corpora').search('content', $scope.content);
+        };
 
         function init() {
-            $scope.filtersManager = FacetedFilterManager.make();
-            addAvailableFilters();
+            var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
+            var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
+            var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
+            var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
+            // Written
+            $scope.searchWrittenCorpora = SearchProvider.make();
+            $scope.searchWrittenCorpora.setActiveOrderProp('rank', false);
+            // $scope.paramsWrittenCorpora = '{"title":"", "type": "Corpus", "ortolang-item-json.corporaType.key":"referential:written_corpora", "fields":"key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
+            $scope.paramsWrittenCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:written_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
+            // Speech
+            $scope.searchSpeechCorpora = SearchProvider.make();
+            $scope.searchSpeechCorpora.setActiveOrderProp('rank', false);
+            // $scope.paramsSpeechCorpora = '{"title":"", "type": "Corpus", "ortolang-item-json.corporaType.key":"referential:speech_corpora", "fields":"key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"9", "orderProp":"rank", "orderDir":"desc"}';
+            $scope.paramsSpeechCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:speech_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
+            // Multimodal
+            $scope.searchMultimodalCorpora = SearchProvider.make();
+            $scope.searchMultimodalCorpora.setActiveOrderProp('rank', false);
+            // $scope.paramsMultimodalCorpora = '{"title":"", "type": "Corpus", "ortolang-item-json.corporaType.key":"referential:multimodal_corpora", "fields":"key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
+            $scope.paramsMultimodalCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:multimodal_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
         }
 
         init();

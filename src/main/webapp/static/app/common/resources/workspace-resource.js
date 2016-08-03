@@ -38,6 +38,11 @@ angular.module('ortolangMarketApp')
             listEvents: {
                 method: 'GET',
                 url: url.api + '/workspaces/:wskey/events'
+            },
+            diffWorkspaceContent: {
+                method: 'GET',
+                url: url.api + '/workspaces/:wskey/diff',
+                isArray: true
             }
         });
     }]);

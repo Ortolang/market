@@ -13,8 +13,8 @@ angular.module('ortolangMarketApp')
 
         var visibilityOptions = {
             EVERYBODY: {value: 'EVERYBODY', label: 'PROFILE.VISIBILITY.EVERYBODY', icon: icons.everybody},
-            FRIENDS: {value: 'FRIENDS', label: 'PROFILE.VISIBILITY.FRIENDS', icon: icons.friends},
-            NOBODY: {value: 'NOBODY', label: 'PROFILE.VISIBILITY.NOBODY', icon: icons.nobody}
+            FRIENDS: {value: 'FRIENDS', label: 'PROFILE.VISIBILITY.FRIENDS', icon: icons.friends}
+            //NOBODY: {value: 'NOBODY', label: 'PROFILE.VISIBILITY.NOBODY', icon: icons.nobody}
         };
 
         function getVisibilityOptions(mask) {
@@ -22,9 +22,9 @@ angular.module('ortolangMarketApp')
                 return visibilityOptions;
             }
             var visibilityOptionsCopy = visibilityOptions;
-            if (mask.charAt(0) !== '3') {
-                delete visibilityOptionsCopy.NOBODY;
-            }
+            //if (mask.charAt(0) !== '3') {
+            //    delete visibilityOptionsCopy.NOBODY;
+            //}
             if (mask.charAt(1) !== '3') {
                 delete visibilityOptionsCopy.FRIENDS;
             }
@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
         function checkAddress(item, $data) {
             $data = sanitizeData($data);
             if ($data !== '' && item.value !== $data && !$data.formatted_address) {
-                return $translate.instant('PROFILE.INFOS.ADDRESS_ERROR');
+                return $translate.instant('PROFILE.FIELDS.ADDRESS_ERROR');
             }
         }
 

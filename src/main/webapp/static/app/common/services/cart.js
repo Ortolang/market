@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Cart', ['Settings', 'Content', 'Profile', 'User', function (Settings, Content, Profile, User) {
+    .service('Cart', ['$filter', '$alert', '$translate', 'Settings', 'Content', 'Profile', 'User', 'ortolangType', function ($filter, $alert, $translate, Settings, Content, Profile, User, ortolangType) {
 
         var content = {};
 
@@ -35,7 +35,47 @@ angular.module('ortolangMarketApp')
                 if (!content[item.wsalias][item.root]) {
                     content[item.wsalias][item.root] = [];
                 }
-                content[item.wsalias][item.root].push(item);
+                if (item.type === ortolangType.collection) {
+                    // Remove cart element(s) included in the added folder
+                    var delta = content[item.wsalias][item.root].length;
+                    content[item.wsalias][item.root] = $filter('filter')(content[item.wsalias][item.root], {path: '!' + item.path}, function (actual, expected) {
+                        return actual.indexOf(expected) === 0 && !angular.equals(actual, expected);
+                    });
+                    delta -= content[item.wsalias][item.root].length;
+                    if (delta > 0) {
+                        $alert({
+                            placement: 'top-right',
+                            content: $translate.instant('BROWSER.CART.' + (delta > 1 ? 'REMOVED_ELEMENTS_ALERT' : 'REMOVED_ELEMENT_ALERT'), {delta: delta, collection: item.name}),
+                            type: 'success',
+                            duration: 7
+                        });
+                    }
+                }
+                if ($filter('filter')(content[item.wsalias][item.root], {path: item.path}, true).length === 0) {
+                    var collections = $filter('filter')(content[item.wsalias][item.root], {type: ortolangType.collection}, true),
+                        alreadyIncluded = false;
+                    angular.forEach(collections, function (collection) {
+                        if (item.path.indexOf(collection.path) === 0) {
+                            alreadyIncluded = true;
+                            $alert({
+                                placement: 'top-right',
+                                content: $translate.instant('BROWSER.CART.ALREADY_INCLUDED_ALERT', {name: item.name, type: item.type, collection: collection.path}),
+                                type: 'danger',
+                                duration: 5
+                            });
+                        }
+                    });
+                    if (!alreadyIncluded) {
+                        content[item.wsalias][item.root].push(item);
+                    }
+                } else {
+                    $alert({
+                        placement: 'top-right',
+                        content: $translate.instant('BROWSER.CART.ALREADY_SELECTED_ALERT', item),
+                        type: 'danger',
+                        duration: 5
+                    });
+                }
             });
             store();
         };
@@ -75,16 +115,16 @@ angular.module('ortolangMarketApp')
             angular.forEach(content, function (workspace) {
                 angular.forEach(workspace, function (version) {
                     angular.forEach(version, function (element) {
-                        paths.push(element.path);
+                        paths.push(element.wsalias + '/' + element.root + element.path);
                     });
                 });
             });
             Content.export(paths);
         };
 
-        User.sessionInitialized().then(function () {
-            Settings.initialized().then(function () {
-                if (User.isAuthenticated()) {
+        Settings.initialized().then(function () {
+            if (User.isAuthenticated()) {
+                User.sessionInitialized().then(function () {
                     var profileCart = {};
                     if (User.getProfileData('cart')) {
                         profileCart = angular.fromJson(User.getProfileData('cart').value);
@@ -97,10 +137,10 @@ angular.module('ortolangMarketApp')
                     } else {
                         content = profileCart;
                     }
-                } else {
-                    content = Settings.cart;
-                }
-            });
+                });
+            } else {
+                content = Settings.cart;
+            }
         });
 
         return this;

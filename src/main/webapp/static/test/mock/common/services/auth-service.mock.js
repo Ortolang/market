@@ -27,6 +27,13 @@ angular.module('ortolangMarketAppMock')
             return keycloakAuth.authenticated;
         }
 
+        function getScope() {
+            if (keycloakAuth.authenticated) {
+                return window.btoa('username') + OrtolangConfig.cacheVersion;
+            }
+            return OrtolangConfig.cacheVersion;
+        }
+
         function login() {
             $window.location = keycloakAuth.createLoginUrl;
         }
@@ -43,13 +50,19 @@ angular.module('ortolangMarketAppMock')
             return deferred.promise;
         }
 
+        function resolveSessionInitialized() {
+            deferred.resolve();
+        }
+
         return {
             login: login,
             logout: logout,
             register: register,
             getToken: function () { return keycloakAuth.token; },
+            getScope: getScope,
             getKeycloak: function () { return keycloakAuth; },
             isAuthenticated: isAuthenticated,
-            sessionInitialized: sessionInitialized
+            sessionInitialized: sessionInitialized,
+            resolveSessionInitialized: resolveSessionInitialized
         };
     }]);

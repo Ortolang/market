@@ -8,40 +8,85 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['Search', 'OptionFacetedFilter', 'Settings', 'Helper', function (Search, OptionFacetedFilter, Settings, Helper) {
+    .directive('items', ['$location', 'SearchProvider', 'SearchResource', 'Helper', function ($location, SearchProvider, SearchResource, Helper) {
         return {
             restrict: 'A',
             scope: {
                 title: '=',
-                params: '='
+                params: '=',
+                search: '=',
+                inline: '=',
+                subtitleValue: '=',
+                hideSeeMoreButton: '=',
+                emptyLabel: '@?',
+                noEmptyLabel: '='
             },
             templateUrl: 'market/directives/items.html',
             link: function (scope) {
 
-                scope.Search = Search;
-
                 scope.$on('$destroy', function () {
-                    Search.clearResults();
+                    scope.search.clearResults();
                 });
+
+                function urlParam(params) {
+                    var searchParams = {};
+                    var copyParams = angular.fromJson(params);
+                    if (copyParams.viewMode) {
+                        searchParams.viewMode = copyParams.viewMode;
+                        delete copyParams.viewMode;
+                    }
+                    if (copyParams.orderProp) {
+                        searchParams.orderProp = copyParams.orderProp;
+                        delete copyParams.orderProp;
+                    }
+                    if (copyParams.orderDir) {
+                        searchParams.orderDir = copyParams.orderDir;
+                        delete copyParams.orderDir;
+                    }
+                    if (copyParams.content) {
+                        searchParams.content = copyParams.content;
+                        delete copyParams.content;
+                    }
+                    if (copyParams.limit) {
+                        delete copyParams.limit;
+                    }
+                    searchParams.filters = angular.toJson(copyParams);
+                    return searchParams;
+                }
+
+                function countWorkspace(params) {
+                    var param = angular.copy(params);
+                    delete param.limit;
+                    delete param.orderProp;
+                    delete param.orderDir;
+                    param.fields = 'workspace.wsalias';
+                    param.group = 'ortolang-workspace-json.wsalias';
+                    SearchResource.countWorkspaces(param, function (data) {
+                        scope.count = data.count;
+                    });
+
+                }
 
                 function load() {
                     var param = angular.fromJson(scope.newParams);
-                    Search.search(param).$promise.then(function (results) {
-                        Search.pack();
+                    scope.search.search(param).$promise.then(function (results) {
+                        countWorkspace(param);
+                        // scope.search.pack();
 
-                        angular.forEach(results, function (result) {
-                            if (result['meta_ortolang-workspace-json'] && result['meta_ortolang-workspace-json'].wskey) {
-                                var title = result['meta_ortolang-item-json'].title;
-                                result.effectiveTitle = Helper.getMultilingualValue(title);
-
-                                var publicationDate = result['meta_ortolang-item-json'].publicationDate;
-                                result.publicationDate = publicationDate;
-                            }
+                        angular.forEach(results.entries, function (result) {
+                            var title = result.title;
+                            result.effectiveTitle = Helper.getMultilingualValue(title);
                         });
 
-                        Search.endProcessing();
+                        scope.search.endProcessing();
                     });
                 }
+
+                scope.seeMore = function () {
+                    if (scope.params) {
+                        $location.url('/market/search/corpora').search(urlParam(scope.params));
+                    }
+                };
 
                 scope.$watch('params', function () {
                     if (scope.params !== undefined && scope.params !== scope.newParams) {
@@ -54,6 +99,11 @@ angular.module('ortolangMarketApp')
                 function initScopeVariables() {
                     scope.newContent = undefined;
                     scope.newParams = undefined;
+                    scope.count = 0;
+                    scope.subtitle = scope.subtitleValue ? scope.subtitleValue : 'MARKET.RESOURCES';
+                    if (!scope.search) {
+                        scope.search = SearchProvider.make();
+                    }
                 }
                 initScopeVariables();
             }

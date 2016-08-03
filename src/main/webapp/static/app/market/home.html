@@ -1,15 +1,15 @@
 <div class="view-wrapper-flex">
     <div class="toolbar-wrapper">
-        <div class="toolbar"></div>
+        <div class="toolbar toolbar-empty"></div>
     </div>
     <div class="container-main container-main-home">
         <div class="container-main-inner">
             <section class="row">
-                <div class="col-md-8">
+                <div class="col-md-8 col-lg-7">
                     <h3 class="ortolang-title" translate="ORTOLANG"></h3>
                     <hr/>
                     <div ng-include="StaticWebsite.getHomePage()"></div>
-                    <hr />
+                    <hr/>
                     <div class="media small marianne" >
                         <div class="media-left">
                             <img src="assets/images/mariane-avenir.png" alt="Logo Investissements d’avenir" />
@@ -20,18 +20,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4" >
+                <div class="col-md-4 col-lg-5" >
                     <div class="card-well card-news-well">
-                        <p class="lead"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;{{'STATIC_WEBSITE.NEWS' | translate}}</p>
-                        <div ng-repeat="news in StaticWebsite.getNews() track by news">
+                        <p class="lead"><span ng-class="::icons.news"></span> {{'NEWS' | translate}}</p>
+                        <div ng-repeat="news in StaticWebsite.getNews() | limitTo:StaticWebsite.getNewsLimit() track by news">
+                            <div ng-include="::news.url"></div>
                             <hr/>
-                            <div ng-include="::news"></div>
+                        </div>
+                        <a class="btn btn-inverse btn-block" href="/news" translate="STATIC_WEBSITE.ALL_THE_NEWS"></a>
+                    </div>
+                    <div class="card-well card-news-well statistics-wrapper">
+                        <p class="lead"><span ng-class="::icons.statistics"></span> {{'STATISTICS' | translate}}</p>
+                        <div>
+                            <p translate="STATIC_WEBSITE.USERS" data-translate-values="statistics"></p>
+                            <p translate="STATIC_WEBSITE.WORKSPACES" data-translate-values="statistics"></p>
+                            <p translate="STATIC_WEBSITE.DATA" data-translate-values="statistics"></p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <div items data-title="'MARKET.NEW_RESOURCES'" data-params="params"></div>
+            <div class="home-items" items data-inline="true" data-search="searchRecents" data-title="'MARKET.NEW_RESOURCES'" data-params="paramsRecents" data-hide-see-more-button="true"></div>
         </div>
 
         <footer class="main-footer small" ng-controller="FooterCtrl" ng-cloak>

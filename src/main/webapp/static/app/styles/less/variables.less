@@ -17,6 +17,9 @@
 @default-border-color: @navbar-default-border;
 @default-border: 1px solid @default-border-color;
 
+@light-border-color: lighten(@navbar-default-border, 4%);
+@light-border: 1px solid @light-border-color;
+
 @alternate-bg: darken(@default-bg, 6%);
 @alternate-border-color: darken(@alternate-bg, 6,5%);
 @alternate-border: 1px solid @alternate-border-color;
@@ -43,7 +46,6 @@
 @text-color: @gray-dark;
 @inverse-text-color: @white;
 
-
 @market-primary: @ortolang-blue;
 @tool-primary: @green;
 @integrated-projects-primary: @green;
@@ -58,6 +60,13 @@
 
 @profile-primary: @green;
 @information-primary: @green;
+
+// ACL
+@acl-for-all: @brand-success;
+@acl-authentified: @ortolang-blue;
+@acl-esr: darken(@yellow, 7%);
+//@acl-esr: darken(@brand-warning, 10%);
+@acl-restricted: @red;
 
 //== Buttons
 //
@@ -94,10 +103,11 @@
 
 //== Side Nav
 //
-@side-nav-width: 210px;
+@side-nav-width: 200px;
 @side-nav-item-first-height: 55px;
-@side-nav-item-height: @side-nav-item-first-height;
-@side-nav-item-icon-width: @side-nav-item-height + 14px;
+@side-nav-item-height: 50px;
+@side-nav-item-icon-width: 66px;
+@side-nav-item-icon-padding-left: 4px;
 @side-nav-item-color: @gray;
 @side-nav-item-icon-color: #b8b8b8;
 @side-nav-item-hover-bg: @workspace-primary;
@@ -114,6 +124,13 @@
 //== Containers
 @page-wrapper-padding: 40px;
 @container-main-padding: 48px;
+@container-main-mobile-padding: 24px;
+@container-xl-desktop: 1400px;
+@market-item-max-width: 1250px;
+
+//== Card well
+@card-well-padding: 17px 19px 19px;
+@card-well-news-padding-top: 19px;
 
 //== Progress wizard
 // Color

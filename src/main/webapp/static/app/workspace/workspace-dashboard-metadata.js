@@ -22,8 +22,8 @@ angular.module('ortolangMarketApp')
         'WorkspaceMetadataService',
         'MetadataFormatResource',
         'OrtolangIitemJsonMigration',
-        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService, MetadataFormatResource, OrtolangIitemJsonMigration) {
-            
+        'User',
+        function ($rootScope, $scope, $location, $filter, $modal, ortolangType, ObjectResource, Workspace, WorkspaceElementResource, Content, WorkspaceMetadataService, MetadataFormatResource, OrtolangIitemJsonMigration, User) {
             function startSubmit() {
                 $scope.submitButtonText = '<span class="fa fa-refresh fa-spin"></span> Sauvegarde...';
                 $scope.applying = true;
@@ -33,18 +33,6 @@ angular.module('ortolangMarketApp')
                 $scope.submitButtonText = 'Appliquer';
                 $scope.applying = false;
             }
-
-            $scope.applyChange = function () {
-                startSubmit();
-                $scope.submitForm();
-            };
-
-            $scope.submitForm = function () {
-                WorkspaceMetadataService.save().then(function () {
-                    $scope.applying = false;
-                    $location.search('section', 'preview');
-                });
-            };
 
             function prepareModalScopeForErrorMessages() {
                 var modalScope = $rootScope.$new(true);
@@ -72,9 +60,25 @@ angular.module('ortolangMarketApp')
             var deregisterFileImageSelectModal = $rootScope.$on('browserSelectedElements-fileImageSelectModal', function ($event, elements) {
 
                 $scope.metadata.image = elements[0].path;
-                $scope.image = Content.getPreviewUrlWithKey(elements[0].key, 180);
+                $scope.image = Content.getThumbUrlWithKey(elements[0].key, 180, true);
                 $scope.fileImageSelectModal.hide();
             });
+
+            $scope.applyChange = function () {
+                startSubmit();
+                $scope.submitForm();
+            };
+
+            $scope.submitForm = function () {
+                WorkspaceMetadataService.save().then(function () {
+                    $scope.applying = false;
+                    $location.search('section', 'preview');
+                }, function () {
+                    abortSubmit();
+                    WorkspaceMetadataService.metadataErrors.metadataFormat = true;
+                    showErrorMessages();
+                });
+            };
 
             $scope.$on('$destroy', function () {
                 deregisterFileImageSelectModal();
@@ -95,6 +99,7 @@ angular.module('ortolangMarketApp')
                 $scope.submitButtonText = 'Appliquer';
                 // $scope.errors = {title: false, type: false, description: false};
                 $scope.activeTab = 0;
+                $scope.WorkspaceMetadataService = WorkspaceMetadataService;
 
                 // Gets last schema
                 MetadataFormatResource.get({name: 'ortolang-item-json'}, function (metadataFormats) {
@@ -111,7 +116,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     //TODO Gets schema url from MetadataFormat
                     $scope.metadata = {
-                        schema: 'http://www.ortolang.fr/schema/014#',
+                        schema: 'http://www.ortolang.fr/schema/015#',
                         title: [
                             {
                                 lang: 'fr',
@@ -121,6 +126,7 @@ angular.module('ortolangMarketApp')
                     };
                 }
                 WorkspaceMetadataService.metadata = $scope.metadata;
+                WorkspaceMetadataService.canEdit = Workspace.active.workspace.readOnly && !User.isRoot();
 
                 // Sets datasize
                 ObjectResource.size({key: Workspace.active.workspace.head}, function (data) {
@@ -144,7 +150,7 @@ angular.module('ortolangMarketApp')
                 // Sets image
                 if ($scope.metadata.image) {
                     ObjectResource.element({key: Workspace.active.workspace.head, path: $scope.metadata.image}).$promise.then(function (oobject) {
-                        $scope.image = Content.getPreviewUrlWithKey(oobject.key, 180);
+                        $scope.image = Content.getThumbUrlWithKey(oobject.key, 180, true);
                     });
                 } else {
                     $scope.imgtitle = 'Cliquez pour ajouter votre logo';

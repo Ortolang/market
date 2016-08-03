@@ -11,13 +11,20 @@ angular.module('ortolangMarketApp')
     .constant('MARKET_FR', {
         MARKET: {
             ALL_TYPE: 'Tous',
+            RESOURCES: '({{value && value !=="" ? value : ""}} ressource{{value > 1 ? "s" : ""}})',
             NEW_RESOURCES: 'Publications récentes',
+            NEW_CORPUS: 'Nouveaux corpus',
+            FREE_CORPUS: 'Corpus libre de droits',
+            WRITTEN_CORPUS: 'Corpus écrits',
+            SPEECH_CORPUS: 'Corpus oraux',
+            MULTIMODAL_CORPUS: 'Corpus multimodaux',
+            SEE_MORE: 'Plus',
             WEBSITES: 'Sites web',
             WEBSITE: 'Site web',
             SEARCH_PAGE: 'Rechercher dans le contenu',
             REDACTOR_CHOICES: 'Choix de l\'équipe',
             CONDITIONS_OF_USE: 'Conditions d\'utilisation',
-            BROWSE: 'Voir le contenu',
+            BROWSE: 'Parcourir',
             GO_BACK_INFO: 'Retourner à la fiche',
             ADD_TO_FAVOURITES: 'Ajouter à mes favoris',
             USE_IN_MY_PROJECT: 'Utiliser dans mon projet',
@@ -27,6 +34,7 @@ angular.module('ortolangMarketApp')
             PUBLICATIONS: 'Liste des publications',
             PRIMARY_PUBLICATIONS: 'Publications de référence',
             SECONDARY_PUBLICATIONS: 'Autres Publications',
+            EXTERNAL_RELATIONS: 'Relations avec d\'autres ressources',
             ALL_VERSIONS: 'Toutes les versions',
             PRIMARY_LANGUAGE: 'Langue principale',
             DISCOURSE_TYPE: 'Genre du discours',
@@ -72,6 +80,8 @@ angular.module('ortolangMarketApp')
             SEE_WEBSITE: 'Accéder au site internet',
             ITEM_NOT_FOUND: 'Aucune ressource n\'a été trouvée à cette adresse',
             METADATA_FORMAT_NOT_FOUND: 'Format des métadonnées illisible.',
+            NO_RESULT: 'Aucun résultat ne correspond à votre recherche',
+            ESR_ACCESSIBLE: 'Accessible aux membres de l\'ESR',
             FACET: {
                 CORPORA_TYPE: 'Type de corpus',
                 ALL_CORPORA: 'Tous les corpus',
@@ -112,10 +122,13 @@ angular.module('ortolangMarketApp')
                 LEXICON_LANGUAGE_TYPE: 'Type de langue',
                 ALL_LEXICON_LANGUAGE_TYPE: 'Tout type de langue',
                 PRODUCERS: 'Laboratoire producteur',
-                ALL_PRODUCERS: 'Tout laboratoire producteur'
+                ALL_PRODUCERS: 'Tout laboratoire producteur',
+                RANKS: 'Disponibilités',
+                ALL_RANKS: 'Toutes les disponibilités'
             },
             SORT: {
                 TITLE: 'Titre',
+                RANK: 'Disponibilité',
                 PUBLICATION_DATE: 'Date de publication'
             },
             SEARCH: {
@@ -137,6 +150,7 @@ angular.module('ortolangMarketApp')
             ACTIVATED_FILTERS: 'Filtres actifs',
             RESET_FILTERS: 'Tout supprimer',
             NO_ITEM: 'Aucune ressource disponible',
+            NO_CONTRIBUTOR_ITEMS: 'Aucune ressources',
             NO_PRODUCER: 'Aucune institution productrice trouvées',
             PUBLISHED_ON: 'Publié le',
             PID: 'Identifiant pérenne',

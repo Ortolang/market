@@ -1,10 +1,11 @@
 <div class="table-wrapper table-workspace-elements-wrapper">
-    <table ng-init="resizeBrowser()" ng-if="parent.elements" ng-class="{'no-children': parent.elements.length === 0 && browserService.canEdit && isHead}" class="table table-hover table-responsive table-workspace-elements">
+    <table ng-if="parent.elements" class="table table-hover table-responsive table-workspace-elements">
         <colgroup>
             <col/>
-            <col ng-class="{type: isScreenMd}"/>
-            <col ng-hide="isScreenMd"/>
-            <col ng-hide="isScreenMd" class="size" />
+            <col class="type"/>
+            <col class="date hidden-xs hidden-sm hidden-md"/>
+            <col class="size hidden-xs hidden-sm"/>
+            <col ng-if="!isFileSelectBrowserService" class="acl" />
         </colgroup>
         <thead class="small">
         <tr>
@@ -16,14 +17,15 @@
                 <span translate="TYPE"></span>
                 <span order-indicator data-name="mimeType" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
             </th>
-            <th ng-hide="isScreenMd" ng-click="order('modification', 'toggle')">
+            <th class="hidden-xs hidden-sm hidden-md" ng-click="order('modification', 'toggle')">
                 <span translate="BROWSER.LAST_MODIFICATION"></span>
                 <span order-indicator data-name="modification" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
             </th>
-            <th ng-hide="isScreenMd" ng-click="order('size', 'toggle')">
+            <th class="hidden-xs hidden-sm" ng-click="order('size', 'toggle')">
                 <span translate="SIZE"></span>
                 <span order-indicator data-name="size" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
             </th>
+            <th ng-if="!isFileSelectBrowserService"></th>
         </tr>
         </thead>
         <tbody>
@@ -37,28 +39,26 @@
             class="workspace-element">
             <td><span class="type" ng-class="::child.mimeType | mimeTypeIconCss"></span>{{child.name}}</td>
             <td>{{::child.mimeType | contentType}}</td>
-            <td ng-hide="isScreenMd">{{::child.modification | date : dateFormat}}</td>
-            <td ng-hide="isScreenMd">{{::child.size | bytes}}</td>
-        </tr>
-        <tr ng-if="displayedItemLimit && displayedItemLimit < parent.elements.length" class="see-all-wrapper">
-            <td colspan="{{isScreenMd ? 2 : 4}}">
-                <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
-                    <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
-                    <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
-                </button>
-            </td>
-        </tr>
-        <tr ng-if="filteredOrderedChildrenArray.length === 0" class="no-children-wrapper">
-            <td colspan="{{isScreenMd ? 2 : 4}}" class="text-center">
-                <div ng-if="parent.elements.length === 0 && browserService.canEdit && isHead" >
-                    <span class="icon" ng-class="::icons.cloudUpload"></span>
-                    <br/>
-                    <span translate="BROWSER.NO_CHILDREN" class="file-not-hover"></span>
-                </div>
-                <span ng-if="parent.elements.length === 0 && (!browserService.canEdit || !isHead)" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
-                <span ng-if="parent.elements.length > 0"  translate="BROWSER.NO_FILTERED_CHILDREN"></span>
-            </td>
+            <td class="hidden-xs hidden-sm hidden-md">{{::child.modification | date : dateFormat}}</td>
+            <td class="hidden-xs hidden-sm">{{::child.size | bytes}}</td>
+            <td ng-if="!isFileSelectBrowserService" class="acl" ng-click="showAclLegend($event)"><span class="label" ng-class="parent.publicationPolicies[child.key]"><span ng-class="::icons.acl[parent.publicationPolicies[child.key]]"></span></span></td>
         </tr>
         </tbody>
     </table>
+    <div ng-if="filteredOrderedChildrenArray.length === 0" class="no-children-wrapper">
+        <div ng-if="parent.elements.length === 0 && browserService.canEdit && isHead" >
+            <span class="icon" ng-class="::icons.cloudUpload"></span>
+            <span translate="BROWSER.NO_CHILDREN" class="hidden-xs file-not-hover"></span>
+            <span translate="BROWSER.NO_CHILDREN_MOBILE" class="visible-xs file-not-hover"></span>
+            <button translate="BROWSER.NO_CHILDREN_MOBILE_BUTTON" class="btn btn-default visible-xs file-not-hover" ng-click="doAction('addFileMobile')"></button>
+        </div>
+        <span ng-if="parent.elements.length === 0 && (!browserService.canEdit || !isHead)" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
+        <span ng-if="parent.elements.length > 0" class="no-filtered-children"  translate="BROWSER.NO_FILTERED_CHILDREN"></span>
+    </div>
+    <div ng-if="displayedItemLimit && displayedItemLimit < parent.elements.length && (!filteredOrderedChildrenArray || displayedItemLimit < filteredOrderedChildrenArray.length)" class="see-all-wrapper">
+        <button class="btn btn-default btn-primary btn-block" ng-click="displayAll()">
+            <span ng-show="loadingAll" class="fa fa-refresh fa-spin"></span>
+            <span ng-hide="loadingAll" translate="BROWSER.SEE_ALL"></span>
+        </button>
+    </div>
 </div>

@@ -3,14 +3,14 @@
     <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>
     <div class="popover-content">
         <p ng-show="Cart.size() === 0">Pas de selection</p>
-        <div ng-repeat="(alias, workspace) in Cart.getContent()" class="selection-workspace">
-            <div ng-repeat="(versionName, version) in workspace">
-                <span class="workspace-alias">{{alias}} <small class="version-name">{{versionName}}</small></span>
+        <div ng-repeat="(alias, workspace) in Cart.getContent() track by alias" class="selection-workspace">
+            <div ng-repeat="(versionName, version) in workspace track by versionName">
+                <span class="workspace-alias">{{::alias}} <small class="version-name">{{::versionName}}</small></span>
                 <ul class="list-unstyled">
-                    <li ng-repeat="item in version" class="selection-item-wrapper">
-                        <span class="selection-item">
+                    <li ng-repeat="item in version track by item.path" class="selection-item-wrapper">
+                        <span class="selection-item" data-title="{{::item.path}}" bs-tooltip>
                             <span class="type" ng-class="::item.mimeType | mimeTypeIconCss"></span>
-                            <span class="selection-item-name">{{item.name}}</span>
+                            <span class="selection-item-name">{{::item.name}}</span>
                         </span>
                         <span class="pull-right remove-selection-item"><button class="btn btn-xs" ng-click="Cart.remove(alias, versionName, $index)"><span ng-class="::icons.remove"></span></button></span>
                     </li>
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="popover-content popover-footer pull-right">
-        <button class="btn btn-sm btn-default" ng-click="Cart.export()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</button>
-        <button class="btn btn-sm btn-default" ng-click="Cart.clear()"><span ng-class="::icons.trash"></span> Clear</button>
+        <button class="btn btn-sm btn-primary" ng-click="Cart.export()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</button>
+        <button class="btn btn-sm btn-default" ng-click="Cart.clear()"><span ng-class="::icons.trash"></span> {{'CLEAR' | translate}}</button>
     </div>
 </div>

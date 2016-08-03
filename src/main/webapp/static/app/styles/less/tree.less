@@ -12,20 +12,20 @@
     margin: @padding-large-vertical 0;
     padding: @padding-base-vertical @padding-base-horizontal @padding-base-vertical @padding-large-horizontal;
     cursor: default;
-    &.collection {
+    &.collection:not(.root-collection) {
       cursor: pointer;
     }
     &.forall {
-      border-left-color: @btn-success-bg;
+      border-left-color: @acl-for-all;
     }
     &.authentified {
-      border-left-color: @ortolang-blue;
+      border-left-color: @acl-authentified;
     }
     &.esr {
-      border-left-color: @dark-yellow;
+      border-left-color: @acl-esr;
     }
     &.restricted {
-      border-left-color: @red;
+      border-left-color: @acl-restricted;
     }
     .node-body {
       flex: 1 0 0%;
@@ -54,7 +54,9 @@
   .legend {
     margin-bottom: 1.5 * @line-height-computed;
     .tag {
-      padding: .3em .8em .4em;
+      display: inline-block;
+      margin-bottom: @padding-base-vertical;
+      padding: 7px @padding-small-horizontal 8px;
       margin-right: @padding-xs-horizontal;
       &.label-success {
         background-color: @btn-success-bg;
@@ -71,6 +73,15 @@
     }
   }
   .options {
+    margin-bottom: @line-height-computed;
+  }
+}
+
+.acl-legend-modal {
+  ul li {
+    &:first-child {
+      margin-top: @line-height-computed;
+    }
     margin-bottom: @line-height-computed;
   }
 }

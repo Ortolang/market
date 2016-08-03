@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', ['Content', 'Helper',  function (Content, Helper) {
+    .directive('item', ['Content', 'Helper', 'icons',  function (Content, Helper, icons) {
         return {
             restrict: 'EA',
             scope: {
@@ -19,31 +19,30 @@ angular.module('ortolangMarketApp')
             },
             link: {
                 pre : function (scope) {
-
-                        var type;
-                        if (scope.entry['meta_ortolang-item-json'].type === 'Corpus') {
-                            type = 'corpora';
-                        } else if (scope.entry['meta_ortolang-item-json'].type === 'Lexique') {
-                            type = 'lexicons';
-                        } else if (scope.entry['meta_ortolang-item-json'].type === 'Outil') {
-                            type = 'tools';
-                        } else if (scope.entry['meta_ortolang-item-json'].type === 'Application') {
-                            type = 'applications';
-                        } else if (scope.entry['meta_ortolang-item-json'].type === 'Terminologie') {
-                            type = 'terminologies';
-                        }
-                        scope.itemUrl = '/market/' + type + '/' + scope.entry['meta_ortolang-workspace-json'].wsalias;
-
-                    if (scope.entry['meta_ortolang-item-json'].title) {
-                        scope.title = Helper.getMultilingualValue(scope.entry['meta_ortolang-item-json'].title);
+                    scope.icons = icons;
+                    var type;
+                    if (scope.entry.type === 'Corpus') {
+                        type = 'corpora';
+                    } else if (scope.entry.type === 'Lexique') {
+                        type = 'lexicons';
+                    } else if (scope.entry.type === 'Outil') {
+                        type = 'tools';
+                    } else if (scope.entry.type === 'Application') {
+                        type = 'applications';
+                    } else if (scope.entry.type === 'Terminologie') {
+                        type = 'terminologies';
                     }
-                    if (scope.entry['meta_ortolang-item-json'].description) {
-                        scope.description = Helper.getMultilingualValue(scope.entry['meta_ortolang-item-json'].description);
+                    scope.itemUrl = '/market/' + type + '/' + scope.entry.wsalias;
+
+                    if (scope.entry.title) {
+                        scope.title = Helper.getMultilingualValue(scope.entry.title);
+                    }
+                    if (scope.entry.description) {
+                        scope.description = Helper.getMultilingualValue(scope.entry.description);
                     }
 
-                    if (scope.entry['meta_ortolang-item-json'].image) {
-                        // 160 - 2 * 14 (padding) = 132
-                        scope.image = Content.getPreviewUrlWithPath(scope.entry['meta_ortolang-item-json'].image, scope.entry['meta_ortolang-workspace-json'].wsalias, scope.entry['meta_ortolang-workspace-json'].snapshotName, 132);
+                    if (scope.entry.image) {
+                        scope.image = Content.getThumbUrlWithPath(scope.entry.image, scope.entry.wsalias, scope.entry.snapshotName, 160, true);
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';
@@ -53,8 +52,10 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
-                    scope.publicationDate = scope.entry['meta_ortolang-item-json'].publicationDate;
-                    scope.producers = scope.entry['meta_ortolang-item-json'].producers;
+                    scope.rank = scope.entry.rank;
+                    scope.esrAccessibility = scope.entry.esrAccessibility;
+                    scope.publicationDate = scope.entry.publicationDate;
+                    // scope.producers = scope.entry.producers;
                 }
             }
         };

@@ -39,7 +39,7 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.nodeToggle = function (element) {
-            if (element.type === ortolangType.collection) {
+            if (element.path !== '/' && element.type === ortolangType.collection) {
                 $scope.models.tree[element.key].expanded = !$scope.models.tree[element.key].expanded;
                 $scope.models.expanded[element.key] = !$scope.models.expanded[element.key];
                 var children = $scope.models.tree[element.key].elements;
@@ -79,6 +79,9 @@ angular.module('ortolangMarketApp')
 
         $scope.removeAcl = function (element, $event) {
             $event.stopPropagation();
+            if (Workspace.active.workspace.readOnly) {
+                return;
+            }
             WorkspaceElementResource.delete({wskey: Workspace.active.workspace.key, path: element.path, metadataname: 'ortolang-acl-json'}, function () {
                 refreshElement(element);
             });
@@ -94,6 +97,9 @@ angular.module('ortolangMarketApp')
 
         $scope.setAcl = function (element, template, $event) {
             $event.stopPropagation();
+            if (Workspace.active.workspace.readOnly) {
+                return;
+            }
             if (element.type === ortolangType.collection) {
                 var permissionsModal,
                     modalScope = Helper.createModalScope(true);

@@ -11,7 +11,14 @@ angular.module('ortolangMarketApp')
     .constant('MARKET_EN', {
         MARKET: {
             ALL_TYPE: 'All',
+            RESOURCES: '({{value && value !=="" ? value : ""}} resource{{value > 1 ? "s" : ""}})',
             NEW_RESOURCES: 'Recent publications',
+            NEW_CORPUS: 'New',
+            FREE_CORPUS: 'Free to use',
+            WRITTEN_CORPUS: 'Written corpus',
+            SPEECH_CORPUS: 'Speeches corpus',
+            MULTIMODAL_CORPUS: 'Multimodals corpus',
+            SEE_MORE: 'See more',
             WEBSITES: 'Websites',
             WEBSITE: 'Website',
             SEARCH_PAGE: 'Search in data',
@@ -27,6 +34,7 @@ angular.module('ortolangMarketApp')
             PUBLICATIONS: 'Publications',
             PRIMARY_PUBLICATIONS: 'Reference publications',
             SECONDARY_PUBLICATIONS: 'Publications based on this item',
+            EXTERNAL_RELATIONS: 'Relations with others resources',
             ALL_VERSIONS: 'All versions',
             PRIMARY_LANGUAGE: 'Primary language',
             DISCOURSE_TYPE: 'Discourse type',
@@ -71,6 +79,8 @@ angular.module('ortolangMarketApp')
             SEE_WEBSITE: 'Go to the website',
             ITEM_NOT_FOUND: 'Any resource has been found at this page',
             METADATA_FORMAT_NOT_FOUND: 'Metadata format unreadable.',
+            NO_RESULT: 'No result found',
+            ESR_ACCESSIBLE: 'Accessible to ESR members',
             FACET: {
                 CORPORA_TYPE: 'Type of corpora',
                 ALL_CORPORA: 'All corpus',
@@ -111,10 +121,13 @@ angular.module('ortolangMarketApp')
                 LEXICON_LANGUAGE_TYPE: 'Language type',
                 ALL_LEXICON_LANGUAGE_TYPE: 'All language types',
                 PRODUCERS: 'Producer',
-                ALL_PRODUCERS: 'All producers'
+                ALL_PRODUCERS: 'All producers',
+                RANKS: 'Availabilities',
+                ALL_RANKS: 'All Availabilities'
             },
             SORT: {
                 TITLE: 'Title',
+                RANK: 'Availability',
                 PUBLICATION_DATE: 'Publication date'
             },
             SEARCH: {
@@ -136,6 +149,7 @@ angular.module('ortolangMarketApp')
             ACTIVATED_FILTERS: 'Activated filters',
             RESET_FILTERS: 'Clear filters',
             NO_ITEM: 'No resource available',
+            NO_CONTRIBUTOR_ITEMS: 'No resource',
             NO_PRODUCER: 'No producer available',
             PUBLISHED_ON: 'Published on',
             ITEM_TYPE: {

@@ -11,34 +11,35 @@ angular.module('ortolangMarketApp')
     .controller('FriendsCtrl', ['$scope', '$modal', 'User', 'GroupResource',
         function ($scope, $modal, User, GroupResource) {
 
-            User.sessionInitialized().then(function () {
-                GroupResource.get({key: User.friends}, function (data) {
-                    $scope.friends = data.members;
+            $scope.User = User;
 
-                    $scope.addFriend = function () {
-                        var addMemberModal,
-                            modalScope = $scope.$new(true);
-                        modalScope.$on('modal.hide', function () {
-                            modalScope.$destroy();
+            User.sessionInitialized().then(function () {
+                User.fetchFriendList();
+
+                $scope.addFriend = function () {
+                    var addMemberModal,
+                        modalScope = $scope.$new(true);
+                    modalScope.$on('modal.hide', function () {
+                        modalScope.$destroy();
+                    });
+                    modalScope.members = $scope.friends;
+                    modalScope.addFriend = true;
+                    modalScope.add = function (profile) {
+                        GroupResource.addMember({key: User.friends, member: profile.key}, {}, function (data) {
+                            User.friendList = data.members;
                         });
-                        modalScope.members = $scope.friends;
-                        modalScope.addFriend = true;
-                        modalScope.add = function (profile) {
-                            GroupResource.addMember({key: User.friends, member: profile.key}, {}, function (data) {
-                                $scope.friends = data.members;
-                            });
-                            addMemberModal.hide();
-                        };
-                        addMemberModal = $modal({
-                            scope: modalScope,
-                            templateUrl: 'workspace/templates/add-member-modal.html',
-                            show: true
-                        });
+                        addMemberModal.hide();
                     };
-                });
+                    addMemberModal = $modal({
+                        scope: modalScope,
+                        templateUrl: 'workspace/templates/add-member-modal.html',
+                        show: true
+                    });
+                };
+
                 $scope.removeFriend = function (member) {
                     GroupResource.removeMember({key: User.friends, member: member}, function (data) {
-                        $scope.friends = data.members;
+                        User.friendList = data.members;
                     });
                 };
             });

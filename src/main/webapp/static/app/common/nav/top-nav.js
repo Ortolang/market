@@ -8,20 +8,14 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('TopNavCtrl', ['$rootScope', '$scope', '$translate', 'AuthService', 'User', 'sideNavElements', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart',
-        function ($rootScope, $scope, $translate, AuthService, User, sideNavElements, Settings, Runtime, amMoment, StaticWebsite, Cart) {
+    .controller('TopNavCtrl', ['$rootScope', '$scope', '$location', '$translate', '$swipe', 'AuthService', 'User', 'Settings', 'Runtime', 'amMoment', 'StaticWebsite', 'Cart', 'Helper',
+        function ($rootScope, $scope, $location, $translate, $swipe, AuthService, User, Settings, Runtime, amMoment, StaticWebsite, Cart, Helper) {
 
-            $scope.sideNavElements = sideNavElements;
-            $scope.navbarCollapsed = false;
             $scope.User = User;
             $scope.Settings = Settings;
             $scope.Runtime = Runtime;
             $scope.Cart = Cart;
             $scope.StaticWebsite = StaticWebsite;
-
-            $scope.toggleNavbar = function () {
-                $scope.navbarCollapsed = !$scope.navbarCollapsed;
-            };
 
             $scope.login = function () {
                 AuthService.login();
@@ -39,6 +33,10 @@ angular.module('ortolangMarketApp')
                 AuthService.logout();
             };
 
+            $scope.showMobileNav = function () {
+                Helper.showAsideMobileNav();
+            };
+
             // *********************** //
             //        Language         //
             // *********************** //
@@ -48,6 +46,10 @@ angular.module('ortolangMarketApp')
                     currentLanguage = $translate.use();
                 if (AuthService.isAuthenticated()) {
                     favoriteLanguage = User.getProfileData('language');
+                }
+                if (!favoriteLanguage && $location.search().lang && ($location.search().lang === 'fr' || $location.search().lang === 'en')) {
+                    favoriteLanguage = {value: $location.search().lang};
+                    $location.search('lang', undefined);
                 }
                 if (Settings.language && Settings.language !== 'fr' && Settings.language !== 'en') {
                     Settings.language = undefined;
@@ -63,7 +65,7 @@ angular.module('ortolangMarketApp')
                     Settings.language = $translate.use();
                 }
                 amMoment.changeLocale(Settings.language);
-                $rootScope.$emit('languageInitialized', Settings.language);
+                $rootScope.$emit('languageInitialized', favoriteLanguage || Settings.language);
             }
 
             if (AuthService.isAuthenticated()) {
@@ -77,6 +79,28 @@ angular.module('ortolangMarketApp')
             $scope.$on('askLanguageChange', function (event, langKey) {
                 $scope.changeLanguage(langKey);
             });
+
+            var touchStart;
+
+            if (Helper.isMobile()) {
+                $swipe.bind(angular.element('body'), {
+                    start:  function (coordinates) {
+                        touchStart = coordinates;
+                    },
+                    move: function (coordinates) {
+                        if (touchStart && touchStart.x < 20 && coordinates.x > touchStart.x + 100 && Math.abs(coordinates.y - touchStart.y) < 50) {
+                            Helper.showAsideMobileNav();
+                            touchStart = undefined;
+                        } else if (touchStart && coordinates.x + 100 < touchStart.x && Math.abs(coordinates.y - touchStart.y) < 50) {
+                            Helper.hideAsideMobileNav();
+                            touchStart = undefined;
+                        }
+                    },
+                    end: function () {
+                        touchStart = undefined;
+                    }
+                });
+            }
 
             $scope.changeLanguage = function (langKey) {
                 $translate.use(langKey).then(function (langKey) {
