@@ -93,6 +93,10 @@ angular.module('ortolangMarketApp')
                                 $scope.select(current.params.section);
                             }
                             break;
+                        case '/workspaces':
+                        case '/workspaces/:alias':
+                            $scope.select('workspaces');
+                            break;
                     }
                 } else {
                     var regExp, i, currentPath;
