@@ -8,8 +8,8 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('WorkspaceMetadataService', ['$rootScope', '$q', '$filter', 'WorkspaceElementResource', 'ReferentialEntityResource', 'Workspace', 'ortolangType', 'Helper', 
-        function ($rootScope, $q, $filter, WorkspaceElementResource, ReferentialEntityResource, Workspace, ortolangType, Helper) {
+    .service('WorkspaceMetadataService', ['$rootScope', '$q', '$filter', 'WorkspaceElementResource', 'ReferentialResource', 'Workspace', 'ortolangType', 'Helper',
+        function ($rootScope, $q, $filter, WorkspaceElementResource, ReferentialResource, Workspace, ortolangType, Helper) {
 
     var WorkspaceMetadataService = this;
 
@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
             var deferred = $q.defer();
             var indexSponsor = organizationsEntity.indexOf(organization);
 
-            ReferentialEntityResource.get({name: newOrganization.id}, function(reason) {
+            ReferentialResource.get({name: newOrganization.id}, function(reason) {
                 //TODO notify and ask to choose one of the result or create a new one
                 console.log('organization exists');
                 deferred.reject(reason);
@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
                 entity.schema = 'http://www.ortolang.fr/schema/organization/01#';
                 entity.type = 'organization';
                 var content = angular.toJson(entity);
-                ReferentialEntityResource.post({}, {name: entity.id, type: 'ORGANIZATION', content: content}, function () {
+                ReferentialResource.post({}, {name: entity.id, type: 'ORGANIZATION', content: content}, function () {
                 // createEntity(entity.id, entity).then(function () {
                     console.log('organization created');
                     organizations[indexSponsor] = Helper.createKeyFromReferentialName(newOrganization.id);
@@ -62,7 +62,7 @@ angular.module('ortolangMarketApp')
                 }, function (reason) {
                     console.log(reason);
                     deferred.reject(reason);
-                });    
+                });
             });
             return deferred.promise;
         }
@@ -167,7 +167,7 @@ angular.module('ortolangMarketApp')
             var deferred = $q.defer();
             var indexLanguage = this.metadata[languagesId+'Entity'].indexOf(language);
 
-            ReferentialEntityResource.get({name: newLanguage.id}, function(reason) {
+            ReferentialResource.get({name: newLanguage.id}, function(reason) {
                 //TODO notify and ask to choose one of the result or create a new one
                 console.log('language exists');
                 deferred.reject(reason);
@@ -175,7 +175,7 @@ angular.module('ortolangMarketApp')
                 var entity = angular.copy(newLanguage);
                 entity.type = 'Language';
                 var content = angular.toJson(entity);
-                ReferentialEntityResource.post({}, {name: entity.id, type: 'LANGUAGE', content: content}, function () {
+                ReferentialResource.post({}, {name: entity.id, type: 'LANGUAGE', content: content}, function () {
                 // createEntity(entity.id, entity).then(function () {
                     console.log('language created');
                     WorkspaceMetadataService.metadata[languagesId][indexLanguage] = Helper.createKeyFromReferentialName(newLanguage.id);
@@ -187,7 +187,7 @@ angular.module('ortolangMarketApp')
                 }, function (reason) {
                     console.log(reason);
                     deferred.reject(reason);
-                });    
+                });
             });
             return deferred.promise;
         };
@@ -215,7 +215,7 @@ angular.module('ortolangMarketApp')
         this.replaceLicense = function (licence, newLicence) {
             var deferred = $q.defer();
 
-            ReferentialEntityResource.get({name: newLicence.id}, function(reason) {
+            ReferentialResource.get({name: newLicence.id}, function(reason) {
                 //TODO notify and ask to choose one of the result or create a new one
                 console.log('licence exists');
                 deferred.reject(reason);
@@ -224,7 +224,7 @@ angular.module('ortolangMarketApp')
                 entity.type = 'Licence';
                 entity.schema = 'http://www.ortolang.fr/schema/license/01#';
                 var content = angular.toJson(entity);
-                ReferentialEntityResource.post({}, {name: entity.id, type: 'LICENSE', content: content}, function () {
+                ReferentialResource.post({}, {name: entity.id, type: 'LICENSE', content: content}, function () {
                     console.log('licence created');
                     WorkspaceMetadataService.metadata.license = Helper.createKeyFromReferentialName(newLicence.id);
                     WorkspaceMetadataService.setLicense(licence, newLicence);
@@ -234,7 +234,7 @@ angular.module('ortolangMarketApp')
                 }, function (reason) {
                     console.log(reason);
                     deferred.reject(reason);
-                });    
+                });
             });
             return deferred.promise;
         };

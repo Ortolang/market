@@ -9,8 +9,8 @@
  * With object for any language not reference by a referential.
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson15Ctrl', ['$scope', '$rootScope', '$location', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialEntityResource', 'ObjectResource',
-        function ($scope, $rootScope, $location, $translate, Settings, Content, Helper, ReferentialEntityResource, ObjectResource) {
+    .controller('OrtolangItemJson15Ctrl', ['$scope', '$rootScope', '$location', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialResource', 'ObjectResource',
+        function ($scope, $rootScope, $location, $translate, Settings, Content, Helper, ReferentialResource, ObjectResource) {
 
             function loadProducers() {
                 if ($scope.content.producers) {
@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
 
                     angular.forEach($scope.content.producers, function (producer) {
                         if (Helper.startsWith(producer, '$')) {
-                            ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(producer)}, function (entity) {
+                            ReferentialResource.get({name: Helper.extractNameFromReferentialId(producer)}, function (entity) {
                                 var contentOrganization = angular.fromJson(entity.content);
                                 $scope.producers.push(contentOrganization);
                             });
@@ -42,14 +42,14 @@ angular.module('ortolangMarketApp')
                         var loadedContributor = {};
                         if (Helper.startsWith(contributor.entity, '$')) {
                             // From Workspace preview with contributor inside the referential
-                            ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
+                            ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
                                 loadedContributor.entity = angular.fromJson(entity.content);
                             });
 
                             if (contributor.roles && contributor.roles.length > 0) {
                                 loadedContributor.roles = [];
                                 angular.forEach(contributor.roles, function (role) {
-                                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
+                                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
                                         var contentRole = angular.fromJson(entity.content);
                                         loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
 
@@ -61,7 +61,7 @@ angular.module('ortolangMarketApp')
                             }
 
                             if (contributor.organization) {
-                                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
+                                ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
                                     var contentOrganization = angular.fromJson(entity.content);
                                     loadedContributor.organization = contentOrganization;
                                 });
@@ -91,7 +91,7 @@ angular.module('ortolangMarketApp')
 
                             if (contributor.organization) {
                                 if (Helper.startsWith(contributor.organization, '$')) {
-                                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
+                                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
                                         var contentOrganization = angular.fromJson(entity.content);
                                         loadedContributor.organization = contentOrganization;
                                     });
@@ -105,7 +105,7 @@ angular.module('ortolangMarketApp')
                                 loadedContributor.roles = [];
                                 angular.forEach(contributor.roles, function (role) {
                                     if (Helper.startsWith(role, '$')) {
-                                        ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
+                                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
                                             var contentRole = angular.fromJson(entity.content);
                                             loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
 
@@ -132,7 +132,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.content.license) {
                     if (Helper.startsWith($scope.content.license, '$')) {
                         // From Workspace
-                        ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId($scope.content.license)}, function (entity) {
+                        ReferentialResource.get({name: Helper.extractNameFromReferentialId($scope.content.license)}, function (entity) {
                             $scope.license = angular.fromJson(entity.content);
                             if ($scope.license.description) {
                                 $scope.license.effectiveDescription = Helper.getMultilingualValue($scope.license.description, lang);
@@ -186,7 +186,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach($scope.content.sponsors, function (sponsor) {
                         if (Helper.startsWith(sponsor, '$')) {
                             // From Workspace
-                            ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(sponsor)}, function (entity) {
+                            ReferentialResource.get({name: Helper.extractNameFromReferentialId(sponsor)}, function (entity) {
                                 var content = angular.fromJson(entity.content);
                                 $scope.sponsors.push(content);
                             });
@@ -268,7 +268,7 @@ angular.module('ortolangMarketApp')
                                 value.label = Helper.getMultilingualValue(fieldValue['meta_ortolang-referential-json'].labels, lang);
                             } else if (Helper.startsWith(fieldValue, '$')) {
                                 // For workspace
-                                ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(fieldValue)}, function (entity) {
+                                ReferentialResource.get({name: Helper.extractNameFromReferentialId(fieldValue)}, function (entity) {
                                     var content = angular.fromJson(entity.content);
                                     // fieldValues.push(Helper.getMultilingualValue(content.labels, lang));
                                     value.label = Helper.getMultilingualValue(content.labels, lang);
@@ -290,7 +290,7 @@ angular.module('ortolangMarketApp')
 
                         if (Helper.startsWith($scope.content[fieldKey], '$')) {
                             // For workspace
-                            ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId($scope.content[fieldKey])}, function (entity) {
+                            ReferentialResource.get({name: Helper.extractNameFromReferentialId($scope.content[fieldKey])}, function (entity) {
                                 var content = angular.fromJson(entity.content);
                                 $scope.additionalInformations.push({
                                     key: fieldKey,

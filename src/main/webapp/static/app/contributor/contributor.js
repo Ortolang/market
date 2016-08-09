@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', 'ReferentialEntityResource', 'SearchResource', 'SearchProvider', 'Helper', function ($rootScope, $scope, $routeParams, $filter, ReferentialEntityResource, SearchResource, SearchProvider, Helper) {
+    .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', 'ReferentialResource', 'SearchResource', 'SearchProvider', 'Helper', function ($rootScope, $scope, $routeParams, $filter, ReferentialResource, SearchResource, SearchProvider, Helper) {
 
         function loadItem(id) {
             SearchResource.getEntity({id: id}, function (entity) {
@@ -25,12 +25,12 @@ angular.module('ortolangMarketApp')
                 $rootScope.ortolangPageTitle = $scope.contributor.fullname + ' | ';
             }, function () {
                 // If not found in json-store, then go to relational db
-                ReferentialEntityResource.get({name: id}, function (entity) {
+                ReferentialResource.get({name: id}, function (entity) {
                     var content = angular.fromJson(entity.content);
                     $scope.contributor = content;
 
                     if (content.organization) {
-                        ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(content.organization)}, function (entity) {
+                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(content.organization)}, function (entity) {
                             var contentOrganization = angular.fromJson(entity.content);
                             $scope.contributor.organizationEntity = contentOrganization;
                         });

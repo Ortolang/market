@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.ReferentialEntityResource
+ * @name ortolangMarketApp.ReferentialResource
  * @description
- * # ReferentialEntityResource
+ * # ReferentialResource
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ReferentialEntityResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/referentialentities/:name', {}, {
-        	 put: {
+    .factory('ReferentialResource', ['$resource', 'url', function ($resource, url) {
+        return $resource(url.api + '/referential/:name', {}, {
+            put: {
                 method: 'PUT'
             },
             post: {

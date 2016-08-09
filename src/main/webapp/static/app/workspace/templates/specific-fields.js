@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', '$translate', 'Settings', 'Helper', '$q', '$modal', 'ReferentialEntityResource', 'WorkspaceMetadataService', 'icons',
-        function ($rootScope, $scope, $filter, $translate, Settings, Helper, $q, $modal, ReferentialEntityResource, WorkspaceMetadataService, icons) {
+    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', '$translate', 'Settings', 'Helper', '$q', '$modal', 'ReferentialResource', 'WorkspaceMetadataService', 'icons',
+        function ($rootScope, $scope, $filter, $translate, Settings, Helper, $q, $modal, ReferentialResource, WorkspaceMetadataService, icons) {
 
             $scope.suggestLanguages = function (term) {
                 if(term.length<2) {
@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
                 }
                 var lang = Settings.language;
                 var deferred = $q.defer();
-                ReferentialEntityResource.get({type: 'LANGUAGE', lang:lang.toUpperCase(),term: term}, function(results) {
+                ReferentialResource.get({type: 'LANGUAGE', lang:lang.toUpperCase(),term: term}, function(results) {
                     var suggestedLanguages = [];
                     angular.forEach(results.entries, function(refentity) {
                         var content = angular.fromJson(refentity.content);
@@ -69,7 +69,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach($scope.metadata[name], function(lang) {
                         var language = {label: lang};
                         if (typeof lang  === 'string') {
-                            ReferentialEntityResource.get({name:Helper.extractNameFromReferentialId(lang)}, function (entity) {
+                            ReferentialResource.get({name:Helper.extractNameFromReferentialId(lang)}, function (entity) {
                                 var content = angular.fromJson(entity.content);
                                 language.id = Helper.createKeyFromReferentialId(entity.key);
                                 language.label = Helper.getMultilingualValue(content.labels);
@@ -93,7 +93,7 @@ angular.module('ortolangMarketApp')
 
                 $scope[arrayName] = [];
 
-                ReferentialEntityResource.get({type: compatibility.toUpperCase()}, function(entities) {
+                ReferentialResource.get({type: compatibility.toUpperCase()}, function(entities) {
                     angular.forEach(entities.entries, function(entry) {
                         var content = angular.fromJson(entry.content);
 
@@ -131,13 +131,13 @@ angular.module('ortolangMarketApp')
                     }
                 }
                 if (domain.contentType === 'Discipline') {
-                    var filteredDomains = $filter('filter')($scope.allDomains, {compatibilities: domain.contentId}, true);                    
+                    var filteredDomains = $filter('filter')($scope.allDomains, {compatibilities: domain.contentId}, true);
                     angular.forEach(filteredDomains, function (filteredDomain) {
                         removeDomain(filteredDomain);
                     });
                 }
                 if (domain.contentType === 'Domain') {
-                    var filteredSubDomains = $filter('filter')($scope.allSubDomains, {compatibilities: domain.contentId}, true);                    
+                    var filteredSubDomains = $filter('filter')($scope.allSubDomains, {compatibilities: domain.contentId}, true);
                     angular.forEach(filteredSubDomains, function (filteredSubDomain) {
                         removeDomain(filteredSubDomain);
                     });
@@ -151,13 +151,13 @@ angular.module('ortolangMarketApp')
                     $scope.checkboxDomain[domain.id] = true;
                 }
                 if (domain.contentType === 'Discipline') {
-                    var filteredDomains = $filter('filter')($scope.allDomains, {compatibilities: domain.contentId}, true);                    
+                    var filteredDomains = $filter('filter')($scope.allDomains, {compatibilities: domain.contentId}, true);
                     angular.forEach(filteredDomains, function (filteredDomain) {
                         checkDomain(filteredDomain);
                     });
                 }
                 if (domain.contentType === 'Domain') {
-                    var filteredSubDomains = $filter('filter')($scope.allSubDomains, {compatibilities: domain.contentId}, true);                    
+                    var filteredSubDomains = $filter('filter')($scope.allSubDomains, {compatibilities: domain.contentId}, true);
                     angular.forEach(filteredSubDomains, function (filteredSubDomain) {
                         checkDomain(filteredSubDomain);
                     });

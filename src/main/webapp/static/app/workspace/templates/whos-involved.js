@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WhosInvolvedCtrl', ['$rootScope', '$scope', '$modal', '$filter', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace', 'WorkspaceMetadataService', '$q',
-        function ($rootScope, $scope, $modal, $filter, Settings, ReferentialEntityResource, Helper, Workspace, WorkspaceMetadataService, $q) {
+    .controller('WhosInvolvedCtrl', ['$scope', '$modal', '$filter', 'ReferentialResource', 'Helper', 'WorkspaceMetadataService', '$q',
+        function ($scope, $modal, $filter, ReferentialResource, Helper, WorkspaceMetadataService, $q) {
 
             /**
              * Utils
@@ -62,14 +62,14 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.suggestPerson = function (term) {
-                if(term.length<2 || angular.isObject(term)) {
+                if (term.length < 2 || angular.isObject(term)) {
                     return [];
                 }
                 var deferred = $q.defer();
-                ReferentialEntityResource.get({type: 'PERSON', lang:'FR', term: term}, function(results) {
+                ReferentialResource.get({type: 'PERSON', lang: 'FR', term: term}, function (results) {
                     var suggestedPersons = [];
-                    angular.forEach(results.entries, function(refentity) {
-                        //TODO convert to JSON in ReferentialEntityResource
+                    angular.forEach(results.entries, function (refentity) {
+                        //TODO convert to JSON in ReferentialResource
                         suggestedPersons.push(angular.fromJson(refentity.content));
                     });
                     deferred.resolve(suggestedPersons);
@@ -92,7 +92,7 @@ angular.module('ortolangMarketApp')
                     $scope.person.midname = i.midname;
                 }
                 if (angular.isDefined(i.organization)) {
-                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(i.organization)}, function(entity) {
+                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(i.organization)}, function (entity) {
                         var content = angular.fromJson(entity.content);
                         $scope.person.organizationEntity = content;
                     });
@@ -112,7 +112,7 @@ angular.module('ortolangMarketApp')
                     console.log('Person already exists');
                     return;
                 }
-                
+
                 var contributor = {};
                 contributor.roles = [];
                 angular.forEach($scope.selectedRoles, function (role) {
@@ -137,15 +137,14 @@ angular.module('ortolangMarketApp')
                 if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
-                var modalScope = Helper.createModalScope(true),
-                    addContributorModal;
+                var modalScope = Helper.createModalScope(true);
                 modalScope.allRoles = $scope.allRoles;
                 modalScope.metadata = $scope.metadata;
                 if (person) {
                     modalScope.contributor = person;
                 }
 
-                addContributorModal = $modal({
+                $modal({
                     scope: modalScope,
                     templateUrl: 'workspace/templates/add-person-modal.html',
                     show: true
@@ -153,8 +152,8 @@ angular.module('ortolangMarketApp')
             };
 
             function loadContributor(contributor) {
-                if (typeof contributor.entity  === 'string') {
-                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function(entity) {
+                if (typeof contributor.entity === 'string') {
+                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
                         var content = angular.fromJson(entity.content);
                         contributor.entityContent = content;
                     });
@@ -165,7 +164,7 @@ angular.module('ortolangMarketApp')
                 if (contributor.roles && contributor.roles.length > 0) {
                     contributor.rolesEntity = [];
                     angular.forEach(contributor.roles, function (role) {
-                        ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(role)}, function(roleEntities) {
+                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (roleEntities) {
                             var content = angular.fromJson(roleEntities.content);
                             content.label = Helper.getMultilingualValue(content.labels);
                             contributor.rolesEntity.push(content);
@@ -174,16 +173,16 @@ angular.module('ortolangMarketApp')
                 }
 
                 if (contributor.organization) {
-                    ReferentialEntityResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function(orgEntities) {
+                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (orgEntities) {
                         var content = angular.fromJson(orgEntities.content);
                         contributor.organizationEntity = content;
                     });
                 }
             }
 
-            function loadContributors () {
+            function loadContributors() {
                 if (angular.isDefined($scope.metadata.contributors)) {
-                    angular.forEach($scope.metadata.contributors, function(contributor) {
+                    angular.forEach($scope.metadata.contributors, function (contributor) {
                         loadContributor(contributor);
                     });
                 }
@@ -210,17 +209,17 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.suggestOrganization = function (term, sponsor) {
-                if(term.length<2 || angular.isObject(term)) {
+                if (term.length < 2 || angular.isObject(term)) {
                     return [];
                 }
                 var deferred = $q.defer();
-                ReferentialEntityResource.get({type: 'ORGANIZATION', lang:'FR', term: term}, function(results) {
+                ReferentialResource.get({type: 'ORGANIZATION', lang: 'FR', term: term}, function (results) {
                     var suggestedOrganizations = [];
-                    angular.forEach(results.entries, function(refentity) {
+                    angular.forEach(results.entries, function (refentity) {
                         var content = angular.fromJson(refentity.content);
 
                         if (angular.isUndefined(sponsor)) {
-                            if(angular.isUndefined(content.compatibilities)) {
+                            if (angular.isUndefined(content.compatibilities)) {
                                 suggestedOrganizations.push(content);
                             }
                         } else {
@@ -247,14 +246,13 @@ angular.module('ortolangMarketApp')
                 if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
-                var modalScope = Helper.createModalScope(true),
-                    addOrganizationModal;
+                var modalScope = Helper.createModalScope(true);
                 modalScope.metadata = $scope.metadata;
                 modalScope.sponsors = $scope.sponsors;
                 if (organization) {
                     modalScope.organization = organization;
                 }
-                addOrganizationModal = $modal({
+                $modal({
                     scope: modalScope,
                     templateUrl: 'workspace/templates/add-organization-modal.html'
                 });
@@ -264,15 +262,14 @@ angular.module('ortolangMarketApp')
                 if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
-                var modalScope = Helper.createModalScope(true),
-                    addOrganizationModal;
+                var modalScope = Helper.createModalScope(true);
                 modalScope.isSponsor = true;
                 modalScope.metadata = $scope.metadata;
                 modalScope.sponsors = $scope.sponsors;
                 if (organization) {
                     modalScope.organization = organization;
                 }
-                addOrganizationModal = $modal({
+                $modal({
                     scope: modalScope,
                     templateUrl: 'workspace/templates/add-organization-modal.html'
                 });
@@ -327,17 +324,17 @@ angular.module('ortolangMarketApp')
              * Methods for loadings entities
              **/
 
-            function loadOrganization (organization) {
-                ReferentialEntityResource.get({name: organization.id}, function(orgEntities) {
+            function loadOrganization(organization) {
+                ReferentialResource.get({name: organization.id}, function (orgEntities) {
                     WorkspaceMetadataService.setOrganization(organization, angular.fromJson(orgEntities.content));
                 });
             }
 
-            function loadOrganizations () {
-                if (angular.isDefined($scope.metadata.producers) && $scope.metadata.producers.length>0) {
+            function loadOrganizations() {
+                if (angular.isDefined($scope.metadata.producers) && $scope.metadata.producers.length > 0) {
                     $scope.metadata.producersEntity = [];
-                    angular.forEach($scope.metadata.producers, function(producer) {
-                        if (typeof producer  === 'string') {
+                    angular.forEach($scope.metadata.producers, function (producer) {
+                        if (typeof producer === 'string') {
                             var producerEntity = {id: Helper.extractNameFromReferentialId(producer)};
                             $scope.metadata.producersEntity.push(producerEntity);
                             loadOrganization(producerEntity);
@@ -346,10 +343,10 @@ angular.module('ortolangMarketApp')
                         }
                     });
                 }
-                if (angular.isDefined($scope.metadata.sponsors) && $scope.metadata.sponsors.length>0) {
+                if (angular.isDefined($scope.metadata.sponsors) && $scope.metadata.sponsors.length > 0) {
                     $scope.metadata.sponsorsEntity = [];
-                    angular.forEach($scope.metadata.sponsors, function(sponsor) {
-                        if (typeof sponsor  === 'string') {
+                    angular.forEach($scope.metadata.sponsors, function (sponsor) {
+                        if (typeof sponsor === 'string') {
                             var sponsorEntity = {id: Helper.extractNameFromReferentialId(sponsor)};
                             $scope.metadata.sponsorsEntity.push(sponsorEntity);
                             loadOrganization(sponsorEntity);
@@ -360,10 +357,10 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function loadAllRoles () {
-                ReferentialEntityResource.get({type: 'ROLE'}, function(entities) {
+            function loadAllRoles() {
+                ReferentialResource.get({type: 'ROLE'}, function (entities) {
                     var allRoles = [];
-                    angular.forEach(entities.entries, function(entry) {
+                    angular.forEach(entities.entries, function (entry) {
                         var content = angular.fromJson(entry.content);
                         content.label = Helper.getMultilingualValue(content.labels);
 
@@ -380,7 +377,7 @@ angular.module('ortolangMarketApp')
                 $scope.WorkspaceMetadataService = WorkspaceMetadataService;
 
                 $scope.allRoles = [];
-                $scope.searchOrganization = '';                
+                $scope.searchOrganization = '';
                 $scope.searchSponsor = '';
                 $scope.searchContributor = '';
                 $scope.selectedRoles = [];
@@ -390,5 +387,6 @@ angular.module('ortolangMarketApp')
 
                 loadAllRoles();
             }
+
             init();
         }]);
