@@ -262,7 +262,7 @@ angular.module('ortolangMarketApp')
                     MIDNAME: 'Deuxième prénom',
                     LASTNAME: 'Nom',
                     ORGANIZATION: 'Organisme',
-                    ROLE: 'Role',
+                    ROLE: 'Rôle(s)',
                     MESSAGES: {
                         EXISTS: 'Cette personne est déjà dans la liste.',
                         ROLE: 'Veuillez spécifier le rôle de cette personne.'
