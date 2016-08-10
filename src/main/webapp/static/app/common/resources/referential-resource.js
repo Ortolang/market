@@ -10,6 +10,20 @@
 angular.module('ortolangMarketApp')
     .factory('ReferentialResource', ['$resource', 'url', function ($resource, url) {
         return $resource(url.api + '/referential/:name', {}, {
+            get: {
+                method: 'GET',
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    if (data && data.entries) {
+                        angular.forEach(data.entries, function (entry) {
+                            if (entry.content) {
+                                entry.content = angular.fromJson(entry.content);
+                            }
+                        });
+                    }
+                    return data;
+                }
+            },
             put: {
                 method: 'PUT'
             },

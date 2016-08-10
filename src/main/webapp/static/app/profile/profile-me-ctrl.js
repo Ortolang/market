@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
                 'family_name': {'type': 'STRING', 'alias': 'familyName', 'forceVisibilities': '333'},
                 'email': {'type': 'EMAIL', 'alias': 'email'},
                 'rescue_email': {'type': 'EMAIL', 'forceVisibilities': '300'},
-                'organisation': {'type': 'STRING'},
+                'organisation': {'type': 'REFERENTIAL'},
                 'job': {'type': 'STRING'},
                 'field_of_research': {'type': 'STRING'},
                 'address': {'type': 'ADDRESS'},

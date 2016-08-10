@@ -56,6 +56,10 @@
     padding-bottom: 5px;
   }
 
+  .organization-well {
+    overflow: visible !important;
+  }
+
   .profile-settings-form {
     .editable-input, .editable-select {
       width: 100%;
@@ -154,28 +158,26 @@
 .profile-container {
   section {
     > header {
-      margin-left: -@container-main-padding;
-      margin-right: -@container-main-padding;
       padding: (3 * @padding-large-vertical) @container-main-padding @line-height-computed;
       background-color: @alternate-light-bg;
       border-bottom: @default-border;
-      .profile-presentation {
-        color: @text-muted;
-        white-space: pre-line;
-      }
       .avatar-wrapper {
         height: 100px;
       }
       > div, + div {
-        max-width: 900px;
+        max-width: @market-item-max-width;
       }
     }
-    > header + div {
-      padding-top: 3 * @padding-large-vertical;
-      dt {
-        font-weight: 600;
-      }
+    dt {
+      font-weight: 600;
     }
+  }
+  .profile-presentation {
+    margin: 0 auto @line-height-computed;
+    max-width: 900px;
+    text-align: center;
+    color: @text-muted;
+    white-space: pre-line;
   }
 }
 

@@ -9,22 +9,19 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Profile', ['$rootScope', '$translate', 'User', 'ProfileResource', 'icons', function ($rootScope, $translate, User, ProfileResource, icons) {
+    .factory('Profile', ['$rootScope', '$translate', '$q', 'User', 'ProfileResource', 'ReferentialResource', 'icons', function ($rootScope, $translate, $q, User, ProfileResource, ReferentialResource, icons) {
 
-        var visibilityOptions = {
-            EVERYBODY: {value: 'EVERYBODY', label: 'PROFILE.VISIBILITY.EVERYBODY', icon: icons.everybody},
-            FRIENDS: {value: 'FRIENDS', label: 'PROFILE.VISIBILITY.FRIENDS', icon: icons.friends}
-            //NOBODY: {value: 'NOBODY', label: 'PROFILE.VISIBILITY.NOBODY', icon: icons.nobody}
-        };
+        var organization,
+            visibilityOptions = {
+                EVERYBODY: {value: 'EVERYBODY', label: 'PROFILE.VISIBILITY.EVERYBODY', icon: icons.everybody},
+                FRIENDS: {value: 'FRIENDS', label: 'PROFILE.VISIBILITY.FRIENDS', icon: icons.friends}
+            };
 
         function getVisibilityOptions(mask) {
             if (!mask) {
                 return visibilityOptions;
             }
             var visibilityOptionsCopy = visibilityOptions;
-            //if (mask.charAt(0) !== '3') {
-            //    delete visibilityOptionsCopy.NOBODY;
-            //}
             if (mask.charAt(1) !== '3') {
                 delete visibilityOptionsCopy.FRIENDS;
             }
@@ -46,6 +43,9 @@ angular.module('ortolangMarketApp')
                     });
                 }
             } else {
+                if (profileData.type === 'REFERENTIAL') {
+                    profileData.value = profileData.value.id;
+                }
                 var profileDataRepresentation = {
                     name: profileData.name,
                     value: profileData.value,
@@ -107,11 +107,69 @@ angular.module('ortolangMarketApp')
             }
         }
 
+        // *********************** //
+        //       Organization      //
+        // *********************** //
+
+        function checkOrganization(profileData, $data) {
+            if ($data !== '' && !angular.isObject($data) && !$data.id) {
+                return $translate.instant('PROFILE.FIELDS.ORGANISATION_ERROR');
+            }
+            profileData.value = $data.id;
+        }
+
+        function searchOrganization(query) {
+            if (!query || angular.isObject(query) || query.length < 2) {
+                return [];
+            }
+            var deferred = $q.defer();
+            ReferentialResource.get({type: 'ORGANIZATION', lang: 'FR', term: query}, function (results) {
+                var suggestedOrganizations = [];
+                angular.forEach(results.entries, function (entity) {
+                    var content = entity.content;
+                    if (angular.isUndefined(content.compatibilities)) {
+                        suggestedOrganizations.push(content);
+                    }
+                });
+                deferred.resolve(suggestedOrganizations);
+            }, function () {
+                deferred.reject([]);
+            });
+            return deferred.promise;
+        }
+
+        var once;
+
+        function getOrganization(name, force) {
+            var deferred = $q.defer();
+            if (organization && organization.id === name) {
+                if (force) {
+                    return organization;
+                }
+                deferred.resolve(organization);
+            } else if (name && !once) {
+                once = true;
+                ReferentialResource.get({name: name}, function (data) {
+                    if (data) {
+                        organization = angular.fromJson(data.content);
+                        once = false;
+                        deferred.resolve(organization);
+                    } else {
+                        organization = null;
+                    }
+                });
+            }
+            return deferred.promise;
+        }
+
         return {
             getVisibilityOptions: getVisibilityOptions,
             updateUserProfileData: updateUserProfileData,
             updateUserAddress: updateUserAddress,
             checkAddress: checkAddress,
-            preventAddressSubmitOnEnter: preventAddressSubmitOnEnter
+            preventAddressSubmitOnEnter: preventAddressSubmitOnEnter,
+            searchOrganization: searchOrganization,
+            getOrganization: getOrganization,
+            checkOrganization: checkOrganization
         };
     }]);

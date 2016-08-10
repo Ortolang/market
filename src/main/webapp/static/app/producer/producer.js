@@ -32,6 +32,7 @@ angular.module('ortolangMarketApp')
             var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('rank', false);
+            // TODO server side
             $scope.params = '{"'+metaItemPrefix+'producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName"}';
         }
         init();
