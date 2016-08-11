@@ -36,7 +36,7 @@
         <label for="search-sponsor" class="control-label">{{'ITEM.SPONSORS.LABEL' | translate}}</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.fullname for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsor" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.fullname for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
             {{'WORKSPACE.METADATA_EDITOR.NO_ORGANIZATION_FOUND' | translate}}

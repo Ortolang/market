@@ -20,6 +20,8 @@ angular.module('ortolangMarketApp')
                                 entry.content = angular.fromJson(entry.content);
                             }
                         });
+                    } else if (data.content) {
+                        data.content = angular.fromJson(data.content);
                     }
                     return data;
                 }
