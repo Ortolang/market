@@ -13,15 +13,17 @@ angular.module('ortolangMarketApp')
             get: {
                 method: 'GET',
                 transformResponse: function (data) {
-                    data = angular.fromJson(data);
-                    if (data && data.entries) {
-                        angular.forEach(data.entries, function (entry) {
-                            if (entry.content) {
-                                entry.content = angular.fromJson(entry.content);
-                            }
-                        });
-                    } else if (data.content) {
-                        data.content = angular.fromJson(data.content);
+                    if (data) {
+                        data = angular.fromJson(data);
+                        if (data.entries) {
+                            angular.forEach(data.entries, function (entry) {
+                                if (entry.content) {
+                                    entry.content = angular.fromJson(entry.content);
+                                }
+                            });
+                        } else if (data.content) {
+                            data.content = angular.fromJson(data.content);
+                        }
                     }
                     return data;
                 }
