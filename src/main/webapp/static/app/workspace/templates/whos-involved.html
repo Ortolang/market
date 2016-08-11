@@ -69,7 +69,7 @@
         <label class="control-label">Personne(s) contributrice(s)</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchConributor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tacontributor" type="text" class="form-control" id="search-contributor" name="searchContributor" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}" bs-options="person as person.fullname for person in suggestPerson($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <input ng-model="searchContributor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tacontributor" type="text" class="form-control" id="search-contributor" name="searchContributor" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}" bs-options="person as person.fullname for person in suggestPerson($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
             <div class="input-group-btn">
                 <div class="btn-group">
                     <button id="add-contributor-role" type="button" class="btn btn-default" name="selectedRole" ng-disabled="WorkspaceMetadataService.canEdit" ng-model="selectedRoles" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" bs-options="role as role.label for role in allRoles track by role.id" bs-select>{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span></button>

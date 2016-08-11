@@ -130,6 +130,8 @@ angular.module('ortolangMarketApp')
                     $scope.metadata.contributors = [];
                 }
                 $scope.metadata.contributors.push(contributor);
+                $scope.searchContributor = '';
+                $scope.selectedRoles = [];
             };
 
             $scope.showAddPersonModal = function (person) {
