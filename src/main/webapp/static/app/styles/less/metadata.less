@@ -78,6 +78,35 @@
     }
   }
 
+  .metadata-editor-list {
+    padding: 0;
+    &.draggable-list {
+      > li {
+        cursor: move;
+      }
+    }
+    > li {
+      padding: @line-height-computed;
+      border-bottom: @default-border;
+      &:last-child {
+        border-bottom: none;
+      }
+      [dnd-nodrag] {
+        cursor: pointer;
+      }
+      .actions {
+        opacity: 0;
+        transition: opacity 0.5s
+      }
+      &:hover, &:focus {
+        .actions {
+          opacity: 1;
+        }
+      }
+
+    }
+  }
+
   .metadata-editor-table {
     td .media {
       padding: @padding-base-horizontal;
@@ -184,6 +213,36 @@
     .select {
       height: 200px;
       overflow-y: scroll;
+    }
+    .order-contributors-btn {
+      margin-top: @line-height-computed;
+    }
+
+    .add-member-btn-wrapper.contributor-card {
+      cursor: move;
+      .media-left {
+        cursor: pointer;
+      }
+    }
+    ul[dnd-list],
+    ul[dnd-list] > li {
+      position: relative;
+    }
+    ul[dnd-list] {
+      min-height: 70px;
+      padding-left: 0;
+      .dndDraggingSource {
+        display: none;
+      }
+      .dndPlaceholder {
+        background-color: @default-bg;
+        min-height: 70px;
+      }
+      .dndDragging {
+        background-color: @white;
+      }
+      li {
+      }
     }
   }
 
@@ -323,20 +382,20 @@
     }
 
     .media {
-        border: 1px solid @well-border;
-        padding-left: @padding-large-horizontal;
-        padding-right:  @padding-large-horizontal;
-        padding-top: @padding-large-vertical;
-        padding-bottom: @padding-large-vertical;
-        background-color: @default-bg;
-        cursor: pointer;
-        &:hover {
-          background-color: @alternate-light-bg;
-          border-bottom-color: darken(@alternate-light-border-color, 5%);
-        }
-        &:active {
-          background-color: lighten(@default-bg, 1%);
-        }
+      border: 1px solid @well-border;
+      padding-left: @padding-large-horizontal;
+      padding-right:  @padding-large-horizontal;
+      padding-top: @padding-large-vertical;
+      padding-bottom: @padding-large-vertical;
+      background-color: @default-bg;
+      cursor: pointer;
+      &:hover {
+        background-color: @alternate-light-bg;
+        border-bottom-color: darken(@alternate-light-border-color, 5%);
+      }
+      &:active {
+        background-color: lighten(@default-bg, 1%);
+      }
     }
   }
 }

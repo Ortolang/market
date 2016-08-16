@@ -251,6 +251,7 @@ angular.module('ortolangMarketApp')
                 LEXICON_INPUT_COUNT: 'Nombre d\'entrée dans le lexique',
                 NO_PERSON_FOUND: 'Vous ne trouvez pas la personne ?',
                 ADD_NEW_PERSON: 'Ajouter une personne',
+                ORDER_CONTRIBUTORS: 'Trier par nom',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: 'Personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
@@ -272,7 +273,7 @@ angular.module('ortolangMarketApp')
                 NO_PRODUCER_FOUND: 'Vous ne trouvez pas votre laboratoire ?',
                 ADD_NEW_PRODCUER: 'Ajouter un laboratoire',
                 NO_ORGANIZATION_FOUND: 'Vous ne trouvez pas votre organisme ?',
-                ADD_NEW_ORGANIZATION: 'Ajouter un nouveau organisme',
+                ADD_NEW_ORGANIZATION: 'Ajouter un nouvel organisme',
                 ADD_ORGANIZATION_MODAL: {
                     TITLE: 'Organisme',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',

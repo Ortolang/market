@@ -46,7 +46,8 @@ angular
         'angulartics.piwik',
         'ng-showdown',
         'zInfiniteScroll',
-        'angular-duration-format'
+        'angular-duration-format',
+        'dndLists'
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider

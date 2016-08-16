@@ -275,6 +275,11 @@ angular.module('ortolangMarketApp')
                 $scope.$apply();
             });
 
+            $scope.moveProducer = function ($index) {
+                $scope.metadata.producersEntity.splice($index, 1);
+                WorkspaceMetadataService.updateProducerOrder();
+            };
+
             /**
              * Adds sponsor listener.
              **/
@@ -308,6 +313,10 @@ angular.module('ortolangMarketApp')
 
                 $scope.$apply();
             });
+
+            $scope.orderContributorsByLastName = function () {
+                $scope.metadata.contributors = $filter('orderBy')($scope.metadata.contributors, '+entityContent.lastname');
+            };
 
             /**
              * Methods for loadings entities

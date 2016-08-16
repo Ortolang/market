@@ -14,7 +14,7 @@
                     <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i> :
                         <ul class="list-unstyled">
                             <li ng-repeat="producer in producers track by producer.id">
-                                <a ng-href='/producers/{{producer.id}}' ng-bind="producer.fullname"></a>
+                                <a ng-href='/producers/{{::producer.id}}'>{{::producer | organizationName}}</a>
                             </li>
                         </ul>
                     </div>
