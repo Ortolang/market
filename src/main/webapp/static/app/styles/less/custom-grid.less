@@ -1,5 +1,6 @@
-@screen-xlg-min: 1400px;
-@screen-xxlg-min: 1550px;
+@screen-xl-min: 1400px;
+@screen-xl-max: 1549px;
+@screen-xxl-min: 1550px;
 
 .col-xs-15,
 .col-sm-15,
@@ -37,33 +38,95 @@
     float: left;
   }
 }
-@media (min-width: @screen-xlg-min) {
+@media (min-width: @screen-xl-min) {
   .col-xlg-15 {
     width: 20%;
     float: left;
   }
 }
-@media (min-width: @screen-xlg-min) {
+@media (min-width: @screen-xl-min) {
   .col-xlg-14 {
     width: 25%;
     float: left;
   }
 }
-@media (min-width: @screen-xxlg-min) {
+@media (min-width: @screen-xxl-min) {
   .col-xxlg-14 {
     width: 25%;
     float: left;
   }
 }
-@media (min-width: @screen-xxlg-min) {
+@media (min-width: @screen-xxl-min) {
   .col-xxlg-15 {
     width: 20%;
     float: left;
   }
 }
-@media (min-width: @screen-xxlg-min) {
+@media (min-width: @screen-xxl-min) {
   .col-xxlg-16 {
     width: percentage((2 / @grid-columns));
     float: left;
   }
 }
+
+.visible-xl,
+.visible-xxl {
+  .responsive-invisibility();
+}
+
+.visible-xl {
+  @media (min-width: @screen-xl-min) and (max-width: @screen-xl-max) {
+    .responsive-visibility();
+  }
+}
+
+.visible-xxl {
+  @media (min-width: @screen-xxl-min) {
+    .responsive-visibility();
+  }
+}
+
+.hidden-xl {
+  @media (min-width: @screen-xl-min) {
+    .responsive-invisibility();
+  }
+}
+
+.hidden-xxl {
+  @media (min-width: @screen-xxl-min) {
+    .responsive-invisibility();
+  }
+}
+
+@media (min-width: @screen-xl-min) {
+  .make-grid(xl);
+}
+
+@media (min-width: @screen-xxl-min) {
+  .make-grid(xxl);
+}
+
+.make-grid-columns-xl() {
+  // Common styles for all sizes of grid columns, widths 1-12
+  .col(@index) { // initial
+    @item: ~".col-xl-@{index}, .col-xxl-@{index}";
+    .col((@index + 1), @item);
+  }
+  .col(@index, @list) when (@index =< @grid-columns) { // general; "=<" isn't a typo
+    @item: ~".col-xl-@{index}, .col-xxl-@{index}";
+    .col((@index + 1), ~"@{list}, @{item}");
+  }
+  .col(@index, @list) when (@index > @grid-columns) { // terminal
+    @{list} {
+      position: relative;
+      // Prevent columns from collapsing when empty
+      min-height: 1px;
+      // Inner gutter via padding
+      padding-left:  ceil((@grid-gutter-width / 2));
+      padding-right: floor((@grid-gutter-width / 2));
+    }
+  }
+  .col(1); // kickstart it
+}
+
+.make-grid-columns-xl();

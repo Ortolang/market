@@ -8,10 +8,10 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducersCtrl', ['$rootScope', '$scope', '$location', '$translate', 'ReferentialEntityResource', function ($rootScope, $scope, $location, $translate, ReferentialEntityResource) {
+    .controller('ProducersCtrl', ['$rootScope', '$scope', '$location', '$translate', 'ReferentialResource', function ($rootScope, $scope, $location, $translate, ReferentialResource) {
 
         $scope.getAllOrganizations = function () {
-            ReferentialEntityResource.get({type: 'ORGANIZATION'}, function (collectionEntities) {
+            ReferentialResource.get({type: 'ORGANIZATION'}, function (collectionEntities) {
                 angular.forEach(collectionEntities.entries, function (entry) {
                     var content = angular.fromJson(entry.content);
                     if (angular.isUndefined(content.compatibilities)) {

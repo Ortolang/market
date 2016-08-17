@@ -52,6 +52,12 @@
               data-onaftersave="Profile.updateUserAddress(profileData)">
             {{profileData.value || emptyText}}
          </span>
+
+        <span ng-if="profileData.type==='REFERENTIAL'" class="xeditable-placeholder" e-bs-typeahead="true" data-editable-text="profileData.value" e-placement="bottom-auto" e-bs-options="organization as organization.fullname for organization in Profile.searchOrganization($data)" data-e-name="profileData.name" data-e-placeholder="{{'PROFILE.FIELDS.' + profileData.name.toUpperCase() | translate}}" data-e-value="{{profileData.value}}"
+              data-onbeforesave="Profile.checkOrganization(profileData, $data)"
+              data-onaftersave="Profile.updateUserProfileData(profileData)">
+             {{Profile.getOrganization(profileData.value, true).fullname || emptyText}}
+         </span>
     </div>
 
     <p ng-class="helpClass" class="help-block" ng-if="profileData.helper" translate="{{'PROFILE.HELPER.' + profileData.name.toUpperCase()}}"></p>

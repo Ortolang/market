@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'ProfileResource', 'User', 'GroupResource', 'SearchResource', 'AuthService',
-        function ($scope, $rootScope, $routeParams, $location, ProfileResource, User, GroupResource, SearchResource, AuthService) {
+    .controller('ProfileCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'ProfileResource', 'User', 'GroupResource', 'SearchResource', 'AuthService', 'Profile',
+        function ($scope, $rootScope, $routeParams, $location, ProfileResource, User, GroupResource, SearchResource, AuthService, Profile) {
 
             $scope.isFriend = function () {
                 return User.isFriend($scope.key);
@@ -34,11 +34,20 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            function processOrganisation(data) {
+                var fullname;
+                if (data.acronym) {
+                    fullname = data.acronym + ' - ';
+                }
+                fullname += data.name + ' (' + data.city + ', ' + data.country + ')';
+                data.fullname = fullname;
+                return data;
+            }
+
             (function init() {
                 User.fetchFriendList();
                 $scope.key = $routeParams.key;
-                $scope.imgClasses = 'img-circle';
-                if (User.isAuthenticated() && $location.search()['see-as'] !== true) {
+                if (User.isAuthenticated() && angular.isDefined($location.search()['see-as'])) {
                     ProfileResource.get({key: $scope.key}, function (data) {
                         $scope.profile = data;
                         $rootScope.ortolangPageTitle = $scope.fullName() + ' | ';
@@ -46,13 +55,25 @@ angular.module('ortolangMarketApp')
                     ProfileResource.getInfos({key: $scope.key}, function (data) {
                         $scope.infos = {};
                         angular.forEach(data.entries, function (profileData) {
-                            $scope.infos[profileData.name] = profileData.value;
+                            if (profileData.name === 'organisation') {
+                                Profile.getOrganization(profileData.value).then(function (data) {
+                                    $scope.infos[profileData.name] = processOrganisation(data);
+                                });
+                            } else {
+                                $scope.infos[profileData.name] = profileData.value;
+                            }
                         });
                     });
                 } else {
                     SearchResource.getProfile({key: $scope.key}, function (data) {
                         $scope.profile = data.meta_profile;
                         $scope.infos = data.meta_profile.infos;
+                        if ($scope.infos.organisation) {
+                            Profile.getOrganization($scope.infos.organisation).then(function (data) {
+                                $scope.infos.organisation = data;
+                                $scope.infos.organisation.fullname = processOrganisation(data);
+                            });
+                        }
                     });
                 }
             }());

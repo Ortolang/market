@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialEntityResource', 'Helper', 'Workspace', 'WorkspaceMetadataService', 'User',
-        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialEntityResource, Helper, Workspace, WorkspaceMetadataService, User) {
+    .controller('LicenceCtrl', ['$rootScope', '$scope', '$filter', '$modal', '$translate', 'Settings', 'ReferentialResource', 'Helper', 'Workspace', 'WorkspaceMetadataService', 'User',
+        function ($rootScope, $scope, $filter, $modal, $translate, Settings, ReferentialResource, Helper, Workspace, WorkspaceMetadataService, User) {
 
             /**
              * Updates the license property.
@@ -136,7 +136,7 @@ angular.module('ortolangMarketApp')
                             modalScope.selectedDescription = modalScope.model.description[0];
                         }
                     } else {
-                        modalScope.selectedDescription = {value: ''};    
+                        modalScope.selectedDescription = {value: ''};
                     }
                     modalScope.model.text = angular.copy(license.text);
                     if (modalScope.model.text) {
@@ -308,7 +308,7 @@ angular.module('ortolangMarketApp')
              **/
             function loadAllStatusOfUse() {
 
-                ReferentialEntityResource.get({type: 'STATUSOFUSE'}, function(entities) {
+                ReferentialResource.get({type: 'STATUSOFUSE'}, function(entities) {
                     $scope.allStatusOfUse = [];
                     angular.forEach(entities.entries, function(entry) {
                         var content = angular.fromJson(entry.content);
@@ -328,14 +328,14 @@ angular.module('ortolangMarketApp')
              * Loads all license.
              **/
             function loadAllLicense() {
-                ReferentialEntityResource.get({type: 'LICENSE'}, function(entities) {
+                ReferentialResource.get({type: 'LICENSE'}, function(entities) {
                     $scope.allLicences = [];
                     angular.forEach(entities.entries, function(entry) {
                         var content = angular.fromJson(entry.content);
                         var id = Helper.createKeyFromReferentialId(entry.key);
                         var license = {
-                            id: id, 
-                            label: content.label, 
+                            id: id,
+                            label: content.label,
                             status: content.status,
                             description: content.description ? Helper.getMultilingualValue(content.description) : undefined
                         };

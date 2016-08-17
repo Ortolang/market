@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AddPersonCtrl', ['$scope', '$filter', 'Helper', 'ReferentialEntityResource', '$q', 'WorkspaceMetadataService', 'User', 
-    	function ($scope, $filter, Helper, ReferentialEntityResource, $q, WorkspaceMetadataService, User) {
+    .controller('AddPersonCtrl', ['$scope', '$filter', 'Helper', 'ReferentialResource', '$q', 'WorkspaceMetadataService', 'User',
+    	function ($scope, $filter, Helper, ReferentialResource, $q, WorkspaceMetadataService, User) {
 
             var regExp = new RegExp(' +', 'g');
 
@@ -67,7 +67,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.addContributorFromScratch = function (addContributorForm) {
-            	
+
                 checkForm(addContributorForm);
 
                 if (angular.isUndefined($scope.contributor)) {
@@ -111,7 +111,7 @@ angular.module('ortolangMarketApp')
             function createEntity(name, metadata) {
                 var deferred = $q.defer();
                 var content = angular.toJson(metadata);
-                ReferentialEntityResource.post({}, {name: name, type: 'PERSON', content: content}, function () {
+                ReferentialResource.post({}, {name: name, type: 'PERSON', content: content}, function () {
                     deferred.resolve();
                 }, function (errors) {
                     deferred.reject(errors);
@@ -124,7 +124,7 @@ angular.module('ortolangMarketApp')
                 checkForm(form);
 
                 if (form.$valid) {
-                    ReferentialEntityResource.get({name: $scope.models.entityContent.id}, function() {
+                    ReferentialResource.get({name: $scope.models.entityContent.id}, function() {
                         //TODO notify and ask to choose one of the result or create a new one
                         console.log('Person exists');
                     }, function () {
@@ -140,7 +140,7 @@ angular.module('ortolangMarketApp')
                             angular.forEach($scope.models.rolesEntity, function (role) {
                                 $scope.models.roles.push(Helper.createKeyFromReferentialName(role.id));
                             });
-                            
+
                             if (angular.isUndefined($scope.contributor)) {
                                 if ($scope.metadata.contributors === undefined) {
                                     $scope.metadata.contributors = [];
@@ -159,7 +159,7 @@ angular.module('ortolangMarketApp')
                         }, function (reason) {
                             //TODO notify
                             console.log(reason);
-                        });    
+                        });
                     });
 
                     Helper.hideModal();
@@ -179,7 +179,7 @@ angular.module('ortolangMarketApp')
                     return [];
                 }
                 var deferred = $q.defer();
-                ReferentialEntityResource.get({type: 'ORGANIZATION', lang:'FR', term: term}, function(results) {
+                ReferentialResource.get({type: 'ORGANIZATION', lang:'FR', term: term}, function(results) {
                     var suggestedOrganizations = [];
                     angular.forEach(results.entries, function(refentity) {
                         var content = angular.fromJson(refentity.content);

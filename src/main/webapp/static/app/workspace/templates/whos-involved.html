@@ -10,33 +10,30 @@
             <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddOrganizationModal()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_PRODCUER' | translate}}</a>
         </p>
     </div>
-    <table class="table table-bordered table-responsive card-well metadata-editor-table">
-        <tbody>
-        <tr ng-repeat="producer in metadata.producersEntity">
-            <td>
-                <div class="media">
-                    <div class="media-left">
-                        <img width="60px" class="img-rounded" ng-src="{{producer.img}}">
-                    </div>
-                    <div class="media-body clickable" ng-click="showAddOrganizationModal(producer)">
-                        <span  ng-bind="producer.fullname"></span> <i ng-if="!producer.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de l'organisme dans le référentiel." data-placement="right" bs-tooltip></i>
-                    </div>
-                    <div class="media-right actions">
-                        <button class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteProducer(producer)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
-                            <span ng-class="::icons.remove"></span>
-                        </button>
-                    </div>
+    <ul class="list-unstyled card-well metadata-editor-list draggable-list" dnd-list="metadata.producersEntity" dnd-allowed-types="['producer']">
+        <li ng-repeat="producer in metadata.producersEntity" dnd-type="'producer'" dnd-draggable="producer" dnd-effect-allowed="move" dnd-moved="moveProducer($index)" ng-click="showAddOrganizationModal(producer)">
+            <div class="media">
+                <div class="media-left" dnd-nodrag>
+                    <img width="60px" class="img-rounded" ng-src="{{producer.img}}">
                 </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <div class="media-body">
+                    {{producer | organizationName}}
+                    <i ng-if="!producer.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de l'organisme dans le référentiel." data-placement="right" bs-tooltip></i>
+                </div>
+                <div class="media-right actions">
+                    <button class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteProducer(producer)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
+                        <span ng-class="::icons.remove"></span>
+                    </button>
+                </div>
+            </div>
+        </li>
+    </ul>
     <hr/>
     <div class="form-group">
         <label for="search-sponsor" class="control-label">{{'ITEM.SPONSORS.LABEL' | translate}}</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.fullname for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsor" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.fullname for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
             {{'WORKSPACE.METADATA_EDITOR.NO_ORGANIZATION_FOUND' | translate}}
@@ -69,7 +66,7 @@
         <label class="control-label">Personne(s) contributrice(s)</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchConributor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tacontributor" type="text" class="form-control" id="search-contributor" name="searchContributor" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}" bs-options="person as person.fullname for person in suggestPerson($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <input ng-model="searchContributor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tacontributor" type="text" class="form-control" id="search-contributor" name="searchContributor" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}" bs-options="person as person.fullname for person in suggestPerson($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
             <div class="input-group-btn">
                 <div class="btn-group">
                     <button id="add-contributor-role" type="button" class="btn btn-default" name="selectedRole" ng-disabled="WorkspaceMetadataService.canEdit" ng-model="selectedRoles" data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" bs-options="role as role.label for role in allRoles track by role.id" bs-select>{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span></button>
@@ -84,14 +81,15 @@
             <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddPersonModal()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_PERSON' | translate}}</a>
         </p>
     </div>
-    <ul class="row list-unstyled auto-clear">
+    <ul class="row list-unstyled auto-clear" dnd-list="metadata.contributors" dnd-allowed-types="['contributor']">
         <li ng-repeat="contributor in metadata.contributors"
             ng-class="{'contributor-link': contributor.entityContent.id}"
             class="profile-card contributor-card col-md-6 col-lg-4 add-member-btn-wrapper"
             ng-disabled="WorkspaceMetadataService.canEdit"
-            ng-click="showAddPersonModal(contributor)">
+            ng-click="showAddPersonModal(contributor)" dnd-type="'contributor'" dnd-horizontal-list="true"
+            dnd-draggable="contributor" dnd-effect-allowed="move" dnd-moved="metadata.contributors.splice($index, 1)">
             <div class="media">
-                <div class="media-left" avatar data-email-hash="contributor.entityContent.emailhash" data-size="60" data-img-classes="img-rounded"></div>
+                <div class="media-left" dnd-nodrag avatar data-email-hash="contributor.entityContent.emailhash" data-size="60" data-img-classes="img-rounded"></div>
                 <div class="media-body">
                     <span class="name">{{contributor.entityContent.fullname}}</span> <span class="organization" ng-if="contributor.organizationEntity && contributor.organizationEntity.acronym">({{contributor.organizationEntity.acronym}})</span> <i ng-if="!contributor.entityContent.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de la personne dans le référentiel." data-placement="right" bs-tooltip></i>
                     <div class="small roles">
@@ -103,5 +101,7 @@
                 </div>
             </div>
         </li>
+        <li class="dndPlaceholder col-md-6 col-lg-4 profile-card contributor-card"></li>
     </ul>
+    <button class="btn btn-default order-contributors-btn" ng-if="metadata.contributors.length > 2" ng-click="orderContributorsByLastName()"><span class="fa fa-sort-alpha-asc"></span> {{'WORKSPACE.METADATA_EDITOR.ORDER_CONTRIBUTORS' | translate}}</button>
 </div>

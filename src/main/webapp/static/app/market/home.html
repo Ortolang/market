@@ -5,7 +5,7 @@
     <div class="container-main container-main-home">
         <div class="container-main-inner">
             <section class="row">
-                <div class="col-md-8 col-lg-7">
+                <div class="col-md-8 col-lg-7 col-xxl-5">
                     <h3 class="ortolang-title" translate="ORTOLANG"></h3>
                     <hr/>
                     <div ng-include="StaticWebsite.getHomePage()"></div>
@@ -20,23 +20,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-5" >
-                    <div class="card-well card-news-well">
-                        <p class="lead"><span ng-class="::icons.news"></span> {{'NEWS' | translate}}</p>
-                        <div ng-repeat="news in StaticWebsite.getNews() | limitTo:StaticWebsite.getNewsLimit() track by news">
-                            <div ng-include="::news.url"></div>
-                            <hr/>
-                        </div>
-                        <a class="btn btn-inverse btn-block" href="/news" translate="STATIC_WEBSITE.ALL_THE_NEWS"></a>
-                    </div>
-                    <div class="card-well card-news-well statistics-wrapper">
-                        <p class="lead"><span ng-class="::icons.statistics"></span> {{'STATISTICS' | translate}}</p>
-                        <div>
-                            <p translate="STATIC_WEBSITE.USERS" data-translate-values="statistics"></p>
-                            <p translate="STATIC_WEBSITE.WORKSPACES" data-translate-values="statistics"></p>
-                            <p translate="STATIC_WEBSITE.DATA" data-translate-values="statistics"></p>
-                        </div>
-                    </div>
+                <div class="visible-xxl col-xxl-4" home-news data-limit="3"></div>
+                <div class="visible-xxl col-xxl-3" ng-include="'market/templates/statistics.html'"></div>
+                <div class="hidden-xxl col-md-4 col-lg-5">
+                    <div home-news data-limit="1"></div>
+                    <div ng-include="'market/templates/statistics.html'"></div>
                 </div>
             </section>
 

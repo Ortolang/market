@@ -241,6 +241,7 @@ angular.module('ortolangMarketApp')
                 LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
                 NO_PERSON_FOUND: 'You do not find a person ?',
                 ADD_NEW_PERSON: 'Ask for adding a new person',
+                ORDER_CONTRIBUTORS: 'Order by last name',
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: 'Contributor',
                     SUBMIT: '{{editing ? "Edit" : "Add"}}',

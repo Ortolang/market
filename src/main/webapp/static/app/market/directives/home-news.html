@@ -1,0 +1,8 @@
+<div class="card-well card-news-well">
+    <p class="lead"><span ng-class="::icons.news"></span> {{'NEWS' | translate}}</p>
+    <div ng-repeat="news in StaticWebsite.getNews() | limitTo:limit track by news.id">
+        <div ng-include="::news.url"></div>
+        <hr/>
+    </div>
+    <a class="btn btn-inverse btn-block" href="/news" translate="STATIC_WEBSITE.ALL_THE_NEWS"></a>
+</div>

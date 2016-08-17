@@ -97,6 +97,9 @@ angular.module('ortolangMarketApp')
                         case '/workspaces/:alias':
                             $scope.select('workspaces');
                             break;
+                        default:
+                            $scope.select();
+                            break;
                     }
                 } else {
                     var regExp, i, currentPath;
