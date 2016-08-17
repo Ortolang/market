@@ -11,17 +11,19 @@
                 <h1 class="market-item-title" ng-bind="title"></h1>
 
                 <div ng-hide="browse">
-                    <div ng-if="producers" class="market-item-producers"><i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i> :
+                    <div ng-if="producers.length > 0" class="market-item-producers">
+                        <i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i>
                         <ul class="list-unstyled">
-                            <li ng-repeat="producer in producers track by producer.id">
+                            <li ng-repeat="producer in producers">
                                 <a ng-href='/producers/{{::producer.id}}'>{{::producer | organizationName}}</a>
                             </li>
                         </ul>
                     </div>
-                    <div ng-if="sponsors" class="market-item-producers"><i>{{'MARKET.SPONSORS' | translate}}</i> :
+                    <div ng-if="sponsors.length > 0" class="market-item-producers">
+                        <i translate="MARKET.SPONSORS"></i>
                         <ul class="list-unstyled">
                             <li class="sponsor" ng-repeat="sponsor in sponsors">
-                                {{sponsor.fullname}} <a target="_BLANK" ng-if="sponsor.homepage" ng-href="{{sponsor.homepage}}"><span class="fa fa-fw fa-external-link"></span></a>
+                                {{::sponsor | organizationName}} <a target="_BLANK" ng-if="sponsor.homepage" ng-href="{{sponsor.homepage}}"><span class="fa fa-fw fa-external-link"></span></a>
                             </li>
                         </ul>
                     </div>
