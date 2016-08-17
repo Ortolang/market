@@ -271,10 +271,17 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             }
 
-            this.updateProducerOrder = function () {
+            this.updateProducersOrder = function () {
                 this.metadata.producers = [];
                 angular.forEach(this.metadata.producersEntity, function (entity) {
                     WorkspaceMetadataService.metadata.producers.push(Helper.createKeyFromReferentialName(entity.id));
+                });
+            };
+
+            this.updateSponsorsOrder = function () {
+                this.metadata.sponsors = [];
+                angular.forEach(this.metadata.sponsorsEntity, function (entity) {
+                    WorkspaceMetadataService.metadata.sponsors.push(Helper.createKeyFromReferentialName(entity.id));
                 });
             };
 

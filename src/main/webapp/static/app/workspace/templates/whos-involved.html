@@ -10,7 +10,7 @@
             <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddOrganizationModal()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_PRODCUER' | translate}}</a>
         </p>
     </div>
-    <ul class="list-unstyled card-well metadata-editor-list draggable-list" dnd-list="metadata.producersEntity" dnd-allowed-types="['producer']">
+    <ul class="list-unstyled card-well metadata-editor-list draggable-list" dnd-list="metadata.producersEntity" dnd-allowed-types="['producer']" ng-show="metadata.producersEntity.length > 0">
         <li ng-repeat="producer in metadata.producersEntity" dnd-type="'producer'" dnd-draggable="producer" dnd-effect-allowed="move" dnd-moved="moveProducer($index)" ng-click="showAddOrganizationModal(producer)">
             <div class="media">
                 <div class="media-left" dnd-nodrag>
@@ -20,7 +20,7 @@
                     {{producer | organizationName}}
                     <i ng-if="!producer.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de l'organisme dans le référentiel." data-placement="right" bs-tooltip></i>
                 </div>
-                <div class="media-right actions">
+                <div class="media-right actions" dnd-nodrag>
                     <button class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteProducer(producer)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
                         <span ng-class="::icons.remove"></span>
                     </button>
@@ -30,37 +30,34 @@
     </ul>
     <hr/>
     <div class="form-group">
-        <label for="search-sponsor" class="control-label">{{'ITEM.SPONSORS.LABEL' | translate}}</label>
+        <label for="search-sponsors" class="control-label">{{'ITEM.SPONSORS.LABEL' | translate}}</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="fa fa-search"></span></span>
-            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsor" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.fullname for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+            <input ng-model="searchSponsor" ng-disabled="WorkspaceMetadataService.canEdit" data-prefix-event="tasponsor" type="text" class="form-control" id="search-sponsors" name="searchSponsor" placeholder="{{'ITEM.SPONSORS.PLACEHOLDER' | translate}}" bs-options="sponsor as sponsor.fullname for sponsor in suggestOrganization($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
         </div>
         <p class="help-block">
             {{'WORKSPACE.METADATA_EDITOR.NO_ORGANIZATION_FOUND' | translate}}
             <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="showAddSponsorModal()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_ORGANIZATION' | translate}}</a>
         </p>
     </div>
-    <table class="table table-bordered table-responsive card-well metadata-editor-table">
-        <tbody>
-        <tr ng-repeat="sponsor in metadata.sponsorsEntity">
-            <td>
-                <div class="media">
-                    <div class="media-left">
-                        <img width="60px" class="img-rounded" ng-src="{{sponsor.img}}">
-                    </div>
-                    <div class="media-body clickable" ng-click="showAddSponsorModal(sponsor)">
-                        <span  ng-bind="sponsor.fullname"></span> <i ng-if="!sponsor.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de l'organisme dans le référentiel." data-placement="right" bs-tooltip></i>
-                    </div>
-                    <div class="media-right actions">
-                        <button class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteSponsor(sponsor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
-                            <span ng-class="::icons.remove"></span>
-                        </button>
-                    </div>
+    <ul class="list-unstyled card-well metadata-editor-list draggable-list" dnd-list="metadata.sponsorsEntity" dnd-allowed-types="['sponsor']" ng-show="metadata.sponsorsEntity.length > 0">
+        <li ng-repeat="sponsor in metadata.sponsorsEntity" dnd-type="'sponsor'" dnd-draggable="sponsor" dnd-effect-allowed="move" dnd-moved="moveSponsor($index)" ng-click="showAddSponsorModal(sponsor)">
+            <div class="media">
+                <div class="media-left" dnd-nodrag>
+                    <img width="60px" class="img-rounded" ng-src="{{sponsor.img}}">
                 </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <div class="media-body">
+                    {{sponsor | organizationName}}
+                    <i ng-if="!sponsor.id" ng-class="::icons.question" data-title="Demande en cours : Ajout de l'organisme dans le référentiel." data-placement="right" bs-tooltip></i>
+                </div>
+                <div class="media-right actions" dnd-nodrag>
+                    <button class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteSponsor(sponsor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>
+                        <span ng-class="::icons.remove"></span>
+                    </button>
+                </div>
+            </div>
+        </li>
+    </ul>
     <hr/>
     <div class="form-group">
         <label class="control-label">Personne(s) contributrice(s)</label>
@@ -96,7 +93,7 @@
                         <span ng-repeat="role in contributor.rolesEntity">{{role.label}}<span ng-if="!$last">, </span></span>
                     </div>
                 </div>
-                <div class="media-right">
+                <div class="media-right" dnd-nodrag>
                     <button type="button" class="close delete-contributor" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteContributor(contributor)" data-title="{{::'DELETE' | translate}}" bs-tooltip>&times;</button>
                 </div>
             </div>

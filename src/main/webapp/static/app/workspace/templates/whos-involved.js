@@ -277,7 +277,12 @@ angular.module('ortolangMarketApp')
 
             $scope.moveProducer = function ($index) {
                 $scope.metadata.producersEntity.splice($index, 1);
-                WorkspaceMetadataService.updateProducerOrder();
+                WorkspaceMetadataService.updateProducersOrder();
+            };
+
+            $scope.moveSponsor = function ($index) {
+                $scope.metadata.sponsorsEntity.splice($index, 1);
+                WorkspaceMetadataService.updateSponsorsOrder();
             };
 
             /**
