@@ -1,56 +1,80 @@
 <div ng-controller="WorkspaceDashboardThreadsCtrl">
     <div class="workspace-dashboard-section workspace-dashboard-threads" ng-if="!models.activeThread">
-        <ul class="list-unstyled">
-            <li ng-if="models.threads.entries.length === 0" class="thread media card-well">
+        <button class="btn btn-default btn-primary thread-function" ng-click="createThread()">{{'WORKSPACE.THREADS.START' | translate}}</button>
+        <ul class="list-unstyled" ng-if="models.threads.length === 0">
+            <li class="thread media card-well">
                 <div class="media-body">
                     <span class="thread-description" translate="WORKSPACE.THREADS.EMPTY"></span>
                 </div>
             </li>
-            <li ng-repeat="thread in models.threads.entries" class="thread card-well card-well-hover" ng-click="openThread(thread)">
+        </ul>
+        <ul class="list-unstyled" ng-if="models.threads.length > 0">
+            <li ng-repeat="thread in models.threads" class="thread card-well card-well-hover" ng-click="openThread(thread)">
                 <div class="media">
-                    <div class="media-body">
-                        <h5 class="thread-name">{{thread.name}}</h5>
-                        <span class="thread-description">{{thread.description}}</span>
-                        <span class="pull-right" avatar data-email-hash="Workspace.authorCards[thread.author].emailHash" data-size="24" data-img-classes="img-circle"></span>
-                        <span class="thread-author pull-right">{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a href="">{{Workspace.authorCards[thread.author].fullName}}</a> </span>
+                    <div class="media-left thread-icon">
+                        <span ng-if="!thread.answered" ng-class="::icons.threads.notanswered"></span>
+                        <span ng-if="thread.answered" ng-class="::icons.threads.answered"></span>
                     </div>
-                    <div class="media-foot">
+                    <div class="media-body">
+                        <div class="thread-title">{{thread.title}}</div>
                         <span class="thread-activity">{{thread.lastActivity | amTimeAgo}}</span>
                     </div>
+                    <div class="media-right thread-author">
+                        <p>
+                            <span>{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a href="">{{Helper.profileCards[thread.author].fullName}}</a> </span>
+                            <span avatar data-email-hash="Helper.profileCards[thread.author].emailHash" data-size="24" data-img-classes="img-circle"></span>
+                        </p>
+                    </div>
                 </div>
             </li>
         </ul>
-        <button class="btn btn-default btn-primary" ng-click="createThread()">{{'WORKSPACE.THREADS.START' | translate}}</button>
     </div>
     <div class="workspace-dashboard-section workspace-dashboard-threads" ng-if="models.activeThread">
-        <div>
-            <button class="btn btn-default btn-primary" ng-click="listThreads()">{{'WORKSPACE.THREADS.BACK' | translate}}</button>
-        </div>
+        <button class="btn btn-default btn-primary thread-function" ng-click="listThreads()">{{'WORKSPACE.THREADS.BACK' | translate}}</button>
         <ul class="list-unstyled">
-            <li class="thread card-well">
+            <li class="message" ng-repeat="message in ::models.messages | filter:{question:'true'} track by message.key" >
                 <div class="media">
-                    <div class="media-body">
-                        <h5 class="thread-name">{{models.activeThread.name}}</h5>
-                        <span class="thread-description">{{models.activeThread.description}}</span>
-                        <span class="pull-right" avatar data-email-hash="Workspace.authorCards[models.activeThread.author].emailHash" data-size="24" data-img-classes="img-circle"></span>
-                        <span class="thread-author pull-right">{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a href="">{{Workspace.authorCards[models.activeThread.author].fullName}}</a> </span>
+                    <div class="media-left message-author-icon">
+                        <span avatar data-email-hash="Helper.profileCards[message.author].emailHash" data-size="48"></span>
                     </div>
-                </div>
-            </li>
-            <li ng-repeat="message in models.messages.entries" class="thread card-well">
-                <div class="media">
                     <div class="media-body">
-                        <h5 class="thread-name">{{message.title}}</h5>
-                        <span class="thread-description">{{message.body}}</span>
-                        <span class="pull-right" avatar data-email-hash="Workspace.authorCards[message.author].emailHash" data-size="24" data-img-classes="img-circle"></span>
-                        <span class="thread-author pull-right">{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a href="">{{Workspace.authorCards[message.author].fullName}}</a> </span>
-                    </div>
-                    <div class="media-foot">
-                        <span class="thread-activity">{{message.date | amTimeAgo}}</span>
+                        <h5 class="media-heading">
+                            <span class="message-author"><a href="">{{Helper.profileCards[message.author].fullName}}</a> </span>
+                            <span class="message-date">{{message.date | date:'medium'}}</span>
+                        </h5>
+                        <div class="media card-well message-body">
+                            <h3 class="media-heading message-title">{{models.activeThread.title}}</h3>
+                            <div ng-if="models.activeThread.answered" class="message-response-status">{{'WORKSPACE.THREADS.ANSWERED.PART1' | translate}} <span class="message-answered">{{'WORKSPACE.THREADS.ANSWERED.PART2' | translate}}</span></div>
+                            <div ng-if="!models.activeThread.answered" class="message-response-status">{{'WORKSPACE.THREADS.NOTANSWERED.PART1' | translate}} <span class="message-notanswered">{{'WORKSPACE.THREADS.NOTANSWERED.PART2' | translate}}</span></div>
+                            <div class="message-content">{{message.body}}</div>
+                            <hr class="message-separator"/>
+                            <a ng-click="reply(message)" class="pull-right message-action"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</a>
+                        </div>
                     </div>
                 </div>
             </li>
         </ul>
-        <button class="btn btn-default btn-primary" ng-click="postMessage()">{{'WORKSPACE.THREADS.POST' | translate}}</button>
+        <ul class="list-unstyled">
+            <li class="message" ng-repeat="message in models.messages | filter:{question:'false'} track by message.key" >
+                <div class="media">
+                    <div class="media-left message-author-icon">
+                        <span avatar data-email-hash="Helper.profileCards[message.author].emailHash" data-size="48"></span>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading">
+                            <span class="message-author"><a href="">{{Helper.profileCards[message.author].fullName}}</a> </span>
+                            <span class="message-date">{{message.date | date:'medium'}}</span>
+                            <span class="message-replyto">({{'WORKSPACE.THREADS.REPLY_TO' | translate}} {{message.parent}})</span>
+                        </h5>
+                        <div class="media card-well message-body">
+                            <h5 class="media-heading message-title">Re: {{models.activeThread.title}}</h5>
+                            <div class="message-content">{{message.body}}</div>
+                            <hr class="message-separator"/>
+                            <a ng-click="reply(message)" class="pull-right message-action"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>

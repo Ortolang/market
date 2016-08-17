@@ -1,0 +1,27 @@
+<div class="modal reply-message-modal" id="reply-message-modal" tabindex="-1" role="dialog" aria-labelledby="reply-message-modal-label">
+    <div class="modal-dialog">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" id="reply-message-modal-label" translate="WORKSPACE.THREADS.REPLY_MESSAGE_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="reply-form" name="reply" class="form-horizontal" ng-submit="submit(reply)" novalidate autocomplete="off">
+                    <div class="form-group">
+                        <label for="reply-body" class="col-sm-2 control-label" translate="WORKSPACE.THREADS.REPLY_MESSAGE_MODAL.MESSAGE"></label>
+                        <div class="col-sm-10">
+                            <textarea ng-model="models.body" class="form-control" id="reply-body" name="body" placeholder="{{'WORKSPACE.THREADS.REPLY_MESSAGE_MODAL.MESSAGE' | translate}}" ng-disabled="models.pendingSubmit"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" translate="WORKSPACE.THREADS.REPLY_MESSAGE_MODAL.SUBMIT" ng-disabled="models.pendingSubmit"></button>
+                            <button type="button" class="btn btn-default" ng-click="$hide()" translate="CANCEL" ng-disabled="models.pendingSubmit"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -9,30 +9,32 @@
  */
 angular.module('ortolangMarketApp')
     .factory('MessageResource', ['$resource', 'url', function ($resource, url) {
-        return $resource(url.api + '/threads', {}, {
+        return $resource(url.api + '/threads/:tkey', {tkey: '@tkey'}, {
             listThreads: {
                 method: 'GET',
-                url: url.api + '/threads'
+                isArray: true
             },
             createThread: {
                 method: 'POST',
-                url: url.api + '/threads'
+                transformRequest: function (data) { return $.param(data); },
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
             },
             readThread: {
-                method: 'GET',
-                url: url.api + '/threads/:tkey'
+                method: 'GET'
             },
             updateThread: {
-                method: 'PUT',
-                url: url.api + '/threads/:tkey'
+                method: 'PUT'
             },
             listMessages: {
                 method: 'GET',
+                isArray: true,
                 url: url.api + '/threads/:tkey/messages'
             },
             postMessage: {
                 method: 'POST',
-                url: url.api + '/threads/:tkey/messages'
+                url: url.api + '/threads/:tkey/messages',
+                transformRequest: function (data) { return $.param(data); },
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
             }
         });
     }]);

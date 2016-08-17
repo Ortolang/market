@@ -380,12 +380,29 @@ angular.module('ortolangMarketApp')
                 START: 'Start a new discussion',
                 BACK: 'Go back to discussion\'s list',
                 POST: 'Post a new message',
+                REPLY: 'Reply',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Create a new discussion',
                     SUBMIT: 'Create',
-                    VISIBILITY: 'Implyr moderators into the discussion'
+                    VISIBILITY: 'Imply moderators into the discussion',
+                    QUESTION: 'Title / Question',
+                    MESSAGE: 'Message'
                 },
-                CREATED_BY: 'created by'
+                REPLY_MESSAGE_MODAL: {
+                    TITLE: 'Reply to Message',
+                    SUBMIT: 'Reply',
+                    MESSAGE: 'Message'
+                },
+                CREATED_BY: 'created by',
+                REPLY_TO: 'in response to',
+                ANSWERED: {
+                    PART1: 'This question has been',
+                    PART: 'Answered'
+                },
+                NOTANSWERED: {
+                    PART1: 'This question is',
+                    PART2: 'Not Answered'
+                }
             }
         },
         ERROR_MODAL_QUEUE_LIMIT: {

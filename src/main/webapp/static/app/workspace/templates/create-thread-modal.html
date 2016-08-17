@@ -1,35 +1,35 @@
 <div class="modal create-thread-modal" id="create-thread-modal" tabindex="-1" role="dialog" aria-labelledby="create-thread-modal-label">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content modal-lg">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
                 <span class="modal-title" id="create-thread-modal-label" translate="WORKSPACE.THREADS.CREATE_THREAD_MODAL.TITLE"></span>
             </div>
             <div class="modal-body">
                 <form role="form" id="create-thread-form" name="createThread" class="form-horizontal" ng-submit="submit(createThread)" novalidate autocomplete="off">
-                    <div class="form-group" ng-class="{'has-error': (createThread.$submitted || createThread.name.$dirty) && createThread.name.$invalid}">
-                        <label for="new-thread-name" class="col-sm-2 control-label" translate="NAME"></label>
+                    <div class="form-group" ng-class="{'has-error': (createThread.$submitted || createThread.title.$dirty) && createThread.title.$invalid}">
+                        <label for="new-thread-title" class="col-sm-2 control-label" translate="WORKSPACE.THREADS.CREATE_THREAD_MODAL.QUESTION"></label>
                         <div class="col-sm-10">
-                            <input ng-model="models.name" type="text" class="form-control" id="new-thread-name" name="name" required autofocus placeholder="{{'NAME' | translate}}" ng-disabled="models.pendingSubmit">
+                            <input ng-model="models.title" type="text" class="form-control" id="new-thread-title" name="title" required autofocus placeholder="{{'WORKSPACE.THREADS.CREATE_THREAD_MODAL.QUESTION' | translate}}" ng-disabled="models.pendingSubmit">
                         </div>
-                        <div class="help-block col-sm-offset-2 col-sm-10" ng-if='(createThread.$submitted || createThread.name.$dirty) && createThread.name.$invalid' ng-messages="createThread.name.$error">
+                        <div class="help-block col-sm-offset-2 col-sm-10" ng-if='(createThread.$submitted || createThread.title.$dirty) && createThread.title.$invalid' ng-messages="createThread.title.$error">
                             <div ng-messages-include="common/forms/messages-template.html"></div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="new-thread-description" class="col-sm-2 control-label" translate="DESCRIPTION"></label>
+                        <label for="new-thread-body" class="col-sm-2 control-label" translate="WORKSPACE.THREADS.CREATE_THREAD_MODAL.MESSAGE"></label>
                         <div class="col-sm-10">
-                            <textarea ng-model="models.description" class="form-control" id="new-thread-description" name="description" placeholder="{{'DESCRIPTION' | translate}}" ng-disabled="models.pendingSubmit"></textarea>
+                            <textarea ng-model="models.body" class="form-control" id="new-thread-body" name="body" placeholder="{{'WORKSPACE.THREADS.CREATE_THREAD_MODAL.MESSAGE' | translate}}" ng-disabled="models.pendingSubmit"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox checkbox-primary">
                                 <input id="thread-visibility" type="checkbox" name="visibility" ng-model="models.visibility" ng-disabled="models.pendingSubmit">
                                 <label for="thread-visibility" translate="WORKSPACE.THREADS.CREATE_THREAD_MODAL.VISIBILITY"></label>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary" translate="WORKSPACE.THREADS.CREATE_THREAD_MODAL.SUBMIT" ng-disabled="models.pendingSubmit"></button>

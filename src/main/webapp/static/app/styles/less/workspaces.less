@@ -220,19 +220,89 @@
     .thread {
       cursor: pointer;
     }
-    .thread-name {
+    .thread-function {
+      margin: 0 0 20px 0;
+    }
+    .thread-icon {
+      vertical-align: middle;
+    }
+    .thread-title {
       color: @ortolang-blue;
       font-weight: bold;
     }
     .thread-author {
       font-size: @font-size-small;
       font-style: italic;
+      vertical-align: middle;
+      p {
+        white-space: nowrap;
+      }
     }
     .thread-activity {
       font-weight: 300;
       font-style: italic;
       font-size: @font-size-small;
     }
+    .message-author {
+      font-size: @font-size-small;
+    }
+    .message-author-icon {
+      padding-top: 5px;
+    }
+    .message-date {
+      font-size: @font-size-small;
+    }
+    .message-title {
+      color: @dark-blue;
+      font-weight: bold;
+    }
+    .message-replyto {
+      color: @text-color-light;
+      font-size: @font-size-small;
+    }
+    .message-body {
+      margin-top: 5px;
+      padding: 10px 20px 10px 20px;
+    }
+    .message-content {
+      margin-top: 15px;
+      white-space: pre;
+    }
+    .message-response-status {
+      color: @text-color-light;
+      font-size: @font-size-small;
+      margin-bottom: 10px;
+    }
+    .message-answered {
+      color: @green;
+      font-weight: bold;
+    }
+    .message-notanswered {
+      color: @red;
+      font-weight: bold;
+    }
+    .message-action {
+      font-size: @font-size-small;
+      cursor: pointer;
+    }
+    .message-separator {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.create-thread-modal {
+  textarea {
+    resize: none;
+    height: 15em;
+  }
+}
+
+.reply-message-modal {
+  textarea {
+    resize: none;
+    height: 15em;
   }
 }
 
@@ -267,13 +337,6 @@
   }
   .media-body {
     vertical-align: middle;
-  }
-}
-
-.create-thread-modal {
-  textarea {
-    resize: none;
-    height: 10em;
   }
 }
 

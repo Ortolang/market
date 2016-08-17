@@ -449,16 +449,33 @@ angular.module('ortolangMarketApp')
             },
             THREADS: {
                 TAB_TITLE: 'Discussion',
-                EMPTY: '<strong>Cet espace de travail ne contient aucune discussion.</strong><br/> Les discussions vous permettent de poser des questions ou d\'échanger des informations entre membres du projet ou avec les modérateurs ORTOLANG.',
+                EMPTY: '<strong>Cet espace de travail ne contient aucune discussion.</strong><br/> Les discussions vous permettent de poser des questions ou d\'échanger des informations entre membres du projet et avec les modérateurs ORTOLANG.',
                 START: 'Démarrer une nouvelle discussion',
                 BACK: 'Revenir à la liste des discussions',
                 POST: 'Poster un nouveau message',
+                REPLY: 'Répondre',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Création d\'une nouvelle discussion',
                     SUBMIT: 'Créer',
-                    VISIBILITY: 'Impliquer les modérateurs dans la discussion'
+                    VISIBILITY: 'Impliquer les modérateurs dans la discussion',
+                    QUESTION: 'Titre / Question',
+                    MESSAGE: 'Message'
                 },
-                CREATED_BY: 'créé par'
+                REPLY_MESSAGE_MODAL: {
+                    TITLE: 'Répondre au message',
+                    SUBMIT: 'Répondre',
+                    MESSAGE: 'Message'
+                },
+                CREATED_BY: 'créé par',
+                REPLY_TO: 'en réponse à',
+                ANSWERED: {
+                    PART1: 'Cette question a reçu une',
+                    PART: 'Réponse'
+                },
+                NOTANSWERED: {
+                    PART1: 'Cette question n\'a reçu',
+                    PART2: 'Aucune Réponse'
+                }
             }
         },
         ERROR_MODAL_QUEUE_LIMIT: {

@@ -65,9 +65,9 @@
                     <small><a ng-href="/workspaces/{{Workspace.active.workspace.alias}}?section=metadata" translate="WORKSPACE.GO_TO_METATDATA"></a></small>
                 </p>
             </div>
-            <div ng-switch-when="threads">
-                <div ng-include="'workspace/workspace-dashboard-threads.html'"></div>
-            </div>
+        </div>
+        <div ng-switch-when="threads">
+            <div ng-include="'workspace/workspace-dashboard-threads.html'"></div>
         </div>
     </div>
 </div>

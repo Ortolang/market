@@ -138,5 +138,10 @@ angular.module('ortolangMarketApp')
                 claim: 'fa fa-fw fa-reply',
                 unclaim: 'fa fa-fw fa-share',
                 workspace: 'fa fa-fw fa-search'
+            },
+            threads: {
+                notanswered: 'fa fa-fw fa-question-circle-o',
+                answered: 'fa fa-fw fa-check-circle',
+                reply: 'fa fa-fw fa-commenting'
             }
         });

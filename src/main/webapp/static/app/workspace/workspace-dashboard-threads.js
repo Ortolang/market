@@ -11,17 +11,23 @@ angular.module('ortolangMarketApp')
     .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$modal', '$q', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', function ($rootScope, $scope, $modal, $q, Workspace, MessageResource, ortolangType, Helper) {
 
         $scope.listThreads = function () {
-            MessageResource.listThreads({wskey: Workspace.active.workspace.key, o: $scope.models.offset, l: $scope.models.limit}, function (result) {
+            MessageResource.listThreads({wskey: Workspace.active.workspace.key}, function (result) {
                 $scope.models.activeThread = null;
                 $scope.models.threads = result;
+                angular.forEach($scope.models.threads, function (thread) {
+                    Helper.getCard(thread.author);
+                });
             }, function (error) {
                 Helper.showUnexpectedErrorAlert('#create-thread-modal', 'top');
             });
         };
 
         $scope.listMessages = function () {
-            MessageResource.listMessages({tkey: $scope.models.activeThread.key, o: $scope.models.offset, l: $scope.models.limit}, function (result) {
+            MessageResource.listMessages({tkey: $scope.models.activeThread.key}, function (result) {
                 $scope.models.messages = result;
+                angular.forEach($scope.models.messages, function (message) {
+                    Helper.getCard(message.author);
+                });
             }, function (error) {
                 Helper.showUnexpectedErrorAlert('#create-thread-modal', 'top');
             });
@@ -35,7 +41,7 @@ angular.module('ortolangMarketApp')
                 if (!modalScope.models.pendingSubmit) {
                     modalScope.models.pendingSubmit = true;
                     if (createThreadForm.$valid) {
-                        MessageResource.createThread({workspace: Workspace.active.workspace.key, name: modalScope.models.name, description: modalScope.models.description}, function (newThread) {
+                        MessageResource.createThread({wskey: Workspace.active.workspace.key, title: modalScope.models.title, body: modalScope.models.body}, function (newThread) {
                             createThreadModal.hide();
                         }, function (error) {
                             Helper.showUnexpectedErrorAlert('#create-thread-modal', 'top');
@@ -56,6 +62,35 @@ angular.module('ortolangMarketApp')
             });
         };
 
+        $scope.reply = function (message) {
+            var replyMessageModal,
+                modalScope = Helper.createModalScope(true);
+
+            modalScope.submit = function (form) {
+                if (!modalScope.models.pendingSubmit) {
+                    modalScope.models.pendingSubmit = true;
+                    if (form.$valid) {
+                        MessageResource.postMessage({tkey: $scope.models.activeThread.key, parent: message.key, body: modalScope.models.body}, function (result) {
+                            replyMessageModal.hide();
+                        }, function (error) {
+                            Helper.showUnexpectedErrorAlert('#reply-message-modal', 'top');
+                            modalScope.models.pendingSubmit = false;
+                        });
+                    } else {
+                        modalScope.models.pendingSubmit = false;
+                    }
+                }
+            };
+            modalScope.$on('modal.show', function () {
+                angular.element('#reply-message-modal').find('[autofocus]:first').focus();
+            });
+            replyMessageModal = $modal({
+                scope: modalScope,
+                templateUrl: 'workspace/templates/reply-message-modal.html',
+                show: true
+            });
+        };
+
         $scope.openThread = function(thread) {
             $scope.models.activeThread = thread;
             $scope.listMessages();
@@ -70,11 +105,8 @@ angular.module('ortolangMarketApp')
 
         (function init() {
             $scope.models = {};
-            $scope.models.offset = 0;
-            $scope.models.limit = 15;
             $scope.models.activeThread = null;
-            $scope.models.threads = {};
-            $scope.models.messages = {};
             $scope.listThreads();
+            $scope.Workspace = Workspace;
         }());
     }]);
