@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$modal', '$q', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', function ($rootScope, $scope, $modal, $q, Workspace, MessageResource, ortolangType, Helper) {
+    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$modal', '$q', '$timeout', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', function ($rootScope, $scope, $modal, $q, $timeout, Workspace, MessageResource, ortolangType, Helper) {
 
         $scope.listThreads = function () {
             MessageResource.listThreads({wskey: Workspace.active.workspace.key}, function (result) {
@@ -25,8 +25,10 @@ angular.module('ortolangMarketApp')
         $scope.listMessages = function () {
             MessageResource.listMessages({tkey: $scope.models.activeThread.key}, function (result) {
                 $scope.models.messages = result;
+                $scope.models.messagesAuthors = {};
                 angular.forEach($scope.models.messages, function (message) {
                     Helper.getCard(message.author);
+                    $scope.models.messagesAuthors[message.key] = message.author;
                 });
             }, function (error) {
                 Helper.showUnexpectedErrorAlert('#create-thread-modal', 'top');
@@ -94,7 +96,7 @@ angular.module('ortolangMarketApp')
         $scope.openThread = function(thread) {
             $scope.models.activeThread = thread;
             $scope.listMessages();
-        }
+        };
 
         $rootScope.$on('message.thread.create', function (event, eventMessage) {
             event.stopPropagation();
@@ -102,6 +104,13 @@ angular.module('ortolangMarketApp')
                 $scope.listThreads();
             }
         });
+
+        $scope.highlightMessage = function (key) {
+            $scope.models.highligtedMessage = key;
+            $timeout(function () {
+                $scope.models.highligtedMessage = undefined;
+            }, 3000);
+        };
 
         (function init() {
             $scope.models = {};

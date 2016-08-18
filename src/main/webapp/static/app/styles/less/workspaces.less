@@ -130,7 +130,7 @@
       }
     }
   }
-  &.information, &.permissions, &.metadata, &.members {
+  &.information, &.permissions, &.metadata, &.members, &.threads {
     > .container-main-inner {
       max-width: 1300px;
     }
@@ -219,9 +219,9 @@
   &.threads {
     .thread {
       cursor: pointer;
-    }
-    .thread-function {
-      margin: 0 0 20px 0;
+      &:first-child {
+        margin-top: @line-height-computed;
+      }
     }
     .thread-icon {
       vertical-align: middle;
@@ -235,19 +235,34 @@
       font-style: italic;
       vertical-align: middle;
       p {
+        margin-bottom: 0;
         white-space: nowrap;
+        [avatar] {
+          position: relative;
+          top: -2px;
+          margin-left: @padding-xs-horizontal;
+        }
       }
+    }
+    .responses-title {
+      font-weight: 300;
+      margin-top: @line-height-computed * 2;
+      margin-bottom: @line-height-computed;
     }
     .thread-activity {
       font-weight: 300;
       font-style: italic;
       font-size: @font-size-small;
     }
+    .message:first-child {
+      margin-bottom: @line-height-computed;
+    }
     .message-author {
+      margin-left: @padding-xs-horizontal;
       font-size: @font-size-small;
     }
     .message-author-icon {
-      padding-top: 5px;
+      padding-top: 2px;
     }
     .message-date {
       font-size: @font-size-small;
@@ -260,18 +275,39 @@
       color: @text-color-light;
       font-size: @font-size-small;
     }
-    .message-body {
-      margin-top: 5px;
-      padding: 10px 20px 10px 20px;
+    .reply-message-wrapper {
+      margin-left: @padding-base-horizontal;
+    }
+    .question-body {
+      transition: all 0.5s;
+      margin: 0 -@padding-base-horizontal -@padding-base-horizontal;
+      padding: 0 @padding-base-horizontal @padding-base-horizontal;
+      &.highlighted {
+        background-color: @alternate-bg;
+      }
+    }
+    .highlight-message {
+      cursor: pointer;
+      color: @ortolang-blue;
+    }
+    .card-well {
+      transition: all 0.5s;
+      &.highlighted {
+        background-color: @alternate-bg;
+      }
+      .message-body {
+        margin-top: @padding-base-vertical;
+        padding-top: @line-height-computed;
+      }
     }
     .message-content {
-      margin-top: 15px;
-      white-space: pre;
+      margin-top: @line-height-computed;
+      white-space: pre-line;
     }
     .message-response-status {
       color: @text-color-light;
       font-size: @font-size-small;
-      margin-bottom: 10px;
+      margin-bottom: @padding-large-vertical;
     }
     .message-answered {
       color: @green;
@@ -281,14 +317,14 @@
       color: @red;
       font-weight: bold;
     }
-    .message-action {
-      font-size: @font-size-small;
-      cursor: pointer;
+    .question-info {
+      margin-top: @line-height-computed;
     }
-    .message-separator {
-      margin-top: 20px;
-      margin-bottom: 10px;
+    .message-actions {
+      margin-top: @line-height-computed;
     }
+
+
   }
 }
 

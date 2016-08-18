@@ -34,16 +34,6 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            function processOrganisation(data) {
-                var fullname;
-                if (data.acronym) {
-                    fullname = data.acronym + ' - ';
-                }
-                fullname += data.name + ' (' + data.city + ', ' + data.country + ')';
-                data.fullname = fullname;
-                return data;
-            }
-
             (function init() {
                 User.fetchFriendList();
                 $scope.key = $routeParams.key;
@@ -71,7 +61,6 @@ angular.module('ortolangMarketApp')
                         if ($scope.infos.organisation) {
                             Profile.getOrganization($scope.infos.organisation).then(function (data) {
                                 $scope.infos.organisation = data;
-                                $scope.infos.organisation.fullname = processOrganisation(data);
                             });
                         }
                     });

@@ -382,6 +382,9 @@ angular.module('ortolangMarketApp')
                 BACK: 'Go back to discussion\'s list',
                 POST: 'Post a new message',
                 REPLY: 'Reply',
+                RESPONSES: 'Responses:',
+                NO_RESPONSES_YET: 'This question has not been answered yet',
+                LAST_ACTIVITY: 'Last response',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Create a new discussion',
                     SUBMIT: 'Create',
@@ -398,11 +401,11 @@ angular.module('ortolangMarketApp')
                 REPLY_TO: 'in response to',
                 ANSWERED: {
                     PART1: 'This question has been',
-                    PART: 'Answered'
+                    PART: 'answered'
                 },
                 NOTANSWERED: {
-                    PART1: 'This question is',
-                    PART2: 'Not Answered'
+                    PART1: 'This question has',
+                    PART2: 'not been answered yet'
                 }
             }
         },
