@@ -225,7 +225,7 @@
                 </div>
             </div>
 
-            <div class="card-well card-well-market card-well-share">
+            <div class="card-well card-well-market card-well-share" ng-show="root !== 'head'">
                 <p class="lead">
                     {{'SHARE' | translate}}
                     <a ng-href="{{content.social.facebook}}" target="_blank" data-title="Facebook" bs-tooltip><span ng-class="::icons.facebook" class="fa-lg"></span></a>
