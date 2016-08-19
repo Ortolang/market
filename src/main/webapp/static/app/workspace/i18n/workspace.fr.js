@@ -455,6 +455,9 @@ angular.module('ortolangMarketApp')
                 BACK: 'Revenir à la liste des discussions',
                 POST: 'Poster un nouveau message',
                 REPLY: 'Répondre',
+                RESPONSES: 'Réponses :',
+                NO_RESPONSES_YET: 'Cette question n\'a encore reçu aucune réponse :',
+                LAST_ACTIVITY: 'Dernière réponse',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Création d\'une nouvelle discussion',
                     SUBMIT: 'Créer',
@@ -470,12 +473,12 @@ angular.module('ortolangMarketApp')
                 CREATED_BY: 'créé par',
                 REPLY_TO: 'en réponse à',
                 ANSWERED: {
-                    PART1: 'Cette question a reçu une',
-                    PART: 'Réponse'
+                    PART1: 'Cette question a reçu',
+                    PART2: '{{messages - 1}} réponse{{messages > 2 ? "s" : ""}}'
                 },
                 NOTANSWERED: {
                     PART1: 'Cette question n\'a reçu',
-                    PART2: 'Aucune Réponse'
+                    PART2: 'aucune réponse'
                 }
             }
         },

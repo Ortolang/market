@@ -161,7 +161,6 @@ angular.module('ortolangMarketApp')
                         activateContextMenu();
                     }
                     if ($scope.contextMenuItems.length > 0) {
-                        $scope.contextMenuStyle = {};
                         var wrapper = angular.element('.browser-wrapper'),
                             wrapperOffset = wrapper.offset(),
                             top = clickEvent.pageY - wrapperOffset.top - 3,

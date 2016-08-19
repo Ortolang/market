@@ -5,7 +5,7 @@
                 <div class="text-center">
                     <div class="avatar-wrapper" ng-if="profile" avatar data-size="100" data-email-hash="profile.emailHash" data-img-classes="img-circle"></div>
                     <h3>{{::fullName()}}</h3>
-                    <p><a ng-href="/producers/{{::infos.organisation.id}}">{{::infos.organisation.fullname}}</a></p>
+                    <p><a ng-href="/producers/{{::infos.organisation.id}}">{{infos.organisation | organizationName}}</a></p>
                     <div>
                         <button ng-if="isFriend && !isFriend()" ng-click="addToFriends()" class="btn btn-sm btn-default"><span ng-class="::icons.plus"></span> {{'PROFILE.ADD_TO_FRIENDS' | translate}}</button>
                         <button ng-if="isFriend()" disabled class="btn btn-sm btn-default"><span ng-class="::icons.check"></span> {{'PROFILE.ADDED_TO_FRIENDS' | translate}}</button>

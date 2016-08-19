@@ -142,6 +142,6 @@ angular.module('ortolangMarketApp')
             threads: {
                 notanswered: 'fa fa-fw fa-question-circle-o',
                 answered: 'fa fa-fw fa-check-circle',
-                reply: 'fa fa-fw fa-commenting'
+                reply: 'fa fa-fw fa-reply'
             }
         });
