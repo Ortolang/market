@@ -160,7 +160,8 @@
                 <div class="section-body-wrapper">
                     <dl>
                         <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>
-                        <dd ng-repeat="pub in content.publications" ng-bind-html="pub">
+                        <dd ng-repeat="pub in content.publications"  data-content="pub" data-target-blank>
+                            <div ng-bind-html="pub"></div>
                         </dd>
                     </dl>
                 </div>

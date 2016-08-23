@@ -17,7 +17,7 @@
                         <tbody>
                         <tr ng-repeat="publication in metadata.publications">
                             <td>
-                                <div class="media">
+                                <div class="media" data-content="publication" data-target-blank>
                                     <div class="media-body" ng-bind-html="publication"></div>
                                     <div class="media-right">
                                         <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="removePublication(publication)"></span>
