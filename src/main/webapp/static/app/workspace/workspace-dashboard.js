@@ -73,7 +73,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.dashboardSection === defaultSection) {
                     $location.search({});
                 } else {
-                    if ($scope.dashboardSection === 'content') {
+                    if ($scope.dashboardSection === 'content' || $scope.dashboardSection === 'threads') {
                         $location.search('section', id);
                     } else {
                         $location.search({section: id});

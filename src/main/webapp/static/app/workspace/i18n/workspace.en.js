@@ -376,12 +376,13 @@ angular.module('ortolangMarketApp')
                 HELP: 'Some of the content of this resource may have a restricted access to:'
             },
             THREADS: {
-                TAB_TITLE: 'Discussion',
-                EMPTY: '<strong>This workspace does not hold any discussion.</strong><br/>Discussions allows to exchange informations between workspace members but also with ORTOLANG\'s moderators.',
+                TAB_TITLE: 'Discussions',
+                EMPTY: '<strong>This workspace does not hold any discussions.</strong><br/>Discussions allows to exchange informations between workspace members but also with ORTOLANG\'s moderators.',
                 START: 'Start a new discussion',
                 BACK: 'Go back to discussion\'s list',
                 POST: 'Post a new message',
                 REPLY: 'Reply',
+                PUBLISH: 'Publish',
                 RESPONSES: 'Responses:',
                 NO_RESPONSES_YET: 'This question has not been answered yet',
                 LAST_ACTIVITY: 'Last response',

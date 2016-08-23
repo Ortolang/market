@@ -457,6 +457,13 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         Workspace.refresh.events = needInfoRefresh(eventMessage);
         Workspace.refresh.head = Workspace.refresh.events;
     });
+    // THREAD
+    $rootScope.$on('message.thread.create', function ($event, eventMessage) {
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+    });
+    $rootScope.$on('message.thread.post', function ($event, eventMessage) {
+        Workspace.refresh.events = needInfoRefresh(eventMessage);
+    });
 
     return this;
 
