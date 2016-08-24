@@ -61,6 +61,8 @@ angular.module('ortolangMarketApp')
             CREATE_WORKSPACE: 'Créer un espace de travail',
             NO_METATDATA: 'Les métadonnées ne sont pas encore renseignées.',
             GO_TO_METATDATA: 'Allez à la page des métadonnées.',
+            NO_METADATA_TYPE: 'La catégorie n\'a pas encore été renseignée.',
+            GO_BASIC_INFO: 'Selectionnez une catégorie.',
             HEAD: 'Version actuelle',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Création d\'un espace de travail',

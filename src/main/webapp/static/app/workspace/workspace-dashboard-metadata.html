@@ -4,7 +4,7 @@
     <div class="workspace-dashboard-metadata">
         <form name="ortolangItemJsonform" novalidate role="form">
 
-            <div class="row" bs-active-pane="activeTab" data-template="workspace/templates/workspace-dashboard-metadata-tabs-template.html" bs-tabs>
+            <div class="row" bs-active-pane="tab.activeTab" data-template="workspace/templates/workspace-dashboard-metadata-tabs-template.html" bs-tabs>
 
                 <div data-title="<span class='fa fa-list-alt fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.BASIC_INFO' | translate}}" bs-pane>
                     <div ng-include="'workspace/templates/basic-info.html'"></div>
@@ -13,7 +13,7 @@
                     <div ng-include="'workspace/templates/whos-involved.html'"></div>
                 </div>
                 <div data-title="<span class='fa fa-puzzle-piece fa-fw' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.SPECIFIC_FIELD' | translate}}" bs-pane>
-                <div ng-include="'workspace/templates/specific-fields.html'"></div>
+                    <div ng-include="'workspace/templates/specific-fields.html'"></div>
                 </div>
                 <div data-title="<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> {{'WORKSPACE.METADATA_EDITOR.ADDITIONAL_INFO' | translate}}" bs-pane>
                     <div ng-include="'workspace/templates/additional-info.html'"></div>

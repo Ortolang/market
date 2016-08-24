@@ -98,7 +98,7 @@ angular.module('ortolangMarketApp')
             function init() {
                 $scope.submitButtonText = 'Appliquer';
                 // $scope.errors = {title: false, type: false, description: false};
-                $scope.activeTab = 0;
+                $scope.tab = {activeTab : 0};
                 $scope.WorkspaceMetadataService = WorkspaceMetadataService;
 
                 // Gets last schema

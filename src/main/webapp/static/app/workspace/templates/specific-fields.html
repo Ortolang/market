@@ -1,4 +1,13 @@
 <div class="row specific-field" ng-controller="SpecificFieldsCtrl">
+    <div ng-if="!metadata.type" class="no_metadata">
+        <i ng-class="icons.section.corpora" class="fa-4x"></i>
+        <br/>
+        <p>
+            <strong translate="WORKSPACE.NO_METADATA_TYPE"></strong>
+            <br/>
+            <small><a ng-href="#" ng-click="tab.activeTab=0" translate="WORKSPACE.GO_BASIC_INFO"></a></small>
+        </p>
+    </div>
     <div class="col-sm-12 col-md-10 tab-pane-content" ng-switch on="metadata.type">
 
         <div ng-switch-when="Corpus">

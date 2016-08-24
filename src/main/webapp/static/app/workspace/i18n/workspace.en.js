@@ -61,6 +61,8 @@ angular.module('ortolangMarketApp')
             CREATE_WORKSPACE: 'Create a new workspace',
             NO_METATDATA: 'Metadata is not filled.',
             GO_TO_METATDATA: 'Go to metadata page.',
+            NO_METADATA_TYPE: 'The resource type is not specified.',
+            GO_BASIC_INFO: 'Pick it one.',
             HEAD: 'Current version',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
