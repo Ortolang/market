@@ -46,7 +46,8 @@
     "angular-duration-format": "1.0.1",
     "ng-showdown": "1.1.0",
     "zInfiniteScroll": "1.1.4",
-    "angular-drag-and-drop-lists": "1.4.0"
+    "angular-drag-and-drop-lists": "1.4.0",
+    "ngWig": "ng-wig#3.0.7"
   },
   "devDependencies": {
     "angular-mocks": "1.5.8",

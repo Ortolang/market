@@ -47,7 +47,8 @@ angular
         'ng-showdown',
         'zInfiniteScroll',
         'angular-duration-format',
-        'dndLists'
+        'dndLists',
+        'ngWig'
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
