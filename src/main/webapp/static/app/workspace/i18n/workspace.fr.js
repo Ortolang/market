@@ -443,18 +443,19 @@ angular.module('ortolangMarketApp')
                 },
                 MESSAGE: {
                     THREAD: {
-                        CREATE: 'a créé une nouvelle discussion <span class="description">{{::arguments.name}}</span>',
-                        POST: 'a posté un message dans la discussion <span class="description">{{::arguments.threadname}}</span>'
+                        CREATE: 'a créé une nouvelle discussion <span class="description">{{::arguments.title}}</span>',
+                        POST: 'a posté un message dans la discussion <span class="description">{{::arguments["thread-title"]}}</span>'
                     }
                 }
             },
             THREADS: {
-                TAB_TITLE: 'Discussion',
+                TAB_TITLE: 'Discussions',
                 EMPTY: '<strong>Cet espace de travail ne contient aucune discussion.</strong><br/> Les discussions vous permettent de poser des questions ou d\'échanger des informations entre membres du projet et avec les modérateurs ORTOLANG.',
                 START: 'Démarrer une nouvelle discussion',
                 BACK: 'Revenir à la liste des discussions',
                 POST: 'Poster un nouveau message',
                 REPLY: 'Répondre',
+                PUBLISH: 'Publier',
                 RESPONSES: 'Réponses :',
                 NO_RESPONSES_YET: 'Cette question n\'a encore reçu aucune réponse :',
                 LAST_ACTIVITY: 'Dernière réponse',

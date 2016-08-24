@@ -1,0 +1,28 @@
+<div class="media" ng-init="scrollToReply()">
+    <div class="media-left message-author-icon">
+        <span avatar data-email-hash="Helper.profileCards[User.key].emailHash" data-size="48"></span>
+    </div>
+    <div class="media-body">
+        <h5 class="media-heading">
+            <span class="message-author"><a ng-href="profiles/{{::User.key}}">{{::Helper.profileCards[User.key].fullName}}</a></span>
+            <span class="message-replyto">({{'WORKSPACE.THREADS.REPLY_TO' | translate}} <span class="highlight-message" ng-click="highlightMessage(models.replyTo.key)">{{::Helper.profileCards[models.messagesAuthors[models.replyTo.key]].fullName}})</span></span>
+        </h5>
+        <form role="form" id="reply-form" name="reply" class="form-horizontal" ng-submit="replySubmit(reply)" novalidate autocomplete="off">
+            <div class="message-body card-well">
+                <h5 class="media-heading message-title">Re: {{::models.activeThread.title}}</h5>
+                <div class="col-xs-12">
+                    <div class="message-reply-content form-group" ng-class="{'has-error': (reply.$submitted || reply.body.$dirty) && reply.body.$invalid}">
+                        <textarea ng-model="models.replyBody" class="form-control" rows="5" name="body" autofocus required></textarea>
+                        <div class="help-block" ng-if='reply.$submitted || reply.body.$dirty' ng-messages="reply.body.$error">
+                            <div ng-messages-include="common/forms/messages-template.html"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="message-actions">
+                    <button type="submit" class="btn btn-primary btn-sm" ng-disabled="models.pendingSubmit" translate="WORKSPACE.THREADS.PUBLISH"></button>
+                    <button type="reset" class="btn btn-default btn-sm" ng-click="cancelReply()" ng-disabled="models.pendingSubmit" translate="CANCEL"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

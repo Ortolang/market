@@ -17,7 +17,7 @@
     </div>
 </div>
 <h3 class="responses-title" translate="WORKSPACE.THREADS.RESPONSES"></h3>
-<div ng-if="models.messages.length < 2">
+<div ng-if="models.messages.length < 2 && !models.replyTo">
     <p translate="WORKSPACE.THREADS.NO_RESPONSES_YET"></p>
     <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>
 </div>

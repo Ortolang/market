@@ -1,27 +1,24 @@
 <div ng-controller="WorkspaceDashboardThreadsCtrl">
     <div class="workspace-dashboard-section workspace-dashboard-threads" ng-if="!models.activeThread">
-        <button class="btn btn-default btn-primary thread-function" ng-click="createThread()">{{'WORKSPACE.THREADS.START' | translate}}</button>
-        <ul class="list-unstyled" ng-if="models.threads.length === 0">
-            <li class="thread media card-well">
+        <button class="btn btn-default btn-primary thread-function" ng-click="createThread()" translate="WORKSPACE.THREADS.START"></button>
+        <ul class="list-unstyled">
+            <li class="thread media card-well" ng-if="models.threads.length === 0">
                 <div class="media-body">
                     <span class="thread-description" translate="WORKSPACE.THREADS.EMPTY"></span>
                 </div>
             </li>
-        </ul>
-        <ul class="list-unstyled" ng-if="models.threads.length > 0">
-            <li ng-repeat="thread in models.threads" class="thread card-well card-well-hover" ng-click="openThread(thread)">
+            <li ng-repeat="thread in models.threads track by thread.key" class="thread card-well card-well-hover" ng-click="openThread(thread)">
                 <div class="media">
                     <div class="media-left thread-icon">
-                        <span ng-if="!thread.answered" ng-class="::icons.threads.notanswered"></span>
-                        <span ng-if="thread.answered" ng-class="::icons.threads.answered"></span>
+                        <span ng-class="thread.answered ? icons.threads.answered : icons.threads.notanswered" class="fa-lg text-muted"></span>
                     </div>
                     <div class="media-body">
                         <div class="thread-title">{{::thread.title}}</div>
-                        <span class="thread-activity">{{::thread.lastActivity | amTimeAgo}}</span>
+                        <span class="thread-activity">{{thread.lastActivity | amTimeAgo}}</span>
                     </div>
                     <div class="media-right thread-author">
                         <p>
-                            <span>{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a ng-href="profiles/{{::thread.author}}">{{Helper.profileCards[thread.author].fullName}}</a></span>
+                            <span>{{'WORKSPACE.THREADS.CREATED_BY' | translate}} <a ng-href="profiles/{{::thread.author}}">{{::Helper.profileCards[thread.author].fullName}}</a></span>
                             <span avatar data-email-hash="Helper.profileCards[thread.author].emailHash" data-size="26" data-img-classes="img-circle"></span>
                         </p>
                     </div>
@@ -30,9 +27,10 @@
         </ul>
     </div>
     <div class="workspace-dashboard-section workspace-dashboard-threads" ng-if="models.activeThread">
-        <button class="btn btn-default btn-primary thread-function" ng-click="listThreads()">{{'WORKSPACE.THREADS.BACK' | translate}}</button>
+        <button class="btn btn-default btn-primary thread-function" ng-click="backToList()"><span ng-class="::icons.browser.back"></span> {{'WORKSPACE.THREADS.BACK' | translate}}</button>
         <ul class="list-unstyled">
             <li class="message" ng-repeat="message in models.messages | orderBy:'+date' track by message.key" ng-include="::'workspace/templates/thread-' + (message.question ? 'question' : 'message') + '.html'"></li>
+            <li ng-if="models.replyTo" id="thread-message-reply-wrapper" ng-include="'workspace/templates/thread-message-reply.html'"></li>
         </ul>
     </div>
 </div>
