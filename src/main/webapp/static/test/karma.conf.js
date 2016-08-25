@@ -57,6 +57,7 @@ module.exports = function (config) {
             projectBase + 'bower_components/ng-showdown/dist/ng-showdown.js',
             projectBase + 'bower_components/angular-duration-format/dist/angular-duration-format.js',
             projectBase + 'bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
+            projectBase + 'bower_components/ngWig/dist/ng-wig.js',
             'test/mock/global.js',
             'app/**/!(ortolang-config).js',
             'test/mock/**/*.js',
