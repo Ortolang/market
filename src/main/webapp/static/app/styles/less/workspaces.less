@@ -257,15 +257,26 @@
     .message:first-child {
       margin-bottom: @line-height-computed;
     }
-    .message-author {
-      margin-left: @padding-xs-horizontal;
+    .media-heading {
+      margin-bottom: @padding-base-vertical;
       font-size: @font-size-small;
     }
     .message-author-icon {
       padding-top: 2px;
     }
+    .message-author {
+      margin-left: @padding-small-vertical;
+    }
     .message-date {
-      font-size: @font-size-small;
+      margin-right: @padding-base-horizontal;
+    }
+    .message-edit {
+      font-weight: 600;
+      &:after {
+        margin-left: @padding-xs-horizontal;
+        margin-right: @padding-xs-horizontal;
+        content: "-";
+      }
     }
     .message-title {
       color: @dark-blue;
@@ -273,7 +284,6 @@
     }
     .message-replyto {
       color: @text-color-light;
-      font-size: @font-size-small;
     }
     .reply-message-wrapper {
       margin-left: @padding-base-horizontal;
@@ -294,10 +304,6 @@
       transition: all 0.5s;
       &.highlighted {
         background-color: @alternate-bg;
-      }
-      .message-body {
-        margin-top: @padding-base-vertical;
-        padding-top: @line-height-computed;
       }
     }
     .message-reply-content {
@@ -322,9 +328,22 @@
     }
     .question-info {
       margin-top: @line-height-computed;
+      [avatar] {
+        margin-right: @padding-small-vertical;
+      }
     }
     .message-actions {
       margin-top: @line-height-computed;
+      .btn-hidden {
+        display: none;
+      }
+    }
+    .message:hover {
+      .message-actions {
+        .btn-hidden {
+          display: inline;
+        }
+      }
     }
 
 

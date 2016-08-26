@@ -1,0 +1,12 @@
+<form role="form" name="edit" class="form-horizontal" ng-submit="editSubmit(edit)" novalidate autocomplete="off">
+    <div class="message-reply-content form-group col-xs-12" ng-class="{'has-error': (edit.$submitted || edit.body.$dirty) && edit.body.$invalid}">
+        <textarea ng-model="models.editBody" class="form-control" rows="5" name="body" autofocus required></textarea>
+        <div class="help-block" ng-if='edit.$submitted || edit.body.$dirty' ng-messages="edit.body.$error">
+            <div ng-messages-include="common/forms/messages-template.html"></div>
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary btn-sm" translate="SUBMIT"></button>
+        <button ng-click="cancelEdit()" class="btn btn-default btn-sm" translate="CANCEL"></button>
+    </div>
+</form>

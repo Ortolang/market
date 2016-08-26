@@ -390,6 +390,7 @@ angular.module('ortolangMarketApp')
                 RESPONSES: 'Responses:',
                 NO_RESPONSES_YET: 'This question has not been answered yet',
                 LAST_ACTIVITY: 'Last response',
+                EDITED: 'Edited on ',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Create a new discussion',
                     SUBMIT: 'Create',
@@ -404,6 +405,7 @@ angular.module('ortolangMarketApp')
                 },
                 CREATED_BY: 'created by',
                 REPLY_TO: 'in response to',
+                ATTACHEMENT: 'Attachement',
                 ANSWERED: {
                     PART1: 'This question has been',
                     PART: 'answered'
@@ -411,6 +413,14 @@ angular.module('ortolangMarketApp')
                 NOTANSWERED: {
                     PART1: 'This question has',
                     PART2: 'not been answered yet'
+                },
+                DELETE_MESSAGE_MODAL: {
+                    TITLE: 'Message deletion',
+                    BODY: '<strong class="text-danger">The deletion of a message cannot be undone</strong>. Are you sure you want to delete this message?'
+                },
+                DELETE_DISCUSSION_MODAL: {
+                    TITLE: 'Discussion deletion',
+                    BODY: '<strong class="text-danger">The deletion of a discussion cannot be undone</strong>. Are you sure you want to delete this discussion?'
                 }
             }
         },
