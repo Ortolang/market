@@ -176,7 +176,8 @@ angular.module('ortolangMarketApp')
             PROCESS_NAMES: {
                 IMPORT_ZIP: 'Importation de "{{zipName}}" dans l\'espace de travail "{{wsName}}"'
             },
-            READ_ONLY_MODE: '<strong>Espace de travail en lecture seule:</strong> certaines propriétés tels que le contenu, les métadonnées et les permissions ne sont pas éditables.',
+            READ_ONLY_MODE: '<strong>Espace de travail en lecture seule :</strong> certaines propriétés tels que le contenu, les métadonnées et les permissions ne sont pas éditables.',
+            ARCHIVE_MODE: '<strong>Espace de travail archivé :</strong> les versions publiées ne sont plus disponibles à la consultation.',
             EDIT_LOGO: 'Cliquez pour modifier votre logo',
             HOLDER_EDITOR_MODAL: {
                 TITLE: 'Création de logo',
@@ -395,7 +396,8 @@ angular.module('ortolangMarketApp')
                         CREATE: 'a créé cet espace de travail',
                         'CHANGE-OWNER': 'a changé le propriétaire de l\'espace',
                         LOCK: 'a verrouillé l\'espace de travail (lecture seule)',
-                        UNLOCK: 'a déverrouillé l\'espace de travail'
+                        UNLOCK: 'a déverrouillé l\'espace de travail',
+                        ARCHIVE: 'a {{arguments.archive==="true"?"archivé":"désarchivé"}} l\'espace de travail'
                     },
                     METADATA: {
                         CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',

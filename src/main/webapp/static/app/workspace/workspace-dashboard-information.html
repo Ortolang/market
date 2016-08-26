@@ -1,6 +1,7 @@
 <div class="row general-information">
     <div class="col-md-12">
         <div ng-if="Workspace.active.workspace.readOnly" class="alert alert-warning" role="alert" translate="WORKSPACE.READ_ONLY_MODE"></div>
+        <div ng-if="Workspace.active.workspace.archive" class="alert alert-warning" role="alert" translate="WORKSPACE.ARCHIVE_MODE"></div>
         <h2>{{::Workspace.getActiveWorkspaceTitle()}}</h2>
         <p><i translate="WORKSPACE.CREATION_DATE" data-translate-values="{creationDate: Workspace.active.workspace.creationDate, author: Helper.profileCards[Workspace.active.workspace.author].fullName}"></i></p>
         <ul class="list-inline">
@@ -97,7 +98,7 @@
         </div>
         <div ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>
-            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
+            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly || Workspace.active.workspace.archive" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
             <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>
     </div>

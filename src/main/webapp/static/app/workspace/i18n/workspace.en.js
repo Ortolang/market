@@ -180,6 +180,8 @@ angular.module('ortolangMarketApp')
             PROCESS_NAMES: {
                 IMPORT_ZIP: 'Import of archive "{{zipName}}" into workspace "{{wsName}}"'
             },
+            READ_ONLY_MODE: '<strong>Workspace on read only :</strong> some properties such as the content, the metadata and the permissions are no longer editables.',
+            ARCHIVE_MODE: '<strong>Archived workspace :</strong> All the published version are no longer availables.',
             EDIT_LOGO: 'Click to edit logo',
             HOLDER_EDITOR_MODAL: {
                 TITLE: 'Logo creator',

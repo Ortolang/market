@@ -410,6 +410,11 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         refreshActiveWorkspaceInfo(eventMessage);
     });
 
+    $rootScope.$on('core.workspace.archive', function (event, eventMessage) {
+        event.stopPropagation();
+        refreshActiveWorkspaceInfo(eventMessage);
+    });
+
     // OBJECT
     $rootScope.$on('core.object.create', function ($event, eventMessage) {
         Workspace.refresh.events = needInfoRefresh(eventMessage);
