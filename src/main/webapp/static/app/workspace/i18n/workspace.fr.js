@@ -461,6 +461,7 @@ angular.module('ortolangMarketApp')
                 RESPONSES: 'Réponses :',
                 NO_RESPONSES_YET: 'Cette question n\'a encore reçu aucune réponse :',
                 LAST_ACTIVITY: 'Dernière réponse',
+                EDITED: 'Éditée le ',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Création d\'une nouvelle discussion',
                     SUBMIT: 'Créer',
@@ -475,6 +476,7 @@ angular.module('ortolangMarketApp')
                 },
                 CREATED_BY: 'créé par',
                 REPLY_TO: 'en réponse à',
+                ATTACHEMENT: 'Pièce jointe',
                 ANSWERED: {
                     PART1: 'Cette question a reçu',
                     PART2: '{{messages - 1}} réponse{{messages > 2 ? "s" : ""}}'
@@ -482,6 +484,14 @@ angular.module('ortolangMarketApp')
                 NOTANSWERED: {
                     PART1: 'Cette question n\'a reçu',
                     PART2: 'aucune réponse'
+                },
+                DELETE_MESSAGE_MODAL: {
+                    TITLE: 'Suppression d\'un message',
+                    BODY: '<strong class="text-danger">La suppression d\'un message est définitive</strong>. Êtes-vous sûr de vouloir supprimer ce message ?'
+                },
+                DELETE_THREAD_MODAL: {
+                    TITLE: 'Suppression d\'une discussion',
+                    BODY: '<strong class="text-danger">La suppression d\'une discussion est définitive</strong>. Êtes-vous sûr de vouloir supprimer cette discussion ?'
                 }
             }
         },

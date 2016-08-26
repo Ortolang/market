@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$location', '$modal', '$q', '$filter', '$timeout', '$anchorScroll', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', function ($rootScope, $scope, $location, $modal, $q, $filter, $timeout, $anchorScroll, Workspace, MessageResource, ortolangType, Helper) {
 
-        var listDeferred;
+        var listDeferred, messagesDeferred;
 
         $scope.listThreads = function () {
             listDeferred = $q.defer();
@@ -30,6 +30,8 @@ angular.module('ortolangMarketApp')
         };
 
         $scope.listMessages = function () {
+            messagesDeferred = $q.defer();
+
             MessageResource.listMessages({tkey: $scope.models.activeThread.key}, function (result) {
                 $scope.models.messages = result;
                 $scope.models.messagesAuthors = {};
@@ -37,9 +39,13 @@ angular.module('ortolangMarketApp')
                     Helper.getCard(message.author);
                     $scope.models.messagesAuthors[message.key] = message.author;
                 });
+                messagesDeferred.resolve();
             }, function () {
                 Helper.showUnexpectedErrorAlert('#create-thread-modal', 'top');
+                messagesDeferred.reject();
             });
+
+            return messagesDeferred.promise;
         };
 
         $scope.createThread = function () {
@@ -72,6 +78,10 @@ angular.module('ortolangMarketApp')
             });
         };
 
+        function setLastActivity() {
+            $scope.models.activeThread.lastActivity = Date.now();
+        }
+
         $scope.reply = function (message) {
             $scope.cancelReply();
             $scope.models.replyTo = message;
@@ -94,16 +104,89 @@ angular.module('ortolangMarketApp')
                 if (form.$valid) {
                     MessageResource.postMessage({tkey: $scope.models.activeThread.key, parent: $scope.models.replyTo.key, body: $scope.models.replyBody}, function () {
                         $scope.listMessages();
-                        $scope.models.activeThread.lastActivity = Date.now();
+                        setLastActivity();
                         $scope.cancelReply();
                     }, function () {
-                        Helper.showUnexpectedErrorAlert(undefined, 'top');
+                        Helper.showUnexpectedErrorAlert();
                         $scope.models.pendingSubmit = false;
                     });
                 } else {
                     $scope.models.pendingSubmit = false;
                 }
             }
+        };
+
+        $scope.deleteMessage = function (message) {
+            var deleteMessageModal,
+                modalScope = Helper.createModalScope(true);
+
+            modalScope.delete = function () {
+                MessageResource.deleteMessage({tkey: $scope.models.activeThread.key, mkey: message.key}, function () {
+                    $scope.listMessages();
+                    deleteMessageModal.hide();
+                }, function () {
+                    Helper.showUnexpectedErrorAlert('#delete-message-modal', 'top');
+                });
+            };
+
+            deleteMessageModal = $modal({
+                scope: modalScope,
+                templateUrl: 'workspace/templates/delete-message-modal.html',
+                show: true
+            });
+        };
+
+        $scope.cancelEdit = function () {
+            $scope.models.editedMessage = undefined;
+            $scope.models.editBody = undefined;
+        };
+
+        $scope.editMessage = function (message) {
+            $scope.models.editedMessage = message;
+            $scope.models.editBody = message.body;
+        };
+
+        $scope.editSubmit = function (form) {
+            if (!$scope.models.pendingSubmit) {
+                if ($scope.models.editedMessage.body === $scope.models.editBody) {
+                    $scope.cancelEdit();
+                    return;
+                }
+                $scope.models.pendingSubmit = true;
+                if (form.$valid) {
+                    MessageResource.updateMessage({tkey: $scope.models.activeThread.key, mkey: $scope.models.editedMessage.key}, {body: $scope.models.editBody}, function () {
+                        $scope.listMessages();
+                        $scope.cancelEdit();
+                    }, function () {
+                        Helper.showUnexpectedErrorAlert();
+                        $scope.models.pendingSubmit = false;
+                    });
+                } else {
+                    $scope.models.pendingSubmit = false;
+                }
+            }
+        };
+
+        $scope.deleteThread = function () {
+            var deleteThreadModal,
+                modalScope = Helper.createModalScope(true);
+
+            modalScope.delete = function () {
+                MessageResource.deleteThread({tkey: $scope.models.activeThread.key}, function () {
+                    deleteThreadModal.hide();
+                    $scope.backToList();
+                }, function () {
+                    Helper.showUnexpectedErrorAlert('#delete-message-modal', 'top');
+                });
+            };
+
+            modalScope.thread = true;
+
+            deleteThreadModal = $modal({
+                scope: modalScope,
+                templateUrl: 'workspace/templates/delete-message-modal.html',
+                show: true
+            });
         };
 
         $scope.openThread = function (thread) {
@@ -121,6 +204,18 @@ angular.module('ortolangMarketApp')
                 listDeferred.promise.then(function () {
                     if ($filter('filter')($scope.models.threads, {key: eventMessage.arguments.key}, true).length === 0) {
                         $scope.listThreads();
+                    }
+                });
+            }
+        });
+
+        $rootScope.$on('message.thread.post', function (event, eventMessage) {
+            event.stopPropagation();
+            if (eventMessage.arguments['thread-key'] === $scope.models.activeThread.key) {
+                messagesDeferred.promise.then(function () {
+                    if ($filter('filter')($scope.models.messages, {key: eventMessage.arguments.key}, true).length === 0) {
+                        $scope.listMessages();
+                        setLastActivity();
                     }
                 });
             }

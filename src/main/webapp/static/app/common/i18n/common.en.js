@@ -15,6 +15,7 @@ angular.module('ortolangMarketApp')
         CANCEL: 'Cancel',
         CREATE: 'Create',
         SUBMIT: 'OK',
+        EDIT: 'Edit',
         ADD: 'Add',
         COPY: 'Copy',
         SAVE: 'Save',

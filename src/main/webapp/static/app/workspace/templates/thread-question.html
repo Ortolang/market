@@ -6,15 +6,22 @@
         | <span>{{'WORKSPACE.THREADS.LAST_ACTIVITY' | translate}} <strong>{{models.activeThread.lastActivity | amTimeAgo}}</strong></span>
     </div>
     <div ng-if="models.messages.length < 2" class="message-response-status">{{'WORKSPACE.THREADS.NOTANSWERED.PART1' | translate}} <span class="message-notanswered" translate="WORKSPACE.THREADS.NOTANSWERED.PART2"></span></div>
-    <div class="message-content">{{::message.body}}</div>
-    <div class="question-info">
-        <span avatar data-email-hash="Helper.profileCards[message.author].emailHash" data-size="48"></span>
-        <span class="message-author"><a ng-href="profiles/{{::message.author}}">{{::Helper.profileCards[message.author].fullName}}</a> </span>
-        <span class="message-date">{{::message.date | date:'medium'}}</span>
-        <span ng-if="models.messages.length >= 2" class="reply-message-wrapper">
-            <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>
-        </span>
+    <div ng-hide="models.editedMessage.key === message.key">
+        <div class="message-content">{{message.body}}</div>
+        <div class="question-info">
+            <span avatar data-email-hash="Helper.profileCards[message.author].emailHash" data-size="48"></span>
+            <span class="message-author"><a ng-href="profiles/{{::message.author}}">{{::Helper.profileCards[message.author].fullName}}</a> </span>
+            <span class="message-date">{{::message.date | date:'medium'}}</span>
+            <span ng-if="models.messages.length >= 2" class="reply-message-wrapper">
+                <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>
+            </span>
+            <span ng-if="models.messages.length === 1 && models.activeThread.author === User.key">
+                <button ng-click="editMessage(message)" class="btn btn-primary btn-sm"><span ng-class="::icons.edit"></span> {{'EDIT' | translate}}</button>
+                <button ng-click="deleteThread()" class="btn btn-danger btn-sm"><span ng-class="::icons.trash"></span> {{'DELETE' | translate}}</button>
+            </span>
+        </div>
     </div>
+    <div ng-if="models.editedMessage.key === message.key" ng-include="'workspace/templates/thread-message-edit.html'"></div>
 </div>
 <h3 class="responses-title" translate="WORKSPACE.THREADS.RESPONSES"></h3>
 <div ng-if="models.messages.length < 2 && !models.replyTo">
