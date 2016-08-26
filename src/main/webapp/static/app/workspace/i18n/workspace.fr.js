@@ -448,6 +448,7 @@ angular.module('ortolangMarketApp')
                 MESSAGE: {
                     THREAD: {
                         CREATE: 'a créé une nouvelle discussion <span class="description">{{::arguments.title}}</span>',
+                        DELETE: 'a supprimé la discussion <span class="description">{{::arguments.title}}</span>',
                         POST: 'a posté un message dans la discussion <span class="description">{{::arguments["thread-title"]}}</span>'
                     }
                 }
@@ -478,7 +479,8 @@ angular.module('ortolangMarketApp')
                 },
                 CREATED_BY: 'créé par',
                 REPLY_TO: 'en réponse à',
-                ATTACHEMENT: 'Pièce jointe',
+                ATTACHMENT: 'Pièce jointe',
+                ATTACHMENTS: 'Pièces jointe{{number > 1 ? "s" : ""}} :',
                 ANSWERED: {
                     PART1: 'Cette question a reçu',
                     PART2: '{{messages - 1}} réponse{{messages > 2 ? "s" : ""}}'

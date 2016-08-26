@@ -63,8 +63,6 @@ angular.module('ortolangMarketApp')
                             });
                         }
                     };
-
-                    scope.showPreview();
                 }
             }
         };

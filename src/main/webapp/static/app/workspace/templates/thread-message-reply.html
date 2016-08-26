@@ -17,6 +17,10 @@
                             <div ng-messages-include="common/forms/messages-template.html"></div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="thread-message-attachment" translate="WORKSPACE.THREADS.ATTACHMENT"></label>
+                        <input type="file" name="attachments" files-model="models.attachments" id="thread-message-attachment" multiple/>
+                    </div>
                 </div>
                 <div class="message-actions">
                     <button type="submit" class="btn btn-primary btn-sm" ng-disabled="models.pendingSubmit" translate="WORKSPACE.THREADS.PUBLISH"></button>

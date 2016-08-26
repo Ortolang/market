@@ -405,7 +405,8 @@ angular.module('ortolangMarketApp')
                 },
                 CREATED_BY: 'created by',
                 REPLY_TO: 'in response to',
-                ATTACHEMENT: 'Attachement',
+                ATTACHMENT: 'Attachement',
+                ATTACHMENTS: 'Attachement{{number > 1 ? "s" : ""}}:',
                 ANSWERED: {
                     PART1: 'This question has been',
                     PART: 'answered'

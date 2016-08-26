@@ -13,10 +13,14 @@
                 <h5 class="media-heading message-title">Re: {{::models.activeThread.title}}</h5>
             <div ng-hide="models.editedMessage.key === message.key">
                 <div class="message-content">{{message.body}}</div>
+                <div class="message-attachments" ng-if="message.attachments.length > 0" visualizer>
+                    {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
+                    <button class="btn btn-alternate btn-sm" ng-click="downloadAttachment(message, attachment)" ng-repeat="attachment in message.attachments track by attachment.hash"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</button>
+                </div>
                 <div class="message-actions">
                     <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>
-                    <button ng-if="::message.author === User.key" ng-click="editMessage(message)" class="btn btn-primary btn-sm btn-hidden"><span ng-class="::icons.edit"></span> {{'EDIT' | translate}}</button>
-                    <button ng-if="::message.author === User.key" ng-click="deleteMessage(message)" class="btn btn-danger btn-sm btn-hidden"><span ng-class="::icons.trash"></span> {{'DELETE' | translate}}</button>
+                    <button ng-if="::message.author === User.key" ng-click="editMessage(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.edit"></span> {{'EDIT' | translate}}</button>
+                    <button ng-if="::message.author === User.key" ng-click="deleteMessage(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.trash"></span> {{'DELETE' | translate}}</button>
                 </div>
             </div>
             <div ng-if="models.editedMessage.key === message.key" ng-include="'workspace/templates/thread-message-edit.html'"></div>

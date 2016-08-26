@@ -105,5 +105,9 @@ angular.module('ortolangMarketApp')
             $window.location = this.getExportSingleUrl(alias, root, path, filename, format, followsymlink, noSSL);
         };
 
+        this.downloadAttachment = function (tkey, mkey, name) {
+            $window.open(url.api + '/threads/' + tkey + '/messages/' + mkey + '/attachments/' + name);
+        };
+
         return this;
     }]);

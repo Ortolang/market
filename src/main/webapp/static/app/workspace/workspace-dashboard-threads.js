@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$location', '$modal', '$q', '$filter', '$timeout', '$anchorScroll', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', function ($rootScope, $scope, $location, $modal, $q, $filter, $timeout, $anchorScroll, Workspace, MessageResource, ortolangType, Helper) {
+    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$location', '$modal', '$q', '$filter', '$timeout', '$anchorScroll', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', 'Content', function ($rootScope, $scope, $location, $modal, $q, $filter, $timeout, $anchorScroll, Workspace, MessageResource, ortolangType, Helper, Content) {
 
         var listDeferred, messagesDeferred;
 
@@ -96,13 +96,20 @@ angular.module('ortolangMarketApp')
             $scope.models.replyTo = undefined;
             $scope.models.pendingSubmit = false;
             $scope.models.replyBody = undefined;
+            $scope.models.attachments = undefined;
         };
 
         $scope.replySubmit = function (form) {
             if (!$scope.models.pendingSubmit) {
                 $scope.models.pendingSubmit = true;
                 if (form.$valid) {
-                    MessageResource.postMessage({tkey: $scope.models.activeThread.key, parent: $scope.models.replyTo.key, body: $scope.models.replyBody}, function () {
+                    var formData = new FormData();
+                    formData.append('parent', $scope.models.replyTo.key);
+                    formData.append('body', $scope.models.replyBody);
+                    angular.forEach($scope.models.attachments, function (attachment, key) {
+                        formData.append('attachment-' + key, attachment);
+                    });
+                    MessageResource.postMessageWithAttachment({tkey: $scope.models.activeThread.key}, formData, function () {
                         $scope.listMessages();
                         setLastActivity();
                         $scope.cancelReply();
@@ -196,6 +203,10 @@ angular.module('ortolangMarketApp')
         $scope.backToList = function () {
             $location.search('t', undefined);
             $scope.listThreads();
+        };
+
+        $scope.downloadAttachment = function (message, attachment) {
+            Content.downloadAttachment($scope.models.activeThread.key, message.key, attachment.name);
         };
 
         $rootScope.$on('message.thread.create', function (event, eventMessage) {
