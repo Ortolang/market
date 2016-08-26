@@ -133,6 +133,7 @@ angular.module('ortolangMarketApp')
                             params[scope.preSelectedFilter.getId()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
                         }
                         params.content = scope.content || undefined;
+                        var workspacePrefix = 'ortolang-workspace-json.';
                         var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
                         var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
                         var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
@@ -141,6 +142,7 @@ angular.module('ortolangMarketApp')
                         // params.fields = 'key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.description,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName';
                         params.orderProp = $routeParams.orderProp;
                         params.orderDir = $routeParams.orderDir;
+                        params[workspacePrefix+'archive'] = false;
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);

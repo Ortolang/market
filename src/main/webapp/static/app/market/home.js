@@ -42,12 +42,15 @@ angular.module('ortolangMarketApp')
                 initScopeVariables();
                 $scope.searchRecents = SearchProvider.make();
                 $scope.searchRecents.setActiveOrderProp('rank', false);
+                var workspacePrefix = 'ortolang-workspace-json.';
                 var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
                 var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
                 var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
                 var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
                 $scope.paramsRecents = '{"' + metaItemPrefix + 'title":"", "' +
-                    metaRatingPrefix + 'score":"4", "fields":"' +
+                    metaRatingPrefix + 'score":"4", "'+
+                    workspacePrefix+ 'archive":"false", '+
+                    '"fields":"' +
                     metaLatestSnapshotPrefix + 'key,' +
                     metaRatingPrefix + 'score:rank,' +
                     metaRatingPrefix + '.esrAccessibility,' +
