@@ -10,7 +10,7 @@
     <parent>
         <groupId>fr.ortolang</groupId>
         <artifactId>ortolang</artifactId>
-        <version>8-SNAPSHOT</version>
+        <version>8</version>
     </parent>
 
     <scm>
