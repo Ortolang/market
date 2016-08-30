@@ -407,6 +407,7 @@ angular.module('ortolangMarketApp')
                 REPLY_TO: 'in response to',
                 ATTACHMENT: 'Attachement',
                 ATTACHMENTS: 'Attachement{{number > 1 ? "s" : ""}}:',
+                ADD_ATTACHMENTS: 'Add an attachement',
                 ANSWERED: {
                     PART1: 'This question has been',
                     PART: 'answered'

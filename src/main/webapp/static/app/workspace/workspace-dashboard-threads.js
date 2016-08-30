@@ -109,7 +109,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach($scope.models.attachments, function (attachment, key) {
                         formData.append('attachment-' + key, attachment);
                     });
-                    MessageResource.postMessageWithAttachment({tkey: $scope.models.activeThread.key}, formData, function () {
+                    MessageResource.postMessage({tkey: $scope.models.activeThread.key}, formData, function () {
                         $scope.listMessages();
                         setLastActivity();
                         $scope.cancelReply();
@@ -146,22 +146,46 @@ angular.module('ortolangMarketApp')
         $scope.cancelEdit = function () {
             $scope.models.editedMessage = undefined;
             $scope.models.editBody = undefined;
+            $scope.models.removedAttachments = undefined;
+            $scope.models.pendingSubmit = undefined;
+            $scope.models.attachments = undefined;
         };
 
         $scope.editMessage = function (message) {
             $scope.models.editedMessage = message;
             $scope.models.editBody = message.body;
+            $scope.models.removedAttachments = {};
+        };
+
+        $scope.removeAttachment = function (attachment) {
+            $scope.models.removedAttachments[attachment.hash] = attachment;
         };
 
         $scope.editSubmit = function (form) {
             if (!$scope.models.pendingSubmit) {
-                if ($scope.models.editedMessage.body === $scope.models.editBody) {
+                if ($scope.models.editedMessage.body === $scope.models.editBody &&
+                    Object.keys($scope.models.removedAttachments).length === 0 &&
+                Object.keys($scope.models.attachments).length === 0) {
                     $scope.cancelEdit();
                     return;
                 }
                 $scope.models.pendingSubmit = true;
                 if (form.$valid) {
-                    MessageResource.updateMessage({tkey: $scope.models.activeThread.key, mkey: $scope.models.editedMessage.key}, {body: $scope.models.editBody}, function () {
+                    var removedAttachments = '';
+                    angular.forEach($scope.models.removedAttachments, function (attachment) {
+                        removedAttachments += attachment.name + ',';
+                    });
+                    var formData = new FormData();
+                    if ($scope.models.editedMessage.body !== $scope.models.editBody) {
+                        formData.append('body', $scope.models.editBody);
+                    }
+                    if (removedAttachments.length > 0) {
+                        formData.append('removed-attachments', removedAttachments.slice(0, -1));
+                    }
+                    angular.forEach($scope.models.attachments, function (attachment, key) {
+                        formData.append('attachment-' + key, attachment);
+                    });
+                    MessageResource.updateMessage({tkey: $scope.models.activeThread.key, mkey: $scope.models.editedMessage.key}, formData, function () {
                         $scope.listMessages();
                         $scope.cancelEdit();
                     }, function () {

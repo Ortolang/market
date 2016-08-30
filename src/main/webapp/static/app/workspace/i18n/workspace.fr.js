@@ -480,6 +480,7 @@ angular.module('ortolangMarketApp')
                 CREATED_BY: 'créé par',
                 REPLY_TO: 'en réponse à',
                 ATTACHMENT: 'Pièce jointe',
+                ADD_ATTACHMENT: 'Ajouter une pièce jointe',
                 ATTACHMENTS: 'Pièces jointe{{number > 1 ? "s" : ""}} :',
                 ANSWERED: {
                     PART1: 'Cette question a reçu',

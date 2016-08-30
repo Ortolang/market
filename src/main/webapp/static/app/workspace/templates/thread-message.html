@@ -15,7 +15,7 @@
                 <div class="message-content">{{message.body}}</div>
                 <div class="message-attachments" ng-if="message.attachments.length > 0" visualizer>
                     {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
-                    <button class="btn btn-alternate btn-sm" ng-click="downloadAttachment(message, attachment)" ng-repeat="attachment in message.attachments track by attachment.hash"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</button>
+                    <span class="btn btn-alternate btn-sm" ng-click="downloadAttachment(message, attachment)" ng-repeat="attachment in message.attachments track by attachment.hash"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>
                 </div>
                 <div class="message-actions">
                     <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>

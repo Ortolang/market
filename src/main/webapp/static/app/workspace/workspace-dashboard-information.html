@@ -9,7 +9,7 @@
                 <strong translate="WORKSPACE.ALIAS"></strong> {{Workspace.active.workspace.alias}}
             </li>
             <li>
-                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.workspace.key"></span></span>
+                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.workspace.key"></span></span>
             </li>
         </ul>
         <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: Workspace.active.members.length}"></p>

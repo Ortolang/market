@@ -315,9 +315,13 @@
     }
     .message-attachments {
       margin-top: @line-height-computed;
-      .btn {
+      > .btn, > .btn-group {
         margin-left: @padding-small-horizontal;
       }
+    }
+    .thread-message-add-attachment-wrapper {
+      margin-top: @line-height-computed;
+      margin-bottom: @line-height-computed;
     }
     .message-response-status {
       color: @text-color-light;

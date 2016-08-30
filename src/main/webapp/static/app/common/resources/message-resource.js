@@ -36,20 +36,14 @@ angular.module('ortolangMarketApp')
             postMessage: {
                 method: 'POST',
                 url: url.api + '/threads/:tkey/messages',
-                transformRequest: function (data) { return $.param(data); },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-            },
-            postMessageWithAttachment: {
-                method: 'POST',
-                url: url.api + '/threads/:tkey/messages',
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             },
             updateMessage: {
                 method: 'PUT',
                 url: url.api + '/threads/:tkey/messages/:mkey',
-                transformRequest: function (data) { return $.param(data); },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
             },
             deleteMessage: {
                 method: 'DELETE',

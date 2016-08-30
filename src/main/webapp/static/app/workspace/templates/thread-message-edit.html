@@ -1,9 +1,20 @@
-<form role="form" name="edit" class="form-horizontal" ng-submit="editSubmit(edit)" novalidate autocomplete="off">
-    <div class="message-reply-content form-group col-xs-12" ng-class="{'has-error': (edit.$submitted || edit.body.$dirty) && edit.body.$invalid}">
+<form role="form" name="edit" ng-submit="editSubmit(edit)" novalidate autocomplete="off">
+    <div class="message-reply-content form-group" ng-class="{'has-error': (edit.$submitted || edit.body.$dirty) && edit.body.$invalid}">
         <textarea ng-model="models.editBody" class="form-control" rows="5" name="body" autofocus required></textarea>
         <div class="help-block" ng-if='edit.$submitted || edit.body.$dirty' ng-messages="edit.body.$error">
             <div ng-messages-include="common/forms/messages-template.html"></div>
         </div>
+    </div>
+    <div class="message-attachments" ng-if="message.attachments.length > 0" visualizer>
+        {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
+        <div class="btn-group" ng-repeat="attachment in message.attachments track by attachment.hash" ng-hide="models.removedAttachments[attachment.hash]">
+            <span class="btn btn-alternate btn-sm" ng-click="downloadAttachment(message, attachment)"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>
+            <span class="btn btn-alternate btn-sm" ng-click="removeAttachment(attachment)" data-title="{{'DELETE' | translate}}" bs-tooltip><span ng-class="::icons.remove"></span></span>
+        </div>
+    </div>
+    <div class="form-group thread-message-add-attachment-wrapper">
+        <label for="thread-message-attachment" translate="WORKSPACE.THREADS.ADD_ATTACHMENT"></label>
+        <input type="file" name="attachments" files-model="models.attachments" id="thread-message-attachment" multiple/>
     </div>
     <div>
         <button type="submit" class="btn btn-primary btn-sm" translate="SUBMIT"></button>
