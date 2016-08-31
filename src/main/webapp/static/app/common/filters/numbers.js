@@ -12,7 +12,6 @@ angular.module('ortolangMarketApp')
     .filter('numbers', function () {
 
         return function (number, language) {
-            console.log(language);
             if (!number) {
                 return;
             }
