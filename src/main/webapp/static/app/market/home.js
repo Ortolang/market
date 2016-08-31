@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .controller('HomeCtrl', ['$scope', 'SearchProvider', 'StaticWebsite', 'StatisticsResource',
         function ($scope, SearchProvider, StaticWebsite, StatisticsResource) {
 
-            StatisticsResource.get({names: 'core.workspaces.all,membership.profiles.all,binary-store.size'}, function (data) {
+            StatisticsResource.get({names: 'core.workspaces.all,membership.profiles.all,binary-store.size,binary-store.files'}, function (data) {
                 angular.forEach(data, function (representation, name) {
                     if (representation.values) {
                         $scope.statistics[name] = representation.values.pop()[1];
