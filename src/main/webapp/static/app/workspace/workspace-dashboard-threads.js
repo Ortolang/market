@@ -56,7 +56,14 @@ angular.module('ortolangMarketApp')
                 if (!modalScope.models.pendingSubmit) {
                     modalScope.models.pendingSubmit = true;
                     if (createThreadForm.$valid) {
-                        MessageResource.createThread({wskey: Workspace.active.workspace.key, title: modalScope.models.title, body: modalScope.models.body}, function (newThread) {
+                        var formData = new FormData();
+                        formData.append('wskey', Workspace.active.workspace.key);
+                        formData.append('title', modalScope.models.title);
+                        formData.append('body', modalScope.models.body);
+                        angular.forEach(modalScope.models.attachments, function (attachment, key) {
+                            formData.append('attachment-' + key, attachment);
+                        });
+                        MessageResource.createThread(formData, function () {
                             $scope.listThreads();
                             createThreadModal.hide();
                         }, function () {
@@ -196,6 +203,13 @@ angular.module('ortolangMarketApp')
                     $scope.models.pendingSubmit = false;
                 }
             }
+        };
+
+        $scope.validateAnswer = function (message) {
+            $scope.models.activeThread.answer = message.key;
+            MessageResource.updateThread({tkey: $scope.models.activeThread.key}, $scope.models.activeThread , function () {
+                $scope.listMessages();
+            });
         };
 
         $scope.deleteThread = function () {

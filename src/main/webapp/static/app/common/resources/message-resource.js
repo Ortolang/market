@@ -16,8 +16,8 @@ angular.module('ortolangMarketApp')
             },
             createThread: {
                 method: 'POST',
-                transformRequest: function (data) { return $.param(data); },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
             },
             readThread: {
                 method: 'GET'

@@ -9,7 +9,7 @@
             <span class="message-edit pull-right" ng-if="message.edit">{{'WORKSPACE.THREADS.EDITED' | translate}}{{message.edit | date:'medium'}}</span>
             <span class="message-replyto" ng-if="message.parent && Helper.profileCards[models.messagesAuthors[message.parent]]">({{'WORKSPACE.THREADS.REPLY_TO' | translate}} <span class="highlight-message" ng-click="highlightMessage(message.parent)">{{::Helper.profileCards[models.messagesAuthors[message.parent]].fullName}})</span></span>
         </div>
-        <div class="message-body card-well" ng-class="{highlighted: models.highligtedMessage === message.key}">
+        <div class="message-body card-well" ng-class="{highlighted: models.highligtedMessage === message.key, validated: models.activeThread.answer === message.key}">
             <h5 class="media-heading message-title">Re: {{::models.activeThread.title}}</h5>
             <div ng-hide="models.editedMessage.key === message.key">
                 <div class="message-content">{{message.body}}</div>
@@ -20,8 +20,9 @@
                         <span class="btn btn-alternate btn-sm" ng-click="showAttachment(message, attachment, showObjectPreview, true)" data-title="{{'DOWNLOAD' | translate}}" bs-tooltip><span ng-class="::icons.download"></span></span>
                     </span>
                 </div>
-                <div class="message-actions">
+                <div class="message-actions" ng-if="!models.activeThread.answer">
                     <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>
+                    <button ng-if="::message.author === User.key" ng-click="validateAnswer(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.check"></span> {{'WORKSPACE.THREADS.VALIDATE_ANSWER' | translate}}</button>
                     <button ng-if="::message.author === User.key" ng-click="editMessage(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.edit"></span> {{'EDIT' | translate}}</button>
                     <button ng-if="::message.author === User.key" ng-click="deleteMessage(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.trash"></span> {{'DELETE' | translate}}</button>
                 </div>

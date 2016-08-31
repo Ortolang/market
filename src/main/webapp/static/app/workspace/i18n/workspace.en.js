@@ -391,6 +391,7 @@ angular.module('ortolangMarketApp')
                 NO_RESPONSES_YET: 'This question has not been answered yet',
                 LAST_ACTIVITY: 'Last response',
                 EDITED: 'Edited on ',
+                VALIDATE_ANSWER: 'Validate as answer',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Create a new discussion',
                     SUBMIT: 'Create',

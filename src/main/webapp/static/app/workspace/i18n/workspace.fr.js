@@ -449,6 +449,7 @@ angular.module('ortolangMarketApp')
                     THREAD: {
                         CREATE: 'a créé une nouvelle discussion <span class="description">{{::arguments.title}}</span>',
                         DELETE: 'a supprimé la discussion <span class="description">{{::arguments.title}}</span>',
+                        UPDATE: 'a mis à jour la discussion <span class="description">{{::arguments.title}}</span>',
                         POST: 'a posté un message dans la discussion <span class="description">{{::arguments["thread-title"]}}</span>'
                     }
                 }
@@ -465,6 +466,7 @@ angular.module('ortolangMarketApp')
                 NO_RESPONSES_YET: 'Cette question n\'a encore reçu aucune réponse :',
                 LAST_ACTIVITY: 'Dernière réponse',
                 EDITED: 'Éditée le ',
+                VALIDATE_ANSWER: 'Valider la réponse',
                 CREATE_THREAD_MODAL: {
                     TITLE: 'Création d\'une nouvelle discussion',
                     SUBMIT: 'Créer',
@@ -479,9 +481,9 @@ angular.module('ortolangMarketApp')
                 },
                 CREATED_BY: 'créé par',
                 REPLY_TO: 'en réponse à',
-                ATTACHMENT: 'Pièce jointe',
+                ATTACHMENT: 'Pièces jointes',
                 ADD_ATTACHMENT: 'Ajouter une pièce jointe',
-                ATTACHMENTS: 'Pièces jointe{{number > 1 ? "s" : ""}} :',
+                ATTACHMENTS: 'Pièce{{number > 1 ? "s" : ""}} jointe{{number > 1 ? "s" : ""}} :',
                 ANSWERED: {
                     PART1: 'Cette question a reçu',
                     PART2: '{{messages - 1}} réponse{{messages > 2 ? "s" : ""}}'

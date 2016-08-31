@@ -305,6 +305,15 @@
       &.highlighted {
         background-color: @alternate-bg;
       }
+      &.validated {
+        border-color: lighten(@green, 35%);
+        background-color: lighten(@green, 42%);
+        .message-attachments {
+          .btn {
+            background-color: @white;
+          }
+        }
+      }
     }
     .message-reply-content {
       margin-top: @padding-base-horizontal;

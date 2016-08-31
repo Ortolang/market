@@ -22,6 +22,12 @@
                             <textarea ng-model="models.body" class="form-control" id="new-thread-body" name="body" placeholder="{{'WORKSPACE.THREADS.CREATE_THREAD_MODAL.MESSAGE' | translate}}" ng-disabled="models.pendingSubmit"></textarea>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="new-thread-attachments" class="col-sm-2 control-label" translate="WORKSPACE.THREADS.ATTACHMENT"></label>
+                        <div class="col-sm-10">
+                            <input id="new-thread-attachments" type="file" name="attachments" files-model="models.attachments" multiple/>
+                        </div>
+                    </div>
                     <!--<div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox checkbox-primary">
