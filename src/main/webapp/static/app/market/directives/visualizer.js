@@ -14,12 +14,12 @@ angular.module('ortolangMarketApp')
             link: {
                 pre : function (scope) {
 
-                    function finishPreview(visualizer, oobject) {
+                    function finishPreview(visualizer, object, url) {
                         var element, modalScope, visualizerModal;
-                        oobject.object.downloadUrl = Content.getContentUrlWithKey(oobject.object.key);
+                        object.downloadUrl = url || Content.getContentUrlWithKey(object.key);
                         modalScope = $rootScope.$new();
                         modalScope.elements = [];
-                        modalScope.elements.push(oobject.object);
+                        modalScope.elements.push(object);
                         modalScope.forceFullData = true;
 
                         modalScope.visualizer = {
@@ -58,10 +58,20 @@ angular.module('ortolangMarketApp')
                                 var visualizers = VisualizerManager.getCompatibleVisualizers([oobject.object]);
 
                                 if (visualizers.length > 0) {
-                                    finishPreview(visualizers[0], oobject);
+                                    finishPreview(visualizers[0], oobject.object);
                                 }
                             });
                         }
+                    };
+
+                    scope.showObjectPreview = function (object, url) {
+                        var visualizers = VisualizerManager.getCompatibleVisualizers([object]);
+
+                        if (visualizers.length > 0) {
+                            finishPreview(visualizers[0], object, url);
+                            return visualizers.length;
+                        }
+                        return visualizers.length;
                     };
                 }
             }

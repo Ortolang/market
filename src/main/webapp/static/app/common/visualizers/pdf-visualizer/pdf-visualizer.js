@@ -45,11 +45,12 @@ angular.module('ortolangVisualizers')
             link: {
                 pre: function (scope, element, attrs) {
                     angular.forEach(scope.elements, function (element) {
-                        scope.pdfUrl = Content.getContentUrlWithKey(element.key);
+                        if (!element.downloadUrl) {
+                            scope.pdfUrl = Content.getContentUrlWithKey(element.key);
+                        }
                     });
                     scope.visualizer.header.fileName = scope.elements[0].name;
                     scope.visualizer.header.fileType = scope.elements[0].mimeType;
-                    //scope.visualizer.content.classes = 'center';
                 }
             }
         };
