@@ -70,7 +70,9 @@ angular.module('ortolangMarketApp')
                 function load() {
                     var param = angular.fromJson(scope.newParams);
                     scope.search.search(param).$promise.then(function (results) {
-                        countWorkspace(param);
+                        if (!scope.hideSeeMoreButton) {
+                            countWorkspace(param);
+                        }
                         // scope.search.pack();
 
                         angular.forEach(results.entries, function (result) {
