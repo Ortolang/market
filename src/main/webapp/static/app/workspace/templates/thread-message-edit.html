@@ -9,6 +9,7 @@
         {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
         <div class="btn-group" ng-repeat="attachment in message.attachments track by attachment.hash" ng-hide="models.removedAttachments[attachment.hash]">
             <span class="btn btn-alternate btn-sm" ng-click="showAttachment(message, attachment, showObjectPreview)"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>
+            <span class="btn btn-alternate btn-sm" ng-click="showAttachment(message, attachment, showObjectPreview, true)" data-title="{{'DOWNLOAD' | translate}}" bs-tooltip><span ng-class="::icons.download"></span></span>
             <span class="btn btn-alternate btn-sm" ng-click="removeAttachment(attachment)" data-title="{{'DELETE' | translate}}" bs-tooltip><span ng-class="::icons.remove"></span></span>
         </div>
     </div>

@@ -10,12 +10,15 @@
             <span class="message-replyto" ng-if="message.parent && Helper.profileCards[models.messagesAuthors[message.parent]]">({{'WORKSPACE.THREADS.REPLY_TO' | translate}} <span class="highlight-message" ng-click="highlightMessage(message.parent)">{{::Helper.profileCards[models.messagesAuthors[message.parent]].fullName}})</span></span>
         </div>
         <div class="message-body card-well" ng-class="{highlighted: models.highligtedMessage === message.key}">
-                <h5 class="media-heading message-title">Re: {{::models.activeThread.title}}</h5>
+            <h5 class="media-heading message-title">Re: {{::models.activeThread.title}}</h5>
             <div ng-hide="models.editedMessage.key === message.key">
                 <div class="message-content">{{message.body}}</div>
                 <div class="message-attachments" ng-if="message.attachments.length > 0" visualizer>
                     {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
-                    <span class="btn btn-alternate btn-sm" ng-repeat="attachment in message.attachments track by attachment.hash" ng-click="showAttachment(message, attachment, showObjectPreview)"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>
+                    <span class="btn-group" ng-repeat="attachment in message.attachments track by attachment.hash">
+                        <span class="btn btn-alternate btn-sm" ng-click="showAttachment(message, attachment, showObjectPreview)"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>
+                        <span class="btn btn-alternate btn-sm" ng-click="showAttachment(message, attachment, showObjectPreview, true)" data-title="{{'DOWNLOAD' | translate}}" bs-tooltip><span ng-class="::icons.download"></span></span>
+                    </span>
                 </div>
                 <div class="message-actions">
                     <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>

@@ -30,6 +30,7 @@ angular.module('ortolangMarketApp')
             officeExcelFile: 'fa fa-fw fa-file-excel-o',
             officePowerpointFile: 'fa fa-fw fa-file-powerpoint-o',
             trash: 'glyphicon glyphicon-trash',
+            download: 'fa fa-fw fa-download',
             remove: 'glyphicon glyphicon-remove',
             check: 'fa fa-fw fa-check',
             square: 'fa fa-fw fa-square-o',
