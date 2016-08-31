@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
             USERS: '{{::stat}} users',
             WORKSPACES: '{{::stat}} resources',
             DATA: '{{::stat | bytes}} of data',
-            FILES: '{{::stat}} files',
+            FILES: '{{::stat | numbers:"en"}} files',
             LEGAL_NOTICES: {
                 TITLE: 'Legal notices',
                 INFO_PUBLICATION: 'Publication Information',

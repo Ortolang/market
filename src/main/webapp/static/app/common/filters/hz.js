@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc filter
- * @name ortolangMarketApp.filter:bytes
+ * @name ortolangMarketApp.filter:hz
  * @function
  * @description
- * # Bytes format filter
+ * # Hz format filter
  * Filter in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
