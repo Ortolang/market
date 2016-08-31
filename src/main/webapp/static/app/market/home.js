@@ -11,25 +11,12 @@ angular.module('ortolangMarketApp')
     .controller('HomeCtrl', ['$scope', 'SearchProvider', 'StaticWebsite', 'StatisticsResource',
         function ($scope, SearchProvider, StaticWebsite, StatisticsResource) {
 
-            StatisticsResource.get({name: 'core.workspaces.all'}, function (data) {
-                if (data.values.length > 0) {
-                    var last = data.values.pop();
-                    $scope.statistics.workspaceNumber = last[1];
-                }
-            });
-
-            StatisticsResource.get({name: 'membership.profiles.all'}, function (data) {
-                if (data.values.length > 0) {
-                    var last = data.values.pop();
-                    $scope.statistics.profileNumber = last[1];
-                }
-            });
-
-            StatisticsResource.get({name: 'binary-store.size'}, function (data) {
-                if (data.values.length > 0) {
-                    var last = data.values.pop();
-                    $scope.statistics.binaryStoreSize = last[1];
-                }
+            StatisticsResource.get({names: 'core.workspaces.all,membership.profiles.all,binary-store.size'}, function (data) {
+                angular.forEach(data, function (representation, name) {
+                    if (representation.values) {
+                        $scope.statistics[name] = representation.values.pop()[1];
+                    }
+                });
             });
 
             function initScopeVariables() {

@@ -14,9 +14,9 @@ angular.module('ortolangMarketApp')
                 LEGAL_NOTICES: 'common/static-website/fr/legal-notices.html'
             },
             ALL_THE_NEWS: 'Toutes les actualités...',
-            USERS: '{{::profileNumber}} utilisateurs',
-            WORKSPACES: '{{::workspaceNumber}} resources',
-            DATA: '{{::binaryStoreSize | bytes}} de données',
+            USERS: '{{::stat}} utilisateurs',
+            WORKSPACES: '{{::stat}} resources',
+            DATA: '{{::stat | bytes}} de données',
             LEGAL_NOTICES: {
                 TITLE: 'Mentions Légales',
                 INFO_PUBLICATION: 'Informations de publication',

@@ -10,5 +10,5 @@
 angular.module('ortolangMarketApp')
     .factory('StatisticsResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(url.api + '/stats/:name/', {}, {});
+        return $resource(url.api + '/stats/:names', {}, {});
     }]);

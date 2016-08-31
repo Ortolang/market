@@ -1,8 +1,8 @@
 <div class="card-well card-news-well statistics-wrapper">
     <p class="lead"><span ng-class="::icons.statistics"></span> {{'STATISTICS' | translate}}</p>
     <div>
-        <p translate="STATIC_WEBSITE.USERS" data-translate-values="statistics"></p>
-        <p translate="STATIC_WEBSITE.WORKSPACES" data-translate-values="statistics"></p>
-        <p translate="STATIC_WEBSITE.DATA" data-translate-values="statistics"></p>
+        <p translate="STATIC_WEBSITE.USERS" data-translate-values="{stat: statistics['membership.profiles.all']}"></p>
+        <p translate="STATIC_WEBSITE.WORKSPACES" data-translate-values="{stat: statistics['core.workspaces.all']}"></p>
+        <p translate="STATIC_WEBSITE.DATA" data-translate-values="{stat: statistics['binary-store.size']}"></p>
     </div>
 </div>
