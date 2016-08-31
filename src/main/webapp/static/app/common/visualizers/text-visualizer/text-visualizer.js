@@ -127,7 +127,9 @@ angular.module('ortolangVisualizers')
                         scope.actions.showPreview = function () {
                             scope.tabs.activeTab = 'preview';
                         };
-                        if (scope.elements[0].path) {
+                        if (scope.elements[0].downloadUrl) {
+                            scope.pageSrc = scope.elements[0].downloadUrl;
+                        } else if (scope.elements[0].path) {
                             scope.pageSrc = Content.getContentUrlWithPath(scope.elements[0].path, scope.wsAlias, scope.root);
                         } else {
                             scope.pageSrc = Content.getContentUrlWithKey(scope.elements[0].key, false);
@@ -140,7 +142,12 @@ angular.module('ortolangVisualizers')
                     } else if (mimeType !== 'application/xml') {
                         scope.forceDisplay = true;
                     }
-                    var contentDownload = Content.downloadWithKey(scope.elements[0].key);
+                    var contentDownload;
+                    if (scope.elements[0].attachment) {
+                        contentDownload = Content.downloadAttachmentWithUrl(scope.elements[0].downloadUrl);
+                    } else {
+                        contentDownload = Content.downloadWithKey(scope.elements[0].key);
+                    }
                     scope.pendingRequests.push(contentDownload);
                     contentDownload.promise.then(function (response) {
                         if (!scope.forceFullData && scope.elements[0].size >= limit) {

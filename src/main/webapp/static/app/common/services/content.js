@@ -109,8 +109,16 @@ angular.module('ortolangMarketApp')
             return (noSSL ? url.contentNoSSL : url.content) + '/attachments/' + mkey + '/' + hash;
         };
 
-        this.downloadAttachment = function (mkey, hash, noSSL) {
-            $window.open(this.getAttachmentUrl(mkey, hash, noSSL));
+        this.downloadAttachmentWithUrl = function (url, config) {
+            return downloadWith(url, config);
+        };
+
+        this.downloadAttachmentInWindow = function (mkey, hash, newWindow, noSSL) {
+            if (newWindow) {
+                $window.open(this.getAttachmentUrl(mkey, hash, noSSL));
+            } else {
+                $window.location = this.getAttachmentUrl(mkey, hash, noSSL);
+            }
         };
 
         return this;

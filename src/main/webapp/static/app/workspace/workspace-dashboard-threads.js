@@ -229,11 +229,12 @@ angular.module('ortolangMarketApp')
             $scope.listThreads();
         };
 
-        $scope.downloadAttachment = function (message, attachment, fn) {
+        $scope.showAttachment = function (message, attachment, fn) {
             var tmp = angular.copy(attachment);
             tmp.mimeType = tmp.type;
+            tmp.attachment = true;
             if (fn(tmp, Content.getAttachmentUrl(message.key, attachment.hash)) === 0) {
-                Content.downloadAttachment(message.key, attachment.hash);
+                Content.downloadAttachmentInWindow(message.key, attachment.hash, true);
             }
         };
 

@@ -10,7 +10,7 @@
         <div class="message-content" ng-bind="message.body"></div>
         <div class="message-attachments" ng-if="message.attachments.length > 0" visualizer>
             {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
-            <span class="btn btn-alternate btn-sm" ng-click="downloadAttachment(message, attachment, showObjectPreview)" ng-repeat="attachment in message.attachments track by attachment.hash"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>
+            <span class="btn btn-alternate btn-sm" ng-repeat="attachment in message.attachments track by attachment.hash" ng-click="showAttachment(message, attachment, showObjectPreview)"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>
         </div>
         <div class="question-info">
             <span avatar data-email-hash="Helper.profileCards[message.author].emailHash" data-size="48"></span>
