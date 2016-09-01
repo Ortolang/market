@@ -10,7 +10,7 @@
             <li ng-repeat="thread in models.threads track by thread.key" class="thread card-well card-well-hover" ng-click="openThread(thread)">
                 <div class="media">
                     <div class="media-left thread-icon">
-                        <span ng-class="thread.answered ? icons.threads.answered : icons.threads.notanswered" class="fa-lg text-muted"></span>
+                        <span ng-class="thread.answer ? icons.threads.answered : icons.threads.notanswered" class="fa-lg text-muted"></span>
                     </div>
                     <div class="media-body">
                         <div class="thread-title">{{::thread.title}}</div>

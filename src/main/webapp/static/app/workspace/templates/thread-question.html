@@ -1,5 +1,9 @@
 <div class="message-body question-body" ng-class="{highlighted: models.highligtedMessage === message.key}">
-    <h3 class="message-title">{{::models.activeThread.title}}</h3>
+    <h3 class="message-title" ng-hide="models.editedMessage.key === models.activeThread.question">{{models.activeThread.title}}</h3>
+    <div class="form-group" ng-if="models.editedMessage.key === models.activeThread.question">
+        <label for="thread-title"></label>
+        <input id="thread-title" type="text" ng-model="models.editTitle" class="form-control" required ng-disabled="models.pendingSubmit"/>
+    </div>
     <div ng-if="models.messages.length >= 2" class="message-response-status">
         {{'WORKSPACE.THREADS.ANSWERED.PART1' | translate}}
         <span class="message-answered" translate="WORKSPACE.THREADS.ANSWERED.PART2" data-translate-values="{messages: models.messages.length}"></span>

@@ -162,43 +162,74 @@ angular.module('ortolangMarketApp')
             $scope.models.editedMessage = message;
             $scope.models.editBody = message.body;
             $scope.models.removedAttachments = {};
+            if (message.key === $scope.models.activeThread.question) {
+                $scope.models.editTitle = $scope.models.activeThread.title;
+            }
         };
 
         $scope.removeAttachment = function (attachment) {
             $scope.models.removedAttachments[attachment.hash] = attachment;
         };
 
+        function isMessageEdited() {
+            return $scope.models.editedMessage.body !== $scope.models.editBody ||
+                ($scope.models.removedAttachments && Object.keys($scope.models.removedAttachments).length > 0) ||
+                ($scope.models.attachments && Object.keys($scope.models.attachments).length > 0);
+        }
+
+        function isThreadTitleEdited() {
+            return $scope.models.editedMessage.key === $scope.models.activeThread.question && $scope.models.editTitle && $scope.models.editTitle !== $scope.models.activeThread.title;
+        }
+
         $scope.editSubmit = function (form) {
             if (!$scope.models.pendingSubmit) {
-                if ($scope.models.editedMessage.body === $scope.models.editBody &&
-                    Object.keys($scope.models.removedAttachments).length === 0 &&
-                Object.keys($scope.models.attachments).length === 0) {
+                if (!isMessageEdited() && !isThreadTitleEdited()) {
                     $scope.cancelEdit();
                     return;
                 }
                 $scope.models.pendingSubmit = true;
                 if (form.$valid) {
-                    var removedAttachments = '';
-                    angular.forEach($scope.models.removedAttachments, function (attachment) {
-                        removedAttachments += attachment.name + ',';
-                    });
-                    var formData = new FormData();
-                    if ($scope.models.editedMessage.body !== $scope.models.editBody) {
-                        formData.append('body', $scope.models.editBody);
+                    var deferred = $q.defer();
+                    if (isMessageEdited()) {
+                        var removedAttachments = '';
+                        angular.forEach($scope.models.removedAttachments, function (attachment) {
+                            removedAttachments += attachment.name + ',';
+                        });
+                        var formData = new FormData();
+                        if ($scope.models.editedMessage.body !== $scope.models.editBody) {
+                            formData.append('body', $scope.models.editBody);
+                        }
+                        if (removedAttachments.length > 0) {
+                            formData.append('removed-attachments', removedAttachments.slice(0, -1));
+                        }
+                        angular.forEach($scope.models.attachments, function (attachment, key) {
+                            formData.append('attachment-' + key, attachment);
+                        });
+                        deferred = MessageResource.updateMessage({tkey: $scope.models.activeThread.key, mkey: $scope.models.editedMessage.key}, formData, function () {
+                            $scope.listMessages();
+                            $scope.cancelEdit();
+                        }, function () {
+                            Helper.showUnexpectedErrorAlert();
+                            $scope.models.pendingSubmit = false;
+                        });
+                    } else {
+                        deferred.resolve();
                     }
-                    if (removedAttachments.length > 0) {
-                        formData.append('removed-attachments', removedAttachments.slice(0, -1));
+                    if (isThreadTitleEdited()) {
+                        var promise = deferred.promise || deferred.$promise;
+                        promise.then(function () {
+                            var tmp = angular.copy($scope.models.activeThread.title);
+                            $scope.models.activeThread.title = $scope.models.editTitle;
+                            MessageResource.updateThread({tkey: $scope.models.activeThread.key}, $scope.models.activeThread, function () {
+                                $scope.cancelEdit();
+                                $scope.models.editTitle = undefined;
+                            }, function () {
+                                $scope.models.activeThread.title = tmp;
+                                Helper.showUnexpectedErrorAlert();
+                                $scope.models.pendingSubmit = false;
+                            });
+                        });
                     }
-                    angular.forEach($scope.models.attachments, function (attachment, key) {
-                        formData.append('attachment-' + key, attachment);
-                    });
-                    MessageResource.updateMessage({tkey: $scope.models.activeThread.key, mkey: $scope.models.editedMessage.key}, formData, function () {
-                        $scope.listMessages();
-                        $scope.cancelEdit();
-                    }, function () {
-                        Helper.showUnexpectedErrorAlert();
-                        $scope.models.pendingSubmit = false;
-                    });
                 } else {
                     $scope.models.pendingSubmit = false;
                 }
@@ -207,7 +238,7 @@ angular.module('ortolangMarketApp')
 
         $scope.validateAnswer = function (message) {
             $scope.models.activeThread.answer = message.key;
-            MessageResource.updateThread({tkey: $scope.models.activeThread.key}, $scope.models.activeThread , function () {
+            MessageResource.updateThread({tkey: $scope.models.activeThread.key}, $scope.models.activeThread, function () {
                 $scope.listMessages();
             });
         };
