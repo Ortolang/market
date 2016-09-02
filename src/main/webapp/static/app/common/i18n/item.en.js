@@ -140,7 +140,10 @@ angular.module('ortolangMarketApp')
             },
             TERMINO_DOMAIN_CATEGORY: {
                 TITLE: 'Domain'
-            }
+            },
+            PARTS: { 
+                TITLE: 'Subparts'
+            },
         }
     }
 );

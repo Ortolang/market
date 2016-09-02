@@ -269,6 +269,9 @@ angular.module('ortolangMarketApp')
                     } else if ($scope.content.schema === 'http://www.ortolang.fr/schema/015#') {
                         $scope.marketItemTemplate = 'market/templates/ortolang-item-json-15.html';
                         loadCommonFields();
+                    } else if ($scope.content.schema === 'http://www.ortolang.fr/schema/016#') {
+                        $scope.marketItemTemplate = 'market/templates/ortolang-item-json-16.html';
+                        loadCommonFields();
                     } else {
                         $scope.marketItemTemplate = 'market/templates/ortolang-item-json-unknown.html';
                     }

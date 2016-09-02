@@ -239,6 +239,25 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             };
 
+            this.addPart = function (title, description) {
+                if (!this.metadata.parts) {
+                    this.metadata.parts = [];
+                }
+                this.metadata.parts.push({
+                    title: title,
+                    description: description
+                });
+            };
+
+            this.updatePart = function (index, title, description) {
+                if (this.metadata.parts && this.metadata.parts[index]) {
+                    this.metadata.parts[index] = {
+                        title: title,
+                        description: description
+                    };
+                }
+            };
+
             function postForm(metadata, deferred) {
 
                 // var deferred = $q.defer();

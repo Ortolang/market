@@ -52,12 +52,21 @@ angular.module('ortolangMarketApp').service('OrtolangIitemJsonMigration', functi
 		}
 	}
 
+	function migrateSchema15to16 (src) {
+		// With parts
+		src.schema = 'http://www.ortolang.fr/schema/016#';
+	}
+
 	this.migrate = function (src) {
 		if (src.schema === 'http://www.ortolang.fr/schema/013#') {
 			migrateSchema13to14(src);
 			migrateSchema14to15(src);
+			migrateSchema15to16(src);
 		} else if (src.schema === 'http://www.ortolang.fr/schema/014#') {
 			migrateSchema14to15(src);
+			migrateSchema15to16(src);
+		} else if (src.schema === 'http://www.ortolang.fr/schema/015#') {
+			migrateSchema15to16(src);
 		}
 	};
     return this;

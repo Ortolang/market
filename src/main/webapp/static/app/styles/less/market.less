@@ -694,3 +694,26 @@
     font-size: @font-size-large;
   }
 }
+
+/***********************************************
+ * Parts directive : Subparts of a item
+ ***********************************************/
+
+.parts {
+  .part {
+    cursor: pointer;
+    &:first-child {
+      margin-top: @line-height-computed;
+    }
+  }
+  .media {
+    .media-body {
+      h4 {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.1;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

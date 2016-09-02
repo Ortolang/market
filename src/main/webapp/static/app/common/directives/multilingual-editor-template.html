@@ -1,0 +1,16 @@
+<div ng-switch on="type">
+    <div ng-switch-when="wig">
+        <div class="input-group">
+            <button type="button" class="btn btn-default" name="multilingual-editor-lang" ng-model="models.selectedLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+        </div>
+        <ng-wig source-mode-allowed name="multilingual-editor-wig" ng-model="models.text.value" ng-change="update()" ng-disabled="disabled"></ng-wig>
+    </div>
+    <div ng-switch-when="inputtext">
+        <div class="input-group">
+            <input type="text" class="form-control" name="multilingual-editor-input" autocomplete="off" ng-model="models.text.value" ng-change="update()" ng-disabled="disabled">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" name="multilingual-editor-lang" ng-model="models.selectedLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeLanguage()" data-placement="bottom-right" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+            </div>
+        </div>
+    </div>
+</div>

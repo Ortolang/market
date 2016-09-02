@@ -255,6 +255,22 @@ angular.module('ortolangMarketApp')
                 NO_PERSON_FOUND: 'Vous ne trouvez pas la personne ?',
                 ADD_NEW_PERSON: 'Ajouter une personne',
                 ORDER_CONTRIBUTORS: 'Trier par nom',
+                PARTS: {
+                    ADD: 'Ajouter une sous-parties'
+                },
+                CREATE_PART_MODAL: {
+                    TITLE: 'Créer une sous-parties',
+                    FIELDS: {
+                        TITLE: {
+                            LABEL: 'Titre',
+                            PLACEHOLDER: 'Nom de la sous-parties'
+                        },
+                        DESCRIPTION: {
+                            LABEL: 'Description',
+                            PLACEHOLDER: 'Description courte de la sous-parties'
+                        }
+                    }
+                },
                 ADD_CONTRIBUTOR_MODAL: {
                     TITLE: 'Personne contributrice',
                     SUBMIT: '{{editing ? "Modifier" : "Ajouter"}}',
