@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp').service('OrtolangIitemJsonMigration', functi
 
 	function migrateSchema15to16 (src) {
 		// With parts
-		src.schema = 'http://www.ortolang.fr/schema/015#';
+		src.schema = 'http://www.ortolang.fr/schema/016#';
 	}
 
 	this.migrate = function (src) {

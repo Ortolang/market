@@ -1,0 +1,13 @@
+<div class="parts">
+    <div class="card-well card-well-hover part" ng-repeat="part in models.parts" ng-click="clickAction(part.part)">
+        <div class="media">
+            <div class="media-body">
+                <h4>{{part.title}}</h4>
+                <div data-content="part.description" data-target-blank>
+                    <div ng-bind-html="part.description"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

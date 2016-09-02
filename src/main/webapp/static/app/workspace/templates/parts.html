@@ -1,3 +1,9 @@
-<div class="parts" ng-controller="PartsCtrl">
-
+<div ng-controller="PartsCtrl">
+    <h3>{{'ITEM.PARTS.TITLE' | translate}}</h3>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button class="btn btn-default btn-primary" ng-click="createPart()" data-translate="WORKSPACE.METADATA_EDITOR.PARTS.ADD"></button>
+        </div>
+    </div>
+    <div data-parts data-model="parts" data-click-action="createPart"></div>
 </div>
