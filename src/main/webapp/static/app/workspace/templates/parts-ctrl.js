@@ -17,8 +17,7 @@ angular.module('ortolangMarketApp')
                 }
                 var modalScope = Helper.createModalScope(true),
                 	createPartModal,
-                    updateMode = angular.isDefined(part),
-                    indexPart = $scope.parts.indexOf(part);
+                    updateMode = angular.isDefined(part)
                 if (part) {
                     modalScope.part = part;
                 } else {
@@ -32,7 +31,7 @@ angular.module('ortolangMarketApp')
                     if (createPartForm.$valid) {
                         if (updateMode) {
                             WorkspaceMetadataService.updatePart(
-                                indexPart,
+                                $scope.parts.indexOf(part),
                                 modalScope.part.title,
                                 modalScope.part.description
                             );
@@ -67,10 +66,7 @@ angular.module('ortolangMarketApp')
 	    	    if ($scope.metadata.parts) {
                     $scope.parts = angular.copy($scope.metadata.parts);
                 } else {
-                    $scope.parts = {
-                        title: [],
-                        description: []
-                    };
+                    $scope.parts = [];
                 }
 	    	}
 	    	init();
