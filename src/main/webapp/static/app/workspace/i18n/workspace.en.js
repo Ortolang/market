@@ -259,6 +259,10 @@ angular.module('ortolangMarketApp')
                         DESCRIPTION: {
                             LABEL: 'Description',
                             PLACEHOLDER: 'A short description of the subpart'
+                        },
+                        PATH: {
+                            LABEL: 'Path',
+                            PLACEHOLDER: 'Path to the subpart'
                         }
                     }
                 },

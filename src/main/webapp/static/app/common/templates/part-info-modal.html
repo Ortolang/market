@@ -1,0 +1,35 @@
+<div class="modal part-info-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" ng-click="$hide()">&times;</button>-->
+                <!--<strong class="modal-title">{{models.title}}</strong>-->
+            <!--</div>-->
+            <div class="modal-body market-item">
+                <h2 class="market-item-title" ng-bind="models.title"></h2>
+                <hr/>
+
+                <div class="market-item-presentation-metadata">
+                    <section>
+                        <h4>{{'DESCRIPTION' | translate}}</h4>
+                        <article data-content="description" data-target-blank>
+                            <div ng-bind-html="models.description"></div>
+                            <br/>
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-6">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </article>
+                    </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <button class="btn btn-success" data-ng-disabled="root === 'head'" ng-click="exportPart()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_PART' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
+                    <button class="btn btn-default" data-ng-disabled="root === 'head'" ng-click="browseContentPart()" translate="MARKET.BROWSE"></button>
+                </div>
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            </div>
+        </div>
+    </div>
+</div>

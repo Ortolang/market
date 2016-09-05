@@ -10,22 +10,27 @@
                     <div class="form-group has-feedback" ng-class="{'has-error': (createPart.$submitted || createPart.title.$dirty) && createPart.title.$invalid}">
                         <label for="create-part-title" class="col-sm-2 control-label" data-translate="WORKSPACE.METADATA_EDITOR.CREATE_PART_MODAL.FIELDS.TITLE.LABEL"></label>
                         <div class="col-sm-10">
-                            <!--<input ng-model="part.title" type="text" class="form-control" id="create-part-title" name="title" required autofocus placeholder="{{'WORKSPACE.METADATA_EDITOR.CREATE_PART_MODAL.FIELDS.TITLE.PLACEHOLDER' | translate}}">-->
                             <div data-multilingual-editor data-model="part.title" data-type="'inputtext'"></div>
                         </div>
                     </div>
-                    <!--<div class="form-group has-feedback" ng-class="{'has-error': (createPart.$submitted || createPart.description.$dirty) && createPart.description.$invalid}">-->
-                        <!--<label for="create-part-description" class="col-sm-2 control-label" data-translate="WORKSPACE.METADATA_EDITOR.CREATE_PART_MODAL.FIELDS.DESCRIPTION.LABEL"></label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<input ng-model="models.description" type="text" class="form-control" id="create-part-description" name="description" required placeholder="{{'WORKSPACE.METADATA_EDITOR.CREATE_PART_MODAL.FIELDS.DESCRIPTION.PLACEHOLDER' | translate}}">-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div class="form-group has-feedback" ng-class="{'has-error': (createPart.$submitted || createPart.description.$dirty) && createPart.description.$invalid}">
                         <label for="create-part-description" class="col-sm-2 control-label" data-translate="WORKSPACE.METADATA_EDITOR.CREATE_PART_MODAL.FIELDS.DESCRIPTION.LABEL"></label>
                         <div class="col-sm-10">
                             <div data-multilingual-editor data-model="part.description" data-type="'wig'"></div>
                         </div>
                     </div>
+                    <div class="form-group has-feedback" ng-class="{'has-error': (createPart.$submitted || createPart.path.$dirty) && createPart.path.$invalid}">
+                        <label for="create-part-path" class="col-sm-2 control-label" data-translate="WORKSPACE.METADATA_EDITOR.CREATE_PART_MODAL.FIELDS.PATH.LABEL"></label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="part.path" placeholder="{{'WORKSPACE.METADATA_EDITOR.CREATE_PART_MODAL.FIELDS.PATH.PLACEHOLDER' | translate}}" ng-click="dirPartPathSelectorModal.show()">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="dirPartPathSelectorModal.show()" type="button">{{'SELECT' | translate}}</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-default order-contributors-btn" ng-if="metadata.contributors.length > 2" ng-click="orderContributorsByLastName()"><span class="fa fa-sort-alpha-asc"></span> {{'WORKSPACE.METADATA_EDITOR.ORDER_CONTRIBUTORS' | translate}}</button>
                     <hr/>
                     <!-- <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(addContributor.$submitted || addContributor.fullname.$dirty) && addContributor.fullname.$invalid' ng-messages="addContributor.fullname.$error">
                         <div class="text-danger col-sm-offset-2" ng-message="exists">{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MESSAGES.EXISTS' | translate}}</div>

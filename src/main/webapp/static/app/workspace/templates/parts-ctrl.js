@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PartsCtrl', ['$scope', '$modal', 'WorkspaceMetadataService', 'Helper',
-        function ($scope, $modal, WorkspaceMetadataService, Helper) {
+    .controller('PartsCtrl', ['$scope', '$rootScope', '$modal', 'WorkspaceMetadataService', 'Workspace', 'Helper',
+        function ($scope, $rootScope, $modal, WorkspaceMetadataService, Workspace, Helper) {
 
 	    	$scope.createPart = function (part) {
 	    		if (WorkspaceMetadataService.canEdit) {
@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
                 }
                 var modalScope = Helper.createModalScope(true),
                 	createPartModal,
-                    updateMode = angular.isDefined(part)
+                    updateMode = angular.isDefined(part);
                 if (part) {
                     modalScope.part = part;
                 } else {
@@ -27,19 +27,39 @@ angular.module('ortolangMarketApp')
                     };
                 }
 
-	            modalScope.submit = function (createPartForm) {
+                var deregisterFilePreviewPathSelectorModal = $rootScope.$on('browserSelectedElements-dirPartPathSelectorModal', function ($event, elements) {
+                    if(elements.length>0) {
+                        modalScope.part.path = elements[0].path;
+                        modalScope.dirPartPathSelectorModal.hide();
+                    }
+                });
+
+                var dirPartPathSelectorModalScope = $rootScope.$new();
+                dirPartPathSelectorModalScope.acceptMultiple = false;
+                dirPartPathSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
+                dirPartPathSelectorModalScope.forceHead = true;
+                dirPartPathSelectorModalScope.fileSelectId = 'dirPartPathSelectorModal';
+                modalScope.dirPartPathSelectorModal = $modal({scope: dirPartPathSelectorModalScope,
+                    title: 'Sélectionnez un répertoire',
+                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    show: false
+                });
+
+                modalScope.submit = function (createPartForm) {
                     if (createPartForm.$valid) {
                         if (updateMode) {
                             WorkspaceMetadataService.updatePart(
                                 $scope.parts.indexOf(part),
                                 modalScope.part.title,
-                                modalScope.part.description
+                                modalScope.part.description,
+                                modalScope.part.path
                             );
 
                         } else {
                             WorkspaceMetadataService.addPart(
                                 modalScope.part.title,
-                                modalScope.part.description
+                                modalScope.part.description,
+                                modalScope.part.path
                             );
                         }
 		    			createPartModal.hide();
@@ -63,6 +83,7 @@ angular.module('ortolangMarketApp')
             });
 
 	    	function init() {
+	    	    $scope.WorkspaceMetadataService = WorkspaceMetadataService;
 	    	    if ($scope.metadata.parts) {
                     $scope.parts = angular.copy($scope.metadata.parts);
                 } else {

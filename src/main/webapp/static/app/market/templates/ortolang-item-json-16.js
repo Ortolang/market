@@ -9,8 +9,28 @@
  * With object for any language not reference by a referential.
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson16Ctrl', ['$scope', '$rootScope', '$translate', 'Settings', 'Content', 'Helper', 'ReferentialResource',
-        function ($scope, $rootScope, $translate, Settings, Content, Helper, ReferentialResource) {
+    .controller('OrtolangItemJson16Ctrl', ['$scope', '$rootScope','$location', '$route', '$translate', '$modal', 'Settings', 'Content', 'Helper', 'ReferentialResource',
+        function ($scope, $rootScope, $location, $route, $translate, $modal, Settings, Content, Helper, ReferentialResource) {
+
+            $scope.showPartInfo = function (part) {
+                var modalScope = Helper.createModalScope(true);
+                modalScope.models = {
+                    title: Helper.getMultilingualValue(part.title, 'lang'),
+                    description: Helper.getMultilingualValue(part.description, 'lang')
+                };
+                modalScope.browseContentPart = function () {
+                    $location.search('path', part.path);
+                    $route.reload();
+                };
+                modalScope.exportPart = function () {
+                    Content.exportSingle($scope.alias, $scope.root, part.path, $scope.alias);
+                };
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/templates/part-info-modal.html',
+                    show: true
+                });
+            };
 
             function loadConditionsOfUse(lang) {
                 if ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {

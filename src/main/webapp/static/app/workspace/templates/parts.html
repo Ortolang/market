@@ -2,7 +2,7 @@
     <h4>{{'ITEM.PARTS.TITLE' | translate}}</h4>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <button class="btn btn-default btn-primary" ng-click="createPart()" data-translate="WORKSPACE.METADATA_EDITOR.PARTS.ADD"></button>
+            <button class="btn btn-default btn-primary" ng-click="createPart()" data-translate="WORKSPACE.METADATA_EDITOR.PARTS.ADD" ng-disabled="WorkspaceMetadataService.canEdit"></button>
         </div>
     </div>
     <div data-parts data-model="parts" data-click-action="createPart"></div>

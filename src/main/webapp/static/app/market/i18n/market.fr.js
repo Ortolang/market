@@ -62,6 +62,7 @@ angular.module('ortolangMarketApp')
             CONTRIBUTOR: 'Contribution',
             DOWNLOAD: 'Téléchargement',
             DOWNLOAD_ALL: 'Vous allez télécharger la totalité des données de cette ressource {{value && value !=="" ? "("+value+")" : ""}}',
+            DOWNLOAD_PART: 'Vous allez télécharger une partie des données de cette ressource {{value && value !=="" ? "("+value+")" : ""}}',
             DOWNLOAD_AGREEMENT: 'Le téléchargement de cette ressource vaut acceptation de la licence d\'utilisation.',
             LICENCE_DETAIL: 'Détails sur la licence',
             DEROGATION: 'Code du patrimoine',
