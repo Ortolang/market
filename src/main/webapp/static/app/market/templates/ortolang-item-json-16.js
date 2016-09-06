@@ -13,19 +13,32 @@ angular.module('ortolangMarketApp')
         function ($scope, $rootScope, $location, $route, $translate, $modal, Settings, Content, Helper, ReferentialResource) {
 
             $scope.showPartInfo = function (part) {
-                var modalScope = Helper.createModalScope(true);
+                var modalScope = Helper.createModalScope(true),
+                    showPartModal;
+                modalScope.disabledBrowseButton = $scope.root === 'head';
+                modalScope.disabledExportButton = $scope.root === 'head';
                 modalScope.models = {
-                    title: Helper.getMultilingualValue(part.title, 'lang'),
-                    description: Helper.getMultilingualValue(part.description, 'lang')
+                    title: Helper.getMultilingualValue(part.title, $translate.use()),
+                    description: Helper.getMultilingualValue(part.description, $translate.use()),
+                    contributors: Helper.loadContributors(part.contributors),
+                    path: part.path
                 };
                 modalScope.browseContentPart = function () {
                     $location.search('path', part.path);
                     $route.reload();
+                    showPartModal.hide();
                 };
                 modalScope.exportPart = function () {
                     Content.exportSingle($scope.alias, $scope.root, part.path, $scope.alias);
                 };
-                $modal({
+                modalScope.seeContributorPage = function (contributor) {
+                    if (contributor.entity.id) {
+                        $location.url('/contributors/' + contributor.entity.id);
+                        $route.reload();
+                        showPartModal.hide();
+                    }
+                };
+                showPartModal = $modal({
                     scope: modalScope,
                     templateUrl: 'common/templates/part-info-modal.html',
                     show: true
@@ -34,13 +47,13 @@ angular.module('ortolangMarketApp')
 
             function loadConditionsOfUse(lang) {
                 if ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {
-                    $scope.conditionsOfUse = Helper.getMultilingualValue($scope.content.conditionsOfUse, 'lang', lang);
+                    $scope.conditionsOfUse = Helper.getMultilingualValue($scope.content.conditionsOfUse, lang);
                 }
             }
 
             function loadTerminoUsage(lang) {
                 if ($scope.content.terminoUsage !== undefined && $scope.content.terminoUsage !== '') {
-                    $scope.terminoUsage = Helper.getMultilingualValue($scope.content.terminoUsage, 'lang', lang);
+                    $scope.terminoUsage = Helper.getMultilingualValue($scope.content.terminoUsage, lang);
                 }
             }
 
@@ -80,7 +93,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach($scope.content.commercialLinks, function (commercialLink) {
                         $scope.commercialLinks.push(
                             {
-                                description: Helper.getMultilingualValue(commercialLink.description, 'lang', lang),
+                                description: Helper.getMultilingualValue(commercialLink.description, lang),
                                 acronym: commercialLink.acronym,
                                 url: commercialLink.url,
                                 img: commercialLink.img

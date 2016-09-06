@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:PartsCtrl
+ * @name ortolangMarketApp.controller:WorkspaceMetadataPartsCtrl
  * @description
- * # PartsCtrl
+ * # WorkspaceMetadataPartsCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('PartsCtrl', ['$scope', '$rootScope', '$modal', 'WorkspaceMetadataService', 'Workspace', 'Helper',
-        function ($scope, $rootScope, $modal, WorkspaceMetadataService, Workspace, Helper) {
+    .controller('WorkspaceMetadataPartsCtrl', ['$scope', '$rootScope', '$modal', 'WorkspaceMetadataService', 'Workspace', 'Helper', 'ReferentialResource', '$q',
+        function ($scope, $rootScope, $modal, WorkspaceMetadataService, Workspace, Helper, ReferentialResource, $q) {
 
 	    	$scope.createPart = function (part) {
 	    		if (WorkspaceMetadataService.canEdit) {
@@ -23,7 +23,9 @@ angular.module('ortolangMarketApp')
                 } else {
                     modalScope.part = {
                         title: [],
-                        description: []
+                        description: [],
+                        path: '',
+                        contributors: []
                     };
                 }
 
@@ -52,14 +54,16 @@ angular.module('ortolangMarketApp')
                                 $scope.parts.indexOf(part),
                                 modalScope.part.title,
                                 modalScope.part.description,
-                                modalScope.part.path
+                                modalScope.part.path,
+                                modalScope.part.contributors
                             );
 
                         } else {
                             WorkspaceMetadataService.addPart(
                                 modalScope.part.title,
                                 modalScope.part.description,
-                                modalScope.part.path
+                                modalScope.part.path,
+                                modalScope.part.contributors
                             );
                         }
 		    			createPartModal.hide();

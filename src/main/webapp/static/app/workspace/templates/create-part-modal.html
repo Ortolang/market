@@ -30,7 +30,12 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-default order-contributors-btn" ng-if="metadata.contributors.length > 2" ng-click="orderContributorsByLastName()"><span class="fa fa-sort-alpha-asc"></span> {{'WORKSPACE.METADATA_EDITOR.ORDER_CONTRIBUTORS' | translate}}</button>
+                    <div class="form-group">
+                        <label for="create-part-contributors" class="col-sm-2 control-label" data-translate="MARKET.CONTRIBUTOR"></label>
+                        <div class="col-sm-10">
+                            <div data-contributors-editor data-contributors="part.contributors" disabled="false"></div>
+                        </div>
+                    </div>
                     <hr/>
                     <!-- <div class="bg-danger error-block col-sm-12 am-fade" ng-if='(addContributor.$submitted || addContributor.fullname.$dirty) && addContributor.fullname.$invalid' ng-messages="addContributor.fullname.$error">
                         <div class="text-danger col-sm-offset-2" ng-message="exists">{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.MESSAGES.EXISTS' | translate}}</div>

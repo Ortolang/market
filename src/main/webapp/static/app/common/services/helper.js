@@ -8,7 +8,8 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'Settings', function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource', 'Settings', 
+        function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, ReferentialResource, Settings) {
 
         var modalScope, modal, asideMobileNav, Helper = this;
 
@@ -51,6 +52,85 @@ angular.module('ortolangMarketApp')
             }
             return null;
         };
+
+
+        this.loadContributors = function (contributors, scope) {
+            var loadedContributors = [];
+
+            if (contributors) {
+                angular.forEach(contributors, function (contributor) {
+                    var loadedContributor = {};
+                    if (Helper.startsWith(contributor.entity, '$')) {
+                        // From Workspace preview with contributor inside the referential
+                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
+                            loadedContributor.entity = angular.fromJson(entity.content);
+                        });
+
+                        if (contributor.roles && contributor.roles.length > 0) {
+                            loadedContributor.roles = [];
+                            angular.forEach(contributor.roles, function (role) {
+                                ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
+                                    var contentRole = angular.fromJson(entity.content);
+                                    loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+                                });
+                            });
+                        }
+
+                        if (contributor.organization) {
+                            ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
+                                loadedContributor.organization = angular.fromJson(entity.content);
+                            });
+                        }
+
+                        loadedContributors.push(loadedContributor);
+
+                    } else if (angular.isDefined(contributor.entity['meta_ortolang-referential-json'])) {
+                        // From Market with contributor from referential
+                        loadedContributor.entity = contributor.entity['meta_ortolang-referential-json'];
+                        if (angular.isDefined(contributor.organization)) {
+                            loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
+                        }
+                        loadedContributor.roles = [];
+                        angular.forEach(contributor.roles, function (role) {
+                            loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+                        });
+
+                        loadedContributors.push(loadedContributor);
+                    } else {
+                        // From Workspace (Contributor that needs to be checked) and Market with contributor outside the referential
+                        loadedContributor.entity = contributor.entity;
+
+                        if (contributor.organization) {
+                            if (Helper.startsWith(contributor.organization, '$')) {
+                                ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
+                                    loadedContributor.organization = angular.fromJson(entity.content);
+                                });
+                            } else {
+                                loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
+                            }
+                        }
+
+                        if (contributor.roles && contributor.roles.length > 0) {
+
+                            loadedContributor.roles = [];
+                            angular.forEach(contributor.roles, function (role) {
+                                if (Helper.startsWith(role, '$')) {
+                                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
+                                        var contentRole = angular.fromJson(entity.content);
+                                        loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+                                    });
+                                } else {
+                                    loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+                                }
+                            });
+                        }
+                        loadedContributors.push(loadedContributor);
+                    }
+                });
+            }
+            return loadedContributors;
+        };
+
 
         this.extractKeyFromReferentialId = function (key) {
             // Pattern : ${key}

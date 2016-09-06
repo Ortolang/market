@@ -1,10 +1,6 @@
 <div class="modal part-info-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" ng-click="$hide()">&times;</button>-->
-                <!--<strong class="modal-title">{{models.title}}</strong>-->
-            <!--</div>-->
             <div class="modal-body market-item">
                 <h2 class="market-item-title" ng-bind="models.title"></h2>
                 <hr/>
@@ -15,18 +11,32 @@
                         <article data-content="description" data-target-blank>
                             <div ng-bind-html="models.description"></div>
                             <br/>
-                            <!--<div class="row">-->
-                                <!--<div class="col-md-6">-->
-                                <!--</div>-->
-                            <!--</div>-->
+                        </article>
+
+                        <h4 ng-if="models.contributors.length > 0">{{'MARKET.CONTRIBUTOR' | translate}}</h4>
+                        <article ng-if="models.contributors.length > 0">
+                            <div class="row auto-clear">
+                                <div ng-repeat="contributor in models.contributors" ng-click="seeContributorPage(contributor)"
+                                     class="media profile-card contributor-card col-md-6 col-lg-4"
+                                     ng-class="{'contributor-link': contributor.entity.id}">
+                                    <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
+                                    </div>
+                                    <div class="media-body">
+                                        <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span></span>
+                                        <div class="small roles">
+                                            <span ng-repeat="role in contributor.roles">{{role}}<span ng-if="!$last">, </span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </article>
                     </section>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="pull-left">
-                    <button class="btn btn-success" data-ng-disabled="root === 'head'" ng-click="exportPart()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_PART' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
-                    <button class="btn btn-default" data-ng-disabled="root === 'head'" ng-click="browseContentPart()" translate="MARKET.BROWSE"></button>
+                    <button class="btn btn-success" ng-if="models.path" data-ng-disabled="disabledExportButton" ng-click="exportPart()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_PART' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
+                    <button class="btn btn-default" ng-if="models.path" data-ng-disabled="disabledBrowseButton" ng-click="browseContentPart()" translate="MARKET.BROWSE"></button>
                 </div>
                 <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
             </div>

@@ -239,22 +239,24 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             };
 
-            this.addPart = function (title, description, path) {
+            this.addPart = function (title, description, path, contributors) {
                 if (!this.metadata.parts) {
                     this.metadata.parts = [];
                 }
                 this.metadata.parts.push({
                     title: title,
                     description: description,
+                    contributors: contributors,
                     path: path
                 });
             };
 
-            this.updatePart = function (index, title, description, path) {
+            this.updatePart = function (index, title, description, path, contributors) {
                 if (this.metadata.parts && this.metadata.parts[index]) {
                     this.metadata.parts[index] = {
                         title: title,
                         description: description,
+                        contributors: contributors,
                         path: path
                     };
                 }
@@ -327,6 +329,14 @@ angular.module('ortolangMarketApp')
                     delete contributor.entityContent;
                     delete contributor.rolesEntity;
                     delete contributor.organizationEntity;
+                });
+
+                angular.forEach(metadataCopy.parts, function (part) {
+                    angular.forEach(part.contributors, function (contributor) {
+                        delete contributor.entityContent;
+                        delete contributor.rolesEntity;
+                        delete contributor.organizationEntity;
+                    });
                 });
 
                 metadataCopy.publicationDate = $filter('date')(new Date(), 'yyyy-MM-dd');
