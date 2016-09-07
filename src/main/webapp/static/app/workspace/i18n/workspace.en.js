@@ -262,7 +262,7 @@ angular.module('ortolangMarketApp')
                         },
                         PATH: {
                             LABEL: 'Path',
-                            PLACEHOLDER: 'Path to the subpart'
+                            PLACEHOLDER: 'Path to the directory of the subpart'
                         }
                     }
                 },
@@ -282,7 +282,7 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'This person is already in the list.',
                         ROLE: 'You need to specify the role of this person.'
                     },
-                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new person in the referential.',
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new person in the referential.'
                 },
                 NO_PRODUCER_FOUND: 'You do not find your laboratory ?',
                 ADD_NEW_PRODCUER: 'Add a new laboratory',
@@ -304,7 +304,7 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'This organization is already in the list.',
                         UNDEFINED: 'The name must be specify.'
                     },
-                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new organization in the referential.',
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new organization in the referential.'
                 },
                 NO_LANGUAGE_FOUND: 'You do not find a language ?',
                 ADD_NEW_LANGUAGE: 'Add a new language',
@@ -320,7 +320,7 @@ angular.module('ortolangMarketApp')
                         EXISTS: 'This language is already in the list.',
                         UNDEFINED: 'The label is not defined.'
                     },
-                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new language in the referential.',
+                    CREATE_ENTITY_PENDING: '<strong>Request pending</strong> : Add the new language in the referential.'
                 },
                 NO_LICENCE_FOUND: 'You do not find your license ?',
                 ADD_NEW_LICENCE: 'Add your license',

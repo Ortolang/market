@@ -271,7 +271,7 @@ angular.module('ortolangMarketApp')
                         },
                         PATH: {
                             LABEL: 'Chemin',
-                            PLACEHOLDER: 'Chemin vers la sous-partie'
+                            PLACEHOLDER: 'Chemin vers le répertoire de la sous-partie'
                         }
                     }
                 },
@@ -351,7 +351,7 @@ angular.module('ortolangMarketApp')
                     MESSAGES: {
                         EXISTS: 'Cette licence est déjà dans la liste.',
                         UNDEFINED: 'Le nom de la licence n\'est pas spécifié.'
-                    },
+                    }
                 },
                 CHOOSE_LICENCE_MODAL: {
                     TITLE: 'Choisir une licence'
