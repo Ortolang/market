@@ -1,13 +1,50 @@
-<div class="parts">
-    <div class="card-well card-well-hover part" ng-repeat="part in models.parts" ng-click="clickAction(part.part)">
+<h4>{{'ITEM.PARTS.TITLE' | translate}}
+    <span class="pull-right">
+        <button class="btn btn-default" ng-click="changePartViewMode(1)"><span class="fa fa-bars"/></button>
+        <button class="btn btn-default" ng-click="changePartViewMode(2)"><span class="fa fa-list"/></button>
+        <button class="btn btn-default" ng-click="changePartViewMode(3)"><span class="fa fa-list-alt"/></button>
+        <button class="btn btn-default" ng-click="changePartViewMode(4)"><span class="fa fa-square-o"/></button>
+    </span>
+</h4>
+<div ng-hide="partViewMode>3" class="parts">
+    <div class="card-well card-well-hover card-well-actions part" ng-repeat="part in models.parts" ng-click="clickAction(part.part)">
         <div class="media">
+            <div ng-if="partViewMode>2" class="media-left">
+                <div ng-if="::part.imageUrl" class="thumb-wrapper">
+                    <div>
+                        <div class="thumb" style="background-image: url({{::part.imageUrl}})"></div>
+                    </div>
+                </div>
+                <img ng-if="::part.imageUrl === null"
+                     class="logo"
+                     holder-js="holder.js/100x100?theme={{::part.title.toLowerCase().charAt(0)}}&text={{::part.title.substr(0, 2)}}&size=35" alt="{{::part.title}}"/>
+            </div>
             <div class="media-body">
-                <h4>{{part.title}}</h4>
-                <div data-content="part.description" data-target-blank>
-                    <div ng-bind-html="part.description"></div>
+                <h5 ng-if="partViewMode<2">{{::part.title}} <span id="path" class="detail">({{::part.path}})</span></h5>
+                <h4 ng-if="partViewMode>1">{{::part.title}} <span id="path" class="detail">({{::part.path}})</span></h4>
+                <div ng-if="partViewMode>1" data-content="::part.description" data-target-blank>
+                    <div ng-bind-html="::part.description"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<div ng-show="partViewMode>3" class="parts-flex">
+    <div class="flex-row medium-item-wrapper" ng-class="inline?'flex-row-inline':''">
+        <div ng-repeat="part in models.parts" class="flex-column">
+            <div class="medium-item">
+                <a ng-click="clickAction(part.part)">
+                    <div ng-if="::part.imageUrl" class="thumb-wrapper">
+                        <div>
+                            <div class="thumb" style="background-image: url({{::part.imageUrl}})"></div>
+                        </div>
+                    </div>
+                    <img ng-if="::part.imageUrl === null"
+                         class="item-logo"
+                         holder-js="holder.js/160x160?theme={{::part.title.toLowerCase().charAt(0)}}&text={{::part.title.substr(0, 2)}}&size=56" alt="{{::part.title}}"/>
+                    <h3 class="title" ng-bind="::part.title"></h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

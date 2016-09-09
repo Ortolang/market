@@ -47,6 +47,30 @@ angular.module('ortolangMarketApp')
                     show: false
                 });
 
+                var deregisterFileImageSelectorModal = $rootScope.$on('browserSelectedElements-dirPartImageSelectorModal', function ($event, elements) {
+                    if(elements.length>0) {
+                        modalScope.part.image = elements[0].path;
+                        modalScope.filePartImageSelectorModal.hide();
+                    }
+                });
+
+                var filePartImageSelectorModalScope = $rootScope.$new();
+                filePartImageSelectorModalScope.acceptMultiple = false;
+                filePartImageSelectorModalScope.forceMimeTypes = ['ortolang/collection', 'image'];
+                filePartImageSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
+                filePartImageSelectorModalScope.forceHead = true;
+                filePartImageSelectorModalScope.fileSelectId = 'dirPartImageSelectorModal';
+                modalScope.filePartImageSelectorModal = $modal({scope: filePartImageSelectorModalScope,
+                    title: 'Sélectionnez une image',
+                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    show: false
+                });
+
+                modalScope.$on('$destroy', function () {
+                    deregisterFilePreviewPathSelectorModal();
+                    deregisterFileImageSelectorModal();
+                });
+
                 modalScope.submit = function (createPartForm) {
                     if (createPartForm.$valid) {
                         if (updateMode) {
@@ -55,6 +79,7 @@ angular.module('ortolangMarketApp')
                                 modalScope.part.title,
                                 modalScope.part.description,
                                 modalScope.part.path,
+                                modalScope.part.image,
                                 modalScope.part.contributors
                             );
 
@@ -63,6 +88,7 @@ angular.module('ortolangMarketApp')
                                 modalScope.part.title,
                                 modalScope.part.description,
                                 modalScope.part.path,
+                                modalScope.part.image,
                                 modalScope.part.contributors
                             );
                         }

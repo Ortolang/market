@@ -239,7 +239,7 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             };
 
-            this.addPart = function (title, description, path, contributors) {
+            this.addPart = function (title, description, path, image, contributors) {
                 if (!this.metadata.parts) {
                     this.metadata.parts = [];
                 }
@@ -247,17 +247,19 @@ angular.module('ortolangMarketApp')
                     title: title,
                     description: description,
                     contributors: contributors,
-                    path: path
+                    path: path,
+                    image: image
                 });
             };
 
-            this.updatePart = function (index, title, description, path, contributors) {
+            this.updatePart = function (index, title, description, path, image, contributors) {
                 if (this.metadata.parts && this.metadata.parts[index]) {
                     this.metadata.parts[index] = {
                         title: title,
                         description: description,
                         contributors: contributors,
-                        path: path
+                        path: path,
+                        image: image
                     };
                 }
             };
