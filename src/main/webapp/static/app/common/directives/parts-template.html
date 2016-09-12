@@ -36,7 +36,9 @@
                 <a ng-click="clickAction(part.part)">
                     <div ng-if="::part.imageUrl" class="thumb-wrapper">
                         <div>
-                            <div class="thumb" style="background-image: url({{::part.imageUrl}})"></div>
+                            <div>
+                                <div class="thumb" style="background-image: url({{::part.imageUrl}})"></div>
+                            </div>
                         </div>
                     </div>
                     <img ng-if="::part.imageUrl === null"
