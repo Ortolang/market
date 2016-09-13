@@ -14,7 +14,8 @@ angular.module('ortolangMarketApp')
             restrict: 'AE',
             scope: {
                 disabled: '=',
-                contributors: '='
+                contributors: '=',
+                metadata: '='
             },
             templateUrl: 'workspace/directives/contributors-editor.html',
             link: function (scope) {
@@ -77,6 +78,10 @@ angular.module('ortolangMarketApp')
                     });
 
                     return deferred.promise;
+                };
+
+                scope.orderContributorsByLastName = function () {
+                    scope.contributors = $filter('orderBy')(scope.contributors, '+entityContent.lastname');
                 };
 
                 /**

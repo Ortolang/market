@@ -319,10 +319,6 @@ angular.module('ortolangMarketApp')
                 $scope.$apply();
             });
 
-            $scope.orderContributorsByLastName = function () {
-                $scope.metadata.contributors = $filter('orderBy')($scope.metadata.contributors, '+entityContent.lastname');
-            };
-
             /**
              * Methods for loadings entities
              **/

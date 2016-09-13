@@ -1,9 +1,9 @@
-<h4>{{'ITEM.PARTS.TITLE' | translate}}
+<h4 ng-if="showTitle">{{'ITEM.PARTS.TITLE' | translate}}
     <span class="pull-right">
-        <button class="btn btn-default" ng-click="changePartViewMode(1)"><span class="fa fa-bars"/></button>
-        <button class="btn btn-default" ng-click="changePartViewMode(2)"><span class="fa fa-list"/></button>
-        <button class="btn btn-default" ng-click="changePartViewMode(3)"><span class="fa fa-list-alt"/></button>
-        <button class="btn btn-default" ng-click="changePartViewMode(4)"><span class="fa fa-square-o"/></button>
+        <button class="btn btn-default" ng-click="changePartViewMode(1)" ng-class="{'active': partViewMode===1}"><span class="fa fa-bars"/></button>
+        <button class="btn btn-default" ng-click="changePartViewMode(2)" ng-class="{'active': partViewMode===2}"><span class="fa fa-list"/></button>
+        <button class="btn btn-default" ng-click="changePartViewMode(3)" ng-class="{'active': partViewMode===3}"><span class="fa fa-list-alt"/></button>
+        <button class="btn btn-default" ng-click="changePartViewMode(4)" ng-class="{'active': partViewMode===4}"><span class="fa fa-square-o"/></button>
     </span>
 </h4>
 <div ng-hide="partViewMode>3" class="parts">
@@ -20,11 +20,16 @@
                      holder-js="holder.js/100x100?theme={{::part.title.toLowerCase().charAt(0)}}&text={{::part.title.substr(0, 2)}}&size=35" alt="{{::part.title}}"/>
             </div>
             <div class="media-body">
-                <h5 ng-if="partViewMode<2">{{::part.title}} <span id="path" class="detail">({{::part.path}})</span></h5>
-                <h4 ng-if="partViewMode>1">{{::part.title}} <span id="path" class="detail">({{::part.path}})</span></h4>
+                <h5 ng-if="partViewMode<2">{{::part.title}} <span ng-if="::part.path" id="path" class="detail">({{::part.path}})</span></h5>
+                <h4 ng-if="partViewMode>1">{{::part.title}} <span ng-if="::part.path" id="path" class="detail">({{::part.path}})</span></h4>
                 <div ng-if="partViewMode>1" data-content="::part.description" data-target-blank>
                     <div ng-bind-html="::part.description"></div>
                 </div>
+            </div>
+            <div class="media-right">
+                <span class="actions">
+                    <button ng-if="deleteAction" class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteAction($index)" data-title="{{::'DELETE' | translate}}" bs-tooltip><span ng-class="::icons.remove"></span></button>
+                </span>
             </div>
         </div>
     </div>

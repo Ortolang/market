@@ -7,14 +7,16 @@
  * # Directive of the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .directive('parts', ['$rootScope', '$translate', 'Helper', 'Content', function ($rootScope, $translate, Helper, Content) {
+    .directive('parts', ['$rootScope', '$translate', 'Helper', 'Content', 'icons', function ($rootScope, $translate, Helper, Content, icons) {
         return {
             restrict: 'EA',
             scope: {
                 model: '=',
                 wsalias: '=',
                 snapshotName: '=',
-                clickAction: '='
+                clickAction: '=',
+                deleteAction: '=',
+                showTitle: '='
             },
             templateUrl: 'common/directives/parts-template.html',
             link: function(scope) {
@@ -37,6 +39,7 @@ angular.module('ortolangMarketApp')
                 function init () {
                     scope.models = {};
                     scope.partViewMode = 1;
+                    scope.icons = icons;
                 }
                 init();
 

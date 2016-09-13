@@ -220,7 +220,9 @@ angular.module('ortolangMarketApp')
              **/
             $scope.$on('taorg.select', function (v, i) {
                 $scope.models.organization = Helper.createKeyFromReferentialId(i.key);
-                $scope.models.entityContent.organization = Helper.createKeyFromReferentialId(i.key);
+                if ($scope.models.entityContent) {
+                    $scope.models.entityContent.organization = Helper.createKeyFromReferentialId(i.key);
+                }
                 $scope.models.organizationEntity = i.org;
 
                 $scope.organizationFullname = i.org.fullname;

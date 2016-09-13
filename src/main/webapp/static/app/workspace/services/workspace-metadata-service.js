@@ -250,6 +250,7 @@ angular.module('ortolangMarketApp')
                     path: path,
                     image: image
                 });
+                WorkspaceMetadataService.metadataChanged = true;
             };
 
             this.updatePart = function (index, title, description, path, image, contributors) {
@@ -261,6 +262,14 @@ angular.module('ortolangMarketApp')
                         path: path,
                         image: image
                     };
+                    WorkspaceMetadataService.metadataChanged = true;
+                }
+            };
+
+            this.deletePart = function (index) {
+                if (index > -1) {
+                    this.metadata.parts.splice(index, 1);
+                    WorkspaceMetadataService.metadataChanged = true;
                 }
             };
 

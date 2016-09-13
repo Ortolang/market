@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
                         contributors: []
                     };
                 }
+                modalScope.metadata = $scope.metadata;
 
                 var deregisterFilePreviewPathSelectorModal = $rootScope.$on('browserSelectedElements-dirPartPathSelectorModal', function ($event, elements) {
                     if(elements.length>0) {
@@ -101,6 +102,10 @@ angular.module('ortolangMarketApp')
                     show: true
                 });
 	    	};
+
+            $scope.deletePart = function (index) {
+                WorkspaceMetadataService.deletePart(index);
+            };
 
             function loadParts () {
                 $scope.parts = angular.copy($scope.metadata.parts);

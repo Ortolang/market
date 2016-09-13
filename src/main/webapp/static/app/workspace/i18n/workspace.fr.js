@@ -272,6 +272,10 @@ angular.module('ortolangMarketApp')
                         PATH: {
                             LABEL: 'Chemin',
                             PLACEHOLDER: 'Chemin vers le répertoire de la sous-partie'
+                        },
+                        IMAGE: {
+                            LABEL: 'Image',
+                            PLACEHOLDER: 'Chemin vers le fichier image'
                         }
                     }
                 },
