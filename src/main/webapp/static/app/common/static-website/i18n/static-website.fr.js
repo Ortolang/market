@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
             },
             ALL_THE_NEWS: 'Toutes les actualités...',
             USERS: '{{::stat}} utilisateurs',
-            WORKSPACES: '{{::stat}} resources',
+            WORKSPACES: '{{::stat}} ressources',
             DATA: '{{::stat | bytes}} de données',
             FILES: '{{::stat | numbers:"fr"}} fichiers',
             LEGAL_NOTICES: {

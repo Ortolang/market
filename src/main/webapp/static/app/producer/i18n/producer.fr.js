@@ -16,6 +16,6 @@ angular.module('ortolangMarketApp')
             HOMEPAGE: 'Site internet',
             LIST_OF_RESOURCES: 'Liste des productions du laboratoire',
             META_DESCRIPTION_PRODUCER: 'Liste des productions de : ',
-            META_DESCRIPTION_PRODUCERS: 'Liste de tous les laboratoires et organismes producteurs de resources publiées sur ORTOLANG.'
+            META_DESCRIPTION_PRODUCERS: 'Liste de tous les laboratoires et organismes producteurs de ressources publiées sur ORTOLANG.'
         }
     });
