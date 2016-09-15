@@ -256,18 +256,18 @@ angular.module('ortolangMarketApp')
                 ADD_NEW_PERSON: 'Ajouter une personne',
                 ORDER_CONTRIBUTORS: 'Trier par nom',
                 PARTS: {
-                    ADD: 'Ajouter une sous-parties'
+                    ADD: 'Ajouter une sous-partie'
                 },
                 CREATE_PART_MODAL: {
-                    TITLE: 'Créer une sous-parties',
+                    TITLE: 'Créer une sous-partie',
                     FIELDS: {
                         TITLE: {
                             LABEL: 'Titre',
-                            PLACEHOLDER: 'Nom de la sous-parties'
+                            PLACEHOLDER: 'Nom de la sous-partie'
                         },
                         DESCRIPTION: {
                             LABEL: 'Description',
-                            PLACEHOLDER: 'Description courte de la sous-parties'
+                            PLACEHOLDER: 'Description courte de la sous-partie'
                         },
                         PATH: {
                             LABEL: 'Chemin',
