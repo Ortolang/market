@@ -4,13 +4,12 @@
         <div ng-if="::image" class="thumb-wrapper">
             <div>
                 <div>
-                    <div class="thumb" style="background-image: url({{::image}})"></div>
+                    <div class="thumb" style="background-image: url('{{::image}}')"></div>
                 </div>
             </div>
         </div>
         <h3 class="title" ng-bind="::title"></h3>
         <div ng-if="::publicationDate" class="publication-date">
-            <!-- <span translate="MARKET.PUBLISHED_ON"></span> -->
             <span class="text-muted" >{{::publicationDate | date:'mediumDate'}}</span>
         </div>
     </a>
