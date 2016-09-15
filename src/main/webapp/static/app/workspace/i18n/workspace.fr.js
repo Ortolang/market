@@ -84,7 +84,7 @@ angular.module('ortolangMarketApp')
                 BODY: 'Vous allez soumettre l\'espace de travail "{{wsName}}" à publication :',
                 VERSION: 'Version',
                 NEXT_TAG: 'Choisir le numéro de la nouvelle version',
-                NEXT_TAG_HELP: 'Vous pouvez choisir le numéro de la nouvelle version qui sera publiée. Veuillez noter que si vous choisissez de "remplacer la dernière version publiée" : la dernière version publiée n\'apparaitra plus dans les resources d\'ORTOLANG et sera remplacée par cette nouvelle publication. Les données de la version remplacée seront toutefois conservées.',
+                NEXT_TAG_HELP: 'Vous pouvez choisir le numéro de la nouvelle version qui sera publiée. Veuillez noter que si vous choisissez de "remplacer la dernière version publiée" : la dernière version publiée n\'apparaitra plus dans les ressources d\'ORTOLANG et sera remplacée par cette nouvelle publication. Les données de la version remplacée seront toutefois conservées.',
                 NEXT_TAG_CUSTOM: 'Saisir manuellement le numéro de la nouvelle version',
                 CONTENT: 'Je reconnais être responsable des contenus que je publie et posséder toutes les autorisations, consentements et droits qui me permettent de publier ces contenus',
                 POLICY: 'Je déclare avoir pris connaissance et accepter sans réserves <a href="/information/policy" target="_blank">la charte ORTOLANG</a>',
@@ -386,7 +386,7 @@ angular.module('ortolangMarketApp')
                 AUTHENTIFIED: 'Utilisateurs connectés',
                 ESR: 'Membres de l\'ESR',
                 RESTRICTED: 'Membres de l\'espace de travail',
-                HELP: 'Certains éléments contenu dans cette resource peuvent avoir un accès restreint aux :'
+                HELP: 'Certains éléments contenu dans cette ressource peuvent avoir un accès restreint aux :'
             },
             EVENTS: {
                 CORE: {
