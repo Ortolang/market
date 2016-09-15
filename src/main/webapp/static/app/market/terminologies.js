@@ -20,15 +20,15 @@ angular.module('ortolangMarketApp')
                 resetLabel: 'MARKET.ALL_RESOURCE',
                 options: [
                     OptionFacetedFilter.make({
-                        label: $translate.instant('ITEM.TYPE.VALUES.TERMINO'),
-                        value: $translate.instant('ITEM.TYPE.VALUES.TERMINO'),
+                        label: 'Terminologie',
+                        value: 'Terminologie',
                         length: 1
                     })
                 ],
                 lockOptions: true,
                 lock: true
             });
-            $scope.typeFilter.putSelectedOption($scope.typeFilter.getOption($translate.instant('ITEM.TYPE.VALUES.TERMINO')));
+            $scope.typeFilter.putSelectedOption($scope.typeFilter.getOption('Terminologie'));
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             // 1rst level
