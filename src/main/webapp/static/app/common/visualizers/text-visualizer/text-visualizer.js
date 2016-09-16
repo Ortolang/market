@@ -104,7 +104,13 @@ angular.module('ortolangVisualizers')
                     function initializeVisualizerWithPreview() {
                         scope.hasPreview = true;
                         scope.tabs = {};
-                        scope.tabs.activeTab = 'preview';
+                        if (scope.xsl) {
+                            scope.tabs.activeTab = 'preview';
+                        } else if (scope.tei) {
+                            scope.tabs.activeTab = 'tei';
+                        } else {
+                            scope.tabs.activeTab = 'source';
+                        }
                         scope.visualizer.header.actions = [
                             {
                                 name: 'showSource',
@@ -112,21 +118,38 @@ angular.module('ortolangVisualizers')
                                     return scope.tabs.activeTab === 'source';
                                 },
                                 text: 'TEXT_VISUALIZER.SHOW_SOURCE'
-                            },
-                            {
+                            }
+                        ];
+                        if (scope.xsl) {
+                            scope.visualizer.header.actions.push({
                                 name: 'showPreview',
                                 hide: function () {
                                     return scope.tabs.activeTab === 'preview';
                                 },
                                 text: 'TEXT_VISUALIZER.SHOW_PREVIEW'
-                            }
-                        ];
+                            });
+                        }
+                        if (scope.tei) {
+                            scope.visualizer.header.actions.push({
+                                name: 'showTei',
+                                hide: function () {
+                                    return scope.tabs.activeTab === 'tei';
+                                },
+                                text: 'TEXT_VISUALIZER.SHOW_TEI_PREVIEW'
+                            });
+                        }
                         scope.actions.showSource = function () {
                             scope.tabs.activeTab = 'source';
                         };
                         scope.actions.showPreview = function () {
                             scope.tabs.activeTab = 'preview';
                         };
+                        scope.actions.showTei = function () {
+                            scope.tabs.activeTab = 'tei';
+                        };
+                        if (scope.parent && scope.parent.path) {
+                            scope.base = Content.getContentUrlWithPath(scope.parent.path, scope.wsAlias, scope.root);
+                        }
                         if (scope.elements[0].downloadUrl) {
                             scope.pageSrc = scope.elements[0].downloadUrl;
                         } else if (scope.elements[0].path) {
@@ -165,8 +188,16 @@ angular.module('ortolangVisualizers')
                         } else {
                             scope.data = response.data;
                         }
-                        if (mimeType === 'application/xml' && response.data.indexOf('<?xml-stylesheet') !== -1) {
-                            initializeVisualizerWithPreview();
+                        if (mimeType === 'application/xml') {
+                            if (response.data.indexOf('<?xml-stylesheet') !== -1) {
+                                scope.xsl = true;
+                            }
+                            if (response.data.indexOf('xmlns="http://www.tei-c.org/ns/1.0"') !== -1) {
+                                scope.tei = true;
+                            }
+                            if (scope.xsl || scope.tei) {
+                                initializeVisualizerWithPreview();
+                            }
                         }
                         if (mimeType === 'text/html' && response.data.indexOf('<iframe') === 0 && response.data.indexOf('</iframe>') === response.data.length - '</iframe>'.length) {
                             scope.inception = true;

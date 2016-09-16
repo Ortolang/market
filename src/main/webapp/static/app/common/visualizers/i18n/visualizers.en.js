@@ -13,6 +13,7 @@ angular.module('ortolangMarketApp')
             SEE_MORE: 'See more content',
             EXCERPT: 'Only an excerpt of the content is displayed due to the important size of the file',
             SHOW_SOURCE: 'Show source code',
-            SHOW_PREVIEW: 'Show preview'
+            SHOW_PREVIEW: 'Preview',
+            SHOW_TEI_PREVIEW: 'CETEIcean preview'
         }
     });

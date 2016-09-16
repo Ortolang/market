@@ -1,7 +1,10 @@
 <div ng-if="(!pendingData || forceDisplay) && !hasPreview" hljs source="data" language="{{language}}" class="highlight"></div>
 <div ng-if="(!pendingData || forceDisplay) && hasPreview" class="html-visualizer-wrapper" bs-active-pane="tabs.activeTab" data-template="common/visualizers/text-visualizer/text-visualizer-tabs-template.html" bs-tabs>
-    <div data-name="preview" class="html-visualizer-iframe-wrapper" bs-pane>
+    <div ng-if="pageSrc" data-name="preview" class="html-visualizer-iframe-wrapper" bs-pane>
         <iframe name="html-visualizer" class="html-visualizer-iframe" ng-src="{{pageSrc}}" ng-class="{inception: inception}" allowfullscreen></iframe>
+    </div>
+    <div ng-if="tei" data-name="tei" bs-pane>
+        <div cetei-cean data-content="fullData || data" data-base="base"></div>
     </div>
     <div data-name="source" hljs source="data" language="{{language}}" class="highlight" bs-pane></div>
 </div>

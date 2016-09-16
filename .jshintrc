@@ -22,6 +22,7 @@
     "angular": false,
     "$": false,
     "atmosphere": false,
-    "Keycloak": false
+    "Keycloak": false,
+    "CTEI": false
   }
 }

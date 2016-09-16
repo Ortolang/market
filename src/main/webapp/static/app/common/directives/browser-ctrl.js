@@ -1037,6 +1037,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     modalScope.elements = $scope.selectedElements;
                 }
+                modalScope.parent = $scope.parent;
                 if ($scope.isMarketBrowserService) {
                     var authorized = true,
                         promises = [],
