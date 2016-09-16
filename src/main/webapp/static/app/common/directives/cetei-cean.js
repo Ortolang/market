@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
                                     return function() {
                                         var that = this;
                                         $timeout(function () {
-                                            let content = new Image();
+                                            var content = new Image();
                                             content.src = CETEIcean.rw(that.getAttribute('url'));
                                             if (that.hasAttribute('width')) {
                                                 content.width = that.getAttribute('width').replace(/[^.0-9]/g, '');
