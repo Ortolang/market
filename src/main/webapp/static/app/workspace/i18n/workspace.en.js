@@ -337,7 +337,7 @@ angular.module('ortolangMarketApp')
                     },
                     DESCRIPTION_FIELD: {
                         LABEL: 'Description',
-                        PLACEHOLDER: 'Sumary of the particularity'
+                        PLACEHOLDER: 'Summary of the particularity'
                     },
                     WEBSITE_FIELD: {
                         LABEL: 'Web page',
@@ -386,9 +386,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Create metadata item'
             },
             PERMISSIONS_EDITOR: {
-                TITLE: 'Visibility of the workspace content',
-                SHOW_FILES: 'Show files',
-                ADVANCED_MODE: 'Advanced edition'
+                TITLE: 'Visibility of the workspace content after publication',
+                HELP: '<p>Here you can set the visibility options of the workspace content: <ul><li>for example you can choose to limit the access to given files or folders to ESR members only ("Enseignement supérieur et de la Recherche").</li><li><strong>these settings only apply on published content</strong>: files uploaded initially and between two publications are only visible to the membres of the workspace until a (new) publication request has been made.</li></ul></p>',
+                LEGEND: 'Legend:',
+                SHOW_FILES: 'Show files'
             },
             PERMISSIONS_MODAL: {
                 TITLE: 'Visibility of {{::path}}',

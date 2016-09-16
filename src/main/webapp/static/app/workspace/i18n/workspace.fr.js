@@ -395,9 +395,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Remplir la fiche des métadonnées'
             },
             PERMISSIONS_EDITOR: {
-                TITLE: 'Visibilité du contenu de l\'espace de travail',
-                SHOW_FILES: 'Afficher les fichiers',
-                ADVANCED_MODE: 'Édition avancée'
+                TITLE: 'Visibilité du contenu de l\'espace de travail après publication',
+                HELP: '<p>Vous pouvez régler ici les options de visibilité du contenu de votre espace de travail : <ul><li>vous pouvez par exemple limiter l\'accès de certain fichiers ou dossiers aux membres de l\'Enseignement supérieur et de la Recherche.</li><li><strong>ces options s\'appliquent uniquement sur le contenu publié</strong> : les fichiers déposés initialement ou entre deux publications ne sont accessibles que par les membres de l\'espace de travail tant qu\'une (nouvelle) demande de publication n\'a pas été effectuée.</li></ul></p>',
+                LEGEND: 'Légende :',
+                SHOW_FILES: 'Afficher les fichiers'
             },
             PERMISSIONS_MODAL: {
                 TITLE: 'Visibilité de {{::path}}',
