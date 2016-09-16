@@ -2,7 +2,9 @@
     <div ng-if="Workspace.active.workspace.readOnly" class="alert alert-warning" role="alert" translate="WORKSPACE.READ_ONLY_MODE"></div>
     <div class="workspace-dashboard-section workspace-dashboard-permissions">
         <h4 translate="WORKSPACE.PERMISSIONS_EDITOR.TITLE" class="no-border-bottom"></h4>
+        <div translate="WORKSPACE.PERMISSIONS_EDITOR.HELP"></div>
         <div class="legend">
+            <span class="legend-label" translate="WORKSPACE.PERMISSIONS_EDITOR.LEGEND"></span>
             <span class="label tag label-for-all"><span ng-class="::icons.acl.forall"></span> {{'WORKSPACE.ACL.FORALL' | translate}}</span>
             <span class="label tag label-authentified"><span ng-class="::icons.acl.authentified"></span> {{'WORKSPACE.ACL.AUTHENTIFIED' | translate}}</span>
             <span class="label tag label-esr"><span ng-class="::icons.acl.esr"></span> {{'WORKSPACE.ACL.ESR' | translate}}</span>
