@@ -23,6 +23,10 @@
     "$": false,
     "atmosphere": false,
     "Keycloak": false,
-    "CTEI": false
+    "CTEI": false,
+    "OrtolangConfig": false,
+    "google": false,
+    "Holder": false,
+    "CETEI": false
   }
 }

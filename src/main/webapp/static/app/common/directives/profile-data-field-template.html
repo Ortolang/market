@@ -42,12 +42,12 @@
             {{profileData.value || emptyText}}
         </span>
 
-         <span ng-if="profileData.type==='ENUM'" class="xeditable-placeholder" id="{{::profileData.name}}" editable-select="profileData.value" data-e-name="profileData.name" data-e-ng-options="s.value as (s.text | translate) for s in {{source}}"
+         <span ng-if="profileData.type==='ENUM'" class="xeditable-placeholder" editable-select="profileData.value" data-e-name="profileData.name" data-e-ng-options="s.value as (s.text | translate) for s in {{source}}"
                data-onaftersave="Profile.updateUserProfileData(profileData)">
              {{(showValue(profileData.value, source) | translate) || emptyText}}
          </span>
 
-        <span ng-if="profileData.type==='ADDRESS'" class="xeditable-placeholder" e-ng-keypress="Profile.preventAddressSubmitOnEnter($event, $data, profileData)" id="{{::profileData.name}}" editable-address="profileData.value" data-e-name="profileData.name" data-e-placeholder="{{'PROFILE.FIELDS.' + profileData.name.toUpperCase() | translate}}" data-e-value="{{profileData.value}}"
+        <span ng-if="profileData.type==='ADDRESS'" class="xeditable-placeholder" e-ng-keypress="Profile.preventAddressSubmitOnEnter($event, $data, profileData)" editable-address="profileData.value" data-e-name="profileData.name" data-e-placeholder="{{'PROFILE.FIELDS.' + profileData.name.toUpperCase() | translate}}" data-e-value="{{profileData.value}}"
               data-onbeforesave="Profile.checkAddress(profileData, $data)"
               data-onaftersave="Profile.updateUserAddress(profileData)">
             {{profileData.value || emptyText}}

@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .directive('cookiesConsent', ['$rootScope', '$cookies', '$alert', 'AuthService', function ($rootScope, $cookies, $alert, AuthService) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
+            link: function (scope, element) {
                 function showCookieAlert() {
                     var cookieAlert = $alert({
                         templateUrl: 'cookies-consent.html',

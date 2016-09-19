@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('previewBox', ['ObjectResource', 'VisualizerManager',  function (ObjectResource, VisualizerManager) {
+    .directive('previewBox', [function () {
         return {
             restrict: 'EA',
             scope: {

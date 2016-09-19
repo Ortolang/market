@@ -10,6 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('WorkspaceResource', ['$resource', 'url', function ($resource, url) {
 
+        //noinspection JSUnusedGlobalSymbols
         return $resource(url.api + '/workspaces/:wskey', {}, {
             createWorkspace: {
                 method: 'POST'

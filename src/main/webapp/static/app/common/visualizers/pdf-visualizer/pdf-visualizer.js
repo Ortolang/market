@@ -43,7 +43,7 @@ angular.module('ortolangVisualizers')
             template: '<iframe class="pdf-visualizer-iframe" ng-src="{{pdfUrl}}"></iframe>',
             restrict: 'A',
             link: {
-                pre: function (scope, element, attrs) {
+                pre: function (scope) {
                     angular.forEach(scope.elements, function (element) {
                         if (!element.downloadUrl) {
                             scope.pdfUrl = Content.getContentUrlWithKey(element.key);

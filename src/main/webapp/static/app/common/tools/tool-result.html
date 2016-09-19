@@ -12,13 +12,13 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills nav-stacked col-md-3" id="resultsTabs">
                         <li ng-repeat="tab in results" id="{{tab.key}}Tab">
-                            <a aria-expanded="false" href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type==='text-preview'">
+                            <a aria-expanded="false" ng-href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type==='text-preview'">
                                 <i class="fa fa-eye"></i> {{'TOOLS.PREVIEW_TITLE' | translate}}
                             </a>
-                            <a aria-expanded="false" href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type==='link-list'">
+                            <a aria-expanded="false" ng-href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type==='link-list'">
                                 <i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}
                             </a>
-                            <a aria-expanded="false" href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
+                            <a aria-expanded="false" ng-href="#{{tab.key}}Pane" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
                         </li>
                         <li id="logTab"><a aria-expanded="false" href="#logPane" target="_blank" data-toggle="tab">
                             <i class="fa fa-file-text-o"></i> {{'TOOLS.LOG_TITLE' | translate}}

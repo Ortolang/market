@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .factory('MetadataFormat', function () {
 
-        var MetadataEditor = function (data) {
+        return function (data) {
             angular.extend(this, {
                 id: '',
                 name: '',
@@ -22,6 +22,4 @@ angular.module('ortolangMarketApp')
                 }
             }, data);
         };
-
-        return MetadataEditor;
     });

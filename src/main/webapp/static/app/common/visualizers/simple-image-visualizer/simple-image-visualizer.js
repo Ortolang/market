@@ -47,7 +47,7 @@ angular.module('ortolangVisualizers')
             templateUrl: 'common/visualizers/simple-image-visualizer/simple-image-visualizer.html',
             restrict: 'A',
             link: {
-                pre: function (scope, element, attrs) {
+                pre: function (scope) {
                     scope.elements[0].selected = true;
                     scope.imageElements = [];
                     angular.forEach(scope.elements, function (element) {

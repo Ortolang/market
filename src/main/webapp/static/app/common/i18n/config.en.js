@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.i18n.en
+ * @name ortolangMarketApp.i18nEN
  * @description
- * # i18n.en
+ * # i18nEN
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .provider('i18n.en', ['COMMON_EN', 'ITEM_EN', 'NAV_EN', 'BROWSER_EN', 'WORKSPACE_EN', 'MARKET_EN', 'PRODUCER_EN', 'PROCESSES_EN', 'VISUALIZERS_EN', 'STATIC_WEBSITE_EN', 'PROFILE_EN', 'FORMS_EN',
+    .provider('i18nEN', ['COMMON_EN', 'ITEM_EN', 'NAV_EN', 'BROWSER_EN', 'WORKSPACE_EN', 'MARKET_EN', 'PRODUCER_EN', 'PROCESSES_EN', 'VISUALIZERS_EN', 'STATIC_WEBSITE_EN', 'PROFILE_EN', 'FORMS_EN',
         function (COMMON_EN, ITEM_EN, NAV_EN, BROWSER_EN, WORKSPACE_EN, MARKET_EN, PRODUCER_EN, PROCESSES_EN, VISUALIZERS_EN, STATIC_WEBSITE_EN, PROFILE_EN, FORMS_EN) {
 
             var translations;
@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
                 };
             };
         }])
-    .config(['$translateProvider', 'i18n.enProvider', function ($translateProvider, i18nEN) {
+    .config(['$translateProvider', 'i18nENProvider', function ($translateProvider, i18nEN) {
         $translateProvider
             .translations('en', i18nEN.getTranslations());
     }]);

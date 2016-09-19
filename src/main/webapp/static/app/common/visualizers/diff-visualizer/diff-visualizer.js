@@ -49,7 +49,7 @@ angular.module('ortolangVisualizers')
             templateUrl: 'common/visualizers/diff-visualizer/diff-visualizer.html',
             restrict: 'A',
             link: {
-                pre: function (scope, element, attrs) {
+                pre: function (scope) {
                     scope.leftObjName = scope.elements[0].name;
                     scope.rightObjName = scope.elements[1].name;
                     scope.visualizer.header.html = scope.leftObjName + '&nbsp;&nbsp;<span class="octicon octicon-mirror"></span>&nbsp;&nbsp;' + scope.rightObjName;

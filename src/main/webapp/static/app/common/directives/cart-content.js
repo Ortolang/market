@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .directive('cartContent', ['Cart', function (Cart) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
+            link: function (scope) {
                 scope.Cart = Cart;
             }
         };

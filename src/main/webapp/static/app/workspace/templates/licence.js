@@ -152,9 +152,10 @@ angular.module('ortolangMarketApp')
                     modalScope.selectedDescription = {value: ''};
 
                     modalScope.model.status = '${referential:free_use}';
-                    var free_status = $filter('filter')($scope.allStatusOfUse, {id: '${referential:free_use}'}, true);
-                    if (free_status.length>0) {
-                        modalScope.status = {value: free_status[0]};
+                    /*jshint camelcase:false */
+                    var freeStatus = $filter('filter')($scope.allStatusOfUse, {id: '${referential:free_use}'}, true);
+                    if (freeStatus.length>0) {
+                        modalScope.status = {value: freeStatus[0]};
                     }
                     modalScope.model.licenseWebsite = '';
                 }

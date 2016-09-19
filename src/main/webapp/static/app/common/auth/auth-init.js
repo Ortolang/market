@@ -33,6 +33,7 @@ angular.element(document).ready(function () {
                 }
 
                 function isRoot() {
+                    /*jshint camelcase:false */
                     return keycloakAuth.idTokenParsed.preferred_username === 'root';
                 }
 
@@ -42,6 +43,7 @@ angular.element(document).ready(function () {
 
                 function getScope() {
                     if (keycloakAuth.authenticated) {
+                        /*jshint camelcase:false */
                         return window.btoa(keycloakAuth.idTokenParsed.preferred_username) + OrtolangConfig.cacheVersion;
                     }
                     return OrtolangConfig.cacheVersion;

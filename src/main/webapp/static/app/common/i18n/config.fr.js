@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.i18n.fr
+ * @name ortolangMarketApp.i18nFR
  * @description
- * # i18n.fr
+ * # i18nFR
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .provider('i18n.fr', ['COMMON_FR', 'ITEM_FR', 'NAV_FR', 'BROWSER_FR', 'WORKSPACE_FR', 'MARKET_FR', 'PRODUCER_FR', 'CONTRIBUTOR_FR', 'PROCESSES_FR', 'VISUALIZERS_FR', 'STATIC_WEBSITE_FR', 'PROFILE_FR', 'FORMS_FR',
+    .provider('i18nFR', ['COMMON_FR', 'ITEM_FR', 'NAV_FR', 'BROWSER_FR', 'WORKSPACE_FR', 'MARKET_FR', 'PRODUCER_FR', 'CONTRIBUTOR_FR', 'PROCESSES_FR', 'VISUALIZERS_FR', 'STATIC_WEBSITE_FR', 'PROFILE_FR', 'FORMS_FR',
         function (COMMON_FR, ITEM_FR, NAV_FR, BROWSER_FR, WORKSPACE_FR, MARKET_FR, PRODUCER_FR, CONTRIBUTOR_FR, PROCESSES_FR, VISUALIZERS_FR, STATIC_WEBSITE_FR, PROFILE_FR, FORMS_FR) {
 
             var translations;
@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
                 };
             };
         }])
-    .config(['$translateProvider', 'i18n.frProvider', function ($translateProvider, i18nFR) {
+    .config(['$translateProvider', 'i18nFRProvider', function ($translateProvider, i18nFR) {
         $translateProvider
             .translations('fr', i18nFR.getTranslations())
             .registerAvailableLanguageKeys(['fr', 'en'], {

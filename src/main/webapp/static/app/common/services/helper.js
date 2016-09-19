@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource', 'Settings', 
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource', 'Settings',
         function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, ReferentialResource, Settings) {
 
         var modalScope, modal, asideMobileNav, Helper = this;
@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
         };
 
 
-        this.loadContributors = function (contributors, scope) {
+        this.loadContributors = function (contributors) {
             var loadedContributors = [];
 
             if (contributors) {

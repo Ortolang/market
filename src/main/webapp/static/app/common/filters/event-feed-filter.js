@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         return function (events) {
             var filteredEvents = [];
             angular.forEach(events, function (event) {
-                if (event.throwedBy == null || event.type === 'core.workspace.snapshot' || event.type === 'membership.group.create') {
+                if (event.throwedBy === undefined || event.throwedBy === null || event.type === 'core.workspace.snapshot' || event.type === 'membership.group.create') {
                     return;
                 }
                 if (event.type === 'membership.group.add-member' && event.throwedBy === event.arguments.member) {

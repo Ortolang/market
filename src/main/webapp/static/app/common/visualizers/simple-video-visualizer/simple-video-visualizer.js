@@ -50,7 +50,7 @@ angular.module('ortolangVisualizers')
             templateUrl: 'common/visualizers/simple-video-visualizer/simple-video-visualizer.html',
             restrict: 'A',
             link: {
-                pre: function (scope, element, attrs) {
+                pre: function (scope) {
                     angular.forEach(scope.elements, function (element) {
                         if (!element.downloadUrl) {
                             element.downloadUrl = Content.getContentUrlWithKey(element.key, false);

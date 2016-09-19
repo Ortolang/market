@@ -47,7 +47,7 @@ angular.module('ortolangMarketApp')
                         angular.forEach(data.entries, function (profileData) {
                             if (profileData.name === 'organisation') {
                                 Profile.getOrganization(profileData.value).then(function (data) {
-                                    $scope.infos[profileData.name] = processOrganisation(data);
+                                    $scope.infos[profileData.name] = data;
                                 });
                             } else {
                                 $scope.infos[profileData.name] = profileData.value;
@@ -56,6 +56,7 @@ angular.module('ortolangMarketApp')
                     });
                 } else {
                     SearchResource.getProfile({key: $scope.key}, function (data) {
+                        /*jshint camelcase:false */
                         $scope.profile = data.meta_profile;
                         $scope.infos = data.meta_profile.infos;
                         if ($scope.infos.organisation) {

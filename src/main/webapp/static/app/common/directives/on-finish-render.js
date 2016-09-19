@@ -10,7 +10,7 @@ angular.module('ortolangMarketApp')
     .directive('onFinishRender', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
-            link: function (scope, element, attr) {
+            link: function (scope) {
                 if (scope.$last === true) {
                     $timeout(function () {
                         scope.$emit('ngRepeatRenderingFinished');

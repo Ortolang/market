@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
             scope: {
                 filesModel: '='
             },
-            link: function(scope, element, attrs) {
+            link: function(scope, element) {
                 element.bind('change', function(){
                     scope.$apply(function(){
                         scope.filesModel = element[0].files;

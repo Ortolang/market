@@ -119,7 +119,7 @@ angular.module('ortolangMarketApp')
                             delete $routeParams.viewMode;
                         }
                         if ($routeParams.orderProp) {
-                            scope.search.setActiveOrderProp($routeParams.orderProp, ($routeParams.orderDir === 'asc' ? false : true));
+                            scope.search.setActiveOrderProp($routeParams.orderProp, ($routeParams.orderDir !== 'asc'));
                             // delete $routeParams.orderProp;
                             // delete $routeParams.orderDir;
                         }

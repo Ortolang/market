@@ -35,15 +35,12 @@ angular.module('ortolangMarketApp')
             }
 
             function prepareModalScopeForErrorMessages() {
-                var modalScope = $rootScope.$new(true);
-
-                return modalScope;
+                return $rootScope.$new(true);
             }
 
             function showErrorMessages() {
 
-                var modalScope = prepareModalScopeForErrorMessages(),
-                    addContributorModal;
+                var modalScope = prepareModalScopeForErrorMessages();
 
                 modalScope.errors = WorkspaceMetadataService.metadataErrors;
 
@@ -51,7 +48,7 @@ angular.module('ortolangMarketApp')
                     modalScope.$destroy();
                 });
 
-                addContributorModal = $modal({
+                $modal({
                     scope: modalScope,
                     templateUrl: 'workspace/templates/error-messages-modal.html'
                 });

@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
                 behaviors: '=?'
             },
             restrict: 'A',
-            link: function (scope, element, attrs) {
+            link: function (scope, element) {
                 function processTEI() {
                     var base = scope.base !== '/' ? scope.base + '/' : scope.base;
                     var CETEIcean = new CETEI(base);

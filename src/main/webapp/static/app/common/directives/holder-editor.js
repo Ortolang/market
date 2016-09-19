@@ -10,7 +10,7 @@ angular.module('ortolangMarketApp')
     .directive('holderJsEditor', ['$translate', function ($translate) {
         var defaultText = $translate.instant('WORKSPACE.HOLDER_EDITOR_MODAL.TEXT');
         return {
-            link: function (scope, element, attrs) {
+            link: function (scope) {
                 scope.models.height = scope.models.height || 200;
                 scope.models.width = scope.models.width || 200;
                 scope.models.text = scope.models.text || defaultText;

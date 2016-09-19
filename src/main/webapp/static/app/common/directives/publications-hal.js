@@ -17,7 +17,7 @@ angular.module('ortolangMarketApp')
             },
             templateUrl: 'common/directives/publications-hal-template.html',
             link: {
-                post: function (scope, element, attrs) {
+                post: function (scope) {
 
                     function getPublications() {
                         var url = 'https://api.archives-ouvertes.fr/search/?q=' + scope.idType + ':' + scope.idHal + '&wt=json&fl=docType_s,citationFull_s,halId_s,producedDate_tdate&sort=producedDate_tdate desc';

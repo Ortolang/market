@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
             },
             templateUrl: 'common/formly/ortolang-formly-file-select-template.html',
             link: {
-                pre : function (scope, element, attrs) {
+                pre : function (scope) {
                     var fileSelectModalScope = $rootScope.$new();
                     fileSelectModalScope.acceptMultiple = false;
                     fileSelectModalScope.fileSelectId = scope.id;

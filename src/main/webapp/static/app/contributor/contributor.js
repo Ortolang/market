@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             SearchResource.getEntity({id: id}, function (entity) {
                 $scope.contributor = entity['meta_ortolang-referential-json'];
                 if ($scope.contributor.username) {
+                    /*jshint camelcase:false */
                     $scope.presentation = $scope.contributor.username.meta_profile.infos.presentation;
                     $scope.emailHash = $scope.contributor.username.meta_profile.emailhash;
                     $scope.idHal = $scope.contributor.username.meta_profile.infos.idhal;
@@ -31,8 +32,7 @@ angular.module('ortolangMarketApp')
 
                     if (content.organization) {
                         ReferentialResource.get({name: Helper.extractNameFromReferentialId(content.organization)}, function (entity) {
-                            var contentOrganization = angular.fromJson(entity.content);
-                            $scope.contributor.organizationEntity = contentOrganization;
+                            $scope.contributor.organizationEntity = angular.fromJson(entity.content);
                         });
                     }
                 }, function () {

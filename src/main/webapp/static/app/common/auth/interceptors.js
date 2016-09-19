@@ -19,6 +19,7 @@ angular.module('ortolangMarketApp')
             config.params.scope = scope;
         }
 
+        //noinspection JSUnusedGlobalSymbols
         return {
             request: function (config) {
                 if (config.url.indexOf(url.api) !== 0) {

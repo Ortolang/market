@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceMetadataPartsCtrl', ['$scope', '$rootScope', '$modal', 'WorkspaceMetadataService', 'Workspace', 'Helper', 'ReferentialResource', '$q',
-        function ($scope, $rootScope, $modal, WorkspaceMetadataService, Workspace, Helper, ReferentialResource, $q) {
+    .controller('WorkspaceMetadataPartsCtrl', ['$scope', '$rootScope', '$modal', 'WorkspaceMetadataService', 'Workspace', 'Helper',
+        function ($scope, $rootScope, $modal, WorkspaceMetadataService, Workspace, Helper) {
 
 	    	$scope.createPart = function (part) {
 	    		if (WorkspaceMetadataService.canEdit) {

@@ -45,7 +45,7 @@ angular.module('ortolangVisualizers')
             templateUrl: 'common/visualizers/markdown-visualizer/markdown-visualizer.html',
             restrict: 'A',
             link: {
-                pre: function (scope, element, attrs) {
+                pre: function (scope) {
                     Content.downloadWithKey(scope.elements[0].key).promise.then(function (response) {
                         scope.markdown = response.data;
                     });

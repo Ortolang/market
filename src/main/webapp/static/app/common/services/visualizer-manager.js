@@ -148,7 +148,7 @@ angular.module('ortolangVisualizers')
                 // If mimetype is given with an array of compatible file extensions
                 if (angular.isObject(compatibleTypes[element.mimeType])) {
                     // check if the file extension is compatible
-                    return compatibleTypes[element.mimeType][element.name.substr((~-element.name.lastIndexOf('.') >>> 0) + 2)];
+                    return compatibleTypes[element.mimeType][element.name.substr((~-element.name.lastIndexOf('.') >>> 0) + 2)]; // jshint ignore:line
                 }
                 return compatibleTypes[element.mimeType];
             },

@@ -28,6 +28,7 @@ angular.module('ortolangMarketApp')
         function getUser() {
             ProfileResource.connected().$promise.then(function (profile) {
                 if (!profile.complete) {
+                    /*jshint camelcase:false */
                     profile.key = AuthService.getKeycloak().idTokenParsed.preferred_username;
                     profile.givenName = AuthService.getKeycloak().idTokenParsed.given_name;
                     profile.familyName = AuthService.getKeycloak().idTokenParsed.family_name;

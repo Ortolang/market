@@ -10,9 +10,9 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills">
                         <li ng-repeat="tab in results" class="{{tab.active===true ? 'active' : ''}}">
-                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='text-preview'"><i class="fa fa-eye"></i> {{'TOOLS.PREVIEW_TITLE' | translate}}</a>
-                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='link-list'"><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</a>
-                            <a aria-expanded="false" href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
+                            <a aria-expanded="false" ng-href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='text-preview'"><i class="fa fa-eye"></i> {{'TOOLS.PREVIEW_TITLE' | translate}}</a>
+                            <a aria-expanded="false" ng-href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type==='link-list'"><i class="fa fa-download"></i> {{'TOOLS.LINK_LIST_TITLE' | translate}}</a>
+                            <a aria-expanded="false" ng-href="#{{tab.key}}" target="_blank" data-toggle="tab" ng-if="tab.type!='text-preview' && tab.type!='link-list'">{{tab.label}}</a>
                         </li>
                     </ul>
 

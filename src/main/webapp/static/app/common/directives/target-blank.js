@@ -11,10 +11,10 @@ angular.module('ortolangMarketApp')
     .directive('targetBlank', function () {
         return {
             scope: true,
-            compile: function (element, attr) {
+            compile: function () {
                 return function (scope, element, attrs) {
                     scope.myContent = attrs.content;
-                    scope.$watch(scope.myContent, function (newValue, oldValue) {
+                    scope.$watch(scope.myContent, function (newValue) {
                         if (newValue) {
                             var elems = (element.prop('tagName') === 'A') ? element : element.find('a');
                             elems.attr('target', '_blank');

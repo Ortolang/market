@@ -66,6 +66,7 @@ angular.module('ortolangMarketApp')
             };
 
     		function init() {
+                //noinspection JSCheckFunctionSignatures
                 $scope.languages = [
                     {key: 'fr', value: $translate.instant('LANGUAGES.FR')},
                     {key: 'en', value: $translate.instant('LANGUAGES.EN')},

@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
                 return this;
             },
 
-            is_not_null : function (name) {
+            isNotNull : function (name) {
                 this.conditions += '`' + name + '`' + ' IS NOT NULL';
                 return this;
             },

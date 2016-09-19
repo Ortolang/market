@@ -60,7 +60,7 @@ angular.module('ortolangVisualizers')
             templateUrl: 'common/visualizers/text-visualizer/text-visualizer.html',
             restrict: 'A',
             link: {
-                pre: function (scope, element, attrs) {
+                pre: function (scope) {
                     var mimeType = scope.elements[0].mimeType,
                         limit = 20000;
                     scope.hasPreview = false;

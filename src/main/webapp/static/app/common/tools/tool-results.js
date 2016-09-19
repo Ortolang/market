@@ -110,7 +110,7 @@ angular.module('ortolangMarketApp')
             // Listeners //
             // ********* //
 
-            var deregisterFolderSelectModal = $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
+            $rootScope.$on('browserSelectedElements-folderSelectModal', function ($event, elements) {
                 if (!$scope.data) {
                     $scope.data = {};
                 }

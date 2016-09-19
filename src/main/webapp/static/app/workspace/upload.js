@@ -156,7 +156,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            uploader.onWhenAddingFileFailed = function (item, filter, options) {
+            uploader.onWhenAddingFileFailed = function (item, filter, options) { // jshint ignore:line
                 if (filter.name === 'queueLimit' && !queueLimitReached) {
                     queueLimitReached = true;
                     Helper.showErrorModal({code: 'QUEUE_LIMIT'});
@@ -171,7 +171,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            uploader.onSuccessItem = function (fileItem, response, status, headers) { // jshint ignore:line
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
                         if (status === 200) {
@@ -204,7 +204,7 @@ angular.module('ortolangMarketApp')
                 uploader.tokenJustRefreshed = false;
             };
 
-            uploader.onErrorItem = function (fileItem, response, status, headers) {
+            uploader.onErrorItem = function (fileItem, response, status, headers) { // jshint ignore:line
                 if (uploader.tokenJustRefreshed || AuthService.getKeycloak().isTokenExpired()) {
                     uploader.tokenJustRefreshed = true;
                     AuthService.getKeycloak().updateToken(5).success(function () {

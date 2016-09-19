@@ -1,3 +1,5 @@
+'use strict';
+
 if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
     var _paq = _paq || [];
     _paq.push([function() {
@@ -8,14 +10,13 @@ if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfi
                 visitorInfo = self.getVisitorInfo();
             var createTs = parseInt(visitorInfo[2]);
             var cookieTimeout = 33696000; // 13 months in seconds
-            var originalTimeout = createTs + cookieTimeout - nowTs;
-            return originalTimeout;
+            return createTs + cookieTimeout - nowTs;
         }
         this.setVisitorCookieTimeout(getOriginalVisitorCookieTimeout());
     }]);
     _paq.push(['enableLinkTracking']);
     (function() {
-        var u="//" + OrtolangConfig.piwikHost;
+        var u= '//' + OrtolangConfig.piwikHost;
         _paq.push(['setTrackerUrl', u+'piwik.php']);
         _paq.push(['setSiteId', OrtolangConfig.piwikSiteId]);
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];

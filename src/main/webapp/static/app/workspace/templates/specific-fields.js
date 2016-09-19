@@ -48,14 +48,13 @@ angular.module('ortolangMarketApp')
                 if (WorkspaceMetadataService.canEdit) {
                     return;
                 }
-                var modalScope = Helper.createModalScope(true),
-                    addContributorModal;
+                var modalScope = Helper.createModalScope(true);
                 modalScope.metadataLanguagesId = languagesId;
                 if (language) {
                     modalScope.language = language;
                 }
 
-                addContributorModal = $modal({
+                $modal({
                     scope: modalScope,
                     templateUrl: 'workspace/templates/add-language-modal.html',
                     show: true

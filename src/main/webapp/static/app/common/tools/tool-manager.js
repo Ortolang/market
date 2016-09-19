@@ -8,8 +8,8 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'Content', 'SearchResource', 'QueryBuilderFactory',
-        function ($resource, $q, $translate, $rootScope, $window, $timeout, Content, SearchResource, QueryBuilderFactory) {
+    .factory('ToolManager', ['$resource', '$q', '$translate', '$rootScope', '$window', '$timeout', 'Content', 'SearchResource',
+        function ($resource, $q, $translate, $rootScope, $window, $timeout, Content, SearchResource) {
 
             // ---
             // ORTOLANG TOOL DEFINITION
