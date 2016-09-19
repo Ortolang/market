@@ -110,7 +110,7 @@ angular.module('ortolangMarketApp')
                 LABEL: 'Qualité',
                 PLACEHOLDER: 'Indicateur permettant d\'évaluer la fiabilité théorique de l\'information terminologique.'
             },
-            TERMINO_CONTROLED: {
+            TERMINO_CONTROLLED: {
                 LABEL: 'Contrôlé',
                 PLACEHOLDER: 'Vérification du maintien de l\'intégrité de la ressource.'
             },
@@ -141,7 +141,7 @@ angular.module('ortolangMarketApp')
             TERMINO_DOMAIN_CATEGORY: {
                 TITLE: 'Domaine'
             },
-            PARTS: { 
+            PARTS: {
                 TITLE: 'Sous-parties',
             },
         }

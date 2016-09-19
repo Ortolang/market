@@ -20,12 +20,10 @@ angular.module('ortolangMarketApp')
             }
             if (change.type === 'MapChange') {
                 if (change.change.propertyName === 'metadatas') {
-                    var changes;
+                    var changes = '';
                     angular.forEach(change.change.entryChanges, function (entryChange) {
-                        if (changes) {
+                        if (changes.length > 0) {
                             changes += ', ';
-                        } else {
-                            changes = '';
                         }
                         if (entryChange.value) {
                             changes += '+ ';

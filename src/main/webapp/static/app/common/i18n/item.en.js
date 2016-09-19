@@ -110,9 +110,9 @@ angular.module('ortolangMarketApp')
                 LABEL: 'Quality',
                 PLACEHOLDER: 'Quality.'
             },
-            TERMINO_CONTROLED: {
-                LABEL: 'Controled',
-                PLACEHOLDER: 'Controled.'
+            TERMINO_CONTROLLED: {
+                LABEL: 'Controlled',
+                PLACEHOLDER: 'Controlled.'
             },
             TERMINO_VALIDATED: {
                 LABEL: 'Validated',
@@ -141,7 +141,7 @@ angular.module('ortolangMarketApp')
             TERMINO_DOMAIN_CATEGORY: {
                 TITLE: 'Domain'
             },
-            PARTS: { 
+            PARTS: {
                 TITLE: 'Subparts'
             },
         }

@@ -9,6 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .directive('targetBlank', function () {
+        //noinspection JSUnusedGlobalSymbols
         return {
             scope: true,
             compile: function () {

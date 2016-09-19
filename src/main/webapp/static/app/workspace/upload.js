@@ -156,6 +156,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            //noinspection JSUnusedLocalSymbols
             uploader.onWhenAddingFileFailed = function (item, filter, options) { // jshint ignore:line
                 if (filter.name === 'queueLimit' && !queueLimitReached) {
                     queueLimitReached = true;
@@ -171,6 +172,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            //noinspection JSUnusedLocalSymbols
             uploader.onSuccessItem = function (fileItem, response, status, headers) { // jshint ignore:line
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
@@ -204,6 +206,7 @@ angular.module('ortolangMarketApp')
                 uploader.tokenJustRefreshed = false;
             };
 
+            //noinspection JSUnusedLocalSymbols
             uploader.onErrorItem = function (fileItem, response, status, headers) { // jshint ignore:line
                 if (uploader.tokenJustRefreshed || AuthService.getKeycloak().isTokenExpired()) {
                     uploader.tokenJustRefreshed = true;

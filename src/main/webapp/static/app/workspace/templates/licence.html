@@ -1,53 +1,48 @@
 <div class="row" ng-controller="LicenceCtrl">
     <div class="col-sm-12 col-md-10 tab-pane-content">
-    	<div class="form-group">
-	        <label for="license" class="control-label">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</label>
+        <div class="form-group">
+            <label for="add-license" class="control-label">{{'WORKSPACE.METADATA_EDITOR.LICENCE' | translate}}</label>
 
             <table class="table table-bordered table-responsive card-well metadata-editor-table">
                 <tbody>
-                    <tr ng-if="metadata.licenseEntity">
-                        <td>
-                            <div class="media">
-                                <div class="media-body">
-                                    <span class="clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="editLicense(metadata.licenseEntity)" ng-bind="metadata.licenseEntity.label"></span> <i ng-if="!metadata.licenseEntity.id && User.isRoot()" ng-class="::icons.info" data-title="{{'WORKSPACE.METADATA_EDITOR.NEW_LICENCE' | translate}}" data-placement="right" bs-tooltip></i>
-                                </div>
-                                <div class="media-right actions">
+                <tr ng-if="metadata.licenseEntity">
+                    <td>
+                        <div class="media">
+                            <div class="media-body">
+                                <span class="clickable" id="add-license" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="editLicense(metadata.licenseEntity)" ng-bind="metadata.licenseEntity.label"></span> <i ng-if="!metadata.licenseEntity.id && User.isRoot()" ng-class="::icons.info" data-title="{{'WORKSPACE.METADATA_EDITOR.NEW_LICENCE' | translate}}" data-placement="right" bs-tooltip></i>
+                            </div>
+                            <div class="media-right actions">
                                     <span class="clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteLicense()" data-title="{{::'DELETE' | translate}}" bs-tooltip>
                                         <span ng-class="::icons.remove"></span>
                                     </span>
-                                </div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr ng-if="!metadata.licenseEntity" class="clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="chooseLicence()">
-                        <td>
-                            <span class="fa fa-search"></span>  <span>  Sélectionnez une licence...</span>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="!metadata.licenseEntity" class="clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="chooseLicence()">
+                    <td>
+                        <span class="fa fa-search"></span>  <span>  Sélectionnez une licence...</span>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <p ng-if="!metadata.licenseEntity" class="help-block">
                 {{'WORKSPACE.METADATA_EDITOR.NO_LICENCE_FOUND' | translate}}
-                <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="addLicenceFromScratch()">{{'WORKSPACE.METADATA_EDITOR.ADD_NEW_LICENCE' | translate}}</a>
+                <a href="" class="btn btn-link" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="addLicenceFromScratch()" translate="WORKSPACE.METADATA_EDITOR.ADD_NEW_LICENCE"></a>
             </p>
-    	</div>
+        </div>
         <hr/>
         <div class="form-group">
-            <label for="conditionsOfUse" class="control-label">{{'MARKET.CONDITIONS_OF_USE' | translate}}</label>
-
+            <label for="conditions-of-use" class="control-label" translate="MARKET.CONDITIONS_OF_USE"></label>
             <div class="input-group">
                 <button type="button" class="btn btn-default" name="conditionsOfUse-lang" ng-model="selectedConditionsOfUseLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeConditionsOfUseLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
             </div>
-            
-            <textarea class="form-control" name="conditionsOfUse" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse.value" ng-disabled="WorkspaceMetadataService.canEdit" ng-change="updateConditionsOfUse()"></textarea>
-                
+            <textarea class="form-control" id="conditions-of-use" name="conditionsOfUse" rows="10" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_CONDITIONS_OF_USE' | translate}}" ng-model="conditionsOfUse.value" ng-disabled="WorkspaceMetadataService.canEdit" ng-change="updateConditionsOfUse()"></textarea>
         </div>
         <hr/>
         <div class="form-group">
-            <label for="copyright" class="control-label">{{'MARKET.COPYRIGHT' | translate}}</label>
-            
-              <input type="text" class="form-control" name="copyright" placeholder="Copyright ..." aria-label="copyright" ng-model="metadata.copyright" ng-disabled="WorkspaceMetadataService.canEdit">
-            
+            <label for="license-copyright" class="control-label" translate="MARKET.COPYRIGHT"></label>
+            <input type="text" class="form-control" id="license-copyright" name="copyright" placeholder="Copyright ..." aria-label="copyright" ng-model="metadata.copyright" ng-disabled="WorkspaceMetadataService.canEdit">
         </div>
-	</div>
+    </div>
 </div>

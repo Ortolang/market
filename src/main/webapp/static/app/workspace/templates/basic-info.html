@@ -1,6 +1,6 @@
 <div ng-controller="BasicInfoCtrl">
     <div class="form-group" ng-class="{'has-error': errors.type === true}">
-        <label for="type" class="control-label">{{'ITEM.TYPE.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
+        <label class="control-label">{{'ITEM.TYPE.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
         <div class="btn-group btn-group-justified o-radio-button-group">
             <label class="btn btn-default" ng-class="{'active': metadata.type === 'Corpus'}">
                 <input type="radio" value="Corpus" ng-model="metadata.type" data-ng-disabled="WorkspaceMetadataService.canEdit"> <span class="fa-2x" ng-class="::icons.section.corpora"></span><br/>{{'ITEM.TYPE.VALUES.CORPORA' | translate}}
@@ -30,7 +30,7 @@
     <div class="form-group" ng-class="{'has-error': errors.description === true}">
         <label for="md-description" class="control-label">{{'ITEM.DESCRIPTION.LABEL' | translate}} <span class="text-danger" data-placement="right" data-title="{{'WORKSPACE.METADATA_EDITOR.MANDATORY_FIELD' | translate}}" bs-tooltip>*</span></label>
         <div class="input-group">
-            <button type="button" class="btn btn-default" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+            <button type="button" class="btn btn-default" id="md-description" name="description-lang" ng-model="selectedDescriptionLanguage" bs-options="lang.key as lang.value for lang in languages" ng-change="changeDescriptionLanguage()" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
         </div>
         <!-- <textarea class="form-control" id="md-description" name="description" rows="20" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_DESCRIPTION' | translate}}" ng-model="description.value" ng-change="updateDescription()" ng-disabled="WorkspaceMetadataService.canEdit"></textarea> -->
         <ng-wig source-mode-allowed name="description" ng-model="description.value" ng-change="updateDescription()" ng-disabled="WorkspaceMetadataService.canEdit"></ng-wig>

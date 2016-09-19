@@ -9,6 +9,7 @@
  */
 angular.module('ortolangMarketApp')
     .factory('ReferentialResource', ['$resource', 'url', function ($resource, url) {
+        //noinspection JSUnusedGlobalSymbols
         return $resource(url.api + '/referential/:name', {}, {
             get: {
                 method: 'GET',

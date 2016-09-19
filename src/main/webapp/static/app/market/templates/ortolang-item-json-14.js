@@ -199,7 +199,7 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('terminoFormat', 'ITEM.TERMINO_FORMAT.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoInputCount', 'ITEM.TERMINO_INPUT_COUNT.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoVersion', 'ITEM.TERMINO_VERSION.LABEL', lang);
-                loadFieldValuesInAdditionalInformations('terminoControled', 'ITEM.TERMINO_CONTROLED.LABEL', lang);
+                loadFieldValuesInAdditionalInformations('terminoControlled', 'ITEM.TERMINO_CONTROLED.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoValidated', 'ITEM.TERMINO_VALIDATED.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoApproved', 'ITEM.TERMINO_APPROVED.LABEL', lang);
                 loadFieldValuesInAdditionalInformations('terminoChecked', 'ITEM.TERMINO_CHECKED.LABEL', lang);
