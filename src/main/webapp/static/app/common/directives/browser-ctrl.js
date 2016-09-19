@@ -56,7 +56,7 @@ angular.module('ortolangMarketApp')
         'FileSelectBrowserService',
         'Helper',
         'url',
-        function (/** ortolangMarketApp.controller:BrowserCtrl */$scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, url) {
+        function ($scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, url) {
 
             var isMacOs, isMobile, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, initialDisplayedItemLimit, lastSelectedElement,
@@ -1255,27 +1255,27 @@ angular.module('ortolangMarketApp')
                 return null;
             }
 
-            function checkUploaderEvent(reprensentation) {
-                if (reprensentation) {
+            function checkUploaderEvent(representation) {
+                if (representation) {
                     if (uploadRefreshTimeoutPromise) {
                         $timeout.cancel(uploadRefreshTimeoutPromise);
                     }
                     uploadRefreshTimeoutPromise = $timeout(function () {
-                        if (getParentPath(reprensentation.path) === $scope.path) {
+                        if (getParentPath(representation.path) === $scope.path) {
                             getParentData(true).then(function () {
-                                refreshSelectedElements(reprensentation);
+                                refreshSelectedElements(representation);
                             });
                         }
                     }, 400);
                 }
             }
 
-            $rootScope.$on('uploader.object.create', function ($event, reprensentation) {
-                checkUploaderEvent(reprensentation);
+            $rootScope.$on('uploader.object.create', function ($event, representation) {
+                checkUploaderEvent(representation);
             });
 
-            $rootScope.$on('uploader.object.update', function ($event, reprensentation) {
-                checkUploaderEvent(reprensentation);
+            $rootScope.$on('uploader.object.update', function ($event, representation) {
+                checkUploaderEvent(representation);
             });
 
             function checkCreateEvent(eventMessage) {
