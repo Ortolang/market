@@ -102,7 +102,7 @@ angular.module('ortolangMarketApp')
                 STATIC_HELP: 'L\'identifiant pérenne statique pointera vers cette version du {{::type === "object" ? "fichier" : "dossier"}} <strong>{{::name}}</strong>.',
                 STATIC_ITEM_HELP: 'Identifiant pérenne statique (pointera vers cette version de la ressource)',
                 DYNAMIC: 'Identifiant pérenne dynamique',
-                DYNAMIC_HELP: 'L\'identifiant pérenne dynamique pointera toujours vers la dernière version du {{::type === "object" ? "fichier" : "dossier"}} <strong>{{::name}}</strong> si une nouvelle version de la resource est publiée.',
+                DYNAMIC_HELP: 'L\'identifiant pérenne dynamique pointera toujours vers la dernière version du {{::type === "object" ? "fichier" : "dossier"}} <strong>{{::name}}</strong> si une nouvelle version de la ressource est publiée.',
                 DYNAMIC_ITEM_HELP: 'Identifiant pérenne dynamique (pointera toujours vers la dernière version publiée de la ressource)',
                 COPY: 'Copier le lien',
                 OTHERS: 'Autres identifiants pérenne'
