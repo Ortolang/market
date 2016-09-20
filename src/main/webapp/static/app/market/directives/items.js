@@ -75,9 +75,11 @@ angular.module('ortolangMarketApp')
                         }
                         // scope.search.pack();
 
-                        angular.forEach(results.entries, function (result) {
-                            var title = result.title;
+                        angular.forEach(results, function (result) {
+                            var title = result.title,
+                                rank = result.rank;
                             result.effectiveTitle = Helper.getMultilingualValue(title);
+                            result.effectiveRank = rank ? rank : 0;
                         });
 
                         scope.search.endProcessing();
