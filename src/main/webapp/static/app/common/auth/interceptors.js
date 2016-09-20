@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
                     console.error('Forbidden', rejection);
                 } else if (rejection.status === 404) {
                     console.error('Not found', rejection);
-                } else if (rejection.status === 0) {
+                } else if (rejection.status === 0 || rejection.status === -1) {
                     $rootScope.$broadcast('server-down');
                     console.error('An unexpected server error has occurred. Server might be currently unavailable.', rejection);
                 } else {

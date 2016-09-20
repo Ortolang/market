@@ -14,7 +14,7 @@
 angular.module('ortolangMarketApp')
     .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', 'Runtime', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, url, User, AuthService, ProfileResource, AtmosphereService, Runtime) {
 
-        var serverDownModal, unauthorizedModal, notLoggedInModal;
+        var serverDownModal, serverDownModalOnce, unauthorizedModal, notLoggedInModal;
 
         function initProfile(profile) {
             User.create(profile);
@@ -52,8 +52,10 @@ angular.module('ortolangMarketApp')
         }
 
         $scope.$on('server-down', function () {
-            if (angular.element('.server-down-modal').length === 0) {
+            if (!serverDownModalOnce) {
+                serverDownModalOnce = true;
                 $http.get(url.api + '/config/ping').then(function () {
+                    serverDownModalOnce = false;
                     console.log('API server responded to ping');
                 }, function () {
                     if (!serverDownModal) {
