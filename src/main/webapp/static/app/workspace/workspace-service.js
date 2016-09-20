@@ -10,7 +10,7 @@
  * @property {Object}   metadatas   - the metadata of all the workspaces in the list
  * @property {Object}   active      - the workspace being managed
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $q, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User, Helper) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$route', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $route, $q, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User, Helper) {
 
     var listDeferred,
         activeWorkspaceInfoDeferred,
@@ -158,14 +158,26 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                 var filteredWorkspace = $filter('filter')(Workspace.list, {alias: alias}, true);
                 if (filteredWorkspace.length === 0) {
                     Workspace.clearActiveWorkspace();
-                    WorkspaceResource.getWorkspaceFromAlias({alias: alias, md: true}, function (data) {
-                        Workspace.active.workspace = data;
-                        getActiveWorkspaceInfo();
-                        deferred.resolve();
-                    }, function (error) {
-                        console.error('No workspace with alias "%s" or user not authorized to access this workspace', alias);
-                        deferred.reject(error);
-                    });
+                    if (Helper.isUUID(alias)) {
+                        WorkspaceResource.get({wskey: alias, md: true}, function (data) {
+                            Workspace.active.workspace = data;
+                            $route.updateParams({alias: data.alias});
+                            getActiveWorkspaceInfo();
+                            deferred.resolve();
+                        }, function (error) {
+                            console.error('No workspace with alias "%s" or user not authorized to access this workspace', alias);
+                            deferred.reject(error);
+                        });
+                    } else {
+                        WorkspaceResource.getWorkspaceFromAlias({alias: alias, md: true}, function (data) {
+                            Workspace.active.workspace = data;
+                            getActiveWorkspaceInfo();
+                            deferred.resolve();
+                        }, function (error) {
+                            console.error('No workspace with alias "%s" or user not authorized to access this workspace', alias);
+                            deferred.reject(error);
+                        });
+                    }
                 } else {
                     Workspace.active.workspace = filteredWorkspace[0];
                     getActiveWorkspaceInfo();
