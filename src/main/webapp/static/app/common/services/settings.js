@@ -32,19 +32,23 @@ angular.module('ortolangMarketApp')
 
         this.store = function () {
             if (User.isAuthenticated()) {
-                var profileDataRepresentation = {
-                    name: 'settings',
-                    value: JSON.stringify(this),
-                    type: 'STRING',
-                    source: null,
-                    visibility: 'NOBODY'
-                };
-                ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
-                    User.profileDatas.settings = profileDataRepresentation;
+                User.sessionInitialized().then(function () {
+                    if (User.getProfileData('settings').value !== angular.toJson(Settings)) {
+                        var profileDataRepresentation = {
+                            name: 'settings',
+                            value: angular.toJson(Settings),
+                            type: 'STRING',
+                            source: null,
+                            visibility: 'NOBODY'
+                        };
+                        ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
+                            User.profileDatas.settings = profileDataRepresentation;
+                        });
+                        $rootScope.$emit('updateProfileFields');
+                    }
                 });
-                $rootScope.$emit('updateProfileFields');
             } else if (localStorage !== undefined) {
-                localStorage.setItem('ortolang.settings', JSON.stringify(this));
+                localStorage.setItem('ortolang.settings', angular.toJson(Settings));
             }
         };
 
@@ -55,12 +59,11 @@ angular.module('ortolangMarketApp')
         this.init = function () {
             if (User.isAuthenticated()) {
                 User.sessionInitialized().then(function () {
-                    console.log('Initialize settings');
                     var profileData = User.getProfileData('settings');
                     if (profileData) {
                         var savedSettings = profileData.value;
                         if (savedSettings && savedSettings !== 'undefined') {
-                            angular.forEach(JSON.parse(savedSettings), function (value, key) {
+                            angular.forEach(angular.fromJson(savedSettings), function (value, key) {
                                 if (angular.isObject(value)) {
                                     angular.extend(Settings[key], value);
                                 } else {
@@ -73,14 +76,13 @@ angular.module('ortolangMarketApp')
                     deferred.resolve();
                 });
             } else if (localStorage !== undefined) {
-                var savedSettings = localStorage.getItem('ortolang.settings'),
-                    that = this;
+                var savedSettings = localStorage.getItem('ortolang.settings');
                 if (savedSettings && savedSettings !== 'undefined') {
-                    angular.forEach(JSON.parse(savedSettings), function (value, key) {
+                    angular.forEach(angular.fromJson(savedSettings), function (value, key) {
                         if (angular.isObject(value)) {
-                            angular.extend(that[key], value);
+                            angular.extend(Settings[key], value);
                         } else {
-                            that[key] = value;
+                            Settings[key] = value;
                         }
                     });
                 }

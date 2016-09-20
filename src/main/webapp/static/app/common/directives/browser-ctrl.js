@@ -2024,8 +2024,8 @@ angular.module('ortolangMarketApp')
                 }
                 if ($scope.isFileSelectBrowserService) {
                     $scope.browserSettings.wskey = $scope.browserService.workspace.key;
+                    Settings.store();
                 }
-                Settings.store();
                 setRoot(root || 'head');
                 setPath(path || '/');
                 getSnapshotsHistory();
