@@ -29,11 +29,11 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
 
         this.orderProps = {
             title: {id: 'title', sort: 'effectiveTitle', label: 'MARKET.SORT.TITLE', text: 'MARKET.SORT.TITLE'},
-            rank: {id: 'rank', sort: ['rank', '-publicationDate'], label: 'MARKET.SORT.RANK', text: 'MARKET.SORT.RANK'},
+            rank: {id: 'rank', sort: ['effectiveRank','publicationDate'], label: 'MARKET.SORT.RANK', text: 'MARKET.SORT.RANK'},
             publicationDate: {id: 'publicationDate', sort: 'publicationDate', label: 'MARKET.SORT.PUBLICATION_DATE', text: 'MARKET.SORT.PUBLICATION_DATE'}
         };
         this.activeOrderProp = this.orderProps.rank;
-        this.orderReverse = false;
+        this.orderReverse = true;
 
         angular.forEach(config, function (value, key) {
             if (this.hasOwnProperty(key)) {

@@ -56,6 +56,7 @@ angular.module('ortolangMarketApp')
                     scope.esrAccessibility = scope.entry.esrAccessibility;
                     scope.publicationDate = scope.entry.publicationDate;
                     // scope.producers = scope.entry.producers;
+                    scope.effectiveRank = scope.entry.effectiveRank;
                 }
             }
         };

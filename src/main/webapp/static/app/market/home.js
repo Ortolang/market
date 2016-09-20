@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
             function init() {
                 initScopeVariables();
                 $scope.searchRecents = SearchProvider.make();
-                $scope.searchRecents.setActiveOrderProp('rank', false);
+                $scope.searchRecents.setActiveOrderProp('rank', true);
                 var workspacePrefix = 'ortolang-workspace-json.';
                 var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
                 var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';

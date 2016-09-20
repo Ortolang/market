@@ -22,15 +22,15 @@ angular.module('ortolangMarketApp')
             var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
             // Written
             $scope.searchWrittenCorpora = SearchProvider.make();
-            $scope.searchWrittenCorpora.setActiveOrderProp('rank', false);
+            $scope.searchWrittenCorpora.setActiveOrderProp('rank', true);
             $scope.paramsWrittenCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:written_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "'+workspacePrefix+'archive":false, "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
             // Speech
             $scope.searchSpeechCorpora = SearchProvider.make();
-            $scope.searchSpeechCorpora.setActiveOrderProp('rank', false);
+            $scope.searchSpeechCorpora.setActiveOrderProp('rank', true);
             $scope.paramsSpeechCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:speech_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "'+workspacePrefix+'archive":false, "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
             // Multimodal
             $scope.searchMultimodalCorpora = SearchProvider.make();
-            $scope.searchMultimodalCorpora.setActiveOrderProp('rank', false);
+            $scope.searchMultimodalCorpora.setActiveOrderProp('rank', true);
             $scope.paramsMultimodalCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:multimodal_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "'+workspacePrefix+'archive":false, "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
         }
 
