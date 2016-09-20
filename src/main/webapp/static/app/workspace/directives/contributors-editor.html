@@ -6,7 +6,7 @@
     <div class="input-group-btn">
         <div class="btn-group">
             <button id="add-contributor-role" type="button" class="btn btn-default" name="selectedRole" ng-disabled="disabled" ng-model="selectedRoles" 
-                    data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" 
+                    data-multiple="1" data-placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_ROLE' | translate}}" data-max-length="7" data-placement="top"
                     bs-options="role as role.label for role in allRoles track by role.id" bs-select>
                 {{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.ROLE' | translate}} <span class="caret"></span>
             </button>
