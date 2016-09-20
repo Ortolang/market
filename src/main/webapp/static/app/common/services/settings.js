@@ -8,9 +8,10 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Settings', ['$q', function ($q) {
+    .service('Settings', ['$rootScope', '$q', '$location', '$modal', 'User', 'ProfileResource', 'Helper', function ($rootScope, $q, $location, $modal, User, ProfileResource, Helper) {
 
-        var deferred = $q.defer();
+        var deferred = $q.defer(),
+            Settings = this;
 
         this.WorkspaceBrowserService = {
             hideInfo: false,
@@ -27,8 +28,22 @@ angular.module('ortolangMarketApp')
 
         this.cart = {};
 
+        this.profileUpdate = {};
+
         this.store = function () {
-            if (localStorage !== undefined) {
+            if (User.isAuthenticated()) {
+                var profileDataRepresentation = {
+                    name: 'settings',
+                    value: JSON.stringify(this),
+                    type: 'STRING',
+                    source: null,
+                    visibility: 'NOBODY'
+                };
+                ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
+                    User.profileDatas.settings = profileDataRepresentation;
+                });
+                $rootScope.$emit('updateProfileFields');
+            } else if (localStorage !== undefined) {
                 localStorage.setItem('ortolang.settings', JSON.stringify(this));
             }
         };
@@ -38,8 +53,26 @@ angular.module('ortolangMarketApp')
         };
 
         this.init = function () {
-            //console.log('Initialize settings');
-            if (localStorage !== undefined) {
+            if (User.isAuthenticated()) {
+                User.sessionInitialized().then(function () {
+                    console.log('Initialize settings');
+                    var profileData = User.getProfileData('settings');
+                    if (profileData) {
+                        var savedSettings = profileData.value;
+                        if (savedSettings && savedSettings !== 'undefined') {
+                            angular.forEach(JSON.parse(savedSettings), function (value, key) {
+                                if (angular.isObject(value)) {
+                                    angular.extend(Settings[key], value);
+                                } else {
+                                    Settings[key] = value;
+                                }
+                            });
+                        }
+                    }
+                    checkIdHal();
+                    deferred.resolve();
+                });
+            } else if (localStorage !== undefined) {
                 var savedSettings = localStorage.getItem('ortolang.settings'),
                     that = this;
                 if (savedSettings && savedSettings !== 'undefined') {
@@ -53,8 +86,37 @@ angular.module('ortolangMarketApp')
                 }
                 deferred.resolve();
             }
-            //console.log('Settings initialized %o', this);
         };
+
+        function checkIdHal() {
+            if (angular.isUndefined(User.getProfileData('idhal'))) {
+                // 86400000ms = 1 day
+                if (Settings.profileUpdate.idHal !== -1 && (angular.isUndefined(Settings.profileUpdate.idHal) || Date.now() - Settings.profileUpdate.idHal > 86400000) ) {
+                    var modalScope = Helper.createModalScope(), modal;
+                    modalScope.action = function (name) {
+                        switch (name) {
+                            case 'set':
+                            case 'later':
+                                Settings.profileUpdate.idHal = Date.now();
+                                break;
+                            case 'never':
+                                Settings.profileUpdate.idHal = -1;
+                                break;
+                        }
+                        Settings.store();
+                        modal.hide();
+                        if (name === 'set') {
+                            $location.url('profiles/me/edition?tab=3');
+                        }
+                    };
+                    modal = $modal({
+                        show: true,
+                        templateUrl: 'common/templates/update-profile-modal.html',
+                        scope: modalScope
+                    });
+                }
+            }
+        }
 
         this.init();
 

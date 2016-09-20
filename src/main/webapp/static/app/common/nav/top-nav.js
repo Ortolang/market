@@ -44,9 +44,6 @@ angular.module('ortolangMarketApp')
             function initLanguage() {
                 var favoriteLanguage,
                     currentLanguage = $translate.use();
-                if (AuthService.isAuthenticated()) {
-                    favoriteLanguage = User.getProfileData('language');
-                }
                 if (!favoriteLanguage && $location.search().lang && ($location.search().lang === 'fr' || $location.search().lang === 'en')) {
                     favoriteLanguage = {value: $location.search().lang};
                     $location.search('lang', undefined);

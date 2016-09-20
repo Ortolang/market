@@ -2,7 +2,7 @@
     <div class="toolbar-wrapper" ng-include="'profile/templates/profile-tabs-template.html'" ng-init="activeProfileTab = 'information'"></div>
     <div ng-cloak class="container-main">
         <div class="container-main-inner">
-            <div class="row profile-me" bs-active-pane="activeTab" data-template="profile/templates/profile-information-tabs-template.html" bs-tabs>
+            <div class="row profile-me" bs-active-pane="models.activeTab" data-template="profile/templates/profile-information-tabs-template.html" bs-tabs>
                 <div data-title="<span class='fa fa-user fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.PERSONAL_INFOS' | translate}}" bs-pane>
                     <div class="row" ng-include="'profile/personal-infos.html'"></div>
                 </div>

@@ -87,6 +87,13 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Ajouter un collaborateur',
                 SEARCH: 'Rechercher un membre',
                 ADD: 'Ajouter'
+            },
+            UPDATE_PROFILE_MODAL: {
+                TITLE: 'Identifiant HAL',
+                BODY: '<p><strong>Avez-vous un IdHAL ?</strong> Vous pouvez dès à présent le renseigner dans votre profil ORTOLANG : la liste de vos publications sera alors affiché sur la page de votre profil.</p><p>Vous trouverez ici : <a href="https://hal.archives-ouvertes.fr/page/mon-idhal" target="_blank">https://hal.archives-ouvertes.fr/page/mon-idhal</a> plus d\'informations sur l\'identifiant HAL ainsi que la procédure pour créer son IdHAL.</p>',
+                SET: 'Renseigner mon IdHAL',
+                LATER: 'Me le rappeler plus tard',
+                NEVER: 'Ne plus me le rappeler'
             }
         },
         TASKS: {

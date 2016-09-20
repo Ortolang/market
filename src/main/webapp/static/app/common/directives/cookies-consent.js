@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
             link: function (scope, element) {
                 function showCookieAlert() {
                     var cookieAlert = $alert({
-                        templateUrl: 'cookies-consent.html',
+                        templateUrl: 'common/templates/cookies-consent.html',
                         placement: 'bottom',
                         container: element,
                         dismissable: false

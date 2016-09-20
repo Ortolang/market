@@ -9,7 +9,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Profile', ['$rootScope', '$translate', '$q', 'User', 'ProfileResource', 'ReferentialResource', 'icons', function ($rootScope, $translate, $q, User, ProfileResource, ReferentialResource, icons) {
+    .factory('Profile', ['$rootScope', '$translate', '$q', 'User', 'ProfileResource', 'ReferentialResource', 'icons', 'Settings', function ($rootScope, $translate, $q, User, ProfileResource, ReferentialResource, icons, Settings) {
 
         var organization,
             visibilityOptions = {
@@ -43,21 +43,24 @@ angular.module('ortolangMarketApp')
                     });
                 }
             } else {
-                if (profileData.type === 'REFERENTIAL') {
-                    profileData.value = profileData.value.id;
-                }
-                var profileDataRepresentation = {
-                    name: profileData.name,
-                    value: profileData.value,
-                    type: profileData.type,
-                    source: profileData.source,
-                    visibility: profileData.visibility.value
-                };
-                ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
-                    User.profileDatas[profileData.name] = profileDataRepresentation;
-                });
                 if (profileData.source === 'languages') {
+                    Settings.language = profileData.value;
+                    Settings.store();
                     $rootScope.$broadcast('askLanguageChange', profileData.value);
+                } else {
+                    if (profileData.type === 'REFERENTIAL') {
+                        profileData.value = profileData.value.id;
+                    }
+                    var profileDataRepresentation = {
+                        name: profileData.name,
+                        value: profileData.value,
+                        type: profileData.type,
+                        source: profileData.source,
+                        visibility: profileData.visibility.value
+                    };
+                    ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
+                        User.profileDatas[profileData.name] = profileDataRepresentation;
+                    });
                 }
             }
         }

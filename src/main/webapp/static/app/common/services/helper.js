@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc service
- * @name ortolangMarketApp.Settings
+ * @name ortolangMarketApp.Helper
  * @description
- * # Settings
+ * # Helper
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource', 'Settings',
-        function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, ReferentialResource, Settings) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource',
+        function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, ReferentialResource) {
 
         var modalScope, modal, asideMobileNav, Helper = this;
 
@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
         this.getMultilingualValue = function (multilingualProperty, language) {
             if (multilingualProperty) {
                 var i;
-                language = language || Settings.language;
+                language = language || $translate.use();
                 for (i = 0; i < multilingualProperty.length; i++) {
                     if (multilingualProperty[i].lang === language) {
                         return multilingualProperty[i].value;

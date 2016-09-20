@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileMeCtrl', ['$scope', '$rootScope', '$translate', 'User', 'Profile', 'Runtime',
-        function ($scope, $rootScope, $translate, User, Profile, Runtime) {
+    .controller('ProfileMeCtrl', ['$scope', '$rootScope', '$routeParams', '$translate', 'User', 'Profile', 'Runtime', 'Settings',
+        function ($scope, $rootScope, $routeParams, $translate, User, Profile, Runtime, Settings) {
 
             var fieldTemplates = {
                 'civility': {'type': 'ENUM'},
@@ -26,7 +26,7 @@ angular.module('ortolangMarketApp')
                 'professional_tel': {'type': 'TEL'},
                 'tel': {'type': 'TEL'},
                 'fax': {'type': 'TEL'},
-                'language': {'type': 'ENUM', 'forceVisibilities': '300'},
+                'language': {'type': 'ENUM', 'forceVisibilities': '300', 'alias': 'settings.language'},
                 'idhal': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'orcid': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'viaf': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
@@ -34,7 +34,7 @@ angular.module('ortolangMarketApp')
                 'linkedin': {'type': 'URL', 'helper': true, 'forceVisibilities': '333'},
                 'viadeo': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'presentation': {'type': 'TEXT'}
-            };
+            }, initialized;
 
             $scope.User = User;
             $scope.Runtime = Runtime;
@@ -43,7 +43,14 @@ angular.module('ortolangMarketApp')
                 $scope.emptyText = $translate.instant('PROFILE.EMPTY');
             });
 
+            $rootScope.$on('updateProfileFields', function () {
+                if (initialized) {
+                    initFields();
+                }
+            });
+
             function initFields() {
+                initialized = true;
                 var result = {},
                     field,
                     profileData;
@@ -57,7 +64,15 @@ angular.module('ortolangMarketApp')
                         forceVisibilities: fieldTemplate.forceVisibilities
                     };
                     if (profileData) {
-                        field.value = fieldTemplate.alias ? User[fieldTemplate.alias] : profileData.value;
+                        if (fieldTemplate.alias) {
+                            if (/^settings\./.test(fieldTemplate.alias)) {
+                                field.value = Settings[fieldTemplate.alias.substr(fieldTemplate.alias.indexOf('.') + 1)];
+                            } else {
+                                field.value = User[fieldTemplate.alias];
+                            }
+                        } else {
+                            field.value = profileData.value;
+                        }
                         field.visibility = Profile.getVisibilityOptions()[profileData.visibility];
                     } else {
                         field.value = field.alias ? User[field.alias] : '';
@@ -73,11 +88,13 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.languages = [
+                {value: '', text: ''},
                 {value: 'fr', text: 'NAV.LANGUAGE.FRENCH'},
                 {value: 'en', text: 'NAV.LANGUAGE.ENGLISH'}
             ];
 
             $scope.civilities = [
+                {value: '', text: ''},
                 {value: 'Ms', text: 'PROFILE.CIVILITY.MISSUS'},
                 {value: 'Mr', text: 'PROFILE.CIVILITY.MISTER'}
             ];
@@ -87,11 +104,16 @@ angular.module('ortolangMarketApp')
             $scope.helpClass = 'col-sm-offset-5 col-sm-7 col-md-offset-4 col-md-8';
 
             (function init() {
-                $scope.activeTab = 0;
+                $scope.models = {
+                    activeTab: 0
+                };
                 $scope.emptyText = $translate.instant('PROFILE.EMPTY');
 
                 User.sessionInitialized().then(function () {
                     initFields();
+                    if ($routeParams.tab) {
+                        $scope.models.activeTab = Number.parseInt($routeParams.tab, 10);
+                    }
                 });
             }());
 
