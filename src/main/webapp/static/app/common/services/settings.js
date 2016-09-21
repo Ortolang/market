@@ -33,7 +33,7 @@ angular.module('ortolangMarketApp')
         this.store = function () {
             if (User.isAuthenticated()) {
                 User.sessionInitialized().then(function () {
-                    if (User.getProfileData('settings').value !== angular.toJson(Settings)) {
+                    if (angular.isDefined(User.getProfileData('settings')) && User.getProfileData('settings').value !== angular.toJson(Settings)) {
                         var profileDataRepresentation = {
                             name: 'settings',
                             value: angular.toJson(Settings),
