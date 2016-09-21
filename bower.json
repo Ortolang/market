@@ -23,19 +23,19 @@
     "angular-file-upload": "2.3.4",
     "angular-strap": "2.3.9",
     "angular-hotkeys": "chieffancypants/angular-hotkeys#1.7.0",
-    "highlightjs": "highlightjs/cdn-release#9.6.0",
+    "highlightjs": "highlightjs/cdn-release#9.7.0",
     "angular-highlightjs": "0.6.2",
     "angular-motion": "0.4.4",
     "angular-formly": "8.4.0",
     "angular-formly-templates-bootstrap": "6.3.2",
-    "angular-translate": "2.12.0",
+    "angular-translate": "2.12.1",
     "angular-zeroclipboard": "0.8.0",
     "angular-bootstrap-toggle-switch": "0.5.6",
     "bootstrap": "3.3.5",
     "bootstrap-additions": "0.3.1",
     "zeroclipboard": "2.2.0",
     "holderjs": "2.9.4",
-    "keycloak": "1.7.0",
+    "keycloak": "2.2.1",
     "angular-xeditable": "0.3.0",
     "ng-tags-input": "3.1.1",
     "atmosphere": "2.3.2",
@@ -74,7 +74,7 @@
     "highlightjs": {
       "main": [
         "build/highlight.min.js",
-        "build/styles/solarized_light.min.css"
+        "build/styles/solarized-light.min.css"
       ]
     },
     "angulartics": {

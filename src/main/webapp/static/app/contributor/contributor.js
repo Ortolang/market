@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.contributor.username) {
                     /*jshint camelcase:false */
                     $scope.presentation = $scope.contributor.username.meta_profile.infos.presentation;
-                    $scope.emailHash = $scope.contributor.username.meta_profile.emailhash;
+                    $scope.emailHash = $scope.contributor.username.meta_profile.emailHash;
                     $scope.idHal = $scope.contributor.username.meta_profile.infos.idhal;
                 }
                 if ($scope.contributor.organization) {
