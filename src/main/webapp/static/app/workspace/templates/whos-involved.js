@@ -61,25 +61,6 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.suggestPerson = function (term) {
-                if (term.length < 2 || angular.isObject(term)) {
-                    return [];
-                }
-                var deferred = $q.defer();
-                ReferentialResource.get({type: 'PERSON', lang: 'FR', term: term}, function (results) {
-                    var suggestedPersons = [];
-                    angular.forEach(results.entries, function (refentity) {
-                        //TODO convert to JSON in ReferentialResource
-                        suggestedPersons.push(angular.fromJson(refentity.content));
-                    });
-                    deferred.resolve(suggestedPersons);
-                }, function () {
-                    deferred.reject([]);
-                });
-
-                return deferred.promise;
-            };
-
             /**
              * Adds contributor listener.
              */
