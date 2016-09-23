@@ -500,6 +500,23 @@ angular.module('ortolangMarketApp')
                 });
             };
 
+            $scope.contact = function () {
+                var modalScope = Helper.createModalScope(true),
+                    contactModal;
+
+                modalScope.submit = function (contactForm) {
+                    if (contactForm.$valid) {
+                        contactModal.hide();
+                    }
+                };
+
+                contactModal = $modal({
+                    scope: modalScope,
+                    templateUrl: 'market/templates/contact-modal-template.html',
+                    show: true
+                });
+            };
+
             function init() {
                 if ($scope.preview) {
                     $scope.content.social = {};

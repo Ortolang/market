@@ -48,6 +48,7 @@ angular.module('ortolangMarketApp')
         CART: 'Selection',
         SEE_MORE: 'See more',
         SHARE: 'Share',
+        CONTACT: 'Contact',
         YES: 'Yes',
         NO: 'No',
         TEXT: 'Text',

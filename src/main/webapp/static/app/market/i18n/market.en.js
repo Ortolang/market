@@ -162,6 +162,22 @@ angular.module('ortolangMarketApp')
             CITATION_MODAL: {
                 TITLE: 'How to cite this item',
                 COMMANDS: 'Press <kbd><kbd>{{isMac ? "cmd" : "ctrl"}}</kbd> + <kbd>c</kbd></kbd> to copy'
+            },
+            CONTACT_MODAL: {
+                TITLE: 'Contact the person responsible for this resource',
+                SUBJECT: {
+                    LABEL: 'Suject',
+                    PLACEHOLDER: 'Suject of the message'
+                },
+                EMAIL: {
+                    LABEL: 'Mail',
+                    PLACEHOLDER: 'Your Email Address'
+                },
+                MESSAGE: {
+                    LABEL: 'Message',
+                    PLACEHOLDER: 'Tell her what is about'
+                },
+                SEND: 'Send the message'
             }
         }
     });

@@ -682,6 +682,24 @@
         }
       }
     }
+    &.card-well-contact {
+      p.lead {
+        margin-bottom: 0;
+        span {
+          margin-left: @padding-base-horizontal;
+          cursor: pointer;
+        }
+        .fa {
+          color: lighten(@gray, 20%);
+          &:hover {
+            &.fa-envelope {
+              color: #b8b8b8;
+            }
+            color: inherit;
+          }
+        }
+      }
+    }
     p.lead {
       font-size: @font-size-h4;
     }

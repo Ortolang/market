@@ -1,0 +1,47 @@
+<div class="modal contact-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" id="contact-form" name="contactForm" class="form-horizontal" ng-submit="submit(contactForm)" novalidate autocomplete="off">
+	            <div class="modal-header">
+	                <button type="button" class="close" ng-click="$hide()">&times;</button>
+	                <strong class="modal-title" translate="MARKET.CONTACT_MODAL.TITLE"></strong>
+	            </div>
+	            <div class="modal-body">
+                    <div class="form-group" ng-class="{'has-error': (contactForm.$submitted || contactForm.subject.$dirty) && contactForm.subject.$invalid}">
+                        <label for="contact-subject" class="col-sm-2 control-label" translate="MARKET.CONTACT_MODAL.SUBJECT.LABEL"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="models.subject" type="text" class="form-control" name="subject" required autofocus 
+                            	placeholder="{{'MARKET.CONTACT_MODAL.SUBJECT.PLACEHOLDER' | translate}}">
+                        </div>
+                        <div class="help-block col-sm-offset-2 col-sm-10" ng-if='contactForm.$submitted || contactForm.subject.$dirty' ng-messages="contactForm.subject.$error">
+                            <div ng-message="required">{{'FORMS.MESSAGES.REQUIRED' | translate}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (contactForm.$submitted || contactForm.email.$dirty) && contactForm.email.$invalid}">
+                        <label for="contact-email" class="col-sm-2 control-label" translate="MARKET.CONTACT_MODAL.EMAIL.LABEL"></label>
+                        <div class="col-sm-10">
+                            <input ng-model="models.email" type="text" class="form-control" name="email" required  
+                            	placeholder="{{'MARKET.CONTACT_MODAL.EMAIL.PLACEHOLDER' | translate}}">
+                        </div>
+                        <div class="help-block col-sm-offset-2 col-sm-10" ng-if='contactForm.$submitted || contactForm.email.$dirty' ng-messages="contactForm.email.$error">
+                            <div ng-message="required">{{'FORMS.MESSAGES.REQUIRED' | translate}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (contactForm.$submitted || contactForm.message.$dirty) && contactForm.message.$invalid}">
+                        <label for="contact-message" class="col-sm-2 control-label" translate="MARKET.CONTACT_MODAL.MESSAGE.LABEL"></label>
+                        <div class="col-sm-10">
+                            <textarea ng-model="models.message" class="form-control" name="message" rows="6" required placeholder="{{'MARKET.CONTACT_MODAL.MESSAGE.PLACEHOLDER' | translate}}"></textarea>
+                        </div>
+                        <div class="help-block col-sm-offset-2 col-sm-10" ng-if='contactForm.$submitted || contactForm.message.$dirty' ng-messages="contactForm.message.$error">
+                            <div ng-message="required">{{'FORMS.MESSAGES.REQUIRED' | translate}}</div>
+                        </div>
+                    </div>
+	            </div>
+	            <div class="modal-footer">
+                	<button type="submit" class="btn btn-primary" translate="MARKET.CONTACT_MODAL.SEND"></button>
+                	<button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            	</div>
+			</form>
+        </div>
+    </div>
+</div>

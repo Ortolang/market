@@ -236,6 +236,13 @@
                 </p>
             </div>
 
+            <div class="card-well card-well-market card-well-contact" ng-show="root !== 'head'">
+                <p class="lead">
+                    {{'CONTACT' | translate}}
+                    <span ng-class="::icons.mail" class="fa-lg" ng-click="contact()" target="_blank" data-title="{{'MARKET.CONTACT_MODAL.TITLE' | translate}}" bs-tooltip></span>
+                </p>
+            </div>
+
             <div class="card-well card-well-market preview-box-list-wrapper" ng-if="content.preview && content.preview.length>0">
                 <p class="lead" translate="MARKET.PREVIEW"></p>
                 <div>
