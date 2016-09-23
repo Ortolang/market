@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                         return [];
                     }
                     var deferred = $q.defer();
-                    ReferentialResource.get({type: 'PERSON', lang: 'FR', term: term}, function (results) {
+                    ReferentialResource.get({type: 'PERSON', lang: 'FR', term: $filter('removeAccents')(term)}, function (results) {
                         var suggestedPersons = [];
                         angular.forEach(results.entries, function (refentity) {
                             //TODO convert to JSON in ReferentialResource
