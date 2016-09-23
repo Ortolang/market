@@ -123,7 +123,7 @@ angular.module('ortolangMarketApp')
                     };
                 }
                 WorkspaceMetadataService.metadata = $scope.metadata;
-                WorkspaceMetadataService.canEdit = Workspace.active.workspace.readOnly && !User.isRoot();
+                WorkspaceMetadataService.canEdit = !Workspace.active.workspace.readOnly || User.isRoot() || User.isModerator;
 
                 // Sets datasize
                 ObjectResource.size({key: Workspace.active.workspace.head}, function (data) {

@@ -135,7 +135,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showAddPersonModal = function (person) {
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var modalScope = Helper.createModalScope(true);
@@ -232,7 +232,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showAddOrganizationModal = function (organization) {
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var modalScope = Helper.createModalScope(true);
@@ -248,7 +248,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showAddSponsorModal = function (organization) {
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var modalScope = Helper.createModalScope(true);

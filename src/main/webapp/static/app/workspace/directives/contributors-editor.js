@@ -139,7 +139,7 @@ angular.module('ortolangMarketApp')
                 };
 
                 scope.showAddPersonModal = function (person) {
-                    if (WorkspaceMetadataService.canEdit) {
+                    if (!WorkspaceMetadataService.canEdit) {
                         return;
                     }
                     var modalScope = Helper.createModalScope(true);

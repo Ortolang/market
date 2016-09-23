@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
              **/
 
             $scope.removeDocumentation = function (documentation) {
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var index = $scope.metadata.relations.indexOf(documentation);

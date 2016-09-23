@@ -37,7 +37,7 @@ angular.module('ortolangMarketApp')
              * Deletes the licence.
              **/
             $scope.deleteLicense = function () {
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 delete $scope.metadata.license;
@@ -48,7 +48,7 @@ angular.module('ortolangMarketApp')
              * Edit the licence.
              **/
             $scope.editLicense = function (license) {
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 if (license.id) {
@@ -72,7 +72,7 @@ angular.module('ortolangMarketApp')
 
             $scope.chooseLicence = function () {
 
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
 
@@ -168,7 +168,7 @@ angular.module('ortolangMarketApp')
 
             $scope.addLicenceFromScratch = function (license) {
 
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
 

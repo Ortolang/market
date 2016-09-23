@@ -45,7 +45,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showAddLanguageModal = function (languagesId, language) {
-                if (WorkspaceMetadataService.canEdit) {
+                if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var modalScope = Helper.createModalScope(true);

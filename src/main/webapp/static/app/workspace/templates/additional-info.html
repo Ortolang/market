@@ -4,9 +4,9 @@
         <div class="form-group">
             <label for="additional-publications" class="control-label">{{'MARKET.PRIMARY_PUBLICATIONS' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="Les publications de référence sont celles qui décrivent comment la ressource a été créée. Elles sont également utilisées pour citer la ressource." data-placement="right" bs-tooltip></i></label>
             <div class="input-group">
-                <input type="text" class="form-control" id="additional-publications" name="publication" ng-model="publication" ng-disabled="WorkspaceMetadataService.canEdit" placeholder="Citation bibliographique de la publication.">
+                <input type="text" class="form-control" id="additional-publications" name="publication" ng-model="publication" ng-disabled="!WorkspaceMetadataService.canEdit" placeholder="Citation bibliographique de la publication.">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="addPublication()" translate="ADD"></button>
+                    <button type="button" class="btn btn-default" ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="addPublication()" translate="ADD"></button>
                 </div>
             </div>
             <br/>
@@ -19,7 +19,7 @@
                                 <div class="media" data-content="publication" data-target-blank>
                                     <div class="media-body" ng-bind-html="publication"></div>
                                     <div class="media-right">
-                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="removePublication(publication)"></span>
+                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="removePublication(publication)"></span>
                                     </div>
                                 </div>
                             </td>
@@ -35,9 +35,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="input-group">
-                        <input id="additional-preview" type="text" class="form-control" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-disabled="WorkspaceMetadataService.canEdit" ng-click="filePreviewPathSelectorModal.show()">
+                        <input id="additional-preview" type="text" class="form-control" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="filePreviewPathSelectorModal.show()">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="filePreviewPathSelectorModal.show()" type="button" translate="SELECT"></button>
+                            <button class="btn btn-default" ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="filePreviewPathSelectorModal.show()" type="button" translate="SELECT"></button>
                         </span>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                                 <div class="media">
                                     <div class="media-body">{{path}}</div>
                                     <div class="media-right">
-                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="removePath(path)"></span>
+                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="removePath(path)"></span>
                                     </div>
                                 </div>
                             </td>
@@ -67,11 +67,11 @@
             <label for="additional-keywords" class="control-label">{{'MARKET.KEYWORDS' | translate}}</label>
             <div class="input-group">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" name="keywords-lang" ng-model="keyword.lang" ng-disabled="WorkspaceMetadataService.canEdit" bs-options="lang.key as lang.value for lang in languages" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
+                    <button type="button" class="btn btn-default" name="keywords-lang" ng-model="keyword.lang" ng-disabled="!WorkspaceMetadataService.canEdit" bs-options="lang.key as lang.value for lang in languages" bs-select>{{'MULTILINGUAL_TEXTFIELD.LANGUAGE' | translate}} <span class="caret"></span></button>
                 </div>
-                <input type="text" class="form-control" id="additional-keywords" name="keywords" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_KEYWORD' | translate}}" ng-model="keyword.value" ng-disabled="WorkspaceMetadataService.canEdit" aria-label="keywords">
+                <input type="text" class="form-control" id="additional-keywords" name="keywords" placeholder="{{'WORKSPACE.METADATA_EDITOR.SELECT_KEYWORD' | translate}}" ng-model="keyword.value" ng-disabled="!WorkspaceMetadataService.canEdit" aria-label="keywords">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="addKeyword()">Ajouter</button>
+                    <button type="button" class="btn btn-default" ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="addKeyword()">Ajouter</button>
                 </div>
             </div>
             <br/>
@@ -87,7 +87,7 @@
                                 <div class="media">
                                     <div class="media-body">{{keyword.value}}</div>
                                     <div class="media-right">
-                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="removeKeyword(keyword)"></span>
+                                        <span ng-class="::icons.trash" class="text-danger clickable" ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="removeKeyword(keyword)"></span>
                                     </div>
                                 </div>
                             </td>
@@ -100,23 +100,23 @@
         <div class="form-group">
             <hr/>
             <label for="additional-website" class="control-label" translate="MARKET.WEBSITE"></label>
-            <input type="text" class="form-control" id="additional-website" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website" ng-disabled="WorkspaceMetadataService.canEdit">
+            <input type="text" class="form-control" id="additional-website" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website" ng-disabled="!WorkspaceMetadataService.canEdit">
         </div>
         <div class="form-group" ng-if="metadata.creationLocations">
             <hr/>
             <label class="control-label" translate="ITEM.CREATION_LOCATIONS.LABEL"></label>
             <div  ng-repeat="creationLocation in metadata.creationLocations">
-                <input ng-if="creationLocation.name" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.name" ng-disabled="WorkspaceMetadataService.canEdit">
-                <input ng-if="creationLocation.dcmipoint" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIPOINT.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmipoint" ng-disabled="WorkspaceMetadataService.canEdit">
-                <input ng-if="creationLocation.dcmibox" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIBOX.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmibox" ng-disabled="WorkspaceMetadataService.canEdit">
-                <input ng-if="creationLocation.iso3166" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.ISO3166.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.iso3166" ng-disabled="WorkspaceMetadataService.canEdit">
-                <input ng-if="creationLocation.tgn" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.TGN.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.tgn" ng-disabled="WorkspaceMetadataService.canEdit">
+                <input ng-if="creationLocation.name" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.name" ng-disabled="!WorkspaceMetadataService.canEdit">
+                <input ng-if="creationLocation.dcmipoint" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIPOINT.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmipoint" ng-disabled="!WorkspaceMetadataService.canEdit">
+                <input ng-if="creationLocation.dcmibox" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.DCMIBOX.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.dcmibox" ng-disabled="!WorkspaceMetadataService.canEdit">
+                <input ng-if="creationLocation.iso3166" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.ISO3166.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.iso3166" ng-disabled="!WorkspaceMetadataService.canEdit">
+                <input ng-if="creationLocation.tgn" type="text" class="form-control" name="creationLocationsName" placeholder="{{'ITEM.CREATION_LOCATIONS.TGN.PLACEHOLDER' | translate}}" aria-label="creationLocations" ng-model="creationLocation.tgn" ng-disabled="!WorkspaceMetadataService.canEdit">
             </div>
         </div>
         <div ng-if="metadata.originDate" class="form-group">
             <hr/>
             <label for="additional-origin-date" class="control-label" translate="ITEM.ORIGIN_DATE.LABEL"></label>
-            <input type="text" class="form-control" id="additional-origin-date" name="originDate" placeholder="{{'ITEM.ORIGIN_DATE.PLACEHOLDER' | translate}}" aria-label="originDate" ng-model="metadata.originDate" ng-disabled="WorkspaceMetadataService.canEdit">
+            <input type="text" class="form-control" id="additional-origin-date" name="originDate" placeholder="{{'ITEM.ORIGIN_DATE.PLACEHOLDER' | translate}}" aria-label="originDate" ng-model="metadata.originDate" ng-disabled="!WorkspaceMetadataService.canEdit">
         </div>
 
     </div>

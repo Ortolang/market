@@ -12,7 +12,7 @@ angular.module('ortolangMarketApp')
         function ($scope, $rootScope, $modal, WorkspaceMetadataService, Workspace, Helper) {
 
 	    	$scope.createPart = function (part) {
-	    		if (WorkspaceMetadataService.canEdit) {
+	    		if (!WorkspaceMetadataService.canEdit) {
                     return;
                 }
                 var modalScope = Helper.createModalScope(true),

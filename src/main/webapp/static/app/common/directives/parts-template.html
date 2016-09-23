@@ -28,7 +28,7 @@
             </div>
             <div class="media-right">
                 <span class="actions">
-                    <button ng-if="deleteAction" class="no-border" ng-disabled="WorkspaceMetadataService.canEdit" ng-click="deleteAction($index)" data-title="{{::'DELETE' | translate}}" bs-tooltip><span ng-class="::icons.remove"></span></button>
+                    <button ng-if="deleteAction" class="no-border" ng-disabled="!WorkspaceMetadataService.canEdit" ng-click="deleteAction($index)" data-title="{{::'DELETE' | translate}}" bs-tooltip><span ng-class="::icons.remove"></span></button>
                 </span>
             </div>
         </div>
