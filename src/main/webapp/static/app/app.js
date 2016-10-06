@@ -48,7 +48,8 @@ angular
         'zInfiniteScroll',
         'angular-duration-format',
         'dndLists',
-        'ngWig'
+        'ngWig',
+        'chart.js'
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
@@ -236,6 +237,14 @@ angular
         microDataElement.text(angular.toJson(microData));
         angular.element('head').append(microDataElement);
     })
+    .config(['ChartJsProvider', function (ChartJsProvider) {
+        ChartJsProvider.setOptions('global', {
+            tooltips: {
+                titleFontFamily: '"Open Sans","Helvetica Neue", Helvetica, Arial, sans-serif',
+                bodyFontFamily: '"Open Sans","Helvetica Neue", Helvetica, Arial, sans-serif'
+            }
+        });
+    }])
     .run(['$rootScope', function ($rootScope) {
         if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
             var optOutUrl = '//' + OrtolangConfig.piwikHost + 'index.php?module=CoreAdminHome&action=optOut&language=';

@@ -1,5 +1,6 @@
 <div class="tile-workspace-elements-wrapper">
     <div ng-if="!isHead || parent.elements.length > 0 || !browserService.canEdit" ng-repeat="type in [ortolangType.collection, ortolangType.object]" class="row">
+        <p class="col-xs-12 small text-muted" translate="BROWSER.TILE_{{::type.toUpperCase()}}"></p>
         <div ng-repeat="child in filteredChildren(type) | limitTo:(type === ortolangType.object ? displayedItemLimit : undefined) | orderBy:orderProp:orderReverse track by child.key"
              ng-class="tileCssClasses()" class="workspace-element-wrapper" on-finish-render>
             <div class="workspace-element"

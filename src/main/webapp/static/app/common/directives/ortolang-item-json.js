@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', 'Helper', 'Settings', 'Content', 'ReferentialResource', 'ObjectResource', 'url',
-        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, Helper, Settings, Content, ReferentialResource, ObjectResource, url) {
+    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'Content', 'ReferentialResource', 'ObjectResource', 'url',
+        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, Content, ReferentialResource, ObjectResource, url) {
 
             function loadReferentialEntities(items, dest) {
                 if (items && items.length > 0) {
@@ -289,6 +289,8 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.exportItem = function () {
+                var analyticsUrl = url.content + '/export/' + $scope.alias + '/' + $scope.root;
+                $analytics.trackLink(analyticsUrl, 'download');
                 Content.exportSingle($scope.alias, $scope.root, '/', $scope.alias);
             };
 

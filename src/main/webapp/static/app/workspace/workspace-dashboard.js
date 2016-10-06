@@ -375,7 +375,7 @@ angular.module('ortolangMarketApp')
                 $scope.Helper = Helper;
                 $scope.Workspace = Workspace;
                 $scope.dashboardModels = {
-                    eventsLimit: 4,
+                    eventsLimit: 3,
                     requestsLimit: 2,
                     eventsInfiniteScrollBusy: false
                 };
@@ -388,6 +388,36 @@ angular.module('ortolangMarketApp')
                             market: '/market/item/' + Workspace.active.workspace.alias,
                             content: Content.getContentUrlWithPath('', Workspace.active.workspace.alias)
                         };
+                        Workspace.isActiveWorkspaceInfoLoaded().then(function () {
+                            if (Workspace.active.stats.length) {
+                                $scope.dashboardModels.chart = {
+                                    data: [],
+                                    labels: [],
+                                    options: {
+
+                                    },
+                                    datasetOverride: {
+                                        backgroundColor: 'rgba(0,139,208,0.5)',
+                                        borderColor: 'rgba(0,139,208,1)',
+                                        pointBackgroundColor: 'rgba(255,255,255,1)',
+                                        pointHoverBackgroundColor: 'rgba(255,255,255,1)',
+                                        borderWidth: 2
+                                    },
+                                    totalHits: 0,
+                                    totalDownloads: 0,
+                                    totalSingleDownloads: 0
+                                };
+                                angular.forEach($filter('orderBy')(Workspace.active.stats, 'timestamp'), function (stat) {
+                                    console.log(stat);
+                                    var date = stat.timestamp.toString().slice(0, 4) + '-' + stat.timestamp.toString().slice(4) + '-01';
+                                    $scope.dashboardModels.chart.labels.push($filter('date')(date, 'MMM yyyy'));
+                                    $scope.dashboardModels.chart.data.push(stat.hits);
+                                    $scope.dashboardModels.chart.totalHits += stat.hits;
+                                    $scope.dashboardModels.chart.totalDownloads += stat.downloads;
+                                    $scope.dashboardModels.chart.totalSingleDownloads += stat.singleDownloads;
+                                });
+                            }
+                        });
                     }, function (error) {
                         Helper.showErrorModal(error.data);
                         $location.url('/workspaces');

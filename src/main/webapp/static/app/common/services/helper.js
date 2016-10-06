@@ -163,7 +163,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.normalizePath = function (path) {
-            return path.indexOf('//') === 0 ? path.substring(1) : path;
+            return path.replace(/\/\//g, '/');
         };
 
         this.pack = function (list) {

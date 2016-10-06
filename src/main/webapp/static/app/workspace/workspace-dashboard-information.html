@@ -34,6 +34,22 @@
 </div>
 <div class="row">
     <div class="col-md-6">
+        <div class="workspace-dashboard-section">
+            <h4 translate="WORKSPACE.ACCESS_LINKS"></h4>
+            <strong>HTTP</strong>
+            <div ng-if="Workspace.active.workspace.tags.length > 0">
+                <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
+                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip data-zeroclip-text="{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}"></span></span>
+            </div>
+            <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
+            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="dashboardModels.links.content"></span></span>
+            <br/>
+            <br/>
+            <strong>FTP</strong>
+            <div>
+                <a ng-href="{{::Workspace.active.ftp.url}}">{{::Workspace.active.ftp.url}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.ftp.url"></span></span>
+            </div>
+        </div>
         <div class="workspace-dashboard-section workspace-dashboard-section-events">
             <h4 translate="WORKSPACE.HISTORY"></h4>
             <div class="infinite-list-wrapper">
@@ -56,21 +72,20 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="workspace-dashboard-section">
-            <h4 translate="WORKSPACE.ACCESS_LINKS"></h4>
-            <strong>HTTP</strong>
-            <div ng-if="Workspace.active.workspace.tags.length > 0">
-                <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
-                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip data-zeroclip-text="{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}"></span></span>
-            </div>
-            <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
-            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="dashboardModels.links.content"></span></span>
-            <br/>
-            <br/>
-            <strong>FTP</strong>
-            <div>
-                <a ng-href="{{::Workspace.active.ftp.url}}">{{::Workspace.active.ftp.url}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.ftp.url"></span></span>
-            </div>
+        <div class="workspace-dashboard-section" ng-if="Workspace.active.stats.length > 0">
+            <h4>{{'WORKSPACE.STATISTICS_HITS' | translate}} <small translate="WORKSPACE.STATISTICS_TOTAL_HITS" translate-value-hits="{{::dashboardModels.chart.totalHits}}"></small></h4>
+            <canvas id="line" class="chart chart-line" chart-data="dashboardModels.chart.data" chart-options="dashboardModels.chart.options"
+                    chart-labels="dashboardModels.chart.labels" chart-dataset-override="dashboardModels.chart.datasetOverride"></canvas>
+            <h4>{{'WORKSPACE.STATISTICS_DOWNLOADS' | translate}} <small translate="WORKSPACE.STATISTICS_DOWNLOADS_HELP"></small></h4>
+            <ul class="list-unstyled">
+                <li translate="WORKSPACE.STATISTICS_WHOLE_DOWNLOADS" translate-value-downloads="{{::dashboardModels.chart.totalDownloads}}"></li>
+                <li translate="WORKSPACE.STATISTICS_SINGLE_DOWNLOADS" translate-value-downloads="{{::dashboardModels.chart.totalSingleDownloads}}"></li>
+            </ul>
+        </div>
+        <div ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="workspace-dashboard-section">
+            <h4 translate="WORKSPACE.ACTIONS"></h4>
+            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly || Workspace.active.workspace.archive" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
+            <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>
         <div class="workspace-dashboard-section workspace-dashboard-section-requests">
             <h4 translate="WORKSPACE.WORKFLOW"></h4>
@@ -95,11 +110,6 @@
                 <div ng-if="showSeeMoreRequests() && !dashboardModels.requestsSeeMoreOnce" class="workspace-event media card-well see-more-card" ng-click="seeMoreRequests()" translate="SEE_MORE"></div>
                 <p ng-if="Workspace.active.requests.length === 0" translate="WORKSPACE.NO_WORKFLOW"></p>
             </div>
-        </div>
-        <div ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="workspace-dashboard-section">
-            <h4 translate="WORKSPACE.ACTIONS"></h4>
-            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly || Workspace.active.workspace.archive" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
-            <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>
     </div>
 </div>

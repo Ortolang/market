@@ -276,14 +276,14 @@ angular.module('ortolangMarketApp')
 
         $scope.showAttachment = function (message, attachment, fn, forceDownload) {
             if (forceDownload) {
-                Content.downloadAttachmentInWindow(message.key, attachment.hash, true);
+                Content.downloadAttachmentInWindow(message.key, attachment.hash);
                 return;
             }
             var tmp = angular.copy(attachment);
             tmp.mimeType = tmp.type;
             tmp.attachment = true;
             if (fn(tmp, Content.getAttachmentUrl(message.key, attachment.hash)) === 0) {
-                Content.downloadAttachmentInWindow(message.key, attachment.hash, true);
+                Content.downloadAttachmentInWindow(message.key, attachment.hash);
             }
         };
 

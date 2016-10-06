@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
 
         	$scope.download = function () {
         		if (angular.isDefined(Workspace.active.workspace.metadatas['ortolang-item-json'])) {
-        			Content.downloadWithKeyInWindow(Workspace.active.workspace.metadatas['ortolang-item-json'], true);
+        			Content.downloadWithKeyInWindow(Workspace.active.workspace.metadatas['ortolang-item-json']);
         		}
         	};
 

@@ -41,6 +41,7 @@ angular.module('ortolangMarketApp')
         '$translate',
         '$modal',
         '$alert',
+        '$analytics',
         'hotkeys',
         'ObjectResource',
         'Content',
@@ -56,7 +57,7 @@ angular.module('ortolangMarketApp')
         'FileSelectBrowserService',
         'Helper',
         'url',
-        function ($scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, url) {
+        function ($scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, Settings, Cart, MarketBrowserService, WorkspaceBrowserService, FileSelectBrowserService, Helper, url) {
 
             var isMacOs, isMobile, isClickedOnce, previousFilterNameQuery, previousFilterMimeTypeQuery, previousFilterType,
                 previousFilteredChildren, initialDisplayedItemLimit, lastSelectedElement,
@@ -418,22 +419,31 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.download = function (elements) {
+                var paths = [];
                 if (elements.length > 1 || elements[0].type === ortolangType.collection) {
-                    var paths = [];
                     angular.forEach(elements, function (element) {
-                        paths.push($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : '/' + element.name));
+                        paths.push(Helper.normalizePath($scope.browserService.workspace.alias + '/' + $scope.root + $scope.path + ($scope.hasOnlyParentSelected() ? '' : '/' + element.name)));
                     });
                     if (elements.length === 1) {
                         if ($scope.path === '/' && $scope.hasOnlyParentSelected()) {
+                            // Root collection
                             Content.export(paths, $scope.browserService.workspace.alias);
                         } else {
+                            // A folder: the name of the archive is the name of the folder
                             Content.export(paths, elements[0].name);
                         }
                     } else {
                         Content.export(paths);
                     }
                 } else {
-                    Content.downloadWithKeyInWindow(elements[0].key, true);
+                    var elementPath = Helper.normalizePath($scope.path + ($scope.hasOnlyParentSelected() ? '' : '/' + elements[0].name));
+                    paths.push(Helper.normalizePath($scope.browserService.workspace.alias + '/' + $scope.root + elementPath));
+                    Content.downloadWithPathInWindow(elementPath, $scope.browserService.workspace.alias, $scope.root);
+                }
+                if ($scope.isMarketBrowserService) {
+                    angular.forEach(paths, function (path) {
+                        $analytics.trackLink(url.content + '/' + path, 'download');
+                    });
                 }
             };
 

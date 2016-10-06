@@ -59,6 +59,8 @@ module.exports = function (config) {
             projectBase + 'bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
             projectBase + 'bower_components/ngWig/dist/ng-wig.js',
             projectBase + 'bower_components/CETEIcean/dist/CETEI.js',
+            projectBase + 'bower_components/chart.js/dist/Chart.js',
+            projectBase + 'bower_components/angular-chart.js/dist/angular-chart.js',
             'test/mock/global.js',
             'app/**/!(ortolang-config).js',
             'test/mock/**/*.js',

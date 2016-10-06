@@ -30,6 +30,8 @@ angular.module('ortolangMarketApp')
             VIEW_MODE_TILE: 'Mode grille',
             VIEW_MODE_LINE: 'Mode liste',
             SORT_BY: 'Trier par',
+            TILE_COLLECTION: 'Dossiers',
+            TILE_OBJECT: 'Fichiers',
             FILTER: {
                 FILTER: 'Filtrer',
                 MIME_TYPE: 'Type Mime'

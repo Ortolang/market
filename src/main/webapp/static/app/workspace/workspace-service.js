@@ -10,7 +10,7 @@
  * @property {Object}   metadatas   - the metadata of all the workspaces in the list
  * @property {Object}   active      - the workspace being managed
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$route', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $route, $q, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, Content, User, Helper) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$route', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'StatisticsResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $route, $q, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, StatisticsResource, Content, User, Helper) {
 
     var listDeferred,
         activeWorkspaceInfoDeferred,
@@ -108,6 +108,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             promises.push(Workspace.getActiveWorkspaceMembers());
             promises.push(Workspace.getActiveWorkspaceRequests());
             promises.push(Workspace.getActiveWorkspaceFtpUrl());
+            promises.push(Workspace.getActiveWorkspaceStats());
         }
         $q.all(promises).then(function () {
             activeWorkspaceInfoDeferred.resolve();
@@ -302,6 +303,18 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         }, function () {
             Workspace.active.head = null;
             Workspace.active.history = null;
+            deferred.reject();
+        });
+        return deferred.promise;
+    };
+
+    this.getActiveWorkspaceStats = function () {
+        var deferred = $q.defer();
+        StatisticsResource.getWorkspaceStats({alias: Workspace.active.workspace.alias}, function (data) {
+            Workspace.active.stats = data;
+            deferred.resolve();
+        }, function () {
+            Workspace.active.stats = null;
             deferred.reject();
         });
         return deferred.promise;

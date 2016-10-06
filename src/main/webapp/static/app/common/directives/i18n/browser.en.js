@@ -30,6 +30,8 @@ angular.module('ortolangMarketApp')
             VIEW_MODE_TILE: 'Tile Mode',
             VIEW_MODE_LINE: 'List Mode',
             SORT_BY: 'Sort by',
+            TILE_COLLECTION: 'Folders',
+            TILE_OBJECT: 'Files',
             FILTER: {
                 FILTER: 'Filter',
                 MIME_TYPE: 'Mime Type'

@@ -41,12 +41,8 @@ angular.module('ortolangMarketApp')
             return this.getContentUrlWithPath(path, alias, root, false, noSSL) + forceDownloadQueryParam;
         };
 
-        this.downloadWithKeyInWindow = function (key, newWindow, noSSL) {
-            if (newWindow) {
-                $window.open(this.getDownloadUrlWithKey(key, noSSL));
-            } else {
-                $window.location = this.getDownloadUrlWithKey(key, noSSL);
-            }
+        this.downloadWithKeyInWindow = function (key, noSSL) {
+            $window.open(this.getDownloadUrlWithKey(key, noSSL));
         };
 
         function downloadWith(url, config) {
@@ -66,6 +62,10 @@ angular.module('ortolangMarketApp')
 
         this.downloadWithPath = function (path, alias, root, config, noSSL) {
             return downloadWith(this.getContentUrlWithPath(path, alias, root, false, noSSL), config);
+        };
+
+        this.downloadWithPathInWindow = function (path, alias, root, noSSL) {
+            $window.open(this.getDownloadUrlWithPath(path, alias, root, noSSL));
         };
 
         this.downloadWithKey = function (key, config, noSSL) {
@@ -94,7 +94,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.export = function (paths, filename, format, followsymlink, noSSL) {
-            $window.location = this.getExportUrl(paths, filename, format, followsymlink, noSSL);
+            $window.open(this.getExportUrl(paths, filename, format, followsymlink, noSSL));
         };
 
         this.getExportSingleUrl = function (alias, root, path, filename, format, followsymlink, noSSL) {
@@ -102,7 +102,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.exportSingle = function (alias, root, path, filename, format, followsymlink, noSSL) {
-            $window.location = this.getExportSingleUrl(alias, root, path, filename, format, followsymlink, noSSL);
+            $window.open(this.getExportSingleUrl(alias, root, path, filename, format, followsymlink, noSSL));
         };
 
         this.getAttachmentUrl = function (mkey, hash, noSSL) {
@@ -113,12 +113,8 @@ angular.module('ortolangMarketApp')
             return downloadWith(url, config);
         };
 
-        this.downloadAttachmentInWindow = function (mkey, hash, newWindow, noSSL) {
-            if (newWindow) {
-                $window.open(this.getAttachmentUrl(mkey, hash, noSSL));
-            } else {
-                $window.location = this.getAttachmentUrl(mkey, hash, noSSL);
-            }
+        this.downloadAttachmentInWindow = function (mkey, hash, noSSL) {
+            $window.open(this.getAttachmentUrl(mkey, hash, noSSL));
         };
 
         return this;

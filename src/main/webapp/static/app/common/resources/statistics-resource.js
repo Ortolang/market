@@ -10,5 +10,11 @@
 angular.module('ortolangMarketApp')
     .factory('StatisticsResource', ['$resource', 'url', function ($resource, url) {
 
-        return $resource(url.api + '/stats/:names', {}, {});
+        return $resource(url.api + '/stats/:names', {}, {
+            getWorkspaceStats: {
+                method: 'GET',
+                url: url.api + '/stats/workspaces/:alias',
+                isArray: true
+            }
+        });
     }]);
