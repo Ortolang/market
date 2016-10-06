@@ -9,6 +9,7 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
         Workspace,
         WorkspaceResource,
         ObjectResource,
+        StatisticsResource,
         $httpBackend,
         $scope,
         sample,
@@ -19,11 +20,12 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
         $route,
         $filter;
 
-    beforeEach(inject(function ($controller, _$rootScope_, _$routeParams_, _$route_, _sample_, _$httpBackend_, _url_, _Workspace_, _WorkspaceResource_, _$location_, _ObjectResource_, _$filter_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _$routeParams_, _$route_, _sample_, _$httpBackend_, _url_, _Workspace_, _WorkspaceResource_, _$location_, _ObjectResource_, _$filter_, _StatisticsResource_) {
         $httpBackend = _$httpBackend_;
         WorkspaceResource = _WorkspaceResource_;
         Workspace = _Workspace_;
         ObjectResource = _ObjectResource_;
+        StatisticsResource = _StatisticsResource_;
         $scope = _$rootScope_.$new();
         $rootScope = _$rootScope_;
         $route = _$route_;
@@ -51,11 +53,13 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
             $rootScope.$digest();
             WorkspaceDashboardCtrl = $controller('WorkspaceDashboardCtrl', {
                 $scope: $scope,
-                WorkspaceResource: WorkspaceResource
+                WorkspaceResource: WorkspaceResource,
+                StatisticsResource: StatisticsResource
             });
             $httpBackend.expect('GET', url.api + '/workspaces?md=true').respond(200, {entries: sample().workspaceList});
             $httpBackend.expect('GET', url.api + '/workspaces/foo/events?limit=25').respond(200, {entries: {}});
             $httpBackend.expect('GET', url.api + '/workspaces/alias/foo/ftp').respond(200, {});
+            $httpBackend.expect('GET', url.api + '/stats/workspaces/foo').respond(200, []);
             $httpBackend.flush();
         }));
 
