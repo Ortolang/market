@@ -57,12 +57,11 @@
                     <li ng-repeat="event in Workspace.active.events | eventFeedFilter | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
                         <div class="media-left" avatar data-email-hash="Helper.profileCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
                         <div class="media-body">
-                            <!--<pre>{{event | json}}</pre>-->
                             <span>
                                 <span class="workspace-event-author">{{::Helper.profileCards[event.throwedBy].fullName}}</span>
                                 <span class="workspace-event-type" translate="{{::event | eventFeedDescription}}" data-translate-values="event"></span>
                             </span>
-                            <span class="workspace-event-date">{{event.date | amTimeAgo}}</span>
+                            <span class="workspace-event-date">{{::event.date | amTimeAgo}}</span>
                         </div>
                     </li>
                     <li ng-show="dashboardModels.eventsInfiniteScrollBusy" class="workspace-event media card-well" translate="PENDING_DATA"></li>
@@ -95,7 +94,6 @@
                         <div class="media-left" avatar data-email-hash="Helper.profileCards[request.initier].emailHash" data-size="36" data-img-classes="img-circle"></div>
                         <div class="media-body">
                             <span>
-                                <!--<pre>{{request | json}}</pre>-->
                                 <span class="workspace-event-author">{{::Helper.profileCards[request.initier].fullName}}</span>
                                 <span class="workspace-event-type" translate="{{::'WORKSPACE.EVENTS.PROCESSES.' + request.type.replace('-', '_').toUpperCase()}}" data-translate-values="event"></span>
                                 <span class="workspace-event-status">
