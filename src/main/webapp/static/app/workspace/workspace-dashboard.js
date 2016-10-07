@@ -408,7 +408,6 @@ angular.module('ortolangMarketApp')
                                     totalSingleDownloads: 0
                                 };
                                 angular.forEach($filter('orderBy')(Workspace.active.stats, 'timestamp'), function (stat) {
-                                    console.log(stat);
                                     var date = stat.timestamp.toString().slice(0, 4) + '-' + stat.timestamp.toString().slice(4) + '-01';
                                     $scope.dashboardModels.chart.labels.push($filter('date')(date, 'MMM yyyy'));
                                     $scope.dashboardModels.chart.data.push(stat.hits);
