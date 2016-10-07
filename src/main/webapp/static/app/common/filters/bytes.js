@@ -9,7 +9,7 @@
  * Filter in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .filter('bytes', function () {
+    .filter('bytes', ['$translate', function ($translate) {
         return function (bytes, precision) {
             if (angular.isUndefined(bytes)) {
                 return undefined;
@@ -20,11 +20,14 @@ angular.module('ortolangMarketApp')
             if (precision === undefined) {
                 precision = 1;
             }
-
-            var units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'],
+            var units,
                 number = Math.floor(Math.log(bytes) / Math.log(1024)),
                 val = (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision);
-
+            if ($translate.use() === 'fr') {
+                units =  ['octets', 'Ko', 'Mo', 'Go', 'To', 'Po'];
+            } else {
+                units =  ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+            }
             return (/\.0*$/.test(val) ? val.substr(0, val.indexOf('.')) : val) +  ' ' + units[number];
         };
-    });
+    }]);
