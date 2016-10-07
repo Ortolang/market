@@ -33,7 +33,7 @@
                             </div>
                             <div class="media-body">
                                 <h4>{{::Workspace.getWorkspaceTitle(workspace)}} <span class="small detail">{{::workspace.alias}}</span></h4>
-                                <div class="date">{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} {{::workspace.lastModificationDate | amTimeAgo}}</div>
+                                <div class="date">{{'WORKSPACE.LAST_MODIFICATION_DATE' | translate}} {{workspace.lastModificationDate | amTimeAgo}}</div>
                             </div>
                             <div class="media-right">
                                 <span class="actions">
