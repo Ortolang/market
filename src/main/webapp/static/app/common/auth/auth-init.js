@@ -46,7 +46,7 @@ angular.element(document).ready(function () {
                         /*jshint camelcase:false */
                         return window.btoa(keycloakAuth.idTokenParsed.preferred_username) + OrtolangConfig.cacheVersion;
                     }
-                    return OrtolangConfig.cacheVersion;
+                    return window.btoa('anonymous') + OrtolangConfig.cacheVersion;
                 }
 
                 function login() {
