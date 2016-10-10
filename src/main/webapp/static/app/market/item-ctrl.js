@@ -35,6 +35,7 @@ angular.module('ortolangMarketApp')
                     $scope.ortolangObject = collection;
                     $scope.root = $scope.tag.snapshot;
                     $scope.itemKey = collection.key;
+                    $scope.wskey = workspace.wskey;
                     $scope.item = collection['meta_ortolang-item-json'];
 
                     if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
