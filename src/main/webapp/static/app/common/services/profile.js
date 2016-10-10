@@ -49,7 +49,11 @@ angular.module('ortolangMarketApp')
                     $rootScope.$broadcast('askLanguageChange', profileData.value);
                 } else {
                     if (profileData.type === 'REFERENTIAL') {
-                        profileData.value = profileData.value.id;
+                        if (angular.isObject(profileData.value) && profileData.value.id) {
+                            profileData.value = '${referential:' + profileData.value.id + '}';
+                        } else {
+                            profileData.value = profileData.value && profileData.value.length > 0 ? profileData.value : undefined;
+                        }
                     }
                     var profileDataRepresentation = {
                         name: profileData.name,
@@ -114,14 +118,10 @@ angular.module('ortolangMarketApp')
         //       Organization      //
         // *********************** //
 
-        function checkOrganization(profileData, $data) {
-            if ($data !== '' && !angular.isObject($data) && !$data.id) {
-                return $translate.instant('PROFILE.FIELDS.ORGANISATION_ERROR');
-            }
-            profileData.value = $data.id;
-        }
-
         function searchOrganization(query) {
+            if (/^\$\{referential:(.*)}/.test(query)) {
+                return [];
+            }
             if (!query || angular.isObject(query) || query.length < 2) {
                 return [];
             }
@@ -144,23 +144,29 @@ angular.module('ortolangMarketApp')
         var once;
 
         function getOrganization(name, force) {
-            var deferred = $q.defer();
-            if (organization && organization.id === name) {
-                if (force) {
-                    return organization;
-                }
-                deferred.resolve(organization);
-            } else if (name && !once) {
-                once = true;
-                ReferentialResource.get({name: name}, function (data) {
-                    if (data) {
-                        organization = angular.fromJson(data.content);
-                        once = false;
-                        deferred.resolve(organization);
-                    } else {
-                        organization = null;
+            var deferred = $q.defer(),
+                exec = /^\$\{referential:(.*)}/.exec(name);
+            if (exec) {
+                name = exec[1];
+                if (organization && organization.id === name) {
+                    if (force) {
+                        return organization.fullname;
                     }
-                });
+                    deferred.resolve(organization);
+                } else if (name && !once) {
+                    once = true;
+                    ReferentialResource.get({name: name}, function (data) {
+                        if (data) {
+                            organization = angular.fromJson(data.content);
+                            once = false;
+                            deferred.resolve(organization.fullname);
+                        } else {
+                            organization = null;
+                        }
+                    });
+                }
+            } else {
+                return name;
             }
             return deferred.promise;
         }
@@ -172,7 +178,6 @@ angular.module('ortolangMarketApp')
             checkAddress: checkAddress,
             preventAddressSubmitOnEnter: preventAddressSubmitOnEnter,
             searchOrganization: searchOrganization,
-            getOrganization: getOrganization,
-            checkOrganization: checkOrganization
+            getOrganization: getOrganization
         };
     }]);
