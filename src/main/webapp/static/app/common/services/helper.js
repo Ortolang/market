@@ -134,7 +134,8 @@ angular.module('ortolangMarketApp')
 
         this.extractKeyFromReferentialId = function (key) {
             // Pattern : ${key}
-            return key.substring(2, key.length - 1);
+            var exec = /^\$\{(.*)}/.exec(key);
+            return exec ? exec[1] : exec;
         };
 
         this.createKeyFromReferentialId = function (id) {
@@ -149,8 +150,8 @@ angular.module('ortolangMarketApp')
 
         this.extractNameFromReferentialId = function (id) {
             // Pattern : ${referential:name}
-            var key = this.extractKeyFromReferentialId(id);
-            return key.split(':').pop();
+            var exec = /^\$\{referential:(.*)}/.exec(id);
+            return exec ? exec[1] : exec;
         };
 
         this.startsWith = function (actual, expected) {

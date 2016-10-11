@@ -9,7 +9,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Profile', ['$rootScope', '$translate', '$q', 'User', 'ProfileResource', 'ReferentialResource', 'icons', 'Settings', function ($rootScope, $translate, $q, User, ProfileResource, ReferentialResource, icons, Settings) {
+    .factory('Profile', ['$rootScope', '$translate', '$q', 'User', 'ProfileResource', 'ReferentialResource', 'icons', 'Settings', 'Helper', function ($rootScope, $translate, $q, User, ProfileResource, ReferentialResource, icons, Settings, Helper) {
 
         var organization,
             visibilityOptions = {
@@ -50,7 +50,7 @@ angular.module('ortolangMarketApp')
                 } else {
                     if (profileData.type === 'REFERENTIAL') {
                         if (angular.isObject(profileData.value) && profileData.value.id) {
-                            profileData.value = '${referential:' + profileData.value.id + '}';
+                            profileData.value = Helper.createKeyFromReferentialName(profileData.value.id);
                         } else {
                             profileData.value = profileData.value && profileData.value.length > 0 ? profileData.value : undefined;
                         }
@@ -119,7 +119,7 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         function searchOrganization(query) {
-            if (/^\$\{referential:(.*)}/.test(query)) {
+            if (Helper.extractNameFromReferentialId(query)) {
                 return [];
             }
             if (!query || angular.isObject(query) || query.length < 2) {
@@ -145,17 +145,16 @@ angular.module('ortolangMarketApp')
 
         function getOrganization(name, force) {
             var deferred = $q.defer(),
-                exec = /^\$\{referential:(.*)}/.exec(name);
-            if (exec) {
-                name = exec[1];
-                if (organization && organization.id === name) {
+                referentialName = Helper.extractNameFromReferentialId(name);
+            if (referentialName) {
+                if (organization && organization.id === referentialName) {
                     if (force) {
                         return organization.fullname;
                     }
                     deferred.resolve(organization);
-                } else if (name && !once) {
+                } else if (referentialName && !once) {
                     once = true;
-                    ReferentialResource.get({name: name}, function (data) {
+                    ReferentialResource.get({name: referentialName}, function (data) {
                         if (data) {
                             organization = angular.fromJson(data.content);
                             once = false;

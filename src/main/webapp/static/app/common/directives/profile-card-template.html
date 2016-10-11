@@ -1,4 +1,4 @@
-<div class="media profile-card">
+<div class="media profile-card" ng-click="goToContributorPage()" ng-class="{contributor: !!profile.referentialId}">
     <div class="media-left" avatar data-email-hash="profile.emailHash" data-size="{{size}}" data-img-classes="{{imgClasses}}"></div>
     <div class="media-body">
         <div ng-transclude class="pull-right"></div>
