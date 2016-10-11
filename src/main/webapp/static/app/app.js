@@ -146,8 +146,8 @@ angular
                 title: 'NAV.LEGAL_NOTICES'
             })
             .when('/profiles/me/edition', {
-                templateUrl: 'profile/profile-me.html',
-                controller: 'ProfileMeCtrl',
+                templateUrl: 'profile/profile.html',
+                controller: 'ProfileCtrl',
                 requiresAuthentication: true,
                 resolve: {
                     func: ['AuthService', function (AuthService) {
@@ -161,10 +161,6 @@ angular
                 controller: 'TasksCtrl',
                 requiresAuthentication: true,
                 title: 'NAV.TASKS'
-            })
-            .when('/profiles/:key', {
-                templateUrl: 'profile/profile.html',
-                controller: 'ProfileCtrl'
             })
             .when('/404', {
                 templateUrl: '404.html',

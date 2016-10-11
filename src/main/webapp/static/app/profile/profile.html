@@ -1,35 +1,30 @@
 <div class="view-wrapper-flex">
-    <div class="container-main container-main-no-toolbar profile-container">
-        <section>
-            <header class="full-header">
-                <div class="text-center">
-                    <div class="avatar-wrapper" ng-if="profile" avatar data-size="100" data-email-hash="profile.emailHash" data-img-classes="img-circle"></div>
-                    <h3>{{::fullName()}}</h3>
-                    <p><a ng-href="/producers/{{::infos.organisation.id}}">{{infos.organisation | organizationName}}</a></p>
-                    <div>
-                        <button ng-if="isFriend && !isFriend()" ng-click="addToFriends()" class="btn btn-sm btn-default"><span ng-class="::icons.plus"></span> {{'PROFILE.ADD_TO_FRIENDS' | translate}}</button>
-                        <button ng-if="isFriend()" disabled class="btn btn-sm btn-default"><span ng-class="::icons.check"></span> {{'PROFILE.ADDED_TO_FRIENDS' | translate}}</button>
-                    </div>
+    <div class="toolbar-wrapper" ng-include="'profile/templates/profile-tabs-template.html'" ng-init="activeProfileTab = 'information'"></div>
+    <div ng-cloak class="container-main">
+        <div class="container-main-inner">
+            <div class="row profile-me" bs-active-pane="models.activeTab" data-template="profile/templates/profile-information-tabs-template.html" bs-tabs>
+                <div data-title="<span class='fa fa-user fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.PERSONAL_INFOS' | translate}}" bs-pane>
+                    <div class="row" ng-include="'profile/personal-infos.html'"></div>
                 </div>
-            </header>
-            <div class="row">
-                <div class="col-xs-12" ng-if="infos.presentation">
-                    <p ng-bind="infos.presentation" class="profile-presentation"></p>
+                <div data-title="<span class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.ABOUT_ME' | translate}}" bs-pane>
+                    <div ng-include="'profile/about-me.html'"></div>
                 </div>
-                <div class="col-md-6">
-                    <h4 translate="PROFILE.NAV.PERSONAL_INFOS"></h4>
-                    <dl>
-                        <dt translate="PROFILE.FIELDS.JOB" ng-show="infos.job"></dt>
-                        <dd ng-show="infos.job">{{infos.job}}</dd>
-                        <dt translate="PROFILE.FIELDS.EMAIL"></dt>
-                        <dd>{{::profile.email.replace('@', ' [ AT ] ')}}</dd>
-                        <dt translate="PROFILE.FIELDS.WEBSITE"></dt>
-                        <dd><a ng-href="{{::infos.website}}" target="_blank">{{::infos.website || '-'}}</a></dd>
-                    </dl>
+                <div data-title="<span class='fa fa-users fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.FRIENDS' | translate}}" bs-pane>
+                    <div ng-include="'profile/friends.html'"></div>
                 </div>
-            <!--<pre>{{profile | json}}</pre>-->
-            <!--<pre>{{infos | json}}</pre>-->
+                <div data-title="<span class='fa fa-puzzle-piece fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.IDENTIFIERS' | translate}}" bs-pane>
+                    <div ng-include="'profile/identifiers.html'"></div>
+                </div>
+                <div data-title="<span class='fa fa-gears fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.SETTINGS' | translate}}" bs-pane>
+                    <div ng-include="'profile/settings.html'"></div>
+                </div>
+                <div data-title="<span class='fa fa-book fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.PUBLICATIONS' | translate}}" bs-pane>
+                    <div ng-include="'profile/publications.html'"></div>
+                </div>
+                <div data-title="<span class='fa fa-cube fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.CONTRIBUTIONS' | translate}}" bs-pane>
+                    <div ng-include="'profile/productions.html'"></div>
+                </div>
             </div>
-        </section>
+        </div>
     </div>
 </div>
