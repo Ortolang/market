@@ -58,7 +58,7 @@ angular.module('ortolangMarketApp')
                 ORCID: 'ORCID',
                 VIAF: 'VIAF ID',
                 MYIDREF: 'IdRef',
-                LINKEDIN: 'Linkedin ID',
+                LINKEDIN: 'LinkedIn ID',
                 VIADEO: 'Viadeo ID',
                 LANGUAGE: 'Preferred interface language'
             },
@@ -66,10 +66,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Professional title: Dr., Prof., etc. ',
                 IDHAL: 'HAL persistent identifiers: <a href="https://hal.archives-ouvertes.fr/page/mon-idhal" target="_blank">https://hal.archives-ouvertes.fr/</a>',
                 ORCID: 'Persistent digital identifiers: <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>.',
-                VIAF: 'Persistent digital identifiers:  <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>.',
-                MYIDREF: 'Persistent digital identifiers:  <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>.',
-                LINKEDIN: 'Persistent digital identifiers:  <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>.',
-                VIADEO: 'Persistent digital identifiers:  <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>.'
+                VIAF: 'Persistent digital identifiers:  <a href="https://viaf.org/viaf/" target="_blank">https://viaf.org/viaf/</a>.',
+                MYIDREF: 'Persistent digital identifiers:  <a href="https://www.idref.fr/" target="_blank">https://www.idref.fr/</a>.',
+                LINKEDIN: 'Persistent digital identifiers:  <a href="https://www.linkedin.com/public-profile/settings" target="_blank">https://www.linkedin.com/</a><br>Find it in: Public Profile > Your Public Profile URL<br>https://www.linkedin.com/in/MY_IDENTIFIER',
+                VIADEO: 'Persistent digital identifiers:  <a href="https://www.viadeo.com/profile/" target="_blank">https://www.viadeo.com/</a><br/>Find it in: Your account > Privacy Settings > Your Profile<br>https://www.viadeo.com/en/profile/MY_IDENTIFIER'
             },
             HAL: {
                 RESULT_NUMBER: '<strong>{{number}} result{{number > 1 ? "s" : ""}}</strong> found out of',

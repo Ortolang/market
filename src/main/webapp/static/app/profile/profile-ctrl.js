@@ -31,7 +31,7 @@ angular.module('ortolangMarketApp')
                 'orcid': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'viaf': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'myidref': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
-                'linkedin': {'type': 'URL', 'helper': true, 'forceVisibilities': '333'},
+                'linkedin': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'viadeo': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'presentation': {'type': 'TEXT'}
             }, initialized;

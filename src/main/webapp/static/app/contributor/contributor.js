@@ -15,9 +15,8 @@ angular.module('ortolangMarketApp')
                 $scope.contributor = entity['meta_ortolang-referential-json'];
                 if ($scope.contributor.username) {
                     /*jshint camelcase:false */
-                    $scope.presentation = $scope.contributor.username.meta_profile.infos.presentation;
                     $scope.emailHash = $scope.contributor.username.meta_profile.emailHash;
-                    $scope.idHal = $scope.contributor.username.meta_profile.infos.idhal;
+                    $scope.infos = $scope.contributor.username.meta_profile.infos;
                 }
                 if ($scope.contributor.organization) {
                     $scope.contributor.organizationEntity = $scope.contributor.organization['meta_ortolang-referential-json'];

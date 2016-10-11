@@ -59,7 +59,7 @@ angular.module('ortolangMarketApp')
                 ORCID: 'Identifiant ORCID',
                 VIAF: 'Identifiant VIAF',
                 MYIDREF: 'IdRef',
-                LINKEDIN: 'Page Linkedin',
+                LINKEDIN: 'Identifiant LinkedIn',
                 VIADEO: 'Identifiant Viadeo',
                 LANGUAGE: 'Langue d\'interface préférée'
             },
@@ -67,10 +67,10 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Titre professionnel : Dr., Prof. etc.',
                 IDHAL: 'Identifiant unique géré dans HAL : <a href="https://hal.archives-ouvertes.fr/page/mon-idhal" target="_blank">https://hal.archives-ouvertes.fr/</a>',
                 ORCID: 'Identifiant personnel pérenne : <a href="http://orcid.org/" target="_blank">http://orcid.org/</a>',
-                VIAF: 'Identifiant personnel pérenne : <a href="http://viaf.org/viaf/" target="_blank">http://viaf.org/viaf/</a>',
-                MYIDREF: 'Identifiant personnel pérenne : <a href="http://www.idref.fr/" target="_blank">http://www.idref.fr/</a>',
-                LINKEDIN: 'Identifiant personnel pérenne : <a href="http://www.linkedin.com/" target="_blank">http://www.linkedin.com/</a>',
-                VIADEO: 'Identifiant personnel pérenne : <a href="http://www.viadeo.com/profile/" target="_blank">http://www.viadeo.com/profile/</a>'
+                VIAF: 'Identifiant personnel pérenne : <a href="https://viaf.org/viaf/" target="_blank">https://viaf.org/viaf/</a>',
+                MYIDREF: 'Identifiant personnel pérenne : <a href="https://www.idref.fr/" target="_blank">https://www.idref.fr/</a>',
+                LINKEDIN: 'Identifiant personnel pérenne : <a href="https://www.linkedin.com/public-profile/settings" target="_blank">https://www.linkedin.com</a><br>Visible dans : Profil Public > L’URL de votre profil public<br>https://www.linkedin.com/in/MON_IDENTIFIANT',
+                VIADEO: 'Identifiant personnel pérenne : <a href="https://www.viadeo.com/profile/" target="_blank">https://www.viadeo.com/</a><br>Visible dans : Mon Compte > Confidentialité > Mon profil<br>https://www.viadeo.com/fr/profile/MON_IDENTIFIANT'
             },
             HAL: {
                 RESULT_NUMBER: '<strong>{{number}} résultat{{number > 1 ? "s" : ""}}</strong> trouvé{{number > 1 ? "s" : ""}} sur',

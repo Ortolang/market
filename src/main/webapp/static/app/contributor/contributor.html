@@ -19,15 +19,23 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="contributor-profiles" ng-if="infos.idhal || infos.orcid || infos.viaf || infos.myidref || infos.linkedin || infos.viadeo">
+                            <a ng-if="infos.idhal" class="btn btn-default" ng-href="https://halshs.archives-ouvertes.fr/search/index/q/*/authIdHal_s/{{infos.idhal}}" translate="CONTRIBUTOR.IDHAL" target="_blank"></a>
+                            <a ng-if="infos.orcid" class="btn btn-default" ng-href="https://orcid.org/{{infos.orcid}}" translate="CONTRIBUTOR.ORCID" target="_blank"></a>
+                            <a ng-if="infos.viaf" class="btn btn-default" ng-href="http://viaf.org/viaf/{{infos.viaf}}/" translate="CONTRIBUTOR.VIAF" target="_blank"></a>
+                            <a ng-if="infos.myidref" class="btn btn-default" ng-href="https://www.idref.fr/{{infos.myidref}}" translate="CONTRIBUTOR.MYIDREF" target="_blank"></a>
+                            <a ng-if="infos.linkedin" class="btn btn-default" ng-href="https://www.linkedin.com/in/{{infos.linkedin}}" translate="CONTRIBUTOR.LINKEDIN" target="_blank"></a>
+                            <a ng-if="infos.viadeo" class="btn btn-default" ng-href="https://www.viadeo.com/fr/profile/{{infos.viadeo}}" translate="CONTRIBUTOR.VIADEO" target="_blank"></a>
+                        </div>
                     </div>
                 </div>
             </header>
 
             <div class="market-item-presentation-metadata">
-                <section ng-if="presentation" class="about-me">
+                <section ng-if="infos.presentation" class="about-me">
                     <h4 translate="CONTRIBUTOR.ABOUT_ME"></h4>
-                    <article data-content="presentation" data-target-blank>
-                        <div class="profile-presentation" ng-bind="presentation"></div>
+                    <article data-target-blank>
+                        <div class="profile-presentation" ng-bind="infos.presentation"></div>
                     </article>
                 </section>
 
@@ -38,10 +46,10 @@
                     </article>
                 </section>
 
-                <section class="publications" ng-if="idHal">
+                <section class="publications" ng-if="infos.idhal">
                     <h4 translate="CONTRIBUTOR.PUBLICATIONS"></h4>
                     <div class="section-body-wrapper">
-                        <div publications-hal data-id-hal="idHal"></div>
+                        <div publications-hal data-id-hal="infos.idhal"></div>
                     </div>
                 </section>
             </div>

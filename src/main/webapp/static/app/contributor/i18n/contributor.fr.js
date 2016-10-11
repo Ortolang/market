@@ -13,6 +13,12 @@ angular.module('ortolangMarketApp')
             ABOUT_ME: 'Présentation',
             RESOURCES: 'Ses productions',
             PUBLICATIONS: 'Ses publications',
-            LABORATORY: 'Son laboratoire d\'appartenance'
+            LABORATORY: 'Son laboratoire d\'appartenance',
+            IDHAL: 'HAL',
+            ORCID: 'ORCID',
+            VIAF: 'VIAF',
+            MYIDREF: 'IdRef',
+            LINKEDIN: 'LinkedIn',
+            VIADEO: 'Viadeo',
         }
     });
