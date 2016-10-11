@@ -35,7 +35,7 @@
                 <hr ng-if="!addFriend" ng-show="profiles.length >= 0" />
                 <div class="my-friends" ng-if="!addFriend">
                     <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MY_FRIENDS"></strong></p>
-                    <p ng-show="friends.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_FRIENDS"></p>
+                    <p ng-show="!User.friendList || User.friendList.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_FRIENDS"></p>
                     <ul class="list-unstyled">
                         <li ng-repeat="friend in ::User.friendList track by friend.key" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
                             <div class="btn-group" ng-if="::!isMember(friend.key)">

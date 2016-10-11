@@ -67,7 +67,13 @@
   }
   .help-block {
     padding-left: 59px;
+    &.friends-help {
+      padding-left: 0;
+      margin-bottom: @line-height-computed;
+    }
   }
+
+
 
   .user-avatar {
     margin-bottom: 3 * @padding-large-vertical;
@@ -152,32 +158,6 @@
         display: block;
       }
     }
-  }
-}
-
-.profile-container {
-  section {
-    > header {
-      padding: (3 * @padding-large-vertical) @container-main-padding @line-height-computed;
-      background-color: @alternate-light-bg;
-      border-bottom: @default-border;
-      .avatar-wrapper {
-        height: 100px;
-      }
-      > div, + div {
-        max-width: @market-item-max-width;
-      }
-    }
-    dt {
-      font-weight: 600;
-    }
-  }
-  .profile-presentation {
-    margin: 0 auto @line-height-computed;
-    max-width: 900px;
-    text-align: center;
-    color: @text-muted;
-    white-space: pre-line;
   }
 }
 

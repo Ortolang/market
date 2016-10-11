@@ -1,5 +1,6 @@
 <div ng-controller="FriendsCtrl">
     <div class="well">
+        <p class="help-block friends-help" translate="PROFILE.ADD_FRIEND_HELP"></p>
         <ul class="list-unstyled row">
             <li ng-repeat="friend in User.friendList track by friend.key" profile-card data-profile="friend" data-size="50" data-img-classes="img-circle" class="col-lg-4 col-md-6 col-sm-12">
                 <button class="close remove-member-btn" ng-click="removeFriend(friend.key)" data-title="{{::'PROFILE.REMOVE_FRIEND' | translate}}" bs-tooltip>

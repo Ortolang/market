@@ -12,6 +12,7 @@ angular.module('ortolangMarketApp')
         PROFILE: {
             EMPTY: 'non renseigné',
             ADD_FRIEND: 'Ajouter un collaborateur',
+            ADD_FRIEND_HELP: 'Ajouter ici les personnes avec lesquelles vous collaborez régulièrement pour pouvoir les retrouver plus facilement lorsque vous ajouter un membre à l\'un de vos espaces de travail ou lorsque vous remplissez la fiche de métadonnées décrivant vos ressources.',
             ADD_TO_FRIENDS: 'Ajouter à mes collaborateurs',
             ADDED_TO_FRIENDS: 'Ajouté à mes collaborateurs',
             REMOVE_FRIEND: 'Retirer des collaborateurs',
