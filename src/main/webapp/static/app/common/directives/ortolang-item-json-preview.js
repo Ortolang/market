@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
                 alias: '=',
                 ortolangObject: '=',
                 itemKey: '=',
+                wskey: '=',
                 root: '=',
                 tag: '=',
                 tags: '=',
