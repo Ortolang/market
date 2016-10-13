@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url',
-        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, Content, WorkspaceResource, ReferentialResource, ObjectResource, url) {
+    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url', 'User',
+        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User) {
 
             function loadReferentialEntities(items, dest) {
                 if (items && items.length > 0) {
@@ -506,12 +506,15 @@ angular.module('ortolangMarketApp')
                 var modalScope = Helper.createModalScope(true),
                     contactModal;
 
+                if (User.email) {
+                    modalScope.models.email = User.email;
+                }
+
                 modalScope.submit = function (contactForm) {
                     if (contactForm.$valid) {
                         WorkspaceResource.notifyOwner({wskey: $scope.wskey}, {subject: modalScope.models.subject, email: modalScope.models.email, message: modalScope.models.message}, function () {
                             contactModal.hide();
                         });
-
                     }
                 };
 
