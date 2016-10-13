@@ -19,8 +19,7 @@
                                 <div ng-repeat="contributor in models.contributors" ng-click="seeContributorPage(contributor)"
                                      class="media profile-card contributor-card col-md-6 col-lg-4"
                                      ng-class="{'contributor-link': contributor.entity.id}">
-                                    <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
-                                    </div>
+                                    <div class="media-left" avatar data-email-hash="contributor.entity.username['meta_profile'].emailHash || contributor.entity.emailhash" data-size="60" data-img-classes="img-circle"></div>
                                     <div class="media-body">
                                         <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span></span>
                                         <div class="small roles">
