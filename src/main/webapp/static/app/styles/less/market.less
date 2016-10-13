@@ -319,12 +319,8 @@
       margin-top: 2 * @padding-large-vertical;
       padding-bottom: 3 * @padding-large-vertical;
 
-      &:first-child {
-        margin-top: 0;
-      }
-
       &:not(:last-child) {
-        border-bottom: 1px solid @gray-lighter;
+        border-bottom: @light-border;
       }
 
       dl.keywords {
@@ -378,7 +374,10 @@
         }
       }
       .section-body-wrapper {
-        margin-left: @padding-large-horizontal;
+        margin-left: 2 * @padding-small-horizontal;
+        dl.dl-horizontal {
+
+        }
         dt {
           padding-bottom: 2*@padding-base-vertical;
         }

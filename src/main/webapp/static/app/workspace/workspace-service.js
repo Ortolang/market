@@ -398,6 +398,10 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                     if (Workspace.list.length > 0) {
                         if (Workspace.active.workspace && Workspace.active.workspace.key === eventMessage.fromObject) {
                             Workspace.active.workspace = null;
+                            // Go back to workspaces list if we were viewing the dashboard of the deleted workspace
+                            if ($route.current.originalPath === '/workspaces/:alias') {
+                                $location.url('/workspaces');
+                            }
                         }
                     } else {
                         Workspace.active.workspace = null;

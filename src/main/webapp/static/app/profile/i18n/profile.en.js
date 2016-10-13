@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
             ADD_TO_FRIENDS: 'Add to my co-workers',
             ADDED_TO_FRIENDS: 'Added to my co-workers',
             REMOVE_FRIEND: 'Remove from co-workers',
-            SEE_PUBLIC_PROFILE: 'See my public profile',
+            SEE_CONTRIBUTOR_PAGE: 'See my public profile',
             NAV: {
                 PERSONAL_INFOS: 'Personal informations',
                 SETTINGS: 'Settings',
@@ -51,8 +51,6 @@ angular.module('ortolangMarketApp')
                 EMAIL: 'Professional e-mail',
                 RESCUE_EMAIL: 'Rescue e-mail',
                 PROFESSIONAL_TEL: 'Professional phone',
-                TEL: 'Personal phone',
-                FAX: 'Fax',
                 PRESENTATION: 'Describe yourself in a few words',
                 IDHAL: 'HAL ID',
                 ORCID: 'ORCID',

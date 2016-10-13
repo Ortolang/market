@@ -37,7 +37,8 @@ angular.module('ortolangMarketApp')
                     });
                 };
 
-                $scope.removeFriend = function (member) {
+                $scope.removeFriend = function (member, $event) {
+                    $event.stopPropagation();
                     GroupResource.removeMember({key: User.friends, member: member}, function (data) {
                         User.friendList = data.members;
                     });

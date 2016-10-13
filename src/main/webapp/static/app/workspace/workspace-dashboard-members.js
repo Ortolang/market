@@ -17,7 +17,8 @@ angular.module('ortolangMarketApp')
                 modalScope = Helper.createModalScope(true);
             modalScope.wsName = Workspace.getActiveWorkspaceTitle();
             modalScope.members = Workspace.active.members;
-            modalScope.add = function (profile) {
+            modalScope.add = function (profile, $event) {
+                $event.stopPropagation();
                 GroupResource.addMember({key: Workspace.active.workspace.members, member: profile.key}, {}, function (data) {
                     Workspace.active.members = data.members;
                 });
@@ -30,7 +31,8 @@ angular.module('ortolangMarketApp')
             });
         };
 
-        $scope.removeMember = function (member) {
+        $scope.removeMember = function (member, $event) {
+            $event.stopPropagation();
             if (User.key === Workspace.active.workspace.owner || User.isRoot()) {
                 GroupResource.removeMember({key: Workspace.active.workspace.members, member: member}, function (data) {
                     Workspace.active.members = data.members;
@@ -45,7 +47,8 @@ angular.module('ortolangMarketApp')
                 modalScope.wsName = Workspace.getActiveWorkspaceTitle();
                 modalScope.members = Workspace.active.members;
                 modalScope.owner = Workspace.active.workspace.owner;
-                modalScope.change = function (member) {
+                modalScope.change = function (member, $event) {
+                    $event.stopPropagation();
                     WorkspaceResource.changeOwner({wskey: Workspace.active.workspace.key}, {newowner: member}, function () {
                         Workspace.refreshActiveWorkspaceInfo();
                     });

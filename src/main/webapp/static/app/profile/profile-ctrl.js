@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProfileCtrl', ['$scope', '$rootScope', '$routeParams', '$translate', 'User', 'Profile', 'Runtime', 'Settings',
-        function ($scope, $rootScope, $routeParams, $translate, User, Profile, Runtime, Settings) {
+    .controller('ProfileCtrl', ['$scope', '$rootScope', '$routeParams', '$translate', 'User', 'Profile', 'Runtime', 'Settings', 'Helper',
+        function ($scope, $rootScope, $routeParams, $translate, User, Profile, Runtime, Settings, Helper) {
 
             var fieldTemplates = {
                 'civility': {'type': 'ENUM'},
@@ -24,8 +24,6 @@ angular.module('ortolangMarketApp')
                 'address': {'type': 'ADDRESS'},
                 'website': {'type': 'URL'},
                 'professional_tel': {'type': 'TEL'},
-                'tel': {'type': 'TEL'},
-                'fax': {'type': 'TEL'},
                 'language': {'type': 'ENUM', 'forceVisibilities': '300', 'alias': 'settings.language'},
                 'idhal': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
                 'orcid': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
@@ -38,6 +36,7 @@ angular.module('ortolangMarketApp')
 
             $scope.User = User;
             $scope.Runtime = Runtime;
+            $scope.Helper = Helper;
 
             $rootScope.$on('$translateChangeSuccess', function () {
                 $scope.emptyText = $translate.instant('PROFILE.EMPTY');
