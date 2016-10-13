@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('profileCard', ['$location', 'Helper', function ($location, Helper) {
+    .directive('profileCard', ['$location', function ($location) {
         return {
             restrict: 'A',
             scope: {
@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
             link: function (scope) {
                 scope.goToContributorPage = function () {
                     if (scope.profile.referentialId) {
-                        $location.url('/contributors/' + Helper.extractNameFromReferentialId(scope.profile.referentialId));
+                        $location.url('/contributors/' + scope.profile.referentialId);
                     }
                 };
             },
