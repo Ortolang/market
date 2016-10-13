@@ -86,7 +86,7 @@ angular
             .when('/market/terminologies', {
                 templateUrl: 'market/terminologies.html',
                 controller: 'TerminologiesCtrl',
-                title: 'TERMINOLGIES',
+                title: 'TERMINOLOGIES',
                 reloadOnSearch: false
             })
             .when('/market/applications', {
