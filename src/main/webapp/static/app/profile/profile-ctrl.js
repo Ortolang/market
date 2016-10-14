@@ -14,23 +14,23 @@ angular.module('ortolangMarketApp')
             var fieldTemplates = {
                 'civility': {'type': 'ENUM'},
                 'title': {'type': 'STRING', 'helper': true},
-                'given_name': {'type': 'STRING', 'alias': 'givenName', 'forceVisibilities': '333'},
-                'family_name': {'type': 'STRING', 'alias': 'familyName', 'forceVisibilities': '333'},
+                'given_name': {'type': 'STRING', 'alias': 'givenName', 'forceVisibility': 'EVERYBODY'},
+                'family_name': {'type': 'STRING', 'alias': 'familyName', 'forceVisibility': 'EVERYBODY'},
                 'email': {'type': 'EMAIL', 'alias': 'email'},
-                'rescue_email': {'type': 'EMAIL', 'forceVisibilities': '300'},
+                'rescue_email': {'type': 'EMAIL', 'forceVisibility': 'NOBODY'},
                 'organisation': {'type': 'REFERENTIAL'},
                 'job': {'type': 'STRING'},
                 'field_of_research': {'type': 'STRING'},
                 'address': {'type': 'ADDRESS'},
                 'website': {'type': 'URL'},
                 'professional_tel': {'type': 'TEL'},
-                'language': {'type': 'ENUM', 'forceVisibilities': '300', 'alias': 'settings.language'},
-                'idhal': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
-                'orcid': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
-                'viaf': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
-                'myidref': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
-                'linkedin': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
-                'viadeo': {'type': 'STRING', 'helper': true, 'forceVisibilities': '333'},
+                'language': {'type': 'ENUM', 'forceVisibility': 'NOBODY'}, // settings.language
+                'idhal': {'type': 'STRING', 'helper': true, 'forceVisibility': 'EVERYBODY'},
+                'orcid': {'type': 'STRING', 'helper': true, 'forceVisibility': 'EVERYBODY'},
+                'viaf': {'type': 'STRING', 'helper': true, 'forceVisibility': 'EVERYBODY'},
+                'myidref': {'type': 'STRING', 'helper': true, 'forceVisibility': 'EVERYBODY'},
+                'linkedin': {'type': 'STRING', 'helper': true, 'forceVisibility': 'EVERYBODY'},
+                'viadeo': {'type': 'STRING', 'helper': true, 'forceVisibility': 'EVERYBODY'},
                 'presentation': {'type': 'TEXT'}
             }, initialized;
 
@@ -60,7 +60,7 @@ angular.module('ortolangMarketApp')
                         type: fieldTemplate.type,
                         helper: fieldTemplate.helper,
                         alias: fieldTemplate.alias,
-                        forceVisibilities: fieldTemplate.forceVisibilities
+                        forceVisibility: fieldTemplate.forceVisibility
                     };
                     if (profileData) {
                         if (fieldTemplate.alias) {
@@ -78,7 +78,11 @@ angular.module('ortolangMarketApp')
                         if (fieldTemplate.alias === 'email') {
                             field.visibility = Profile.getVisibilityOptions()[User.emailVisibility];
                         } else {
-                            field.visibility = fieldTemplate.visibility ? Profile.getVisibilityOptions()[fieldTemplate.visibility] : Profile.getVisibilityOptions().EVERYBODY;
+                            if (fieldTemplate.visibility) {
+                                field.visibility = Profile.getVisibilityOptions()[fieldTemplate.visibility];
+                            } else if (!fieldTemplate.forceVisibility) {
+                                field.visibility = Profile.getVisibilityOptions().EVERYBODY;
+                            }
                         }
                     }
                     result[profileDataName] = field;

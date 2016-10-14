@@ -74,7 +74,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.$on('askLanguageChange', function (event, langKey) {
-                $scope.changeLanguage(langKey);
+                $scope.changeLanguage(langKey || 'fr');
             });
 
             var touchStart;

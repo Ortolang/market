@@ -4,10 +4,10 @@
 
     <div ng-class="inputClass">
 
-        <div class="profile-data-visibility-wrapper" ng-switch="::profileData.forceVisibilities">
-            <a ng-switch-when="333" class="pull-left btn btn-default disabled profile-data-visibility" bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{'PROFILE.VISIBILITY.EVERYBODY' | translate}}"><span ng-class="::icons.everybody"></span></a>
-            <a ng-switch-when="300" class="pull-left btn btn-default disabled profile-data-visibility" bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{'PROFILE.VISIBILITY.NOBODY' | translate}}"><span ng-class="::icons.nobody"></span></a>
-            <div ng-switch-default toggle-visibility class="pull-left" data-options="::Profile.getVisibilityOptions(profileData.forceVisibilities)" data-profile-data="profileData"
+        <div class="profile-data-visibility-wrapper" ng-switch="::profileData.forceVisibility">
+            <a ng-switch-when="EVERYBODY" class="pull-left btn btn-default disabled profile-data-visibility" bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{'PROFILE.VISIBILITY.EVERYBODY' | translate}}"><span ng-class="::icons.everybody"></span></a>
+            <a ng-switch-when="NOBODY" class="pull-left btn btn-default disabled profile-data-visibility" bs-tooltip data-title="{{'PROFILE.VISIBILITY.LABEL' | translate}} {{'PROFILE.VISIBILITY.NOBODY' | translate}}"><span ng-class="::icons.nobody"></span></a>
+            <div ng-switch-default toggle-visibility class="pull-left" data-options="::Profile.getVisibilityOptions()" data-profile-data="profileData"
                  data-onaftersave="Profile.updateUserProfileData(profileData)"></div>
         </div>
 
