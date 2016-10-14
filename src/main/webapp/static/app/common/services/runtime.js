@@ -13,7 +13,8 @@ angular.module('ortolangMarketApp')
         var lastTasksRefresh,
             tasks = null,
             history = {},
-            delta = 500;
+            delta = 500,
+            alert;
 
         // *********************** //
         //          Tasks          //
@@ -91,6 +92,10 @@ angular.module('ortolangMarketApp')
             }, delta);
         }
 
+        function clearAlert() {
+            alert = null;
+        }
+
         $rootScope.$on('runtime.task.created', function (event, message) {
             // If we receive the same message we don't process it again
             if (history['runtime.task.created'] && history['runtime.task.created'].date === message.date) {
@@ -99,7 +104,16 @@ angular.module('ortolangMarketApp')
             history['runtime.task.created'] = message;
             processTaskEvent(event, message);
             $timeout(function () {
-                $alert({title: $translate.instant('TASKS.TASK'), content: $translate.instant('TASKS.TASK_CREATED', {name: message.fromObject}), type: 'danger'});
+                if (!alert) {
+                    alert = $alert({
+                        title: $translate.instant('TASKS.TASK'),
+                        content: $translate.instant('TASKS.TASK_CREATED'),
+                        type: 'danger',
+                        duration: 3,
+                        dismissable: false,
+                        onHide: clearAlert
+                    });
+                }
             }, delta);
         });
 
