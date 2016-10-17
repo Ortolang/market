@@ -10,7 +10,7 @@
  * @property {Object}   metadatas   - the metadata of all the workspaces in the list
  * @property {Object}   active      - the workspace being managed
  */
-angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$route', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'SubscriptionResource', 'StatisticsResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $route, $q, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, SubscriptionResource, StatisticsResource, Content, User, Helper) {
+angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter', '$location', '$route', '$q', 'WorkspaceResource', 'WorkspaceElementResource', 'GroupResource', 'ObjectResource', 'EventFeedResource', 'RuntimeResource', 'StatisticsResource', 'Content', 'User', 'Helper', function ($rootScope, $filter, $location, $route, $q, WorkspaceResource, WorkspaceElementResource, GroupResource, ObjectResource, EventFeedResource, RuntimeResource, StatisticsResource, Content, User, Helper) {
 
     var listDeferred,
         activeWorkspaceInfoDeferred,
@@ -340,7 +340,6 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         listDeferred.promise.then(function () {
             var workspaces = $filter('filter')(Workspace.list, {members: members}, true);
             if (workspaces.length !== 1) {
-                SubscriptionResource.refreshWorkspacesFilters();
                 Workspace.refreshWorkspaceList();
             }
         });
