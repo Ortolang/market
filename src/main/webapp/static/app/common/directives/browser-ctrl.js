@@ -1428,7 +1428,7 @@ angular.module('ortolangMarketApp')
             });
 
             $scope.$on('$routeUpdate', function () {
-                if ($scope.isWorkspaceBrowserService && $location.search().section === 'content') {
+                if ($scope.isMarketBrowserService || ($scope.isWorkspaceBrowserService && $location.search().section === 'content')) {
                     if ($location.search().path !== $scope.path) {
                         setPath($location.search().path);
                     }
@@ -2006,12 +2006,12 @@ angular.module('ortolangMarketApp')
 
             function setPath(path) {
                 if (path) {
-                    if (angular.isUndefined($scope.path) && !$scope.isFileSelectBrowserService) {
+                    if (angular.isUndefined($scope.path) && $scope.isWorkspaceBrowserService) {
                         $location.replace();
                     }
                     path = Helper.normalizePath(path);
                     $scope.path = path;
-                    if ($scope.isWorkspaceBrowserService) {
+                    if (!$scope.isFileSelectBrowserService) {
                         $location.search('path', path);
                     }
                 }
@@ -2048,10 +2048,6 @@ angular.module('ortolangMarketApp')
                 populateBreadcrumbDropdownMenu();
                 if ($scope.isMarketBrowserService) {
                     initWorkspaceVariables(undefined, $scope.root, $location.search().path);
-                    if ($location.search().path) {
-                        $location.replace();
-                        $location.search({});
-                    }
                 } else {
                     $scope.$on('initWorkspaceVariables', function () {
                         initWorkspaceVariables(undefined, $location.search().root, $location.search().path);

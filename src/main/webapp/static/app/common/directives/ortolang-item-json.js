@@ -255,9 +255,8 @@ angular.module('ortolangMarketApp')
                 }
 
                 if ($scope.content.schema) {
-
                     if ($location.search().path) {
-                        $scope.browse = true;
+                        $scope.browseContent();
                     }
 
                     if ($scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
@@ -280,7 +279,18 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            $scope.$on('$routeUpdate', function () {
+                if (angular.isUndefined($location.search().path) && $scope.browse) {
+                    $scope.browseContent();
+                } else if (angular.isDefined($location.search().path) && !$scope.browse) {
+                    $scope.browseContent();
+                }
+            });
+
             $scope.browseContent = function () {
+                if ($scope.browse) {
+                    $location.search({});
+                }
                 $scope.browse = !$scope.browse;
             };
 
@@ -444,6 +454,7 @@ angular.module('ortolangMarketApp')
 
             function initScopeVariables() {
                 // Show info, browse, ...
+                $scope.browse = false;
                 $scope.isArray = angular.isArray;
                 $scope.isString = angular.isString;
                 $scope.marketItemTemplate = undefined;

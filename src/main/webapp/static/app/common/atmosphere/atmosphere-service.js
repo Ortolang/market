@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AtmosphereService', ['$rootScope', '$timeout', 'AtmosphereListener', 'url', 'ProfileResource', 'SubscriptionResource', 'User', function ($rootScope, $timeout, AtmosphereListener, url, ProfileResource, SubscriptionResource, User) {
+    .factory('AtmosphereService', ['$rootScope', '$timeout', 'AtmosphereListener', 'url', 'ProfileResource', 'User', function ($rootScope, $timeout, AtmosphereListener, url, ProfileResource, User) {
 
         var responseParameterDelegateFunctions = ['onOpen', 'onClientTimeout', 'onReopen', 'onMessage', 'onClose', 'onError'],
             delegateFunctions = responseParameterDelegateFunctions,
@@ -35,7 +35,6 @@ angular.module('ortolangMarketApp')
         config.onOpen = function (response) {
             console.log('Atmosphere connected using ' + response.transport);
             connected = true;
-            SubscriptionResource.addDefaultFilters();
         };
 
         config.onClientTimeout = function (response) {
