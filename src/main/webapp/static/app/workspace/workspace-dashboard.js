@@ -124,6 +124,19 @@ angular.module('ortolangMarketApp')
                 }
             });
 
+            /**
+             * On metadata page, when metadata has changed, we asks to the user if he wants to leave (refresh or go back).
+             **/
+            $window.onbeforeunload = function (e) {
+                if ($location.search().section === 'metadata' && WorkspaceMetadataService.metadataChanged) {
+                    e = e || window.event;
+                    e.preventDefault = true;
+                    e.cancelBubble = true;
+                    e.returnValue = 'test';
+                    return 'Ask';
+                }
+            };
+            
             // *********************** //
             //       Publication       //
             // *********************** //
