@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('fileSelectBrowser', ['$filter', 'FileSelectBrowserService', 'WorkspaceResource', 'Settings', function ($filter, FileSelectBrowserService, WorkspaceResource, Settings) {
+    .directive('fileSelectBrowser', ['$filter', 'FileSelectBrowserService', 'WorkspaceResource', 'Settings', 'icons', function ($filter, FileSelectBrowserService, WorkspaceResource, Settings, icons) {
 
         function initWorkspace(workspace, scope) {
             FileSelectBrowserService.workspace = workspace;
@@ -24,12 +24,13 @@ angular.module('ortolangMarketApp')
                 forceHead: '=?',
                 fileSelectId: '=',
                 hideElements: '=?',
-                fileSelectAcceptMultiple: '=acceptMultiple',
-                icons: '='
+                fileSelectAcceptMultiple: '=acceptMultiple'
             },
             templateUrl: 'common/directives/browser.html',
             link: {
                 pre : function (scope) {
+                    scope.icons = icons;
+
                     scope.isFileSelectBrowserService = true;
                     var workspaceListDeferred = WorkspaceResource.get(),
                         workspace;

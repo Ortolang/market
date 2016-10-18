@@ -17,7 +17,8 @@ angular.module('ortolangMarketApp')
                 search: '=',
                 inline: '=',
                 subtitleValue: '=',
-                hideSeeMoreButton: '=',
+                seeMore: '=?',
+                seeMoreValue: '@?',
                 emptyLabel: '@?',
                 noEmptyLabel: '='
             },
@@ -27,32 +28,6 @@ angular.module('ortolangMarketApp')
                 scope.$on('$destroy', function () {
                     scope.search.clearResults();
                 });
-
-                function urlParam(params) {
-                    var searchParams = {};
-                    var copyParams = angular.fromJson(params);
-                    if (copyParams.viewMode) {
-                        searchParams.viewMode = copyParams.viewMode;
-                        delete copyParams.viewMode;
-                    }
-                    if (copyParams.orderProp) {
-                        searchParams.orderProp = copyParams.orderProp;
-                        delete copyParams.orderProp;
-                    }
-                    if (copyParams.orderDir) {
-                        searchParams.orderDir = copyParams.orderDir;
-                        delete copyParams.orderDir;
-                    }
-                    if (copyParams.content) {
-                        searchParams.content = copyParams.content;
-                        delete copyParams.content;
-                    }
-                    if (copyParams.limit) {
-                        delete copyParams.limit;
-                    }
-                    searchParams.filters = angular.toJson(copyParams);
-                    return searchParams;
-                }
 
                 function countWorkspace(params) {
                     var param = angular.copy(params);
@@ -70,10 +45,9 @@ angular.module('ortolangMarketApp')
                 function load() {
                     var param = angular.fromJson(scope.newParams);
                     scope.search.search(param).$promise.then(function (results) {
-                        if (!scope.hideSeeMoreButton) {
+                        if (angular.isDefined(scope.seeMoreValue)) {
                             countWorkspace(param);
                         }
-                        // scope.search.pack();
 
                         angular.forEach(results, function (result) {
                             var title = result.title,
@@ -85,12 +59,6 @@ angular.module('ortolangMarketApp')
                         scope.search.endProcessing();
                     });
                 }
-
-                scope.seeMore = function () {
-                    if (scope.params) {
-                        $location.url('/market/search/corpora').search(urlParam(scope.params));
-                    }
-                };
 
                 scope.$watch('params', function () {
                     if (scope.params !== undefined && scope.params !== scope.newParams) {

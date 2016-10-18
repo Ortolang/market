@@ -8,22 +8,22 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'SearchResource', 'Helper',  function ($routeParams, $location, $analytics, OptionFacetedFilter, SearchResource, Helper) {
+    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'SearchResource', 'Helper', 'icons', function ($routeParams, $location, $analytics, OptionFacetedFilter, SearchResource, Helper, icons) {
         return {
-            restrict: 'EA',
+            restrict: 'A',
             scope: {
                 params: '=',
                 search: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
-                searchPlaceHolder: '@',
-                icons: '='
+                searchPlaceHolder: '@'
             },
             templateUrl: 'market/directives/market-toolbar.html',
             link: {
+                pre: function (scope) {
+                    scope.icons = icons;
+                },
                 post : function (scope) {
-
-                    // scope.Search = Search;
 
                     scope.setFilter = function (filter, opt) {
                         addSelectedOptionFilter(filter, opt.getValue());
@@ -120,8 +120,6 @@ angular.module('ortolangMarketApp')
                         }
                         if ($routeParams.orderProp) {
                             scope.search.setActiveOrderProp($routeParams.orderProp, ($routeParams.orderDir !== 'asc'));
-                            // delete $routeParams.orderProp;
-                            // delete $routeParams.orderDir;
                         }
                         scope.content = $routeParams.content || undefined;
                         delete $routeParams.content;
@@ -246,7 +244,7 @@ angular.module('ortolangMarketApp')
 
 
                     /**
-                     * Sets options values of all filters availabled.
+                     * Sets options values of all filters available.
                      **/
                     function setOptionsFilters() {
                         var facetedFilters = scope.filtersManager.availabledFilters,
@@ -322,6 +320,10 @@ angular.module('ortolangMarketApp')
                         applyParams();
                     });
 
+                    scope.$on('market-toolbar-set-filter', function ($event, filter, option) {
+                        scope.setFilter(filter, option);
+                    });
+
                     // Scope variables
                     function initScopeVariables() {
                         scope.facets = false;
@@ -330,7 +332,6 @@ angular.module('ortolangMarketApp')
 
                     function init() {
                         initScopeVariables();
-
                         applyParams();
                     }
                     init();
