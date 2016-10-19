@@ -116,8 +116,7 @@
                         <div ng-repeat="contributor in contributors" ng-click="seeContributorPage(contributor)"
                              class="media profile-card contributor-card col-md-6 col-lg-4"
                              ng-class="{'contributor-link': contributor.entity.id}">
-                            <div class="media-left" avatar data-email-hash="contributor.entity.emailhash" data-size="60" data-img-classes="img-rounded">
-                            </div>
+                            <div class="media-left" avatar data-email-hash="contributor.entity.username['meta_profile'].emailHash || contributor.entity.emailhash" data-size="60" data-img-classes="img-circle"></div>
                             <div class="media-body">
                                 <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span></span>
                                 <div class="small roles">
@@ -178,9 +177,7 @@
                             <img ng-src="{{commercialLink.img}}">
                         </div>
                         <div class="media-body">
-                            <p>
-                                {{commercialLink.description}}<a target="_BLANK" ng-href="{{commercialLink.url}}"><span class="fa fa-fw fa-external-link"></span></a>
-                            </p>
+                            <p>{{commercialLink.description}}<a target="_BLANK" ng-href="{{commercialLink.url}}"><span class="fa fa-fw fa-external-link"></span></a></p>
                         </div>
                     </div>
                 </div>
@@ -204,7 +201,6 @@
                         </dd>
                     </dl>
                     <p ng-if="!license && conditionsOfUse" ng-bind-html="conditionsOfUse"></p>
-                    <!-- <p data-visualizer ng-show="licenseDataObject"><a id="preview-license" ng-click="showPreview(licenseDataObject.key)" translate="MARKET.LICENCE_DETAIL"></a></p> -->
                     <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
                         <div class="btn-group" role="group">
                             <button class="btn btn-success" data-ng-disabled="root === 'head'" ng-click="exportItem()" translate="DOWNLOAD" data-title="{{'MARKET.DOWNLOAD_ALL' | translate:datasizeToPrint}}" data-placement="bottom" bs-tooltip></button>
@@ -219,7 +215,6 @@
             <div class="panel panel-default" ng-if="content.type === 'Application'">
                 <div class="panel-heading"><span class="fa fa-link fa-fw"></span> {{'MARKET.LINK' | translate}}</div>
                 <div class="panel-body">
-
                     <div class="btn-group btn-group-justified">
                         <a ng-href="{{content.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
                     </div>

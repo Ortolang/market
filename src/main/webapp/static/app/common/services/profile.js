@@ -17,18 +17,8 @@ angular.module('ortolangMarketApp')
                 FRIENDS: {value: 'FRIENDS', label: 'PROFILE.VISIBILITY.FRIENDS', icon: icons.friends}
             };
 
-        function getVisibilityOptions(mask) {
-            if (!mask) {
-                return visibilityOptions;
-            }
-            var visibilityOptionsCopy = visibilityOptions;
-            if (mask.charAt(1) !== '3') {
-                delete visibilityOptionsCopy.FRIENDS;
-            }
-            if (mask.charAt(2) !== '3') {
-                delete visibilityOptionsCopy.EVERYBODY;
-            }
-            return visibilityOptionsCopy;
+        function getVisibilityOptions() {
+            return visibilityOptions;
         }
 
         function updateUserProfileData(profileData) {
@@ -43,29 +33,26 @@ angular.module('ortolangMarketApp')
                     });
                 }
             } else {
-                if (profileData.source === 'languages') {
-                    Settings.language = profileData.value;
-                    Settings.store();
+                if (profileData.name === 'language') {
                     $rootScope.$broadcast('askLanguageChange', profileData.value);
-                } else {
-                    if (profileData.type === 'REFERENTIAL') {
-                        if (angular.isObject(profileData.value) && profileData.value.id) {
-                            profileData.value = Helper.createKeyFromReferentialName(profileData.value.id);
-                        } else {
-                            profileData.value = profileData.value && profileData.value.length > 0 ? profileData.value : undefined;
-                        }
-                    }
-                    var profileDataRepresentation = {
-                        name: profileData.name,
-                        value: profileData.value,
-                        type: profileData.type,
-                        source: profileData.source,
-                        visibility: profileData.visibility.value
-                    };
-                    ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
-                        User.profileDatas[profileData.name] = profileDataRepresentation;
-                    });
                 }
+                if (profileData.type === 'REFERENTIAL') {
+                    if (angular.isObject(profileData.value) && profileData.value.id) {
+                        profileData.value = Helper.createKeyFromReferentialName(profileData.value.id);
+                    } else {
+                        profileData.value = profileData.value && profileData.value.length > 0 ? profileData.value : undefined;
+                    }
+                }
+                var profileDataRepresentation = {
+                    name: profileData.name,
+                    value: profileData.value,
+                    type: profileData.type,
+                    source: profileData.source,
+                    visibility: profileData.forceVisibility ? profileData.forceVisibility : profileData.visibility.value
+                };
+                ProfileResource.updateProfileInfos({key: User.key}, profileDataRepresentation, function () {
+                    User.profileDatas[profileData.name] = profileDataRepresentation;
+                });
             }
         }
 

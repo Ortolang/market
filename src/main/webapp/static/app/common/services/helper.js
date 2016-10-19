@@ -15,7 +15,6 @@ angular.module('ortolangMarketApp')
 
         this.profileCards = {};
 
-
         this.getCard = function (username) {
             if (username && this.profileCards[username] === undefined) {
                 this.profileCards[username] = null;

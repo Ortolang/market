@@ -12,11 +12,11 @@ angular.module('ortolangMarketApp')
         PROFILE: {
             EMPTY: 'non renseigné',
             ADD_FRIEND: 'Ajouter un collaborateur',
-            ADD_FRIEND_HELP: 'Ajouter ici les personnes avec lesquelles vous collaborez régulièrement pour pouvoir les retrouver plus facilement lorsque vous ajouter un membre à l\'un de vos espaces de travail ou lorsque vous remplissez la fiche de métadonnées décrivant vos ressources.',
+            ADD_FRIEND_HELP: 'Ajouter ici les personnes avec lesquelles vous collaborez régulièrement pour pouvoir les retrouver plus facilement lorsque vous ajouter un membre à l\'un de vos espaces de travail ou lorsque vous remplissez la fiche de métadonnées décrivant vos ressources.<br/>Vous pourrez également partager certaines informations personnelles uniquement avec vos collaborateurs.',
             ADD_TO_FRIENDS: 'Ajouter à mes collaborateurs',
             ADDED_TO_FRIENDS: 'Ajouté à mes collaborateurs',
             REMOVE_FRIEND: 'Retirer des collaborateurs',
-            SEE_PUBLIC_PROFILE: 'Voir mon profil public',
+            SEE_CONTRIBUTOR_PAGE: 'Voir mon profil public',
             NAV: {
                 PERSONAL_INFOS: 'Informations personnelles',
                 SETTINGS: 'Préférences',
@@ -52,8 +52,6 @@ angular.module('ortolangMarketApp')
                 EMAIL: 'E-mail professionnel',
                 RESCUE_EMAIL: 'E-mail de secours',
                 PROFESSIONAL_TEL: 'Téléphone professionnel',
-                TEL: 'Téléphone personnel',
-                FAX: 'Fax',
                 PRESENTATION: 'Décrivez-vous en quelques mots',
                 IDHAL: 'Identifiant IdHAL',
                 ORCID: 'Identifiant ORCID',

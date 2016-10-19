@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url',
-        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, Content, WorkspaceResource, ReferentialResource, ObjectResource, url) {
+    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url', 'User',
+        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User) {
 
             function loadReferentialEntities(items, dest) {
                 if (items && items.length > 0) {
@@ -255,9 +255,8 @@ angular.module('ortolangMarketApp')
                 }
 
                 if ($scope.content.schema) {
-
                     if ($location.search().path) {
-                        $scope.browse = true;
+                        $scope.browseContent();
                     }
 
                     if ($scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
@@ -280,7 +279,18 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            $scope.$on('$routeUpdate', function () {
+                if (angular.isUndefined($location.search().path) && $scope.browse) {
+                    $scope.browseContent();
+                } else if (angular.isDefined($location.search().path) && !$scope.browse) {
+                    $scope.browseContent();
+                }
+            });
+
             $scope.browseContent = function () {
+                if ($scope.browse) {
+                    $location.search({});
+                }
                 $scope.browse = !$scope.browse;
             };
 
@@ -444,6 +454,7 @@ angular.module('ortolangMarketApp')
 
             function initScopeVariables() {
                 // Show info, browse, ...
+                $scope.browse = false;
                 $scope.isArray = angular.isArray;
                 $scope.isString = angular.isString;
                 $scope.marketItemTemplate = undefined;
@@ -506,12 +517,15 @@ angular.module('ortolangMarketApp')
                 var modalScope = Helper.createModalScope(true),
                     contactModal;
 
+                if (User.email) {
+                    modalScope.models.email = User.email;
+                }
+
                 modalScope.submit = function (contactForm) {
                     if (contactForm.$valid) {
                         WorkspaceResource.notifyOwner({wskey: $scope.wskey}, {subject: modalScope.models.subject, email: modalScope.models.email, message: modalScope.models.message}, function () {
                             contactModal.hide();
                         });
-
                     }
                 };
 

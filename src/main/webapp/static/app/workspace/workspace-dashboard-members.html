@@ -11,7 +11,7 @@
         <ul class="list-unstyled row">
             <li ng-repeat="member in Workspace.active.members track by member.key" class="col-lg-3 col-md-4 col-sm-6 workspace-member-card" profile-card data-profile="member" data-size="50" data-img-classes="img-circle">
                 <button ng-if="(User.key === Workspace.active.workspace.owner || User.isRoot()) && member.key !== Workspace.active.workspace.owner"
-                        class="btn btn-default btn-danger btn-xs remove-member-btn" ng-class="::icons.remove" ng-click="removeMember(member.key)" data-title="{{::'WORKSPACE.REMOVE_MEMBER' | translate}}" bs-tooltip></button>
+                        class="btn btn-default btn-danger btn-xs remove-member-btn" ng-class="::icons.remove" ng-click="removeMember(member.key, $event)" data-title="{{::'WORKSPACE.REMOVE_MEMBER' | translate}}" bs-tooltip></button>
             </li>
             <li ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
                 <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>

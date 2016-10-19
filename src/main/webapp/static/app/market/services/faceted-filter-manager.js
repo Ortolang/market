@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FacetedFilterManager', ['QueryBuilderFactory', '$filter', function (QueryBuilderFactory, $filter) {
+    .factory('FacetedFilterManager', ['QueryBuilderFactory', 'FacetedFilter', '$filter', function (QueryBuilderFactory, FacetedFilter, $filter) {
 
         // Constructor
         function FacetedFilterManager() {
@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
         // Methods
         FacetedFilterManager.prototype = {
 
-            addFilter : function (filter) {
+            addFilter: function (filter) {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
                     if (this.enabledFilters[i].getId() === filter.getId()) {
@@ -28,6 +28,15 @@ angular.module('ortolangMarketApp')
                     }
                 }
                 return this.enabledFilters.push(filter);
+            },
+
+            getFilter: function (alias) {
+                var i = 0;
+                for (i; i < this.availabledFilters.length; i++) {
+                    if (this.availabledFilters[i].alias === alias) {
+                        return this.availabledFilters[i];
+                    }
+                }
             },
 
             removeFilter: function (filter) {
@@ -54,7 +63,7 @@ angular.module('ortolangMarketApp')
                 this.enabledFilters = [];
             },
 
-            addAvailableFilter : function (filter) {
+            addAvailableFilter: function (filter) {
                 var i = 0;
                 for (i; i < this.availabledFilters.length; i++) {
                     if (this.availabledFilters[i].id === filter.id) {
@@ -99,6 +108,18 @@ angular.module('ortolangMarketApp')
                     }
                 });
                 return result;
+            },
+
+            init: function (type, configurations) {
+                var Manager = this;
+                var filter = FacetedFilter.makeTypeFilter(type, true);
+                this.addAvailableFilter(filter);
+                angular.forEach(configurations, function (config) {
+                    config.id = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.' + config.alias + '.key';
+                    config.path = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.' + config.alias;
+                    var filter = FacetedFilter.make(config);
+                    return Manager.addAvailableFilter(filter);
+                });
             }
         };
 

@@ -8,43 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SearchCtrl', ['$scope', 'icons', 'FacetedFilterManager', 'FacetedFilter', 'OptionFacetedFilter', function ($scope, icons, FacetedFilterManager, FacetedFilter, OptionFacetedFilter) {
+    .controller('SearchCtrl', ['$scope', 'icons', 'FacetedFilterManager', 'FacetedFilter', function ($scope, icons, FacetedFilterManager, FacetedFilter) {
 
         function initScopeVariables() {
 
             $scope.filtersManager = FacetedFilterManager.make();
 
-            $scope.typeFilter = FacetedFilter.make({
-                id: 'meta_ortolang-item-json.type',
-                alias: 'type',
-                label: 'MARKET.RESOURCE_TYPE',
-                resetLabel: 'MARKET.ALL_RESOURCE',
-                priority: 'high',
-                options: [
-                    OptionFacetedFilter.make({
-                        label: 'Corpus',
-                        value: 'Corpus',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Lexique',
-                        value: 'Lexique',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Outil',
-                        value: 'Outil',
-                        length: 1
-                    }),
-                    OptionFacetedFilter.make({
-                        label: 'Projet intégré',
-                        value: 'Application',
-                        length: 1
-                    })
-                ],
-                lockOptions: true,
-                view: 'dropdown-faceted-filter'
-            });
+            $scope.typeFilter = FacetedFilter.makeTypeFilter(undefined, false);
             $scope.filtersManager.addAvailableFilter($scope.typeFilter);
 
             var producersFilter = FacetedFilter.make({
@@ -69,9 +39,8 @@ angular.module('ortolangMarketApp')
             $scope.orderProp = orderPublicationDate;
         }
 
-        function init() {
+        (function init() {
             initScopeVariables();
-        }
-        init();
+        }());
 
     }]);

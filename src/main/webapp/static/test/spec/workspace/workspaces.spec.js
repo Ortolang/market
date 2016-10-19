@@ -69,7 +69,6 @@ describe('Controller: WorkspacesCtrl', function () {
         $rootScope.$emit('membership.group.add-member', {fromObject: 'group1', arguments: {member: 'foo'}});
         $rootScope.$digest();
         $rootScope.$emit('membership.group.add-member', {fromObject: 'foobar', arguments: {member: undefined}});
-        $httpBackend.expect('GET', url.api + '/subscription/workspaces').respond(200);
         $httpBackend.expect('GET', workspaceListUrl).respond(200, {entries: sample().workspaceList});
         $rootScope.$digest();
         $httpBackend.flush();

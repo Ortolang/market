@@ -7,7 +7,7 @@
  * # FacetedFilter
  * Factory in the ortolangMarketApp.
  */
-angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', function ($filter) {
+angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', 'OptionFacetedFilter', function ($filter, OptionFacetedFilter) {
 
     // Constructor
     function FacetedFilter(config) {
@@ -223,6 +223,56 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', functio
 
     this.make = function (config) {
         return new FacetedFilter(config);
+    };
+
+    this.makeTypeFilter = function (selectedOption, hidden) {
+        var config = {
+            alias: 'type',
+            label: 'MARKET.RESOURCE_TYPE',
+            resetLabel: 'MARKET.ALL_RESOURCE',
+            options: [
+                OptionFacetedFilter.make({
+                    label: 'Corpus',
+                    value: 'Corpus',
+                    length: 1
+                }),
+                OptionFacetedFilter.make({
+                    label: 'Lexique',
+                    value: 'Lexique',
+                    length: 1
+                }),
+                OptionFacetedFilter.make({
+                    label: 'Terminologie',
+                    value: 'Terminologie',
+                    length: 1
+                }),
+                OptionFacetedFilter.make({
+                    label: 'Outil',
+                    value: 'Outil',
+                    length: 1
+                }),
+                OptionFacetedFilter.make({
+                    label: 'Projet intégré',
+                    value: 'Application',
+                    length: 1
+                })
+            ],
+            lockOptions: true
+        };
+        if (hidden) {
+            config.id = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type';
+            config.path = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type';
+            config.lock = true;
+        } else {
+            config.id = 'meta_ortolang-item-json.type';
+            config.priority = 'high';
+            config.view = 'dropdown-faceted-filter';
+        }
+        var filter = new FacetedFilter(config);
+        if (selectedOption) {
+            filter.putSelectedOption(filter.getOption(selectedOption));
+        }
+        return filter;
     };
 
     return this;

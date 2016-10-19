@@ -11,8 +11,13 @@
                     </div>
                     <div class="media-body">
                         <h1 class="market-item-title" ng-bind="contributor.fullname"></h1>
+                        <p ng-if="infos.job || infos.field_of_research">
+                            <span ng-show="infos.job" ng-bind="infos.job"></span>
+                            <span ng-show="infos.job && infos.field_of_research">|</span>
+                            <span ng-show="infos.job">{{'CONTRIBUTOR.FIELD_OF_RESEARCH' | translate}} {{infos.field_of_research}}</span>
+                        </p>
                         <div ng-if="contributor.organizationEntity" class="market-item-producers">
-                            <i translate="CONTRIBUTOR.LABORATORY"></i> :
+                            <i translate="CONTRIBUTOR.LABORATORY"></i>
                             <ul class="list-unstyled">
                                 <li>
                                     <a ng-href='/producers/{{::contributor.organizationEntity.id}}' ng-bind="contributor.organizationEntity.fullname"></a>
@@ -32,12 +37,30 @@
             </header>
 
             <div class="market-item-presentation-metadata">
-                <section ng-if="infos.presentation" class="about-me">
-                    <h4 translate="CONTRIBUTOR.ABOUT_ME"></h4>
-                    <article data-target-blank>
-                        <div class="profile-presentation" ng-bind="infos.presentation"></div>
-                    </article>
-                </section>
+                <div class="contributor-infos-wrapper" ng-if="infos.presentation || infos.website || infos.address || infos.professional_tel">
+                    <section>
+                        <h4 translate="CONTRIBUTOR.ABOUT_ME"></h4>
+                        <div class="row">
+                            <div ng-class="(infos.website || infos.address || infos.professional_tel) ? 'col-md-6' : 'col-md-12'"  ng-if="infos.presentation">
+                                <article data-target-blank class="about-me">
+                                    <div class="profile-presentation" ng-bind="infos.presentation"></div>
+                                </article>
+                            </div>
+                            <div ng-class="infos.presentation ? 'col-md-6' : 'col-md-12'" ng-if="infos.website || infos.address || infos.professional_tel">
+                                <div class="section-body-wrapper">
+                                    <dl>
+                                        <dt ng-show="::infos.website" translate="CONTRIBUTOR.WEBSITE"></dt>
+                                        <dd ng-show="::infos.website"><a ng-href="{{::infos.website}}" target="_blank">{{::infos.website}}</a></dd>
+                                        <dt ng-show="::infos.address" translate="PROFILE.FIELDS.ADDRESS"></dt>
+                                        <dd ng-show="::infos.address">{{::infos.address}}</dd>
+                                        <dt ng-show="::infos.professional_tel" translate="PROFILE.FIELDS.PROFESSIONAL_TEL"></dt>
+                                        <dd ng-show="::infos.professional_tel">{{::infos.professional_tel}}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
 
                 <section class="contributions">
                     <h4 translate="CONTRIBUTOR.RESOURCES"></h4>

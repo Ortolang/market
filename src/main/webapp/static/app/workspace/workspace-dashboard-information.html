@@ -75,7 +75,7 @@
             <h4>{{'WORKSPACE.STATISTICS_HITS' | translate}} <small translate="WORKSPACE.STATISTICS_TOTAL_HITS" translate-value-hits="{{::dashboardModels.chart.totalHits}}"></small></h4>
             <canvas id="line" class="chart chart-line" chart-data="dashboardModels.chart.data" chart-options="dashboardModels.chart.options"
                     chart-labels="dashboardModels.chart.labels" chart-dataset-override="dashboardModels.chart.datasetOverride"></canvas>
-            <h4>{{'WORKSPACE.STATISTICS_DOWNLOADS' | translate}} <small translate="WORKSPACE.STATISTICS_DOWNLOADS_HELP"></small></h4>
+            <h4>{{'WORKSPACE.STATISTICS_DOWNLOADS' | translate}} <span class="small">(<span translate="WORKSPACE.STATISTICS_DOWNLOADS_HELP"></span> <span ng-class="::icons.info" data-title="{{'WORKSPACE.STATISTICS_DOWNLOADS_INFO' | translate}}" bs-tooltip></span>)</span></h4>
             <ul class="list-unstyled">
                 <li translate="WORKSPACE.STATISTICS_WHOLE_DOWNLOADS" translate-value-downloads="{{::dashboardModels.chart.totalDownloads}}"></li>
                 <li translate="WORKSPACE.STATISTICS_SINGLE_DOWNLOADS" translate-value-downloads="{{::dashboardModels.chart.totalSingleDownloads}}"></li>
