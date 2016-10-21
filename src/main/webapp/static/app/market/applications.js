@@ -8,15 +8,21 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ApplicationsCtrl', ['$scope', '$location', 'SearchProvider', function ($scope, $location, SearchProvider) {
-        function init() {
+    .controller('ApplicationsCtrl', ['$scope', 'SearchProvider', 'Helper', function ($scope, SearchProvider, Helper) {
+
+        (function init() {
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('publicationDate', true);
-            var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
-            var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
-            var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
-            var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
-            $scope.params = '{"'+metaItemPrefix+'type": "Application", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName"}';
-        }
-        init();
+            var fields = {
+                metaLatestSnapshot: 'key',
+                metaRating: 'score:rank,.esrAccessibility',
+                metaItem: 'title,type,image,publicationDate',
+                metaWorkspace: 'wskey,wsalias,snapshotName'
+            };
+            var params = {};
+            params[Helper.prefix.metaItem + 'type'] = 'Application';
+            params.fields = Helper.getFieldsParam(fields);
+            $scope.params = angular.toJson(params);
+        }());
+
     }]);

@@ -30,6 +30,28 @@ angular.module('ortolangMarketApp')
 
         this.profileUpdate = {};
 
+        this.searchHistory = [];
+
+        this.putSearch = function (type, params) {
+            var search = {
+                type: type,
+                params: params,
+                date: Date.now()
+            };
+            for (var i = 0; i < this.searchHistory.length; i++) {
+                var previous = this.searchHistory[i];
+                if (previous.type === search.type && previous.params.content === search.params.content && previous.params.filters === search.params.filters) {
+                    this.searchHistory.splice(i, 1);
+                    break;
+                }
+            }
+            this.searchHistory.unshift(search);
+            if (this.searchHistory.length > 10) {
+                this.searchHistory.slice(0, 10);
+            }
+            this.store();
+        };
+
         this.store = function () {
             if (User.isAuthenticated()) {
                 User.sessionInitialized().then(function () {

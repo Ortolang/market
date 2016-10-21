@@ -186,15 +186,21 @@ angular.module('ortolangMarketApp')
             $scope.item.social.linkedin += '&source=ORTOLANG';
         }
 
-        function init() {
+        $scope.$on('$routeChangeSuccess', function ($event, current, previous) {
+            if (previous) {
+                // if previous route was /market/(corpora|lexicons...) and params
+                $scope.fromSearch = Object.keys(previous.params).length > 0 && /^\/market\/\w+$/.test(previous.$$route.originalPath);
+                console.log($scope.fromSearch);
+            }
+        });
+
+        (function init() {
             $scope.itemAlias = $routeParams.alias;
             $scope.browse = $location.search().browse;
             $scope.ready = false;
             $scope.item = {};
             handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.itemAlias + ($scope.tag ? '/' + $scope.tag.name : '');
             loadItem();
-        }
-
-        init();
+        }());
 
     }]);

@@ -227,33 +227,9 @@
         padding: 0;
       }
       .market-item-content > [browser] {
-        // Also used in workspaces.less
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
+        .browser();
         .browser-wrapper {
-          display: flex;
-          flex-direction: column;
-          align-content: stretch;
-          height: 100%;
-          > .browser-toolbar {
-            margin: 0;
-            flex: 0 0 auto;
-          }
-          > .browser-content-wrapper {
-            margin: 0;
-            flex: 1 1 auto;
-            overflow-x: hidden;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: row;
-            align-content: stretch;
-            height: 100%;
-            > div {
-              overflow-y: auto;
-            }
-          }
+          padding: 0 floor(@grid-gutter-width/2);
         }
       }
     }
@@ -587,6 +563,24 @@
 
     label {
       width: 100%;
+    }
+  }
+
+  .search-history-item {
+    display: block;
+    margin-top: @padding-small-vertical;
+    margin-bottom: @padding-small-vertical;
+    .label {
+      background-color: @alternate-bg !important;
+      border: @alternate-border;
+      font-weight: 600 !important;
+      color: @text-color !important;
+    }
+    strong:not(:empty) + .label {
+      margin-left: @padding-small-horizontal;
+    }
+    .label + .label {
+      margin-left: @padding-xs-horizontal;
     }
   }
 }

@@ -1,3 +1,31 @@
+.browser() {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  .browser-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    height: 100%;
+    > .browser-toolbar {
+      flex: 0 0 auto;
+    }
+    > .browser-content-wrapper {
+      flex: 1 1 auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: row;
+      align-content: stretch;
+      height: 100%;
+      > div {
+        overflow-y: auto;
+      }
+    }
+  }
+}
+
 .browser-wrapper {
   position: relative;
   &.market-browser-wrapper {

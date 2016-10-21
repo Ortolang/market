@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', 'OptionFacetedFilter', 'SearchResource', 'Helper', 'icons', function ($routeParams, $location, $analytics, OptionFacetedFilter, SearchResource, Helper, icons) {
+    .directive('marketToolbar', [ '$routeParams', '$location', '$analytics', '$filter', '$q', '$translate', 'OptionFacetedFilter', 'SearchResource', 'Helper', 'icons', 'Settings', function ($routeParams, $location, $analytics, $filter, $q, $translate, OptionFacetedFilter, SearchResource, Helper, icons, Settings) {
         return {
             restrict: 'A',
             scope: {
@@ -16,7 +16,7 @@ angular.module('ortolangMarketApp')
                 search: '=',
                 filtersManager: '=',
                 preSelectedFilter: '=',
-                searchPlaceHolder: '@'
+                type: '@?'
             },
             templateUrl: 'market/directives/market-toolbar.html',
             link: {
@@ -24,6 +24,9 @@ angular.module('ortolangMarketApp')
                     scope.icons = icons;
                 },
                 post : function (scope) {
+                    var highFilters,
+                        labels = {},
+                        labelsDeferred;
 
                     scope.setFilter = function (filter, opt) {
                         addSelectedOptionFilter(filter, opt.getValue());
@@ -37,10 +40,8 @@ angular.module('ortolangMarketApp')
                             scope.filtersManager.removeOptionFilter(filter, opt);
                         } else {
                             addSelectedOptionFilter(filter, opt.getValue());
-
                             scope.filtersManager.addFilter(filter);
                         }
-
                         if (apply) {
                             scope.applyFilters();
                         }
@@ -131,16 +132,12 @@ angular.module('ortolangMarketApp')
                             params[scope.preSelectedFilter.getId()] = scope.preSelectedFilter.getSelectedOptions()[0].getValue();
                         }
                         params.content = scope.content || undefined;
-                        var workspacePrefix = 'ortolang-workspace-json.';
-                        var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
-                        var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
-                        var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
-                        var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
-                        params.fields = metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'description,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName';
+                        var prefix = Helper.prefix;
+                        params.fields = prefix.metaLatestSnapshot+'key,'+prefix.metaRating+'score:rank,'+prefix.metaRating+'.esrAccessibility,'+prefix.metaItem+'title,'+prefix.metaItem+'description,'+prefix.metaItem+'type,'+prefix.metaItem+'image,'+prefix.metaItem+'publicationDate,'+prefix.metaWorkspace+'wskey,'+prefix.metaWorkspace+'wsalias,'+prefix.metaWorkspace+'snapshotName';
                         // params.fields = 'key,system-rating-json.score:rank,system-rating-json.esrAccessibility,ortolang-item-json.title,ortolang-item-json.type,ortolang-item-json.description,ortolang-item-json.image,ortolang-item-json.publicationDate,ortolang-workspace-json.wskey,ortolang-workspace-json.wsalias,ortolang-workspace-json.snapshotName';
                         params.orderProp = $routeParams.orderProp;
                         params.orderDir = $routeParams.orderDir;
-                        params[workspacePrefix+'archive'] = false;
+                        params[prefix.workspace+'archive'] = false;
 
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
@@ -248,12 +245,16 @@ angular.module('ortolangMarketApp')
                      **/
                     function setOptionsFilters() {
                         var facetedFilters = scope.filtersManager.availabledFilters,
-                            i = 0;
+                            i = 0,
+                            promises = [];
+
                         for (i; i < facetedFilters.length; i++) {
                             if (facetedFilters[i] !== scope.preSelectedFilter) {
-                                setOptionsFilter(facetedFilters[i]);
+                                labels[facetedFilters[i].id] = facetedFilters[i].label;
+                                promises.push(setOptionsFilter(facetedFilters[i]));
                             }
                         }
+                        $q.all(promises).then(labelsDeferred.resolve);
                     }
 
                     /**
@@ -261,6 +262,7 @@ angular.module('ortolangMarketApp')
                      **/
                     function setOptionsFilter(filter) {
                         var alias = filter.getAlias();
+                        var deferred = $q.defer();
                         var params = scope.params !== undefined ? angular.fromJson(scope.params) : {};
                         // params.fields = 'ortolang-item-json.'+filter.getAlias() + ':' + alias;
                         params.fields = filter.getPath() + ':' + alias;
@@ -277,6 +279,7 @@ angular.module('ortolangMarketApp')
                                             var label = field;
                                             if (angular.isDefined(field['meta_ortolang-referential-json'].labels)) {
                                                 label = Helper.getMultilingualValue(field['meta_ortolang-referential-json'].labels);
+                                                labels[field.key] = label;
                                             }
                                             if(!filter.getOption(label)) {
                                                 filter.putOption(OptionFacetedFilter.make({
@@ -290,6 +293,7 @@ angular.module('ortolangMarketApp')
                                         var label = result[alias];
                                         if (angular.isDefined(result[alias]['meta_ortolang-referential-json'])) {
                                             label = Helper.getMultilingualValue(result[alias]['meta_ortolang-referential-json'].labels);
+                                            labels[result[alias].key] = label;
                                         }
                                         if(!filter.getOption(label)) {
                                             filter.putOption(OptionFacetedFilter.make({
@@ -301,7 +305,9 @@ angular.module('ortolangMarketApp')
                                     }
                                 }
                             });
+                            deferred.resolve();
                         });
+                        return deferred.promise;
                     }
 
                     /**
@@ -324,6 +330,53 @@ angular.module('ortolangMarketApp')
                         scope.setFilter(filter, option);
                     });
 
+                    /**
+                     * Search History
+                     **/
+
+                    scope.history = function () {
+                        var deferred = $q.defer();
+                        labelsDeferred.promise.then(function () {
+                            highFilters = [];
+                            angular.forEach(scope.filtersManager.getHighFilters(), function (filter) {
+                                highFilters.push(filter.id);
+                            });
+                            deferred.resolve($filter('filter')(Settings.searchHistory, function (value) {
+                                if (!scope.type || value.type === scope.type) {
+                                    value.html = searchOptionHtml(value);
+                                    return true;
+                                }
+                            }, true));
+                        });
+                        return deferred.promise;
+                    };
+
+                    function searchOptionHtml(search) {
+                        var html = '<span class="search-history-item"><span class="fa fa-history text-muted" aria-hidden="true"></span> ' +
+                            '<strong>' + (search.params.content ? search.params.content : '') + '</strong>';
+                        angular.forEach(angular.fromJson(search.params.filters), function (value, key) {
+                            if (key.indexOf('[]') !== -1) {
+                                key = key.substr(0, key.length - 2);
+                            }
+                            if (highFilters.indexOf(key) !== -1) {
+                                html += ' <span class="label">' + $translate.instant(labels[key]) + ' : ';
+                                angular.forEach(value, function (item, index) {
+                                    html += (index > 0 ? ', ': '') + (labels[item] || item);
+                                });
+                                html += '</span>';
+                            }
+                        });
+                        html += '</span>';
+                        return html;
+                    }
+
+                    scope.$on('$typeahead.select', function ($event, value) {
+                        // Move search up to top (last search done)
+                        Settings.putSearch(value.type, value.params);
+                        $location.search(value.params);
+                        angular.element('#market-toolbar-search').blur();
+                    });
+
                     // Scope variables
                     function initScopeVariables() {
                         scope.facets = false;
@@ -331,6 +384,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     function init() {
+                        labelsDeferred = $q.defer();
                         initScopeVariables();
                         applyParams();
                     }

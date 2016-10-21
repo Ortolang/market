@@ -137,7 +137,8 @@ angular.module('ortolangMarketApp')
                 LEXICONS: 'Search for lexicons',
                 TERMINOLOGIES: 'Search for a terminologies, thésaurus or ontologies',
                 PRODUCERS: 'Search for a producer (name, acronym, city)',
-                ALL: 'Search in ORTOLANG'
+                ALL: 'Search in ORTOLANG',
+                BACK_TO_RESULTS: 'Back to results'
             },
             SHOW_IN: 'Show by',
             VIEW_MODE: {
