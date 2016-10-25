@@ -1,8 +1,0 @@
-<div class="media profile-card" ng-click="goToContributorPage()" ng-class="{contributor: !!profile.referentialId}">
-    <avatar class="media-left" email-hash="profile.emailHash" size="{{size}}" img-classes="{{imgClasses}}"></avatar>
-    <div class="media-body">
-        <div ng-transclude class="pull-right"></div>
-        <span class="name">{{profile.givenName}} {{profile.familyName}}</span>
-        <span ng-show="profile.email" class="small email">{{profile.email}}</span>
-    </div>
-</div>

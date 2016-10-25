@@ -2,16 +2,20 @@
     <div class="workspace-dashboard-section">
         <h4 translate="WORKSPACE.OWNER" class="no-border-bottom"></h4>
         <ul class="list-unstyled row">
-            <li class="col-lg-3 col-md-4 col-sm-6" profile-card data-profile="Helper.profileCards[Workspace.active.workspace.owner]" data-size="50" data-img-classes="img-circle"></li>
+            <li class="col-lg-3 col-md-4 col-sm-6">
+                <profile-card profile="Helper.profileCards[Workspace.active.workspace.owner]" size="50" img-classes="img-circle"></profile-card>
+            </li>
         </ul>
         <button class="btn btn-default" ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" ng-click="changeOwner()" translate="WORKSPACE.CHANGE_OWNER"></button>
     </div>
     <div class="workspace-dashboard-section">
         <h4 translate="WORKSPACE.MEMBERS_LIST" class="no-border-bottom"></h4>
         <ul class="list-unstyled row">
-            <li ng-repeat="member in Workspace.active.members track by member.key" class="col-lg-3 col-md-4 col-sm-6 workspace-member-card" profile-card data-profile="member" data-size="50" data-img-classes="img-circle">
-                <button ng-if="(User.key === Workspace.active.workspace.owner || User.isRoot()) && member.key !== Workspace.active.workspace.owner"
-                        class="btn btn-default btn-danger btn-xs remove-member-btn" ng-class="::icons.remove" ng-click="removeMember(member.key, $event)" data-title="{{::'WORKSPACE.REMOVE_MEMBER' | translate}}" bs-tooltip></button>
+            <li ng-repeat="member in Workspace.active.members track by member.key" class="col-lg-3 col-md-4 col-sm-6">
+                <profile-card class="workspace-member-card" profile="member" size="50" img-classes="img-circle">
+                    <button ng-if="(User.key === Workspace.active.workspace.owner || User.isRoot()) && member.key !== Workspace.active.workspace.owner"
+                            class="btn btn-default btn-danger btn-xs remove-member-btn" ng-class="::icons.remove" ng-click="removeMember(member.key, $event)" data-title="{{::'WORKSPACE.REMOVE_MEMBER' | translate}}" bs-tooltip></button>
+                </profile-card>
             </li>
             <li ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addMember()">
                 <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
