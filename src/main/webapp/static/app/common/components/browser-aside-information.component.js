@@ -17,10 +17,9 @@ angular.module('ortolangMarketApp')
             showMetadata: '&',
             helper: '<'
         },
-        controller: ['$scope', 'ObjectResource', 'Content', 'icons', 'ortolangType', function ($scope, ObjectResource, Content, icons, ortolangType) {
+        controller: ['ObjectResource', 'Content', 'icons', 'ortolangType', function (ObjectResource, Content, icons, ortolangType) {
 
             var ctrl = this;
-            console.log(this);
 
             this.Content = Content;
             this.icons = icons;
@@ -48,9 +47,11 @@ angular.module('ortolangMarketApp')
                 return size;
             };
 
-            $scope.$watch('$ctrl.element', function () {
-                ctrl.computedSize = undefined;
-            });
+            this.$onChanges = function (changesObj) {
+                if (changesObj.element) {
+                    ctrl.computedSize = undefined;
+                }
+            };
 
             this.fetchCollectionSize = function () {
                 var key;
