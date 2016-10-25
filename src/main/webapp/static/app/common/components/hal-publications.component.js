@@ -13,11 +13,17 @@ angular.module('ortolangMarketApp')
             idHal: '<'
         },
         templateUrl: 'common/components/hal-publications.component.html',
-        controller: ['$scope', '$http', function ($scope, $http) {
+        controller: ['$http', function ($http) {
 
             var ctrl = this;
 
             function getPublications() {
+                if (angular.isNumber(ctrl.idHal)) {
+                    ctrl.idType = 'authIdHal_i';
+                } else {
+                    ctrl.idType = 'authIdHal_s';
+                }
+                ctrl.morePublicationsUrl = 'https://hal.archives-ouvertes.fr/search/index/q/*/' + ctrl.idType + '/' + ctrl.idHal;
                 var url = 'https://api.archives-ouvertes.fr/search/?q=' + ctrl.idType + ':' + ctrl.idHal + '&wt=json&fl=docType_s,citationFull_s,halId_s,producedDate_tdate&sort=producedDate_tdate desc';
                 $http.get(url).then(function (response) {
                     if (response.data && response.data.response) {
@@ -27,20 +33,16 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            $scope.$watch('$ctrl.idHal', function (newValue) {
-                if (newValue) {
-                    if (angular.isNumber(ctrl.idHal)) {
-                        ctrl.idType = 'authIdHal_i';
+            ctrl.$onChanges = function (changesObj) {
+                if (changesObj.idHal) {
+                    if (changesObj.idHal.currentValue) {
+                        getPublications();
                     } else {
-                        ctrl.idType = 'authIdHal_s';
+                        ctrl.publicationNumber = 0;
+                        ctrl.publications = [];
                     }
-                    ctrl.morePublicationsUrl = 'https://hal.archives-ouvertes.fr/search/index/q/*/' + ctrl.idType + '/' + ctrl.idHal;
-                    getPublications();
-                } else {
-                    ctrl.publicationNumber = 0;
-                    ctrl.publications = [];
                 }
-            });
+            };
 
             ctrl.doctype = {
                 'ART': {'value': 'Article dans des revues', 'color': 'danger'},
