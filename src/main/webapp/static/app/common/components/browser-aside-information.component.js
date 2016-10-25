@@ -1,0 +1,70 @@
+'use strict';
+
+/**
+ * @ngdoc component
+ * @name ortolangMarketApp.component:browserAsideInformation
+ * @description
+ * # browserAsideInformation
+ * Component of the ortolangMarketApp
+ */
+angular.module('ortolangMarketApp')
+    .component('browserAsideInformation', {
+        bindings: {
+            elements: '<',
+            element: '<',
+            parent: '<',
+            toggle: '&',
+            showMetadata: '&',
+            helper: '<'
+        },
+        controller: ['$scope', 'ObjectResource', 'Content', 'icons', 'ortolangType', function ($scope, ObjectResource, Content, icons, ortolangType) {
+
+            var ctrl = this;
+            console.log(this);
+
+            this.Content = Content;
+            this.icons = icons;
+
+            this.elementsSize = function () {
+                if (this.elements) {
+                    var i,
+                        size = {
+                            value: 0,
+                            elementNumber: 0,
+                            collectionNumber: 0,
+                            partial: false
+                        };
+                    for (i = 0; i < this.elements.length; i++) {
+                        if (this.elements[i].type === ortolangType.object) {
+                            size.value += this.elements[i].size;
+                            size.elementNumber += 1;
+                        } else if (this.elements[i].type === ortolangType.collection) {
+                            size.elementNumber += 1;
+                            size.collectionNumber += 1;
+                            size.partial = true;
+                        }
+                    }
+                }
+                return size;
+            };
+
+            $scope.$watch('$ctrl.element', function () {
+                ctrl.computedSize = undefined;
+            });
+
+            this.fetchCollectionSize = function () {
+                var key;
+                if (this.helper.hasOnlyParentSelected()) {
+                    key = this.parent.key;
+                } else if (this.element.type === ortolangType.collection) {
+                    key = this.element.key;
+                } else {
+                    return;
+                }
+                ObjectResource.size({key: key}, function (data) {
+                    ctrl.computedSize = data.size;
+                });
+            };
+        }],
+        templateUrl: 'common/components/browser-aside-information.component.html'
+    });

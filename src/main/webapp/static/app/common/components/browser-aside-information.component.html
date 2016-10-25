@@ -1,0 +1,114 @@
+<div ng-if="$ctrl.elements.length === 1">
+    <p class="lead">
+        <button ng-click="$ctrl.toggle()" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+        <span ng-class="$ctrl.element.mimeType | mimeTypeIconCss"></span>
+        <span>{{$ctrl.element.root ? '/' : $ctrl.element.name}}</span>
+    </p>
+    <div ng-if="$ctrl.element.type === 'object'" thumb class="ng-hide info-thumb-wrapper">
+        <img class="thumb" ng-src="{{$ctrl.Content.getThumbUrlWithKey($ctrl.element.key)}}"/>
+        <hr/>
+    </div>
+    <dl class="dl-horizontal">
+        <dt translate="BROWSER.AUTHOR"></dt>
+        <dd>{{$ctrl.element.author}}</dd>
+        <dt translate="TYPE"></dt>
+        <dd>{{$ctrl.element.mimeType | contentType}}</dd>
+        <dt translate="BROWSER.CREATION"></dt>
+        <dd>{{$ctrl.element.creation | date : dateFormat}}</dd>
+        <dt translate="BROWSER.MODIFICATION"></dt>
+        <dd>{{$ctrl.element.modification | date : dateFormat}}</dd>
+        <dt ng-if="$ctrl.element.target" translate="BROWSER.TARGET"></dt>
+        <dd ng-if="$ctrl.element.target">{{$ctrl.element.target}}</dd>
+        <dt translate="BROWSER.KEY"></dt>
+        <dd>{{$ctrl.element.key.substring(0,6)}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top"><span ng-class="::$ctrl.icons.copyToClipboard" ui-zeroclip zeroclip-model="$ctrl.element.key"></span></span></dd>
+        <dt ng-if="$ctrl.element.type === 'collection'" translate="SIZE"></dt>
+        <dd ng-if="$ctrl.element.type === 'collection'">
+            <span ng-hide="$ctrl.computedSize || $ctrl.element.size === 0">
+                <span translate="BROWSER.ELEMENT" translate-values="{value: $ctrl.element.elements.length}"></span>
+                <br/>
+                <i><span class="calculate-size" ng-click="$ctrl.fetchCollectionSize()" translate="{{'BROWSER.CALCULATE_SIZE' | translate}}"></span></i>
+            </span>
+            <span ng-show="$ctrl.computedSize" translate="BROWSER.ELEMENT_WITH_SIZE" translate-values="{value: $ctrl.element.elements.length, size: $ctrl.computedSize}"></span>
+            <span ng-show="$ctrl.element.size === 0" translate="BROWSER.ELEMENT" translate-values="{value: $ctrl.element.elements.length}"></span>
+        </dd>
+        <dt ng-if="$ctrl.element.type !== 'collection'" translate="SIZE"></dt>
+        <dd ng-if="$ctrl.element.type !== 'collection'">{{$ctrl.element.size | bytes}}</dd>
+    </dl>
+    <hr ng-if="$ctrl.element.x" />
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'audio'">
+        <dt translate="BROWSER.AUDIO.DURATION"></dt>
+        <dd>{{$ctrl.element.x['xmpDM:duration'] | duration:'hh:mm:ss'}}</dd>
+        <dt translate="BROWSER.AUDIO.SAMPLE_RATE"></dt>
+        <dd>{{$ctrl.element.x['xmpDM:audioSampleRate'] | hz}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'image'">
+        <dt translate="BROWSER.IMAGE.SIZE"></dt>
+        <dd>{{$ctrl.element.x['tiff:ImageWidth']}} x {{$ctrl.element.x['tiff:ImageLength']}} px</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'video'">
+        <dt ng-show="$ctrl.element.x['tiff:ImageWidth']" translate="BROWSER.VIDEO.SIZE"></dt>
+        <dd ng-show="$ctrl.element.x['tiff:ImageWidth']">{{$ctrl.element.x['tiff:ImageWidth']}} x {{$ctrl.element.x['tiff:ImageLength']}} px</dd>
+        <dt ng-show="$ctrl.element.x['xmpDM:duration']" translate="BROWSER.VIDEO.DURATION"></dt>
+        <dd ng-show="$ctrl.element.x['xmpDM:duration']">{{$ctrl.element.x['xmpDM:duration'] * 1000 | duration:'hh:mm:ss'}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'xml' && $ctrl.element.x['XML-Type'] === 'TEI'">
+        <dt translate="BROWSER.XML.FORMAT"></dt>
+        <dd>{{$ctrl.element.x['XML-Type']}}</dd>
+        <dt translate="BROWSER.COMMON.ENCODING"></dt>
+        <dd>{{$ctrl.element.x['Content-Encoding'] || "–"}}</dd>
+        <dt translate="BROWSER.COMMON.TITLE"></dt>
+        <dd>{{$ctrl.element.x['tei:title']}}</dd>
+        <dt translate="BROWSER.AUTHOR"></dt>
+        <dd>{{$ctrl.element.x['tei:author'] || "–"}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'xml' && $ctrl.element.x['XML-Type'] === 'Trans'">
+        <dt translate="BROWSER.XML.FORMAT"></dt>
+        <dd>{{$ctrl.element.x['XML-Type']}}</dd>
+        <dt translate="BROWSER.COMMON.ENCODING"></dt>
+        <dd>{{$ctrl.element.x['Content-Encoding']}}</dd>
+        <dt translate="BROWSER.XML.SPEAKER_NUMBER"></dt>
+        <dd>{{$ctrl.element.x['trans:speakerNumber']}}</dd>
+        <dt translate="BROWSER.COMMON.WORDS"></dt>
+        <dd>{{$ctrl.element.x['trans:words']}}</dd>
+        <dt translate="BROWSER.XML.SPEECH_TIME"></dt>
+        <dd>{{$ctrl.element.x['trans:speechTime'] * 1000 | duration:'hh:mm:ss'}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'pdf'">
+        <dt translate="BROWSER.COMMON.TITLE"></dt>
+        <dd>{{$ctrl.element.x['title']}}</dd>
+        <dt translate="BROWSER.PDF.VERSION"></dt>
+        <dd>{{$ctrl.element.x['pdf:PDFVersion']}}</dd>
+        <dt translate="BROWSER.PDF.PAGES"></dt>
+        <dd>{{$ctrl.element.x['xmpTPg:NPages']}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'text'">
+        <dt translate="BROWSER.COMMON.ENCODING"></dt>
+        <dd>{{$ctrl.element.x['Content-Encoding']}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'office'">
+        <dt translate="BROWSER.COMMON.WORDS"></dt>
+        <dd>{{$ctrl.element.x['meta:word-count']}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt translate="BROWSER.VISIBILITY"></dt>
+        <dd>{{'WORKSPACE.ACL.' + $ctrl.element.publicationPolicy.toUpperCase() | translate}}</dd>
+    </dl>
+</div>
+<div ng-if="$ctrl.elements.length > 1">
+    <p class="lead">
+        <span ng-class="::$ctrl.icons.files"></span> <span translate="BROWSER.ELEMENT" data-translate-values="{value: $ctrl.elements.length}"></span>
+    </p>
+    <dl class="dl-horizontal">
+        <dt translate="SIZE"></dt>
+        <dd translate="BROWSER.FULL_SIZE" data-translate-values="{size: $ctrl.elementsSize()}"></dd>
+    </dl>
+</div>
