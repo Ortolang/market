@@ -11,19 +11,19 @@
         <tr>
             <th ng-click="order(['type','name'], 'toggle')">
                 <span translate="NAME"></span>
-                <span order-indicator data-name="name" data-array="1" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                <order-indicator name="name" array="1" order-prop="orderProp" order-reverse="orderReverse"></order-indicator>
             </th>
             <th ng-click="order('mimeType', 'toggle')">
                 <span translate="TYPE"></span>
-                <span order-indicator data-name="mimeType" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                <order-indicator name="mimeType" order-prop="orderProp" order-reverse="orderReverse"></order-indicator>
             </th>
             <th class="hidden-xs hidden-sm hidden-md" ng-click="order('modification', 'toggle')">
                 <span translate="BROWSER.LAST_MODIFICATION"></span>
-                <span order-indicator data-name="modification" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                <order-indicator name="modification" order-prop="orderProp" order-reverse="orderReverse"></order-indicator>
             </th>
             <th class="hidden-xs hidden-sm" ng-click="order('size', 'toggle')">
                 <span translate="SIZE"></span>
-                <span order-indicator data-name="size" data-order-prop="orderProp" data-order-reverse="orderReverse"></span>
+                <order-indicator name="size" order-prop="orderProp" order-reverse="orderReverse"></order-indicator>
             </th>
             <th ng-if="!isFileSelectBrowserService"></th>
         </tr>

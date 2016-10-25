@@ -21,7 +21,7 @@
                     <li ng-repeat="orderProp in ::search.orderProps">
                         <div ng-click="toggleOrderBy(orderProp)">
                             <span>{{::orderProp.text | translate}}</span>
-                            <span order-indicator data-name="{{search.activeOrderProp.id}}" data-array="id" data-order-prop="orderProp" data-order-reverse="search.orderReverse"></span>
+                            <order-indicator name="{{search.activeOrderProp.id}}" array="id" order-prop="orderProp" order-reverse="search.orderReverse"></order-indicator>
                         </div>
                     </li>
                 </ul>
