@@ -14,12 +14,10 @@ angular.module('ortolangMarketApp')
             size: '@',
             imgClasses: '@'
         },
-        controller: ['$scope', '$location', 'icons', function ($scope, $location, icons) {
-            $scope.icons = icons;
-
+        controller: ['$location', function ($location) {
             this.goToContributorPage = function () {
-                if ($scope.profile.referentialId) {
-                    $location.url('/contributors/' + $scope.profile.referentialId);
+                if (this.profile.referentialId) {
+                    $location.url('/contributors/' + this.profile.referentialId);
                 }
             };
         }],
