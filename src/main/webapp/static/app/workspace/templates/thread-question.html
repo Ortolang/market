@@ -20,7 +20,7 @@
             </span>
         </div>
         <div class="question-info">
-            <span avatar data-email-hash="Helper.profileCards[message.author].emailHash" data-size="48"></span>
+            <avatar email-hash="Helper.profileCards[message.author].emailHash" size="48"></avatar>
             <span class="message-author"><a ng-href="profiles/{{::message.author}}">{{::Helper.profileCards[message.author].fullName}}</a> </span>
             <span class="message-date">{{::message.date | date:'medium'}}</span>
             <span ng-if="!models.activeThread.answer">

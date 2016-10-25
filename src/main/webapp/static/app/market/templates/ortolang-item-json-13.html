@@ -116,7 +116,7 @@
                         <div ng-repeat="contributor in contributors" ng-click="seeContributorPage(contributor)"
                              class="media profile-card contributor-card col-md-6 col-lg-4"
                              ng-class="{'contributor-link': contributor.entity.id}">
-                            <div class="media-left" avatar data-email-hash="contributor.entity.username['meta_profile'].emailHash || contributor.entity.emailhash" data-size="60" data-img-classes="img-circle"></div>
+                            <avatar class="media-left" email-hash="contributor.entity.username['meta_profile'].emailHash || contributor.entity.emailhash" size="60" img-classes="img-circle"></avatar>
                             <div class="media-body">
                                 <span class="name">{{contributor.entity.fullname}} <span ng-if="contributor.organization.acronym">({{contributor.organization.acronym}})</span></span>
                                 <div class="small roles">

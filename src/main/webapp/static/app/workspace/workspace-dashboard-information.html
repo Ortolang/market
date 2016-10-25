@@ -55,7 +55,7 @@
             <div class="infinite-list-wrapper">
                 <ul class="list-unstyled overflow-list" z-infinite-scroll="seeMoreEvents"  ng-style="{height: dashboardModels.eventFeedHeight}">
                     <li ng-repeat="event in Workspace.active.events | eventFeedFilter | limitTo:dashboardModels.eventsLimit track by event.id" class="workspace-event media card-well">
-                        <div class="media-left" avatar data-email-hash="Helper.profileCards[event.throwedBy].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                        <avatar class="media-left" email-hash="Helper.profileCards[event.throwedBy].emailHash" size="36" img-classes="img-circle"></avatar>
                         <div class="media-body">
                             <span>
                                 <span class="workspace-event-author">{{::Helper.profileCards[event.throwedBy].fullName}}</span>
@@ -91,7 +91,7 @@
             <div class="infinite-list-wrapper">
                 <ul ng-if="Workspace.active.requests.length > 0" class="list-unstyled overflow-list" z-infinite-scroll="seeMoreRequests"  ng-style="{height: dashboardModels.requestsHeight}">
                     <li ng-repeat="request in Workspace.active.requests | filter:{'type': 'publish-workspace'} | orderBy:'-start' | limitTo:dashboardModels.requestsLimit track by request.key" class="workspace-event media card-well">
-                        <div class="media-left" avatar data-email-hash="Helper.profileCards[request.initier].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                        <avatar class="media-left" email-hash="Helper.profileCards[request.initier].emailHash" size="36" img-classes="img-circle"></avatar>
                         <div class="media-body">
                             <span>
                                 <span class="workspace-event-author">{{::Helper.profileCards[request.initier].fullName}}</span>
