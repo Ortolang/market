@@ -1205,12 +1205,6 @@ angular.module('ortolangMarketApp')
                 }
             });
 
-            $rootScope.$on('browserAskChangeWorkspace', function ($event, workspace) {
-                //console.log('%s caught event "browserAskChangeWorkspace"', $scope.browserService.id);
-                $scope.changeWorkspace(workspace);
-                $event.stopPropagation();
-            });
-
             function getParentPath(path) {
                 if (path) {
                     var parentPath = path.substring(0, path.lastIndexOf('/'));
@@ -1399,7 +1393,8 @@ angular.module('ortolangMarketApp')
 
             $scope.changeWorkspace = function (workspace) {
                 if (!$scope.forceWorkspace) {
-                    if (!$scope.isActiveWorkspace(workspace)) {
+                    // If not the active workspace
+                    if (workspace !== $scope.browserService.workspace) {
                         initWorkspaceVariables(workspace);
                     } else {
                         if ($scope.path !== '/') {
@@ -1409,10 +1404,6 @@ angular.module('ortolangMarketApp')
                         }
                     }
                 }
-            };
-
-            $scope.isActiveWorkspace = function (workspace) {
-                return $scope.browserService.workspace.key === workspace.key;
             };
 
             $scope.changeRoot = function (root) {
@@ -1722,18 +1713,6 @@ angular.module('ortolangMarketApp')
                             if (!hasOpenedModal()) {
                                 preventDefault(event);
                                 $scope.toggleAsideInfo();
-                            }
-                        }
-                    });
-                }
-                if ($scope.browserService.displayAsideWorkspaceList && !$scope.isFileSelectBrowserService) {
-                    hotkeys.bindTo($scope).add({
-                        combo: 'w',
-                        description: $translate.instant('BROWSER.SHORTCUTS.WORKSPACE_LIST'),
-                        callback: function (event) {
-                            if (!hasOpenedModal()) {
-                                preventDefault(event);
-                                $scope.toggleWorkspaceList();
                             }
                         }
                     });
