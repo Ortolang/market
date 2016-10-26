@@ -1,10 +1,8 @@
-<div class="browser-wrapper container-fluid" ng-class="::{'market-browser-wrapper': isMarketBrowserService, 'file-select-browser-wrapper': isFileSelectBrowserService}" ng-controller="BrowserCtrl">
+<div class="browser-wrapper" ng-class="::{'market-browser-wrapper': isMarketBrowserService, 'file-select-browser-wrapper': isFileSelectBrowserService}" ng-controller="BrowserCtrl">
 
-    <div class="row toolbar browser-toolbar" ng-class="::{'market-browser-toolbar': isMarketBrowserService}" ng-click="deactivateContextMenu()" ng-right-click="deactivateContextMenu()">
-        <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList" class="col-md-2 toolbar-aside"></div>
-
-        <div ng-class="displayAsideWorkspaceList() && !(browserSettings.hideWorkspaceList) ? 'col-md-10' : 'col-md-12'" class="btn-toolbar" role="toolbar">
-            <div class="browser-breadcrumb" ng-class="{'aside-left-collapsed': displayAsideWorkspaceList() && browserSettings.hideWorkspaceList}">
+    <div class="toolbar browser-toolbar" ng-class="::{'market-browser-toolbar': isMarketBrowserService}" ng-click="deactivateContextMenu()" ng-right-click="deactivateContextMenu()">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="browser-breadcrumb">
                 <div ng-if="breadcrumbParts.length > 0" class="breadcrumb-part visible-xs">
                     <button class="btn btn-default"  ng-click="browseToParent()">..</button>
                 </div>
@@ -240,8 +238,8 @@
         </div>
     </div>
 
-    <div class="browser-content-wrapper row">
-        <div ng-if="::displayAsideWorkspaceList()" ng-hide="browserSettings.hideWorkspaceList" ng-click="checkDeselection($event)" ng-right-click="checkDeselection($event)" class="col-sm-2 col-md-2 browser-aside browser-aside-left">
+    <div class="browser-content-wrapper">
+        <div ng-if="::displayAsideWorkspaceList()" ng-click="checkDeselection($event)" ng-right-click="checkDeselection($event)" class="browser-aside browser-aside-left">
             <browser-workspaces-list workspaces="workspaceList" active="browserService.workspace" on-change="changeWorkspace(workspace)"></browser-workspaces-list>
         </div>
 

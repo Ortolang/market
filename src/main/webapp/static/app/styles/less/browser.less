@@ -39,12 +39,13 @@
   &.file-select-browser-wrapper {
     padding-left: 0;
     padding-right: 0;
-    .row {
-      margin-left: 0;
-      margin-right: 0;
-    }
+    .browser();
+    position: relative !important;
     .table-workspace-elements {
       margin-bottom: 4 * @padding-large-vertical;
+    }
+    .browser-content-wrapper {
+      display: flex;
     }
   }
   .browser-context-menu {
@@ -73,18 +74,11 @@
     font-weight: bold;
   }
 
-  .btn-toolbar {
-    margin-left: 0;
-  }
-
   .btn.btn-off {
     color: fadeout(@gray-dark, 40%);
   }
 
   .browser-breadcrumb {
-    &.aside-left-collapsed {
-      padding-left: 20px;
-    }
     .btn.btn-default {
       padding: @padding-base-vertical;
     }
@@ -168,6 +162,21 @@
   &.browser-aside-left {
     border-right: @default-border;
     background-color: @main-bg;
+    border-left: @default-border;
+    width: 120px;
+    flex: 0 0 auto;
+    @media(min-width: @container-md) {
+      width: 160px;
+    }
+    @media(min-width: @container-large-desktop) {
+      width: 180px;
+    }
+    @media(min-width: @container-xl-desktop) {
+      width: 200px;
+    }
+    @media(min-width: @container-xxl-desktop) {
+      width: 220px;
+    }
     .btn-collapse {
       position: absolute;
       top: 50%;
@@ -613,8 +622,6 @@ table.table-workspace-elements {
   }
   ul.my-workspaces {
     overflow: auto;
-    margin-left: -(floor(@grid-gutter-width/2));
-    margin-right: -(floor(@grid-gutter-width/2));
     .user-select-mixin();
     li {
       position: relative;
