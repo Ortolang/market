@@ -302,7 +302,7 @@ angular.module('ortolangMarketApp')
             }
 
             ctrl.showMetadata = function () {
-                modalScope = createModalScope();
+                createModalScope();
                 modalScope.metadata = ctrl.selectedElements[0].x;
                 var tmp = [];
                 angular.forEach(modalScope.metadata, function (v, k) {
@@ -321,7 +321,7 @@ angular.module('ortolangMarketApp')
             };
 
             ctrl.showAclLegend = function ($event) {
-                modalScope = createModalScope();
+                createModalScope();
                 modalScope.AuthService = AuthService;
                 $event.stopPropagation();
                 $modal({
@@ -690,7 +690,7 @@ angular.module('ortolangMarketApp')
                         }
                     });
                     if (collectionNumber || objectNumber > 1) {
-                        modalScope = createModalScope();
+                        createModalScope();
                         modalScope.delete = function () {
                             deferred.resolve();
                             deleteMultipleElementsModal.hide();
