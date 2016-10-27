@@ -41,7 +41,7 @@
             <td>{{::child.mimeType | contentType}}</td>
             <td class="hidden-xs hidden-sm hidden-md">{{::child.modification | date:$ctrl.dateFormat}}</td>
             <td class="hidden-xs hidden-sm">{{::child.size | bytes}}</td>
-            <td ng-if="!$ctrl.isFileSelect" class="acl" ng-click="$ctrl.showAclLegend($event)"><span class="label" ng-class="$ctrl.parent.publicationPolicies[child.key]"><span ng-class="::icons.acl[$ctrl.parent.publicationPolicies[child.key]]"></span></span></td>
+            <td ng-if="!$ctrl.isFileSelect" class="acl" ng-click="$ctrl.showAclLegend($event)" ng-class="$ctrl.parent.publicationPolicies[child.key]"><span class="label"><span ng-class="::icons.acl[$ctrl.parent.publicationPolicies[child.key]]"></span></span></td>
         </tr>
         </tbody>
     </table>

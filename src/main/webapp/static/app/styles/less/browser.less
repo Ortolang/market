@@ -349,69 +349,76 @@ table.table-workspace-elements {
         padding-left: 0;
         padding-right: 0;
         cursor: help;
-        .label {
-          &.forall {
+        &.forall {
+          cursor: default;
+          .label {
             display: none;
           }
-          &.authentified {
+        }
+        &.authentified {
+          .label {
             background-color: @acl-authentified;
           }
-          &.esr {
+        }
+        &.esr {
+          .label {
             background-color: @acl-esr;
           }
-          &.restricted {
+        }
+        &.restricted {
+          .label {
             background-color: @acl-restricted;
           }
         }
       }
     }
-    &.active {
-      > td.acl .label {
-        background-color: @white;
-        color: @text-color;
-      }
+  }
+  &.active {
+    > td.acl .label {
+      background-color: @white;
+      color: @text-color;
     }
   }
-  tr.active {
-    td {
-      background-color: @active-element-bg-color;
-      color: @inverse-text-color;
-      .type {
-        color: inherit;
-      }
-    }
-    &:hover {
-      td {
-        background-color: @active-element-bg-color;
-      }
-    }
-  }
-  > thead > tr > th {
-    padding-top: @padding-large-vertical;
-    padding-bottom: @padding-large-vertical;
-    &:hover, &:focus {
-      background-color: @table-bg-accent;
-      cursor: pointer;
-    }
-  }
+}
+tr.active {
   td {
-    cursor: default;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    a {
+    background-color: @active-element-bg-color;
+    color: @inverse-text-color;
+    .type {
       color: inherit;
     }
-    .type {
-      margin-right: @padding-small-horizontal - 2px;
-      color: @gray-light;
+  }
+  &:hover {
+    td {
+      background-color: @active-element-bg-color;
     }
   }
-
-  &.no-children {
-    height: 100%;
-    margin: 0;
+}
+> thead > tr > th {
+  padding-top: @padding-large-vertical;
+  padding-bottom: @padding-large-vertical;
+  &:hover, &:focus {
+    background-color: @table-bg-accent;
+    cursor: pointer;
   }
+}
+td {
+  cursor: default;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  a {
+    color: inherit;
+  }
+  .type {
+    margin-right: @padding-small-horizontal - 2px;
+    color: @gray-light;
+  }
+}
+
+&.no-children {
+  height: 100%;
+  margin: 0;
 }
 
 .table-workspace-elements-wrapper .no-children-wrapper, .tile-workspace-elements-wrapper .no-children {
