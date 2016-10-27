@@ -416,8 +416,9 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            ctrl.download = function (elements) {
-                var paths = [];
+            ctrl.download = function () {
+                var paths = [],
+                    elements = ctrl.selectedElements;
                 if (elements.length > 1 || elements[0].type === ortolangType.collection) {
                     angular.forEach(elements, function (element) {
                         paths.push(Helper.normalizePath(ctrl.workspace.alias + '/' + ctrl.root + ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + element.name)));
@@ -499,14 +500,6 @@ angular.module('ortolangMarketApp')
                     }
                 }
                 return false;
-            };
-
-            ctrl.isLink = function (element) {
-                return element.type === ortolangType.link;
-            };
-
-            ctrl.isCollection = function (element) {
-                return element.type === ortolangType.collection;
             };
 
             ctrl.hasOnlyParentSelected = function () {
@@ -681,7 +674,7 @@ angular.module('ortolangMarketApp')
             //         Delete          //
             // *********************** //
 
-            ctrl.deleteSelectedElements = function () {
+            ctrl.delete = function () {
                 if (!ctrl.hasOnlyParentSelected()) {
                     var sources = [],
                         collectionNumber = 0,
@@ -785,7 +778,7 @@ angular.module('ortolangMarketApp')
                             path = ctrl.parent.path + '/';
 
                         if (ctrl.hasOnlyOneElementSelected() && !ctrl.hasOnlyParentSelected() &&
-                            ctrl.isCollection(ctrl.selectedElements[0])) {
+                            Helper.isCollection(ctrl.selectedElements[0])) {
                             path += ctrl.selectedElements[0].name + '/';
                         }
                         path += modalScope.models.newCollectionName;
@@ -817,12 +810,12 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            ctrl.renameChild = function () {
+            ctrl.rename = function () {
                 if (ctrl.config.canEdit && ctrl.isHead) {
-                    var renameChildModal;
+                    var renameModal;
                     createModalScope(true, true);
                     modalScope.models.childNewName = ctrl.selectedElements[0].name;
-                    modalScope.renameChild = function () {
+                    modalScope.rename = function () {
                         if (modalScope.childNewName !== ctrl.selectedElements[0].name) {
                             var data = ctrl.selectedElements[0], destination;
                             if (ctrl.hasOnlyParentSelected()) {
@@ -835,20 +828,20 @@ angular.module('ortolangMarketApp')
                             WorkspaceElementResource.put({wskey: ctrl.workspace.key, destination: destination}, data, function (element) {
                                 if (ctrl.hasOnlyParentSelected()) {
                                     ctrl.browseToPath(destination);
-                                    renameChildModal.hide();
+                                    renameModal.hide();
                                 } else {
                                     getParentData(true).then(function () {
                                         ctrl.selectedElements[0].name = modalScope.models.childNewName;
                                         refreshSelectedElements(element);
-                                        renameChildModal.hide();
+                                        renameModal.hide();
                                     });
                                 }
                             });
                         } else {
-                            renameChildModal.hide();
+                            renameModal.hide();
                         }
                     };
-                    renameChildModal = $modal({
+                    renameModal = $modal({
                         scope: modalScope,
                         templateUrl: 'browser/templates/rename.modal.html',
                         show: true
@@ -856,7 +849,7 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            ctrl.moveElements = function () {
+            ctrl.move = function () {
                 if (ctrl.config.canEdit && ctrl.isHead) {
                     var moveModal, hideElements = [], sources = [];
                     createModalScope();
@@ -875,11 +868,11 @@ angular.module('ortolangMarketApp')
                     modalScope.fileSelectId = 'moveChildModal';
 
                     modalScope.$on('browserSelectedElements-moveChildModal', function ($event, elements) {
-                        modalScope.moveElements(elements[0]);
+                        modalScope.move(elements[0]);
                     });
 
-                    modalScope.moveElements = function (selectedCollection) {
-                        WorkspaceElementResource.bulkAction({wskey: ctrl.workspace.key}, {action: 'move', sources: sources, destination: selectedCollection.path}, function () {
+                    modalScope.move = function (destination) {
+                        WorkspaceElementResource.bulkAction({wskey: ctrl.workspace.key}, {action: 'move', sources: sources, destination: destination.path}, function () {
                             getParentData(true, true).then(function () {
                                 moveModal.hide();
                             });
@@ -906,47 +899,11 @@ angular.module('ortolangMarketApp')
 
             ctrl.doAction = function (name) {
                 switch (name) {
-                    case 'download':
-                        ctrl.download(ctrl.selectedElements);
-                        ctrl.deactivateContextMenu();
-                        break;
-                    case 'addCollection':
-                        ctrl.addCollection();
-                        break;
-                    case 'delete':
-                        ctrl.deleteSelectedElements();
-                        break;
-                    case 'rename':
-                        ctrl.renameChild();
-                        break;
-                    case 'move':
-                        ctrl.moveElements();
-                        break;
-                    case 'preview':
-                        ctrl.clickPreview();
-                        break;
-                    case 'showMetadata':
-                        ctrl.showMetadata();
-                        ctrl.deactivateContextMenu();
-                        break;
-                    case 'share':
-                        ctrl.share();
-                        break;
-                    case 'addToCart':
-                        ctrl.addToCart();
-                        ctrl.deactivateContextMenu();
-                        break;
                     case 'uploadFiles':
                         // Using $timeout to prevent '$apply already in progress' error
                         $timeout(function () {
                             angular.element('#object-upload-file-select').click();
                         });
-                        break;
-                    case 'uploadZip':
-                        uploadZip();
-                        break;
-                    case 'switchViewMode':
-                        ctrl.switchViewMode();
                         break;
                     case 'addFileMobile':
                         $timeout(function () {
@@ -954,8 +911,12 @@ angular.module('ortolangMarketApp')
                         });
                         break;
                     default:
+                        if (ctrl[name]) {
+                            ctrl[name]();
+                        }
                         break;
                 }
+                ctrl.deactivateContextMenu();
             };
 
             // *********************** //
@@ -1051,7 +1012,7 @@ angular.module('ortolangMarketApp')
                             fileType: modalScope.elements[0].mimeType
                         };
                         modalScope.download = function () {
-                            ctrl.download(ctrl.selectedElements);
+                            ctrl.download();
                         };
                         modalScope.visualizer.content.classes = 'center';
                         element = $compile('<div ng-include="\'common/visualizers/no-visualizer-template.html\'">')(modalScope);
@@ -1075,7 +1036,7 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            ctrl.clickPreview = function (_visualizer_) {
+            ctrl.preview = function (_visualizer_) {
                 if (ctrl.config.canPreview) {
                     if (Helper.isModalOpened('visualizer')) {
                         Helper.hideModal();
@@ -1141,7 +1102,7 @@ angular.module('ortolangMarketApp')
             }
 
             ctrl.doubleClickChild = function (child) {
-                if (ctrl.isCollection(child)) {
+                if (Helper.isCollection(child)) {
                     browseToChild(child);
                 } else {
                     if (ctrl.isFileSelect) {
@@ -1152,7 +1113,7 @@ angular.module('ortolangMarketApp')
                     } else {
                         clickedChildSelectionDeferred.promise.then(function () {
                             if (ctrl.visualizers) {
-                                ctrl.clickPreview();
+                                ctrl.preview();
                             } else {
                                 finishPreview();
                             }
@@ -1633,7 +1594,7 @@ angular.module('ortolangMarketApp')
 
             function previewWithShortcut(event) {
                 preventDefault(event);
-                ctrl.clickPreview();
+                ctrl.preview();
             }
 
             function bindHotkeys() {
@@ -1724,7 +1685,7 @@ angular.module('ortolangMarketApp')
                                 if (ctrl.hasOnlyParentSelected()) {
                                     return;
                                 }
-                                if (ctrl.hasOnlyOneElementSelected() && ctrl.isCollection(ctrl.selectedElements[0])) {
+                                if (ctrl.hasOnlyOneElementSelected() && Helper.isCollection(ctrl.selectedElements[0])) {
                                     browseToChild(ctrl.selectedElements[0]);
                                 } else {
                                     previewWithShortcut(event);
@@ -1762,7 +1723,7 @@ angular.module('ortolangMarketApp')
                                 if (!Helper.isModalOpened()) {
                                     preventDefault(event);
                                     if (!ctrl.hasOnlyParentSelected()) {
-                                        ctrl.deleteSelectedElements();
+                                        ctrl.delete();
                                     }
                                 }
                             }

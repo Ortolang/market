@@ -8,8 +8,8 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource',
-        function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, ReferentialResource) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource', 'ortolangType',
+        function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, ReferentialResource, ortolangType) {
 
             var modalScope, modal, asideMobileNav, Helper = this;
 
@@ -303,6 +303,18 @@ angular.module('ortolangMarketApp')
 
             this.isUUID = function (input) {
                 return /[a-f0-9]{8}-?[a-f0-9]{4}-?[1-5][a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/.test(input);
+            };
+
+            this.isObject = function (element) {
+                return element.type === ortolangType.object;
+            };
+
+            this.isLink = function (element) {
+                return element.type === ortolangType.link;
+            };
+
+            this.isCollection = function (element) {
+                return element.type === ortolangType.collection;
             };
 
             return this;

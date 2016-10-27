@@ -304,7 +304,6 @@ angular.module('ortolangMarketApp')
             $scope.showDiff = function () {
                 if (Workspace.active.workspace.snapshots.length > 1) {
                     modalScope = Helper.createModalScope(true);
-                    modalScope.models = {};
                     modalScope.icons = $rootScope.icons;
                     var tmp = {},
                         lastTag = null;

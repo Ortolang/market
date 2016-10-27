@@ -167,13 +167,13 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyRootCollectionSelected()">
-                            <div ng-click="$ctrl.renameChild()"><span ng-class="::icons.edit"></span> {{'RENAME' | translate}}</div>
+                            <div ng-click="$ctrl.rename()"><span ng-class="::icons.edit"></span> {{'RENAME' | translate}}</div>
                         </li>
                         <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyParentSelected()">
-                            <div ng-click="$ctrl.moveElements()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
+                            <div ng-click="$ctrl.move()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
                         </li>
                         <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyParentSelected()" class="divider"></li>
-                        <li><div ng-click="$ctrl.download($ctrl.selectedElements)"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
+                        <li><div ng-click="$ctrl.download()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
                         <!--<li><div ng-click="$ctrl.addToCart()"><span ng-class="::icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
                     </ul>
                 </div>
@@ -209,19 +209,19 @@
                 </div>
 
                 <div ng-show="$ctrl.isMarket && !$ctrl.hasOnlyParentSelected()" class="btn-group">
-                    <button class="btn btn-default" ng-click="$ctrl.download($ctrl.selectedElements)" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button class="btn btn-default" ng-click="$ctrl.download()" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.download"></span>
                     </button>
                 </div>
 
                 <div ng-show="!$ctrl.hasOnlyParentSelected()" class="btn-group hidden-xs">
-                    <button ng-if="$ctrl.config.canEdit && $ctrl.isHead" class="btn btn-default" ng-click="$ctrl.deleteSelectedElements()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button ng-if="$ctrl.config.canEdit && $ctrl.isHead" class="btn btn-default" ng-click="$ctrl.delete()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.delete"></span>
                     </button>
                 </div>
 
                 <div ng-if="::$ctrl.config.canPreview" ng-show="$ctrl.visualizers" class="btn-group hidden-xs">
-                    <button class="btn btn-default" ng-click="$ctrl.clickPreview()" data-title="{{'BROWSER.PREVIEW' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button class="btn btn-default" ng-click="$ctrl.preview()" data-title="{{'BROWSER.PREVIEW' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.preview"></span>
                     </button>
                     <button ng-if="$ctrl.visualizers.length > 1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -229,7 +229,7 @@
                         <span class="sr-only" translate="BROWSER.TOGGLE_DROPDOWN"></span>
                     </button>
                     <ul ng-if="$ctrl.visualizers.length > 1" class="dropdown-menu" role="menu">
-                        <li ng-repeat-start="visualizer in $ctrl.visualizers"><div ng-click="$ctrl.clickPreview(visualizer)">{{visualizer.getName()}}</div></li>
+                        <li ng-repeat-start="visualizer in $ctrl.visualizers"><div ng-click="$ctrl.preview(visualizer)">{{visualizer.getName()}}</div></li>
                         <li ng-repeat-end ng-if="$first" class="divider"></li>
                     </ul>
                 </div>
