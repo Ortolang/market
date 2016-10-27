@@ -302,7 +302,7 @@ angular.module('ortolangMarketApp')
             }
 
             ctrl.showMetadata = function () {
-                modalScope = Helper.createModalScope();
+                modalScope = createModalScope();
                 modalScope.metadata = ctrl.selectedElements[0].x;
                 var tmp = [];
                 angular.forEach(modalScope.metadata, function (v, k) {
@@ -321,7 +321,7 @@ angular.module('ortolangMarketApp')
             };
 
             ctrl.showAclLegend = function ($event) {
-                modalScope = Helper.createModalScope();
+                modalScope = createModalScope();
                 modalScope.AuthService = AuthService;
                 $event.stopPropagation();
                 $modal({
@@ -480,8 +480,8 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            function createModalScope() {
-                modalScope = Helper.createModalScope();
+            function createModalScope(isolate, autofocus) {
+                modalScope = Helper.createModalScope(isolate, autofocus);
                 modalScope.$on('modal.show.before', function () {
                     ctrl.deactivateContextMenu();
                 });
@@ -697,7 +697,7 @@ angular.module('ortolangMarketApp')
                         }
                     });
                     if (collectionNumber || objectNumber > 1) {
-                        modalScope = Helper.createModalScope();
+                        modalScope = createModalScope();
                         modalScope.delete = function () {
                             deferred.resolve();
                             deleteMultipleElementsModal.hide();
@@ -779,7 +779,7 @@ angular.module('ortolangMarketApp')
             ctrl.addCollection = function () {
                 if (ctrl.config.canEdit && ctrl.isHead) {
                     var addCollectionModal;
-                    createModalScope();
+                    createModalScope(true, true);
                     modalScope.submit = function (form) {
                         var formData,
                             path = ctrl.parent.path + '/';
@@ -809,9 +809,6 @@ angular.module('ortolangMarketApp')
                             }
                         });
                     };
-                    modalScope.$on('modal.show', function () {
-                        angular.element('#add-collection-modal').find('[autofocus]:first').focus();
-                    });
                     addCollectionModal = $modal({
                         scope: modalScope,
                         templateUrl: 'browser/templates/add-collection.modal.html',
@@ -823,7 +820,7 @@ angular.module('ortolangMarketApp')
             ctrl.renameChild = function () {
                 if (ctrl.config.canEdit && ctrl.isHead) {
                     var renameChildModal;
-                    createModalScope();
+                    createModalScope(true, true);
                     modalScope.models.childNewName = ctrl.selectedElements[0].name;
                     modalScope.renameChild = function () {
                         if (modalScope.childNewName !== ctrl.selectedElements[0].name) {
@@ -851,9 +848,6 @@ angular.module('ortolangMarketApp')
                             renameChildModal.hide();
                         }
                     };
-                    modalScope.$on('modal.show', function () {
-                        angular.element('#rename-collection-modal').find('[autofocus]:first').focus();
-                    });
                     renameChildModal = $modal({
                         scope: modalScope,
                         templateUrl: 'browser/templates/rename.modal.html',
@@ -982,7 +976,7 @@ angular.module('ortolangMarketApp')
             function finishPreview(visualizer) {
                 var element, visualizerModal,
                     deferred = $q.defer();
-                createModalScope();
+                createModalScope(true);
                 if (ctrl.children && ctrl.children.length !== 0) {
                     modalScope.elements = ctrl.children;
                 } else {
@@ -1064,6 +1058,7 @@ angular.module('ortolangMarketApp')
                     }
                     element.addClass('close-on-click');
                     visualizerModal = $modal({
+                        id: 'visualizer',
                         scope: modalScope,
                         templateUrl: 'common/visualizers/visualizer-template.html',
                         show: true
@@ -1082,7 +1077,7 @@ angular.module('ortolangMarketApp')
 
             ctrl.clickPreview = function (_visualizer_) {
                 if (ctrl.config.canPreview) {
-                    if (angular.element('.visualizer-modal').length > 0) {
+                    if (Helper.isModalOpened('visualizer')) {
                         Helper.hideModal();
                     } else if (_visualizer_ || ctrl.visualizers) {
                         var visualizer = _visualizer_ || ctrl.visualizers[0];
@@ -1529,7 +1524,7 @@ angular.module('ortolangMarketApp')
             });
 
             function navigate(down, event) {
-                if (angular.element('.visualizer-modal').length === 0 && ctrl.isViewModeLine()) {
+                if (ctrl.isViewModeLine()) {
                     var i, deferred, promise;
                     if (ctrl.hasOnlyOneElementSelected()) {
                         if (ctrl.selectedElements[0].key === ctrl.parent.key) {
@@ -1641,17 +1636,13 @@ angular.module('ortolangMarketApp')
                 ctrl.clickPreview();
             }
 
-            function hasOpenedModal() {
-                return angular.element('.modal').length > 0;
-            }
-
             function bindHotkeys() {
                 hotkeys.bindTo($scope)
                     .add({
                         combo: ['up', 'shift+up'],
                         description: $translate.instant('BROWSER.SHORTCUTS.UP'),
                         callback: function (event) {
-                            if (!hasOpenedModal() || ctrl.isFileSelect) {
+                            if (!Helper.isModalOpened() || ctrl.isFileSelect) {
                                 preventDefault(event);
                                 navigate(false, event);
                             }
@@ -1661,7 +1652,7 @@ angular.module('ortolangMarketApp')
                         combo: ['down', 'shift+down'],
                         description: $translate.instant('BROWSER.SHORTCUTS.DOWN'),
                         callback: function (event) {
-                            if (!hasOpenedModal() || ctrl.isFileSelect) {
+                            if (!Helper.isModalOpened() || ctrl.isFileSelect) {
                                 preventDefault(event);
                                 navigate(true, event);
                             }
@@ -1671,7 +1662,7 @@ angular.module('ortolangMarketApp')
                         combo: 'backspace',
                         description: $translate.instant('BROWSER.SHORTCUTS.BACKSPACE'),
                         callback: function (event) {
-                            if (!hasOpenedModal() || ctrl.isFileSelect) {
+                            if (!Helper.isModalOpened() || ctrl.isFileSelect) {
                                 preventDefault(event);
                                 ctrl.browseToParent();
                             }
@@ -1682,7 +1673,7 @@ angular.module('ortolangMarketApp')
                         combo: 'v',
                         description: $translate.instant('BROWSER.SHORTCUTS.VIEW_MODE'),
                         callback: function (event) {
-                            if (!hasOpenedModal()) {
+                            if (!Helper.isModalOpened()) {
                                 preventDefault(event);
                                 ctrl.switchViewMode();
                             }
@@ -1694,7 +1685,7 @@ angular.module('ortolangMarketApp')
                         combo: 'i',
                         description: $translate.instant('BROWSER.SHORTCUTS.INFO'),
                         callback: function (event) {
-                            if (!hasOpenedModal()) {
+                            if (!Helper.isModalOpened()) {
                                 preventDefault(event);
                                 ctrl.toggleAsideInfo();
                             }
@@ -1707,7 +1698,17 @@ angular.module('ortolangMarketApp')
                             combo: 'space',
                             description: $translate.instant('BROWSER.PREVIEW'),
                             callback: function (event) {
-                                if (!hasOpenedModal() || angular.element('.visualizer-modal').length === 1) {
+                                if (!Helper.isModalOpened() || Helper.isModalOpened('visualizer')) {
+                                    previewWithShortcut(event);
+                                }
+                            }
+                        });
+                    hotkeys.bindTo($scope)
+                        .add({
+                            combo: 'esc',
+                            description: $translate.instant('BROWSER.PREVIEW'),
+                            callback: function (event) {
+                                if (Helper.isModalOpened('visualizer')) {
                                     previewWithShortcut(event);
                                 }
                             }
@@ -1718,7 +1719,7 @@ angular.module('ortolangMarketApp')
                         combo: 'enter',
                         description: $translate.instant('BROWSER.SHORTCUTS.ENTER'),
                         callback: function (event) {
-                            if (!hasOpenedModal() || ctrl.isFileSelect) {
+                            if (!Helper.isModalOpened() || ctrl.isFileSelect) {
                                 preventDefault(event);
                                 if (ctrl.hasOnlyParentSelected()) {
                                     return;
@@ -1735,7 +1736,7 @@ angular.module('ortolangMarketApp')
                         combo: 'mod+f',
                         description: $translate.instant('BROWSER.SHORTCUTS.FILTER'),
                         callback: function (event) {
-                            if (!hasOpenedModal()) {
+                            if (!Helper.isModalOpened()) {
                                 preventDefault(event);
                                 var filterWrapper = angular.element('#filter-query-wrapper');
                                 filterWrapper.find('button').dropdown('toggle');
@@ -1747,7 +1748,7 @@ angular.module('ortolangMarketApp')
                         combo: 'mod+a',
                         description: $translate.instant('BROWSER.SHORTCUTS.SELECT_ALL'),
                         callback: function (event) {
-                            if (!hasOpenedModal() || (ctrl.isFileSelect && ctrl.fileSelectAcceptMultiple)) {
+                            if (!Helper.isModalOpened() || (ctrl.isFileSelect && ctrl.fileSelectAcceptMultiple)) {
                                 preventDefault(event);
                                 selectAll();
                             }
@@ -1758,7 +1759,7 @@ angular.module('ortolangMarketApp')
                             combo: 'mod+backspace',
                             description: $translate.instant('BROWSER.SHORTCUTS.DELETE'),
                             callback: function (event) {
-                                if (!hasOpenedModal()) {
+                                if (!Helper.isModalOpened()) {
                                     preventDefault(event);
                                     if (!ctrl.hasOnlyParentSelected()) {
                                         ctrl.deleteSelectedElements();
@@ -1770,7 +1771,7 @@ angular.module('ortolangMarketApp')
                             combo: 'shift+f',
                             description: $translate.instant('BROWSER.SHORTCUTS.NEW_COLLECTION'),
                             callback: function (event) {
-                                if (!hasOpenedModal()) {
+                                if (!Helper.isModalOpened()) {
                                     preventDefault(event);
                                     ctrl.addCollection();
                                 }
@@ -1780,7 +1781,7 @@ angular.module('ortolangMarketApp')
                             combo: 'u',
                             description: $translate.instant('BROWSER.UPLOAD_FILES'),
                             callback: function (event) {
-                                if (!hasOpenedModal()) {
+                                if (!Helper.isModalOpened()) {
                                     preventDefault(event);
                                     ctrl.doAction('uploadFiles');
                                 }

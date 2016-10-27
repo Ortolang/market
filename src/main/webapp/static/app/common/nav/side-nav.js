@@ -24,8 +24,7 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         $rootScope.$on('$routeUpdate', function () {
-            var modal = angular.element('.modal');
-            if (modal.length > 0) {
+            if (Helper.isModalOpened()) {
                 Helper.hideModal();
             }
             Helper.hideAsideMobileNav();

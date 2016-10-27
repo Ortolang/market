@@ -12,9 +12,9 @@
  * @property {boolean} authenticated    - Shortcut for {@link ortolangMarketApp.AuthService#isAuthenticated}
  */
 angular.module('ortolangMarketApp')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', 'Runtime', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, url, User, AuthService, ProfileResource, AtmosphereService, Runtime) {
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$http', '$modal', 'url', 'User', 'AuthService', 'ProfileResource', 'AtmosphereService', 'Runtime', 'Helper', function (/** ortolangMarketApp.controller:AuthCtrl */$scope, $rootScope, $http, $modal, url, User, AuthService, ProfileResource, AtmosphereService, Runtime, Helper) {
 
-        var serverDownModal, serverDownModalOnce, unauthorizedModal, notLoggedInModal;
+        var serverDownModal, serverDownModalOnce, unauthorizedModal, unauthenticatedModal;
 
         function initProfile(profile) {
             User.create(profile);
@@ -69,7 +69,7 @@ angular.module('ortolangMarketApp')
                         });
                         serverDownModal = $modal({
                             scope: modalScope,
-                            templateUrl: 'common/auth/templates/server-down-modal.html'
+                            templateUrl: 'common/auth/templates/server-down.modal.html'
                         });
                     }
                 });
@@ -77,40 +77,38 @@ angular.module('ortolangMarketApp')
         });
 
         function unauthorized() {
-            if (angular.element('.unauthorized-modal').length === 0) {
-                if (!unauthorizedModal) {
-                    var modalScope = $scope.$new(true);
-                    modalScope.refresh = function () {
-                        AuthService.forceReload();
-                    };
-                    modalScope.$on('modal.hide', function () {
-                        modalScope.$destroy();
-                        unauthorizedModal = undefined;
-                    });
-                    unauthorizedModal = $modal({
-                        scope: modalScope,
-                        templateUrl: 'common/auth/templates/unauthorized-modal.html'
-                    });
-                }
+            if (!Helper.isModalOpened('unauthorized') && !unauthorizedModal) {
+                var modalScope = $scope.$new(true);
+                modalScope.refresh = function () {
+                    AuthService.forceReload();
+                };
+                modalScope.$on('modal.hide', function () {
+                    modalScope.$destroy();
+                    unauthorizedModal = undefined;
+                });
+                unauthorizedModal = $modal({
+                    id: 'unauthorized',
+                    scope: modalScope,
+                    templateUrl: 'common/auth/templates/unauthorized.modal.html'
+                });
             }
         }
 
-        function notLoggedIn() {
-            if (angular.element('.not-logged-in-modal').length === 0) {
-                if (!notLoggedInModal) {
-                    var modalScope = $scope.$new(true);
-                    modalScope.login = function () {
-                        AuthService.login();
-                    };
-                    modalScope.$on('modal.hide', function () {
-                        modalScope.$destroy();
-                        notLoggedInModal = undefined;
-                    });
-                    notLoggedInModal = $modal({
-                        scope: modalScope,
-                        templateUrl: 'common/auth/templates/not-logged-in-modal.html'
-                    });
-                }
+        function unauthenticated() {
+            if (!Helper.isModalOpened('unauthenticated') && !unauthenticatedModal) {
+                var modalScope = $scope.$new(true);
+                modalScope.login = function () {
+                    AuthService.login();
+                };
+                modalScope.$on('modal.hide', function () {
+                    modalScope.$destroy();
+                    unauthenticatedModal = undefined;
+                });
+                unauthenticatedModal = $modal({
+                    id: 'unauthenticated',
+                    scope: modalScope,
+                    templateUrl: 'common/auth/templates/unauthenticated.modal.html'
+                });
             }
         }
 
@@ -118,7 +116,7 @@ angular.module('ortolangMarketApp')
             if (AuthService.isAuthenticated()) {
                 unauthorized();
             } else {
-                notLoggedIn();
+                unauthenticated();
             }
         });
 

@@ -50,7 +50,7 @@ angular.module('ortolangMarketApp')
 
         $scope.createThread = function () {
             var createThreadModal,
-                modalScope = Helper.createModalScope(true);
+                modalScope = Helper.createModalScope(true, true);
 
             modalScope.submit = function (createThreadForm) {
                 if (!modalScope.models.pendingSubmit) {
@@ -75,9 +75,6 @@ angular.module('ortolangMarketApp')
                     }
                 }
             };
-            modalScope.$on('modal.show', function () {
-                angular.element('#create-thread-modal').find('[autofocus]:first').focus();
-            });
             createThreadModal = $modal({
                 scope: modalScope,
                 templateUrl: 'workspace/templates/create-thread-modal.html',

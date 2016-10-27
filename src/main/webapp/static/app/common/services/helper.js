@@ -210,19 +210,31 @@ angular.module('ortolangMarketApp')
                 modal = _modal_;
             });
 
-            this.createModalScope = function (isolate) {
+            this.createModalScope = function (isolate, autofocus) {
                 modalScope = $rootScope.$new(isolate);
                 modalScope.$on('modal.hide', function () {
                     modalScope.$destroy();
+                    modal = undefined;
                 });
+                if (autofocus) {
+                    modalScope.$on('modal.show', function () {
+                        angular.element('.modal').find('[autofocus]:first').focus();
+                    });
+                }
                 modalScope.models = {};
                 return modalScope;
+            };
+
+            this.isModalOpened = function (id) {
+                if (id) {
+                    return angular.isDefined(modal) && modal.$options.id === id;
+                }
+                return angular.isDefined(modal);
             };
 
             this.hideModal = function () {
                 if (modal && modal.hide) {
                     modal.hide();
-                    modal = undefined;
                 }
             };
 
@@ -240,10 +252,11 @@ angular.module('ortolangMarketApp')
             };
 
             this.showErrorModal = function (error, container, placement) {
-                if (angular.element('.modal.error-modal').length === 0) {
+                if (this.isModalOpened('error')) {
                     var scope = this.createModalScope(true);
                     scope.error = error;
                     var config = {
+                        id: 'error',
                         title: 'ERROR_MODAL_' + error.code + '.TITLE',
                         content: 'ERROR_MODAL_' + error.code + '.BODY',
                         show: true,

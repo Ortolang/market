@@ -65,7 +65,7 @@ angular.module('ortolangMarketApp')
             BODY: '<p>It seems that the server is currently unavailable; thus you won\'t be able to access ORTOLANG\'s resources.</p><p>You should try to refresh the page. If the problem persists, please contact us at <a href="mailto:contact@ortolang.fr">contact@ortolang.fr</a> .</p>',
             BUTTON: 'Refresh the page'
         },
-        NOT_LOGGED_IN_MODAL: {
+        UNAUTHENTICATED_MODAL: {
             TITLE: 'Unauthorized',
             BODY: 'You do not have the access rights to see the content of this file/folder or this page: please login.'
         },
