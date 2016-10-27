@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'MarketBrowserService', 'Helper', 'url', function ($rootScope, $scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, MarketBrowserService, Helper, url) {
+    .controller('ItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'Helper', 'url', function ($rootScope, $scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, Helper, url) {
 
         var handle;
 
@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
                     $scope.tag = $scope.tags[$scope.tags.length - 1];
                 }
 
-                MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
+                $scope.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
 
                 SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
                     $scope.ortolangObject = collection;

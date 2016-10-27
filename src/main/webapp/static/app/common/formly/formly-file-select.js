@@ -25,7 +25,7 @@ angular.module('ortolangMarketApp')
                     scope.fileSelectModal = $modal({
                         scope: fileSelectModalScope,
                         title: scope.options.labelProp || $translate.instant('SELECT_WORKSPACE_ELEMENT'),
-                        templateUrl: 'common/directives/file-select-modal-template.html',
+                        templateUrl: 'browser/browser-file-select-modal-template.html',
                         show: false
                     });
 

@@ -43,7 +43,7 @@
             <div ng-include="'workspace/workspace-dashboard-information.html'"></div>
         </div>
         <div ng-switch-when="content" class="workspace-dashboard-content">
-            <div ng-class="{'read-only': Workspace.active.workspace.readOnly}" browser></div>
+            <browser ng-class="{'read-only': Workspace.active.workspace.readOnly}" workspace="Workspace.active.workspace"></browser>
         </div>
         <div ng-switch-when="members" class="container-main-inner">
             <div ng-include="'workspace/workspace-dashboard-members.html'"></div>

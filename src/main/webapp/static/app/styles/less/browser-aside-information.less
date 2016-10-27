@@ -1,0 +1,110 @@
+browser-aside-information {
+  overflow-x: hidden;
+  overflow-y: auto;
+  .lead {
+    word-break: break-all;
+  }
+  .info-thumb-wrapper {
+    text-align: center;
+    .thumb {
+      max-width: 100%;
+    }
+  }
+  dl {
+    margin-top: @line-height-computed;
+    dt {
+      font-weight: 600;
+    }
+    &.dl-horizontal {
+      dt {
+        width: @browser-offset-horizontal - 20;
+        padding-bottom: @padding-base-vertical;
+        .hyphenate();
+        white-space: normal;
+      }
+      dd {
+        margin-left: @browser-offset-horizontal;
+        word-break: break-all;
+        .copy-key {
+          margin-left: 4px;
+        }
+        .copy-key, .calculate-size {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .more-md {
+    margin-top: @padding-xs-vertical;
+  }
+
+  p.lead span {
+    padding-right: @padding-base-horizontal;
+  }
+  button.close {
+    float: right;
+    line-height: 1;
+    font-size: 25px;
+    font-weight: inherit;
+    opacity: 0.3;
+    position: relative;
+    top: 3px;
+    &:hover {
+      opacity: 0.6;
+    }
+    span {
+      padding: 0;
+    }
+  }
+
+  #metadata .input-group {
+    .user-select-mixin();
+    padding-bottom: @padding-large-vertical;
+  }
+
+  .tab-pane {
+    padding-top: 2*@padding-large-vertical;
+    padding-left: @padding-base-horizontal;
+  }
+
+  .list-group-item {
+    &:hover {
+      button {
+        display: inline-block;
+        float: right;
+      }
+    }
+    button {
+      display: inline-block;
+      float: right;
+    }
+  }
+
+  .lead.workspace-name {
+    margin-bottom: @padding-large-vertical;
+  }
+  .workspace-toolbar {
+    margin-bottom: 2*@padding-large-vertical;
+  }
+
+  .workspace-snapshot {
+    cursor: pointer;
+    .creation {
+      margin-bottom: @padding-xs-vertical;
+      position: relative;
+      padding-right: @padding-large-horizontal;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: break-all;
+      overflow: hidden;
+      span.publication-status {
+        position: absolute;
+        right: 0;
+        &.draft {
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+}

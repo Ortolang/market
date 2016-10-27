@@ -1,13 +1,13 @@
 'use strict';
 
-describe('Controller: UploadCtrl', function () {
+describe('Controller: BrowserUploaderCtrl', function () {
 
     // load the controller's module
     beforeEach(module('ortolangMarketApp'));
     beforeEach(module('ortolangMarketAppMock'));
 
-    var UploadCtrl,
-        UploadCtrlBis,
+    var BrowserUploaderCtrl,
+        BrowserUploaderCtrlBis,
         scope,
         scopeBis,
         $rootScope,
@@ -19,41 +19,26 @@ describe('Controller: UploadCtrl', function () {
         sample = _sample_;
         scope = $rootScope.$new();
         scopeBis = $rootScope.$new();
-        scope.browserService = {
-            workspace: {
-                name: 'system'
-            }
+        scope.$ctrl = {};
+        scope.$ctrl.workspace = {
+            name: 'system'
         };
         scope.parent = {path: '/'};
-        scopeBis.browserService = {
-            workspace: {
-                name: 'test'
-            }
+        scopeBis.$ctrl = {};
+        scopeBis.$ctrl.workspace = {
+            name: 'test'
         };
         scopeBis.parent = {path: '/test'};
-        UploadCtrlBis = $controller('UploadCtrl', {
+        BrowserUploaderCtrlBis = $controller('BrowserUploaderCtrl', {
             $scope: scopeBis
         });
-        UploadCtrl = $controller('UploadCtrl', {
+        BrowserUploaderCtrl = $controller('BrowserUploaderCtrl', {
             $scope: scope
         });
     }));
 
     it('should attach FileUploader to the scope', function () {
         expect(scope.uploader).toBeDefined();
-    });
-
-    it('should be able to toggle upload queue status', function () {
-        var i, previousStatus;
-        for (i = 0; i < 2; i++) {
-            previousStatus = $rootScope.uploader.uploadQueueStatus;
-            scope.toggleUploadQueueStatus();
-            if (previousStatus === 'active') {
-                expect($rootScope.uploader.uploadQueueStatus).toBeUndefined();
-            } else {
-                expect($rootScope.uploader.uploadQueueStatus).toEqual('active');
-            }
-        }
     });
 
     it('should filter folders', function () {
@@ -79,9 +64,9 @@ describe('Controller: UploadCtrl', function () {
     //it('should be possible to clear an item from queue', function () {
     //    $rootScope.uploader.addToQueue(sample().fileUploadMock, {ortolangType: 'object'});
     //    expect($rootScope.uploader.queue.length).toEqual(1);
-        //console.log($rootScope.uploader.getNotUploadedItems());
-        //scope.clearItem([0]);
-        //expect($rootScope.uploader.queue.length).toEqual(0);
+    //console.log($rootScope.uploader.getNotUploadedItems());
+    //scope.clearItem([0]);
+    //expect($rootScope.uploader.queue.length).toEqual(0);
     //});
 
     // it('should be possible to clear the entire queue', function () {

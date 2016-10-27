@@ -139,6 +139,16 @@
 
 <!-- build:js(src/main/webapp/static/app) scripts/scripts.js -->
 <script src="app.js"></script>
+<script src="browser/browser.component.js"></script>
+<script src="browser/browser.controller.js"></script>
+<script src="browser/browser-aside-information.component.js"></script>
+<script src="browser/browser-config.constant.js"></script>
+<script src="browser/browser-file-select.component.js"></script>
+<script src="browser/browser-uploader.controller.js"></script>
+<script src="browser/browser-uploader.component.js"></script>
+<script src="browser/browser-workspaces-list.component.js"></script>
+<script src="browser/i18n/browser.fr.js"></script>
+<script src="browser/i18n/browser.en.js"></script>
 <script src="common/constants/url.js"></script>
 <script src="common/constants/icons.js"></script>
 <script src="common/constants/ortolang-type.js"></script>
@@ -164,8 +174,6 @@
 <script src="common/filters/organization-name.js"></script>
 <script src="common/filters/numbers.js"></script>
 <script src="common/components/avatar.component.js"></script>
-<script src="common/components/browser-aside-information.component.js"></script>
-<script src="common/components/browser-workspaces-list.component.js"></script>
 <script src="common/components/hal-publications.component.js"></script>
 <script src="common/components/order-indicator.component.js"></script>
 <script src="common/components/organization-card.component.js"></script>
@@ -174,10 +182,8 @@
 <script src="common/directives/parts.js"></script>
 <script src="common/directives/multilingual-editor.js"></script>
 <script src="common/directives/ng-right-click.js"></script>
-<script src="common/directives/browser.js"></script>
 <script src="common/directives/ortolang-item-json.js"></script>
 <script src="common/directives/ortolang-item-json-ctrl.js"></script>
-<script src="common/directives/file-select-browser.js"></script>
 <script src="common/directives/holder.js"></script>
 <script src="common/directives/holder-editor.js"></script>
 <script src="common/directives/google-auto-complete.js"></script>
@@ -191,8 +197,6 @@
 <script src="common/directives/cookies-consent.js"></script>
 <script src="common/directives/files-model.js"></script>
 <script src="common/directives/cetei-cean.js"></script>
-<script src="common/directives/i18n/browser.fr.js"></script>
-<script src="common/directives/i18n/browser.en.js"></script>
 <script src="common/formly/formly-file-select.js"></script>
 <script src="common/formly/config.js"></script>
 <script src="common/resources/workspace-resource.js"></script>
@@ -210,12 +214,9 @@
 <script src="common/resources/message-resource.js"></script>
 <script src="common/services/helper.js"></script>
 <script src="common/services/content.js"></script>
-<script src="common/services/market-browser.js"></script>
-<script src="common/services/workspace-browser.js"></script>
 <script src="common/services/metadata-format.js"></script>
 <script src="common/services/metadata-manager.js"></script>
 <script src="common/services/visualizer-manager.js"></script>
-<script src="common/services/file-select-browser.js"></script>
 <script src="common/services/profile.js"></script>
 <script src="common/services/settings.js"></script>
 <script src="common/services/cart.js"></script>
@@ -245,7 +246,6 @@
 <script src="common/i18n/config.en.js"></script>
 <script src="common/i18n/item.fr.js"></script>
 <script src="common/i18n/item.en.js"></script>
-<script src="common/directives/browser-ctrl.js"></script>
 <script src="common/forms/i18n/forms.fr.js"></script>
 <script src="common/forms/i18n/forms.en.js"></script>
 <script src="workspace/workspaces.js"></script>
@@ -256,7 +256,6 @@
 <script src="workspace/workspace-dashboard-threads.js"></script>
 <script src="workspace/workspace-service.js"></script>
 <script src="workspace/services/workspace-metadata-service.js"></script>
-<script src="workspace/upload.js"></script>
 <script src="workspace/i18n/workspace.fr.js"></script>
 <script src="workspace/i18n/workspace.en.js"></script>
 <script src="workspace/templates/add-member-modal.js"></script>

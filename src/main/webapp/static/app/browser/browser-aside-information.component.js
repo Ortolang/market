@@ -67,5 +67,5 @@ angular.module('ortolangMarketApp')
                 });
             };
         }],
-        templateUrl: 'common/components/browser-aside-information.component.html'
+        templateUrl: 'browser/browser-aside-information.component.html'
     });

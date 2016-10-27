@@ -1,3 +1,0 @@
-<ul class="my-workspaces list-unstyled">
-    <li class="my-workspaces-item" ng-repeat="workspace in $ctrl.workspaces | orderBy:'+name' track by workspace.key" ng-click="$ctrl.onChange({workspace: workspace})" ng-class="{active: workspace.key === $ctrl.active.key}"><span></span>{{workspace.name}}</li>
-</ul>

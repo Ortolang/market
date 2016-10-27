@@ -44,7 +44,7 @@ angular.module('ortolangMarketApp')
                 dirPartPathSelectorModalScope.fileSelectId = 'dirPartPathSelectorModal';
                 modalScope.dirPartPathSelectorModal = $modal({scope: dirPartPathSelectorModalScope,
                     title: 'Sélectionnez un répertoire',
-                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    templateUrl: 'browser/browser-file-select-modal-template.html',
                     show: false
                 });
 
@@ -63,7 +63,7 @@ angular.module('ortolangMarketApp')
                 filePartImageSelectorModalScope.fileSelectId = 'dirPartImageSelectorModal';
                 modalScope.filePartImageSelectorModal = $modal({scope: filePartImageSelectorModalScope,
                     title: 'Sélectionnez une image',
-                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    templateUrl: 'browser/browser-file-select-modal-template.html',
                     show: false
                 });
 

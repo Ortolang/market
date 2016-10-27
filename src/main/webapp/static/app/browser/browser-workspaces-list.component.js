@@ -14,5 +14,5 @@ angular.module('ortolangMarketApp')
             active: '<',
             onChange: '&'
         },
-        templateUrl: 'common/components/browser-workspaces-list.component.html'
+        templateUrl: 'browser/browser-workspaces-list.component.html'
     });

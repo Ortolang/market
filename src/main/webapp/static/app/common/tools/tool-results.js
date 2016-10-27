@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$filter', '$translate', 'FileSelectBrowserService', 'Settings',  'WorkspaceResource',
-        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $filter, $translate, FileSelectBrowserService, Settings, WorkspaceResource) {
+    .controller('ToolResultsCtrl', ['$scope', '$rootScope', '$modal', 'ObjectResource', 'ToolManager', '$filter', '$translate', 'Settings',  'WorkspaceResource',
+        function ($scope, $rootScope, $modal, ObjectResource, ToolManager, $filter, $translate, Settings, WorkspaceResource) {
 
             // ***************** //
             // Editor visibility //
@@ -146,15 +146,15 @@ angular.module('ortolangMarketApp')
                 $scope.folderSelectModal = $modal({
                     scope: folderSelectModalScope,
                     title: 'Folder select',
-                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    templateUrl: 'browser/browser-file-select-modal-template.html',
                     show: false
                 });
 
                 $scope.folder = {};
                 $scope.data = {};
                 WorkspaceResource.get().$promise.then(function (data) {
-                    if (Settings[FileSelectBrowserService.id].wskey) {
-                        var key = Settings[FileSelectBrowserService.id].wskey,
+                    if (Settings.browser.fileSelect.wskey) {
+                        var key = Settings.browser.fileSelect.wskey,
                             filteredWorkspace = $filter('filter')(data.entries, {key: key}, true);
                         if (filteredWorkspace.length === 1) {
                             $scope.folder = filteredWorkspace[0];

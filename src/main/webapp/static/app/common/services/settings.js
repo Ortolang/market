@@ -13,16 +13,16 @@ angular.module('ortolangMarketApp')
         var deferred = $q.defer(),
             Settings = this;
 
-        this.WorkspaceBrowserService = {
-            hideInfo: false,
-            hideWorkspaceList: false
+        this.browser = {
+            workspace: {
+                hideInfo: false,
+                hideWorkspaceList: false
+            },
+            market: {
+                hideInfo: false
+            },
+            fileSelect: {}
         };
-
-        this.MarketBrowserService  = {
-            hideInfo: false
-        };
-
-        this.FileSelectBrowserService  = {};
 
         this.language = undefined;
 

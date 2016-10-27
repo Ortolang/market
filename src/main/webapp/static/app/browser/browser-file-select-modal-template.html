@@ -6,7 +6,7 @@
                 <span class="modal-title" translate="{{title}}" translate-values="titleValues"></span>
             </div>
             <div class="modal-body file-select-modal-body">
-                <div file-select-browser data-accept-multiple="acceptMultiple" data-force-workspace="forceWorkspace" data-force-mime-types="forceMimeTypes" data-force-head="forceHead" data-file-select-id="fileSelectId" data-force-path="forcePath" data-hide-elements="hideElements"></div>
+                <browser-file-select accept-multiple="acceptMultiple" force-workspace="forceWorkspace" force-mime-types="forceMimeTypes" force-head="forceHead" file-select-id="fileSelectId" force-path="forcePath" hide-elements="hideElements"></browser-file-select>
             </div>
             <div class="modal-footer modal-footer-border">
                 <button type="button" class="btn btn-primary" ng-click="$emit('browserAskSelectedElements')" translate="SELECT"></button>

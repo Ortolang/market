@@ -7,7 +7,12 @@
   padding-right: 0;
 }
 
-.toolbar.browser-toolbar.market-browser-toolbar, .toolbar.visualizer-toolbar {
+.toolbar.browser-toolbar.market-browser-toolbar {
+  padding-left: @container-main-padding;
+  padding-right: @container-main-padding;
+}
+
+.toolbar.visualizer-toolbar {
   padding-left: @container-main-padding - floor(@grid-gutter-width/2);
   padding-right: @container-main-padding - floor(@grid-gutter-width/2);
 }

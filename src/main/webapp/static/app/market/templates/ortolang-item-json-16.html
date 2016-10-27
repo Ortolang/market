@@ -47,7 +47,7 @@
     <div ng-if="browse" class="container-main container-market-content">
         <div class="container-main-inner">
             <div class="market-item-content">
-                <div browser></div>
+                <browser workspace="workspace"></browser>
             </div>
         </div>
     </div>
@@ -177,8 +177,7 @@
                 <div class="section-body-wrapper">
                     <dl>
                         <dt translate="MARKET.PRIMARY_PUBLICATIONS"></dt>
-                        <dd ng-repeat="pub in content.publications" ng-bind-html="pub">
-                        </dd>
+                        <dd ng-repeat="pub in content.publications" ng-bind-html="pub"></dd>
                     </dl>
                 </div>
             </section>

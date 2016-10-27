@@ -2,21 +2,23 @@
 
 /**
  * @ngdoc function
- * @name ortolangMarketApp.controller:UploadCtrl
+ * @name ortolangMarketApp.controller:BrowserUploaderCtrl
  * @description
- * # UploadCtrl
+ * # BrowserUploaderCtrl
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('UploadCtrl', ['$scope', '$rootScope', '$timeout', '$modal', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'AtmosphereService', 'Helper',
-        function ($scope, $rootScope, $timeout, $modal, $filter, FileUploader, url, ortolangType, AuthService, processStates, AtmosphereService, Helper) {
+    .controller('BrowserUploaderCtrl', ['$rootScope', '$timeout', '$filter', 'FileUploader', 'url', 'ortolangType', 'AuthService', 'processStates', 'Helper',
+        function ($rootScope, $timeout, $filter, FileUploader, url, ortolangType, AuthService, processStates, Helper) {
+
+            var ctrl = this;
 
             var uploader, queueLimitReached, sizeLimitReached;
 
             if ($rootScope.uploader) {
-                uploader = $rootScope.uploader;
+                ctrl.uploader = $rootScope.uploader;
             } else {
-                uploader = $rootScope.uploader = new FileUploader({
+                ctrl.uploader = $rootScope.uploader = new FileUploader({
                     alias: 'stream',
                     autoUpload: true,
                     removeAfterUpload: false,
@@ -25,8 +27,8 @@ angular.module('ortolangMarketApp')
                         {
                             name: 'noFolder',
                             fn: function (item) {
-                                return !(!item.type && ((!this.isMacOs && item.size % 4096 === 0) ||
-                                (this.isMacOs && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 8 < item.name.length - 1))));
+                                return !(!item.type && ((!Helper.isMac() && item.size % 4096 === 0) ||
+                                (Helper.isMac() && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 8 < item.name.length - 1))));
                             }
                         },
                         {
@@ -37,66 +39,46 @@ angular.module('ortolangMarketApp')
                         }
                     ]
                 });
-                uploader.uploadQueueStatus = undefined;
-                uploader.isMacOs = Helper.isMac();
-                uploader.tokenJustRefreshed = false;
-                uploader.zipExtractionQueue = [];
+                ctrl.uploader.tokenJustRefreshed = false;
+                ctrl.uploader.zipExtractionQueue = [];
 
                 // EVENTS
                 $rootScope.$on('runtime.process.change-state', function ($event, message) {
-                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject}, true);
+                    var queueItem = $filter('filter')(ctrl.uploader.zipExtractionQueue, {key: message.fromObject}, true);
                     if (queueItem.length > 0) {
                         queueItem[0].state = message.arguments.state;
                     }
                 });
                 $rootScope.$on('runtime.process.update-activity', function ($event, message) {
-                    var queueItem = $filter('filter')(uploader.zipExtractionQueue, {key: message.fromObject}, true);
+                    var queueItem = $filter('filter')(ctrl.uploader.zipExtractionQueue, {key: message.fromObject}, true);
                     if (queueItem.length > 0) {
                         queueItem[0].progress = message.arguments.progress;
                     }
                 });
             }
 
-            function deactivateUploadQueue() {
-                uploader.uploadQueueStatus = undefined;
+            function isQueueEmpty() {
+                return ctrl.uploader.queue.length === 0 && ctrl.uploader.zipExtractionQueue.length === 0;
             }
+
+            ctrl.active = function () {
+                return !isQueueEmpty();
+            };
 
             function clearItem(fileItem) {
                 $timeout(function () {
                     fileItem.remove();
-                    if (uploader.queue.length === 0 && uploader.zipExtractionQueue.length === 0) {
-                        deactivateUploadQueue();
-                    }
                 }, 1500);
             }
 
-            function activateUploadQueue() {
-                uploader.uploadQueueStatus = 'active';
-                var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-                angular.element('.upload-queue').css('max-height', 2 * height / 5);
-            }
-
-            $scope.toggleUploadQueueStatus = function () {
-                if (uploader.uploadQueueStatus) {
-                    deactivateUploadQueue();
-                } else {
-                    activateUploadQueue();
-                }
+            ctrl.clearUploaderQueue = function () {
+                ctrl.uploader.clearQueue();
+                ctrl.uploader.zipExtractionQueue = [];
             };
 
-            $scope.clearUploaderQueue = function () {
-                uploader.clearQueue();
-                uploader.zipExtractionQueue = [];
-                deactivateUploadQueue();
-            };
-
-            $scope.clearItem = function (item) {
-                item.remove();
-            };
-
-            $scope.isZipExtractionQueueEmpty = function () {
+            ctrl.isZipExtractionQueueEmpty = function () {
                 var empty = true;
-                angular.forEach(uploader.zipExtractionQueue, function (extractionQueueItem) {
+                angular.forEach(ctrl.uploader.zipExtractionQueue, function (extractionQueueItem) {
                     if (extractionQueueItem.state !== processStates.completed && extractionQueueItem.state !== processStates.aborted) {
                         empty = false;
                     }
@@ -104,24 +86,23 @@ angular.module('ortolangMarketApp')
                 return empty;
             };
 
-            uploader.onAfterAddingFile = function (fileItem) {
-                fileItem.wsName = fileItem.wsName || angular.copy($scope.browserService.workspace.name);
+            ctrl.uploader.onAfterAddingFile = function (fileItem) {
+                fileItem.wsName = fileItem.wsName || angular.copy(ctrl.workspace.name);
                 fileItem.headers = {
                     'Authorization': 'Bearer ' + AuthService.getToken()
                 };
-                if ($scope.browserService) {
-                    fileItem.wskey = angular.copy($scope.browserService.workspace.key);
+                if (ctrl.workspace) {
+                    fileItem.wskey = angular.copy(ctrl.workspace.key);
                 }
                 fileItem.url = url.api + '/workspaces/' + fileItem.wskey + '/elements';
                 fileItem.formData = [{type: fileItem.ortolangType}];
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
-                        fileItem.file.path = Helper.normalizePath(angular.copy($scope.parent.path) + '/');
+                        fileItem.file.path = Helper.normalizePath(angular.copy(ctrl.parent.path) + '/');
                         fileItem.formData.push({path: fileItem.file.path + fileItem.file.name});
                         break;
 
                     case ortolangType.metadata:
-                        // fileItem.file.path = Helper.normalizePath(angular.copy($scope.parent.path) + ($scope.selectedChild ? '/' + $scope.selectedChild.name : ''));
                         fileItem.formData.push({path: fileItem.path});
                         fileItem.formData.push({name: fileItem.name});
                         break;
@@ -140,24 +121,22 @@ angular.module('ortolangMarketApp')
 
                     default:
                         console.error('No ortolang type provided');
-                        uploader.removeFromQueue(fileItem);
+                        ctrl.uploader.removeFromQueue(fileItem);
                         break;
                 }
             };
 
-            uploader.onAfterAddingAll = function (addedItems) {
+            ctrl.uploader.onAfterAddingAll = function (addedItems) {
                 if (queueLimitReached) {
                     angular.forEach(addedItems, function (addedItem) {
-                        uploader.removeFromQueue(addedItem);
+                        ctrl.uploader.removeFromQueue(addedItem);
                     });
                     queueLimitReached = false;
-                } else {
-                    activateUploadQueue();
                 }
             };
 
             //noinspection JSUnusedLocalSymbols
-            uploader.onWhenAddingFileFailed = function (item, filter, options) { // jshint ignore:line
+            ctrl.uploader.onWhenAddingFileFailed = function (item, filter, options) { // jshint ignore:line
                 if (filter.name === 'queueLimit' && !queueLimitReached) {
                     queueLimitReached = true;
                     Helper.showErrorModal({code: 'QUEUE_LIMIT'});
@@ -173,7 +152,7 @@ angular.module('ortolangMarketApp')
             };
 
             //noinspection JSUnusedLocalSymbols
-            uploader.onSuccessItem = function (fileItem, response, status, headers) { // jshint ignore:line
+            ctrl.uploader.onSuccessItem = function (fileItem, response, status, headers) { // jshint ignore:line
                 switch (fileItem.ortolangType) {
                     case ortolangType.object:
                         if (status === 200) {
@@ -189,7 +168,7 @@ angular.module('ortolangMarketApp')
                         zipExtractionQueueItem.wsName = fileItem.wsName;
                         zipExtractionQueueItem.ziproot = fileItem.ziproot;
                         zipExtractionQueueItem.state = processStates.pending;
-                        uploader.zipExtractionQueue.push(zipExtractionQueueItem);
+                        ctrl.uploader.zipExtractionQueue.push(zipExtractionQueueItem);
                         break;
                     case ortolangType.metadata:
                         if (status === 200) {
@@ -202,14 +181,14 @@ angular.module('ortolangMarketApp')
                 clearItem(fileItem);
             };
 
-            uploader.onCompleteAll = function () {
-                uploader.tokenJustRefreshed = false;
+            ctrl.uploader.onCompleteAll = function () {
+                ctrl.uploader.tokenJustRefreshed = false;
             };
 
             //noinspection JSUnusedLocalSymbols
-            uploader.onErrorItem = function (fileItem, response, status, headers) { // jshint ignore:line
-                if (uploader.tokenJustRefreshed || AuthService.getKeycloak().isTokenExpired()) {
-                    uploader.tokenJustRefreshed = true;
+            ctrl.uploader.onErrorItem = function (fileItem, response, status, headers) { // jshint ignore:line
+                if (ctrl.uploader.tokenJustRefreshed || AuthService.getKeycloak().isTokenExpired()) {
+                    ctrl.uploader.tokenJustRefreshed = true;
                     AuthService.getKeycloak().updateToken(5).success(function () {
                         fileItem.headers.Authorization = 'Bearer ' + AuthService.getToken();
                         fileItem.upload();
@@ -227,4 +206,5 @@ angular.module('ortolangMarketApp')
                     }
                 }
             };
+
         }]);
