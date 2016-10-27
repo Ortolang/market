@@ -38,7 +38,7 @@ describe('Controller: BrowserUploaderCtrl', function () {
     }));
 
     it('should attach FileUploader to the scope', function () {
-        expect(scope.uploader).toBeDefined();
+        expect($rootScope.uploader).toBeDefined();
     });
 
     it('should filter folders', function () {
