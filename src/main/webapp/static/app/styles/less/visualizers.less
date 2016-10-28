@@ -1,15 +1,29 @@
-.visualizer-modal {
-
-  padding-bottom: 0;
+.modal-open visualizer.modal {
+  display: block;
+}
+visualizer {
+  display: block;
 
   .toolbar.visualizer-toolbar {
     position: fixed;
+    display: flex;
     left: 0;
     right: 0;
     margin: 0;
     background-color: @gray-dark;
     color: @inverse-text-color;
     border-bottom: none;
+
+    .toolbar-title-wrapper {
+      flex: 1 1 auto;
+      .toolbar-title {
+        top: 6px;
+        position: relative;
+      }
+    }
+    .visualizer-actions {
+      flex: 0 1 auto;
+    }
   }
 
   .toolbar.visualizer-toolbar.visualizer-header {
@@ -22,22 +36,17 @@
     bottom: 0;
   }
 
-  &.with-footer {
-    .visualizer-content .visualizer {
-      padding-bottom: @toolbar-min-height + 3 * @padding-large-vertical;
-    }
-  }
-
   .visualizer-content {
     height: 100%;
-
+    padding: (@toolbar-min-height + @line-height-computed) @container-main-padding (3 * @padding-large-vertical);
+    &.with-footer {
+      padding-bottom: @toolbar-min-height + (3 * @padding-large-vertical);
+    }
     &.center {
       text-align: center;
     }
-
     &.middle {
-
-      > .visualizer {
+      > .visualizer-template {
         display: table;
         width: 100%;
 
@@ -52,6 +61,7 @@
       display: table;
       text-align: center;
       width: 100%;
+      height: 100%;
       color: @inverse-text-color;
       > div {
         display: table-cell;
@@ -63,8 +73,8 @@
       }
     }
 
-    .visualizer {
-      padding: (@toolbar-min-height + 3 * @padding-large-vertical) 0 (3 * @padding-large-vertical);
+    .visualizer-template {
+      overflow: auto;
       height: 100%;
     }
 

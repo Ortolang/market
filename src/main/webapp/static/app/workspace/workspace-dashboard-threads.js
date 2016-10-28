@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$location', '$modal', '$q', '$filter', '$timeout', '$anchorScroll', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', 'Content', function ($rootScope, $scope, $location, $modal, $q, $filter, $timeout, $anchorScroll, Workspace, MessageResource, ortolangType, Helper, Content) {
+    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$location', '$modal', '$q', '$filter', '$timeout', '$anchorScroll', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', 'VisualizerService', 'Content', function ($rootScope, $scope, $location, $modal, $q, $filter, $timeout, $anchorScroll, Workspace, MessageResource, ortolangType, Helper, VisualizerService, Content) {
 
         var listDeferred, messagesDeferred;
 
@@ -313,6 +313,10 @@ angular.module('ortolangMarketApp')
                 $scope.listMessages();
             });
         }
+
+        $scope.showObjectPreview = function (object, url) {
+            VisualizerService.showObjectPreview(object, url);
+        };
 
         $scope.$on('$routeUpdate', function () {
             if ($location.search().t) {

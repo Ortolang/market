@@ -31,7 +31,6 @@ angular.module('ortolangMarketApp')
         '$location',
         '$route',
         '$rootScope',
-        '$compile',
         '$filter',
         '$timeout',
         '$window',
@@ -42,10 +41,10 @@ angular.module('ortolangMarketApp')
         '$analytics',
         'hotkeys',
         'ObjectResource',
+        'VisualizerService',
         'Content',
         'AuthService',
         'WorkspaceElementResource',
-        'VisualizerManager',
         'icons',
         'ortolangType',
         'browserConfig',
@@ -53,7 +52,7 @@ angular.module('ortolangMarketApp')
         'Cart',
         'Helper',
         'url',
-        function ($scope, $location, $route, $rootScope, $compile, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, Content, AuthService, WorkspaceElementResource, VisualizerManager, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
+        function ($scope, $location, $route, $rootScope, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, VisualizerService, Content, AuthService, WorkspaceElementResource, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
 
             var ctrl = this;
 
@@ -387,33 +386,6 @@ angular.module('ortolangMarketApp')
                     root: ctrl.root,
                     policy: ctrl.isWorkspace
                 }).$promise;
-            }
-
-            function getChildrenDataOfTypes(mimeTypes, isPreview, visualizer) {
-                console.log('Starting to get children data of types %o', Object.keys(mimeTypes));
-                ctrl.children = [];
-                var completedElements = 0,
-                    filteredElements;
-                if (mimeTypes) {
-                    filteredElements = [];
-                    angular.forEach(mimeTypes, function (value, mimeType) {
-                        filteredElements = filteredElements.concat($filter('filter')(ctrl.parent.elements, {mimeType: mimeType}, true));
-                    });
-                } else {
-                    filteredElements = ctrl.parent.elements;
-                }
-                angular.forEach(filteredElements, function (child) {
-                    console.log('Requesting data of child %s', child.name);
-                    WorkspaceElementResource.get({wskey: ctrl.workspace.key, path: ctrl.path + child.name, root: ctrl.root}, function (data) {
-                        data.selected = ctrl.isSelected(data);
-                        ctrl.children.push(data);
-                        console.log('Successfully retrieved data of child %s: %o', child.name, data);
-                        completedElements += 1;
-                        if (isPreview && completedElements === filteredElements.length) {
-                            finishPreview(visualizer);
-                        }
-                    });
-                });
             }
 
             ctrl.download = function () {
@@ -928,129 +900,100 @@ angular.module('ortolangMarketApp')
             }
 
             function checkCompatibleVisualizers() {
-                ctrl.visualizers = VisualizerManager.getCompatibleVisualizers(ctrl.selectedElements);
+                ctrl.visualizers = VisualizerService.getCompatibleVisualizers(ctrl.selectedElements);
                 if (ctrl.visualizers.length === 0) {
                     clearVisualizers();
                 }
             }
 
-            function finishPreview(visualizer) {
-                var element, visualizerModal,
-                    deferred = $q.defer();
-                createModalScope(true);
-                if (ctrl.children && ctrl.children.length !== 0) {
-                    modalScope.elements = ctrl.children;
-                } else {
-                    modalScope.elements = ctrl.selectedElements;
-                }
-                modalScope.parent = ctrl.parent;
-                if (ctrl.isMarket) {
-                    var authorized = true,
-                        promises = [],
-                        i;
-                    for (i = 0; i < modalScope.elements.length; i++) {
-                        if (modalScope.elements[i].unrestrictedDownload === false) {
-                            if (AuthService.isAuthenticated()) {
-                                authorized = false;
-                                break;
-                            } else {
-                                $rootScope.$broadcast('unauthorized-user');
-                                return;
-                            }
+            function checkPermissions(deferred) {
+                var authorized = true,
+                    promises = [],
+                    i;
+                for (i = 0; i < ctrl.selectedElements.length; i++) {
+                    if (ctrl.selectedElements[i].unrestrictedDownload === false) {
+                        if (AuthService.isAuthenticated()) {
+                            authorized = false;
+                            break;
+                        } else {
+                            $rootScope.$broadcast('unauthorized-user');
+                            return;
                         }
                     }
-                    if (authorized) {
-                        deferred.resolve();
-                    } else {
-                        authorized = true;
-                        angular.forEach(modalScope.elements, function (element) {
-                            if (authorized) {
-                                promises.push(ObjectResource.isAuthorized({key: element.key}, function (data) {
-                                    authorized = data.download;
-                                }).$promise);
-                            }
-                        });
-                        $q.all(promises).then(function () {
-                            if (authorized) {
-                                deferred.resolve();
-                            } else {
-                                deferred.reject();
-                                $rootScope.$broadcast('unauthorized-user');
-                            }
-                        });
-                    }
-                } else {
+                }
+                if (authorized) {
                     deferred.resolve();
-                }
-                deferred.promise.then(function () {
-                    modalScope.visualizer = {
-                        header: {},
-                        content: {},
-                        footer: {}
-                    };
-                    modalScope.root = ctrl.root;
-                    modalScope.wsAlias = ctrl.workspace.alias;
-                    modalScope.actions = {};
-                    modalScope.doAction = function (name) {
-                        if (modalScope.actions && modalScope.actions[name]) {
-                            modalScope.actions[name]();
+                } else {
+                    authorized = true;
+                    angular.forEach(ctrl.selectedElements, function (element) {
+                        if (authorized) {
+                            promises.push(ObjectResource.isAuthorized({key: element.key}, function (data) {
+                                authorized = data.download;
+                            }).$promise);
                         }
-                    };
-                    modalScope.pendingRequests = [];
-                    modalScope.$on('modal.hide.before', function () {
-                        angular.forEach(modalScope.pendingRequests, function (request) {
-                            if (request.promise.$$state && request.promise.$$state.pending) {
-                                request.timeout.resolve();
-                            }
-                        });
                     });
-                    if (visualizer) {
-                        element = $compile(visualizer.getElement())(modalScope);
-                    } else {
-                        modalScope.visualizer.header = {
-                            fileName: modalScope.elements[0].name,
-                            fileType: modalScope.elements[0].mimeType
-                        };
-                        modalScope.download = function () {
-                            ctrl.download();
-                        };
-                        modalScope.visualizer.content.classes = 'center';
-                        element = $compile('<div ng-include="\'common/visualizers/no-visualizer-template.html\'">')(modalScope);
-                    }
-                    element.addClass('close-on-click');
-                    visualizerModal = $modal({
-                        id: 'visualizer',
-                        scope: modalScope,
-                        templateUrl: 'common/visualizers/visualizer-template.html',
-                        show: true
+                    $q.all(promises).then(function () {
+                        if (authorized) {
+                            deferred.resolve();
+                        } else {
+                            deferred.reject();
+                            $rootScope.$broadcast('unauthorized-user');
+                        }
                     });
-                    modalScope.$on('modal.show.before', function (event, modal) {
-                        modal.$element.find('.visualizer-content').append(element);
-                        modalScope.clickContent = function (event) {
-                            if (angular.element(event.target).hasClass('close-on-click')) {
-                                visualizerModal.hide();
-                            }
-                        };
-                    });
-                    ctrl.contextMenu();
-                });
+                }
             }
 
-            ctrl.preview = function (_visualizer_) {
+            ctrl.preview = function (visualizer) {
                 if (ctrl.config.canPreview) {
                     if (Helper.isModalOpened('visualizer')) {
                         Helper.hideModal();
-                    } else if (_visualizer_ || ctrl.visualizers) {
-                        var visualizer = _visualizer_ || ctrl.visualizers[0];
-                        if (visualizer.needAllChildrenData) {
-                            // TODO Won't work for visualizers accepting multiple
-                            if (visualizer.isAcceptingSingle()) {
-                                getChildrenDataOfTypes(visualizer.getCompatibleTypes(), true, visualizer);
-                            }
-                        } else {
-                            ctrl.children = null;
-                            finishPreview(visualizer);
+                    } else {
+                        createModalScope(true);
+                        visualizer = visualizer || (ctrl.visualizers ? ctrl.visualizers[0] : undefined);
+                        // No visualizer available for this type of file
+                        if (angular.isUndefined(visualizer)) {
+                            modalScope.data = {
+                                element: ctrl.selectedElements[0]
+                            };
+                            modalScope.actions = {
+                                download: function () {
+                                    ctrl.download();
+                                }
+                            };
+                            VisualizerService.showModal(modalScope);
+                            return;
                         }
+                        // If market we need to check if the user can download the file(s)
+                        var deferred = $q.defer();
+                        if (ctrl.isMarket) {
+                            checkPermissions(deferred);
+                        } else {
+                            deferred.resolve();
+                        }
+                        deferred.promise.then(function () {
+                            modalScope.data = {};
+                            angular.forEach(visualizer.data, function (name) {
+                                switch (name) {
+                                    case 'root':
+                                        modalScope.data.root = ctrl.root;
+                                        break;
+                                    case 'alias':
+                                        modalScope.data.alias = ctrl.workspace.alias;
+                                        break;
+                                    case 'element':
+                                        modalScope.data.element = ctrl.selectedElements[0];
+                                        break;
+                                    case 'elements':
+                                        modalScope.data.elements = ctrl.selectedElements;
+                                        break;
+                                    case 'parent':
+                                        modalScope.data.parent = ctrl.parent;
+                                        break;
+                                }
+                            });
+                            modalScope.visualizer = visualizer;
+                            VisualizerService.showModal(modalScope);
+                        });
                     }
                 }
             };
@@ -1112,11 +1055,7 @@ angular.module('ortolangMarketApp')
                         }
                     } else {
                         clickedChildSelectionDeferred.promise.then(function () {
-                            if (ctrl.visualizers) {
-                                ctrl.preview();
-                            } else {
-                                finishPreview();
-                            }
+                            ctrl.preview();
                         });
                     }
                 }
@@ -1566,6 +1505,7 @@ angular.module('ortolangMarketApp')
                         }
                     }
                     if (promise) {
+                        // TODO fix
                         promise.then(function () {
                             var element = angular.element('tr[data-key="' + ctrl.selectedElements[ctrl.selectedElements.length - 1].key + '"]'),
                                 parent = angular.element('.table-wrapper.table-workspace-elements-wrapper'),
@@ -1590,11 +1530,6 @@ angular.module('ortolangMarketApp')
                 } else { // IE
                     event.returnValue = false;
                 }
-            }
-
-            function previewWithShortcut(event) {
-                preventDefault(event);
-                ctrl.preview();
             }
 
             function bindHotkeys() {
@@ -1660,7 +1595,8 @@ angular.module('ortolangMarketApp')
                             description: $translate.instant('BROWSER.PREVIEW'),
                             callback: function (event) {
                                 if (!Helper.isModalOpened() || Helper.isModalOpened('visualizer')) {
-                                    previewWithShortcut(event);
+                                    preventDefault(event);
+                                    ctrl.preview();
                                 }
                             }
                         });
@@ -1670,7 +1606,8 @@ angular.module('ortolangMarketApp')
                             description: $translate.instant('BROWSER.PREVIEW'),
                             callback: function (event) {
                                 if (Helper.isModalOpened('visualizer')) {
-                                    previewWithShortcut(event);
+                                    preventDefault(event);
+                                    ctrl.preview();
                                 }
                             }
                         });
@@ -1688,7 +1625,7 @@ angular.module('ortolangMarketApp')
                                 if (ctrl.hasOnlyOneElementSelected() && Helper.isCollection(ctrl.selectedElements[0])) {
                                     browseToChild(ctrl.selectedElements[0]);
                                 } else {
-                                    previewWithShortcut(event);
+                                    ctrl.preview();
                                 }
                             }
                         }
@@ -1717,17 +1654,17 @@ angular.module('ortolangMarketApp')
                     });
                 if (ctrl.config.canEdit) {
                     hotkeys.bindTo($scope).add({
-                            combo: 'mod+backspace',
-                            description: $translate.instant('BROWSER.SHORTCUTS.DELETE'),
-                            callback: function (event) {
-                                if (!Helper.isModalOpened()) {
-                                    preventDefault(event);
-                                    if (!ctrl.hasOnlyParentSelected()) {
-                                        ctrl.delete();
-                                    }
+                        combo: 'mod+backspace',
+                        description: $translate.instant('BROWSER.SHORTCUTS.DELETE'),
+                        callback: function (event) {
+                            if (!Helper.isModalOpened()) {
+                                preventDefault(event);
+                                if (!ctrl.hasOnlyParentSelected()) {
+                                    ctrl.delete();
                                 }
                             }
-                        })
+                        }
+                    })
                         .add({
                             combo: 'shift+f',
                             description: $translate.instant('BROWSER.SHORTCUTS.NEW_COLLECTION'),
@@ -1875,7 +1812,6 @@ angular.module('ortolangMarketApp')
                 };
                 bindHotkeys();
                 ctrl.parent = null;
-                ctrl.children = null;
                 ctrl.selectedElements = null;
                 // Breadcrumb
                 ctrl.breadcrumbParts = null;

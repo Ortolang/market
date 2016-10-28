@@ -4,6 +4,7 @@ describe('Constant: icons', function () {
 
     // load the service's module
     beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
 
     // instantiate service
     var icons;

@@ -1,4 +1,4 @@
-<ul class="list-group" visualizer>
+<ul class="list-group">
     <li class="list-group-item" ng-repeat="previewFile in previewFiles" ng-click="previewFile.external===true ? openContentInNewTab(previewFile.key) : showPreview(previewFile.key)">
         <span ng-class="::previewFile.mimeType | mimeTypeIconCss"></span> {{previewFile.name}}
     </li>

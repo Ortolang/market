@@ -1,0 +1,37 @@
+<div class="toolbar visualizer-toolbar visualizer-header">
+    <div class="toolbar-title-wrapper">
+        <div class="toolbar-title">
+            <span ng-if="$ctrl.header.fileType" class="type" ng-class="::$ctrl.header.fileType | mimeTypeIconCss"></span>
+            <strong ng-bind="$ctrl.header.fileName"></strong>
+            <div ng-bind-html="$ctrl.header.html"></div>
+        </div>
+    </div>
+    <div class="btn-toolbar btn-toolbar-right visualizer-actions" role="toolbar">
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-default" ng-click="$ctrl.hide()"><span class="fa fa-times fa-fw"></span></button>
+        </div>
+        <div ng-hide="$ctrl.pendingData" ng-repeat="action in ::$ctrl.header.actions.slice().reverse()" class="btn-group">
+            <button ng-hide="action.hide && action.hide()" type="button" class="btn btn-sm btn-default" ng-click="$ctrl.doAction(action.name)"><span ng-class="action.icon"></span> {{action.text | translate}}</button>
+        </div>
+    </div>
+</div>
+<div class="visualizer-content close-on-click" ng-class="$ctrl.visualizer.classes.content + (!$ctrl.pendingData && $ctrl.footer.show() ? ' with-footer' : '')">
+    <div ng-if="$ctrl.pendingData" class="visualizer pending-wrapper">
+        <div>
+            <span  class="fa fa-3x fa-circle-o-notch fa-spin"></span>
+            <p translate="PENDING_DATA"></p>
+        </div>
+    </div>
+    <div ng-hide="$ctrl.pendingData" class="visualizer-template close-on-click" ng-include="$ctrl.visualizer.templateUrl"></div>
+</div>
+
+<div ng-if="!$ctrl.pendingData && $ctrl.footer.show()" class="toolbar visualizer-toolbar visualizer-footer">
+    <div class="toolbar-title-wrapper">
+        <span class="toolbar-title" translate="{{$ctrl.footer.text}}"></span>
+    </div>
+    <div class="btn-toolbar btn-toolbar-right visualizer-actions" role="toolbar">
+        <div ng-repeat="action in ::$ctrl.footer.actions.slice().reverse()" class="btn-group">
+            <button ng-hide="action.hide && action.hide()" type="button" class="btn btn-sm btn-default" ng-click="$ctrl.doAction(action.name)" translate="{{action.text}}"></button>
+        </div>
+    </div>
+</div>

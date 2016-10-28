@@ -191,7 +191,7 @@
                             {{license.label}} <a target="_BLANK" ng-if="(!license.description || conditionsOfUse) && license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>
                         </dt>
                         <dd ng-if="textFileKey">
-                            <a data-visualizer ng-click="showPreview(textFileKey)" class="clickable">{{'MARKET.LICENCE_DETAIL' | translate}}</a>
+                            <a ng-click="showPreview(textFileKey)" class="clickable">{{'MARKET.LICENCE_DETAIL' | translate}}</a>
                         </dd>
                         <dd ng-show="!conditionsOfUse && license.description">
                             <span ng-if="license.effectiveDescription">{{license.effectiveDescription}}</span><a target="_BLANK" ng-if="license.effectiveText && license.effectiveText.url" ng-href="{{license.effectiveText.url}}"><span class="fa fa-fw fa-external-link"></span></a>

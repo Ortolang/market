@@ -1,25 +1,25 @@
 'use strict';
 
-describe('Service: VisualizerManager', function () {
+describe('Service: VisualizerService', function () {
 
-    // load the service's module
     beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
 
-    // instantiate service
-    var VisualizerManager, VisualizerFactory,
+    var VisualizerService,
         fakeVisualizerConfig, fakeVisualizerBisConfig, fakeVisualizerTerConfig, fakeVisualizerQuaterConfig,
         fakeVisualizer, fakeVisualizerBis, fakeVisualizerTer, fakeVisualizerQuater;
-    beforeEach(inject(function (_VisualizerManager_, _VisualizerFactory_) {
-        VisualizerManager = _VisualizerManager_;
-        VisualizerFactory = _VisualizerFactory_;
-        fakeVisualizer = VisualizerFactory.make(fakeVisualizerConfig);
-        fakeVisualizerBis = VisualizerFactory.make(fakeVisualizerBisConfig);
-        fakeVisualizerTer = VisualizerFactory.make(fakeVisualizerTerConfig);
-        fakeVisualizerQuater = VisualizerFactory.make(fakeVisualizerQuaterConfig);
+
+    beforeEach(inject(function (_VisualizerService_) {
+        VisualizerService = _VisualizerService_;
+        fakeVisualizer = VisualizerService.register(fakeVisualizerConfig);
+        fakeVisualizerBis = VisualizerService.register(fakeVisualizerBisConfig);
+        fakeVisualizerQuater = VisualizerService.register(fakeVisualizerQuaterConfig);
     }));
 
     fakeVisualizerConfig = {
         id: 'FakeVisualizer',
+        templateUrl: 'url.html',
+        data: ['element'],
         name: {
             fr: 'Fake Visualizer'
         },
@@ -33,6 +33,8 @@ describe('Service: VisualizerManager', function () {
 
     fakeVisualizerBisConfig = {
         id: 'FakeVisualizerBis',
+        templateUrl: 'url.html',
+        data: ['element'],
         name: {
             fr: 'Fake Visualizer Bis'
         },
@@ -44,6 +46,8 @@ describe('Service: VisualizerManager', function () {
 
     fakeVisualizerTerConfig = {
         id: 'FakeVisualizerTer',
+        templateUrl: 'url.html',
+        data: ['element'],
         name: {
             fr: 'Fake Visualizer Ter'
         },
@@ -55,6 +59,8 @@ describe('Service: VisualizerManager', function () {
 
     fakeVisualizerQuaterConfig = {
         id: 'FakeVisualizerQuater',
+        templateUrl: 'url.html',
+        data: ['element'],
         name: {
             fr: 'Fake Visualizer Quater'
         },
@@ -71,38 +77,37 @@ describe('Service: VisualizerManager', function () {
     };
 
     it('should do something', function () {
-        expect(!!VisualizerManager).toBe(true);
-    });
-
-    it('should have a registry', function () {
-        expect(VisualizerManager.getRegistry()).toBeDefined();
+        expect(!!VisualizerService).toBe(true);
     });
 
     it('should not be possible to make a new visualizer with a wrong config', function () {
         var wrongConfig = {};
-        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
+        expect(VisualizerService.register(wrongConfig)).not.toBeDefined();
         wrongConfig.id = 'wrong';
-        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
+        expect(VisualizerService.register(wrongConfig)).not.toBeDefined();
+        wrongConfig.templateUrl = 'url';
+        expect(VisualizerService.register(wrongConfig)).not.toBeDefined();
+        wrongConfig.data = ['element'];
+        expect(VisualizerService.register(wrongConfig)).not.toBeDefined();
         wrongConfig.compatibleTypes = {'foo': true};
+        expect(VisualizerService.register(wrongConfig)).not.toBeDefined();
         wrongConfig.name = {fr: 'Wrong'};
-        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
-        wrongConfig.id = 'Wrong';
-        expect(VisualizerFactory.make(wrongConfig)).toBeDefined();
+        expect(VisualizerService.register(wrongConfig)).toBeDefined();
+        wrongConfig.data = 'element';
+        expect(VisualizerService.register(wrongConfig)).not.toBeDefined();
+        wrongConfig.data = ['element'];
         wrongConfig.name = 'Wrong';
-        expect(VisualizerFactory.make(wrongConfig)).toEqualData({});
+        expect(VisualizerService.register(wrongConfig)).not.toBeDefined();
     });
 
     it('should be possible to make a new visualizer', function () {
         expect(fakeVisualizer).toBeDefined();
-
     });
 
     it('should be possible to get the visualizer properties', function () {
         expect(fakeVisualizer.getId()).toEqual(fakeVisualizerConfig.id);
         expect(fakeVisualizer.getName()).toEqual(fakeVisualizerConfig.name.fr);
-        expect(fakeVisualizer.getDescription()).toEqual(undefined);
         expect(fakeVisualizer.getCompatibleTypes()).toEqual(fakeVisualizerConfig.compatibleTypes);
-        expect(fakeVisualizer.getElement()).toEqual('<div ng-hide="pendingData" class="visualizer" fake-visualizer></div>');
     });
 
     it('should be possible to know if a visualizer is compatible with a mime type', function () {
@@ -114,32 +119,31 @@ describe('Service: VisualizerManager', function () {
     });
 
     it('should be possible to register a new visualizer', function () {
-        var registrySize = VisualizerManager.getRegistry().length;
-        expect(VisualizerManager.register(fakeVisualizer)).toEqual(registrySize + 1);
+        var registrySize = VisualizerService.getRegistry().length;
+        var newFakeVisualizer = fakeVisualizerConfig;
+        newFakeVisualizer.id = 'new';
+        VisualizerService.register(newFakeVisualizer);
+        expect(VisualizerService.getRegistry().length).toEqual(registrySize + 1);
     });
 
     it('should not be possible to register a visualizer with an existing id', function () {
-        VisualizerManager.register(fakeVisualizer);
-        expect(VisualizerManager.register(fakeVisualizer)).toBeUndefined();
+        VisualizerService.register(fakeVisualizer);
+        expect(VisualizerService.register(fakeVisualizer)).toBeUndefined();
     });
 
     it('should return a list of compatibles visualizer for a given mime type', function () {
-        VisualizerManager.register(fakeVisualizer);
-        expect(VisualizerManager.getCompatibleVisualizers([{mimeType: 'foo/fake'}]).length).toEqual(1);
-        expect(VisualizerManager.getCompatibleVisualizers([{mimeType: 'foo/fake'}])[0]).toEqual(fakeVisualizer);
-        expect(VisualizerManager.getCompatibleVisualizers([{mimeType: 'foo/bar'}]).length).toEqual(0);
+        expect(VisualizerService.getCompatibleVisualizers([{mimeType: 'foo/fake'}]).length).toEqual(1);
+        expect(VisualizerService.getCompatibleVisualizers([{mimeType: 'foo/fake'}])[0]).toEqual(fakeVisualizer);
+        expect(VisualizerService.getCompatibleVisualizers([{mimeType: 'foo/bar'}]).length).toEqual(0);
     });
 
     it('should return a list of all supported mime types', function () {
-        VisualizerManager.register(fakeVisualizer);
-        VisualizerManager.register(fakeVisualizerBis);
-        expect(VisualizerManager.getAllSupportedMimeTypes()).toBeDefined();
-        expect(VisualizerManager.getAllSupportedMimeTypes()['foo/fake']).toBeDefined();
-        expect(VisualizerManager.getAllSupportedMimeTypes()['hello/world']).toBeDefined();
-        expect(VisualizerManager.getAllSupportedMimeTypes()['foo/bar']).not.toBeDefined();
-        expect(VisualizerManager.getAllSupportedMimeTypes()['application/fake-stream']).toEqual({foo: true, bar: true, hello: true, world: true});
-        VisualizerManager.register(fakeVisualizerTer);
-        expect(VisualizerManager.getAllSupportedMimeTypes()['application/fake-stream']).toEqual(true);
+        expect(VisualizerService.getAllSupportedMimeTypes()).toBeDefined();
+        expect(VisualizerService.getAllSupportedMimeTypes()['foo/fake']).toBeDefined();
+        expect(VisualizerService.getAllSupportedMimeTypes()['hello/world']).toBeDefined();
+        expect(VisualizerService.getAllSupportedMimeTypes()['application/fake-stream']).toEqual({foo: true, bar: true, hello: true, world: true, toto: true});
+        fakeVisualizerTer = VisualizerService.register(fakeVisualizerTerConfig);
+        expect(VisualizerService.getAllSupportedMimeTypes()['application/fake-stream']).toEqual(true);
     });
 
     it('should accept single element by default', function () {

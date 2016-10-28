@@ -5,7 +5,7 @@
             <div ng-messages-include="common/forms/messages-template.html"></div>
         </div>
     </div>
-    <div class="message-attachments" ng-if="message.attachments.length > 0" visualizer>
+    <div class="message-attachments" ng-if="message.attachments.length > 0">
         {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
         <div class="btn-group" ng-repeat="attachment in message.attachments track by attachment.hash" ng-hide="models.removedAttachments[attachment.hash]">
             <span class="btn btn-alternate btn-sm" ng-click="showAttachment(message, attachment, showObjectPreview)"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>

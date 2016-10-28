@@ -4,6 +4,7 @@ describe('Constant: url', function () {
 
     // load the service's module
     beforeEach(module('ortolangMarketApp'));
+    beforeEach(module('ortolangMarketAppMock'));
 
     var url;
     beforeEach(inject(function (_url_) {

@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url', 'User',
-        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User) {
+    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'VisualizerService', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url', 'User',
+        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, VisualizerService, Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User) {
 
             function loadReferentialEntities(items, dest) {
                 if (items && items.length > 0) {
@@ -556,6 +556,10 @@ angular.module('ortolangMarketApp')
                     loadLicense($translate.use());
                 }
             });
+
+            $scope.showPreview = function (key) {
+                VisualizerService.showPreview(key);
+            };
 
             $scope.backToSearch = function () {
                 var history = $filter('orderBy')(Settings.searchHistory, '-date')[0];

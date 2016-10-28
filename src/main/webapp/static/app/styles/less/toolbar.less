@@ -12,11 +12,6 @@
   padding-right: @container-main-padding;
 }
 
-.toolbar.visualizer-toolbar {
-  padding-left: @container-main-padding - floor(@grid-gutter-width/2);
-  padding-right: @container-main-padding - floor(@grid-gutter-width/2);
-}
-
 .toolbar {
   padding: @padding-large-vertical @container-main-padding;
   border-bottom: @default-border;
@@ -25,14 +20,6 @@
 
   &.toolbar-empty {
     display: none;
-  }
-
-  .toolbar-title-wrapper {
-    margin-top: -@padding-large-vertical;
-    margin-bottom: -@padding-large-vertical;
-    .toolbar-title {
-      line-height: @toolbar-min-height;
-    }
   }
 
   .btn-toolbar.btn-toolbar-right .btn-group {

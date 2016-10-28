@@ -9,15 +9,15 @@ describe('Controller: MarketItemCtrl', function () {
     var controllerCreator,
         scope,
         SearchResource,
-        VisualizerManager,
+        VisualizerService,
         sample;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope, $compile, _SearchResource_, _sample_, _VisualizerManager_) {
+    beforeEach(inject(function ($controller, $rootScope, $compile, _SearchResource_, _sample_, _VisualizerService_) {
         scope = $rootScope.$new();
         sample = _sample_;
         SearchResource = _SearchResource_;
-        VisualizerManager = _VisualizerManager_;
+        VisualizerService = _VisualizerService_;
 
         controllerCreator = function (params) {
             return $controller('MarketItemCtrl', {
