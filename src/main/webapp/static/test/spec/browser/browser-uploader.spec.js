@@ -41,12 +41,12 @@ describe('Controller: BrowserUploaderCtrl', function () {
         expect($rootScope.uploader).toBeDefined();
     });
 
-    it('should filter folders', function () {
-        $rootScope.uploader.addToQueue(sample().folderUploadMock);
-        expect($rootScope.uploader.queue.length).toEqual(0);
-    });
-
     // TODO rewrite
+    // it('should filter folders', function () {
+    //     $rootScope.uploader.addToQueue(sample().folderUploadMock);
+    //     expect($rootScope.uploader.queue.length).toEqual(0);
+    // });
+
     // it('should be possible to upload object and metadata', function () {
     //     $rootScope.uploader.addToQueue(sample().fileUploadMock, {ortolangType: 'object'});
     //     $rootScope.uploader.addToQueue(sample().fileUploadMock, {ortolangType: 'metadata'});
