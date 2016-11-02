@@ -78,36 +78,32 @@ angular.module('ortolangMarketApp')
             return deferred.promise;
         };
 
-        this.init = function () {
-            if (User.isAuthenticated()) {
-                User.sessionInitialized().then(function () {
-                    var profileData = User.getProfileData('settings');
-                    if (profileData) {
-                        var savedSettings = profileData.value;
-                        if (savedSettings && savedSettings !== 'undefined') {
-                            angular.forEach(angular.fromJson(savedSettings), function (value, key) {
-                                if (angular.isObject(value)) {
-                                    angular.extend(Settings[key], value);
-                                } else {
-                                    Settings[key] = value;
-                                }
-                            });
-                        }
-                    }
-                    checkIdHal();
-                    deferred.resolve();
-                });
-            } else if (localStorage !== undefined) {
-                var savedSettings = localStorage.getItem('ortolang.settings');
-                if (savedSettings && savedSettings !== 'undefined') {
-                    angular.forEach(angular.fromJson(savedSettings), function (value, key) {
+        function importSettings(settings) {
+            if (angular.isDefined(settings) && settings !== 'undefined') {
+                angular.forEach(angular.fromJson(settings), function (value, key) {
+                    if (angular.isDefined(Settings[key])) {
                         if (angular.isObject(value)) {
                             angular.extend(Settings[key], value);
                         } else {
                             Settings[key] = value;
                         }
-                    });
-                }
+                    }
+                });
+            }
+        }
+
+        this.init = function () {
+            if (User.isAuthenticated()) {
+                User.sessionInitialized().then(function () {
+                    var profileData = User.getProfileData('settings');
+                    if (profileData) {
+                        importSettings(profileData.value);
+                    }
+                    checkIdHal();
+                    deferred.resolve();
+                });
+            } else if (localStorage !== undefined) {
+                importSettings(localStorage.getItem('ortolang.settings'));
                 deferred.resolve();
             }
         };
