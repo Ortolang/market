@@ -91,7 +91,7 @@ angular.module('ortolangVisualizers')
             $scope.$ctrl.actions.showTei = function () {
                 $scope.tabs.activeTab = 'tei';
             };
-            if ($scope.$ctrl.parent && $scope.$ctrl.parent.path) {
+            if ($scope.$ctrl.data.parent && $scope.$ctrl.data.parent.path) {
                 $scope.base = Content.getContentUrlWithPath($scope.$ctrl.data.parent.path, $scope.$ctrl.data.alias, $scope.$ctrl.data.root);
             }
             if ($scope.$ctrl.data.element.downloadUrl) {
