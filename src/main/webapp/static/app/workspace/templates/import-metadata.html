@@ -9,8 +9,8 @@
 	<div>
 		<button type="button" class="btn btn-primary" ng-click="download()" data-ng-disabled="!WorkspaceMetadataService.canEdit"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</button>
 		<button type="button" class="btn btn-default" ng-click="upload()" data-ng-disabled="!WorkspaceMetadataService.canEdit"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD' | translate}}</button>
-		<div ng-controller="UploadCtrl">
-			<input id="metadata-upload-file-select" type="file" nv-file-select="" uploader="uploader" multiple="" ng-hide="true" options="{wsName: Workspace.active.workspace.name, wskey: Workspace.active.workspace.key, ortolangType: ortolangType.metadata, path: '/', name: 'ortolang-item-json'}">
+		<div ng-controller="BrowserUploaderCtrl">
+			<input id="metadata-upload-file-select" type="file" nv-file-select="" uploader="$root.uploader" multiple="" ng-hide="true" options="{wsName: Workspace.active.workspace.name, wskey: Workspace.active.workspace.key, ortolangType: ortolangType.metadata, path: '/', name: 'ortolang-item-json'}">
 		</div>
 	</div>
 	<br/>

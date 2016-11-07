@@ -69,6 +69,10 @@
           margin-top: @line-height-computed;
         }
       }
+      &.container-main-market-item {
+        padding: 0;
+        position: relative;
+      }
       &.container-main-no-toolbar {
         padding-top: 0;
         header.full-header {
@@ -109,17 +113,6 @@
           > div {
             overflow-y: auto;
             height: 100%;
-          }
-          .browser-aside-left {
-            display: flex;
-            flex-direction: column;
-            > .dropdown-wrapper {
-              flex: 0 0 auto;
-            }
-            > .my-workspaces {
-              //noinspection CssRedundantUnit
-              flex: 1 1 0%;
-            }
           }
         }
       }

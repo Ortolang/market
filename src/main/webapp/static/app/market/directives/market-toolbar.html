@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-sm-6">
             <div class="input-group">
-                <input ng-model="content" ng-keyup="$event.keyCode == 13 && applyFilters()" class="form-control" type="text" placeholder="{{::(searchPlaceHolder || 'SEARCH') | translate}}">
-                    <span class="input-group-btn">
-                        <button ng-click="applyFilters()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
+                <input id="market-toolbar-search" ng-model="content" ng-keyup="$event.keyCode == 13 && applyFilters()" class="form-control" type="text" placeholder="{{::('MARKET.SEARCH.' + (type ? type.toUpperCase() : 'ALL') || 'SEARCH') | translate}}" bs-options="search.html for search in history()" data-min-length="0" data-html="true" bs-typeahead>
+                <span class="input-group-btn">
+                    <button ng-click="applyFilters()" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
             </div>
         </div>
         <div class="col-sm-6">
@@ -21,7 +21,7 @@
                     <li ng-repeat="orderProp in ::search.orderProps">
                         <div ng-click="toggleOrderBy(orderProp)">
                             <span>{{::orderProp.text | translate}}</span>
-                            <span order-indicator data-name="{{search.activeOrderProp.id}}" data-array="id" data-order-prop="orderProp" data-order-reverse="search.orderReverse"></span>
+                            <order-indicator name="{{search.activeOrderProp.id}}" array="id" order-prop="orderProp" order-reverse="search.orderReverse"></order-indicator>
                         </div>
                     </li>
                 </ul>
@@ -65,8 +65,7 @@
             <strong class="text-primary" translate="MARKET.ACTIVATED_FILTERS"></strong>
         </div>
         <div class="media-body">
-
-    <button ng-repeat="filter in filtersManager.enabledFilters track by filter.id" ng-if="filter.hasSelectedOptions() && !filter.isLocked() && filter.getSelectedLabel() !== 'undefined'" type="button" ng-click="removeFilter(filter)" class="btn btn-sm btn-alternate" role="button">{{::filter.label | translate}} : {{filter.getSelectedLabel() | translate}} <span class="fa fa-times"></span></button>
+            <button ng-repeat="filter in filtersManager.enabledFilters track by filter.id" ng-if="filter.hasSelectedOptions() && !filter.isLocked() && filter.getSelectedLabel() !== 'undefined'" type="button" ng-click="removeFilter(filter)" class="btn btn-sm btn-alternate" role="button">{{::filter.label | translate}} : {{filter.getSelectedLabel() | translate}} <span class="fa fa-times"></span></button>
         </div>
     </div>
     <!--<button type="button" ng-click="resetFilters()" class="btn btn-sm btn-alternate" role="button">{{'MARKET.RESET_FILTERS' | translate}} <span class="fa fa-times"></span></button>-->

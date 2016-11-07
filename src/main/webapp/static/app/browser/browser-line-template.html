@@ -1,0 +1,64 @@
+<div class="table-wrapper table-workspace-elements-wrapper">
+    <table ng-if="$ctrl.parent.elements" class="table table-hover table-responsive table-workspace-elements">
+        <colgroup>
+            <col/>
+            <col class="type"/>
+            <col class="date hidden-xs hidden-sm hidden-md"/>
+            <col class="size hidden-xs hidden-sm"/>
+            <col ng-if="!$ctrl.isFileSelect" class="acl" />
+        </colgroup>
+        <thead class="small">
+        <tr>
+            <th ng-click="$ctrl.order(['type','name'], 'toggle')">
+                <span translate="NAME"></span>
+                <order-indicator name="name" array="1" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+            </th>
+            <th ng-click="$ctrl.order('mimeType', 'toggle')">
+                <span translate="TYPE"></span>
+                <order-indicator name="mimeType" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+            </th>
+            <th class="hidden-xs hidden-sm hidden-md" ng-click="$ctrl.order('modification', 'toggle')">
+                <span translate="BROWSER.LAST_MODIFICATION"></span>
+                <order-indicator name="modification" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+            </th>
+            <th class="hidden-xs hidden-sm" ng-click="$ctrl.order('size', 'toggle')">
+                <span translate="SIZE"></span>
+                <order-indicator name="size" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+            </th>
+            <th ng-if="!$ctrl.isFileSelect"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="child in $ctrl.filteredOrderedChildren() | limitTo:$ctrl.displayedItemLimit track by child.key + child.modification"
+            ng-click="$ctrl.clickChild(child, $event)"
+            ng-right-click="$ctrl.clickChild(child, $event)"
+            ng-dblclick="$ctrl.doubleClickChild(child)"
+            ng-class="{active : $ctrl.isSelected(child)}"
+            data-key="{{::child.key}}"
+            on-finish-render
+            class="workspace-element">
+            <td><span class="type" ng-class="::child.mimeType | mimeTypeIconCss"></span>{{child.name}}</td>
+            <td>{{::child.mimeType | contentType}}</td>
+            <td class="hidden-xs hidden-sm hidden-md">{{::child.modification | date:$ctrl.dateFormat}}</td>
+            <td class="hidden-xs hidden-sm">{{::child.size | bytes}}</td>
+            <td ng-if="!$ctrl.isFileSelect" class="acl" ng-click="$ctrl.showAclLegend($event)" ng-class="$ctrl.parent.publicationPolicies[child.key]"><span class="label"><span ng-class="::icons.acl[$ctrl.parent.publicationPolicies[child.key]]"></span></span></td>
+        </tr>
+        </tbody>
+    </table>
+    <div ng-if="filteredOrderedChildrenArray.length === 0" class="no-children-wrapper">
+        <div ng-if="$ctrl.parent.elements.length === 0 && $ctrl.config.canEdit && $ctrl.isHead" >
+            <span class="icon" ng-class="::icons.cloudUpload"></span>
+            <span translate="BROWSER.NO_CHILDREN" class="hidden-xs file-not-hover"></span>
+            <span translate="BROWSER.NO_CHILDREN_MOBILE" class="visible-xs file-not-hover"></span>
+            <button translate="BROWSER.NO_CHILDREN_MOBILE_BUTTON" class="btn btn-default visible-xs file-not-hover" ng-click="$ctrl.doAction('addFileMobile')"></button>
+        </div>
+        <span ng-if="$ctrl.parent.elements.length === 0 && (!$ctrl.config.canEdit || !$ctrl.isHead)" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
+        <span ng-if="$ctrl.parent.elements.length > 0" class="no-filtered-children"  translate="BROWSER.NO_FILTERED_CHILDREN"></span>
+    </div>
+    <div ng-if="$ctrl.displayedItemLimit && $ctrl.displayedItemLimit < $ctrl.parent.elements.length && (!filteredOrderedChildrenArray || $ctrl.displayedItemLimit < filteredOrderedChildrenArray.length)" class="see-all-wrapper">
+        <button class="btn btn-default btn-primary btn-block" ng-click="$ctrl.displayAll()">
+            <span ng-show="$ctrl.loadingAll" class="fa fa-refresh fa-spin"></span>
+            <span ng-hide="$ctrl.loadingAll" translate="BROWSER.SEE_ALL"></span>
+        </button>
+    </div>
+</div>

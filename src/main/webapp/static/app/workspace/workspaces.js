@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
             var createWorkspaceModal,
                 spaceRegExp = new RegExp(' +', 'g'),
                 dashRegExp = new RegExp('-+', 'g'),
-                modalScope = Helper.createModalScope(true);
+                modalScope = Helper.createModalScope(true, true);
 
             modalScope.submit = function (createWorkspaceForm) {
                 if (!modalScope.models.pendingSubmit) {
@@ -54,9 +54,6 @@ angular.module('ortolangMarketApp')
                     modalScope.normalizeAlias(modalScope.models.name, createWorkspaceForm);
                 }
             };
-            modalScope.$on('modal.show', function () {
-                angular.element('#create-workspace-modal').find('[autofocus]:first').focus();
-            });
             createWorkspaceModal = $modal({
                 scope: modalScope,
                 templateUrl: 'workspace/templates/create-workspace-modal.html',

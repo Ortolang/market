@@ -1,0 +1,34 @@
+browser-workspaces-list {
+  ul {
+    overflow: auto;
+    .user-select-mixin();
+    li {
+      position: relative;
+      padding: @padding-large-vertical @padding-small-horizontal @padding-large-vertical @grid-gutter-width/2;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      &:hover {
+        background-color: @workspace-primary;
+        color: @inverse-text-color;
+        cursor: pointer;
+      }
+      &.active {
+        font-weight: bold;
+        transition: font-weight 0.3s ease-out;
+        span {
+          transition: all 0.3s ease-out;
+          position: absolute;
+          left: 0;
+          height: 100%;
+          margin-top: -@padding-large-vertical;
+          width: 5px;
+          background-color: @workspace-primary;
+        }
+        &:hover {
+          background-color: inherit;
+          color: inherit;
+        }
+      }
+    }
+  }
+}

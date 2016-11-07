@@ -22,10 +22,10 @@ angular.module('ortolangMarketApp')
         'Helper',
         'RuntimeResource',
         'WorkspaceResource',
-        'WorkspaceBrowserService',
         'WorkspaceMetadataService',
         'User',
-        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, $filter, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceBrowserService, WorkspaceMetadataService, User) {
+        'browserConfig',
+        function ($scope, $rootScope, $location, $route, $modal, $translate, $window, $filter, Workspace, Content, Helper, RuntimeResource, WorkspaceResource, WorkspaceMetadataService, User, browserConfig) {
 
             /**
              * The section selected by default
@@ -85,8 +85,7 @@ angular.module('ortolangMarketApp')
                 }
                 // If browsing content
                 if (id === 'content') {
-                    WorkspaceBrowserService.canEdit = !Workspace.active.workspace.readOnly;
-                    WorkspaceBrowserService.workspace = Workspace.active.workspace;
+                    browserConfig.workspace.canEdit = !Workspace.active.workspace.readOnly;
                 }
             }
 
@@ -318,7 +317,6 @@ angular.module('ortolangMarketApp')
             $scope.showDiff = function () {
                 if (Workspace.active.workspace.snapshots.length > 1) {
                     modalScope = Helper.createModalScope(true);
-                    modalScope.models = {};
                     modalScope.icons = $rootScope.icons;
                     var tmp = {},
                         lastTag = null;

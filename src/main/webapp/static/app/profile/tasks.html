@@ -35,7 +35,7 @@
                     <h5 class="reviews-title">{{'TASKS.REVIEWS' | translate}} <small>{{task.processVariables.reviewresults.length + '/' + task.processVariables.reviewers.length}}</small></h5>
                     <ul class="list-unstyled reviews">
                         <li ng-repeat="review in task.processVariables.reviewresults | orderBy:'grade' track by review.reviewer" class="media">
-                            <div class="media-left" avatar data-email-hash="Helper.profileCards[review.reviewer].emailHash" data-size="36" data-img-classes="img-circle"></div>
+                            <avatar class="media-left" email-hash="Helper.profileCards[review.reviewer].emailHash" size="36" img-classes="img-circle"></avatar>
                             <div class="media-body">
                                 <span class="author">{{::Helper.profileCards[review.reviewer].fullName}}</span>
                                 <span class="badge" ng-class="::'badge-'+ review.grade">{{::review.grade}}</span>

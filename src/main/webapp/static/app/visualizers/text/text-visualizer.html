@@ -1,0 +1,15 @@
+<div ng-controller="TextVisualizerCtrl">
+    <script type="text/ng-template" id="text-visualizer-tabs-template.html">
+        <div ng-transclude class="tab-content"></div>
+    </script>
+    <div ng-if="(!pendingData || forceDisplay) && !hasPreview" hljs source="content" language="{{language}}" class="highlight"></div>
+    <div ng-if="(!pendingData || forceDisplay) && hasPreview" class="html-visualizer-wrapper" bs-active-pane="tabs.activeTab" data-template="text-visualizer-tabs-template.html" bs-tabs>
+        <div ng-if="pageSrc" data-name="preview" class="html-visualizer-iframe-wrapper" bs-pane>
+            <iframe name="html-visualizer" class="html-visualizer-iframe" ng-src="{{pageSrc}}" ng-class="{inception: inception}" allowfullscreen></iframe>
+        </div>
+        <div ng-if="tei" data-name="tei" bs-pane>
+            <div cetei-cean data-content="fullContent || content" data-base="base"></div>
+        </div>
+        <div data-name="source" hljs source="content" language="{{language}}" class="highlight" bs-pane></div>
+    </div>
+</div>

@@ -21,13 +21,15 @@
                     <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.SEARCH_RESULT"></strong></p>
                     <p ng-show="profiles.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_RESULT"></p>
                     <ul class="list-unstyled">
-                        <li ng-repeat="profile in profiles | limitTo:models.limit track by profile.key" profile-card data-profile="profile" data-img-classes="img-circle" data-size="50">
-                            <div class="btn-group" ng-if="::!User.isFriend(profile.key)">
-                                <button ng-click="add(profile, $event)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
-                            </div>
-                            <div class="btn-group" ng-if="::User.isFriend(profile.key)">
-                                <button disabled class="btn btn-default"><span ng-class="::icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
-                            </div>
+                        <li ng-repeat="profile in profiles | limitTo:models.limit track by profile.key">
+                            <profile-card profile="profile" img-classes="img-circle" size="50">
+                                <div class="btn-group" ng-if="::addFriend ? !User.isFriend(profile.key) : !isMember(profile.key)">
+                                    <button ng-click="add(profile, $event)" class="btn btn-default"><span ng-class="::$root.icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
+                                </div>
+                                <div class="btn-group" ng-if="::addFriend ? User.isFriend(profile.key) : isMember(profile.key)">
+                                    <button disabled class="btn btn-default"><span ng-class="::$root.icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
+                                </div>
+                            </profile-card>
                         </li>
                     </ul>
                     <p ng-show="profiles.length > models.limit" class="alert alert-warning"><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MORE_RESULTS"></strong></p>
@@ -37,13 +39,15 @@
                     <p><strong translate="WORKSPACE.ADD_MEMBER_MODAL.MY_FRIENDS"></strong></p>
                     <p ng-show="!User.friendList || User.friendList.length === 0" translate="WORKSPACE.ADD_MEMBER_MODAL.NO_FRIENDS"></p>
                     <ul class="list-unstyled">
-                        <li ng-repeat="friend in ::User.friendList track by friend.key" profile-card data-profile="friend" data-img-classes="img-circle" data-size="50">
-                            <div class="btn-group" ng-if="::!isMember(friend.key)">
-                                <button ng-click="add(friend, $event)" class="btn btn-default"><span ng-class="::icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
-                            </div>
-                            <div class="btn-group" ng-if="::isMember(friend.key)">
-                                <button disabled class="btn btn-default"><span ng-class="::icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
-                            </div>
+                        <li ng-repeat="friend in ::User.friendList track by friend.key">
+                            <profile-card profile="friend" img-classes="img-circle" size="50">
+                                <div class="btn-group" ng-if="::!isMember(friend.key)">
+                                    <button ng-click="add(friend, $event)" class="btn btn-default"><span ng-class="::$root.icons.plus"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADD' | translate}}</button>
+                                </div>
+                                <div class="btn-group" ng-if="::isMember(friend.key)">
+                                    <button disabled class="btn btn-default"><span ng-class="::$root.icons.check"></span> {{'WORKSPACE.ADD_MEMBER_MODAL.ADDED' | translate}}</button>
+                                </div>
+                            </profile-card>
                         </li>
                     </ul>
                 </div>

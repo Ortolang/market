@@ -16,11 +16,12 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
         $rootScope,
         $routeParams,
         url,
+        Helper,
         $location,
         $route,
         $filter;
 
-    beforeEach(inject(function ($controller, _$rootScope_, _$routeParams_, _$route_, _sample_, _$httpBackend_, _url_, _Workspace_, _WorkspaceResource_, _$location_, _ObjectResource_, _$filter_, _StatisticsResource_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _$routeParams_, _$route_, _sample_, _$httpBackend_, _url_, _Workspace_, _WorkspaceResource_, _$location_, _ObjectResource_, _$filter_, _StatisticsResource_, _Helper_) {
         $httpBackend = _$httpBackend_;
         WorkspaceResource = _WorkspaceResource_;
         Workspace = _Workspace_;
@@ -33,6 +34,7 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
         $filter = _$filter_;
         sample = _sample_;
         url = _url_;
+        Helper = _Helper_;
         $location = _$location_;
         ObjectResource.when({key: 'head1'}, sample().head1);
         ObjectResource.when({key: 'head2'}, sample().head2);
@@ -42,10 +44,6 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
     });
-
-    function hideModal() {
-        angular.element('.modal').scope().$hide();
-    }
 
     describe('with existing workspace', function () {
         beforeEach(inject(function ($controller) {
@@ -117,9 +115,11 @@ describe('Controller: WorkspaceDashboardCtrl', function () {
         }));
 
         it('should display an error modal when workspace does not exist', function () {
-            expect(angular.element('.modal.error-modal').length).toBe(1);
-            hideModal();
-            $rootScope.$apply();
+            setTimeout(function () {
+                expect(Helper.isModalOpened('error')).toEqual(true);
+                Helper.hideModal();
+                $rootScope.$apply();
+            }, 500);
         });
     });
 

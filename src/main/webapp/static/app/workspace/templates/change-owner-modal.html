@@ -8,8 +8,10 @@
             <div class="modal-body">
                 <p><strong translate="WORKSPACE.MEMBERS_LIST"></strong></p>
                 <ul class="list-unstyled">
-                    <li ng-repeat="member in members track by member.key" ng-if="member.key !== owner" profile-card data-profile="member" data-size="50" data-img-classes="img-circle">
-                        <button class="btn btn-default" ng-class="::icons.remove" ng-click="change(member.key, $event)" translate="SELECT"></button>
+                    <li ng-repeat="member in members track by member.key" ng-if="member.key !== owner">
+                        <profile-card profile="member" size="50" img-classes="img-circle">
+                            <button class="btn btn-default" ng-click="change(member.key, $event)" translate="SELECT"></button>
+                        </profile-card>
                     </li>
                 </ul>
                 <p ng-if="members.length <= 1" translate="WORKSPACE.CHANGE_OWNER_MODAL.NO_OTHER_MEMBERS"></p>

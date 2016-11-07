@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('CorporaCtrl', ['$scope', '$location', 'SearchProvider', 'FacetedFilterManager', function ($scope, $location, SearchProvider, FacetedFilterManager) {
+    .controller('CorporaCtrl', ['$scope', '$location', 'SearchProvider', 'FacetedFilterManager', 'Settings', function ($scope, $location, SearchProvider, FacetedFilterManager, Settings) {
 
         var filters = [
             {
@@ -71,6 +71,12 @@ angular.module('ortolangMarketApp')
 
         $scope.$on('$routeUpdate', function () {
             isHome();
+        });
+
+        $scope.$on('$routeChangeStart', function ($event, next, current) {
+            if (Object.keys(current.params).length > 0) {
+                Settings.putSearch('corpora', current.params);
+            }
         });
 
         function isHome() {

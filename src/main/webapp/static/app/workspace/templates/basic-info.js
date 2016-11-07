@@ -143,7 +143,7 @@ angular.module('ortolangMarketApp')
                 $scope.fileDocumentationPathSelectorModal = $modal({
                     scope: fileDocumentationPathSelectorModalScope,
                     title: 'Sélectionnez un fichier contenant la documentation',
-                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    templateUrl: 'browser/browser-file-select-modal-template.html',
                     show: false
                 });
 

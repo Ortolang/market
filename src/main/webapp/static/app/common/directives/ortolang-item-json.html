@@ -1,0 +1,10 @@
+<div class="toolbar-wrapper market-toolbar-wrapper" ng-if="fromSearch">
+    <div class="toolbar">
+        <button class="btn btn-default" ng-click="backToSearch()"><span ng-class="::icons.browser.back"></span> {{'MARKET.SEARCH.BACK_TO_RESULTS' | translate}}</button>
+    </div>
+</div>
+<div class="container-main container-main-market-item">
+    <div class="container-main-inner">
+        <div class="market-item-wrapper" ng-include="marketItemTemplate"></div>
+    </div>
+</div>

@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('FacetedFilterManager', ['QueryBuilderFactory', 'FacetedFilter', '$filter', function (QueryBuilderFactory, FacetedFilter, $filter) {
+    .factory('FacetedFilterManager', ['QueryBuilderFactory', 'FacetedFilter', '$filter', 'Helper', function (QueryBuilderFactory, FacetedFilter, $filter, Helper) {
 
         // Constructor
         function FacetedFilterManager() {
@@ -73,6 +73,10 @@ angular.module('ortolangMarketApp')
                 return this.availabledFilters.push(filter);
             },
 
+            getHighFilters: function () {
+                return $filter('filter')(this.availabledFilters, {priority: 'high'}, true);
+            },
+
             removeOptionFilter: function (filter, opt) {
                 filter.removeSelectedOption(opt);
                 if (!filter.hasSelectedOptions()) {
@@ -115,8 +119,8 @@ angular.module('ortolangMarketApp')
                 var filter = FacetedFilter.makeTypeFilter(type, true);
                 this.addAvailableFilter(filter);
                 angular.forEach(configurations, function (config) {
-                    config.id = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.' + config.alias + '.key';
-                    config.path = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.' + config.alias;
+                    config.id = Helper.prefix.metaItem + config.alias + '.key';
+                    config.path = Helper.prefix.metaItem + config.alias;
                     var filter = FacetedFilter.make(config);
                     return Manager.addAvailableFilter(filter);
                 });

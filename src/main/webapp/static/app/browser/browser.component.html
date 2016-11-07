@@ -1,0 +1,270 @@
+<div class="browser-wrapper" ng-class="::{'market-browser-wrapper': $ctrl.isMarket, 'file-select-browser-wrapper': $ctrl.isFileSelect}">
+
+    <div class="toolbar browser-toolbar" ng-class="::{'market-browser-toolbar': $ctrl.isMarket}" ng-click="$ctrl.deactivateContextMenu()" ng-right-click="deactivateContextMenu()">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="browser-breadcrumb">
+                <div ng-if="$ctrl.breadcrumbParts.length > 0" class="breadcrumb-part visible-xs">
+                    <button class="btn btn-default"  ng-click="$ctrl.browseToParent()">..</button>
+                </div>
+                <div class="breadcrumb-part visible-xs">
+                    <div ng-if="$ctrl.breadcrumbDropdownItems.length === 0" class="btn-group">
+                        <button type="button" class="btn btn-default">{{$ctrl.parent.name}}</button>
+                    </div>
+                    <div ng-if="$ctrl.breadcrumbDropdownItems.length !== 0" class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle mobile-add-file" data-toggle="dropdown">
+                            {{$ctrl.breadcrumbParts.length === 0 ? '/' : $ctrl.parent.name}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="item in $ctrl.breadcrumbDropdownItems" ng-click="::$ctrl.doAction(item.action)" class="{{::item.divider ? 'divider' : ''}}"><div><span ng-class="::item.icon"></span> {{item.text | translate}}</div></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="breadcrumb-part hidden-xs">
+                    <button ng-if="$ctrl.breadcrumbParts.length > 0" class="btn btn-default"  ng-click="$ctrl.browseToPath('/')">
+                        {{$ctrl.workspace.alias}} <span ng-if="$ctrl.root !== 'head'" class="root">{{$ctrl.workspaceHistoryTags[$ctrl.root]}}</span>
+                    </button>
+                    <div ng-if="$ctrl.breadcrumbParts.length === 0 && $ctrl.breadcrumbDropdownItems.length === 0" class="btn-group">
+                        <button type="button" class="btn btn-default">
+                            {{$ctrl.workspace.alias}} <span ng-if="$ctrl.root !== 'head'" class="root">{{$ctrl.workspaceHistoryTags[$ctrl.root]}}</span>
+                        </button>
+                    </div>
+                    <div ng-if="$ctrl.breadcrumbParts.length === 0 && $ctrl.breadcrumbDropdownItems.length !== 0" class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{$ctrl.workspace.alias}} <span ng-if="$ctrl.root !== 'head'" class="root">{{$ctrl.root}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="item in $ctrl.breadcrumbDropdownItems" ng-click="::$ctrl.doAction(item.action)" class="{{::item.divider ? 'divider' : ''}}"><div><span ng-class="::item.icon"></span> {{item.text | translate}}</div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-repeat="part in $ctrl.breadcrumbParts" class="breadcrumb-part hidden-xs">
+                    <a ng-if="!$last" ng-click="::$ctrl.browseToPath(part)" class="btn btn-default">
+                        {{::$ctrl.parent.pathParts[$index]}}
+                    </a>
+                    <div class="btn-group" ng-if="$last && $ctrl.breadcrumbDropdownItems.length === 0">
+                        <button type="button" class="btn btn-default">
+                            {{::$ctrl.parent.pathParts[$index]}}
+                        </button>
+                    </div>
+                    <div class="btn-group" ng-if="$last && $ctrl.breadcrumbDropdownItems.length !== 0">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{::$ctrl.parent.pathParts[$index]}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="item in $ctrl.breadcrumbDropdownItems" ng-click="::$ctrl.doAction(item.action)" ng-class="::{divider: item.divider}"><div><span ng-class="::item.icon"></span> {{item.text | translate}}</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-toolbar btn-toolbar-right" role="toolbar">
+
+                <div ng-if="!$ctrl.isFileSelect" class="btn-group hidden-xs">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SETTINGS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.settings"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><div ng-click="$ctrl.showCheatsheet($event)"><span ng-class="::icons.browser.keyboard"></span> {{'BROWSER.SHORTCUTS' | translate}}</div></li>
+                        <li ng-if="::$ctrl.displayAsideWorkspaceList()"><div ng-click="$ctrl.toggleWorkspaceList()"><span class="fa fa-fw"></span> {{'BROWSER.WORKSPACE_LIST' | translate:$ctrl.browserSettings}}</div></li>
+                    </ul>
+                </div>
+
+                <div ng-if="::$ctrl.config.displayAsideInfo" class="btn-group hidden-xs">
+                    <button ng-class="{'btn-inverse': !$ctrl.browserSettings.hideInfo}" class="btn btn-default" ng-click="$ctrl.toggleAsideInfo()" data-title="{{'BROWSER.INFO' | translate:$ctrl.browserSettings}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.info"></span>
+                    </button>
+                </div>
+
+                <div class="btn-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                            <span ng-class="::icons.browser.sort"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li>
+                                <div ng-click="$ctrl.order(['type','name'], 'toggle')">
+                                    <span translate="NAME"></span>
+                                    <order-indicator name="name" array="1" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+                                </div>
+                            </li>
+                            <li>
+                                <div ng-click="$ctrl.order('mimeType', 'toggle')">
+                                    <span translate="BROWSER.SORT.MIME_TYPE"></span>
+                                    <order-indicator name="mimeType" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+                                </div>
+                            </li>
+                            <li>
+                                <div ng-click="$ctrl.order('modification', 'toggle')">
+                                    <span translate="BROWSER.SORT.DATE"></span>
+                                    <order-indicator name="modification" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+                                </div>
+                            </li>
+                            <li>
+                                <div ng-click="$ctrl.order('size', 'toggle')">
+                                    <span translate="SIZE"></span>
+                                    <order-indicator name="size" order-prop="$ctrl.orderProp" order-reverse="$ctrl.orderReverse"></order-indicator>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="filter-query-wrapper" class="btn-group hidden-xs">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.FILTER' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                            <span ng-class="::icons.search"></span>
+                        </button>
+                        <div class="dropdown-menu filter dropdown-menu-right" ng-click="$ctrl.openFilter($event)" role="menu">
+                            <div class="form-group has-feedback">
+                                <label class="control-label" for="filter-input" translate="NAME"></label>
+                                <input id="filter-input" ng-model="$ctrl.filterModels.nameQuery" class="form-control" placeholder="{{'NAME' | translate}}" type="text">
+                                <span ng-show="$ctrl.filterModels.nameQuery" ng-click="$ctrl.filterModels.nameQuery = ''" ng-class="::icons.remove" class="form-control-feedback"></span>
+                            </div>
+                            <div ng-if="!$ctrl.forceMimeTypes" class="has-feedback">
+                                <label class="control-label" for="filter-mime-type-input" translate="BROWSER.FILTER.MIME_TYPE"></label>
+                                <input id="filter-mime-type-input" ng-model="$ctrl.filterModels.mimeTypeQuery" class="form-control" placeholder="{{'BROWSER.FILTER.MIME_TYPE' | translate}}" type="text" bs-options="childrenMimeType.value as childrenMimeType.label for childrenMimeType in $ctrl.filterModels.allChildrenMimeTypes" data-html="true" data-container=".browser-wrapper" bs-typeahead>
+                                <span ng-show="$ctrl.filterModels.mimeTypeQuery" ng-click="$ctrl.filterModels.mimeTypeQuery = ''" ng-class="::icons.remove" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="::$ctrl.config.canSwitchViewMode" class="btn-group">
+                    <button class="btn btn-default" ng-click="$ctrl.switchViewMode()" data-title="{{$ctrl.viewMode[$ctrl.browserSettings.viewMode].text | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="$ctrl.viewMode[$ctrl.browserSettings.viewMode].icon"></span>
+                    </button>
+                </div>
+
+                <div class="btn-group">
+                    <button ng-if="$ctrl.config.canChangeRoot && !$ctrl.forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSIONS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.history"></span>
+                    </button>
+                    <ul ng-if="$ctrl.config.canChangeRoot && !$ctrl.forceHead" class="dropdown-menu dropdown-menu-right snapshots" role="menu">
+                        <li ng-click="$ctrl.changeRoot('head')" ng-class="{active: $ctrl.root === 'head'}">
+                            <div>{{'BROWSER.HEAD' | translate}}</div>
+                        </li>
+                        <li ng-if="$ctrl.workspaceHistory.length > 1" class="divider"></li>
+                        <li ng-if="$ctrl.workspaceHistory.length > 1" class="dropdown-header">{{'BROWSER.PREVIOUS_VERSIONS' | translate}}</li>
+                        <li ng-repeat="workspaceSnapshot in $ctrl.workspaceHistory | filter:{name:'!!'} | orderBy:'date':true track by workspaceSnapshot.key"
+                            ng-class="{active: $ctrl.root === workspaceSnapshot.name}"
+                            ng-click="::$ctrl.changeRoot(workspaceSnapshot.name)">
+                            <div>
+                                <span ng-if="::workspaceSnapshot.tag">
+                                    <span ng-class="::icons.tag"></span> <strong translate="BROWSER.TAG" data-translate-values="workspaceSnapshot"></strong>
+                                </span>
+                                <span ng-class="::{small: workspaceSnapshot.tag}" translate="BROWSER.SNAPSHOT" data-translate-values="workspaceSnapshot"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <span class="divider"></span>
+
+                <div ng-if="$ctrl.isWorkspace" class="btn-group hidden-xs">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.OTHERS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.others"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyRootCollectionSelected()">
+                            <div ng-click="$ctrl.rename()"><span ng-class="::icons.edit"></span> {{'RENAME' | translate}}</div>
+                        </li>
+                        <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyParentSelected()">
+                            <div ng-click="$ctrl.move()"><span ng-class="::icons.browser.move"></span> {{'BROWSER.MOVE' | translate}}</div>
+                        </li>
+                        <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyParentSelected()" class="divider"></li>
+                        <li><div ng-click="$ctrl.download()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
+                        <!--<li><div ng-click="$ctrl.addToCart()"><span ng-class="::icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
+                    </ul>
+                </div>
+
+                <!--<div ng-show="$ctrl.isMarket" class="btn-group">-->
+                <!--<button ng-if="$ctrl.config.canDownload" class="btn btn-default" ng-click="$ctrl.addToCart()" data-title="{{'BROWSER.ADD_TO_CART' | translate}}"  data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>-->
+                <!--<span ng-class="::icons.cartPlus"></span>-->
+                <!--</button>-->
+                <!--</div>-->
+
+                <div ng-show="$ctrl.config.canEdit && $ctrl.isHead && $ctrl.hasOnlyParentSelected()" class="btn-group hidden-xs">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'ADD' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.plus"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <div ng-click="$ctrl.addCollection()"><span ng-class="::icons.plus"></span> {{'BROWSER.NEW_COLLECTION' | translate}}</div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div ng-click="$ctrl.doAction('uploadFiles')"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD_FILES' | translate}}</div>
+                        </li>
+                        <li>
+                            <div ng-click="$ctrl.doAction('uploadZip')"><span ng-class="::icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div ng-show="$ctrl.isMarket && !$ctrl.hasOnlyParentSelected() && $ctrl.hasOnlyOneElementSelected()" class="btn-group">
+                    <button class="btn btn-default" ng-click="$ctrl.share()" data-title="{{'SHARE' | translate}}"  data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.share"></span>
+                    </button>
+                </div>
+
+                <div ng-show="$ctrl.isMarket && !$ctrl.hasOnlyParentSelected()" class="btn-group">
+                    <button class="btn btn-default" ng-click="$ctrl.download()" data-title="{{'DOWNLOAD' | translate}}"  data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.download"></span>
+                    </button>
+                </div>
+
+                <div ng-show="!$ctrl.hasOnlyParentSelected()" class="btn-group hidden-xs">
+                    <button ng-if="$ctrl.config.canEdit && $ctrl.isHead" class="btn btn-default" ng-click="$ctrl.delete()" data-title="{{'BROWSER.DELETE' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.delete"></span>
+                    </button>
+                </div>
+
+                <div ng-if="::$ctrl.config.canPreview" ng-show="$ctrl.visualizers" class="btn-group hidden-xs">
+                    <button class="btn btn-default" ng-click="$ctrl.preview()" data-title="{{'BROWSER.PREVIEW' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.preview"></span>
+                    </button>
+                    <button ng-if="$ctrl.visualizers.length > 1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only" translate="BROWSER.TOGGLE_DROPDOWN"></span>
+                    </button>
+                    <ul ng-if="$ctrl.visualizers.length > 1" class="dropdown-menu" role="menu">
+                        <li ng-repeat-start="visualizer in $ctrl.visualizers"><div ng-click="$ctrl.preview(visualizer)">{{visualizer.getName()}}</div></li>
+                        <li ng-repeat-end ng-if="$first" class="divider"></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="browser-content-wrapper">
+        <browser-workspaces-list class="browser-aside browser-aside-left" ng-if="::$ctrl.displayAsideWorkspaceList()" ng-click="$ctrl.deactivateContextMenu()" ng-right-click="$ctrl.deactivateContextMenu()"
+                                 workspaces="$ctrl.workspaces" active="$ctrl.workspace" on-change="$ctrl.changeWorkspace(workspace)"></browser-workspaces-list>
+
+        <div ng-if="$ctrl.config.canEdit && $ctrl.isHead" ng-click="$ctrl.checkSelection($event)" ng-right-click="$ctrl.checkSelection($event)"
+             class="workspace-elements-wrapper" ng-controller="BrowserUploaderCtrl"
+             nv-file-over="" nv-file-drop="" uploader="$root.uploader" options="{ortolangType: ortolangType.object}">
+            <div ng-include="$ctrl.isViewModeLine() ? 'browser/browser-line-template.html' : 'browser/browser-tile-template.html'"></div>
+            <input id="object-upload-file-select" type="file" nv-file-select="" uploader="$root.uploader" multiple="" ng-hide="true" options="{ortolangType: ortolangType.object}">
+        </div>
+
+        <div ng-if="!$ctrl.config.canEdit || !$ctrl.isHead" ng-click="$ctrl.checkSelection($event)" ng-right-click="$ctrl.checkSelection($event)"
+             class="workspace-elements-wrapper">
+            <div ng-include="$ctrl.isViewModeLine() ? 'browser/browser-line-template.html' : 'browser/browser-tile-template.html'"></div>
+        </div>
+
+        <browser-aside-information ng-if="::$ctrl.config.displayAsideInfo" ng-hide="$ctrl.browserSettings.hideInfo" ng-click="$ctrl.deactivateContextMenu()" ng-right-click="$ctrl.deactivateContextMenu()" class="browser-aside browser-aside-right hidden-xs"
+                                   element="$ctrl.selectedElements[0]" elements="$ctrl.selectedElements" parent="parent" toggle="$ctrl.toggleAsideInfo()" helper="$ctrl.browserHelperFn" show-metadata="$ctrl.showMetadata()"></browser-aside-information>
+    </div>
+
+    <browser-uploader ng-if="$ctrl.config.canEdit && $ctrl.isHead" workspace="$ctrl.workspace" parent="$ctrl.parent"></browser-uploader>
+
+    <div ng-show="$ctrl.isContextMenuActive && $ctrl.contextMenuItems.length > 0" ng-style="$ctrl.contextMenuStyle" ng-right-click="$ctrl.preventRightClick()" class="browser-context-menu dropdown clearfix open ng-hide">
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="item in $ctrl.contextMenuItems" ng-class="::{divider: item.divider}">
+                <div ng-click="::$ctrl.doAction(item.action)"><span ng-class="::item.icon"></span> {{item.text | translate}}</div>
+            </li>
+        </ul>
+    </div>
+</div>

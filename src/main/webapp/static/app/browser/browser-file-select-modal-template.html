@@ -1,0 +1,17 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-xl">
+        <div class="modal-content">
+            <div class="modal-header modal-header-border" ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" translate="{{title}}" translate-values="titleValues"></span>
+            </div>
+            <div class="modal-body file-select-modal-body">
+                <browser-file-select accept-multiple="acceptMultiple" force-workspace="forceWorkspace" force-mime-types="forceMimeTypes" force-head="forceHead" file-select-id="fileSelectId" force-path="forcePath" hide-elements="hideElements"></browser-file-select>
+            </div>
+            <div class="modal-footer modal-footer-border">
+                <button type="button" class="btn btn-primary" ng-click="$emit('browserAskSelectedElements')" translate="SELECT"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            </div>
+        </div>
+    </div>
+</div>

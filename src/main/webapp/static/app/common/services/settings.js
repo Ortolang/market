@@ -13,22 +13,44 @@ angular.module('ortolangMarketApp')
         var deferred = $q.defer(),
             Settings = this;
 
-        this.WorkspaceBrowserService = {
-            hideInfo: false,
-            hideWorkspaceList: false
+        this.browser = {
+            workspace: {
+                hideInfo: false,
+                hideWorkspaceList: false
+            },
+            market: {
+                hideInfo: false
+            },
+            fileSelect: {}
         };
-
-        this.MarketBrowserService  = {
-            hideInfo: false
-        };
-
-        this.FileSelectBrowserService  = {};
 
         this.language = undefined;
 
         this.cart = {};
 
         this.profileUpdate = {};
+
+        this.searchHistory = [];
+
+        this.putSearch = function (type, params) {
+            var search = {
+                type: type,
+                params: params,
+                date: Date.now()
+            };
+            for (var i = 0; i < this.searchHistory.length; i++) {
+                var previous = this.searchHistory[i];
+                if (previous.type === search.type && previous.params.content === search.params.content && previous.params.filters === search.params.filters) {
+                    this.searchHistory.splice(i, 1);
+                    break;
+                }
+            }
+            this.searchHistory.unshift(search);
+            if (this.searchHistory.length > 10) {
+                this.searchHistory.slice(0, 10);
+            }
+            this.store();
+        };
 
         this.store = function () {
             if (User.isAuthenticated()) {
@@ -56,36 +78,32 @@ angular.module('ortolangMarketApp')
             return deferred.promise;
         };
 
-        this.init = function () {
-            if (User.isAuthenticated()) {
-                User.sessionInitialized().then(function () {
-                    var profileData = User.getProfileData('settings');
-                    if (profileData) {
-                        var savedSettings = profileData.value;
-                        if (savedSettings && savedSettings !== 'undefined') {
-                            angular.forEach(angular.fromJson(savedSettings), function (value, key) {
-                                if (angular.isObject(value)) {
-                                    angular.extend(Settings[key], value);
-                                } else {
-                                    Settings[key] = value;
-                                }
-                            });
-                        }
-                    }
-                    checkIdHal();
-                    deferred.resolve();
-                });
-            } else if (localStorage !== undefined) {
-                var savedSettings = localStorage.getItem('ortolang.settings');
-                if (savedSettings && savedSettings !== 'undefined') {
-                    angular.forEach(angular.fromJson(savedSettings), function (value, key) {
+        function importSettings(settings) {
+            if (angular.isDefined(settings) && settings !== 'undefined') {
+                angular.forEach(angular.fromJson(settings), function (value, key) {
+                    if (angular.isDefined(Settings[key])) {
                         if (angular.isObject(value)) {
                             angular.extend(Settings[key], value);
                         } else {
                             Settings[key] = value;
                         }
-                    });
-                }
+                    }
+                });
+            }
+        }
+
+        this.init = function () {
+            if (User.isAuthenticated()) {
+                User.sessionInitialized().then(function () {
+                    var profileData = User.getProfileData('settings');
+                    if (profileData) {
+                        importSettings(profileData.value);
+                    }
+                    checkIdHal();
+                    deferred.resolve();
+                });
+            } else if (localStorage !== undefined) {
+                importSettings(localStorage.getItem('ortolang.settings'));
                 deferred.resolve();
             }
         };

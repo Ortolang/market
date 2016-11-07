@@ -1,0 +1,45 @@
+<div class="tile-workspace-elements-wrapper">
+    <div ng-if="!$ctrl.isHead || $ctrl.parent.elements.length > 0 || !$ctrl.config.canEdit" ng-repeat="type in [ortolangType.collection, ortolangType.object]" class="row">
+        <p class="col-xs-12 small text-muted" translate="BROWSER.TILE_{{::type.toUpperCase()}}"></p>
+        <div ng-repeat="child in $ctrl.filteredChildren(type) | limitTo:(type === ortolangType.object ? $ctrl.displayedItemLimit : undefined) | orderBy:$ctrl.orderProp:$ctrl.orderReverse track by child.key"
+             ng-class="$ctrl.tileCssClasses()" class="workspace-element-wrapper" on-finish-render>
+            <div class="workspace-element"
+                 ng-click="$ctrl.clickChild(child, $event)"
+                 ng-right-click="$ctrl.clickChild(child, $event)"
+                 ng-dblclick="$ctrl.doubleClickChild(child)"
+                 ng-class="{active : $ctrl.isSelected(child), collection: type === ortolangType.collection}">
+                <div ng-if="::type === ortolangType.object" class="thumb-wrapper">
+                    <div>
+                        <span class="thumb-icon fa-4x" ng-class="::child.mimeType | mimeTypeIconCss"></span>
+                        <div class="thumb" style="background-image: url({{::$ctrl.Content.getThumbUrlWithKey(child.key)}})"></div>
+                        <div ng-if="::(child.mimeType | mimeTypeIconCss) === icons.videoFile" class="thumb-overlay">
+                            <span class="fa-2x" ng-class="::icons.play"></span>
+                        </div>
+                    </div>
+                </div>
+                <p class="name-wrapper">
+                    <span ng-if="::type === ortolangType.collection" ng-class="::icons.folderPlain" class="type"></span>
+                    <span ng-if="::type === ortolangType.object" ng-class="::child.mimeType | mimeTypeIconCss" class="type"></span>
+                    <span class="name">{{child.name}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div ng-if="$ctrl.displayedItemLimit && $ctrl.displayedItemLimit < $ctrl.parent.elements.length" class="clearfix see-all-wrapper">
+        <button class="btn btn-default btn-primary btn-block" ng-click="$ctrl.displayAll()">
+            <span ng-show="$ctrl.loadingAll" class="fa fa-refresh fa-spin"></span>
+            <span ng-hide="$ctrl.loadingAll" translate="BROWSER.SEE_ALL"></span>
+        </button>
+    </div>
+    <div ng-if="$ctrl.parent.elements.length === 0" class="clearfix no-children-wrapper">
+        <span ng-if="!$ctrl.config.canEdit || !$ctrl.isHead" translate="BROWSER.NO_CHILDREN_NOT_HEAD"></span>
+    </div>
+    <div ng-if="$ctrl.isHead && $ctrl.parent.elements.length === 0 && $ctrl.config.canEdit" class="no-children-wrapper-head text-center">
+        <div class="no-children">
+            <span class="icon" ng-class="::icons.cloudUpload"></span>
+            <span translate="BROWSER.NO_CHILDREN" class="hidden-xs file-not-hover"></span>
+            <span translate="BROWSER.NO_CHILDREN_MOBILE" class="visible-xs"></span>
+            <button translate="BROWSER.NO_CHILDREN_MOBILE_BUTTON" class="btn btn-default visible-xs" ng-click="$ctrl.doAction('addFileMobile')"></button>
+        </div>
+    </div>
+</div>

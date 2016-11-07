@@ -19,7 +19,7 @@
                     <div ng-include="'profile/settings.html'"></div>
                 </div>
                 <div data-title="<span class='fa fa-book fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.PUBLICATIONS' | translate}}" bs-pane>
-                    <div ng-include="'profile/publications.html'"></div>
+                    <hal-publications id-hal="User.getProfileData('idhal').value"></hal-publications>
                 </div>
                 <div data-title="<span class='fa fa-cube fa-fw' aria-hidden='true'></span> {{'PROFILE.NAV.CONTRIBUTIONS' | translate}}" bs-pane>
                     <div ng-include="'profile/productions.html'"></div>

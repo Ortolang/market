@@ -6,7 +6,7 @@
                 <div class="media">
                     <div class="media-left">
                         <div class="item-logo contributor-logo">
-                            <span avatar data-email-hash="emailHash || contributor.emailhash" data-size="120" data-img-classes="user-avatar img-circle img-responsive"></span>
+                            <avatar email-hash="emailHash || contributor.emailhash" size="120" img-classes="user-avatar img-circle img-responsive"></avatar>
                         </div>
                     </div>
                     <div class="media-body">
@@ -72,7 +72,7 @@
                 <section class="publications" ng-if="infos.idhal">
                     <h4 translate="CONTRIBUTOR.PUBLICATIONS"></h4>
                     <div class="section-body-wrapper">
-                        <div publications-hal data-id-hal="infos.idhal"></div>
+                        <hal-publications id-hal="infos.idhal"></hal-publications>
                     </div>
                 </section>
             </div>

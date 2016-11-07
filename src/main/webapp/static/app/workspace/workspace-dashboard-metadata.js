@@ -140,7 +140,7 @@ angular.module('ortolangMarketApp')
                 $scope.fileImageSelectModal = $modal({
                     scope: fileImageSelectModalScope,
                     title: 'WORKSPACE.METADATA_EDITOR.SELECT_LOGO',
-                    templateUrl: 'common/directives/file-select-modal-template.html',
+                    templateUrl: 'browser/browser-file-select-modal-template.html',
                     show: false
                 });
 

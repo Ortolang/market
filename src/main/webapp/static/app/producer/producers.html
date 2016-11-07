@@ -36,7 +36,7 @@
             </table>
             <section ng-if="producers && models.viewMode === 'tile'" class="items">
                 <div class="row auto-clear">
-                    <div ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder | limitTo:models.limit track by producer.key" ng-click="showProducer(producer, $event)" organization-card organization="producer" icons="icons" class="col-sm-12 col-md-6 col-lg-6"></div>
+                    <organization-card ng-repeat="producer in producers | filter:models.query | orderBy:producerOrder | limitTo:models.limit track by producer.key" ng-click="showProducer(producer, $event)" organization="producer" icons="icons" class="col-sm-12 col-md-6 col-lg-6"></organization-card>
                 </div>
             </section>
             <p ng-show="processing"><span class="fa fa-refresh fa-spin"></span> {{'PENDING_DATA' | translate}}</p>

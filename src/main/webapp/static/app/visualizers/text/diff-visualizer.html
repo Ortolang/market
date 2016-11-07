@@ -1,0 +1,6 @@
+<div ng-controller="DiffVisualizerCtrl" class="diff" ng-init="diff = 'default'">
+    <pre ng-if="diff === 'default'" diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre ng-if="diff === 'processing-diff'" processing-diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre ng-if="diff === 'semantic-diff'" semantic-diff left-obj="leftObj" right-obj="rightObj"></pre>
+    <pre ng-if="diff === 'line-diff'" line-diff left-obj="leftObj" right-obj="rightObj"></pre>
+</div>

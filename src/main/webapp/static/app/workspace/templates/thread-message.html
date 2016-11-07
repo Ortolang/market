@@ -1,6 +1,6 @@
 <div class="media">
     <div class="media-left message-author-icon">
-        <span avatar data-email-hash="Helper.profileCards[message.author].emailHash" data-size="48"></span>
+        <avatar email-hash="Helper.profileCards[message.author].emailHash" size="48"></avatar>
     </div>
     <div class="media-body">
         <div class="media-heading">
@@ -13,7 +13,7 @@
             <h5 class="media-heading message-title">Re: {{::models.activeThread.title}}</h5>
             <div ng-hide="models.editedMessage.key === message.key">
                 <div class="message-content">{{message.body}}</div>
-                <div class="message-attachments" ng-if="message.attachments.length > 0" visualizer>
+                <div class="message-attachments" ng-if="message.attachments.length > 0">
                     {{'WORKSPACE.THREADS.ATTACHMENTS' | translate:{number: message.attachments.length} }}
                     <span class="btn-group" ng-repeat="attachment in message.attachments track by attachment.hash">
                         <span class="btn btn-alternate btn-sm" ng-click="showAttachment(message, attachment, showObjectPreview)"><span ng-class="::attachment.type | mimeTypeIconCss"></span> {{::attachment.name}}</span>

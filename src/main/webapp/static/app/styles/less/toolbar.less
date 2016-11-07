@@ -1,11 +1,15 @@
-.toolbar.browser-toolbar, .toolbar.side-panel-toolbar {
+.toolbar.browser-toolbar {
+  padding-left: floor(@grid-gutter-width/2);
+  padding-right: floor(@grid-gutter-width/2);
+}
+.toolbar.side-panel-toolbar {
   padding-left: 0;
   padding-right: 0;
 }
 
-.toolbar.browser-toolbar.market-browser-toolbar, .toolbar.visualizer-toolbar {
-  padding-left: @container-main-padding - floor(@grid-gutter-width/2);
-  padding-right: @container-main-padding - floor(@grid-gutter-width/2);
+.toolbar.browser-toolbar.market-browser-toolbar {
+  padding-left: @container-main-padding;
+  padding-right: @container-main-padding;
 }
 
 .toolbar {
@@ -16,14 +20,6 @@
 
   &.toolbar-empty {
     display: none;
-  }
-
-  .toolbar-title-wrapper {
-    margin-top: -@padding-large-vertical;
-    margin-bottom: -@padding-large-vertical;
-    .toolbar-title {
-      line-height: @toolbar-min-height;
-    }
   }
 
   .btn-toolbar.btn-toolbar-right .btn-group {

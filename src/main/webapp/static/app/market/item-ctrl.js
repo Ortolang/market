@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'MarketBrowserService', 'Helper', 'url', function ($rootScope, $scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, MarketBrowserService, Helper, url) {
+    .controller('ItemCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$filter', '$sanitize', 'Content', 'SearchResource', 'Helper', 'url', function ($rootScope, $scope, $routeParams, $location, $route, $filter, $sanitize, Content, SearchResource, Helper, url) {
 
         var handle;
 
@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
                     $scope.tag = $scope.tags[$scope.tags.length - 1];
                 }
 
-                MarketBrowserService.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
+                $scope.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
 
                 SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
                     $scope.ortolangObject = collection;
@@ -186,15 +186,21 @@ angular.module('ortolangMarketApp')
             $scope.item.social.linkedin += '&source=ORTOLANG';
         }
 
-        function init() {
+        $scope.$on('$routeChangeSuccess', function ($event, current, previous) {
+            if (previous) {
+                // if previous route was /market/(corpora|lexicons...) and params
+                $scope.fromSearch = Object.keys(previous.params).length > 0 && /^\/market\/\w+$/.test(previous.$$route.originalPath);
+                console.log($scope.fromSearch);
+            }
+        });
+
+        (function init() {
             $scope.itemAlias = $routeParams.alias;
             $scope.browse = $location.search().browse;
             $scope.ready = false;
             $scope.item = {};
             handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.itemAlias + ($scope.tag ? '/' + $scope.tag.name : '');
             loadItem();
-        }
-
-        init();
+        }());
 
     }]);

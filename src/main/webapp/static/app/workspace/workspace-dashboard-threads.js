@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$location', '$modal', '$q', '$filter', '$timeout', '$anchorScroll', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', 'Content', function ($rootScope, $scope, $location, $modal, $q, $filter, $timeout, $anchorScroll, Workspace, MessageResource, ortolangType, Helper, Content) {
+    .controller('WorkspaceDashboardThreadsCtrl', ['$rootScope', '$scope', '$location', '$modal', '$q', '$filter', '$timeout', '$anchorScroll', 'Workspace', 'MessageResource', 'ortolangType', 'Helper', 'VisualizerService', 'Content', function ($rootScope, $scope, $location, $modal, $q, $filter, $timeout, $anchorScroll, Workspace, MessageResource, ortolangType, Helper, VisualizerService, Content) {
 
         var listDeferred, messagesDeferred;
 
@@ -50,7 +50,7 @@ angular.module('ortolangMarketApp')
 
         $scope.createThread = function () {
             var createThreadModal,
-                modalScope = Helper.createModalScope(true);
+                modalScope = Helper.createModalScope(true, true);
 
             modalScope.submit = function (createThreadForm) {
                 if (!modalScope.models.pendingSubmit) {
@@ -75,9 +75,6 @@ angular.module('ortolangMarketApp')
                     }
                 }
             };
-            modalScope.$on('modal.show', function () {
-                angular.element('#create-thread-modal').find('[autofocus]:first').focus();
-            });
             createThreadModal = $modal({
                 scope: modalScope,
                 templateUrl: 'workspace/templates/create-thread-modal.html',
@@ -316,6 +313,10 @@ angular.module('ortolangMarketApp')
                 $scope.listMessages();
             });
         }
+
+        $scope.showObjectPreview = function (object, url) {
+            VisualizerService.showObjectPreview(object, url);
+        };
 
         $scope.$on('$routeUpdate', function () {
             if ($location.search().t) {
