@@ -3,8 +3,8 @@
 describe('Constant: ortolangType', function () {
 
     // load the service's module
-    beforeEach(module('ortolangMarketApp'));
-    beforeEach(module('ortolangMarketAppMock'));
+    beforeEach(angular.mock.module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketAppMock'));
 
     var ortolangType;
     beforeEach(inject(function (_ortolangType_) {

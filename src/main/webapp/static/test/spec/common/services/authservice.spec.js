@@ -3,7 +3,7 @@
 //describe('Service: authService', function () {
 //
 //    // load the service's module
-//    beforeEach(module('ortolangMarketApp'));
+//    beforeEach(angular.mock.module('ortolangMarketApp'));
 //
 //    // instantiate service
 //    var authService, httpBackend, urlPattern, urlPattern2, goodCredentials, badCredentials, user, locationService, successCallback, errorCallback, session;

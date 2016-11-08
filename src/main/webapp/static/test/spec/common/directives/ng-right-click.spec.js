@@ -3,7 +3,7 @@
 describe('Directive: ngRightClick', function () {
 
     // load the directive's module
-    beforeEach(module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketApp'));
 
     var scope;
 

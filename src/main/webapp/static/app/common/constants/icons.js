@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
             cart: 'fa fa-fw fa-star',
             cartPlus: 'fa fa-star',
             edit: 'glyphicon glyphicon-pencil',
-            copyToClipboard: 'octicon octicon-clippy',
+            clipboard: 'octicon octicon-clippy',
             cloudUpload: 'glyphicon glyphicon-cloud-upload',
             pending: 'fa fa-refresh fa-spin',
             search: 'glyphicon glyphicon-search',

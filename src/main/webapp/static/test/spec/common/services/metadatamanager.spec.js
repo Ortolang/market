@@ -3,7 +3,7 @@
 describe('Service: MetadataManager', function () {
 
   // load the service's module
-  beforeEach(module('ortolangMarketApp'));
+  beforeEach(angular.mock.module('ortolangMarketApp'));
 
   // instantiate service
   var MetadataManager;

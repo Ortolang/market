@@ -9,7 +9,7 @@
                 <strong translate="WORKSPACE.ALIAS"></strong> {{Workspace.active.workspace.alias}}
             </li>
             <li>
-                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.workspace.key"></span></span>
+                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key}} <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{Workspace.active.workspace.key}}"></span></span>
             </li>
         </ul>
         <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: Workspace.active.members.length}"></p>
@@ -39,15 +39,15 @@
             <strong>HTTP</strong>
             <div ng-if="Workspace.active.workspace.tags.length > 0">
                 <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
-                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip data-zeroclip-text="{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}"></span></span>
+                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}"></span></span>
             </div>
             <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
-            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="dashboardModels.links.content"></span></span>
+            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{dashboardModels.links.content}}"></span></span>
             <br/>
             <br/>
             <strong>FTP</strong>
             <div>
-                <a ng-href="{{::Workspace.active.ftp.url}}">{{::Workspace.active.ftp.url}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.ftp.url"></span></span>
+                <a ng-href="{{::Workspace.active.ftp.url}}">{{::Workspace.active.ftp.url}}</a> <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{Workspace.active.ftp.url}}"></span></span>
             </div>
         </div>
         <div class="workspace-dashboard-section workspace-dashboard-section-events">

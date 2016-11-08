@@ -2,8 +2,8 @@
 
 describe('Controller: WorkspacesCtrl', function () {
 
-    beforeEach(module('ortolangMarketApp'));
-    beforeEach(module('ortolangMarketAppMock'));
+    beforeEach(angular.mock.module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketAppMock'));
 
     var WorkspacesCtrl,
         WorkspaceResource,
@@ -14,9 +14,10 @@ describe('Controller: WorkspacesCtrl', function () {
         $rootScope,
         url,
         $location,
-        workspaceListUrl;
+        workspaceListUrl,
+        Helper;
 
-    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Workspace_, _WorkspaceResource_, _$location_) {
+    beforeEach(inject(function ($controller, _$rootScope_, _sample_, _$httpBackend_, _url_, _Workspace_, _WorkspaceResource_, _$location_, _Helper_) {
         $httpBackend = _$httpBackend_;
         WorkspaceResource = _WorkspaceResource_;
         Workspace = _Workspace_;
@@ -24,6 +25,7 @@ describe('Controller: WorkspacesCtrl', function () {
         $rootScope = _$rootScope_;
         sample = _sample_;
         url = _url_;
+        Helper = _Helper_;
         workspaceListUrl = url.api + '/workspaces?md=true';
         $location = _$location_;
         WorkspacesCtrl = $controller('WorkspacesCtrl', {
@@ -48,12 +50,15 @@ describe('Controller: WorkspacesCtrl', function () {
     });
 
     it('should display a modal when asking to create a workspace', function () {
+        $httpBackend.expect('GET', 'workspace/templates/create-workspace-modal.html').respond(200, '<div class="modal"></div>');
         $scope.createWorkspace();
         $rootScope.$apply();
-        expect(angular.element('.modal').length).toBe(1);
-        expect(angular.element('.modal')[0]).toBeDefined();
-        hideModal();
-        $rootScope.$apply();
+        setTimeout(function () {
+            expect(Helper.isModalOpened()).toEqual(true);
+            Helper.hideModal();
+            $rootScope.$apply();
+        }, 500);
+        $httpBackend.flush();
     });
 
     it('should change url when asking to manage a workspace', function () {

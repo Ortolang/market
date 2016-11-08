@@ -1,4 +1,16 @@
-'use strict';
+import * as angular from "angular";
+import IRouteProvider = angular.route.IRouteProvider;
+import ILocationProvider = angular.ILocationProvider;
+import ISCEDelegateProvider = angular.ISCEDelegateProvider;
+import ICompileProvider = angular.ICompileProvider;
+import IRootScopeService = angular.IRootScopeService;
+import IDirective = angular.IDirective;
+import ITooltipProvider = mgcrea.ngStrap.tooltip.ITooltipProvider;
+import IAlertProvider = mgcrea.ngStrap.alert.IAlertProvider;
+import IAnalyticsServiceProvider = angulartics.IAnalyticsServiceProvider;
+import IEditableOptions = angular.xeditable.IEditableOptions;
+import IServiceProviderFactory = angular.IServiceProviderFactory;
+import IModule = angular.IModule;
 
 /**
  * @ngdoc overview
@@ -38,7 +50,7 @@ angular
         'formly',
         'formlyBootstrap',
         'pascalprecht.translate',
-        'zeroclipboard',
+        'ngclipboard',
         'xeditable',
         'ngTagsInput',
         'angularMoment',
@@ -51,7 +63,7 @@ angular
         'ngWig',
         'chart.js'
     ])
-    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider: OrtolangRouteProvider, $locationProvider: ILocationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'market/home.html',
@@ -144,7 +156,7 @@ angular
                 controller: 'ProfileCtrl',
                 requiresAuthentication: true,
                 resolve: {
-                    func: ['AuthService', function (AuthService) {
+                    func: ['AuthService', function (AuthService: any) {
                         return AuthService.sessionInitialized;
                     }]
                 },
@@ -177,7 +189,7 @@ angular
         }
         $locationProvider.hashPrefix('!');
     }])
-    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+    .config(['$sceDelegateProvider', function ($sceDelegateProvider: ISCEDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             // Allow same origin resource loads.
             'self',
@@ -187,7 +199,7 @@ angular
             'https://' + OrtolangConfig.piwikHost + '**'
         ]);
     }])
-    .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider, $alertProvider) {
+    .config(['$tooltipProvider', '$alertProvider', function ($tooltipProvider: ITooltipProvider, $alertProvider: IAlertProvider) {
         angular.extend($tooltipProvider.defaults, {
             container: 'body',
             trigger: 'hover'
@@ -197,22 +209,17 @@ angular
             placement: 'top-right'
         });
     }])
-    .config(['hotkeysProvider', function (hotkeysProvider) {
+    .config(['hotkeysProvider', function (hotkeysProvider: any) {
         hotkeysProvider.templateHeader = '<span></span>';
     }])
-    .config(['uiZeroclipConfigProvider', function (uiZeroclipConfigProvider) {
-        uiZeroclipConfigProvider.setZcConf({
-            swfPath: '/vendor/ZeroClipboard.swf'
-        });
-    }])
-    .config(['$analyticsProvider', function ($analyticsProvider) {
+    .config(['$analyticsProvider', function ($analyticsProvider: IAnalyticsServiceProvider) {
         if (!(OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId)) {
             $analyticsProvider.developerMode(true);
             $analyticsProvider.virtualPageviews(false);
             $analyticsProvider.firstPageview(false);
         }
     }])
-    .config(['$compileProvider', function ($compileProvider) {
+    .config(['$compileProvider', function ($compileProvider: ICompileProvider) {
         $compileProvider.debugInfoEnabled(!!OrtolangConfig.debug);
     }])
     .config(function () {
@@ -227,7 +234,7 @@ angular
         microDataElement.text(angular.toJson(microData));
         angular.element('head').append(microDataElement);
     })
-    .config(['ChartJsProvider', function (ChartJsProvider) {
+    .config(['ChartJsProvider', function (ChartJsProvider: any) {
         ChartJsProvider.setOptions('global', {
             tooltips: {
                 titleFontFamily: '"Open Sans","Helvetica Neue", Helvetica, Arial, sans-serif',
@@ -235,7 +242,7 @@ angular
             }
         });
     }])
-    .run(['$rootScope', function ($rootScope) {
+    .run(['$rootScope', function ($rootScope: OrtolangRootScopeService) {
         if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
             var optOutUrl = '//' + OrtolangConfig.piwikHost + 'index.php?module=CoreAdminHome&action=optOut&language=';
             $rootScope.$on('languageInitialized', function (event, language) {
@@ -246,7 +253,7 @@ angular
             });
         }
     }])
-    .run(['editableOptions', 'editableThemes', function (editableOptions, editableThemes) {
+    .run(['editableOptions', 'editableThemes', function (editableOptions: IEditableOptions, editableThemes: any) {
         var copy = editableThemes.bs3;
         copy.formTpl = '<form class="" role="form"></form>';
         copy.controlsTpl = '<div class="editable-controls input-group" ng-class="{\'has-error\': $error, \'input-group-lg\': largeInput}"></div>';
@@ -256,7 +263,7 @@ angular
         editableThemes.bs3 = copy;
         editableOptions.theme = 'bs3';
     }])
-    .run(['$rootScope', 'icons', function ($rootScope, icons) {
+    .run(['$rootScope', 'icons', function ($rootScope: OrtolangRootScopeService, icons: IModule) {
         $rootScope.icons = icons;
     }]);
 

@@ -21,13 +21,14 @@
     </scm>
 
     <properties>
-        <version.frontend.maven.plugin>1.0</version.frontend.maven.plugin>
+        <version.frontend.maven.plugin>1.2</version.frontend.maven.plugin>
         <version.resources.maven.plugin>3.0.1</version.resources.maven.plugin>
         <version.clean.maven.plugin>3.0.0</version.clean.maven.plugin>
         <version.sonar.maven.plugin>3.0.2</version.sonar.maven.plugin>
         <sonar.language>js</sonar.language>
         <sonar.sources>src/main/webapp/static/app</sonar.sources>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <working.directory>target-webpack</working.directory>
     </properties>
 
     <repositories>
@@ -71,15 +72,20 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target-grunt</outputDirectory>
+                            <outputDirectory>${basedir}/${working.directory}</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${basedir}</directory>
                                     <excludes>
+                                        <exclude>.*/**</exclude>
+                                        <exclude>_*/**</exclude>
+                                        <exclude>inspection/**</exclude>
                                         <exclude>bower_components/**</exclude>
+                                        <exclude>dist/**</exclude>
                                         <exclude>node_modules/**</exclude>
-                                        <exclude>.idea/**</exclude>
-                                        <exclude>.tmp/**</exclude>
+                                        <exclude>target-*/**</exclude>
+                                        <exclude>target/**</exclude>
+                                        <exclude>typings/**</exclude>
                                     </excludes>
                                 </resource>
                             </resources>
@@ -93,7 +99,7 @@
                 <version>${version.frontend.maven.plugin}</version>
 
                 <configuration>
-                    <workingDirectory>target-grunt</workingDirectory>
+                    <workingDirectory>${working.directory}</workingDirectory>
                 </configuration>
 
                 <executions>
@@ -105,7 +111,7 @@
                         <configuration>
                             <nodeVersion>v6.2.1</nodeVersion>
                             <npmVersion>3.9.6</npmVersion>
-                            <installDirectory>target-grunt</installDirectory>
+                            <installDirectory>${working.directory}</installDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -114,25 +120,28 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <installDirectory>target-grunt</installDirectory>
+                            <arguments>install</arguments>
+                            <installDirectory>${working.directory}</installDirectory>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>bower install</id>
+                        <id>npm test</id>
                         <goals>
-                            <goal>bower</goal>
+                            <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <installDirectory>target-grunt</installDirectory>
+                            <arguments>test</arguments>
+                            <installDirectory>${working.directory}</installDirectory>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>grunt build</id>
+                        <id>webpack</id>
                         <goals>
-                            <goal>grunt</goal>
+                            <goal>webpack</goal>
                         </goals>
                         <configuration>
-                            <installDirectory>target-grunt</installDirectory>
+                            <arguments>--config config/webpack.prod.js --progress --profile --bail</arguments>
+                            <installDirectory>${working.directory}</installDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -143,9 +152,11 @@
                 <configuration>
                     <webResources>
                         <resource>
-                            <directory>target-grunt/dist</directory>
+                            <directory>${working.directory}/dist</directory>
                         </resource>
                     </webResources>
+                    <warSourceExcludes>static/**</warSourceExcludes>
+                    <packagingExcludes>static/**</packagingExcludes>
                     <archive>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -188,8 +199,8 @@
                         <fileset>
                             <directory>${basedir}</directory>
                             <includes>
-                                <include>target-grunt/**/*</include>
-                                <include>target-grunt</include>
+                                <include>${working.directory}/**/*</include>
+                                <include>${working.directory}</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
                         </fileset>
