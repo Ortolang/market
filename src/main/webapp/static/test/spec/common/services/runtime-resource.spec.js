@@ -4,6 +4,7 @@ describe('Service: RuntimeResource', function () {
 
     // load the service's module
     beforeEach(angular.mock.module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketAppMock'));
 
     // instantiate service
     var RuntimeResource;

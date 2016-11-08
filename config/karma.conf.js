@@ -14,7 +14,9 @@ module.exports = function (config) {
         plugins: [
             require('karma-jasmine'),
             require('karma-chrome-launcher'),
+            require('karma-safari-launcher'),
             require('karma-firefox-launcher'),
+            require('karma-opera-launcher'),
             require('karma-phantomjs-launcher'),
             require('karma-remap-istanbul'),
             require('karma-sourcemap-loader'),
@@ -31,7 +33,7 @@ module.exports = function (config) {
         webpack: webpackConfig,
 
         webpackMiddleware: {
-            stats: 'errors-only'
+            stats: { colors: true }
         },
 
         webpackServer: {
@@ -65,10 +67,19 @@ module.exports = function (config) {
         },
 
         port: 9876,
+
         colors: true,
-        logLevel: config.LOG_INFO,
+
+        logLevel: config.LOG_DEBUG,
+
         autoWatch: false,
-        browsers: ['PhantomJS'],
+
+        browsers: config.all ? ['PhantomJS', 'Safari', 'Chrome', 'Opera', 'Firefox'] : ['PhantomJS'],
+        browserDisconnectTimeout: 20000,
+        browserDisconnectTolerance: 1,
+        browserNoActivityTimeout: 4*60*1000,
+        captureTimeout : 4*60*1000,
+
         singleRun: true
     };
 
