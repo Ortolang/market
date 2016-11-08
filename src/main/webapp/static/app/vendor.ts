@@ -62,7 +62,7 @@ import 'ngclipboard';
 // You can import js, ts, css, sass, ...
 
 // LESS
-import './styles/less/custom-bootstrap.less';
+require('./styles/less/custom-bootstrap.less');
 // CSS
 import 'font-awesome/css/font-awesome.css';
 import 'octicons/octicons/octicons.css';
