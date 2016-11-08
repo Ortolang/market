@@ -222,6 +222,4 @@ import './profile/friends';
 import './profile/tasks';
 
 // STYLE
-if (process.env.ENV !== 'test') {
-    require('./styles/less/app.less');
-}
+import './styles/less/app.less';
