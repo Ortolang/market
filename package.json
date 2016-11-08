@@ -100,6 +100,7 @@
     "karma-tap": "^3.1.1",
     "karma-tap-pretty-reporter": "^3.0.5",
     "karma-webpack": "^1.8.0",
+    "less": "^2.7.1",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.7",
     "postcss-loader": "^1.1.0",
