@@ -63,7 +63,6 @@ import 'ngclipboard';
 
 // LESS
 import './styles/less/custom-bootstrap.less';
-
 // CSS
 import 'font-awesome/css/font-awesome.css';
 import 'octicons/octicons/octicons.css';

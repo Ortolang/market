@@ -41,7 +41,7 @@ module.exports = {
                 loader: ExtractTextPlugin.extract(
                     'css?sourceMap!' +
                     'postcss-loader!' +
-                    'less?sourceMap'
+                    'less-loader?sourceMap'
                 )
             },
             {
