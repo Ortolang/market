@@ -50,7 +50,6 @@ describe('Controller: WorkspacesCtrl', function () {
     });
 
     it('should display a modal when asking to create a workspace', function () {
-        $httpBackend.expect('GET', 'workspace/templates/create-workspace-modal.html').respond(200, '<div class="modal"></div>');
         $scope.createWorkspace();
         $rootScope.$apply();
         setTimeout(function () {
@@ -58,7 +57,6 @@ describe('Controller: WorkspacesCtrl', function () {
             Helper.hideModal();
             $rootScope.$apply();
         }, 500);
-        $httpBackend.flush();
     });
 
     it('should change url when asking to manage a workspace', function () {
