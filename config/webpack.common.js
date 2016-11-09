@@ -76,7 +76,9 @@ module.exports = {
             'window.jQuery': 'jquery',
             'Keycloak': 'keycloak-js',
             'atmosphere': 'atmosphere.js',
-            'Holder': 'holderjs'
+            'Holder': 'holderjs',
+            'window.FileUploader': 'angular-file-upload',
+            'FileUploader': 'angular-file-upload'
         }),
 
         // Ignore some locales for moment module

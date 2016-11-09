@@ -14,7 +14,7 @@ import 'angular-i18n/angular-locale_fr';
 
 // Dependencies
 import 'angular-translate';
-import 'angular-file-upload';
+import 'angular-file-upload/dist/angular-file-upload';
 import 'angular-strap';
 import 'angular-hotkeys';
 import 'api-check';

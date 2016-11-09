@@ -6,6 +6,8 @@
 //     enableProdMode();
 // }
 
+/// <reference path="typings.d.ts"/>
+
 declare var window: any;
 if (process.env.ENV === 'test') {
     window.OrtolangConfig = require('json!../test/ortolang-config.json');
@@ -14,7 +16,6 @@ if (process.env.ENV === 'test') {
 if (process.env.ENV === 'dev') {
     window.OrtolangConfig = require('json!./ortolang-config.json');
 }
-
 
 // platformBrowserDynamic().bootstrapModule(AppModule);
 import './app.module';
