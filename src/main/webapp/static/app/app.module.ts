@@ -12,6 +12,9 @@ import IEditableOptions = angular.xeditable.IEditableOptions;
 import IServiceProviderFactory = angular.IServiceProviderFactory;
 import IModule = angular.IModule;
 
+
+//@require "./**/*.html"
+
 /**
  * @ngdoc overview
  * @name ortolangMarketApp

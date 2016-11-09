@@ -1,3 +1,5 @@
+reports
+coverage
 src/main/webapp/static/test/reports/
 src/main/webapp/static/app/styles/*.css*
 target-grunt

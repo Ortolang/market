@@ -33,11 +33,11 @@ module.exports = function (config) {
         webpack: webpackConfig,
 
         webpackMiddleware: {
-            stats: { colors: true }
+            stats: 'errors-only'
         },
 
         webpackServer: {
-            noInfo: true
+            noInfo: false
         },
 
         reporters: ['progress', 'junit', 'tap-pretty', 'karma-remap-istanbul'],
