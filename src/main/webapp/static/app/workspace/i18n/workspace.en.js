@@ -78,6 +78,7 @@ angular.module('ortolangMarketApp')
                 MESSAGES: {
                     AVAILABILITY: 'Alias already used',
                     MIN_LENGTH: 'Minimum length of 3 characters',
+                    MAX_LENGTH: 'Maximum length of 25 characters, please choose it manually.',
                     CONSENT: 'You must accept the ORTOLANG policy'
                 },
                 HELP: {
