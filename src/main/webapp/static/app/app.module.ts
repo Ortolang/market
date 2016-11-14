@@ -172,7 +172,7 @@ angular
                 title: 'NAV.TASKS'
             })
             .when('/404', {
-                templateUrl: '404.html',
+                templateUrl: 'common/templates/404.html',
                 title: 'NAV.404',
                 resolve: {
                     func: [function () {

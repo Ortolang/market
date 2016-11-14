@@ -31,6 +31,6 @@ module.exports = webpackMerge(commonConfig, {
         historyApiFallback: true,
         // hot: true,
         stats: { colors: true },
-        contentBase: 'src/main/webapp/static/app'
+        // contentBase: 'src/main/webapp/static/app'
     }
 });

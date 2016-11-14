@@ -6,8 +6,6 @@
 //     enableProdMode();
 // }
 
-/// <reference path="typings.d.ts"/>
-
 declare var window: any;
 if (process.env.ENV === 'test') {
     window.OrtolangConfig = require('json!../test/ortolang-config.json');
@@ -224,3 +222,14 @@ import './profile/tasks';
 
 // STYLE
 import './styles/less/app.less';
+
+import './robots.txt';
+if (process.env.ENV === 'dev') {
+    require('./keycloak.json');
+}
+
+import './manifest.json';
+import './browserconfig.xml';
+import './BingSiteAuth.xml';
+import './favicon.ico';
+//@require "./assets/icons/*"

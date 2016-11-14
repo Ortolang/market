@@ -27,7 +27,7 @@ module.exports = {
             {
                 test: /\.html$/,
                 loader: 'ng-cache?prefix=app:**',
-                exclude: /index\.html/
+                exclude: /(index|ie|google.+)\.html/
             },
             {
                 test: /\.html$/,
@@ -35,8 +35,14 @@ module.exports = {
                 include: /index\.html/
             },
             {
-                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'file?name=assets/[name].[hash].[ext]'
+                test: /\.html$/,
+                loader: 'file?name=[name].[ext]',
+                include: /(ie|google.+)\.html/
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file?name=assets/[name].[hash].[ext]',
+                exclude: /assets\/icons\//
             },
             {
                 test: /\.css$/,
@@ -49,6 +55,16 @@ module.exports = {
                     'postcss-loader!' +
                     'less-loader?sourceMap'
                 )
+            },
+            {
+                test: /(robots\.txt|\.xml|\.ico|\.json)$/,
+                loader: 'file?name=[name].[ext]',
+                exclude: /ortolang-config\.json/
+            },
+            {
+                test: /\.png$/,
+                loader: 'file?name=assets/icons/[name].[ext]',
+                include: /assets\/icons\//
             },
             {
                 test: /\/home\.html$/,
