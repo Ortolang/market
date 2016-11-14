@@ -98,6 +98,9 @@ module.exports = {
         }),
 
         new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: process.env.ENV === 'production'
+            },
             comments: false
         }),
 
