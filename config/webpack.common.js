@@ -97,6 +97,10 @@ module.exports = {
             'FileUploader': 'angular-file-upload'
         }),
 
+        new webpack.optimize.UglifyJsPlugin({
+            comments: false
+        }),
+
         // Ignore some locales for moment module
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fr/)
     ]
