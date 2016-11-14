@@ -711,7 +711,7 @@ angular.module('ortolangMarketApp')
             //       Upload Zip        //
             // *********************** //
 
-            function uploadZip() {
+            ctrl.uploadZip = function () {
                 var uploadZipModal;
                 createModalScope();
                 modalScope.parent = ctrl.parent;
@@ -735,7 +735,7 @@ angular.module('ortolangMarketApp')
                     templateUrl: 'browser/templates/upload-zip.modal.html',
                     show: true
                 });
-            }
+            };
 
             // *********************** //
             //     Add Collection      //
