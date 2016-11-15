@@ -16,7 +16,7 @@
         <div>
             <strong translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: Workspace.active.workspace.tags.length, snapshots: Workspace.active.workspace.snapshots.length}"></strong>
             <ul class="list-inline">
-                <li ng-repeat="tag in Workspace.active.workspace.tags track by tag.snapshot" class="tag-wrapper">
+                <li ng-repeat="tag in Workspace.active.workspace.tags | orderBy:'+tag' track by tag.snapshot" class="tag-wrapper">
                     <div class="label tag label-workspace">
                         <span ng-class="::icons.tag"></span>
                         <span translate="BROWSER.VERSION" data-translate-values="{tag: tag.name}"></span>
@@ -81,10 +81,11 @@
                 <li translate="WORKSPACE.STATISTICS_SINGLE_DOWNLOADS" translate-value-downloads="{{::dashboardModels.chart.totalSingleDownloads}}"></li>
             </ul>
         </div>
-        <div ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="workspace-dashboard-section">
+        <div class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>
-            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly || Workspace.active.workspace.archive" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
-            <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
+            <button class="btn btn-primary" ng-disabled="User.key !== Workspace.active.workspace.owner || !User.isRoot() || !Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly || Workspace.active.workspace.archive" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
+            <button class="btn btn-default btn-danger" ng-hide="Workspace.active.workspace.tags.length > 0" ng-disabled="User.key !== Workspace.active.workspace.owner || !User.isRoot() || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
+            <button class="btn btn-default" ng-click="listWorkspaceContent()">{{'WORKSPACE.LIST_CONTENT' | translate}}</button>
         </div>
         <div class="workspace-dashboard-section workspace-dashboard-section-requests">
             <h4 translate="WORKSPACE.WORKFLOW"></h4>

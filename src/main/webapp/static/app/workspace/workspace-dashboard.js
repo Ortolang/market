@@ -365,6 +365,24 @@ angular.module('ortolangMarketApp')
                 }
             };
 
+            $scope.listWorkspaceContent = function () {
+                WorkspaceResource.listSnapshotContent({wskey: Workspace.active.workspace.key, sid: 'head'}, function (data) {
+                    data = Helper.cleanResourceResponse(data);
+                    delete data['/'];
+                    modalScope = Helper.createModalScope(true);
+                    modalScope.content = Object.keys(data);
+                    modalScope.icons = $rootScope.icons;
+                    modalScope.depth = function (path) {
+                        return 'depth-' + (path.match(/\//g) || []).length;
+                    };
+                    $modal({
+                        scope: modalScope,
+                        templateUrl: 'workspace/templates/workspace-content-modal.html',
+                        show: true
+                    });
+                });
+            };
+
             (function init() {
                 if (Workspace.active.workspace && Workspace.active.workspace.alias !== $route.current.params.alias) {
                     Workspace.clearActiveWorkspace();

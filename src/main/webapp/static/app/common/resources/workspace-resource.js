@@ -50,6 +50,10 @@ angular.module('ortolangMarketApp')
                 method: 'GET',
                 url: url.api + '/workspaces/:wskey/diff',
                 isArray: true
+            },
+            listSnapshotContent: {
+                method: 'GET',
+                url: url.api + '/workspaces/:wskey/snapshots/:sid/content'
             }
         });
     }]);
