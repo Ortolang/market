@@ -482,3 +482,20 @@ table.table-workspace-elements {
     border-bottom: @light-border;
   }
 }
+
+.generate-depth(@n, @i: 2) when (@i =< @n) {
+  .depth-@{i} {
+    margin-left: (@i - 1) * 3 * @padding-large-horizontal;
+  }
+  .generate-depth(@n, (@i + 1));
+}
+
+.workspace-content-modal {
+  .list-group {
+    .depth {
+      border-right: none;
+      border-left-width: 3px;
+    }
+    .generate-depth(8);
+  }
+}

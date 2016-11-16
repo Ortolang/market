@@ -71,6 +71,11 @@ angular.module('ortolangMarketApp')
             PUBLISHED: 'Publié',
             CREATED: '{{author}} a créé',
             VISIBILITY: 'Visibilité',
+            LIST_CONTENT: 'Lister le contenu',
+            LIST_CONTENT_MODAL: {
+                TITLE: 'Contenu de l\'espace de travail /',
+                COPY: 'Copier la liste'
+            },
             SHORTCUTS: {
                 SHORTCUTS: 'Raccourcis clavier',
                 SHOW_SHORTCUTS: 'Afficher la liste des raccourcis clavier',

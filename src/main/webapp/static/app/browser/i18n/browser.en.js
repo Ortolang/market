@@ -69,6 +69,11 @@ angular.module('ortolangMarketApp')
             PUBLISHED: 'Published',
             CREATED: '{{author}} created',
             VISIBILITY: 'Visibility',
+            LIST_CONTENT: 'List content',
+            LIST_CONTENT_MODAL: {
+                TITLE: 'Workspace content',
+                COPY: 'Copy the list to clipboard'
+            },
             SHORTCUTS: {
                 SHORTCUTS: 'Shortcuts',
                 SHOW_SHORTCUTS: 'Show shortcut list',

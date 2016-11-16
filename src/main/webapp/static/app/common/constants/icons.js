@@ -61,6 +61,7 @@ angular.module('ortolangMarketApp')
             linkedin: 'fa fa-linkedin',
             viadeo: 'fa fa-viadeo',
             mail: 'fa fa-envelope',
+            list: 'glyphicon glyphicon-list-alt',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

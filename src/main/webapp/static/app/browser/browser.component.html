@@ -175,6 +175,8 @@
                         <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyParentSelected()" class="divider"></li>
                         <li><div ng-click="$ctrl.download()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
                         <!--<li><div ng-click="$ctrl.addToCart()"><span ng-class="::icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
+                        <li class="divider"></li>
+                        <li><div ng-click="$ctrl.listWorkspaceContent()"><span ng-class="::icons.list"></span> {{'BROWSER.LIST_CONTENT' | translate}}</div></li>
                     </ul>
                 </div>
 

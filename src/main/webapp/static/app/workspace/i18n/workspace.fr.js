@@ -71,7 +71,6 @@ angular.module('ortolangMarketApp')
             NO_METADATA_TYPE: 'La catégorie n\'a pas encore été renseignée.',
             GO_BASIC_INFO: 'Selectionnez une catégorie.',
             HEAD: 'Version actuelle',
-            LIST_CONTENT: 'Lister le contenu',
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Création d\'un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'alias',
@@ -219,10 +218,6 @@ angular.module('ortolangMarketApp')
                 REMOVED: 'Element supprimé',
                 RENAMED: 'Element déplacé',
                 METADATAS: 'Métadonnées modifiées'
-            },
-            CONTENT_MODAL: {
-                TITLE: 'Contenu de l\'espace de travail',
-                COPY: 'Copier la liste'
             },
             SAVE_METADATA_MODAL: {
                 TITLE: 'Enregistrer les métadonnées',

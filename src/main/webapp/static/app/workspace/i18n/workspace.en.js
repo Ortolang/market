@@ -210,10 +210,6 @@ angular.module('ortolangMarketApp')
                 RENAMED: 'Moved element',
                 METADATAS: 'Updated metadata'
             },
-            CONTENT_MODAL: {
-                TITLE: 'Workspace content',
-                COPY: 'Copy the list to clipboard'
-            },
             SAVE_METADATA_MODAL: {
                 TITLE: 'Save metadata',
                 BODY: 'Would you save the modifications ?'
