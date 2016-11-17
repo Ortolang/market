@@ -23,7 +23,7 @@
             <avatar email-hash="Helper.profileCards[message.author].emailHash" size="48"></avatar>
             <span class="message-author"><a ng-href="profiles/{{::message.author}}">{{::Helper.profileCards[message.author].fullName}}</a> </span>
             <span class="message-date">{{::message.date | date:'medium'}}</span>
-            <span ng-if="!models.activeThread.answer">
+            <span>
                 <span ng-if="models.messages.length >= 2" class="reply-message-wrapper">
                     <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>
                 </span>

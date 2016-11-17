@@ -235,8 +235,8 @@ angular.module('ortolangMarketApp')
 
         $scope.validateAnswer = function (message) {
             $scope.models.activeThread.answer = message.key;
-            MessageResource.updateThread({tkey: $scope.models.activeThread.key}, $scope.models.activeThread, function () {
-                $scope.listMessages();
+            MessageResource.updateThread({tkey: $scope.models.activeThread.key}, $scope.models.activeThread, function (data) {
+                $scope.models.activeThread = data;
             });
         };
 
@@ -297,13 +297,26 @@ angular.module('ortolangMarketApp')
 
         $rootScope.$on('message.thread.post', function (event, eventMessage) {
             event.stopPropagation();
-            if (eventMessage.arguments['thread-key'] === $scope.models.activeThread.key) {
+            if (eventMessage.fromObject === $scope.models.activeThread.key) {
                 messagesDeferred.promise.then(function () {
                     if ($filter('filter')($scope.models.messages, {key: eventMessage.arguments.key}, true).length === 0) {
                         $scope.listMessages();
                         setLastActivity();
                     }
                 });
+            }
+        });
+
+        $rootScope.$on('message.thread.answered', function (event, eventMessage) {
+            event.stopPropagation();
+            if (eventMessage.fromObject === $scope.models.activeThread.key) {
+                $timeout(function () {
+                    if (!$scope.models.activeThread.answer) {
+                        var key = $scope.models.activeThread.key;
+                        $scope.listThreads();
+                        setActiveThread(key);
+                    }
+                }, 500);
             }
         });
 
