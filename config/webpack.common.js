@@ -13,7 +13,6 @@ module.exports = {
     resolve: {
         extensions: ['', '.ts', '.js'],
         alias: {
-            'CETEIcean$': 'bower-CETEIcean',
             'highlight.js$': '../../../' + app + 'vendor/highlightjs.js'
         }
     },

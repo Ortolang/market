@@ -405,12 +405,18 @@ tei-graph {
 }
 tei-facsimile {
   tei-graphic {
+    img {
+      max-height: 300px !important;
+    }
     &::shadow img {
       max-height: 300px;
     }
   }
 }
 tei-graphic {
+  img {
+    max-width: 100% !important;
+  }
   &::shadow img {
     max-width: 100%;
   }

@@ -17,14 +17,14 @@
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },
   "dependencies": {
-    "@angular/common": "2.1.2",
-    "@angular/compiler": "2.1.2",
-    "@angular/core": "2.1.2",
-    "@angular/forms": "2.1.2",
-    "@angular/http": "2.1.2",
-    "@angular/platform-browser": "2.1.2",
-    "@angular/platform-browser-dynamic": "2.1.2",
-    "@angular/router": "3.1.2",
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/router": "3.2.1",
     "angular": "1.5.8",
     "angular-animate": "1.5.8",
     "angular-bootstrap-toggle-switch": "git+https://github.com/JumpLink/angular-toggle-switch.git#v0.5.6",
@@ -56,7 +56,7 @@
     "awesome-bootstrap-checkbox": "0.3.5",
     "bootstrap": "3.3.7",
     "bootstrap-additions": "0.3.1",
-    "bower-CETEIcean": "git+https://github.com/prismsoundzero/CETEIcean.git#v0.3.2",
+    "CETEIcean": "git+https://github.com/Ortolang/CETEIcean.git#v0.3.2-ortolang",
     "clipboard": "1.5.15",
     "core-js": "2.4.1",
     "font-awesome": "4.6.3",
@@ -69,7 +69,7 @@
     "ng-wig": "3.0.7",
     "ngclipboard": "1.1.1",
     "octicons": "3.5.0",
-    "rxjs": "5.0.0-rc.2",
+    "rxjs": "5.0.0-rc.3",
     "zone.js": "0.6.26"
   },
   "devDependencies": {
@@ -79,7 +79,7 @@
     "angular-mocks": "1.5.8",
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^2.2.4",
-    "css-loader": "^0.25.0",
+    "css-loader": "^0.26.0",
     "extract-loader": "0.0.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
@@ -116,7 +116,7 @@
     "typings": "^2.0.0",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.15.0"
+    "webpack-merge": "^0.17.0"
   },
   "engines": {
     "node": ">=0.10.0"

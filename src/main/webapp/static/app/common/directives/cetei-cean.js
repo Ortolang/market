@@ -125,29 +125,56 @@ angular.module('ortolangMarketApp')
                                 }
                             },
                             'fallbacks': {
+                                'graphic': function(elmt) {
+                                    $timeout(function () {
+                                        var content = new Image();
+                                        content.src = CETEIcean.rw(elmt.getAttribute('url'));
+                                        if (elmt.hasAttribute('width')) {
+                                            content.width = elmt.getAttribute('width').replace(/[^.0-9]/g, '');
+                                        }
+                                        if (elmt.hasAttribute('height')) {
+                                            content.height = elmt.getAttribute('height').replace(/[^.0-9]/g, '');
+                                        }
+                                        var link = document.createElement('a');
+                                        link.setAttribute('href', CETEIcean.rw(elmt.getAttribute('url')));
+                                        link.setAttribute('target', '_blank');
+                                        link.appendChild(content);
+                                        elmt.appendChild(link);
+                                    });
+                                },
                                 'pb': function () {
-                                //        var elts = this.dom.getElementsByTagName('tei-pb'), i, pgbr, link;
-                                //        for (i = 0; i < elts.length; i++) {
-                                //            pgbr = document.createElement('span');
-                                //            link = document.createElement('a');
-                                //            link.setAttribute('style', 'text-align:right;text-decoration:none;color:gray;');
-                                //            if (elts[i].hasAttribute('facs')) {
-                                //                var facs = this.getAttribute('facs');
-                                //                link.setAttribute('href', facs);
-                                //                if (this.hasAttribute('n')) {
-                                //                    link.innerHTML = 'p. ' + this.getAttribute('n');
-                                //                }
-                                //                if (facs.match(/^https?:\/\/.*(?:jpg|jpeg|gif|png)$/)) {
-                                //                    var img = document.createElement('img');
-                                //                    img.setAttribute('src', facs);
-                                //                    img.setAttribute('height', '50px');
-                                //                    link.appendChild(img);
-                                //                }
-                                //            }
-                                //            pgbr.appendChild(link);
-                                //            elts[i].insertBefore(pgbr, elts[i].firstChild);
-                                //        }
-                                //    }
+                                    var elts = this.dom.getElementsByTagName('tei-pb'), i, pgbr, link;
+                                    for (i = 0; i < elts.length; i++) {
+                                        pgbr = document.createElement('span');
+                                        link = document.createElement('a');
+                                        link.setAttribute('style', 'text-align:right;text-decoration:none;color:gray;');
+                                        if (elts[i].hasAttribute('facs')) {
+                                            var facs = elts[i].getAttribute('facs');
+                                            var img;
+                                            if (facs.match(/^(?!https?:\/\/).*$/)) {
+                                                link.setAttribute('href', CETEIcean.rw(facs));
+                                            } else {
+                                                link.setAttribute('href', facs);
+                                            }
+                                            link.setAttribute('target', '_blank');
+                                            if (elts[i].hasAttribute('n')) {
+                                                link.innerHTML = 'p. ' + elts[i].getAttribute('n');
+                                            }
+                                            if (facs.match(/^https?:\/\/.*(?:jpg|jpeg|gif|png)$/)) {
+                                                img = document.createElement('img');
+                                                img.setAttribute('src', facs);
+                                                img.setAttribute('height', '50px');
+                                                link.appendChild(img);
+                                            } else if (facs.match(/.*(?:jpg|jpeg|gif|png)$/)) {
+                                                img = document.createElement('img');
+                                                img.setAttribute('src', CETEIcean.rw(facs));
+                                                img.setAttribute('height', '50px');
+                                                link.appendChild(img);
+                                            }
+                                        }
+                                        pgbr.appendChild(link);
+                                        elts[i].insertBefore(pgbr, elts[i].firstChild);
+                                    }
                                 }
                             }
                         });
