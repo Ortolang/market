@@ -10,6 +10,15 @@
     height: 100%;
     > .browser-toolbar {
       flex: 0 0 auto;
+      > .btn-toolbar {
+        display: flex;
+        > .browser-breadcrumb {
+          flex: 1 1 auto;
+        }
+        > .btn-toolbar {
+          flex: 1 0 auto;
+        }
+      }
     }
     > .browser-content-wrapper {
       flex: 1 1 auto;
@@ -84,6 +93,13 @@
     }
     .breadcrumb-part {
       display: inline;
+      &.partial {
+        a {
+          max-width: 90px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
       &:after {
         content: '\f054';
         //noinspection CssNoGenericFontName
