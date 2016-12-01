@@ -9,7 +9,7 @@
 
     <fileSets>
         <fileSet>
-            <directory>target-grunt/dist</directory>
+            <directory>${working.directory}/dist</directory>
             <outputDirectory>/</outputDirectory>
             <filtered>false</filtered>
             <includes>

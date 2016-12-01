@@ -1,0 +1,28 @@
+<div class="modal workspace-content-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title">
+                    <span  translate="BROWSER.LIST_CONTENT_MODAL.TITLE"></span>
+                    <span ng-if="::tag">
+                        <span ng-class="::icons.tag"></span> <strong translate="BROWSER.TAG" data-translate-values="{tag: tag}"></strong>
+                    </span>
+                    <span ng-class="::{small: tag}" ng-hide="root === 'head'" translate="BROWSER.SNAPSHOT" data-translate-values="{name: root}"></span>
+                    <span ng-show="root === 'head'" translate="BROWSER.HEAD"></span>
+                </span>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <button class="btn btn-default" ngclipboard data-clipboard-text="{{(content | orderBy:'+').join('\n')}}"><span ng-class="::icons.clipboard"></span> {{'BROWSER.LIST_CONTENT_MODAL.COPY' | translate}}</button>
+                </p>
+                <ul class="list-unstyled" ng-class="bare ? '' : 'list-group'">
+                    <li class="depth" ng-class="depth(path) + ' ' + (bare ? 'unstyled-list' : 'list-group-item')" ng-repeat="path in content | orderBy:'-':true">{{path}}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()" translate="CLOSE"></button>
+            </div>
+        </div>
+    </div>
+</div>

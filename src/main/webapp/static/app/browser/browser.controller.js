@@ -44,6 +44,7 @@ angular.module('ortolangMarketApp')
         'VisualizerService',
         'Content',
         'AuthService',
+        'WorkspaceResource',
         'WorkspaceElementResource',
         'icons',
         'ortolangType',
@@ -52,7 +53,7 @@ angular.module('ortolangMarketApp')
         'Cart',
         'Helper',
         'url',
-        function ($scope, $location, $route, $rootScope, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, VisualizerService, Content, AuthService, WorkspaceElementResource, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
+        function ($scope, $location, $route, $rootScope, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, VisualizerService, Content, AuthService, WorkspaceResource, WorkspaceElementResource, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
 
             var ctrl = this;
 
@@ -711,7 +712,7 @@ angular.module('ortolangMarketApp')
             //       Upload Zip        //
             // *********************** //
 
-            function uploadZip() {
+            ctrl.uploadZip = function () {
                 var uploadZipModal;
                 createModalScope();
                 modalScope.parent = ctrl.parent;
@@ -735,7 +736,7 @@ angular.module('ortolangMarketApp')
                     templateUrl: 'browser/templates/upload-zip.modal.html',
                     show: true
                 });
-            }
+            };
 
             // *********************** //
             //     Add Collection      //
@@ -1762,6 +1763,27 @@ angular.module('ortolangMarketApp')
                     });
                 });
                 Cart.add(items);
+            };
+
+            ctrl.listWorkspaceContent = function () {
+                WorkspaceResource.listSnapshotContent({wskey: ctrl.workspace.key, sid: ctrl.root}, function (data) {
+                    data = Helper.cleanResourceResponse(data);
+                    delete data['/'];
+                    modalScope = Helper.createModalScope(true);
+                    modalScope.icons = icons;
+                    modalScope.root = ctrl.root;
+                    modalScope.tag = getTagName(ctrl.root);
+                    modalScope.content = Object.keys(data);
+                    modalScope.icons = $rootScope.icons;
+                    modalScope.depth = function (path) {
+                        return 'depth-' + (path.match(/\//g) || []).length;
+                    };
+                    $modal({
+                        scope: modalScope,
+                        templateUrl: 'browser/templates/workspace-content.modal.html',
+                        show: true
+                    });
+                });
             };
 
             // *********************** //

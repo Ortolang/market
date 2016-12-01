@@ -65,13 +65,17 @@ angular.module('ortolangMarketApp')
             BACK: 'Revenir',
             FORWARD: 'Avancer',
             TOGGLE_DROPDOWN: 'Menu déroulant',
-            COPY_TO_CLIPBOARD: 'Copier',
             NO_PREVIOUS_VERSIONS: 'Pas de version encore crée',
             TOOLS: 'Outils',
             DRAFT: 'Non publié',
             PUBLISHED: 'Publié',
             CREATED: '{{author}} a créé',
             VISIBILITY: 'Visibilité',
+            LIST_CONTENT: 'Lister le contenu',
+            LIST_CONTENT_MODAL: {
+                TITLE: 'Contenu de l\'espace de travail /',
+                COPY: 'Copier la liste'
+            },
             SHORTCUTS: {
                 SHORTCUTS: 'Raccourcis clavier',
                 SHOW_SHORTCUTS: 'Afficher la liste des raccourcis clavier',

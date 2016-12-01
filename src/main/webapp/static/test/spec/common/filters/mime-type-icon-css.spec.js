@@ -3,8 +3,8 @@
 describe('Filter: mimeTypeIconCss', function () {
 
     // load the filter's module
-    beforeEach(module('ortolangMarketApp'));
-    beforeEach(module('ortolangMarketAppMock'));
+    beforeEach(angular.mock.module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketAppMock'));
 
     // initialize a new instance of the filter before each test
     var mimeTypeIconCss,

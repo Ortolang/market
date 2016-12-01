@@ -3,7 +3,7 @@
 describe('Controller: BagUploaderCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('ortolangMarketApp'));
+  beforeEach(angular.mock.module('ortolangMarketApp'));
 
   var BagUploaderCtrl,
     scope;

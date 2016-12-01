@@ -3,8 +3,8 @@
 describe('Service: Content', function () {
 
     // load the service's module
-    beforeEach(module('ortolangMarketApp'));
-    beforeEach(module('ortolangMarketAppMock'));
+    beforeEach(angular.mock.module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketAppMock'));
 
     // instantiate service
     var Content, httpBackend, url, AuthService,

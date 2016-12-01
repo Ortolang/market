@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div ng-repeat="part in $ctrl.breadcrumbParts" class="breadcrumb-part hidden-xs">
+                <div ng-repeat="part in $ctrl.breadcrumbParts" ng-class="{partial: $ctrl.breadcrumbParts.length > 4 && $ctrl.breadcrumbParts.length - $index > 1}" class="breadcrumb-part hidden-xs">
                     <a ng-if="!$last" ng-click="::$ctrl.browseToPath(part)" class="btn btn-default">
                         {{::$ctrl.parent.pathParts[$index]}}
                     </a>
@@ -175,6 +175,8 @@
                         <li ng-show="$ctrl.isHead && !$ctrl.hasOnlyParentSelected()" class="divider"></li>
                         <li><div ng-click="$ctrl.download()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</div></li>
                         <!--<li><div ng-click="$ctrl.addToCart()"><span ng-class="::icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
+                        <li class="divider"></li>
+                        <li><div ng-click="$ctrl.listWorkspaceContent()"><span ng-class="::icons.list"></span> {{'BROWSER.LIST_CONTENT' | translate}}</div></li>
                     </ul>
                 </div>
 
@@ -197,7 +199,7 @@
                             <div ng-click="$ctrl.doAction('uploadFiles')"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD_FILES' | translate}}</div>
                         </li>
                         <li>
-                            <div ng-click="$ctrl.doAction('uploadZip')"><span ng-class="::icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div>
+                            <div ng-click="$ctrl.uploadZip()"><span ng-class="::icons.browser.uploadZip"></span> {{'BROWSER.UPLOAD_ZIP' | translate}}</div>
                         </li>
                     </ul>
                 </div>

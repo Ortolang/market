@@ -20,6 +20,7 @@
   "smarttabs": true,
   "proto": true,
   "globals": {
+    "OrtolangConfig": false,
     "after": false,
     "afterEach": false,
     "angular": false,

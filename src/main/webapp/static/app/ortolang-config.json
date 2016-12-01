@@ -1,0 +1,15 @@
+{
+    "apiServerUrlDefault": "https://localhost:8443/api",
+    "apiServerUrlNoSSL": "http://localhost:8080/api",
+    "apiSubPath": "/sub",
+    "apiContentPath": "/content",
+    "keycloakConfigLocation": "keycloak.json",
+    "piwikHost": "",
+    "piwikSiteId": "",
+    "staticSiteVersion": "",
+    "handlePrefix": "",
+    "marketServerUrl": "http://localhost:9000/",
+    "cacheVersion": "1",
+    "debug": true
+}
+

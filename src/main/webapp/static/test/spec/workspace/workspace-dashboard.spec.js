@@ -2,8 +2,8 @@
 
 describe('Controller: WorkspaceDashboardCtrl', function () {
 
-    beforeEach(module('ortolangMarketApp'));
-    beforeEach(module('ortolangMarketAppMock'));
+    beforeEach(angular.mock.module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketAppMock'));
 
     var WorkspaceDashboardCtrl,
         Workspace,

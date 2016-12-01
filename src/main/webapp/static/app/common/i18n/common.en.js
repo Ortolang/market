@@ -18,6 +18,7 @@ angular.module('ortolangMarketApp')
         EDIT: 'Edit',
         ADD: 'Add',
         COPY: 'Copy',
+        COPY_TO_CLIPBOARD: 'Copy to clipboard',
         SAVE: 'Save',
         DELETE: 'Delete',
         CLEAR: 'Clear',

@@ -317,5 +317,15 @@ angular.module('ortolangMarketApp')
                 return element.type === ortolangType.collection;
             };
 
+            this.cleanResourceResponse = function (data) {
+                if (data.$promise) {
+                    delete data.$promise;
+                }
+                if (data.$resolved) {
+                    delete data.$resolved;
+                }
+                return data;
+            };
+
             return this;
         }]);

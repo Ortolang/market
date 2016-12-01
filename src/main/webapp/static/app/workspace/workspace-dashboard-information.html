@@ -9,14 +9,14 @@
                 <strong translate="WORKSPACE.ALIAS"></strong> {{Workspace.active.workspace.alias}}
             </li>
             <li>
-                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key}} <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.workspace.key"></span></span>
+                <strong translate="BROWSER.KEY"></strong> {{Workspace.active.workspace.key}} <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{Workspace.active.workspace.key}}"></span></span>
             </li>
         </ul>
         <p translate="WORKSPACE.MEMBERS_NUMBER" data-translate-values="{number: Workspace.active.members.length}"></p>
         <div>
             <strong translate="WORKSPACE.PUBLISHED_VERSIONS" data-translate-values="{number: Workspace.active.workspace.tags.length, snapshots: Workspace.active.workspace.snapshots.length}"></strong>
             <ul class="list-inline">
-                <li ng-repeat="tag in Workspace.active.workspace.tags track by tag.snapshot" class="tag-wrapper">
+                <li ng-repeat="tag in Workspace.active.workspace.tags | orderBy:'+tag' track by tag.snapshot" class="tag-wrapper">
                     <div class="label tag label-workspace">
                         <span ng-class="::icons.tag"></span>
                         <span translate="BROWSER.VERSION" data-translate-values="{tag: tag.name}"></span>
@@ -39,15 +39,15 @@
             <strong>HTTP</strong>
             <div ng-if="Workspace.active.workspace.tags.length > 0">
                 <h5 translate="WORKSPACE.MARKET_LINKS"></h5>
-                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip data-zeroclip-text="{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}"></span></span>
+                <a ng-href="{{::dashboardModels.links.market}}">{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}</a> <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{::dashboardModels.links.base}}{{::dashboardModels.links.market}}"></span></span>
             </div>
             <h5 translate="WORKSPACE.CONTENT_LINKS"></h5>
-            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="dashboardModels.links.content"></span></span>
+            <a ng-href="{{::dashboardModels.links.content}}">{{::dashboardModels.links.content}}</a> <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{dashboardModels.links.content}}"></span></span>
             <br/>
             <br/>
             <strong>FTP</strong>
             <div>
-                <a ng-href="{{::Workspace.active.ftp.url}}">{{::Workspace.active.ftp.url}}</a> <span class="copy-key" data-title="{{'BROWSER.COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.copyToClipboard" ui-zeroclip zeroclip-model="Workspace.active.ftp.url"></span></span>
+                <a ng-href="{{::Workspace.active.ftp.url}}">{{::Workspace.active.ftp.url}}</a> <span class="copy-key" data-title="{{'COPY_TO_CLIPBOARD' | translate}}" data-placement="top" bs-tooltip><span ng-class="::icons.clipboard" ngclipboard data-clipboard-text="{{Workspace.active.ftp.url}}"></span></span>
             </div>
         </div>
         <div class="workspace-dashboard-section workspace-dashboard-section-events">
@@ -81,10 +81,10 @@
                 <li translate="WORKSPACE.STATISTICS_SINGLE_DOWNLOADS" translate-value-downloads="{{::dashboardModels.chart.totalSingleDownloads}}"></li>
             </ul>
         </div>
-        <div ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="workspace-dashboard-section">
+        <div class="workspace-dashboard-section">
             <h4 translate="WORKSPACE.ACTIONS"></h4>
-            <button class="btn btn-default" ng-disabled="!Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly || Workspace.active.workspace.archive" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
-            <button class="btn btn-default btn-danger" ng-disabled="Workspace.active.workspace.tags.length > 0 || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
+            <button class="btn btn-primary" ng-disabled="User.key !== Workspace.active.workspace.owner || !User.isRoot() || !Workspace.active.workspace.changed || !Workspace.active.metadata || Workspace.active.workspace.readOnly || Workspace.active.workspace.archive" ng-click="publishWorkspace()">{{'WORKSPACE.PUBLISH' | translate}}</button>
+            <button class="btn btn-default btn-danger" ng-hide="Workspace.active.workspace.tags.length > 0" ng-disabled="User.key !== Workspace.active.workspace.owner || !User.isRoot() || Workspace.active.workspace.readOnly" ng-click="deleteWorkspace()">{{'WORKSPACE.DELETE_WORKSPACE' | translate}}</button>
         </div>
         <div class="workspace-dashboard-section workspace-dashboard-section-requests">
             <h4 translate="WORKSPACE.WORKFLOW"></h4>

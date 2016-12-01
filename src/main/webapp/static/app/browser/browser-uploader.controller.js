@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
 
             var ctrl = this;
 
-            var uploader, queueLimitReached, sizeLimitReached;
+            var queueLimitReached, sizeLimitReached;
 
             if ($rootScope.uploader) {
                 ctrl.uploader = $rootScope.uploader;

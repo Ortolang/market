@@ -54,10 +54,10 @@ angular.module('ortolangMarketApp')
             STATISTICS_HITS: 'Statistiques de consultation',
             STATISTICS_TOTAL_HITS: '({{hits}} vues au total)',
             STATISTICS_DOWNLOADS: 'Statistiques de téléchargements',
-            STATISTICS_WHOLE_DOWNLOADS: '{{downloads}} téléchargement{{downloads > 1 ? "s" : ""}} complet',
+            STATISTICS_WHOLE_DOWNLOADS: '{{downloads}} téléchargement{{downloads > 1 ? "s" : ""}} complet{{downloads > 1 ? "s" : ""}}',
             STATISTICS_SINGLE_DOWNLOADS: '{{downloads}} fichiers ou dossiers téléchargés',
-            STATISTICS_DOWNLOADS_HELP: 'depuis octobre 2016',
-            STATISTICS_DOWNLOADS_INFO: 'Cette fonctionnalité ayant été ajouté en octobre 2016, ces chiffres n\'inclus pas les téléchargements antérieurs.',
+            STATISTICS_DOWNLOADS_HELP: 'depuis novembre 2016',
+            STATISTICS_DOWNLOADS_INFO: 'Cette fonctionnalité ayant été ajouté en novembre 2016, ces chiffres n\'inclus pas les téléchargements antérieurs.',
             ADVANCED_INFORMATION: 'Informations avancées',
             CREATE_PRESENTATION_METADATA_FIRST: 'Vous devez d\'abord créer les métadonées de présentation',
             CREATE_PRESENTATION_METADATA: 'Créer les métadonnées',
@@ -78,6 +78,7 @@ angular.module('ortolangMarketApp')
                 MESSAGES: {
                     AVAILABILITY: 'Alias déjà utilisé',
                     MIN_LENGTH: 'L\'alias doit contenir au minimum 3 caractères',
+                    MAX_LENGTH: 'L\'alias doit contenir au maximum 25 caractères, veuillez le saisir manuellement.',
                     CONSENT: 'Vous devez accepter la charte ORTOLANG'
                 },
                 HELP: {

@@ -10,22 +10,39 @@ angular.module('ortolangVisualizers')
     .controller('TextVisualizerCtrl', ['$scope', 'Content', function ($scope, Content) {
 
         var mimeType = $scope.$ctrl.data.element.mimeType,
+            name = $scope.$ctrl.data.element.name,
             limit = 20000;
         $scope.hasPreview = false;
         if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml' || mimeType === 'application/xslt+xml' || mimeType === 'application/xml-dtd') {
             $scope.language = 'xml';
+        } else if (mimeType === 'text/plain' && name.endsWith('.ts')) {
+            $scope.language = 'typescript';
         } else if (mimeType === 'text/html' || mimeType === 'text/plain' || mimeType === 'text/csv') {
             $scope.language = 'html';
         } else if (mimeType === 'text/css') {
             $scope.language = 'css';
         } else if (mimeType === 'text/x-php') {
             $scope.language = 'php';
-        } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript' || mimeType === 'application/json') {
+        } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
             $scope.language = 'javascript';
+        } else if (mimeType === 'application/json') {
+            $scope.language = 'json';
         } else if (mimeType === 'text/x-web-markdown') {
             $scope.language = 'markdown';
         } else if (mimeType === 'text/x-java-source') {
             $scope.language = 'java';
+        } else if (mimeType === 'application/x-sh') {
+            $scope.language = 'bash';
+        } else if (mimeType === 'text/x-less') {
+            $scope.language = 'less';
+        } else if (mimeType === 'application/postscript' && name.endsWith('.tex')) {
+            $scope.language = 'tex';
+        } else if (mimeType === 'text/x-sql') {
+            $scope.language = 'sql';
+        } else if (mimeType === 'text/x-python') {
+            $scope.language = 'python';
+        } else if (mimeType === 'text/x-perl') {
+            $scope.language = 'perl';
         } else {
             $scope.language = undefined;
         }
@@ -163,6 +180,7 @@ angular.module('ortolangVisualizers')
                 'text/html': true,
                 'text/x-php': true,
                 'text/css': true,
+                'text/x-less': true,
                 'text/xml': true,
                 'text/x-log': true,
                 'text/troff': true,
@@ -176,9 +194,14 @@ angular.module('ortolangVisualizers')
                 'application/json': true,
                 'application/x-bibtex-text-file': true,
                 'text/csv': true,
-                'application/octet-stream': 'cha',
+                'application/octet-stream': {cha: true},
                 'application/clan': true,
-                'text/x-java-source': true
+                'text/x-java-source': true,
+                'application/x-sh': true,
+                'application/postscript': {tex: true},
+                'text/x-sql': true,
+                'text/x-python': true,
+                'text/x-perl': true
             }
         });
     }]);

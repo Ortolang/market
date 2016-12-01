@@ -11,7 +11,22 @@
 angular.module('ortolangMarketApp')
     .filter('mimeTypeIconCss', ['icons', function (icons) {
 
-        var xmlRegExp = new RegExp('^(?!image/)[a-zA-Z0-9\/+]*xml$');
+        var xmlRegExp = new RegExp('^(?!image/)[a-zA-Z0-9\/+]*xml$'),
+            codeMimeTypes = [
+                'text/html',
+                'text/x-php',
+                'text/css',
+                'text/x-less',
+                'text/x-log',
+                'application/javascript',
+                'text/javascript',
+                'application/json',
+                'application/x-sh',
+                'text/x-java-source',
+                'text/x-sql',
+                'text/x-python',
+                'text/x-perl'
+            ];
 
         return function (input) {
             if (input === undefined) {
@@ -23,7 +38,7 @@ angular.module('ortolangMarketApp')
             if (input === 'ortolang/link') {
                 return icons.link;
             }
-            if (xmlRegExp.test(input) || input === 'text/html' || input === 'application/javascript' || input === 'application/json') {
+            if (xmlRegExp.test(input) || codeMimeTypes.indexOf(input) >= 0) {
                 return icons.codeFile;
             }
             if (/^text/.test(input)) {
@@ -38,7 +53,7 @@ angular.module('ortolangMarketApp')
             if (/^video/.test(input)) {
                 return icons.videoFile;
             }
-            if (input === 'application/pdf') {
+            if (input === 'application/pdf' || input === 'application/postscript') {
                 return icons.pdfFile;
             }
             if (input === 'application/zip' ||

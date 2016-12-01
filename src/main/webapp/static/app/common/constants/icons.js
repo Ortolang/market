@@ -41,7 +41,7 @@ angular.module('ortolangMarketApp')
             cart: 'fa fa-fw fa-star',
             cartPlus: 'fa fa-star',
             edit: 'glyphicon glyphicon-pencil',
-            copyToClipboard: 'octicon octicon-clippy',
+            clipboard: 'octicon octicon-clippy',
             cloudUpload: 'glyphicon glyphicon-cloud-upload',
             pending: 'fa fa-refresh fa-spin',
             search: 'glyphicon glyphicon-search',
@@ -61,6 +61,7 @@ angular.module('ortolangMarketApp')
             linkedin: 'fa fa-linkedin',
             viadeo: 'fa fa-viadeo',
             mail: 'fa fa-envelope',
+            list: 'glyphicon glyphicon-list-alt',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

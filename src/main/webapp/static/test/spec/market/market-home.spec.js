@@ -3,8 +3,8 @@
 describe('Controller: MarketHomeCtrl', function () {
 
     // load the controller's module
-    beforeEach(module('ortolangMarketApp'));
-    beforeEach(module('ortolangMarketAppMock'));
+    beforeEach(angular.mock.module('ortolangMarketApp'));
+    beforeEach(angular.mock.module('ortolangMarketAppMock'));
 
     var controllerCreator,
         scope,

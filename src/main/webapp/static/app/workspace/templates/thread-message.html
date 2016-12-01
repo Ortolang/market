@@ -22,7 +22,7 @@
                 </div>
                 <div class="message-actions" ng-if="!models.activeThread.answer">
                     <button ng-click="reply(message)" class="btn btn-default btn-sm"><span ng-class="::icons.threads.reply"></span> {{'WORKSPACE.THREADS.REPLY' | translate}}</button>
-                    <button ng-if="::message.author === User.key" ng-click="validateAnswer(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.check"></span> {{'WORKSPACE.THREADS.VALIDATE_ANSWER' | translate}}</button>
+                    <button ng-if="::models.activeThread.author === User.key" ng-click="validateAnswer(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.check"></span> {{'WORKSPACE.THREADS.VALIDATE_ANSWER' | translate}}</button>
                     <button ng-if="::message.author === User.key" ng-click="editMessage(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.edit"></span> {{'EDIT' | translate}}</button>
                     <button ng-if="::message.author === User.key" ng-click="deleteMessage(message)" class="btn btn-default btn-sm btn-hidden"><span ng-class="::icons.trash"></span> {{'DELETE' | translate}}</button>
                 </div>
