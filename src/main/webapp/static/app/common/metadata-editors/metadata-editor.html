@@ -1,0 +1,32 @@
+<div class="modal" tabindex="-1" role="dialog" ng-controller="MetadataEditorCtrl">
+    <div class="modal-dialog modal-lg modal-xl">
+        <div class="modal-content">
+        	<div class="modal-header modal-header-border">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" ng-bind="elementName"></span>
+            </div>
+            <div class="modal-body file-select-modal-body">
+                <div class="browser-wrapper container-fluid file-select-browser-wrapper">
+                    <div class="row toolbar browser-toolbar">
+                        <div class="col-md-12 btn-toolbar" role="toolbar">
+                            <div class="btn-toolbar btn-toolbar-left">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        {{selectedMetadata.name}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)"><div>{{md.name}}</div></li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-primary">Nouveau</button>
+                                <button class="btn btn-default">Importer</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-include="'common/editors/source-editor-template.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

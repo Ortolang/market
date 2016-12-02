@@ -320,6 +320,18 @@ angular.module('ortolangMarketApp')
                 });
             };
 
+            ctrl.showMetadataEditor = function (md) {
+                createModalScope(true);
+                modalScope.metadatas = ctrl.selectedElements[0].metadatas;
+                modalScope.elementName = ctrl.selectedElements[0].name;
+                modalScope.metadataName = md.name;
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/editors/metadata-editor.html',
+                    show: true
+                });
+            };
+
             ctrl.showAclLegend = function ($event) {
                 createModalScope();
                 modalScope.AuthService = AuthService;
