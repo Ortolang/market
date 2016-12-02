@@ -135,8 +135,8 @@ import './common/forms/i18n/forms.fr';
 import './common/forms/i18n/forms.en';
 /* piwik */
 import './common/piwik/piwik';
-/* metadata-editor */
-import './common/metadata-editors/metadata-editor';
+// METADATA EDITOR
+import './metadata-editor/metadata-editor.controller';
 // VISUALIZERS
 import './visualizers/visualizer.component';
 import './visualizers/visualizer.service';

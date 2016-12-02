@@ -324,10 +324,11 @@ angular.module('ortolangMarketApp')
                 createModalScope(true);
                 modalScope.metadatas = ctrl.selectedElements[0].metadatas;
                 modalScope.elementName = ctrl.selectedElements[0].name;
+                modalScope.elementPath = ctrl.selectedElements[0].path;
                 modalScope.metadataName = md.name;
                 $modal({
                     scope: modalScope,
-                    templateUrl: 'common/editors/metadata-editor.html',
+                    templateUrl: 'metadata-editor/metadata-editor.html',
                     show: true
                 });
             };
