@@ -98,6 +98,13 @@
         <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <hr/>
+    <dl class="dl-horizontal" ng-if="$ctrl.element.metadatas.length>0">
+        <dt>Méta</dt>
+        <dd ng-repeat="md in $ctrl.element.metadatas" ng-click="$ctrl.showMetadataEditor({md: md})">
+            {{md.name}}
+        </dd>
+    </dl>
+    <hr/>
     <dl class="dl-horizontal">
         <dt translate="BROWSER.VISIBILITY"></dt>
         <dd>{{'WORKSPACE.ACL.' + $ctrl.element.publicationPolicy.toUpperCase() | translate}}</dd>
