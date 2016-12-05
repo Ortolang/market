@@ -99,7 +99,7 @@ angular.module('ortolangMarketApp')
                 MESSAGES: {
                     CONTENT: 'You must check this box',
                     POLICY: 'You must accept the ORTOLANG policy',
-                    PATTERN: 'You mus enter a valid version number (ex: 3 or 3.2)'
+                    PATTERN: 'You mus enter a valid version number (ex: 3, 3.2 or 3.2.1)'
                 },
                 LABEL: {
                     NEXT_MAJOR_VERSION: 'Version {{version}}',
