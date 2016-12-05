@@ -1,0 +1,14 @@
+<div class="metadata-editor-wizzard">
+	<select name="metadata-format" ng-model="newMetadataFormat.name">
+		<option value="oai_dc" selected="selected">Dublin Core</option>
+		<option value="olac">OLAC</option>
+	</select>
+	<button class="btn btn-default" ng-click="upload()"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD' | translate}}</button>
+	<!-- Uploader -->
+	<div ng-controller="BrowserUploaderCtrl">
+	    <input id="metadata-editor-upload-file-select" type="file" nv-file-select="" uploader="$root.uploader" multiple="" ng-hide="true" options="{wsName: Workspace.active.workspace.name, wskey: Workspace.active.workspace.key, ortolangType: ortolangType.metadata, path: elementPath, name: newMetadataFormat}">
+	</div>
+	ou
+	<!-- File selector -->
+    <button class="btn btn-default" ng-click="fileMetadataPathSelectorModal.show()" type="button" translate="SELECT"></button>
+</div>

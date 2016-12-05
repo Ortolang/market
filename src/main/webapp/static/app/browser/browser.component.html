@@ -257,7 +257,7 @@
         </div>
 
         <browser-aside-information ng-if="::$ctrl.config.displayAsideInfo" ng-hide="$ctrl.browserSettings.hideInfo" ng-click="$ctrl.deactivateContextMenu()" ng-right-click="$ctrl.deactivateContextMenu()" class="browser-aside browser-aside-right hidden-xs"
-                                   element="$ctrl.selectedElements[0]" elements="$ctrl.selectedElements" parent="parent" toggle="$ctrl.toggleAsideInfo()" helper="$ctrl.browserHelperFn" show-metadata="$ctrl.showMetadata()" show-metadata-editor="$ctrl.showMetadataEditor(md)"></browser-aside-information>
+                                   element="$ctrl.selectedElements[0]" elements="$ctrl.selectedElements" parent="parent" toggle="$ctrl.toggleAsideInfo()" helper="$ctrl.browserHelperFn" show-metadata="$ctrl.showMetadata(md)"></browser-aside-information>
     </div>
 
     <browser-uploader ng-if="$ctrl.config.canEdit && $ctrl.isHead" workspace="$ctrl.workspace" parent="$ctrl.parent"></browser-uploader>

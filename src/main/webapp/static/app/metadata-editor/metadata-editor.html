@@ -6,11 +6,11 @@
                 <span class="modal-title" ng-bind="elementName"></span>
             </div>
             <div class="modal-body file-select-modal-body">
-                <div class="browser-wrapper container-fluid file-select-browser-wrapper">
+                <div class="metadata-editor-wrapper">
                     <div class="row toolbar browser-toolbar">
                         <div class="col-md-12 btn-toolbar" role="toolbar">
                             <div class="btn-toolbar btn-toolbar-left">
-                                <div class="btn-group">
+                                <div class="btn-group visible-xs">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         {{selectedMetadata.name}}
                                         <span class="caret"></span>
@@ -19,24 +19,23 @@
                                         <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)"><div>{{md.name}}</div></li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-primary" disabled="disabled">Nouveau</button>
-                                <button class="btn btn-default" ng-click="upload()">Importer</button>
+                                <button class="btn btn-primary" ng-click="create()">Nouveau</button>
+                                <button class="btn btn-default" ng-click="download()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</button>
+                                <button class="btn btn-default" ng-click="source()" translate="TEXT_VISUALIZER.SHOW_SOURCE"></button>
                             </div>
                         </div>
                     </div>
-                    <div class="browser-content-wrapper">
-                        <div class="browser-workspaces-list browser-aside browser-aside-left">
-                            <ul class="list-unstyled">
-                                <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.name}}</li>
-                            </ul>
+                    <div class="metadata-editor-content-wrapper">
+                        <div class="metadata-editor-aside metadata-editor-aside-left hidden-xs">
+                            <div class="metadata-list">
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.name}}</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="workspace-elements-wrapper">
-                            <div ng-include="'metadata-editor/source-editor.template.html'"></div>
+                        <div class="metadata-editor-main-container">
+                            <div ng-include="mainContainer"></div>
                         </div>
-                    </div>
-                    <!-- Uploader -->
-                    <div ng-controller="BrowserUploaderCtrl">
-                        <input id="metadata-editor-upload-file-select" type="file" nv-file-select="" uploader="$root.uploader" multiple="" ng-hide="true" options="{wsName: Workspace.active.workspace.name, wskey: Workspace.active.workspace.key, ortolangType: ortolangType.metadata, path: elementPath, name: 'olac'}">
                     </div>
                 </div>
             </div>

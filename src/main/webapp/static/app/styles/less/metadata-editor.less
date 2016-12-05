@@ -1,0 +1,94 @@
+.metadata-editor-wrapper {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  position: relative !important;
+  // TODO create my own function or import styles
+  .browser();
+  .metadata-editor-main-container {
+    flex: 1 1 auto;
+    padding-left: floor(@grid-gutter-width/2);
+    padding-right: floor(@grid-gutter-width/2);
+  }
+
+  .metadata-editor-content-wrapper {
+    display: flex;
+
+    .metadata-editor-aside {
+      padding-top: 2 * @padding-large-vertical;
+      padding-bottom: @padding-large-vertical;
+      overflow-y: auto;
+      flex: 0 0 auto;
+      &.metadata-editor-aside-left {
+        background-color: @main-bg;
+        border-right: @default-border;
+        width: 120px;
+        @media(min-width: @container-md) {
+          width: 160px;
+        }
+        @media(min-width: @container-large-desktop) {
+          width: 180px;
+        }
+        @media(min-width: @container-xl-desktop) {
+          width: 200px;
+        }
+        @media(min-width: @container-xxl-desktop) {
+          width: 220px;
+        }
+        .metadata-list {
+          ul {
+            overflow: auto;
+            .user-select-mixin();
+            li {
+              position: relative;
+              padding: @padding-large-vertical @padding-small-horizontal @padding-large-vertical @grid-gutter-width/2;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              &:hover {
+                background-color: @workspace-primary;
+                color: @inverse-text-color;
+                cursor: pointer;
+              }
+              &.active {
+                font-weight: bold;
+                transition: font-weight 0.3s ease-out;
+                span {
+                  transition: all 0.3s ease-out;
+                  position: absolute;
+                  left: 0;
+                  height: 100%;
+                  margin-top: -@padding-large-vertical;
+                  width: 5px;
+                  background-color: @workspace-primary;
+                }
+                &:hover {
+                  background-color: inherit;
+                  color: inherit;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.metadata-editor-aside-right {
+        background-color: @default-bg;
+        border-left: @default-border;
+        padding-left: floor(@grid-gutter-width/2);
+        padding-right: floor(@grid-gutter-width/2);
+        width: 280px;
+        @media(min-width: @container-md) {
+          width: 320px;
+        }
+        @media(min-width: @container-large-desktop) {
+          width: 340px;
+        }
+        @media(min-width: @container-xl-desktop) {
+          width: 365px;
+        }
+        @media(min-width: @container-xxl-desktop) {
+          width: 400px;
+        }
+      }
+    }
+  }
+}

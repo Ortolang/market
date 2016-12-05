@@ -129,13 +129,14 @@ angular.module('ortolangMarketApp')
                             if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                             }
-                            var hasMD = ctrl.hasOnlyOneElementSelected() && hasXMd(ctrl.selectedElements[0]);
-                            if (hasMD) {
+                            // var hasMD = ctrl.hasOnlyOneElementSelected() && hasXMd(ctrl.selectedElements[0]);
+                            // if (hasMD) {
                                 ctrl.contextMenuItems.push({text: 'BROWSER.SEE_MD', icon: icons.browser.metadata, action: 'showMetadata'});
-                            }
-                            if (ctrl.visualizers || hasMD) {
+                            // }
+                            // if (ctrl.visualizers || hasMD) {
+                            // if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({divider: true});
-                            }
+                            // }
                         }
                         if (ctrl.config.canEdit && ctrl.isHead && !ctrl.hasOnlyParentSelected()) {
                             if (ctrl.selectedElements.length === 1) {
@@ -301,31 +302,33 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            ctrl.showMetadata = function () {
-                createModalScope();
-                modalScope.metadata = ctrl.selectedElements[0].x;
-                var tmp = [];
-                angular.forEach(modalScope.metadata, function (v, k) {
-                    tmp.push({
-                        name: k,
-                        value: v
-                    });
-                });
-                modalScope.metadata = tmp;
-                modalScope.isArray = angular.isArray;
-                $modal({
-                    scope: modalScope,
-                    templateUrl: 'common/directives/metadata-modal-template.html',
-                    show: true
-                });
-            };
+            // ctrl.showMetadata = function () {
+            //     createModalScope();
+            //     modalScope.metadata = ctrl.selectedElements[0].x;
+            //     var tmp = [];
+            //     angular.forEach(modalScope.metadata, function (v, k) {
+            //         tmp.push({
+            //             name: k,
+            //             value: v
+            //         });
+            //     });
+            //     modalScope.metadata = tmp;
+            //     modalScope.isArray = angular.isArray;
+            //     $modal({
+            //         scope: modalScope,
+            //         templateUrl: 'common/directives/metadata-modal-template.html',
+            //         show: true
+            //     });
+            // };
 
-            ctrl.showMetadataEditor = function (md) {
+            ctrl.showMetadata = function (md) {
                 createModalScope(true);
                 modalScope.metadatas = ctrl.selectedElements[0].metadatas;
                 modalScope.elementName = ctrl.selectedElements[0].name;
                 modalScope.elementPath = ctrl.selectedElements[0].path;
-                modalScope.metadataName = md.name;
+                if (md) {
+                    modalScope.metadataName = md.name;
+                }
                 $modal({
                     scope: modalScope,
                     templateUrl: 'metadata-editor/metadata-editor.html',
