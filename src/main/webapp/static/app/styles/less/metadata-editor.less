@@ -1,14 +1,15 @@
 .metadata-editor-wrapper {
-  position: relative;
+  position: relative !important;
   padding-left: 0;
   padding-right: 0;
-  position: relative !important;
   // TODO create my own function or import styles
   .browser();
   .metadata-editor-main-container {
     flex: 1 1 auto;
-    padding-left: floor(@grid-gutter-width/2);
-    padding-right: floor(@grid-gutter-width/2);
+    padding: floor(@grid-gutter-width/2);
+    pre, .hljs {
+      background-color: @default-bg;
+    }
   }
 
   .metadata-editor-content-wrapper {
