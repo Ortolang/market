@@ -45,6 +45,7 @@ import 'angular-zinfinitescroll';
 import 'ng-wig';
 import 'clipboard';
 import 'ngclipboard';
+import 'angular-xml-cjs2';
 
 // Angular 2
 // import '@angular/platform-browser';

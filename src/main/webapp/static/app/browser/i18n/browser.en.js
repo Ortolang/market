@@ -110,6 +110,10 @@ angular.module('ortolangMarketApp')
                 DYNAMIC_ITEM_HELP: 'Dynamic persistent identifier (will always reference the latest published version of this item)',
                 COPY: 'Copy link',
                 OTHERS: 'Other persistent identifiers'
+            },
+            METADATA_EDITOR: {
+                TITLE: 'Edit the metadata of <strong>{{elementName}}</strong>',
+                CONVERT_XML_JSON: 'Loads from a XML file'
             }
         }
     });

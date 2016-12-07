@@ -1,6 +1,9 @@
 <div ng-controller="OaiDcMetadataEditorCtrl">
-	<form>
+	<!-- <textarea rows="10" cols="10" name="description" ng-model="textXml"></textarea> -->
+	<!-- <button class="btn btn-default" ng-click="convertXMLToJson()">Convert</button> -->
+	{{selectedMetadata.content | json}}
+	<!-- <form>
 		<input type="text" name="identifier"></input>
 		<textarea name="description"></textarea>
-	</form>
+	</form> -->
 </div>

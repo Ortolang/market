@@ -64,6 +64,7 @@ angular
         'angular-duration-format',
         'dndLists',
         'ngWig',
+        'xml',
         'chart.js'
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider: OrtolangRouteProvider, $locationProvider: ILocationProvider) {

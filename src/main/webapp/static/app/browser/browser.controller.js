@@ -129,16 +129,12 @@ angular.module('ortolangMarketApp')
                             if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                             }
-                            // var hasMD = ctrl.hasOnlyOneElementSelected() && hasXMd(ctrl.selectedElements[0]);
-                            // if (hasMD) {
-                                ctrl.contextMenuItems.push({text: 'BROWSER.SEE_MD', icon: icons.browser.metadata, action: 'showMetadata'});
-                            // }
-                            // if (ctrl.visualizers || hasMD) {
-                            // if (ctrl.visualizers) {
+                            if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({divider: true});
-                            // }
+                            }
                         }
                         if (ctrl.config.canEdit && ctrl.isHead && !ctrl.hasOnlyParentSelected()) {
+                            ctrl.contextMenuItems.push({text: 'BROWSER.SEE_MD', icon: icons.browser.metadata, action: 'showMetadata'});
                             if (ctrl.selectedElements.length === 1) {
                                 ctrl.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
                             }

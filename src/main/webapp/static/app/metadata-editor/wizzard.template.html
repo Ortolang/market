@@ -1,14 +1,21 @@
 <div class="metadata-editor-wizzard">
+	Importer un fichier de métadonnées (format JSON) :
 	<select name="metadata-format" ng-model="newMetadataFormat.name">
 		<option value="oai_dc" selected="selected">Dublin Core</option>
 		<option value="olac">OLAC</option>
 	</select>
+	<br/>
+	à partir du système de fichier local
 	<button class="btn btn-default" ng-click="upload()"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD' | translate}}</button>
 	<!-- Uploader -->
 	<div ng-controller="BrowserUploaderCtrl">
-	    <input id="metadata-editor-upload-file-select" type="file" nv-file-select="" uploader="$root.uploader" multiple="" ng-hide="true" options="{wsName: Workspace.active.workspace.name, wskey: Workspace.active.workspace.key, ortolangType: ortolangType.metadata, path: elementPath, name: newMetadataFormat}">
+	    <input id="metadata-editor-upload-file-select" type="file" nv-file-select="" uploader="$root.uploader" multiple="" ng-hide="true" options="{wsName: Workspace.active.workspace.name, wskey: Workspace.active.workspace.key, ortolangType: ortolangType.metadata, path: elementPath, name: newMetadataFormat.name}">
 	</div>
 	ou
+	<br/>
 	<!-- File selector -->
-    <button class="btn btn-default" ng-click="fileMetadataPathSelectorModal.show()" type="button" translate="SELECT"></button>
+	à partir des l'espace de travail
+    <button class="btn btn-default" ng-click="fileMetadataPathSelectorModal.show()" type="button">
+    	<span ng-class="::icons.cloudUpload"></span> {{'SELECT' | translate}}
+    </button>
 </div>

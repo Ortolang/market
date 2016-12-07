@@ -146,6 +146,10 @@ angular.module('ortolangMarketApp')
                 ENCODING: 'Encodage',
                 TITLE: 'Titre',
                 WORDS: 'Mots'
+            },
+            METADATA_EDITOR: {
+                TITLE: 'Editer les métadonnées de <strong>{{elementName}}</strong>',
+                CONVERT_XML_JSON: 'Charger à partir d\'un fichier XML'
             }
         }
     });

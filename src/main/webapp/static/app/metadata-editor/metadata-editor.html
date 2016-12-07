@@ -1,14 +1,14 @@
-<div class="modal" tabindex="-1" role="dialog" ng-controller="MetadataEditorCtrl">
+<div class="modal modal-hg-lg" tabindex="-1" role="dialog" ng-controller="MetadataEditorCtrl">
     <div class="modal-dialog modal-lg modal-xl">
         <div class="modal-content">
         	<div class="modal-header modal-header-border">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <span class="modal-title" ng-bind="elementName"></span>
+                <span class="modal-title" translate="BROWSER.METADATA_EDITOR.TITLE" translate-values="{elementName: elementName}"></span>
             </div>
-            <div class="modal-body file-select-modal-body">
+            <div class="modal-body">
                 <div class="metadata-editor-wrapper">
                     <div class="row toolbar browser-toolbar">
-                        <div class="col-md-12 btn-toolbar" role="toolbar">
+                        <div class="btn-toolbar col-md-12" role="toolbar">
                             <div class="btn-toolbar btn-toolbar-left">
                                 <div class="btn-group visible-xs">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -16,12 +16,57 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)"><div>{{md.name}}</div></li>
+                                        <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)"><div>{{md.name}} <span ng-show="md.changed===true">*</span></div></li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-primary" ng-click="create()">Nouveau</button>
-                                <button class="btn btn-default" ng-click="download()"><span ng-class="::icons.browser.download"></span> {{'DOWNLOAD' | translate}}</button>
-                                <button class="btn btn-default" ng-click="source()" translate="TEXT_VISUALIZER.SHOW_SOURCE"></button>
+                            </div>
+                            <div class="btn-toolbar btn-toolbar-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default" ng-class="{'active':modeSource===true}" ng-click="source()" ng-disabled="!selectedMetadata" data-title="{{'TEXT_VISUALIZER.SHOW_SOURCE' | translate}}" bs-tooltip><span ng-class="::icons.code"></span></button>
+                                </div>
+                                <span class="divider"></span>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default" ng-click="download()" ng-disabled="!selectedMetadata" data-title="{{'DOWNLOAD' | translate}}" bs-tooltip><span ng-class="::icons.browser.download"></span></button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-disabled="!selectedMetadata" data-title="{{'BROWSER.METADATA_EDITOR.CONVERT_XML_JSON' | translate}}" bs-tooltip><span ng-class="::icons.convert"></span></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="disabled">
+                                            <a ng-click="convertFromFile()"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD' | translate}}</a>
+                                        </li>
+                                        <li>
+                                            <a ng-click="convertFromOrtolang()"><span ng-class="::icons.cloudUpload"></span> {{'SELECT' | translate}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" ng-disabled="!selectedMetadata" data-toggle="dropdown" data-title="{{'BROWSER.UPLOAD' | translate}}" bs-tooltip><span ng-class="::icons.browser.upload"></span></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="disabled">
+                                            <a ng-click="uploadFromFile()"><span ng-class="::icons.browser.upload"></span> {{'BROWSER.UPLOAD' | translate}}</a>
+                                        </li>
+                                        <li>
+                                            <a ng-click="uploadFromOrtolang()"><span ng-class="::icons.cloudUpload"></span> {{'SELECT' | translate}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="!selectedMetadata || (selectedMetadata && !selectedMetadata.changed)" data-title="{{'SAVE' | translate}}" bs-tooltip><span ng-class="::icons.save"></span></button>
+                                </div>
+                                <span class="divider"></span>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'ADD' | translate}}" bs-tooltip>
+                                        <span ng-class="::icons.plus"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a ng-click="create('oai_dc')">Dublin Core</a>
+                                        </li>
+                                        <li>
+                                            <a ng-click="create('olac')">OLAC</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -29,15 +74,24 @@
                         <div class="metadata-editor-aside metadata-editor-aside-left hidden-xs">
                             <div class="metadata-list">
                                 <ul class="list-unstyled">
-                                    <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.name}}</li>
+                                    <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.name}} <i ng-show="md.changed===true">*</i></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="metadata-editor-main-container">
-                            <div ng-include="mainContainer"></div>
+                            <div ng-if="mainContainer" ng-include="mainContainer"></div>
+                            <div ng-if="!mainContainer">
+                                <p>
+                                    Pour créer un <strong>nouveau</strong> fichier de métadonnées, appuyer sur le <strong>bouton <span ng-class="::icons.plus"></span></strong> puis selectionner le <strong>type de métadonnées</strong> souhaitées.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- Uploader -->
+            <div ng-controller="BrowserUploaderCtrl">
+                <input id="metadata-editor-upload-file-select" type="file" nv-file-select="" uploader="$root.uploader" multiple="" ng-hide="true" options="{wsName: Workspace.active.workspace.name, wskey: Workspace.active.workspace.key, ortolangType: ortolangType.metadata, path: elementPath, name: newMetadataFormat.name}">
             </div>
         </div>
     </div>
