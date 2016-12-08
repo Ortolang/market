@@ -101,7 +101,7 @@
     <dl class="dl-horizontal" ng-if="$ctrl.element.metadatas.length>0">
         <dt>Méta</dt>
         <dd ng-repeat="md in $ctrl.element.metadatas" ng-click="$ctrl.showMetadata({md: md})">
-            {{md.name}}
+            <span class="metadata-name">{{md.name}}</span>
         </dd>
     </dl>
     <hr/>

@@ -31,18 +31,26 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			/**
 			 * Loads the metadata.
 			 **/
-			function loadMetadataFromKey(key, md) {
+			function loadMetadataFromKey(key) {
+				var deferred = $q.defer();
 				Content.downloadWithKey(key).promise.then(function (data) {
-		            md.content = angular.fromJson(data.data);
-		            // md.jsonContent = angular.toJson(md.metadata, true);
+		            deferred.resolve(data.data);
 		        }, function (reason) {
-					//TODO show message to user
-		        	console.log(reason);
+		        	deferred.reject(reason);
 		        });
+		        return deferred.promise;
 			}
 
 			function setModeSource(source) {
 				$scope.modeSource = source;
+			}
+
+			//TODO move to an angular service
+			function initOaiDcContent(metadata) {
+				metadata.content = {
+					title: [{value: ''}],
+					description: [{value: ''}]
+				};
 			}
 
 			function setMetadataEditorView(source) {
@@ -55,6 +63,10 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 					switch($scope.selectedMetadata.name) {
 						case 'oai_dc':
 							$scope.mainContainer = 'metadata-editor/oai_dc/oai_dc-metadata-editor.html';
+							if (angular.isUndefined($scope.selectedMetadata.content)) {
+								initOaiDcContent($scope.selectedMetadata);
+							}
+							// $scope.oaiDc = $scope.selectedMetadata.content;
 							break;
 						default:
 		        			$scope.source();
@@ -107,11 +119,23 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			$scope.selectMetadataByName = function (name) {
 				var refMetadata = findMetadata(name);
 				if (refMetadata !== null) {
-					if (angular.isDefined(refMetadata.key) && angular.isUndefined(refMetadata.metadata)) {
-						loadMetadataFromKey(refMetadata.key, refMetadata);
+					if (angular.isDefined(refMetadata.key) && angular.isUndefined(refMetadata.content)) {
+						// Loads into content property
+						loadMetadataFromKey(refMetadata.key).then(
+							function (data) {
+								refMetadata.content = angular.fromJson(data);
+								$scope.selectedMetadata = refMetadata;
+								setMetadataEditorView();
+							},
+							function (reason) {
+								//TODO alert
+		        				console.log(reason);
+							}
+						);
+					} else {
+						$scope.selectedMetadata = refMetadata;
+						setMetadataEditorView();
 					}
-					$scope.selectedMetadata = refMetadata;
-					setMetadataEditorView();
 				} else {
 					//TODO show message to user 
 					console.log('enable to download metadata name : {name}');
@@ -138,10 +162,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			 * Uploads a file for creating a new metadata format
 			 **/
 			$scope.uploadFromFile = function () {
-				// Using $timeout to prevent '$apply already in progress' error
-		        $timeout(function () {
-		            angular.element('#metadata-editor-upload-file-select').click();
-		        });
+				//TODO
 			};
 
 			$scope.uploadFromOrtolang = function () {
@@ -149,7 +170,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			};
 
 			$scope.convertFromFile = function () {
-
+				//TODO
 			};
 
 			$scope.convertFromOrtolang = function () {
@@ -181,39 +202,14 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
         		}
         	};
 
-            $rootScope.$on('uploader.metadata.create', function (event, response) {
-            	$scope.metadatas.push({name: response.name, key: response.key, changed: false});
-		        $scope.selectMetadataByName(response.name);
-            });
-
-            $rootScope.$on('uploader.metadata.update', function (event, response) {
-            	//TODO What to do ??
-                $scope.selectMetadataByName(response.name);
-            });
-
-            $rootScope.$on('uploader.metadata.failed', function (event, response) {
-            	console.log(response);
-                $alert({
-                	content: $translate.instant('ERROR_MODAL_9.BODY'),
-                	placement: 'top',
-                	type: 'danger',
-                	duration: 5,
-                	show: true
-                });
-            });
-
+            // Loads a data object to the content
             var deregisterFileMetadataPathSelectorModal = $rootScope.$on('browserSelectedElements-fileMetadataPathSelectorModal', function ($event, elements) {
                if(elements.length>0) {
                		Content.downloadWithKey(elements[0].key).promise.then(function (data) {
-               			// Adds the downloaded file to the list of metadata
-               			// $scope.metadatas.push({
-               			// 	name: $scope.newMetadataFormat.name, 
-               			// 	content: angular.fromJson(data.data),
-               			// 	changed: false
-               			// });
+               			// Loads
                			$scope.selectedMetadata.content = angular.fromJson(data.data);
                			$scope.selectedMetadata.changed = true;
-               			$scope.selectMetadataByName($scope.newMetadataFormat.name);
+               			$scope.selectMetadataByName($scope.selectedMetadata.name);
 			        }, function (reason) {
 						//TODO show message to user
 			        	console.log(reason);
@@ -222,10 +218,13 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                 }
             });
 
+            // Converts a data object to the content
             var deregisterFileToConvertSelectorModal = $rootScope.$on('browserSelectedElements-fileToConvertSelectorModal', function ($event, elements) {
                if(elements.length>0) {
                		Content.downloadWithKey(elements[0].key).promise.then(function (data) {
+               			// Convert
                			$scope.selectedMetadata.content = convertXMLToJsonOaiDc(data.data);
+               			$scope.selectMetadataByName($scope.selectedMetadata.name);
 						$scope.selectedMetadata.changed = true;
 			        }, function (reason) {
 						//TODO show message to user
@@ -241,6 +240,12 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
             });
 
 			(function init() {
+		        $scope.Workspace = Workspace;
+		        $scope.ortolangType = ortolangType;
+		        $scope.icons = icons;
+		        // Tells if we show the code source 
+		        $scope.modeSource = false;
+		        
 		        if ($scope.metadataName) {
 		        	$scope.selectMetadataByName($scope.metadataName);
 		        } else {
@@ -248,12 +253,8 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 		        		$scope.selectMetadataByName($scope.metadatas[0].name);
 		        	}
 		        }
-		        $scope.modeSource = false;
-		        $scope.Workspace = Workspace;
-		        $scope.ortolangType = ortolangType;
-		        $scope.newMetadataFormat = {name: 'oai_dc'};
-		        $scope.icons = icons;
 
+		        // Ortolang file selector used to LOAD a data object
                 var fileMetadataPathSelectorModalScope = $rootScope.$new();
                 fileMetadataPathSelectorModalScope.acceptMultiple = false;
                 fileMetadataPathSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
@@ -264,7 +265,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                 	templateUrl: 'browser/browser-file-select-modal-template.html',
                 	show: false
                 });
-
+                // Ortolang file selector used to CONVERT a data object
                 var fileToConvertSelectorModalScope = $rootScope.$new();
                 fileToConvertSelectorModalScope.acceptMultiple = false;
                 fileToConvertSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;

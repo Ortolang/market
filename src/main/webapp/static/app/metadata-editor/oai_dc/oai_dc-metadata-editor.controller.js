@@ -7,15 +7,10 @@
  * # OaiDcMetadataEditorCtrl
  */
 angular.module('ortolangMarketApp')
-    .controller('OaiDcMetadataEditorCtrl', ['$scope', 'x2js', function ($scope, x2js) {
+    .controller('OaiDcMetadataEditorCtrl', ['$scope', function ($scope) {
 
     	function init() {
-    		$scope.textXml = '';
-    		// if ($scope.selectedMetadata) {
-    		// 	$scope.jsonOaiDc = $scope.selectedMetadata.content;
-    		// } else {
-    		// 	$scope.jsonOaiDc = {};
-    		// }
+    		// $scope.oaiDc.title = {value: ''};
     	}
     	init();
 	}]);
