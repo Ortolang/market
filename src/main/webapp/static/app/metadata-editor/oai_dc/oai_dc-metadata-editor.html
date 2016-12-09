@@ -1,16 +1,15 @@
-<div ng-controller="OaiDcMetadataEditorCtrl">
-	<form class="form-horizontal">
-		<div ng-repeat="title in selectedMetadata.content.title" class="form-group">
-			<label for="title" class="col-sm-2 control-label">Titre</label>
-			<div class="col-sm-10">
-				<input ng-model="title.value" type="text" class="form-control" name="title" placeholder="Titre">
+<form class="form-horizontal">
+	<div ng-repeat="(keyElement, valuesElement) in selectedMetadata.content">
+		<div ng-if="dcElementsObject[keyElement]" ng-repeat="value in valuesElement" class="form-group">
+			<label for="elm-{{keyElement}}" class="col-sm-2 control-label">{{dcElementsObject[keyElement].label}}</label>
+			<div class="col-sm-8">
+				<input ng-model="value.value" type="text" class="form-control" name="elm-{{keyElement}}" placeholder="{{dcElementsObject[keyElement].placeholder}}">
 			</div>
 	  	</div>
-		<div ng-repeat="description in selectedMetadata.content.description" class="form-group">
-			<label for="description" class="col-sm-2 control-label">Description</label>
-			<div class="col-sm-10">
-				<input ng-model="description.value" type="text" class="form-control" name="description" placeholder="Description">
-			</div>
-	  	</div>
-	</form>
-</div>
+	</div>
+	<div class="col-sm-10">
+		<div class="pull-right">
+			<button disabled="disabled" type="button" class="btn btn-primary"><span ng-class="::icons.plus"></span> Ajouter un élément Dublin Core</button>
+		</div>
+	</div>
+</form>

@@ -45,14 +45,6 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 				$scope.modeSource = source;
 			}
 
-			//TODO move to an angular service
-			function initOaiDcContent(metadata) {
-				metadata.content = {
-					title: [{value: ''}],
-					description: [{value: ''}]
-				};
-			}
-
 			function setMetadataEditorView(source) {
 				if ($scope.selectedMetadata) {
 					setModeSource(source);
@@ -60,19 +52,11 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 						$scope.mainContainer = 'metadata-editor/source-editor.template.html';
 						return;
 					}
-					switch($scope.selectedMetadata.name) {
-						case 'oai_dc':
-							$scope.mainContainer = 'metadata-editor/oai_dc/oai_dc-metadata-editor.html';
-							if (angular.isUndefined($scope.selectedMetadata.content)) {
-								initOaiDcContent($scope.selectedMetadata);
-							}
-							// $scope.oaiDc = $scope.selectedMetadata.content;
-							break;
-						default:
-		        			$scope.source();
+					if ($scope.metadataFormats[$scope.selectedMetadata.name]) {
+						$scope.mainContainer = $scope.metadataFormats[$scope.selectedMetadata.name].template;
+					} else {
+						$scope.source();
 					}
-		        } else {
-		        	$scope.create();
 		        }
 			}
 
@@ -99,13 +83,60 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 				var doc = x2js.xml_str2json(metadata),
 					content = {};
 				console.log(doc);
-				if (angular.isDefined(doc.olac)) {
-					if (angular.isDefined(doc.olac.title)) {
-						content.title = [
-							{
-								value: doc.olac.title.__text
+				if (angular.isDefined(doc.dc)) {
+					for (var dcElementName in $scope.dcElementsObject) {
+						if (angular.isDefined(doc.dc[dcElementName])) {
+							content[dcElementName] = [];
+							if (angular.isArray(doc.dc[dcElementName])) {
+								for(var iElm=0 ; iElm<doc.dc[dcElementName].length ; iElm++) {
+									content[dcElementName].push({
+										value: doc.dc[dcElementName][iElm].__text,
+										lang: doc.dc[dcElementName][iElm]['_xml:lang']
+									});
+								}
+							} else {
+								content[dcElementName].push({
+									value: doc.dc[dcElementName].__text,
+									lang: doc.dc[dcElementName]['_xml:lang']
+								});
 							}
-						];
+						}
+					}
+				} else {
+					console.log('XML parser error : root element not found or not a dc element');
+				}
+				return content;
+	    	}
+
+            /**
+             * Converts a XML OLAC (String representation) to JSON.
+             **/
+	    	function convertXMLToJsonOlac (metadata) {
+	    		var doc = x2js.xml_str2json(metadata),
+					content = {};
+				console.log(doc);
+				if (angular.isDefined(doc.olac)) {
+					for (var olacElementName in $scope.olacElementsObject) {
+						if (angular.isDefined(doc.olac[olacElementName])) {
+							content[olacElementName] = [];
+							if (angular.isArray(doc.olac[olacElementName])) {
+								for(var iElm=0 ; iElm<doc.olac[olacElementName].length ; iElm++) {
+									content[olacElementName].push({
+										type: doc.olac[olacElementName][iElm]['_xsi:type'],
+										code: doc.olac[olacElementName][iElm]['_olac:code'],
+										value: doc.olac[olacElementName][iElm].__text,
+										lang: doc.olac[olacElementName][iElm]['_xml:lang']
+									});
+								}
+							} else {
+								content[olacElementName].push({
+									type: doc.olac[olacElementName]['_xsi:type'],
+									code: doc.olac[olacElementName]['_olac:code'],
+									value: doc.olac[olacElementName].__text,
+									lang: doc.olac[olacElementName]['_xml:lang']
+								});
+							}
+						}
 					}
 				} else {
 					console.log('XML parser error : root element not found or not a dc element');
@@ -154,8 +185,11 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			 * Creates and adds a new metadata based on the metadataFormat.
 			 **/
 			$scope.create = function (metadataFormat) {
-				$scope.metadatas.push({name: metadataFormat, changed: true});
-				$scope.selectMetadataByName(metadataFormat);
+				var metadata = findMetadata(metadataFormat);
+				if (metadata === null) {
+					$scope.metadatas.push({name: metadataFormat, changed: true});
+					$scope.selectMetadataByName(metadataFormat);
+				}
 			};
 
 			/**
@@ -208,8 +242,8 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                		Content.downloadWithKey(elements[0].key).promise.then(function (data) {
                			// Loads
                			$scope.selectedMetadata.content = angular.fromJson(data.data);
-               			$scope.selectedMetadata.changed = true;
                			$scope.selectMetadataByName($scope.selectedMetadata.name);
+               			$scope.selectedMetadata.changed = true;
 			        }, function (reason) {
 						//TODO show message to user
 			        	console.log(reason);
@@ -223,7 +257,13 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                if(elements.length>0) {
                		Content.downloadWithKey(elements[0].key).promise.then(function (data) {
                			// Convert
-               			$scope.selectedMetadata.content = convertXMLToJsonOaiDc(data.data);
+               			if ($scope.metadataFormats[$scope.selectedMetadata.name]) {
+               				$scope.selectedMetadata.content = $scope.metadataFormats[$scope.selectedMetadata.name].converter(data.data);
+               			} else {
+               				//TODO alert
+               				console.log('unable to convert metadata format ' + $scope.selectedMetadata.name);
+               			}
+
                			$scope.selectMetadataByName($scope.selectedMetadata.name);
 						$scope.selectedMetadata.changed = true;
 			        }, function (reason) {
@@ -245,7 +285,52 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 		        $scope.icons = icons;
 		        // Tells if we show the code source 
 		        $scope.modeSource = false;
-		        
+
+		        $scope.metadataFormats = {
+		        	oai_dc: {label: 'Dublin Core', template: 'metadata-editor/oai_dc/oai_dc-metadata-editor.html', converter: convertXMLToJsonOaiDc},
+		        	olac: {label: 'OLAC', template: 'metadata-editor/olac/olac-metadata-editor.html', converter: convertXMLToJsonOlac}
+		        };
+
+				$scope.dcElementsObject = {
+					title: {init: [{value: ''}], label: 'Titre', placeholder: 'Titre'},
+					creator: {init: [{value: ''}], label: 'Créateur', placeholder: 'Créateur'},
+					subject: {init: [{value: ''}], label: 'Subjet', placeholder: 'Subjet'},
+					description: {init: [{value: ''}], label: 'Description', placeholder: 'Description'},
+					publisher: {init: [{value: ''}], label: 'Editeur', placeholder: 'Editeur'},
+					contributor: {init: [{value: ''}], label: 'Contributeur', placeholder: 'Contributeur'},
+					date: {init: [{value: ''}], label: 'Date', placeholder: 'Date'},
+					type: {init: [{value: ''}], label: 'Type', placeholder: 'Type'},
+					format: {init: [{value: ''}], label: 'Format', placeholder: 'Format'},
+					identifier: {init: [{value: ''}], label: 'Identifiant', placeholder: 'Identifiant'},
+					source: {init: [{value: ''}], label: 'Source', placeholder: 'Source'},
+					language: {init: [{value: ''}], label: 'Langue', placeholder: 'Langue'},
+					relation: {init: [{value: ''}], label: 'Relation', placeholder: 'Relation'},
+					coverage: {init: [{value: ''}], label: 'Couverture', placeholder: 'Couverture'},
+					rights: {init: [{value: ''}], label: 'Droits', placeholder: 'Droits'}
+				};
+
+				$scope.olacElementsObject = {
+					title: {init: [{value: ''}], label: 'Titre', placeholder: 'Titre'},
+					creator: {init: [{value: ''}], label: 'Créateur', placeholder: 'Créateur'},
+					subject: {init: [{value: ''}], label: 'Subjet', placeholder: 'Subjet'},
+					description: {init: [{value: ''}], label: 'Description', placeholder: 'Description'},
+					publisher: {init: [{value: ''}], label: 'Editeur', placeholder: 'Editeur'},
+					contributor: {init: [{value: ''}], label: 'Contributeur', placeholder: 'Contributeur'},
+					date: {init: [{value: ''}], label: 'Date', placeholder: 'Date'},
+					type: {init: [{value: ''}], label: 'Type', placeholder: 'Type'},
+					format: {init: [{value: ''}], label: 'Format', placeholder: 'Format'},
+					identifier: {init: [{value: ''}], label: 'Identifiant', placeholder: 'Identifiant'},
+					source: {init: [{value: ''}], label: 'Source', placeholder: 'Source'},
+					language: {init: [{value: ''}], label: 'Langue', placeholder: 'Langue'},
+					relation: {init: [{value: ''}], label: 'Relation', placeholder: 'Relation'},
+					coverage: {init: [{value: ''}], label: 'Couverture', placeholder: 'Couverture'},
+					rights: {init: [{value: ''}], label: 'Droits', placeholder: 'Droits'},
+					alternative: {init: [{value: ''}], label: 'Titre alternatif', placeholder: 'Titre alternatif'},
+					tableOfContents: {init: [{value: ''}], label: 'Table des matières', placeholder: 'Table des matières'},
+					abstract: {init: [{value: ''}], label: 'Résumé', placeholder: 'Résumé'},
+					bibliographicCitation: {init: [{value: ''}], label: 'Citation bibliographique', placeholder: 'Citation bibliographique'}
+				};
+
 		        if ($scope.metadataName) {
 		        	$scope.selectMetadataByName($scope.metadataName);
 		        } else {

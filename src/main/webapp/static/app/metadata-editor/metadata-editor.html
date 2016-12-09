@@ -58,12 +58,9 @@
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'ADD' | translate}}" bs-tooltip>
                                         <span ng-class="::icons.plus"></span>
                                     </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a ng-click="create('oai_dc')">Dublin Core</a>
-                                        </li>
-                                        <li>
-                                            <a ng-click="create('olac')">OLAC</a>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <li ng-repeat="(mfId, mfValue) in metadataFormats">
+                                            <a ng-click="create(mfId)">{{mfValue.label}}</a>
                                         </li>
                                     </ul>
                                 </div>

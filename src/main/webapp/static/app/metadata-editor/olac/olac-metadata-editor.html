@@ -1,0 +1,21 @@
+<form class="form-horizontal">
+	<div ng-repeat="(keyElement, valuesElement) in selectedMetadata.content">
+		<div ng-if="olacElementsObject[keyElement]" ng-repeat="value in valuesElement" class="form-group">
+			<label for="elm-{{keyElement}}" class="col-sm-2 control-label">
+				{{olacElementsObject[keyElement].label}}
+			</label>
+			<div class="col-sm-8">
+				<div class="col-sm-12 input-group">
+					<span ng-if="value.type" class="input-group-addon">{{value.type}}</span>
+					<input ng-if="value.value" ng-model="value.value" type="text" class="form-control" name="elm-{{keyElement}}" placeholder="{{olacElementsObject[keyElement].placeholder}}">
+					<input ng-if="value.code" ng-model="value.code" type="text" class="form-control" name="elm-{{keyElement}}" placeholder="{{olacElementsObject[keyElement].placeholder}}">
+				</div>
+			</div>
+	  	</div>
+	</div>
+	<div class="col-sm-10">
+		<div class="pull-right">
+			<button disabled="disabled" type="button" class="btn btn-primary"><span ng-class="::icons.plus"></span> Ajouter un élément OLAC</button>
+		</div>
+	</div>
+</form>
