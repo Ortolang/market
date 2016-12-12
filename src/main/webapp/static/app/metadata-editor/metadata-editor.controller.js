@@ -236,6 +236,16 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
         		}
         	};
 
+        	$scope.addDcElement = function(key) {
+        		if (!$scope.selectedMetadata.content) {
+        			$scope.selectedMetadata.content = {};
+        		}
+        		if (!$scope.selectedMetadata.content[key]) {
+        			$scope.selectedMetadata.content[key] = [];
+        		}
+        		$scope.selectedMetadata.content[key].push({value: ''});
+        	};
+
             // Loads a data object to the content
             var deregisterFileMetadataPathSelectorModal = $rootScope.$on('browserSelectedElements-fileMetadataPathSelectorModal', function ($event, elements) {
                if(elements.length>0) {
@@ -292,43 +302,79 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 		        };
 
 				$scope.dcElementsObject = {
-					title: {init: [{value: ''}], label: 'Titre', placeholder: 'Titre'},
-					creator: {init: [{value: ''}], label: 'Créateur', placeholder: 'Créateur'},
-					subject: {init: [{value: ''}], label: 'Subjet', placeholder: 'Subjet'},
-					description: {init: [{value: ''}], label: 'Description', placeholder: 'Description'},
-					publisher: {init: [{value: ''}], label: 'Editeur', placeholder: 'Editeur'},
-					contributor: {init: [{value: ''}], label: 'Contributeur', placeholder: 'Contributeur'},
-					date: {init: [{value: ''}], label: 'Date', placeholder: 'Date'},
-					type: {init: [{value: ''}], label: 'Type', placeholder: 'Type'},
-					format: {init: [{value: ''}], label: 'Format', placeholder: 'Format'},
-					identifier: {init: [{value: ''}], label: 'Identifiant', placeholder: 'Identifiant'},
-					source: {init: [{value: ''}], label: 'Source', placeholder: 'Source'},
-					language: {init: [{value: ''}], label: 'Langue', placeholder: 'Langue'},
-					relation: {init: [{value: ''}], label: 'Relation', placeholder: 'Relation'},
-					coverage: {init: [{value: ''}], label: 'Couverture', placeholder: 'Couverture'},
-					rights: {init: [{value: ''}], label: 'Droits', placeholder: 'Droits'}
+					title: {label: 'Titre', placeholder: 'Titre'},
+					creator: {label: 'Créateur', placeholder: 'Créateur'},
+					subject: {label: 'Subjet', placeholder: 'Subjet'},
+					description: {label: 'Description', placeholder: 'Description'},
+					publisher: {label: 'Editeur', placeholder: 'Editeur'},
+					contributor: {label: 'Contributeur', placeholder: 'Contributeur'},
+					date: {label: 'Date', placeholder: 'Date'},
+					type: {label: 'Type', placeholder: 'Type'},
+					format: {label: 'Format', placeholder: 'Format'},
+					identifier: {label: 'Identifiant', placeholder: 'Identifiant'},
+					source: {label: 'Source', placeholder: 'Source'},
+					language: {label: 'Langue', placeholder: 'Langue'},
+					relation: {label: 'Relation', placeholder: 'Relation'},
+					coverage: {label: 'Couverture', placeholder: 'Couverture'},
+					rights: {label: 'Droits', placeholder: 'Droits'}
 				};
 
 				$scope.olacElementsObject = {
-					title: {init: [{value: ''}], label: 'Titre', placeholder: 'Titre'},
-					creator: {init: [{value: ''}], label: 'Créateur', placeholder: 'Créateur'},
-					subject: {init: [{value: ''}], label: 'Subjet', placeholder: 'Subjet'},
-					description: {init: [{value: ''}], label: 'Description', placeholder: 'Description'},
-					publisher: {init: [{value: ''}], label: 'Editeur', placeholder: 'Editeur'},
-					contributor: {init: [{value: ''}], label: 'Contributeur', placeholder: 'Contributeur'},
-					date: {init: [{value: ''}], label: 'Date', placeholder: 'Date'},
-					type: {init: [{value: ''}], label: 'Type', placeholder: 'Type'},
-					format: {init: [{value: ''}], label: 'Format', placeholder: 'Format'},
-					identifier: {init: [{value: ''}], label: 'Identifiant', placeholder: 'Identifiant'},
-					source: {init: [{value: ''}], label: 'Source', placeholder: 'Source'},
-					language: {init: [{value: ''}], label: 'Langue', placeholder: 'Langue'},
-					relation: {init: [{value: ''}], label: 'Relation', placeholder: 'Relation'},
-					coverage: {init: [{value: ''}], label: 'Couverture', placeholder: 'Couverture'},
-					rights: {init: [{value: ''}], label: 'Droits', placeholder: 'Droits'},
-					alternative: {init: [{value: ''}], label: 'Titre alternatif', placeholder: 'Titre alternatif'},
-					tableOfContents: {init: [{value: ''}], label: 'Table des matières', placeholder: 'Table des matières'},
-					abstract: {init: [{value: ''}], label: 'Résumé', placeholder: 'Résumé'},
-					bibliographicCitation: {init: [{value: ''}], label: 'Citation bibliographique', placeholder: 'Citation bibliographique'}
+					title: {label: 'Titre', placeholder: 'Titre'},
+					creator: {label: 'Créateur', placeholder: 'Créateur'},
+					subject: {label: 'Subjet', placeholder: 'Subjet'},
+					description: {label: 'Description', placeholder: 'Description'},
+					publisher: {label: 'Editeur', placeholder: 'Editeur'},
+					contributor: {label: 'Contributeur', placeholder: 'Contributeur'},
+					date: {label: 'Date', placeholder: 'Date'},
+					type: {label: 'Type', placeholder: 'Type'},
+					format: {label: 'Format', placeholder: 'Format'},
+					identifier: {label: 'Identifiant', placeholder: 'Identifiant'},
+					source: {label: 'Source', placeholder: 'Source'},
+					language: {label: 'Langue', placeholder: 'Langue'},
+					relation: {label: 'Relation', placeholder: 'Relation'},
+					coverage: {label: 'Couverture', placeholder: 'Couverture'},
+					rights: {label: 'Droits', placeholder: 'Droits'},
+					alternative: {label: 'Titre alternatif', placeholder: 'Titre alternatif'},
+					tableOfContents: {label: 'Table des matières', placeholder: 'Table des matières'},
+					abstract: {label: 'Résumé', placeholder: 'Résumé'},
+					created: {label: 'Date de création', placeholder: 'Date de création'},
+					valid: {label: 'Date de validation', placeholder: 'Date de validation'},
+					available: {label: 'Date de validité', placeholder: 'Date de validité'},
+					issued: {label: 'Date', placeholder: 'Date'},
+					modified: {label: 'Date', placeholder: 'Date'},
+					dateAccepted: {label: 'Date', placeholder: 'Date'},
+					dateCopyrighted: {label: 'Date', placeholder: 'Date'},
+					dateSubmitted: {label: 'Date', placeholder: 'Date'},
+					extent: {label: 'Taille', placeholder: 'Taille'},
+					medium: {label: 'Taille', placeholder: 'Taille'},
+					isVersionOf: {label: 'Est la version de', placeholder: 'Est la version de'},
+					hasVersion: {label: 'A la version', placeholder: 'A la version'},
+					isReplacedBy: {label: 'Est remplacer par', placeholder: 'Est remplacer par'},
+					replaces: {label: 'Remplace', placeholder: 'Remplace'},
+					isRequiredBy: {label: 'Est nécessaire par', placeholder: 'Est nécessaire par'},
+					requires: {label: 'Necessite', placeholder: 'Necessite'},
+					isPartOf: {label: 'Fait parti de', placeholder: 'Fait parti de'},
+					hasPart: {label: 'A pour partie', placeholder: 'A pour partie'},
+					isReferencedBy: {label: 'Est réferencé par', placeholder: 'Est réferencé par'},
+					references: {label: 'Fait référence à', placeholder: 'Fait référence à'},
+					isFormatOf: {label: 'Est le format de', placeholder: 'Est le format de'},
+					hasFormat: {label: 'A pour format', placeholder: 'A pour format'},
+					conformsTo: {label: 'Est conforme à', placeholder: 'Est conforme à'},
+					spatial: {label: 'Coordonnée spaciale', placeholder: 'Coordonnée spaciale'},
+					temporal: {label: 'Coordonnée temporelle', placeholder: 'Coordonnée temporelle'},
+					audience: {label: 'Audience', placeholder: 'Audience'},
+					accrualMethod: {label: 'AccrualMethod', placeholder: 'AccrualMethod'},
+					accrualPeriodicity: {label: 'AccrualPeriodicity', placeholder: 'AccrualPeriodicity'},
+					accrualPolicy: {label: 'AccrualPolicy', placeholder: 'AccrualPolicy'},
+					instructionalMethod: {label: 'InstructionalMethod', placeholder: 'InstructionalMethod'},
+					provenance: {label: 'Provenance', placeholder: 'Provenance'},
+					rightsHolder: {label: 'RightsHolder', placeholder: 'RightsHolder'},
+					mediator: {label: 'Mediator', placeholder: 'Mediator'},
+					educationLevel: {label: 'EducationLevel', placeholder: 'EducationLevel'},
+					accessRights: {label: 'Droits d\'accès', placeholder: 'Droits d\'accès'},
+					license: {label: 'Licence', placeholder: 'Licence'},
+					bibliographicCitation: {label: 'Citation bibliographique', placeholder: 'Citation bibliographique'}
 				};
 
 		        if ($scope.metadataName) {
