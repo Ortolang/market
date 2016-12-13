@@ -12,11 +12,11 @@
                             <div class="btn-toolbar btn-toolbar-left">
                                 <div class="btn-group visible-xs">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        {{selectedMetadata.name}}
+                                        {{selectedMetadata.label}}
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)"><div>{{md.name}} <span ng-show="md.changed===true">*</span></div></li>
+                                        <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)"><div>{{md.label}} <span ng-show="md.changed===true">*</span></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                         <span ng-class="::icons.plus"></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <li ng-repeat="(mfId, mfValue) in metadataFormats">
+                                        <li ng-repeat="(mfId, mfValue) in metadataFormats" ng-class="{'disabled': metadataExist(mfId)}">
                                             <a ng-click="create(mfId)">{{mfValue.label}}</a>
                                         </li>
                                     </ul>
@@ -71,7 +71,7 @@
                         <div class="metadata-editor-aside metadata-editor-aside-left hidden-xs">
                             <div class="metadata-list">
                                 <ul class="list-unstyled">
-                                    <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.name}} <i ng-show="md.changed===true">*</i></li>
+                                    <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.label}} <i ng-show="md.changed===true">*</i></li>
                                 </ul>
                             </div>
                         </div>

@@ -173,6 +173,10 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 				}
 			};
 
+			$scope.metadataExist = function (name) {
+				return findMetadata(name) !== null;
+			};
+
 			/**
 			 * Shows the metadata source.
 			 **/
@@ -187,7 +191,9 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			$scope.create = function (metadataFormat) {
 				var metadata = findMetadata(metadataFormat);
 				if (metadata === null) {
-					$scope.metadatas.push({name: metadataFormat, changed: true});
+					$scope.metadatas.push({name: metadataFormat, 
+						label: angular.isDefined($scope.metadataFormats[metadataFormat]) ? $scope.metadataFormats[metadataFormat].label : metadataFormat, 
+						changed: true});
 					$scope.selectMetadataByName(metadataFormat);
 				}
 			};
@@ -376,6 +382,10 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 					license: {label: 'Licence', placeholder: 'Licence'},
 					bibliographicCitation: {label: 'Citation bibliographique', placeholder: 'Citation bibliographique'}
 				};
+
+				angular.forEach($scope.metadatas, function (md) {
+					md.label = angular.isDefined($scope.metadataFormats[md.name]) ? $scope.metadataFormats[md.name].label : md.name;
+				});
 
 		        if ($scope.metadataName) {
 		        	$scope.selectMetadataByName($scope.metadataName);
