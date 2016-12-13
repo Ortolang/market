@@ -190,7 +190,6 @@ angular.module('ortolangMarketApp')
             if (previous) {
                 // if previous route was /market/(corpora|lexicons...) and params
                 $scope.fromSearch = Object.keys(previous.params).length > 0 && /^\/market\/\w+$/.test(previous.$$route.originalPath);
-                console.log($scope.fromSearch);
             }
         });
 
