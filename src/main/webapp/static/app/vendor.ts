@@ -29,6 +29,7 @@ import 'atmosphere.js';
 import 'angulartics';
 import 'angulartics-piwik';
 import 'moment';
+import 'moment/locale/fr.js';
 import 'angular-moment';
 import 'angular-motion';
 import 'angular-chart.js';
