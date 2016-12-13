@@ -13,7 +13,8 @@ angular.module('ortolangMarketApp')
         bindings: {
             options: '<?',
             workspaces: '<?',
-            workspace: '<'
+            workspace: '<',
+            root: '<?'
         },
         templateUrl: 'browser/browser.component.html'
     });
