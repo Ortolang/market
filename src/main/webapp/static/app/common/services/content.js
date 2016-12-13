@@ -73,8 +73,7 @@ angular.module('ortolangMarketApp')
         };
 
         this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {
-            var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?',
-                scope = AuthService.getScope();
+            var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?';
             angular.forEach(paths, function (path) {
                 exportUrl += '&path=/' + path;
             });
@@ -87,9 +86,7 @@ angular.module('ortolangMarketApp')
             if (followsymlink) {
                 exportUrl += '&followsymlink=' + followsymlink;
             }
-            if (scope) {
-                exportUrl += '&scope=' + scope;
-            }
+            exportUrl += '&scope=' + AuthService.getScope();
             return exportUrl;
         };
 
