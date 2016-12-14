@@ -42,6 +42,10 @@ angular.module('ortolangMarketApp')
                 transformRequest: function (data) { return $.param(data); },
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
             },
+            addMember: {
+                method: 'PUT',
+                url: url.api + '/workspaces/:wskey/members/:member'
+            },
             listEvents: {
                 method: 'GET',
                 url: url.api + '/workspaces/:wskey/events'

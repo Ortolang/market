@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
             modalScope.members = Workspace.active.members;
             modalScope.add = function (profile, $event) {
                 $event.stopPropagation();
-                GroupResource.addMember({key: Workspace.active.workspace.members, member: profile.key}, {}, function (data) {
+                WorkspaceResource.addMember({wskey: Workspace.active.workspace.key, member: profile.key}, {}, function (data) {
                     Workspace.active.members = data.members;
                 });
                 addMemberModal.hide();
