@@ -251,6 +251,23 @@ angular.module('ortolangMarketApp')
                 $alert(config);
             };
 
+            this.showNotificationMessage = function (message, container, placement) {
+                var config = {
+                    id: 'notification',
+                    title: message.title,
+                    content: message.body,
+                    show: true,
+                    templateUrl: 'common/templates/notification-modal.html',
+                };
+                if (container) {
+                    config.container = container;
+                }
+                if (placement) {
+                    config.placement = placement;
+                }
+                $modal(config);
+            };
+
             this.showErrorModal = function (error, container, placement) {
                 if (this.isModalOpened('error')) {
                     var scope = this.createModalScope(true);

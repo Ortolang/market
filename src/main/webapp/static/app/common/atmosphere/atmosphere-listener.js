@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('AtmosphereListener', ['$rootScope', function ($rootScope) {
+    .factory('AtmosphereListener', ['$rootScope', 'Helper', function ($rootScope, Helper) {
 
         function onMessage(response) {
             var responseText = response.responseBody,
@@ -16,8 +16,13 @@ angular.module('ortolangMarketApp')
             try {
                 message = atmosphere.util.parseJSON(responseText);
                 if (message.type) {
-                    $rootScope.$emit(message.type, message);
+                    if (message.type === 'system.notification') {
+                        Helper.showNotificationMessage(message);
+                    } else {
+                        $rootScope.$emit(message.type, message);
+                    }
                 }
+                // console.log('ATMOSPHERE MESSAGE', message);
             } catch (e) {
                 console.error('Error parsing JSON: ', responseText);
                 throw e;
