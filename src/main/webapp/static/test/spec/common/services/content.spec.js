@@ -56,12 +56,14 @@ describe('Service: Content', function () {
         expect(Content.getExportUrl(['<path>', '<path2>'])).toMatch(expectedUrl);
         expectedUrl += '&filename=<filename>';
         expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>')).toMatch(expectedUrl);
+        expectedUrl += '&regex=<regex>';
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<regex>', '<format>')).toMatch(expectedUrl);
         expectedUrl += '&format=<format>';
-        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>')).toMatch(expectedUrl);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<regex>', '<format>')).toMatch(expectedUrl);
         expectedUrl += '&followsymlink=<followsymlink>';
-        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>')).toMatch(expectedUrl);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<regex>', '<format>', '<followsymlink>')).toMatch(expectedUrl);
         expectedUrl = expectedUrl.replace(url.content, url.contentNoSSL);
-        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<format>', '<followsymlink>', true)).toMatch(expectedUrl);
+        expect(Content.getExportUrl(['<path>', '<path2>'], '<filename>', '<regex>', '<format>', '<followsymlink>', true)).toMatch(expectedUrl);
     });
 
     it('should download data', function () {

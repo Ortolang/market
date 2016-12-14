@@ -72,13 +72,16 @@ angular.module('ortolangMarketApp')
             return downloadWith(this.getContentUrlWithKey(key, undefined, noSSL), config);
         };
 
-        this.getExportUrl = function (paths, filename, format, followsymlink, noSSL) {
+        this.getExportUrl = function (paths, filename, regex, format, followsymlink, noSSL) {
             var exportUrl = (noSSL ? url.contentNoSSL : url.content) + '/export?';
             angular.forEach(paths, function (path) {
                 exportUrl += '&path=/' + path;
             });
             if (filename) {
                 exportUrl += '&filename=' + filename;
+            }
+            if (regex) {
+                exportUrl += '&regex=' + regex;
             }
             if (format) {
                 exportUrl += '&format=' + format;
@@ -90,16 +93,16 @@ angular.module('ortolangMarketApp')
             return exportUrl;
         };
 
-        this.export = function (paths, filename, format, followsymlink, noSSL) {
-            $window.open(this.getExportUrl(paths, filename, format, followsymlink, noSSL));
+        this.export = function (paths, filename, regex, format, followsymlink, noSSL) {
+            $window.open(this.getExportUrl(paths, filename, regex, format, followsymlink, noSSL));
         };
 
-        this.getExportSingleUrl = function (alias, root, path, filename, format, followsymlink, noSSL) {
-            return this.getExportUrl([alias + '/' + (root || 'head') + (path || '/')], filename, format, followsymlink, noSSL);
+        this.getExportSingleUrl = function (alias, root, path, filename, regex, format, followsymlink, noSSL) {
+            return this.getExportUrl([alias + '/' + (root || 'head') + (path || '/')], filename, regex, format, followsymlink, noSSL);
         };
 
-        this.exportSingle = function (alias, root, path, filename, format, followsymlink, noSSL) {
-            $window.open(this.getExportSingleUrl(alias, root, path, filename, format, followsymlink, noSSL));
+        this.exportSingle = function (alias, root, path, filename, regex, format, followsymlink, noSSL) {
+            $window.open(this.getExportSingleUrl(alias, root, path, filename, regex, format, followsymlink, noSSL));
         };
 
         this.getAttachmentUrl = function (mkey, hash, noSSL) {
