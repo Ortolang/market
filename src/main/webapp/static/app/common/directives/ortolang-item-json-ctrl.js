@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'Helper', 'Settings', 'VisualizerService', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url', 'User',
-        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, Helper, Settings, VisualizerService, Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User) {
+    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'AuthService', 'Helper', 'Settings', 'VisualizerService', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url', 'User',
+        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, AuthService, Helper, Settings, VisualizerService, Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User) {
 
             function loadReferentialEntities(items, dest) {
                 if (items && items.length > 0) {
@@ -299,9 +299,44 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.exportItem = function () {
-                var analyticsUrl = url.content + '/export/' + $scope.alias + '/' + $scope.root;
-                $analytics.trackLink(analyticsUrl, 'download');
-                Content.exportSingle($scope.alias, $scope.root, '/', $scope.alias);
+                var modalScope = Helper.createModalScope(true),
+                    exportModal;
+
+                modalScope.models.authenticated = AuthService.isAuthenticated();
+                modalScope.models.esr = AuthService.isEsr();
+                modalScope.models.size = $scope.content.datasize;
+
+                modalScope.login = function () {
+                    AuthService.login();
+                };
+
+                modalScope.submit = function (downloadItemForm) {
+                    if (!modalScope.models.pendingSubmit) {
+                        modalScope.models.pendingSubmit = true;
+                        if (downloadItemForm.$valid) {
+                            try {
+                                new RegExp(modalScope.models.regex);
+                            } catch (e) {
+                                downloadItemForm.regex.$setValidity('invalid', false);
+                                modalScope.models.pendingSubmit = false;
+                                return;
+                            }
+                        } else {
+                            modalScope.models.pendingSubmit = false;
+                            return;
+                        }
+                    }
+                    var analyticsUrl = url.content + '/export/' + $scope.alias + '/' + $scope.root;
+                    $analytics.trackLink(analyticsUrl, 'download');
+                    Content.exportSingle($scope.alias, $scope.root, '/', $scope.alias, modalScope.models.regex);
+                    exportModal.hide();
+                };
+
+                exportModal = $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/directives/download-item-modal-template.html',
+                    show: true
+                });
             };
 
             $scope.seeContributorPage = function (contributor) {

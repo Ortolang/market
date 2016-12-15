@@ -41,6 +41,10 @@ angular.element(document).ready(function () {
                     return keycloakAuth.hasRealmRole('admin');
                 }
 
+                function isEsr() {
+                    return keycloakAuth.hasRealmRole('esr');
+                }
+
                 function getScope() {
                     if (keycloakAuth.authenticated) {
                         /*jshint camelcase:false */
@@ -94,6 +98,7 @@ angular.element(document).ready(function () {
                     isAuthenticated: isAuthenticated,
                     isRoot: isRoot,
                     isAdmin: isAdmin,
+                    isEsr: isEsr,
                     getScope: getScope,
                     forceReload: forceReload,
                     sessionInitialized: sessionInitialized,

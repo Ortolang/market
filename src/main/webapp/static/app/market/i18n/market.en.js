@@ -179,6 +179,21 @@ angular.module('ortolangMarketApp')
                     PLACEHOLDER: 'Tell her what is about'
                 },
                 SEND: 'Send the message'
+            },
+            DOWNLOAD_MODAL: {
+                TITLE: 'Download',
+                ADVANCED: 'Advanced download',
+                REGEX: 'Regular expression',
+                REGEX_HELP: 'Use a regular expression to download specific files only (example: <code>.*\\.xml</code> to download XML files only)',
+                POLICY: 'I have read and agree to <a href="/information/policy" target="_blank">the ORTOLANG policy</a> as well as the license of this resource.',
+                ANONYMOUS: '<strong>You are not connected to ORTOLANG.</strong> Some files of this resource might only be accessible to connected users and/or ESR members. If you do have an account, please login to ORTOLANG.',
+                AUTHENTICATED: '<strong>You are connected to ORTOLANG but you are not an ESR member.</strong> Some files of this resource might only be accessible to ESR members.',
+                ESR: 'You are connected to ORTOLANG and an ESR member.',
+                SIZE: 'You are about to download a complete archive of this resource representing up to <strong>{{size | bytes}}</strong>.',
+                MESSAGES: {
+                    INVALID_REGEX: 'Invalid regular expression',
+                    POLICY: 'You must accept the ORTOLANG policy as well as the resource license'
+                }
             }
         }
     });
