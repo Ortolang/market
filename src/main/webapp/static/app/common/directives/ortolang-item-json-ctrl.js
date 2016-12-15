@@ -304,6 +304,10 @@ angular.module('ortolangMarketApp')
 
                 modalScope.models.authenticated = AuthService.isAuthenticated();
                 modalScope.models.esr = AuthService.isEsr();
+                if ($scope.license) {
+                    modalScope.models.license = $scope.license.label;
+                    modalScope.models.licenseUrl = $scope.license.effectiveText ? $scope.license.effectiveText.url : undefined;
+                }
                 modalScope.models.size = $scope.content.datasize;
 
                 modalScope.login = function () {

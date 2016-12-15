@@ -187,9 +187,9 @@ angular.module('ortolangMarketApp')
                 ADVANCED: 'Téléchargement avancé',
                 REGEX: 'Expression régulière',
                 REGEX_HELP: 'Utilisez une expression régulière pour télécharger uniquement certains fichiers (exemple: <code>.*\\.xml</code> pour télécharger uniquement les fichiers XML)',
-                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserves <a href="/information/policy" target="_blank">la charte ORTOLANG</a> ainsi que la license relative à cette ressource',
-                ANONYMOUS: '<strong>Vous n\'êtes pas connecté à ORTOLANG.</strong> Il est possible que certains fichiers de cette ressource ne soient accessibles uniquement aux utilisateurs connectés et/ou aux membres de l\'ESR. Si vous possédez un compte ORTOLANG, veuillez-vous connecter.',
-                AUTHENTICATED: '<strong>Vous êtes connecté à ORTOLANG mais vous ne faites pas parti des membres de l\'ESR.</strong> Il est possible que certains fichiers de cette ressource ne soient accessibles uniquement aux membres de l\'ESR.',
+                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/information/policy" target="_blank">la charte ORTOLANG</a> ainsi que la license relative à cette ressource {{license ? \'(<a target="_blank" href="\' + licenseUrl + \'">\' + license + \'</a>)\' : ""}}',
+                ANONYMOUS: '<strong>Vous n\'êtes pas connecté à ORTOLANG.</strong> Il est possible que l\'accès à certains fichiers de cette ressource soit réservé uniquement aux utilisateurs connectés et/ou aux membres de l\'ESR. Si vous possédez un compte ORTOLANG, veuillez-vous connecter.',
+                AUTHENTICATED: '<strong>Vous êtes connecté à ORTOLANG mais vous ne faites pas parti des membres de l\'ESR.</strong> Il est possible que l\'accès à certains fichiers de cette ressource soit réservé uniquement aux membres de l\'ESR.',
                 ESR: 'Vous êtes connecté à ORTOLANG et membre de l\'ESR.',
                 SIZE: 'Vous allez télécharger la totalité des données de cette ressource soit un maximum de <strong>{{size | bytes}}</strong>.',
                 MESSAGES: {
