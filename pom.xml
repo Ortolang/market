@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>market</artifactId>
     <name>Ortolang Diffusion Marketplace Application</name>
-    <version>5.1.1</version>
+    <version>5.1.2-SNAPSHOT</version>
     <packaging>war</packaging>
     <url>http://www.ortolang.fr</url>
 
@@ -17,7 +17,7 @@
         <connection>scm:git:git@gitlab.ortolang.fr:ortolang/ortolang-market.git</connection>
         <developerConnection>scm:git:git@gitlab.ortolang.fr:ortolang/ortolang-market.git</developerConnection>
         <url>https://gitlab.ortolang.fr/ortolang/ortolang-market</url>
-        <tag>market-5.1.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
