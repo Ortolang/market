@@ -42,7 +42,7 @@ angular.module('ortolangMarketApp')
                 params[Helper.prefix.workspace + 'archive'] = 'false';
                 params.fields = Helper.getFieldsParam(fields);
                 params.limit = '15';
-                params.orderProp = 'rank';
+                params.orderProp = 'publicationDate';
                 params.orderDir = 'desc';
                 $scope.paramsRecents = angular.toJson(params);
             }());
