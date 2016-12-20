@@ -1,0 +1,38 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" data-translate-values="{editing: editing}" data-translate="BROWSER.METADATA_EDITOR.ADD_DC_ELEMENT"></span>
+            </div>
+            <div class="modal-body">
+            	<form class="form-horizontal" role="form" name="addDcElementForm" ng-submit="submit(addDcElementForm)">
+                    <div class="form-group">
+                        <label for="key" class="col-sm-2 control-label">Nom</label>
+                        <div class="col-sm-6">
+                            <!-- <input type="text" class="form-control" name="key" ng-model="models.key" ng-disabled="originalKey" required> -->
+                            <select name="key" class="form-control" ng-model="models.key" ng-disabled="originalKey" required>
+                                <option ng-repeat="(key, value) in dcElements" value="{{key}}">{{value.label}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="value" class="col-sm-2 control-label">Valeur</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="value" ng-model="models.value" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lang" class="col-sm-2 control-label">Langue</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="lang" ng-model="models.lang">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

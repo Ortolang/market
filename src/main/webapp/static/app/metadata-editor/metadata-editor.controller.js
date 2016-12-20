@@ -242,16 +242,6 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
         		}
         	};
 
-        	$scope.addDcElement = function(key) {
-        		if (!$scope.selectedMetadata.content) {
-        			$scope.selectedMetadata.content = {};
-        		}
-        		if (!$scope.selectedMetadata.content[key]) {
-        			$scope.selectedMetadata.content[key] = [];
-        		}
-        		$scope.selectedMetadata.content[key].push({value: ''});
-        	};
-
             // Loads a data object to the content
             var deregisterFileMetadataPathSelectorModal = $rootScope.$on('browserSelectedElements-fileMetadataPathSelectorModal', function ($event, elements) {
                if(elements.length>0) {
