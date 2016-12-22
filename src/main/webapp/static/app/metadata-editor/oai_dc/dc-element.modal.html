@@ -9,7 +9,7 @@
             	<form class="form-horizontal" role="form" name="addDcElementForm" ng-submit="submit(addDcElementForm)">
                     <div class="form-group">
                         <label for="key" class="col-sm-2 control-label">Nom</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-9">
                             <!-- <input type="text" class="form-control" name="key" ng-model="models.key" ng-disabled="originalKey" required> -->
                             <select name="key" class="form-control" ng-model="models.key" ng-disabled="originalKey" required>
                                 <option ng-repeat="(key, value) in dcElements" value="{{key}}">{{value.label}}</option>
@@ -18,18 +18,25 @@
                     </div>
                     <div class="form-group">
                         <label for="value" class="col-sm-2 control-label">Valeur</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" name="value" ng-model="models.value" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="lang" class="col-sm-2 control-label">Langue</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="lang" ng-model="models.lang">
+                        <div class="col-sm-9">
+                            <!-- <input type="text" class="form-control" name="lang" ng-model="models.lang"> -->
+                            <select name="lang" class="form-control" ng-model="models.lang">
+                                <option value=""></option>
+                                <option ng-repeat="language in languages" value="{{language.key}}">{{language.value}}
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input class="btn btn-primary" type="submit"></div>
+                        <div class="col-sm-offset-2 col-sm-11">
+                            <input class="btn btn-primary" type="submit">
+                            <button class="btn btn-default" type="button" ng-click="$hide()" data-translate="CANCEL"></button>
+                        </div>
                     </div>
                 </form>
             </div>

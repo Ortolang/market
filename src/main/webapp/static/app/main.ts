@@ -139,6 +139,7 @@ import './common/piwik/piwik';
 import './metadata-editor/metadata-editor.controller';
 import './metadata-editor/metadata-editor-view.controller';
 import './metadata-editor/oai_dc/oai_dc-metadata-editor.controller';
+import './metadata-editor/olac/olac-metadata-editor.controller';
 // VISUALIZERS
 import './visualizers/visualizer.component';
 import './visualizers/visualizer.service';

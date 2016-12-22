@@ -1,0 +1,61 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" data-translate-values="{editing: editing}" data-translate="BROWSER.METADATA_EDITOR.ADD_OLAC_ELEMENT"></span>
+            </div>
+            <div class="modal-body">
+            	<form class="form-horizontal" role="form" name="addOlacElementForm" ng-submit="submit(addOlacElementForm)">
+                    <div class="form-group">
+                        <label for="key" class="col-sm-2 control-label">Nom</label>
+                        <div class="col-sm-9">
+                            <select name="key" class="form-control" ng-model="models.key" ng-disabled="originalKey" required>
+                                <option ng-repeat="(key, value) in olacElements" value="{{key}}">{{value.label}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="value" class="col-sm-2 control-label">Valeur</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="value" ng-model="models.value">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lang" class="col-sm-2 control-label">Langue</label>
+                        <div class="col-sm-9">
+                            <select name="lang" class="form-control" ng-model="models.lang">
+                                <option value=""></option>
+                                <option ng-repeat="language in languages" value="{{language.key}}">{{language.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="col-sm-2 control-label">Type</label>
+                        <div class="col-sm-9">
+                            <select name="type" class="form-control" ng-model="models.type">
+                                <option value=""></option>
+                                <option ng-repeat="type in olacTypes" value="{{type}}">{{type}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="code" class="col-sm-2 control-label">Code</label>
+                        <div class="col-sm-9">
+                            <select name="code" class="form-control" ng-model="models.code">
+                                <option value=""></option>
+                                <option ng-repeat="code in olacCodes" value="{{code}}">{{code}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-11">
+                            <input class="btn btn-primary" type="submit"></input>
+                            <button class="btn btn-default" type="button" ng-click="$hide()" data-translate="CANCEL"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

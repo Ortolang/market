@@ -2,24 +2,24 @@
 
 /**
  * @ngdoc controller
- * @name ortolangMarketApp.controller:OaiDcMetadataEditorCtrl
+ * @name ortolangMarketApp.controller:OlacMetadataEditorCtrl
  * @description
- * # OaiDcMetadataEditorCtrl
+ * # OlacMetadataEditorCtrl
  * Controller of the ortolangMarketApp
  *
  */
-angular.module('ortolangMarketApp').controller('OaiDcMetadataEditorCtrl', 
+angular.module('ortolangMarketApp').controller('OlacMetadataEditorCtrl', 
 	['$scope', '$modal', '$translate', 'Helper', 
 		function($scope, $modal, $translate, Helper) {
 
-            $scope.addDcElement = function(key, value, lang) {
+            $scope.addOlacElement = function(key, value, lang, type, code) {
                 if (!$scope.selectedMetadata.content) {
                     $scope.selectedMetadata.content = {};
                 }
                 if (!$scope.selectedMetadata.content[key]) {
                     $scope.selectedMetadata.content[key] = [];
                 }
-                $scope.selectedMetadata.content[key].push({value: value, lang: lang});
+                $scope.selectedMetadata.content[key].push({value: value, lang: lang, type: type, code: code});
             };
 
             $scope.deleteElement = function (key, value) {
@@ -36,21 +36,32 @@ angular.module('ortolangMarketApp').controller('OaiDcMetadataEditorCtrl',
             $scope.showAddElement = function (key, value) {
                 var modalScope = Helper.createModalScope(true), 
                  modal;
-                modalScope.dcElements = $scope.dcElementsObject;
+                modalScope.olacElements = $scope.olacElementsObject;
                 modalScope.languages = $scope.languages;
+                modalScope.olacTypes = $scope.olacTypes;
+                modalScope.olacCodes = $scope.olacCodes;
                 if (key) {
                     modalScope.originalKey = key;
                     modalScope.models.key = key;
                     modalScope.models.value = value.value;
                     modalScope.models.lang = value.lang;
+                    modalScope.models.type = value.type;
+                    modalScope.models.code = value.code;
                 }
                 modalScope.submit = function (form) {
                     if (form.$valid) {
                         if (modalScope.originalKey) {
                             value.value = modalScope.models.value;
                             value.lang = modalScope.models.lang === '' ? undefined : modalScope.models.lang;
+                            value.type = modalScope.models.type === '' ? undefined : modalScope.models.type;
+                            value.code = modalScope.models.code === '' ? undefined : modalScope.models.code;
                         } else {
-                            $scope.addDcElement(modalScope.models.key, modalScope.models.value, modalScope.models.lang === '' ? undefined : modalScope.models.lang);
+                            $scope.addOlacElement(modalScope.models.key, 
+                                modalScope.models.value, 
+                                modalScope.models.lang === '' ? undefined : modalScope.models.lang,
+                                modalScope.models.type === '' ? undefined : modalScope.models.type,
+                                modalScope.models.code === '' ? undefined : modalScope.models.code
+                            );
                         }
                         $scope.selectedMetadata.changed = true;
                         modal.hide();
@@ -61,7 +72,7 @@ angular.module('ortolangMarketApp').controller('OaiDcMetadataEditorCtrl',
                 };
                 modal = $modal({
                     scope: modalScope,
-                    templateUrl: 'metadata-editor/oai_dc/dc-element.modal.html',
+                    templateUrl: 'metadata-editor/olac/olac-element.modal.html',
                     show: true
                 });
             };
@@ -79,6 +90,16 @@ angular.module('ortolangMarketApp').controller('OaiDcMetadataEditorCtrl',
                     {key: 'en', value: $translate.instant('LANGUAGES.EN')},
                     {key: 'es', value: $translate.instant('LANGUAGES.ES')},
                     {key: 'zh', value: $translate.instant('LANGUAGES.ZH')}
+                ];
+                $scope.olacTypes = [
+                    'olac:role',
+                    'discourse',
+                    'W3C:datetime',
+                    'DCMI:URI',
+                    'DCMI:Space'
+                ];
+                $scope.olacCodes = [
+                    'narrative',
                 ];
             }());
 		}

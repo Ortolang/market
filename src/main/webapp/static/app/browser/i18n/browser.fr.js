@@ -150,7 +150,8 @@ angular.module('ortolangMarketApp')
             METADATA_EDITOR: {
                 TITLE: 'Editer les métadonnées de <strong>{{elementName}}</strong>',
                 CONVERT_XML_JSON: 'Charger à partir d\'un fichier XML',
-                ADD_DC_ELEMENT: 'Ajouter un élément Dublin Core'
+                ADD_DC_ELEMENT: 'Ajouter un élément Dublin Core',
+                ADD_OLAC_ELEMENT: 'Ajouter un élément OLAC'
             }
         }
     });

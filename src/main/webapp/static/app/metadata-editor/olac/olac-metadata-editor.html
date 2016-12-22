@@ -1,4 +1,4 @@
-<form class="form-horizontal" name="metadataEditorViewForm" ng-controller="MetadataEditorViewCtrl">
+<form class="form-horizontal" name="metadataEditorViewForm" ng-controller="OlacMetadataEditorCtrl">
 	<div ng-repeat="(keyElement, valuesElement) in selectedMetadata.content">
 		<div ng-if="olacElementsObject[keyElement]" ng-repeat="value in valuesElement" class="form-group">
 			<label for="elm-{{keyElement}}" class="col-sm-2 control-label">
@@ -6,16 +6,22 @@
 			</label>
 			<div class="col-sm-8">
 				<div class="col-sm-12 input-group">
-					<span ng-if="value.type" class="input-group-addon">{{value.type}}</span>
-					<input ng-if="value.value" ng-model="value.value" type="text" class="form-control" name="elm-{{keyElement}}" placeholder="{{olacElementsObject[keyElement].placeholder}}">
-					<input ng-if="value.code" ng-model="value.code" type="text" class="form-control" name="elm-{{keyElement}}" placeholder="{{olacElementsObject[keyElement].placeholder}}">
+					<span ng-if="value.lang" class="input-group-addon" ng-click="showAddElement(keyElement, value)" data-title="xml:lang" bs-tooltip>{{value.lang}}</span>
+					<span ng-if="value.type" class="input-group-addon" ng-click="showAddElement(keyElement, value)" data-title="xsi:type" bs-tooltip>{{value.type}}</span>
+					<input ng-if="value.value" ng-model="value.value" type="text" class="form-control" name="elm-{{keyElement}}" ng-click="showAddElement(keyElement, value)">
+					<input ng-if="value.code" ng-model="value.code" type="text" class="form-control" name="elm-{{keyElement}}" ng-click="showAddElement(keyElement, value)" data-title="olac:code" bs-tooltip>
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="deleteElement(keyElement, value)">
+							<span class="text-danger" ng-class="::icons.trash"></span>
+						</button>
+					</div>
 				</div>
 			</div>
 	  	</div>
 	</div>
 	<div class="col-sm-10">
 		<div class="pull-right">
-			<button disabled="disabled" type="button" class="btn btn-primary"><span ng-class="::icons.plus"></span> Ajouter un élément OLAC</button>
+			<button type="button" class="btn btn-primary" ng-click="showAddElement()">{{'BROWSER.METADATA_EDITOR.ADD_OLAC_ELEMENT' | translate}}</button>
 		</div>
 	</div>
 </form>

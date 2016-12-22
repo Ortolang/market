@@ -2,16 +2,16 @@
 	<div ng-repeat="(keyElement, valuesElement) in selectedMetadata.content">
 		<div ng-if="dcElementsObject[keyElement]" ng-repeat="value in valuesElement" class="form-group">
 			<label for="elm-{{keyElement}}" class="col-sm-2 control-label">{{dcElementsObject[keyElement].label}}</label>
-			<div class="col-sm-7">
-				<div class="col-sm-12 input-group">
-					<span ng-if="value.lang" class="input-group-addon">{{value.lang}}</span>
-					<input ng-model="value.value" type="text" class="form-control" name="elm-{{keyElement}}" placeholder="{{dcElementsObject[keyElement].placeholder}}">
-				</div>
-			</div>
-			<div class="col-sm-1">
-				<div class="pull-right">
-					<span ng-class="::icons.edit" ng-click="showAddElement(keyElement, value)"></span>
-					<span ng-class="::icons.trash" ng-click="showAddElement(keyElement)"></span>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<span ng-if="value.lang" class="input-group-addon" ng-click="showAddElement(keyElement, value)">{{value.lang}}</span>
+					<input ng-model="value.value" type="text" class="form-control" name="elm-{{keyElement}}" placeholder="{{dcElementsObject[keyElement].placeholder}}" ng-click="showAddElement(keyElement, value)">
+
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="deleteElement(keyElement, value)">
+							<span class="text-danger" ng-class="::icons.trash"></span>
+						</button>
+					</div>
 				</div>
 			</div>
 	  	</div>
