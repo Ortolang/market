@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         return function (events) {
             var filteredEvents = [];
             angular.forEach(events, function (event) {
-                if (event.throwedBy === undefined || event.throwedBy === null || event.type === 'core.workspace.snapshot' || event.type === 'membership.group.create') {
+                if (event.throwedBy === undefined || event.throwedBy === null || event.type === 'core.workspace.snapshot' || event.type === 'publication.workspace.publish-snapshot' || event.type === 'membership.group.create') {
                     return;
                 }
                 if (event.type === 'membership.group.add-member' && event.throwedBy === event.arguments.member) {
@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
                 if (event.type === 'core.collection.create' && event.arguments.path === '/') {
                     return;
                 }
-                if (event.type === 'membership.group.change-owner') {
+                if (event.type === 'membership.group.change-owner' || event.type === 'core.workspace.notify-owner' || event.type === 'core.workspace.notify-added-member') {
                     return;
                 }
                 if (/^core\.metadata\./.test(event.type) && event.arguments.name === 'ortolang-workspace-json') {
