@@ -20,14 +20,18 @@ angular.module('ortolangMarketApp')
             if (precision === undefined) {
                 precision = 1;
             }
-            var units,
-                number = Math.floor(Math.log(bytes) / Math.log(1024)),
-                val = (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision);
+            var units, result,
+                number = Math.floor(Math.log(bytes) / Math.log(1000)),
+                val = (bytes / Math.pow(1000, Math.floor(number))).toFixed(precision);
             if ($translate.use() === 'fr') {
                 units =  ['octets', 'Ko', 'Mo', 'Go', 'To', 'Po'];
             } else {
-                units =  ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+                units =  ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'];
             }
-            return (/\.0*$/.test(val) ? val.substr(0, val.indexOf('.')) : val) +  ' ' + units[number];
+            result = (/\.0*$/.test(val) ? val.substr(0, val.indexOf('.')) : val) +  ' ' + units[number];
+            if ($translate.use() === 'fr') {
+                result = result.replace('.', ',');
+            }
+            return result;
         };
     }]);

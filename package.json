@@ -68,7 +68,7 @@
     "devDependencies": {
         "@types/core-js": "0.9.35",
         "@types/jasmine": "2.5.38",
-        "@types/node": "6.0.45",
+        "@types/node": "6.0.52",
         "angular-mocks": "1.5.9",
         "angular-scenario": "1.5.9",
         "angular2-template-loader": "0.6.0",
