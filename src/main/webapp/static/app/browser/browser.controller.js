@@ -328,7 +328,9 @@ angular.module('ortolangMarketApp')
                 $modal({
                     scope: modalScope,
                     templateUrl: 'metadata-editor/metadata-editor.html',
-                    show: true
+                    show: true,
+                    backdrop: 'static',
+                    keyboard  : false
                 });
             };
 

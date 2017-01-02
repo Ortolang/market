@@ -13,8 +13,8 @@
  * @property {String}   elementPath              - The selected element path
  */
 angular.module('ortolangMarketApp').controller('MetadataEditorCtrl', 
-	['$rootScope', '$scope', '$q', '$filter', '$timeout', 'x2js', '$alert', '$modal', '$translate', 'Content', 'ortolangType', 'icons', 'Workspace', 'WorkspaceElementResource', 
-		function($rootScope, $scope, $q, $filter, $timeout, x2js, $alert, $modal, $translate, Content, ortolangType, icons, Workspace, WorkspaceElementResource) {
+	['$rootScope', '$scope', '$q', '$filter', '$timeout', 'x2js', '$alert', '$modal', '$translate', 'Content', 'ortolangType', 'icons', 'Workspace', 'WorkspaceElementResource', 'Helper', 
+		function($rootScope, $scope, $q, $filter, $timeout, x2js, $alert, $modal, $translate, Content, ortolangType, icons, Workspace, WorkspaceElementResource, Helper) {
 
 			/**
 			 * Finds a metadata by it name.
@@ -63,11 +63,13 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
             function postForm(metadata, metadataName, deferred) {
                 var fd = new FormData(),
                 	blob = new Blob([metadata], { type: 'text/json'});
+                if (!deferred) {
+                	deferred = $q.defer();
+                }
                 fd.append('path', $scope.elementPath);
                 fd.append('type', ortolangType.metadata);
                 fd.append('name', metadataName);
                 fd.append('stream', blob);
-
                 WorkspaceElementResource.post({wskey: Workspace.active.workspace.key}, fd, function (element) {
                     deferred.resolve(element);
                 }, function (errors) {
@@ -75,6 +77,22 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                 });
                 return deferred.promise;
             }
+
+	    	function saveAndUpdate(md, deferred) {
+	    		postForm(angular.toJson(md.content), md.name).then(
+       				function (metadataObject) {
+       					if (md !== null) {
+       						md.key = metadataObject.key;
+       					}
+       					md.changed = false;
+       					deferred.resolve();
+           			}, function (reason) {
+           				console.log('save and update reject ' + md.name);
+           				console.log(reason);
+           				deferred.reject(reason);
+           			}
+           		);
+	    	}
 
             /**
              * Converts a XML OAI_DC (String representation) to JSON.
@@ -143,6 +161,51 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 				}
 				return content;
 	    	}
+
+	    	function saveAndUpdateFailed(reason) {
+	    		console.log('save and update failed');
+				console.log(reason);
+	    	}
+
+            /**
+             *
+             */
+            function showSavingMetadataModal() {
+                var savingMetadataModal,
+                	modalScope = Helper.createModalScope(true);
+                modalScope.save = function () {
+                	// Paralell updateMetadataObject is not possible (Row was updated or deleted by another transaction)
+                    var deferred = null;
+                    angular.forEach($scope.metadatas, function (md) {
+                    	if (md.changed === true) {
+                    		var tmpDeferred = $q.defer();
+                    		if (deferred === null) {
+                    			saveAndUpdate(md, tmpDeferred);
+                    		} else {
+                    			deferred.then(function () { saveAndUpdate(md, tmpDeferred); }, saveAndUpdateFailed);
+                    		}
+			                deferred = tmpDeferred.promise;
+                    	}	
+                    });
+                    if (deferred !== null) {
+	                    deferred.then(function () {
+	                    	console.log('all promise resolved');
+			           		savingMetadataModal.hide();
+		                    $scope.$hide();
+	                    }, saveAndUpdateFailed);
+                    }
+                };
+                modalScope.exit = function () {
+                    savingMetadataModal.hide();
+                    // TODO Resets metadatas
+                    $scope.$hide();
+                };
+                savingMetadataModal = $modal({
+                    scope: modalScope,
+                    templateUrl: 'workspace/templates/save-metadata-modal.html',
+                    show: true
+                });
+            }
 
 			/**
 			 * Sets the metadata format viewer.
@@ -221,15 +284,15 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			 * Saves the current selected metadata.
 			 **/
 			$scope.save = function () {
-				var deferred = $q.defer();
 				// Creates/Updates in the server
-				postForm(angular.toJson($scope.selectedMetadata.content), $scope.selectedMetadata.name, deferred).then(
+				postForm(angular.toJson($scope.selectedMetadata.content), $scope.selectedMetadata.name).then(
        				function (metadataObject) {
        					var md = findMetadata(metadataObject.name);
        					if (md !== null) {
        						$scope.selectedMetadata.key = metadataObject.key;
        					}
        					md.changed = false;
+       					// TODO Copy the metadata saved to origin array
            			}, function (reason) {
            				console.log(reason);
            			}
@@ -240,6 +303,10 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
         		if (angular.isDefined($scope.selectedMetadata)) {
         			Content.downloadWithKeyInWindow($scope.selectedMetadata.key);
         		}
+        	};
+			
+        	$scope.hide = function () {
+        		showSavingMetadataModal();
         	};
 
             // Loads a data object to the content
