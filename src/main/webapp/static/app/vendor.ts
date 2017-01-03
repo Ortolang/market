@@ -3,13 +3,13 @@ import 'jquery';
 
 // AngularJS 1.x
 import 'angular';
-import 'angular-animate';
 import 'angular-route';
 import 'angular-resource';
 import 'angular-sanitize';
 import 'angular-messages';
 import 'angular-touch';
 import 'angular-cookies';
+import 'angular-animate';
 import 'angular-i18n/angular-locale_fr';
 
 // Dependencies
