@@ -546,5 +546,7 @@ angular.module('ortolangMarketApp')
         'ortolang-item-json': 'Fiche de présentation',
         'ortolang-thumb-json': 'Logo',
         'ortolang-acl-json': 'Permissions',
-        'ortolang-pid-json': 'Identifiant pérenne'
+        'ortolang-pid-json': 'Identifiant pérenne',
+        'oai_dc': 'Dublin Core',
+        'olac': 'OLAC'
     });

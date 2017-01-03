@@ -267,16 +267,6 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function hasXMd(object) {
-                var i;
-                for (i = 0; i < object.metadatas.length; i++) {
-                    if (/^system-x-(\w+)-json$/.test(object.metadatas[i].name)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
             function checkMetadata(object) {
                 if (object.type === ortolangType.object) {
                     angular.forEach(object.metadatas, function (metadata) {
@@ -297,25 +287,6 @@ angular.module('ortolangMarketApp')
                     });
                 }
             }
-
-            // ctrl.showMetadata = function () {
-            //     createModalScope();
-            //     modalScope.metadata = ctrl.selectedElements[0].x;
-            //     var tmp = [];
-            //     angular.forEach(modalScope.metadata, function (v, k) {
-            //         tmp.push({
-            //             name: k,
-            //             value: v
-            //         });
-            //     });
-            //     modalScope.metadata = tmp;
-            //     modalScope.isArray = angular.isArray;
-            //     $modal({
-            //         scope: modalScope,
-            //         templateUrl: 'common/directives/metadata-modal-template.html',
-            //         show: true
-            //     });
-            // };
 
             ctrl.showMetadata = function (md) {
                 createModalScope(true);

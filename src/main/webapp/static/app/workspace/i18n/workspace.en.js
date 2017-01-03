@@ -467,5 +467,11 @@ angular.module('ortolangMarketApp')
         ERROR_MODAL_UPLOAD_SIZE_LIMIT: {
             TITLE: 'File size limit',
             BODY: '<p>You cannot import files whose size exceeds <strong>1 GB</strong> using this method.</p><p>To import larger amount of data, you can <strong>access your workspace by FTP</strong>. The FTP address of your workspace can be found in the Information tab.</p>'
-        }
+        },
+        'ortolang-item-json': 'Item informations',
+        'ortolang-thumb-json': 'Logo',
+        'ortolang-acl-json': 'Permissions',
+        'ortolang-pid-json': 'Long-term identifier',
+        'oai_dc': 'Dublin Core',
+        'olac': 'OLAC'
     });
