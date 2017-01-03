@@ -1,0 +1,52 @@
+@media print {
+  body {
+    background-color: red;
+    height: auto;
+  }
+  #top-nav-wrapper {
+    position: relative;
+  }
+  #main-wrapper {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    overflow: visible;
+  }
+  #side-nav-wrapper {
+    display: none;
+  }
+  .container-flex {
+    display: block;
+    height: auto;
+    width: auto;
+  }
+
+  #main-wrapper main {
+    display: block;
+  }
+
+  .view-wrapper {
+    height: auto;
+  }
+
+  .container-main {
+    display: block !important;
+  }
+
+  .market-item-wrapper {
+    position: relative;
+    height: auto;
+    width: 100%;
+
+    .all-versions li {
+      margin-top: @padding-large-vertical;
+    }
+
+    .card-well-share, .citatation-alert .label {
+      display: none;
+    }
+  }
+
+}
