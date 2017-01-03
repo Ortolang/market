@@ -167,6 +167,15 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 				console.log(reason);
 	    	}
 
+        	function isChanged() {
+        		for(var i=0;i<$scope.metadatas.length;i++) {
+        			if ($scope.metadatas[i].changed	=== true) {
+        				return true;
+        			}
+        		}
+        		return false;
+        	}
+
             /**
              *
              */
@@ -306,7 +315,11 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
         	};
 			
         	$scope.hide = function () {
-        		showSavingMetadataModal();
+        		if (isChanged()) {
+        			showSavingMetadataModal();
+        		} else {
+        			$scope.$hide();
+        		}
         	};
 
             // Loads a data object to the content
