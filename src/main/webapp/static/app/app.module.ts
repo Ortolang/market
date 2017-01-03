@@ -25,13 +25,13 @@ import IModule = angular.IModule;
  */
 angular
     .module('ortolangMarketApp', [
-        'ngAnimate',
         'ngRoute',
         'ngResource',
         'ngMessages',
         'ngSanitize',
         'ngTouch',
         'ngCookies',
+        'ngAnimate',
         'ortolangVisualizers',
         'angularFileUpload',
         'mgcrea.ngStrap.tab',
