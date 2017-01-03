@@ -133,41 +133,6 @@ angular.module('ortolangMarketApp')
                 });
             };
 
-            function loadContributor(contributor) {
-                if (typeof contributor.entity === 'string') {
-                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
-                        contributor.entityContent = entity.content;
-                    });
-                } else {
-                    contributor.entityContent = angular.copy(contributor.entity);
-                }
-
-                if (contributor.roles && contributor.roles.length > 0) {
-                    contributor.rolesEntity = [];
-                    angular.forEach(contributor.roles, function (role) {
-                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (roleEntities) {
-                            var content = roleEntities.content;
-                            content.label = Helper.getMultilingualValue(content.labels);
-                            contributor.rolesEntity.push(content);
-                        });
-                    });
-                }
-
-                if (contributor.organization) {
-                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
-                        contributor.organizationEntity = entity.content;
-                    });
-                }
-            }
-
-            function loadContributors() {
-                if (angular.isDefined($scope.metadata.contributors)) {
-                    angular.forEach($scope.metadata.contributors, function (contributor) {
-                        loadContributor(contributor);
-                    });
-                }
-            }
-
             /**
              * Methods on organizations (producers and sponsors)
              **/
@@ -337,19 +302,6 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function loadAllRoles() {
-                ReferentialResource.get({type: 'ROLE'}, function (entities) {
-                    var allRoles = [];
-                    angular.forEach(entities.entries, function (entry) {
-                        var content = entry.content;
-                        content.label = Helper.getMultilingualValue(content.labels);
-
-                        allRoles.push(content);
-                    });
-                    $scope.allRoles = $filter('orderBy')(allRoles, 'label');
-                });
-            }
-
             /**
              * Initialize the scope
              **/
@@ -363,9 +315,6 @@ angular.module('ortolangMarketApp')
                 $scope.selectedRoles = [];
 
                 loadOrganizations();
-                loadContributors();
-
-                loadAllRoles();
             }
 
             init();
