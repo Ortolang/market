@@ -91,6 +91,16 @@ angular.module('ortolangMarketApp')
                             // From Workspace preview with contributor inside the referential
                             ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
                                 loadedContributor.entity = angular.fromJson(entity.content);
+                                // Load contributor card when previewing
+                                if ($scope.preview && Helper.startsWith(loadedContributor.entity.username, '$')) {
+                                    var username = Helper.extractKeyFromReferentialId(loadedContributor.entity.username);
+                                    var cardPromise = Helper.getCard(username);
+                                    if (cardPromise) {
+                                        cardPromise.then(function (data) {
+                                            loadedContributor.entity.username = {'meta_profile': data};
+                                        });
+                                    }
+                                }
                             });
 
                             if (contributor.roles && contributor.roles.length > 0) {

@@ -8,19 +8,25 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', 'ProfileResource', 'ReferentialResource', 'ortolangType',
-        function ($rootScope, $translate, $alert, $modal, $aside, $window, ProfileResource, ReferentialResource, ortolangType) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', '$q', 'ProfileResource', 'ReferentialResource', 'ortolangType',
+        function ($rootScope, $translate, $alert, $modal, $aside, $window, $q, ProfileResource, ReferentialResource, ortolangType) {
 
             var modalScope, modal, asideMobileNav, Helper = this;
 
             this.profileCards = {};
 
             this.getCard = function (username) {
-                if (username && this.profileCards[username] === undefined) {
-                    this.profileCards[username] = null;
-                    ProfileResource.getCard({key: username}, function (data) {
-                        Helper.profileCards[username] = data;
-                    });
+                if (username) {
+                    if (this.profileCards[username] === undefined) {
+                        this.profileCards[username] = null;
+                        return ProfileResource.getCard({key: username}, function (data) {
+                            Helper.profileCards[username] = data;
+                        }).$promise;
+                    } else {
+                        var deferred = $q.defer();
+                        deferred.resolve(Helper.profileCards[username]);
+                        return deferred.promise;
+                    }
                 }
             };
 
@@ -172,6 +178,9 @@ angular.module('ortolangMarketApp')
             };
 
             this.startsWith = function (actual, expected) {
+                if (!angular.isString(actual)) {
+                    return false;
+                }
                 var lowerStr = (actual + '').toLowerCase();
                 return lowerStr.indexOf(expected.toLowerCase()) === 0;
             };
