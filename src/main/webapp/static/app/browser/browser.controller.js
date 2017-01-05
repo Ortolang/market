@@ -134,7 +134,6 @@ angular.module('ortolangMarketApp')
                             }
                         }
                         if (ctrl.config.canEdit && ctrl.isHead && !ctrl.hasOnlyParentSelected()) {
-                            ctrl.contextMenuItems.push({text: 'BROWSER.SEE_MD', icon: icons.browser.metadata, action: 'showMetadata'});
                             if (ctrl.selectedElements.length === 1) {
                                 ctrl.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
                             }
@@ -150,6 +149,8 @@ angular.module('ortolangMarketApp')
                             //ctrl.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
                             ctrl.contextMenuItems.push({divider: true});
                         }
+                        ctrl.contextMenuItems.push({text: 'BROWSER.SEE_MD', icon: icons.browser.metadata, action: 'showMetadata'});
+                        ctrl.contextMenuItems.push({divider: true});
                         ctrl.contextMenuItems.push({text: ctrl.viewMode[ctrl.browserSettings.viewMode].text, icon: ctrl.viewMode[ctrl.browserSettings.viewMode].icon, action: 'switchViewMode'});
                         if (ctrl.contextMenuItems.length > 0 && ctrl.contextMenuItems[ctrl.contextMenuItems.length - 1].divider) {
                             ctrl.contextMenuItems.pop();

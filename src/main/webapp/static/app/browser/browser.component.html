@@ -180,6 +180,12 @@
                     </ul>
                 </div>
 
+                <div class="btn-group hidden-xs">
+                    <button class="btn btn-default" ng-click="$ctrl.showMetadata()" data-title="{{'BROWSER.SEE_MD' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.browser.metadata"></span>
+                    </button>
+                </div>
+
                 <!--<div ng-show="$ctrl.isMarket" class="btn-group">-->
                 <!--<button ng-if="$ctrl.config.canDownload" class="btn btn-default" ng-click="$ctrl.addToCart()" data-title="{{'BROWSER.ADD_TO_CART' | translate}}"  data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>-->
                 <!--<span ng-class="::icons.cartPlus"></span>-->
