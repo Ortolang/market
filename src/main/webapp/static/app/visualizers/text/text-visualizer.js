@@ -111,10 +111,10 @@ angular.module('ortolangVisualizers')
             if ($scope.$ctrl.data.parent && $scope.$ctrl.data.parent.path) {
                 $scope.base = Content.getContentUrlWithPath($scope.$ctrl.data.parent.path, $scope.$ctrl.data.alias, $scope.$ctrl.data.root);
             }
-            if ($scope.$ctrl.data.element.downloadUrl) {
-                $scope.pageSrc = $scope.$ctrl.data.element.downloadUrl;
-            } else if ($scope.$ctrl.data.element.path) {
+            if ($scope.$ctrl.data.element.path) {
                 $scope.pageSrc = Content.getContentUrlWithPath($scope.$ctrl.data.element.path, $scope.$ctrl.data.alias, $scope.$ctrl.data.root);
+            } else if ($scope.$ctrl.data.element.downloadUrl) {
+                $scope.pageSrc = $scope.$ctrl.data.element.downloadUrl;
             } else {
                 $scope.pageSrc = Content.getContentUrlWithKey($scope.$ctrl.data.element.key, false);
             }
