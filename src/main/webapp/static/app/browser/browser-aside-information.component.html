@@ -97,10 +97,10 @@
         <dd>{{$ctrl.element.x['meta:word-count']}}</dd>
         <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
-    <hr ng-if="$ctrl.element.metadatas.length>0 && !$ctrl.element['X-Type'] && $ctrl.element.root !== true"/>
-    <dl class="dl-horizontal" ng-if="$ctrl.element.metadatas.length>0 && !$ctrl.element['X-Type'] && $ctrl.element.root !== true">
+    <hr ng-if="$ctrl.element.metadatas.length>0 && $ctrl.element.root !== true"/>
+    <dl class="dl-horizontal" ng-if="$ctrl.element.metadatas.length>0 && $ctrl.element.root !== true">
         <dt>Méta</dt>
-        <dd ng-repeat="md in $ctrl.element.metadatas | orderBy:'name'" ng-click="$ctrl.showMetadata({md: md})">
+        <dd ng-repeat="md in $ctrl.element.metadatas | filter:'!system':Helper.startsWith | orderBy:'name'" ng-click="$ctrl.showMetadata({md: md})">
             <span class="metadata-name">{{md.name | translate}}</span>
         </dd>
     </dl>

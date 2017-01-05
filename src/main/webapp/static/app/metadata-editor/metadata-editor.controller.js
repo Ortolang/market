@@ -373,14 +373,14 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 		        $scope.modeSource = false;
 
 		        $scope.metadataFormats = {
-		        	oai_dc: {label: 'Dublin Core', template: 'metadata-editor/oai_dc/oai_dc-metadata-editor.html', converter: convertXMLToJsonOaiDc},
-		        	olac: {label: 'OLAC', template: 'metadata-editor/olac/olac-metadata-editor.html', converter: convertXMLToJsonOlac}
+		        	'oai_dc': {label: 'Dublin Core', template: 'metadata-editor/oai_dc/oai_dc-metadata-editor.html', converter: convertXMLToJsonOaiDc},
+		        	'olac': {label: 'OLAC', template: 'metadata-editor/olac/olac-metadata-editor.html', converter: convertXMLToJsonOlac}
 		        };
 
 				$scope.dcElementsObject = {
 					title: {label: 'Titre', placeholder: 'Titre'},
 					creator: {label: 'Créateur', placeholder: 'Créateur'},
-					subject: {label: 'Subjet', placeholder: 'Subjet'},
+					subject: {label: 'Sujet', placeholder: 'Sujet'},
 					description: {label: 'Description', placeholder: 'Description'},
 					publisher: {label: 'Editeur', placeholder: 'Editeur'},
 					contributor: {label: 'Contributeur', placeholder: 'Contributeur'},
@@ -398,7 +398,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 				$scope.olacElementsObject = {
 					title: {label: 'Titre', placeholder: 'Titre'},
 					creator: {label: 'Créateur', placeholder: 'Créateur'},
-					subject: {label: 'Subjet', placeholder: 'Subjet'},
+					subject: {label: 'Sujet', placeholder: 'Sujet'},
 					description: {label: 'Description', placeholder: 'Description'},
 					publisher: {label: 'Editeur', placeholder: 'Editeur'},
 					contributor: {label: 'Contributeur', placeholder: 'Contributeur'},

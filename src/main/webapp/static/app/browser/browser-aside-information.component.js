@@ -17,12 +17,13 @@ angular.module('ortolangMarketApp')
             showMetadata: '&',
             helper: '<'
         },
-        controller: ['ObjectResource', 'Content', 'icons', 'ortolangType', function (ObjectResource, Content, icons, ortolangType) {
+        controller: ['ObjectResource', 'Content', 'icons', 'ortolangType', 'Helper', function (ObjectResource, Content, icons, ortolangType, Helper) {
 
             var ctrl = this;
 
             this.Content = Content;
             this.icons = icons;
+            this.Helper = Helper;
 
             this.elementsSize = function () {
                 if (this.elements) {
