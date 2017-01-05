@@ -153,14 +153,16 @@ angular.module('ortolangMarketApp')
                 loadFieldValuesInAdditionalInformations('toolSupport', 'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT', lang);
 
                 if (angular.isDefined($scope.content.creationLocations)) {
+                    var creationLocoationValue = '';
                     angular.forEach($scope.content.creationLocations, function (creationLocation) {
                         if (creationLocation.name) {
-                            $scope.additionalInformations.push({
-                                key: 'creationLocations',
-                                value: creationLocation.name,
-                                name: 'ITEM.CREATION_LOCATIONS.LABEL'
-                            });
+                            creationLocoationValue += (creationLocoationValue===''?'':', ') + creationLocation.name;
                         }
+                    });
+                    $scope.additionalInformations.push({
+                        key: 'creationLocations',
+                        value: creationLocoationValue,
+                        name: 'ITEM.CREATION_LOCATIONS.LABEL'
                     });
                 }
 
