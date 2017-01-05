@@ -277,7 +277,7 @@ angular.module('ortolangMarketApp')
                                     if(angular.isArray(result[alias])) {
                                         angular.forEach(result[alias], function (field) {
                                             var label = field;
-                                            if (field['meta_ortolang-referential-json'] && angular.isDefined(field['meta_ortolang-referential-json'].labels)) {
+                                            if (angular.isDefined(field['meta_ortolang-referential-json'].labels)) {
                                                 label = Helper.getMultilingualValue(field['meta_ortolang-referential-json'].labels);
                                                 labels[field.key] = label;
                                             }
