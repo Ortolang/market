@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('ProducersCtrl', ['$rootScope', '$scope', '$location', '$translate', 'ReferentialResource', function ($rootScope, $scope, $location, $translate, ReferentialResource) {
+    .controller('ProducersCtrl', ['$rootScope', '$scope', '$location', '$translate', 'ReferentialResource', 'Helper', function ($rootScope, $scope, $location, $translate, ReferentialResource, Helper) {
 
         $scope.getAllOrganizations = function () {
             ReferentialResource.get({type: 'ORGANIZATION'}, function (collectionEntities) {
@@ -51,9 +51,10 @@ angular.module('ortolangMarketApp')
 
         function init() {
             $scope.models = {
-                viewMode: 'line',
+                viewMode: Helper.isMobile() ? 'tile' : 'line',
                 limit: 30
             };
+            $scope.Helper = Helper;
             $scope.producers = [];
             $scope.processing = true;
             $scope.getAllOrganizations();
