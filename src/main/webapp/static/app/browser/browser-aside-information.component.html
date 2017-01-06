@@ -40,19 +40,19 @@
         <dd>{{$ctrl.element.x['xmpDM:duration'] | duration:'hh:mm:ss'}}</dd>
         <dt translate="BROWSER.AUDIO.SAMPLE_RATE"></dt>
         <dd>{{$ctrl.element.x['xmpDM:audioSampleRate'] | hz}}</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'image'">
         <dt translate="BROWSER.IMAGE.SIZE"></dt>
         <dd>{{$ctrl.element.x['tiff:ImageWidth']}} x {{$ctrl.element.x['tiff:ImageLength']}} px</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'video'">
         <dt ng-show="$ctrl.element.x['tiff:ImageWidth']" translate="BROWSER.VIDEO.SIZE"></dt>
         <dd ng-show="$ctrl.element.x['tiff:ImageWidth']">{{$ctrl.element.x['tiff:ImageWidth']}} x {{$ctrl.element.x['tiff:ImageLength']}} px</dd>
         <dt ng-show="$ctrl.element.x['xmpDM:duration']" translate="BROWSER.VIDEO.DURATION"></dt>
         <dd ng-show="$ctrl.element.x['xmpDM:duration']">{{$ctrl.element.x['xmpDM:duration'] * 1000 | duration:'hh:mm:ss'}}</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'xml' && $ctrl.element.x['XML-Type'] === 'TEI'">
         <dt translate="BROWSER.XML.FORMAT"></dt>
@@ -63,7 +63,7 @@
         <dd>{{$ctrl.element.x['tei:title']}}</dd>
         <dt translate="BROWSER.AUTHOR"></dt>
         <dd>{{$ctrl.element.x['tei:author'] || "–"}}</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'xml' && $ctrl.element.x['XML-Type'] === 'Trans'">
         <dt translate="BROWSER.XML.FORMAT"></dt>
@@ -76,7 +76,7 @@
         <dd>{{$ctrl.element.x['trans:words']}}</dd>
         <dt translate="BROWSER.XML.SPEECH_TIME"></dt>
         <dd>{{$ctrl.element.x['trans:speechTime'] * 1000 | duration:'hh:mm:ss'}}</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'pdf'">
         <dt translate="BROWSER.COMMON.TITLE"></dt>
@@ -85,22 +85,22 @@
         <dd>{{$ctrl.element.x['pdf:PDFVersion']}}</dd>
         <dt translate="BROWSER.PDF.PAGES"></dt>
         <dd>{{$ctrl.element.x['xmpTPg:NPages']}}</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'text'">
         <dt translate="BROWSER.COMMON.ENCODING"></dt>
         <dd>{{$ctrl.element.x['Content-Encoding']}}</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
     <dl class="dl-horizontal" ng-if="$ctrl.element['X-Type'] === 'office'">
         <dt translate="BROWSER.COMMON.WORDS"></dt>
         <dd>{{$ctrl.element.x['meta:word-count']}}</dd>
-        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
-    <hr ng-if="$ctrl.element.metadatas.length>0 && $ctrl.element.root !== true"/>
-    <dl class="dl-horizontal" ng-if="$ctrl.element.metadatas.length>0 && $ctrl.element.root !== true">
-        <dt>Méta</dt>
-        <dd ng-repeat="md in $ctrl.element.metadatas | filter:'!system':Helper.startsWith | orderBy:'name'" ng-click="$ctrl.showMetadata({md: md})">
+    <hr ng-show="($ctrl.element.metadatas | userMetadata).length > 0"/>
+    <dl class="dl-horizontal" ng-if="($ctrl.element.metadatas | userMetadata).length > 0">
+        <dt translate="METADATA"></dt>
+        <dd ng-repeat="md in $ctrl.element.metadatas | userMetadata | orderBy:'name'" ng-click="$ctrl.showMetadata({md: md})">
             <span class="metadata-name">{{md.name | translate}}</span>
         </dd>
     </dl>

@@ -99,7 +99,7 @@ angular.module('ortolangMarketApp')
             NO_CHILDREN_NOT_HEAD: 'This folder is empty',
             NO_FILTERED_CHILDREN: 'No elements',
             MORE_MD: 'Show all metadata',
-            SEE_MD: 'Show metadata',
+            EDIT_MD: 'Edit metadata',
             PIDS: {
                 PIDS: 'Persistent identifiers',
                 STATIC: 'Static persistent identifier',
@@ -110,6 +110,9 @@ angular.module('ortolangMarketApp')
                 DYNAMIC_ITEM_HELP: 'Dynamic persistent identifier (will always reference the latest published version of this item)',
                 COPY: 'Copy link',
                 OTHERS: 'Other persistent identifiers'
+            },
+            METADATA_MODAL: {
+                TITLE: 'System metadata'
             },
             METADATA_EDITOR: {
                 TITLE: 'Edit the metadata of <strong>{{elementName}}</strong>',

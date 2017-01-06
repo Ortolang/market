@@ -149,7 +149,7 @@ angular.module('ortolangMarketApp')
                             //ctrl.contextMenuItems.push({text: 'BROWSER.ADD_TO_CART', icon: icons.cartPlus, action: 'addToCart'});
                             ctrl.contextMenuItems.push({divider: true});
                         }
-                        ctrl.contextMenuItems.push({text: 'BROWSER.SEE_MD', icon: icons.browser.metadata, action: 'showMetadata'});
+                        ctrl.contextMenuItems.push({text: 'BROWSER.EDIT_MD', icon: icons.browser.metadata, action: 'showMetadata'});
                         ctrl.contextMenuItems.push({divider: true});
                         ctrl.contextMenuItems.push({text: ctrl.viewMode[ctrl.browserSettings.viewMode].text, icon: ctrl.viewMode[ctrl.browserSettings.viewMode].icon, action: 'switchViewMode'});
                         if (ctrl.contextMenuItems.length > 0 && ctrl.contextMenuItems[ctrl.contextMenuItems.length - 1].divider) {
@@ -289,9 +289,28 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            ctrl.showSystemMetadata = function () {
+                createModalScope();
+                modalScope.metadata = ctrl.selectedElements[0].x;
+                var tmp = [];
+                angular.forEach(modalScope.metadata, function (v, k) {
+                    tmp.push({
+                        name: k,
+                        value: v
+                    });
+                });
+                modalScope.metadata = tmp;
+                modalScope.isArray = angular.isArray;
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/directives/system-metadata-modal-template.html',
+                    show: true
+                });
+            };
+
             ctrl.showMetadata = function (md) {
                 createModalScope(true);
-                modalScope.metadatas = ctrl.selectedElements[0].metadatas;
+                modalScope.userMetadatas = $filter('userMetadata')(ctrl.selectedElements[0].metadatas);
                 modalScope.elementName = ctrl.selectedElements[0].name;
                 modalScope.elementPath = ctrl.selectedElements[0].path;
                 if (md) {
@@ -300,9 +319,8 @@ angular.module('ortolangMarketApp')
                 $modal({
                     scope: modalScope,
                     templateUrl: 'metadata-editor/metadata-editor.html',
-                    show: true,
-                    backdrop: 'static',
-                    keyboard  : false
+                    controller: 'MetadataEditorCtrl',
+                    show: true
                 });
             };
 
@@ -373,6 +391,14 @@ angular.module('ortolangMarketApp')
                     root: ctrl.root,
                     policy: ctrl.isWorkspace
                 }).$promise;
+            }
+
+            function refreshSelectedChildData() {
+                if (ctrl.hasOnlyOneElementSelected()) {
+                    getChildData(ctrl.selectedElements[0]).then(function (data) {
+                        ctrl.selectedElements[0] = data;
+                    });
+                }
             }
 
             ctrl.download = function () {
@@ -1107,7 +1133,11 @@ angular.module('ortolangMarketApp')
 
             function checkCreateEvent(eventMessage) {
                 if (ctrl.workspace.key === eventMessage.fromObject) {
-                    if (ctrl.path === getParentPath(eventMessage.arguments.path)) {
+                    if (eventMessage.type === 'core.metadata.create') {
+                        if (ctrl.hasOnlyOneElementSelected() && ctrl.selectedElements[0].path === eventMessage.arguments.path) {
+                            refreshSelectedChildData();
+                        }
+                    } else if (ctrl.path === getParentPath(eventMessage.arguments.path)) {
                         $timeout(function () {
                             parentDataPromise.then(function () {
                                 var filtered = $filter('filter')(ctrl.parent.elements, {key: eventMessage.arguments.key}, true);
@@ -1127,7 +1157,11 @@ angular.module('ortolangMarketApp')
 
             function checkUpdateEvent(eventMessage) {
                 if (ctrl.workspace.key === eventMessage.fromObject) {
-                    if (ctrl.path === getParentPath(eventMessage.arguments.path)) {
+                    if (eventMessage.type === 'core.metadata.update') {
+                        if (ctrl.hasOnlyOneElementSelected() && ctrl.selectedElements[0].path === eventMessage.arguments.path) {
+                            refreshSelectedChildData();
+                        }
+                    } else if (ctrl.path === getParentPath(eventMessage.arguments.path)) {
                         $timeout(function () {
                             parentDataPromise.then(function () {
                                 var filtered = $filter('filter')(ctrl.parent.elements, {key: eventMessage.arguments.key}, true);
@@ -1188,7 +1222,11 @@ angular.module('ortolangMarketApp')
 
             function checkDeleteEvent(eventMessage) {
                 if (ctrl.workspace.key === eventMessage.fromObject) {
-                    if (ctrl.path === getParentPath(eventMessage.arguments.path)) {
+                    if (eventMessage.type === 'core.metadata.delete') {
+                        if (ctrl.hasOnlyOneElementSelected() && ctrl.selectedElements[0].path === eventMessage.arguments.path) {
+                            refreshSelectedChildData();
+                        }
+                    } else if (ctrl.path === getParentPath(eventMessage.arguments.path)) {
                         $timeout(function () {
                             parentDataPromise.then(function () {
                                 var filtered = $filter('filter')(ctrl.parent.elements, {key: eventMessage.arguments.key}, true);
@@ -1241,6 +1279,16 @@ angular.module('ortolangMarketApp')
                 checkDeleteEvent(eventMessage);
             });
             $rootScope.$on('core.collection.move', function ($event, eventMessage) {
+                checkMoveEvent(eventMessage);
+            });
+            // METADATA
+            $rootScope.$on('core.metadata.create', function ($event, eventMessage) {
+                checkCreateEvent(eventMessage);
+            });
+            $rootScope.$on('core.metadata.delete', function ($event, eventMessage) {
+                checkDeleteEvent(eventMessage);
+            });
+            $rootScope.$on('core.metadata.move', function ($event, eventMessage) {
                 checkMoveEvent(eventMessage);
             });
 

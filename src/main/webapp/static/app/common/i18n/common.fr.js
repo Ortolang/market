@@ -56,6 +56,7 @@ angular.module('ortolangMarketApp')
         LEGEND: 'Légende',
         NEWS: 'Actualités',
         STATISTICS: 'Statistiques',
+        METADATA: 'Métadonnées',
         404: {
             TITLE: 'Page non trouvée',
             BODY: 'Désolé, mais la page que vous recherchez est introuvable. Vous devriez peut être essayé de retourner sur la page d\'accueuil.',

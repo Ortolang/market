@@ -101,7 +101,7 @@ angular.module('ortolangMarketApp')
             NO_CHILDREN_NOT_HEAD: 'Ce dossier est vide',
             NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants',
             MORE_MD: 'Voir toutes les métadonnées',
-            SEE_MD: 'Voir les métadonnées',
+            EDIT_MD: 'Éditer les métadonnées',
             PIDS: {
                 PIDS: 'Identifiants pérennes',
                 STATIC: 'Identifiant pérenne statique',
@@ -120,7 +120,7 @@ angular.module('ortolangMarketApp')
                 ALREADY_INCLUDED_ALERT: 'Le {{type === "collection" ? "dossier" : "fichier"}} <strong>{{name}}</strong> fait déjà parti de votre sélection car il est inclus dans le dossier <strong>{{collection}}</strong>'
             },
             METADATA_MODAL: {
-                TITLE: 'Métadonnées'
+                TITLE: 'Métadonnées système'
             },
             AUDIO: {
                 SAMPLE_RATE: 'Échantillonnage',

@@ -12,8 +12,8 @@
  * @property {String}   elementName              - The selected element name
  * @property {String}   elementPath              - The selected element path
  */
-angular.module('ortolangMarketApp').controller('MetadataEditorCtrl', 
-	['$rootScope', '$scope', '$q', '$filter', '$timeout', 'x2js', '$alert', '$modal', '$translate', 'Content', 'ortolangType', 'icons', 'Workspace', 'WorkspaceElementResource', 'Helper', 
+angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
+	['$rootScope', '$scope', '$q', '$filter', '$timeout', 'x2js', '$alert', '$modal', '$translate', 'Content', 'ortolangType', 'icons', 'Workspace', 'WorkspaceElementResource', 'Helper',
 		function($rootScope, $scope, $q, $filter, $timeout, x2js, $alert, $modal, $translate, Content, ortolangType, icons, Workspace, WorkspaceElementResource, Helper) {
 
 			/**
@@ -194,11 +194,10 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                     			deferred.then(function () { saveAndUpdate(md, tmpDeferred); }, saveAndUpdateFailed);
                     		}
 			                deferred = tmpDeferred.promise;
-                    	}	
+                    	}
                     });
                     if (deferred !== null) {
 	                    deferred.then(function () {
-	                    	console.log('all promise resolved');
 			           		savingMetadataModal.hide();
 		                    $scope.$hide();
 	                    }, saveAndUpdateFailed);
@@ -207,6 +206,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                 modalScope.exit = function () {
                     savingMetadataModal.hide();
                     // TODO Resets metadatas
+                    $scope.forceHide = true;
                     $scope.$hide();
                 };
                 savingMetadataModal = $modal({
@@ -240,7 +240,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 						setMetadataEditorView();
 					}
 				} else {
-					//TODO show message to user 
+					//TODO show message to user
 					console.log('enable to download metadata name : {name}');
 				}
 			};
@@ -263,8 +263,8 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 			$scope.create = function (metadataFormat) {
 				var metadata = findMetadata(metadataFormat);
 				if (metadata === null) {
-					$scope.metadatas.push({name: metadataFormat, 
-						label: angular.isDefined($scope.metadataFormats[metadataFormat]) ? $scope.metadataFormats[metadataFormat].label : metadataFormat, 
+					$scope.metadatas.push({name: metadataFormat,
+						label: angular.isDefined($scope.metadataFormats[metadataFormat]) ? $scope.metadataFormats[metadataFormat].label : metadataFormat,
 						changed: true});
 					$scope.selectMetadataByName(metadataFormat);
 				}
@@ -313,14 +313,6 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
         			Content.downloadWithKeyInWindow($scope.selectedMetadata.key);
         		}
         	};
-			
-        	$scope.hide = function () {
-        		if (isChanged()) {
-        			showSavingMetadataModal();
-        		} else {
-        			$scope.$hide();
-        		}
-        	};
 
             // Loads a data object to the content
             var deregisterFileMetadataPathSelectorModal = $rootScope.$on('browserSelectedElements-fileMetadataPathSelectorModal', function ($event, elements) {
@@ -360,6 +352,13 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                 }
             });
 
+            $scope.$parent.$on('modal.hide.before', function ($event) {
+                if (!$scope.forceHide && isChanged()) {
+                    showSavingMetadataModal();
+                    $event.preventDefault();
+                }
+            });
+
             $scope.$on('$destroy', function () {
                 deregisterFileMetadataPathSelectorModal();
                 deregisterFileToConvertSelectorModal();
@@ -369,7 +368,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 		        $scope.Workspace = Workspace;
 		        $scope.ortolangType = ortolangType;
 		        $scope.icons = icons;
-		        // Tells if we show the code source 
+		        // Tells if we show the code source
 		        $scope.modeSource = false;
 
 		        $scope.metadataFormats = {
@@ -452,7 +451,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 					license: {label: 'Licence', placeholder: 'Licence'},
 					bibliographicCitation: {label: 'Citation bibliographique', placeholder: 'Citation bibliographique'}
 				};
-
+                $scope.metadatas = angular.copy($scope.userMetadatas);
 				angular.forEach($scope.metadatas, function (md) {
 					md.label = angular.isDefined($scope.metadataFormats[md.name]) ? $scope.metadataFormats[md.name].label : md.name;
 				});

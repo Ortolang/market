@@ -58,6 +58,7 @@ import './common/filters/diff-icon-css';
 import './common/filters/diff-description';
 import './common/filters/organization-name';
 import './common/filters/numbers';
+import './common/filters/user-metadata';
 /* components */
 import './common/components/avatar.component';
 import './common/components/hal-publications.component';

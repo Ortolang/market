@@ -15,25 +15,25 @@ angular.module('ortolangMarketApp')
             parent: '<',
             toggle: '&',
             showMetadata: '&',
+            showSystemMetadata: '&',
             helper: '<'
         },
-        controller: ['ObjectResource', 'Content', 'icons', 'ortolangType', 'Helper', function (ObjectResource, Content, icons, ortolangType, Helper) {
+        controller: ['ObjectResource', 'Content', 'icons', 'ortolangType', function (ObjectResource, Content, icons, ortolangType) {
 
             var ctrl = this;
 
             this.Content = Content;
             this.icons = icons;
-            this.Helper = Helper;
 
             this.elementsSize = function () {
+                var i,
+                    size = {
+                        value: 0,
+                        elementNumber: 0,
+                        collectionNumber: 0,
+                        partial: false
+                    };
                 if (this.elements) {
-                    var i,
-                        size = {
-                            value: 0,
-                            elementNumber: 0,
-                            collectionNumber: 0,
-                            partial: false
-                        };
                     for (i = 0; i < this.elements.length; i++) {
                         if (this.elements[i].type === ortolangType.object) {
                             size.value += this.elements[i].size;

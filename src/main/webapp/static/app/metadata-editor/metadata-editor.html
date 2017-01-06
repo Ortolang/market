@@ -1,8 +1,8 @@
-<div class="modal modal-hg-lg" tabindex="-1" role="dialog" ng-controller="MetadataEditorCtrl">
+<div class="modal modal-hg-lg" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg modal-xl">
         <div class="modal-content">
         	<div class="modal-header modal-header-border">
-                <button type="button" class="close" ng-click="hide()">&times;</button>
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
                 <span class="modal-title" translate="BROWSER.METADATA_EDITOR.TITLE" translate-values="{elementName: elementName}"></span>
             </div>
             <div class="modal-body">
@@ -71,7 +71,7 @@
                         <div class="metadata-editor-aside metadata-editor-aside-left hidden-xs">
                             <div class="metadata-list">
                                 <ul class="list-unstyled">
-                                    <li ng-repeat="md in metadatas" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.label}} <i ng-show="md.changed===true">*</i></li>
+                                    <li ng-repeat="md in metadatas | userMetadata" ng-click="::selectMetadataByName(md.name)" ng-class="{active: md.name === selectedMetadata.name}"><span></span>{{md.label}} <i ng-show="md.changed===true">*</i></li>
                                 </ul>
                             </div>
                         </div>

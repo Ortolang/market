@@ -181,7 +181,7 @@
                 </div>
 
                 <div class="btn-group hidden-xs">
-                    <button class="btn btn-default" ng-click="$ctrl.showMetadata()" data-title="{{'BROWSER.SEE_MD' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button class="btn btn-default" ng-click="$ctrl.showMetadata()" data-title="{{'BROWSER.EDIT_MD' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.metadata"></span>
                     </button>
                 </div>
@@ -263,7 +263,7 @@
         </div>
 
         <browser-aside-information ng-if="::$ctrl.config.displayAsideInfo" ng-hide="$ctrl.browserSettings.hideInfo" ng-click="$ctrl.deactivateContextMenu()" ng-right-click="$ctrl.deactivateContextMenu()" class="browser-aside browser-aside-right hidden-xs"
-                                   element="$ctrl.selectedElements[0]" elements="$ctrl.selectedElements" parent="parent" toggle="$ctrl.toggleAsideInfo()" helper="$ctrl.browserHelperFn" show-metadata="$ctrl.showMetadata(md)"></browser-aside-information>
+                                   element="$ctrl.selectedElements[0]" elements="$ctrl.selectedElements" parent="parent" toggle="$ctrl.toggleAsideInfo()" helper="$ctrl.browserHelperFn" show-metadata="$ctrl.showMetadata(md)" show-system-metadata="$ctrl.showSystemMetadata()"></browser-aside-information>
     </div>
 
     <browser-uploader ng-if="$ctrl.config.canEdit && $ctrl.isHead" workspace="$ctrl.workspace" parent="$ctrl.parent"></browser-uploader>
