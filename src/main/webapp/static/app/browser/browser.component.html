@@ -64,7 +64,7 @@
             <div class="btn-toolbar btn-toolbar-right" role="toolbar">
 
                 <div ng-if="!$ctrl.isFileSelect" class="btn-group hidden-xs">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SETTINGS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SETTINGS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" data-trigger="hover focus click" bs-tooltip>
                         <span ng-class="::icons.browser.settings"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -81,7 +81,7 @@
 
                 <div class="btn-group">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.SORT_BY' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" data-trigger="hover focus click" bs-tooltip>
                             <span ng-class="::icons.browser.sort"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -112,7 +112,7 @@
                         </ul>
                     </div>
                     <div id="filter-query-wrapper" class="btn-group hidden-xs">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.FILTER' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.FILTER' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" data-trigger="hover focus click" bs-tooltip>
                             <span ng-class="::icons.search"></span>
                         </button>
                         <div class="dropdown-menu filter dropdown-menu-right" ng-click="$ctrl.openFilter($event)" role="menu">
@@ -137,7 +137,7 @@
                 </div>
 
                 <div class="btn-group">
-                    <button ng-if="$ctrl.config.canChangeRoot && !$ctrl.forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSIONS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button ng-if="$ctrl.config.canChangeRoot && !$ctrl.forceHead" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.VERSIONS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" data-trigger="hover focus click" bs-tooltip>
                         <span ng-class="::icons.browser.history"></span>
                     </button>
                     <ul ng-if="$ctrl.config.canChangeRoot && !$ctrl.forceHead" class="dropdown-menu dropdown-menu-right snapshots" role="menu">
@@ -162,7 +162,7 @@
                 <span class="divider"></span>
 
                 <div ng-if="$ctrl.isWorkspace" class="btn-group hidden-xs">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.OTHERS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.OTHERS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" data-trigger="hover focus click" bs-tooltip>
                         <span ng-class="::icons.browser.others"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -193,7 +193,7 @@
                 <!--</div>-->
 
                 <div ng-show="$ctrl.config.canEdit && $ctrl.isHead && $ctrl.hasOnlyParentSelected()" class="btn-group hidden-xs">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'ADD' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'ADD' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" data-trigger="hover focus click" bs-tooltip>
                         <span ng-class="::icons.plus"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
