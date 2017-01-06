@@ -116,9 +116,9 @@ angular.module('ortolangMarketApp')
             },
             METADATA_EDITOR: {
                 TITLE: 'Edit the metadata of <strong>{{elementName}}</strong>',
-                CONVERT_XML_JSON: 'Loads from a XML file',
+                CONVERT_XML_JSON: 'Load from an XML file',
                 ADD_DC_ELEMENT: 'Add a Dublin Core element',
-                ADD_OLAC_ELEMENT: 'Add a OLAC element'
+                ADD_OLAC_ELEMENT: 'Add an OLAC element'
             }
         }
     });
