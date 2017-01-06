@@ -1,14 +1,14 @@
 <div class="media organization-card card-well card-well-actions card-well-hover">
     <div class="media-left">
-        <div ng-if="::organization.content.img" class="organization-logo-wrapper" style="background-image: url({{::organization.content.img}})"></div>
-        <img ng-if="::!organization.content.img" holder-js="holder.js/100x100?theme={{::organization.title.toLowerCase()}}&text={{::organization.title}}&size=40" width="60"/>
+        <div ng-if="::$ctrl.organization.content.img" class="organization-logo-wrapper" style="background-image: url({{::$ctrl.organization.content.img}})"></div>
+        <img ng-if="::!$ctrl.organization.content.img" holder-js="holder.js/100x100?theme={{::$ctrl.organization.title.toLowerCase()}}&text={{::$ctrl.organization.title}}&size=40" width="60"/>
     </div>
     <div class="media-body">
         <p class="name">
-            <span ng-show="::organization.content.acronym">{{::organization.content.acronym}} | </span>
-            <span>{{::organization.content.name}}</span>
+            <span ng-show="::$ctrl.organization.content.acronym">{{::$ctrl.organization.content.acronym}} | </span>
+            <span>{{::$ctrl.organization.content.name}}</span>
         </p>
-        <span ng-show="::organization.content.city" class="small location"><span ng-class="::icons.location"></span> {{::organization.content.city}}, {{::organization.content.country}}</span>
-        <span ng-show="::organization.content.homepage" class="small website"><span ng-class="::icons.externalLink"></span> <a ng-href="{{::organization.content.homepage}}" target="_blank" translate="PRODUCER.HOMEPAGE"></a></span>
+        <span ng-show="::$ctrl.organization.content.city" class="small location"><span ng-class="::icons.location"></span> {{::$ctrl.organization.content.city}}, {{::$ctrl.organization.content.country}}</span>
+        <span ng-show="::$ctrl.organization.content.homepage" class="small website"><span ng-class="::icons.externalLink"></span> <a ng-href="{{::$ctrl.organization.content.homepage}}" target="_blank" translate="PRODUCER.HOMEPAGE"></a></span>
     </div>
 </div>

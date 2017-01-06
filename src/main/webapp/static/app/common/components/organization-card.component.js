@@ -15,5 +15,5 @@ angular.module('ortolangMarketApp')
             imgClasses: '@',
             icons: '<'
         },
-        templateUrl: 'common/directives/organization-card.component.html'
+        templateUrl: 'common/components/organization-card.component.html'
     });
