@@ -3,6 +3,7 @@
 if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
     //noinspection JSUnusedAssignment
     var _paq = _paq || [];
+    window._paq = _paq;
     _paq.push([function() {
         var self = this;
         function getOriginalVisitorCookieTimeout() {

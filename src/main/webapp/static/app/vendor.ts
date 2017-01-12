@@ -1,3 +1,15 @@
+declare var window: any;
+if (process.env.ENV === 'test') {
+    window.OrtolangConfig = require('json!../test/ortolang-config.json');
+}
+
+if (process.env.ENV === 'dev') {
+    window.OrtolangConfig = require('json!./ortolang-config.json');
+}
+
+/* piwik */
+import './common/piwik/piwik';
+
 import 'keycloak-js';
 import 'jquery';
 

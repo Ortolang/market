@@ -6,15 +6,6 @@
 //     enableProdMode();
 // }
 
-declare var window: any;
-if (process.env.ENV === 'test') {
-    window.OrtolangConfig = require('json!../test/ortolang-config.json');
-}
-
-if (process.env.ENV === 'dev') {
-    window.OrtolangConfig = require('json!./ortolang-config.json');
-}
-
 // platformBrowserDynamic().bootstrapModule(AppModule);
 import './app.module';
 
@@ -134,8 +125,7 @@ import './common/i18n/item.en';
 /* forms */
 import './common/forms/i18n/forms.fr';
 import './common/forms/i18n/forms.en';
-/* piwik */
-// import './common/piwik/piwik';
+
 // METADATA EDITOR
 import './metadata-editor/metadata-editor.controller';
 import './metadata-editor/metadata-editor-view.controller';
