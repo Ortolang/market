@@ -69,9 +69,6 @@ angular
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider: OrtolangRouteProvider, $locationProvider: ILocationProvider) {
         $routeProvider
-            .when('/index.html', {
-                redirectTo: '/'
-            })
             .when('/market/home', {
                 redirectTo: '/'
             })
