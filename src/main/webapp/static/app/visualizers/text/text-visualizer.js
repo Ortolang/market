@@ -9,6 +9,10 @@
 angular.module('ortolangVisualizers')
     .controller('TextVisualizerCtrl', ['$scope', 'Content', function ($scope, Content) {
 
+        function isHtml(mimeType) {
+            return mimeType === 'text/html' || mimeType === 'application/xhtml+xml';
+        }
+
         var mimeType = $scope.$ctrl.data.element.mimeType,
             name = $scope.$ctrl.data.element.name,
             limit = 20000;
@@ -17,7 +21,7 @@ angular.module('ortolangVisualizers')
             $scope.language = 'xml';
         } else if (mimeType === 'text/plain' && name.endsWith('.ts')) {
             $scope.language = 'typescript';
-        } else if (mimeType === 'text/html' || mimeType === 'text/plain' || mimeType === 'text/csv') {
+        } else if (isHtml(mimeType) || mimeType === 'text/plain' || mimeType === 'text/csv') {
             $scope.language = 'html';
         } else if (mimeType === 'text/css') {
             $scope.language = 'css';
@@ -65,7 +69,7 @@ angular.module('ortolangVisualizers')
         function initializeVisualizerWithPreview() {
             $scope.hasPreview = true;
             $scope.tabs = {};
-            if ($scope.xsl) {
+            if ($scope.xsl || isHtml(mimeType)) {
                 $scope.tabs.activeTab = 'preview';
             } else if ($scope.tei) {
                 $scope.tabs.activeTab = 'tei';
@@ -81,7 +85,7 @@ angular.module('ortolangVisualizers')
                     text: 'TEXT_VISUALIZER.SHOW_SOURCE'
                 }
             ];
-            if ($scope.xsl) {
+            if ($scope.xsl || isHtml(mimeType)) {
                 $scope.$ctrl.header.actions.push({
                     name: 'showPreview',
                     hide: function () {
@@ -120,7 +124,7 @@ angular.module('ortolangVisualizers')
             }
         }
 
-        if (mimeType === 'text/html' || mimeType === 'application/xhtml+xml') {
+        if (isHtml(mimeType)) {
             initializeVisualizerWithPreview();
             $scope.forceDisplay = true;
         } else if (mimeType !== 'application/xml') {
@@ -160,7 +164,7 @@ angular.module('ortolangVisualizers')
                     initializeVisualizerWithPreview();
                 }
             }
-            if (mimeType === 'text/html' && response.data.indexOf('<iframe') === 0 && response.data.indexOf('</iframe>') === response.data.length - '</iframe>'.length) {
+            if (isHtml(mimeType) && response.data.indexOf('<iframe') === 0 && response.data.indexOf('</iframe>') === response.data.length - '</iframe>'.length) {
                 $scope.inception = true;
             }
             $scope.$ctrl.pendingData = false;
