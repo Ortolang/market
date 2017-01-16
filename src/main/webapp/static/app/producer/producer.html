@@ -10,10 +10,10 @@
                         </div>
                     </div>
                     <div class="media-body">
-                        <h2>
+                        <h1 class="producer-title">
                             <span ng-show="::producer.acronym">{{::producer.acronym}} | </span>
                             <span>{{::producer.name}}</span>
-                        </h2>
+                        </h1>
                         <p ng-show="::producer.city"><span ng-class="::icons.location"></span> {{::producer.city}}, {{::producer.country}}</p>
                         <p ng-show="::producer.homepage" class="website"><span ng-class="::icons.externalLink"></span> <a ng-href="{{::producer.homepage}}" target="_blank">{{::producer.homepage}}</a></p>
                     </div>
