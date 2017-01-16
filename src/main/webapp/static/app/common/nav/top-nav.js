@@ -106,6 +106,7 @@ angular.module('ortolangMarketApp')
                     Settings.language = langKey;
                     Settings.store();
                     amMoment.changeLocale(langKey, {});
+                    angular.element('html').attr('lang', langKey);
                 });
             };
 
