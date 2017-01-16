@@ -82,7 +82,10 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            template: app + 'index.html'
+            template: app + 'index.html',
+            minify: {
+                removeAttributeQuotes: false
+            }
         }),
 
         new webpack.ProvidePlugin({
