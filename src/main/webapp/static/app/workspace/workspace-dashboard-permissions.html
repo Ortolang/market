@@ -8,6 +8,7 @@
             <span class="label tag label-for-all"><span ng-class="::icons.acl.forall"></span> {{'WORKSPACE.ACL.FORALL' | translate}}</span>
             <span class="label tag label-authentified"><span ng-class="::icons.acl.authentified"></span> {{'WORKSPACE.ACL.AUTHENTIFIED' | translate}}</span>
             <span class="label tag label-esr"><span ng-class="::icons.acl.esr"></span> {{'WORKSPACE.ACL.ESR' | translate}}</span>
+            <span ng-if="Workspace.active.workspace.privileged" class="label tag label-privileged"><span ng-class="::icons.acl.privileged"></span> {{'WORKSPACE.ACL.PRIVILEGED' | translate}}</span>
             <span class="label tag label-restricted"><span ng-class="::icons.acl.restricted"></span> {{'WORKSPACE.ACL.RESTRICTED' | translate}}</span>
         </div>
         <div class="options">

@@ -23,6 +23,12 @@
                 data-ng-disabled="Workspace.active.workspace.readOnly" class="btn btn-sm btn-default"><span
                 ng-class="::icons.acl.esr"></span></button>
             <button
+                ng-if="Workspace.active.workspace.privileged"
+                ng-class="{'btn-danger btn-privileged' : models.tree[element.key].publicationPolicy === 'privileged', 'muted' : models.tree[element.key].effectiveAcl === 'privileged'}"
+                ng-click="setAcl(models.tree[element.key], 'privileged', $event)"
+                data-ng-disabled="Workspace.active.workspace.readOnly" class="btn btn-sm btn-default"><span
+                ng-class="::icons.acl.privileged"></span></button>
+            <button
                 ng-class="{'btn-danger' : models.tree[element.key].publicationPolicy === 'restricted', 'muted' : models.tree[element.key].effectiveAcl === 'restricted'}"
                 ng-click="setAcl(models.tree[element.key], 'restricted', $event)"
                 data-ng-disabled="Workspace.active.workspace.readOnly"

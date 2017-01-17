@@ -88,6 +88,15 @@ button.no-border {
   .button-variant(@text-color; @alternate-bg; darken(@alternate-bg, 6.5%));
 }
 
+.btn-privileged {
+  background-color: lighten(@acl-privileged, 10%);
+  border-color: @acl-privileged;
+  &:hover {
+    background-color: @acl-privileged;
+    border-color: @acl-privileged;
+  }
+}
+
 .has-error .help-block.help {
   color: lighten(@text-color, 25%);
 }
@@ -365,6 +374,10 @@ button.no-border {
 
 .label.label-esr {
   background-color: @acl-esr;
+}
+
+.label.label-privileged {
+  background-color: @acl-privileged;
 }
 
 .label.label-restricted {

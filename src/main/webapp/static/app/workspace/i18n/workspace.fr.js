@@ -418,6 +418,7 @@ angular.module('ortolangMarketApp')
                 FORALL: 'Pour tous',
                 AUTHENTIFIED: 'Utilisateurs connectés',
                 ESR: 'Membres de l\'ESR',
+                PRIVILEGED: 'Membres privilégiés',
                 RESTRICTED: 'Membres de l\'espace de travail',
                 HELP: 'Certains éléments contenu dans cette ressource peuvent avoir un accès restreint aux :'
             },

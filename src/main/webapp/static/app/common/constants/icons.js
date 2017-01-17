@@ -89,6 +89,7 @@ angular.module('ortolangMarketApp')
                 forall: 'fa fa-fw fa-globe',
                 authentified: 'fa fa-fw fa-user',
                 esr: 'fa fa-fw fa-graduation-cap',
+                privileged: 'fa fa-fw fa-users',
                 restricted: 'fa fa-fw fa-ban'
             },
             diff: {
