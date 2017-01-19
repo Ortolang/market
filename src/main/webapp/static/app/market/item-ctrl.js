@@ -130,34 +130,30 @@ angular.module('ortolangMarketApp')
         }
 
         function loadItem() {
-            // SearchResource.item({type: $routeParams.section, id: $scope.itemAlias}, function (workspace) {
-            //     console.log(workspace);
-            //     workspace =  workspace['meta_ortolang-workspace-json'];
-            //     $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
-            //         return tag.name;
-            //     });
+            SearchResource.getWorkspace({alias: $scope.itemAlias}, function (workspace) {
+                $scope.tags = $filter('orderBy')(workspace.snapshots, function (snapshot) {
+                    return snapshot.tag;
+                });
 
-            //     if ($routeParams.version) {
-            //         var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
-            //         if (filteredTag.length === 1) {
-            //             $scope.tag = filteredTag[0];
-            //         }
-            //     }
-            //     if (!$scope.tag) {
-            //         $scope.tag = $scope.tags[$scope.tags.length - 1];
-            //     }
-
-            //     $scope.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
-
+                if ($routeParams.version) {
+                    var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
+                    if (filteredTag.length === 1) {
+                        $scope.tag = filteredTag[0];
+                    }
+                }
+                if (!$scope.tag) {
+                    $scope.tag = $scope.tags[$scope.tags.length - 1];
+                }
+                // For browser directive
+                $scope.workspace = {alias: $scope.itemAlias, key: workspace.key, tags: workspace.tags};
+                
                 // SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
-                SearchResource.item({type: $routeParams.section, id: $scope.itemAlias}, function (collection) {
+                SearchResource.getItem({type: $routeParams.section, id: $scope.itemAlias, version: $scope.tag.tag}, function (collection) {
                     $scope.ortolangObject = collection;
-                    // $scope.root = $scope.tag.snapshot;
-                    console.log(collection);
+                    $scope.root = $scope.tag.name;
                     $scope.item = collection;
                     $scope.itemKey = collection.key;
-                    // $scope.wskey = workspace.wskey;
-                    // $scope.item = collection['meta_ortolang-item-json'];
+                    $scope.wskey = workspace.key;
 
                     if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
                         switch ($scope.item.type) {
@@ -185,9 +181,9 @@ angular.module('ortolangMarketApp')
                         $scope.ready = true;
                     }
                 });
-        //     }, function () {
+            }, function () {
                 $scope.ready = true;
-        //     });
+            });
         }
 
         $scope.$on('$routeChangeSuccess', function ($event, current, previous) {

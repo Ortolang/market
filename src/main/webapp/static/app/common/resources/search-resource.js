@@ -86,8 +86,12 @@ angular.module('ortolangMarketApp')
                     return data;
                 }
             },
-            item: {
+            getItem: {
                 url: url.api + '/search/items/:id',
+                method: 'GET'
+            },
+            getWorkspace: {
+                url: url.api + '/search/workspaces/:alias',
                 method: 'GET'
             },
             countWorkspaces: {
