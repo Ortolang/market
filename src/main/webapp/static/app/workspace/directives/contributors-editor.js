@@ -8,8 +8,8 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('contributorsEditor', ['$q', '$modal', '$filter', 'WorkspaceMetadataService', 'ReferentialResource', 'Helper',
-        function ($q, $modal, $filter, WorkspaceMetadataService, ReferentialResource, Helper) {
+    .directive('contributorsEditor', ['$q', '$modal', '$filter', 'WorkspaceMetadataService', 'ReferentialResource', 'Helper', 'icons',
+        function ($q, $modal, $filter, WorkspaceMetadataService, ReferentialResource, Helper, icons) {
         return {
             restrict: 'AE',
             scope: {
@@ -210,6 +210,7 @@ angular.module('ortolangMarketApp')
                  **/
                 function init() {
                     scope.WorkspaceMetadataService = WorkspaceMetadataService;
+                    scope.icons = icons;
 
                     scope.allRoles = [];
                     scope.searchContributor = '';
