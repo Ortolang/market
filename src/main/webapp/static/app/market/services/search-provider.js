@@ -93,7 +93,7 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
         search: function (param, noProcessing) {
             tmpResults = undefined;
             var Search = this;
-            return SearchResource.findWorkspaces(param, function (data) {
+            return SearchResource.items(param, function (data) {
                 if (noProcessing) {
                     Search.results = data;
                     Search.countResults = data.size;

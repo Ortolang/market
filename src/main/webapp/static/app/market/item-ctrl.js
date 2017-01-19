@@ -12,61 +12,26 @@ angular.module('ortolangMarketApp')
 
         var handle;
 
-        function loadItem() {
-            SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
-                workspace =  workspace['meta_ortolang-workspace-json'];
-                $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
-                    return tag.name;
-                });
-
-                if ($routeParams.version) {
-                    var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
-                    if (filteredTag.length === 1) {
-                        $scope.tag = filteredTag[0];
+        function generateProducerMicroData(producerWrapper) {
+            if (producerWrapper && producerWrapper['meta_ortolang-referential-json']) {
+                var producer = producerWrapper['meta_ortolang-referential-json'],
+                    microDataProducer = {};
+                microDataProducer['@type'] = 'Organization';
+                microDataProducer.name = producer.name;
+                microDataProducer.url = producer.homepage;
+                microDataProducer.logo = producer.img;
+                microDataProducer.alternateName = producer.acronym;
+                if (producer.country) {
+                    microDataProducer.address = {
+                        '@type': 'PostalAddress',
+                        'addressCountry': producer.country
+                    };
+                    if (producer.city) {
+                        microDataProducer.address.addressLocality = producer.city;
                     }
                 }
-                if (!$scope.tag) {
-                    $scope.tag = $scope.tags[$scope.tags.length - 1];
-                }
-
-                $scope.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
-
-                SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
-                    $scope.ortolangObject = collection;
-                    $scope.root = $scope.tag.snapshot;
-                    $scope.itemKey = collection.key;
-                    $scope.wskey = workspace.wskey;
-                    $scope.item = collection['meta_ortolang-item-json'];
-
-                    if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
-                        switch ($scope.item.type) {
-                            case 'Corpus':
-                                $route.updateParams({section: 'corpora'});
-                                break;
-                            case 'Lexique':
-                                $route.updateParams({section: 'lexicons'});
-                                break;
-                            case 'Application':
-                                $route.updateParams({section: 'applications'});
-                                break;
-                            case 'Outil':
-                                $route.updateParams({section: 'tools'});
-                                break;
-                            case 'Terminologie':
-                                $route.updateParams({section: 'terminologies'});
-                                break;
-                        }
-                        $location.replace();
-                    } else {
-                        var microdata = generateMicroData();
-                        generateOpenGraphTags(microdata);
-                        generateSocialLinks(microdata);
-                        $scope.ready = true;
-                    }
-                });
-            }, function () {
-                $scope.ready = true;
-            });
+                return microDataProducer;
+            }
         }
 
         function generateMicroData() {
@@ -134,28 +99,6 @@ angular.module('ortolangMarketApp')
             return microData;
         }
 
-        function generateProducerMicroData(producerWrapper) {
-            if (producerWrapper && producerWrapper['meta_ortolang-referential-json']) {
-                var producer = producerWrapper['meta_ortolang-referential-json'],
-                    microDataProducer = {};
-                microDataProducer['@type'] = 'Organization';
-                microDataProducer.name = producer.name;
-                microDataProducer.url = producer.homepage;
-                microDataProducer.logo = producer.img;
-                microDataProducer.alternateName = producer.acronym;
-                if (producer.country) {
-                    microDataProducer.address = {
-                        '@type': 'PostalAddress',
-                        'addressCountry': producer.country
-                    };
-                    if (producer.city) {
-                        microDataProducer.address.addressLocality = producer.city;
-                    }
-                }
-                return microDataProducer;
-            }
-        }
-
         function generateOpenGraphTags(microdata) {
             angular.element('meta[property^="og"]').remove();
             angular.element('<meta property="og:url" content="' + handle + '">').appendTo('head');
@@ -184,6 +127,67 @@ angular.module('ortolangMarketApp')
             $scope.item.social.linkedin += '&title=' + encodeURIComponent(microdata.name);
             $scope.item.social.linkedin += '&summary=' + encodeURIComponent(microdata.description);
             $scope.item.social.linkedin += '&source=ORTOLANG';
+        }
+
+        function loadItem() {
+            // SearchResource.item({type: $routeParams.section, id: $scope.itemAlias}, function (workspace) {
+            //     console.log(workspace);
+            //     workspace =  workspace['meta_ortolang-workspace-json'];
+            //     $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
+            //         return tag.name;
+            //     });
+
+            //     if ($routeParams.version) {
+            //         var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
+            //         if (filteredTag.length === 1) {
+            //             $scope.tag = filteredTag[0];
+            //         }
+            //     }
+            //     if (!$scope.tag) {
+            //         $scope.tag = $scope.tags[$scope.tags.length - 1];
+            //     }
+
+            //     $scope.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
+
+                // SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
+                SearchResource.item({type: $routeParams.section, id: $scope.itemAlias}, function (collection) {
+                    $scope.ortolangObject = collection;
+                    // $scope.root = $scope.tag.snapshot;
+                    console.log(collection);
+                    $scope.item = collection;
+                    $scope.itemKey = collection.key;
+                    // $scope.wskey = workspace.wskey;
+                    // $scope.item = collection['meta_ortolang-item-json'];
+
+                    if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
+                        switch ($scope.item.type) {
+                            case 'Corpus':
+                                $route.updateParams({section: 'corpora'});
+                                break;
+                            case 'Lexique':
+                                $route.updateParams({section: 'lexicons'});
+                                break;
+                            case 'Application':
+                                $route.updateParams({section: 'applications'});
+                                break;
+                            case 'Outil':
+                                $route.updateParams({section: 'tools'});
+                                break;
+                            case 'Terminologie':
+                                $route.updateParams({section: 'terminologies'});
+                                break;
+                        }
+                        $location.replace();
+                    } else {
+                        var microdata = generateMicroData();
+                        generateOpenGraphTags(microdata);
+                        generateSocialLinks(microdata);
+                        $scope.ready = true;
+                    }
+                });
+        //     }, function () {
+                $scope.ready = true;
+        //     });
         }
 
         $scope.$on('$routeChangeSuccess', function ($event, current, previous) {

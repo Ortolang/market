@@ -37,13 +37,14 @@ angular.module('ortolangMarketApp')
                     metaWorkspace: 'wskey,wsalias,snapshotName'
                 };
                 var params = {};
-                params[Helper.prefix.metaItem + 'title'] = '';
-                params[Helper.prefix.metaRating + 'score'] = '4';
-                params[Helper.prefix.workspace + 'archive'] = 'false';
-                params.fields = Helper.getFieldsParam(fields);
-                params.limit = '15';
-                params.orderProp = 'publicationDate';
-                params.orderDir = 'desc';
+                // params[Helper.prefix.metaItem + 'title'] = '';
+                // params[Helper.prefix.metaRating + 'score'] = '4';
+                // params[Helper.prefix.workspace + 'archive'] = 'false';
+                // params.fields = Helper.getFieldsParam(fields);
+                // params.limit = '15';
+                // params.orderProp = 'publicationDate';
+                // params.orderDir = 'desc';
+                params.index = 'item';
                 $scope.paramsRecents = angular.toJson(params);
             }());
 

@@ -41,6 +41,10 @@ angular.module('ortolangMarketApp')
                     return data;
                 }
             },
+            findWorkspace: {
+                url: url.api + '/search/workspaces/:alias',
+                method: 'GET'
+            },
             getProfile: {
                 url: url.api + '/search/profiles/:key',
                 method: 'GET',
@@ -67,8 +71,23 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/collections/:key',
                 method: 'GET'
             },
-            findWorkspace: {
-                url: url.api + '/search/workspaces/:alias',
+            items: {
+                url: url.api + '/search/items',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
+            item: {
+                url: url.api + '/search/items/:id',
                 method: 'GET'
             },
             countWorkspaces: {
@@ -79,7 +98,6 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/entities/:id',
                 method: 'GET'
             },
-
             index: {
                 url: url.api + '/search/index',
                 method: 'GET',
