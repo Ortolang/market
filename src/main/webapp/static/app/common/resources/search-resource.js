@@ -102,6 +102,10 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/entities/:id',
                 method: 'GET'
             },
+            getPerson: {
+                url: url.api + '/search/persons/:key',
+                method: 'GET'
+            },
             index: {
                 url: url.api + '/search/index',
                 method: 'GET',

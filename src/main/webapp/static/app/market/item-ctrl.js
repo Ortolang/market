@@ -13,21 +13,20 @@ angular.module('ortolangMarketApp')
         var handle;
 
         function generateProducerMicroData(producerWrapper) {
-            if (producerWrapper && producerWrapper['meta_ortolang-referential-json']) {
-                var producer = producerWrapper['meta_ortolang-referential-json'],
-                    microDataProducer = {};
+            if (producerWrapper) {
+                var microDataProducer = {};
                 microDataProducer['@type'] = 'Organization';
-                microDataProducer.name = producer.name;
-                microDataProducer.url = producer.homepage;
-                microDataProducer.logo = producer.img;
-                microDataProducer.alternateName = producer.acronym;
-                if (producer.country) {
+                microDataProducer.name = producerWrapper.name;
+                microDataProducer.url = producerWrapper.homepage;
+                microDataProducer.logo = producerWrapper.img;
+                microDataProducer.alternateName = producerWrapper.acronym;
+                if (producerWrapper.country) {
                     microDataProducer.address = {
                         '@type': 'PostalAddress',
-                        'addressCountry': producer.country
+                        'addressCountry': producerWrapper.country
                     };
-                    if (producer.city) {
-                        microDataProducer.address.addressLocality = producer.city;
+                    if (producerWrapper.city) {
+                        microDataProducer.address.addressLocality = producerWrapper.city;
                     }
                 }
                 return microDataProducer;
@@ -79,11 +78,10 @@ angular.module('ortolangMarketApp')
             if (jsonMetadata.producers && jsonMetadata.producers.length > 0) {
                 var contributors = [];
                 angular.forEach(jsonMetadata.contributors, function (contributorWrapper) {
-                    if (contributorWrapper && contributorWrapper.entity && contributorWrapper.entity['meta_ortolang-referential-json']) {
-                        var contributor = contributorWrapper.entity['meta_ortolang-referential-json'],
-                            contributorMicroData = {};
+                    if (contributorWrapper && contributorWrapper.entity) {
+                        var contributorMicroData = {};
                         contributorMicroData['@type'] = 'Person';
-                        contributorMicroData.name = contributor.fullname;
+                        contributorMicroData.name = contributorWrapper.entity.fullname;
                         contributorMicroData.worksFor = generateProducerMicroData(contributorWrapper.organization);
                         contributors.push(contributorMicroData);
                     }

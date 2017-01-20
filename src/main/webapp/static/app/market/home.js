@@ -30,12 +30,12 @@ angular.module('ortolangMarketApp')
                 $scope.searchRecents = SearchProvider.make();
                 $scope.searchRecents.setActiveOrderProp('rank', true);
 
-                var fields = {
-                    metaLatestSnapshot: 'key',
-                    metaRating: 'score:rank,.esrAccessibility',
-                    metaItem: 'title,type,image,publicationDate',
-                    metaWorkspace: 'wskey,wsalias,snapshotName'
-                };
+                // var fields = {
+                //     metaLatestSnapshot: 'key',
+                //     metaRating: 'score:rank,.esrAccessibility',
+                //     metaItem: 'title,type,image,publicationDate',
+                //     metaWorkspace: 'wskey,wsalias,snapshotName'
+                // };
                 var params = {};
                 // params[Helper.prefix.metaItem + 'title'] = '';
                 // params[Helper.prefix.metaRating + 'score'] = '4';

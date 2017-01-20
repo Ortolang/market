@@ -11,19 +11,21 @@ angular.module('ortolangMarketApp')
     .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', 'ReferentialResource', 'SearchResource', 'SearchProvider', 'Helper', function ($rootScope, $scope, $routeParams, $filter, ReferentialResource, SearchResource, SearchProvider, Helper) {
 
         function loadItem(id) {
-            SearchResource.getEntity({id: id}, function (entity) {
-                $scope.contributor = entity['meta_ortolang-referential-json'];
+            SearchResource.getPerson({key: Helper.createKeyFromReferentialName(id)}, function (entity) {
+                console.log('from index');
+                $scope.contributor = entity;
                 if ($scope.contributor.username) {
                     /*jshint camelcase:false */
                     $scope.emailHash = $scope.contributor.username.meta_profile.emailHash;
                     $scope.infos = $scope.contributor.username.meta_profile.infos;
                 }
                 if ($scope.contributor.organization) {
-                    $scope.contributor.organizationEntity = $scope.contributor.organization['meta_ortolang-referential-json'];
+                    $scope.contributor.organizationEntity = $scope.contributor.organization;
                 }
 
                 $rootScope.ortolangPageTitle = $scope.contributor.fullname + ' | ';
             }, function () {
+                console.log('from db');
                 // If not found in json-store, then go to relational db
                 ReferentialResource.get({name: id}, function (entity) {
                     var content = angular.fromJson(entity.content);
@@ -35,6 +37,7 @@ angular.module('ortolangMarketApp')
                         });
                     }
                 }, function () {
+                    console.log('from no one');
                     $scope.contributor = {fullname: id};
                 });
             });
