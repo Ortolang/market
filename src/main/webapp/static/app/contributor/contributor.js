@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .controller('ContributorCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', 'ReferentialResource', 'SearchResource', 'SearchProvider', 'Helper', function ($rootScope, $scope, $routeParams, $filter, ReferentialResource, SearchResource, SearchProvider, Helper) {
 
         function loadItem(id) {
-            SearchResource.getPerson({key: Helper.createKeyFromReferentialName(id)}, function (entity) {
+            SearchResource.getPerson({key: 'referential:' + id}, function (entity) {
                 console.log('from index');
                 $scope.contributor = entity;
                 if ($scope.contributor.username) {
