@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
                     var promises = [],
                         tmp = [];
                     angular.forEach(items, function (item, index) {
+                        console.log(item);
                         if (Helper.startsWith(item, '$')) {
                             promises.push(ReferentialResource.get({name: Helper.extractNameFromReferentialId(item)}, function (entity) {
                                 tmp[index] = angular.fromJson(entity.content);
@@ -24,7 +25,7 @@ angular.module('ortolangMarketApp')
                             // From Market
                             tmp[index] = item['meta_ortolang-referential-json'];
                         } else {
-                            // From Workspace (Producer that needs to be checked)
+                            // From Workspace (entity that needs to be checked)
                             tmp[index] = item;
                         }
                     });
@@ -125,22 +126,22 @@ angular.module('ortolangMarketApp')
 
                             $scope.contributors.push(loadedContributor);
 
-                        } else if (angular.isDefined(contributor.entity['meta_ortolang-referential-json'])) {
-                            // From Market with contributor from referential
-                            loadedContributor.entity = contributor.entity['meta_ortolang-referential-json'];
-                            if (angular.isDefined(contributor.organization)) {
-                                loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
-                            }
-                            loadedContributor.roles = [];
-                            angular.forEach(contributor.roles, function (role) {
-                                loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+                        // } else if (angular.isDefined(contributor.entity['meta_ortolang-referential-json'])) {
+                        //     // From Market with contributor from referential
+                        //     loadedContributor.entity = contributor.entity['meta_ortolang-referential-json'];
+                        //     if (angular.isDefined(contributor.organization)) {
+                        //         loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
+                        //     }
+                        //     loadedContributor.roles = [];
+                        //     angular.forEach(contributor.roles, function (role) {
+                        //         loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
 
-                                if (role['meta_ortolang-referential-json'].id === 'author') {
-                                    $scope.authors.push(loadedContributor);
-                                }
-                            });
+                        //         if (role['meta_ortolang-referential-json'].id === 'author') {
+                        //             $scope.authors.push(loadedContributor);
+                        //         }
+                        //     });
 
-                            $scope.contributors.push(loadedContributor);
+                        //     $scope.contributors.push(loadedContributor);
                         } else {
                             // From Workspace (Contributor that needs to be checked) and Market with contributor outside the referential
                             loadedContributor.entity = contributor.entity;
@@ -151,12 +152,11 @@ angular.module('ortolangMarketApp')
                                         loadedContributor.organization = angular.fromJson(entity.content);
                                     });
                                 } else {
-                                    loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
+                                    loadedContributor.organization = contributor.organization;
                                 }
                             }
 
                             if (contributor.roles && contributor.roles.length > 0) {
-
                                 loadedContributor.roles = [];
                                 angular.forEach(contributor.roles, function (role) {
                                     if (Helper.startsWith(role, '$')) {
@@ -169,9 +169,9 @@ angular.module('ortolangMarketApp')
                                             }
                                         });
                                     } else {
-                                        loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+                                        loadedContributor.roles.push(Helper.getMultilingualValue(role.labels));
 
-                                        if (role['meta_ortolang-referential-json'].id === 'author') {
+                                        if (role.id === 'author') {
                                             $scope.authors.push(loadedContributor);
                                         }
                                     }
@@ -187,6 +187,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.content.license) {
                     if (Helper.startsWith($scope.content.license, '$')) {
                         // From Workspace
+                        console.log('Workspace');
                         ReferentialResource.get({name: Helper.extractNameFromReferentialId($scope.content.license)}, function (entity) {
                             $scope.license = angular.fromJson(entity.content);
                             if ($scope.license.description) {
@@ -196,17 +197,22 @@ angular.module('ortolangMarketApp')
                                 $scope.license.effectiveText = Helper.getMultilingualValue($scope.license.text, lang);
                             }
                         });
-                    } else if (angular.isDefined($scope.content.license['meta_ortolang-referential-json'])) {
-                        // From Market
-                        $scope.license = $scope.content.license['meta_ortolang-referential-json'];
+                    // } else if (angular.isDefined($scope.content.license)) {
+                    //     // From Market
+                    //     console.log('Market');
+                    //     $scope.license = $scope.content.license;
+                    //     if ($scope.license.description) {
+                    //         $scope.license.effectiveDescription = Helper.getMultilingualValue($scope.license.description, lang);
+                    //     }
+                    //     if ($scope.license.text) {
+                    //         $scope.license.effectiveText = Helper.getMultilingualValue($scope.license.text, lang);
+                    //     }
+                    } else {
+                        console.log('Market et Autre');
+                        $scope.license = $scope.content.license;
                         if ($scope.license.description) {
                             $scope.license.effectiveDescription = Helper.getMultilingualValue($scope.license.description, lang);
                         }
-                        if ($scope.license.text) {
-                            $scope.license.effectiveText = Helper.getMultilingualValue($scope.license.text, lang);
-                        }
-                    } else {
-                        $scope.license = $scope.content.license;
                         if ($scope.license.text) {
                             var value = Helper.getMultilingualValue($scope.license.text, lang);
                             if (value && value.path) {
@@ -216,6 +222,8 @@ angular.module('ortolangMarketApp')
                                 }).$promise.then(function (oobject) {
                                     $scope.textFileKey = oobject.key;
                                 });
+                            } else {
+                                $scope.license.effectiveText = value;
                             }
                         }
                     }
