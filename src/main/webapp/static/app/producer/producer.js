@@ -11,6 +11,7 @@ angular.module('ortolangMarketApp')
     .controller('ProducerCtrl', ['$rootScope', '$scope', '$routeParams', '$translate', 'ReferentialResource', 'SearchProvider', function ($rootScope, $scope, $routeParams, $translate, ReferentialResource, SearchProvider) {
 
         function loadItem(id) {
+            //TODO Use SearchResource.getOrganization
             ReferentialResource.get({name: id}, function (refEntity) {
                 $scope.producer = angular.fromJson(refEntity.content);
                 $rootScope.ortolangPageTitle = $scope.producer.name + ' | ';
@@ -26,14 +27,15 @@ angular.module('ortolangMarketApp')
             $scope.producer = undefined;
             loadItem($routeParams.producerId);
 
-            var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
-            var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
-            var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
-            var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
+            // var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
+            // var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
+            // var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
+            // var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('rank', false);
             // TODO server side
-            $scope.params = '{"'+metaItemPrefix+'producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName"}';
+            // $scope.params = '{"'+metaItemPrefix+'producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName"}';
+            $scope.params = {index: 'item', query: 'producers.id[]=' + $routeParams.producerId};
         }
         init();
     }]);
