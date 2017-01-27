@@ -98,6 +98,21 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/count/workspaces',
                 method: 'GET'
             },
+            searchEntities: {
+                url: url.api + '/search/entities',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
             getEntity: {
                 url: url.api + '/search/entities/:id',
                 method: 'GET'

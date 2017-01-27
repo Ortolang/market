@@ -298,6 +298,11 @@ angular.module('ortolangMarketApp')
                 return exec ? exec[1] : exec;
             };
 
+            this.createIdFromReferentialName = function (name) {
+                // Pattern : referential:{name}
+                return 'referential:' + name;
+            };
+
             this.createKeyFromReferentialId = function (id) {
                 // Pattern : ${key}
                 return '${' + id + '}';
