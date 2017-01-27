@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
             $scope.loadProductions = function () {
 	            $scope.search = SearchProvider.make();
 	            $scope.search.setActiveOrderProp('publicationDate', true);
-                $scope.params = '{"contributors.entity.meta_ortolang-referential-json.username[]": "' + User.key + '"}';
+                $scope.params = {'contributors.entity.username.key[]': User.key};
             };
         }
 ]);

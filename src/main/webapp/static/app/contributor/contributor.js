@@ -12,7 +12,6 @@ angular.module('ortolangMarketApp')
 
         function loadItem(id) {
             SearchResource.getPerson({key: 'referential:' + id}, function (entity) {
-                console.log('from index');
                 $scope.contributor = entity;
                 if ($scope.contributor.username) {
                     /*jshint camelcase:false */
@@ -25,7 +24,6 @@ angular.module('ortolangMarketApp')
 
                 $rootScope.ortolangPageTitle = $scope.contributor.fullname + ' | ';
             }, function () {
-                console.log('from db');
                 // If not found in json-store, then go to relational db
                 ReferentialResource.get({name: id}, function (entity) {
                     var content = angular.fromJson(entity.content);
@@ -37,7 +35,6 @@ angular.module('ortolangMarketApp')
                         });
                     }
                 }, function () {
-                    console.log('from no one');
                     $scope.contributor = {fullname: id};
                 });
             });
@@ -56,7 +53,7 @@ angular.module('ortolangMarketApp')
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('rank', false);
             // $scope.params = '{"'+metaItemPrefix+'contributors.entity.meta_ortolang-referential-json.id[]": "' + $routeParams.contributorId + '", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName"}';
-            $scope.params = {index: 'item', query: 'contributors.entity.id[]=' + $routeParams.contributorId};
+            $scope.params = {'contributors.entity.id[]': $routeParams.contributorId};
         }
         init();
     }]);

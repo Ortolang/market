@@ -35,7 +35,7 @@ angular.module('ortolangMarketApp')
             $scope.search.setActiveOrderProp('rank', false);
             // TODO server side
             // $scope.params = '{"'+metaItemPrefix+'producers.meta_ortolang-referential-json.id[]": "' + $routeParams.producerId + '", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'.esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName"}';
-            $scope.params = {index: 'item', query: 'producers.id[]=' + $routeParams.producerId};
+            $scope.params = {'producers.id[]': $routeParams.producerId};
         }
         init();
     }]);

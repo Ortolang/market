@@ -44,7 +44,6 @@ angular.module('ortolangMarketApp')
                 // params.limit = '15';
                 // params.orderProp = 'publicationDate';
                 // params.orderDir = 'desc';
-                params.index = 'item';
                 $scope.paramsRecents = angular.toJson(params);
             }());
 
