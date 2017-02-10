@@ -145,6 +145,7 @@ angular.module('ortolangMarketApp')
                 // For browser directive
                 $scope.workspace = {alias: $scope.itemAlias, key: workspace.key, tags: workspace.tags};
                 
+                // TODO if type is item then it doesn't work !!
                 // SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
                 SearchResource.getItem({type: $routeParams.section, id: $scope.itemAlias, version: $scope.tag.tag}, function (collection) {
                     $scope.ortolangObject = collection;

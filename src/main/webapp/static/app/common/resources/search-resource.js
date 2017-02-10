@@ -73,18 +73,7 @@ angular.module('ortolangMarketApp')
             },
             items: {
                 url: url.api + '/search/items',
-                method: 'GET',
-                isArray: true,
-                transformResponse: function (data) {
-                    data = angular.fromJson(data);
-                    if (angular.isArray(data)) {
-                        var i = 0;
-                        for (i; i < data.length; i++) {
-                            data[i] = angular.fromJson(data[i]);
-                        }
-                    }
-                    return data;
-                }
+                method: 'GET'
             },
             getItem: {
                 url: url.api + '/search/items/:id',
@@ -104,6 +93,7 @@ angular.module('ortolangMarketApp')
                 isArray: true,
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
+                    data = data.hits;
                     if (angular.isArray(data)) {
                         var i = 0;
                         for (i; i < data.length; i++) {

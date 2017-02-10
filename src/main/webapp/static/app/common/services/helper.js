@@ -335,28 +335,6 @@ angular.module('ortolangMarketApp')
                 return path.replace(/\/\//g, '/');
             };
 
-            this.pack = function (list) {
-                var register = {};
-                var results = [];
-                for (var i = list.length - 1; i >= 0; i--) {
-
-                    if (list[i].wskey) {
-                        var wskey = list[i].wskey;
-                        if (angular.isUndefined(register[wskey])) {
-                            register[wskey] = list[i];
-                            results.push(list[i]);
-                        } else {
-                            if (register[wskey].lastModificationDate < list[i].lastModificationDate) {
-                                var index = results.indexOf(register[wskey]);
-                                results.splice(index, 1, list[i]);
-                                register[wskey] = list[i];
-                            }
-                        }
-                    }
-                }
-                return results;
-            };
-
             $rootScope.$on('modal.show', function (event, _modal_) {
                 modal = _modal_;
             });

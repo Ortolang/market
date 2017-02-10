@@ -20,6 +20,7 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
     // Constructor
     function SearchProvider(config) {
         this.results = null;
+        this.aggregations = null;
         this.countResults = 0;
         this.viewModes = {
             line: {id: 'line', icon: icons.browser.viewModeLine, text: 'MARKET.VIEW_MODE.LINE'},
@@ -52,12 +53,6 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
 
         hasResults: function () {
             return this.results && this.results.length > 0;
-        },
-
-        pack: function () {
-            if (tmpResults) {
-                tmpResults = Helper.pack(tmpResults);
-            }
         },
 
         endProcessing: function () {
@@ -95,10 +90,42 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
             var Search = this;
             return SearchResource.items(param, function (data) {
                 if (noProcessing) {
-                    Search.results = data;
-                    Search.countResults = data.size;
+                    console.log('noProcessing');
+                    Search.results = [];
+                    angular.forEach(data.hits, function (hit) {
+                        Search.results.push(angular.fromJson(hit));
+                    });
+                    // Search.results = data.hits;
+                    // Search.aggregations = data.aggregations;
+                    Search.aggregations = {};
+                    angular.forEach(data.aggregations, function (agg) {
+                        Search.aggregations[agg] = angular.fromJson(agg);
+                    });
+                    Search.countResults = data.hits.size;
                 } else {
-                    tmpResults = data;
+                    console.log('processing');
+                    // tmpResults = data;
+                    tmpResults = [];
+                    angular.forEach(data.hits, function (hit) {
+                        var hitObject = angular.fromJson(hit);
+                        hitObject.effectiveTitle = Helper.getMultilingualValue(hit.title);
+                        hitObject.effectiveRank = hit.rank ? hit.rank : 0;
+                        tmpResults.push(hitObject);
+                    });
+                    Search.aggregations = {};
+                    // console.log('data aggregations');
+                    // console.log(data.aggregations);
+                    for (var aggName in data.aggregations) {
+                        Search.aggregations[aggName] = [];
+                        if (angular.isArray(data.aggregations[aggName])) {
+                            angular.forEach(data.aggregations[aggName], function (aggValue) {
+                                var decodedKey = decodeURIComponent((aggValue + '').replace(/\+/g, '%20'));
+                                // console.log('decode key : ');
+                                // console.log(decodedKey);
+                                Search.aggregations[aggName].push(angular.fromJson(decodedKey));
+                            });
+                        }
+                    }
                     Search.countResults = data.size;
                 }
             });

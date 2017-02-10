@@ -185,7 +185,6 @@ import './market/templates/ortolang-item-json-14';
 import './market/templates/ortolang-item-json-15';
 import './market/templates/ortolang-item-json-16';
 import './market/home';
-import './market/services/query-builder-service';
 import './market/services/option-faceted-filter';
 import './market/services/faceted-filter';
 import './market/services/faceted-filter-manager';

@@ -29,32 +29,20 @@ angular.module('ortolangMarketApp')
                     scope.search.clearResults();
                 });
 
-                function countWorkspace(params) {
-                    var param = angular.copy(params);
-                    delete param.limit;
-                    delete param.orderProp;
-                    delete param.orderDir;
-                    param.fields = 'workspace.wsalias';
-                    param.group = 'ortolang-workspace-json.wsalias';
-                    SearchResource.countWorkspaces(param, function (data) {
-                        scope.count = data.count;
-                    });
-
-                }
-
                 function load() {
                     var param = angular.fromJson(scope.newParams);
                     scope.search.search(param).$promise.then(function (results) {
                         if (angular.isDefined(scope.seeMoreValue)) {
-                            countWorkspace(param);
+                            //TOOD adds "size" : param.limit and get hits.total
+                            // countWorkspace(param);
                         }
 
-                        angular.forEach(results, function (result) {
-                            var title = result.title,
-                                rank = result.rank;
-                            result.effectiveTitle = Helper.getMultilingualValue(title);
-                            result.effectiveRank = rank ? rank : 0;
-                        });
+                        // angular.forEach(results, function (result) {
+                        //     var title = result.title,
+                        //         rank = result.rank;
+                        //     result.effectiveTitle = Helper.getMultilingualValue(title);
+                        //     result.effectiveRank = rank ? rank : 0;
+                        // });
 
                         scope.search.endProcessing();
                     });
