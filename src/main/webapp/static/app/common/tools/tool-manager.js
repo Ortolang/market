@@ -270,59 +270,61 @@ angular.module('ortolangMarketApp')
                 //queryBuilder.equals('meta_ortolang-item-json.type', 'Outil');
                 //
                 //var query = queryBuilder.toString();
-                SearchResource.findCollections({type: 'Outil'}, function (jsonResults) {
-                    angular.forEach(jsonResults, function (itemMeta) {
-                        var item = {},
-                            data = angular.fromJson(itemMeta);
-                        item.key = data.key;
-                        item.id = data.id;
-                        item.name = data.title;
-                        item.description = data.description;
-                        item.documentation = data.help;
-                        item.url = data.url;
-                        if (data.inputData) {
-                            item.inputData = data.inputData.filter(function (elem, pos) {
-                                return data.inputData.indexOf(elem) === pos;
-                            });
-                            angular.forEach(item.inputData, function (input) {
-                                inputDatasList.push(input);
-                            });
-                        }
-                        if (data.outputData) {
-                            item.outputData = data.outputData.filter(function (elem, pos) {
-                                return data.outputData.indexOf(elem) === pos;
-                            });
-                            angular.forEach(item.outputData, function (output) {
-                                outputDatasList.push(output);
-                            });
-                        }
-                        if (data.functionalities) {
-                            item.functionalities = data.functionalities.filter(function (elem, pos) {
-                                return data.functionalities.indexOf(elem) === pos;
-                            });
-                            angular.forEach(item.functionalities, function (fnc) {
-                                functionalitiesList.push(fnc);
-                            });
-                        }
-                        item.meta = data;
-                        if (item.url !== undefined && item.url !== '') {
-                            item.active = true;
-                        }
 
-                        if (data.image !== undefined && data.image !== '') {
-                            item.image = Content.getContentUrlWithPath(data.image, data.alias, 'latest');
-                            register(new OrtolangTool(item));
-                        } else {
-                            register(new OrtolangTool(item));
-                        }
-                        console.log('register ' + item.name);
-                    });
-                    loaded = true;
-                    $rootScope.$broadcast('tool-list-registered');
+                
+                // SearchResource.findCollections({type: 'Outil'}, function (jsonResults) {
+                //     angular.forEach(jsonResults, function (itemMeta) {
+                //         var item = {},
+                //             data = angular.fromJson(itemMeta);
+                //         item.key = data.key;
+                //         item.id = data.id;
+                //         item.name = data.title;
+                //         item.description = data.description;
+                //         item.documentation = data.help;
+                //         item.url = data.url;
+                //         if (data.inputData) {
+                //             item.inputData = data.inputData.filter(function (elem, pos) {
+                //                 return data.inputData.indexOf(elem) === pos;
+                //             });
+                //             angular.forEach(item.inputData, function (input) {
+                //                 inputDatasList.push(input);
+                //             });
+                //         }
+                //         if (data.outputData) {
+                //             item.outputData = data.outputData.filter(function (elem, pos) {
+                //                 return data.outputData.indexOf(elem) === pos;
+                //             });
+                //             angular.forEach(item.outputData, function (output) {
+                //                 outputDatasList.push(output);
+                //             });
+                //         }
+                //         if (data.functionalities) {
+                //             item.functionalities = data.functionalities.filter(function (elem, pos) {
+                //                 return data.functionalities.indexOf(elem) === pos;
+                //             });
+                //             angular.forEach(item.functionalities, function (fnc) {
+                //                 functionalitiesList.push(fnc);
+                //             });
+                //         }
+                //         item.meta = data;
+                //         if (item.url !== undefined && item.url !== '') {
+                //             item.active = true;
+                //         }
 
-                }, function (reason) {
-                    console.error('An issue occurred when trying to get the tool list: %o', reason);
-                });
+                //         if (data.image !== undefined && data.image !== '') {
+                //             item.image = Content.getContentUrlWithPath(data.image, data.alias, 'latest');
+                //             register(new OrtolangTool(item));
+                //         } else {
+                //             register(new OrtolangTool(item));
+                //         }
+                //         console.log('register ' + item.name);
+                //     });
+                //     loaded = true;
+                //     $rootScope.$broadcast('tool-list-registered');
+
+                // }, function (reason) {
+                //     console.error('An issue occurred when trying to get the tool list: %o', reason);
+                // });
             }
 
             function isRegistryLoaded() {
