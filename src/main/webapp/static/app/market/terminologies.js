@@ -29,7 +29,7 @@ angular.module('ortolangMarketApp')
             // 2nd level
             {
                 alias: 'terminoStructureType',
-                type: 'array',
+                // type: 'array',
                 label: 'ITEM.TERMINO_STRUCTURE_TYPE.LABEL'
             },
             {
@@ -44,12 +44,12 @@ angular.module('ortolangMarketApp')
             },
             {
                 alias: 'terminoFormat',
-                type: 'array',
+                // type: 'array',
                 label: 'ITEM.TERMINO_FORMAT.LABEL'
             },
             {
                 alias: 'terminoInputCount',
-                type: 'array',
+                // type: 'array',
                 label: 'ITEM.TERMINO_INPUT_COUNT.LABEL'
             }
         ];

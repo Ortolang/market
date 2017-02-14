@@ -33,8 +33,7 @@ angular.module('ortolangMarketApp')
                     var param = angular.fromJson(scope.newParams);
                     scope.search.search(param).$promise.then(function (results) {
                         if (angular.isDefined(scope.seeMoreValue)) {
-                            //TOOD adds "size" : param.limit and get hits.total
-                            // countWorkspace(param);
+                            scope.count = results.totalHits;
                         }
 
                         // angular.forEach(results, function (result) {
