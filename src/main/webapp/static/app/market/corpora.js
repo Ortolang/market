@@ -11,35 +11,35 @@ angular.module('ortolangMarketApp')
     .controller('CorporaCtrl', ['$scope', '$location', 'SearchProvider', 'FacetedFilterManager', 'Settings', function ($scope, $location, SearchProvider, FacetedFilterManager, Settings) {
 
         var filters = [
-            // {
-            //     alias: 'annotationLevels',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.ANNOTATION_LEVEL',
-            //     resetLabel: 'MARKET.FACET.ALL_ANNOTATION_LEVEL'
-            // },
+            {
+                alias: 'annotationLevels',
+                type: 'array',
+                label: 'MARKET.FACET.ANNOTATION_LEVEL',
+                resetLabel: 'MARKET.FACET.ALL_ANNOTATION_LEVEL'
+            },
             {
                 alias: 'corporaFormats',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_FORMAT',
                 resetLabel: 'MARKET.FACET.ALL_TEXT_FORMAT'
             },
-            // {
-            //     alias: 'corporaDataTypes',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.CORPORA_DATATYPES',
-            //     resetLabel: 'MARKET.FACET.ALL_CORPORA_DATATYPES'
-            // },
-            // {
-            //     alias: 'corporaLanguageType',
-            //     label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
-            //     resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
-            // },
-            // {
-            //     alias: 'corporaFileEncodings',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.TEXT_ENCODING',
-            //     resetLabel: 'MARKET.FACET.ALL_TEXT_ENCODING'
-            // },
+            {
+                alias: 'corporaDataTypes',
+                type: 'array',
+                label: 'MARKET.FACET.CORPORA_DATATYPES',
+                resetLabel: 'MARKET.FACET.ALL_CORPORA_DATATYPES'
+            },
+            {
+                alias: 'corporaLanguageType',
+                label: 'MARKET.FACET.CORPORA_LANGUAGE_TYPE',
+                resetLabel: 'MARKET.FACET.ALL_CORPORA_LANGUAGE_TYPE'
+            },
+            {
+                alias: 'corporaFileEncodings',
+                type: 'array',
+                label: 'MARKET.FACET.TEXT_ENCODING',
+                resetLabel: 'MARKET.FACET.ALL_TEXT_ENCODING'
+            },
             {
                 alias: 'corporaType',
                 label: 'MARKET.FACET.CORPORA_TYPE',
@@ -47,14 +47,14 @@ angular.module('ortolangMarketApp')
                 priority: 'high',
                 view: 'dropdown-faceted-filter'
             },
-            // {
-            //     alias: 'corporaLanguages',
-            //     type: 'array',
-            //     label: 'MARKET.FACET.CORPORA_LANG',
-            //     resetLabel: 'MARKET.FACET.ALL_LANG',
-            //     priority: 'high',
-            //     view: 'dropdown-faceted-filter'
-            // },
+            {
+                alias: 'corporaLanguages',
+                type: 'array',
+                label: 'MARKET.FACET.CORPORA_LANG',
+                resetLabel: 'MARKET.FACET.ALL_LANG',
+                priority: 'high',
+                view: 'dropdown-faceted-filter'
+            },
             {
                 alias: 'statusOfUse',
                 label: 'MARKET.FACET.STATUS_OF_USE',

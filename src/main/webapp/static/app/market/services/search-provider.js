@@ -90,21 +90,16 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
             var Search = this;
             return SearchResource.items(param, function (data) {
                 if (noProcessing) {
-                    console.log('noProcessing');
                     Search.results = [];
                     angular.forEach(data.hits, function (hit) {
                         Search.results.push(angular.fromJson(hit));
                     });
-                    // Search.results = data.hits;
-                    // Search.aggregations = data.aggregations;
                     Search.aggregations = {};
                     angular.forEach(data.aggregations, function (agg) {
                         Search.aggregations[agg] = angular.fromJson(agg);
                     });
                     Search.countResults = data.hits.size;
                 } else {
-                    console.log('processing');
-                    // tmpResults = data;
                     tmpResults = [];
                     angular.forEach(data.hits, function (hit) {
                         var hitObject = angular.fromJson(hit);
@@ -113,15 +108,11 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
                         tmpResults.push(hitObject);
                     });
                     Search.aggregations = {};
-                    // console.log('data aggregations');
-                    // console.log(data.aggregations);
                     for (var aggName in data.aggregations) {
                         Search.aggregations[aggName] = [];
                         if (angular.isArray(data.aggregations[aggName])) {
                             angular.forEach(data.aggregations[aggName], function (aggValue) {
                                 var decodedKey = decodeURIComponent((aggValue + '').replace(/\+/g, '%20'));
-                                // console.log('decode key : ');
-                                // console.log(decodedKey);
                                 Search.aggregations[aggName].push(angular.fromJson(decodedKey));
                             });
                         }
