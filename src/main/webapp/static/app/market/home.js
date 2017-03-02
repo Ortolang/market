@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
 
             StatisticsResource.get({names: 'core.workspaces.all,membership.profiles.all,binary-store.size,binary-store.files'}, function (data) {
                 angular.forEach(data, function (representation, name) {
-                    if (representation.values) {
+                    if (representation.values && representation.values.length>0) {
                         $scope.statistics[name] = representation.values.pop()[1];
                     }
                 });
