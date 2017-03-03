@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['$location', 'SearchProvider', 'SearchResource', 'Helper', function ($location, SearchProvider, SearchResource, Helper) {
+    .directive('items', ['$location', 'SearchProvider', 'Helper', function ($location, SearchProvider, Helper) {
         return {
             restrict: 'A',
             scope: {
@@ -35,8 +35,8 @@ angular.module('ortolangMarketApp')
                         if (angular.isDefined(scope.seeMoreValue)) {
                             scope.count = results.totalHits;
                         }
-
-                        // angular.forEach(results, function (result) {
+                        // console.log(results);
+                        // angular.forEach(results.hits, function (result) {
                         //     var title = result.title,
                         //         rank = result.rank;
                         //     result.effectiveTitle = Helper.getMultilingualValue(title);

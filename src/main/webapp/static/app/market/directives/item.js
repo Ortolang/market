@@ -34,8 +34,8 @@ angular.module('ortolangMarketApp')
                     }
                     scope.itemUrl = '/market/' + type + '/' + scope.entry.alias;
 
-                    if (scope.entry.title) {
-                        scope.title = Helper.getMultilingualValue(scope.entry.title);
+                    if (scope.entry.effectiveTitle) {
+                        scope.title = scope.entry.effectiveTitle;
                     }
                     if (scope.entry.description) {
                         scope.description = Helper.getMultilingualValue(scope.entry.description);
@@ -52,10 +52,10 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
-                    scope.rank = scope.entry.rank;
+                    // For sorting
                     scope.publicationDate = scope.entry.publicationDate;
-                    // scope.producers = scope.entry.producers;
                     scope.effectiveRank = scope.entry.effectiveRank;
+                    scope.effectiveTitle = scope.entry.effectiveTitle;
                 }
             }
         };

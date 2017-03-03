@@ -8,7 +8,7 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('CorporaCtrl', ['$scope', '$location', 'SearchProvider', 'FacetedFilterManager', 'Settings', function ($scope, $location, SearchProvider, FacetedFilterManager, Settings) {
+    .controller('CorporaCtrl', ['$scope', '$location', 'SearchProvider', 'FacetedFilterManager', 'Settings', 'Helper', function ($scope, $location, SearchProvider, FacetedFilterManager, Settings, Helper) {
 
         var filters = [
             {
@@ -84,27 +84,18 @@ angular.module('ortolangMarketApp')
         });
 
         (function init() {
-            // var workspacePrefix = 'ortolang-workspace-json.';
-            // var metaLatestSnapshotPrefix = 'ortolang-workspace-json.latestSnapshot.';
-            // var metaItemPrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.';
-            // var metaWorkspacePrefix = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-workspace-json.';
-            // var metaRatingPrefix = 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.';
             // Written
             $scope.searchWrittenCorpora = SearchProvider.make();
             $scope.searchWrittenCorpora.setActiveOrderProp('rank', true);
-            // $scope.paramsWrittenCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:written_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "'+workspacePrefix+'archive":false, "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
-            $scope.paramsWrittenCorpora = {type:'corpora', 'corporaType.id': 'written_corpora'};
+            $scope.paramsWrittenCorpora = {type:'corpora', 'corporaType.id': 'written_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc'};
             // Speech
             $scope.searchSpeechCorpora = SearchProvider.make();
             $scope.searchSpeechCorpora.setActiveOrderProp('rank', true);
-            // $scope.paramsSpeechCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:speech_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "'+workspacePrefix+'archive":false, "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
-            $scope.paramsSpeechCorpora = {type:'corpora', 'corporaType.id': 'speech_corpora'};
-            // $scope.paramsSpeechCorpora = {type:'corpora', 'corporaType.id': 'speech_corpora', aggregations: ['corporaType']};
+            $scope.paramsSpeechCorpora = {type:'corpora', 'corporaType.id': 'speech_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc'};
             // Multimodal
             $scope.searchMultimodalCorpora = SearchProvider.make();
             $scope.searchMultimodalCorpora.setActiveOrderProp('rank', true);
-            // $scope.paramsMultimodalCorpora = '{"'+metaItemPrefix+'title":"", "'+metaItemPrefix+'type": "Corpus", "'+metaItemPrefix+'corporaType.key":"referential:multimodal_corpora", "fields":"'+metaLatestSnapshotPrefix+'key,'+metaRatingPrefix+'score:rank,'+metaRatingPrefix+'esrAccessibility,'+metaItemPrefix+'title,'+metaItemPrefix+'type,'+metaItemPrefix+'image,'+metaItemPrefix+'publicationDate,'+metaWorkspacePrefix+'wskey,'+metaWorkspacePrefix+'wsalias,'+metaWorkspacePrefix+'snapshotName", "'+workspacePrefix+'archive":false, "limit":"15", "orderProp":"rank", "orderDir":"desc"}';
-            $scope.paramsMultimodalCorpora = {type:'corpora', 'corporaType.id': 'multimodal_corpora'};
+            $scope.paramsMultimodalCorpora = {type:'corpora', 'corporaType.id': 'multimodal_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc'};
 
             isHome();
 

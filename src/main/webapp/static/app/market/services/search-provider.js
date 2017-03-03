@@ -92,7 +92,10 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
                 if (noProcessing) {
                     Search.results = [];
                     angular.forEach(data.hits, function (hit) {
-                        Search.results.push(angular.fromJson(hit));
+                        var hitObject = angular.fromJson(hit);
+                        hitObject.effectiveTitle = Helper.getMultilingualValue(hitObject.title);
+                        hitObject.effectiveRank = hitObject.rank ? hitObject.rank : 0;
+                        Search.results.push(hitObject);
                     });
                     Search.aggregations = {};
                     angular.forEach(data.aggregations, function (agg) {
@@ -103,8 +106,8 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
                     tmpResults = [];
                     angular.forEach(data.hits, function (hit) {
                         var hitObject = angular.fromJson(hit);
-                        hitObject.effectiveTitle = Helper.getMultilingualValue(hit.title);
-                        hitObject.effectiveRank = hit.rank ? hit.rank : 0;
+                        hitObject.effectiveTitle = Helper.getMultilingualValue(hitObject.title);
+                        hitObject.effectiveRank = hitObject.rank ? hitObject.rank : 0;
                         tmpResults.push(hitObject);
                     });
                     Search.aggregations = {};
