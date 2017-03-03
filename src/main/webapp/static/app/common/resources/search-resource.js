@@ -11,21 +11,6 @@ angular.module('ortolangMarketApp')
     .factory('SearchResource', ['$resource', 'url', function ($resource, url) {
 
         return $resource(url.api + '/search', {}, {
-            findProfiles: {
-                url: url.api + '/search/profiles',
-                method: 'GET',
-                transformResponse: function (data) {
-                    data = angular.fromJson(data);
-                    if (angular.isArray(data)) {
-                        var i = 0;
-                        for (i; i < data.length; i++) {
-                            data[i] = angular.fromJson(data[i]);
-                        }
-                    }
-                    return data;
-                },
-                isArray: true
-            },
             items: {
                 url: url.api + '/search/items',
                 method: 'GET'
@@ -38,7 +23,7 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/workspaces/:alias',
                 method: 'GET'
             },
-            searchEntities: {
+            entities: {
                 url: url.api + '/search/entities',
                 method: 'GET',
                 isArray: true,
@@ -66,9 +51,20 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/organizations/:key',
                 method: 'GET'
             },
-            index: {
-                url: url.api + '/search/index',
+            profiles: {
+                url: url.api + '/search/profiles',
                 method: 'GET',
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                },
                 isArray: true
             }
         });
