@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                         return [];
                     }
                     var deferred = $q.defer();
-                    SearchResource.searchEntities({type: 'PERSON', '_all*': term}, function (results) {
+                    SearchResource.entities({type: 'PERSON', '_all*': term}, function (results) {
                         var suggestedPersons = [];
                         angular.forEach(results, function (refentity) {
                             suggestedPersons.push(refentity);
@@ -188,7 +188,7 @@ angular.module('ortolangMarketApp')
                 }
 
                 function loadAllRoles() {
-                    SearchResource.searchEntities({type: 'ROLE', size: 100}, function (entities) {
+                    SearchResource.entities({type: 'ROLE', size: 100}, function (entities) {
                         var allRoles = [];
                         angular.forEach(entities, function (entry) {
                             entry.label = Helper.getMultilingualValue(entry.labels);
