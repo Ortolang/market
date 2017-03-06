@@ -35,14 +35,6 @@ angular.module('ortolangMarketApp')
                         if (angular.isDefined(scope.seeMoreValue)) {
                             scope.count = results.totalHits;
                         }
-                        // console.log(results);
-                        // angular.forEach(results.hits, function (result) {
-                        //     var title = result.title,
-                        //         rank = result.rank;
-                        //     result.effectiveTitle = Helper.getMultilingualValue(title);
-                        //     result.effectiveRank = rank ? rank : 0;
-                        // });
-
                         scope.search.endProcessing();
                     });
                 }

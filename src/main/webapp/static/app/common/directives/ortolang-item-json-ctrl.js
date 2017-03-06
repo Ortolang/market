@@ -195,10 +195,6 @@ angular.module('ortolangMarketApp')
                 $scope.browse = !$scope.browse;
             };
 
-            $scope.toggleDescription = function () {
-                $scope.showingDescription = !$scope.showingDescription;
-            };
-
             $scope.exportItem = function () {
                 var modalScope = Helper.createModalScope(true),
                     exportModal;
