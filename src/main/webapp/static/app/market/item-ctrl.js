@@ -127,6 +127,40 @@ angular.module('ortolangMarketApp')
             $scope.item.social.linkedin += '&source=ORTOLANG';
         }
 
+        function loadCollection(collection) {
+            $scope.ortolangObject = collection;
+            $scope.root = $scope.tag.name;
+            $scope.item = collection;
+            $scope.itemKey = collection.key;
+            $scope.wskey = $scope.workspace.key;
+
+            if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
+                switch ($scope.item.type) {
+                    case 'Corpus':
+                        $route.updateParams({section: 'corpora'});
+                        break;
+                    case 'Lexique':
+                        $route.updateParams({section: 'lexicons'});
+                        break;
+                    case 'Application':
+                        $route.updateParams({section: 'applications'});
+                        break;
+                    case 'Outil':
+                        $route.updateParams({section: 'tools'});
+                        break;
+                    case 'Terminologie':
+                        $route.updateParams({section: 'terminologies'});
+                        break;
+                }
+                $location.replace();
+            } else {
+                var microdata = generateMicroData();
+                generateOpenGraphTags(microdata);
+                generateSocialLinks(microdata);
+                $scope.ready = true;
+            }
+        }
+
         function loadItem() {
             SearchResource.getWorkspace({alias: $scope.itemAlias}, function (workspace) {
                 $scope.tags = $filter('orderBy')(workspace.snapshots, function (snapshot) {
@@ -145,40 +179,17 @@ angular.module('ortolangMarketApp')
                 // For browser directive
                 $scope.workspace = {alias: $scope.itemAlias, key: workspace.key, tags: workspace.tags};
                 
-                // TODO if type is item then it doesn't work !!
-                SearchResource.getItem({type: $routeParams.section, id: $scope.itemAlias, version: $scope.tag.tag}, function (collection) {
-                    $scope.ortolangObject = collection;
-                    $scope.root = $scope.tag.name;
-                    $scope.item = collection;
-                    $scope.itemKey = collection.key;
-                    $scope.wskey = workspace.key;
-
-                    if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
-                        switch ($scope.item.type) {
-                            case 'Corpus':
-                                $route.updateParams({section: 'corpora'});
-                                break;
-                            case 'Lexique':
-                                $route.updateParams({section: 'lexicons'});
-                                break;
-                            case 'Application':
-                                $route.updateParams({section: 'applications'});
-                                break;
-                            case 'Outil':
-                                $route.updateParams({section: 'tools'});
-                                break;
-                            case 'Terminologie':
-                                $route.updateParams({section: 'terminologies'});
-                                break;
+                if ($routeParams.section === 'item') {
+                    SearchResource.items({'_id': $scope.itemAlias}, function (items) {
+                        if (items.totalHits===1) {
+                            loadCollection(angular.fromJson(items.hits[0]));
+                        } else {
+                            console.log('there is more than one item !');
                         }
-                        $location.replace();
-                    } else {
-                        var microdata = generateMicroData();
-                        generateOpenGraphTags(microdata);
-                        generateSocialLinks(microdata);
-                        $scope.ready = true;
-                    }
-                });
+                    });
+                } else {
+                    SearchResource.getItem({type: $routeParams.section, id: $scope.itemAlias, version: $scope.tag.tag}, loadCollection);
+                }
             }, function () {
                 $scope.ready = true;
             });
