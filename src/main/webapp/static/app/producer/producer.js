@@ -28,8 +28,8 @@ angular.module('ortolangMarketApp')
             loadItem($routeParams.producerId);
 
             $scope.search = SearchProvider.make();
-            $scope.search.setActiveOrderProp('rank', false);
-            $scope.params = {'producers.id[]': $routeParams.producerId, archive: false, includes: Helper.includedItemFields, orderProp: 'rank', orderDir: 'desc'};
+            $scope.search.setActiveOrderProp('publicationDate', false);
+            $scope.params = {'producers.id[]': $routeParams.producerId, archive: false, includes: Helper.includedItemFields, orderProp: 'publicationDate', orderDir: 'desc'};
         }
         init();
     }]);
