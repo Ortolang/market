@@ -95,7 +95,7 @@ angular.module('ortolangMarketApp')
                                     var cardPromise = Helper.getCard(username);
                                     if (cardPromise) {
                                         cardPromise.then(function (data) {
-                                            loadedContributor.entity.username = {'meta_profile': data};
+                                            loadedContributor.entity.username = data;
                                         });
                                     }
                                 }
