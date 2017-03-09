@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                     return [];
                 }
                 var deferred = $q.defer();
-                SearchResource.entities({type: 'ORGANIZATION', '_all*': term}, function (results) {
+                SearchResource.entities({type: 'ORGANIZATION', 'fullname*': term}, function (results) {
                     var suggestedOrganizations = [];
                     angular.forEach(results, function (entity) {
                         if (angular.isUndefined(sponsor)) {

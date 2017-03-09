@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                         return [];
                     }
                     var deferred = $q.defer();
-                    SearchResource.entities({type: 'PERSON', '_all*': term}, function (results) {
+                    SearchResource.entities({type: 'PERSON', 'fullname*': term}, function (results) {
                         var suggestedPersons = [];
                         angular.forEach(results, function (refentity) {
                             suggestedPersons.push(refentity);
