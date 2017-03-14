@@ -43,13 +43,81 @@ angular.module('ortolangMarketApp')
                 url: url.api + '/search/entities/:id',
                 method: 'GET'
             },
+            persons: {
+                url: url.api + '/search/persons',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
             getPerson: {
                 url: url.api + '/search/persons/:key',
                 method: 'GET'
             },
+            organizations: {
+                url: url.api + '/search/organizations',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
             getOrganization: {
                 url: url.api + '/search/organizations/:key',
                 method: 'GET'
+            },
+            roles: {
+                url: url.api + '/search/roles',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
+            getRole: {
+                url: url.api + '/search/roles/:key',
+                method: 'GET'
+            },
+            languages: {
+                url: url.api + '/search/languages',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
             },
             profiles: {
                 url: url.api + '/search/profiles',

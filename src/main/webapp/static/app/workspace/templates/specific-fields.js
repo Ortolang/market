@@ -15,14 +15,10 @@ angular.module('ortolangMarketApp')
                 if(term.length<2) {
                     return [];
                 }
-                var lang = Settings.language;
                 var deferred = $q.defer();
-                // ReferentialResource.get({type: 'LANGUAGE', lang:lang.toUpperCase(),term: term}, function(results) {
-                SearchResource.entities({type: 'LANGUAGE', 'labels.value*': term}, function(results) {
+                SearchResource.languages({'labels.value*': term}, function(results) {
                     var suggestedLanguages = [];
-                    // angular.forEach(results.entries, function(refentity) {
                     angular.forEach(results, function(refentity) {
-                        // var content = angular.fromJson(refentity.content);
                         var content = refentity;
                         var text = Helper.getMultilingualValue(content.labels);
                         if(text) {

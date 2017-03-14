@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                         return [];
                     }
                     var deferred = $q.defer();
-                    SearchResource.entities({type: 'PERSON', 'fullname*': term}, function (results) {
+                    SearchResource.persons({'fullname.autocomplete*': term}, function (results) {
                         var suggestedPersons = [];
                         angular.forEach(results, function (refentity) {
                             suggestedPersons.push(refentity);
@@ -155,7 +155,7 @@ angular.module('ortolangMarketApp')
 
                 function loadContributor(contributor) {
                     if (typeof contributor.entity === 'string') {
-                        SearchResource.getEntity({id: Helper.extractKeyFromReferentialId(contributor.entity), type: 'PERSON'}, function (entity) {
+                        SearchResource.getPerson({id: Helper.extractKeyFromReferentialId(contributor.entity)}, function (entity) {
                             contributor.entityContent = entity;
                         });
                     } else {
@@ -165,7 +165,7 @@ angular.module('ortolangMarketApp')
                     if (contributor.roles && contributor.roles.length > 0) {
                         contributor.rolesEntity = [];
                         angular.forEach(contributor.roles, function (role) {
-                            SearchResource.getEntity({id: Helper.extractKeyFromReferentialId(role), type: 'ROLE'}, function (entity) {
+                            SearchResource.getRole({id: Helper.extractKeyFromReferentialId(role)}, function (entity) {
                                 entity.label = Helper.getMultilingualValue(entity.labels);
                                 contributor.rolesEntity.push(entity);
                             });
@@ -173,7 +173,7 @@ angular.module('ortolangMarketApp')
                     }
 
                     if (contributor.organization) {
-                        SearchResource.getEntity({id: Helper.extractKeyFromReferentialId(contributor.organization), type: 'ORGANIZATION'}, function (entity) {
+                        SearchResource.getOrganization({id: Helper.extractKeyFromReferentialId(contributor.organization)}, function (entity) {
                             contributor.organizationEntity = entity;
                         });
                     }
@@ -188,7 +188,7 @@ angular.module('ortolangMarketApp')
                 }
 
                 function loadAllRoles() {
-                    SearchResource.entities({type: 'ROLE', size: 100}, function (entities) {
+                    SearchResource.roles({size: 100}, function (entities) {
                         var allRoles = [];
                         angular.forEach(entities, function (entry) {
                             entry.label = Helper.getMultilingualValue(entry.labels);

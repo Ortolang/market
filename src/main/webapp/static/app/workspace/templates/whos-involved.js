@@ -66,7 +66,7 @@ angular.module('ortolangMarketApp')
                     return [];
                 }
                 var deferred = $q.defer();
-                SearchResource.entities({type: 'ORGANIZATION', 'fullname*': term}, function (results) {
+                SearchResource.organizations({'fullname*': term}, function (results) {
                     var suggestedOrganizations = [];
                     angular.forEach(results, function (entity) {
                         if (angular.isUndefined(sponsor)) {
@@ -150,7 +150,7 @@ angular.module('ortolangMarketApp')
              **/
 
             function loadOrganization(organization) {
-                SearchResource.getEntity({id: Helper.createIdFromReferentialName(organization.id), type: 'ORGANIZATION'}, function (entity) {
+                SearchResource.getOrganization({id: Helper.createIdFromReferentialName(organization.id)}, function (entity) {
                     WorkspaceMetadataService.setOrganization(organization, entity);
                 });
             }
