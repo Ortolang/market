@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
 
             StatisticsResource.get({names: 'core.workspaces.all,membership.profiles.all,binary-store.size,binary-store.files'}, function (data) {
                 angular.forEach(data, function (representation, name) {
-                    if (representation.values) {
+                    if (representation.values && representation.values.length>0) {
                         $scope.statistics[name] = representation.values.pop()[1];
                     }
                 });
@@ -30,20 +30,13 @@ angular.module('ortolangMarketApp')
                 $scope.searchRecents = SearchProvider.make();
                 $scope.searchRecents.setActiveOrderProp('rank', true);
 
-                var fields = {
-                    metaLatestSnapshot: 'key',
-                    metaRating: 'score:rank,.esrAccessibility',
-                    metaItem: 'title,type,image,publicationDate',
-                    metaWorkspace: 'wskey,wsalias,snapshotName'
-                };
                 var params = {};
-                params[Helper.prefix.metaItem + 'title'] = '';
-                params[Helper.prefix.metaRating + 'score'] = '4';
-                params[Helper.prefix.workspace + 'archive'] = 'false';
-                params.fields = Helper.getFieldsParam(fields);
-                params.limit = '15';
+                params.includes = Helper.includedItemFields;
+                params.size = '15';
                 params.orderProp = 'publicationDate';
                 params.orderDir = 'desc';
+                params.rank = '4';
+                params.archive = false;
                 $scope.paramsRecents = angular.toJson(params);
             }());
 

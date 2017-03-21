@@ -233,38 +233,38 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', 'Option
             options: [
                 OptionFacetedFilter.make({
                     label: 'Corpus',
-                    value: 'Corpus',
+                    value: 'corpora',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Lexique',
-                    value: 'Lexique',
+                    value: 'lexicons',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Terminologie',
-                    value: 'Terminologie',
+                    value: 'terminologies',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Outil',
-                    value: 'Outil',
+                    value: 'tools',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Projet intégré',
-                    value: 'Application',
+                    value: 'applications',
                     length: 1
                 })
             ],
             lockOptions: true
         };
         if (hidden) {
-            config.id = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type';
-            config.path = 'ortolang-workspace-json.latestSnapshot.meta_ortolang-item-json.type';
+            config.id = 'type';
+            config.path = 'type';
             config.lock = true;
         } else {
-            config.id = 'meta_ortolang-item-json.type';
+            config.id = 'type';
             config.priority = 'high';
             config.view = 'dropdown-faceted-filter';
         }

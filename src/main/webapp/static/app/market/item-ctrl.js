@@ -12,61 +12,25 @@ angular.module('ortolangMarketApp')
 
         var handle;
 
-        function loadItem() {
-            SearchResource.findWorkspace({alias: $scope.itemAlias}, function (workspace) {
-                workspace =  workspace['meta_ortolang-workspace-json'];
-                $scope.tags = $filter('orderBy')(workspace.tags, function (tag) {
-                    return tag.name;
-                });
-
-                if ($routeParams.version) {
-                    var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
-                    if (filteredTag.length === 1) {
-                        $scope.tag = filteredTag[0];
+        function generateProducerMicroData(producerWrapper) {
+            if (producerWrapper) {
+                var microDataProducer = {};
+                microDataProducer['@type'] = 'Organization';
+                microDataProducer.name = producerWrapper.name;
+                microDataProducer.url = producerWrapper.homepage;
+                microDataProducer.logo = producerWrapper.img;
+                microDataProducer.alternateName = producerWrapper.acronym;
+                if (producerWrapper.country) {
+                    microDataProducer.address = {
+                        '@type': 'PostalAddress',
+                        'addressCountry': producerWrapper.country
+                    };
+                    if (producerWrapper.city) {
+                        microDataProducer.address.addressLocality = producerWrapper.city;
                     }
                 }
-                if (!$scope.tag) {
-                    $scope.tag = $scope.tags[$scope.tags.length - 1];
-                }
-
-                $scope.workspace = {alias: $scope.itemAlias, key: workspace.wskey, tags: workspace.tags};
-
-                SearchResource.findCollection({key: $scope.tag.key}, function (collection) {
-                    $scope.ortolangObject = collection;
-                    $scope.root = $scope.tag.snapshot;
-                    $scope.itemKey = collection.key;
-                    $scope.wskey = workspace.wskey;
-                    $scope.item = collection['meta_ortolang-item-json'];
-
-                    if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
-                        switch ($scope.item.type) {
-                            case 'Corpus':
-                                $route.updateParams({section: 'corpora'});
-                                break;
-                            case 'Lexique':
-                                $route.updateParams({section: 'lexicons'});
-                                break;
-                            case 'Application':
-                                $route.updateParams({section: 'applications'});
-                                break;
-                            case 'Outil':
-                                $route.updateParams({section: 'tools'});
-                                break;
-                            case 'Terminologie':
-                                $route.updateParams({section: 'terminologies'});
-                                break;
-                        }
-                        $location.replace();
-                    } else {
-                        var microdata = generateMicroData();
-                        generateOpenGraphTags(microdata);
-                        generateSocialLinks(microdata);
-                        $scope.ready = true;
-                    }
-                });
-            }, function () {
-                $scope.ready = true;
-            });
+                return microDataProducer;
+            }
         }
 
         function generateMicroData() {
@@ -114,11 +78,10 @@ angular.module('ortolangMarketApp')
             if (jsonMetadata.producers && jsonMetadata.producers.length > 0) {
                 var contributors = [];
                 angular.forEach(jsonMetadata.contributors, function (contributorWrapper) {
-                    if (contributorWrapper && contributorWrapper.entity && contributorWrapper.entity['meta_ortolang-referential-json']) {
-                        var contributor = contributorWrapper.entity['meta_ortolang-referential-json'],
-                            contributorMicroData = {};
+                    if (contributorWrapper && contributorWrapper.entity) {
+                        var contributorMicroData = {};
                         contributorMicroData['@type'] = 'Person';
-                        contributorMicroData.name = contributor.fullname;
+                        contributorMicroData.name = contributorWrapper.entity.fullname;
                         contributorMicroData.worksFor = generateProducerMicroData(contributorWrapper.organization);
                         contributors.push(contributorMicroData);
                     }
@@ -132,28 +95,6 @@ angular.module('ortolangMarketApp')
             angular.element('head').append(microDataElement);
 
             return microData;
-        }
-
-        function generateProducerMicroData(producerWrapper) {
-            if (producerWrapper && producerWrapper['meta_ortolang-referential-json']) {
-                var producer = producerWrapper['meta_ortolang-referential-json'],
-                    microDataProducer = {};
-                microDataProducer['@type'] = 'Organization';
-                microDataProducer.name = producer.name;
-                microDataProducer.url = producer.homepage;
-                microDataProducer.logo = producer.img;
-                microDataProducer.alternateName = producer.acronym;
-                if (producer.country) {
-                    microDataProducer.address = {
-                        '@type': 'PostalAddress',
-                        'addressCountry': producer.country
-                    };
-                    if (producer.city) {
-                        microDataProducer.address.addressLocality = producer.city;
-                    }
-                }
-                return microDataProducer;
-            }
         }
 
         function generateOpenGraphTags(microdata) {
@@ -184,6 +125,74 @@ angular.module('ortolangMarketApp')
             $scope.item.social.linkedin += '&title=' + encodeURIComponent(microdata.name);
             $scope.item.social.linkedin += '&summary=' + encodeURIComponent(microdata.description);
             $scope.item.social.linkedin += '&source=ORTOLANG';
+        }
+
+        function loadCollection(collection) {
+            $scope.ortolangObject = collection;
+            $scope.root = $scope.tag.name;
+            $scope.item = collection;
+            $scope.itemKey = collection.key;
+            $scope.wskey = $scope.workspace.key;
+
+            if (!/^(corpora|lexicons|applications|tools|terminologies)$/.test($routeParams.section)) {
+                switch ($scope.item.type) {
+                    case 'Corpus':
+                        $route.updateParams({section: 'corpora'});
+                        break;
+                    case 'Lexique':
+                        $route.updateParams({section: 'lexicons'});
+                        break;
+                    case 'Application':
+                        $route.updateParams({section: 'applications'});
+                        break;
+                    case 'Outil':
+                        $route.updateParams({section: 'tools'});
+                        break;
+                    case 'Terminologie':
+                        $route.updateParams({section: 'terminologies'});
+                        break;
+                }
+                $location.replace();
+            } else {
+                var microdata = generateMicroData();
+                generateOpenGraphTags(microdata);
+                generateSocialLinks(microdata);
+                $scope.ready = true;
+            }
+        }
+
+        function loadItem() {
+            SearchResource.getWorkspace({alias: $scope.itemAlias}, function (workspace) {
+                $scope.tags = $filter('orderBy')(workspace.snapshots, function (snapshot) {
+                    return snapshot.tag;
+                });
+
+                if ($routeParams.version) {
+                    var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
+                    if (filteredTag.length === 1) {
+                        $scope.tag = filteredTag[0];
+                    }
+                }
+                if (!$scope.tag) {
+                    $scope.tag = $scope.tags[$scope.tags.length - 1];
+                }
+                // For browser directive
+                $scope.workspace = {alias: $scope.itemAlias, key: workspace.key, tags: workspace.tags};
+                
+                if ($routeParams.section === 'item') {
+                    SearchResource.items({'_id': $scope.itemAlias}, function (items) {
+                        if (items.totalHits===1) {
+                            loadCollection(angular.fromJson(items.hits[0]));
+                        } else {
+                            console.log('there is more than one item !');
+                        }
+                    });
+                } else {
+                    SearchResource.getItem({type: $routeParams.section, id: $scope.itemAlias, version: $scope.tag.tag}, loadCollection);
+                }
+            }, function () {
+                $scope.ready = true;
+            });
         }
 
         $scope.$on('$routeChangeSuccess', function ($event, current, previous) {

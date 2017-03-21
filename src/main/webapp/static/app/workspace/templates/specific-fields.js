@@ -8,22 +8,21 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', '$translate', 'Settings', 'Helper', '$q', '$modal', 'ReferentialResource', 'WorkspaceMetadataService', 'icons',
-        function ($rootScope, $scope, $filter, $translate, Settings, Helper, $q, $modal, ReferentialResource, WorkspaceMetadataService, icons) {
+    .controller('SpecificFieldsCtrl', ['$rootScope', '$scope', '$filter', '$translate', 'Settings', 'Helper', '$q', '$modal', 'ReferentialResource', 'SearchResource', 'WorkspaceMetadataService', 'icons',
+        function ($rootScope, $scope, $filter, $translate, Settings, Helper, $q, $modal, ReferentialResource, SearchResource, WorkspaceMetadataService, icons) {
 
             $scope.suggestLanguages = function (term) {
                 if(term.length<2) {
                     return [];
                 }
-                var lang = Settings.language;
                 var deferred = $q.defer();
-                ReferentialResource.get({type: 'LANGUAGE', lang:lang.toUpperCase(),term: term}, function(results) {
+                SearchResource.languages({'labels.value*': term}, function(results) {
                     var suggestedLanguages = [];
-                    angular.forEach(results.entries, function(refentity) {
-                        var content = angular.fromJson(refentity.content);
+                    angular.forEach(results, function(refentity) {
+                        var content = refentity;
                         var text = Helper.getMultilingualValue(content.labels);
                         if(text) {
-                            suggestedLanguages.push({id: Helper.createKeyFromReferentialId(refentity.key), label: text, content: content});
+                            suggestedLanguages.push({id: Helper.createKeyFromReferentialId(content.key), label: text, content: content});
                         }
                     });
                     deferred.resolve(suggestedLanguages);

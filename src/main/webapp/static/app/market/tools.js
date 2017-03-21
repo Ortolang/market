@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
 
         (function init() {
             $scope.filtersManager = FacetedFilterManager.make();
-            $scope.filtersManager.init('Outil', filters);
+            $scope.filtersManager.init('tools', filters);
             $scope.typeFilter = $scope.filtersManager.getFilter('type');
             $scope.search = SearchProvider.make();
         }());

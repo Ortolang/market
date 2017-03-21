@@ -11,12 +11,25 @@ angular.module('ortolangMarketApp')
     .factory('SearchResource', ['$resource', 'url', function ($resource, url) {
 
         return $resource(url.api + '/search', {}, {
-            findCollections: {
-                url: url.api + '/search/collections',
+            items: {
+                url: url.api + '/search/items',
+                method: 'GET'
+            },
+            getItem: {
+                url: url.api + '/search/items/:id',
+                method: 'GET'
+            },
+            getWorkspace: {
+                url: url.api + '/search/workspaces/:alias',
+                method: 'GET'
+            },
+            entities: {
+                url: url.api + '/search/entities',
                 method: 'GET',
                 isArray: true,
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
+                    data = data.hits;
                     if (angular.isArray(data)) {
                         var i = 0;
                         for (i; i < data.length; i++) {
@@ -26,12 +39,17 @@ angular.module('ortolangMarketApp')
                     return data;
                 }
             },
-            findWorkspaces: {
-                url: url.api + '/search/workspaces',
+            getEntity: {
+                url: url.api + '/search/entities/:id',
+                method: 'GET'
+            },
+            persons: {
+                url: url.api + '/search/persons',
                 method: 'GET',
                 isArray: true,
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
+                    data = data.hits;
                     if (angular.isArray(data)) {
                         var i = 0;
                         for (i; i < data.length; i++) {
@@ -41,18 +59,72 @@ angular.module('ortolangMarketApp')
                     return data;
                 }
             },
-            getProfile: {
-                url: url.api + '/search/profiles/:key',
+            getPerson: {
+                url: url.api + '/search/persons/:key',
+                method: 'GET'
+            },
+            organizations: {
+                url: url.api + '/search/organizations',
                 method: 'GET',
+                isArray: true,
                 transformResponse: function (data) {
-                    return angular.fromJson(data);
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
                 }
             },
-            findProfiles: {
+            getOrganization: {
+                url: url.api + '/search/organizations/:key',
+                method: 'GET'
+            },
+            roles: {
+                url: url.api + '/search/roles',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
+            getRole: {
+                url: url.api + '/search/roles/:key',
+                method: 'GET'
+            },
+            languages: {
+                url: url.api + '/search/languages',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
+            profiles: {
                 url: url.api + '/search/profiles',
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
+                    data = data.hits;
                     if (angular.isArray(data)) {
                         var i = 0;
                         for (i; i < data.length; i++) {
@@ -61,28 +133,6 @@ angular.module('ortolangMarketApp')
                     }
                     return data;
                 },
-                isArray: true
-            },
-            findCollection: {
-                url: url.api + '/search/collections/:key',
-                method: 'GET'
-            },
-            findWorkspace: {
-                url: url.api + '/search/workspaces/:alias',
-                method: 'GET'
-            },
-            countWorkspaces: {
-                url: url.api + '/search/count/workspaces',
-                method: 'GET'
-            },
-            getEntity: {
-                url: url.api + '/search/entities/:id',
-                method: 'GET'
-            },
-
-            index: {
-                url: url.api + '/search/index',
-                method: 'GET',
                 isArray: true
             }
         });

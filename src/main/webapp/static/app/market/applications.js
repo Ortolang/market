@@ -13,15 +13,12 @@ angular.module('ortolangMarketApp')
         (function init() {
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('publicationDate', true);
-            var fields = {
-                metaLatestSnapshot: 'key',
-                metaRating: 'score:rank,.esrAccessibility',
-                metaItem: 'title,type,image,publicationDate',
-                metaWorkspace: 'wskey,wsalias,snapshotName'
-            };
             var params = {};
-            params[Helper.prefix.metaItem + 'type'] = 'Application';
-            params.fields = Helper.getFieldsParam(fields);
+            	params.type = 'applications';
+                params.includes = Helper.includedItemFields;
+                params.orderProp = 'publicationDate';
+                params.orderDir = 'desc';
+                params.archive = false;
             $scope.params = angular.toJson(params);
         }());
 

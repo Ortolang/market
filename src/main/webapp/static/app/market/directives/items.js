@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('items', ['$location', 'SearchProvider', 'SearchResource', 'Helper', function ($location, SearchProvider, SearchResource, Helper) {
+    .directive('items', ['$location', 'SearchProvider', 'Helper', function ($location, SearchProvider, Helper) {
         return {
             restrict: 'A',
             scope: {
@@ -29,33 +29,12 @@ angular.module('ortolangMarketApp')
                     scope.search.clearResults();
                 });
 
-                function countWorkspace(params) {
-                    var param = angular.copy(params);
-                    delete param.limit;
-                    delete param.orderProp;
-                    delete param.orderDir;
-                    param.fields = 'workspace.wsalias';
-                    param.group = 'ortolang-workspace-json.wsalias';
-                    SearchResource.countWorkspaces(param, function (data) {
-                        scope.count = data.count;
-                    });
-
-                }
-
                 function load() {
                     var param = angular.fromJson(scope.newParams);
                     scope.search.search(param).$promise.then(function (results) {
                         if (angular.isDefined(scope.seeMoreValue)) {
-                            countWorkspace(param);
+                            scope.count = results.totalHits;
                         }
-
-                        angular.forEach(results, function (result) {
-                            var title = result.title,
-                                rank = result.rank;
-                            result.effectiveTitle = Helper.getMultilingualValue(title);
-                            result.effectiveRank = rank ? rank : 0;
-                        });
-
                         scope.search.endProcessing();
                     });
                 }

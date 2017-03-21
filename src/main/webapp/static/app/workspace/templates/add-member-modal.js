@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
         $scope.search = function () {
             if ($scope.searchQuery && $scope.searchQuery.length > 2) {
                 $scope.searchQueryLength = false;
-                SearchResource.findProfiles({content: $scope.searchQuery}, function (profiles) {
+                SearchResource.profiles({'_all*': $scope.searchQuery}, function (profiles) {
                     $scope.profiles = [];
                     angular.forEach(profiles, function (profile) {
                         if (profile.key !== User.key) {

@@ -2,7 +2,7 @@
     <span class="input-group-addon"><span class="fa fa-search"></span></span>
     <input ng-model="searchContributor" ng-disabled="disabled" data-prefix-event="tacontributor" type="text"
            class="form-control" id="search-contributor" name="searchContributor" placeholder="{{'WORKSPACE.METADATA_EDITOR.ADD_CONTRIBUTOR_MODAL.SEARCH' | translate}}"
-           bs-options="person as person.fullname for person in suggestPerson($viewValue, true)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
+           bs-options="person as person.fullname for person in suggestPerson($viewValue)" data-html="true" data-container="body" data-min-length="2" bs-typeahead>
     <div class="input-group-btn">
         <div class="btn-group">
             <button id="add-contributor-role" type="button" class="btn btn-default" name="selectedRole" ng-disabled="disabled" ng-model="selectedRoles"

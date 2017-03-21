@@ -38,6 +38,8 @@ angular.module('ortolangMarketApp')
                 metaRating: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.'
             };
 
+            this.includedItemFields = ['key', 'title', 'rank', 'type', 'image', 'publicationDate', 'wskey', 'alias', 'snapshot', 'tag'];
+
             this.getFieldsParam = function (fields) {
                 var param = [];
                 angular.forEach(fields, function (value, key) {
@@ -77,7 +79,7 @@ angular.module('ortolangMarketApp')
             };
 
 
-            this.loadContributors = function (contributors) {
+            this.loadContributors = function (contributors, authors) {
                 var loadedContributors = [];
 
                 if (contributors) {
@@ -87,6 +89,16 @@ angular.module('ortolangMarketApp')
                             // From Workspace preview with contributor inside the referential
                             ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
                                 loadedContributor.entity = angular.fromJson(entity.content);
+                                // Load contributor card when previewing (?? $scope.preview && )
+                                if (Helper.startsWith(loadedContributor.entity.username, '$')) {
+                                    var username = Helper.extractKeyFromReferentialId(loadedContributor.entity.username);
+                                    var cardPromise = Helper.getCard(username);
+                                    if (cardPromise) {
+                                        cardPromise.then(function (data) {
+                                            loadedContributor.entity.username = data;
+                                        });
+                                    }
+                                }
                             });
 
                             if (contributor.roles && contributor.roles.length > 0) {
@@ -95,6 +107,10 @@ angular.module('ortolangMarketApp')
                                     ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
                                         var contentRole = angular.fromJson(entity.content);
                                         loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+
+                                        if (authors && contentRole.id === 'author') {
+                                            authors.push(loadedContributor);
+                                        }
                                     });
                                 });
                             }
@@ -104,19 +120,6 @@ angular.module('ortolangMarketApp')
                                     loadedContributor.organization = angular.fromJson(entity.content);
                                 });
                             }
-
-                            loadedContributors.push(loadedContributor);
-
-                        } else if (angular.isDefined(contributor.entity['meta_ortolang-referential-json'])) {
-                            // From Market with contributor from referential
-                            loadedContributor.entity = contributor.entity['meta_ortolang-referential-json'];
-                            if (angular.isDefined(contributor.organization)) {
-                                loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
-                            }
-                            loadedContributor.roles = [];
-                            angular.forEach(contributor.roles, function (role) {
-                                loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
-                            });
 
                             loadedContributors.push(loadedContributor);
                         } else {
@@ -129,7 +132,7 @@ angular.module('ortolangMarketApp')
                                         loadedContributor.organization = angular.fromJson(entity.content);
                                     });
                                 } else {
-                                    loadedContributor.organization = contributor.organization['meta_ortolang-referential-json'];
+                                    loadedContributor.organization = contributor.organization;
                                 }
                             }
 
@@ -141,9 +144,17 @@ angular.module('ortolangMarketApp')
                                         ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
                                             var contentRole = angular.fromJson(entity.content);
                                             loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+
+                                            if (authors && contentRole.id === 'author') {
+                                                authors.push(loadedContributor);
+                                            }
                                         });
                                     } else {
-                                        loadedContributor.roles.push(Helper.getMultilingualValue(role['meta_ortolang-referential-json'].labels));
+                                        loadedContributor.roles.push(Helper.getMultilingualValue(role.labels));
+
+                                        if (authors && role.id === 'author') {
+                                            authors.push(loadedContributor);
+                                        }
                                     }
                                 });
                             }
@@ -155,10 +166,143 @@ angular.module('ortolangMarketApp')
             };
 
 
+            this.loadFieldValuesInAdditionalInformations = function(content, additionalInformations, fieldKey, fieldName, lang) {
+                if (angular.isDefined(content[fieldKey])) {
+                    var fieldValues = [];
+
+                    // Array
+                    if (angular.isArray(content[fieldKey]) && content[fieldKey].length>0) {
+                        angular.forEach(content[fieldKey], function (fieldValue) {
+                            var value = {label:''};
+                            if (angular.isDefined(fieldValue.labels)) {
+                                // For market
+                                value.label = Helper.getMultilingualValue(fieldValue.labels, lang);
+                            } else if (Helper.startsWith(fieldValue, '$')) {
+                                // For workspace
+                                ReferentialResource.get({name: Helper.extractNameFromReferentialId(fieldValue)}, function (entity) {
+                                    var content = angular.fromJson(entity.content);
+                                    // fieldValues.push(Helper.getMultilingualValue(content.labels, lang));
+                                    value.label = Helper.getMultilingualValue(content.labels, lang);
+                                });
+                            } else if (angular.isDefined(fieldValue.labels)) {
+                                // fieldValues.push(Helper.getMultilingualValue(fieldValue.labels, lang));
+                                value.label = Helper.getMultilingualValue(fieldValue.labels, lang);
+                            } else {
+                                // Not checked
+                                // fieldValues.push(fieldValue);
+                                value.label = fieldValue;
+                            }
+                            fieldValues.push(value);
+                        });
+                        additionalInformations.push({key: fieldKey, value: fieldValues, name: fieldName});
+
+                        // String
+                    } else if (angular.isString(content[fieldKey])) {
+                        if (Helper.startsWith(content[fieldKey], '$')) {
+                            // For workspace
+                            ReferentialResource.get({name: Helper.extractNameFromReferentialId(content[fieldKey])}, function (entity) {
+                                var content = angular.fromJson(entity.content);
+                                additionalInformations.push({
+                                    key: fieldKey,
+                                    value: Helper.getMultilingualValue(content.labels, lang),
+                                    name: fieldName
+                                });
+                            });
+                        } else {
+                            // Not checked
+                            additionalInformations.push({
+                                key: fieldKey,
+                                value: content[fieldKey],
+                                name: fieldName
+                            });
+                        }
+                    } else if (angular.isObject(content[fieldKey])) {
+                        if (angular.isDefined(content[fieldKey].labels)) {
+                            // For market
+                            additionalInformations.push({
+                                key: fieldKey,
+                                value: Helper.getMultilingualValue(content[fieldKey].labels, lang),
+                                name: fieldName
+                            });
+                        }
+                    } else {
+                        // Boolean
+                        additionalInformations.push({
+                            key: fieldKey,
+                            value: content[fieldKey],
+                            name: fieldName
+                        });
+                    }
+                }
+            };
+
+
+            this.loadCommonAdditionalInformations = function(content, lang) {
+                var additionalInformations = [];
+
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'statusOfUse', 'MARKET.FACET.STATUS_OF_USE', lang);
+
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaType', 'MARKET.FACET.CORPORA_TYPE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaLanguageType', 'MARKET.FACET.CORPORA_LANGUAGE_TYPE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaLanguages', 'MARKET.FACET.CORPORA_LANG', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaStudyLanguages', 'MARKET.FACET.CORPORA_STUDY_LANG', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaStyles', 'MARKET.FACET.CORPORA_STYLES', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'annotationLevels', 'MARKET.FACET.ANNOTATION_LEVEL', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaFormats', 'MARKET.FACET.TEXT_FORMAT', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaFileEncodings', 'MARKET.FACET.TEXT_ENCODING', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'corporaDataTypes', 'MARKET.FACET.CORPORA_DATATYPES', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'wordCount', 'WORKSPACE.METADATA_EDITOR.WORD_COUNT');
+
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'lexiconInputType', 'MARKET.FACET.LEXICON_INPUT_TYPE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'lexiconLanguageType', 'MARKET.FACET.LEXICON_LANGUAGE_TYPE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'lexiconInputLanguages', 'MARKET.FACET.LEXICON_INPUT_LANGUAGE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'lexiconInputCount', 'WORKSPACE.METADATA_EDITOR.LEXICON_INPUT_COUNT');
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'lexiconDescriptionTypes', 'MARKET.FACET.LEXICON_DESCRIPTION_TYPE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'lexiconDescriptionLanguages', 'MARKET.FACET.LEXICON_DESCRIPTION_LANGUAGE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'lexiconFormats', 'MARKET.FACET.LEXICON_FORMAT', lang);
+
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'operatingSystems', 'WORKSPACE.METADATA_EDITOR.OPERATING_SYSTEMS', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'programmingLanguages', 'MARKET.PROGRAMMING_LANGUAGE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'toolFunctionalities', 'MARKET.FACET.TOOL_FUNCTIONALITY', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'toolInputData', 'MARKET.FACET.TOOL_INPUTDATA', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'toolOutputData', 'MARKET.FACET.TOOL_OUTPUTDATA', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'toolFileEncodings', 'MARKET.FACET.TOOL_FILE_ENCODINGS', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'toolLanguages', 'MARKET.FACET.TOOL_LANGUAGE', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'navigationLanguages', 'WORKSPACE.METADATA_EDITOR.NAVIGATION_LANGUAGES', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'toolSupport', 'WORKSPACE.METADATA_EDITOR.TOOL_SUPPORT', lang);
+
+                if (angular.isDefined(content.creationLocations)) {
+                    var creationLocoationValue = '';
+                    angular.forEach(content.creationLocations, function (creationLocation) {
+                        if (creationLocation.name) {
+                            creationLocoationValue += (creationLocoationValue===''?'':', ') + creationLocation.name;
+                        }
+                    });
+                    additionalInformations.push({
+                        key: 'creationLocations',
+                        value: creationLocoationValue,
+                        name: 'ITEM.CREATION_LOCATIONS.LABEL'
+                    });
+                }
+
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'originDate', 'ITEM.ORIGIN_DATE.LABEL', lang);
+
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'linguisticDataType', 'ITEM.LINGUISTIC_DATA_TYPE.LABEL', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'discourseTypes', 'ITEM.DISCOURSE_TYPE.LABEL', lang);
+                Helper.loadFieldValuesInAdditionalInformations(content, additionalInformations, 'linguisticSubjects', 'ITEM.LINGUISTIC_SUBJECT.LABEL', lang);
+
+                return additionalInformations;
+            };
+
             this.extractKeyFromReferentialId = function (key) {
                 // Pattern : ${key}
                 var exec = /^\$\{(.*)}/.exec(key);
                 return exec ? exec[1] : exec;
+            };
+
+            this.createIdFromReferentialName = function (name) {
+                // Pattern : referential:{name}
+                return 'referential:' + name;
             };
 
             this.createKeyFromReferentialId = function (id) {
@@ -191,28 +335,6 @@ angular.module('ortolangMarketApp')
 
             this.normalizePath = function (path) {
                 return path.replace(/\/\//g, '/');
-            };
-
-            this.pack = function (list) {
-                var register = {};
-                var results = [];
-                for (var i = list.length - 1; i >= 0; i--) {
-
-                    if (list[i].wskey) {
-                        var wskey = list[i].wskey;
-                        if (angular.isUndefined(register[wskey])) {
-                            register[wskey] = list[i];
-                            results.push(list[i]);
-                        } else {
-                            if (register[wskey].lastModificationDate < list[i].lastModificationDate) {
-                                var index = results.indexOf(register[wskey]);
-                                results.splice(index, 1, list[i]);
-                                register[wskey] = list[i];
-                            }
-                        }
-                    }
-                }
-                return results;
             };
 
             $rootScope.$on('modal.show', function (event, _modal_) {

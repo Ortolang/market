@@ -32,17 +32,17 @@ angular.module('ortolangMarketApp')
                     } else if (scope.entry.type === 'Terminologie') {
                         type = 'terminologies';
                     }
-                    scope.itemUrl = '/market/' + type + '/' + scope.entry.wsalias;
+                    scope.itemUrl = '/market/' + type + '/' + scope.entry.alias;
 
-                    if (scope.entry.title) {
-                        scope.title = Helper.getMultilingualValue(scope.entry.title);
+                    if (scope.entry.effectiveTitle) {
+                        scope.title = scope.entry.effectiveTitle;
                     }
                     if (scope.entry.description) {
                         scope.description = Helper.getMultilingualValue(scope.entry.description);
                     }
 
                     if (scope.entry.image) {
-                        scope.image = Content.getThumbUrlWithPath(scope.entry.image, scope.entry.wsalias, scope.entry.snapshotName, 160, true);
+                        scope.image = Content.getThumbUrlWithPath(scope.entry.image, scope.entry.alias, scope.entry.tag, 160, true);
                     } else {
                         scope.imgtitle = '';
                         scope.imgtheme = 'custom';
@@ -52,11 +52,10 @@ angular.module('ortolangMarketApp')
                         }
                     }
 
-                    scope.rank = scope.entry.rank;
-                    scope.esrAccessibility = scope.entry.esrAccessibility;
+                    // For sorting
                     scope.publicationDate = scope.entry.publicationDate;
-                    // scope.producers = scope.entry.producers;
                     scope.effectiveRank = scope.entry.effectiveRank;
+                    scope.effectiveTitle = scope.entry.effectiveTitle;
                 }
             }
         };
