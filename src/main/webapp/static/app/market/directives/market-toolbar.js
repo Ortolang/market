@@ -208,9 +208,9 @@ angular.module('ortolangMarketApp')
                             angular.forEach(facetedFilters, function (facet) {
                                 if (facet !== scope.preSelectedFilter) {
                                     if (facet.getType() === 'array') {
-                                        params.aggregations.push(facet.getAlias() + '[]');
+                                        params.aggregations.push(facet.getAlias() + '[]:' + facet.getAlias() + '.content');
                                     } else {
-                                        params.aggregations.push(facet.getAlias());
+                                        params.aggregations.push(facet.getAlias() + ':' + facet.getAlias() + '.content');
                                     }
                                 }
                             });
