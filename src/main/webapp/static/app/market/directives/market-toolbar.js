@@ -343,7 +343,7 @@ angular.module('ortolangMarketApp')
                         var deferred = $q.defer();
                         labelsDeferred.promise.then(function () {
                             highFilters = [];
-                            angular.forEach(scope.filtersManager.getHighFilters(), function (filter) {
+                            angular.forEach(scope.filtersManager.availabledFilters, function (filter) {
                                 highFilters.push(filter.id);
                             });
                             deferred.resolve($filter('filter')(Settings.searchHistory, function (value) {
