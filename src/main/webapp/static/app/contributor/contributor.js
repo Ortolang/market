@@ -26,12 +26,11 @@ angular.module('ortolangMarketApp')
             }, function () {
                 // If not found in json-store, then go to relational db
                 ReferentialResource.get({name: id}, function (entity) {
-                    var content = angular.fromJson(entity.content);
-                    $scope.contributor = content;
+                    $scope.contributor = entity.content;
 
-                    if (content.organization) {
-                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(content.organization)}, function (entity) {
-                            $scope.contributor.organizationEntity = angular.fromJson(entity.content);
+                    if (entity.content.organization) {
+                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(entity.content.organization)}, function (entity) {
+                            $scope.contributor.organizationEntity = entity.content;
                         });
                     }
                 }, function () {

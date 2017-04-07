@@ -120,9 +120,7 @@ angular.module('ortolangMarketApp')
             }
 
             $scope.setContributorFromNewEntity = function (form) {
-
                 checkForm(form);
-
                 if (form.$valid) {
                     ReferentialResource.get({name: $scope.models.entityContent.id}, function() {
                         //TODO notify and ask to choose one of the result or create a new one
@@ -179,32 +177,31 @@ angular.module('ortolangMarketApp')
                     return [];
                 }
                 var deferred = $q.defer();
-                ReferentialResource.get({type: 'ORGANIZATION', lang:'FR', term: term}, function(results) {
+                // console.log('suggestedOrganizations');
+                ReferentialResource.list({type: 'ORGANIZATION', lang:'FR', term: term}, function(results) {
                     var suggestedOrganizations = [];
                     angular.forEach(results.entries, function(refentity) {
-                        var content = angular.fromJson(refentity.content);
-
                         if (angular.isUndefined(sponsor)) {
-                            if(angular.isUndefined(content.compatibilities)) {
+                            if(angular.isUndefined(refentity.content.compatibilities)) {
                                 suggestedOrganizations.push({
                                     key: refentity.key,
-                                    value: content.fullname,
-                                    fullname: content.fullname,
-                                    name: content.name,
-                                    img: content.img,
-                                    org: content,
-                                    label: '<span>' + content.fullname + '</span>'
+                                    value: refentity.content.fullname,
+                                    fullname: refentity.content.fullname,
+                                    name: refentity.content.name,
+                                    img: refentity.content.img,
+                                    org: refentity.content,
+                                    label: '<span>' + refentity.content.fullname + '</span>'
                                 });
                             }
                         } else {
                             suggestedOrganizations.push({
                                 key: refentity.key,
-                                value: content.fullname,
-                                fullname: content.fullname,
-                                name: content.name,
-                                img: content.img,
-                                org: content,
-                                label: '<span>' + content.fullname + '</span>'
+                                value: refentity.content.fullname,
+                                fullname: refentity.content.fullname,
+                                name: refentity.content.name,
+                                img: refentity.content.img,
+                                org: refentity.content,
+                                label: '<span>' + refentity.content.fullname + '</span>'
                             });
                         }
                     });

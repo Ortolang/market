@@ -150,7 +150,7 @@ angular.module('ortolangMarketApp')
              **/
 
             function loadOrganization(organization) {
-                SearchResource.getOrganization({id: Helper.createIdFromReferentialName(organization.id)}, function (entity) {
+                SearchResource.getOrganization({key: Helper.createIdFromReferentialName(organization.id)}, function (entity) {
                     WorkspaceMetadataService.setOrganization(organization, entity);
                 });
             }

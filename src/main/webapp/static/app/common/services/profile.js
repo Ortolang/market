@@ -113,7 +113,7 @@ angular.module('ortolangMarketApp')
                 return [];
             }
             var deferred = $q.defer();
-            ReferentialResource.get({type: 'ORGANIZATION', lang: 'FR', term: query}, function (results) {
+            ReferentialResource.list({type: 'ORGANIZATION', lang: 'FR', term: query}, function (results) {
                 var suggestedOrganizations = [];
                 angular.forEach(results.entries, function (entity) {
                     var content = entity.content;
@@ -143,7 +143,7 @@ angular.module('ortolangMarketApp')
                     once = true;
                     ReferentialResource.get({name: referentialName}, function (data) {
                         if (data) {
-                            organization = angular.fromJson(data.content);
+                            organization = data.content;
                             once = false;
                             deferred.resolve(organization.fullname);
                         } else {

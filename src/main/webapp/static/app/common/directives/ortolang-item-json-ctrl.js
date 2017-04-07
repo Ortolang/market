@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
                         if (Helper.startsWith(item, '$')) {
                             // From Workspace
                             promises.push(ReferentialResource.get({name: Helper.extractNameFromReferentialId(item)}, function (entity) {
-                                tmp[index] = angular.fromJson(entity.content);
+                                tmp[index] = entity.content;
                             }));
                         } else {
                             // From Market and Workspace (entity that needs to be checked) 
@@ -83,7 +83,7 @@ angular.module('ortolangMarketApp')
                     if (Helper.startsWith($scope.content.license, '$')) {
                         // From Workspace
                         ReferentialResource.get({name: Helper.extractNameFromReferentialId($scope.content.license)}, function (entity) {
-                            $scope.license = angular.fromJson(entity.content);
+                            $scope.license = entity.content;
                             if ($scope.license.description) {
                                 $scope.license.effectiveDescription = Helper.getMultilingualValue($scope.license.description, lang);
                             }

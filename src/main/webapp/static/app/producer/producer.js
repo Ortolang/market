@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         function loadItem(id) {
             //TODO Use SearchResource.getOrganization
             ReferentialResource.get({name: id}, function (refEntity) {
-                $scope.producer = angular.fromJson(refEntity.content);
+                $scope.producer = refEntity.content;
                 $rootScope.ortolangPageTitle = $scope.producer.name + ' | ';
                 $rootScope.ortolangPageDescription = $translate.instant('PRODUCER.META_DESCRIPTION_PRODUCER') + $scope.producer.fullname;
 

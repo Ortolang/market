@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .factory('ReferentialResource', ['$resource', 'url', function ($resource, url) {
         //noinspection JSUnusedGlobalSymbols
         return $resource(url.api + '/referential/:name', {}, {
-            get: {
+            list: {
                 method: 'GET',
                 transformResponse: function (data) {
                     if (data) {
@@ -22,7 +22,17 @@ angular.module('ortolangMarketApp')
                                     entry.content = angular.fromJson(entry.content);
                                 }
                             });
-                        } else if (data.content) {
+                        }
+                    }
+                    return data;
+                }
+            },
+            get: {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                        if (data.content) {
                             data.content = angular.fromJson(data.content);
                         }
                     }

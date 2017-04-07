@@ -11,12 +11,11 @@ angular.module('ortolangMarketApp')
     .controller('ProducersCtrl', ['$rootScope', '$scope', '$location', '$translate', 'ReferentialResource', 'Helper', function ($rootScope, $scope, $location, $translate, ReferentialResource, Helper) {
 
         $scope.getAllOrganizations = function () {
-            ReferentialResource.get({type: 'ORGANIZATION'}, function (collectionEntities) {
+            ReferentialResource.list({type: 'ORGANIZATION'}, function (collectionEntities) {
                 angular.forEach(collectionEntities.entries, function (entry) {
-                    var content = angular.fromJson(entry.content);
-                    if (angular.isUndefined(content.compatibilities)) {
-                        var producer = {key: entry.key, content: content};
-                        producer.title = content.acronym ? content.acronym.charAt(0) : content.name.charAt(0);
+                    if (angular.isUndefined(entry.content.compatibilities)) {
+                        var producer = {key: entry.key, content: entry.content};
+                        producer.title = entry.content.acronym ? entry.content.acronym.charAt(0) : entry.content.name.charAt(0);
                         $scope.producers.push(producer);
                     }
                 });

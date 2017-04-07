@@ -309,13 +309,10 @@ angular.module('ortolangMarketApp')
              **/
             function loadAllStatusOfUse() {
 
-                ReferentialResource.get({type: 'STATUSOFUSE'}, function(entities) {
+                ReferentialResource.list({type: 'STATUSOFUSE'}, function(entities) {
                     $scope.allStatusOfUse = [];
                     angular.forEach(entities.entries, function(entry) {
-                        var content = angular.fromJson(entry.content);
-                        var label = Helper.getMultilingualValue(content.labels);
-
-                        $scope.allStatusOfUse.push({id: '${'+entry.key+'}', label: label});
+                        $scope.allStatusOfUse.push({id: '${'+entry.key+'}', label: Helper.getMultilingualValue(entry.content.labels)});
                     });
 
                     // Init with default value if not already set
@@ -329,16 +326,15 @@ angular.module('ortolangMarketApp')
              * Loads all license.
              **/
             function loadAllLicense() {
-                ReferentialResource.get({type: 'LICENSE'}, function(entities) {
+                ReferentialResource.list({type: 'LICENSE'}, function(entities) {
                     $scope.allLicences = [];
                     angular.forEach(entities.entries, function(entry) {
-                        var content = angular.fromJson(entry.content);
                         var id = Helper.createKeyFromReferentialId(entry.key);
                         var license = {
                             id: id,
-                            label: content.label,
-                            status: content.status,
-                            description: content.description ? Helper.getMultilingualValue(content.description) : undefined
+                            label: entry.content.label,
+                            status: entry.content.status,
+                            description: entry.content.description ? Helper.getMultilingualValue(entry.content.description) : undefined
                         };
                         $scope.allLicences.push(license);
 

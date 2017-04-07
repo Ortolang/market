@@ -68,10 +68,9 @@ angular.module('ortolangMarketApp')
                         var language = {label: lang};
                         if (typeof lang  === 'string') {
                             ReferentialResource.get({name:Helper.extractNameFromReferentialId(lang)}, function (entity) {
-                                var content = angular.fromJson(entity.content);
                                 language.id = Helper.createKeyFromReferentialId(entity.key);
-                                language.label = Helper.getMultilingualValue(content.labels);
-                                language.content = content;
+                                language.label = Helper.getMultilingualValue(entity.content.labels);
+                                language.content = entity.content;
                             },
                             function () {
                                 language.id = lang;
@@ -91,28 +90,26 @@ angular.module('ortolangMarketApp')
 
                 $scope[arrayName] = [];
 
-                ReferentialResource.get({type: compatibility.toUpperCase()}, function(entities) {
+                ReferentialResource.list({type: compatibility.toUpperCase()}, function(entities) {
                     angular.forEach(entities.entries, function(entry) {
-                        var content = angular.fromJson(entry.content);
-
-                        var entity = {id: Helper.createKeyFromReferentialId(entry.key), label: Helper.getMultilingualValue(content.labels)};
-                        if(content.rank) {
-                            entity.rank = content.rank;
+                        var entity = {id: Helper.createKeyFromReferentialId(entry.key), label: Helper.getMultilingualValue(entry.content.labels)};
+                        if(entry.content.rank) {
+                            entity.rank = entry.content.rank;
                         }
-                        if(content.compatibilities) {
-                            entity.compatibilities = content.compatibilities;
+                        if(entry.content.compatibilities) {
+                            entity.compatibilities = entry.content.compatibilities;
                         }
-                        if(content.id) {
-                            entity.contentId = content.id;
+                        if(entry.content.id) {
+                            entity.contentId = entry.content.id;
                         }
-                        if(content.type) {
-                            entity.contentType = content.type;
+                        if(entry.content.type) {
+                            entity.contentType = entry.content.type;
                         }
-                        if(content.discipline) {
-                            entity.discipline = content.discipline;
+                        if(entry.content.discipline) {
+                            entity.discipline = entry.content.discipline;
                         }
-                        if(content.domain) {
-                            entity.domain = content.domain;
+                        if(entry.content.domain) {
+                            entity.domain = entry.content.domain;
                         }
                         $scope[arrayName].push(entity);
                     });
