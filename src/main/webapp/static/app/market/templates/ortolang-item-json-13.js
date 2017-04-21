@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
 
             function loadConditionsOfUse(lang) {
                 if ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {
-                    $scope.conditionsOfUse = Helper.getMultilingualValue($scope.content.conditionsOfUse, 'lang', lang);
+                    $scope.conditionsOfUse = Helper.getMultilingualValue($scope.content.conditionsOfUse, lang);
                 }
             }
 
@@ -54,7 +54,7 @@ angular.module('ortolangMarketApp')
                     angular.forEach($scope.content.commercialLinks, function (commercialLink) {
                         $scope.commercialLinks.push(
                             {
-                                description: Helper.getMultilingualValue(commercialLink.description, 'lang', lang),
+                                description: Helper.getMultilingualValue(commercialLink.description, lang),
                                 acronym: commercialLink.acronym,
                                 url: commercialLink.url,
                                 img: commercialLink.img
