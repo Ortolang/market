@@ -65,6 +65,7 @@ angular.module('ortolangMarketApp')
             code: 'fa fa-fw fa-code',
             convert: 'fa fa-fw fa-exchange',
             save: 'fa fa-fw fa-floppy-o',
+            openWith: 'glyphicon glyphicon-new-window',
             // Ortolang elements
             ortolang: {
                 collection: 'glyphicon glyphicon-folder-close',

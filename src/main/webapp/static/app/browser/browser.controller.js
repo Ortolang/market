@@ -135,6 +135,9 @@ angular.module('ortolangMarketApp')
                         }
                         if (ctrl.config.canEdit && ctrl.isHead && !ctrl.hasOnlyParentSelected()) {
                             if (ctrl.selectedElements.length === 1) {
+                                if (ctrl.selectedElements[0].mimeType === 'text/plain') {
+                                    ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH', icon: icons.openWith, action: 'openWith'});
+                                }
                                 ctrl.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
                             }
                             ctrl.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
@@ -429,6 +432,11 @@ angular.module('ortolangMarketApp')
                         $analytics.trackLink(url.content + '/' + path, 'download');
                     });
                 }
+            };
+
+            ctrl.openWith = function () {
+                var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
+                $window.open('http://localhost:8081/ortolang-treetagger/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
             };
 
             ctrl.share = function () {

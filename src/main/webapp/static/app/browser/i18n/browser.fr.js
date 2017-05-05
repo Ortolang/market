@@ -102,6 +102,7 @@ angular.module('ortolangMarketApp')
             NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants',
             MORE_MD: 'Voir toutes les métadonnées',
             EDIT_MD: 'Éditer les métadonnées',
+            OPEN_WITH: 'Ouvrir avec treetagger',
             PIDS: {
                 PIDS: 'Identifiants pérennes',
                 STATIC: 'Identifiant pérenne statique',
