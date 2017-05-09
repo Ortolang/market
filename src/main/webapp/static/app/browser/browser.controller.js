@@ -436,7 +436,7 @@ angular.module('ortolangMarketApp')
 
             ctrl.openWith = function () {
                 var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
-                $window.open('http://localhost:8081/ortolang-treetagger/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
+                $window.open(OrtolangConfig.treeTaggerUrl + '/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
             };
 
             ctrl.share = function () {

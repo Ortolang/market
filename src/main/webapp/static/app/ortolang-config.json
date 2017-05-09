@@ -10,6 +10,7 @@
     "handlePrefix": "",
     "marketServerUrl": "http://localhost:9000/",
     "cacheVersion": "1",
+    "treeTaggerUrl": "http://localhot:8081/ortolang-treetagger",
     "debug": true
 }
 
