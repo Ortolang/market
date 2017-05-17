@@ -136,7 +136,10 @@ angular.module('ortolangMarketApp')
                         if (ctrl.config.canEdit && ctrl.isHead && !ctrl.hasOnlyParentSelected()) {
                             if (ctrl.selectedElements.length === 1) {
                                 if (ctrl.selectedElements[0].mimeType === 'text/plain') {
-                                    ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH', icon: icons.openWith, action: 'openWith'});
+                                    ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH_TREETAGGER', icon: icons.openWith, action: 'openWithTreeTagger'});
+                                }
+                                if (ctrl.selectedElements[0].mimeType === 'text/plain' || ctrl.selectedElements[0].mimeType === 'application/xml' || ctrl.selectedElements[0].mimeType === 'application/clan') {
+                                    ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH_TEICORPO', icon: icons.openWith, action: 'openWithTeiCorpo'});
                                 }
                                 ctrl.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
                             }
@@ -434,9 +437,14 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            ctrl.openWith = function () {
+            ctrl.openWithTreeTagger = function () {
                 var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
                 $window.open(OrtolangConfig.treeTaggerUrl + '/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
+            };
+
+            ctrl.openWithTeiCorpo = function () {
+                var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
+                $window.open(OrtolangConfig.teiCorpoUrl + '/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
             };
 
             ctrl.share = function () {
