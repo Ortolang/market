@@ -102,8 +102,10 @@ angular.module('ortolangMarketApp')
             NO_FILTERED_CHILDREN: 'Pas d\'éléments correspondants',
             MORE_MD: 'Voir toutes les métadonnées',
             EDIT_MD: 'Éditer les métadonnées',
-            OPEN_WITH_TREETAGGER: 'Ouvrir avec treetagger',
-            OPEN_WITH_TEICORPO: 'Ouvrir avec teicorpo',
+            OPEN_WITH: 'Ouvrir avec ...',
+            OPEN_WITH_MODAL: {
+                TITLE: 'Ouvrir <strong>{{element ? element : ""}}</strong> avec ...'
+            },
             PIDS: {
                 PIDS: 'Identifiants pérennes',
                 STATIC: 'Identifiant pérenne statique',

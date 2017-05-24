@@ -169,6 +169,33 @@ button.no-border {
   }
 }
 
+.thumb-wrapper-base {
+  cursor: default;
+  display: table;
+  background-color: @white;
+  text-align: center;
+  position: relative;
+  > div {
+    display: table-cell;
+    vertical-align: middle;
+    .thumb {
+      position: absolute;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      background-size: cover;
+      background: no-repeat center center;
+    }
+  }
+}
+
+.thumb-wrapper-sm {
+  height: 100px;
+  width: 100px;
+  .thumb-wrapper-base();
+}
+
 .order-indicator {
   color: @dark-yellow;
   padding-left: 2px;
@@ -200,6 +227,7 @@ button.no-border {
   background-color: lighten(@default-bg, 1%);
   border: 1px solid @well-border;
   border-radius: @border-radius-base;
+  cursor: pointer;
   .card-border();
   &.card-well-inverse {
     .card-border-inverse();

@@ -46,6 +46,7 @@ angular.module('ortolangMarketApp')
         'AuthService',
         'WorkspaceResource',
         'WorkspaceElementResource',
+        'SearchResource',
         'icons',
         'ortolangType',
         'browserConfig',
@@ -53,7 +54,7 @@ angular.module('ortolangMarketApp')
         'Cart',
         'Helper',
         'url',
-        function ($scope, $location, $route, $rootScope, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, VisualizerService, Content, AuthService, WorkspaceResource, WorkspaceElementResource, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
+        function ($scope, $location, $route, $rootScope, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, VisualizerService, Content, AuthService, WorkspaceResource, WorkspaceElementResource, SearchResource, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
 
             var ctrl = this;
 
@@ -129,18 +130,15 @@ angular.module('ortolangMarketApp')
                             if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                             }
+                            if (ctrl.compatibleTools) {
+                                ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH', icon: icons.openWith, action: 'browseTools'});
+                            }
                             if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({divider: true});
                             }
                         }
                         if (ctrl.config.canEdit && ctrl.isHead && !ctrl.hasOnlyParentSelected()) {
                             if (ctrl.selectedElements.length === 1) {
-                                if (ctrl.selectedElements[0].mimeType === 'text/plain') {
-                                    ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH_TREETAGGER', icon: icons.openWith, action: 'openWithTreeTagger'});
-                                }
-                                if (ctrl.selectedElements[0].mimeType === 'text/plain' || ctrl.selectedElements[0].mimeType === 'application/xml' || ctrl.selectedElements[0].mimeType === 'application/clan') {
-                                    ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH_TEICORPO', icon: icons.openWith, action: 'openWithTeiCorpo'});
-                                }
                                 ctrl.contextMenuItems.push({text: 'RENAME', icon: icons.edit, action: 'rename'});
                             }
                             ctrl.contextMenuItems.push({text: 'BROWSER.MOVE', icon: icons.browser.move, action: 'move'});
@@ -370,6 +368,7 @@ angular.module('ortolangMarketApp')
                         checkMetadata(data);
                     }
                     checkCompatibleVisualizers();
+                    checkCompatibleTools();
                     if (!refresh) {
                         ctrl.contextMenu(clickEvent, false);
                     }
@@ -437,15 +436,51 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            ctrl.openWithTreeTagger = function () {
-                var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
-                $window.open(OrtolangConfig.treeTaggerUrl + '/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
+            ctrl.browseTools = function () {
+                if (ctrl.config.canEdit && ctrl.isHead) {
+                    var moveModal;
+                    createModalScope();
+                    // Complete list of tools
+                    modalScope.tools = ctrl.tools;
+                    modalScope.selectedElement = ctrl.selectedElements[0].name;
+                    
+                    modalScope.openWith = function (tool) {
+                        ctrl.openWith(tool);
+                    };
+                    moveModal = $modal({
+                        scope: modalScope,
+                        templateUrl: 'browser/templates/open-with.modal.html',
+                        show: true
+                    });
+                }
             };
 
-            ctrl.openWithTeiCorpo = function () {
+            /**
+             * Opens a new window to the tool.
+             **/
+            ctrl.openWith = function (tool) {
                 var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
-                $window.open(OrtolangConfig.teiCorpoUrl + '/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
+                $window.open(tool.applicationUrl + '/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
             };
+
+            function clearTools() {
+                ctrl.compatibleTools = null;
+            }
+
+            function checkCompatibleTools() {
+                ctrl.compatibleTools = [];
+                if (ctrl.hasOnlyOneElementSelected) {
+                    console.log('check compatitble tools with ');
+                    console.log(ctrl.hasOnlyOneElementSelected[0]);
+                    for (var i = 0; i < ctrl.tools.length; i++) {
+                        console.log(ctrl.tools[i]);
+                        ctrl.compatibleTools.push(ctrl.tools[i]);
+                    }
+                }
+                if (ctrl.compatibleTools.length === 0) {
+                    clearTools();
+                }
+            }
 
             ctrl.share = function () {
                 createModalScope();
@@ -540,6 +575,7 @@ angular.module('ortolangMarketApp')
                     newSelectedElement(ctrl.parent);
                 }
                 checkCompatibleVisualizers();
+                checkCompatibleTools();
             }
 
             function deselectOthers(child) {
@@ -550,6 +586,7 @@ angular.module('ortolangMarketApp')
                 ctrl.selectedElements = [ctrl.parent];
                 ctrl.deactivateContextMenu();
                 clearVisualizers();
+                clearTools();
             }
 
             function getChildIndex(child) {
@@ -1034,6 +1071,7 @@ angular.module('ortolangMarketApp')
                     getParentData();
                 }
                 clearVisualizers();
+                clearTools();
             };
 
             function browseToChild(child) {
@@ -1897,6 +1935,8 @@ angular.module('ortolangMarketApp')
                 ctrl.reverse = false;
                 // Visualizers
                 ctrl.visualizers = null;
+                // Tools
+                ctrl.compatibleTools = null;
                 // Workspace
                 ctrl.displayedItemLimit = initialDisplayedItemLimit;
                 ctrl.Content = Content;
@@ -1923,6 +1963,23 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function populateToolList() {
+                ctrl.tools = [];
+                SearchResource.items({type: 'tools'}, function (itemResult) {
+                    angular.forEach(itemResult.hits, function (hit) {
+                        var tool = angular.fromJson(hit);
+                        tool.effectiveTitle = Helper.getMultilingualValue(tool.title);
+                        tool.effectiveDescription = Helper.getMultilingualValue(tool.description);
+                        if (tool.image) {
+                            tool.imageUrl = Content.getThumbUrlWithPath(tool.image, tool.alias, tool.snapshot, 100, true);
+                        } else {
+                            tool.imageUrl = null;
+                        }
+                        ctrl.tools.push(tool);
+                    });
+                });
+            }
+
             function initWorkspaceVariables(root, path) {
                 if (!ctrl.workspace) {
                     return;
@@ -1935,6 +1992,7 @@ angular.module('ortolangMarketApp')
                 setPath(path || '/');
                 getSnapshotsHistory();
                 getParentData();
+                populateToolList();
             }
 
             (function init() {
