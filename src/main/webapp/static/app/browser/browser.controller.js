@@ -469,12 +469,23 @@ angular.module('ortolangMarketApp')
 
             function checkCompatibleTools() {
                 ctrl.compatibleTools = [];
-                if (ctrl.hasOnlyOneElementSelected) {
-                    console.log('check compatitble tools with ');
-                    console.log(ctrl.hasOnlyOneElementSelected[0]);
+                if (ctrl.hasOnlyOneElementSelected()) {
                     for (var i = 0; i < ctrl.tools.length; i++) {
-                        console.log(ctrl.tools[i]);
-                        ctrl.compatibleTools.push(ctrl.tools[i]);
+                        var fileFormats = ctrl.tools[i].toolInputData;
+                        if (fileFormats) {
+                            var mimetypes = [];
+                            angular.forEach(fileFormats, function (fileFormat) {
+                                if (fileFormat.mimetypes) {
+                                    var fileFormatMimetypes = fileFormat.mimetypes;
+                                    for (var iMimetype = 0; iMimetype < fileFormatMimetypes.length; iMimetype++) {
+                                        mimetypes.push(fileFormatMimetypes[iMimetype]);
+                                    }
+                                }
+                            });
+                            if (mimetypes.indexOf(ctrl.selectedElements[0].mimeType) >= 0) {
+                                ctrl.compatibleTools.push(ctrl.tools[i]);
+                            }
+                        }
                     }
                 }
                 if (ctrl.compatibleTools.length === 0) {
