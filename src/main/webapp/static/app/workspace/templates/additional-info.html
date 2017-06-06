@@ -100,7 +100,20 @@
         <div class="form-group">
             <hr/>
             <label for="additional-website" class="control-label" translate="MARKET.WEBSITE"></label>
-            <input type="text" class="form-control" id="additional-website" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website" ng-disabled="!WorkspaceMetadataService.canEdit">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" name="website-source" ng-model="websiteSource" ng-disabled="!WorkspaceMetadataService.canEdit" bs-options="source.key as source.value for source in websiteSources" bs-select> <span class="caret"></span></button>
+                </div>
+                <div ng-show="websiteSource==='external'">
+                    <input ng-show="websiteSource==='external'" type="text" class="form-control" id="additional-website" name="website" placeholder="Adresse HTTP du site web contenant des informations sur la ressource." aria-label="website" ng-model="metadata.website" ng-disabled="!WorkspaceMetadataService.canEdit">
+                </div>
+                <div ng-show="websiteSource==='internal'" class="input-group input-group-content">
+                    <input type="text" class="form-control" id="md-internal-website" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-model="metadata.website" ng-click="fileWebsitePathSelectorModal.show()" ng-disabled="!WorkspaceMetadataService.canEdit">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="fileWebsitePathSelectorModal.show()" ng-disabled="!WorkspaceMetadataService.canEdit">{{'SELECT' | translate}}</button>
+                    </span>
+                </div>
+            </div>
         </div>
         <div class="form-group" ng-if="metadata.creationLocations">
             <hr/>

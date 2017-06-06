@@ -147,6 +147,13 @@ angular.module('ortolangMarketApp')
                 if ($scope.content.datasize !== undefined && $scope.content.datasize !== '') {
                     $scope.datasizeToPrint = {'value': $filter('bytes')($scope.content.datasize)};
                 }
+
+                if ($scope.content.website && !Helper.startsWith($scope.content.website, 'http')) {
+                    // ObjectResource.element({key: $scope.itemKey, path: $scope.content.website}).$promise.then(function (oobject) {
+                        // $scope.content.website = Content.getContentUrlWithKey(oobject.key);
+                        $scope.website = Content.getContentUrlWithPath($scope.content.website, $scope.alias, $scope.root);
+                    // });
+                }
             }
 
             function loadItem() {

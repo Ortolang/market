@@ -40,9 +40,9 @@
         <label for="md-documentation" class="control-label" translate="MARKET.DOCUMENTATIONS"></label>
         <div class="input-group">
             <input type="text" class="form-control" id="md-documentation" placeholder="Sélectionnez un fichier dans votre espace de travail." ng-click="fileDocumentationPathSelectorModal.show()" ng-disabled="!WorkspaceMetadataService.canEdit">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="fileDocumentationPathSelectorModal.show()" ng-disabled="!WorkspaceMetadataService.canEdit">{{'SELECT' | translate}}</button>
-                </span>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="fileDocumentationPathSelectorModal.show()" ng-disabled="!WorkspaceMetadataService.canEdit">{{'SELECT' | translate}}</button>
+            </span>
         </div>
         <br/>
         <table ng-if="documentations" class="table table-bordered table-responsive metadata-editor-table">

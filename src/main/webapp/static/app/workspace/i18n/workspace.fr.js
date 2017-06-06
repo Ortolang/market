@@ -48,8 +48,8 @@ angular.module('ortolangMarketApp')
             NO_WORKFLOW: 'Il n\'y a pas de demande de publication en cours concernant cet espace de travail',
             ACTIONS: 'Actions',
             DELETE_WORKSPACE: 'Supprimer l\'espace de travail',
-            MARKET_LINKS: 'Lien vers la dernière version publiée',
-            CONTENT_LINKS: 'Liens vers le contenu',
+            MARKET_LINKS: 'Lien vers la fiche de métadonnées (publiée)',
+            CONTENT_LINKS: 'Liens vers le contenu (non publiée)',
             STATISTICS: 'Statistiques',
             STATISTICS_HITS: 'Statistiques de consultation',
             STATISTICS_TOTAL_HITS: '({{hits}} vues au total)',
@@ -397,7 +397,9 @@ angular.module('ortolangMarketApp')
                 SELECT_TOOL_FUNCTIONALITIES: 'Sélectionnez les fonctionnalités',
                 SELECT_TOOL_INPUTDATA: 'Sélectionnez les types d\'entrée',
                 SELECT_TOOL_OUTPUTDATA: 'Sélectionnez les types de sorties',
-                SELECT_TOOL_FILE_ENCODINGS: 'Sélectionnez les encodage de caractères'
+                SELECT_TOOL_FILE_ENCODINGS: 'Sélectionnez les encodage de caractères',
+                EXTERNAL_WEBSITE: 'Lien externe',
+                INTERNAL_WEBSITE: 'Lien interne'
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Remplir la fiche des métadonnées'

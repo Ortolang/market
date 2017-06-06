@@ -388,7 +388,9 @@ angular.module('ortolangMarketApp')
                 SELECT_TOOL_FUNCTIONALITIES: 'Choose one or more functionalities',
                 SELECT_TOOL_INPUTDATA: 'Choose one or more input data',
                 SELECT_TOOL_OUTPUTDATA: 'Choose one or more input data',
-                SELECT_TOOL_FILE_ENCODINGS: 'Choose one or more file encodings'
+                SELECT_TOOL_FILE_ENCODINGS: 'Choose one or more file encodings',
+                EXTERNAL_WEBSITE: 'External link',
+                INTERNAL_WEBSITE: 'Internal link'
             },
             CREATE_METADATA_ITEM_MODAL: {
                 TITLE: 'Create metadata item'

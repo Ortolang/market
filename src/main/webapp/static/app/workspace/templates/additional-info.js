@@ -8,8 +8,8 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('AdditionalInfoCtrl', ['$rootScope', '$scope', '$modal', '$translate', 'Workspace', 'WorkspaceMetadataService',
-        function ($rootScope, $scope, $modal, $translate, Workspace, WorkspaceMetadataService) {
+    .controller('AdditionalInfoCtrl', ['$rootScope', '$scope', '$modal', '$translate', 'Workspace', 'WorkspaceMetadataService', 'Helper',
+        function ($rootScope, $scope, $modal, $translate, Workspace, WorkspaceMetadataService, Helper) {
 
             /**
              * Methods on publications
@@ -92,8 +92,16 @@ angular.module('ortolangMarketApp')
                 }
             });
 
+            var deregisterFileWebsitePathSelectorModal = $rootScope.$on('browserSelectedElements-fileWebsitePathSelectorModal', function ($event, elements) {
+               if(elements.length>0) {
+                    $scope.metadata.website = elements[0].path;
+                    $scope.fileWebsitePathSelectorModal.hide();
+                }
+            });
+
             $scope.$on('$destroy', function () {
                 deregisterFilePreviewPathSelectorModal();
+                deregisterFileWebsitePathSelectorModal();
             });
 
         	function init() {
@@ -117,6 +125,28 @@ angular.module('ortolangMarketApp')
                     {key:'zh', value: $translate.instant('LANGUAGES.ZH')}
                 ];
                 $scope.keyword = {lang:'fr'};
+
+                var fileWebsitePathSelectorModalScope = $rootScope.$new();
+                fileWebsitePathSelectorModalScope.acceptMultiple = false;
+                fileWebsitePathSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
+                fileWebsitePathSelectorModalScope.forceHead = true;
+                fileWebsitePathSelectorModalScope.fileSelectId = 'fileWebsitePathSelectorModal';
+                $scope.fileWebsitePathSelectorModal = $modal({scope: fileWebsitePathSelectorModalScope,
+                    title: 'Sélectionnez un fichier',
+                    templateUrl: 'browser/browser-file-select-modal-template.html',
+                    show: false
+                });
+
+                $scope.websiteSources = [
+                    {key:'external',value: $translate.instant('WORKSPACE.METADATA_EDITOR.EXTERNAL_WEBSITE')},
+                    {key:'internal',value: $translate.instant('WORKSPACE.METADATA_EDITOR.INTERNAL_WEBSITE')}
+
+                ];
+                if(!Helper.startsWith($scope.metadata.website, 'http')) {
+                    $scope.websiteSource = $scope.websiteSources[1].key;
+                } else {
+                    $scope.websiteSource = $scope.websiteSources[0].key;
+                }
         	}
         	init();
 }]);
