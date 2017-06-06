@@ -1,5 +1,8 @@
 <div ng-controller="WorkspaceDashboardThreadsCtrl">
     <div class="workspace-dashboard-section workspace-dashboard-threads" ng-if="!models.activeThread">
+        <h4 translate="WORKSPACE.THREADS.TAB_TITLE" class="no-border-bottom"></h4>
+        <p data-translate="WORKSPACE.THREADS.DESCRIPTION"></p>
+        <br/>
         <button class="btn btn-default btn-primary thread-function" ng-click="createThread()" translate="WORKSPACE.THREADS.START"></button>
         <ul class="list-unstyled">
             <li class="thread media card-well" ng-if="models.threads.length === 0">

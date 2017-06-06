@@ -417,7 +417,8 @@ angular.module('ortolangMarketApp')
             },
             THREADS: {
                 TAB_TITLE: 'Discussions',
-                EMPTY: '<strong>This workspace does not hold any discussions.</strong><br/>Discussions allows to exchange informations between workspace members but also with ORTOLANG\'s moderators.',
+                DESCRIPTION: 'Discussions allows to exchange informations between workspace members but also with ORTOLANG\'s moderators.',
+                EMPTY: '<strong>This workspace does not hold any discussions.</strong>',
                 START: 'Start a new discussion',
                 BACK: 'Go back to discussion\'s list',
                 POST: 'Post a new message',

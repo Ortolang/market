@@ -492,7 +492,8 @@ angular.module('ortolangMarketApp')
             },
             THREADS: {
                 TAB_TITLE: 'Discussions',
-                EMPTY: '<strong>Cet espace de travail ne contient aucune discussion.</strong><br/> Les discussions vous permettent de poser des questions ou d\'échanger des informations entre membres du projet et avec les modérateurs ORTOLANG.',
+                DESCRIPTION: 'Les discussions vous permettent de poser des questions ou d\'échanger des informations entre membres du projet et avec les modérateurs ORTOLANG.',
+                EMPTY: '<strong>Cet espace de travail ne contient aucune discussion.</strong>',
                 START: 'Démarrer une nouvelle discussion',
                 BACK: 'Revenir à la liste des discussions',
                 POST: 'Poster un nouveau message',
