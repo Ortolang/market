@@ -50,6 +50,7 @@ angular.module('ortolangMarketApp')
             DELETE_WORKSPACE: 'Delete the workspace',
             MARKET_LINKS: 'Link to the last published version',
             CONTENT_LINKS: 'Content links',
+            FTP_LINKS: 'Use the FTP protocol for importing big files (up to 1 Gb)',
             STATISTICS: 'Statistics',
             STATISTICS_HITS: 'Views statistics',
             STATISTICS_TOTAL_HITS: '({{hits}} total views)',
