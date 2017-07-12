@@ -163,10 +163,12 @@ angular.module('ortolangMarketApp')
 
         function loadItem() {
             SearchResource.getWorkspace({alias: $scope.itemAlias}, function (workspace) {
-                $scope.tags = $filter('orderBy')(workspace.snapshots, function (snapshot) {
-                    return snapshot.tag;
+                // Filters only snapshot with a tag
+                $scope.tags = $filter('filter')(workspace.snapshots, {tag: ''});
+                // Order tags by name
+                $scope.tags = $filter('orderBy')($scope.tags, function (snapshot) {
+                    return snapshot.name;
                 });
-
                 if ($routeParams.version) {
                     var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
                     if (filteredTag.length === 1) {
