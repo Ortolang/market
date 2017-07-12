@@ -106,7 +106,6 @@ angular.module('ortolangMarketApp')
                         WorkspaceMetadataService.format = entries[0];
                     }
                 });
-                console.log(Workspace.active.metadata);
                 
                 if (Workspace.active.metadata !== null) {
                     $scope.metadata = angular.copy(Workspace.active.metadata);
@@ -123,7 +122,6 @@ angular.module('ortolangMarketApp')
                         ]
                     };
                 }
-                console.log($scope.metadata);
                 WorkspaceMetadataService.metadata = $scope.metadata;
                 WorkspaceMetadataService.canEdit = !Workspace.active.workspace.readOnly || User.isRoot() || User.isModerator;
 
