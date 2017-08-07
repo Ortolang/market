@@ -114,7 +114,8 @@ angular.module('ortolangMarketApp')
             FR: 'Français',
             EN: 'Anglais',
             ES: 'Espagnol',
-            ZH: 'Chinois'
+            ZH: 'Chinois',
+            PT: 'Portugais'
         },
         MULTILINGUAL_TEXTFIELD: {
             LANGUAGE: 'Langue',

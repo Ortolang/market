@@ -78,7 +78,8 @@ angular.module('ortolangMarketApp').controller('OaiDcMetadataEditorCtrl',
                     {key: 'fr', value: $translate.instant('LANGUAGES.FR')},
                     {key: 'en', value: $translate.instant('LANGUAGES.EN')},
                     {key: 'es', value: $translate.instant('LANGUAGES.ES')},
-                    {key: 'zh', value: $translate.instant('LANGUAGES.ZH')}
+                    {key: 'zh', value: $translate.instant('LANGUAGES.ZH')},
+                    {key: 'pt', value: $translate.instant('LANGUAGES.PT')}
                 ];
             }());
 		}
