@@ -224,7 +224,8 @@ angular.module('ortolangMarketApp')
                         // params.orderProp = $routeParams.orderProp;
                         // params.orderDir = $routeParams.orderDir;
                         // params[prefix.workspace+'archive'] = false;
-
+                        params.archive = false;
+                        
                         // -- Sends params to search service (always watching params) --
                         scope.params = angular.toJson(params);
 
