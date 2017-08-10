@@ -32,8 +32,8 @@
                             <li ng-repeat="t in ::tags">
                                 <div class="label tag" ng-class="::{'label-primary': tag.name === t.name}">
                                     <span ng-class="::icons.tag"></span>
-                                    <a ng-if="::tag.name !== t.name" ng-href="/market/{{::itemMarketType}}/{{::alias}}/{{::t.name}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></a>
-                                    <span ng-if="::tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{tag: t.name}"></span>
+                                    <a ng-if="::tag.name !== t.name" ng-href="/market/{{::itemMarketType}}/{{::alias}}/{{::t.name}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.tag}"></a>
+                                    <span ng-if="::tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{tag: t.tag}"></span>
                                 </div>
                             </li>
                         </ul>
