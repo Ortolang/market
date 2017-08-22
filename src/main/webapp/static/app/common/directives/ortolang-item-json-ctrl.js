@@ -148,11 +148,12 @@ angular.module('ortolangMarketApp')
                     $scope.datasizeToPrint = {'value': $filter('bytes')($scope.content.datasize)};
                 }
 
-                if ($scope.content.website && !Helper.startsWith($scope.content.website, 'http')) {
-                    // ObjectResource.element({key: $scope.itemKey, path: $scope.content.website}).$promise.then(function (oobject) {
-                        // $scope.content.website = Content.getContentUrlWithKey(oobject.key);
+                if ($scope.content.website) {
+                    if (!Helper.startsWith($scope.content.website, 'http')) {
                         $scope.website = Content.getContentUrlWithPath($scope.content.website, $scope.alias, $scope.root);
-                    // });
+                    } else {
+                        $scope.website = $scope.content.website;
+                    }
                 }
             }
 
