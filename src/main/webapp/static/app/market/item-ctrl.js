@@ -57,7 +57,7 @@ angular.module('ortolangMarketApp')
             }
             // **************
             microData.datePublished = jsonMetadata.publicationDate;
-            microData.version = $scope.tag.name.substring(1);
+            microData.version = $scope.tag.tag.substring(1);
             // Keywords
             var keywordsString = '';
             angular.forEach(jsonMetadata.keywords, function (keyword, index) {
@@ -209,7 +209,7 @@ angular.module('ortolangMarketApp')
             $scope.browse = $location.search().browse;
             $scope.ready = false;
             $scope.item = {};
-            handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.itemAlias + ($scope.tag ? '/' + $scope.tag.name : '');
+            handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.itemAlias + ($scope.tag ? '/' + $scope.tag.tag : '');
             loadItem();
         }());
 

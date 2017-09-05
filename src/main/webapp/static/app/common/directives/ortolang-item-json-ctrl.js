@@ -350,7 +350,7 @@ angular.module('ortolangMarketApp')
                     return undefined;
                 }
                 var i,
-                    bibTeX = '@misc{' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.name : '') + ',\n';
+                    bibTeX = '@misc{' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '') + ',\n';
                 bibTeX += '    title = {' + replaceSpecialChars($scope.title) + '},\n';
                 bibTeX += '    author = {';
                 if ($scope.producers && $scope.producers.length > 0) {
@@ -406,9 +406,9 @@ angular.module('ortolangMarketApp')
                 $scope.imgtitle = undefined;
                 $scope.currentContent = $scope.content;
                 $scope.showingDescription = false;
-                $scope.handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.name : '');
+                $scope.handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '');
                 $scope.dynamicHandle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias;
-                $scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.name : '');
+                $scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '');
             }
 
             $scope.howToCite = function ($scope, $event) {
