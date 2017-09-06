@@ -251,7 +251,7 @@ angular.module('ortolangMarketApp')
                 PROGRAMMING_LANGUAGES: 'Programming language',
                 OPERATING_SYSTEMS: 'Operating systems',
                 TOOL_SUPPORT: 'Tool support',
-                LEXICON_INPUT_COUNT: 'The count of input in the lexicon',
+                LEXICON_INPUT_COUNT: 'Number of lexicon entities described',
                 NO_PERSON_FOUND: 'You do not find a person ?',
                 ADD_NEW_PERSON: 'Ask for adding a new person',
                 ORDER_CONTRIBUTORS: 'Order by last name',
