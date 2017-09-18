@@ -22,6 +22,7 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Mentions Légales',
                 INFO_PUBLICATION: 'Informations de publication',
                 PUBLICATION_DIRECTOR: 'Directeur de la publication',
+                SECONDARY_DIRECTOR: 'Directeurs adjoints',
                 IT_MANAGER: 'Responsable informatique',
                 IT_DEVELOPMENT: 'Développement informatique',
                 PERSONNAL_DATA: 'Données personnelles',
