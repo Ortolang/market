@@ -116,6 +116,7 @@ angular.module('ortolangMarketApp')
                         fileItem.formData.push({'process-name': fileItem['process-name']});
                         fileItem.formData.push({'wskey': fileItem.wskey});
                         fileItem.formData.push({'ziproot': fileItem.ziproot});
+                        fileItem.formData.push({'zipmode': fileItem.zipmode});
                         fileItem.formData.push({'zipoverwrites': fileItem.zipoverwrites});
                         break;
 

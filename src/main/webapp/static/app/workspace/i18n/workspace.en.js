@@ -178,7 +178,8 @@ angular.module('ortolangMarketApp')
                 ROOT: 'Folder',
                 ROOT_HELP: 'Name of the folder to decompress into.<br/>Leave empty to extract into the current folder : "{{wsName}}{{path === "/" ? "" : path}}/"',
                 ROOT_HELP_FILLED: 'The zip will be extract into "{{wsName}}{{path === "/" ? "" : path}}/{{root}}"',
-                OVERWRITE: 'Overwrite existing files'
+                OVERWRITE: 'Overwrite existing files',
+                MODE: 'Uploads metadata files'
             },
             UPLOAD_ZIP_COMPLETED_MODAL: {
                 TITLE: 'Importation of Zip content in progress',

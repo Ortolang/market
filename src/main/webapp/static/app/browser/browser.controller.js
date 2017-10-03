@@ -801,6 +801,7 @@ angular.module('ortolangMarketApp')
                         'process-name': $translate.instant('WORKSPACE.PROCESS_NAMES.IMPORT_ZIP', {zipName: files[0].name, wsName: ctrl.workspace.name}),
                         'ziproot': Helper.normalizePath(ctrl.parent.path + '/' + modalScope.models.root),
                         'zipoverwrites': modalScope.models.zipoverwrites,
+                        'zipmode': modalScope.models.zipmode ? 'metadata' : 'data',
                         'wskey': ctrl.workspace.key,
                         'wsName': ctrl.workspace.name,
                         'ortolangType': 'zip'
