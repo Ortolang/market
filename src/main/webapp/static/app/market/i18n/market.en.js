@@ -78,6 +78,7 @@ angular.module('ortolangMarketApp')
             DOCUMENTATIONS: 'Documentations',
             SEE_DOCUMENTATIONS: 'See the documentation',
             SEE_WEBSITE: 'Go to the website',
+            APPLICATION_URL: 'Address of the web application',
             ITEM_NOT_FOUND: 'Any resource has been found at this page',
             METADATA_FORMAT_NOT_FOUND: 'Metadata format unreadable.',
             NO_RESULT: 'No result found',

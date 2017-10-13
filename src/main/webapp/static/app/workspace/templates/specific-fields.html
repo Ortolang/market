@@ -243,6 +243,16 @@
                     </div>
                 </div>
             </section>
+            <section name="tool-application">
+                <div class="row">
+                    <div class=" col-md-12">
+                        <div class="form-group">
+                            <label for="specific-application-url" class="control-label">{{'MARKET.APPLICATION_URL' | translate}} <i class="glyphicon glyphicon-info-sign" data-title="URL de l'outil en ligne." data-placement="right" bs-tooltip></i></label>
+                            <input type="text" class="form-control" id="specific-application-url" name="applicationUrl" placeholder="http://..." aria-label="applicationUrl" ng-model="metadata.applicationUrl" ng-disabled="!WorkspaceMetadataService.canEdit">
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <div ng-switch-when="Terminologie">
 
