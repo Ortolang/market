@@ -441,7 +441,7 @@ angular.module('ortolangMarketApp')
                     var moveModal;
                     createModalScope();
                     // Complete list of tools
-                    modalScope.tools = ctrl.tools;
+                    modalScope.tools = ctrl.compatibleTools;
                     modalScope.selectedElement = ctrl.selectedElements[0].name;
                     
                     modalScope.openWith = function (tool) {
@@ -472,7 +472,7 @@ angular.module('ortolangMarketApp')
                 if (ctrl.hasOnlyOneElementSelected()) {
                     for (var i = 0; i < ctrl.tools.length; i++) {
                         var fileFormats = ctrl.tools[i].toolInputData;
-                        if (fileFormats) {
+                        if (ctrl.tools[i].applicationUrl && fileFormats) {
                             var mimetypes = [];
                             angular.forEach(fileFormats, function (fileFormat) {
                                 if (fileFormat.mimetypes) {
