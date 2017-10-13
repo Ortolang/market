@@ -193,7 +193,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li ng-repeat="tool in $ctrl.compatibleTools">
                             <div class="media">
-                                <div class="media-body" ng-click="openWith(tool)">
+                                <div class="media-body" ng-click="$ctrl.openWith(tool)">
                                     <div>{{::tool.effectiveTitle}}</div>
                                 </div>
                             </div>
