@@ -6,8 +6,7 @@
                 <span class="modal-title" id="open-with-modal-label" translate-values="{element: selectedElement}" translate="BROWSER.OPEN_WITH_MODAL.TITLE"></span>
             </div>
             <div class="modal-body">
-
-                    <div class="media card-well card-well-hover" ng-repeat="tool in tools">
+                    <div class="media card-well card-well-hover card-well-body-action" ng-repeat="tool in tools">
                         <div class="media-left">
                             <div ng-if="tool.imageUrl" class="thumb-wrapper-sm">
                                 <div>
@@ -16,10 +15,16 @@
                             </div>
                             <img ng-if="tool.imageUrl === null" class="logo" holder-js="holder.js/100x100?theme={{::tool.effectiveTitle.toLowerCase().charAt(0)}}&text={{::tool.effectiveTitle.substr(0, 2)}}&size=35"/>
                         </div>
-                        <div class="media-body" ng-click="openWith(tool)">
+                        <div class="media-body">
                             <h4>{{::tool.effectiveTitle}}</h4>
+                            <article data-content="tool.effectiveDescription" data-target-blank>
+                                <div ng-bind-html="tool.effectiveDescription"></div>
+                            </article>
+                            <div class="media-body-action">
+                                <button type="button" class="btn btn-primary" ng-click="openWith(tool)">Sélectionner</button>
+                            </div>
                             <!-- <article data-content="tool.effectiveDescription" data-target-blank> -->
-                                <div data-content="tool.effectiveDescription" data-target-blank ng-bind-html="tool.effectiveDescription"></div>
+                                <!-- <div data-content="tool.effectiveDescription" data-target-blank ng-bind-html="tool.effectiveDescription"></div> -->
                             <!-- </article> -->
                             <!-- <p data-content="tool.effectiveDescription" data-target-blank ng-bind-html="tool.effectiveDescription"></p> -->
                             <!-- <dl>
