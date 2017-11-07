@@ -227,7 +227,7 @@ button.no-border {
   background-color: lighten(@default-bg, 1%);
   border: 1px solid @well-border;
   border-radius: @border-radius-base;
-  cursor: pointer;
+
   .card-border();
   &.card-well-inverse {
     .card-border-inverse();
@@ -258,7 +258,6 @@ button.no-border {
   }
   &.card-well-actions {
     background-color: lighten(@default-bg, 2%);
-    cursor: pointer;
     .detail, .actions {
       opacity: 0;
     }
@@ -285,6 +284,9 @@ button.no-border {
         opacity: 1;
       }
     }
+  }
+  &.card-well-pointer {
+    cursor: pointer;
   }
   &.card-well-body-action {
     .media-body {

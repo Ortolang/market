@@ -15,10 +15,10 @@
         <div class="container-main-inner">
             <div class="row">
                 <div class="col-sm-8">
-                    <div ng-click="createWorkspace()" class="card-well card-well-hover card-new clearfix">
+                    <div ng-click="createWorkspace()" class="card-well card-well-hover card-well-pointer card-new clearfix">
                         <span ng-class="::icons.plus"></span>{{'WORKSPACE.CREATE_WORKSPACE' | translate}}
                     </div>
-                    <div class="card-well card-well-hover card-well-actions card-workspace clearfix"
+                    <div class="card-well card-well-hover card-well-actions card-well-pointer card-workspace clearfix"
                          ng-repeat="workspace in Workspace.list | filter:models.query | orderBy:'-lastModificationDate' track by workspace.alias"
                          ng-click="manageWorkspace($event, workspace)" ng-class="{'deleted': workspace.key === Workspace.deleted}">
                         <div class="media">
