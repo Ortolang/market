@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
             HISTORY: 'Activity',
             MEMBERS_NUMBER: '<strong>{{number}} member{{number > 1 ? "s" : ""}}</strong> in the project',
             MEMBERS_LIST: 'Workspace members',
+            PRIVILEGED_MEMBERS_LIST: 'Privileged members',
             OWNER: 'Workspace owner',
             PUBLISHED_VERSIONS: '<strong>{{number}} published version{{number > 1 ? "s" : ""}}{{number !== snapshots ? " | " + snapshots + " saved version" + (snapshots > 1 ? "s" : "") : ""}}</strong>',
             TAGS: 'Versions',

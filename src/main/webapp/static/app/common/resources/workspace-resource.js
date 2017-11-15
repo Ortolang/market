@@ -46,6 +46,10 @@ angular.module('ortolangMarketApp')
                 method: 'PUT',
                 url: url.api + '/workspaces/:wskey/members/:member'
             },
+            addPrivilegedMember: {
+                method: 'PUT',
+                url: url.api + '/workspaces/:wskey/privileged/:member'
+            },
             listEvents: {
                 method: 'GET',
                 url: url.api + '/workspaces/:wskey/events'

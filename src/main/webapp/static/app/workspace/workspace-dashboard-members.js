@@ -61,4 +61,35 @@ angular.module('ortolangMarketApp')
                 });
             }
         };
+
+        $scope.addPrivilegedMember = function () {
+            var addMemberModal,
+                modalScope = Helper.createModalScope(true);
+            modalScope.wsName = Workspace.getActiveWorkspaceTitle();
+            modalScope.privileged = Workspace.active.privileged;
+            modalScope.add = function (profile, $event) {
+                $event.stopPropagation();
+                WorkspaceResource.addPrivilegedMember({wskey: Workspace.active.workspace.key, member: profile.key}, {}, function (data) {
+                    Workspace.active.privileged = data.members;
+                }, function (reason) {
+                    console.log(reason);
+                });
+                addMemberModal.hide();
+            };
+            addMemberModal = $modal({
+                scope: modalScope,
+                templateUrl: 'workspace/templates/add-member-modal.html',
+                show: true
+            });
+        };
+
+        $scope.removePrivilegedMember = function (member, $event) {
+            $event.stopPropagation();
+            if (User.key === Workspace.active.workspace.owner || User.isRoot()) {
+                GroupResource.removeMember({key: Workspace.active.workspace.privileged, member: member}, function (data) {
+                    Workspace.active.privileged = data.members;
+                });
+            }
+        };
+
     }]);

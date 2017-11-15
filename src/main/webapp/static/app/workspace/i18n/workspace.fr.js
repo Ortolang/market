@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
             HISTORY: 'Activité',
             MEMBERS_NUMBER: '<strong>{{number}} membre{{number > 1 ? "s" : ""}}</strong> dans ce projet',
             MEMBERS_LIST: 'Membres de l\'espace de travail',
+            PRIVILEGED_MEMBERS_LIST: 'Membres privilégiés',
             OWNER: 'Propriétaire de l\'espace de travail',
             PUBLISHED_VERSIONS: '<strong>{{number}} version{{number > 1 ? "s" : ""}} publiée{{number > 1 ? "s" : ""}}{{number !== snapshots ? " | " + snapshots + " versions mémorisée" + (snapshots > 1 ? "s" : "") : ""}}</strong>',
             TAGS: 'Versions',
@@ -435,7 +436,9 @@ angular.module('ortolangMarketApp')
                         'CHANGE-OWNER': 'a changé le propriétaire de l\'espace',
                         LOCK: 'a verrouillé l\'espace de travail (lecture seule)',
                         UNLOCK: 'a déverrouillé l\'espace de travail',
-                        ARCHIVE: 'a {{arguments.archive==="true"?"archivé":"désarchivé"}} l\'espace de travail'
+                        ARCHIVE: 'a {{arguments.archive==="true"?"archivé":"désarchivé"}} l\'espace de travail',
+                        'NOTIFY-ADDED-PRIVILEGED-MEMBER': 'a ajouté le membre <strong>{{arguments.member}}</strong> au groupe privilégié',
+                        UPDATE: 'a mis à jour l\'espace de travail'
                     },
                     METADATA: {
                         CREATE: 'a créé des métadonnées :<span class="description">{{::arguments.name | translate}} de {{::arguments.path}}</span>',

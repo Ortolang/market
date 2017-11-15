@@ -23,4 +23,19 @@
             </li>
         </ul>
     </div>
+    <div class="workspace-dashboard-section" ng-if="Workspace.active.privileged">
+        <h4 translate="WORKSPACE.PRIVILEGED_MEMBERS_LIST" class="no-border-bottom"></h4>
+        <ul class="list-unstyled row">
+            <li ng-repeat="member in Workspace.active.privileged track by member.key" class="col-lg-3 col-md-4 col-sm-6">
+                <profile-card class="workspace-member-card" profile="member" size="50" img-classes="img-circle">
+                    <button ng-if="(User.key === Workspace.active.workspace.owner || User.isRoot()) && member.key !== Workspace.active.workspace.owner"
+                            class="btn btn-default btn-danger btn-xs remove-member-btn" ng-class="::icons.remove" ng-click="removePrivilegedMember(member.key, $event)" data-title="{{::'WORKSPACE.REMOVE_MEMBER' | translate}}" bs-tooltip></button>
+                </profile-card>
+            </li>
+            <li ng-if="User.key === Workspace.active.workspace.owner || User.isRoot()" class="col-lg-3 col-md-4 col-sm-6 add-member-btn-wrapper" ng-click="addPrivilegedMember()">
+                <div class="media-left"><button class="btn btn-default btn-rounded"><span ng-class="::icons.plus"></span></button></div>
+                <div class="media-body" translate="WORKSPACE.ADD_MEMBER"></div>
+            </li>
+        </ul>
+    </div>
 </div>

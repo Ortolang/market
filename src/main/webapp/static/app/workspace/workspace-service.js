@@ -106,6 +106,9 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         if (!partial) {
             promises.push(Workspace.getActiveWorkspaceMetadata());
             promises.push(Workspace.getActiveWorkspaceMembers());
+            if (Workspace.active.workspace.privileged) {
+                promises.push(Workspace.getActiveWorkspacePrivilegedMembers());
+            }
             promises.push(Workspace.getActiveWorkspaceRequests());
             promises.push(Workspace.getActiveWorkspaceFtpUrl());
             promises.push(Workspace.getActiveWorkspaceStats());
@@ -135,7 +138,6 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             }, function () {
                 deferred.reject();
             });
-            console.log('refreshActiveWorkspaceInfo', data, Workspace.active);
         });
         return deferred.promise;
     };
@@ -198,6 +200,18 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             deferred.resolve();
         }, function () {
             Workspace.active.members = null;
+            deferred.reject();
+        });
+        return deferred.promise;
+    };
+
+    this.getActiveWorkspacePrivilegedMembers = function () {
+        var deferred = $q.defer();
+        GroupResource.get({key: Workspace.active.workspace.privileged}, function (data) {
+            Workspace.active.privileged = data.members;
+            deferred.resolve();
+        }, function () {
+            Workspace.active.privileged = null;
             deferred.reject();
         });
         return deferred.promise;
@@ -371,7 +385,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         listDeferred.promise.then(function () {
             var workspaces = $filter('filter')(Workspace.list, {members: eventMessage.fromObject}, true);
             if (User.key === eventMessage.arguments.member) {
-                if (Workspace.active.workspace && Workspace.active.workspace.key === workspaces[0].key) {
+                if (Workspace.active.workspace && workspaces.length>0 && Workspace.active.workspace.key === workspaces[0].key) {
                     $location.url('/workspaces');
                 } else {
                     Workspace.getWorkspaceList().then(function () {
@@ -379,7 +393,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
                     });
                 }
             } else {
-                if (Workspace.active.workspace && Workspace.active.workspace.key === workspaces[0].key) {
+                if (Workspace.active.workspace && workspaces.length>0 && Workspace.active.workspace.key === workspaces[0].key) {
                     // A member has been removed from the active workspace; refreshing active workspace members
                     Workspace.getActiveWorkspaceMembers();
                 }
@@ -417,6 +431,16 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
             }
         });
     }
+
+    $rootScope.$on('core.workspace.update', function (event, eventMessage) {
+        event.stopPropagation();
+        refreshActiveWorkspaceInfo(eventMessage);
+    });
+
+    $rootScope.$on('core.workspace.notify-added-privileged-member', function (event, eventMessage) {
+        event.stopPropagation();
+        refreshActiveWorkspaceInfo(eventMessage);
+    });
 
     $rootScope.$on('core.workspace.snapshot', function (event, eventMessage) {
         event.stopPropagation();
