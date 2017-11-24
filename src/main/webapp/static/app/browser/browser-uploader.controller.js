@@ -28,7 +28,7 @@ angular.module('ortolangMarketApp')
                             name: 'noFolder',
                             fn: function (item) {
                                 return !(!item.type && ((!Helper.isMac() && item.size % 4096 === 0) ||
-                                (Helper.isMac() && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 8 < item.name.length - 1))));
+                                (Helper.isMac() && (item.name.indexOf('.') === -1 || item.name.lastIndexOf('.') + 18 < item.name.length - 1))));
                             }
                         },
                         {
