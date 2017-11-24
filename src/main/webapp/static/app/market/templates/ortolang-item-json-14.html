@@ -147,9 +147,9 @@
                         </dd>
                         <dt ng-repeat-start="additionalInformation in additionalInformations track by additionalInformation.name" translate="{{additionalInformation.name}}"></dt>
                         <dd ng-repeat-end>
-                            <span ng-if="isArray(additionalInformation.value)"><span ng-repeat="valueItem in additionalInformation.value">{{::valueItem}}</span></span>
-                            <span ng-if="isString(additionalInformation.value)">{{::additionalInformation.value}}</span>
-                            <span ng-if="isBoolean(additionalInformation.value)">{{::additionalInformation.value ? ('YES' | translate) : ('NO' | translate)}}</span>
+                            <span ng-if="isArray(additionalInformation.value)"><span ng-repeat="valueItem in additionalInformation.value">{{valueItem.label}}</span></span>
+                            <span ng-if="isString(additionalInformation.value)">{{additionalInformation.value}}</span>
+                            <span ng-if="isBoolean(additionalInformation.value)">{{additionalInformation.value ? ('YES' | translate) : ('NO' | translate)}}</span>
                         </dd>
                     </dl>
                 </article>
