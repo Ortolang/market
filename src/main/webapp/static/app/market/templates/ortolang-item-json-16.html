@@ -185,6 +185,15 @@
 
         <aside class="col-md-4">
 
+            <div class="card-well card-well-market" ng-show="root !== 'head'">
+              <p class="lead" translate="CONTACT"></p>
+              <div class="btn-group btn-group-justified" role="group" ng-show="datasizeToPrint">
+                <div class="btn-group" role="group">
+                  <button class="btn btn-default btn-primary" data-ng-disabled="root === 'head'" ng-click="contact()" ><span ng-class="::icons.mail" class="fa-lg"> {{'SEND_MAIL' | translate}}</button>
+                </div>
+              </div>
+            </div>
+
             <div class="card-well card-well-market card-well-license" ng-if="commercialLinks">
                 <p class="lead" translate="MARKET.COMMERCIAL_LINKS"></p>
                 <div>
@@ -244,13 +253,6 @@
                     <a ng-href="{{content.social.twitter}}" target="_blank" data-title="Twitter" bs-tooltip><span ng-class="::icons.twitter" class="fa-lg"></span></a>
                     <a ng-href="{{content.social.linkedin}}" target="_blank" data-title="LinkedIn" bs-tooltip><span ng-class="::icons.linkedin" class="fa-lg"></span></a>
                     <a ng-href="{{content.social.viadeo}}" target="_blank" data-title="Viadeo" bs-tooltip><span ng-class="::icons.viadeo" class="fa-lg"></span></a>
-                </p>
-            </div>
-
-            <div class="card-well card-well-market card-well-contact" ng-show="root !== 'head'">
-                <p class="lead">
-                    {{'CONTACT' | translate}}
-                    <span ng-class="::icons.mail" class="fa-lg" ng-click="contact()" target="_blank" data-title="{{'MARKET.CONTACT_MODAL.TITLE' | translate}}" bs-tooltip></span>
                 </p>
             </div>
 

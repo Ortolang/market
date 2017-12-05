@@ -168,7 +168,7 @@ angular.module('ortolangMarketApp')
                 COMMANDS: '<kbd><kbd>{{isMac ? "cmd" : "ctrl"}}</kbd> + <kbd>c</kbd></kbd> pour copier'
             },
             CONTACT_MODAL: {
-                TITLE: 'Contacter le responsable de cette ressource',
+                TITLE: 'Envoyer un mail au responsable de cette ressource',
                 SUBJECT: {
                     LABEL: 'Sujet',
                     PLACEHOLDER: 'Sujet du message'
