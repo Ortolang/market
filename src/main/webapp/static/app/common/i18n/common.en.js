@@ -34,6 +34,7 @@ angular.module('ortolangMarketApp')
         LOG_IN: 'Login',
         NO_IMAGE_PROVIDED: 'No image provided',
         DOWNLOAD: 'Download',
+        DOWNLOAD_WITH_FILTER: 'Download with filter',
         START: 'Start',
         STOP: 'Stop',
         ORTOLANG: 'Open Resources and TOols for LANGuage',

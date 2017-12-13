@@ -406,7 +406,7 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            ctrl.download = function () {
+            ctrl.download = function (regex) {
                 var paths = [],
                     elements = ctrl.selectedElements;
                 if (elements.length > 1 || elements[0].type === ortolangType.collection) {
@@ -416,10 +416,10 @@ angular.module('ortolangMarketApp')
                     if (elements.length === 1) {
                         if (ctrl.path === '/' && ctrl.hasOnlyParentSelected()) {
                             // Root collection
-                            Content.export(paths, ctrl.workspace.alias);
+                            Content.export(paths, ctrl.workspace.alias, regex);
                         } else {
                             // A folder: the name of the archive is the name of the folder
-                            Content.export(paths, elements[0].name);
+                            Content.export(paths, elements[0].name, regex);
                         }
                     } else {
                         Content.export(paths);
@@ -945,6 +945,31 @@ angular.module('ortolangMarketApp')
                         show: true
                     });
                 }
+            };
+
+            ctrl.downloadWithFilter = function () {
+                var downloadModal, hideElements = [], sources = [];
+                createModalScope();
+                modalScope.models = { regex: ''};
+                modalScope.download = function () {
+                    if (modalScope.models.regex.trim() !== '') {
+                        try {
+                            new RegExp(modalScope.models.regex);
+                        } catch (e) {
+                            // downloadItemForm.regex.$setValidity('invalid', false);
+                            // modalScope.models.pendingSubmit = false;
+                            return;
+                        }
+                        ctrl.download(modalScope.models.regex);
+                    } else {
+                        ctrl.download();
+                    }
+                };
+                downloadModal = $modal({
+                    scope: modalScope,
+                    templateUrl: 'browser/templates/download-with-filter-modal.html',
+                    show: true
+                });
             };
 
             ctrl.doAction = function (name) {

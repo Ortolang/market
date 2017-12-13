@@ -156,6 +156,10 @@ angular.module('ortolangMarketApp')
                 CONVERT_XML_JSON: 'Charger à partir d\'un fichier XML',
                 ADD_DC_ELEMENT: 'Ajouter un élément Dublin Core',
                 ADD_OLAC_ELEMENT: 'Ajouter un élément OLAC'
+            },
+            DOWNLOAD_WITH_FILTER_MODAL: {
+                TITLE: 'Télécharger avec un filtre',
+                REGEX: 'Filtre'
             }
         }
     });

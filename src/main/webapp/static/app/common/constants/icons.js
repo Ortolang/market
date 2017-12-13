@@ -111,6 +111,7 @@ angular.module('ortolangMarketApp')
                 viewModeTile: 'glyphicon glyphicon-th-large',
                 viewModeLine: 'glyphicon glyphicon-align-justify',
                 download: 'glyphicon glyphicon-download',
+                downloadWithFilter: 'fa fa-fw fa-filter',
                 upload: 'glyphicon glyphicon-upload',
                 uploadZip: 'glyphicon glyphicon-compressed',
                 uploadToWorkspace: 'glyphicon glyphicon-cloud-upload',

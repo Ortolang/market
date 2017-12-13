@@ -34,6 +34,7 @@ angular.module('ortolangMarketApp')
         LOG_IN: 'Connexion',
         NO_IMAGE_PROVIDED: 'Pas d\'image disponible',
         DOWNLOAD: 'Télécharger',
+        DOWNLOAD_WITH_FILTER: 'Télécharger avec un filtre',
         START: 'Début',
         STOP: 'Fin',
         ORTOLANG: 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
