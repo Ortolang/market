@@ -185,7 +185,7 @@ angular.module('ortolangMarketApp')
             },
             DOWNLOAD_MODAL: {
                 TITLE: 'Téléchargement',
-                ADVANCED: 'Téléchargement avancé',
+                ADVANCED: 'Filtrer le téléchargement',
                 REGEX: 'Expression régulière',
                 REGEX_HELP: 'Utilisez une expression régulière pour télécharger uniquement certains fichiers (exemple: <code>.*\\.xml</code> pour télécharger uniquement les fichiers XML)',
                 POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/information/policy" target="_blank">la charte ORTOLANG</a> ainsi que la license relative à cette ressource {{license ? \'(<a target="_blank" href="\' + licenseUrl + \'">\' + license + \'</a>)\' : ""}}',

@@ -184,7 +184,7 @@ angular.module('ortolangMarketApp')
             },
             DOWNLOAD_MODAL: {
                 TITLE: 'Download',
-                ADVANCED: 'Advanced download',
+                ADVANCED: 'Filters the downloaded package',
                 REGEX: 'Regular expression',
                 REGEX_HELP: 'Use a regular expression to download specific files only (example: <code>.*\\.xml</code> to download XML files only)',
                 POLICY: 'I have read and agree to <a href="/information/policy" target="_blank">the ORTOLANG policy</a> as well as the license of this resource {{license ? \'(<a target="_blank" href="\' + licenseUrl + \'">\' + license + \'</a>)\' : ""}}',
