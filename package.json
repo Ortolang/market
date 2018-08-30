@@ -11,7 +11,6 @@
     "private": true,
     "scripts": {
         "start": "webpack-dev-server",
-        "postinstall": "typings install",
         "test": "karma start config/karma.conf.js",
         "test-all": "karma start config/karma.conf.js --all",
         "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
