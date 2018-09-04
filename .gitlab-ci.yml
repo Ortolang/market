@@ -12,6 +12,8 @@ stages:
 
 docker_build:
   stage: build
+  tags:
+    - ortolang-docker-bind
   script:
     - docker build --rm -f Dockerfile -t $IMAGE_NAME .
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
