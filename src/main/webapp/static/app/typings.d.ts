@@ -1,4 +1,4 @@
-///<reference path="../../../../../typings/globals/angular/index.d.ts"/>
+///<reference path="../../../../../node_modules/@types/angular/index.d.ts"/>
 ///<reference path="../../../../../node_modules/@types/node/index.d.ts"/>
 
 // Typings reference file, you can add your own global typings here
