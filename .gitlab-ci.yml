@@ -1,0 +1,24 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  GIT_SSL_NO_VERIFY: "true"
+  IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG
+
+stages:
+  - build
+
+docker_build:
+  stage: build
+  tags:
+    - ortolang-docker-bind
+  script:
+    - docker build --rm -f Dockerfile -t $IMAGE_NAME .
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $IMAGE_NAME
+  only: 
+    - master
+    - tags
+    - branches
