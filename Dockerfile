@@ -5,7 +5,7 @@ WORKDIR /code
 
 COPY package.json .
 
-RUN npm config set depth 0 && npm cache clean --force && npm install --no-progress
+RUN npm config set depth 0 && npm cache clean --force && npm install -q --no-progress
 
 COPY . .
 
