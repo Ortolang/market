@@ -213,6 +213,9 @@ angular.module('ortolangMarketApp')
                     modalScope.models.license = $scope.license.label;
                     modalScope.models.licenseUrl = $scope.license.effectiveText ? $scope.license.effectiveText.url : undefined;
                 }
+                if ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {
+                    modalScope.models.conditionsOfUse = Helper.getMultilingualValue($scope.content.conditionsOfUse, 'fr');
+                }
                 modalScope.models.size = $scope.content.datasize;
 
                 modalScope.login = function () {

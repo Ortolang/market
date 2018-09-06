@@ -189,6 +189,7 @@ angular.module('ortolangMarketApp')
                 REGEX: 'Expression régulière',
                 REGEX_HELP: 'Utilisez une expression régulière pour télécharger uniquement certains fichiers (exemple: <code>.*\\.xml</code> pour télécharger uniquement les fichiers XML)',
                 POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/information/policy" target="_blank">la charte ORTOLANG</a> ainsi que la license relative à cette ressource {{license ? \'(<a target="_blank" href="\' + licenseUrl + \'">\' + license + \'</a>)\' : ""}}',
+                CONDITIONSOFUSE: 'Je déclare avoir pris connaissance et accepter les conditions d\'utilisation suivantes : {{conditionsOfUse}}',
                 ANONYMOUS: '<strong>Vous n\'êtes pas connecté à ORTOLANG.</strong> Il est possible que l\'accès à certains fichiers de cette ressource soit réservé uniquement aux utilisateurs connectés et/ou aux membres de l\'ESR. Si vous possédez un compte ORTOLANG, veuillez-vous connecter.',
                 AUTHENTICATED: '<strong>Vous êtes connecté à ORTOLANG mais vous ne faites pas parti des membres de l\'ESR.</strong> Il est possible que l\'accès à certains fichiers de cette ressource soit réservé uniquement aux membres de l\'ESR.',
                 ESR: 'Vous êtes connecté à ORTOLANG et membre de l\'ESR.',
@@ -196,6 +197,7 @@ angular.module('ortolangMarketApp')
                 MESSAGES: {
                     INVALID_REGEX: 'Expression régulière invalide',
                     POLICY: 'Vous devez accepter la charte ORTOLANG ainsi que la license relative à cette ressource',
+                    CONDITIONSOFUSE: 'Vous devez accepter les conditions d\'utilisation relatives à cette ressource',
                 }
             }
         }
