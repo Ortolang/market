@@ -203,19 +203,23 @@ angular.module('ortolangMarketApp')
                 $scope.browse = !$scope.browse;
             };
 
+            function createLicenseModel() {
+                console.log($scope.license);
+                return {
+                    label: $scope.license ? $scope.license.label : undefined,
+                    url: $scope.license && $scope.license.effectiveText ? $scope.license.effectiveText.url : undefined,
+                    conditionsOfUse: ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') ? Helper.getMultilingualValue($scope.content.conditionsOfUse, 'fr') : undefined
+                }
+            }
+
             $scope.exportItem = function () {
                 var modalScope = Helper.createModalScope(true),
                     exportModal;
 
                 modalScope.models.authenticated = AuthService.isAuthenticated();
                 modalScope.models.esr = AuthService.isEsr();
-                if ($scope.license) {
-                    modalScope.models.license = $scope.license.label;
-                    modalScope.models.licenseUrl = $scope.license.effectiveText ? $scope.license.effectiveText.url : undefined;
-                }
-                if ($scope.content.conditionsOfUse !== undefined && $scope.content.conditionsOfUse !== '') {
-                    modalScope.models.conditionsOfUse = Helper.getMultilingualValue($scope.content.conditionsOfUse, 'fr');
-                }
+                modalScope.models.license = $scope.licenseModel;
+                
                 modalScope.models.size = $scope.content.datasize;
 
                 modalScope.login = function () {
@@ -497,6 +501,7 @@ angular.module('ortolangMarketApp')
                     $scope.contributors = Helper.loadContributors($scope.content.contributors, $scope.authors);
                 }
                 loadLicense(Settings.language);
+                $scope.licenseModel = createLicenseModel();
                 $scope.initilizing = false;
             }
 

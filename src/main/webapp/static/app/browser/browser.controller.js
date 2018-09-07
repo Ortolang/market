@@ -408,11 +408,59 @@ angular.module('ortolangMarketApp')
 
             ctrl.download = function (regex) {
                 var paths = [],
-                    elements = ctrl.selectedElements;
+                    elements = ctrl.selectedElements,
+                    modalScope = Helper.createModalScope(true),
+                    exportModal;
+
+                // Creates paths
                 if (elements.length > 1 || elements[0].type === ortolangType.collection) {
                     angular.forEach(elements, function (element) {
                         paths.push(Helper.normalizePath(ctrl.workspace.alias + '/' + ctrl.root + ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + element.name)));
                     });
+                } else {
+                    var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + elements[0].name));
+                    paths.push(Helper.normalizePath(ctrl.workspace.alias + '/' + ctrl.root + elementPath));
+                }
+
+                if (ctrl.isMarket) {
+                    modalScope.models.authenticated = AuthService.isAuthenticated();
+                    modalScope.models.esr = AuthService.isEsr();
+                    modalScope.models.license = ctrl.license;
+                    modalScope.submit = function (downloadItemForm) {
+                        if (!modalScope.models.pendingSubmit) {
+                            modalScope.models.pendingSubmit = true;
+                            if (downloadItemForm.$valid) {
+                                try {
+                                    new RegExp(modalScope.models.regex);
+                                } catch (e) {
+                                    downloadItemForm.regex.$setValidity('invalid', false);
+                                    modalScope.models.pendingSubmit = false;
+                                    return;
+                                }
+                            } else {
+                                modalScope.models.pendingSubmit = false;
+                                return;
+                            }
+                        }
+                        downloadFromPath(regex, paths, elements);
+                        angular.forEach(paths, function (path) {
+                            $analytics.trackLink(url.content + '/' + path, 'download');
+                        });
+                        exportModal.hide();
+                    };
+
+                    exportModal = $modal({
+                        scope: modalScope,
+                        templateUrl: 'common/directives/download-item-modal-template.html',
+                        show: true
+                    });
+                } else {
+                    downloadFromPath(regex, paths, elements);
+                }
+            };
+
+            function downloadFromPath(regex, paths, elements) {
+                if (elements.length > 1 || elements[0].type === ortolangType.collection) {
                     if (elements.length === 1) {
                         if (ctrl.path === '/' && ctrl.hasOnlyParentSelected()) {
                             // Root collection
@@ -426,15 +474,9 @@ angular.module('ortolangMarketApp')
                     }
                 } else {
                     var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + elements[0].name));
-                    paths.push(Helper.normalizePath(ctrl.workspace.alias + '/' + ctrl.root + elementPath));
                     Content.downloadWithPathInWindow(elementPath, ctrl.workspace.alias, ctrl.root);
                 }
-                if (ctrl.isMarket) {
-                    angular.forEach(paths, function (path) {
-                        $analytics.trackLink(url.content + '/' + path, 'download');
-                    });
-                }
-            };
+            }
 
             ctrl.browseTools = function () {
                 if (ctrl.config.canEdit && ctrl.isHead) {

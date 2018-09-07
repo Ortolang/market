@@ -14,6 +14,7 @@ angular.module('ortolangMarketApp')
             options: '<?',
             workspaces: '<?',
             workspace: '<',
+            license: '<',
             root: '<?'
         },
         templateUrl: 'browser/browser.component.html'

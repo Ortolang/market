@@ -6,7 +6,7 @@
                 <span class="modal-title" translate="MARKET.DOWNLOAD_MODAL.TITLE"></span>
             </div>
             <div class="modal-body">
-                <p translate="MARKET.DOWNLOAD_MODAL.SIZE" data-translate-values="models"></p>
+                <p ng-if="models.size" translate="MARKET.DOWNLOAD_MODAL.SIZE" data-translate-values="models"></p>
                 <p ng-if="!models.authenticated" translate="MARKET.DOWNLOAD_MODAL.ANONYMOUS"></p>
                 <p ng-if="models.authenticated && !models.esr" translate="MARKET.DOWNLOAD_MODAL.AUTHENTICATED"></p>
                 <p ng-if="models.authenticated && models.esr" translate="MARKET.DOWNLOAD_MODAL.ESR"></p>
@@ -20,7 +20,7 @@
                             <div ng-message="required">{{'MARKET.DOWNLOAD_MODAL.MESSAGES.POLICY' | translate}}</div>
                         </div>
                     </div>
-                    <div class="form-group" ng-if="models.conditionsOfUse" ng-class="{'has-error': (downloadItem.$submitted || downloadItem.alias.$dirty) && downloadItem.conditionsOfUseConsent.$invalid}">
+                    <div class="form-group" ng-if="models.license && models.license.conditionsOfUse" ng-class="{'has-error': (downloadItem.$submitted || downloadItem.alias.$dirty) && downloadItem.conditionsOfUseConsent.$invalid}">
                         <div class="checkbox checkbox-primary">
                             <input id="conditionsOfUse-consent" type="checkbox" name="conditionsOfUseConsent" ng-model="models.conditionsOfUseConsent" required ng-disabled="models.pendingSubmit">
                             <label for="conditionsOfUse-consent" translate="MARKET.DOWNLOAD_MODAL.CONDITIONSOFUSE" data-translate-values="models"></label>
