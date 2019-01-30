@@ -26,5 +26,7 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /code/dist /usr/share/nginx/html
 
 CMD cp /usr/share/nginx/html/index.html /tmp/ && \
+    cp /etc/nginx/conf.d/default.conf /tmp/ && \
     envsubst < /tmp/index.html > /usr/share/nginx/html/index.html && \
+    envsubst < /tmp/default.conf > /etc/nginx/conf.d/default.conf && \
     nginx -g 'daemon off;'
