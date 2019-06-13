@@ -17,6 +17,7 @@ angular.module('ortolangMarketApp')
             ADDED_TO_FRIENDS: 'Added to my co-workers',
             REMOVE_FRIEND: 'Remove from co-workers',
             SEE_CONTRIBUTOR_PAGE: 'See my public profile',
+            PRIVACY_ALERT: 'The collected data is handled by computer processing as described in the <a href="https://www.ortolang.fr/information/privacy?lang=en" target="_blank">privacy policy</a> of ORTOLANG.',
             NAV: {
                 PERSONAL_INFOS: 'Personal informations',
                 SETTINGS: 'Settings',
