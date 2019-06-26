@@ -8,7 +8,18 @@ variables:
   IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG
 
 stages:
+  - analyse
   - build
+
+analyze:
+  stage: analyze
+  image: registry2.atilf.fr/atilf/sonarqube-scanner:1.0.0
+  tags:
+    - ortolang-docker-bind
+  allow_failure: true
+  script:
+    - /sonar/sonar-scanner-cli/bin/sonar-scanner
+
 
 docker_build:
   stage: build
