@@ -8,7 +8,7 @@ variables:
   IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG
 
 stages:
-  - analyse
+  - analyze
   - build
 
 analyze:
