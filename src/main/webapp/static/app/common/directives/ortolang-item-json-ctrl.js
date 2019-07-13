@@ -204,7 +204,6 @@ angular.module('ortolangMarketApp')
             };
 
             function createLicenseModel() {
-                console.log($scope.license);
                 return {
                     label: $scope.license ? $scope.license.label : undefined,
                     url: $scope.license && $scope.license.effectiveText ? $scope.license.effectiveText.url : undefined,

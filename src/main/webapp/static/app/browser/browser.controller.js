@@ -1957,6 +1957,24 @@ angular.module('ortolangMarketApp')
             //           Init          //
             // *********************** //
 
+            ctrl.$onInit = function () {
+                initLocalVariables();
+                initOptions();
+                initScopeVariables();
+                populateBreadcrumbDropdownMenu();
+                if (ctrl.isMarket) {
+                    initWorkspaceVariables(ctrl.root, $location.search().path);
+                } else if (ctrl.isWorkspace) {
+                    initWorkspaceVariables($location.search().root, $location.search().path);
+                } else if (ctrl.isFileSelect) {
+                    ctrl.$onChanges = function (changesObj) {
+                        if (changesObj.workspace && angular.isDefined(changesObj.workspace.currentValue)) {
+                            initWorkspaceVariables($location.search().root, $location.search().path);
+                        }
+                    };
+                }
+            };
+
             function initLocalVariables() {
                 isMobile = Helper.isMobile();
                 isClickedOnce = false;
@@ -2074,22 +2092,22 @@ angular.module('ortolangMarketApp')
                 populateToolList();
             }
 
-            (function init() {
-                initLocalVariables();
-                initOptions();
-                initScopeVariables();
-                populateBreadcrumbDropdownMenu();
-                if (ctrl.isMarket) {
-                    initWorkspaceVariables(ctrl.root, $location.search().path);
-                } else if (ctrl.isWorkspace) {
-                    initWorkspaceVariables($location.search().root, $location.search().path);
-                } else if (ctrl.isFileSelect) {
-                    ctrl.$onChanges = function (changesObj) {
-                        if (changesObj.workspace && angular.isDefined(changesObj.workspace.currentValue)) {
-                            initWorkspaceVariables($location.search().root, $location.search().path);
-                        }
-                    };
-                }
-            }());
+            // (function init() {
+            //     initLocalVariables();
+            //     initOptions();
+            //     initScopeVariables();
+            //     populateBreadcrumbDropdownMenu();
+            //     if (ctrl.isMarket) {
+            //         initWorkspaceVariables(ctrl.root, $location.search().path);
+            //     } else if (ctrl.isWorkspace) {
+            //         initWorkspaceVariables($location.search().root, $location.search().path);
+            //     } else if (ctrl.isFileSelect) {
+            //         ctrl.$onChanges = function (changesObj) {
+            //             if (changesObj.workspace && angular.isDefined(changesObj.workspace.currentValue)) {
+            //                 initWorkspaceVariables($location.search().root, $location.search().path);
+            //             }
+            //         };
+            //     }
+            // }());
 
         }]);
