@@ -1,20 +1,29 @@
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var commonConfig = require('./webpack.common.js');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'test';
 
 module.exports = {
     devtool: 'source-map',
+    mode: 'development',
+    
+    entry: commonConfig.entry,
 
     resolve: commonConfig.resolve,
 
     module: {
-        loaders: commonConfig.module.loaders
+        rules: commonConfig.module.rules
     },
 
+    optimization: commonConfig.optimization,
+
     plugins: [
-        new ExtractTextPlugin('[name].css'),
+
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: "[id].css"
+        }),
 
         new webpack.ProvidePlugin({
             '$': 'jquery',
@@ -27,7 +36,7 @@ module.exports = {
 
         new webpack.DefinePlugin({
             'process.env': {
-                'ENV': JSON.stringify(ENV)
+                'NODE_ENV': JSON.stringify(ENV)
             }
         })
     ]
