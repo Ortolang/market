@@ -8,8 +8,21 @@ variables:
   IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG
 
 stages:
+  - outdated
   - analyze
+  - test
   - build
+
+outdated:
+  stage: outdated
+  image: node:8.16
+  tags:
+    - ortolang-docker-bind
+  script:
+    - npm install
+    - npm outdated -l || true
+  except:
+    - tags
 
 analyze:
   stage: analyze
@@ -20,6 +33,16 @@ analyze:
   script:
     - /sonar/sonar-scanner-cli/bin/sonar-scanner
 
+test:
+  stage: test
+  image: node:8.16
+  tags:
+    - ortolang-docker-bind
+  script:
+    - npm install
+    - npm test
+  except:
+    - tags
 
 docker_build:
   stage: build
@@ -32,4 +55,3 @@ docker_build:
   only: 
     - master
     - tags
-    - branches

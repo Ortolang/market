@@ -21,8 +21,6 @@ module.exports = function (config) {
             require('karma-remap-istanbul'),
             require('karma-sourcemap-loader'),
             require('karma-junit-reporter'),
-            require('karma-tap'),
-            require('karma-tap-pretty-reporter'),
             require('karma-webpack')
         ],
 
@@ -40,7 +38,7 @@ module.exports = function (config) {
             noInfo: false
         },
 
-        reporters: ['progress', 'junit', 'tap-pretty', 'karma-remap-istanbul'],
+        reporters: ['progress', 'junit', 'karma-remap-istanbul'],
 
         remapIstanbulReporter: {
             reports: {

@@ -219,7 +219,7 @@ import './profile/tasks';
 import './styles/less/app.less';
 
 import './robots.txt';
-if (process.env.ENV === 'dev') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     require('./keycloak.json');
 }
 

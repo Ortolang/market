@@ -1,10 +1,10 @@
 declare var window: any;
-if (process.env.ENV === 'test') {
-    window.OrtolangConfig = require('json!../test/ortolang-config.json');
+if (process.env.NODE_ENV === 'test') {
+    window.OrtolangConfig = require('../test/ortolang-config.json');
 }
 
-if (process.env.ENV === 'dev') {
-    window.OrtolangConfig = require('json!./ortolang-config.json');
+if (process.env.NODE_ENV === 'development') {
+    window.OrtolangConfig = require('./ortolang-config.json');
 }
 
 /* piwik */
@@ -79,7 +79,6 @@ import 'angular-xml-cjs2';
 import './styles/less/custom-bootstrap.less';
 // CSS
 import 'font-awesome/css/font-awesome.css';
-import 'octicons/octicons/octicons.css';
 import 'highlight.js/styles/solarized-light.css';
 import 'angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css';
 import 'angular-hotkeys/src/hotkeys.css';

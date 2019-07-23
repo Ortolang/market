@@ -1,9 +1,9 @@
 ### STAGE 1: Build ###
-FROM node:6.3 as builder
+FROM node:8.16 as builder
 
 WORKDIR /code
 
-COPY package.json .
+COPY package.json package-lock.json /code/
 
 RUN npm config set depth 0 && npm cache clean --force && npm install -q --no-progress
 
