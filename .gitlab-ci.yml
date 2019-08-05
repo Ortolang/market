@@ -50,9 +50,9 @@ dependency_scanning:
   artifacts:
     paths:
       - reports/dependency-check/
+  only:
+    - master
   except:
-    - tags
-    - branches
     - schedules
 
 analyze:
@@ -65,9 +65,9 @@ analyze:
     - /sonar/sonar-scanner-cli/bin/sonar-scanner
   dependencies:
     - dependency_scanning
+  only:
+    - master
   except:
-    - tags
-    - branches
     - schedules
 
 docker_build:
