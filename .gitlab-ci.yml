@@ -1,7 +1,7 @@
 image: docker:latest
 
 services:
-  - docker:dind
+  - docker:18.06-dind
 
 variables:
   GIT_SSL_NO_VERIFY: "true"
@@ -9,8 +9,8 @@ variables:
 
 stages:
   - outdated
-  - analyze
   - test
+  - analyze
   - build
 
 outdated:
@@ -21,17 +21,8 @@ outdated:
   script:
     - npm install
     - npm outdated -l || true
-  except:
-    - tags
-
-analyze:
-  stage: analyze
-  image: registry2.atilf.fr/atilf/sonarqube-scanner:1.0.0
-  tags:
-    - ortolang-docker-bind
-  allow_failure: true
-  script:
-    - /sonar/sonar-scanner-cli/bin/sonar-scanner
+  only:
+    - schedules
 
 test:
   stage: test
@@ -43,6 +34,41 @@ test:
     - npm test
   except:
     - tags
+    - schedules
+
+dependency_scanning:
+  stage: test
+  image: 
+    name: owasp/dependency-check
+    entrypoint: [""]
+  tags:
+    - ortolang-docker-bind
+  allow_failure: true
+  script:
+    - mkdir -p reports/dependency-check
+    - /usr/share/dependency-check/bin/dependency-check.sh -s . --format 'ALL' --data /tmp/data --out reports/dependency-check/
+  artifacts:
+    paths:
+      - reports/dependency-check/
+  except:
+    - tags
+    - branches
+    - schedules
+
+analyze:
+  stage: analyze
+  image: registry2.atilf.fr/atilf/sonarqube-scanner:1.1.0
+  tags:
+    - ortolang-docker-bind
+  allow_failure: true
+  script:
+    - /sonar/sonar-scanner-cli/bin/sonar-scanner
+  dependencies:
+    - dependency_scanning
+  except:
+    - tags
+    - branches
+    - schedules
 
 docker_build:
   stage: build
@@ -55,3 +81,5 @@ docker_build:
   only: 
     - master
     - tags
+  except:
+    - schedules
