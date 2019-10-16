@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{$ctrl.filter.label | translate}}</h3>
+    </div>
+    <div class="panel-body">
+        <ul>
+            <li ng-repeat="option in $ctrl.filter.getOptions()" class="no-style">
+                <div class="checkbox checkbox-primary" ng-click="$ctrl.switchFilter(option)">
+                    <input type="checkbox" id="checkbox{{option.label}}" ng-model="checkbox[option.label]"
+                        ng-checked="$ctrl.filter.hasSelectedOption(option)">
+                    <label>{{option.label | translate}}</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

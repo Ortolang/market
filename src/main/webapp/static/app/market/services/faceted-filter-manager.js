@@ -10,6 +10,8 @@
 angular.module('ortolangMarketApp')
     .factory('FacetedFilterManager', ['FacetedFilter', '$filter', 'Helper', function (FacetedFilter, $filter, Helper) {
 
+        var subject = new Rx.Subject();
+
         // Constructor
         function FacetedFilterManager() {
             this.enabledFilters = [];
@@ -20,14 +22,19 @@ angular.module('ortolangMarketApp')
         // Methods
         FacetedFilterManager.prototype = {
 
-            addFilter: function (filter) {
+            addEnabledFilter: function (filter) {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
                     if (this.enabledFilters[i].getId() === filter.getId()) {
+                        // Sends event after processing changes
+                        // subject.onNext(filter);
                         return this.enabledFilters;
                     }
                 }
-                return this.enabledFilters.push(filter);
+                this.enabledFilters.push(filter);
+                // Sends event after processing changes
+                // subject.onNext(filter);
+                return this.enabledFilters;
             },
 
             getFilter: function (alias) {
@@ -39,7 +46,7 @@ angular.module('ortolangMarketApp')
                 }
             },
 
-            removeFilter: function (filter) {
+            removeEnabledFilter: function (filter) {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
                     if (this.enabledFilters[i].getId() === filter.getId()) {
@@ -52,15 +59,19 @@ angular.module('ortolangMarketApp')
 
             clear: function () {
                 this.enabledFilters = [];
+                // Sends event after processing changes
+                // subject.onNext();
             },
 
-            resetFilter: function () {
+            resetEnabledFilters: function () {
                 var i = 0;
                 for (i; i < this.enabledFilters.length; i++) {
                     this.enabledFilters[i].clearSelectedOptions();
                     delete this.enabledFilters[i];
                 }
                 this.enabledFilters = [];
+                // Sends event after processing changes
+                // subject.onNext();
             },
 
             addAvailableFilter: function (filter) {
@@ -80,8 +91,15 @@ angular.module('ortolangMarketApp')
             removeOptionFilter: function (filter, opt) {
                 filter.removeSelectedOption(opt);
                 if (!filter.hasSelectedOptions()) {
-                    this.removeFilter(filter);
+                    this.removeEnabledFilter(filter);
                 }
+                // Sends event after processing changes
+                // subject.onNext(filter);
+            },
+
+            applyFilters: function () {
+                // Sends event after processing changes
+                subject.onNext();
             },
 
             enabledParamsFilter: function() {
@@ -114,17 +132,23 @@ angular.module('ortolangMarketApp')
                 return result;
             },
 
+            onEnabledFilterChange: function (subscriber) {
+                return subject.subscribe(subscriber);
+            },
+
             init: function (type, configurations) {
                 var Manager = this;
-                var filter = FacetedFilter.makeTypeFilter(type, true);
-                this.addAvailableFilter(filter);
-                angular.forEach(configurations, function (config) {
-                    // config.id = Helper.prefix.metaItem + config.alias + '.key';
-                    config.id = config.alias + '.id';
-                    // config.path = Helper.prefix.metaItem + config.alias;
-                    var filter = FacetedFilter.make(config);
-                    return Manager.addAvailableFilter(filter);
-                });
+                if (configurations) {
+                    angular.forEach(configurations, function (config) {
+                        if (config.type === 'array' || config.type === 'object') {
+                            config.id = config.alias + '.id';
+                        } else {
+                            config.id = config.alias;
+                        }
+                        var filter = FacetedFilter.make(config);
+                        return Manager.addAvailableFilter(filter);
+                    });
+                }
             }
         };
 

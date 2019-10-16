@@ -38,7 +38,7 @@ angular.module('ortolangMarketApp')
                 metaRating: 'ortolang-workspace-json.latestSnapshot.meta_system-rating-json.'
             };
 
-            this.includedItemFields = ['key', 'title', 'rank', 'type', 'image', 'publicationDate', 'wskey', 'alias', 'snapshot', 'tag'];
+            this.includedItemFields = ['key', 'title', 'rank', 'type', 'corporaType', 'corporaLanguages', 'description', 'image', 'publicationDate', 'statusOfUse', 'wskey', 'alias', 'snapshot', 'tag'];
 
             this.getFieldsParam = function (fields) {
                 var param = [];

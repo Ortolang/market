@@ -8,8 +8,13 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('HomeCtrl', ['$scope', 'SearchProvider', 'StaticWebsite', 'StatisticsResource', 'Helper',
-        function ($scope, SearchProvider, StaticWebsite, StatisticsResource, Helper) {
+    .controller('HomeCtrl', ['$scope', '$location', 'SearchProvider', 'StaticWebsite', 'StatisticsResource', 'Helper',
+        function ($scope, $location, SearchProvider, StaticWebsite, StatisticsResource, Helper) {
+
+            $scope.goToSearch = function() {
+                $location.search({content: $scope.content});
+                $location.path("/market/search");
+            };
 
             StatisticsResource.get({names: 'core.workspaces.all,membership.profiles.all,binary-store.size,binary-store.files'}, function (data) {
                 angular.forEach(data, function (representation, name) {

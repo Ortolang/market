@@ -8,7 +8,7 @@
  * Directive of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .directive('item', ['Content', 'Helper', 'icons',  function (Content, Helper, icons) {
+    .directive('item', ['$translate', 'Content', 'Helper', 'icons', function ($translate, Content, Helper, icons) {
         return {
             restrict: 'EA',
             scope: {
@@ -38,7 +38,17 @@ angular.module('ortolangMarketApp')
                         scope.title = scope.entry.effectiveTitle;
                     }
                     if (scope.entry.description) {
-                        scope.description = Helper.getMultilingualValue(scope.entry.description);
+                        var description = Helper.findObjectOfArray(scope.entry.description, "lang", "fr");
+                        if (description == null) {
+                            description = Helper.findObjectOfArray(scope.entry.description, "lang", "en");
+                        }
+                        if (angular.isDefined(description.abstract)) {
+                            scope.description = description.abstract;
+                        }
+                    }
+                    if (scope.entry.type) {
+                        scope.type = scope.entry.type;
+                        scope.typeIcon = icons.suggestion[scope.entry.type.toLowerCase()];
                     }
 
                     if (scope.entry.image) {
@@ -50,6 +60,13 @@ angular.module('ortolangMarketApp')
                             scope.imgtitle = scope.title.substring(0, 2);
                             scope.imgtheme = scope.title.substring(0, 1).toLowerCase();
                         }
+                    }
+
+                    if (scope.entry.corporaType) {
+                        scope.corporaType = Helper.getMultilingualValue(scope.entry.corporaType.labels);
+                    }
+                    if (scope.entry.statusOfUse) {
+                        scope.statusOfUse = Helper.getMultilingualValue(scope.entry.statusOfUse.labels);
                     }
 
                     // For sorting

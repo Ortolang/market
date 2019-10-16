@@ -1,8 +1,11 @@
-<div class="view-wrapper-flex">
-    <div class="toolbar-wrapper market-toolbar-wrapper" market-toolbar data-filters-manager="filtersManager" data-query='query' data-items="items" data-view-mode="viewMode" data-view-modes="viewModes" data-order-prop="orderProp" data-order-direction="orderDirection" data-order-props="orderProps"></div>
+<div class="view-wrapper-flex market-view-wrapper-flex">
+    <facet-filter-search-bar class="toolbar-wrapper market-toolbar-wrapper" data-search="search" data-filters-manager="filtersManager"></facet-filter-search-bar>
     <div class="container-main">
         <div class="container-main-inner">
-            <div items data-filters-manager="filtersManager" data-query="query"></div>
+            <div class="container-flex">
+                <facet-filter-column class="container-flex-controller-panel facet-filter-column" data-search="search" data-filters-manager="filtersManager"></facet-filter-column>
+                <facet-filter-results class="container-flex-results-panel" data-search="search"></facet-filter-results>
+            </div>
         </div>
     </div>
 </div>

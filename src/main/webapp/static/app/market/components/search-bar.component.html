@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-sm-8">
+        <div class="input-group">
+            <input id="market-search-bar" name="market-search-bar" ng-model="$ctrl.content" ng-keyup="$event.keyCode == 13 && $ctrl.goToSearch()"
+                class="form-control" type="text"
+                placeholder="{{::('MARKET.SEARCH.' + ($ctrl.type ? $ctrl.type.toUpperCase() : 'ALL') || 'SEARCH') | translate}}"
+                autocomplete="off"
+                bs-options="suggestion.html for suggestion in $ctrl.suggest($viewValue, $ctrl.type)" 
+                data-container="body" data-min-length="0" data-html="true"  data-bs-on-select="$ctrl.applySuggestion"  bs-typeahead>
+            <span class="input-group-btn">
+                <button ng-click="$ctrl.goToSearch()" class="btn btn-default" type="button"><span
+                        class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </div>
+</div>

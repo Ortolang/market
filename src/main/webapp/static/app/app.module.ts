@@ -83,6 +83,13 @@ angular
                 title: 'NEWS',
                 description: 'default'
             })
+            .when('/market/:section/cluster/:cluster', {
+                templateUrl: 'market/cluster.html',
+                controller: 'ClusterCtrl',
+                title: 'CORPORA',
+                description: 'NAV.DESCRIPTION.CORPORA',
+                reloadOnSearch: false
+            })
             .when('/market/corpora', {
                 templateUrl: 'market/corpora.html',
                 controller: 'CorporaCtrl',
