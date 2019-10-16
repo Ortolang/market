@@ -84,6 +84,8 @@ angular.module('ortolangMarketApp')
             NO_RESULT: 'No result found',
             ESR_ACCESSIBLE: 'Accessible to ESR members',
             FACET: {
+                PRODUCER: 'Producer',
+                ALL_PRODUCER: 'All producers',
                 CORPORA_TYPE: 'Type of corpora',
                 ALL_CORPORA: 'All corpus',
                 ANNOTATION_LEVEL: 'Annotation levels',
@@ -139,7 +141,9 @@ angular.module('ortolangMarketApp')
                 TERMINOLOGIES: 'Search for a terminologies, thésaurus or ontologies',
                 PRODUCERS: 'Search for a producer (name, acronym, city)',
                 ALL: 'Search in ORTOLANG',
-                BACK_TO_RESULTS: 'Back to results'
+                BACK_TO_RESULTS: 'Back to results',
+                COUNT_RESULT: 'Results',
+                NO_RESULT: 'No result'
             },
             SHOW_IN: 'Show by',
             VIEW_MODE: {

@@ -435,3 +435,20 @@ button.no-border {
 blockquote {
   font-size: 14.5px;
 }
+
+li.no-style {
+  list-style: none;
+}
+
+dl.with-comma {
+  dt {
+    white-space: normal;
+  }
+  dd {
+    span:not(:last-child) {
+      &:after {
+        content: ", ";
+      }
+    }
+  }
+}

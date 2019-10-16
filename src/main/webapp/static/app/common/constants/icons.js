@@ -81,6 +81,14 @@ angular.module('ortolangMarketApp')
                 tools: 'fa fa-fw fa-cubes',
                 terminologies: 'fa fa-fw fa-font'
             },
+            suggestion: {
+                corpus: 'fa fa-book',
+                lexique: 'fa fa-quote-right',
+                outil: 'fa fa-cubes',
+                terminologie: 'fa fa-font',
+                application: 'fa fa-briefcase',
+                organization: 'fa fa-graduation-cap'
+            },
             tree: {
                 collection: 'fa fa-folder',
                 collectionOpen: 'fa fa-folder-open',

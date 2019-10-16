@@ -1,0 +1,34 @@
+<div class="toolbar">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input id="market-toolbar-search" ng-model="$ctrl.content" ng-keyup="$event.keyCode == 13 && $ctrl.applyFilters()"
+                    class="form-control" type="text"
+                    placeholder="{{::('MARKET.SEARCH.' + (type ? type.toUpperCase() : 'ALL') || 'SEARCH') | translate}}"
+                    autocomplete="off"
+                    bs-options="suggestion.html for suggestion in $ctrl.suggest($viewValue)" 
+                    data-container="body" data-min-length="0" data-html="true"  data-bs-on-select="$ctrl.applySuggestion"  bs-typeahead>
+                <span class="input-group-btn">
+                    <button ng-click="$ctrl.applyFilters()" class="btn btn-default" type="button"><span
+                            class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                    role="button" data-title="{{'BROWSER.SORT_BY' | translate}}" bs-tooltip><span
+                        ng-class="::$ctrl.icons.browser.sort"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="orderProp in ::$ctrl.search.orderProps">
+                        <div ng-click="$ctrl.toggleOrderBy(orderProp)">
+                            <span>{{::orderProp.text | translate}}</span>
+                            <order-indicator name="{{$ctrl.search.activeOrderProp.id}}" array="id" order-prop="orderProp"
+                                order-reverse="$ctrl.search.orderReverse"></order-indicator>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

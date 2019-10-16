@@ -1,0 +1,8 @@
+<div ng-hide="$ctrl.search.isProcessing()" ng-if="$ctrl.results.length > 0">
+    <h3>{{'MARKET.SEARCH.COUNT_RESULT' | translate }} : {{ $ctrl.results.length }}</h3>
+    <item ng-repeat="item in $ctrl.results | orderBy:$ctrl.search.activeOrderProp.sort:$ctrl.search.orderReverse track by item.key"
+        data-entry="item" data-template="market/templates/full-item.html"></item>
+</div>
+<div ng-hide="$ctrl.search.isProcessing()" ng-if="$ctrl.results.length == 0">
+    <h3 translate="MARKET.SEARCH.NO_RESULT"></h3>
+</div>

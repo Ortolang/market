@@ -100,7 +100,7 @@ angular.module('ortolangMarketApp')
                     scope.setFilter = function (filter, opt) {
                         addSelectedOptionFilter(filter, opt.getValue());
 
-                        scope.filtersManager.addFilter(filter);
+                        scope.filtersManager.addEnabledFilter(filter);
                         scope.applyFilters();
                     };
 
@@ -109,7 +109,7 @@ angular.module('ortolangMarketApp')
                             scope.filtersManager.removeOptionFilter(filter, opt);
                         } else {
                             addSelectedOptionFilter(filter, opt.getValue());
-                            scope.filtersManager.addFilter(filter);
+                            scope.filtersManager.addEnabledFilter(filter);
                         }
                         if (apply) {
                             scope.applyFilters();
@@ -118,13 +118,13 @@ angular.module('ortolangMarketApp')
 
                     scope.removeFilter = function (filter) {
                         if (filter.hasSelectedOptions()) {
-                            scope.filtersManager.removeFilter(filter);
+                            scope.filtersManager.removeEnabledFilter(filter);
                             scope.applyFilters();
                         }
                     };
 
                     scope.resetFilters = function () {
-                        scope.filtersManager.resetFilter();
+                        scope.filtersManager.resetEnabledFilters();
                         scope.applyFilters();
                     };
 
@@ -233,10 +233,10 @@ angular.module('ortolangMarketApp')
                         // -- Sets filters for HTML render view --
 
                         // Clears selection and remove all filters enabled
-                        scope.filtersManager.resetFilter();
+                        scope.filtersManager.resetEnabledFilters();
                         if (scope.preSelectedFilter) {
                             addSelectedOptionFilter(scope.preSelectedFilter, params[scope.preSelectedFilter.getId()]);
-                            scope.filtersManager.addFilter(scope.preSelectedFilter);
+                            scope.filtersManager.addEnabledFilter(scope.preSelectedFilter);
                         }
                         
 
@@ -251,7 +251,7 @@ angular.module('ortolangMarketApp')
                                     if (facetedFilters[i].getId() === paramKey) {
                                         addOptionFilter(facetedFilters[i], params[paramName]);
                                         addSelectedOptionFilter(facetedFilters[i], params[paramName]);
-                                        scope.filtersManager.addFilter(facetedFilters[i]);
+                                        scope.filtersManager.addEnabledFilter(facetedFilters[i]);
                                         break;
                                     }
                                 }
@@ -286,6 +286,7 @@ angular.module('ortolangMarketApp')
                             i = 0;
                             
                         for (i; i < facetedFilters.length; i++) {
+                            // if (scope.preSelectedFilter == undefined || (scope.preSelectedFilter && facetedFilters[i] !== scope.preSelectedFilter)) {
                             if (facetedFilters[i] !== scope.preSelectedFilter) {
                                 labels[facetedFilters[i].id] = facetedFilters[i].label;
 

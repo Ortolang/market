@@ -233,27 +233,32 @@ angular.module('ortolangMarketApp').service('FacetedFilter', ['$filter', 'Option
             options: [
                 OptionFacetedFilter.make({
                     label: 'Corpus',
-                    value: 'corpora',
+                    // value: 'corpora',
+                    value: 'Corpus',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Lexique',
-                    value: 'lexicons',
+                    // value: 'lexicons',
+                    value: 'Lexique',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Terminologie',
-                    value: 'terminologies',
+                    // value: 'terminologies',
+                    value: 'Terminologie',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Outil',
-                    value: 'tools',
+                    // value: 'tools',
+                    value: 'Outil',
                     length: 1
                 }),
                 OptionFacetedFilter.make({
                     label: 'Projet intégré',
-                    value: 'applications',
+                    // value: 'applications',
+                    value: 'Projet intégré',
                     length: 1
                 })
             ],

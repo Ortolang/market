@@ -16,6 +16,7 @@
 angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'SearchResource', 'icons', 'Helper', function ($filter, SearchResource, icons, Helper) {
 
     var tmpResults; // a temporary array holding the results while they are being processed
+    var subject = new Rx.Subject();
 
     // Constructor
     function SearchProvider(config) {
@@ -119,14 +120,25 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
                         Search.aggregations[aggName] = [];
                         if (angular.isArray(data.aggregations[aggName])) {
                             angular.forEach(data.aggregations[aggName], function (aggValue) {
-                                var decodedKey = decodeURIComponent((aggValue + '').replace(/\+/g, '%20'));
-                                Search.aggregations[aggName].push(angular.fromJson(decodedKey));
+                                var decodedKey = decodeURIComponent((aggValue + '').replace(/\+/g, '%20')).trim();
+                                if (Helper.startsWith(decodedKey, '{')) {
+                                    decodedKey = angular.fromJson(decodedKey);
+                                } else {
+                                    decodedKey = aggValue;
+                                }
+                                Search.aggregations[aggName].push(decodedKey);
                             });
                         }
                     }
                     Search.countResults = data.size;
                 }
+                // Sends event after processing searches
+                subject.onNext(Search);
             });
+        },
+
+        onSearch: function (subscriber) {
+            return subject.subscribe(subscriber);
         },
 
         addViewMode: function (viewMode) {

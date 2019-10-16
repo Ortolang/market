@@ -59,6 +59,7 @@ import 'ng-wig';
 import 'clipboard';
 import 'ngclipboard';
 import 'angular-xml-cjs2';
+import 'rx';
 
 // Angular 2
 // import '@angular/platform-browser';

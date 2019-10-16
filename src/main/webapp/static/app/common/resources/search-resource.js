@@ -11,6 +11,22 @@ angular.module('ortolangMarketApp')
     .factory('SearchResource', ['$resource', 'url', function ($resource, url) {
 
         return $resource(url.api + '/search', {}, {
+            suggest: {
+                url: url.api + '/search/suggest',
+                method: 'GET',
+                isArray: true,
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    data = data.hits;
+                    if (angular.isArray(data)) {
+                        var i = 0;
+                        for (i; i < data.length; i++) {
+                            data[i] = angular.fromJson(data[i]);
+                        }
+                    }
+                    return data;
+                }
+            },
             items: {
                 url: url.api + '/search/items',
                 method: 'GET'
