@@ -16,7 +16,7 @@
         "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
     },
     "dependencies": {
-        "angular": "1.6.10",
+        "angular": "1.7.9",
         "angular-animate": "1.6.10",
         "angular-bootstrap-toggle-switch": "JumpLink/angular-toggle-switch#77b1f1d",
         "angular-chart.js": "1.1.1",
