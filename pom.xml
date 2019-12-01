@@ -47,7 +47,7 @@
     <pluginRepositories>
         <pluginRepository>
             <id>ortolang-maven-repository</id>
-            <url>http://maven.ortolang.fr/public/</url>
+            <url>https://maven.ortolang.fr/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -56,6 +56,23 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>ortolang-maven-repository</id>
+            <name>Ortolang Releases</name>
+            <url>https://maven.ortolang.fr/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ortolang-maven-repository</id>
+            <name>Ortolang Snapshots</name>
+            <url>https://maven.ortolang.fr/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <site>
+            <id>dev.ortolang.fr</id>
+            <url>file:///tmp/ortolang-site/</url>
+        </site>
+    </distributionManagement>
 
     <build>
         <finalName>ortolang-market</finalName>
