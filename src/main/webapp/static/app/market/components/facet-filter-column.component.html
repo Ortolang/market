@@ -1,12 +1,3 @@
-<div class="facet-filter-query" ng-if="$ctrl.search.hasResults()">
-    <h3>Rechercher</h3>
-    <dl class="with-comma">
-        <dt ng-repeat-start="filter in $ctrl.filtersManager.enabledFilters track by filter.id">{{filter.label | translate}} :</dt>
-        <dd ng-repeat-end>
-            <span ng-repeat="option in filter.getSelectedOptions() track by $index">{{option.getLabel() | translate}}</span>
-        </dd>
-    </dl>
-</div>
 <div name="facet-filter-cells" ng-if="$ctrl.search.hasResults()">
     <h3>Filtrer</h3>
     <facet-filter-cell class="facet-filter-cell" ng-repeat="filter in $ctrl.facetedFilters | filter:{priority: 'high'} track by filter.id" data-filter="filter" data-filters-manager="$ctrl.filtersManager"></facet-filter-cell>
