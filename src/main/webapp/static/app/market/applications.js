@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
             $scope.search = SearchProvider.make();
             $scope.search.setActiveOrderProp('publicationDate', true);
             var params = {};
-            	params.type = 'applications';
+            	params.type = 'application';
                 params.includes = Helper.includedItemFields;
                 params.orderProp = 'publicationDate';
                 params.orderDir = 'desc';
