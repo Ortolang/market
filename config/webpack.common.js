@@ -154,18 +154,18 @@ module.exports = {
                 ],
                 include: /assets\/icons\//
             },
-            // {
-            //     test: /\/home\.html$/,
-            //     use: [
-            //         {
-            //             loader: 'string-replace-loader',
-            //             query: {
-            //                 search: '@@version',
-            //                 replace: require('../package.json').version
-            //             }
-            //         }
-            //     ],
-            // }
+            {
+                test: /\/(home|news)\.html$/,
+                use: [
+                    {
+                        loader: 'string-replace-loader',
+                        query: {
+                            search: '@@version',
+                            replace: require('../package.json').version
+                        }
+                    }
+                ],
+            }
         ]
     },
 
