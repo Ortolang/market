@@ -19,7 +19,7 @@ angular.module('ortolangMarketApp')
                     'corporaType.id': $routeParams.cluster,
                     archive: false,
                     includes: Helper.includedItemFields,
-                    size: 15,
+                    size: 200,
                     orderProp: 'rank',
                     orderDir: 'desc'
                 };

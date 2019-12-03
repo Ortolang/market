@@ -13,7 +13,7 @@ angular.module('ortolangMarketApp')
         (function init() {
             $scope.searchTool = SearchProvider.make();
             $scope.searchTool.setActiveOrderProp('rank', true);
-            $scope.paramsTool = { type: 'Outil', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
+            $scope.paramsTool = { type: 'Outil', archive: false, includes: Helper.includedItemFields, size: 200, orderProp: 'rank', orderDir: 'desc' };
 
             $scope.filtersManager = FacetedFilterManager.make();
             $scope.filtersManager.init();
