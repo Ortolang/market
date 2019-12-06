@@ -23,15 +23,17 @@ angular.module('ortolangMarketApp')
 
             var ctrl = this;
 
-            ctrl.options = {
-                isFileSelect: true,
-                forceMimeTypes: ctrl.forceMimeTypes,
-                forceWorkspace: ctrl.forceWorkspace,
-                path: ctrl.path,
-                forceHead: ctrl.forceHead,
-                fileSelectId: ctrl.fileSelectId,
-                hideElements: ctrl.hideElements,
-                fileSelectAcceptMultiple: ctrl.fileSelectAcceptMultiple
+            ctrl.$onInit = function () {
+                ctrl.options = {
+                    isFileSelect: true,
+                    forceMimeTypes: this.forceMimeTypes,
+                    forceWorkspace: this.forceWorkspace,
+                    path: this.path,
+                    forceHead: this.forceHead,
+                    fileSelectId: this.fileSelectId,
+                    hideElements: this.hideElements,
+                    fileSelectAcceptMultiple: this.fileSelectAcceptMultiple
+                };
             };
 
             WorkspaceResource.get().$promise.then(function (data) {
