@@ -60,20 +60,6 @@ angular.module('ortolangMarketApp')
                     }
                 };
             };
-            // (function () {
-            //     ctrl.icons = icons;
-
-            //     ctrl.header = {};
-            //     ctrl.content = {};
-            //     ctrl.footer = {};
-
-            //     ctrl.requests = [];
-
-            //     if (angular.isUndefined(ctrl.actions)) {
-            //         ctrl.actions = {};
-            //     }
-            // })();
-
         }],
         templateUrl: 'visualizers/visualizer.component.html'
     });
