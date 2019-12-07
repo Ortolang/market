@@ -9,62 +9,8 @@
 angular.module('ortolangVisualizers')
     .controller('TextVisualizerCtrl', ['$scope', 'Content', function ($scope, Content) {
 
-        function isHtml(mimeType) {
-            return mimeType === 'text/html' || mimeType === 'application/xhtml+xml';
-        }
-
-        var mimeType = $scope.$ctrl.data.element.mimeType,
-            name = $scope.$ctrl.data.element.name,
-            limit = 20000;
-        $scope.hasPreview = false;
-        if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml' || mimeType === 'application/xslt+xml' || mimeType === 'application/xml-dtd') {
-            $scope.language = 'xml';
-        } else if (mimeType === 'text/plain' && name.endsWith('.ts')) {
-            $scope.language = 'typescript';
-        } else if (isHtml(mimeType) || mimeType === 'text/plain' || mimeType === 'text/csv') {
-            $scope.language = 'html';
-        } else if (mimeType === 'text/css') {
-            $scope.language = 'css';
-        } else if (mimeType === 'text/x-php') {
-            $scope.language = 'php';
-        } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
-            $scope.language = 'javascript';
-        } else if (mimeType === 'application/json') {
-            $scope.language = 'json';
-        } else if (mimeType === 'text/x-web-markdown') {
-            $scope.language = 'markdown';
-        } else if (mimeType === 'text/x-java-source') {
-            $scope.language = 'java';
-        } else if (mimeType === 'application/x-sh') {
-            $scope.language = 'bash';
-        } else if (mimeType === 'text/x-less') {
-            $scope.language = 'less';
-        } else if (mimeType === 'application/postscript' && name.endsWith('.tex')) {
-            $scope.language = 'tex';
-        } else if (mimeType === 'text/x-sql') {
-            $scope.language = 'sql';
-        } else if (mimeType === 'text/x-python') {
-            $scope.language = 'python';
-        } else if (mimeType === 'text/x-perl') {
-            $scope.language = 'perl';
-        } else {
-            $scope.language = undefined;
-        }
-
-        $scope.$ctrl.pendingData = true;
-        $scope.truncated = $scope.$ctrl.forceFullContent ? false : $scope.$ctrl.data.element.size >= limit;
-        $scope.$ctrl.footer = {
-            show: function () {
-                return (!$scope.hasPreview && $scope.truncated) || ($scope.hasPreview && $scope.tabs.activeTab === 'source' && $scope.truncated);
-            },
-            text: 'TEXT_VISUALIZER.EXCERPT'
-        };
-        $scope.$ctrl.footer.actions = [
-            {
-                name: 'seeMore',
-                text: 'TEXT_VISUALIZER.SEE_MORE'
-            }
-        ];
+        var ctrl = this;
+        var mimeType, name, limit, contentDownload;
 
         function initializeVisualizerWithPreview() {
             $scope.hasPreview = true;
@@ -124,51 +70,115 @@ angular.module('ortolangVisualizers')
             }
         }
 
-        if (isHtml(mimeType)) {
-            initializeVisualizerWithPreview();
-            $scope.forceDisplay = true;
-        } else if (mimeType !== 'application/xml') {
-            $scope.forceDisplay = true;
+        function isHtml(mimeType) {
+            return mimeType === 'text/html' || mimeType === 'application/xhtml+xml';
         }
-        var contentDownload;
-        if ($scope.$ctrl.data.element.attachment) {
-            contentDownload = Content.downloadAttachmentWithUrl($scope.$ctrl.data.element.downloadUrl);
-        } else {
-            contentDownload = Content.downloadWithKey($scope.$ctrl.data.element.key);
-        }
-        $scope.$ctrl.requests.push(contentDownload);
-        contentDownload.promise.then(function (response) {
-            if (!$scope.forceFullContent && $scope.$ctrl.data.element.size >= limit) {
-                $scope.content = response.data.substr(0, limit);
-                $scope.$ctrl.actions.seeMore = function () {
-                    if ($scope.content.length + limit < $scope.fullContent.length) {
-                        $scope.content = $scope.fullContent.substr(0, $scope.content.length + limit);
-                    } else {
-                        $scope.content = $scope.fullContent;
-                        $scope.fullContent = undefined;
-                        $scope.truncated = false;
-                    }
-                };
-                $scope.fullContent = response.data;
+
+        ctrl.$onInit = function () {
+            mimeType = $scope.$ctrl.data.element.mimeType;
+            name = $scope.$ctrl.data.element.name;
+            limit = 20000;
+
+            $scope.hasPreview = false;
+
+            if (mimeType === 'application/xml' || mimeType === 'application/rdf+xml' || mimeType === 'text/xml' || mimeType === 'application/xslt+xml' || mimeType === 'application/xml-dtd') {
+                $scope.language = 'xml';
+            } else if (mimeType === 'text/plain' && name.endsWith('.ts')) {
+                $scope.language = 'typescript';
+            } else if (isHtml(mimeType) || mimeType === 'text/plain' || mimeType === 'text/csv') {
+                $scope.language = 'html';
+            } else if (mimeType === 'text/css') {
+                $scope.language = 'css';
+            } else if (mimeType === 'text/x-php') {
+                $scope.language = 'php';
+            } else if (mimeType === 'application/javascript' || mimeType === 'text/javascript') {
+                $scope.language = 'javascript';
+            } else if (mimeType === 'application/json') {
+                $scope.language = 'json';
+            } else if (mimeType === 'text/x-web-markdown') {
+                $scope.language = 'markdown';
+            } else if (mimeType === 'text/x-java-source') {
+                $scope.language = 'java';
+            } else if (mimeType === 'application/x-sh') {
+                $scope.language = 'bash';
+            } else if (mimeType === 'text/x-less') {
+                $scope.language = 'less';
+            } else if (mimeType === 'application/postscript' && name.endsWith('.tex')) {
+                $scope.language = 'tex';
+            } else if (mimeType === 'text/x-sql') {
+                $scope.language = 'sql';
+            } else if (mimeType === 'text/x-python') {
+                $scope.language = 'python';
+            } else if (mimeType === 'text/x-perl') {
+                $scope.language = 'perl';
             } else {
-                $scope.content = response.data;
+                $scope.language = undefined;
             }
-            if (mimeType === 'application/xml') {
-                if (response.data.indexOf('<?xml-stylesheet') !== -1) {
-                    $scope.xsl = true;
-                }
-                if (response.data.indexOf('xmlns="http://www.tei-c.org/ns/1.0"') !== -1) {
-                    $scope.tei = true;
-                }
-                if ($scope.xsl || $scope.tei) {
-                    initializeVisualizerWithPreview();
-                }
+
+            $scope.$ctrl.pendingData = true;
+            $scope.truncated = $scope.$ctrl.forceFullContent ? false : $scope.$ctrl.data.element.size >= limit;
+
+            if (isHtml(mimeType)) {
+                initializeVisualizerWithPreview();
+                $scope.forceDisplay = true;
+            } else if (mimeType !== 'application/xml') {
+                $scope.forceDisplay = true;
             }
-            if (isHtml(mimeType) && response.data.indexOf('<iframe') === 0 && response.data.indexOf('</iframe>') === response.data.length - '</iframe>'.length) {
-                $scope.inception = true;
+
+            if ($scope.$ctrl.data.element.attachment) {
+                contentDownload = Content.downloadAttachmentWithUrl($scope.$ctrl.data.element.downloadUrl);
+            } else {
+                contentDownload = Content.downloadWithKey($scope.$ctrl.data.element.key);
             }
-            $scope.$ctrl.pendingData = false;
-        });
+
+            $scope.$ctrl.footer = {
+                show: function () {
+                    return (!$scope.hasPreview && $scope.truncated) || ($scope.hasPreview && $scope.tabs.activeTab === 'source' && $scope.truncated);
+                },
+                text: 'TEXT_VISUALIZER.EXCERPT'
+            };
+            $scope.$ctrl.footer.actions = [
+                {
+                    name: 'seeMore',
+                    text: 'TEXT_VISUALIZER.SEE_MORE'
+                }
+            ];
+
+            $scope.$ctrl.requests.push(contentDownload);
+            contentDownload.promise.then(function (response) {
+                if (!$scope.forceFullContent && $scope.$ctrl.data.element.size >= limit) {
+                    $scope.content = response.data.substr(0, limit);
+                    $scope.$ctrl.actions.seeMore = function () {
+                        if ($scope.content.length + limit < $scope.fullContent.length) {
+                            $scope.content = $scope.fullContent.substr(0, $scope.content.length + limit);
+                        } else {
+                            $scope.content = $scope.fullContent;
+                            $scope.fullContent = undefined;
+                            $scope.truncated = false;
+                        }
+                    };
+                    $scope.fullContent = response.data;
+                } else {
+                    $scope.content = response.data;
+                }
+                if (mimeType === 'application/xml') {
+                    if (response.data.indexOf('<?xml-stylesheet') !== -1) {
+                        $scope.xsl = true;
+                    }
+                    if (response.data.indexOf('xmlns="http://www.tei-c.org/ns/1.0"') !== -1) {
+                        $scope.tei = true;
+                    }
+                    if ($scope.xsl || $scope.tei) {
+                        initializeVisualizerWithPreview();
+                    }
+                }
+                if (isHtml(mimeType) && response.data.indexOf('<iframe') === 0 && response.data.indexOf('</iframe>') === response.data.length - '</iframe>'.length) {
+                    $scope.inception = true;
+                }
+                $scope.$ctrl.pendingData = false;
+            });
+        };
+
     }])
     .run(['VisualizerService', function (VisualizerService) {
         VisualizerService.register({
