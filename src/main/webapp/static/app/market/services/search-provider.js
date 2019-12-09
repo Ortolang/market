@@ -91,7 +91,7 @@ angular.module('ortolangMarketApp').factory('SearchProvider', [ '$filter', 'Sear
             var Search = this;
             // Includes in the results only those fields
             param.includes = Helper.includedItemFields;
-            param.size = param.size || 200;
+            param.size = param.size || 500;
 
             return SearchResource.items(param, function (data) {
                 if (noProcessing) {
