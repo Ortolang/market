@@ -1,4 +1,4 @@
-<div name="facet-filter-cells" ng-if="$ctrl.search.hasResults()">
+<div name="facet-filter-cells">
     <h3>Filtrer</h3>
     <facet-filter-cell class="facet-filter-cell" ng-repeat="filter in $ctrl.facetedFilters | filter:{priority: 'high'} track by filter.id" data-filter="filter" data-filters-manager="$ctrl.filtersManager"></facet-filter-cell>
 </div>

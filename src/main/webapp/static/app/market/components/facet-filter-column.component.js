@@ -21,7 +21,7 @@ angular.module('ortolangMarketApp')
              * @param {SearchProvider} s 
              */
             function onSearch(s) {
-                if (s.aggregations !== null) {
+                if (s.aggregations !== null && angular.isDefined(s.aggregations.type)) {
                     // setOptionsFilters();
                     initFacetedFilters(s.aggregations);
                 }
