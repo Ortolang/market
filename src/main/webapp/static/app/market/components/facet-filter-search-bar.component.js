@@ -15,7 +15,7 @@ angular.module('ortolangMarketApp')
         },
         controller: ['$location', '$routeParams', '$scope', 'icons', 'Helper', 'OptionFacetedFilter', 'Suggester', 
             function ($location, $routeParams, $scope, icons, Helper, OptionFacetedFilter, Suggester) {
-            var ctrl = this, subscription;
+            var ctrl = this, subscription, fireSearchFromFacet, fireSearchFromURL;
 
             /**
              * Returns an object containing all url param necessary to apply the criteria.
@@ -93,13 +93,16 @@ angular.module('ortolangMarketApp')
                 params.archive = false;
                 ctrl.search.search(params);
             }
-
+            
             ctrl.applyFilters = function () {
-                //TODO hide suggestion
                 // Changes the URL
-                $location.search(urlParam(ctrl.content, ctrl.search.activeViewMode, ctrl.search.activeOrderProp, (ctrl.search.orderReverse ? 'desc' : 'asc')));
+                if (!fireSearchFromURL) {
+                    fireSearchFromFacet = true;
+                    $location.search(urlParam(ctrl.content, ctrl.search.activeViewMode, ctrl.search.activeOrderProp, (ctrl.search.orderReverse ? 'desc' : 'asc')));
+                }
                 // Executes the query via SearchProvider 
                 executeQuery(ctrl.content, ctrl.search.activeViewMode, ctrl.search.activeOrderProp, (ctrl.search.orderReverse ? 'desc' : 'asc'));
+                fireSearchFromURL = false;
             };
 
             ctrl.toggleOrderBy = function (orderProp) {
@@ -152,8 +155,12 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            function setEnabledFiltersFromRouteParam() {
-                var routeParamsfilters = angular.fromJson($routeParams.filters);
+            /**
+             * Sets filters GUI from route params.
+             */
+            function setEnabledFiltersFromRouteParam(urlParam) {
+                var routeParamsfilters = angular.fromJson(urlParam || $routeParams.filters);
+                ctrl.filtersManager.resetEnabledFilters();
                 for (var paramName in routeParamsfilters) {
                     if (routeParamsfilters.hasOwnProperty(paramName) && routeParamsfilters[paramName]) {
                         var paramKey = paramName;
@@ -184,17 +191,32 @@ angular.module('ortolangMarketApp')
                 //TODO remove filter URL parameter
                 $scope.$apply();
             };
+            
+            $scope.$on('$routeUpdate', function ($event, next, current) {
+                if (!fireSearchFromFacet) {
+                    fireSearchFromURL = true;
+                    // Runs search at startup
+                    ctrl.content = next.params.content || '';
+                    // Sets filters
+                    if (angular.isDefined(next.params.filters)) {
+                        setEnabledFiltersFromRouteParam(next.params.filters);
+                    }
+                }
+                // Limit of one search per request
+                fireSearchFromFacet = false;
+            });
 
             ctrl.$onInit = function () {
                 ctrl.icons = icons;
                 subscription = ctrl.filtersManager.onEnabledFilterChange(onEnabledFilterChange);
+                fireSearchFromFacet = false;
+                fireSearchFromURL = true;
                 // Runs search at startup
                 ctrl.content = $routeParams.content || '';
                 // Sets filters
                 if (angular.isDefined($routeParams.filters)) {
                     setEnabledFiltersFromRouteParam();
                 }
-                // executeQuery(ctrl.content, $routeParams.viewMode, $routeParams.orderProp, $routeParams.orderDir);
             };
 
             ctrl.$onDestroy = function () {
