@@ -134,7 +134,7 @@ angular.module('ortolangMarketApp')
             MOVE_CHILD_MODAL: {
                 TITLE: 'Déplacer <strong>{{name}}</strong> vers...'
             },
-            DELETE_MULTIPLE_ELEMENTS_MODAL: {
+            DELETE_ELEMENTS_MODAL: {
                 COLLECTION: {
                     TITLE: 'Suppression d\'un dossier',
                     BODY: 'Vous êtes sur le point de supprimer un dossier. <strong class="text-danger">Êtes-vous sûr de vouloir supprimer ce dossier ainsi que son contenu ?</strong>'
@@ -142,6 +142,10 @@ angular.module('ortolangMarketApp')
                 COLLECTIONS: {
                     TITLE: 'Suppression de dossiers multiples',
                     BODY: 'Vous êtes sur le point de supprimer {{collectionNumber}} dossiers à la fois. <strong class="text-danger">Êtes-vous sûr de vouloir supprimer ces dossiers ainsi que leur contenu ?</strong>'
+                },
+                FILE: {
+                    TITLE: 'Suppression d\'un fichier',
+                    BODY: 'Vous êtes sur le point de supprimer le fichier {{ elementName }}. <strong class="text-danger">Êtes-vous sûr de vouloir supprimer ce fichier ?</strong>'
                 },
                 FILES: {
                     TITLE: 'Suppression de fichiers multiples',

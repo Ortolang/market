@@ -770,25 +770,27 @@ angular.module('ortolangMarketApp')
                     var sources = [],
                         collectionNumber = 0,
                         objectNumber = 0,
+                        elementName = '',
                         deferred = $q.defer(),
-                        deleteMultipleElementsModal;
+                        deleteElementsModal;
                     angular.forEach(ctrl.selectedElements, function (element) {
                         sources.push(Helper.normalizePath(ctrl.parent.path + '/' + element.name));
+                        elementName = element.name;
                         if (element.type === ortolangType.collection) {
                             collectionNumber++;
                         } else if (element.type === ortolangType.object) {
                             objectNumber++;
                         }
                     });
-                    if (collectionNumber || objectNumber > 1) {
+                    // if (collectionNumber || objectNumber > 1) {
                         createModalScope();
                         modalScope.delete = function () {
                             deferred.resolve();
-                            deleteMultipleElementsModal.hide();
+                            deleteElementsModal.hide();
                         };
                         modalScope.cancel = function () {
                             deferred.reject();
-                            deleteMultipleElementsModal.hide();
+                            deleteElementsModal.hide();
                         };
                         if (objectNumber === 0) {
                             if (collectionNumber === 1) {
@@ -798,23 +800,28 @@ angular.module('ortolangMarketApp')
                             }
                         } else {
                             if (collectionNumber === 0) {
-                                modalScope.type = 'FILES';
+                                if (objectNumber === 1) {
+                                    modalScope.type = 'FILE';
+                                } else {
+                                    modalScope.type = 'FILES';
+                                }
                             } else {
                                 modalScope.type = 'FILES_COLLECTIONS';
                             }
                         }
                         modalScope.numbers = {
                             collectionNumber: collectionNumber,
-                            objectNumber: objectNumber
+                            objectNumber: objectNumber,
+                            elementName: elementName
                         };
-                        deleteMultipleElementsModal = $modal({
+                        deleteElementsModal = $modal({
                             scope: modalScope,
-                            templateUrl: 'browser/templates/delete-multiple-elements.modal.html',
+                            templateUrl: 'browser/templates/delete-elements.modal.html',
                             show: true
                         });
-                    } else {
-                        deferred.resolve();
-                    }
+                    // } else {
+                    //     deferred.resolve();
+                    // }
                     deferred.promise.then(function () {
                         WorkspaceElementResource.bulkAction({wskey: ctrl.workspace.key}, {action: 'delete', sources: sources, force: true}, function () {
                             getParentData(true, true);

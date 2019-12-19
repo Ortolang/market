@@ -140,6 +140,6 @@ docker_build:
   only: 
     - master
     - tags
-    - 3-recherche-globale
+    - branches
   except:
     - schedules
