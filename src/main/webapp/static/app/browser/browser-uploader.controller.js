@@ -34,7 +34,7 @@ angular.module('ortolangMarketApp')
                         {
                             name: 'sizeLimit',
                             fn: function (item) {
-                                return item.size < 1000000000; // 1 GB
+                                return item.size < 3000000000; // 3 GB
                             }
                         }
                     ]
