@@ -10,7 +10,7 @@
     <parent>
         <groupId>fr.ortolang</groupId>
         <artifactId>ortolang</artifactId>
-        <version>10</version>
+        <version>11</version>
     </parent>
 
     <scm>
@@ -56,23 +56,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
-    <distributionManagement>
-        <repository>
-            <id>ortolang-maven-repository</id>
-            <name>Ortolang Releases</name>
-            <url>https://maven.ortolang.fr/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ortolang-maven-repository</id>
-            <name>Ortolang Snapshots</name>
-            <url>https://maven.ortolang.fr/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <site>
-            <id>dev.ortolang.fr</id>
-            <url>file:///tmp/ortolang-site/</url>
-        </site>
-    </distributionManagement>
 
     <build>
         <finalName>ortolang-market</finalName>
