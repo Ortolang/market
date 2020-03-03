@@ -51,7 +51,7 @@ angular.module('ortolangMarketApp')
             DELETE_WORKSPACE: 'Supprimer l\'espace de travail',
             MARKET_LINKS: 'Lien vers la fiche de métadonnées (publiée)',
             CONTENT_LINKS: 'Lien vers le contenu (non publiée)',
-            FTP_LINKS: 'Utiliser le protocole FTP pour déposer de gros fichiers (supérieur à 1 Go)',
+            FTP_LINKS: 'Utiliser le protocole FTP pour déposer de gros fichiers (supérieur à 3 Go)',
             STATISTICS: 'Statistiques',
             STATISTICS_HITS: 'Statistiques de consultation',
             STATISTICS_TOTAL_HITS: '({{hits}} vues au total)',
@@ -554,7 +554,7 @@ angular.module('ortolangMarketApp')
         },
         ERROR_MODAL_UPLOAD_SIZE_LIMIT: {
             TITLE: 'Fichier trop volumineux',
-            BODY: '<p>Il n\'est pas possible d\'importer des fichiers dont la taille dépasse <strong>1 Go</strong> par cette méthode.</p><p>Pour importer de grandes quantités de données vous pouvez <strong>vous connecter à votre workspace par FTP</strong>. L\'adresse FTP de votre workspace se trouve dans l\'onglet Informations.</p>'
+            BODY: '<p>Il n\'est pas possible d\'importer des fichiers dont la taille dépasse <strong>3 Go</strong> par cette méthode.</p><p>Pour importer de grandes quantités de données vous pouvez <strong>vous connecter à votre workspace par FTP</strong>. L\'adresse FTP de votre workspace se trouve dans l\'onglet Informations.</p>'
         },
         'ortolang-item-json': 'Fiche de présentation',
         'ortolang-thumb-json': 'Logo',
