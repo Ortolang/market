@@ -374,7 +374,7 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 		        $scope.metadataFormats = {
 		        	'oai_dc': {label: 'Dublin Core', template: 'metadata-editor/oai_dc/oai_dc-metadata-editor.html', converter: convertXMLToJsonOaiDc},
 		        	'olac': {label: 'OLAC', template: 'metadata-editor/olac/olac-metadata-editor.html', converter: convertXMLToJsonOlac},
-		        	'cmdi': {label: 'CMDI', template: 'metadata-editor/cmfi/cmdi-metadata-editor.html'}
+		        	'cmdi': {label: 'CMDI', template: 'metadata-editor/source-editor.template.html'}
 		        };
 
 				$scope.dcElementsObject = {
