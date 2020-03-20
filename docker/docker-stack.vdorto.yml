@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   olmarket:
-    image: registry.ortolang.fr/ortolang/ortolang-market:15-confirmation-before-deletion
+    image: registry.ortolang.fr/ortolang/ortolang-market:master
     environment: 
       - 'api_url=https://repo-dev.ortolang.fr/api'
       - 'prerender_server_ip=prerender'
