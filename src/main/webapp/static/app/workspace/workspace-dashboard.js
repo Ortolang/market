@@ -146,7 +146,9 @@ angular.module('ortolangMarketApp')
                     modalScope = Helper.createModalScope(true);
                     modalScope.wsName = Workspace.getActiveWorkspaceTitle();
                     modalScope.models.firstVersion = Workspace.active.workspace.tags.length === 0;
-                    modalScope.models.tags = $filter('orderBy')(Workspace.active.workspace.tags, '-name');
+                    modalScope.models.tags = $filter('orderBy')(Workspace.active.workspace.tags, function (snapshot) {
+                        return parseInt(snapshot.snapshot, 10);
+                    }, true);
                     modalScope.models.customVersionPattern = /^([0-9]+|[0-9]+\.[0-9]+|[0-9]+\.[0-9]+\.[0-9]+)$/;
                     if (!modalScope.models.firstVersion) {
                         modalScope.models.lastTag = modalScope.models.tags[0];

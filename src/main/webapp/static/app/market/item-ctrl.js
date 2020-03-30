@@ -167,7 +167,7 @@ angular.module('ortolangMarketApp')
                 $scope.tags = $filter('filter')(workspace.snapshots, {tag: ''});
                 // Order tags by name
                 $scope.tags = $filter('orderBy')($scope.tags, function (snapshot) {
-                    return snapshot.name;
+                    return parseInt(snapshot.name, 10);
                 });
                 if ($routeParams.version) {
                     var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);

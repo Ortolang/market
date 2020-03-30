@@ -86,6 +86,18 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         return this.getWorkspaceTitle(Workspace.active.workspace);
     };
 
+    this.getTags = function (workspace) {
+        var tags;
+        tags = $filter('orderBy')(workspace.tags, function (snapshot) {
+            return parseInt(snapshot.snapshot, 10);
+        }, true);
+        return tags;
+    };
+
+    this.getActiveWorkspaceTags = function () {
+        Workspace.active.workspace.tagsOrdered = this.getTags(Workspace.active.workspace);
+    };
+
     this.clearActiveWorkspace = function () {
         this.active = {};
     };
@@ -96,6 +108,7 @@ angular.module('ortolangMarketApp').service('Workspace', ['$rootScope', '$filter
         activeWorkspaceInfoDeferred = $q.defer();
         Helper.getCard(Workspace.active.workspace.author);
         Helper.getCard(Workspace.active.workspace.owner);
+        Workspace.getActiveWorkspaceTags();
         if (!partial || Workspace.refresh.events) {
             promises.push(Workspace.getActiveWorkspaceEvents());
         }
