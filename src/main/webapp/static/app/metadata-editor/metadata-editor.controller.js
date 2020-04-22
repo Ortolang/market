@@ -15,7 +15,7 @@
 angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 	['$rootScope', '$scope', '$q', '$filter', '$timeout', 'x2js', '$alert', '$modal', '$translate', 'Content', 'ortolangType', 'icons', 'Workspace', 'WorkspaceElementResource', 'Helper',
 		function($rootScope, $scope, $q, $filter, $timeout, x2js, $alert, $modal, $translate, Content, ortolangType, icons, Workspace, WorkspaceElementResource, Helper) {
-
+			var fileMetadataPathSelectorModalScope, fileToConvertSelectorModalScope;
 			/**
 			 * Finds a metadata by it name.
 			 **/
@@ -199,7 +199,11 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                     if (deferred !== null) {
 	                    deferred.then(function () {
 			           		savingMetadataModal.hide();
-		                    $scope.$hide();
+							$scope.$hide();
+							$timeout(function () {
+								fileMetadataPathSelectorModalScope.$destroy();
+								fileToConvertSelectorModalScope.$destroy();
+							});
 	                    }, saveAndUpdateFailed);
                     }
                 };
@@ -207,7 +211,9 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
                     savingMetadataModal.hide();
                     // TODO Resets metadatas
                     $scope.forceHide = true;
-                    $scope.$hide();
+					$scope.$hide();
+					fileMetadataPathSelectorModalScope.$destroy();
+					fileToConvertSelectorModalScope.$destroy();
                 };
                 savingMetadataModal = $modal({
                     scope: modalScope,
@@ -297,10 +303,10 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 				postForm(angular.toJson($scope.selectedMetadata.content), $scope.selectedMetadata.name).then(
        				function (metadataObject) {
        					var md = findMetadata(metadataObject.name);
-       					if (md !== null) {
+       					if (md != null) {
        						$scope.selectedMetadata.key = metadataObject.key;
+							md.changed = false;
        					}
-       					md.changed = false;
        					// TODO Copy the metadata saved to origin array
            			}, function (reason) {
            				console.log(reason);
@@ -314,44 +320,6 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
         		}
         	};
 
-            // Loads a data object to the content
-            var deregisterFileMetadataPathSelectorModal = $rootScope.$on('browserSelectedElements-fileMetadataPathSelectorModal', function ($event, elements) {
-               if(elements.length>0) {
-               		Content.downloadWithKey(elements[0].key).promise.then(function (data) {
-               			// Loads
-               			$scope.selectedMetadata.content = angular.fromJson(data.data);
-               			$scope.selectMetadataByName($scope.selectedMetadata.name);
-               			$scope.selectedMetadata.changed = true;
-			        }, function (reason) {
-						//TODO show message to user
-			        	console.log(reason);
-			        });
-                    $scope.fileMetadataPathSelectorModal.hide();
-                }
-            });
-
-            // Converts a data object to the content
-            var deregisterFileToConvertSelectorModal = $rootScope.$on('browserSelectedElements-fileToConvertSelectorModal', function ($event, elements) {
-               if(elements.length>0) {
-               		Content.downloadWithKey(elements[0].key).promise.then(function (data) {
-               			// Convert
-               			if ($scope.metadataFormats[$scope.selectedMetadata.name]) {
-               				$scope.selectedMetadata.content = $scope.metadataFormats[$scope.selectedMetadata.name].converter(data.data);
-               			} else {
-               				//TODO alert
-               				console.log('unable to convert metadata format ' + $scope.selectedMetadata.name);
-               			}
-
-               			$scope.selectMetadataByName($scope.selectedMetadata.name);
-						$scope.selectedMetadata.changed = true;
-			        }, function (reason) {
-						//TODO show message to user
-			        	console.log(reason);
-			        });
-                    $scope.fileToConvertSelectorModal.hide();
-                }
-            });
-
             $scope.$parent.$on('modal.hide.before', function ($event) {
                 if (!$scope.forceHide && isChanged()) {
                     showSavingMetadataModal();
@@ -360,8 +328,8 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
             });
 
             $scope.$on('$destroy', function () {
-                deregisterFileMetadataPathSelectorModal();
-                deregisterFileToConvertSelectorModal();
+				fileMetadataPathSelectorModalScope.$destroy();
+				fileToConvertSelectorModalScope.$destroy();
             });
 
 			(function init() {
@@ -466,22 +434,56 @@ angular.module('ortolangMarketApp').controller('MetadataEditorCtrl',
 		        }
 
 		        // Ortolang file selector used to LOAD a data object
-                var fileMetadataPathSelectorModalScope = $rootScope.$new();
+                fileMetadataPathSelectorModalScope = $rootScope.$new();
                 fileMetadataPathSelectorModalScope.acceptMultiple = false;
                 fileMetadataPathSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
                 fileMetadataPathSelectorModalScope.forceHead = true;
-                fileMetadataPathSelectorModalScope.fileSelectId = 'fileMetadataPathSelectorModal';
+				fileMetadataPathSelectorModalScope.fileSelectId = 'fileMetadataPathSelectorModal';
+				fileMetadataPathSelectorModalScope.$on('browserSelectedElements-fileMetadataPathSelectorModal', function ($event, elements) {
+					if (elements.length > 0) {
+						Content.downloadWithKey(elements[0].key).promise.then(function (data) {
+							// Loads
+							$scope.selectedMetadata.content = angular.fromJson(data.data);
+							$scope.selectMetadataByName($scope.selectedMetadata.name);
+							$scope.selectedMetadata.changed = true;
+						}, function (reason) {
+							//TODO show message to user
+							console.log(reason);
+						});
+						$scope.fileMetadataPathSelectorModal.hide();
+					}
+				});
                 $scope.fileMetadataPathSelectorModal = $modal({scope: fileMetadataPathSelectorModalScope,
                 	title: 'Sélectionnez un fichier de métadonnées',
                 	templateUrl: 'browser/browser-file-select-modal-template.html',
                 	show: false
                 });
                 // Ortolang file selector used to CONVERT a data object
-                var fileToConvertSelectorModalScope = $rootScope.$new();
+                fileToConvertSelectorModalScope = $rootScope.$new();
                 fileToConvertSelectorModalScope.acceptMultiple = false;
                 fileToConvertSelectorModalScope.forceWorkspace = Workspace.active.workspace.key;
                 fileToConvertSelectorModalScope.forceHead = true;
-                fileToConvertSelectorModalScope.fileSelectId = 'fileToConvertSelectorModal';
+				fileToConvertSelectorModalScope.fileSelectId = 'fileToConvertSelectorModal';
+				fileToConvertSelectorModalScope.$on('browserSelectedElements-fileToConvertSelectorModal', function ($event, elements) {
+					if (elements.length > 0) {
+						Content.downloadWithKey(elements[0].key).promise.then(function (data) {
+							// Convert
+							if ($scope.metadataFormats[$scope.selectedMetadata.name]) {
+								$scope.selectedMetadata.content = $scope.metadataFormats[$scope.selectedMetadata.name].converter(data.data);
+							} else {
+								//TODO alert
+								console.log('unable to convert metadata format ' + $scope.selectedMetadata.name);
+							}
+
+							$scope.selectMetadataByName($scope.selectedMetadata.name);
+							$scope.selectedMetadata.changed = true;
+						}, function (reason) {
+							//TODO show message to user
+							console.log(reason);
+						});
+						$scope.fileToConvertSelectorModal.hide();
+					}
+				});
                 $scope.fileToConvertSelectorModal = $modal({scope: fileToConvertSelectorModalScope,
                 	title: 'Sélectionnez un fichier de métadonnées XML',
                 	templateUrl: 'browser/browser-file-select-modal-template.html',
