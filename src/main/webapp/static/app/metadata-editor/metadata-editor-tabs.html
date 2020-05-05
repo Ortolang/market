@@ -1,0 +1,25 @@
+<div class="metadata-editor-tabs">
+    <div bs-active-pane="activeTab" bs-tabs>
+        <div data-title="{{ selectedMetadata.name }}" name="form" bs-pane>
+            <div ng-if="mainContainer" ng-include="mainContainer" style="padding: 15px 0px;"></div>
+        </div>
+        <div data-title="{{'WORKSPACE.CONTENT' | translate}}" name="source" bs-pane>
+            <article hljs source="selectedMetadata.jsonSource" language="json" name="content" style="padding: 15px 0px;"></article>
+        </div>
+        <div data-title="{{'ERRORS' | translate}} <span style='display: {{ selectedMetadata.errors.length > 0 ? 'inline' : 'none' }}; background-color: red;' class='badge'>{{selectedMetadata.errors.length}}</span>" 
+            name="errors" bs-pane>
+            <div style="padding: 15px 0px;">
+                <dl ng-repeat="error in selectedMetadata.errors track by $index" class="dl-horizontal">
+                    <dt>Message :</dt>
+                    <dd>{{ error.message }}</dd>
+                    <dt>Schema path:</dt>
+                    <dd>{{ error.instance.pointer }}</dd>
+                    <dt>Expected:</dt>
+                    <dd>{{ error.expected }}</dd>
+                    <dt>Found:</dt>
+                    <dd>{{ error.found }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

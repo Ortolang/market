@@ -23,8 +23,6 @@ angular.module('ortolangMarketApp').controller('OaiDcMetadataEditorCtrl',
             };
 
             $scope.deleteElement = function (key, value) {
-                console.log(key);
-                console.log(value);
                 var index = $scope.selectedMetadata.content[key].indexOf(value);
                 $scope.selectedMetadata.content[key].splice(index, 1);
                 if ($scope.selectedMetadata.content[key].length === 0) {

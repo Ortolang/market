@@ -59,6 +59,7 @@ angular.module('ortolangMarketApp')
         NEWS: 'News',
         STATISTICS: 'Statistics',
         METADATA: 'Metadata',
+        ERRORS: 'Errors',
         404: {
             TITLE: 'Page not found',
             BODY: 'Sorry, but we can\'t find the page you are looking for. Maybe you should try heading home.',
@@ -148,5 +149,9 @@ angular.module('ortolangMarketApp')
         ERROR_MODAL_9: {
             TITLE: 'Invalid metadata',
             BODY: 'The metadata send to .'
+        },
+        SUCCESS_MODAL_METADATA_SAVED: {
+            TITLE: 'Save',
+            BODY: 'The metadata are saved.'
         }
     });
