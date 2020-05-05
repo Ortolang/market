@@ -59,6 +59,7 @@ angular.module('ortolangMarketApp')
         NEWS: 'Actualités',
         STATISTICS: 'Statistiques',
         METADATA: 'Métadonnées',
+        ERRORS: 'Erreurs',
         404: {
             TITLE: 'Page non trouvée',
             BODY: 'Désolé, mais la page que vous recherchez est introuvable. Vous devriez peut être essayé de retourner sur la page d\'accueuil.',
@@ -148,5 +149,9 @@ angular.module('ortolangMarketApp')
         ERROR_MODAL_9: {
             TITLE: 'Métadonnées invalide',
             BODY: 'Les métadonnées envoyées au serveur ne sont pas valide.'
+        },
+        SUCCESS_MODAL_METADATA_SAVED: {
+            TITLE: 'Sauvegarde',
+            BODY: 'Les métadonnées ont été sauvegardées.'
         }
     });

@@ -22,10 +22,6 @@
                             </div>
                             <div class="btn-toolbar btn-toolbar-right">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" ng-class="{'active':modeSource===true}" ng-click="source()" ng-disabled="!selectedMetadata" data-title="{{'TEXT_VISUALIZER.SHOW_SOURCE' | translate}}" bs-tooltip><span ng-class="::icons.code"></span></button>
-                                </div>
-                                <span class="divider"></span>
-                                <div class="btn-group">
                                     <button type="button" class="btn btn-default" ng-click="download()" ng-disabled="!selectedMetadata" data-title="{{'DOWNLOAD' | translate}}" bs-tooltip><span ng-class="::icons.browser.download"></span></button>
                                 </div>
                                 <div class="btn-group">
@@ -76,7 +72,7 @@
                             </div>
                         </div>
                         <div class="metadata-editor-main-container">
-                            <div ng-if="mainContainer" ng-include="mainContainer"></div>
+                            <div ng-if="mainContainer" ng-include="'metadata-editor/metadata-editor-tabs.html'"></div>
                             <div ng-if="!mainContainer">
                                 <p>
                                     Pour créer un <strong>nouveau</strong> fichier de métadonnées, appuyer sur le <strong>bouton <span ng-class="::icons.plus"></span></strong> puis selectionner le <strong>type de métadonnées</strong> souhaitées.

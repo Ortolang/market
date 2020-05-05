@@ -122,7 +122,8 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Edit the metadata of <strong>{{elementName}}</strong>',
                 CONVERT_XML_JSON: 'Load from an XML file',
                 ADD_DC_ELEMENT: 'Add a Dublin Core element',
-                ADD_OLAC_ELEMENT: 'Add an OLAC element'
+                ADD_OLAC_ELEMENT: 'Add an OLAC element',
+                LOAD_METADATA: "Select a metadata file"
             },
             DOWNLOAD_WITH_FILTER_MODAL: {
                 TITLE: 'Download with a filter',
