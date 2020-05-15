@@ -118,6 +118,11 @@ angular.module('ortolangMarketApp')
             METADATA_MODAL: {
                 TITLE: 'System metadata'
             },
+            FACILE: {
+                VALID: 'Valid',
+                WELLFORMED: 'WellFormed',
+                ARCHIVABLE: 'Archivable'
+            },
             METADATA_EDITOR: {
                 TITLE: 'Edit the metadata of <strong>{{elementName}}</strong>',
                 CONVERT_XML_JSON: 'Load from an XML file',

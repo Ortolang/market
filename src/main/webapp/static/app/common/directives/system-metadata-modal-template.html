@@ -7,8 +7,8 @@
             </div>
             <div class="modal-body">
                 <dl>
-                    <dt ng-repeat-start="md in ::metadata | orderBy:'+name' track by md.name">{{::md.name}}</dt>
-                    <dd ng-repeat-end>
+                    <dt ng-repeat-start="md in ::metadata | orderBy:'+name' track by md.name" ng-if="md.value !== '' && md.value !== null">{{::md.name}}</dt>
+                    <dd ng-repeat-end ng-if="md.value !== '' && md.value !== null">
                         <span ng-if="::!isArray(md.value)">{{::md.value}}</span>
                         <ul ng-if="::isArray(md.value)">
                             <li ng-repeat="sub in ::md.value track by $index">{{::sub}}</li>

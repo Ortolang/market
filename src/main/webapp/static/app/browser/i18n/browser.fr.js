@@ -151,6 +151,11 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Titre',
                 WORDS: 'Mots'
             },
+            FACILE: {
+                VALID: 'Valide',
+                WELLFORMED: 'Bien formé',
+                ARCHIVABLE: 'Archivable',
+            },
             METADATA_EDITOR: {
                 TITLE: 'Éditer les métadonnées de <strong>{{elementName}}</strong>',
                 CONVERT_XML_JSON: 'Charger à partir d\'un fichier XML',
