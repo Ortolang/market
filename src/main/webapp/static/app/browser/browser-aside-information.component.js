@@ -16,6 +16,7 @@ angular.module('ortolangMarketApp')
             toggle: '&',
             showMetadata: '&',
             showSystemMetadata: '&',
+            showFacileMetadata: '&',
             helper: '<'
         },
         controller: ['ObjectResource', 'Content', 'icons', 'ortolangType', function (ObjectResource, Content, icons, ortolangType) {

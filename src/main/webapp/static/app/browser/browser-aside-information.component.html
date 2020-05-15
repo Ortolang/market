@@ -97,6 +97,16 @@
         <dd>{{$ctrl.element.x['meta:word-count']}}</dd>
         <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showSystemMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
     </dl>
+    <hr ng-show="$ctrl.element.facile" />
+    <dl class="dl-horizontal" ng-if="$ctrl.element.facile">
+        <dt translate="BROWSER.FACILE.VALID"></dt>
+        <dd>{{$ctrl.element.facile['valid']}}</dd>
+        <dt translate="BROWSER.FACILE.WELLFORMED"></dt>
+        <dd>{{$ctrl.element.facile['wellFormed']}}</dd>
+        <dt translate="BROWSER.FACILE.ARCHIVABLE"></dt>
+        <dd>{{$ctrl.element.facile['archivable']}}</dd>
+        <dd class="more-md"><button class="btn btn-default btn-sm" ng-click="$ctrl.showFacileMetadata()" data-title="{{::'BROWSER.MORE_MD' | translate}}" bs-tooltip translate="SEE_MORE"></button></dd>
+    </dl>
     <hr ng-show="($ctrl.element.metadatas | userMetadata).length > 0"/>
     <dl class="dl-horizontal" ng-if="($ctrl.element.metadatas | userMetadata).length > 0">
         <dt translate="METADATA"></dt>

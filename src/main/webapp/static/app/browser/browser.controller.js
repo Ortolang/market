@@ -293,9 +293,41 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function checkFacileMetadata(object) {
+                if (object.type === ortolangType.object) {
+                    angular.forEach(object.metadatas, function (metadata) {
+                        var exec = /^system-facile-validator$/.exec(metadata.name);
+                        if (exec) {
+                            Content.downloadWithKey(metadata.key).promise.then(function (data) {
+                                object.facile = angular.fromJson(data.data);
+                            });
+                        }
+                    });
+                }
+            }
+
             ctrl.showSystemMetadata = function () {
                 createModalScope();
                 modalScope.metadata = ctrl.selectedElements[0].x;
+                var tmp = [];
+                angular.forEach(modalScope.metadata, function (v, k) {
+                    tmp.push({
+                        name: k,
+                        value: v
+                    });
+                });
+                modalScope.metadata = tmp;
+                modalScope.isArray = angular.isArray;
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'common/directives/system-metadata-modal-template.html',
+                    show: true
+                });
+            };
+
+            ctrl.showFacileMetadata = function () {
+                createModalScope();
+                modalScope.metadata = ctrl.selectedElements[0].facile;
                 var tmp = [];
                 angular.forEach(modalScope.metadata, function (v, k) {
                     tmp.push({
@@ -366,6 +398,7 @@ angular.module('ortolangMarketApp')
                         newSelectedElement(data);
                         lastSelectedElement = data;
                         checkMetadata(data);
+                        checkFacileMetadata(data);
                     }
                     checkCompatibleVisualizers();
                     checkCompatibleTools();
