@@ -74,6 +74,7 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Workspace content',
                 COPY: 'Copy the list to clipboard'
             },
+            LIST_CONTENT_ARCHIVABLE: 'List of archivable content',
             SHORTCUTS: {
                 SHORTCUTS: 'Shortcuts',
                 SHOW_SHORTCUTS: 'Show shortcut list',

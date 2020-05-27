@@ -1972,26 +1972,30 @@ angular.module('ortolangMarketApp')
                 Cart.add(items);
             };
 
-            ctrl.listWorkspaceContent = function () {
-                WorkspaceResource.listSnapshotContent({wskey: ctrl.workspace.key, sid: ctrl.root}, function (data) {
-                    data = Helper.cleanResourceResponse(data);
-                    delete data['/'];
-                    modalScope = Helper.createModalScope(true);
-                    modalScope.icons = icons;
-                    modalScope.root = ctrl.root;
-                    modalScope.tag = getTagName(ctrl.root);
-                    modalScope.content = Object.keys(data);
-                    modalScope.icons = $rootScope.icons;
-                    modalScope.depth = function (path) {
-                        return 'depth-' + (path.match(/\//g) || []).length;
-                    };
-                    $modal({
-                        scope: modalScope,
-                        templateUrl: 'browser/templates/workspace-content.modal.html',
-                        show: true
-                    });
+            ctrl.listWorkspaceContent = function (archive) {
+                WorkspaceResource.listSnapshotContent({ wskey: ctrl.workspace.key, sid: ctrl.root, archive: archive}, function (data) {
+                    showContent(ctrl.root, data);
                 });
             };
+
+            function showContent(root, data) {
+                data = Helper.cleanResourceResponse(data);
+                delete data['/'];
+                modalScope = Helper.createModalScope(true);
+                modalScope.icons = icons;
+                modalScope.root = root;
+                modalScope.tag = getTagName(root);
+                modalScope.icons = $rootScope.icons;
+                modalScope.depth = function (path) {
+                    return 'depth-' + (path.match(/\//g) || []).length;
+                };
+                modalScope.content = Object.keys(data);
+                $modal({
+                    scope: modalScope,
+                    templateUrl: 'browser/templates/workspace-content.modal.html',
+                    show: true
+                });
+            }
 
             // *********************** //
             //           Init          //

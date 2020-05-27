@@ -177,7 +177,8 @@
                         <li><div ng-click="$ctrl.downloadWithFilter()"><span ng-class="::icons.browser.downloadWithFilter"></span> {{'DOWNLOAD_WITH_FILTER' | translate}}</div></li>
                         <!--<li><div ng-click="$ctrl.addToCart()"><span ng-class="::icons.cartPlus"></span> {{'BROWSER.ADD_TO_CART' | translate}}</div></li>-->
                         <li class="divider"></li>
-                        <li><div ng-click="$ctrl.listWorkspaceContent()"><span ng-class="::icons.list"></span> {{'BROWSER.LIST_CONTENT' | translate}}</div></li>
+                        <li><div ng-click="$ctrl.listWorkspaceContent(false)"><span ng-class="::icons.list"></span> {{'BROWSER.LIST_CONTENT' | translate}}</div></li>
+                        <li><div ng-click="$ctrl.listWorkspaceContent(true)"><span ng-class="::icons.list"></span> {{'BROWSER.LIST_CONTENT_ARCHIVABLE' | translate}}</div></li>
                     </ul>
                 </div>
 
