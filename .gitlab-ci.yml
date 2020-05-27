@@ -1,4 +1,4 @@
-image: docker:latest
+image: docker:18.06
 
 services:
   - docker:18.06-dind
