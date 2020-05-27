@@ -76,6 +76,7 @@ angular.module('ortolangMarketApp')
                 TITLE: 'Contenu de l\'espace de travail /',
                 COPY: 'Copier la liste'
             },
+            LIST_CONTENT_ARCHIVABLE: 'Liste du contenu archivable',
             SHORTCUTS: {
                 SHORTCUTS: 'Raccourcis clavier',
                 SHOW_SHORTCUTS: 'Afficher la liste des raccourcis clavier',
