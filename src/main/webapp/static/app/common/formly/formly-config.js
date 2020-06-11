@@ -14,7 +14,7 @@ angular.module('ortolangMarketApp')
             },
             {
                 name: 'preview',
-                templateUrl: 'common/formly/tool-tpl-text-preview.html'
+                templateUrl: 'common/tools/tool-tpl-text-preview.html'
             },
             {
                 name: 'multiField',
@@ -61,6 +61,16 @@ angular.module('ortolangMarketApp')
                 name: 'radio',
                 overwriteOk: true,
                 templateUrl: 'common/formly/ortolang-formly-radio.html'
+            },
+            {
+                name: 'inputFile',
+                overwriteOk: true,
+                templateUrl: 'common/formly/ortolang-formly-file.html',
+                defaultOptions: {
+                    templateOptions: {
+                        button: 'Ouvrir'
+                    }
+                }
             }
         ]);
     }]);

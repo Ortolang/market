@@ -241,7 +241,20 @@
                 <div class="panel-heading"><span class="fa fa-link fa-fw"></span> {{'MARKET.LINK' | translate}}</div>
                 <div class="panel-body">
                     <div class="btn-group btn-group-justified">
-                        <a ng-href="{{content.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
+                        <div class="btn-group" role="group">
+                            <a ng-href="{{content.applicationUrl}}" target="_BLANK" class="btn btn-block btn-success" translate="MARKET.SITE"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default" ng-if="content.type === 'Outil'">
+                <div class="panel-heading"><span class="fa fa-cubes fa-fw"></span> {{'MARKET.EXECUTION' | translate}}</div>
+                <div class="panel-body">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-success" ng-click="showTool()">{{'MARKET.RUN_TOOL' | translate}}</button>
+                        </div>
                     </div>
                 </div>
             </div>

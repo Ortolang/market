@@ -9,8 +9,8 @@
  * With object for any language not reference by a referential.
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJson16Ctrl', ['$scope', '$rootScope','$location', '$route', '$translate', '$modal', 'Settings', 'Content', 'Helper',
-        function ($scope, $rootScope, $location, $route, $translate, $modal, Settings, Content, Helper) {
+    .controller('OrtolangItemJson16Ctrl', ['$scope', '$rootScope', '$location', '$route', '$translate', '$modal', 'Settings', 'Content', 'FormResource', 'Helper',
+        function ($scope, $rootScope, $location, $route, $translate, $modal, Settings, Content, FormResource, Helper) {
 
             $scope.showPartInfo = function (part) {
                 var modalScope = Helper.createModalScope(true),
@@ -42,6 +42,29 @@ angular.module('ortolangMarketApp')
                     scope: modalScope,
                     templateUrl: 'common/templates/part-info-modal.html',
                     show: true
+                });
+            };
+
+            $scope.showTool = function () {
+                FormResource.get({ formKey: 'tool-' + $scope.alias + '-form' }, function (form) {
+
+                    var modalScope = Helper.createModalScope(true);
+                    modalScope.models = {
+                        title: $scope.title,
+                        baseurl: $scope.content.applicationUrl
+                    };
+                    modalScope.formdata = {};
+                    modalScope.formfields = JSON.parse(form.definition);
+                    modalScope.formOptions = {
+                        formState: {
+                            uploadfiles: []
+                        }
+                    };
+                    $modal({
+                        scope: modalScope,
+                        templateUrl: 'tool/templates/tool-modal.html',
+                        show: true
+                    });
                 });
             };
 
