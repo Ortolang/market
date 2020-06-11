@@ -78,7 +78,7 @@ import './common/directives/files-model';
 import './common/directives/cetei-cean';
 /* formly */
 import './common/formly/formly-file-select';
-import './common/formly/config';
+import './common/formly/formly-config';
 /* resources */
 import './common/resources/workspace-resource';
 import './common/resources/profile-resource';
@@ -220,6 +220,8 @@ import './profile/profile-ctrl';
 import './profile/productions';
 import './profile/friends';
 import './profile/tasks';
+// TOOL
+import './tool/tool.component';
 
 // STYLE
 import './styles/less/app.less';

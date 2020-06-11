@@ -401,7 +401,7 @@ angular.module('ortolangMarketApp')
                         checkFacileMetadata(data);
                     }
                     checkCompatibleVisualizers();
-                    checkCompatibleTools();
+                    // checkCompatibleTools();
                     if (!refresh) {
                         ctrl.contextMenu(clickEvent, false);
                     }
@@ -661,7 +661,7 @@ angular.module('ortolangMarketApp')
                     newSelectedElement(ctrl.parent);
                 }
                 checkCompatibleVisualizers();
-                checkCompatibleTools();
+                // checkCompatibleTools();
             }
 
             function deselectOthers(child) {
@@ -2133,25 +2133,6 @@ angular.module('ortolangMarketApp')
                 setPath(path || '/');
                 getSnapshotsHistory();
                 getParentData();
-                populateToolList();
+                // populateToolList();
             }
-
-            // (function init() {
-            //     initLocalVariables();
-            //     initOptions();
-            //     initScopeVariables();
-            //     populateBreadcrumbDropdownMenu();
-            //     if (ctrl.isMarket) {
-            //         initWorkspaceVariables(ctrl.root, $location.search().path);
-            //     } else if (ctrl.isWorkspace) {
-            //         initWorkspaceVariables($location.search().root, $location.search().path);
-            //     } else if (ctrl.isFileSelect) {
-            //         ctrl.$onChanges = function (changesObj) {
-            //             if (changesObj.workspace && angular.isDefined(changesObj.workspace.currentValue)) {
-            //                 initWorkspaceVariables($location.search().root, $location.search().path);
-            //             }
-            //         };
-            //     }
-            // }());
-
         }]);
