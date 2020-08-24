@@ -260,17 +260,31 @@ angular.module('ortolangMarketApp')
                 }
             };
 
-            $scope.computeTextCitation = function ($scope) {
+            $scope.computeTextCitation = function () {
                 if ($scope.bibliographicCitation) {
                     return $scope.bibliographicCitation;
                 }
-                var citation = '', i;
+                var citation = '', i, iPub = 0;
                 if ($scope.content.publications && $scope.content.publications.length > 0) {
                     angular.forEach($scope.content.publications, function (publication) {
+                        if (iPub++>1) return;
                         citation += '<p>' + publication + '</p>';
                     });
                 }
-                if ($scope.producers && $scope.producers.length > 0) {
+                if ($scope.authors && $scope.authors.length > 0) {
+                    for (i = 0; i < $scope.authors.length; i++) {
+                        if (i>2) {
+                            citation += ', et al.';
+                            break;
+                        }
+                        if ($scope.authors[i].entity) {
+                            if (i !== 0) {
+                                citation += ', ';
+                            }
+                            citation += $scope.authors[i].entity.fullname;
+                        }
+                    }
+                } else if ($scope.producers && $scope.producers.length > 0) {
                     for (i = 0; i < $scope.producers.length; i++) {
                         if ($scope.producers[i]) {
                             if (i !== 0) {
@@ -279,19 +293,13 @@ angular.module('ortolangMarketApp')
                             citation += $scope.producers[i].name + ($scope.producers[i].acronym ? ' (' + $scope.producers[i].acronym + ')' : '');
                         }
                     }
-                } else if ($scope.authors && $scope.authors.length > 0) {
-                    for (i = 0; i < $scope.authors.length; i++) {
-                        if ($scope.authors[i].entity) {
-                            if (i !== 0) {
-                                citation += ', ';
-                            }
-                            citation += $scope.authors[i].entity.fullname;
-                        }
-                    }
-                }
+                } 
                 citation += ' (' + $filter('date')($scope.content.publicationDate, 'yyyy') + ').';
                 citation += ' <i>' + $scope.title + '</i> [' + $scope.content.type + '].';
-                citation += ' ORTOLANG (Open Resources and TOols for LANGuage) - <a target="_BLANK" href="https://www.ortolang.fr">www.ortolang.fr</a>,';
+                citation += ' ORTOLANG (Open Resources and TOols for LANGuage) - <a target="_BLANK" href="https://www.ortolang.fr">www.ortolang.fr</a>, ';
+                if (angular.isDefined($scope.tag)) {
+                    citation += $scope.tag.tag + ',';
+                }
                 citation += ' <a target="_BLANK" href="' + $scope.handle + '">' + $scope.handle + '</a>.';
                 return citation;
             };
@@ -351,7 +359,7 @@ angular.module('ortolangMarketApp')
                 });
             }
 
-            $scope.computeBibtexCitation = function ($scope) {
+            $scope.computeBibtexCitation = function () {
                 if ($scope.bibliographicCitation) {
                     return undefined;
                 }
@@ -359,7 +367,16 @@ angular.module('ortolangMarketApp')
                     bibTeX = '@misc{' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '') + ',\n';
                 bibTeX += '    title = {' + replaceSpecialChars($scope.title) + '},\n';
                 bibTeX += '    author = {';
-                if ($scope.producers && $scope.producers.length > 0) {
+                if ($scope.authors && $scope.authors.length > 0) {
+                    for (i = 0; i < $scope.authors.length; i++) {
+                        if ($scope.authors[i].entity) {
+                            if (i !== 0) {
+                                bibTeX += ', ';
+                            }
+                            bibTeX += replaceSpecialChars($scope.authors[i].entity.fullname);
+                        }
+                    }
+                } else if ($scope.producers && $scope.producers.length > 0) {
                     for (i = 0; i < $scope.producers.length; i++) {
                         if (i !== 0) {
                             bibTeX += ' and ';
@@ -368,15 +385,6 @@ angular.module('ortolangMarketApp')
                             bibTeX += replaceSpecialChars($scope.producers[i].acronym);
                         } else {
                             bibTeX += '{' + replaceSpecialChars($scope.producers[i].name) + '}';
-                        }
-                    }
-                } else if ($scope.authors && $scope.authors.length > 0) {
-                    for (i = 0; i < $scope.authors.length; i++) {
-                        if ($scope.authors[i].entity) {
-                            if (i !== 0) {
-                                bibTeX += ', ';
-                            }
-                            bibTeX += replaceSpecialChars($scope.authors[i].entity.fullname);
                         }
                     }
                 }
@@ -421,8 +429,8 @@ angular.module('ortolangMarketApp')
                 $event.preventDefault();
                 var modalScope = Helper.createModalScope(true);
                 modalScope.models = {
-                    citation: $scope.computeTextCitation($scope),
-                    bibTeX: $scope.computeBibtexCitation($scope),
+                    citation: $scope.citation,
+                    bibTeX: $scope.computeBibtexCitation(),
                     isMac: window.navigator.appVersion.indexOf('Mac') !== -1
                 };
                 modalScope.select = function (target) {
@@ -493,12 +501,17 @@ angular.module('ortolangMarketApp')
                 $scope.initilizing = true;
                 initScopeVariables();
                 loadItem();
-                loadProducers();
-                loadSponsors();
                 if ($scope.content.contributors) {
                     $scope.authors = [];
-                    $scope.contributors = Helper.loadContributors($scope.content.contributors, $scope.authors);
+                    Helper.loadContributors($scope.content.contributors, $scope.authors).then(function(loadedContributors) {
+                        $scope.contributors = loadedContributors;
+                        $scope.citation = $scope.getCitation();
+                    });
+                } else {
+                    $scope.citation = $scope.getCitation();
                 }
+                loadProducers();
+                loadSponsors();
                 loadLicense(Settings.language);
                 $scope.licenseModel = createLicenseModel();
                 $scope.initilizing = false;
