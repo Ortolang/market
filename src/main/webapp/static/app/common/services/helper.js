@@ -78,47 +78,96 @@ angular.module('ortolangMarketApp')
                 return null;
             };
 
+            this.getContributorEntity = function (contributor, loadedContributor) {
+                var deferred = $q.defer();
+                ReferentialResource.get({ name: Helper.extractNameFromReferentialId(contributor.entity) }).$promise.then(function (entity) {
+                    loadedContributor.entity = entity.content;
+                    // Load contributor card when previewing (?? $scope.preview && )
+                    if (Helper.startsWith(loadedContributor.entity.username, '$')) {
+                        var username = Helper.extractKeyFromReferentialId(loadedContributor.entity.username);
+                        var cardPromise = Helper.getCard(username);
+                        if (cardPromise) {
+                            cardPromise.then(function (data) {
+                                loadedContributor.entity.username = data;
+                                deferred.resolve();
+                            });
+                        } else {
+                            deferred.reject();
+                        }
+                    } else {
+                        deferred.resolve();
+                    }
+                }, function() {
+                    deferred.reject();
+                });
+                return deferred.promise;
+            };
+
+            this.getRoleEntity = function (role, loadedContributor, authors) {
+                var deferred = $q.defer();
+                if (Helper.startsWith(role, '$')) {
+                    ReferentialResource.get({ name: Helper.extractNameFromReferentialId(role) }).$promise.then(function (entity) {
+                        var contentRole = entity.content;
+                        loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
+
+                        if (authors && contentRole.id === 'author') {
+                            authors.push(loadedContributor);
+                        }
+                        deferred.resolve();
+                    }, function () {
+                        deferred.reject();
+                    });
+                } else {
+                    loadedContributor.roles.push(Helper.getMultilingualValue(role.labels));
+
+                    if (authors && role.id === 'author') {
+                        authors.push(loadedContributor);
+                    }
+                    deferred.resolve();
+                }
+                return deferred.promise;
+            };
+
+            this.getOrganizationEntity = function (contributor, loadedContributor) {
+                var deferred = $q.defer();
+                if (Helper.startsWith(contributor.organization, '$')) {
+                    ReferentialResource.get({ name: Helper.extractNameFromReferentialId(contributor.organization) }).$promise.then(function (entity) {
+                        loadedContributor.organization = entity.organization;
+                        deferred.resolve();
+                    }, function () {
+                        deferred.reject();
+                    });
+                } else {
+                    loadedContributor.organization = contributor.organization;
+                    deferred.resolve();
+                }
+                return deferred.promise;
+            };
 
             this.loadContributors = function (contributors, authors) {
+                var deferred = $q.defer();
                 var loadedContributors = [];
+                var promises = [];
 
                 if (contributors) {
-                    angular.forEach(contributors, function (contributor) {
+                    for (var iContributor = 0; iContributor < contributors.length; iContributor++) {
+                        var contributor = contributors[iContributor];
                         var loadedContributor = {};
                         if (Helper.startsWith(contributor.entity, '$')) {
                             // From Workspace preview with contributor inside the referential
-                            ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.entity)}, function (entity) {
-                                loadedContributor.entity = entity.content;
-                                // Load contributor card when previewing (?? $scope.preview && )
-                                if (Helper.startsWith(loadedContributor.entity.username, '$')) {
-                                    var username = Helper.extractKeyFromReferentialId(loadedContributor.entity.username);
-                                    var cardPromise = Helper.getCard(username);
-                                    if (cardPromise) {
-                                        cardPromise.then(function (data) {
-                                            loadedContributor.entity.username = data;
-                                        });
-                                    }
-                                }
-                            });
+                            promises.push(this.getContributorEntity(contributor, loadedContributor));
 
                             if (contributor.roles && contributor.roles.length > 0) {
                                 loadedContributor.roles = [];
-                                angular.forEach(contributor.roles, function (role) {
-                                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
-                                        var contentRole = entity.content;
-                                        loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
-
-                                        if (authors && contentRole.id === 'author') {
-                                            authors.push(loadedContributor);
-                                        }
-                                    });
-                                });
+                                // angular.forEach(contributor.roles, function (roleContributor) {
+                                for (var iRole = 0; iRole < contributor.roles.length ; iRole++) {
+                                    promises.push(Helper.getRoleEntity(contributor.roles[iRole], loadedContributor, authors));
+                                }
+                                // });
                             }
 
                             if (contributor.organization) {
-                                ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
-                                    loadedContributor.organization = entity.content;
-                                });
+                                promises.push(this.getOrganizationEntity(contributor, loadedContributor));
                             }
 
                             loadedContributors.push(loadedContributor);
@@ -127,42 +176,31 @@ angular.module('ortolangMarketApp')
                             loadedContributor.entity = contributor.entity;
 
                             if (contributor.organization) {
-                                if (Helper.startsWith(contributor.organization, '$')) {
-                                    ReferentialResource.get({name: Helper.extractNameFromReferentialId(contributor.organization)}, function (entity) {
-                                        loadedContributor.organization = entity.content;
-                                    });
-                                } else {
-                                    loadedContributor.organization = contributor.organization;
-                                }
+                                promises.push(this.getOrganizationEntity(contributor, loadedContributor));
                             }
 
                             if (contributor.roles && contributor.roles.length > 0) {
 
                                 loadedContributor.roles = [];
-                                angular.forEach(contributor.roles, function (role) {
-                                    if (Helper.startsWith(role, '$')) {
-                                        ReferentialResource.get({name: Helper.extractNameFromReferentialId(role)}, function (entity) {
-                                            var contentRole = entity.content;
-                                            loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
-
-                                            if (authors && contentRole.id === 'author') {
-                                                authors.push(loadedContributor);
-                                            }
-                                        });
-                                    } else {
-                                        loadedContributor.roles.push(Helper.getMultilingualValue(role.labels));
-
-                                        if (authors && role.id === 'author') {
-                                            authors.push(loadedContributor);
-                                        }
-                                    }
+                                angular.forEach(contributor.roles, function (roleContributor) {
+                                    promises.push(Helper.getRoleEntity(roleContributor, loadedContributor, authors));
                                 });
                             }
                             loadedContributors.push(loadedContributor);
                         }
+                    }
+                }
+                // return loadedContributors;
+                if (promises.length == 0) {
+                    deferred.resolve(loadedContributors);
+                } else {
+                    $q.all(promises).then(function () {
+                        deferred.resolve(loadedContributors);
+                    }, function() {
+                        deferred.reject();
                     });
                 }
-                return loadedContributors;
+                return deferred.promise;
             };
 
 
