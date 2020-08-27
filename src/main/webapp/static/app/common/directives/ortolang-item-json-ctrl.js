@@ -8,8 +8,11 @@
  * Controller of the ortolangMarketApp
  */
 angular.module('ortolangMarketApp')
-    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 'AuthService', 'Helper', 'Settings', 'VisualizerService', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 'url', 'User',
-        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, AuthService, Helper, Settings, VisualizerService, Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User) {
+    .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 
+                'AuthService', 'Helper', 'Settings', 'VisualizerService', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 
+                'url', 'User', 'SearchResource',
+        function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, AuthService, Helper, Settings, VisualizerService, 
+            Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User, SearchResource) {
 
             function loadReferentialEntities(items, dest) {
                 if (items && items.length > 0) {
@@ -166,6 +169,8 @@ angular.module('ortolangMarketApp')
                 if ($scope.content.schema) {
                     if ($location.search().path) {
                         $scope.browseContent();
+                    } else if($location.search().content) {
+                        $scope.displaySearch();
                     }
 
                     if ($scope.content.schema === 'http://www.ortolang.fr/schema/013#') {
@@ -188,19 +193,33 @@ angular.module('ortolangMarketApp')
                 }
             }
 
+            function ckeckSearchable() {
+                SearchResource.content({ 'workspace.key.keyword': $scope.wskey}, function (hits) {
+                    $scope.searchable = hits.totalHits > 0;
+                });
+            }
+
             $scope.$on('$routeUpdate', function () {
-                if (angular.isUndefined($location.search().path) && $scope.browse) {
-                    $scope.browseContent();
-                } else if (angular.isDefined($location.search().path) && !$scope.browse) {
-                    $scope.browseContent();
+                if (angular.isDefined($location.search().path) && !$scope.browse) {
+                    $scope.browse = !$scope.browse;
+                } else if (angular.isDefined($location.search().content)) {
+                    $scope.displaySearch();
                 }
             });
 
             $scope.browseContent = function () {
-                if ($scope.browse) {
-                    $location.search({});
-                }
                 $scope.browse = !$scope.browse;
+            };
+
+            $scope.displaySearch = function () {
+                $scope.search = true;
+            };
+
+            $scope.displayInfo = function () {
+                // Cleans up the search url parameters
+                $location.search({});
+                $scope.search = false;
+                $scope.browse = false;
             };
 
             function createLicenseModel() {
@@ -423,6 +442,7 @@ angular.module('ortolangMarketApp')
                 $scope.handle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '');
                 $scope.dynamicHandle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias;
                 $scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '');
+                $scope.searchable = false;
             }
 
             $scope.howToCite = function ($scope, $event) {
@@ -514,6 +534,7 @@ angular.module('ortolangMarketApp')
                 loadSponsors();
                 loadLicense(Settings.language);
                 $scope.licenseModel = createLicenseModel();
+                ckeckSearchable();
                 $scope.initilizing = false;
             }
 

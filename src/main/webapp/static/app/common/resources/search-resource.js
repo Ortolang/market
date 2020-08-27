@@ -27,6 +27,10 @@ angular.module('ortolangMarketApp')
                     return data;
                 }
             },
+            content: {
+                url: url.api + '/search/content',
+                method: 'GET'
+            },
             items: {
                 url: url.api + '/search/items',
                 method: 'GET'

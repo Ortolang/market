@@ -204,6 +204,7 @@ import './market/components/facet-filter-column.component';
 import './market/components/facet-filter-cell.component';
 import './market/components/facet-filter-results.component';
 import './market/components/search-bar.component';
+import './market/components/search-panel.component';
 // PRODUCER
 import './producer/i18n/producer.fr';
 import './producer/i18n/producer.en';

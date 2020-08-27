@@ -128,6 +128,9 @@
  ***********************************************/
 
 .full-item {
+  &:first-child {
+    border-top: 0;
+  }
   border-top: @default-border;
   margin-bottom: 3 * @padding-large-vertical;
   padding-top: 3 * @padding-large-vertical;
@@ -149,6 +152,11 @@
   .text-pane-small {
     max-height: 144px;
     margin-bottom: @line-height-computed;
+
+    > em {
+      font-weight: bold;
+      font-style: normal;
+    }
   }
   .details {
     font-weight: 100;
@@ -170,7 +178,41 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+.flexable {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    height: 100%;
+}
+
+.flexable-fixed {
+  flex: 0 0 auto;
+}
+
+.flexable-content {
+  padding: 0;
+  position: relative;
+  flex: 1 1 auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .market-item {
+
+  &.flexable {
+    > header {
+      flex: 0 0 auto;
+      .item-logo {
+        height: 120px;
+        width: 120px;
+        img {
+          max-height: 120px;
+          max-width: 120px;
+        }
+      }
+    }
+  }
+
   &.browse {
     display: flex;
     flex-direction: column;

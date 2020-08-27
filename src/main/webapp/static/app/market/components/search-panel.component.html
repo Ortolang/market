@@ -1,0 +1,33 @@
+<div class="flexable">
+    <div class="toolbar-wrapper market-toolbar-wrapper">
+        <div class="toolbar">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input name="market-search-panel-input" ng-model="$ctrl.text"
+                            ng-keyup="$event.keyCode == 13 && $ctrl.search()" class="form-control" type="text"
+                            placeholder="{{::'MARKET.SEARCH_PAGE' | translate}}">
+                        <span class="input-group-btn">
+                            <button ng-click="$ctrl.search()" class="btn btn-default" type="button"><span
+                                    class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flexable-content">
+        <div class="container-main">
+            <div class="container-market-content">
+                <div class="media full-item" ng-repeat="hit in $ctrl.hits">
+                    <div class="media-body">
+                        <h4><span class="fa fa-fw fa-file-code-o"></span> <a ng-href="{{::hit.pid}}">{{::hit.title}}</a></h4>
+                        <div class="description-wrapper">
+                            <div class="text-pane text-pane-small" data-target-blank ng-bind-html="::hit.fragment"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
