@@ -10,7 +10,7 @@
 angular.module('ortolangMarketApp')
     .component('searchPanel', {
         bindings: {
-            type: '@?',
+            wskey: '@?',
         },
         controller: ['$scope', '$location', 'SearchResource',
             function ($scope, $location, SearchResource) {
@@ -18,7 +18,7 @@ angular.module('ortolangMarketApp')
 
                 ctrl.search = function () {
                     $location.search({content: ctrl.text});
-                    SearchResource.content({ 'content*': ctrl.text, 'highlight': 'content' }, function (hits) {
+                    SearchResource.content({ 'content*': ctrl.text, 'highlight': 'content', 'workspace.key.keyword': ctrl.wskey }, function (hits) {
                         ctrl.hits = hits.hits;
                     });
                 };
