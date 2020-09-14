@@ -16,11 +16,14 @@ angular.module('ortolangMarketApp')
             function ($scope, $location, SearchResource) {
                 var ctrl = this;
 
-                ctrl.search = function () {
-                    $location.search({content: ctrl.text});
+                function searchContent() {
                     SearchResource.content({ 'content*': ctrl.text, 'highlight': 'content', 'workspace.key.keyword': ctrl.wskey }, function (hits) {
                         ctrl.hits = hits.hits;
                     });
+                }
+
+                ctrl.search = function () {
+                    $location.search({content: ctrl.text});
                 };
 
                 $scope.$on('$routeUpdate', function () {
@@ -35,7 +38,7 @@ angular.module('ortolangMarketApp')
                 function refresh() {
                     ctrl.text = $location.search().content ? $location.search().content : '';
                     if ($location.search().content) {
-                        ctrl.search();
+                        searchContent();
                     }
                 }
 
