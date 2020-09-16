@@ -9,7 +9,6 @@ services:
       - 'prerender_server_port=3000'
     deploy:
       labels:
-        traefik.backend: "www-dev"
         traefik.frontend.rule: "Host:www-dev.ortolang.fr"
         traefik.docker.network: "proxy"
         traefik.enable: "true"

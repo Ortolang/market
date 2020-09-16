@@ -93,8 +93,14 @@ test:
     - npm install
     - npm test
   only:
-    - master
-    - branches
+    refs:
+      - master
+      - branches
+    changes:
+      - Dockerfile
+      - nginx/*
+      - config/*
+      - src/main/webapp/static/app/**/*
 
 dependency_scanning:
   stage: test
@@ -111,9 +117,13 @@ dependency_scanning:
     paths:
       - reports/dependency-check/
   only:
-    - master
-  except:
-    - schedules
+    refs:
+      - master
+    changes:
+      - Dockerfile
+      - nginx/*
+      - config/*
+      - src/main/webapp/static/app/**/*
 
 analyze:
   stage: analyze
@@ -126,24 +136,43 @@ analyze:
   dependencies:
     - dependency_scanning
   only:
-    - master
-  except:
-    - schedules
+    refs:
+      - master
+    changes:
+      - Dockerfile
+      - nginx/*
+      - config/*
+      - src/main/webapp/static/app/**/*
 
 docker_build:
   stage: build
   tags:
     - ortolang-docker-bind
   script:
-    - docker build --rm -f Dockerfile -t $IMAGE_NAME .
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build --rm -f Dockerfile -t $IMAGE_NAME .
     - docker push $IMAGE_NAME
-  only: 
-    - master
+  only:
+    refs:
+      - master
+      - branches
+    changes:
+      - Dockerfile
+      - nginx/*
+      - config/*
+      - src/main/webapp/static/app/**/*
+
+docker_tag_from_master:
+  stage: build
+  tags:
+    - ortolang-docker-bind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE:master
+    - docker tag $CI_REGISTRY_IMAGE:master $IMAGE_NAME
+    - docker push $IMAGE_NAME
+  only:
     - tags
-    - branches
-  except:
-    - schedules
 
 deploy_on_dev:
   stage: deploy
@@ -154,7 +183,7 @@ deploy_on_dev:
       - master
     changes:
       - Dockerfile
-      - docker/*
+      - docker/docker-stack.vdorto.yml
       - nginx/*
       - config/*
       - src/main/webapp/static/app/**/*
