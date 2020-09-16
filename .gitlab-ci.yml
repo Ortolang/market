@@ -11,6 +11,7 @@ stages:
   - test
   - analyze
   - build
+  - deploy
 
 # outdated:
 #   stage: test
@@ -143,3 +144,23 @@ docker_build:
     - branches
   except:
     - schedules
+
+deploy_on_dev:
+  stage: deploy
+  tags:
+    - ortolang-docker-bind
+  only:
+    refs:
+      - master
+    changes:
+      - Dockerfile
+      - docker/*
+      - nginx/*
+      - config/*
+      - src/main/webapp/static/app/**/*
+  environment:
+    name: vdorto
+    url: https://www-dev.ortolang.fr
+  image: registry2.atilf.fr/atilf/portainer-cli:1.0.0
+  script:
+    - portainer-cli -u $PORTAINER_USERNAME -p $PORTAINER_PASSWORD -b http://192.168.37.13:9000 deploy -e "Intégration-vdorto" -n ortolang-market_vdorto -f docker/docker-stack.vdorto.yml
