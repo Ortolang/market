@@ -1,4 +1,4 @@
-<section class="market-item" ng-controller="OrtolangItemJson13Ctrl" ng-class="{browse: browse}">
+<section class="market-item" ng-controller="OrtolangItemJson13Ctrl" ng-class="{browse: browse, flexable: search}">
     <header>
         <div class="media">
             <div class="media-left">
@@ -10,7 +10,7 @@
             <div class="media-body">
                 <h1 class="market-item-title" ng-bind="title"></h1>
 
-                <div ng-hide="browse">
+                <div ng-hide="browse || search">
                     <div ng-if="producers.length > 0" class="market-item-producers">
                         <i translate="MARKET.PRODUCER" data-translate-values="{producerNumber: producers.length}"></i>
                         <ul class="list-unstyled">
@@ -39,7 +39,7 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-default" ng-show="browse" ng-click="browseContent()" translate="MARKET.GO_BACK_INFO"></button>
+                <button class="btn btn-default" ng-show="browse || search" ng-click="displayInfo()" translate="MARKET.GO_BACK_INFO"></button>
             </div>
         </div>
     </header>
@@ -52,7 +52,11 @@
         </div>
     </div>
 
-    <div ng-if="!browse" class="row market-item-metadata-wrapper">
+    <div class="flexable-content" ng-if="search">
+        <search-panel wskey="{{wskey}}" />
+    </div>
+
+    <div ng-if="!browse && !search" class="row market-item-metadata-wrapper">
 
         <div class="col-md-8 market-item-presentation-metadata">
 
@@ -217,6 +221,16 @@
                         <div class="btn-group" role="group">
                             <button class="btn btn-default" data-ng-disabled="root === 'head'" ng-click="browseContent()" translate="MARKET.BROWSE"></button>
                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div data-ng-if="searchable" class="card-well card-well-market card-well-license">
+                <p class="lead" translate="MARKET.SEARCH_PAGE"></p>
+                <div class="btn-group btn-group-justified" role="group">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-default btn-info" data-ng-disabled="root === 'head'" ng-click="displaySearch()">
+                            {{'SEARCH' | translate}}</button>
                     </div>
                 </div>
             </div>
