@@ -24,7 +24,7 @@
         <version.frontend.maven.plugin>1.2</version.frontend.maven.plugin>
         <version.resources.maven.plugin>3.0.1</version.resources.maven.plugin>
         <version.clean.maven.plugin>3.0.0</version.clean.maven.plugin>
-        <version.sonar.maven.plugin>3.0.2</version.sonar.maven.plugin>
+        <version.sonar.maven.plugin>3.5.0.1254</version.sonar.maven.plugin>
         <sonar.language>js</sonar.language>
         <sonar.sources>src/main/webapp/static/app</sonar.sources>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

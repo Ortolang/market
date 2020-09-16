@@ -18,7 +18,7 @@ module.exports = function (config) {
             require('karma-firefox-launcher'),
             require('karma-opera-launcher'),
             require('karma-phantomjs-launcher'),
-            require('karma-remap-istanbul'),
+            // require('karma-remap-istanbul'),
             require('karma-sourcemap-loader'),
             require('karma-junit-reporter'),
             require('karma-webpack')
@@ -38,14 +38,15 @@ module.exports = function (config) {
             noInfo: false
         },
 
-        reporters: ['progress', 'junit', 'karma-remap-istanbul'],
+        // reporters: ['progress', 'junit', 'karma-remap-istanbul'],
+        reporters: ['progress', 'junit'],
 
-        remapIstanbulReporter: {
-            reports: {
-                html: 'coverage',
-                lcovonly: './reports/coverage/coverage.lcov'
-            }
-        },
+        // remapIstanbulReporter: {
+        //     reports: {
+        //         html: 'coverage',
+        //         lcovonly: './reports/coverage/lcov.info'
+        //     }
+        // },
 
         junitReporter: {
             outputDir: './reports/',
