@@ -170,7 +170,7 @@ angular.module('ortolangMarketApp')
                     return parseInt(snapshot.name, 10);
                 });
                 if ($routeParams.version) {
-                    var filteredTag = $filter('filter')($scope.tags, {name: $routeParams.version}, true);
+                    var filteredTag = $filter('filter')($scope.tags, {tag: $routeParams.version}, true);
                     if (filteredTag.length === 1) {
                         $scope.tag = filteredTag[0];
                     }
