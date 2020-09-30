@@ -30,10 +30,10 @@
                     <div ng-if="tags.length > 1"><span translate="MARKET.ALL_VERSIONS"></span> :
                         <ul class="list-inline all-versions">
                             <li ng-repeat="t in ::tags">
-                                <div class="label tag" ng-class="::{'label-primary': tag.name === t.name}">
+                                <div class="label tag" ng-class="::{'label-primary': tag.tag === t.tag}">
                                     <span ng-class="::icons.tag"></span>
-                                    <a ng-if="::tag.name !== t.name" ng-href="/market/{{::itemMarketType}}/{{::alias}}/{{::t.name}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.tag}"></a>
-                                    <span ng-if="::tag.name === t.name" translate="BROWSER.VERSION" data-translate-values="{tag: t.tag}"></span>
+                                    <a ng-if="::tag.tag !== t.tag" ng-href="/market/{{::itemMarketType}}/{{::alias}}/{{::t.tag}}" translate="BROWSER.VERSION" data-translate-values="{tag: t.tag}"></a>
+                                    <span ng-if="::tag.tag === t.tag" translate="BROWSER.VERSION" data-translate-values="{tag: t.tag}"></span>
                                 </div>
                             </li>
                         </ul>
