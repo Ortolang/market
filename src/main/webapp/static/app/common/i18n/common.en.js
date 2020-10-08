@@ -31,6 +31,7 @@ angular.module('ortolangMarketApp')
         RESULT: 'Result',
         SIZE: 'Size',
         SEARCH: 'Search',
+        SEARCHING: 'Search in progress',
         LOG_IN: 'Login',
         NO_IMAGE_PROVIDED: 'No image provided',
         DOWNLOAD: 'Download',
@@ -153,5 +154,10 @@ angular.module('ortolangMarketApp')
         SUCCESS_MODAL_METADATA_SAVED: {
             TITLE: 'Save',
             BODY: 'The metadata are saved.'
+        },
+        SEARCH_TYPES: {
+            MATCH: 'Exact word',
+            MATCH_PHRASE_PREFIX: 'Start with',
+            REGEX: 'Regex'
         }
     });

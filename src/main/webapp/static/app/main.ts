@@ -205,6 +205,9 @@ import './market/components/facet-filter-cell.component';
 import './market/components/facet-filter-results.component';
 import './market/components/search-bar.component';
 import './market/components/search-panel.component';
+import './market/components/content-search/content-search-hit.component';
+/* constants */
+import './market/constants/search-panel-config.constant';
 // PRODUCER
 import './producer/i18n/producer.fr';
 import './producer/i18n/producer.en';

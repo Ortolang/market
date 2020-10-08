@@ -1,0 +1,14 @@
+<div class="media-body">
+    <h4><span class="fa fa-fw fa-file-code-o"></span> <a ng-href="{{::$ctrl.hit.source.pid}}">{{::$ctrl.hit.source.name}}</a></h4>
+    <div><em class="fa fa-fw fa-quote-right"></em> {{::$ctrl.hit.highlightFields[0].highlights.length}}
+        <em ng-if="$ctrl.hit.highlightFields[0].highlights.length>=$ctrl.selectedNumOfFragments" data-title="{{::'MARKET.SEARCH_PANEL.MAX_FRAGMENTS_EXCEED' | translate}}"
+        data-placement="right" bs-tooltip>+</em></div>
+    <div class="description-wrapper" ng-repeat="hl in $ctrl.hit.highlightFields[0].highlights | limitTo: $ctrl.maxHit">
+        <div class="separator" ng-if="!$first">...</div>
+        <div class="text-pane text-pane-small" data-target-blank ng-bind-html="::hl"></div>
+    </div>
+    <div>
+        <button type="button" class="btn btn-default" ng-click="$ctrl.displayMoreFragments()" ng-disabled="$ctrl.maxHit == $ctrl.selectedNumOfFragments" translate="MARKET.SEARCH_PANEL.DISPLAY_MORE_FRAGMENTS"> </button>
+        <button type="button" class="btn btn-default" ng-click="$ctrl.displayFilePreview()" translate="MARKET.SEARCH_PANEL.PREVIEW_FILE"></button>
+    </div>
+</div>
