@@ -207,6 +207,20 @@ angular.module('ortolangMarketApp')
                     POLICY: 'You must accept the ORTOLANG policy as well as the resource license',
                     CONDITIONSOFUSE: 'You must accept the conditions of use'
                 }
+            },
+            SEARCH_PANEL: {
+                HEADER: 'The word <em>{{ ::text }}</em> has been found from {{ ::totalNumOfDocuments }} documents in {{ ::tookInMillis }} ms',
+                NUM_OF_FRAGMENTS: 'Maximum number of matches',
+                FIVE_FRAGMENTS: '5 matches max',
+                TWENTY_FIVE_FRAGMENTS: '25 matches max',
+                FIFTY_FRAGMENTS: '50 matches max',
+                HUNDRED_FRAGMENTS: '100 matches max',
+                MAX_FRAGMENTS_EXCEED: 'Number of max matches exceeded',
+                DISPLAY_MORE_FRAGMENTS: 'See more matches',
+                PREVIEW_FILE: 'See the file',
+                HELP: {
+                    SEARCH_FIELD: 'Exact word : The boundaries of the term is the word. Each term is searched independendly (OR).'
+                }
             }
         }
     });

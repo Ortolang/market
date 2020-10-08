@@ -214,6 +214,20 @@ angular.module('ortolangMarketApp')
                     POLICY: 'Vous devez accepter la charte ORTOLANG ainsi que la license relative à cette ressource',
                     CONDITIONSOFUSE: 'Vous devez accepter les conditions d\'utilisation relatives à cette ressource',
                 }
+            },
+            SEARCH_PANEL: {
+                HEADER: 'Le mot <em>{{ ::text }}</em> a été trouvé dans {{ ::totalNumOfDocuments }} fichiers en {{ ::tookInMillis }} ms',
+                NUM_OF_FRAGMENTS: 'Nombre de occurrence maximal',
+                FIVE_FRAGMENTS: '5 occurrences max',
+                TWENTY_FIVE_FRAGMENTS: '25 occurrences max',
+                FIFTY_FRAGMENTS: '50 occurrences max',
+                HUNDRED_FRAGMENTS: '100 occurrences max',
+                MAX_FRAGMENTS_EXCEED: 'Nombre d\'occurrence maximal dépossé',
+                DISPLAY_MORE_FRAGMENTS: 'Voir plus d\'occurrence',
+                PREVIEW_FILE: 'Voir le fichier',
+                HELP: {
+                    SEARCH_FIELD: 'Mot exact : La recherche est borné au mot. Chaque mot est recherché indépendamment (équivalent à un "ou" logique).<br/><br/>Expression régulière: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.1/query-dsl-regexp-query.html#regexp-syntax" target="_BLANK">syntaxe</a>'
+                }
             }
         }
     });

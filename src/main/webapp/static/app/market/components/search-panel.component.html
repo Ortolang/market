@@ -4,28 +4,34 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="input-group">
+                        <span class="input-group-addon"><em class="fa fa-search"></em></span>
                         <input name="market-search-panel-input" ng-model="$ctrl.text"
                             ng-keyup="$event.keyCode == 13 && $ctrl.search()" class="form-control" type="text"
                             placeholder="{{::'MARKET.SEARCH_PAGE' | translate}}">
                         <span class="input-group-btn">
-                            <button ng-click="$ctrl.search()" class="btn btn-default" type="button"><span
-                                    class="glyphicon glyphicon-search"></span></button>
+                            <button type="button" class="btn btn-default" name="search-type" ng-model="$ctrl.selectedSearchType" bs-options="type.key as type.value for type in $ctrl.searchTypes" data-placement="bottom-right"
+                                bs-select>Mot <span class="caret"></span></button>
+                            <button ng-click="$ctrl.search()" class="btn btn-primary" type="button" translate='SEARCH'></button>
+                            
                         </span>
                     </div>
+                </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-default" ng-model="$ctrl.selectedNumOfFragments" bs-options="lang.key as lang.value for lang in $ctrl.numOfFragmentsList" data-placement="bottom-right" ng-change="$ctrl.search()" bs-select>{{'MARKET.SEARCH_PANEL.NUM_OF_FRAGMENTS' | translate}} <span class="caret"></span></button>
+                    <button type="button" class="btn btn-default" data-title="{{::'MARKET.SEARCH_PANEL.HELP.SEARCH_FIELD' | translate}}" data-html="true" data-placement="bottom" data-trigger="click" bs-tooltip><em class="fa fa-info-circle"></em></button>
                 </div>
             </div>
         </div>
     </div>
     <div class="flexable-content">
         <div class="container-main">
-            <div class="container-market-content">
+            <div ng-if="$ctrl.ready != null && $ctrl.ready === false" class="container-header" translate='SEARCHING'></div>
+            <div class="container-header" ng-if="$ctrl.ready === true && $ctrl.totalHits >= 0" 
+                translate='MARKET.SEARCH_PANEL.HEADER' 
+                data-translate-values="{text: $ctrl.text, totalNumOfDocuments: $ctrl.totalHits, tookInMillis: $ctrl.tookInMillis}"></div>
+            <div class="container-market-content" ng-if="$ctrl.ready === true">
                 <div class="media full-item" ng-repeat="hit in $ctrl.hits">
-                    <div class="media-body">
-                        <h4><span class="fa fa-fw fa-file-code-o"></span> <a ng-href="{{::hit.pid}}">{{::hit.title}}</a></h4>
-                        <div class="description-wrapper">
-                            <div class="text-pane text-pane-small" data-target-blank ng-bind-html="::hit.fragment"></div>
-                        </div>
-                    </div>
+                    <content-search-hit hit="hit" selected-num-of-fragments="{{$ctrl.selectedNumOfFragments}}"></content-search-hit>
                 </div>
             </div>
         </div>
