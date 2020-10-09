@@ -18,7 +18,8 @@ angular.module('ortolangMarketApp')
             INCLUDES: 'includes',
             HIGHLIGHT_NUMOFFRAGMENTS: 'highlightNumOfFragments',
             HIGHLIGHT_FIELDS: 'highlightFields',
-            WORKSPACE_KEY: 'workspace.key.keyword'
+            WORKSPACE_KEY: 'workspace.key.keyword',
+            SIZE: 'size'
         },
         HIGHLIGHT_FIELDS: {
             CONTENT: 'content',
@@ -27,4 +28,5 @@ angular.module('ortolangMarketApp')
             KEY: 'key'
         },
         NUM_OF_FRAGMENTS: '25',
+        MAX_NB_DOCUMENTS: 10000
     });

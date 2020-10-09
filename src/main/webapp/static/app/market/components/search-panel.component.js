@@ -26,6 +26,7 @@ angular.module('ortolangMarketApp')
                             SearchPanelConfig.HIGHLIGHT_FIELDS.PID,
                             SearchPanelConfig.HIGHLIGHT_FIELDS.KEY
                         ];
+                    query[SearchPanelConfig.FIELDS.SIZE] = SearchPanelConfig.MAX_NB_DOCUMENTS;
                     query[SearchPanelConfig.HIGHLIGHT_FIELDS.CONTENT + ctrl.selectedSearchType] = ctrl.text;
                     ctrl.ready = false;
                     SearchResource.content(query, function (hits) {
