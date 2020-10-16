@@ -86,21 +86,19 @@ stages:
 
 test:
   stage: test
-  image: node:8.16
   tags:
     - ortolang-docker-bind
   script:
-    - npm install
-    - npm test
+    - docker build -f Dockerfile.test .
   only:
     refs:
       - master
       - branches
     changes:
-      - Dockerfile
-      - nginx/*
+      - Dockerfile.test
       - config/*
       - src/main/webapp/static/app/**/*
+      - src/main/webapp/static/test/**/*
 
 dependency_scanning:
   stage: test

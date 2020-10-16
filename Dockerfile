@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM node:8.16 as builder
+FROM node:14.13 as builder
 
 WORKDIR /code
 

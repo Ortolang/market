@@ -104,7 +104,7 @@ angular.module('ortolangVisualizers')
             } else if (mimeType === 'text/x-less') {
                 $scope.language = 'less';
             } else if (mimeType === 'application/postscript' && name.endsWith('.tex')) {
-                $scope.language = 'tex';
+                $scope.language = 'latex';
             } else if (mimeType === 'text/x-sql') {
                 $scope.language = 'sql';
             } else if (mimeType === 'text/x-python') {

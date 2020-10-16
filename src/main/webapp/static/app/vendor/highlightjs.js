@@ -1,4 +1,4 @@
-var hljs = require('../../../../../../node_modules/highlight.js/lib/highlight');
+var hljs = require('../../../../../../node_modules/highlight.js/lib/core');
 
 hljs.registerLanguage('bash', require('../../../../../../node_modules/highlight.js/lib/languages/bash'));
 hljs.registerLanguage('css', require('../../../../../../node_modules/highlight.js/lib/languages/css'));
@@ -13,7 +13,7 @@ hljs.registerLanguage('php', require('../../../../../../node_modules/highlight.j
 hljs.registerLanguage('python', require('../../../../../../node_modules/highlight.js/lib/languages/python'));
 hljs.registerLanguage('scss', require('../../../../../../node_modules/highlight.js/lib/languages/scss'));
 hljs.registerLanguage('sql', require('../../../../../../node_modules/highlight.js/lib/languages/sql'));
-hljs.registerLanguage('tex', require('../../../../../../node_modules/highlight.js/lib/languages/tex'));
+hljs.registerLanguage('latex', require('../../../../../../node_modules/highlight.js/lib/languages/latex'));
 hljs.registerLanguage('typescript', require('../../../../../../node_modules/highlight.js/lib/languages/typescript'));
 hljs.registerLanguage('xml', require('../../../../../../node_modules/highlight.js/lib/languages/xml'));
 

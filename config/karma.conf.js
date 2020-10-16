@@ -1,5 +1,6 @@
 'use strict';
 var webpackConfig = require('./webpack.test');
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function (config) {
     var _config = {
@@ -17,7 +18,6 @@ module.exports = function (config) {
             require('karma-safari-launcher'),
             require('karma-firefox-launcher'),
             require('karma-opera-launcher'),
-            require('karma-phantomjs-launcher'),
             // require('karma-remap-istanbul'),
             require('karma-sourcemap-loader'),
             require('karma-junit-reporter'),
@@ -73,11 +73,18 @@ module.exports = function (config) {
 
         autoWatch: false,
 
-        browsers: config.all ? ['PhantomJS', 'Safari', 'Chrome', 'Opera', 'Firefox'] : ['PhantomJS'],
+        browsers: config.all ? ['HeadlessChrome', 'Safari', 'Chrome', 'Firefox'] : ['HeadlessChrome'],
         browserDisconnectTimeout: 20000,
         browserDisconnectTolerance: 1,
         browserNoActivityTimeout: 4*60*1000,
         captureTimeout : 4*60*1000,
+
+        customLaunchers: {
+            HeadlessChrome: {
+                base: 'ChromeHeadless',
+                flags: ['--disable-web-security', '--disable-site-isolation-trials', '--no-sandbox']
+            }
+        },
 
         singleRun: true
     };
