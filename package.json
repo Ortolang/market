@@ -54,7 +54,7 @@
         "font-awesome": "4.7.0",
         "holderjs": "2.9.6",
         "jquery": "3.5.0",
-        "keycloak-js": "3.4.3",
+        "keycloak-js": "11.0.3",
         "moment": "2.24.0",
         "ng-showdown": "1.1.0",
         "ng-tags-input": "3.2.0",
