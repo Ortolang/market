@@ -1,5 +1,5 @@
 <div class="media-body">
-    <h4><span class="fa fa-fw fa-file-code-o"></span> <a ng-href="{{::$ctrl.hit.source.pid}}">{{::$ctrl.hit.source.name}}</a></h4>
+    <h4><span class="fa fa-fw fa-file-code-o"></span> <a ng-href="https://hdl.handle.net/{{::$ctrl.hit.source.pid}}">{{::$ctrl.hit.source.name}}</a></h4>
     <div><em class="fa fa-fw fa-quote-right"></em> {{::$ctrl.hit.highlightFields[0].highlights.length}}
         <em ng-if="$ctrl.hit.highlightFields[0].highlights.length>=$ctrl.selectedNumOfFragments" data-title="{{::'MARKET.SEARCH_PANEL.MAX_FRAGMENTS_EXCEED' | translate}}"
         data-placement="right" bs-tooltip>+</em></div>
