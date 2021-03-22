@@ -14,36 +14,39 @@ angular.module('ortolangMarketApp')
         function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, AuthService, Helper, Settings, VisualizerService, 
             Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User, SearchResource) {
 
-            function loadReferentialEntities(items, dest) {
+            function loadReferentialEntities(items) {
+                var deferred = $q.defer();
                 if (items && items.length > 0) {
                     var promises = [],
-                        tmp = [];
-                    angular.forEach(items, function (item, index) {
+                        tmp = [],
+                        item;
+                    for (let iEntity = 0; iEntity < items.length ; iEntity++) {
+                        item = items[iEntity];
                         if (Helper.startsWith(item, '$')) {
                             // From Workspace
-                            promises.push(ReferentialResource.get({name: Helper.extractNameFromReferentialId(item)}, function (entity) {
-                                tmp[index] = entity.content;
-                            }));
+                            var deferredEntity = $q.defer();
+                            ReferentialResource.get({ name: Helper.extractNameFromReferentialId(item) }, function (entity) {
+                                tmp[iEntity] = entity.content;
+                                deferredEntity.resolve();
+                            }, function() {
+                                deferredEntity.reject();
+                            });
+                            promises.push(deferredEntity.promise);
                         } else {
                             // From Market and Workspace (entity that needs to be checked) 
-                            tmp[index] = item;
+                            tmp[iEntity] = item;
                         }
-                    });
+                    }
                     $q.all(promises).then(function () {
-                        $scope[dest] = tmp;
+                        deferred.resolve(tmp);
                     }, function (reason) {
                         console.error(reason);
-                        $scope[dest] = tmp;
+                        deferred.reject(tmp);
                     });
+                } else {
+                    deferred.resolve([]);
                 }
-            }
-
-            function loadProducers() {
-                loadReferentialEntities($scope.content.producers, 'producers');
-            }
-
-            function loadSponsors() {
-                loadReferentialEntities($scope.content.sponsors, 'sponsors');
+                return deferred.promise;
             }
 
             function getValues(arr, propertyName, propertyValue) {
@@ -283,7 +286,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.bibliographicCitation) {
                     return $scope.bibliographicCitation;
                 }
-                var citation = '', i, iPub = 0;
+                var citation = '', i = 0, iPub = 0, iAuthor = 0;
                 if ($scope.content.publications && $scope.content.publications.length > 0) {
                     angular.forEach($scope.content.publications, function (publication) {
                         if (iPub++>1) return;
@@ -291,16 +294,19 @@ angular.module('ortolangMarketApp')
                     });
                 }
                 if ($scope.authors && $scope.authors.length > 0) {
-                    for (i = 0; i < $scope.authors.length; i++) {
-                        if (i>2) {
-                            citation += ', et al.';
-                            break;
-                        }
-                        if ($scope.authors[i].entity) {
-                            if (i !== 0) {
-                                citation += ', ';
+                    // Displays authors
+                    for (iAuthor = 0; iAuthor < $scope.authors.length ; iAuthor++) {
+                        if ($scope.authors[iAuthor].isAuthor) {
+                            if (iAuthor > 2) {
+                                citation += ', et al.';
+                                break;
                             }
-                            citation += $scope.authors[i].entity.fullname;
+                            if ($scope.authors[iAuthor].entity) {
+                                if (iAuthor !== 0) {
+                                    citation += ', ';
+                                }
+                                citation += $scope.authors[iAuthor].entity.fullname;
+                            }
                         }
                     }
                 } else if ($scope.producers && $scope.producers.length > 0) {
@@ -421,10 +427,6 @@ angular.module('ortolangMarketApp')
                 return $scope.computeTextCitation($scope);
             };
 
-            $scope.getBibTeX = function () {
-                return $scope.computeBibtexCitation($scope);
-            };
-
             $scope.goToItem = function (url) {
                 $location.url(url);
             };
@@ -521,17 +523,32 @@ angular.module('ortolangMarketApp')
                 $scope.initilizing = true;
                 initScopeVariables();
                 loadItem();
-                if ($scope.content.contributors) {
+                $scope.producers = [];
+                loadReferentialEntities($scope.content.producers).then(function (loadedProducers) {
+                    $scope.producers = loadedProducers.slice();
+
+                    // Loads contributors and authors
                     $scope.authors = [];
-                    Helper.loadContributors($scope.content.contributors, $scope.authors).then(function(loadedContributors) {
-                        $scope.contributors = loadedContributors;
+                    if ($scope.content.contributors && $scope.content.contributors.length > 0) {
+                        Helper.loadContributors($scope.content.contributors).then(function(loadedContributors) {
+                            $scope.contributors = loadedContributors;
+                            for (var iContributor = 0; iContributor < $scope.contributors.length; iContributor++) {
+                                if ($scope.contributors[iContributor].isAuthor) {
+                                    $scope.authors.push($scope.contributors[iContributor]);
+                                }
+                            }
+                            // If contributors, needs authors to be loaded
+                            $scope.citation = $scope.getCitation();
+                        });
+                    } else {
+                        // If producers, needs producers to be loaded
                         $scope.citation = $scope.getCitation();
-                    });
-                } else {
-                    $scope.citation = $scope.getCitation();
-                }
-                loadProducers();
-                loadSponsors();
+                    }
+                });
+                $scope.sponsors = [];
+                loadReferentialEntities($scope.content.sponsors).then(function (loadedSponsors) {
+                    $scope.sponsors = loadedSponsors.slice();
+                });
                 loadLicense(Settings.language);
                 $scope.licenseModel = createLicenseModel();
                 ckeckSearchable();

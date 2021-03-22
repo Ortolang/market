@@ -103,26 +103,18 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             };
 
-            this.getRoleEntity = function (role, loadedContributor, authors) {
+            this.getRoleEntity = function (role, loadedContributor) {
                 var deferred = $q.defer();
                 if (Helper.startsWith(role, '$')) {
                     ReferentialResource.get({ name: Helper.extractNameFromReferentialId(role) }).$promise.then(function (entity) {
                         var contentRole = entity.content;
                         loadedContributor.roles.push(Helper.getMultilingualValue(contentRole.labels));
-
-                        if (authors && contentRole.id === 'author') {
-                            authors.push(loadedContributor);
-                        }
                         deferred.resolve();
                     }, function () {
                         deferred.reject();
                     });
                 } else {
                     loadedContributor.roles.push(Helper.getMultilingualValue(role.labels));
-
-                    if (authors && role.id === 'author') {
-                        authors.push(loadedContributor);
-                    }
                     deferred.resolve();
                 }
                 return deferred.promise;
@@ -144,7 +136,7 @@ angular.module('ortolangMarketApp')
                 return deferred.promise;
             };
 
-            this.loadContributors = function (contributors, authors) {
+            this.loadContributors = function (contributors) {
                 var deferred = $q.defer();
                 var loadedContributors = [];
                 var promises = [];
@@ -159,11 +151,13 @@ angular.module('ortolangMarketApp')
 
                             if (contributor.roles && contributor.roles.length > 0) {
                                 loadedContributor.roles = [];
-                                // angular.forEach(contributor.roles, function (roleContributor) {
+                                loadedContributor.isAuthor = false;
                                 for (var iRole = 0; iRole < contributor.roles.length ; iRole++) {
-                                    promises.push(Helper.getRoleEntity(contributor.roles[iRole], loadedContributor, authors));
+                                    promises.push(Helper.getRoleEntity(contributor.roles[iRole], loadedContributor));
+                                    if (contributor.roles[iRole] == "${referential:author}") {
+                                        loadedContributor.isAuthor = true;
+                                    }
                                 }
-                                // });
                             }
 
                             if (contributor.organization) {
@@ -182,8 +176,14 @@ angular.module('ortolangMarketApp')
                             if (contributor.roles && contributor.roles.length > 0) {
 
                                 loadedContributor.roles = [];
+                                loadedContributor.isAuthor = false;
                                 angular.forEach(contributor.roles, function (roleContributor) {
-                                    promises.push(Helper.getRoleEntity(roleContributor, loadedContributor, authors));
+                                    promises.push(Helper.getRoleEntity(roleContributor, loadedContributor));
+                                    if (angular.isDefined(roleContributor.key) && roleContributor.key == "referential:author") {
+                                        loadedContributor.isAuthor = true;
+                                    } else if (roleContributor == "${referential:author}") {
+                                        loadedContributor.isAuthor = true;
+                                    }
                                 });
                             }
                             loadedContributors.push(loadedContributor);
