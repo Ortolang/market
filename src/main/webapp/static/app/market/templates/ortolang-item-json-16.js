@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
                 modalScope.models = {
                     title: Helper.getMultilingualValue(part.title, $translate.use()),
                     description: Helper.getMultilingualValue(part.description, $translate.use()),
-                    contributors: Helper.loadContributors(part.contributors),
+                    contributors: part.loadedContributors,
                     path: part.path
                 };
                 modalScope.browseContentPart = function () {
@@ -161,6 +161,12 @@ angular.module('ortolangMarketApp')
                 loadCommercialLinks(Settings.language);
                 loadRelations();
                 loadAdditionalInformations(Settings.language);
+
+                angular.forEach($scope.content.parts, function(part) {
+                    Helper.loadContributors(part.contributors).then(function (loadedContributors) {
+                        part.loadedContributors = loadedContributors;
+                    });
+                });
             }
 
             init();
