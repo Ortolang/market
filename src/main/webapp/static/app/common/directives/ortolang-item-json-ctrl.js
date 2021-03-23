@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
                     var promises = [],
                         tmp = [],
                         item;
-                    for (let iEntity = 0; iEntity < items.length ; iEntity++) {
+                    for (var iEntity = 0; iEntity < items.length ; iEntity++) {
                         item = items[iEntity];
                         if (Helper.startsWith(item, '$')) {
                             // From Workspace
