@@ -1,6 +1,6 @@
 {
     "realm": "ortolang",
-    "auth-server-url": "http://docker.for.mac.localhost:8080/auth",
+    "auth-server-url": "http://docker.for.mac.localhost:18080/auth",
     "ssl-required": "external",
     "resource": "market",
     "public-client": true
