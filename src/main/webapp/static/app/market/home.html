@@ -7,7 +7,7 @@
     <div class="container-main container-main-home">
         <div class="container-main-inner">
             <section class="row">
-                <div class="col-md-8 col-lg-7 col-xxl-5">
+                <div class="col-md-12 col-lg-11 col-xxl-9">
                     <h1 class="ortolang-title" translate="ORTOLANG"></h1>
                     <hr/>
                     <div ng-include="StaticWebsite.getHomePage()"></div>
@@ -23,10 +23,8 @@
                     </div>
                     <hr/>
                 </div>
-                <div class="visible-xxl col-xxl-4" home-news data-limit="2"></div>
                 <div class="visible-xxl col-xxl-3" ng-include="'market/templates/statistics.html'"></div>
                 <div class="hidden-xxl col-md-4 col-lg-5">
-                    <div home-news data-limit="1"></div>
                     <div ng-include="'market/templates/statistics.html'"></div>
                 </div>
             </section>
