@@ -33,7 +33,7 @@ angular.module('ortolangMarketApp')
         }
 
         config.onOpen = function (response) {
-            console.log('Atmosphere connected using ' + response.transport, response);
+            console.log('Atmosphere connected using ' + response.transport);
             connected = true;
         };
 
@@ -46,7 +46,7 @@ angular.module('ortolangMarketApp')
         };
 
         config.onReopen = function (response) {
-            console.log('Atmosphere re-connected using ' + response.transport, response);
+            console.log('Atmosphere re-connected using ' + response.transport);
             connected = true;
         };
 
@@ -100,7 +100,6 @@ angular.module('ortolangMarketApp')
                             result[property] = request[property];
                         }
                     });
-                    console.log("Atmosphere subscribe ", request);
                     socket = atmosphere.subscribe(result);
                 }
             });
