@@ -48,7 +48,7 @@ angular.element(document).ready(function () {
                 function getScope() {
                     if (keycloakAuth.authenticated) {
                         /*jshint camelcase:false */
-                        return window.btoa(keycloakAuth.idTokenParsed.preferred_username) + OrtolangConfig.cacheVersion;
+                        return window.btoa(encodeURIComponent(keycloakAuth.idTokenParsed.preferred_username)) + OrtolangConfig.cacheVersion;
                     }
                     return window.btoa('anonymous') + OrtolangConfig.cacheVersion;
                 }
