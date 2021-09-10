@@ -41,13 +41,13 @@ angular.module('ortolangMarketApp')
                 function getBuildOutput() {
                     $http({
                         method: 'GET',
-                        url: ctrl.baseurl + '/api/jobs/' + ctrl.jobId + "/build/" + ctrl.builds[0],
+                        url: ctrl.baseurl + '/jobs/' + ctrl.jobId + "/file/" + ctrl.builds[0],
                         transformResponse: [function (data) {
                             return data;
                         }]
                     }).then(function successCallback(response) {
                         ctrl.output = response.data;
-                        ctrl.outputUrl = ctrl.baseurl + '/api/jobs/' + ctrl.jobId + "/build/" + ctrl.builds[0];
+                        ctrl.outputUrl = ctrl.baseurl + '/jobs/' + ctrl.jobId + "/file/" + ctrl.builds[0];
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -67,11 +67,8 @@ angular.module('ortolangMarketApp')
                 };
 
                 function send() {
-                    var variables = {};
-                    angular.forEach(ctrl.formdata, function (value, key) {
-                        variables[key] = value;
-                    });
-                    ctrl.toolResource.createJob(variables, function (data) {
+                    var job = { parameters : ctrl.formdata };
+                    ctrl.toolResource.createJob(job, function (data) {
                         ctrl.jobId = data.id;
                         refreshOutput();
                     }, function (data) {
@@ -122,22 +119,20 @@ angular.module('ortolangMarketApp')
                     ctrl.enableSubmit = '';
                     ctrl.output = null;
                     ctrl.builds = [];
-                    ctrl.toolResource = $resource('/api/jobs', {}, {
+                    ctrl.toolResource = $resource('/jobs', {}, {
                         createJob: {
                             method: 'POST',
-                            url: ctrl.baseurl + '/api/jobs',
-                            transformRequest: function (data) { return $.param(data); },
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                            url: ctrl.baseurl + '/jobs',
                         },
                         createJobWithFile: {
                             method: 'POST',
-                            url: ctrl.baseurl + '/api/jobs',
+                            url: ctrl.baseurl + '/jobs',
                             transformRequest: angular.identity,
                             headers: { 'Content-Type': undefined }
                         },
                         getJob: {
                             method: 'GET',
-                            url: ctrl.baseurl + '/api/jobs/:id'
+                            url: ctrl.baseurl + '/jobs/:id'
                         }
                     });
                 }
