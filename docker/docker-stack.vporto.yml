@@ -1,0 +1,27 @@
+version: '3.2'
+
+services:
+  olmarket:
+    image: registry.ortolang.fr/ortolang/ortolang-market:market-9-4-0
+    environment: 
+      - 'api_url=https://repository.ortolang.fr/api'
+      - 'prerender_server_ip=prerender'
+      - 'prerender_server_port=3000'
+    deploy:
+      labels:
+        traefik.backend: "www-ortolang-fr"
+        traefik.frontend.rule: "Host:www.ortolang.fr"
+        traefik.docker.network: "proxy"
+        traefik.enable: "true"
+        traefik.port: "80"
+        traefik.default.protocol: "http"
+        traefik.frontend.entryPoints: "http,https"
+    networks:
+      - proxy
+      - ortolang-vporto
+
+networks:
+  ortolang-vporto:
+    external: true
+  proxy:
+    external: true
