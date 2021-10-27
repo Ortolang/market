@@ -28,6 +28,8 @@ test:
       - config/*
       - src/main/webapp/static/app/**/*
       - src/main/webapp/static/test/**/*
+  except:
+    - production
 
 dependency_scanning:
   stage: test
@@ -88,6 +90,8 @@ docker_build:
       - nginx/*
       - config/*
       - src/main/webapp/static/app/**/*
+  except:
+    - production
 
 docker_tag_from_master:
   stage: build
