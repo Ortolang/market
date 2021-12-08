@@ -6,38 +6,20 @@
     </div>
     <div class="container-main container-main-home">
         <div class="container-main-inner">
-            <section class="row">
-                <div class="col-md-12 col-lg-11 col-xxl-9">
-                    <h1 class="ortolang-title" translate="ORTOLANG"></h1>
-                    <hr/>
-                    <div ng-include="StaticWebsite.getHomePage()"></div>
-                    <div class="media small marianne">
-                        <div class="media-left">
-                            <!--suppress HtmlUnknownTarget -->
-                            <img src="../assets/images/marianne-avenir.png" width="100" height="100" alt="Logo Investissements d’avenir" />
-                        </div>
-                        <div class="media-body">
-                            <p>{{'NAV.STATE_SUPPORT' | translate}}<br />(ANR&ndash;11&ndash;EQPX&ndash;0032)</p>
-                            <i>ORTOLANG ISSN 2417&ndash;7482</i>
-                        </div>
-                    </div>
-                    <hr/>
-                </div>
-                <div class="visible-xxl col-xxl-3" ng-include="'market/templates/statistics.html'"></div>
-                <div class="hidden-xxl col-md-4 col-lg-5">
-                    <div ng-include="'market/templates/statistics.html'"></div>
-                </div>
-            </section>
-
-            <div class="home-items" items data-inline="true" data-search="searchRecents" data-title="'MARKET.NEW_RESOURCES'" data-params="paramsRecents" data-hide-see-more-button="true"></div>
+            <div items data-inline="true" data-search="searchCorpora" data-title="'CORPORA'"
+                data-params="paramsCorpora" data-see-more-value="corpora" data-see-more="seeMore"></div>
+            <div items data-inline="true" data-search="searchLexicons" data-title="'LEXICONS'"
+                data-params="paramsLexicons" data-see-more-value="lexicons" data-see-more="seeMore"></div>
+            <div items data-inline="true" data-search="searchTerminologies" data-title="'TERMINOLOGIES'"
+                data-params="paramsTerminologies" data-see-more-value="terminologies" data-see-more="seeMore"></div>
+            <div items data-inline="true" data-search="searchTools" data-title="'TOOLS'"
+                data-params="paramsTools" data-see-more-value="tools" data-see-more="seeMore"></div>
             
         </div>
 
         <footer class="main-footer small" ng-controller="FooterCtrl" ng-cloak>
-            <p class="pull-left">© 2021 <a href="http://dev.ortolang.fr/team-list.html" target="_blank" translate="NAV.TEAM"></a> | @@version</p>
+            <p class="pull-left">© 2021 | Version @@version</p>
             <p class="pull-right">
-                <a href="https://dev.ortolang.fr/" target="_blank" translate="NAV.COMMUNITY_WEBSITE"></a>
-                &bull;
                 <a ng-href="/legal-notices" translate="NAV.LEGAL_NOTICES"></a>
                 &bull;
                 <span ng-click="contactUs()" translate="NAV.CONTACT"></span>

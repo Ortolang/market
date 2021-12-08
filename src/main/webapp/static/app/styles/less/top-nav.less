@@ -28,6 +28,7 @@
   ul.navbar-nav {
     &.navbar-collapse {
       border: none;
+      
       &.in.collapse, &.collapsing {
         margin-top: @padding-small-vertical;
         .open .dropdown-menu > li {
@@ -51,13 +52,13 @@
         padding-bottom: 0;
         line-height: @top-navbar-height;
         color: @top-navbar-color;
-        &:hover, &:focus {
-          background-color: inherit;
+        &:hover {
+          background-color: @dark-blue-lighten;
           color: @top-navbar-color;
         }
         &.dropdown-toggle {
           &:hover, &:focus {
-            background-color: inherit;
+            background-color: @dark-blue-lighten;
           }
         }
       }

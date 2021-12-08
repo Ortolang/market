@@ -9,8 +9,8 @@ variables:
 
 stages:
   - test
-  - analyze
-  - build
+  # - analyze
+  - package
   - deploy
 
 test:
@@ -54,27 +54,27 @@ dependency_scanning:
       - config/*
       - src/main/webapp/static/app/**/*
 
-analyze:
-  stage: analyze
-  image: registry2.atilf.fr/atilf/sonarqube-scanner:1.1.0
-  tags:
-    - ortolang-docker-bind
-  allow_failure: true
-  script:
-    - /sonar/sonar-scanner-cli/bin/sonar-scanner
-  dependencies:
-    - dependency_scanning
-  only:
-    refs:
-      - master
-    changes:
-      - Dockerfile
-      - nginx/*
-      - config/*
-      - src/main/webapp/static/app/**/*
+# analyze:
+#   stage: analyze
+#   image: registry2.atilf.fr/atilf/sonarqube-scanner:1.1.0
+#   tags:
+#     - ortolang-docker-bind
+#   allow_failure: true
+#   script:
+#     - /sonar/sonar-scanner-cli/bin/sonar-scanner
+#   dependencies:
+#     - dependency_scanning
+#   only:
+#     refs:
+#       - master
+#     changes:
+#       - Dockerfile
+#       - nginx/*
+#       - config/*
+#       - src/main/webapp/static/app/**/*
 
 docker_build:
-  stage: build
+  stage: package
   tags:
     - ortolang-docker-bind
   script:
@@ -94,7 +94,7 @@ docker_build:
     - production
 
 docker_tag_from_master:
-  stage: build
+  stage: package
   tags:
     - ortolang-docker-bind
   script:
@@ -121,7 +121,7 @@ deploy_on_dev:
   environment:
     name: vdorto
     url: https://www-dev.ortolang.fr
-  image: registry2.atilf.fr/atilf/portainer-cli:1.6.0
+  image: cyrilpestel/portainer-cli:1.6.0
   script:
     - portainer-cli -u $PORTAINER_USERNAME -p $PORTAINER_PASSWORD -b http://192.168.37.13:9000 deploy -e "Intégration-vdorto" -n ortolang-market_vdorto -f docker/docker-stack.vdorto.yml
 

@@ -104,14 +104,9 @@ import './common/services/cart';
 import './common/services/runtime';
 /* static-website */
 import './common/static-website/static-website';
-import './common/static-website/information';
 import './common/static-website/i18n/static-website.fr';
 import './common/static-website/i18n/static-website.en';
 /* nav */
-import './common/nav/side-nav-elements';
-import './common/nav/side-nav';
-import './common/nav/mobile-nav';
-import './common/nav/top-nav';
 import './common/nav/footer';
 import './common/nav/i18n/nav.fr';
 import './common/nav/i18n/nav.en';
@@ -172,7 +167,6 @@ import './processes/i18n/processes.en';
 import './market/directives/item';
 import './market/directives/market-toolbar';
 import './market/directives/items';
-import './market/directives/home-news';
 import './market/directives/preview-line';
 import './market/directives/preview-list';
 import './market/directives/preview-slideshow';
@@ -191,11 +185,9 @@ import './market/services/search-provider';
 import './market/services/suggester';
 import './market/corpora';
 import './market/lexicons';
-import './market/applications';
 import './market/tools';
 import './market/terminologies';
 import './market/search';
-import './market/news';
 import './market/cluster';
 import './market/i18n/market.fr';
 import './market/i18n/market.en';
@@ -226,6 +218,10 @@ import './profile/friends';
 import './profile/tasks';
 // TOOL
 import './tool/tool.component';
+
+// VueJs Component through AngularJS Controller (ngVue)
+import "./vue/hello/hello.ajs";
+import "./vue/top-navbar/top-navbar.ajs"
 
 // STYLE
 import './styles/less/app.less';

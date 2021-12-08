@@ -65,23 +65,19 @@ angular
         'dndLists',
         'ngWig',
         'xml',
-        'chart.js'
+        'chart.js',
+        'vue.components.top-navbar',
+        'vue.components.hello'
     ])
     .config(['$routeProvider', '$locationProvider', function ($routeProvider: OrtolangRouteProvider, $locationProvider: ILocationProvider) {
         $routeProvider
             .when('/market/home', {
-                redirectTo: '/'
-            })
-            .when('/', {
                 templateUrl: 'market/home.html',
                 controller: 'HomeCtrl',
                 description: 'default'
             })
-            .when('/news', {
-                templateUrl: 'market/news.html',
-                controller: 'NewsCtrl',
-                title: 'NEWS',
-                description: 'default'
+            .when('/', {
+                redirectTo: '/market/corpora'
             })
             .when('/market/:section/cluster/:cluster', {
                 templateUrl: 'market/cluster.html',
@@ -114,11 +110,6 @@ angular
                 controller: 'TerminologiesCtrl',
                 title: 'TERMINOLOGIES',
                 reloadOnSearch: false
-            })
-            .when('/market/applications', {
-                templateUrl: 'market/applications.html',
-                controller: 'ApplicationsCtrl',
-                title: 'INTEGRATED_PROJECTS'
             })
             .when('/market/:section/:alias/:version?', {
                 templateUrl: 'market/item.html',
@@ -154,12 +145,6 @@ angular
                 reloadOnSearch: false,
                 controller: 'WorkspaceDashboardCtrl',
                 title: 'NAV.WORKSPACES'
-            })
-            .when('/information/:section?', {
-                templateUrl: 'common/static-website/information.html',
-                controller: 'InformationCtrl',
-                reloadOnSearch: false,
-                title: 'NAV.INFORMATION'
             })
             .when('/legal-notices', {
                 templateUrl: 'common/static-website/legal-notices.html',
@@ -256,12 +241,10 @@ angular
             }
         });
     }])
-    .run(['$rootScope', function ($rootScope: OrtolangRootScopeService) {
+    .run(['$rootScope', 'Settings', function ($rootScope: OrtolangRootScopeService, Settings: any) {
         if (OrtolangConfig.piwikHost && OrtolangConfig.piwikHost !== '' && OrtolangConfig.piwikSiteId) {
             var optOutUrl = '//' + OrtolangConfig.piwikHost + 'index.php?module=CoreAdminHome&action=optOut&language=';
-            $rootScope.$on('languageInitialized', function (event, language) {
-                $rootScope.piwikIframeSrc =  optOutUrl + language;
-            });
+            $rootScope.piwikIframeSrc =  optOutUrl + Settings.language;
             $rootScope.$on('$translateChangeSuccess', function (event, data) {
                 $rootScope.piwikIframeSrc = optOutUrl + data.language;
             });

@@ -19,10 +19,14 @@ angular.module('ortolangMarketApp')
         function initProfile(profile) {
             User.create(profile);
             if (User.isModerator) {
-                Runtime.init();
+                Runtime.init().then(function() {
+                    AuthService.resolveSessionInitialized();
+                    AtmosphereService.subscribe();
+                });
+            } else {
+                AuthService.resolveSessionInitialized();
+                AtmosphereService.subscribe();
             }
-            AuthService.resolveSessionInitialized();
-            AtmosphereService.subscribe();
         }
 
         function getUser() {

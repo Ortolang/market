@@ -8,7 +8,7 @@
  * Factory in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .factory('Runtime', ['$rootScope', '$translate', '$modal', '$alert', '$timeout', 'RuntimeResource', 'FormResource', 'Helper', function ($rootScope, $translate, $modal, $alert, $timeout, RuntimeResource, FormResource, Helper) {
+    .factory('Runtime', ['$rootScope', '$translate', '$modal', '$alert', '$timeout', '$q', 'RuntimeResource', 'FormResource', 'Helper', function ($rootScope, $translate, $modal, $alert, $timeout, $q, RuntimeResource, FormResource, Helper) {
 
         var lastTasksRefresh,
             tasks = null,
@@ -21,6 +21,7 @@ angular.module('ortolangMarketApp')
         // *********************** //
 
         function getTasks(date) {
+            var deferred = $q.defer();
             if (!date || lastTasksRefresh < date) {
                 lastTasksRefresh = Date.now();
                 RuntimeResource.listTasks(function (data) {
@@ -33,8 +34,13 @@ angular.module('ortolangMarketApp')
                         }
                     });
                     tasks = data.entries;
+                    deferred.resolve();
+                }, function (resp) {
+                    console.log(resp);
+                    deferred.reject();
                 });
             }
+            return deferred.promise;
         }
 
         function claimTask(task) {
@@ -82,7 +88,7 @@ angular.module('ortolangMarketApp')
         }
 
         function init() {
-            getTasks();
+            return getTasks();
         }
 
         function processTaskEvent(event, message) {
