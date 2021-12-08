@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { VueLoaderPlugin } = require('vue-loader')
 var commonConfig = require('./webpack.common.js');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'test';
@@ -19,6 +20,7 @@ module.exports = {
     optimization: commonConfig.optimization,
 
     plugins: [
+        new VueLoaderPlugin(),
 
         new MiniCssExtractPlugin({
             filename: '[name].css',

@@ -8,7 +8,7 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Settings', ['$rootScope', '$q', '$location', '$modal', 'User', 'ProfileResource', 'Helper', function ($rootScope, $q, $location, $modal, User, ProfileResource, Helper) {
+    .service('Settings', ['$rootScope', '$q', '$location', '$modal', '$translate', 'User', 'ProfileResource', 'AuthService', 'Helper', 'amMoment', function ($rootScope, $q, $location, $modal, $translate, User, ProfileResource, AuthService, Helper, amMoment) {
 
         var deferred = $q.defer(),
             Settings = this;
@@ -24,7 +24,7 @@ angular.module('ortolangMarketApp')
             fileSelect: {}
         };
 
-        this.language = undefined;
+        this.language = 'fr';
 
         this.cart = {};
 
@@ -106,7 +106,59 @@ angular.module('ortolangMarketApp')
                 importSettings(localStorage.getItem('ortolang.settings'));
                 deferred.resolve();
             }
+            if (AuthService.isAuthenticated()) {
+                AuthService.sessionInitialized().then(function () {
+                    initLanguage();
+                });
+            } else {
+                initLanguage();
+            }
         };
+
+        function initLanguage() {
+            var urlParameterLanguage,
+                currentLanguage = $translate.use();
+            // If the lang url parameter is defined then remove it and remember the value in urlParameterLanguage var
+            if (!urlParameterLanguage && $location.search().lang && ($location.search().lang === 'fr' || $location.search().lang === 'en')) {
+                urlParameterLanguage = {value: $location.search().lang};
+                // $location.search('lang', undefined);
+            }
+            // Sets Settings.language to undefined if Setting.language is other than 'fr' or 'en'
+            if (Settings.language && Settings.language !== 'fr' && Settings.language !== 'en') {
+                Settings.language = undefined;
+            }
+            // If lang url parameter or Settings.language is defined then set the current language to lang url parameter in priority 
+            // or to Settings.language
+            if (urlParameterLanguage || Settings.language) {
+                urlParameterLanguage = urlParameterLanguage ? urlParameterLanguage.value : Settings.language;
+                // if (urlParameterLanguage !== currentLanguage) {
+                    // $translate.use(urlParameterLanguage).then(function (language) {
+                    //     Settings.language = language;
+                    // });
+                    Settings.language = urlParameterLanguage;
+                    $translate.use(urlParameterLanguage);
+                // }
+            } else {
+                Settings.language = $translate.use();
+            }
+            var initializedLanguage = urlParameterLanguage || Settings.language;
+            amMoment.changeLocale(initializedLanguage);
+            angular.element('html').attr('lang', initializedLanguage);
+            $rootScope.$emit('languageInitialized', initializedLanguage);
+        }
+
+        function changeLanguage(langKey) {
+            $translate.use(langKey).then(function (langKey) {
+                Settings.language = langKey;
+                Settings.store();
+                amMoment.changeLocale(langKey);
+                angular.element('html').attr('lang', langKey);
+            });
+        }
+
+        $rootScope.$on('askLanguageChange', function (event, langKey) {
+            changeLanguage(langKey || 'fr');
+        });
 
         function checkIdHal() {
             if (angular.isUndefined(User.getProfileData('idhal'))) {

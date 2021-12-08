@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 // var ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { VueLoaderPlugin } = require('vue-loader')
 var app = './src/main/webapp/static/app/';
 
 module.exports = {
@@ -12,7 +13,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.vue', '.ts', '.js'],
         alias: {
             'highlight.js$': '../../../' + app + 'vendor/highlightjs.js'
         }
@@ -20,6 +21,10 @@ module.exports = {
 
     module: {
         rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
             {
                 test: /\.ts$/,
                 use: [
@@ -212,7 +217,7 @@ module.exports = {
         // new webpack.optimize.CommonsChunkPlugin({
         //     name: ['app', 'vendor', 'polyfills']
         // }),
-
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: "[id].css"

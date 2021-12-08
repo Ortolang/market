@@ -61,6 +61,12 @@ import 'ngclipboard';
 import 'angular-xml-cjs2';
 import 'rx';
 
+// VueJS
+// import 'vue/dist/vue'
+// import Vue from 'vue';
+import 'ngVue';
+import 'ngVue/build/plugins.js'
+
 // Angular 2
 // import '@angular/platform-browser';
 // import '@angular/platform-browser-dynamic';

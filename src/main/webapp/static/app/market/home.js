@@ -16,6 +16,10 @@ angular.module('ortolangMarketApp')
                 $location.path("/market/search");
             };
 
+            $scope.seeMore = function (value) {
+                $location.path("/market/" + value);
+            };
+
             StatisticsResource.get({names: 'core.workspaces.all,membership.profiles.all,binary-store.size,binary-store.files'}, function (data) {
                 angular.forEach(data, function (representation, name) {
                     if (representation.values && representation.values.length>0) {
@@ -32,17 +36,22 @@ angular.module('ortolangMarketApp')
 
             (function init() {
                 initScopeVariables();
-                $scope.searchRecents = SearchProvider.make();
-                $scope.searchRecents.setActiveOrderProp('rank', true);
-
-                var params = {};
-                params.includes = Helper.includedItemFields;
-                params.size = '15';
-                params.orderProp = 'publicationDate';
-                params.orderDir = 'desc';
-                params.rank = '4';
-                params.archive = false;
-                $scope.paramsRecents = angular.toJson(params);
+                // Corpora
+                $scope.searchCorpora = SearchProvider.make();
+                $scope.searchCorpora.setActiveOrderProp('rank', true);
+                $scope.paramsCorpora = { type: 'Corpus', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
+                // Lexicons
+                $scope.searchLexicons = SearchProvider.make();
+                $scope.searchLexicons.setActiveOrderProp('rank', true);
+                $scope.paramsLexicons = { type: 'Lexique', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
+                // Terminology
+                $scope.searchTerminologies = SearchProvider.make();
+                $scope.searchTerminologies.setActiveOrderProp('rank', true);
+                $scope.paramsTerminologies = { type: 'Terminologie', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
+                // Tools
+                $scope.searchTools = SearchProvider.make();
+                $scope.searchTools.setActiveOrderProp('rank', true);
+                $scope.paramsTools = { type: 'Outil', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
             }());
 
         }]);

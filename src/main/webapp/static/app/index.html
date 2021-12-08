@@ -34,23 +34,21 @@
 
 <body ng-controller="AuthCtrl" id="top">
 
-<div id="top-nav-wrapper" ng-controller="TopNavCtrl" ng-include="'common/nav/top-nav.html'"></div>
+<div id="top-nav-wrapper" ng-controller="TopNavbarCtrl as ctrl">
+    <vue-component 
+        name="TopNavbarComponent" 
+        v-props-authenticated="ctrl.authenticated" 
+        v-props-location-path="ctrl.locationPath" 
+        v-props-icons="ctrl.icons"
+        v-props-settings="ctrl.Settings"
+        v-props-authservice="ctrl.AuthService"
+        v-props-user="ctrl.User"
+        v-props-runtime="ctrl.Runtime"
+        v-on-ask-language-change="ctrl.handleAskLanguageChange"
+    />
+</div>
 <div id="main-wrapper">
     <div class="container-flex">
-        <nav id="side-nav-wrapper" ng-controller="SideNavCtrl" ng-class="{'reduced-side-nav': reducedSideNav}" class="side-nav" role="navigation" ng-cloak>
-            <ul class="side-nav-list">
-                <li ng-repeat="element in ::sideNavElements track by element.id" ng-if="!element.authenticated || authenticated" class="side-nav-list-item" ng-class="{divider: element.class === 'divider', active: element.class === sideNavActiveClass}">
-                    <a ng-if="::element.class !== 'divider'"
-                       ng-href="{{:: element.path}}"
-                       ng-click="select(element.class)"
-                       ng-class="::element.class">
-                        <span class="icon-container" ng-class="::element.iconCss" data-title="{{element.description | translate}}" data-bs-enabled="reducedSideNav" data-placement="right" data-container="false" bs-tooltip></span>
-                        <span class="item-description" translate="{{::element.description}}"></span>
-                    </a>
-                    <span ng-if="::element.class === 'divider'"></span>
-                </li>
-            </ul>
-        </nav>
         <main role="main">
             <div class="view-wrapper" ng-view ng-cloak></div>
         </main>
@@ -64,6 +62,7 @@
 <![endif]-->
 
 <!--<script src="ortolang-config-url"></script>-->
+
 
 </body>
 </html>
