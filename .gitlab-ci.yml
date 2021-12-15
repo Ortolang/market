@@ -8,22 +8,18 @@ variables:
   SRC_DIR: src/main/webapp/static/app
   DOCKER_STACK: docker/docker-stack.yml
   ## Development
-  API_URL_DEV: https://repo-dev.ortolang.fr/api
   FRONTEND_HOST_DEV: catalogue-dev.ortolang.fr
   STACKNAME_DEV: ortolang-catalogue_vdorto
-  STACK_ENV_DEV: --env VERSION=master,FRONTEND_HOST=catalogue-dev.ortolang.fr,ORTOLANG_NETWORK=ortolang-vdorto
+  STACK_ENV_DEV: --env VERSION=master,API_URL=https://repo-dev.ortolang.fr/api,FRONTEND_HOST=catalogue-dev.ortolang.fr,ORTOLANG_NETWORK=ortolang-vdorto
   ## PreProduction
-  VERSION_INT: ${CI_COMMIT_REF_NAME}
-  API_URL_INT: https://repo-int.ortolang.fr/api
   FRONTEND_HOST_INT: catalogue-int.ortolang.fr
   STACKNAME_INT: ortolang-catalogue_viorto
-  STACK_ENV_INT: --env VERSION=latest,FRONTEND_HOST=catalogue-int.ortolang.fr,ORTOLANG_NETWORK=ortolang-viorto
+  STACK_ENV_INT: --env VERSION=latest,API_URL=https://repo-int.ortolang.fr/api,FRONTEND_HOST=catalogue-int.ortolang.fr,ORTOLANG_NETWORK=ortolang-viorto
   ## Production
   VERSION_PROD: market-9-4-0
-  API_URL_PROD: https://repository.ortolang.fr/api
   FRONTEND_HOST_PROD: catalogue.ortolang.fr
   STACKNAME_PROD: ortolang-catalogue
-  STACK_ENV_INT: --env VERSION=market-9-4-0,FRONTEND_HOST=catalogue.ortolang.fr,ORTOLANG_NETWORK=ortolang-vporto
+  STACK_ENV_INT: --env VERSION=market-9-4-0,API_URL=https://repository.ortolang.fr/api,FRONTEND_HOST=catalogue.ortolang.fr,ORTOLANG_NETWORK=ortolang-vporto
 
 include: 
   - project: 'gitlab1/gitlab-ci'
