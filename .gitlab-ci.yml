@@ -1,20 +1,65 @@
-image: docker:18.06
-
-services:
-  - docker:18.06-dind
-
-variables:
-  GIT_SSL_NO_VERIFY: "true"
-  IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG
-
 stages:
   - test
-  # - analyze
+  - build
   - package
   - deploy
 
+variables:
+  SRC_DIR: src/main/webapp/static/app
+  DOCKER_STACK: docker/docker-stack.yml
+  ## Development
+  API_URL_DEV: https://repo-dev.ortolang.fr/api
+  FRONTEND_HOST_DEV: catalogue-dev.ortolang.fr
+  STACKNAME_DEV: ortolang-catalogue_vdorto
+  STACK_ENV_DEV: --env VERSION=master,FRONTEND_HOST=catalogue-dev.ortolang.fr,ORTOLANG_NETWORK=ortolang-vdorto
+  ## PreProduction
+  VERSION_INT: ${CI_COMMIT_REF_NAME}
+  API_URL_INT: https://repo-int.ortolang.fr/api
+  FRONTEND_HOST_INT: catalogue-int.ortolang.fr
+  STACKNAME_INT: ortolang-catalogue_viorto
+  STACK_ENV_INT: --env VERSION=latest,FRONTEND_HOST=catalogue-int.ortolang.fr,ORTOLANG_NETWORK=ortolang-viorto
+  ## Production
+  VERSION_PROD: market-9-4-0
+  API_URL_PROD: https://repository.ortolang.fr/api
+  FRONTEND_HOST_PROD: catalogue.ortolang.fr
+  STACKNAME_PROD: ortolang-catalogue
+  STACK_ENV_INT: --env VERSION=market-9-4-0,FRONTEND_HOST=catalogue.ortolang.fr,ORTOLANG_NETWORK=ortolang-vporto
+
+include: 
+  - project: 'gitlab1/gitlab-ci'
+    ref: master
+    file: '/docker/base_docker.yml'
+  - project: 'gitlab1/gitlab-ci'
+    ref: master
+    file: '/npm/build.14.yml'
+  - project: 'gitlab1/gitlab-ci'
+    ref: master
+    file: '/docker/package.yml'
+  - project: 'gitlab1/gitlab-ci'
+    ref: master
+    file: '/docker/deploy.yml'
+
+
+# image: docker:18.06
+
+# services:
+#   - docker:18.06-dind
+
+# variables:
+#   GIT_SSL_NO_VERIFY: "true"
+#   IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG
+
+# stages:
+#   - test
+#   # - analyze
+#   - package
+#   - deploy
+
 test:
   stage: test
+  image: docker:18.06
+  services:
+    - docker:18.06-dind
   tags:
     - ortolang-docker-bind
   script:
@@ -36,6 +81,8 @@ dependency_scanning:
   image: 
     name: owasp/dependency-check
     entrypoint: [""]
+  services:
+    - docker:18.06-dind
   tags:
     - ortolang-docker-bind
   allow_failure: true
@@ -73,67 +120,67 @@ dependency_scanning:
 #       - config/*
 #       - src/main/webapp/static/app/**/*
 
-docker_build:
-  stage: package
-  tags:
-    - ortolang-docker-bind
-  script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build --rm -f Dockerfile -t $IMAGE_NAME .
-    - docker push $IMAGE_NAME
-  only:
-    refs:
-      - master
-      - branches
-    changes:
-      - Dockerfile
-      - nginx/*
-      - config/*
-      - src/main/webapp/static/app/**/*
-  except:
-    - production
+# docker_build:
+#   stage: package
+#   tags:
+#     - ortolang-docker-bind
+#   script:
+#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#     - docker build --rm -f Dockerfile -t $IMAGE_NAME .
+#     - docker push $IMAGE_NAME
+#   only:
+#     refs:
+#       - master
+#       - branches
+#     changes:
+#       - Dockerfile
+#       - nginx/*
+#       - config/*
+#       - src/main/webapp/static/app/**/*
+#   except:
+#     - production
 
-docker_tag_from_master:
-  stage: package
-  tags:
-    - ortolang-docker-bind
-  script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:master
-    - docker tag $CI_REGISTRY_IMAGE:master $IMAGE_NAME
-    - docker push $IMAGE_NAME
-  only:
-    - tags
+# docker_tag_from_master:
+#   stage: package
+#   tags:
+#     - ortolang-docker-bind
+#   script:
+#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#     - docker pull $CI_REGISTRY_IMAGE:master
+#     - docker tag $CI_REGISTRY_IMAGE:master $IMAGE_NAME
+#     - docker push $IMAGE_NAME
+#   only:
+#     - tags
 
-deploy_on_dev:
-  stage: deploy
-  tags:
-    - ortolang-docker-bind
-  only:
-    refs:
-      - master
-    changes:
-      - Dockerfile
-      - docker/docker-stack.vdorto.yml
-      - nginx/*
-      - config/*
-      - src/main/webapp/static/app/**/*
-  environment:
-    name: vdorto
-    url: https://www-dev.ortolang.fr
-  image: cyrilpestel/portainer-cli:1.6.0
-  script:
-    - portainer-cli -u $PORTAINER_USERNAME -p $PORTAINER_PASSWORD -b http://192.168.37.13:9000 deploy -e "Intégration-vdorto" -n ortolang-market_vdorto -f docker/docker-stack.vdorto.yml
+# deploy_on_dev:
+#   stage: deploy
+#   tags:
+#     - ortolang-docker-bind
+#   only:
+#     refs:
+#       - master
+#     changes:
+#       - Dockerfile
+#       - docker/docker-stack.vdorto.yml
+#       - nginx/*
+#       - config/*
+#       - src/main/webapp/static/app/**/*
+#   environment:
+#     name: vdorto
+#     url: https://www-dev.ortolang.fr
+#   image: cyrilpestel/portainer-cli:1.6.0
+#   script:
+#     - portainer-cli -u $PORTAINER_USERNAME -p $PORTAINER_PASSWORD -b http://192.168.37.13:9000 deploy -e "Intégration-vdorto" -n ortolang-market_vdorto -f docker/docker-stack.vdorto.yml
 
-deploy_on_prod:
-  stage: deploy
-  tags:
-    - ortolang-docker-bind
-  only:
-    - production
-  environment:
-    name: production
-    url: https://www.ortolang.fr
-  image: registry2.atilf.fr/atilf/portainer-cli:1.6.0
-  script:
-    - portainer-cli -u $PORTAINER_USERNAME -p $PORTAINER_PASSWORD -b http://192.168.37.13:9000 deploy -e "production-vporto" -n ortolang-market -f docker/docker-stack.vporto.yml
+# deploy_on_prod:
+#   stage: deploy
+#   tags:
+#     - ortolang-docker-bind
+#   only:
+#     - production
+#   environment:
+#     name: production
+#     url: https://www.ortolang.fr
+#   image: registry2.atilf.fr/atilf/portainer-cli:1.6.0
+#   script:
+#     - portainer-cli -u $PORTAINER_USERNAME -p $PORTAINER_PASSWORD -b http://192.168.37.13:9000 deploy -e "production-vporto" -n ortolang-market -f docker/docker-stack.vporto.yml
