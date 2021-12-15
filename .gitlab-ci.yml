@@ -19,7 +19,7 @@ variables:
   VERSION_PROD: market-9-4-0
   FRONTEND_HOST_PROD: catalogue.ortolang.fr
   STACKNAME_PROD: ortolang-catalogue
-  STACK_ENV_INT: --env VERSION=market-9-4-0,API_URL=https://repository.ortolang.fr/api,FRONTEND_HOST=catalogue.ortolang.fr,ORTOLANG_NETWORK=ortolang-vporto
+  STACK_ENV_PROD: --env VERSION=market-9-4-0,API_URL=https://repository.ortolang.fr/api,FRONTEND_HOST=catalogue.ortolang.fr,ORTOLANG_NETWORK=ortolang-vporto
 
 include: 
   - project: 'gitlab1/gitlab-ci'
