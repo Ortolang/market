@@ -79,6 +79,7 @@ dependency-check:scan:
     changes:
       - ${SRC_DIR}/**/*
       - ${TEST_DIR}/**/*
+      - sonar-project.properties
 
 sonar:scan:
   stage: analyse
@@ -97,3 +98,4 @@ sonar:scan:
     changes:
       - ${SRC_DIR}/**/*
       - ${TEST_DIR}/**/*
+      - sonar-project.properties
