@@ -1,11 +1,13 @@
 stages:
-  - test
   - build
+  - test
+  - analyse
   - package
   - deploy
 
 variables:
   SRC_DIR: src/main/webapp/static/app
+  TEST_DIR: src/main/webapp/static/test
   DOCKER_STACK: docker/docker-stack.yml
   ## Development
   FRONTEND_HOST_DEV: catalogue-dev.ortolang.fr
@@ -34,7 +36,7 @@ include:
     ref: master
     file: '/docker/deploy.yml'
 
-test:
+npm:test:
   stage: test
   image: docker:18.06
   services:
@@ -50,12 +52,12 @@ test:
     changes:
       - Dockerfile.test
       - config/*
-      - src/main/webapp/static/app/**/*
-      - src/main/webapp/static/test/**/*
+      - ${SRC_DIR}/**/*
+      - ${TEST_DIR}/**/*
   except:
     - production
 
-dependency_scanning:
+dependency-check:scan:
   stage: test
   image: 
     name: owasp/dependency-check
@@ -75,26 +77,23 @@ dependency_scanning:
     refs:
       - master
     changes:
-      - Dockerfile
-      - nginx/*
-      - config/*
-      - src/main/webapp/static/app/**/*
+      - ${SRC_DIR}/**/*
+      - ${TEST_DIR}/**/*
 
-# analyze:
-#   stage: analyze
-#   image: registry2.atilf.fr/atilf/sonarqube-scanner:1.1.0
-#   tags:
-#     - ortolang-docker-bind
-#   allow_failure: true
-#   script:
-#     - /sonar/sonar-scanner-cli/bin/sonar-scanner
-#   dependencies:
-#     - dependency_scanning
-#   only:
-#     refs:
-#       - master
-#     changes:
-#       - Dockerfile
-#       - nginx/*
-#       - config/*
-#       - src/main/webapp/static/app/**/*
+sonar:scan:
+  stage: analyse
+  image: sonarsource/sonar-scanner-cli
+  tags:
+    - ortolang-docker-bind
+  allow_failure: true
+  script:
+    - sonar-scanner
+  dependencies:
+    - dependency-check:scan
+  needs: ["dependency-check:scan"]
+  only:
+    refs:
+      - master
+    changes:
+      - ${SRC_DIR}/**/*
+      - ${TEST_DIR}/**/*
