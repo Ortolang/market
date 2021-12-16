@@ -88,7 +88,7 @@ sonar:scan:
     - ortolang-docker-bind
   allow_failure: true
   script:
-    - sonar-scanner
+    - sonar-scanner -Dsonar.login=$SONAR_LOGIN
   dependencies:
     - dependency-check:scan
   needs: ["dependency-check:scan"]
