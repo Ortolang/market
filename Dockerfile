@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 ### STAGE 2: Setup ###
-FROM nginx:1.13.3-alpine
+FROM nginx:1.21
 
 ## Copy our default nginx config
 COPY docker/nginx /etc/nginx/conf.d/
