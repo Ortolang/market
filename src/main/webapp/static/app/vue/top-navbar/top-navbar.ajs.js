@@ -18,7 +18,6 @@ var app = angular.module('vue.components.top-navbar', ['ngVue', 'ngVue.plugins',
     function ($rootScope, $scope, $translate, icons, Settings, AuthService, User, Runtime) {
         var ctrl = this;
         this.authenticated = AuthService.isAuthenticated();
-        this.locationPath = "";
         this.icons = icons;
         this.Settings = Settings;
         this.AuthService = AuthService;
@@ -73,8 +72,6 @@ var app = angular.module('vue.components.top-navbar', ['ngVue', 'ngVue.plugins',
                 } else {
                     $rootScope.ortolangPageDescription = $translate.instant(current.$$route.description);
                 }
-
-                ctrl.locationPath = current.$$route.originalPath;
             }
         });
 }]);

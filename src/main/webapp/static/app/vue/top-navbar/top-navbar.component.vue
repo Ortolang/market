@@ -9,7 +9,6 @@ import explorerElements from './explorer-nav.constant';
 export default Vue.component('top-navbar-component', {
     props: {
         authenticated: Boolean,
-        locationPath: String,
         // AngularJS Constant
         icons: Object,
         // AngularJS Services
@@ -26,7 +25,8 @@ export default Vue.component('top-navbar-component', {
             isModerator: false,
             emailHash: "",
             fullname: "",
-            aboutBaseUrl: "https://ortolangdoc.atilf.fr"
+            aboutBaseUrl: OrtolangConfig.marketServerUrl,
+            currentLocation: ""
         };
     },
     created() {
@@ -37,6 +37,11 @@ export default Vue.component('top-navbar-component', {
             ctrl.fullname = ctrl.user.fullName();
             ctrl.emailHash = ctrl.user.emailHash;
         });
+        // When a browser action is a click on back or forward button
+        window.addEventListener('popstate', () => {
+            ctrl.currentLocation = document.location.pathname;
+        });
+        ctrl.currentLocation = document.location.pathname;
     },
     components: {
         'avatar-component': avatarComponent,
@@ -74,13 +79,16 @@ export default Vue.component('top-navbar-component', {
                 mutations.toggleNav();
             }
         },
-        select(elementClass) {
-            if (this.explorerActiveClass !== elementClass) {
-                this.explorerActiveClass = elementClass;
+        select(element) {
+            // Mobile explorer items
+            if (this.explorerActiveClass !== element.class) {
+                this.explorerActiveClass = element.class;
             }
             if (store.isNavOpen) {
                 mutations.toggleNav();
             }
+            // Standard explorer items
+            this.currentLocation = element.path;
         },
         /**
          * Merges the path with the lang if it's specify.
@@ -174,18 +182,13 @@ export default Vue.component('top-navbar-component', {
             </div>
 
             <ul class="nav navbar-nav navbar-left collapse navbar-collapse hidden-xs">
-                <!-- <li>
-                    <a href="https://ortolangdoc.atilf.fr">
-                        {{ translate('NAV.INFORMATIONS') }}
-                    </a>
-                </li> -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         {{ translate('NAV.CATALOG') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li v-for="element in explorerElements" v-bind:key="element.id" :class="{active: element.path == locationPath}">
-                            <a :href="path(element)" @click="select(element.class)">
+                        <li v-for="element in explorerElements" v-bind:key="element.id" :class="{active: element.path == currentLocation}">
+                            <a :href="path(element)" @click="select(element)">
                                 <span :class="element.iconCss"></span> {{ translate(element.description) }}
                             </a>
                         </li>
