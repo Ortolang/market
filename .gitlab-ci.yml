@@ -11,6 +11,7 @@ variables:
   DOCKER_STACK: docker/docker-stack.yml
   ## Development
   FRONTEND_HOST_DEV: catalogue-dev.ortolang.fr
+  ENDPOINT_DEV: Intégration-vdorto
   STACKNAME_DEV: ortolang-catalogue_vdorto
   STACK_ENV_DEV: --env VERSION=master,API_URL=https://repo-dev.ortolang.fr/api,FRONTEND_HOST=catalogue-dev.ortolang.fr,ORTOLANG_NETWORK=ortolang-vdorto
   ## PreProduction
