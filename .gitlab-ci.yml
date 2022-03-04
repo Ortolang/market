@@ -28,7 +28,7 @@ include:
     file: '/docker/base_docker.yml'
   - project: 'gitlab1/gitlab-ci'
     ref: master
-    file: '/npm/build.14.yml'
+    file: '/npm/build.16.yml'
   - project: 'gitlab1/gitlab-ci'
     ref: master
     file: '/docker/package.yml'

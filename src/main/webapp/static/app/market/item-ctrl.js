@@ -186,7 +186,7 @@ angular.module('ortolangMarketApp')
                         if (items.totalHits===1) {
                             loadCollection(angular.fromJson(items.hits[0]));
                         } else {
-                            console.log('there is more than one item !');
+                            console.log('there is more than one or zero item (check item-ctrl)');
                         }
                     });
                 } else {
