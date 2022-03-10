@@ -10,10 +10,10 @@ variables:
   TEST_DIR: src/main/webapp/static/test
   DOCKER_STACK: docker/docker-stack.yml
   ## Development
-  FRONTEND_HOST_DEV: catalogue-dev.ortolang.fr
+  FRONTEND_HOST_DEV: wp-dev.ortolang.fr
   ENVIONMENT_NAME: development
   STACKNAME_DEV: ortolang-catalogue_vdorto
-  STACK_ENV_DEV: --env VERSION=master,API_URL=https://repo-dev.ortolang.fr/api,FRONTEND_HOST=catalogue-dev.ortolang.fr,ORTOLANG_NETWORK=ortolang-vdorto
+  STACK_ENV_DEV: --env VERSION=master,API_URL=https://repo-dev.ortolang.fr/api,FRONTEND_HOST="wp-dev.ortolang.fr;PathPrefix:/assets,/market,/producers,/contributors,/workspaces,/profiles",ORTOLANG_NETWORK=ortolang-vdorto
   ## PreProduction
   FRONTEND_HOST_INT: catalogue-int.ortolang.fr
   STACKNAME_INT: ortolang-catalogue_viorto
@@ -25,16 +25,16 @@ variables:
 
 include: 
   - project: 'gitlab1/gitlab-ci'
-    ref: master
+    ref: 2.0.0
     file: '/docker/base_docker.yml'
   - project: 'gitlab1/gitlab-ci'
-    ref: master
+    ref: 2.0.0
     file: '/npm/build.16.yml'
   - project: 'gitlab1/gitlab-ci'
-    ref: master
+    ref: 2.0.0
     file: '/docker/package.yml'
   - project: 'gitlab1/gitlab-ci'
-    ref: master
+    ref: 2.0.0
     file: '/docker/deploy.yml'
 
 npm:test:

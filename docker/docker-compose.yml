@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  web:
+    image: ortolang-market
+    build: ..
+    environment: 
+      - 'api_url=http://docker.for.mac.localhost:8080/api'
+      - 'prerender_server_ip=prerender'
+      - 'prerender_server_port=3000'
+    ports:
+      - 8000:80

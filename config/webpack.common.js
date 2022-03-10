@@ -219,8 +219,8 @@ module.exports = {
         // }),
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: "[id].css"
+            filename: 'assets/[name].css',
+            chunkFilename: "assets/[id].css"
         }),
 
         new HtmlWebpackPlugin({
