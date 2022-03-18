@@ -86,7 +86,10 @@ import 'ngVue/build/plugins.js'
 import './styles/less/custom-bootstrap.less';
 // CSS
 import 'font-awesome/css/font-awesome.css';
+// For version 10
 import 'highlight.js/styles/solarized-light.css';
+// For version 11
+// import 'highlight.js/styles/intellij-light.css';
 import 'angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css';
 import 'angular-hotkeys/src/hotkeys.css';
 import 'angular-motion/dist/angular-motion.css';

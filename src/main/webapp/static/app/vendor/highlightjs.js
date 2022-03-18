@@ -6,7 +6,7 @@ hljs.registerLanguage('less', require('../../../../../../node_modules/highlight.
 hljs.registerLanguage('java', require('../../../../../../node_modules/highlight.js/lib/languages/java'));
 hljs.registerLanguage('javascript', require('../../../../../../node_modules/highlight.js/lib/languages/javascript'));
 hljs.registerLanguage('json', require('../../../../../../node_modules/highlight.js/lib/languages/json'));
-hljs.registerLanguage('htmlbars', require('../../../../../../node_modules/highlight.js/lib/languages/htmlbars'));
+// hljs.registerLanguage('htmlbars', require('../../../../../../node_modules/highlight.js/lib/languages/htmlbars'));
 hljs.registerLanguage('markdown', require('../../../../../../node_modules/highlight.js/lib/languages/markdown'));
 hljs.registerLanguage('perl', require('../../../../../../node_modules/highlight.js/lib/languages/perl'));
 hljs.registerLanguage('php', require('../../../../../../node_modules/highlight.js/lib/languages/php'));
