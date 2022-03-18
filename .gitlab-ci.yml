@@ -13,7 +13,7 @@ variables:
   FRONTEND_HOST_DEV: wp-dev.ortolang.fr
   ENVIONMENT_NAME: development
   STACKNAME_DEV: ortolang-catalogue_vdorto
-  STACK_ENV_DEV: --env VERSION=master,API_URL=https://repo-dev.ortolang.fr/api,FRONTEND_HOST="wp-dev.ortolang.fr;PathPrefix:/assets,/market,/producers,/contributors,/workspaces,/profiles",ORTOLANG_NETWORK=ortolang-vdorto
+  STACK_ENV_DEV: --env VERSION=master,API_URL=https://repo-dev.ortolang.fr/api,FRONTEND_HOST="wp-dev.ortolang.fr;PathPrefix:/assets,/market,/producers,/contributors,/workspaces,/profiles,/seo",ORTOLANG_NETWORK=ortolang-vdorto
   ## PreProduction
   FRONTEND_HOST_INT: catalogue-int.ortolang.fr
   STACKNAME_INT: ortolang-catalogue_viorto

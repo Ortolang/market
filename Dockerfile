@@ -26,5 +26,5 @@ COPY --from=builder /code/dist /usr/share/nginx/html
 CMD cp /usr/share/nginx/html/index.html /tmp/ && \
     cp /etc/nginx/conf.d/default.conf /tmp/ && \
     envsubst < /tmp/index.html > /usr/share/nginx/html/index.html && \
-    envsubst '${prerender_server_ip} ${prerender_server_port}' < /tmp/default.conf > /etc/nginx/conf.d/default.conf && \
+    envsubst '${prerender_server_ip} ${prerender_server_port} ${api_url}' < /tmp/default.conf > /etc/nginx/conf.d/default.conf && \
     nginx -g 'daemon off;'
