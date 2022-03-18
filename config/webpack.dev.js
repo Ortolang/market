@@ -18,11 +18,7 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     devServer: {
-        inline: true,
         port: 9000,
         historyApiFallback: true,
-        // hot: true,
-        stats: { colors: true },
-        // contentBase: 'src/main/webapp/static/app'
     }
 });
