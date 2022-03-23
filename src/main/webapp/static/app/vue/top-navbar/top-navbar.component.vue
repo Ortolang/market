@@ -206,7 +206,7 @@ export default Vue.component('top-navbar-component', {
                     </a>
                 </li>
                 <li>
-                    <a :href="aboutBaseUrl + '/aide/'" target="_BLANK">
+                    <a :href="aboutBaseUrl + 'aide/'" target="_BLANK">
                         <span :class="['fa-fw', icons.question]"></span>
                         <span>{{ translate('NAV.HELP') }}</span>
                     </a>
