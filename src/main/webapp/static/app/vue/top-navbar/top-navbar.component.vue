@@ -1,4 +1,4 @@
-<script>
+<script lang="js">
 import Vue from 'vue';
 import avatarComponent from '../avatar/avatar.component';
 import mobileNavButtonComponent from '../mobile-nav/mobile-nav-button.component'
@@ -57,6 +57,9 @@ export default Vue.component('top-navbar-component', {
         },
         register: function () {
             this.authservice.register();
+        },
+        externalLink: function (newlocation) {
+            window.location = newlocation;
         },
         changeLanguage: function(lang) {
             // Set url parametter lang to ${lang}
@@ -175,7 +178,7 @@ export default Vue.component('top-navbar-component', {
         <div class="container-fluid">
             <div class="navbar-header">
                 <mobile-nav-button-component></mobile-nav-button-component>
-                <a class="navbar-brand" :href="aboutBaseUrl">
+                <a class="navbar-brand" @click.prevent="externalLink(aboutBaseUrl)" :href="aboutBaseUrl">
                     <img class="ortolang-logo" height="28" width="53" alt="Logo ORTOLANG" src="../../assets/images/logo-ortolang-white.png"/>
                     <span>ORTOLANG</span>
                 </a>
