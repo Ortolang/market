@@ -20,7 +20,7 @@ angular.module('ortolangMarketApp')
                     archive: false,
                     includes: Helper.includedItemFields,
                     size: 500,
-                    orderProp: 'rank',
+                    orderProp: 'publicationDate',
                     orderDir: 'desc'
                 };
             }

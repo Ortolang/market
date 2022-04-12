@@ -18,16 +18,16 @@ angular.module('ortolangMarketApp')
         (function init() {
             // Written
             $scope.searchWrittenCorpora = SearchProvider.make();
-            $scope.searchWrittenCorpora.setActiveOrderProp('rank', true);
-            $scope.paramsWrittenCorpora = { type: 'Corpus', 'corporaType.id': 'written_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
+            $scope.searchWrittenCorpora.setActiveOrderProp('publicationDate', true);
+            $scope.paramsWrittenCorpora = { type: 'Corpus', 'corporaType.id': 'written_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'publicationDate', orderDir: 'desc' };
             // Speech
             $scope.searchSpeechCorpora = SearchProvider.make();
-            $scope.searchSpeechCorpora.setActiveOrderProp('rank', true);
-            $scope.paramsSpeechCorpora = { type: 'Corpus', 'corporaType.id': 'speech_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
+            $scope.searchSpeechCorpora.setActiveOrderProp('publicationDate', true);
+            $scope.paramsSpeechCorpora = { type: 'Corpus', 'corporaType.id': 'speech_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'publicationDate', orderDir: 'desc' };
             // Multimodal
             $scope.searchMultimodalCorpora = SearchProvider.make();
-            $scope.searchMultimodalCorpora.setActiveOrderProp('rank', true);
-            $scope.paramsMultimodalCorpora = { type: 'Corpus', 'corporaType.id': 'multimodal_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'rank', orderDir: 'desc' };
+            $scope.searchMultimodalCorpora.setActiveOrderProp('publicationDate', true);
+            $scope.paramsMultimodalCorpora = { type: 'Corpus', 'corporaType.id': 'multimodal_corpora', archive: false, includes: Helper.includedItemFields, size: 15, orderProp: 'publicationDate', orderDir: 'desc' };
         }());
 
     }]);
