@@ -7,7 +7,7 @@
  * # Directive of the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .directive('parts', ['$rootScope', '$translate', 'Helper', 'Content', 'icons', function ($rootScope, $translate, Helper, Content, icons) {
+    .directive('parts', ['$rootScope', '$translate', 'Helper', 'Content', 'icons', 'WorkspaceMetadataService', function ($rootScope, $translate, Helper, Content, icons, WorkspaceMetadataService) {
         return {
             restrict: 'EA',
             scope: {
@@ -40,6 +40,7 @@ angular.module('ortolangMarketApp')
                     scope.models = {};
                     scope.partViewMode = 1;
                     scope.icons = icons;
+                    scope.WorkspaceMetadataService = WorkspaceMetadataService;
                 }
                 init();
 
