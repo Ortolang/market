@@ -55,7 +55,7 @@
             <div ng-include="'workspace/workspace-dashboard-permissions.html'"></div>
         </div>
         <div ng-switch-when="preview" class="container-main-inner">
-            <div ng-if="Workspace.active.metadata !== null" ortolang-item-json content="Workspace.active.metadata" alias="Workspace.active.workspace.alias" ortolang-object="Workspace.active.workspace" item-key="Workspace.active.workspace.head" wskey="wskey" root="'head'" preview="true" ></div>
+            <div ng-if="Workspace.active.metadata !== null" ortolang-item-json content="Workspace.active.metadata" alias="Workspace.active.workspace.alias" ortolang-object="Workspace.active.workspace" item-key="Workspace.active.workspace.head" wskey="Workspace.active.workspace.key" root="'head'" preview="true" ></div>
             <div ng-if="Workspace.active.metadata === null" class="no_metadata">
                 <i class="fa fa-eye fa-4x"></i>
                 <br/>
