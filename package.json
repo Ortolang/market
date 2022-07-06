@@ -55,7 +55,7 @@
         "holderjs": "2.9.6",
         "jquery": "3.4.1",
         "keycloak-js": "3.4.3",
-        "moment": "2.24.0",
+        "moment": "2.29.4",
         "ng-showdown": "1.1.0",
         "ng-tags-input": "3.2.0",
         "ng-wig": "git+https://github.com/Ortolang/ngWig.git#v3.0.9-ortolang",
