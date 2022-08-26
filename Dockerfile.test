@@ -13,4 +13,4 @@ RUN npm config set depth 0 && npm cache clean --force && npm install -q --no-pro
 
 COPY . .
 
-RUN npm run test
+CMD [ "npm", "run", "test" ]
