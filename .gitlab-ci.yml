@@ -6,8 +6,8 @@ stages:
   - deploy
 
 variables:
-  SRC_DIR: src/main/webapp/static/app
-  TEST_DIR: src/main/webapp/static/test
+  SRC_DIR: app
+  TEST_DIR: test
   DOCKER_STACK: docker/docker-stack.yml
   ## Development
   FRONTEND_HOST_DEV: wp-dev.ortolang.fr
@@ -45,7 +45,8 @@ npm:test:
   tags:
     - ortolang-docker-bind
   script:
-    - docker build -f Dockerfile.test .
+    - docker build -f Dockerfile.test -t ortolang-market-test .
+    - docker run ortolang-market-test
   only:
     refs:
       - master

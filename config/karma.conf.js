@@ -4,7 +4,7 @@ process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function (config) {
     var _config = {
-        basePath: '../src/main/webapp/static/test',
+        basePath: '../test',
 
         frameworks: ['jasmine'],
 
