@@ -9,8 +9,9 @@ services:
       - 'prerender_server_port=3000'
     deploy:
       labels:
-        traefik.frontend.rule: "Host:${FRONTEND_HOST}"
-        traefik.port: "80"
+        traefik.http.routers.ortolang-market.rule: "Host(`${FRONTEND_HOST}`) && PathPrefix(`/market`,`/assets`,`/producers`,`/contributors`,`/workspaces`,`/profiles`,`/seo`)"
+        traefik.http.services.ortolang-market-service.loadbalancer.server.port: "80"
+        traefik.http.routers.ortolang-market.tls: "true"
     networks:
       - proxy
       - ortolang-network
