@@ -11,7 +11,7 @@ angular.module('ortolangMarketApp')
     .controller('SearchCtrl', ['$scope', 'FacetedFilterManager', 'OptionFacetedFilter', 'SearchProvider', 'Settings', 
         function ($scope, FacetedFilterManager, OptionFacetedFilter, SearchProvider, Settings) {
 
-        var filters = [
+        const filters = [
             {
                 alias: 'type',
                 label: 'MARKET.RESOURCE_TYPE',
@@ -72,7 +72,8 @@ angular.module('ortolangMarketApp')
                 alias: 'corporaFormats',
                 type: 'array',
                 label: 'MARKET.FACET.TEXT_FORMAT',
-                resetLabel: 'MARKET.FACET.ALL_TEXT_FORMAT'
+                resetLabel: 'MARKET.FACET.ALL_TEXT_FORMAT',
+                priority: 'high',
             },
             {
                 alias: 'corporaDataTypes',
@@ -94,7 +95,7 @@ angular.module('ortolangMarketApp')
             },
             {
                 alias: 'corporaType',
-            type: 'object',
+                type: 'object',
                 label: 'MARKET.FACET.CORPORA_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_CORPORA',
                 priority: 'high',
@@ -111,7 +112,7 @@ angular.module('ortolangMarketApp')
             // // Lexicon
             {
                 alias: 'lexiconInputType',
-            type: 'object',
+                type: 'object',
                 label: 'MARKET.FACET.LEXICON_INPUT_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_INPUT_TYPE',
                 priority: 'high',
@@ -141,11 +142,12 @@ angular.module('ortolangMarketApp')
                 alias: 'lexiconFormats',
                 type: 'array',
                 label: 'MARKET.FACET.LEXICON_FORMAT',
-                resetLabel: 'MARKET.FACET.ALL_LEXICON_FORMAT'
+                resetLabel: 'MARKET.FACET.ALL_LEXICON_FORMAT',
+                priority: 'high',
             },
             {
                 alias: 'lexiconLanguageType',
-            type: 'object',
+                type: 'object',
                 label: 'MARKET.FACET.LEXICON_LANGUAGE_TYPE',
                 resetLabel: 'MARKET.FACET.ALL_LEXICON_LANGUAGE_TYPE'
             },
