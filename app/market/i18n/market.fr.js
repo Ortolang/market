@@ -203,7 +203,7 @@ angular.module('ortolangMarketApp')
                 ADVANCED: 'Filtrer le téléchargement',
                 REGEX: 'Expression régulière',
                 REGEX_HELP: 'Utilisez une expression régulière pour télécharger uniquement certains fichiers (exemple: <code>.*\\.xml</code> pour télécharger uniquement les fichiers XML)',
-                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/information/policy" target="_blank">la charte ORTOLANG</a> ainsi que la license relative à cette ressource {{license && license.label ? \'(<a target="_blank" href="\' + license.url + \'">\' + license.label + \'</a>)\' : ""}}',
+                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/fr/accueil/charte-ortolang" target="_blank">la charte ORTOLANG</a> ainsi que la license relative à cette ressource {{license && license.label ? \'(<a target="_blank" href="\' + license.url + \'">\' + license.label + \'</a>)\' : ""}}',
                 CONDITIONSOFUSE: 'Je déclare avoir pris connaissance et accepter les conditions d\'utilisation suivantes : {{license && license.conditionsOfUse ? license.conditionsOfUse : ""}}',
                 ANONYMOUS: '<strong>Vous n\'êtes pas connecté à ORTOLANG.</strong> Il est possible que l\'accès à certains fichiers de cette ressource soit réservé uniquement aux utilisateurs connectés et/ou aux membres de l\'ESR. Si vous possédez un compte ORTOLANG, veuillez-vous connecter.',
                 AUTHENTICATED: '<strong>Vous êtes connecté à ORTOLANG mais vous ne faites pas parti des membres de l\'ESR.</strong> Il est possible que l\'accès à certains fichiers de cette ressource soit réservé uniquement aux membres de l\'ESR.',

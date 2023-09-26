@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Création d\'un espace de travail',
                 AUTO_GENERATED: 'Générer automatiquement l\'alias',
-                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/information/policy" target="_blank">la charte ORTOLANG</a>',
+                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/fr/accueil/charte-ortolang" target="_blank">la charte ORTOLANG</a>',
                 MESSAGES: {
                     AVAILABILITY: 'Alias déjà utilisé',
                     MIN_LENGTH: 'L\'alias doit contenir au minimum 3 caractères',
@@ -97,7 +97,7 @@ angular.module('ortolangMarketApp')
                 NEXT_TAG_HELP: 'Vous pouvez choisir le numéro de la nouvelle version qui sera publiée. Veuillez noter que si vous choisissez de "remplacer la dernière version publiée" : la dernière version publiée n\'apparaitra plus dans les ressources d\'ORTOLANG et sera remplacée par cette nouvelle publication. Les données de la version remplacée seront toutefois conservées.',
                 NEXT_TAG_CUSTOM: 'Saisir manuellement le numéro de la nouvelle version',
                 CONTENT: 'Je reconnais être responsable des contenus que je publie et posséder toutes les autorisations, consentements et droits qui me permettent de publier ces contenus',
-                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/information/policy" target="_blank">la charte ORTOLANG</a>',
+                POLICY: 'Je déclare avoir pris connaissance et accepter sans réserve <a href="/fr/accueil/charte-ortolang" target="_blank">la charte ORTOLANG</a>',
                 MESSAGES: {
                     CONTENT: 'Vous devez cocher cette case',
                     POLICY: 'Vous devez accepter la charte ORTOLANG',

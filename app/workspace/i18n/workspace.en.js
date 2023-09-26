@@ -76,7 +76,7 @@ angular.module('ortolangMarketApp')
             CREATE_WORKSPACE_MODAL: {
                 TITLE: 'Create Workspace',
                 AUTO_GENERATED: 'Auto-generated alias',
-                POLICY: 'I have read and agree to <a href="/information/policy" target="_blank">the ORTOLANG policy</a>',
+                POLICY: 'I have read and agree to <a href="/fr/accueil/charte-ortolang" target="_blank">the ORTOLANG policy</a>',
                 MESSAGES: {
                     AVAILABILITY: 'Alias already used',
                     MIN_LENGTH: 'Minimum length of 3 characters',
@@ -97,7 +97,7 @@ angular.module('ortolangMarketApp')
                 NEXT_TAG_HELP: 'You can choose the number of the new version that will be published. Please note that if you decide to "replace the last published version": the last published version will not appear in ORTOLANG\'s resources anymore and will be replaced by this new publication. Nevertheless, the data of the replaced version will remain stored.',
                 NEXT_TAG_CUSTOM: 'Manually enter the new version number',
                 CONTENT: 'I acknowledge being responsible for the content that I publish and I have all the authorizations, consents and rights that allow me to publish these contents',
-                POLICY: 'I have read and agree to <a href="/information/policy" target="_blank">the ORTOLANG policy</a>',
+                POLICY: 'I have read and agree to <a href="/fr/accueil/charte-ortolang" target="_blank">the ORTOLANG policy</a>',
                 MESSAGES: {
                     CONTENT: 'You must check this box',
                     POLICY: 'You must accept the ORTOLANG policy',
