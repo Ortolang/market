@@ -21,7 +21,7 @@ variables:
   ## Production
   FRONTEND_HOST_PROD: catalogue.ortolang.fr
   STACKNAME_PROD: ortolang-catalogue
-  STACK_ENV_PROD: --env VERSION=10.3.0,API_URL=https://repository.ortolang.fr/api,ORTOLANG_NETWORK=ortolang-vporto,FRONTEND_HOST=www.ortolang.fr
+  STACK_ENV_PROD: --env VERSION=10.5.0,API_URL=https://repository.ortolang.fr/api,ORTOLANG_NETWORK=ortolang-vporto,FRONTEND_HOST=www.ortolang.fr
 
 include: 
   - project: 'gitlab1/gitlab-ci'
