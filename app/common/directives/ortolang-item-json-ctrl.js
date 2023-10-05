@@ -15,38 +15,42 @@ angular.module('ortolangMarketApp')
             Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User, SearchResource) {
 
             function loadReferentialEntities(items) {
-                var deferred = $q.defer();
+                let deferred = $q.defer();
                 if (items && items.length > 0) {
-                    var promises = [],
-                        tmp = [],
+                    let promises = [],
+                        tmpEntities = [],
                         item;
-                    for (var iEntity = 0; iEntity < items.length ; iEntity++) {
+                    for (let iEntity = 0; iEntity < items.length ; iEntity++) {
                         item = items[iEntity];
                         if (Helper.startsWith(item, '$')) {
                             // From Workspace
-                            var deferredEntity = $q.defer();
-                            ReferentialResource.get({ name: Helper.extractNameFromReferentialId(item) }, function (entity) {
-                                tmp[iEntity] = entity.content;
-                                deferredEntity.resolve();
-                            }, function() {
-                                deferredEntity.reject();
-                            });
-                            promises.push(deferredEntity.promise);
+                            promises.push(loadReferentialEntity(tmpEntities, iEntity, item));
                         } else {
                             // From Market and Workspace (entity that needs to be checked) 
-                            tmp[iEntity] = item;
+                            tmpEntities[iEntity] = item;
                         }
                     }
                     $q.all(promises).then(function () {
-                        deferred.resolve(tmp);
+                        deferred.resolve(tmpEntities);
                     }, function (reason) {
                         console.error(reason);
-                        deferred.reject(tmp);
+                        deferred.reject(tmpEntities);
                     });
                 } else {
                     deferred.resolve([]);
                 }
                 return deferred.promise;
+            }
+
+            function loadReferentialEntity(tmpEntities, iEntity, item) {
+                let deferredEntity = $q.defer();
+                ReferentialResource.get({ name: Helper.extractNameFromReferentialId(item) }, function (entity) {
+                    tmpEntities[iEntity] = entity.content;
+                    deferredEntity.resolve();
+                }, function() {
+                    deferredEntity.reject();
+                });
+                return deferredEntity.promise;
             }
 
             function getValues(arr, propertyName, propertyValue) {
@@ -286,7 +290,7 @@ angular.module('ortolangMarketApp')
                 if ($scope.bibliographicCitation) {
                     return $scope.bibliographicCitation;
                 }
-                var citation = '', i = 0, iPub = 0, iAuthor = 0;
+                let citation = '', iPub = 0, iAuthor = 0;
                 if ($scope.content.publications && $scope.content.publications.length > 0) {
                     angular.forEach($scope.content.publications, function (publication) {
                         if (iPub++>1) return;
@@ -310,12 +314,12 @@ angular.module('ortolangMarketApp')
                         }
                     }
                 } else if ($scope.producers && $scope.producers.length > 0) {
-                    for (i = 0; i < $scope.producers.length; i++) {
-                        if ($scope.producers[i]) {
-                            if (i !== 0) {
+                    for (let iProducer = 0; iProducer < $scope.producers.length; iProducer++) {
+                        if ($scope.producers[iProducer]) {
+                            if (iProducer !== 0) {
                                 citation += ', ';
                             }
-                            citation += $scope.producers[i].name + ($scope.producers[i].acronym ? ' (' + $scope.producers[i].acronym + ')' : '');
+                            citation += $scope.producers[iProducer].name + ($scope.producers[iProducer].acronym ? ' (' + $scope.producers[iProducer].acronym + ')' : '');
                         }
                     }
                 } 
@@ -532,7 +536,7 @@ angular.module('ortolangMarketApp')
                     if ($scope.content.contributors && $scope.content.contributors.length > 0) {
                         Helper.loadContributors($scope.content.contributors).then(function(loadedContributors) {
                             $scope.contributors = loadedContributors;
-                            for (var iContributor = 0; iContributor < $scope.contributors.length; iContributor++) {
+                            for (let iContributor = 0; iContributor < $scope.contributors.length; iContributor++) {
                                 if ($scope.contributors[iContributor].isAuthor) {
                                     $scope.authors.push($scope.contributors[iContributor]);
                                 }
@@ -546,9 +550,11 @@ angular.module('ortolangMarketApp')
                     }
                 });
                 $scope.sponsors = [];
-                loadReferentialEntities($scope.content.sponsors).then(function (loadedSponsors) {
-                    $scope.sponsors = loadedSponsors.slice();
-                });
+                if (angular.isDefined($scope.content.sponsors)) {
+                    loadReferentialEntities($scope.content.sponsors).then(function (loadedSponsors) {
+                        $scope.sponsors = loadedSponsors.slice();
+                    });
+                }
                 loadLicense(Settings.language);
                 $scope.licenseModel = createLicenseModel();
                 ckeckSearchable();
