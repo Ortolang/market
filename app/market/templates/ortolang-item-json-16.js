@@ -56,9 +56,7 @@ angular.module('ortolangMarketApp')
                     modalScope.formdata = {};
                     modalScope.formfields = JSON.parse(form.definition);
                     modalScope.formOptions = {
-                        formState: {
-                            uploadfiles: []
-                        }
+                        formState: {}
                     };
                     $modal({
                         scope: modalScope,

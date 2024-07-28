@@ -23,7 +23,9 @@ angular.module('ortolangMarketApp')
                     ctrl.toolResource.getJob({ id: ctrl.jobId }, function(data) {
                         if (data.state == 'COMPLETED') {
                             ctrl.builds = data.outputFiles;
-                            myTimeout = $timeout(getBuildOutput, 1000);
+                            // TODO check if stdout exists then get BuildOutput
+                            // myTimeout = $timeout(getBuildOutput, 1000);
+                            ctrl.outputUrl = ctrl.baseurl + '/jobs/' + ctrl.jobId + "/file/" + ctrl.builds[0];
                             ctrl.submitText = null;
                             ctrl.enableSubmit = '';
                         } else if (data.state == 'ABORTED') {
@@ -47,7 +49,7 @@ angular.module('ortolangMarketApp')
                         }]
                     }).then(function successCallback(response) {
                         ctrl.output = response.data;
-                        ctrl.outputUrl = ctrl.baseurl + '/jobs/' + ctrl.jobId + "/file/" + ctrl.builds[0];
+                        // ctrl.outputUrl = ctrl.baseurl + '/jobs/' + ctrl.jobId + "/file/" + ctrl.builds[0];
                     }, function errorCallback(response) {
                         console.log(response);
                     });
@@ -56,10 +58,12 @@ angular.module('ortolangMarketApp')
                  * Sends a request to the tool.
                  */
                 ctrl.execute = function () {
-                    var uploadfiles = ctrl.formoptions.formState.uploadfiles;
-                    if (angular.isDefined(uploadfiles) && uploadfiles.length > 0) {
+                    var uploadfiles = ctrl.formoptions.formState;
+                    if (angular.isDefined(uploadfiles) && Object.keys(uploadfiles).length > 0) {
+                        console.debug("send with file");
                         sendFile(uploadfiles);
                     } else {
+                        console.debug("send");
                         send();
                     }
                     ctrl.submitText = "MARKET.EXECUTING";
@@ -80,14 +84,14 @@ angular.module('ortolangMarketApp')
                 }
 
                 function sendFile (files) {
-                    var fd = new FormData();
+                    let fd = new FormData();
                     angular.forEach(ctrl.formdata, function (value, key) {
                         fd.append(key, value);
                     });
                     angular.forEach(files, function (file, key) {
-                        fd.append('input-file', file);
+                        fd.append(key, file);
                     });
-
+                    console.debug(fd);
                     ctrl.toolResource.createJobWithFile({}, fd, function (data) {
                         ctrl.jobId = data.id;
                         refreshOutput();
@@ -108,7 +112,7 @@ angular.module('ortolangMarketApp')
                     ctrl.builds = [];
                     $timeout.cancel(myTimeout);
                     ctrl.jobId = null;
-                    ctrl.formoptions.formState.uploadfiles = [];
+                    ctrl.formoptions.formState = {};
                     ctrl.formdata = {};
                     ctrl.submitText = null;
                     ctrl.enableSubmit = '';
