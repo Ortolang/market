@@ -5,14 +5,13 @@
     </label>
     <div class="input-group">
         <span class="form-control">
-            <span ng-class="formState.uploadfiles[0].type | mimeTypeIconCss"></span>
-            <span class="input-placeholder" ng-if="!formState.uploadfiles">{{ to.placeholder }}</span>
-            {{formState.uploadfiles[0].name}}
+            <span class="input-placeholder" ng-if="!formState[options.key]">{{ to.placeholder }}</span>
+            {{formState[options.key].name}}
         </span>
         <span class="input-group-btn">
             <button class="btn btn-default" type="button">
                 <label class="custom-file-upload">
-                    <input type="file" name="input-file" files-model="formState.uploadfiles" class="files-model">
+                    <input type="file" id="{{options.key}}" name="{{options.key}}" files-model="formState" options-key="options.key" class="files-model">
                     <span class="fa fa-cloud-upload"></span> {{ to.button }} 
                 </label>
             </button>

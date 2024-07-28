@@ -11,12 +11,13 @@ angular.module('ortolangMarketApp')
         return {
             restrict: 'A',
             scope: {
-                filesModel: '='
+                filesModel: '=',
+                optionsKey: "="
             },
             link: function(scope, element) {
-                element.bind('change', function(){
+                element.on('change', function(){
                     scope.$apply(function(){
-                        scope.filesModel = element[0].files;
+                        scope.filesModel[scope.optionsKey] = element[0].files[0];
                     });
                 });
             }
