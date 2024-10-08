@@ -92,7 +92,11 @@ angular.module('ortolangMarketApp')
 
                 ReferentialResource.list({type: compatibility.toUpperCase()}, function(entities) {
                     angular.forEach(entities.entries, function(entry) {
-                        var entity = {id: Helper.createKeyFromReferentialId(entry.key), label: Helper.getMultilingualValue(entry.content.labels)};
+                        var entity = {
+                            id: Helper.createKeyFromReferentialId(entry.key),
+                            label: Helper.getMultilingualValue(entry.content.labels),
+                            sortLabel: $filter('diacritics')(Helper.getMultilingualValue(entry.content.labels))
+                            };
                         if(entry.content.rank) {
                             entity.rank = entry.content.rank;
                         }
@@ -113,6 +117,7 @@ angular.module('ortolangMarketApp')
                         }
                         $scope[arrayName].push(entity);
                     });
+                    $scope[arrayName] = $filter('orderBy')($scope[arrayName], 'sortLabel');
                 });
             }
 
