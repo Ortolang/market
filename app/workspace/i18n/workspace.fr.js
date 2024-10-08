@@ -334,7 +334,7 @@ angular.module('ortolangMarketApp')
                     },
                     CREATE_ENTITY_PENDING: '<strong>Demande en cours</strong> : Ajout de l\'organisation dans le référentiel.'
                 },
-                NO_LANGUAGE_FOUND: 'Vous ne trouvez pas une languge ?',
+                NO_LANGUAGE_FOUND: 'Vous ne trouvez pas une langue ?',
                 ADD_NEW_LANGUAGE: 'Ajouter une langue',
                 ADD_LANGUAGE_MODAL: {
                     TITLE: 'Langue',
