@@ -1,0 +1,31 @@
+<div class="modal browse-tools-modal" id="browse-tools-modal" tabindex="-1" role="dialog" aria-labelledby="browse-tools-modal-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <span class="modal-title" id="browse-tools-modal-label" translate="BROWSER.SHOW_TOOLS_MODAL.TITLE"></span>
+            </div>
+            <div class="modal-body">
+                    <div class="media card-well card-well-hover card-well-body-action" ng-repeat="tool in tools">
+                        <div class="media-left">
+                            <div ng-if="tool.imageUrl" class="thumb-wrapper-sm">
+                                <div>
+                                    <div class="thumb" style="background-image: url({{tool.imageUrl}})"></div>
+                                </div>
+                            </div>
+                            <img ng-if="tool.imageUrl === null" class="logo" holder-js="holder.js/100x100?theme={{::tool.effectiveTitle.toLowerCase().charAt(0)}}&text={{::tool.effectiveTitle.substr(0, 2)}}&size=35"/>
+                        </div>
+                        <div class="media-body">
+                            <h4>{{::tool.effectiveTitle}}</h4>
+                            <article data-content="tool.effectiveDescription" data-target-blank>
+                                <div ng-bind-html="tool.effectiveDescription"></div>
+                            </article>
+                            <div class="media-body-action">
+                                <button type="button" class="btn btn-primary" ng-click="openWith(tool)">Sélectionner</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

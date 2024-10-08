@@ -46,24 +46,7 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showTool = function () {
-                FormResource.get({ formKey: 'tool-' + $scope.alias + '-form' }, function (form) {
-
-                    var modalScope = Helper.createModalScope(true);
-                    modalScope.models = {
-                        title: $scope.title,
-                        baseurl: $scope.content.applicationUrl
-                    };
-                    modalScope.formdata = {};
-                    modalScope.formfields = JSON.parse(form.definition);
-                    modalScope.formOptions = {
-                        formState: {}
-                    };
-                    $modal({
-                        scope: modalScope,
-                        templateUrl: 'tool/templates/tool-modal.html',
-                        show: true
-                    });
-                });
+                Helper.showTool('tool-' + $scope.alias + '-form', $scope.title, $scope.content.applicationUrl, null, null);
             };
 
             function loadConditionsOfUse(lang) {

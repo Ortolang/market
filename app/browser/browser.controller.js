@@ -130,9 +130,9 @@ angular.module('ortolangMarketApp')
                             if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({text: 'BROWSER.PREVIEW', icon: icons.browser.preview, action: 'preview'});
                             }
-                            if (ctrl.compatibleTools) {
-                                ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH', icon: icons.openWith, action: 'browseTools'});
-                            }
+                            // if (ctrl.compatibleTools) {
+                            //     ctrl.contextMenuItems.push({text: 'BROWSER.OPEN_WITH', icon: icons.openWith, action: 'showTools'});
+                            // }
                             if (ctrl.visualizers) {
                                 ctrl.contextMenuItems.push({divider: true});
                             }
@@ -511,20 +511,26 @@ angular.module('ortolangMarketApp')
                 }
             }
 
-            ctrl.browseTools = function () {
+            ctrl.showTools = function () {
                 if (ctrl.config.canEdit && ctrl.isHead) {
-                    var moveModal;
-                    createModalScope();
+                    let toolsModal,
+                        modalScope = $rootScope.$new(true);
+                    // Need to control the hide function (Helper.createModalScope failed)
+                    modalScope.$on('modal.hide', function () {
+                        modalScope.$destroy();
+                    });
                     // Complete list of tools
-                    modalScope.tools = ctrl.compatibleTools;
+                    // modalScope.tools = ctrl.compatibleTools;
+                    modalScope.tools = ctrl.tools;
                     modalScope.selectedElement = ctrl.selectedElements[0].name;
                     
                     modalScope.openWith = function (tool) {
                         ctrl.openWith(tool);
+                        toolsModal.hide();
                     };
-                    moveModal = $modal({
+                    toolsModal = $modal({
                         scope: modalScope,
-                        templateUrl: 'browser/templates/open-with.modal.html',
+                        templateUrl: 'browser/templates/show-tools.modal.html',
                         show: true
                     });
                 }
@@ -534,39 +540,48 @@ angular.module('ortolangMarketApp')
              * Opens a new window to the tool.
              **/
             ctrl.openWith = function (tool) {
-                var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
-                $window.open(tool.applicationUrl + '/api?wskey=' + ctrl.workspace.key + '&wspath=' + elementPath);
+                // var elementPath = Helper.normalizePath(ctrl.path + (ctrl.hasOnlyParentSelected() ? '' : '/' + ctrl.selectedElements[0].name));
+                Helper.showTool(
+                    'ortolang-tool-' + tool.alias + '-form',
+                    tool.effectiveTitle,
+                    tool.applicationUrl,
+                    ctrl.parent.path,
+                    ctrl.workspace.key
+                );
             };
 
-            function clearTools() {
-                ctrl.compatibleTools = null;
-            }
+            // function clearTools() {
+            //     ctrl.compatibleTools = null;
+            // }
 
-            function checkCompatibleTools() {
-                ctrl.compatibleTools = [];
-                if (ctrl.hasOnlyOneElementSelected()) {
-                    for (var i = 0; i < ctrl.tools.length; i++) {
-                        var fileFormats = ctrl.tools[i].toolInputData;
-                        if (ctrl.tools[i].applicationUrl && fileFormats) {
-                            var mimetypes = [];
-                            angular.forEach(fileFormats, function (fileFormat) {
-                                if (fileFormat.mimetypes) {
-                                    var fileFormatMimetypes = fileFormat.mimetypes;
-                                    for (var iMimetype = 0; iMimetype < fileFormatMimetypes.length; iMimetype++) {
-                                        mimetypes.push(fileFormatMimetypes[iMimetype]);
-                                    }
-                                }
-                            });
-                            if (mimetypes.indexOf(ctrl.selectedElements[0].mimeType) >= 0) {
-                                ctrl.compatibleTools.push(ctrl.tools[i]);
-                            }
-                        }
-                    }
-                }
-                if (ctrl.compatibleTools.length === 0) {
-                    clearTools();
-                }
-            }
+            // function checkCompatibleTools() {
+            //     ctrl.compatibleTools = [];
+            //     if (ctrl.hasOnlyOneElementSelected()) {
+            //         for (var i = 0; i < ctrl.tools.length; i++) {
+            //             var fileFormats = ctrl.tools[i].toolInputData;
+            //             if (ctrl.tools[i].applicationUrl && fileFormats) {
+            //                 var mimetypes = [];
+            //                 console.debug(fileFormats);
+            //                 angular.forEach(fileFormats, function (fileFormat) {
+            //                     if (fileFormat.mimetypes) {
+            //                         var fileFormatMimetypes = fileFormat.mimetypes;
+            //                         for (var iMimetype = 0; iMimetype < fileFormatMimetypes.length; iMimetype++) {
+            //                             mimetypes.push(fileFormatMimetypes[iMimetype]);
+            //                         }
+            //                     }
+            //                 });
+            //                 console.debug(mimetypes);
+            //                 console.debug(ctrl.selectedElements[0].mimeType);
+            //                 if (mimetypes.indexOf(ctrl.selectedElements[0].mimeType) >= 0) {
+            //                     ctrl.compatibleTools.push(ctrl.tools[i]);
+            //                 }
+            //             }
+            //         }
+            //     }
+            //     if (ctrl.compatibleTools.length === 0) {
+            //         clearTools();
+            //     }
+            // }
 
             ctrl.share = function () {
                 createModalScope();
@@ -672,7 +687,7 @@ angular.module('ortolangMarketApp')
                 ctrl.selectedElements = [ctrl.parent];
                 ctrl.deactivateContextMenu();
                 clearVisualizers();
-                clearTools();
+                // clearTools();
             }
 
             function getChildIndex(child) {
@@ -1190,7 +1205,7 @@ angular.module('ortolangMarketApp')
                     getParentData();
                 }
                 clearVisualizers();
-                clearTools();
+                // clearTools();
             };
 
             function browseToChild(child) {
@@ -2106,7 +2121,7 @@ angular.module('ortolangMarketApp')
 
             function populateToolList() {
                 ctrl.tools = [];
-                SearchResource.items({type: 'tools'}, function (itemResult) {
+                SearchResource.items({type: 'Outil'}, function (itemResult) {
                     angular.forEach(itemResult.hits, function (hit) {
                         var tool = angular.fromJson(hit);
                         tool.effectiveTitle = Helper.getMultilingualValue(tool.title);
@@ -2133,6 +2148,6 @@ angular.module('ortolangMarketApp')
                 setPath(path || '/');
                 getSnapshotsHistory();
                 getParentData();
-                // populateToolList();
+                populateToolList();
             }
         }]);

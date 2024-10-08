@@ -1,16 +1,16 @@
 <div class="form-group" show-errors>
     <label for="{{id}}">
-        {{options.to.labelProp || 'Select workspace element'}}
+        {{options.to.labelProp || 'Sélectionner un fichier'}}
         {{options.required ? '*' : ''}}
     </label>
     <div class="input-group">
-        <span class="form-control" ng-click="showModal()"><span ng-class="displayedValue.mimeType | mimeTypeIconCss"></span> {{displayedValue.name}}</span>
+        <span class="form-control" ng-click="showModal()">{{displayedValue.name}}</span>
             <span class="input-group-btn">
             <button class="btn btn-default"
                     ng-click="showModal()"
                     type="button"
                     data-ng-disabled="options.disabled">
-                {{options.label || 'Select workspace element'}}
+                {{options.label || 'Ouvrir'}}
             </button>
         </span>
     </div>

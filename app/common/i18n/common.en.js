@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
         NO_IMAGE_PROVIDED: 'No image provided',
         DOWNLOAD: 'Download',
         DOWNLOAD_WITH_FILTER: 'Download with filter',
+        SHOW_STDOUT: 'Show the standard output',
         START: 'Start',
         STOP: 'Stop',
         ORTOLANG: 'Open Resources and TOols for LANGuage',
@@ -82,6 +83,10 @@ angular.module('ortolangMarketApp')
         UNEXPECTED_ERROR_ALERT: {
             TITLE: 'Error',
             CONTENT: 'An unexpected error has occurred'
+        },
+        EXECUTION_DONE: {
+            TITLE: 'Execution',
+            BODY: 'Execution done.'
         },
         ROLES: {
             DEVELOPER: 'Developer',
@@ -150,6 +155,14 @@ angular.module('ortolangMarketApp')
         ERROR_MODAL_9: {
             TITLE: 'Invalid metadata',
             BODY: 'The metadata send to .'
+        },
+        ERROR_MODAL_10: {
+            TITLE: 'Invalide execution',
+            BODY: 'An unexpected error has occurred during the execution of the tool. Please try again later.'
+        },
+        ERROR_MODAL_11: {
+            TITLE: 'Invalide download',
+            BODY: 'An unexpected error has occurred while downloading the file. Please try again later.'
         },
         SUCCESS_MODAL_METADATA_SAVED: {
             TITLE: 'Save',

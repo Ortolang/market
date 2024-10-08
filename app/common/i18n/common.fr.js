@@ -36,6 +36,7 @@ angular.module('ortolangMarketApp')
         NO_IMAGE_PROVIDED: 'Pas d\'image disponible',
         DOWNLOAD: 'Télécharger',
         DOWNLOAD_WITH_FILTER: 'Télécharger avec un filtre',
+        SHOW_STDOUT: 'Voir la sortie standard',
         START: 'Début',
         STOP: 'Fin',
         ORTOLANG: 'Outils et Ressources pour un Traitement Optimisé de la LANGue',
@@ -82,6 +83,10 @@ angular.module('ortolangMarketApp')
         UNEXPECTED_ERROR_ALERT: {
             TITLE: 'Erreur',
             CONTENT: 'Une erreur inattendue s\'est produite'
+        },
+        EXECUTION_DONE: {
+            TITLE: 'Execution',
+            BODY: 'Execution réussie.'
         },
         ROLES: {
             DEVELOPER: 'Développeur',
@@ -150,6 +155,18 @@ angular.module('ortolangMarketApp')
         ERROR_MODAL_9: {
             TITLE: 'Métadonnées invalide',
             BODY: 'Les métadonnées envoyées au serveur ne sont pas valide.'
+        },
+        ERROR_MODAL_10: {
+            TITLE: 'Exécution invalide',
+            BODY: 'Une erreur est survenue durant l\'exécution de l\'outil. Veuillez essayer ulterieurment.'
+        },
+        ERROR_MODAL_11: {
+            TITLE: 'Téléchargement impossible',
+            BODY: 'Une erreur est survenue durant l\'exécution de l\'outil (téléchargement de la sortie standard de l\'outil). Veuillez réessayer ulterieurment.'
+        },
+        ERROR_MODAL_12: {
+            TITLE: 'Téléversement impossible',
+            BODY: 'Une erreur est survenue durant l\'exécution de l\'outil (téléversement du résultat). Veuillez réessayer ulterieurment.'
         },
         SUCCESS_MODAL_METADATA_SAVED: {
             TITLE: 'Sauvegarde',

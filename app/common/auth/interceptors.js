@@ -22,7 +22,7 @@ angular.module('ortolangMarketApp')
         //noinspection JSUnusedGlobalSymbols
         return {
             request: function (config) {
-                if (config.url.indexOf(url.api) !== 0) {
+                if (config.url.indexOf(url.api) !== 0 && config.url.indexOf('/jobs') < 0 && config.url.indexOf('/transfer') < 0) {
                     return config;
                 }
                 var deferred = $q.defer();

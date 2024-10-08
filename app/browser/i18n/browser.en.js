@@ -101,6 +101,9 @@ angular.module('ortolangMarketApp')
             NO_FILTERED_CHILDREN: 'No elements',
             MORE_MD: 'Show all metadata',
             EDIT_MD: 'Edit metadata',
+            SHOW_TOOLS_MODAL: {
+                TITLE: 'Show all tools',
+            },
             OPEN_WITH: 'Open with ...',
             OPEN_WITH_MODAL: {
                 TITLE: 'Open <strong>{{element ? element : ""}}</strong> with ...'
