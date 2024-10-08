@@ -185,6 +185,12 @@ angular.module('ortolangMarketApp')
                     SearchResource.items({'_id': $scope.itemAlias}, function (items) {
                         if (items.totalHits===1) {
                             loadCollection(angular.fromJson(items.hits[0]));
+                        } else if (items.totalHits > 1) {
+                            items.hits.forEach(hit => {
+                                if (hit['snapshot'] === $scope.tag) {
+                                    loadCollection(angular.fromJson(hit));
+                                }
+                            });
                         } else {
                             console.log('there is more than one or zero item (check item-ctrl)');
                         }
