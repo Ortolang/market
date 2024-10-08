@@ -10,9 +10,9 @@
 angular.module('ortolangMarketApp')
     .controller('OrtolangItemJsonCtrl', ['$scope', '$rootScope', '$q', '$filter', '$location', '$modal', '$translate', '$analytics', 
                 'AuthService', 'Helper', 'Settings', 'VisualizerService', 'Content', 'WorkspaceResource', 'ReferentialResource', 'ObjectResource', 
-                'url', 'User', 'SearchResource',
+                'url', 'User', 'SearchResource', 'FormResource',
         function ($scope, $rootScope, $q, $filter, $location, $modal, $translate, $analytics, AuthService, Helper, Settings, VisualizerService, 
-            Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User, SearchResource) {
+            Content, WorkspaceResource, ReferentialResource, ObjectResource, url, User, SearchResource, FormResource) {
 
             function loadReferentialEntities(items) {
                 let deferred = $q.defer();
@@ -203,6 +203,14 @@ angular.module('ortolangMarketApp')
             function ckeckSearchable() {
                 SearchResource.content({ 'workspace.key.keyword': $scope.wskey}, function (hits) {
                     $scope.searchable = hits.totalHits > 0;
+                });
+            }
+
+            function checkExecutable() {
+                FormResource.get({ formKey: 'tool-' + $scope.alias + '-form' }, function (form) {
+                    $scope.executable = true;
+                }, function () {
+                    $scope.executable = false;
                 });
             }
 
@@ -449,6 +457,7 @@ angular.module('ortolangMarketApp')
                 $scope.dynamicHandle = 'https://hdl.handle.net/' + url.handlePrefix + '/' + $scope.alias;
                 $scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '');
                 $scope.searchable = false;
+                $scope.executable = false;
             }
 
             $scope.howToCite = function ($scope, $event) {
@@ -558,6 +567,7 @@ angular.module('ortolangMarketApp')
                 loadLicense(Settings.language);
                 $scope.licenseModel = createLicenseModel();
                 ckeckSearchable();
+                checkExecutable();
                 $scope.initilizing = false;
             }
 
