@@ -8,8 +8,8 @@
  * Service in the ortolangMarketApp.
  */
 angular.module('ortolangMarketApp')
-    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', '$q', 'ProfileResource', 'ReferentialResource', 'ortolangType',
-        function ($rootScope, $translate, $alert, $modal, $aside, $window, $q, ProfileResource, ReferentialResource, ortolangType) {
+    .service('Helper', ['$rootScope', '$translate', '$alert', '$modal', '$aside', '$window', '$q', 'ProfileResource', 'ReferentialResource', 'FormResource', 'ortolangType',
+        function ($rootScope, $translate, $alert, $modal, $aside, $window, $q, ProfileResource, ReferentialResource, FormResource, ortolangType) {
 
             var modalScope, modal, asideMobileNav, Helper = this;
 
@@ -331,6 +331,31 @@ angular.module('ortolangMarketApp')
 
                 return additionalInformations;
             };
+
+
+            this.showTool = function (form, title, applicationUrl, path, workspace) {
+                FormResource.get({ formKey: form }, function (form) {
+
+                    var toolModalScope = Helper.createModalScope(true);
+                    toolModalScope.models = {
+                        title: title,
+                        baseurl: applicationUrl,
+                        workspace: workspace,
+                        path: path
+                    };
+                    toolModalScope.formdata = {};
+                    toolModalScope.formfields = JSON.parse(form.definition);
+                    toolModalScope.formOptions = {
+                        formState: {}
+                    };
+                    $modal({
+                        scope: toolModalScope,
+                        templateUrl: 'tool/templates/tool-modal.html',
+                        show: true
+                    });
+                });
+            };
+
 
             this.extractKeyFromReferentialId = function (key) {
                 // Pattern : ${key}

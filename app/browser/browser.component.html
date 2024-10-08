@@ -182,13 +182,19 @@
                     </ul>
                 </div>
 
+                <div ng-show="$ctrl.isWorkspace && $ctrl.isHead" class="btn-group hidden-xs">
+                    <button class="btn btn-default" ng-click="$ctrl.showTools()" data-title="{{'BROWSER.TOOLS' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
+                        <span ng-class="::icons.section.tools"></span>
+                    </button>
+                </div>
+
                 <div ng-show="$ctrl.isWorkspace" class="btn-group hidden-xs">
                     <button class="btn btn-default" ng-click="$ctrl.showMetadata()" data-title="{{'BROWSER.EDIT_MD' | translate}}" data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>
                         <span ng-class="::icons.browser.metadata"></span>
                     </button>
                 </div>
 
-                <div ng-show="$ctrl.isHead && $ctrl.hasOnlyOneElementSelected() && $ctrl.compatibleTools" class="btn-group hidden-xs">
+                <!-- <div ng-show="$ctrl.isHead && $ctrl.hasOnlyOneElementSelected() && $ctrl.compatibleTools" class="btn-group hidden-xs">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-title="{{'BROWSER.TOOLS' | translate}}" data-placement="'left'" data-trigger="hover focus click" bs-tooltip>
                         <span ng-class="::icons.section.tools"></span>
                     </button>
@@ -201,7 +207,7 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> -->
 
                 <!--<div ng-show="$ctrl.isMarket" class="btn-group">-->
                 <!--<button ng-if="$ctrl.config.canDownload" class="btn btn-default" ng-click="$ctrl.addToCart()" data-title="{{'BROWSER.ADD_TO_CART' | translate}}"  data-placement="{{$ctrl.isMarket ? 'top': 'bottom'}}" bs-tooltip>-->

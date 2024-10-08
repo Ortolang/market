@@ -4,16 +4,19 @@
         <div class="row">
             <div class="col-xs-8 col-sm-6">
                 <button class="btn btn-success" type="submit" ng-class="$ctrl.enableSubmit">{{($ctrl.submitText || "MARKET.EXECUTE") | translate}}</button>
-                <!-- <button class="btn btn-default" type="button" ng-click="$ctrl.reset()">{{"MARKET.RESET" | translate}}</button> -->
+                <button ng-if="$ctrl.executionCompleted" type="button" class="btn btn-default" ng-click="$ctrl.showOutput()">
+                    {{"SHOW_STDOUT" | translate}}
+                </button>
             </div>
             <div class="col-xs-4 col-sm-6 text-right">
-                <a ng-if="$ctrl.outputUrl" target="page" class="btn btn-primary" ng-href="{{ $ctrl.outputUrl }}"
-                    download>{{"DOWNLOAD" | translate}}</a>
+                <button ng-if="$ctrl.outputUrl" type="button" class="btn btn-primary" ng-click="$ctrl.downloadFile()">
+                    {{"DOWNLOAD" | translate}}
+                </button>
             </div>
         </div>
     </formly-form>
 </form>
 <br/>
-<pre style="white-space: break-spaces;" ng-if="$ctrl.output" name="tool-output">
-{{ $ctrl.output }}
+<pre style="white-space: break-spaces;" ng-show="$ctrl.stdoutVisibility" name="tool-stdout">
+{{ $ctrl.stdout }}
 </pre>
