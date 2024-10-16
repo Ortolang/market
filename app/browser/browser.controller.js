@@ -2121,17 +2121,19 @@ angular.module('ortolangMarketApp')
 
             function populateToolList() {
                 ctrl.tools = [];
-                SearchResource.items({type: 'Outil'}, function (itemResult) {
+                SearchResource.items({type: 'Outil', size: 50}, function (itemResult) {
                     angular.forEach(itemResult.hits, function (hit) {
-                        var tool = angular.fromJson(hit);
-                        tool.effectiveTitle = Helper.getMultilingualValue(tool.title);
-                        tool.effectiveDescription = Helper.getMultilingualValue(tool.description);
-                        if (tool.image) {
-                            tool.imageUrl = Content.getThumbUrlWithPath(tool.image, tool.alias, tool.snapshot, 100, true);
-                        } else {
-                            tool.imageUrl = null;
+                        let tool = angular.fromJson(hit);
+                        if (angular.isDefined(tool.applicationUrl)) {
+                            tool.effectiveTitle = Helper.getMultilingualValue(tool.title);
+                            tool.effectiveDescription = Helper.getMultilingualValue(tool.description);
+                            if (tool.image) {
+                                tool.imageUrl = Content.getThumbUrlWithPath(tool.image, tool.alias, tool.snapshot, 100, true);
+                            } else {
+                                tool.imageUrl = null;
+                            }
+                            ctrl.tools.push(tool);
                         }
-                        ctrl.tools.push(tool);
                     });
                 });
             }
