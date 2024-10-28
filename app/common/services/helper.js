@@ -333,28 +333,43 @@ angular.module('ortolangMarketApp')
             };
 
 
-            this.showTool = function (form, title, applicationUrl, path, workspace) {
-                FormResource.get({ formKey: form }, function (form) {
-
-                    var toolModalScope = Helper.createModalScope(true);
-                    toolModalScope.models = {
-                        title: title,
-                        baseurl: applicationUrl,
-                        workspace: workspace,
-                        path: path
-                    };
-                    toolModalScope.formdata = {};
-                    toolModalScope.formfields = JSON.parse(form.definition);
-                    toolModalScope.formOptions = {
-                        formState: {}
-                    };
-                    $modal({
-                        scope: toolModalScope,
-                        templateUrl: 'tool/templates/tool-modal.html',
-                        show: true
+            this.showTool = function (form, title, applicationUrl, path, workspace, formContent) {
+                if (angular.isDefined(formContent)) {
+                    showToolModal(formContent, title, applicationUrl, path, workspace);
+                } else {
+                    FormResource.get({ formKey: form }, function (form) {
+                        showToolModal(form, title, applicationUrl, path, workspace);
                     });
-                });
+                }
             };
+
+            /**
+             * Shows a modal containing the form of the tool.
+             * @param {string} form content of the form
+             * @param {string} title title of the tool
+             * @param {string} applicationUrl url of the application
+             * @param {string} path path in the content
+             * @param {string} workspace key of the workspace
+             */
+            function showToolModal(form, title, applicationUrl, path, workspace) {
+                var toolModalScope = Helper.createModalScope(true);
+                toolModalScope.models = {
+                    title: title,
+                    baseurl: applicationUrl,
+                    workspace: workspace,
+                    path: path
+                };
+                toolModalScope.formdata = {};
+                toolModalScope.formfields = JSON.parse(form.definition);
+                toolModalScope.formOptions = {
+                    formState: {}
+                };
+                $modal({
+                    scope: toolModalScope,
+                    templateUrl: 'tool/templates/tool-modal.html',
+                    show: true
+                });
+            }
 
 
             this.extractKeyFromReferentialId = function (key) {

@@ -207,11 +207,14 @@ angular.module('ortolangMarketApp')
             }
 
             function checkExecutable() {
-                FormResource.get({ formKey: 'tool-' + $scope.alias + '-form' }, function (form) {
-                    $scope.executable = true;
-                }, function () {
-                    $scope.executable = false;
-                });
+                if ($scope.content.type === 'Outil' && angular.isDefined($scope.content.applicationUrl) && $scope.content.applicationUrl !== '') {
+                    FormResource.get({ formKey: 'tool-' + $scope.alias + '-form' }, function (form) {
+                        $scope.executable = true;
+                        $scope.form = form;
+                    }, function () {
+                        $scope.executable = false;
+                    });
+                }
             }
 
             $scope.$on('$routeUpdate', function () {
@@ -458,6 +461,7 @@ angular.module('ortolangMarketApp')
                 $scope.shortHandle = 'hdl:' + url.handlePrefix + '/' + $scope.alias + ($scope.tag ? '/' + $scope.tag.tag : '');
                 $scope.searchable = false;
                 $scope.executable = false;
+                $scope.form = undefined;
             }
 
             $scope.howToCite = function ($scope, $event) {

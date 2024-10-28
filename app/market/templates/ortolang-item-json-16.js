@@ -46,7 +46,14 @@ angular.module('ortolangMarketApp')
             };
 
             $scope.showTool = function () {
-                Helper.showTool('tool-' + $scope.alias + '-form', $scope.title, $scope.content.applicationUrl, null, null);
+                Helper.showTool(
+                    'tool-' + $scope.alias + '-form',
+                    $scope.title,
+                    $scope.content.applicationUrl,
+                    null,
+                    null,
+                    angular.isDefined($scope.form) ? $scope.form : undefined
+                );
             };
 
             function loadConditionsOfUse(lang) {

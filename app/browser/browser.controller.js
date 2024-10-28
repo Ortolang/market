@@ -47,6 +47,7 @@ angular.module('ortolangMarketApp')
         'WorkspaceResource',
         'WorkspaceElementResource',
         'SearchResource',
+        'FormResource',
         'icons',
         'ortolangType',
         'browserConfig',
@@ -54,7 +55,7 @@ angular.module('ortolangMarketApp')
         'Cart',
         'Helper',
         'url',
-        function ($scope, $location, $route, $rootScope, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, VisualizerService, Content, AuthService, WorkspaceResource, WorkspaceElementResource, SearchResource, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
+        function ($scope, $location, $route, $rootScope, $filter, $timeout, $window, $q, $translate, $modal, $alert, $analytics, hotkeys, ObjectResource, VisualizerService, Content, AuthService, WorkspaceResource, WorkspaceElementResource, SearchResource, FormResource, icons, ortolangType, browserConfig, Settings, Cart, Helper, url) {
 
             var ctrl = this;
 
@@ -546,7 +547,8 @@ angular.module('ortolangMarketApp')
                     tool.effectiveTitle,
                     tool.applicationUrl,
                     ctrl.parent.path,
-                    ctrl.workspace.key
+                    ctrl.workspace.key,
+                    tool.form
                 );
             };
 
@@ -2125,14 +2127,17 @@ angular.module('ortolangMarketApp')
                     angular.forEach(itemResult.hits, function (hit) {
                         let tool = angular.fromJson(hit);
                         if (angular.isDefined(tool.applicationUrl)) {
-                            tool.effectiveTitle = Helper.getMultilingualValue(tool.title);
-                            tool.effectiveDescription = Helper.getMultilingualValue(tool.description);
-                            if (tool.image) {
-                                tool.imageUrl = Content.getThumbUrlWithPath(tool.image, tool.alias, tool.snapshot, 100, true);
-                            } else {
-                                tool.imageUrl = null;
-                            }
-                            ctrl.tools.push(tool);
+                            FormResource.get({ formKey: 'ortolang-tool-' + tool.alias + '-form' }, function(form) {
+                                    tool.form = form;
+                                    tool.effectiveTitle = Helper.getMultilingualValue(tool.title);
+                                    tool.effectiveDescription = Helper.getMultilingualValue(tool.description);
+                                    if (tool.image) {
+                                        tool.imageUrl = Content.getThumbUrlWithPath(tool.image, tool.alias, tool.snapshot, 100, true);
+                                    } else {
+                                        tool.imageUrl = null;
+                                    }
+                                    ctrl.tools.push(tool);
+                            });
                         }
                     });
                 });
